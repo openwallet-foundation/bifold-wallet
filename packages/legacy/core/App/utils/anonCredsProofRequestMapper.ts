@@ -8,6 +8,7 @@ import {
   getAnonCredsTagsFromRecord,
 } from '@credo-ts/anoncreds'
 import {
+  ClaimFormat,
   DifPexCredentialsForRequest,
   DifPresentationExchangeDefinition,
   DifPresentationExchangeDefinitionV2,
@@ -150,10 +151,14 @@ export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsFo
     for (const entry of requestedAttribute.submissionEntry) {
       const inputDescriptorId = entry.inputDescriptorId
 
-      const recordsWithMetadata = entry.verifiableCredentials.map((record) => {
+      const recordsWithMetadata = entry.verifiableCredentials.map((submissionEntryCredential) => {
+        if (submissionEntryCredential.type !== ClaimFormat.LdpVc) {
+          throw new Error(`Unsupported credential type. ${submissionEntryCredential.type}`)
+        }
+        const record = submissionEntryCredential.credentialRecord
         const anonCredsTags = getAnonCredsTagsFromRecord(record as W3cCredentialRecord)
         if (!anonCredsTags) throw new Error('Missing AnonCreds tags from credential record')
-        return { record: record as W3cCredentialRecord, anonCredsTags }
+        return { record, anonCredsTags }
       })
 
       if (!descriptorMetadata[inputDescriptorId]) descriptorMetadata[inputDescriptorId] = []

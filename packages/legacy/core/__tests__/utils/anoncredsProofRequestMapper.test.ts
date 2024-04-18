@@ -15,6 +15,7 @@ import {
   testW3cCredentialRecord,
   testW3cCredentialRecord2,
 } from '../screens/fixtures/w3c-proof-request'
+import { ClaimFormat } from '@credo-ts/core'
 
 describe('getDescriptorMetadata', () => {
   test('Returns Correct DescriptorMetadata', async () => {
@@ -28,19 +29,31 @@ describe('getDescriptorMetadata', () => {
           isRequirementSatisfied: true,
           needsCount: 1,
           rule: 'all',
-          submissionEntry: [{ inputDescriptorId: '0', verifiableCredentials: [record1] }],
+          submissionEntry: [
+            { inputDescriptorId: '0', verifiableCredentials: [{ credentialRecord: record1, type: ClaimFormat.LdpVc }] },
+          ],
         },
         {
           isRequirementSatisfied: true,
           needsCount: 1,
           rule: 'all',
-          submissionEntry: [{ inputDescriptorId: '1', verifiableCredentials: [record2] }],
+          submissionEntry: [
+            { inputDescriptorId: '1', verifiableCredentials: [{ credentialRecord: record2, type: ClaimFormat.LdpVc }] },
+          ],
         },
         {
           isRequirementSatisfied: true,
           needsCount: 1,
           rule: 'all',
-          submissionEntry: [{ inputDescriptorId: '2', verifiableCredentials: [record1, record2] }],
+          submissionEntry: [
+            {
+              inputDescriptorId: '2',
+              verifiableCredentials: [
+                { credentialRecord: record1, type: ClaimFormat.LdpVc },
+                { credentialRecord: record2, type: ClaimFormat.LdpVc },
+              ],
+            },
+          ],
         },
       ],
     })

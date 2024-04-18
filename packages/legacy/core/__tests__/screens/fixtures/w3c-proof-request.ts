@@ -1,5 +1,5 @@
 import { AnonCredsCredentialsForProofRequest } from '@credo-ts/anoncreds'
-import { DifPexCredentialsForRequest, JsonTransformer, W3cCredentialRecord } from '@credo-ts/core'
+import { ClaimFormat, DifPexCredentialsForRequest, JsonTransformer, W3cCredentialRecord } from '@credo-ts/core'
 import { DifPexAnonCredsProofRequest } from '../../../App/utils/anonCredsProofRequestMapper'
 
 export const testW3cCredentialRecord = JsonTransformer.fromJSON(
@@ -254,7 +254,7 @@ export const difPexCredentialsForRequest: DifPexCredentialsForRequest = {
           inputDescriptorId: 'age',
           name: undefined,
           purpose: undefined,
-          verifiableCredentials: [testW3cCredentialRecord],
+          verifiableCredentials: [{ type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord }],
         },
       ],
       isRequirementSatisfied: true,
@@ -267,7 +267,7 @@ export const difPexCredentialsForRequest: DifPexCredentialsForRequest = {
           inputDescriptorId: 'email',
           name: undefined,
           purpose: undefined,
-          verifiableCredentials: [testW3cCredentialRecord],
+          verifiableCredentials: [{ type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord }],
         },
       ],
       isRequirementSatisfied: true,
@@ -280,7 +280,7 @@ export const difPexCredentialsForRequest: DifPexCredentialsForRequest = {
           inputDescriptorId: 'time',
           name: undefined,
           purpose: undefined,
-          verifiableCredentials: [testW3cCredentialRecord],
+          verifiableCredentials: [{ type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord }],
         },
       ],
       isRequirementSatisfied: true,
@@ -301,7 +301,10 @@ export const difPexCredentialsForRequest2: DifPexCredentialsForRequest = {
           inputDescriptorId: 'age',
           name: undefined,
           purpose: undefined,
-          verifiableCredentials: [testW3cCredentialRecord, testW3cCredentialRecord2],
+          verifiableCredentials: [
+            { type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord },
+            { type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord2 },
+          ],
         },
       ],
       isRequirementSatisfied: true,
@@ -314,7 +317,10 @@ export const difPexCredentialsForRequest2: DifPexCredentialsForRequest = {
           inputDescriptorId: 'email',
           name: undefined,
           purpose: undefined,
-          verifiableCredentials: [testW3cCredentialRecord, testW3cCredentialRecord2],
+          verifiableCredentials: [
+            { type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord },
+            { type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord2 },
+          ],
         },
       ],
       isRequirementSatisfied: true,
@@ -327,7 +333,10 @@ export const difPexCredentialsForRequest2: DifPexCredentialsForRequest = {
           inputDescriptorId: 'time',
           name: undefined,
           purpose: undefined,
-          verifiableCredentials: [testW3cCredentialRecord, testW3cCredentialRecord2],
+          verifiableCredentials: [
+            { type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord },
+            { type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord2 },
+          ],
         },
       ],
       isRequirementSatisfied: true,

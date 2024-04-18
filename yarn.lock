@@ -5,9 +5,9 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@2060.io/ffi-napi@npm:^4.0.8":
-  version: 4.0.8
-  resolution: "@2060.io/ffi-napi@npm:4.0.8"
+"@2060.io/ffi-napi@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "@2060.io/ffi-napi@npm:4.0.9"
   dependencies:
     "@2060.io/ref-napi": ^3.0.6
     debug: ^4.1.1
@@ -16,7 +16,7 @@ __metadata:
     node-gyp: latest
     node-gyp-build: ^4.2.1
     ref-struct-di: ^1.1.0
-  checksum: 7c2318776b6482032e51046255ed8830069a7e602f839df333b678ebf7b79f490b4cd88117745cb40c8813f31aa0cb973822ad57e1abbc1bac1fd48063b51b79
+  checksum: 51cfe6dd3b880db0192400f9ee642602132dfb3a9072fd7ebcc2632ea62268cffbf97b4678c2b0dd966c80e2af4bfda4319dd63025c6408cc033961f177d5bf3
   languageName: node
   linkType: hard
 
@@ -3686,42 +3686,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/anoncreds@npm:0.5.1, @credo-ts/anoncreds@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/anoncreds@npm:0.5.1"
+"@credo-ts/anoncreds@npm:0.5.1-alpha.19, @credo-ts/anoncreds@npm:0.5.1-alpha.19+edc5735c":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/anoncreds@npm:0.5.1-alpha.19"
   dependencies:
     "@astronautlabs/jsonpath": ^1.1.2
-    "@credo-ts/core": 0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
     big-integer: ^1.6.51
     bn.js: ^5.2.1
     class-transformer: 0.5.1
     class-validator: 0.14.1
     reflect-metadata: ^0.1.13
   peerDependencies:
-    "@hyperledger/anoncreds-shared": ^0.2.1
-  checksum: 2b623e6d990f0999633e3631298101890b1766f98bbe68dc97a4cfc4f273f6b7e99b8425de24f8bffd65585efb7ccbc33f219d146c1c1ab855f334603f5049d1
+    "@hyperledger/anoncreds-shared": ^0.2.2
+  checksum: 050cfc3168bbc26e9a3cb24d49749caa4e7f668e3ae76e52096c4e816b19e2ff4bafe22a23286a30a98381136876e2f2d5d7e33597bdb2428f6ed1361ebe8d96
   languageName: node
   linkType: hard
 
-"@credo-ts/askar@npm:0.5.1, @credo-ts/askar@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/askar@npm:0.5.1"
+"@credo-ts/askar@npm:0.5.1-alpha.19, @credo-ts/askar@npm:0.5.1-alpha.19+edc5735c":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/askar@npm:0.5.1-alpha.19"
   dependencies:
-    "@credo-ts/core": 0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
     bn.js: ^5.2.1
     class-transformer: 0.5.1
     class-validator: 0.14.1
     rxjs: ^7.8.0
     tsyringe: ^4.8.0
   peerDependencies:
-    "@hyperledger/aries-askar-shared": ^0.2.0
-  checksum: 6c245a57f1cebc4075f16070df15f30694dc0158074f5547608357e5e517a45e5a686c9d7f0054ee52ecee77fc69041a869568e960adf5601c57800d6aa9ca3a
+    "@hyperledger/aries-askar-shared": ^0.2.1
+  checksum: 89eecec53230785b59e299f27bf21502071a5e3666b7b8f7b648dd946ebb637cab96490c4aeeb8ecb7b9d4fc78671fc77fb65418cdd0d086e0120f2e5589489f
   languageName: node
   linkType: hard
 
-"@credo-ts/core@npm:0.5.1, @credo-ts/core@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/core@npm:0.5.1"
+"@credo-ts/core@npm:0.5.1-alpha.19, @credo-ts/core@npm:0.5.1-alpha.19+edc5735c":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/core@npm:0.5.1-alpha.19"
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -3754,47 +3754,47 @@ __metadata:
     uuid: ^9.0.0
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
-  checksum: 65f313fb76414d1d177168bfd1c9b20bc463ada74205a6a69d181ce4daff8e92cfecab05699047c16a9821387a89b1245b309830783568d6abd1d26f716b464e
+  checksum: 13ff138d1897a2cc42e898dbb05ee33c73ab6488a5da8d5812c879d47ae02c34ecba24c8fb1a3ca7f3b1ef25d03ac41ff763d388b01045e8a78b021011c899a1
   languageName: node
   linkType: hard
 
-"@credo-ts/indy-sdk-to-askar-migration@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/indy-sdk-to-askar-migration@npm:0.5.1"
+"@credo-ts/indy-sdk-to-askar-migration@npm:0.5.1-alpha.19":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/indy-sdk-to-askar-migration@npm:0.5.1-alpha.19"
   dependencies:
-    "@credo-ts/anoncreds": 0.5.1
-    "@credo-ts/askar": 0.5.1
-    "@credo-ts/core": 0.5.1
-    "@credo-ts/node": 0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19+edc5735c
+    "@credo-ts/askar": 0.5.1-alpha.19+edc5735c
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
+    "@credo-ts/node": 0.5.1-alpha.19+edc5735c
   peerDependencies:
-    "@hyperledger/aries-askar-shared": ^0.2.0
-  checksum: a2a1accc79eb159766badf470491da825d986ec8ccbd91ea2ec2138a1f4a7b22f2472f2f7ef2aec0e5b2c32830f4ae0368e18b09dfbca1562f1d2e2b75ea24b5
+    "@hyperledger/aries-askar-shared": ^0.2.1
+  checksum: 4681071d05612bc43f9cbd518d14703d1c40ae75fe28b126d41e438440452232849fae0dfa8bd13e1a67e06b35623d208ab58ccff44880ff0a844a78b071a646
   languageName: node
   linkType: hard
 
-"@credo-ts/indy-vdr@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/indy-vdr@npm:0.5.1"
+"@credo-ts/indy-vdr@npm:0.5.1-alpha.19":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/indy-vdr@npm:0.5.1-alpha.19"
   dependencies:
-    "@credo-ts/anoncreds": 0.5.1
-    "@credo-ts/core": 0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19+edc5735c
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
   peerDependencies:
-    "@hyperledger/indy-vdr-shared": ^0.2.0
-  checksum: bacb30cbbb62b85fb1d9a8b812b19e04d6de660b788d017ee9f9f3a97766eb4945dacf95fde8265b99db9c75909abc68a27ba39a509b4d82a436ca7fed46addd
+    "@hyperledger/indy-vdr-shared": ^0.2.2
+  checksum: b9196c54aa43739b9d954e7f86c90c009a3cc840530dba6c39f53d308f90003d11d19a2f1b7697efc458cf52104eef9a8b874a3a71d1d302dad1224c17b50358
   languageName: node
   linkType: hard
 
-"@credo-ts/node@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/node@npm:0.5.1"
+"@credo-ts/node@npm:0.5.1-alpha.19+edc5735c":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/node@npm:0.5.1-alpha.19"
   dependencies:
-    "@2060.io/ffi-napi": ^4.0.8
+    "@2060.io/ffi-napi": ^4.0.9
     "@2060.io/ref-napi": ^3.0.6
-    "@credo-ts/core": 0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
     "@types/express": ^4.17.15
     express: ^4.17.1
     ws: ^8.13.0
-  checksum: 6dad1181d42290d4505dc62015f89f6b0ea5c1dfae3bfdcc5316f4b5fc992bc72ca8d95b5d3a318aca25a7931e079e96e7e146b608b9530da79f50077aba76fc
+  checksum: 572b6a0da54c48199fc87c726325916d6d3526e7f4523bc242bf8d8f6a77562067effcfd064dc34ef432af92c784a460bddd2c00f75b360fabb93ff4e7109a74
   languageName: node
   linkType: hard
 
@@ -3811,15 +3811,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/question-answer@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/question-answer@npm:0.5.1"
+"@credo-ts/question-answer@npm:0.5.1-alpha.19":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/question-answer@npm:0.5.1-alpha.19"
   dependencies:
-    "@credo-ts/core": 0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
     class-transformer: 0.5.1
     class-validator: 0.14.1
     rxjs: ^7.8.0
-  checksum: ecd21fba949364f233644aa44570a6c4c1d0f14b5cb85b00cd0e97b59487add09cabe1a39d2291b550cd245d91fc53c2cf4adadf3cca50c0b7992d8ecc4c0cbd
+  checksum: 52f3d314100d33fc6c1d8934a6948fc59e7bdfbe6b77848eef8613bd1da450124f8da225acd758d4709a87b47847ea86c1f7f3f7be792e61623cfbd38d73783f
   languageName: node
   linkType: hard
 
@@ -3849,18 +3849,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/react-native@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@credo-ts/react-native@npm:0.5.1"
+"@credo-ts/react-native@npm:0.5.1-alpha.19":
+  version: 0.5.1-alpha.19
+  resolution: "@credo-ts/react-native@npm:0.5.1-alpha.19"
   dependencies:
     "@azure/core-asynciterator-polyfill": ^1.0.2
-    "@credo-ts/core": 0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19+edc5735c
     events: ^3.3.0
   peerDependencies:
     react-native: ">=0.71.4"
     react-native-fs: ^2.20.0
     react-native-get-random-values: ^1.8.0
-  checksum: c31bb3ccbc63d63c371749fb4bd93c818e91c9353892847adc6467ae355827cdb1d694b6793d2a4957557d41f0b2a867d36e5edcf1d0ffbda61feb720ba6867d
+  checksum: 817f38e5a2275f21589bf710848efda25e94fcd7aa7a8cd70406f93e31f4a15697f5a93e1ed21956b6d0a7ca3d817e543ff44054be9d1737124e84f3c5f62330
   languageName: node
   linkType: hard
 
@@ -4405,15 +4405,15 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@commitlint/cli": ^11.0.0
-    "@credo-ts/anoncreds": ^0.5.1
-    "@credo-ts/askar": ^0.5.1
-    "@credo-ts/core": ^0.5.1
-    "@credo-ts/indy-sdk-to-askar-migration": ^0.5.1
-    "@credo-ts/indy-vdr": ^0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19
+    "@credo-ts/askar": 0.5.1-alpha.19
+    "@credo-ts/core": 0.5.1-alpha.19
+    "@credo-ts/indy-sdk-to-askar-migration": 0.5.1-alpha.19
+    "@credo-ts/indy-vdr": 0.5.1-alpha.19
     "@credo-ts/push-notifications": ^0.7.0
-    "@credo-ts/question-answer": ^0.5.1
+    "@credo-ts/question-answer": 0.5.1-alpha.19
     "@credo-ts/react-hooks": ^0.6.0
-    "@credo-ts/react-native": ^0.5.1
+    "@credo-ts/react-native": 0.5.1-alpha.19
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
     "@formatjs/intl-getcanonicallocales": 1.7.3
@@ -4509,15 +4509,15 @@ __metadata:
     typescript: ^5.0.4
     uuid: ^9.0.0
   peerDependencies:
-    "@credo-ts/anoncreds": ^0.5.1
-    "@credo-ts/askar": ^0.5.1
-    "@credo-ts/core": ^0.5.1
-    "@credo-ts/indy-sdk-to-askar-migration": ^0.5.1
-    "@credo-ts/indy-vdr": ^0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19
+    "@credo-ts/askar": 0.5.1-alpha.19
+    "@credo-ts/core": 0.5.1-alpha.19
+    "@credo-ts/indy-sdk-to-askar-migration": 0.5.1-alpha.19
+    "@credo-ts/indy-vdr": 0.5.1-alpha.19
     "@credo-ts/push-notifications": ^0.7.0
-    "@credo-ts/question-answer": ^0.5.1
+    "@credo-ts/question-answer": 0.5.1-alpha.19
     "@credo-ts/react-hooks": ^0.6.0
-    "@credo-ts/react-native": ^0.5.1
+    "@credo-ts/react-native": 0.5.1-alpha.19
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
     "@formatjs/intl-getcanonicallocales": 1.7.3
@@ -4587,7 +4587,7 @@ __metadata:
   resolution: "@hyperledger/aries-bifold-remote-logs@workspace:packages/remote-logs"
   dependencies:
     "@babel/runtime": ^7.20.0
-    "@credo-ts/core": ^0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
     buffer: ^6.0.3
@@ -4599,7 +4599,7 @@ __metadata:
     rimraf: ^5.0.0
     typescript: ^5.0.4
   peerDependencies:
-    "@credo-ts/core": ^0.5.1
+    "@credo-ts/core": 0.5.1-alpha.19
     axios: ^1.4.0
     buffer: ^6.0.3
     react: ^18.2.0
@@ -4613,8 +4613,8 @@ __metadata:
   resolution: "@hyperledger/aries-bifold-verifier@workspace:packages/verifier"
   dependencies:
     "@babel/core": ^7.20.0
-    "@credo-ts/anoncreds": ^0.5.1
-    "@credo-ts/core": ^0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19
+    "@credo-ts/core": 0.5.1-alpha.19
     "@credo-ts/react-hooks": ^0.6.0
     "@hyperledger/anoncreds-shared": ^0.2.1
     "@types/jest": ^29.5.5
@@ -4628,8 +4628,8 @@ __metadata:
     rimraf: ^5.0.0
     typescript: ^5.0.4
   peerDependencies:
-    "@credo-ts/anoncreds": ^0.5.1
-    "@credo-ts/core": ^0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19
+    "@credo-ts/core": 0.5.1-alpha.19
     "@credo-ts/react-hooks": ^0.6.0
     "@hyperledger/anoncreds-shared": ^0.2.1
     react: ^18.2.0
@@ -4641,8 +4641,8 @@ __metadata:
   resolution: "@hyperledger/aries-oca@workspace:packages/oca"
   dependencies:
     "@babel/runtime": ^7.20.0
-    "@credo-ts/anoncreds": ^0.5.1
-    "@credo-ts/core": ^0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19
+    "@credo-ts/core": 0.5.1-alpha.19
     "@types/lodash.startcase": ^4.4.7
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
@@ -8056,15 +8056,15 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@credo-ts/anoncreds": ^0.5.1
-    "@credo-ts/askar": ^0.5.1
-    "@credo-ts/core": ^0.5.1
-    "@credo-ts/indy-sdk-to-askar-migration": ^0.5.1
-    "@credo-ts/indy-vdr": ^0.5.1
+    "@credo-ts/anoncreds": 0.5.1-alpha.19
+    "@credo-ts/askar": 0.5.1-alpha.19
+    "@credo-ts/core": 0.5.1-alpha.19
+    "@credo-ts/indy-sdk-to-askar-migration": 0.5.1-alpha.19
+    "@credo-ts/indy-vdr": 0.5.1-alpha.19
     "@credo-ts/push-notifications": ^0.7.0
-    "@credo-ts/question-answer": ^0.5.1
+    "@credo-ts/question-answer": 0.5.1-alpha.19
     "@credo-ts/react-hooks": ^0.6.0
-    "@credo-ts/react-native": ^0.5.1
+    "@credo-ts/react-native": 0.5.1-alpha.19
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
     "@formatjs/intl-getcanonicallocales": 1.7.3

@@ -1,5 +1,6 @@
 import { getCredentialsForAnonCredsProofRequest } from '@credo-ts/anoncreds'
 import {
+  ClaimFormat,
   CredentialExchangeRecord,
   CredentialRole,
   CredentialState,
@@ -446,7 +447,7 @@ describe('displays a proof request screen', () => {
                     inputDescriptorId: 'email',
                     name: undefined,
                     purpose: undefined,
-                    verifiableCredentials: [testW3cCredentialRecord],
+                    verifiableCredentials: [{ type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord }],
                   },
                 ],
                 isRequirementSatisfied: true,
@@ -459,7 +460,7 @@ describe('displays a proof request screen', () => {
                     inputDescriptorId: 'time',
                     name: undefined,
                     purpose: undefined,
-                    verifiableCredentials: [testW3cCredentialRecord],
+                    verifiableCredentials: [{ type: ClaimFormat.LdpVc, credentialRecord: testW3cCredentialRecord }],
                   },
                 ],
                 isRequirementSatisfied: true,
