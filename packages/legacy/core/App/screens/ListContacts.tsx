@@ -1,7 +1,7 @@
 import { ConnectionRecord, ConnectionType, DidExchangeState } from '@aries-framework/core'
-import { useConnections } from '@aries-framework/react-hooks'
+import { useAgent } from '@aries-framework/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, View } from 'react-native'
 
@@ -12,6 +12,8 @@ import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens, Stacks } from '../types/navigators'
+import { BifoldAgent } from '../utils/agent'
+import { fetchContactsByLatestMessage } from '../utils/contacts'
 import { testIdWithKey } from '../utils/testable'
 
 interface ListContactsProps {
@@ -21,6 +23,10 @@ interface ListContactsProps {
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { ColorPallet } = useTheme()
   const { t } = useTranslation()
+  const { agent } = useAgent()
+  const [connections, setConnections] = useState<ConnectionRecord[]>([])
+  const [store] = useStore()
+  const { contactHideList } = useConfiguration()
   const style = StyleSheet.create({
     list: {
       backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -31,20 +37,28 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       marginHorizontal: 16,
     },
   })
-  const { records } = useConnections()
-  const [store] = useStore()
-  const { contactHideList } = useConfiguration()
-  // Filter out mediator agents and hidden contacts when not in dev mode
-  let connections: ConnectionRecord[] = records
-  if (!store.preferences.developerModeEnabled) {
-    connections = records.filter((r) => {
-      return (
-        !r.connectionTypes.includes(ConnectionType.Mediator) &&
-        !contactHideList?.includes((r.theirLabel || r.alias) ?? '') &&
-        r.state === DidExchangeState.Completed
-      )
-    })
-  }
+
+  useEffect(() => {
+    const fetchAndSetConnections = async () => {
+      if (!agent) return
+      let orderedContacts = await fetchContactsByLatestMessage(agent as BifoldAgent)
+
+      // if developer mode is disabled, filter out mediator connections and connections in the hide list
+      if (!store.preferences.developerModeEnabled) {
+        orderedContacts = orderedContacts.filter((r) => {
+          return (
+            !r.connectionTypes.includes(ConnectionType.Mediator) &&
+            !contactHideList?.includes((r.theirLabel || r.alias) ?? '') &&
+            r.state === DidExchangeState.Completed
+          )
+        })
+      }
+
+      setConnections(orderedContacts)
+    }
+
+    fetchAndSetConnections()
+  }, [agent])
 
   const onPressAddContact = () => {
     navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan, params: { defaultToConnect: true } })
