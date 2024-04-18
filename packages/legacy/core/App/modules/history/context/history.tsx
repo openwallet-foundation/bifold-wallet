@@ -148,7 +148,7 @@ export const HistoryProvider: React.FC<React.PropsWithChildren> = ({ children })
       const storedContent = customRecord.content as unknown as Record<string, unknown>
       log(`[${HistoryProvider.name}]: Adding history record:${JSON.stringify(storedContent)}`, LogLevel.trace)
       log(`[${HistoryProvider.name}]: >> Tags:${JSON.stringify(tags)}`, LogLevel.trace)
-      await agent.genericRecords.save({
+      await agent.genericRecords?.save({
         content: storedContent,
         tags: tags,
       })
