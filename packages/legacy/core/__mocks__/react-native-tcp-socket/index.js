@@ -1,6 +1,3 @@
-import { JsonTransformer } from '@aries-framework/core'
-import events from 'events'
-
 // const eventEmitter = new events.EventEmitter()
 
 let aNode = undefined

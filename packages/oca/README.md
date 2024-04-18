@@ -3,7 +3,7 @@
   <img
     alt="Hyperledger Aries logo"
     src="https://raw.githubusercontent.com/hyperledger/aries-framework-javascript/aa31131825e3331dc93694bc58414d955dcb1129/images/aries-logo.png"
-    height="200px"
+    height="250px"
   />
 </p>
 <h1 align="center"><b>Aries Bifold - OCA</b></h1>
@@ -30,4 +30,4 @@
 
 Aries Bifold OCA provides an interpreter for OCA ([Overlay Capture Architecture](https://humancolossus.foundation/blog/cjzegoi58xgpfzwxyrqlroy48dihwz)) bundles. More details to come.
 
-_Package structure inspired / adapted from the [Aries Framework Javascript](https://github.com/hyperledger/aries-framework-javascript) project_
+_Package structure inspired / adapted from the [credo-ts](https://github.com/openwallet-foundation/credo-ts) project_

@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord } from '@credo-ts/core'
 import { Attribute, BrandingOverlayType, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React from 'react'
 import { ViewStyle } from 'react-native'

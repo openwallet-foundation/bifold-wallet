@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import type { OnboardingStyleSheet } from './screens/Onboarding'
 
-import { Agent } from '@aries-framework/core'
-import AgentProvider from '@aries-framework/react-hooks'
+import { Agent } from '@credo-ts/core'
+import AgentProvider from '@credo-ts/react-hooks'
 
 import App from './App'
 import * as components from './components'

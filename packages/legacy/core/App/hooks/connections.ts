@@ -1,5 +1,5 @@
-import { ConnectionRecord, OutOfBandRecord } from '@aries-framework/core'
-import { useAgent, useConnectionById, useConnections } from '@aries-framework/react-hooks'
+import { ConnectionRecord, OutOfBandRecord } from '@credo-ts/core'
+import { useAgent, useConnectionById, useConnections } from '@credo-ts/react-hooks'
 import { useMemo, useState } from 'react'
 
 export const useConnectionByOutOfBandId = (outOfBandId: string): ConnectionRecord | undefined => {

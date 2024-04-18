@@ -1,10 +1,10 @@
-import { CredentialState } from '@aries-framework/core'
-import { useAgent, useConnectionById, useCredentialByState } from '@aries-framework/react-hooks'
+import { CredentialState } from '@credo-ts/core'
+import { useAgent, useConnectionById, useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 

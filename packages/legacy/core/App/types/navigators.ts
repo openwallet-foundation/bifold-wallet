@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 import { StackNavigationOptions } from '@react-navigation/stack'
 

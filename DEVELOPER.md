@@ -4,15 +4,12 @@ The following document is intended to help developers get started with the Bifol
 
 # Project Overview
 
-The Aries Mobile Agent React Native (Bifold) is a user-friendly mobile agent that is built with React Native and uses Aries Framework JavaScript (AFJ) to exchange verifiable credentials with other agents. While AFJ handles the heavy lifting of verifiable credential work, Bifold focuses on user experience and interactions with these credentials.
+The Aries Mobile Agent React Native (Bifold) is a user-friendly mobile agent that is built with React Native and uses Credo to exchange verifiable credentials with other agents. While Credo handles the heavy lifting of verifiable credential work, Bifold focuses on user experience and interactions with these credentials.
 
 Key points to note:
 
-- AFJ uses some Rust libraries, specifically Indy-SDK, which are compiled into native code. These libraries will soon be replaced by Indy-VDR and AnonCreds-rs.
-- Bifold uses the AFJ library, which in turn uses these Rust libraries.
-- The Indy-SDK library has been cross-compiled for ARM CPU architecture, meaning it works on iOS devices and Android devices/emulators but not on iOS simulators.
-- Indy-SDK uses the ZMQ protocol to interact with the Indy ledgers. This might be blocked by some corporate firewalls as it's a non-standard protocol that doesn't use HTTP/s.
-- AFJ uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
+- Bifold uses the Credo library, which in turn uses these Rust libraries.
+- Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
 - Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
 
 ## Setup

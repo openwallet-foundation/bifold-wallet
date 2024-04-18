@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useConnectionById, useProofById } from '@aries-framework/react-hooks'
+import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
-import { render, waitFor, fireEvent } from '@testing-library/react-native'
+import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
+import { StackNavigationProp } from '@react-navigation/stack'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
 import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
+import { DeliveryStackParams, Screens } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { DeliveryStackParams, Screens } from '../../App/types/navigators'
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
@@ -44,7 +44,7 @@ jest.mock('../../App/hooks/connections', () => ({
 }))
 
 describe('ConnectionModal Component', () => {
-    beforeEach(() => {
+  beforeEach(() => {
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 0, notifications: [] })
     // @ts-ignore-next-line
@@ -207,7 +207,7 @@ describe('ConnectionModal Component', () => {
     expect(tree).toMatchSnapshot()
     expect(navigation.replace).toBeCalledTimes(1)
     expect(navigation.replace).toBeCalledWith('Proof Request', { proofId: proofNotif.id })
-    })
+  })
 
   test('Goal code extracted and navigation to Chat', async () => {
     const navigation = useNavigation()

@@ -6,14 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-
 # Jest
 .jest/
 
 # Merge artifacts
 *.orig
 
-# Jest 
+# Jest
 .jest
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -76,8 +75,8 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Development of Aries Framework Javascript in a React Native environment
-aries-framework-javascript/
+# Development of credo-ts in a React Native environment
+credo-ts/
 
 # Yarn Integrity file
 .yarn-integrity

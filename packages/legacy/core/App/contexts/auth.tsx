@@ -3,10 +3,10 @@ import '@hyperledger/aries-askar-react-native'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'reflect-metadata'
 
-import { AskarWallet } from '@aries-framework/askar'
-import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@aries-framework/core'
-import { useAgent } from '@aries-framework/react-hooks'
-import { agentDependencies } from '@aries-framework/react-native'
+import { AskarWallet } from '@credo-ts/askar'
+import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
+import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -15,16 +15,16 @@ import { EventTypes } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import {
+  isBiometricsActive,
+  loadWalletSalt,
+  loadWalletSecret,
   secretForPIN,
   storeWalletSecret,
-  loadWalletSecret,
-  loadWalletSalt,
-  isBiometricsActive,
   wipeWalletKey,
 } from '../services/keychain'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
-import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { didMigrateToAskar, migrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
   checkPIN: (PIN: string) => Promise<boolean>

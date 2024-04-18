@@ -441,6 +441,8 @@ const translation = {
     "ProofAccepted": "Prova Aceita",
     "ProofRejected": "Prova Rejeitada",
     "RequestedCredentialsCouldNotBeFound": "Crecenciais requisitadas puderam ser encontradas",
+    "PresentationMetadataNotFound": "Não foi possível encontrar os metadados da apresentação",
+    "CredentialMetadataNotFound": "Não foi possível encontrar metadados de credenciais",
     "NewProofRequest": "Nova Prova de Credencial",
     "NotAvailableInYourWallet": "Não disponível em sua carteira",
     "PredicateNotSatisfied": "Requisito não atendido",

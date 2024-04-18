@@ -1,4 +1,4 @@
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent } from '@credo-ts/react-hooks'
 import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useMemo, useState } from 'react'

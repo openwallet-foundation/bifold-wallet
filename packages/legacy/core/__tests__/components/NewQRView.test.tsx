@@ -1,5 +1,4 @@
-import { useConnections } from '@aries-framework/react-hooks'
-import { useAgent } from '@aries-framework/react-hooks'
+import { useAgent, useConnections } from '@credo-ts/react-hooks'
 import { act, render } from '@testing-library/react-native'
 import React from 'react'
 
