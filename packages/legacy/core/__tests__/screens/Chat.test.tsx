@@ -1,5 +1,5 @@
-import { BasicMessageRecord, BasicMessageRole } from '@aries-framework/core'
-import { useBasicMessagesByConnectionId } from '@aries-framework/react-hooks'
+import { BasicMessageRecord, BasicMessageRole } from '@credo-ts/core'
+import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 

@@ -1,4 +1,4 @@
-import AgentProvider from '@aries-framework/react-hooks'
+import AgentProvider from '@credo-ts/react-hooks'
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
 import { StatusBar } from 'react-native'
@@ -45,7 +45,7 @@ function App(sytem: Container) {
     return (
       <ContainerProvider value={sytem}>
         <StoreProvider>
-          <AgentProvider>
+          <AgentProvider agent={undefined}>
             <ThemeProvider value={theme}>
               <AnimatedComponentsProvider value={animatedComponents}>
                 <ConfigurationProvider value={defaultConfiguration}>

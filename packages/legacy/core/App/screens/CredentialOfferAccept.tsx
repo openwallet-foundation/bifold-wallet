@@ -1,9 +1,9 @@
-import { CredentialState } from '@aries-framework/core'
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialState } from '@credo-ts/core'
+import { useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View, ScrollView, AccessibilityInfo } from 'react-native'
+import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -63,7 +63,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   })
 
   if (!credential) {
-    throw new Error('Unable to fetch credential from AFJ')
+    throw new Error('Unable to fetch credential from Credo')
   }
 
   const onBackToHomeTouched = () => {

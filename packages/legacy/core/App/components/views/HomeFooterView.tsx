@@ -1,8 +1,8 @@
-import { CredentialState } from '@aries-framework/core'
-import { useCredentialByState } from '@aries-framework/react-hooks'
+import { CredentialState } from '@credo-ts/core'
+import { useCredentialByState } from '@credo-ts/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { useNotifications } from '../../hooks/notifications'

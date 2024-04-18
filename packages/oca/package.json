@@ -40,8 +40,8 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@aries-framework/anoncreds": "^0.4.0",
-    "@aries-framework/core": "^0.4.0",
+    "@credo-ts/anoncreds": "0.5.1-alpha.19",
+    "@credo-ts/core": "0.5.1-alpha.19",
     "axios": "^1.4.0",
     "lodash.startcase": "^4.4.0"
   }

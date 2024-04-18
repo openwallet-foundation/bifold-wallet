@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { DidExchangeState } from '@aries-framework/core'
-import { useAgent, useProofById } from '@aries-framework/react-hooks'
+import { DidExchangeState } from '@credo-ts/core'
+import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import {
   ProofCustomMetadata,
   ProofMetadata,
@@ -17,12 +17,12 @@ import { useTranslation } from 'react-i18next'
 import {
   BackHandler,
   DeviceEventEmitter,
-  useWindowDimensions,
   ScrollView,
   StyleSheet,
   Text,
-  View,
   Vibration,
+  View,
+  useWindowDimensions,
 } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -57,7 +57,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const { templateId, predicateValues } = route?.params
   const { agent } = useAgent()
   if (!agent) {
-    throw new Error('Unable to fetch agent from AFJ')
+    throw new Error('Unable to fetch agent from Credo')
   }
 
   const { t } = useTranslation()

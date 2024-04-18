@@ -1,8 +1,8 @@
-import { ProofExchangeRecord } from '@aries-framework/core'
-import { useProofs } from '@aries-framework/react-hooks'
+import { ProofExchangeRecord } from '@credo-ts/core'
+import { useProofs } from '@credo-ts/react-hooks'
 import { useMemo } from 'react'
 
-import { ProofMetadata, ProofCustomMetadata } from '../types/metadata'
+import { ProofCustomMetadata, ProofMetadata } from '../types/metadata'
 
 export const useProofsByTemplateId = (templateId: string): ProofExchangeRecord[] => {
   const { records: proofs } = useProofs()

@@ -42,7 +42,7 @@ We keep track of any project issues directly on GitHub using the Issues feature.
 
 # External Dependencies
 
-Our project uses several smaller libraries, too many to list here. However, one key dependency we heavily rely on is [Credo-ts](https://github.com/openwallet-foundation/credo-ts/issues) from the OpenWallet Foundation, which was previously known as Aries Framework JavaScript.
+Our project uses several smaller libraries, too many to list here. However, one key dependency we heavily rely on is [credo](https://github.com/openwallet-foundation/credo-ts/issues) from the OpenWallet Foundation, which was previously known as Aries Framework JavaScript.
 
 # Release Methodology
 

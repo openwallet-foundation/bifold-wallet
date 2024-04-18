@@ -460,6 +460,8 @@ const translation = {
     "ProofAccepted": "Proof Accepted",
     "ProofRejected": "Proof Rejected",
     "RequestedCredentialsCouldNotBeFound": "Requested credentials could not be found",
+    "PresentationMetadataNotFound": "Could not find presentation metadata",
+    "CredentialMetadataNotFound": "Could not find credential metadata",
     "NewProofRequest": "New Proof Request",
     "NotAvailableInYourWallet": "Not in your wallet",
     "PredicateNotSatisfied": "Requirement not met",

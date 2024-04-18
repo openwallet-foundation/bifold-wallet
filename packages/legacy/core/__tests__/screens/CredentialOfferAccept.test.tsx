@@ -1,5 +1,5 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@aries-framework/core'
-import { useCredentialById } from '@aries-framework/react-hooks'
+import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@credo-ts/core'
+import { useCredentialById } from '@credo-ts/react-hooks'
 import { render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'

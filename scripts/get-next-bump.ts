@@ -1,6 +1,6 @@
 /*
- Original file from Aries Framework JavaScript:
- located at: https://github.com/hyperledger/aries-framework-javascript
+ Original file from credo-ts
+ located at: https://github.com/openwallet-foundation/credo-ts/
 */
 
 // eslint-disable-next-line import/no-extraneous-dependencies

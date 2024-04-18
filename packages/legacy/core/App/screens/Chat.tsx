@@ -5,8 +5,8 @@ import {
   CredentialState,
   ProofExchangeRecord,
   ProofState,
-} from '@aries-framework/core'
-import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
+} from '@credo-ts/core'
+import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
@@ -21,7 +21,7 @@ import { renderComposer, renderInputToolbar, renderSend } from '../components/ch
 import ActionSlider from '../components/chat/ActionSlider'
 import { renderActions } from '../components/chat/ChatActions'
 import { ChatEvent } from '../components/chat/ChatEvent'
-import { ChatMessage, ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
+import { CallbackType, ChatMessage, ExtendedChatMessage } from '../components/chat/ChatMessage'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -29,7 +29,7 @@ import { useCredentialsByConnectionId } from '../hooks/credentials'
 import { useProofsByConnectionId } from '../hooks/proofs'
 import { Role } from '../types/chat'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../types/metadata'
-import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
+import { ContactStackParams, RootStackParams, Screens, Stacks } from '../types/navigators'
 import {
   getConnectionName,
   getCredentialEventLabel,

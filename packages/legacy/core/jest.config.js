@@ -11,15 +11,13 @@ module.exports = {
     axios: require.resolve('axios'),
     'react-i18next': '<rootDir>/__mocks__/react-i18next.ts',
     '^uuid$': require.resolve('uuid'),
-    '@aries-framework/core': require.resolve('@aries-framework/core'),
-    '@aries-framework/anoncreds': require.resolve('@aries-framework/anoncreds'),
+    '@credo-ts/core': require.resolve('@credo-ts/core'),
+    '@credo-ts/anoncreds': require.resolve('@credo-ts/anoncreds'),
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
-  transformIgnorePatterns: [
-    'node_modules\\/(?!(.*react-native.*)|(uuid)|(@aries-framework\\/core)|(@aries-framework\\/anoncreds))',
-  ],
+  transformIgnorePatterns: ['node_modules\\/(?!(.*react-native.*)|(uuid)|(@credo-ts\\/core)|(@credo-ts\\/anoncreds))'],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
   testPathIgnorePatterns: [
     '\\.snap$',
@@ -27,6 +25,7 @@ module.exports = {
     '<rootDir>/lib',
     '<rootDir>/__tests__/contexts/',
     '<rootDir>/__tests__/helpers/',
+    '<rootDir>/__tests__/screens/fixtures',
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',

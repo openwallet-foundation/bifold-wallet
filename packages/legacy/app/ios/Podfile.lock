@@ -1,9 +1,9 @@
 PODS:
-  - anoncreds (0.1.0):
+  - anoncreds (0.2.1):
     - React
     - React-callinvoker
     - React-Core
-  - aries-askar (0.1.1):
+  - aries-askar (0.2.0):
     - React
     - React-callinvoker
     - React-Core
@@ -24,7 +24,7 @@ PODS:
   - hermes-engine (0.72.5):
     - hermes-engine/Pre-built (= 0.72.5)
   - hermes-engine/Pre-built (0.72.5)
-  - indy-vdr (0.1.0):
+  - indy-vdr (0.2.0):
     - React
     - React-callinvoker
     - React-Core
@@ -733,18 +733,18 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  anoncreds: 8e6ab626d5250ae6301c3e96d6fc739186e083f0
-  aries-askar: 738c677e194913ed3c256adc953db3fe0494f8f8
-  boost: a7c83b31436843459a1961bfd74b96033dc77234
+  anoncreds: ded0f63df11448ade577836092a8a3e5574dd1d8
+  aries-askar: c87454db9e0fab377f26ac15dcf6356ad7014f90
+  boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 71803c074f6325f10b5ec891c443b6bbabef0ca7
   FBReactNativeSpec: 448e08a759d29a96e15725ae532445bf4343567c
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: f6cf92a471053245614d9d8097736f6337d5b86c
-  indy-vdr: 85cd66089f151256581323440e78988891f4082e
+  indy-vdr: 3d43949ef94eb3912f5b382bc9d7af5692f5e4e1
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: df81ab637d35fac9e6eb94611cfd20f0feb05455

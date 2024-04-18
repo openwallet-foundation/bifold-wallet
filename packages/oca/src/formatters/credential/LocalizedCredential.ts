@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialPreviewAttribute } from '@aries-framework/core'
+import { CredentialExchangeRecord, CredentialPreviewAttribute } from '@credo-ts/core'
 
 import { OverlayBundle } from '../../types'
 

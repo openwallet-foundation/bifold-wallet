@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord, ProofExchangeRecord } from '@aries-framework/core'
+import { CredentialExchangeRecord as CredentialRecord, ProofExchangeRecord } from '@credo-ts/core'
 
 type Notifications = {
   total: number

@@ -1,6 +1,6 @@
-import { BaseLogger } from '@aries-framework/core'
+import { BaseLogger } from '@credo-ts/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
-import { logger, consoleTransport } from 'react-native-logs'
+import { consoleTransport, logger } from 'react-native-logs'
 
 import { RemoteLoggerOptions, lokiTransport } from './transports'
 

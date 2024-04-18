@@ -1,4 +1,3 @@
-// TODO: export this from @aries-framework/anoncreds
 import startCase from 'lodash.startcase'
 
 import {
@@ -9,7 +8,6 @@ import {
 } from '../../interfaces'
 import {
   BaseOverlay,
-  OverlayType,
   BrandingOverlay,
   CaptureBase,
   CharacterEncodingOverlay,
@@ -18,6 +16,7 @@ import {
   LegacyBrandingOverlay,
   MetaOverlay,
   OverlayBundle,
+  OverlayType,
 } from '../../types'
 import { generateColor } from '../../utils/color'
 import { parseCredDefFromId } from '../../utils/credential-definition'

@@ -1,4 +1,4 @@
-import { AnonCredsProof } from '@aries-framework/anoncreds'
+import { AnonCredsProof } from '@credo-ts/anoncreds'
 type AnonCredsProofIdentifier = AnonCredsProof['identifiers'][number]
 
 export interface MissingAttribute {
