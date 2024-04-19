@@ -5,8 +5,8 @@ import {
   CredentialState,
   ProofExchangeRecord,
   ProofState,
-} from '@aries-framework/core'
-import { useBasicMessagesByConnectionId } from '@aries-framework/react-hooks'
+} from '@credo-ts/core'
+import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackNavigationProp } from '@react-navigation/stack'

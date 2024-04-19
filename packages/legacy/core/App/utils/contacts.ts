@@ -1,9 +1,4 @@
-import {
-  BasicMessageRecord,
-  ConnectionRecord,
-  CredentialExchangeRecord,
-  ProofExchangeRecord,
-} from '@aries-framework/core'
+import { BasicMessageRecord, ConnectionRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@credo-ts/core'
 
 import { BifoldAgent } from './agent'
 
