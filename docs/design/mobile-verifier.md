@@ -22,16 +22,16 @@ On the application configuration level the set of proof request templates can be
       - Write predefined templates into the application `store` (like we do with settings) on the application bootstrap.
     - Read: Read from the store on the App screens
     - Update/Delete: Use React actions to trigger store reducer
-  - Option 2: - Create AFJ module for template managing operations (CRUD) similar to existing ones (like connections, credentials, proofs, etc).
+  - Option 2: - Create Credo module for template managing operations (CRUD) similar to existing ones (like connections, credentials, proofs, etc).
     - Issue:
-      - AFJ modules represents protocols from Aries RFC's.
-      - AFJ maintainers may not want to include a such synthetic module for Proof Templates.
-      - If AFJ maintainers reject this module we need to find a proper place to locate it.
+      - Credo modules represents protocols from Aries RFC's.
+      - Credo maintainers may not want to include a such synthetic module for Proof Templates.
+      - If Credo maintainers reject this module we need to find a proper place to locate it.
     - Create:
       - Define a constant with a predefined templates.
-      - Write templates into AFJ repository on the bootstrap.
-    - Read: Read from the AFJ store on the App screens
-    - Update/Delete: Use AFJ methods from the new module
+      - Write templates into Credo repository on the bootstrap.
+    - Read: Read from the Credo store on the App screens
+    - Update/Delete: Use Credo methods from the new module
 
 ## Proof Request Template Structure
 
@@ -139,7 +139,7 @@ interface IndyRequestedPredicate {
 
 ## Proof Request Generation
 
-Due to the [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1250) at Aries Framework JavaScript we cannot use Out-of-Band protocol covering both possible cases (with connection / connectionless).
+Due to the [issue](https://github.com/openwallet-foundation/credo-ts/issues/1250) at credo we cannot use Out-of-Band protocol covering both possible cases (with connection / connectionless).
 
 Instead, we have to use two legacy approaches to cover our cases:
 
@@ -181,22 +181,22 @@ Limitations:
 - There will be a limitation regarding the number of attributes that can be used in a Proof Request. Currently, testing showed that we can generate a request containing 10 attributes for each of them set a restriction by schema id. \
   > Hint: for indy proof request instead of defining multiple attributes restricted by the same schema you can use `names` filed in the proof request attribute data structure.
 
-Aries Bifold Scanner updated to handle raw json messages -> pass them to AFJ message receiver.
+Aries Bifold Scanner updated to handle raw json messages -> pass them to Credo message receiver.
 
 ## Proof processing state
 
-- Currently, AFJ ProofRecord may have only two states: `RequestReceived` and `PresentationReceived`. There is no way to detect that proof received and its verification is in progress.
-- In order to show the processing loader we need to new intermediate state `ProcessingPresentation` which will be raised by AFJ at the beginning of the Proof handler.
+- Currently, Credo ProofRecord may have only two states: `RequestReceived` and `PresentationReceived`. There is no way to detect that proof received and its verification is in progress.
+- In order to show the processing loader we need to new intermediate state `ProcessingPresentation` which will be raised by Credo at the beginning of the Proof handler.
 - Very likely the state will be changed from `ProcessingPresentation` to `PresentationReceived` very quickly making UI flash. In this case, do we need to add some delay on the loader view?
 
-> Issue: Created AFJ [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1379)
+> Issue: Created Credo [issue](https://github.com/openwallet-foundation/credo-ts/issues/1379)
 
 ## Contact History
 
 - The existing application has a `Contact Chat` screen showdown only `basic` messages sent between parties.
 - We want to evaluate this screen to include records about received credentials, shared/received proofs, and pending events also.
   - How to do:
-    - Mobile: Call AFJ methods to get Credentials/Proofs by a connection ID.
+    - Mobile: Call Credo methods to get Credentials/Proofs by a connection ID.
     - Join records into a single list by adding `type`, `role`, `text` fields depending on the record type and status (sent message, received message, received credential, received proof, etc.).
       ```
       {
@@ -211,11 +211,11 @@ Aries Bifold Scanner updated to handle raw json messages -> pass them to AFJ mes
       ```
 - Some events will also contain `Open` button tapping which a User will be able ti see the details of the event.
 
-> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in Aries Framework JavaScript (see corresponding [issue](https://github.com/hyperledger/aries-framework-javascript/issues/1380)).
+> Issue: Right now we are able to show only the latest event for a protocol instance (for instance `PROOF_RECEIVED` but not `PROOF_REQUESTED`). In order to show all event properly we need to do changes in credo (see corresponding [issue](https://github.com/openwallet-foundation/credo-ts/issues/1380)).
 
 ## Proof Request Template usage history
 
-- In order to get the list of proofs received for a specific template we need to have an association between AFJ `ProofRecord` and `Template` records. It means that we need to add an optional `templateId` field to AFJ `ProofRecord` record.
+- In order to get the list of proofs received for a specific template we need to have an association between Credo `ProofRecord` and `Template` records. It means that we need to add an optional `templateId` field to Credo `ProofRecord` record.
 - After that, we will be able to query the history of proofs for a specific template.
 - For the current solution we used custom metadata of `ProofRecord` record. But there is no efficient method to query records with specific metadata filter. So we have to query all records and filer them on mobile side.
 

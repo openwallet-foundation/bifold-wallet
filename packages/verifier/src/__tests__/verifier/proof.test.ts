@@ -1,5 +1,5 @@
+import { AnonCredsProof } from '@credo-ts/anoncreds'
 import { getProofIdentifiers, groupSharedProofDataByCredential, parseAnonCredsProof } from '../../utils/proof'
-import { AnonCredsProof } from '@aries-framework/anoncreds'
 const proof_request = {
   name: 'proof-request',
   version: '1.0',

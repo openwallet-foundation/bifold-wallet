@@ -1,4 +1,4 @@
-import { AnonCredsNonRevokedInterval, AnonCredsProofRequestRestriction } from '@aries-framework/anoncreds'
+import { AnonCredsNonRevokedInterval, AnonCredsProofRequestRestriction } from '@credo-ts/anoncreds'
 
 export interface FieldParams {
   name: string | null

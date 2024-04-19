@@ -1,0 +1,502 @@
+diff --git a/build/AgentProvider.d.ts b/build/AgentProvider.d.ts
+index 1c1c0c867f21d899f62bf99725925ffe0084be91..cb695c3945d12f8065d0241478f1bb65d8903cae 100644
+--- a/build/AgentProvider.d.ts
++++ b/build/AgentProvider.d.ts
+@@ -3,11 +3,12 @@ import type { PropsWithChildren } from 'react';
+ import * as React from 'react';
+ interface AgentContextInterface<AppAgent extends Agent = Agent> {
+     loading: boolean;
+-    agent: AppAgent;
++    agent?: AppAgent;
++    setAgent(agent: AppAgent): void;
+ }
+ export declare const useAgent: <AppAgent extends Agent<any>>() => AgentContextInterface<AppAgent>;
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const AgentProvider: React.FC<PropsWithChildren<Props>>;
+ export default AgentProvider;
+diff --git a/build/AgentProvider.js b/build/AgentProvider.js
+index 2f4560a13ca0271da8c8178a269a3288768eed5a..e17a2f59902018f1a022e782f33ad8e5d9753277 100644
+--- a/build/AgentProvider.js
++++ b/build/AgentProvider.js
+@@ -48,18 +48,26 @@ const useAgent = () => {
+ };
+ exports.useAgent = useAgent;
+ const AgentProvider = ({ agent, children }) => {
+-    const isQaRegistered = (0, recordUtils_1.useIsModuleRegistered)(agent, question_answer_1.QuestionAnswerModule);
+-    const [agentState] = (0, react_1.useState)({
+-        loading: false,
++    const [agentState, setAgentState] = (0, react_1.useState)({
++        loading: true,
+         agent,
+     });
+-    return (React.createElement(AgentContext.Provider, { value: agentState },
+-        React.createElement(ConnectionProvider_1.default, { agent: agent },
+-            React.createElement(CredentialProvider_1.default, { agent: agent },
+-                React.createElement(ProofProvider_1.default, { agent: agent },
+-                    React.createElement(CredentialFormatDataProvider_1.default, { agent: agent },
+-                        React.createElement(ProofFormatDataProvider_1.default, { agent: agent },
+-                            React.createElement(BasicMessageProvider_1.default, { agent: agent }, isQaRegistered ? (React.createElement(QuestionAnswerProvider_1.default, { agent: agent },
++    const isQaRegistered = (0, recordUtils_1.useIsModuleRegistered)(agentState.agent, question_answer_1.QuestionAnswerModule);
++    const setInitialState = async (newAgent) => {
++        if (!newAgent)
++            return;
++        setAgentState({ agent: newAgent, loading: false });
++    };
++    React.useEffect(() => {
++        setInitialState();
++    }, [agentState.agent]);
++    return (React.createElement(AgentContext.Provider, { value: { agent: agentState.agent, loading: agentState.agent ? false : true, setAgent: setInitialState } },
++        React.createElement(ConnectionProvider_1.default, { agent: agentState.agent },
++            React.createElement(CredentialProvider_1.default, { agent: agentState.agent },
++                React.createElement(ProofProvider_1.default, { agent: agentState.agent },
++                    React.createElement(CredentialFormatDataProvider_1.default, { agent: agentState.agent },
++                        React.createElement(ProofFormatDataProvider_1.default, { agent: agentState.agent },
++                            React.createElement(BasicMessageProvider_1.default, { agent: agentState.agent }, isQaRegistered ? (React.createElement(QuestionAnswerProvider_1.default, { agent: agentState.agent },
+                                 children,
+                                 " ")) : (children)))))))));
+ };
+diff --git a/build/AgentProvider.js.map b/build/AgentProvider.js.map
+index cce4a4e200a612c4b8d3feff87b595fc8f0261d0..351573bd4715b4d327c2a3098cae5130f58a51f7 100644
+--- a/build/AgentProvider.js.map
++++ b/build/AgentProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"AgentProvider.js","sourceRoot":"","sources":["../src/AgentProvider.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAGA,+DAAgE;AAChE,6CAA8B;AAC9B,iCAA2D;AAE3D,kFAAyD;AACzD,8EAAqD;AACrD,kGAAyE;AACzE,8EAAqD;AACrD,wFAA+D;AAC/D,oEAA2C;AAC3C,sFAA6D;AAC7D,+CAAqD;AAOrD,MAAM,YAAY,GAAG,IAAA,qBAAa,EAAoC,SAAS,CAAC,CAAA;AAEzE,MAAM,QAAQ,GAAG,GAA2B,EAAE;IACnD,MAAM,YAAY,GAAG,IAAA,kBAAU,EAAC,YAAY,CAAC,CAAA;IAC7C,IAAI,CAAC,YAAY,EAAE,CAAC;QAClB,MAAM,IAAI,KAAK,CAAC,qDAAqD,CAAC,CAAA;IACxE,CAAC;IACD,OAAO,YAA+C,CAAA;AACxD,CAAC,CAAA;AANY,QAAA,QAAQ,YAMpB;AAMD,MAAM,aAAa,GAAuC,CAAC,EAAE,KAAK,EAAE,QAAQ,EAAE,EAAE,EAAE;IAChF,MAAM,cAAc,GAAG,IAAA,mCAAqB,EAAC,KAAK,EAAE,sCAAoB,CAAC,CAAA;IACzE,MAAM,CAAC,UAAU,CAAC,GAAG,IAAA,gBAAQ,EAAwB;QACnD,OAAO,EAAE,KAAK;QACd,KAAK;KACN,CAAC,CAAA;IAEF,OAAO,CACL,oBAAC,YAAY,CAAC,QAAQ,IAAC,KAAK,EAAE,UAAU;QACtC,oBAAC,4BAAkB,IAAC,KAAK,EAAE,KAAK;YAC9B,oBAAC,4BAAkB,IAAC,KAAK,EAAE,KAAK;gBAC9B,oBAAC,uBAAa,IAAC,KAAK,EAAE,KAAK;oBACzB,oBAAC,sCAA4B,IAAC,KAAK,EAAE,KAAK;wBACxC,oBAAC,iCAAuB,IAAC,KAAK,EAAE,KAAK;4BACnC,oBAAC,8BAAoB,IAAC,KAAK,EAAE,KAAK,IAC/B,cAAc,CAAC,CAAC,CAAC,CAChB,oBAAC,gCAAsB,IAAC,KAAK,EAAE,KAAK;gCAAG,QAAQ;oCAA2B,CAC3E,CAAC,CAAC,CAAC,CACF,QAAQ,CACT,CACoB,CACC,CACG,CACjB,CACG,CACF,CACC,CACzB,CAAA;AACH,CAAC,CAAA;AAED,kBAAe,aAAa,CAAA"}
+\ No newline at end of file
++{"version":3,"file":"AgentProvider.js","sourceRoot":"","sources":["../src/AgentProvider.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAGA,+DAAgE;AAChE,6CAA8B;AAC9B,iCAA2D;AAE3D,kFAAyD;AACzD,8EAAqD;AACrD,kGAAyE;AACzE,8EAAqD;AACrD,wFAA+D;AAC/D,oEAA2C;AAC3C,sFAA6D;AAC7D,+CAAqD;AAQrD,MAAM,YAAY,GAAG,IAAA,qBAAa,EAAoC,SAAS,CAAC,CAAA;AAEzE,MAAM,QAAQ,GAAG,GAA2B,EAAE;IACnD,MAAM,YAAY,GAAG,IAAA,kBAAU,EAAC,YAAY,CAAC,CAAA;IAC7C,IAAI,CAAC,YAAY,EAAE,CAAC;QAClB,MAAM,IAAI,KAAK,CAAC,qDAAqD,CAAC,CAAA;IACxE,CAAC;IACD,OAAO,YAA+C,CAAA;AACxD,CAAC,CAAA;AANY,QAAA,QAAQ,YAMpB;AAMD,MAAM,aAAa,GAAuC,CAAC,EAAE,KAAK,EAAE,QAAQ,EAAE,EAAE,EAAE;IAChF,MAAM,CAAC,UAAU,EAAE,aAAa,CAAC,GAAG,IAAA,gBAAQ,EAAiC;QAC3E,OAAO,EAAE,IAAI;QACb,KAAK;KACN,CAAC,CAAA;IAEF,MAAM,cAAc,GAAG,IAAA,mCAAqB,EAAC,UAAU,CAAC,KAAK,EAAE,sCAAoB,CAAC,CAAA;IACpF,MAAM,eAAe,GAAG,KAAK,EAAE,QAAgB,EAAE,EAAE;QACjD,IAAI,CAAC,QAAQ;YAAE,OAAM;QACrB,aAAa,CAAC,EAAE,KAAK,EAAE,QAAQ,EAAE,OAAO,EAAE,KAAK,EAAE,CAAC,CAAA;IACpD,CAAC,CAAA;IAED,KAAK,CAAC,SAAS,CAAC,GAAG,EAAE;QACnB,eAAe,EAAE,CAAA;IACnB,CAAC,EAAE,CAAC,UAAU,CAAC,KAAK,CAAC,CAAC,CAAA;IAEtB,OAAO,CACL,oBAAC,YAAY,CAAC,QAAQ,IACpB,KAAK,EAAE,EAAE,KAAK,EAAE,UAAU,CAAC,KAAK,EAAE,OAAO,EAAE,UAAU,CAAC,KAAK,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,CAAC,IAAI,EAAE,QAAQ,EAAE,eAAe,EAAE;QAEvG,oBAAC,4BAAkB,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK;YACzC,oBAAC,4BAAkB,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK;gBACzC,oBAAC,uBAAa,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK;oBACpC,oBAAC,sCAA4B,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK;wBACnD,oBAAC,iCAAuB,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK;4BAC9C,oBAAC,8BAAoB,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK,IAC1C,cAAc,CAAC,CAAC,CAAC,CAChB,oBAAC,gCAAsB,IAAC,KAAK,EAAE,UAAU,CAAC,KAAK;gCAAG,QAAQ;oCAA2B,CACtF,CAAC,CAAC,CAAC,CACF,QAAQ,CACT,CACoB,CACC,CACG,CACjB,CACG,CACF,CACC,CACzB,CAAA;AACH,CAAC,CAAA;AAED,kBAAe,aAAa,CAAA"}
+\ No newline at end of file
+diff --git a/build/BasicMessageProvider.d.ts b/build/BasicMessageProvider.d.ts
+index 20a12947d1972a8fb50cb2110f0c60749e2e8b7c..1b3295ff9848c1db6a4c4977144ea635de012bf4 100644
+--- a/build/BasicMessageProvider.d.ts
++++ b/build/BasicMessageProvider.d.ts
+@@ -1,12 +1,12 @@
+-import type { RecordsState } from './recordUtils';
+ import type { Agent } from '@credo-ts/core';
+ import type { PropsWithChildren } from 'react';
++import type { RecordsState } from './recordUtils';
+ import { BasicMessageRecord } from '@credo-ts/core';
+ import * as React from 'react';
+ export declare const useBasicMessages: () => RecordsState<BasicMessageRecord>;
+ export declare const useBasicMessagesByConnectionId: (connectionId: string) => BasicMessageRecord[];
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const BasicMessageProvider: React.FC<PropsWithChildren<Props>>;
+ export default BasicMessageProvider;
+diff --git a/build/BasicMessageProvider.js b/build/BasicMessageProvider.js
+index c3e2f44cf8bd564ce51c51c65eba15ac2dba4285..b11879a899678985a111927c2c8044ea0e799577 100644
+--- a/build/BasicMessageProvider.js
++++ b/build/BasicMessageProvider.js
+@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.useBasicMessagesByConnectionId = exports.useBasicMessages = void 0;
+ const core_1 = require("@credo-ts/core");
+-const react_1 = require("react");
+ const React = __importStar(require("react"));
++const react_1 = require("react");
+ const recordUtils_1 = require("./recordUtils");
+ const BasicMessageContext = (0, react_1.createContext)(undefined);
+ const useBasicMessages = () => {
+@@ -49,6 +49,8 @@ const BasicMessageProvider = ({ agent, children }) => {
+         loading: true,
+     });
+     const setInitialState = async () => {
++        if (!agent)
++            return;
+         const records = await agent.basicMessages.findAllByQuery({});
+         setState({ records, loading: false });
+     };
+diff --git a/build/BasicMessageProvider.js.map b/build/BasicMessageProvider.js.map
+index 0422e84723349a214579992ac89b3caa0371cecc..fd7a06a63c5e8da8ce3321e5ef5d3d734c8d9380 100644
+--- a/build/BasicMessageProvider.js.map
++++ b/build/BasicMessageProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"BasicMessageProvider.js","sourceRoot":"","sources":["../src/BasicMessageProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"BasicMessageProvider.js","sourceRoot":"","sources":["../src/BasicMessageProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/build/ConnectionProvider.d.ts b/build/ConnectionProvider.d.ts
+index 42d8b4772eabb9342ef0ba71ddef9007ea04238b..b43d2e9d52f3d8c65cfef6b612a53dd76dbb5768 100644
+--- a/build/ConnectionProvider.d.ts
++++ b/build/ConnectionProvider.d.ts
+@@ -1,4 +1,4 @@
+-import type { Agent, DidExchangeState, ConnectionType } from '@credo-ts/core';
++import type { Agent, ConnectionType, DidExchangeState } from '@credo-ts/core';
+ import type { PropsWithChildren } from 'react';
+ import { ConnectionRecord } from '@credo-ts/core';
+ import * as React from 'react';
+@@ -18,7 +18,7 @@ export declare const useConnections: (options?: UseConnectionsOptions) => {
+ };
+ export declare const useConnectionById: (id: string) => ConnectionRecord | undefined;
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const ConnectionProvider: React.FC<PropsWithChildren<Props>>;
+ export default ConnectionProvider;
+diff --git a/build/ConnectionProvider.js b/build/ConnectionProvider.js
+index aa461a803ee740a756989464640538e735de2c52..29f667890a6a1d767fb687049ed110d3199a3d5c 100644
+--- a/build/ConnectionProvider.js
++++ b/build/ConnectionProvider.js
+@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.useConnectionById = exports.useConnections = void 0;
+ const core_1 = require("@credo-ts/core");
+-const react_1 = require("react");
+ const React = __importStar(require("react"));
++const react_1 = require("react");
+ const recordUtils_1 = require("./recordUtils");
+ const ConnectionContext = (0, react_1.createContext)(undefined);
+ /**
+@@ -72,16 +72,25 @@ const ConnectionProvider = ({ agent, children }) => {
+         loading: true,
+     });
+     const setInitialState = async () => {
++        console.log('inside setInitialState');
++        if (!agent)
++            return;
++        console.log('setting initial state');
+         const records = await agent.connections.getAll();
++        console.log('records', records.length);
+         setState({ records, loading: false });
+     };
+     (0, react_1.useEffect)(() => {
++        console.log('inside useffect for connection provider');
+         setInitialState();
+     }, [agent]);
+     (0, react_1.useEffect)(() => {
+         if (state.loading)
+             return;
+-        const connectionAdded$ = (0, recordUtils_1.recordsAddedByType)(agent, core_1.ConnectionRecord).subscribe((record) => setState((0, recordUtils_1.addRecord)(record, state)));
++        const connectionAdded$ = (0, recordUtils_1.recordsAddedByType)(agent, core_1.ConnectionRecord).subscribe((record) => {
++            console.log('adding connection record record');
++            setState((0, recordUtils_1.addRecord)(record, state));
++        });
+         const connectionUpdated$ = (0, recordUtils_1.recordsUpdatedByType)(agent, core_1.ConnectionRecord).subscribe((record) => setState((0, recordUtils_1.updateRecord)(record, state)));
+         const connectionRemoved$ = (0, recordUtils_1.recordsRemovedByType)(agent, core_1.ConnectionRecord).subscribe((record) => setState((0, recordUtils_1.removeRecord)(record, state)));
+         return () => {
+diff --git a/build/ConnectionProvider.js.map b/build/ConnectionProvider.js.map
+index b5186e596d3f4452552b53776304a04e808af1f0..2694805b9d519c93b89793768ded33e3a0f550b5 100644
+--- a/build/ConnectionProvider.js.map
++++ b/build/ConnectionProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"ConnectionProvider.js","sourceRoot":"","sources":["../src/ConnectionProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"ConnectionProvider.js","sourceRoot":"","sources":["../src/ConnectionProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/build/CredentialFormatDataProvider.d.ts b/build/CredentialFormatDataProvider.d.ts
+index 0d129f9aef9f897eb57f517dd831749e1a20fd04..515658fc958ae513b962da731eb0557a4dab0d09 100644
+--- a/build/CredentialFormatDataProvider.d.ts
++++ b/build/CredentialFormatDataProvider.d.ts
+@@ -13,7 +13,7 @@ type FormattedDataState = {
+ export declare const useCredentialsFormatData: () => FormattedDataState;
+ export declare const useCredentialFormatDataById: (id: string) => CredentialFormatData | undefined;
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>>;
+ export default CredentialFormatDataProvider;
+diff --git a/build/CredentialFormatDataProvider.js b/build/CredentialFormatDataProvider.js
+index e42643767e2f37e1b9b8ccb343dadaf7a0f18a26..42a902506bc879e799fe4a64da25328b3f0210c3 100644
+--- a/build/CredentialFormatDataProvider.js
++++ b/build/CredentialFormatDataProvider.js
+@@ -77,6 +77,8 @@ const CredentialFormatDataProvider = ({ agent, children }) => {
+         return Object.assign(Object.assign({}, formatData), { id: record.id });
+     };
+     const setInitialState = async () => {
++        if (!agent)
++            return;
+         const records = await agent.credentials.getAll();
+         const formattedData = [];
+         for (const record of records) {
+@@ -91,10 +93,14 @@ const CredentialFormatDataProvider = ({ agent, children }) => {
+         if (state.loading)
+             return;
+         const credentialAdded$ = (0, recordUtils_1.recordsAddedByType)(agent, core_1.CredentialExchangeRecord).subscribe(async (record) => {
++            if (!agent)
++                return;
+             const formatData = await fetchCredentialInformation(agent, record);
+             setState(addRecord(formatData, state));
+         });
+         const credentialUpdate$ = (0, recordUtils_1.recordsUpdatedByType)(agent, core_1.CredentialExchangeRecord).subscribe(async (record) => {
++            if (!agent)
++                return;
+             const formatData = await fetchCredentialInformation(agent, record);
+             setState(updateRecord(formatData, state));
+         });
+diff --git a/build/CredentialFormatDataProvider.js.map b/build/CredentialFormatDataProvider.js.map
+index 35ace1447196d5d174248003eeb952098317afb9..1b467c24be6da0c52c514881d804489490beac08 100644
+--- a/build/CredentialFormatDataProvider.js.map
++++ b/build/CredentialFormatDataProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"CredentialFormatDataProvider.js","sourceRoot":"","sources":["../src/CredentialFormatDataProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"CredentialFormatDataProvider.js","sourceRoot":"","sources":["../src/CredentialFormatDataProvider.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;AAIA,yCAAyD;AACzD,+CAA6E;AAE7E,+CAA8F;AAa9F,MAAM,SAAS,GAAG,CAAC,MAA4B,EAAE,KAAyB,EAAsB,EAAE;IAChG,MAAM,eAAe,GAAG,CAAC,GAAG,KAAK,CAAC,aAAa,CAAC,CAAA;IAChD,eAAe,CAAC,OAAO,CAAC,MAAM,CAAC,CAAA;IAE/B,OAAO;QACL,OAAO,EAAE,KAAK,CAAC,OAAO;QACtB,aAAa,EAAE,eAAe;KAC/B,CAAA;AACH,CAAC,CAAA;AAED,MAAM,YAAY,GAAG,CAAC,MAA4B,EAAE,KAAyB,EAAsB,EAAE;IACnG,MAAM,eAAe,GAAG,CAAC,GAAG,KAAK,CAAC,aAAa,CAAC,CAAA;IAChD,MAAM,KAAK,GAAG,eAAe,CAAC,SAAS,CAAC,CAAC,CAAC,EAAE,EAAE,CAAC,CAAC,CAAC,EAAE,KAAK,MAAM,CAAC,EAAE,CAAC,CAAA;IAElE,IAAI,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC;QACf,eAAe,CAAC,KAAK,CAAC,GAAG,MAAM,CAAA;IACjC,CAAC;IAED,OAAO;QACL,OAAO,EAAE,KAAK,CAAC,OAAO;QACtB,aAAa,EAAE,eAAe;KAC/B,CAAA;AACH,CAAC,CAAA;AAED,MAAM,YAAY,GAAG,CAAC,QAAgB,EAAE,KAAyB,EAAsB,EAAE;IACvF,MAAM,eAAe,GAAG,KAAK,CAAC,aAAa,CAAC,MAAM,CAAC,CAAC,CAAC,EAAE,EAAE,CAAC,CAAC,CAAC,EAAE,KAAK,QAAQ,CAAC,CAAA;IAE5E,OAAO;QACL,OAAO,EAAE,KAAK,CAAC,OAAO;QACtB,aAAa,EAAE,eAAe;KAC/B,CAAA;AACH,CAAC,CAAA;AAED,MAAM,2BAA2B,GAAG,IAAA,qBAAa,EAAiC,SAAS,CAAC,CAAA;AAErF,MAAM,wBAAwB,GAAG,GAAG,EAAE;IAC3C,MAAM,2BAA2B,GAAG,IAAA,kBAAU,EAAC,2BAA2B,CAAC,CAAA;IAE3E,IAAI,CAAC,2BAA2B,EAAE,CAAC;QACjC,MAAM,IAAI,KAAK,CAAC,mFAAmF,CAAC,CAAA;IACtG,CAAC;IAED,OAAO,2BAA2B,CAAA;AACpC,CAAC,CAAA;AARY,QAAA,wBAAwB,4BAQpC;AAEM,MAAM,2BAA2B,GAAG,CAAC,EAAU,EAAoC,EAAE;IAC1F,MAAM,EAAE,aAAa,EAAE,GAAG,IAAA,gCAAwB,GAAE,CAAA;IACpD,OAAO,aAAa,CAAC,IAAI,CAAC,CAAC,CAAC,EAAE,EAAE,CAAC,CAAC,CAAC,EAAE,KAAK,EAAE,CAAC,CAAA;AAC/C,CAAC,CAAA;AAHY,QAAA,2BAA2B,+BAGvC;AAMD,MAAM,4BAA4B,GAAuC,CAAC,EAAE,KAAK,EAAE,QAAQ,EAAE,EAAE,EAAE;IAC/F,MAAM,CAAC,KAAK,EAAE,QAAQ,CAAC,GAAG,IAAA,gBAAQ,EAG/B;QACD,aAAa,EAAE,EAAE;QACjB,OAAO,EAAE,IAAI;KACd,CAAC,CAAA;IAEF,MAAM,0BAA0B,GAAG,KAAK,EAAE,KAAY,EAAE,MAAgC,EAAE,EAAE;QAC1F,MAAM,UAAU,GAAG,MAAM,KAAK,CAAC,WAAW,CAAC,aAAa,CAAC,MAAM,CAAC,EAAE,CAAC,CAAA;QAEnE,uCAAY,UAAU,KAAE,EAAE,EAAE,MAAM,CAAC,EAAE,IAAE;IACzC,CAAC,CAAA;IAED,MAAM,eAAe,GAAG,KAAK,IAAI,EAAE;QACjC,IAAI,CAAC,KAAK;YAAE,OAAM;QAClB,MAAM,OAAO,GAAG,MAAM,KAAK,CAAC,WAAW,CAAC,MAAM,EAAE,CAAA;QAChD,MAAM,aAAa,GAAgC,EAAE,CAAA;QACrD,KAAK,MAAM,MAAM,IAAI,OAAO,EAAE,CAAC;YAC7B,aAAa,CAAC,IAAI,CAAC,MAAM,0BAA0B,CAAC,KAAK,EAAE,MAAM,CAAC,CAAC,CAAA;QACrE,CAAC;QACD,QAAQ,CAAC,EAAE,aAAa,EAAE,OAAO,EAAE,KAAK,EAAE,CAAC,CAAA;IAC7C,CAAC,CAAA;IAED,IAAA,iBAAS,EAAC,GAAG,EAAE;QACb,KAAK,eAAe,EAAE,CAAA;IACxB,CAAC,EAAE,CAAC,KAAK,CAAC,CAAC,CAAA;IAEX,IAAA,iBAAS,EAAC,GAAG,EAAE;QACb,IAAI,KAAK,CAAC,OAAO;YAAE,OAAM;QAEzB,MAAM,gBAAgB,GAAG,IAAA,gCAAkB,EAAC,KAAK,EAAE,+BAAwB,CAAC,CAAC,SAAS,CACpF,KAAK,EAAE,MAAgC,EAAE,EAAE;YACzC,IAAI,CAAC,KAAK;gBAAE,OAAM;YAClB,MAAM,UAAU,GAAG,MAAM,0BAA0B,CAAC,KAAK,EAAE,MAAM,CAAC,CAAA;YAClE,QAAQ,CAAC,SAAS,CAAC,UAAU,EAAE,KAAK,CAAC,CAAC,CAAA;QACxC,CAAC,CACF,CAAA;QAED,MAAM,iBAAiB,GAAG,IAAA,kCAAoB,EAAC,KAAK,EAAE,+BAAwB,CAAC,CAAC,SAAS,CACvF,KAAK,EAAE,MAAgC,EAAE,EAAE;YACzC,IAAI,CAAC,KAAK;gBAAE,OAAM;YAClB,MAAM,UAAU,GAAG,MAAM,0BAA0B,CAAC,KAAK,EAAE,MAAM,CAAC,CAAA;YAClE,QAAQ,CAAC,YAAY,CAAC,UAAU,EAAE,KAAK,CAAC,CAAC,CAAA;QAC3C,CAAC,CACF,CAAA;QAED,MAAM,iBAAiB,GAAG,IAAA,kCAAoB,EAAC,KAAK,EAAE,+BAAwB,CAAC,CAAC,SAAS,CAAC,CAAC,MAAM,EAAE,EAAE,CACnG,QAAQ,CAAC,YAAY,CAAC,MAAM,CAAC,EAAE,EAAE,KAAK,CAAC,CAAC,CACzC,CAAA;QAED,OAAO,GAAG,EAAE;YACV,gBAAgB,CAAC,WAAW,EAAE,CAAA;YAC9B,iBAAiB,CAAC,WAAW,EAAE,CAAA;YAC/B,iBAAiB,CAAC,WAAW,EAAE,CAAA;QACjC,CAAC,CAAA;IACH,CAAC,EAAE,CAAC,KAAK,EAAE,KAAK,CAAC,CAAC,CAAA;IAElB,OAAO,8BAAC,2BAA2B,CAAC,QAAQ,IAAC,KAAK,EAAE,KAAK,IAAG,QAAQ,CAAwC,CAAA;AAC9G,CAAC,CAAA;AAED,kBAAe,4BAA4B,CAAA"}
+\ No newline at end of file
+diff --git a/build/CredentialProvider.d.ts b/build/CredentialProvider.d.ts
+index 553364cef8798db59dcc1d2cf9671f935d1ee346..f999735b3d4951f49cff24c895ffd48401743b6b 100644
+--- a/build/CredentialProvider.d.ts
++++ b/build/CredentialProvider.d.ts
+@@ -1,6 +1,6 @@
+-import type { RecordsState } from './recordUtils';
+ import type { Agent, CredentialState } from '@credo-ts/core';
+ import type { PropsWithChildren } from 'react';
++import type { RecordsState } from './recordUtils';
+ import { CredentialExchangeRecord } from '@credo-ts/core';
+ import * as React from 'react';
+ export declare const useCredentials: () => RecordsState<CredentialExchangeRecord>;
+@@ -9,7 +9,7 @@ export declare const useCredentialById: (id: string) => CredentialExchangeRecord
+ export declare const useCredentialByState: (state: CredentialState | CredentialState[]) => CredentialExchangeRecord[];
+ export declare const useCredentialNotInState: (state: CredentialState | CredentialState[]) => CredentialExchangeRecord[];
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const CredentialProvider: React.FC<PropsWithChildren<Props>>;
+ export default CredentialProvider;
+diff --git a/build/CredentialProvider.js b/build/CredentialProvider.js
+index 0cabe89193d87c2f08f1f897b31fbc393cc2a6d5..c94f32680fbdf6cd6e0a57a600ad2062c1abe45d 100644
+--- a/build/CredentialProvider.js
++++ b/build/CredentialProvider.js
+@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.useCredentialNotInState = exports.useCredentialByState = exports.useCredentialById = exports.useCredentialsByConnectionId = exports.useCredentials = void 0;
+ const core_1 = require("@credo-ts/core");
+-const react_1 = require("react");
+ const React = __importStar(require("react"));
++const react_1 = require("react");
+ const recordUtils_1 = require("./recordUtils");
+ const CredentialContext = (0, react_1.createContext)(undefined);
+ const useCredentials = () => {
+@@ -67,6 +67,8 @@ const CredentialProvider = ({ agent, children }) => {
+         loading: true,
+     });
+     const setInitialState = async () => {
++        if (!agent)
++            return;
+         const records = await agent.credentials.getAll();
+         setState({ records, loading: false });
+     };
+diff --git a/build/CredentialProvider.js.map b/build/CredentialProvider.js.map
+index 828b07cd2a14a4c5f0d1be510cbe603867197c63..98b43d2771df1021c11c70554bad431bc9a9bb1e 100644
+--- a/build/CredentialProvider.js.map
++++ b/build/CredentialProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"CredentialProvider.js","sourceRoot":"","sources":["../src/CredentialProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"CredentialProvider.js","sourceRoot":"","sources":["../src/CredentialProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/build/ProofFormatDataProvider.d.ts b/build/ProofFormatDataProvider.d.ts
+index 3ea0c4942baf415938c9e316a60b89e99fe930fa..e3960550563ad3cf5662fcf5440f504ebb8edbc1 100644
+--- a/build/ProofFormatDataProvider.d.ts
++++ b/build/ProofFormatDataProvider.d.ts
+@@ -13,7 +13,7 @@ type FormattedProofDataState = {
+ export declare const useProofsFormatData: () => FormattedProofDataState;
+ export declare const useProofFormatDataById: (id: string) => ProofFormatData | undefined;
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>>;
+ export default ProofFormatDataProvider;
+diff --git a/build/ProofFormatDataProvider.js b/build/ProofFormatDataProvider.js
+index 331fc7c90a7b0b64d15ce2e9e8346c7234ef8370..ce9cd1bf38d3e18d81d86061193400643369f288 100644
+--- a/build/ProofFormatDataProvider.js
++++ b/build/ProofFormatDataProvider.js
+@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.useProofFormatDataById = exports.useProofsFormatData = void 0;
+ const core_1 = require("@credo-ts/core");
+-const react_1 = require("react");
+ const React = __importStar(require("react"));
++const react_1 = require("react");
+ const recordUtils_1 = require("./recordUtils");
+ const addRecord = (record, state) => {
+     const newRecordsState = [...state.formattedData];
+@@ -74,6 +74,8 @@ const ProofFormatDataProvider = ({ agent, children }) => {
+         loading: true,
+     });
+     const setInitialState = async () => {
++        if (!agent)
++            return;
+         const records = await agent.proofs.getAll();
+         const formattedData = [];
+         for (const record of records) {
+@@ -89,10 +91,14 @@ const ProofFormatDataProvider = ({ agent, children }) => {
+         if (state.loading)
+             return;
+         const proofAdded$ = (0, recordUtils_1.recordsAddedByType)(agent, core_1.ProofExchangeRecord).subscribe(async (record) => {
++            if (!agent)
++                return;
+             const formatData = await agent.proofs.getFormatData(record.id);
+             setState(addRecord(Object.assign(Object.assign({}, formatData), { id: record.id }), state));
+         });
+         const proofUpdate$ = (0, recordUtils_1.recordsUpdatedByType)(agent, core_1.ProofExchangeRecord).subscribe(async (record) => {
++            if (!agent)
++                return;
+             const formatData = await agent.proofs.getFormatData(record.id);
+             setState(updateRecord(Object.assign(Object.assign({}, formatData), { id: record.id }), state));
+         });
+diff --git a/build/ProofFormatDataProvider.js.map b/build/ProofFormatDataProvider.js.map
+index 84f12e7ccbdcbae50e6335621e8eb9673bdb3576..327497427454942c03b4a82294903faf11eceeb1 100644
+--- a/build/ProofFormatDataProvider.js.map
++++ b/build/ProofFormatDataProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"ProofFormatDataProvider.js","sourceRoot":"","sources":["../src/ProofFormatDataProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"ProofFormatDataProvider.js","sourceRoot":"","sources":["../src/ProofFormatDataProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/build/ProofProvider.d.ts b/build/ProofProvider.d.ts
+index 642e9d45565f61fac1d086fe0966a4db1bd91edd..d2161da65165b6aa8d1fbbbf11db8e44f287877c 100644
+--- a/build/ProofProvider.d.ts
++++ b/build/ProofProvider.d.ts
+@@ -1,6 +1,6 @@
+-import type { RecordsState } from './recordUtils';
+ import type { Agent, ProofState } from '@credo-ts/core';
+ import type { PropsWithChildren } from 'react';
++import type { RecordsState } from './recordUtils';
+ import { ProofExchangeRecord } from '@credo-ts/core';
+ import * as React from 'react';
+ export declare const useProofs: () => RecordsState<ProofExchangeRecord>;
+@@ -9,7 +9,7 @@ export declare const useProofById: (id: string) => ProofExchangeRecord | undefin
+ export declare const useProofByState: (state: ProofState | ProofState[]) => ProofExchangeRecord[];
+ export declare const useProofNotInState: (state: ProofState | ProofState[]) => ProofExchangeRecord[];
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const ProofProvider: React.FC<PropsWithChildren<Props>>;
+ export default ProofProvider;
+diff --git a/build/ProofProvider.js b/build/ProofProvider.js
+index a620fe6f6a8b90bff0fd26f683a68f47925f0e9b..cbc98477e0a14c7a567e8d9974ec725e269a7cca 100644
+--- a/build/ProofProvider.js
++++ b/build/ProofProvider.js
+@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.useProofNotInState = exports.useProofByState = exports.useProofById = exports.useProofsByConnectionId = exports.useProofs = void 0;
+ const core_1 = require("@credo-ts/core");
+-const react_1 = require("react");
+ const React = __importStar(require("react"));
++const react_1 = require("react");
+ const recordUtils_1 = require("./recordUtils");
+ const ProofContext = (0, react_1.createContext)(undefined);
+ const useProofs = () => {
+@@ -73,6 +73,8 @@ const ProofProvider = ({ agent, children }) => {
+         loading: true,
+     });
+     const setInitialState = async () => {
++        if (!agent)
++            return;
+         const records = await agent.proofs.getAll();
+         setState({ records, loading: false });
+     };
+diff --git a/build/ProofProvider.js.map b/build/ProofProvider.js.map
+index 1d043a3441a7098ee1e3d63a2dbfaab76611108a..500e9376f1c538f8c16fe969274f8914e464490b 100644
+--- a/build/ProofProvider.js.map
++++ b/build/ProofProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"ProofProvider.js","sourceRoot":"","sources":["../src/ProofProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"ProofProvider.js","sourceRoot":"","sources":["../src/ProofProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/build/QuestionAnswerProvider.d.ts b/build/QuestionAnswerProvider.d.ts
+index 95a6c38861bdf71d46ba145c50000150c664a2f6..68b4758b6ef6a8527bfc256569daf00e685990c1 100644
+--- a/build/QuestionAnswerProvider.d.ts
++++ b/build/QuestionAnswerProvider.d.ts
+@@ -8,7 +8,7 @@ export declare const useQuestionAnswer: () => {
+ export declare const useQuestionAnswerByConnectionId: (connectionId: string) => QuestionAnswerRecord[];
+ export declare const useQuestionAnswerById: (id: string) => QuestionAnswerRecord | undefined;
+ interface Props {
+-    agent: Agent;
++    agent: Agent | undefined;
+ }
+ declare const QuestionAnswerProvider: React.FC<PropsWithChildren<Props>>;
+ export default QuestionAnswerProvider;
+diff --git a/build/QuestionAnswerProvider.js b/build/QuestionAnswerProvider.js
+index 4abe2463e0f629556b55a7ac4cb7cf4fce81a327..1a4c35e3f9a8ef14a501953f673bfa7f0c3c8676 100644
+--- a/build/QuestionAnswerProvider.js
++++ b/build/QuestionAnswerProvider.js
+@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.useQuestionAnswerById = exports.useQuestionAnswerByConnectionId = exports.useQuestionAnswer = void 0;
+ const question_answer_1 = require("@credo-ts/question-answer");
+-const react_1 = require("react");
+ const React = __importStar(require("react"));
++const react_1 = require("react");
+ const QuestionAnswerContext = (0, react_1.createContext)(undefined);
+ const useQuestionAnswer = () => {
+     const questionAnswerContext = (0, react_1.useContext)(QuestionAnswerContext);
+@@ -53,6 +53,8 @@ const QuestionAnswerProvider = ({ agent, children }) => {
+         loading: true,
+     });
+     const setInitialState = async () => {
++        if (!agent)
++            return;
+         const questAnswerApi = agent.dependencyManager.resolve(question_answer_1.QuestionAnswerApi);
+         const questionAnswerMessages = await questAnswerApi.getAll();
+         setQuestionAnswerState({ questionAnswerMessages, loading: false });
+@@ -77,9 +79,9 @@ const QuestionAnswerProvider = ({ agent, children }) => {
+                 questionAnswerMessages: newQuestionAnswerState,
+             });
+         };
+-        agent.events.on(question_answer_1.QuestionAnswerEventTypes.QuestionAnswerStateChanged, listener);
++        agent === null || agent === void 0 ? void 0 : agent.events.on(question_answer_1.QuestionAnswerEventTypes.QuestionAnswerStateChanged, listener);
+         return () => {
+-            agent.events.off(question_answer_1.QuestionAnswerEventTypes.QuestionAnswerStateChanged, listener);
++            agent === null || agent === void 0 ? void 0 : agent.events.off(question_answer_1.QuestionAnswerEventTypes.QuestionAnswerStateChanged, listener);
+         };
+     }, [questionAnswerState, agent]);
+     return React.createElement(QuestionAnswerContext.Provider, { value: questionAnswerState }, children);
+diff --git a/build/QuestionAnswerProvider.js.map b/build/QuestionAnswerProvider.js.map
+index 00a840d1d2ce645c1f43b18de93e28d3fe30f6a7..ffdd9d79af50e84a558c8fd65b14dc5c0ce051c6 100644
+--- a/build/QuestionAnswerProvider.js.map
++++ b/build/QuestionAnswerProvider.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"QuestionAnswerProvider.js","sourceRoot":"","sources":["../src/QuestionAnswerProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"QuestionAnswerProvider.js","sourceRoot":"","sources":["../src/QuestionAnswerProvider.tsx"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/build/recordUtils.d.ts b/build/recordUtils.d.ts
+index 7b5c5d109011a1e950157b04eafa886312b07341..5409cf2fbf4ee2a4c31e021d69eab214ecec033c 100644
+--- a/build/recordUtils.d.ts
++++ b/build/recordUtils.d.ts
+@@ -1,4 +1,4 @@
+-import type { BaseRecord, Agent } from '@credo-ts/core';
++import type { Agent, BaseRecord } from '@credo-ts/core';
+ import type { Constructor } from '@credo-ts/core/build/utils/mixins';
+ export type BaseRecordAny = BaseRecord<any, any, any>;
+ type RecordClass<R extends BaseRecordAny> = Constructor<R> & {
+@@ -18,5 +18,5 @@ export declare const recordsAddedByType: <R extends BaseRecordAny>(agent: Agent
+ export declare const recordsUpdatedByType: <R extends BaseRecordAny>(agent: Agent | undefined, recordClass: RecordClass<R>) => import("rxjs").Observable<R>;
+ export declare const recordsRemovedByType: <R extends BaseRecordAny>(agent: Agent | undefined, recordClass: RecordClass<R>) => import("rxjs").Observable<R>;
+ export declare const isModuleRegistered: (agent: Agent, ModuleClass: Constructor) => boolean;
+-export declare const useIsModuleRegistered: (agent: Agent, ModuleClass: Constructor) => boolean;
++export declare const useIsModuleRegistered: (agent: Agent | undefined, ModuleClass: Constructor) => boolean | undefined;
+ export {};
+diff --git a/build/recordUtils.js b/build/recordUtils.js
+index 5fcf63af4d1790d4de9c93a7c5726e0d97fdf491..e6a5a553877230a09598cd6eb32e3274ae6f1699 100644
+--- a/build/recordUtils.js
++++ b/build/recordUtils.js
+@@ -75,7 +75,7 @@ const isModuleRegistered = (agent, ModuleClass) => {
+ };
+ exports.isModuleRegistered = isModuleRegistered;
+ const useIsModuleRegistered = (agent, ModuleClass) => {
+-    return (0, react_1.useMemo)(() => (0, exports.isModuleRegistered)(agent, ModuleClass), [agent, ModuleClass]);
++    return (0, react_1.useMemo)(() => (agent ? (0, exports.isModuleRegistered)(agent, ModuleClass) : undefined), [agent, ModuleClass]);
+ };
+ exports.useIsModuleRegistered = useIsModuleRegistered;
+ //# sourceMappingURL=recordUtils.js.map
+\ No newline at end of file
+diff --git a/build/recordUtils.js.map b/build/recordUtils.js.map
+index 7cf23d5cfac74ccc776e499ed6959f64a71ee1d9..bfc120ecf34a712abe929a76e7f4e79af80b8f0d 100644
+--- a/build/recordUtils.js.map
++++ b/build/recordUtils.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"recordUtils.js","sourceRoot":"","sources":["../src/recordUtils.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"recordUtils.js","sourceRoot":"","sources":["../src/recordUtils.ts"],"names":[],"mappings":";;;AAUA,yCAAqD;AACrD,iCAA+B;AAC/B,+BAAwC;AAcjC,MAAM,SAAS,GAAG,CAA0B,MAAS,EAAE,KAAsB,EAAmB,EAAE;IACvG,MAAM,eAAe,GAAG,CAAC,GAAG,KAAK,CAAC,OAAO,CAAC,CAAA;IAC1C,eAAe,CAAC,OAAO,CAAC,MAAM,CAAC,CAAA;IAC/B,OAAO;QACL,OAAO,EAAE,KAAK,CAAC,OAAO;QACtB,OAAO,EAAE,eAAe;KACzB,CAAA;AACH,CAAC,CAAA;AAPY,QAAA,SAAS,aAOrB;AAEM,MAAM,YAAY,GAAG,CAA0B,MAAS,EAAE,KAAsB,EAAmB,EAAE;IAC1G,MAAM,eAAe,GAAG,CAAC,GAAG,KAAK,CAAC,OAAO,CAAC,CAAA;IAC1C,MAAM,KAAK,GAAG,eAAe,CAAC,SAAS,CAAC,CAAC,CAAC,EAAE,EAAE,CAAC,CAAC,CAAC,EAAE,KAAK,MAAM,CAAC,EAAE,CAAC,CAAA;IAClE,IAAI,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC;QACf,eAAe,CAAC,KAAK,CAAC,GAAG,MAAM,CAAA;IACjC,CAAC;IACD,OAAO;QACL,OAAO,EAAE,KAAK,CAAC,OAAO;QACtB,OAAO,EAAE,eAAe;KACzB,CAAA;AACH,CAAC,CAAA;AAVY,QAAA,YAAY,gBAUxB;AAEM,MAAM,YAAY,GAAG,CAC1B,MAA2C,EAC3C,KAAsB,EACL,EAAE;IACnB,MAAM,eAAe,GAAG,KAAK,CAAC,OAAO,CAAC,MAAM,CAAC,CAAC,CAAC,EAAE,EAAE,CAAC,CAAC,CAAC,EAAE,KAAK,MAAM,CAAC,EAAE,CAAC,CAAA;IACvE,OAAO;QACL,OAAO,EAAE,KAAK,CAAC,OAAO;QACtB,OAAO,EAAE,eAAe;KACzB,CAAA;AACH,CAAC,CAAA;AATY,QAAA,YAAY,gBASxB;AAED,MAAM,YAAY,GAAG,CAA0B,WAA2B,EAAE,EAAE;IAC5E,OAAO,IAAA,WAAI,EACT,IAAA,UAAG,EAAC,CAAC,KAAgB,EAAE,EAAE,CAAE,KAAK,CAAC,OAA6B,CAAC,MAAM,CAAC,EACtE,IAAA,aAAM,EAAC,CAAC,MAAS,EAAE,EAAE,CAAC,MAAM,CAAC,IAAI,KAAK,WAAW,CAAC,IAAI,CAAC,CACxD,CAAA;AACH,CAAC,CAAA;AAEM,MAAM,kBAAkB,GAAG,CAA0B,KAAwB,EAAE,WAA2B,EAAE,EAAE;IACnH,IAAI,CAAC,KAAK,EAAE,CAAC;QACX,MAAM,IAAI,KAAK,CAAC,wCAAwC,CAAC,CAAA;IAC3D,CAAC;IAED,IAAI,CAAC,WAAW,EAAE,CAAC;QACjB,MAAM,IAAI,KAAK,CAAC,oCAAoC,CAAC,CAAA;IACvD,CAAC;IAED,OAAO,KAAK,aAAL,KAAK,uBAAL,KAAK,CAAE,MAAM,CAAC,UAAU,CAAsB,2BAAoB,CAAC,WAAW,EAAE,IAAI,CAAC,YAAY,CAAC,WAAW,CAAC,CAAC,CAAA;AACxH,CAAC,CAAA;AAVY,QAAA,kBAAkB,sBAU9B;AAEM,MAAM,oBAAoB,GAAG,CAClC,KAAwB,EACxB,WAA2B,EAC3B,EAAE;IACF,IAAI,CAAC,KAAK,EAAE,CAAC;QACX,MAAM,IAAI,KAAK,CAAC,yCAAyC,CAAC,CAAA;IAC5D,CAAC;IAED,IAAI,CAAC,WAAW,EAAE,CAAC;QACjB,MAAM,IAAI,KAAK,CAAC,oCAAoC,CAAC,CAAA;IACvD,CAAC;IAED,OAAO,KAAK,aAAL,KAAK,uBAAL,KAAK,CAAE,MAAM,CACjB,UAAU,CAAwB,2BAAoB,CAAC,aAAa,EACpE,IAAI,CAAC,YAAY,CAAC,WAAW,CAAC,CAAC,CAAA;AACpC,CAAC,CAAA;AAfY,QAAA,oBAAoB,wBAehC;AAEM,MAAM,oBAAoB,GAAG,CAClC,KAAwB,EACxB,WAA2B,EAC3B,EAAE;IACF,IAAI,CAAC,KAAK,EAAE,CAAC;QACX,MAAM,IAAI,KAAK,CAAC,6CAA6C,CAAC,CAAA;IAChE,CAAC;IAED,IAAI,CAAC,WAAW,EAAE,CAAC;QACjB,MAAM,IAAI,KAAK,CAAC,oCAAoC,CAAC,CAAA;IACvD,CAAC;IAED,OAAO,KAAK,aAAL,KAAK,uBAAL,KAAK,CAAE,MAAM,CACjB,UAAU,CAAwB,2BAAoB,CAAC,aAAa,EACpE,IAAI,CAAC,YAAY,CAAC,WAAW,CAAC,CAAC,CAAA;AACpC,CAAC,CAAA;AAfY,QAAA,oBAAoB,wBAehC;AAEM,MAAM,kBAAkB,GAAG,CAAC,KAAY,EAAE,WAAwB,EAAE,EAAE;IAC3E,IAAI,CAAC,KAAK,EAAE,CAAC;QACX,MAAM,IAAI,KAAK,CAAC,mDAAmD,CAAC,CAAA;IACtE,CAAC;IAED,MAAM,WAAW,GAAG,MAAM,CAAC,MAAM,CAAC,KAAK,CAAC,iBAAiB,CAAC,iBAAiB,CAAC,CAAC,IAAI,CAC/E,CAAC,MAAe,EAAE,EAAE,CAAC,MAAM,YAAY,WAAW,CACnD,CAAA;IAED,OAAO,WAAW,KAAK,SAAS,CAAA;AAClC,CAAC,CAAA;AAVY,QAAA,kBAAkB,sBAU9B;AAEM,MAAM,qBAAqB,GAAG,CAAC,KAAwB,EAAE,WAAwB,EAAE,EAAE;IAC1F,OAAO,IAAA,eAAO,EAAC,GAAG,EAAE,CAAC,CAAC,KAAK,CAAC,CAAC,CAAC,IAAA,0BAAkB,EAAC,KAAK,EAAE,WAAW,CAAC,CAAC,CAAC,CAAC,SAAS,CAAC,EAAE,CAAC,KAAK,EAAE,WAAW,CAAC,CAAC,CAAA;AAC1G,CAAC,CAAA;AAFY,QAAA,qBAAqB,yBAEjC"}
+\ No newline at end of file

@@ -2,20 +2,22 @@ import {
   AnonCredsCredentialFormatService,
   AnonCredsModule,
   AnonCredsProofFormatService,
+  DataIntegrityCredentialFormatService,
   LegacyIndyCredentialFormatService,
   LegacyIndyProofFormatService,
   V1CredentialProtocol,
   V1ProofProtocol,
-} from '@aries-framework/anoncreds'
+} from '@credo-ts/anoncreds'
 import {
   Agent,
   ConnectionsModule,
   CredentialsModule,
+  DifPresentationExchangeProofFormatService,
   MediationRecipientModule,
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
-} from '@aries-framework/core'
+} from '@credo-ts/core'
 
 function getAgentModules() {
   return null as unknown as {
@@ -27,11 +29,22 @@ function getAgentModules() {
     credentials: CredentialsModule<
       (
         | V1CredentialProtocol
-        | V2CredentialProtocol<(LegacyIndyCredentialFormatService | AnonCredsCredentialFormatService)[]>
+        | V2CredentialProtocol<
+            (
+              | LegacyIndyCredentialFormatService
+              | AnonCredsCredentialFormatService
+              | DataIntegrityCredentialFormatService
+            )[]
+          >
       )[]
     >
     proofs: ProofsModule<
-      (V1ProofProtocol | V2ProofProtocol<(LegacyIndyProofFormatService | AnonCredsProofFormatService)[]>)[]
+      (
+        | V1ProofProtocol
+        | V2ProofProtocol<
+            (LegacyIndyProofFormatService | AnonCredsProofFormatService | DifPresentationExchangeProofFormatService)[]
+          >
+      )[]
     >
     mediationRecipient: MediationRecipientModule
   }

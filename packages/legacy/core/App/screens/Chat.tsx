@@ -1,5 +1,5 @@
-import { BasicMessageRepository } from '@aries-framework/core'
-import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@aries-framework/react-hooks'
+import { BasicMessageRepository } from '@credo-ts/core'
+import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'

@@ -1,18 +1,13 @@
-import {
-  INDY_PROOF_REQUEST_ATTACHMENT_ID,
-  V1RequestPresentationMessage,
-  AnonCredsProof,
-} from '@aries-framework/anoncreds'
-import { ProofExchangeRecord, ProofState } from '@aries-framework/core'
-import { Attachment, AttachmentData } from '@aries-framework/core/build/decorators/attachment/Attachment'
-import { useProofById } from '@aries-framework/react-hooks'
+import { AnonCredsProof, INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
+import { ProofExchangeRecord, ProofRole, ProofState } from '@credo-ts/core'
+import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+import { useProofById } from '@credo-ts/react-hooks'
 import * as verifier from '@hyperledger/aries-bifold-verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/core'
 import '@testing-library/jest-native/extend-expect'
-import { cleanup, fireEvent, render, RenderAPI } from '@testing-library/react-native'
+import { RenderAPI, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import ProofDetails from '../../App/screens/ProofDetails'
@@ -60,6 +55,7 @@ const proof: AnonCredsProof = {
     },
   },
   requested_proof: {
+    revealed_attrs: {},
     revealed_attr_groups: {
       attribute_1: {
         sub_proof_index: 0,
@@ -128,6 +124,7 @@ describe('ProofDetails Component', () => {
 
   describe('with a verified proof record', () => {
     const testVerifiedProofRequest = new ProofExchangeRecord({
+      role: ProofRole.Prover,
       connectionId: undefined,
       threadId: requestPresentationMessage.id,
       state: ProofState.Done,
@@ -210,6 +207,7 @@ describe('ProofDetails Component', () => {
       state: ProofState.Done,
       protocolVersion: 'V1',
       isVerified: false,
+      role: ProofRole.Verifier,
     })
 
     beforeEach(() => {

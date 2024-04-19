@@ -1,4 +1,4 @@
-import { CredentialPreviewAttribute, CredentialPreviewAttributeOptions } from '@aries-framework/core'
+import { CredentialPreviewAttribute, CredentialPreviewAttributeOptions } from '@credo-ts/core'
 
 import { IOverlayBundleAttribute as OverlayBundleAttributeOptions } from '../../interfaces/overlay'
 

@@ -1,6 +1,5 @@
-// TODO: export this from @aries-framework/anoncreds
-import { AnonCredsCredentialMetadataKey } from '@aries-framework/anoncreds/build/utils/metadata'
-import { CredentialExchangeRecord, CredentialState } from '@aries-framework/core'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
+import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
@@ -9,7 +8,8 @@ export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord)
   return (
     credential &&
     (credential.state === CredentialState.OfferReceived ||
-      credential.credentials.find((c) => c.credentialRecordType === 'anoncreds'))
+      (Boolean(credential.metadata.get(AnonCredsCredentialMetadataKey)) &&
+        credential.credentials.find((c) => c.credentialRecordType === 'anoncreds' || c.credentialRecordType === 'w3c')))
   )
 }
 

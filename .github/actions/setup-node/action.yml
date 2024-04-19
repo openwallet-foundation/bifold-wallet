@@ -1,4 +1,3 @@
-# based on https://github.com/hyperledger/aries-framework-javascript-ext/blob/main/.github/actions/setup-node/action.yml
 name: Setup NodeJS
 description: Setup NodeJS with caching
 author: 'timo@animo.id'

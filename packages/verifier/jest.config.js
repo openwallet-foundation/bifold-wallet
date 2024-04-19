@@ -4,9 +4,7 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
-  transformIgnorePatterns: [
-    'node_modules\\/(?!(.*react-native.*)|(uuid)|(@aries-framework\\/core)|(@aries-framework\\/anoncreds))',
-  ],
+  transformIgnorePatterns: ['node_modules\\/(?!(.*react-native.*)|(uuid)|(@credo-ts\\/core)|(@credo-ts\\/anoncreds))'],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
   testPathIgnorePatterns: [
     '\\.snap$',

@@ -1,9 +1,9 @@
-import { ProofState } from '@aries-framework/core'
-import { useProofById } from '@aries-framework/react-hooks'
+import { ProofState } from '@credo-ts/core'
+import { useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, View, ScrollView } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -53,7 +53,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   })
 
   if (!proof) {
-    throw new Error('Unable to fetch proof from AFJ')
+    throw new Error('Unable to fetch proof from Credo')
   }
 
   const onBackToHomeTouched = () => {

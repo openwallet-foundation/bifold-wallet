@@ -1,4 +1,4 @@
-import type { ConnectionRecord } from '@aries-framework/core'
+import type { ConnectionRecord } from '@credo-ts/core'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
