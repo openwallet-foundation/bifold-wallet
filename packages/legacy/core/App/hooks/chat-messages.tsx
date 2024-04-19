@@ -55,10 +55,7 @@ const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchange
   }
 }
 
-export const useChatMessagesByConnection = (connection?: ConnectionRecord): ExtendedChatMessage[] => {
-  if (!connection) {
-    return []
-  }
+export const useChatMessagesByConnection = (connection: ConnectionRecord): ExtendedChatMessage[] => {
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [store] = useStore()
   const { t } = useTranslation()
