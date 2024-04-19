@@ -1,4 +1,4 @@
-import { BasicMessageRepository } from '@credo-ts/core'
+import { BasicMessageRepository, ConnectionRecord } from '@credo-ts/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { useIsFocused, useNavigation } from '@react-navigation/core'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
@@ -33,7 +33,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
-  const connection = useConnectionById(connectionId)
+  const connection = useConnectionById(connectionId) as ConnectionRecord
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const chatMessages = useChatMessagesByConnection(connection)
   const isFocused = useIsFocused()
