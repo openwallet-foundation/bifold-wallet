@@ -22,7 +22,7 @@ const NotificationStack: React.FC = () => {
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
         name={Screens.CredentialDetails}
-        component={CredentialDetails}
+        component={CredentialDetails as React.FC} //TODO: Review/Refactor later
         options={{ title: t('Screens.CredentialDetails') }}
       />
       <Stack.Screen

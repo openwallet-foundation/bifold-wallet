@@ -26,11 +26,8 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-interface VerifiedProofProps {
+type VerifiedProofProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails> & {
   record: ProofExchangeRecord
-  isHistory?: boolean
-  senderReview?: boolean
-  navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
 }
 
 interface UnverifiedProofProps {
@@ -38,16 +35,11 @@ interface UnverifiedProofProps {
   navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
 }
 
-const VerifiedProof: React.FC<VerifiedProofProps> = ({
-  record,
-  navigation,
-  isHistory,
-  senderReview,
-}: VerifiedProofProps) => {
+const VerifiedProof: React.FC<VerifiedProofProps> = ({ navigation, route, record }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const [store] = useStore()
-
+  const { isHistory, senderReview } = route.params
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -284,7 +276,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     throw new Error('ProofRequesting route prams were not set properly')
   }
 
-  const { recordId, isHistory, senderReview } = route?.params
+  const { recordId, senderReview } = route.params
   const record = useProofById(recordId)
   const { agent } = useAgent()
   const [store] = useStore()
@@ -327,9 +319,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      {(record.isVerified || senderReview) && (
-        <VerifiedProof record={record} isHistory={isHistory} navigation={navigation} senderReview={senderReview} />
-      )}
+      {(record.isVerified || senderReview) && <VerifiedProof record={record} route={route} navigation={navigation} />}
       {!(record.isVerified || senderReview) && <UnverifiedProof record={record} navigation={navigation} />}
     </SafeAreaView>
   )

@@ -42,7 +42,7 @@ const ContactStack: React.FC = () => {
       <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts} options={{ title: '' }} />
       <Stack.Screen
         name={Screens.CredentialDetails}
-        component={CredentialDetails}
+        component={CredentialDetails as React.FC} //TODO: Review/Refactor later
         options={{ title: t('Screens.CredentialDetails') }}
       />
       <Stack.Screen

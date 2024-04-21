@@ -204,7 +204,7 @@ const RootStack: React.FC = () => {
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
         <Stack.Screen
           name={Screens.Chat}
-          component={Chat}
+          component={Chat as React.FC} //TODO: Review/Refactor later
           options={({ navigation }) => ({
             headerShown: true,
             title: t('Screens.CredentialOffer'),

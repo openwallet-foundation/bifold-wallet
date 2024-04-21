@@ -79,12 +79,12 @@ const SettingStack: React.FC = () => {
       />
       <Stack.Screen
         name={Screens.CreatePIN}
-        component={PINCreate}
+        component={PINCreate as React.FC} //TODO: Review/Refactor later
         options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.UsePushNotifications}
-        component={PushNotification}
+        component={PushNotification as React.FC} //TODO: Review/Refactor later
         options={{ title: t('Screens.UsePushNotifications'), headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
