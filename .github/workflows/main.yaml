@@ -62,6 +62,7 @@ jobs:
       - name: Install React Native Dependencies
         run: |
           yarn install --immutable && \
+          yarn info --all --name-only && \
           git status
 
       - name: Build Workspace
@@ -148,6 +149,7 @@ jobs:
       - name: Install React Native Dependencies
         run: |
           node -v && yarn -v && yarn install --immutable && \
+          yarn info --all --name-only && \
           git status
 
       - name: Build Workspace
