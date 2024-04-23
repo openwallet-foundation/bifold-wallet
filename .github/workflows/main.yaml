@@ -39,14 +39,14 @@ jobs:
         run: |
           sudo xcode-select --switch /Applications/Xcode_15.3.app
 
-      - name: Cache pod dependencies
-        id: pod-cache
-        uses: actions/cache@v3
-        with:
-          path: packages/legacy/app/ios/Pods
-          key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-${{ env.cacheId }}-
+#      - name: Cache pod dependencies
+#        id: pod-cache
+#        uses: actions/cache@v3
+#        with:
+#          path: packages/legacy/app/ios/Pods
+#          key: ${{ runner.os }}-pods-${{ env.cacheId }}-${{ hashFiles('**/Podfile.lock ') }}
+#          restore-keys: |
+#            ${{ runner.os }}-pods-${{ env.cacheId }}-
 
       # Watch for changes to the `App` and `iOS` paths, use
       # git for cache keys.
@@ -55,13 +55,13 @@ jobs:
           echo $(git rev-parse HEAD:packages/legacy/core/App) > ./dd-cache-key.txt
           echo $(git rev-parse HEAD:packages/legacy/app/ios) >> ./dd-cache-key.txt
 
-      - name: Cache derived data
-        uses: actions/cache@v3
-        with:
-          path: packages/legacy/app/ios/xbuild/Build
-          key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
+#      - name: Cache derived data
+#        uses: actions/cache@v3
+#        with:
+#          path: packages/legacy/app/ios/xbuild/Build
+#          key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
+#          restore-keys: |
+#            ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
 
       - name: Install React Native Dependencies
         run: |
