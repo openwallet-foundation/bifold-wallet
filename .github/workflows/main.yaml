@@ -67,7 +67,10 @@ jobs:
         run: |
           yarn install --immutable && \
           yarn info --all --name-only && \
-          git status
+          git status && \
+          cd ./packages/legacy/app && \
+          yarn info --name-only && \
+          grep 'version' node_modules/react-native/package.json
 
       - name: Build Workspace
         run: |
