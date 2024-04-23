@@ -17,7 +17,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-latest
+    runs-on: macos-14
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/packages/legacy/app/Gemfile
     steps:
@@ -34,6 +34,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           working-directory: ./packages/legacy/app
+
+      - name: What XCode are we using?
+        run: |
+          sudo xcode-select --switch /Applications/Xcode_15.3.app
 
       - name: Cache pod dependencies
         id: pod-cache
@@ -75,7 +79,7 @@ jobs:
         run: |
           bundle install --frozen --gemfile=${BUNDLE_GEMFILE} && \
           bundle exec pod --version && \
-          bundle exec pod install --clean-install --repo-update --verbose && \
+          bundle exec pod install --clean-install --repo-update --verbose --deployment && \
           git status && \
           git diff Podfile.lock
 
