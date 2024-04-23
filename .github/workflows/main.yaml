@@ -48,12 +48,12 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-pods-${{ env.cacheId }}-
 
-      # Watch for changes to the `App` and `iOS` paths, use
-      # git for cache keys.
-      - name: Generate cache key
-        run: |
-          echo $(git rev-parse HEAD:packages/legacy/core/App) > ./dd-cache-key.txt
-          echo $(git rev-parse HEAD:packages/legacy/app/ios) >> ./dd-cache-key.txt
+#      # Watch for changes to the `App` and `iOS` paths, use
+#      # git for cache keys.
+#      - name: Generate cache key
+#        run: |
+#          echo $(git rev-parse HEAD:packages/legacy/core/App) > ./dd-cache-key.txt
+#          echo $(git rev-parse HEAD:packages/legacy/app/ios) >> ./dd-cache-key.txt
 
 #      - name: Cache derived data
 #        uses: actions/cache@v3
