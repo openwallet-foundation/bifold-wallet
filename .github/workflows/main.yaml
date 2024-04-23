@@ -74,7 +74,8 @@ jobs:
         working-directory: ./packages/legacy/app/ios
         run: |
           bundle install --frozen --gemfile=${BUNDLE_GEMFILE} && \
-          bundle exec pod install && \
+          bundle exec pod --version && \
+          bundle exec pod install --clean-install --repo-update --verbose && \
           git status && \
           git diff Podfile.lock
 
