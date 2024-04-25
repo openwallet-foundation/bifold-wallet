@@ -10,7 +10,6 @@ import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
   indexFileName?: string
   preLoad?: boolean
-  log?: any
 }
 
 type BundleIndexEntry = {
@@ -30,7 +29,6 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   constructor(indexFileBaseUrl: string, options?: RemoteOCABundleResolverOptions) {
     super({}, options)
 
-    this.log = options?.log
     this.indexFileName = options?.indexFileName || 'ocabundles.json'
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
