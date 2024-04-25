@@ -168,6 +168,7 @@ export class OCABundle implements OCABundleType {
 export class DefaultOCABundleResolver implements OCABundleResolverType {
   protected bundles: Record<string, OverlayBundle | string> = {}
   protected options: OCABundleResolverOptions
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _log?: any
 
   public constructor(
@@ -197,6 +198,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
    * Sets the log value.
    * @param value - The new value for the log.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set log(value: any) {
     this._log = value
   }

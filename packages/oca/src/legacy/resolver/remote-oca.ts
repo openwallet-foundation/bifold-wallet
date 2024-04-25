@@ -139,8 +139,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @param useCachedOnFail - Optional. Specifies whether to use the cached data if the fetch fails. Default is true.
    * @returns A Promise that resolves to the fetched data, or undefined if the fetch fails and no cached data is available.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private fetchRemoteResource = async (path: string, useCachedOnFail = true): Promise<any> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let response: axios.AxiosResponse<any, any> | undefined = undefined
+
     try {
       response = await this.axiosInstance.get(path)
     } catch (error) {
