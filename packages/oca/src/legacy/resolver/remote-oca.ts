@@ -29,20 +29,18 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   constructor(indexFileBaseUrl: string, options?: RemoteOCABundleResolverOptions) {
     super({}, options)
 
-    console.log('****************** 2')
-    console.log('****************** 2')
-    console.log('****************** 2')
-    console.log('****************** 2')
-    console.log('****************** 2')
-    console.log('****************** 2')
-    console.log('****************** 2')
-
     this.indexFileName = options?.indexFileName || 'ocabundles.json'
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
     })
   }
 
+  /**
+   * Finds the SHA-256 hash associated with a given path in the index file.
+   *
+   * @param {string} path - The path to search for in the index file.
+   * @returns {string | null} The SHA-256 hash associated with the path if found, or null if not found.
+   */
   private findSha256ByPath = (path: string): string | null => {
     for (const key in this.indexFile) {
       if (this.indexFile[key].path === path) {
@@ -53,10 +51,26 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return null
   }
 
+  /**
+   * Determines the file name for a given path.
+   *
+   * If the path is equal to the index file name, returns the index file name.
+   * Otherwise, it finds the SHA-256 hash associated with the path in the index file.
+   *
+   * @param {string} path - The path to determine the file name for.
+   * @returns {string | null} The file name associated with the path if found, or null if not found.
+   */
   private fileNameForPath = (path: string): string | null => {
     return path === this.indexFileName ? this.indexFileName : this.findSha256ByPath(path)
   }
 
+  /**
+   * Checks if a file exists at a specific path in the document directory.
+   *
+   * @param {string} fileName - The name of the file to check.
+   * @returns {Promise<boolean>} A promise that resolves to true if the file exists, or false otherwise.
+   * @throws Will throw an error if the existence check fails.
+   */
   private checkFileExists = async (fileName: string): Promise<boolean> => {
     const pathToFile = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
@@ -71,6 +85,14 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return false
   }
 
+  /**
+   * Saves a string of data to a file in the local storage.
+   *
+   * @param {string} fileName - The name of the file to save.
+   * @param {string} data - The data to write to the file.
+   * @returns {Promise<boolean>} A promise that resolves to true if the file was saved successfully, or false otherwise.
+   * @throws Will throw an error if the write operation fails.
+   */
   private saveFileToLocalStorage = async (fileName: string, data: string): Promise<boolean> => {
     const pathToFile = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
@@ -86,6 +108,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return false
   }
 
+  /**
+   * Loads a file from local storage.
+   *
+   * @param fileName - The name of the file to load.
+   * @returns A promise that resolves to the contents of the file, or undefined if the file does not exist.
+   */
   private loadFileFromLocalStorage = async (fileName: string): Promise<string | undefined> => {
     const pathToFile = `${RNFS.DocumentDirectoryPath}/${fileName}`
 
@@ -104,6 +132,13 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
   }
 
+  /**
+   * Fetches a remote resource from the specified path.
+   *
+   * @param path - The path of the remote resource.
+   * @param useCachedOnFail - Optional. Specifies whether to use the cached data if the fetch fails. Default is true.
+   * @returns A Promise that resolves to the fetched data, or undefined if the fetch fails and no cached data is available.
+   */
   private fetchRemoteResource = async (path: string, useCachedOnFail = true): Promise<any> => {
     let response: axios.AxiosResponse<any, any> | undefined = undefined
     try {
@@ -136,15 +171,27 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       }
     }
 
-    return response.data
+    return response ? response.data : undefined
   }
 
+  /**
+   * Loads the OCA index file from a remote resource.
+   *
+   * @param fileName - The name of the file to load.
+   * @returns A Promise that resolves with the loaded data.
+   */
   private loadOCAIndex = async (fileName: string) => {
     const data = await this.fetchRemoteResource(fileName)
 
     this.indexFile = data
   }
 
+  /**
+   * Loads the Overlay Content Archive (OCA) bundle from a remote resource.
+   *
+   * @param fileName - The name of the file to load.
+   * @returns A promise that resolves to an array of Overlay Bundle Data.
+   */
   private loadOCABundle = async (fileName: string): Promise<IOverlayBundleData[]> => {
     const data = await this.fetchRemoteResource(fileName)
 
