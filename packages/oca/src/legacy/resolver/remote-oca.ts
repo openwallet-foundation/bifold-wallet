@@ -1,5 +1,5 @@
 import axios from 'axios'
-import RNFS from 'react-native-fs'
+import { DocumentDirectoryPath, readFile, writeFile, exists } from 'react-native-fs'
 
 import { IOverlayBundleData } from '../../interfaces'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
@@ -72,10 +72,10 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @throws Will throw an error if the existence check fails.
    */
   private checkFileExists = async (fileName: string): Promise<boolean> => {
-    const pathToFile = `${RNFS.DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
 
     try {
-      const fileExists = await RNFS.exists(pathToFile)
+      const fileExists = await exists(pathToFile)
       this.log?.info(`File ${fileName} ${fileExists ? 'does ' : 'does not '} exist at ${pathToFile}`)
       return fileExists
     } catch (error) {
@@ -94,10 +94,10 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @throws Will throw an error if the write operation fails.
    */
   private saveFileToLocalStorage = async (fileName: string, data: string): Promise<boolean> => {
-    const pathToFile = `${RNFS.DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
 
     try {
-      await RNFS.writeFile(pathToFile, data, 'utf8')
+      await writeFile(pathToFile, data, 'utf8')
       this.log?.info(`File ${fileName} saved to ${pathToFile}`)
 
       return true
@@ -115,7 +115,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @returns A promise that resolves to the contents of the file, or undefined if the file does not exist.
    */
   private loadFileFromLocalStorage = async (fileName: string): Promise<string | undefined> => {
-    const pathToFile = `${RNFS.DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
 
     try {
       const fileExists = await this.checkFileExists(fileName)
@@ -123,7 +123,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
         return
       }
 
-      const data = await RNFS.readFile(pathToFile, 'utf8')
+      const data = await readFile(pathToFile, 'utf8')
       this.log?.info(`File ${fileName} loaded from ${pathToFile}`)
 
       return data
@@ -204,7 +204,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   }): Promise<OCABundle | undefined> {
     const { schemaId, credentialDefinitionId, templateId } = params.identifiers
     const language = params.language || 'en'
-    let identifier = schemaId || credentialDefinitionId || templateId
+    const identifier = schemaId || credentialDefinitionId || templateId
 
     await this.loadOCAIndex(this.indexFileName)
 
