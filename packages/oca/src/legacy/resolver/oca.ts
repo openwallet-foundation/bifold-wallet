@@ -168,6 +168,7 @@ export class OCABundle implements OCABundleType {
 export class DefaultOCABundleResolver implements OCABundleResolverType {
   protected bundles: Record<string, OverlayBundle | string> = {}
   protected options: OCABundleResolverOptions
+  private _log?: any
 
   public constructor(
     bundlesData: Record<string, IOverlayBundleData | string> = {},
@@ -182,6 +183,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
         }
       } catch (error) {
         // might get an error trying to parse javascript's default value
+        this.log?.error(`Error parsing bundle for ${cid}`, error)
       }
     }
 
@@ -189,6 +191,21 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
       language: options?.language ?? 'en',
     }
+  }
+
+  /**
+   * Sets the log value.
+   * @param value - The new value for the log.
+   */
+  set log(value: any) {
+    this._log = value
+  }
+
+  /**
+   * Get the log value.
+   */
+  get log() {
+    return this._log
   }
 
   public getBrandingOverlayType(): BrandingOverlayType {

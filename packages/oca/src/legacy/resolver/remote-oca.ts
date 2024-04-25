@@ -10,6 +10,7 @@ import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
   indexFileName?: string
   preLoad?: boolean
+  log?: any
 }
 
 type BundleIndexEntry = {
@@ -29,6 +30,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   constructor(indexFileBaseUrl: string, options?: RemoteOCABundleResolverOptions) {
     super({}, options)
 
+    this.log = options?.log
     this.indexFileName = options?.indexFileName || 'ocabundles.json'
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
@@ -76,10 +78,10 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
 
     try {
       const fileExists = await RNFS.exists(pathToFile)
-      console.log(`File ${fileName} ${fileExists ? 'does ' : 'does not '} exist at ${pathToFile}`)
+      this.log?.info(`File ${fileName} ${fileExists ? 'does ' : 'does not '} exist at ${pathToFile}`)
       return fileExists
     } catch (error) {
-      console.error(`Failed to check existence of ${fileName} at ${pathToFile}`)
+      this.log?.error(`Failed to check existence of ${fileName} at ${pathToFile}`)
     }
 
     return false
@@ -98,11 +100,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
 
     try {
       await RNFS.writeFile(pathToFile, data, 'utf8')
-      console.log(`File ${fileName} saved to ${pathToFile}`)
+      this.log?.info(`File ${fileName} saved to ${pathToFile}`)
 
       return true
     } catch (error) {
-      console.error(`Failed to save file ${fileName} to ${pathToFile}, ${error}`)
+      this.log?.error(`Failed to save file ${fileName} to ${pathToFile}, ${error}`)
     }
 
     return false
@@ -124,11 +126,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       }
 
       const data = await RNFS.readFile(pathToFile, 'utf8')
-      console.log(`File ${fileName} loaded from ${pathToFile}`)
+      this.log?.info(`File ${fileName} loaded from ${pathToFile}`)
 
       return data
     } catch (error) {
-      console.error(`Failed to load file ${fileName} from ${pathToFile}`)
+      this.log?.error(`Failed to load file ${fileName} from ${pathToFile}`)
     }
   }
 
@@ -144,11 +146,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     try {
       response = await this.axiosInstance.get(path)
     } catch (error) {
-      console.error(`Failed to fetch remote resource at ${path}`)
+      this.log?.error(`Failed to fetch remote resource at ${path}`)
     }
 
     if ((!response || response.status !== 200) && useCachedOnFail) {
-      console.error(`Failed to fetch, loading ${path} from cache`)
+      this.log?.error(`Failed to fetch, loading ${path} from cache`)
       const loadFileName = this.fileNameForPath(path)
       if (loadFileName) {
         const cachedData = await this.loadFileFromLocalStorage(loadFileName)
@@ -156,7 +158,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
           return JSON.parse(cachedData)
         }
       } else {
-        console.error(`Failed to determine file name for path ${path} for save`)
+        this.log?.error(`Failed to determine file name for path ${path} for save`)
       }
 
       return
@@ -167,7 +169,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       if (saveFileName) {
         await this.saveFileToLocalStorage(saveFileName, JSON.stringify(response.data))
       } else {
-        console.error(`Failed to determine file name for path ${path} for load`)
+        this.log?.error(`Failed to determine file name for path ${path} for load`)
       }
     }
 
