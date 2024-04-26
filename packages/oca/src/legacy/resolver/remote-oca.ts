@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DocumentDirectoryPath, readFile, writeFile, exists } from 'react-native-fs'
+import { DocumentDirectoryPath, readFile, writeFile, exists, unlink } from 'react-native-fs'
 
 import { IOverlayBundleData } from '../../interfaces'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
@@ -21,18 +21,120 @@ type BundleIndex = {
   [key: string]: BundleIndexEntry
 }
 
+enum OCABundleQueueEntryOperation {
+  Add = 'add',
+  Remove = 'remove',
+}
+
+class MiniLogger {
+  warn(message: string) {
+    console.warn(message)
+  }
+  error(message: string) {
+    console.error(message)
+  }
+  info(message: string) {
+    console.info(message)
+  }
+}
+
+type OCABundleQueueEntry = {
+  sha256: string
+  operation: OCABundleQueueEntryOperation
+}
+
 export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   protected indexFile: BundleIndex = {}
   private axiosInstance: axios.AxiosInstance
   private indexFileName: string
+  private indexFileEtag?: string
+  private loadingIndexFile = false
+  private _queue: OCABundleQueueEntry[] = []
 
   constructor(indexFileBaseUrl: string, options?: RemoteOCABundleResolverOptions) {
     super({}, options)
 
+    this.log = new MiniLogger()
     this.indexFileName = options?.indexFileName || 'ocabundles.json'
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
     })
+
+    this.loadingIndexFile = true
+    this.loadOCAIndex(this.indexFileName)
+      .catch((error) => {
+        this.log?.error(`Failed to load OCA index ${this.indexFileName} on init, ${error}`)
+      })
+      .finally(() => {
+        this.loadingIndexFile = false
+      })
+  }
+
+  set queue(value: Array<OCABundleQueueEntry>) {
+    this._queue = value ?? []
+
+    if (this._queue.length > 0) {
+      this.processQueue()
+    }
+  }
+
+  private processQueue = async () => {
+    const processed = new Set<string>()
+    for (const q of this._queue) {
+      const hash = q.sha256
+
+      this.log?.info(`Processing queue op ${q.operation} for ${hash}`)
+
+      try {
+        switch (q.operation) {
+          case OCABundleQueueEntryOperation.Add:
+            const path = this.findPathBySha256(hash)
+            if (!path) {
+              continue
+            }
+
+            await this.fetchOCABundle(path)
+
+            break
+          case OCABundleQueueEntryOperation.Remove:
+            await this.removeFileFromLocalStorage(hash)
+            break
+        }
+
+        processed.add(hash)
+      } catch (error) {
+        this.log?.error(`Failed to process queue op ${q.operation} for ${hash}, ${error}`)
+      }
+    }
+
+    this._queue = this._queue.filter((q) => !processed.has(q.sha256))
+  }
+
+  private prepareBundleQueue = (newIndexFile: BundleIndex, oldIndexFile: BundleIndex): Array<OCABundleQueueEntry> => {
+    const oldIndexItemHashes = [...new Set(Object.keys(oldIndexFile).map((key) => oldIndexFile[key].sha256))]
+    const newIndexItemHashes = [...new Set(Object.keys(newIndexFile).map((key) => newIndexFile[key].sha256))]
+
+    // if the SHA256 is in the old index file but not in
+    // the new index file, it should be removed.
+    const hashesToRemove = oldIndexItemHashes
+      .filter((hash) => !newIndexItemHashes.includes(hash))
+      .map((hash) => ({
+        sha256: hash,
+        operation: OCABundleQueueEntryOperation.Remove,
+      }))
+
+    // if the SHA256 is in the new index file but not in
+    // the old index file, it should be added.
+    const hashesToAdd = newIndexItemHashes
+      .filter((hash) => !oldIndexItemHashes.includes(hash))
+      .map((hash) => ({
+        sha256: hash,
+        operation: OCABundleQueueEntryOperation.Add,
+      }))
+
+    this.log?.info(`Files to remove ${hashesToRemove.length}, add ${hashesToAdd.length}`)
+
+    return [...hashesToRemove, ...hashesToAdd]
   }
 
   /**
@@ -45,6 +147,17 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     for (const key in this.indexFile) {
       if (this.indexFile[key].path === path) {
         return this.indexFile[key].sha256
+      }
+    }
+
+    return null
+  }
+
+  private findPathBySha256 = (sha256: string): string | null => {
+    for (const key of Object.keys(this.indexFile)) {
+      const hash = this.indexFile[key].sha256
+      if (hash === sha256) {
+        return this.indexFile[key].path
       }
     }
 
@@ -76,7 +189,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
 
     try {
       const fileExists = await exists(pathToFile)
-      this.log?.info(`File ${fileName} ${fileExists ? 'does ' : 'does not '} exist at ${pathToFile}`)
+      this.log?.info(`File ${fileName} ${fileExists ? 'does' : 'does not'} exist at ${pathToFile}`)
       return fileExists
     } catch (error) {
       this.log?.error(`Failed to check existence of ${fileName} at ${pathToFile}`)
@@ -120,6 +233,8 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     try {
       const fileExists = await this.checkFileExists(fileName)
       if (!fileExists) {
+        this.log?.warn(`Missing ${fileName} from ${pathToFile}`)
+
         return
       }
 
@@ -132,73 +247,119 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
   }
 
-  /**
-   * Fetches a remote resource from the specified path.
-   *
-   * @param path - The path of the remote resource.
-   * @param useCachedOnFail - Optional. Specifies whether to use the cached data if the fetch fails. Default is true.
-   * @returns A Promise that resolves to the fetched data, or undefined if the fetch fails and no cached data is available.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private fetchRemoteResource = async (path: string, useCachedOnFail = true): Promise<any> => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let response: axios.AxiosResponse<any, any> | undefined = undefined
+  private removeFileFromLocalStorage = async (fileName: string): Promise<boolean> => {
+    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
 
     try {
-      response = await this.axiosInstance.get(path)
+      await unlink(pathToFile)
+      return true
     } catch (error) {
+      this.log?.error(`Failed to unlink file ${fileName} from ${pathToFile}`)
+    }
+
+    return false
+  }
+
+  private fetchOCABundle = async (path: string): Promise<boolean> => {
+    const response = await this.axiosInstance.get(path)
+    const { status } = response
+
+    if (status !== 200) {
       this.log?.error(`Failed to fetch remote resource at ${path}`)
+
+      return false
     }
 
-    if ((!response || response.status !== 200) && useCachedOnFail) {
-      this.log?.error(`Failed to fetch, loading ${path} from cache`)
-      const loadFileName = this.fileNameForPath(path)
-      if (loadFileName) {
-        const cachedData = await this.loadFileFromLocalStorage(loadFileName)
-        if (cachedData) {
-          return JSON.parse(cachedData)
+    const fileName = this.fileNameForPath(path)
+    if (!fileName) {
+      this.log?.error(`Failed to determine file name ${fileName} for save`)
+
+      return false
+    }
+
+    return this.saveFileToLocalStorage(fileName, JSON.stringify(response.data))
+  }
+
+  private loadOCAIndex = async (filePath: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // let response: axios.AxiosResponse<any, any> | undefined = undefined
+
+    try {
+      const response = await this.axiosInstance.get(filePath)
+      const { status } = response
+      const { etag } = response.headers
+
+      if (status !== 200) {
+        this.log?.error(`Failed to fetch remote resource at ${filePath}`)
+        // failed to fetch, use the cached index file
+        // if available
+        const data = await this.loadFileFromLocalStorage(filePath)
+        if (data) {
+          this.log?.info(`Using index file ${filePath} from cache`)
+          this.indexFile = JSON.parse(data)
         }
-      } else {
-        this.log?.error(`Failed to determine file name for path ${path} for save`)
+
+        return
       }
 
-      return
-    }
+      if (etag && etag === this.indexFileEtag) {
+        this.log?.info(`Index file ${filePath} has not changed, etag ${etag}`)
+        // etag is the same, no need to refresh
+        this.indexFile = response.data
 
-    if (response && response.data) {
-      const saveFileName = this.fileNameForPath(path)
-      if (saveFileName) {
-        await this.saveFileToLocalStorage(saveFileName, JSON.stringify(response.data))
-      } else {
-        this.log?.error(`Failed to determine file name for path ${path} for load`)
+        return
       }
+
+      // etag is different, we need to refresh the
+      // index file and the bundles.
+      const items = this.prepareBundleQueue(response.data, this.indexFile)
+      this.indexFile = response.data
+      this.indexFileEtag = etag
+      this.queue = items
+
+      this.saveFileToLocalStorage(filePath, JSON.stringify(this.indexFile))
+    } catch (error) {
+      this.log?.error(`Failed to fetch OCA index ${filePath}`)
+    }
+  }
+
+  private loadOCABundle = async (path: string): Promise<IOverlayBundleData[]> => {
+    // check if the file exists in the local storage
+    // if it does, load it from there.
+    const fileName = this.fileNameForPath(path)
+    if (!fileName) {
+      this.log?.error(`Failed to determine file name ${fileName} for save`)
+      return []
     }
 
-    return response ? response.data : undefined
-  }
+    const data = await this.loadFileFromLocalStorage(fileName!)
+    if (data) {
+      return JSON.parse(data)
+    }
 
-  /**
-   * Loads the OCA index file from a remote resource.
-   *
-   * @param fileName - The name of the file to load.
-   * @returns A Promise that resolves with the loaded data.
-   */
-  private loadOCAIndex = async (fileName: string) => {
-    const data = await this.fetchRemoteResource(fileName)
+    // if the file does not exist in the local storage
+    // and we have a queue, we should wait for the queue
+    // to be processed before trying to fetch the file.
+    const delay = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-    this.indexFile = data
-  }
+    // wait for 3, 6 then 9 seconds between checks
+    for (let i = 0; i < 4; i++) {
+      if (this.queue.length === 0) break
+      await delay(3000 * (i + 1))
+    }
 
-  /**
-   * Loads the Overlay Content Archive (OCA) bundle from a remote resource.
-   *
-   * @param fileName - The name of the file to load.
-   * @returns A promise that resolves to an array of Overlay Bundle Data.
-   */
-  private loadOCABundle = async (fileName: string): Promise<IOverlayBundleData[]> => {
-    const data = await this.fetchRemoteResource(fileName)
+    // if the queue is not empty, fail gracefully
+    if (this.queue.length > 0) {
+      return []
+    }
 
-    return data
+    // the queue is empty, try to fetch the file
+    const cachedData = await this.loadFileFromLocalStorage(fileName)
+    if (!cachedData) {
+      return []
+    }
+
+    return JSON.parse(cachedData)
   }
 
   public async resolve(params: {
@@ -208,8 +369,6 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     const { schemaId, credentialDefinitionId, templateId } = params.identifiers
     const language = params.language || 'en'
     const identifier = schemaId || credentialDefinitionId || templateId
-
-    await this.loadOCAIndex(this.indexFileName)
 
     if (!identifier || !(identifier in this.bundles || identifier in this.indexFile)) {
       return Promise.resolve(undefined)
