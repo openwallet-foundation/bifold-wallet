@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { DocumentDirectoryPath, readFile, writeFile, exists, unlink } from 'react-native-fs'
+import { CachesDirectoryPath, readFile, writeFile, exists, mkdir, unlink } from 'react-native-fs'
 
 import { IOverlayBundleData } from '../../interfaces'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
 import { generateColor } from '../../utils'
-
+import { ocaBundleStorageDirectory, defaultBundleIndexFileName } from '../../constants'
 import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, OCABundleResolverOptions } from './oca'
 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
@@ -48,26 +48,22 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   private axiosInstance: axios.AxiosInstance
   private indexFileName: string
   private indexFileEtag?: string
-  private loadingIndexFile = false
   private _queue: OCABundleQueueEntry[] = []
 
   constructor(indexFileBaseUrl: string, options?: RemoteOCABundleResolverOptions) {
     super({}, options)
 
     this.log = new MiniLogger()
-    this.indexFileName = options?.indexFileName || 'ocabundles.json'
+    this.indexFileName = options?.indexFileName || defaultBundleIndexFileName
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
     })
 
-    this.loadingIndexFile = true
-    this.loadOCAIndex(this.indexFileName)
-      .catch((error) => {
+    this.createWorkingDirectoryIfNotExists().then(() => {
+      this.loadOCAIndex(this.indexFileName).catch((error) => {
         this.log?.error(`Failed to load OCA index ${this.indexFileName} on init, ${error}`)
       })
-      .finally(() => {
-        this.loadingIndexFile = false
-      })
+    })
   }
 
   set queue(value: Array<OCABundleQueueEntry>) {
@@ -82,22 +78,26 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     const processed = new Set<string>()
     for (const q of this._queue) {
       const hash = q.sha256
+      const path = this.findPathBySha256(hash)
+      if (!path) {
+        continue
+      }
 
       this.log?.info(`Processing queue op ${q.operation} for ${hash}`)
 
       try {
         switch (q.operation) {
           case OCABundleQueueEntryOperation.Add:
-            const path = this.findPathBySha256(hash)
-            if (!path) {
-              continue
-            }
-
             await this.fetchOCABundle(path)
 
             break
           case OCABundleQueueEntryOperation.Remove:
-            await this.removeFileFromLocalStorage(hash)
+            const fileName = this.fileNameForBundleAtPath(path)
+            if (!fileName) {
+              continue
+            }
+
+            await this.removeFileFromLocalStorage(fileName)
             break
         }
 
@@ -164,17 +164,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return null
   }
 
-  /**
-   * Determines the file name for a given path.
-   *
-   * If the path is equal to the index file name, returns the index file name.
-   * Otherwise, it finds the SHA-256 hash associated with the path in the index file.
-   *
-   * @param {string} path - The path to determine the file name for.
-   * @returns {string | null} The file name associated with the path if found, or null if not found.
-   */
-  private fileNameForPath = (path: string): string | null => {
-    return path === this.indexFileName ? this.indexFileName : this.findSha256ByPath(path)
+  private fileNameForBundleAtPath = (path: string): string | null => {
+    return this.findSha256ByPath(path)
+  }
+
+  private fileStoragePath = (): string => {
+    return `${CachesDirectoryPath}/${ocaBundleStorageDirectory}`
   }
 
   /**
@@ -185,7 +180,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @throws Will throw an error if the existence check fails.
    */
   private checkFileExists = async (fileName: string): Promise<boolean> => {
-    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${this.fileStoragePath()}/${fileName}`
 
     try {
       const fileExists = await exists(pathToFile)
@@ -198,6 +193,23 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return false
   }
 
+  private createWorkingDirectoryIfNotExists = async (): Promise<boolean> => {
+    const workSpace = this.fileStoragePath()
+    const pathDoesExist = await exists(workSpace)
+
+    if (!pathDoesExist) {
+      try {
+        await mkdir(workSpace)
+        return true
+      } catch (error) {
+        this.log?.error(`Failed to create directory ${workSpace}`)
+        return false
+      }
+    }
+
+    return true
+  }
+
   /**
    * Saves a string of data to a file in the local storage.
    *
@@ -207,7 +219,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @throws Will throw an error if the write operation fails.
    */
   private saveFileToLocalStorage = async (fileName: string, data: string): Promise<boolean> => {
-    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${this.fileStoragePath()}/${fileName}`
 
     try {
       await writeFile(pathToFile, data, 'utf8')
@@ -228,7 +240,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    * @returns A promise that resolves to the contents of the file, or undefined if the file does not exist.
    */
   private loadFileFromLocalStorage = async (fileName: string): Promise<string | undefined> => {
-    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${this.fileStoragePath()}/${fileName}`
 
     try {
       const fileExists = await this.checkFileExists(fileName)
@@ -248,7 +260,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   }
 
   private removeFileFromLocalStorage = async (fileName: string): Promise<boolean> => {
-    const pathToFile = `${DocumentDirectoryPath}/${fileName}`
+    const pathToFile = `${this.fileStoragePath()}/${fileName}`
 
     try {
       await unlink(pathToFile)
@@ -270,7 +282,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       return false
     }
 
-    const fileName = this.fileNameForPath(path)
+    const fileName = this.fileNameForBundleAtPath(path)
     if (!fileName) {
       this.log?.error(`Failed to determine file name ${fileName} for save`)
 
@@ -326,7 +338,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   private loadOCABundle = async (path: string): Promise<IOverlayBundleData[]> => {
     // check if the file exists in the local storage
     // if it does, load it from there.
-    const fileName = this.fileNameForPath(path)
+    const fileName = this.fileNameForBundleAtPath(path)
     if (!fileName) {
       this.log?.error(`Failed to determine file name ${fileName} for save`)
       return []
