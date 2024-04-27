@@ -105,6 +105,8 @@ const Splash: React.FC = () => {
     },
   })
 
+  // navigation calls that occur before the screen is fully mounted will fail
+  // this useeffect prevents that race condition
   useEffect(() => {
     setMounted(true)
   }, [])
