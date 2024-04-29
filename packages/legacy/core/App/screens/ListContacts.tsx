@@ -3,14 +3,16 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, StyleSheet, View } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyListContacts from '../components/misc/EmptyListContacts'
+import { EventTypes } from '../constants'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, Stacks } from '../types/navigators'
 import { BifoldAgent } from '../utils/agent'
 import { fetchContactsByLatestMessage } from '../utils/contacts'
@@ -57,7 +59,11 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       setConnections(orderedContacts)
     }
 
-    fetchAndSetConnections()
+    fetchAndSetConnections().catch((err) => {
+      agent?.config.logger.error('Error fetching contacts:', err)
+      const error = new BifoldError(t('Error.Title1046'), t('Error.Message1046'), (err as Error)?.message ?? err, 1046)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    })
   }, [agent])
 
   const onPressAddContact = () => {
@@ -93,6 +99,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
         keyExtractor={(connection) => connection.id}
         renderItem={({ item: connection }) => <ContactListItem contact={connection} navigation={navigation} />}
         ListEmptyComponent={() => <EmptyListContacts navigation={navigation} />}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   )

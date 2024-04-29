@@ -126,6 +126,8 @@ const translation = {
         "Message1044": "There was a problem while initializing onboarding. (FR)",
         "Title1045": "Unable to initialize agent. (FR)",
         "Message1045": "There was a problem while initializing agent. (FR)",
+        "Title1046": "Unable to fetch contacts. (FR)",
+        "Message1046": "There was a problem while fetching contacts. (FR)",
     },
     "ActivityLog": {
         "Your": "Votre ",

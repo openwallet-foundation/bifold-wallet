@@ -31,6 +31,14 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 
+/**
+ * Determines the callback to be called when the button below a given chat message is pressed, if it exists.
+ *
+ * eg. 'View offer' -> opens the credential offer screen
+ *
+ * @param {CredentialExchangeRecord | ProofExchangeRecord} record - The record to determine the callback type for.
+ * @returns {CallbackType} The callback type for the given record.
+ */
 const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
   if (
     record instanceof CredentialExchangeRecord &&
@@ -55,6 +63,13 @@ const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchange
   }
 }
 
+/**
+ * Custom hook for retrieving chat messages for a given connection. This hook includes some of
+ * the JSX for rendering the chat messages, including the logic for handling links in messages.
+ *
+ * @param {ConnectionRecord} connection - The connection to retrieve chat messages for.
+ * @returns {ExtendedChatMessage[]} The chat messages for the given connection.
+ */
 export const useChatMessagesByConnection = (connection: ConnectionRecord): ExtendedChatMessage[] => {
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [store] = useStore()
