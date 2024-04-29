@@ -3703,6 +3703,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.2#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.2-aeab4e2513.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.5.2
+  resolution: "@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.2#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.2-aeab4e2513.patch::version=0.5.2&hash=9e6840&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@astronautlabs/jsonpath": ^1.1.2
+    "@credo-ts/core": 0.5.2
+    big-integer: ^1.6.51
+    bn.js: ^5.2.1
+    class-transformer: 0.5.1
+    class-validator: 0.14.1
+    reflect-metadata: ^0.1.13
+  peerDependencies:
+    "@hyperledger/anoncreds-shared": ^0.2.2
+  checksum: e265249ab0591229374ebe045f9afb8ee5c2ae29d6b1efc1b4045c8a3e93601ad6cd95d11c1ead4732e09700c23b746519b2a00ada782c46303aba6956951691
+  languageName: node
+  linkType: hard
+
 "@credo-ts/askar@npm:0.5.2":
   version: 0.5.2
   resolution: "@credo-ts/askar@npm:0.5.2"
