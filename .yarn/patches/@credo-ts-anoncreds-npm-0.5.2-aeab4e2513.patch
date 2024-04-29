@@ -1,0 +1,18 @@
+diff --git a/build/updates/0.4-0.5/anonCredsCredentialRecord.js b/build/updates/0.4-0.5/anonCredsCredentialRecord.js
+index fef09a6ca69409b2ed457d7ee120875ebe290d54..915dffae9bd592aa489ef8ce5c31c9d3a8ce2ec3 100644
+--- a/build/updates/0.4-0.5/anonCredsCredentialRecord.js
++++ b/build/updates/0.4-0.5/anonCredsCredentialRecord.js
+@@ -102,11 +102,11 @@ async function migrateLegacyToW3cCredential(agentContext, legacyRecord) {
+     // Find the credential exchange record bound to this anoncreds credential and update it to point to the newly created w3c record
+     const credentialExchangeRepository = agentContext.dependencyManager.resolve(core_1.CredentialRepository);
+     const [relatedCredentialExchangeRecord] = await credentialExchangeRepository.findByQuery(agentContext, {
+-        credentialIds: [legacyRecord.id],
++        credentialIds: [legacyRecord.credentialId],
+     });
+     if (relatedCredentialExchangeRecord) {
+         // Replace the related binding by the new one
+-        const credentialBindingIndex = relatedCredentialExchangeRecord.credentials.findIndex((binding) => binding.credentialRecordId === legacyRecord.id);
++        const credentialBindingIndex = relatedCredentialExchangeRecord.credentials.findIndex((binding) => binding.credentialRecordId === legacyRecord.credentialId);
+         if (credentialBindingIndex !== -1) {
+             relatedCredentialExchangeRecord.credentials[credentialBindingIndex] = {
+                 credentialRecordType: 'w3c',
