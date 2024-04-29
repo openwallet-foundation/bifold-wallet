@@ -19,17 +19,21 @@ export const initNodeAndSdk = async (eventHandler: any) => {
         // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
         if (useInviteCode) {
 
+            // Physical phone mnemonic
+            // const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
+
+            // Emulator mnemonic
+            const mnemonic = 'large artefact physical panel shed movie inhale sausage sense bundle depart ribbon';
+
             // Physical phone invite code
             // const inviteCode = '6FUD-Z8A9';
 
             // Emulator invite code
             const inviteCode = 'XLT3-8WFJ';
 
-            // Physical phone seed
-            // seed = await mnemonicToSeed('spring business health luggage word spin start column pipe giant pink spoon');
+            setItem(MNEMONIC_STORE, mnemonic);
 
-            // Emulator seed
-            seed = await mnemonicToSeed('large artefact physical panel shed movie inhale sausage sense bundle depart ribbon');
+            seed = await mnemonicToSeed(mnemonic);
 
             nodeConfig = {
                 type: NodeConfigVariant.GREENLIGHT,

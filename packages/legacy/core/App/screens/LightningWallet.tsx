@@ -50,6 +50,7 @@ const LightningWallet = () => {
     const [logs, setLogs] = useState<string[]>([]);
     const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(0);
     const [amoutZar, setAmountZar] = useState<string | undefined>(undefined);
+    const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -85,6 +86,21 @@ const LightningWallet = () => {
     const removeMnemonic = async () => {
         try {
             await removeItem(MNEMONIC_STORE);
+        } catch (err: any) {
+            console.error(err);
+            addLog(err.message);
+        }
+    }
+
+    const backupSeedPhraseHandler = async () => {
+        try {
+
+            const tmpSeedPhrase = await getItem(MNEMONIC_STORE);
+            console.log('Seed Phrase:', tmpSeedPhrase);
+            if (tmpSeedPhrase) {
+                addLog(tmpSeedPhrase);
+            }
+
         } catch (err: any) {
             console.error(err);
             addLog(err.message);
@@ -227,9 +243,15 @@ const LightningWallet = () => {
                 </TouchableOpacity>
             </View> */}
 
-            <View style={styles.buttonPadding}>
+            {/* <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={removeMnemonic}>
                     <Text style={theme.TextTheme.label}>Remove Mnemonic</Text>
+                </TouchableOpacity>
+            </View> */}
+
+            <View style={styles.buttonPadding}>
+                <TouchableOpacity style={theme.Buttons.primary} onPress={backupSeedPhraseHandler}>
+                    <Text style={theme.TextTheme.label}>Backup Seed Phrase</Text>
                 </TouchableOpacity>
             </View>
 

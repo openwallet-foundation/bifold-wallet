@@ -188,7 +188,7 @@ const GrayscaleColors: IGrayscaleColors = {
 }
 
 const BrandColors: IBrandColors = {
-  primary: '#CC9900',
+  primary: '#F7931A',
   primaryDisabled: `rgba(150, 93, 0, ${lightOpacity})`,
   secondary: '#FFFFFFFF',
   secondaryDisabled: `rgba(150, 93, 0, ${heavyOpacity})`,
@@ -196,7 +196,7 @@ const BrandColors: IBrandColors = {
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
-  modalPrimary: '#CC9900',
+  modalPrimary: '#F7931A',
   modalSecondary: '#FFFFFFFF',
   modalPrimaryBackground: '#000000',
   modalSecondaryBackground: '#313132',
