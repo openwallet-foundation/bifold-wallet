@@ -68,6 +68,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
     removeClippedSubviews={false}
     renderItem={[Function]}
     scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     style={
       Object {
