@@ -67,8 +67,12 @@ const RootStack: React.FC = () => {
     if (agent && state.authentication.didAuthenticate) {
       // make sure agent is shutdown so wallet isn't still open
       removeSavedWalletSecret()
-      await agent.wallet.close()
-      await agent.shutdown()
+      try {
+        await agent.wallet.close()
+        await agent.shutdown()
+      } catch (error) {
+        agent?.config?.logger?.error(`Error shutting down agent: ${error}`)
+      }
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
         payload: [{ didAuthenticate: false }],
