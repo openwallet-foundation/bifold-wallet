@@ -6663,6 +6663,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.2#./.yarn/patches/@sphereon-pex-npm-3.3.2-144d9252ec.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 3.3.2
+  resolution: "@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.2#./.yarn/patches/@sphereon-pex-npm-3.3.2-144d9252ec.patch::version=3.3.2&hash=be3141&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@astronautlabs/jsonpath": ^1.1.2
+    "@sd-jwt/decode": ^0.6.1
+    "@sd-jwt/present": ^0.6.1
+    "@sd-jwt/types": ^0.6.1
+    "@sphereon/pex-models": ^2.2.4
+    "@sphereon/ssi-types": 0.22.0
+    ajv: ^8.12.0
+    ajv-formats: ^2.1.1
+    jwt-decode: ^3.1.2
+    nanoid: ^3.3.7
+    string.prototype.matchall: ^4.0.10
+    uint8arrays: ^3.1.1
+  checksum: 4e49c7a55f0376f335ec1dc56a38435f99ce62073bb748ed9c1ae27bda3555bf02310691dd002d3ac5ef5999b5cf34f47a439aa22af2123c57ff80cb6d35ec34
+  languageName: node
+  linkType: hard
+
 "@sphereon/ssi-types@npm:0.22.0":
   version: 0.22.0
   resolution: "@sphereon/ssi-types@npm:0.22.0"
