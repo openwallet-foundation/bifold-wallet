@@ -3,7 +3,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
@@ -94,6 +94,7 @@ const Splash: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
   const container = useContainer()
+  const [mounted, setMounted] = useState(false)
   const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   const styles = StyleSheet.create({
     container: {
@@ -104,8 +105,14 @@ const Splash: React.FC = () => {
     },
   })
 
+  // navigation calls that occur before the screen is fully mounted will fail
+  // this useeffect prevents that race condition
   useEffect(() => {
-    if (store.authentication.didAuthenticate) {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted || store.authentication.didAuthenticate) {
       return
     }
 
@@ -190,10 +197,10 @@ const Splash: React.FC = () => {
     }
 
     initOnboarding()
-  }, [store.authentication.didAuthenticate, store.stateLoaded])
+  }, [mounted, store.authentication.didAuthenticate, store.stateLoaded])
 
   useEffect(() => {
-    if (!store.authentication.didAuthenticate || !store.onboarding.didConsiderBiometry) {
+    if (!mounted || !store.authentication.didAuthenticate || !store.onboarding.didConsiderBiometry) {
       return
     }
 
@@ -264,7 +271,7 @@ const Splash: React.FC = () => {
     }
 
     initAgent()
-  }, [store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry])
+  }, [mounted, store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry])
 
   return (
     <SafeAreaView style={styles.container}>
