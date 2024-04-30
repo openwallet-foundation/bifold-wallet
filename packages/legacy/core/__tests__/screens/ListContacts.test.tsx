@@ -1,7 +1,5 @@
-import { ConnectionRecord, DidExchangeRole, DidExchangeState } from '@credo-ts/core'
-import { useConnections } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { act, fireEvent, render } from '@testing-library/react-native'
+import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
@@ -21,60 +19,30 @@ jest.mock('react-native-localize', () => {})
 const navigation = useNavigation()
 
 describe('ListContacts Component', () => {
-  const testContactRecord1 = new ConnectionRecord({
-    id: '1',
-    did: '9gtPKWtaUKxJir5YG2VPxX',
-    theirLabel: 'Faber',
-    role: DidExchangeRole.Responder,
-    theirDid: '2SBuq9fpLT8qUiQKr2RgBe',
-    threadId: '1',
-    state: DidExchangeState.Completed,
-    createdAt: new Date('2020-01-01T00:00:00.000Z'),
-  })
-  const testContactRecord2 = new ConnectionRecord({
-    id: '2',
-    did: '2SBuq9fpLT8qUiQKr2RgBe',
-    role: DidExchangeRole.Requester,
-    theirLabel: 'Bob',
-    theirDid: '9gtPKWtaUKxJir5YG2VPxX',
-    threadId: '1',
-    state: DidExchangeState.Completed,
-    createdAt: new Date('2020-01-01T00:00:00.000Z'),
-  })
-
   beforeEach(() => {
     jest.clearAllMocks()
-
-    // @ts-ignore
-    useConnections.mockReturnValue({ records: [testContactRecord1, testContactRecord2] })
   })
 
-  const renderView = () => {
-    return render(
+  test('Renders correctly', async () => {
+    const tree = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <ListContacts navigation={navigation as any} />
       </ConfigurationContext.Provider>
     )
-  }
-
-  test('Renders correctly', async () => {
-    const tree = renderView()
-    await act(async () => {})
+    await waitFor(() => {})
+    await new Promise((r) => setTimeout(r, 2000))
     expect(tree).toMatchSnapshot()
-
-    const faberContact = await tree.findByText('Faber', { exact: true })
-    const bobContact = await tree.findByText('Bob', { exact: false })
-
-    expect(faberContact).not.toBe(null)
-    expect(bobContact).not.toBe(null)
   })
 
   test('pressing on a contact in the list takes the user to a contact history screen', async () => {
-    const navigation = useNavigation()
-    const tree = renderView()
+    const { findByText } = render(
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ListContacts navigation={navigation as any} />
+      </ConfigurationContext.Provider>
+    )
 
-    await act(async () => {
-      const connectionRecord = await tree.findByText('Faber', { exact: false })
+    await waitFor(async () => {
+      const connectionRecord = await findByText('Faber', { exact: true })
       fireEvent(connectionRecord, 'press')
       expect(navigation.navigate).toBeCalledWith('Contacts Stack', {
         screen: 'Chat',
@@ -86,7 +54,6 @@ describe('ListContacts Component', () => {
   })
 
   test('Hide list filters out specific contacts', async () => {
-    const navigation = useNavigation()
     const tree = render(
       <StoreProvider
         initialState={{
@@ -102,13 +69,12 @@ describe('ListContacts Component', () => {
         </ConfigurationContext.Provider>
       </StoreProvider>
     )
-    await act(async () => {})
-
-    const faberContact = await tree.queryByText('Faber', { exact: false })
-    const bobContact = await tree.queryByText('Bob', { exact: false })
-
-    expect(faberContact).toBe(null)
-    expect(bobContact).not.toBe(null)
+    await waitFor(async () => {
+      const faberContact = await tree.queryByText('Faber', { exact: true })
+      const bobContact = await tree.queryByText('Bob', { exact: true })
+      expect(faberContact).toBe(null)
+      expect(bobContact).not.toBe(null)
+    })
   })
 
   test('Hide list does not filter out specific contacts when developer mode is enabled', async () => {
@@ -128,12 +94,11 @@ describe('ListContacts Component', () => {
         </ConfigurationContext.Provider>
       </StoreProvider>
     )
-    await act(async () => {})
-
-    const faberContact = await tree.queryByText('Faber', { exact: false })
-    const bobContact = await tree.queryByText('Bob', { exact: false })
-
-    expect(faberContact).not.toBe(null)
-    expect(bobContact).not.toBe(null)
+    await waitFor(async () => {
+      const faberContact = await tree.queryByText('Faber', { exact: true })
+      const bobContact = await tree.queryByText('Bob', { exact: true })
+      expect(faberContact).not.toBe(null)
+      expect(bobContact).not.toBe(null)
+    })
   })
 })

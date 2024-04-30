@@ -1,5 +1,11 @@
-import { BasicMessageRecord, BasicMessageRole } from '@credo-ts/core'
-import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
+import {
+  BasicMessageRecord,
+  BasicMessageRole,
+  ConnectionRecord,
+  DidExchangeRole,
+  DidExchangeState,
+} from '@credo-ts/core'
+import { useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
@@ -18,6 +24,15 @@ jest.mock('@react-navigation/native', () => {
 })
 
 const props = { params: { connectionId: '1' } }
+
+const connection = new ConnectionRecord({
+  id: '1',
+  createdAt: new Date(2024, 1, 1),
+  state: DidExchangeState.Completed,
+  role: DidExchangeRole.Requester,
+  theirDid: 'did:example:123',
+  theirLabel: 'Alice',
+})
 
 const unseenMessage = new BasicMessageRecord({
   threadId: '1',
@@ -66,6 +81,10 @@ const testBasicMessages: BasicMessageRecord[] = [unseenMessage, seenMessage]
 describe('Chat screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // @ts-ignore
+    useConnectionById.mockReturnValue(connection)
+    // @ts-ignore
+    useBasicMessagesByConnectionId.mockReturnValue(testBasicMessages)
   })
 
   test('Renders correctly', async () => {
@@ -90,6 +109,8 @@ describe('Chat screen', () => {
 describe('Chat screen with messages', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // @ts-ignore
+    useConnectionById.mockReturnValue(connection)
     // @ts-ignore
     useBasicMessagesByConnectionId.mockReturnValue(testBasicMessages)
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({

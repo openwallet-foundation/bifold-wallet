@@ -12,7 +12,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
           "alias": undefined,
           "autoAcceptConnection": undefined,
           "connectionTypes": Array [],
-          "createdAt": "2020-01-01T00:00:00.000Z",
+          "createdAt": "2020-01-02T00:00:00.000Z",
           "did": "9gtPKWtaUKxJir5YG2VPxX",
           "errorMessage": undefined,
           "id": "1",
@@ -68,6 +68,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
     removeClippedSubviews={false}
     renderItem={[Function]}
     scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     style={
       Object {
@@ -205,23 +206,11 @@ exports[`ListContacts Component Renders correctly 1`] = `
                       }
                     }
                   >
-                    Jan 1, 2020
+                    Jan 2, 2020
                   </Text>
                 </View>
               </View>
-              <View>
-                <Text
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
-                  style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    }
-                  }
-                />
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -367,19 +356,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <View>
-                <Text
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
-                  style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    }
-                  }
-                />
-              </View>
+              <View />
             </View>
           </View>
         </View>

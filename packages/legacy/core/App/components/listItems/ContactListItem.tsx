@@ -1,36 +1,17 @@
-import type {
-  BasicMessageRecord,
-  ConnectionRecord,
-  CredentialExchangeRecord,
-  ProofExchangeRecord,
-} from '@credo-ts/core'
+import type { ConnectionRecord } from '@credo-ts/core'
 
-import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
-import { useCredentialsByConnectionId } from '../../hooks/credentials'
-import { useProofsByConnectionId } from '../../hooks/proofs'
-import { Role } from '../../types/chat'
+import { useChatMessagesByConnection } from '../../hooks/chat-messages'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
-import {
-  formatTime,
-  getConnectionName,
-  getCredentialEventLabel,
-  getCredentialEventRole,
-  getProofEventLabel,
-  getProofEventRole,
-} from '../../utils/helpers'
+import { formatTime, getConnectionName } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
-interface CondensedMessage {
-  text: string
-  createdAt: Date
-}
 interface Props {
   contact: ConnectionRecord
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
@@ -39,10 +20,9 @@ interface Props {
 const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet, ListItems } = useTheme()
-  const basicMessages = useBasicMessagesByConnectionId(contact.id)
-  const credentials = useCredentialsByConnectionId(contact.id)
-  const proofs = useProofsByConnectionId(contact.id)
-  const [message, setMessage] = useState<CondensedMessage>({ text: '', createdAt: contact.createdAt })
+  const messages = useChatMessagesByConnection(contact)
+  const message = messages[0]
+  const hasOnlyInitialMessage = messages.length < 2
   const [store] = useStore()
 
   const styles = StyleSheet.create({
@@ -90,48 +70,6 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     },
   })
 
-  useEffect(() => {
-    const transformedMessages: Array<CondensedMessage> = basicMessages.map((record: BasicMessageRecord) => {
-      return {
-        text: record.content,
-        createdAt: record.updatedAt || record.createdAt,
-      }
-    })
-
-    transformedMessages.push(
-      ...credentials.map((record: CredentialExchangeRecord) => {
-        const role = getCredentialEventRole(record)
-        const userLabel = role === Role.me ? `${t('Chat.UserYou')} ` : ''
-        const actionLabel = t(getCredentialEventLabel(record) as any)
-        return {
-          text: `${userLabel}${actionLabel}.`,
-          createdAt: record.updatedAt || record.createdAt,
-        }
-      })
-    )
-
-    transformedMessages.push(
-      ...proofs.map((record: ProofExchangeRecord) => {
-        const role = getProofEventRole(record)
-        const userLabel = role === Role.me ? `${t('Chat.UserYou')} ` : ''
-        const actionLabel = t(getProofEventLabel(record) as any)
-
-        return {
-          text: `${userLabel}${actionLabel}.`,
-          createdAt: record.updatedAt || record.createdAt,
-        }
-      })
-    )
-
-    // don't show a message snippet for the initial connection
-    const connectedMessage = {
-      text: '',
-      createdAt: contact.createdAt,
-    }
-
-    setMessage([...transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt), connectedMessage][0])
-  }, [basicMessages, credentials, proofs])
-
   const navigateToContact = useCallback(() => {
     navigation
       .getParent()
@@ -169,13 +107,17 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
               <Text style={styles.contactNameText}>{contactLabel}</Text>
             </View>
             <View style={styles.timeContainer}>
-              <Text style={styles.timeText}>{formatTime(message.createdAt, { shortMonth: true, trim: true })}</Text>
+              {message && (
+                <Text style={styles.timeText}>{formatTime(message.createdAt, { shortMonth: true, trim: true })}</Text>
+              )}
             </View>
           </View>
           <View>
-            <Text style={TextTheme.normal} numberOfLines={1} ellipsizeMode={'tail'}>
-              {message.text}
-            </Text>
+            {message && !hasOnlyInitialMessage && (
+              <Text style={TextTheme.normal} numberOfLines={1} ellipsizeMode={'tail'}>
+                {message.text}
+              </Text>
+            )}
           </View>
         </View>
       </View>

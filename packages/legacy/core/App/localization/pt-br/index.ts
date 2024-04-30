@@ -125,6 +125,8 @@ const translation = {
     "Message1044": "Ocorreu um problema ao incializar o onboarding.",
     "Title1045": "Não foi possível inicializar o agente.",
     "Message1045": "Ocorreu um erro ao inicializar o agente.",
+    "Title1046": "Unable to fetch contacts. (PT-BR)",
+    "Message1046": "There was a problem while fetching contacts. (PT-BR)",
   },
   "StatusMessages": {
     "InitAgent": "Iniciando agente .."
