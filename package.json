@@ -47,7 +47,6 @@
   "resolutions": {
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",
-    "@sphereon/pex": "3.3.2",
     "@typescript-eslint/parser": "^6.6.0",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@types/react": "^18.0.24",
@@ -58,6 +57,6 @@
     "@types/node": "16.9.6",
     "@credo-ts/react-hooks": "patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch",
     "@credo-ts/anoncreds@0.5.2": "patch:@credo-ts/anoncreds@npm%3A0.5.2#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.2-aeab4e2513.patch",
-    "@sphereon/pex@^3.3.2": "patch:@sphereon/pex@npm%3A3.3.2#./.yarn/patches/@sphereon-pex-npm-3.3.2-144d9252ec.patch"
+    "@sphereon/pex": "patch:@sphereon/pex@npm%3A3.3.2#./.yarn/patches/@sphereon-pex-npm-3.3.2-144d9252ec.patch"
   }
 }
