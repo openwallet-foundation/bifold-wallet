@@ -4,7 +4,12 @@ import { CachesDirectoryPath, readFile, writeFile, exists, mkdir, unlink } from 
 import { IOverlayBundleData } from '../../interfaces'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
 import { generateColor } from '../../utils'
-import { ocaBundleStorageDirectory, defaultBundleIndexFileName } from '../../constants'
+import {
+  queueProcessingInterval,
+  ocaBundleStorageDirectory,
+  ocaCacheDataFileName,
+  defaultBundleIndexFileName,
+} from '../../constants'
 import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, OCABundleResolverOptions } from './oca'
 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
@@ -26,43 +31,35 @@ enum OCABundleQueueEntryOperation {
   Remove = 'remove',
 }
 
-class MiniLogger {
-  warn(message: string) {
-    console.warn(message)
-  }
-  error(message: string) {
-    console.error(message)
-  }
-  info(message: string) {
-    console.info(message)
-  }
-}
-
 type OCABundleQueueEntry = {
   sha256: string
   operation: OCABundleQueueEntryOperation
 }
 
+type CacheDataFile = {
+  indexFileEtag: string
+
+  updatedAt: Date
+}
+
 export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   protected indexFile: BundleIndex = {}
   private axiosInstance: axios.AxiosInstance
+  private cacheDataFileName = ocaCacheDataFileName
   private indexFileName: string
-  private indexFileEtag?: string
+  private lastQueueCheck?: Date
+  private lastIndexCheck?: Date
+  private indexRecheckTimerInterval?: ReturnType<typeof setInterval>
+  private exitInProgress = false
+  private _indexFileEtag?: string
   private _queue: OCABundleQueueEntry[] = []
 
   constructor(indexFileBaseUrl: string, options?: RemoteOCABundleResolverOptions) {
     super({}, options)
 
-    this.log = new MiniLogger()
     this.indexFileName = options?.indexFileName || defaultBundleIndexFileName
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
-    })
-
-    this.createWorkingDirectoryIfNotExists().then(() => {
-      this.loadOCAIndex(this.indexFileName).catch((error) => {
-        this.log?.error(`Failed to load OCA index ${this.indexFileName} on init, ${error}`)
-      })
     })
   }
 
@@ -70,13 +67,108 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     this._queue = value ?? []
 
     if (this._queue.length > 0) {
-      this.processQueue()
+      const currentTime = new Date()
+      const timeDifference = currentTime.getTime() - (this.lastQueueCheck?.getTime() || 0)
+      const timeIntervalInMilliseconds = queueProcessingInterval * 60 * 1000
+
+      if (timeDifference > timeIntervalInMilliseconds) {
+        this.processQueue()
+      } else {
+        setTimeout(() => {
+          this.processQueue()
+        }, timeIntervalInMilliseconds - timeDifference)
+      }
     }
+  }
+
+  get queue(): Array<OCABundleQueueEntry> {
+    return this._queue
+  }
+
+  set indexFileEtag(value: string) {
+    if (!value) {
+      return
+    }
+
+    this._indexFileEtag = value
+    this.saveCacheData({
+      indexFileEtag: value,
+      updatedAt: new Date(),
+    }).catch((error) => {
+      this.log?.error(`Failed to save cache data, ${error}`)
+    })
+  }
+
+  get indexFileEtag(): string {
+    return this._indexFileEtag || ''
+  }
+
+  public async start(): Promise<void> {
+    this.exitInProgress = false
+
+    await this.createWorkingDirectoryIfNotExists()
+    const cacheData = await this.loadCacheData()
+    if (cacheData) {
+      this.indexFileEtag = cacheData.indexFileEtag
+    }
+
+    const currentTime = new Date()
+    const timeDifference = currentTime.getTime() - (this.lastIndexCheck?.getTime() || 0)
+    const timeIntervalInMilliseconds = 6 * 60 * 60 * 1000
+
+    if (timeDifference > timeIntervalInMilliseconds) {
+      this.log?.info('Loading OCA index now')
+      await this.loadOCAIndex(this.indexFileName)
+      this.lastIndexCheck = new Date()
+    }
+
+    this.log?.info(`Setting index load timer ${timeIntervalInMilliseconds - timeDifference}ms`)
+
+    setTimeout(async () => {
+      this.log?.info('Loading OCA index as scheduled')
+      await this.loadOCAIndex(this.indexFileName)
+    }, timeIntervalInMilliseconds - timeDifference)
+  }
+
+  public stop(): void {
+    this.exitInProgress = true
+
+    if (this.indexRecheckTimerInterval) {
+      clearInterval(this.indexRecheckTimerInterval)
+    }
+
+    this.queue = []
+  }
+
+  private loadCacheData = async (): Promise<CacheDataFile | undefined> => {
+    const cacheFileExists = await this.checkFileExists(this.cacheDataFileName)
+    if (!cacheFileExists) {
+      return
+    }
+
+    const data = await this.loadFileFromLocalStorage(this.cacheDataFileName)
+    if (!data) {
+      return
+    }
+
+    const cacheData: CacheDataFile = JSON.parse(data)
+
+    return cacheData
+  }
+
+  private saveCacheData = async (cacheData: CacheDataFile): Promise<boolean> => {
+    const cacheDataAsString = JSON.stringify(cacheData)
+
+    return this.saveFileToLocalStorage(this.cacheDataFileName, cacheDataAsString)
   }
 
   private processQueue = async () => {
     const processed = new Set<string>()
-    for (const q of this._queue) {
+    for (const q of this.queue) {
+      if (this.exitInProgress) {
+        break
+      }
+
       const hash = q.sha256
       const path = this.findPathBySha256(hash)
       if (!path) {
@@ -107,7 +199,8 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       }
     }
 
-    this._queue = this._queue.filter((q) => !processed.has(q.sha256))
+    this.lastQueueCheck = new Date()
+    this.queue = this.exitInProgress ? [] : this.queue.filter((q) => !processed.has(q.sha256))
   }
 
   private prepareBundleQueue = (newIndexFile: BundleIndex, oldIndexFile: BundleIndex): Array<OCABundleQueueEntry> => {
