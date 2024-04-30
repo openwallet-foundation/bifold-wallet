@@ -6643,9 +6643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sphereon/pex@npm:3.3.2":
-  version: 3.3.2
-  resolution: "@sphereon/pex@npm:3.3.2"
+"@sphereon/pex@npm:3.3.3":
+  version: 3.3.3
+  resolution: "@sphereon/pex@npm:3.3.3"
   dependencies:
     "@astronautlabs/jsonpath": ^1.1.2
     "@sd-jwt/decode": ^0.6.1
@@ -6659,13 +6659,13 @@ __metadata:
     nanoid: ^3.3.7
     string.prototype.matchall: ^4.0.10
     uint8arrays: ^3.1.1
-  checksum: 62c33f1c7dd29fc984e03adf73351fea5d3b8511a822bf3c416569d5a55a9a9b7aa8bf08cebc9328a749839a2158a2d71d64f8800d35ef2ee89bc4247f40553c
+  checksum: e376506f8c94e6b24053e5b39bafbf2b2434bfe04122f174a10736e0611a5fbd79c7686921c36041c0c0e6ce3031685650b1a782285180438c42b1170853f7dd
   languageName: node
   linkType: hard
 
-"@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.2#./.yarn/patches/@sphereon-pex-npm-3.3.2-144d9252ec.patch::locator=aries-bifold-root%40workspace%3A.":
-  version: 3.3.2
-  resolution: "@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.2#./.yarn/patches/@sphereon-pex-npm-3.3.2-144d9252ec.patch::version=3.3.2&hash=be3141&locator=aries-bifold-root%40workspace%3A."
+"@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 3.3.3
+  resolution: "@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch::version=3.3.3&hash=be3141&locator=aries-bifold-root%40workspace%3A."
   dependencies:
     "@astronautlabs/jsonpath": ^1.1.2
     "@sd-jwt/decode": ^0.6.1
@@ -6679,7 +6679,7 @@ __metadata:
     nanoid: ^3.3.7
     string.prototype.matchall: ^4.0.10
     uint8arrays: ^3.1.1
-  checksum: 4e49c7a55f0376f335ec1dc56a38435f99ce62073bb748ed9c1ae27bda3555bf02310691dd002d3ac5ef5999b5cf34f47a439aa22af2123c57ff80cb6d35ec34
+  checksum: fd5762945c350d03cd0803a5f4f2f8bccce7d8e85c9553a58633b7f611a643e42827dc140fc4127796e7ff75df4e8cae966a3d78bed05c7b9ef43c4da5a72846
   languageName: node
   linkType: hard
 
