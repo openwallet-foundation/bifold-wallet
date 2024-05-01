@@ -5,10 +5,10 @@ import { IOverlayBundleData } from '../../interfaces'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
 import { generateColor } from '../../utils'
 import {
-  queueProcessingInterval,
   ocaBundleStorageDirectory,
   ocaCacheDataFileName,
   defaultBundleIndexFileName,
+  defaultBundleLanguage,
 } from '../../constants'
 import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, OCABundleResolverOptions } from './oca'
 
@@ -403,13 +403,30 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return JSON.parse(cachedData)
   }
 
+  private matchBundleIndexEntry = (identifiers: Identifiers): string | undefined => {
+    const { schemaId, credentialDefinitionId, templateId } = identifiers
+    // If more than one candidate identifier exists in the index file then
+    // order matters here.
+    const candidates = [schemaId, credentialDefinitionId, templateId].filter(
+      (value) => value !== undefined && value !== null && value !== ''
+    )
+
+    if (candidates.length === 0) {
+      return undefined
+    }
+
+    const keys = Object.keys(this.indexFile)
+    const identifier = candidates.find((c) => keys.includes(c!))
+
+    return identifier
+  }
+
   public async resolve(params: {
     identifiers: Identifiers
     language?: string | undefined
   }): Promise<OCABundle | undefined> {
-    const { schemaId, credentialDefinitionId, templateId } = params.identifiers
-    const language = params.language || 'en'
-    const identifier = schemaId || credentialDefinitionId || templateId
+    const language = params.language || defaultBundleLanguage
+    const identifier = this.matchBundleIndexEntry(params.identifiers)
 
     if (!identifier || !(identifier in this.bundles || identifier in this.indexFile)) {
       return Promise.resolve(undefined)

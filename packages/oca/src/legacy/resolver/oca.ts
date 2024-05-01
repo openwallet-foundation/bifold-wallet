@@ -23,6 +23,8 @@ import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
 
+import { defaultBundleLanguage } from '../../constants'
+
 export enum BrandingOverlayType {
   Branding01 = OverlayType.Branding01,
   Branding10 = OverlayType.Branding10,
@@ -98,7 +100,7 @@ export class OCABundle implements OCABundleType {
     this.bundle = bundle
     this.options = {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
-      language: options?.language ?? 'en',
+      language: options?.language ?? defaultBundleLanguage,
     }
   }
 
@@ -190,7 +192,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
     this.options = {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
-      language: options?.language ?? 'en',
+      language: options?.language ?? defaultBundleLanguage,
     }
   }
 
@@ -216,7 +218,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
   private getDefaultBundle(params: { language?: string; identifiers?: Identifiers; meta?: Meta }) {
     if (!params.language) {
-      params.language = 'en'
+      params.language = defaultBundleLanguage
     }
 
     const metaOverlay: IMetaOverlayData = {
@@ -281,7 +283,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
   }
 
   public resolve(params: { identifiers: Identifiers; language?: string }): Promise<OCABundle | undefined> {
-    const language = params.language || 'en'
+    const language = params.language || defaultBundleLanguage
     for (const item of [
       params.identifiers?.credentialDefinitionId,
       params.identifiers?.schemaId,
