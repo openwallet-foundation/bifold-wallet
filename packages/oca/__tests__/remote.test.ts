@@ -3,6 +3,7 @@ import fs from 'fs'
 import { ocaCacheDataFileName, defaultBundleIndexFileName } from '../src/constants'
 import axios from 'axios'
 import MiniLogger from '../src/utils/logger'
+import { readFile, writeFile, exists, mkdir, unlink } from 'react-native-fs'
 
 const bundleFileName = 'bundle.json'
 const ocaPath = `${__dirname}/fixtures/${ocaCacheDataFileName}`
@@ -19,7 +20,30 @@ const keysToUpdated = [
   '29bf8f8729f235450980d0b273f9ca49b7ab73b7358467bf52b311bf40464bb0',
 ]
 
-const get = axios.create().get as jest.Mock
+const getMock = jest.fn().mockImplementation((url) => {
+  const fileName = url.split('/').pop()
+  switch (fileName) {
+    case 'ocabundles.json':
+      return Promise.resolve({
+        status: 200,
+        data: JSON.parse(indexAsString),
+        headers: { etag: initialEtag },
+      })
+    case 'OCABundle.json':
+      return Promise.resolve({
+        status: 200,
+        data: JSON.parse(bundleAsString),
+      })
+    default:
+      return Promise.reject(new Error('Not Found'))
+  }
+})
+
+jest.mock('axios', () => ({
+  create: jest.fn().mockReturnValue({
+    get: jest.fn(),
+  }),
+}))
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 
@@ -39,6 +63,7 @@ jest.mock('react-native-fs', () => ({
     }
   }),
   writeFile: jest.fn().mockResolvedValue(true),
+  unlink: jest.fn().mockResolvedValue(true),
 }))
 
 describe('RemoteOCABundleResolver', () => {
@@ -46,13 +71,11 @@ describe('RemoteOCABundleResolver', () => {
 
   beforeEach(() => {
     resolver = new RemoteOCABundleResolver('http://example.com')
-    resolver.log = new MiniLogger()
+    // resolver.log = new MiniLogger()
 
     jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    resolver.stop()
+    // @ts-ignore
+    axios.create().get.mockImplementation(getMock)
   })
 
   it('should be created', async () => {
@@ -61,43 +84,79 @@ describe('RemoteOCABundleResolver', () => {
     expect(resolver).toHaveProperty('indexFileName', defaultBundleIndexFileName)
     expect(resolver).toHaveProperty('cacheDataFileName', ocaCacheDataFileName)
     expect(resolver['axiosInstance']).not.toBeNull()
-    expect(resolver['lastQueueCheck']).not.toBeNull()
-    expect(get).toBeCalledTimes(0)
+    expect(axios.create().get).toHaveBeenCalledTimes(0)
     expect(resolver.indexFileEtag).toEqual('')
-    expect(resolver.queue).toMatchSnapshot()
     expect(resolver['indexFile']).toMatchSnapshot()
   })
 
-  it('should stop on demand', async () => {
-    const get = axios.create().get as jest.Mock
-    get.mockResolvedValue({
-      status: 200,
-      data: JSON.parse(indexAsString),
-      headers: { etag: initialEtag },
-    })
+  it('should update demand', async () => {
+    await resolver.checkForUpdates()
 
-    await resolver.start()
-    resolver.stop()
-
+    expect(axios.create().get).toHaveBeenCalledTimes(16) // 1 index + 15 bundles
+    expect(writeFile).toHaveBeenCalledTimes(17) // 1 index + 15 bundles + 1 cache
+    expect(readFile).toHaveBeenCalledTimes(1) // 1 cache
+    expect(unlink).toHaveBeenCalledTimes(0) // 0 deletes
+    expect(exists).toHaveBeenCalledTimes(3) // 1 index + 1 cache + 1 directory
+    expect(mkdir).toHaveBeenCalledTimes(0) // mock always return true
     expect(resolver.indexFileEtag).toEqual(initialEtag)
-    expect(get).toBeCalledTimes(2) // TODO(jl): why 2 and not 1? Probably getting a bundle.
-    expect(resolver.queue).toMatchSnapshot()
     expect(resolver['indexFile']).toMatchSnapshot()
   })
 
-  it('should do something cool', async () => {
-    const get = axios.create().get as jest.Mock
-    get.mockResolvedValue({
-      status: 200,
-      data: JSON.parse(indexAsString),
-      headers: { etag: initialEtag },
+  it('should check index periodically', async () => {
+    await resolver.checkForUpdates()
+    await resolver.checkForUpdates()
+    await resolver.checkForUpdates()
+
+    expect(axios.create().get).toHaveBeenCalledTimes(18) // 3 index + 15 bundles
+    expect(writeFile).toHaveBeenCalledTimes(17) // 1 index + 15 bundles + 1 cache
+    expect(readFile).toHaveBeenCalledTimes(1)
+    expect(unlink).toHaveBeenCalledTimes(0)
+    expect(exists).toHaveBeenCalledTimes(5)
+    expect(mkdir).toHaveBeenCalledTimes(0)
+  })
+
+  it('should check fetch updated bundles', async () => {
+    await resolver.checkForUpdates()
+
+    expect(axios.create().get).toHaveBeenCalledTimes(16) // 1 index + 15 bundles
+    expect(resolver.indexFileEtag).toEqual(initialEtag)
+
+    const newIndexAsJSON = JSON.parse(indexAsString)
+    for (const key of Object.keys(newIndexAsJSON)) {
+      if (keysToUpdated.includes(newIndexAsJSON[key].sha256)) {
+        newIndexAsJSON[key].sha256 = newIndexAsJSON[key].sha256.slice(0, 7)
+      }
+    }
+
+    // @ts-ignore
+    axios.create().get.mockImplementation((url) => {
+      const fileName = url.split('/').pop()
+      switch (fileName) {
+        case 'ocabundles.json':
+          return Promise.resolve({
+            status: 200,
+            data: newIndexAsJSON,
+            headers: { etag: changedEtag },
+          })
+        case 'OCABundle.json':
+          return Promise.resolve({
+            status: 200,
+            data: JSON.parse(bundleAsString),
+          })
+        default:
+          return Promise.reject(new Error('Not Found'))
+      }
     })
 
-    await resolver.start()
+    await resolver.checkForUpdates()
 
-    expect(resolver.indexFileEtag).toEqual(initialEtag)
-    expect(get).toBeCalledTimes(2) // TODO(jl): why 2 and not 1? Probably getting a bundle.
-    expect(resolver.queue).toMatchSnapshot()
+    expect(axios.create().get).toHaveBeenCalledTimes(19) // 2 index + 17 bundles
+    expect(writeFile).toHaveBeenCalledTimes(21) // 2 index + 17 bundles + 2 cache
+    expect(readFile).toHaveBeenCalledTimes(1)
+    expect(unlink).toHaveBeenCalledTimes(2) // 2 deletes
+    expect(exists).toHaveBeenCalledTimes(4) // 2 index + 1 cache + 1 directory
+    expect(mkdir).toHaveBeenCalledTimes(0)
+    expect(resolver.indexFileEtag).toEqual(changedEtag)
     expect(resolver['indexFile']).toMatchSnapshot()
   })
 })

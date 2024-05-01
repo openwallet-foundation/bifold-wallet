@@ -1,11 +1,11 @@
 export default class MiniLogger {
   warn(message: string) {
-    console.warn(message)
+    console.log(message)
   }
   error(message: string) {
-    console.error(message)
+    console.log(message)
   }
   info(message: string) {
-    console.info(message)
+    console.log(message)
   }
 }
