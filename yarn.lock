@@ -4701,7 +4701,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-oca@workspace:packages/oca"
   dependencies:
-    "@babel/runtime": ^7.20.0
     "@credo-ts/anoncreds": 0.5.2
     "@credo-ts/core": 0.5.2
     "@testing-library/jest-native": 5.4.3
@@ -4709,8 +4708,6 @@ __metadata:
     "@types/lodash.startcase": ^4.4.7
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
-    babel-jest: ^29.7.0
-    babel-plugin-module-resolver: 5.0.0
     eslint: ^8.48.0
     eslint-import-resolver-typescript: ^2.5.0
     jest: 29.6.4
@@ -8689,7 +8686,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-module-resolver@npm:5.0.0, babel-plugin-module-resolver@npm:^5.0.0":
+"babel-plugin-module-resolver@npm:^5.0.0":
   version: 5.0.0
   resolution: "babel-plugin-module-resolver@npm:5.0.0"
   dependencies:
