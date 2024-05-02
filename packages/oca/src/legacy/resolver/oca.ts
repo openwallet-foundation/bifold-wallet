@@ -1,5 +1,6 @@
 import startCase from 'lodash.startcase'
 
+import { defaultBundleLanguage } from '../../constants'
 import {
   IBrandingOverlayData,
   ILegacyBrandingOverlayData,
@@ -22,8 +23,6 @@ import { generateColor } from '../../utils/color'
 import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
-
-import { defaultBundleLanguage } from '../../constants'
 
 export enum BrandingOverlayType {
   Branding01 = OverlayType.Branding01,

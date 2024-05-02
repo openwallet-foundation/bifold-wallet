@@ -1,15 +1,16 @@
 import axios from 'axios'
 import { CachesDirectoryPath, readFile, writeFile, exists, mkdir, unlink } from 'react-native-fs'
 
-import { IOverlayBundleData } from '../../interfaces'
-import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
-import { generateColor } from '../../utils'
 import {
   ocaBundleStorageDirectory,
   ocaCacheDataFileName,
   defaultBundleIndexFileName,
   defaultBundleLanguage,
 } from '../../constants'
+import { IOverlayBundleData } from '../../interfaces'
+import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay, OverlayBundle } from '../../types'
+import { generateColor } from '../../utils'
+
 import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, OCABundleResolverOptions } from './oca'
 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
@@ -77,21 +78,19 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   }
 
   public async checkForUpdates(): Promise<void> {
-    try {
-      await this.createWorkingDirectoryIfNotExists()
+    await this.createWorkingDirectoryIfNotExists()
 
-      if (!this.indexFileEtag) {
-        this.log?.info('Loading cache data')
+    if (!this.indexFileEtag) {
+      this.log?.info('Loading cache data')
 
-        const cacheData = await this.loadCacheData()
-        if (cacheData) {
-          this.indexFileEtag = cacheData.indexFileEtag
-        }
+      const cacheData = await this.loadCacheData()
+      if (cacheData) {
+        this.indexFileEtag = cacheData.indexFileEtag
       }
+    }
 
-      this.log?.info('Loading OCA index now')
-      await this.loadOCAIndex(this.indexFileName)
-    } catch (error) {}
+    this.log?.info('Loading OCA index now')
+    await this.loadOCAIndex(this.indexFileName)
   }
 
   private loadCacheData = async (): Promise<CacheDataFile | undefined> => {
@@ -127,12 +126,13 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
 
       switch (q.operation) {
         case OCABundleQueueEntryOperation.Add:
-          const path = this.findPathBySha256(hash)
-          if (!path) {
-            continue
+          {
+            const path = this.findPathBySha256(hash)
+            if (!path) {
+              continue
+            }
+            operations.push(this.fetchOCABundle(path))
           }
-          operations.push(this.fetchOCABundle(path))
-
           break
         case OCABundleQueueEntryOperation.Remove:
           operations.push(this.removeFileFromLocalStorage(hash))
