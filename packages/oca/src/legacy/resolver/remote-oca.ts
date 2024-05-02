@@ -88,7 +88,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   }
 
   /**
-   * Checks for updates in the OCA (Open Cryptographic Architecture) index.
+   * Checks for updates in the OCA (Overlay Capture Architecture) index.
    * If the index file ETag is not available, it loads the cache data and retrieves the ETag from it.
    * Then, it loads the OCA index.
    * @returns A promise that resolves when the update check is complete.
