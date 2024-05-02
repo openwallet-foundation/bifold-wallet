@@ -59,6 +59,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     })
   }
 
+  /**
+   * Sets the value of the index file ETag.
+   *
+   * @param value - The new value for the index file ETag.
+   */
   set indexFileEtag(value: string) {
     if (!value) {
       return
@@ -73,10 +78,21 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     })
   }
 
+  /**
+   * Gets the ETag of the index file.
+   *
+   * @returns The ETag of the index file, or an empty string if not available.
+   */
   get indexFileEtag(): string {
     return this._indexFileEtag || ''
   }
 
+  /**
+   * Checks for updates in the OCA (Open Cryptographic Architecture) index.
+   * If the index file ETag is not available, it loads the cache data and retrieves the ETag from it.
+   * Then, it loads the OCA index.
+   * @returns A promise that resolves when the update check is complete.
+   */
   public async checkForUpdates(): Promise<void> {
     await this.createWorkingDirectoryIfNotExists()
 
@@ -93,6 +109,10 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     await this.loadOCAIndex(this.indexFileName)
   }
 
+  /**
+   * Loads the cache data from the local storage.
+   * @returns A promise that resolves to the cache data file, or undefined if the cache file does not exist or cannot be loaded.
+   */
   private loadCacheData = async (): Promise<CacheDataFile | undefined> => {
     const cacheFileExists = await this.checkFileExists(this.cacheDataFileName)
     if (!cacheFileExists) {
@@ -109,12 +129,24 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return cacheData
   }
 
+  /**
+   * Saves the cache data to local storage.
+   *
+   * @param cacheData - The cache data to be saved.
+   * @returns A promise that resolves to a boolean indicating whether the save operation was successful.
+   */
   private saveCacheData = async (cacheData: CacheDataFile): Promise<boolean> => {
     const cacheDataAsString = JSON.stringify(cacheData)
 
     return this.saveFileToLocalStorage(this.cacheDataFileName, cacheDataAsString)
   }
 
+  /**
+   * Processes the queue of OCABundleQueueEntry items.
+   *
+   * @param items - An array of OCABundleQueueEntry items to process.
+   * @returns A promise that resolves to an array of processed OCABundleQueueEntry items.
+   */
   private processQueue = async (items: Array<OCABundleQueueEntry>): Promise<OCABundleQueueEntry[]> => {
     const processed = Array<OCABundleQueueEntry>()
     const operations = []
@@ -158,6 +190,16 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
   }
 
+  /**
+   * Prepares the bundle queue based on the new and old index files.
+   * It compares the SHA256 hashes of the files in the new and old index files
+   * and determines which files should be removed and which files should be added
+   * to the bundle queue.
+   *
+   * @param newIndexFile - The new bundle index file.
+   * @param oldIndexFile - The old bundle index file.
+   * @returns An array of `OCABundleQueueEntry` objects representing the files to be removed and added.
+   */
   private prepareBundleQueue = (newIndexFile: BundleIndex, oldIndexFile: BundleIndex): Array<OCABundleQueueEntry> => {
     const oldIndexItemHashes = [...new Set(Object.keys(oldIndexFile).map((key) => oldIndexFile[key].sha256))]
     const newIndexItemHashes = [...new Set(Object.keys(newIndexFile).map((key) => newIndexFile[key].sha256))]
@@ -201,6 +243,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return null
   }
 
+  /**
+   * Finds the path associated with the given SHA256 hash in the index file.
+   *
+   * @param sha256 - The SHA256 hash to search for.
+   * @returns The path associated with the SHA256 hash, or null if not found.
+   */
   private findPathBySha256 = (sha256: string): string | null => {
     for (const key of Object.keys(this.indexFile)) {
       const hash = this.indexFile[key].sha256
@@ -212,10 +260,22 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return null
   }
 
+  /**
+   * Returns the file name for the bundle at the specified path.
+   *
+   * @param path - The path of the bundle.
+   * @returns The file name for the bundle, or null if not found.
+   */
   private fileNameForBundleAtPath = (path: string): string | null => {
     return this.findSha256ByPath(path)
   }
 
+  /**
+   * Returns the file storage path for the remote OCA resolver.
+   * The file storage path is the concatenation of the `CachesDirectoryPath` and `ocaBundleStorageDirectory`.
+   *
+   * @returns The file storage path.
+   */
   private fileStoragePath = (): string => {
     return `${CachesDirectoryPath}/${ocaBundleStorageDirectory}`
   }
@@ -241,6 +301,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return false
   }
 
+  /**
+   * Creates a working directory if it does not already exist.
+   *
+   * @returns A promise that resolves to a boolean indicating whether the directory was created successfully.
+   */
   private createWorkingDirectoryIfNotExists = async (): Promise<boolean> => {
     const workSpace = this.fileStoragePath()
     const pathDoesExist = await exists(workSpace)
@@ -307,6 +372,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
   }
 
+  /**
+   * Removes a file from the local storage.
+   *
+   * @param fileName - The name of the file to be removed.
+   * @returns A promise that resolves to a boolean indicating whether the file was successfully removed.
+   */
   private removeFileFromLocalStorage = async (fileName: string): Promise<boolean> => {
     const pathToFile = `${this.fileStoragePath()}/${fileName}`
 
@@ -320,6 +391,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return false
   }
 
+  /**
+   * Fetches an OCA bundle from a remote resource and saves it to local storage.
+   * @param path - The path of the remote resource.
+   * @returns A promise that resolves to a boolean indicating whether the fetch and save operation was successful.
+   */
   private fetchOCABundle = async (path: string): Promise<boolean> => {
     const response = await this.axiosInstance.get(path)
     const { status } = response
@@ -340,6 +416,16 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return this.saveFileToLocalStorage(fileName, JSON.stringify(response.data))
   }
 
+  /**
+   * Loads the OCA index from a remote location and processes it.
+   * If the remote resource is not available, it falls back to the cached index file.
+   * If the index file has not changed, it uses the existing data.
+   * If the index file has changed, it refreshes the index file and the bundles.
+   *
+   * @param filePath - The path to the remote OCA index file.
+   * @returns A Promise that resolves when the index file and bundles have been processed.
+   * @throws If there is an error fetching or processing the OCA index.
+   */
   private loadOCAIndex = async (filePath: string) => {
     try {
       const response = await this.axiosInstance.get(filePath)
@@ -380,6 +466,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
   }
 
+  /**
+   * Loads the OCABundle from the specified path.
+   *
+   * @param path - The path of the OCABundle.
+   * @returns A promise that resolves to an array of IOverlayBundleData.
+   */
   private loadOCABundle = async (path: string): Promise<IOverlayBundleData[]> => {
     // check if the file exists in the local storage
     // if it does, load it from there.
@@ -403,6 +495,13 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return JSON.parse(cachedData)
   }
 
+  /**
+   * Finds a matching identifier in the index file based on the provided identifiers.
+   * The order of the identifiers matters if more than one candidate exists in the index file.
+   *
+   * @param identifiers - The identifiers to match against the index file.
+   * @returns The matching identifier, or undefined if no match is found.
+   */
   private matchBundleIndexEntry = (identifiers: Identifiers): string | undefined => {
     const { schemaId, credentialDefinitionId, templateId } = identifiers
     // If more than one candidate identifier exists in the index file then
@@ -421,6 +520,13 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     return identifier
   }
 
+  /**
+   * Resolves the OCABundle based on the given parameters.
+   * @param params - The parameters for resolving the OCABundle.
+   * @param params.identifiers - The identifiers used to match the OCABundle.
+   * @param params.language - The language of the OCABundle (optional).
+   * @returns A Promise that resolves to the OCABundle or undefined.
+   */
   public async resolve(params: {
     identifiers: Identifiers
     language?: string | undefined
@@ -472,6 +578,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     }
   }
 
+  /**
+   * Retrieves the fallback branding overlays for a given credential definition ID and capture base.
+   * @param credentialDefinitionId - The ID of the credential definition.
+   * @param captureBase - The capture base for the overlays.
+   * @returns An array of fallback branding overlays.
+   */
   private getFallbackBrandingOverlays(credentialDefinitionId: string, captureBase: string): BaseOverlay[] {
     const legacyBrandingOverlay: LegacyBrandingOverlay = new LegacyBrandingOverlay(credentialDefinitionId, {
       capture_base: captureBase,
