@@ -6,11 +6,11 @@ The Bifold Wallet is an open-source project designed to enhance the way we inter
 
 **Key Features and Benefits:**
 
-- **Unified Digital Identity Management:** Emphasizing security and user-friendliness, Aries Bifold excels in consolidating and managing digital identities across various standards like AnonCreds and W3C VC Data Model. This capability positions Bifold as a pivotal resource for secure and private handling of digital identities, accessible to all.
+- **Unified Digital Identity Management:** Emphasizing security and user-friendliness, Bifold excels in consolidating and managing digital identities across various standards like AnonCreds and W3C VC Data Model. This capability positions Bifold as a pivotal resource for secure and private handling of digital identities, accessible to all.
 
 - **Seamless Multi-Platform Use:** Thanks to its React Native architecture, Bifold delivers a smooth experience on any device, enabling users to manage their digital identities whether they are using a phone or a tablet. This cross-platform flexibility means that developers can create applications once and deploy them on both iOS and Android, ensuring a consistent and accessible user experience.
 
-- **Community-Driven Development:** Aries Bifold is more than a tool; it's a community initiative aimed at fostering collaboration and sharing innovations. By bringing together diverse groups, from organizations to individuals, Bifold encourages the pooling of resources and knowledge to facilitate the broader adoption and understanding of verifiable credentials.
+- **Community-Driven Development:** Bifold is more than a tool; it's a community initiative aimed at fostering collaboration and sharing innovations. By bringing together diverse groups, from organizations to individuals, Bifold encourages the pooling of resources and knowledge to facilitate the broader adoption and understanding of verifiable credentials.
 
 - **Widespread Adoption and Trust:** With a growing list of users around the globe, including governmental bodies in Canada and teams in Brazil, Bifold has proven its reliability and relevance. Its international use showcases the platform's adaptability to various needs and its role in advancing digital identity management on a global scale.
 
