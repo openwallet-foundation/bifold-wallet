@@ -4,18 +4,18 @@
 
 <!-- Please keep this sorted alphabetically by github -->
 
-| Name                   | Github       | LFID |
-| ---------------------- | ------------ | ---- |
-| Akiff Manji            | amanji       |      |
-| Bryce McMath           | bryce-mcmath |      |
-| Clécio Varjão          | cvarjao      |      |
-| James Ebert            | JamesKEbert  |      |
-| Jean-Christophe Drouin | jcdrouin21   |      |
-| Jason C. Leach         | jleach       |      |
-| Mostafa Gamal          | MosCD3       |      |
-| Ryan Koch              | ryankoch13   |      |
-| Thiago Romano          | thiagoromanos|      |
-| Wade King              | wadeking98   |      |
+| Name                   | Github        | LFID |
+| ---------------------- | ------------- | ---- |
+| Akiff Manji            | amanji        |      |
+| Bryce McMath           | bryce-mcmath  |      |
+| Clécio Varjão          | cvarjao       |      |
+| James Ebert            | JamesKEbert   |      |
+| Jean-Christophe Drouin | jcdrouin21    |      |
+| Jason C. Leach         | jleach        |      |
+| Mostafa Gamal          | MosCD3        |      |
+| Ryan Koch              | ryankoch13    |      |
+| Thiago Romano          | thiagoromanos |      |
+| Wade King              | wadeking98    |      |
 
 ## Emeritus Maintainers
 
@@ -27,46 +27,34 @@
 
 ## Becoming a Maintainer
 
-Bifold within the Hyperledger Aries community welcomes contributions.
+Bifold Wallet, part of the OpenWallet Foundation community, encourages contributions.
 
-Contributors may progress to become a maintainer. To become a maintainer the following steps occur, roughly in order.
+Contributors can become maintainers by following these steps, listed in their general order:
 
-- 5 **significant** changes have been authored by the proposed maintainer and accepted.
-- The proposed maintainer has the sponsorship of at least one other maintainer.
-  - This sponsoring maintainer will create a PR modifying the list of
-    maintainers.
-  - The proposed maintainer accepts the nomination and expresses a willingness
-    to be a long-term (more than 6 month) maintainer.
-  - This would be a comment in the above PR.
-  - This PR will be communicated in all appropriate communication channels. It
-    should be mentioned in any maintainer/community call. It should also be
-    posted to the appropriate mailing list or chat channels if they exist.
-- Approval by at least 3 current maintainers within two weeks of the proposal or an absolute majority of current maintainers.
-  - These votes will be recorded in the PR modifying the list of maintainers.
-- No veto by another maintainer within two weeks of proposal are recorded.
-  - All vetoes must be accompanied by a public explanation as a comment in the
-    PR for adding this maintainer
-  - The explanation of the veto must be reasonable.
-  - A veto can be retracted, in that case the approval/veto time-frame is reset.
-  - It is bad form to veto, retract, and veto again.
-- The proposed maintainer becomes a maintainer
-  - Either two weeks have passed since the third approval,
-  - Or an absolute majority of maintainers approve.
-  - In either case, no maintainer presents a veto.
+1. **Contribute Significantly**: You need to have made at least 5 significant contributions that have been accepted.
+2. **Get a Sponsor**: A current maintainer must sponsor you.
+   - Your sponsor will propose your addition by creating a pull request (PR) to update the list of maintainers.
+   - You must accept this nomination and agree to be a maintainer for at least 6 months. Confirm your acceptance in a comment on the PR.
+   - The nomination will be announced in all relevant communication channels, including maintainer/community calls and any applicable mailing lists or chat channels.
+3. **Gain Approvals**: At least 3 current maintainers must approve your nomination within two weeks, or you must receive approval from a majority of current maintainers.
+   - Approvals are recorded in the PR.
+4. **Avoid Vetoes**: No maintainer should veto your nomination within two weeks.
+   - Vetoes must be publicly explained in the PR comments and be reasonable. Vetoes can be withdrawn, but this resets the approval/veto period.
+5. **Officially Become a Maintainer**: You become a maintainer if:
+   - Two weeks pass after receiving the third approval without any vetoes, or
+   - A majority of maintainers approve your nomination without any vetoes.
+
+This process ensures a transparent and fair path to becoming a maintainer.
 
 ## Removing Maintainers
 
-Being a maintainer is not a status symbol or a title to be maintained indefinitely. It will occasionally be necessary and appropriate to move a
-maintainer to emeritus status. This can occur in the following situations:
+Being a maintainer is about active participation, not just holding a title. Sometimes, it's necessary to change a maintainer's status to emeritus for reasons such as:
 
-- Resignation of a maintainer.
-- Violation of the [Hyperledger Code of
-  Conduct](https://wiki.hyperledger.org/display/HYP/Hyperledger+Code+of+Conduct) warranting removal.
-- **Inactivity**.
-  - A general measure of inactivity will be no commits or code review comments for one reporting quarter, although this will not be strictly enforced if the maintainer expresses a reasonable intent to continue contributing.
-  - Reasonable exceptions to inactivity will be granted for known long term leave such as parental leave and medical leave.
-- Other unspecified circumstances.
+- A maintainer choosing to resign.
+- A breach of the Linux Foundation Code of Conduct that leads to removal.
+- Inactivity, defined loosely as no commits or review comments for one reporting quarter. However, exceptions are made for maintainers who plan to return to active contribution after a absences.
+- Other specific situations not listed here.
 
-Like adding a maintainer the record and governance process for moving a maintainer to emeritus status is recorded in the github PR making that change.
+The process for changing a maintainer to emeritus status is documented through a GitHub pull request (PR).
 
-Returning to active status from emeritus status uses the same steps as adding a new maintainer. Note that the emeritus maintainer already has the 5 required significant changes as there is no contribution time horizon for those.
+To return from emeritus to active status, a maintainer follows the same procedure as a new maintainer. Since emeritus maintainers have already made significant contributions, they don't need to meet the requirement for new contributions.
