@@ -5,10 +5,103 @@ updates:
   # Maintain dependencies for GitHub Actions
   #  - Check for updates once a week
   #  - Group all updates into a single PR
-  - package-ecosystem: github-actions
-    directory: /
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: weekly
+      interval: "weekly"
     groups:
       all-actions:
         patterns: [ "*" ]
+        
+  # Maintain dependencies for TypeScript and JavaScript
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for Gradle
+  - package-ecosystem: "gradle"
+    directory: "/packages/legacy/app/android/app"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for Gradle
+  - package-ecosystem: "gradle"
+    directory: "/packages/legacy/app/android"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for Gradle
+  - package-ecosystem: "gradle"
+    directory: "/packages/react-native-attestation/android"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for Gradle
+  - package-ecosystem: "gradle"
+    directory: "/packages/react-native-attestation/example/android/app"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for Gradle
+  - package-ecosystem: "gradle"
+    directory: "/packages/react-native-attestation/example/android"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for Ruby
+  - package-ecosystem: "bundler"
+    directory: "/packages/legacy/app"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Maintain dependencies for dev Container
+  - package-ecosystem: "devcontainers"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Canada/Pacific"
