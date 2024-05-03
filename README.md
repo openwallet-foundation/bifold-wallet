@@ -22,7 +22,7 @@ Currently, we're updating Bifold's architecture to make it easier to maintain an
 
 ## Contributing
 
-We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide](contributor-guide).
+We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide][contributor-guide].
 
 ## Community
 
@@ -34,15 +34,15 @@ Joining the Bifold community on OpenWallet Foundation Discord is a breeze:
 
 `#bifold` is our main discussion channel for everything Bifold wallet related. And since Bifold uses Credo (formerly Aries Framework Javascript) extensively, you might also want to join the `#credo` channel for deeper technical conversations. We can't wait to see you there!
 
-Additionally, we hold a bi-weekly user group meeting. You can find the updated schedule, past agendas, and meeting recordings on this [wiki page](https://wiki.hyperledger.org/display/ARIES/Aries+Bifold+User+Group).
+Additionally, we hold a bi-weekly user group meeting. You can find the updated schedule, past agendas, and meeting recordings on this [wiki page](https://wiki.openwallet.foundation/display/BIFOLD/).
 
-Please note, being part of the OpenWallet Foundation, we expect all interactions to adhere to the [Antitrust Policy](https://wiki.hyperledger.org/download/attachments/29034696/Antitrustnotice.png?version=1&modificationDate=1581695654000&api=v2) and [Code of Conduct](https://wiki.hyperledger.org/display/HYP/Hyperledger+Code+of+Conduct).
+Please note, being part of the OpenWallet Foundation, we expect all interactions to adhere to the [Antitrust Policy](https://wiki.hyperledger.org/download/attachments/29034696/Antitrustnotice.png?version=1&modificationDate=1581695654000&api=v2) and [Code of Conduct][code-of-conduct].
 
 # Development
 
 To better understand the technical aspects of the Bifold project including how to set it up and run it please see the following documents:
 
-1. [Developer's Guide](developers-guide)
+1. [Developer's Guide][developers-guide]
 
 # Success Stories
 
