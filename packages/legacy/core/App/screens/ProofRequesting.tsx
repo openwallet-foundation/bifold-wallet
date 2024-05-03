@@ -90,8 +90,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       color: ColorPallet.grayscale.black,
     },
     secondaryHeaderText: {
-      fontWeight: TextTheme.normal.fontWeight,
-      fontSize: 20,
+      ...TextTheme.normal,
       textAlign: 'center',
       marginTop: 8,
       color: ColorPallet.grayscale.black,
