@@ -6,13 +6,13 @@ To create an open and welcoming environment, we, both contributors and maintaine
 
 ## Our Standards
 
-This project operates in accordance with the [Linux Foundation Code of Conduct](code-of-conduct).
+This project operates in accordance with the [Linux Foundation Code of Conduct][code-of-conduct].
 
 ## Our Responsibilities
 
 Project maintainers set the standards for acceptable behavior and must respond fairly and appropriately to any unacceptable actions.
 
-They have the authority and duty to delete, change, or refuse comments, code changes, documentation edits, problem reports, and other contributions that don't follow the [Code of Conduct](code-of-conduct). They can also temporarily or permanently ban any contributor for behaviors they consider inappropriate, threatening, offensive, or harmful.
+They have the authority and duty to delete, change, or refuse comments, code changes, documentation edits, problem reports, and other contributions that don't follow the [Code of Conduct][code-of-conduct]. They can also temporarily or permanently ban any contributor for behaviors they consider inappropriate, threatening, offensive, or harmful.
 
 ## Scope
 
@@ -22,11 +22,11 @@ This Code of Conduct must be followed in project areas and in public when someon
 
 If you experience or witness abusive, harassing, or otherwise unacceptable behavior, you can report it by emailing the project team at ken@indicio.tech. We will review and investigate all complaints, leading to a necessary and appropriate response based on the situation. The project team will keep the reporter’s identity confidential. We may publish more details on our enforcement policies separately.
 
-Project maintainers who fail to uphold or enforce the [Code of Conduct](code-of-conduct) properly may be subject to temporary or permanent consequences, as decided by the project’s leadership.
+Project maintainers who fail to uphold or enforce the [Code of Conduct][code-of-conduct] properly may be subject to temporary or permanent consequences, as decided by the project’s leadership.
 
 ## Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], [version 1.4](version).
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], [version 1.4][version].
 
 [homepage]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
