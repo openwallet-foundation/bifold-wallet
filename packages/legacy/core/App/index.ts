@@ -30,7 +30,7 @@ import HomeFooterView from './components/views/HomeFooterView'
 import indyLedgers from './configs/ledgers/indy'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
-import { CommonUtilProvider } from './contexts/commons'
+import { UtilityProvider } from './contexts/utility'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
@@ -107,7 +107,7 @@ export {
   App,
   indyLedgers,
   Agent,
-  CommonUtilProvider,
+  UtilityProvider,
   AgentProvider,
   AuthProvider,
   NetworkProvider,

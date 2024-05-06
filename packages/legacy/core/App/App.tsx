@@ -16,7 +16,7 @@ import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { Container, ContainerProvider } from './container-api'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
 import { AuthProvider } from './contexts/auth'
-import { CommonUtilProvider } from './contexts/commons'
+import { UtilityProvider } from './contexts/utility'
 import { ConfigurationProvider } from './contexts/configuration'
 import { NetworkProvider } from './contexts/network'
 import { StoreProvider } from './contexts/store'
@@ -49,7 +49,7 @@ function App(sytem: Container) {
             <ThemeProvider value={theme}>
               <AnimatedComponentsProvider value={animatedComponents}>
                 <ConfigurationProvider value={defaultConfiguration}>
-                  <CommonUtilProvider>
+                  <UtilityProvider>
                     <AuthProvider>
                       <NetworkProvider>
                         <StatusBar
@@ -73,7 +73,7 @@ function App(sytem: Container) {
                         <Toast topOffset={15} config={toastConfig} />
                       </NetworkProvider>
                     </AuthProvider>
-                  </CommonUtilProvider>
+                  </UtilityProvider>
                 </ConfigurationProvider>
               </AnimatedComponentsProvider>
             </ThemeProvider>
