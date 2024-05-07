@@ -138,7 +138,7 @@ export function formatTime(
     }
     if (lessThanAnHourAgo) {
       const minutesAgo = Math.floor(millisecondsAgo / 1000 / 60)
-      return minutesAgo === 1 ? `1 ${i18n.t('Date.MinuteAgo')}` : `${minutesAgo} ${i18n.t('Date.MinutesAgo')}`
+      return minutesAgo === 1 ? `${i18n.t('Date.MinuteAgo')}` : `${i18n.t('Date.MinutesAgo', { count: minutesAgo })}`
     }
     if (sameDay) {
       return momentTime.format(hoursFormat)
