@@ -1,0 +1,134 @@
+[
+  {
+    "capture_base": {
+      "attributes": {
+        "expiry_date": "DateTime",
+        "student_first_name": "Text",
+        "student_last_name": "Text"
+      },
+      "classification": "",
+      "digest": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+      "flagged_attributes": [
+        "student_last_name",
+        "student_first_name"
+      ],
+      "type": "spec/capture_base/1.0"
+    },
+    "overlays": [
+      {
+        "attribute_character_encoding": {
+          "expiry_date": "utf-8",
+          "student_first_name": "utf-8",
+          "student_last_name": "utf-8"
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "default_character_encoding": "utf-8",
+        "digest": "E-HUFu1rj2RESNP8LYpo-kr0IiGghzmn-yjZb8w2-gy0",
+        "type": "spec/overlays/character_encoding/1.0"
+      },
+      {
+        "attribute_categories": [],
+        "attribute_labels": {
+          "expiry_date": "ID Expiry Date",
+          "student_first_name": "Student First Name",
+          "student_last_name": "Student Last Name"
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "category_labels": {},
+        "digest": "ENR3_iqVATq5dWx_I4YzKbf35mv-OipIdbnNt4nGmsJU",
+        "language": "en",
+        "type": "spec/overlays/label/1.0"
+      },
+      {
+        "attribute_information": {
+          "expiry_date": "The expiry date of the Best BC College student ID card.",
+          "student_first_name": "The first name of the Best BC College student.",
+          "student_last_name": "The last name of the Best BC College student."
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "digest": "Emn1K6J6RaTBWEjhjTDj3WYErRvleBKATs6adzcqPTc8",
+        "language": "en",
+        "type": "spec/overlays/information/1.0"
+      },
+      {
+        "attribute_categories": [],
+        "attribute_labels": {
+          "expiry_date": "Date d'expiration",
+          "student_first_name": "Prénom de l'étudiant",
+          "student_last_name": "Nom de famille de l'étudiant"
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "category_labels": {},
+        "digest": "E-MLSlBNMpmYJSKmrFUBYDGCCZM0t0Y_j8hQjyONnHkM",
+        "language": "fr",
+        "type": "spec/overlays/label/1.0"
+      },
+      {
+        "attribute_information": {
+          "expiry_date": "La date d'expiration de la carte d'étudiant.",
+          "student_first_name": "Le prénom du titulaire de la carte d'étudiant",
+          "student_last_name": "Le nom (de famille) du titulaire de la carte d'étudiant."
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "digest": "EGn9GBdK0LDKLt7uizMpMKXAQU9KQ1XhApLBM3NT9GOY",
+        "language": "fr",
+        "type": "spec/overlays/information/1.0"
+      },
+      {
+        "attribute_formats": {
+          "expiry_date": "YYYYMMDD"
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "digest": "EVKeZx9XY2URist1gx-7XsuwceDuaUv-EIqxfh3UWoTk",
+        "type": "spec/overlays/format/1.0"
+      },
+      {
+        "attribute_standards": {
+          "expiry_date": "urn:iso:std:iso:1989"
+        },
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "digest": "EBmVnxGhcxhC2yrJZA_8ZLsrH_MWA6Bh-0la39e9jg2g",
+        "type": "spec/overlays/standard/1.0"
+      },
+      {
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "credential_help_text": "This is an example of a simple student card that might be issued by a Canadian University or College.",
+        "credential_support_url": "mailto:DItrust@gov.bc.ca",
+        "description": "An example Student Card that might be issued from a Canadian University or College",
+        "digest": "EZ6QKl1zTJplRtOL7z7q_Tfg8kTMghmTFE3e5S3CDlFo",
+        "issuer": "Best BC College",
+        "issuer_description": "Best BC College",
+        "issuer_url": "https://digital.gov.bc.ca/digital-trust/contact/",
+        "language": "en",
+        "name": "DEMO - Student Card",
+        "type": "spec/overlays/meta/1.0",
+        "watermark": "NON-PRODUCTION"
+      },
+      {
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "credential_help_text": "Il s'agit d'un exemple de simple carte d'étudiant qui pourrait être émise par une université ou un collège canadien.",
+        "credential_support_url": "mailto:DItrust@gov.bc.ca",
+        "description": "Un exemple de carte étudiante qui pourrait être émise par une université ou un collège canadien",
+        "digest": "EaqTc0Ll59tCS4mhfWn0AFt1VwcH74GI1YTsD1jVtNbU",
+        "issuer": "Best BC College",
+        "issuer_description": "Best BC College",
+        "issuer_url": "https://digital.gov.bc.ca/digital-trust/contact/",
+        "language": "fr",
+        "name": "DÉMO - Carte d'étudiant",
+        "type": "spec/overlays/meta/1.0"
+      },
+      {
+        "logo": "https://raw.githubusercontent.com/bcgov/aries-oca-bundles/main/OCABundles/schema/bcgov-digital-trust/student-card/best-bc-logo.png",
+        "background_image_slice": "https://raw.githubusercontent.com/bcgov/aries-oca-bundles/main/OCABundles/schema/bcgov-digital-trust/student-card/best-bc-background-image-slice.jpg",
+        "background_image": "https://raw.githubusercontent.com/bcgov/aries-oca-bundles/main/OCABundles/schema/bcgov-digital-trust/student-card/best-bc-background-image.jpg",
+        "primary_background_color": "#32674e",
+        "capture_base": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
+        "digest": "EBQbQEV6qSEGDzGLj1CqT4e6yzESjPimF-Swmyltw5jU",
+        "expiry_date_attribute": "expiry_date",
+        "primary_attribute": "",
+        "secondary_attribute": "",
+        "type": "aries/overlays/branding/1.0"
+      }
+    ]
+  }
+]
