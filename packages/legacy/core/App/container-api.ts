@@ -1,3 +1,4 @@
+import { BaseLogger } from '@credo-ts/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'

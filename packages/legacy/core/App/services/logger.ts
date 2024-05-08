@@ -20,7 +20,7 @@ export class ConsoleLogger extends BaseLogger {
     printDate: false,
   }
 
-  constructor() {
+  public constructor() {
     super()
 
     const transport = [consoleTransport]

@@ -15,6 +15,7 @@ import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
+import { ConsoleLogger } from './services/logger'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 import {
   Migration as MigrationState,
@@ -23,7 +24,6 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
-import { ConsoleLogger } from './services/logger'
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private container: DependencyContainer

@@ -1,5 +1,5 @@
-import React, { createContext, useContext } from 'react'
 import { BaseLogger } from '@credo-ts/core'
+import React, { createContext, useContext } from 'react'
 
 import { ConsoleLogger } from '../services/logger'
 
