@@ -8,6 +8,9 @@ import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 
+export enum PROOF_TOKENS {
+  GROUP_BY_REFERENT = 'proof.groupByReferant',
+}
 export enum SCREEN_TOKENS {
   SCREEN_PREFACE = 'screen.preface',
   SCREEN_TERMS = 'screen.terms',
@@ -39,6 +42,7 @@ export enum OBJECT_TOKENS {
 }
 
 export const TOKENS = {
+  ...PROOF_TOKENS,
   ...SCREEN_TOKENS,
   ...SERVICE_TOKENS,
   ...STACK_TOKENS,
@@ -56,6 +60,7 @@ export type FN_ONBOARDING_DONE = (
 type FN_LOADSTATE = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 
 export interface TokenMapping {
+  [TOKENS.GROUP_BY_REFERENT]: boolean
   [TOKENS.SCREEN_PREFACE]: React.FC
   [TOKENS.STACK_ONBOARDING]: React.FC
   [TOKENS.SCREEN_TERMS]: { screen: React.FC; version: boolean | string }
