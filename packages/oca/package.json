@@ -15,7 +15,8 @@
     "clean": "rimraf ./build",
     "compile": "tsc",
     "prepublishOnly": "yarn run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "TZ=GMT jest --config ./jest.config.js",
+    "test:watch": "TZ=GMT jest --config ./jest.config.js --watch"
   },
   "repository": {
     "type": "git",
@@ -31,18 +32,22 @@
   },
   "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "devDependencies": {
-    "@babel/runtime": "^7.20.0",
+    "@testing-library/jest-native": "5.4.3",
+    "@types/jest": "29.5.5",
     "@types/lodash.startcase": "^4.4.7",
     "@typescript-eslint/parser": "^6.6.0",
     "eslint": "^8.48.0",
     "eslint-import-resolver-typescript": "^2.5.0",
+    "jest": "29.6.4",
     "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.0.4"
   },
   "dependencies": {
     "@credo-ts/anoncreds": "0.5.2",
     "@credo-ts/core": "0.5.2",
     "axios": "^1.4.0",
-    "lodash.startcase": "^4.4.0"
+    "lodash.startcase": "^4.4.0",
+    "react-native-fs": "^2.16.6"
   }
 }

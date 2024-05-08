@@ -1,5 +1,6 @@
 import startCase from 'lodash.startcase'
 
+import { defaultBundleLanguage } from '../../constants'
 import {
   IBrandingOverlayData,
   ILegacyBrandingOverlayData,
@@ -98,7 +99,7 @@ export class OCABundle implements OCABundleType {
     this.bundle = bundle
     this.options = {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
-      language: options?.language ?? 'en',
+      language: options?.language ?? defaultBundleLanguage,
     }
   }
 
@@ -168,6 +169,8 @@ export class OCABundle implements OCABundleType {
 export class DefaultOCABundleResolver implements OCABundleResolverType {
   protected bundles: Record<string, OverlayBundle | string> = {}
   protected options: OCABundleResolverOptions
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private _log?: any
 
   public constructor(
     bundlesData: Record<string, IOverlayBundleData | string> = {},
@@ -182,13 +185,30 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
         }
       } catch (error) {
         // might get an error trying to parse javascript's default value
+        this.log?.error(`Error parsing bundle for ${cid}`, error)
       }
     }
 
     this.options = {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
-      language: options?.language ?? 'en',
+      language: options?.language ?? defaultBundleLanguage,
     }
+  }
+
+  /**
+   * Sets the log value.
+   * @param value - The new value for the log.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  set log(value: any) {
+    this._log = value
+  }
+
+  /**
+   * Get the log value.
+   */
+  get log() {
+    return this._log
   }
 
   public getBrandingOverlayType(): BrandingOverlayType {
@@ -197,7 +217,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
 
   private getDefaultBundle(params: { language?: string; identifiers?: Identifiers; meta?: Meta }) {
     if (!params.language) {
-      params.language = 'en'
+      params.language = defaultBundleLanguage
     }
 
     const metaOverlay: IMetaOverlayData = {
@@ -262,7 +282,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
   }
 
   public resolve(params: { identifiers: Identifiers; language?: string }): Promise<OCABundle | undefined> {
-    const language = params.language || 'en'
+    const language = params.language || defaultBundleLanguage
     for (const item of [
       params.identifiers?.credentialDefinitionId,
       params.identifiers?.schemaId,
