@@ -33,7 +33,6 @@ import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
-import { UtilityProvider } from './contexts/utility'
 import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
@@ -107,7 +106,6 @@ export {
   App,
   indyLedgers,
   Agent,
-  UtilityProvider,
   AgentProvider,
   AuthProvider,
   NetworkProvider,

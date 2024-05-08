@@ -21,7 +21,6 @@ import { NetworkProvider } from './contexts/network'
 import { StoreProvider } from './contexts/store'
 import { ThemeProvider } from './contexts/theme'
 import { TourProvider } from './contexts/tour/tour-provider'
-import { UtilityProvider } from './contexts/utility'
 import { defaultConfiguration } from './defaultConfiguration'
 import { initLanguages, initStoredLanguage, translationResources } from './localization'
 import RootStack from './navigators/RootStack'
@@ -49,31 +48,29 @@ function App(sytem: Container) {
             <ThemeProvider value={theme}>
               <AnimatedComponentsProvider value={animatedComponents}>
                 <ConfigurationProvider value={defaultConfiguration}>
-                  <UtilityProvider>
-                    <AuthProvider>
-                      <NetworkProvider>
-                        <StatusBar
-                          hidden={false}
-                          barStyle="light-content"
-                          backgroundColor={theme.ColorPallet.brand.primary}
-                          translucent={false}
-                        />
-                        <NetInfo />
-                        <ErrorModal />
-                        <TourProvider
-                          homeTourSteps={homeTourSteps}
-                          credentialsTourSteps={credentialsTourSteps}
-                          credentialOfferTourSteps={credentialOfferTourSteps}
-                          proofRequestTourSteps={proofRequestTourSteps}
-                          overlayColor={'gray'}
-                          overlayOpacity={0.7}
-                        >
-                          <RootStack />
-                        </TourProvider>
-                        <Toast topOffset={15} config={toastConfig} />
-                      </NetworkProvider>
-                    </AuthProvider>
-                  </UtilityProvider>
+                  <AuthProvider>
+                    <NetworkProvider>
+                      <StatusBar
+                        hidden={false}
+                        barStyle="light-content"
+                        backgroundColor={theme.ColorPallet.brand.primary}
+                        translucent={false}
+                      />
+                      <NetInfo />
+                      <ErrorModal />
+                      <TourProvider
+                        homeTourSteps={homeTourSteps}
+                        credentialsTourSteps={credentialsTourSteps}
+                        credentialOfferTourSteps={credentialOfferTourSteps}
+                        proofRequestTourSteps={proofRequestTourSteps}
+                        overlayColor={'gray'}
+                        overlayOpacity={0.7}
+                      >
+                        <RootStack />
+                      </TourProvider>
+                      <Toast topOffset={15} config={toastConfig} />
+                    </NetworkProvider>
+                  </AuthProvider>
                 </ConfigurationProvider>
               </AnimatedComponentsProvider>
             </ThemeProvider>
