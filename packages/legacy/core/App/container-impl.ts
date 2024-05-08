@@ -23,7 +23,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
-
+import { ConsoleLogger } from './services/logger'
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private container: DependencyContainer
@@ -41,6 +41,8 @@ export class MainContainer implements Container {
     this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
     this.container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
+    this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
+    this.container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
 
     this.container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,

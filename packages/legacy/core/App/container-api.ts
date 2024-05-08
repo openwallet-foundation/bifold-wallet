@@ -8,9 +8,12 @@ import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 
+import { BaseLogger } from '@credo-ts/core'
+
 export enum PROOF_TOKENS {
   GROUP_BY_REFERENT = 'proof.groupByReferant',
 }
+
 export enum SCREEN_TOKENS {
   SCREEN_PREFACE = 'screen.preface',
   SCREEN_TERMS = 'screen.terms',
@@ -41,6 +44,10 @@ export enum OBJECT_TOKENS {
   OBJECT_ONBOARDINGCONFIG = 'object.onboarding-config',
 }
 
+export enum UTILITY_TOKENS {
+  UTIL_LOGGER = 'utility.logger',
+}
+
 export const TOKENS = {
   ...PROOF_TOKENS,
   ...SCREEN_TOKENS,
@@ -50,6 +57,7 @@ export const TOKENS = {
   ...COMP_TOKENS,
   ...LOAD_STATE_TOKENS,
   ...OBJECT_TOKENS,
+  ...UTILITY_TOKENS,
 }
 
 export type FN_ONBOARDING_DONE = (
@@ -70,6 +78,7 @@ export interface TokenMapping {
   [TOKENS.LOAD_STATE]: FN_LOADSTATE
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.OBJECT_ONBOARDINGCONFIG]: ScreenOptionsType
+  [TOKENS.UTIL_LOGGER]: BaseLogger
 }
 
 export interface Container {
