@@ -9,16 +9,16 @@ const url = require('url')
 const networkUrl =
   'https://raw.githubusercontent.com/hyperledger/indy-node-monitor/main/fetch-validator-status/networks.json'
 const networksToAdd = [
-  { id: 'bct', connectionOnStartup: true, production: false },
-  { id: 'cdn', connectionOnStartup: true, production: false },
-  { id: 'ctn', connectionOnStartup: true, production: false },
-  { id: 'cpn', connectionOnStartup: true, production: true },
-  { id: 'imn', connectionOnStartup: true, production: true },
-  { id: 'idn', connectionOnStartup: true, production: false },
-  { id: 'itn', connectionOnStartup: true, production: false },
-  { id: 'sbn', connectionOnStartup: true, production: false },
-  { id: 'ssn', connectionOnStartup: true, production: false },
-  { id: 'smn', connectionOnStartup: true, production: true },
+  { id: 'bct', connectOnStartup: true, production: false },
+  { id: 'cdn', connectOnStartup: true, production: false },
+  { id: 'ctn', connectOnStartup: true, production: false },
+  { id: 'cpn', connectOnStartup: true, production: true },
+  { id: 'imn', connectOnStartup: true, production: true },
+  { id: 'idn', connectOnStartup: true, production: false },
+  { id: 'itn', connectOnStartup: true, production: false },
+  { id: 'sbn', connectOnStartup: true, production: false },
+  { id: 'ssn', connectOnStartup: true, production: false },
+  { id: 'smn', connectOnStartup: true, production: true },
 ]
 const networkNameRe = /\W+/im
 
@@ -56,7 +56,7 @@ const main = async () => {
       id: name,
       indyNamespace: n['indyNamespace'],
       isProduction: n['production'],
-      connectionOnStartup: n['connectionOnStartup'],
+      connectOnStartup: n['connectOnStartup'],
       genesisTransactions: transaction.trim(),
     })
   }
