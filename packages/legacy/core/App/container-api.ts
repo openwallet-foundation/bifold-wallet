@@ -9,8 +9,6 @@ import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 
-import { BaseLogger } from '@credo-ts/core'
-
 export enum PROOF_TOKENS {
   GROUP_BY_REFERENT = 'proof.groupByReferant',
 }
