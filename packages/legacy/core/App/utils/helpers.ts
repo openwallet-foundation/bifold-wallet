@@ -453,7 +453,8 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
 export const processProofAttributes = (
   request?: AnonCredsProofRequest,
   credentials?: AnonCredsCredentialsForProofRequest,
-  credentialRecords?: CredentialExchangeRecord[]
+  credentialRecords?: CredentialExchangeRecord[],
+  groupByReferent?: boolean
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
@@ -478,10 +479,11 @@ export const processProofAttributes = (
 
     if (credentialList.length <= 0) {
       const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key])
-      if (!processedAttributes[missingAttributes.credName]) {
-        processedAttributes[missingAttributes.credName] = missingAttributes
+      const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
+      if (!processedAttributes[missingCredGroupKey]) {
+        processedAttributes[missingCredGroupKey] = missingAttributes
       } else {
-        processedAttributes[missingAttributes.credName].attributes?.push(...(missingAttributes.attributes ?? []))
+        processedAttributes[missingCredGroupKey].attributes?.push(...(missingAttributes.attributes ?? []))
       }
     }
 
@@ -505,7 +507,7 @@ export const processProofAttributes = (
         continue
       }
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
-        if (!processedAttributes[credential?.credentialId]) {
+        if (!processedAttributes[credential.credentialId]) {
           // init processedAttributes object
           processedAttributes[credential.credentialId] = {
             credExchangeRecord,
@@ -591,7 +593,8 @@ const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
 export const processProofPredicates = (
   request?: AnonCredsProofRequest,
   credentials?: AnonCredsCredentialsForProofRequest,
-  credentialRecords?: CredentialExchangeRecord[]
+  credentialRecords?: CredentialExchangeRecord[],
+  groupByReferent?: boolean
 ): { [key: string]: ProofCredentialPredicates } => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
   const requestedProofPredicates = request?.requested_predicates
@@ -614,10 +617,11 @@ export const processProofPredicates = (
 
     if (credentialList.length <= 0) {
       const missingPredicates = addMissingDisplayPredicates(requestedProofPredicates[key])
-      if (!processedPredicates[missingPredicates.credName]) {
-        processedPredicates[missingPredicates.credName] = missingPredicates
+      const missingCredGroupKey = groupByReferent ? key : missingPredicates.credName
+      if (!processedPredicates[missingCredGroupKey]) {
+        processedPredicates[missingCredGroupKey] = missingPredicates
       } else {
-        processedPredicates[missingPredicates.credName].predicates?.push(...(missingPredicates.predicates ?? []))
+        processedPredicates[missingCredGroupKey].predicates?.push(...(missingPredicates.predicates ?? []))
       }
     }
 
@@ -643,7 +647,6 @@ export const processProofPredicates = (
           credential?.credentialInfo?.schemaId
         )
       }
-
       if (!processedPredicates[credential.credentialId]) {
         processedPredicates[credential.credentialId] = {
           altCredentials,
@@ -678,7 +681,8 @@ export const retrieveCredentialsForProof = async (
   agent: BifoldAgent,
   proof: ProofExchangeRecord,
   fullCredentials: CredentialExchangeRecord[],
-  t: TFunction<'translation', undefined>
+  t: TFunction<'translation', undefined>,
+  groupByReferent?: boolean
 ) => {
   try {
     const format = await agent.proofs.getFormatData(proof.id)
@@ -746,8 +750,18 @@ export const retrieveCredentialsForProof = async (
       )
 
       const filtered = filterInvalidProofRequestMatches(anonCredsCredentialsForRequest, descriptorMetadata)
-      const processedAttributes = processProofAttributes(anonCredsProofRequest, filtered, fullCredentials)
-      const processedPredicates = processProofPredicates(anonCredsProofRequest, filtered, fullCredentials)
+      const processedAttributes = processProofAttributes(
+        anonCredsProofRequest,
+        filtered,
+        fullCredentials,
+        groupByReferent
+      )
+      const processedPredicates = processProofPredicates(
+        anonCredsProofRequest,
+        filtered,
+        fullCredentials,
+        groupByReferent
+      )
       const groupedProof = Object.values(mergeAttributesAndPredicates(processedAttributes, processedPredicates))
 
       return {
@@ -761,8 +775,8 @@ export const retrieveCredentialsForProof = async (
     const proofRequest = format.request?.anoncreds ?? format.request?.indy
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = processProofAttributes(proofRequest, proofFormat, fullCredentials)
-    const predicates = processProofPredicates(proofRequest, proofFormat, fullCredentials)
+    const attributes = processProofAttributes(proofRequest, proofFormat, fullCredentials, groupByReferent)
+    const predicates = processProofPredicates(proofRequest, proofFormat, fullCredentials, groupByReferent)
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
 
     return { groupedProof, retrievedCredentials: proofFormat, fullCredentials }
