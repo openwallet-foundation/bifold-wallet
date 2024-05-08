@@ -8225,6 +8225,7 @@ __metadata:
     react-native-gifted-chat: "*"
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
+    react-native-logs: ^5.1.0
     react-native-orientation-locker: ^1.6.0
     react-native-permissions: ^4.0.1
     react-native-qrcode-svg: ^6.2.0
@@ -19901,6 +19902,13 @@ __metadata:
   version: 5.0.1
   resolution: "react-native-logs@npm:5.0.1"
   checksum: 71af385c85a7d45d2046ee9fa05ec49e989a446660742d732e2ba210528fb5145f81308af3f65be607bbf207a875480344cca3ec5e7943a7c10ba2d882f28266
+  languageName: node
+  linkType: hard
+
+"react-native-logs@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "react-native-logs@npm:5.1.0"
+  checksum: 21a26b0b2d60facbc0207c0e402cb351e3d4ffb41c44297c0a1af6968130e06556ae302153ae6bd8707d79046efc85a277b93cff26dbdfebd67a63a0323e76ed
   languageName: node
   linkType: hard
 
