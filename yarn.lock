@@ -4657,7 +4657,7 @@ __metadata:
     eslint-import-resolver-typescript: ^2.5.0
     react: 18.2.0
     react-native: 0.72.5
-    react-native-logs: ^5.0.1
+    react-native-logs: ^5.1.0
     rimraf: ^5.0.0
     typescript: ^5.0.4
   peerDependencies:
@@ -4666,7 +4666,7 @@ __metadata:
     buffer: ^6.0.3
     react: ^18.2.0
     react-native: ^0.72.5
-    react-native-logs: ^5.0.1
+    react-native-logs: ^5.1.0
   languageName: unknown
   linkType: soft
 
@@ -19895,13 +19895,6 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: aa03c37a254e4bec71dcd8b9844ece091e9b14ff38b6e1db6307674d33f62477c8d42b5a022da8ec892586004985846e08b79822f05989382ef07ba696438917
-  languageName: node
-  linkType: hard
-
-"react-native-logs@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "react-native-logs@npm:5.0.1"
-  checksum: 71af385c85a7d45d2046ee9fa05ec49e989a446660742d732e2ba210528fb5145f81308af3f65be607bbf207a875480344cca3ec5e7943a7c10ba2d882f28266
   languageName: node
   linkType: hard
 
