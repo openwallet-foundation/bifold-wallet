@@ -20,16 +20,16 @@ export const initNodeAndSdk = async (eventHandler: any) => {
         if (useInviteCode) {
 
             // Physical phone mnemonic
-            // const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
+            const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
 
             // Emulator mnemonic
-            const mnemonic = 'large artefact physical panel shed movie inhale sausage sense bundle depart ribbon';
+            // const mnemonic = 'large artefact physical panel shed movie inhale sausage sense bundle depart ribbon';
 
             // Physical phone invite code
-            // const inviteCode = '6FUD-Z8A9';
+            const inviteCode = '6FUD-Z8A9';
 
             // Emulator invite code
-            const inviteCode = 'XLT3-8WFJ';
+            // const inviteCode = 'XLT3-8WFJ';
 
             setItem(MNEMONIC_STORE, mnemonic);
 

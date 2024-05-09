@@ -450,6 +450,12 @@ const SmartProxy = () => {
                                     <Text style={theme.TextTheme.label}>Create</Text>
                                 </TouchableOpacity>
                             </View>
+
+                            <View style={styles.buttonPadding}>
+                                <TouchableOpacity style={theme.Buttons.primary} onPress={() => handleProxyCreation()}>
+                                    <Text style={theme.TextTheme.label}>Add Email using VC</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     {showProxyCreateScreen && <BottomPopup
