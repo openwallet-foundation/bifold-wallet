@@ -15,6 +15,7 @@ import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
+import { ConsoleLogger } from './services/logger'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 import {
   Migration as MigrationState,
@@ -23,7 +24,6 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
-
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private container: DependencyContainer
@@ -39,8 +39,9 @@ export class MainContainer implements Container {
     this.container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this.container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
-    this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
     this.container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
+    this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
+    this.container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
 
     this.container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,

@@ -1,4 +1,4 @@
-import { Agent, ConsoleLogger, HttpOutboundTransport, LogLevel, WsOutboundTransport } from '@credo-ts/core'
+import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import { useNavigation } from '@react-navigation/core'
@@ -96,6 +96,7 @@ const Splash: React.FC = () => {
   const container = useContainer()
   const [mounted, setMounted] = useState(false)
   const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -220,7 +221,7 @@ const Splash: React.FC = () => {
               id: credentials.id,
               key: credentials.key,
             },
-            logger: new ConsoleLogger(LogLevel.trace),
+            logger,
             autoUpdateStorageOnStartup: true,
           },
           dependencies: agentDependencies,

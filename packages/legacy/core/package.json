@@ -198,6 +198,7 @@
     "react-native-gifted-chat": "*",
     "react-native-keychain": "^8.1.1",
     "react-native-localize": "^2.2.4",
+    "react-native-logs": "^5.1.0",
     "react-native-orientation-locker": "*",
     "react-native-permissions": "^4.0.1",
     "react-native-qrcode-svg": "^6.2.0",
