@@ -10,7 +10,7 @@ import { FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle, us
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { useConfiguration } from '../../contexts/configuration'
+import { TOKENS, useContainer } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { NotificationStackParams, Screens } from '../../types/navigators'
@@ -94,7 +94,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
-  const { OCABundleResolver, getCredentialHelpDictionary } = useConfiguration()
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
@@ -102,6 +101,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
     credential?.revocationNotification !== undefined && !!proof
   )
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   // below navigation only to be used from proof request screen
@@ -282,7 +282,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       },
       language: i18n.language,
     }
-    OCABundleResolver.resolveAllBundles(params).then((bundle) => {
+    bundleResolver.resolveAllBundles(params).then((bundle) => {
       if (proof) {
         setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
       }

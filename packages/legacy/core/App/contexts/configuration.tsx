@@ -1,7 +1,6 @@
 import { Agent } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
-import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
 import { ReducerAction, createContext, useContext } from 'react'
 
@@ -43,7 +42,6 @@ export interface ConfigurationContext {
   credentialListOptions: React.FC
   credentialEmptyList: React.FC<EmptyListProps>
   developer: React.FC
-  OCABundleResolver: OCABundleResolverType
   proofTemplateBaseUrl?: string
   scan: React.FC<StackScreenProps<ConnectStackParams>>
   record: React.FC<RecordProps>
