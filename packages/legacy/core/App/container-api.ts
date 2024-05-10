@@ -9,6 +9,7 @@ import { ReducerAction } from './contexts/reducers/store'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
+import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 
 export enum PROOF_TOKENS {
   GROUP_BY_REFERENT = 'proof.groupByReferant',
@@ -47,6 +48,7 @@ export enum OBJECT_TOKENS {
 export enum UTILITY_TOKENS {
   UTIL_LOGGER = 'utility.logger',
   UTIL_OCA_RESOLVER = 'utility.oca-resolver',
+  UTIL_LEDGERS = 'utility.ledgers',
 }
 
 export const TOKENS = {
@@ -81,6 +83,7 @@ export interface TokenMapping {
   [TOKENS.OBJECT_ONBOARDINGCONFIG]: ScreenOptionsType
   [TOKENS.UTIL_LOGGER]: BaseLogger
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
+  [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
 }
 
 export interface Container {

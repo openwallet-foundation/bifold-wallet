@@ -46,7 +46,6 @@ export interface ConfigurationContext {
   scan: React.FC<StackScreenProps<ConnectStackParams>>
   record: React.FC<RecordProps>
   PINSecurity: PINSecurityParams
-  indyLedgers: IndyVdrPoolConfig[]
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   supportedLanguages: Locales[]

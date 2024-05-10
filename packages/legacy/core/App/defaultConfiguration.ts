@@ -31,7 +31,6 @@ export const defaultConfiguration: ConfigurationContext = {
   scan: Scan,
   record: Record,
   PINSecurity: { rules: PINRules, displayHelper: false },
-  indyLedgers: defaultIndyLedgers,
   settings: [],
   customNotification: {
     component: () => null,
