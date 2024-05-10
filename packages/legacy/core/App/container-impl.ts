@@ -6,6 +6,7 @@ import { DependencyContainer } from 'tsyringe'
 
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
+import defaultIndyLedgers from './configs/ledgers/indy'
 import { LocalStorageKeys } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
@@ -26,7 +27,6 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
-import defaultIndyLedgers from './configs/ledgers/indy'
 
 
 export class MainContainer implements Container {

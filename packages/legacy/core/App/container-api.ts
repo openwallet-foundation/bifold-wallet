@@ -1,5 +1,6 @@
 import { BaseLogger } from '@credo-ts/core'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
+import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -9,7 +10,6 @@ import { ReducerAction } from './contexts/reducers/store'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
-import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 
 export enum PROOF_TOKENS {
   GROUP_BY_REFERENT = 'proof.groupByReferant',
