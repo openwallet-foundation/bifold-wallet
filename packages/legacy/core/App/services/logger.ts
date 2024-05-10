@@ -1,86 +1,62 @@
-/* eslint-disable no-console,@typescript-eslint/no-explicit-any */
+import { BaseLogger } from '@credo-ts/core'
+import { consoleTransport, logger } from 'react-native-logs'
 
-export enum LogLevel {
-  test = 0,
-  trace = 1,
-  debug = 2,
-  info = 3,
-  warn = 4,
-  error = 5,
-  fatal = 6,
-  off = 7,
-}
-
-export interface Logger {
-  logLevel: LogLevel
-
-  test(message: string, data?: Record<string, any>): void
-  trace(message: string, data?: Record<string, any>): void
-  debug(message: string, data?: Record<string, any>): void
-  info(message: string, data?: Record<string, any>): void
-  warn(message: string, data?: Record<string, any>): void
-  error(message: string, data?: Record<string, any>): void
-  fatal(message: string, data?: Record<string, any>): void
-}
-
-const replaceError = (_: unknown, value: unknown) => {
-  if (value instanceof Error) {
-    const newValue = Object.getOwnPropertyNames(value).reduce(
-      (obj, propName) => {
-        obj[propName] = (value as unknown as Record<string, unknown>)[propName]
-        return obj
-      },
-      { name: value.name } as Record<string, unknown>
-    )
-    return newValue
+export class ConsoleLogger extends BaseLogger {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private log: any
+  private config = {
+    levels: {
+      test: 0,
+      trace: 0,
+      debug: 0,
+      info: 1,
+      warn: 2,
+      error: 3,
+      fatal: 4,
+    },
+    severity: 'debug',
+    async: true,
+    dateFormat: 'time',
+    printDate: false,
   }
 
-  return value
-}
+  public constructor() {
+    super()
 
-export class AppConsoleLogger {
-  public logLevel: LogLevel
-
-  // Map our log levels to console levels
-  private consoleLogMap = {
-    [LogLevel.test]: 'log',
-    [LogLevel.trace]: 'log',
-    [LogLevel.debug]: 'debug',
-    [LogLevel.info]: 'info',
-    [LogLevel.warn]: 'warn',
-    [LogLevel.error]: 'error',
-    [LogLevel.fatal]: 'error',
-  } as const
-
-  public constructor(logLevel: LogLevel = LogLevel.off) {
-    this.logLevel = logLevel
-  }
-
-  public log(level: Exclude<LogLevel, LogLevel.off>, message: string, data?: Record<string, any>): void {
-    // Get console method from mapping
-    const consoleLevel = this.consoleLogMap[level]
-
-    // Get logger prefix from log level names in enum
-    const prefix = LogLevel[level].toUpperCase()
-
-    // Return early if logging is not enabled for this level
-    if (!this.isEnabled(level)) {
-      console.log('logger disabled')
-      return
+    const transport = [consoleTransport]
+    const config = {
+      ...this.config,
+      transport,
     }
 
-    // Log, with or without data
-    if (data) {
-      console[consoleLevel](
-        `${prefix}: ${new Date().toISOString()} - ${message}`,
-        JSON.stringify(data, replaceError, 2)
-      )
-    } else {
-      console[consoleLevel](`${prefix}:  ${new Date().toISOString()} - ${message}`)
-    }
+    this.log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
   }
 
-  private isEnabled(logLevel: LogLevel) {
-    return logLevel >= this.logLevel
+  public test(message: string, data?: object | undefined): void {
+    this.log?.test(message, data)
+  }
+
+  public trace(message: string, data?: object | undefined): void {
+    this.log?.trace(message, data)
+  }
+
+  public debug(message: string, data?: object | undefined): void {
+    this.log?.debug(message, data)
+  }
+
+  public info(message: string, data?: object | undefined): void {
+    this.log?.info(message, data)
+  }
+
+  public warn(message: string, data?: object | undefined): void {
+    this.log?.warn(message, data)
+  }
+
+  public error(message: string, data?: object | undefined): void {
+    this.log?.error(message, data)
+  }
+
+  public fatal(message: string, data?: object | undefined): void {
+    this.log?.fatal(message, data)
   }
 }
