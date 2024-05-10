@@ -19,6 +19,7 @@ import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
 import { TOKENS, useContainer } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
+import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -45,7 +46,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   const { credentialId } = route.params
-
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
@@ -63,6 +63,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation.goalCode
+  const { enableTours: enableToursConfig } = useConfiguration()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
