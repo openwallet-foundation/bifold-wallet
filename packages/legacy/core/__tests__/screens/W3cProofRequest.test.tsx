@@ -32,9 +32,7 @@ import {
   testW3cCredentialRecord,
 } from './fixtures/w3c-proof-request'
 
-jest.mock("../../App/container-api", ()=>{
-  return require("../../__mocks__/custom/container-api")
-});
+jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
