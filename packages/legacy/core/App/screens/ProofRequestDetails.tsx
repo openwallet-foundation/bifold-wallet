@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import VerifierCredentialCard from '../components/misc/VerifierCredentialCard'
 import AlertModal from '../components/modals/AlertModal'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useContainer } from '../container-api'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
@@ -35,20 +35,21 @@ interface ProofRequestAttributesCardProps {
 const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({ data, onChangeValue }) => {
   const { ColorPallet } = useTheme()
   const { i18n } = useTranslation()
-  const { OCABundleResolver } = useConfiguration()
-
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
   const [attributes, setAttributes] = useState<Field[] | undefined>(undefined)
   const [credDefId, setCredDefId] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     const attributes = buildFieldsFromAnonCredsProofRequestTemplate(data)
-    OCABundleResolver.presentationFields({
-      identifiers: { schemaId: data.schema },
-      attributes,
-      language: i18n.language,
-    }).then((fields) => {
-      setAttributes(fields)
-    })
+    bundleResolver
+      .presentationFields({
+        identifiers: { schemaId: data.schema },
+        attributes,
+        language: i18n.language,
+      })
+      .then((fields) => {
+        setAttributes(fields)
+      })
   }, [data.schema])
 
   useEffect(() => {
@@ -90,7 +91,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const [store] = useStore()
   const { t } = useTranslation()
   const { i18n } = useTranslation()
-  const { OCABundleResolver } = useConfiguration()
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
 
   const { agent } = useAgent()
   if (!agent) {
@@ -140,7 +141,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     }
     const attributes = template.payload.type === ProofRequestType.AnonCreds ? template.payload.data : []
 
-    OCABundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
+    bundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
       const metaOverlay =
         bundle?.metaOverlay ||
         new MetaOverlay({

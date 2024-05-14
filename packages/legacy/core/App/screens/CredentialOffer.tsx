@@ -17,6 +17,7 @@ import CredentialCard from '../components/misc/CredentialCard'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
+import { TOKENS, useContainer } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
@@ -45,13 +46,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   }
 
   const { credentialId } = route.params
-
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertConnectedNetwork } = useNetwork()
-  const { OCABundleResolver, enableTours: enableToursConfig } = useConfiguration()
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
@@ -63,6 +63,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation.goalCode
+  const { enableTours: enableToursConfig } = useConfiguration()
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -132,7 +133,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     const resolvePresentationFields = async () => {
       const identifiers = getCredentialIdentifiers(credential)
       const attributes = buildFieldsFromAnonCredsCredential(credential)
-      const fields = await OCABundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
+      const fields = await bundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
+
       return { fields }
     }
 

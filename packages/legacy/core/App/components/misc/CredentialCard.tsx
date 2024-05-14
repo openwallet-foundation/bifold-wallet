@@ -3,7 +3,7 @@ import { Attribute, BrandingOverlayType, Predicate } from '@hyperledger/aries-oc
 import React from 'react'
 import { ViewStyle } from 'react-native'
 
-import { useConfiguration } from '../../contexts/configuration'
+import { TOKENS, useContainer } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 
@@ -44,7 +44,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   onPress = undefined,
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
-  const { OCABundleResolver } = useConfiguration()
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
   const { ColorPallet } = useTheme()
   const getCredOverlayType = (type: BrandingOverlayType) => {
     if (proof) {
@@ -64,7 +64,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           hasAltCredentials={hasAltCredentials}
           proof
           elevated
-        ></CredentialCard11>
+        />
       )
     }
 
@@ -87,7 +87,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       )
     }
   }
-  return getCredOverlayType(OCABundleResolver.getBrandingOverlayType())
+
+  return getCredOverlayType(bundleResolver.getBrandingOverlayType())
 }
 
 export default CredentialCard
