@@ -4,7 +4,6 @@ import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
 import HomeHeaderView from './components/views/HomeHeaderView'
-import defaultIndyLedgers from './configs/ledgers/indy'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
@@ -31,7 +30,6 @@ export const defaultConfiguration: ConfigurationContext = {
   scan: Scan,
   record: Record,
   PINSecurity: { rules: PINRules, displayHelper: false },
-  indyLedgers: defaultIndyLedgers,
   settings: [],
   customNotification: {
     component: () => null,

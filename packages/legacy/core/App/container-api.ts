@@ -1,4 +1,5 @@
 import { BaseLogger } from '@credo-ts/core'
+import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
@@ -47,6 +48,7 @@ export enum OBJECT_TOKENS {
 export enum UTILITY_TOKENS {
   UTIL_LOGGER = 'utility.logger',
   UTIL_OCA_RESOLVER = 'utility.oca-resolver',
+  UTIL_LEDGERS = 'utility.ledgers',
 }
 
 export const TOKENS = {
@@ -81,6 +83,7 @@ export interface TokenMapping {
   [TOKENS.OBJECT_ONBOARDINGCONFIG]: ScreenOptionsType
   [TOKENS.UTIL_LOGGER]: BaseLogger
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
+  [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
 }
 
 export interface Container {

@@ -4397,20 +4397,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/anoncreds-react-native@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@hyperledger/anoncreds-react-native@npm:0.1.0"
-  dependencies:
-    "@hyperledger/anoncreds-shared": 0.1.0
-    "@mapbox/node-pre-gyp": ^1.0.10
-  peerDependencies:
-    react: ">= 16"
-    react-native: ">= 0.66.0"
-  checksum: 33fa1625c0cb97edd21b29b3793159575f32712f9566b3eff016ffa6ee65352b97b0a0771d9b6f096547d8aae03c8a55e0b460aa5ae030e7426a0ba7ccafbf8a
-  languageName: node
-  linkType: hard
-
-"@hyperledger/anoncreds-react-native@npm:^0.2.1":
+"@hyperledger/anoncreds-react-native@npm:0.2.2":
   version: 0.2.2
   resolution: "@hyperledger/anoncreds-react-native@npm:0.2.2"
   dependencies:
@@ -4420,13 +4407,6 @@ __metadata:
     react: ">= 16"
     react-native: ">= 0.66.0"
   checksum: 987ad04db5c5700e6514f93b697cbee2a15244c48fc90bb6d548c21afe4b8539b8a5aaf44de9aed88e51e4ac619927644b5bc15026cdd5f0ee301009c1e51cb0
-  languageName: node
-  linkType: hard
-
-"@hyperledger/anoncreds-shared@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@hyperledger/anoncreds-shared@npm:0.1.0"
-  checksum: 1a9a46c80719640ef424f5802e527663167e49eb6dba8a7259eccdb7b6086e6e7a217e03e19a4b29559c51951938d6786aaa738b80c85dd3360f7ae9a4da70a6
   languageName: node
   linkType: hard
 
