@@ -6,6 +6,7 @@ import { DependencyContainer } from 'tsyringe'
 
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
+import defaultIndyLedgers from './configs/ledgers/indy'
 import { LocalStorageKeys } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
@@ -46,6 +47,7 @@ export class MainContainer implements Container {
     this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
     this.container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
     this.container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
+    this.container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this.container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {

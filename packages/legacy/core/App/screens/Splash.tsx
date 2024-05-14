@@ -85,7 +85,7 @@ const resumeOnboardingAt = (
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { indyLedgers, showPreface, enablePushNotifications } = useConfiguration()
+  const { showPreface, enablePushNotifications } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -97,6 +97,7 @@ const Splash: React.FC = () => {
   const [mounted, setMounted] = useState(false)
   const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   const logger = container.resolve(TOKENS.UTIL_LOGGER)
+  const indyLedgers = container.resolve(TOKENS.UTIL_LEDGERS)
   const styles = StyleSheet.create({
     container: {
       flex: 1,

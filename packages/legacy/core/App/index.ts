@@ -27,7 +27,6 @@ import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
 import HomeFooterView from './components/views/HomeFooterView'
-import indyLedgers from './configs/ledgers/indy'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
@@ -104,7 +103,6 @@ export { MainContainer } from './container-impl'
 
 export {
   App,
-  indyLedgers,
   Agent,
   AgentProvider,
   AuthProvider,

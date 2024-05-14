@@ -1,5 +1,4 @@
 import { Agent } from '@credo-ts/core'
-import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
 import { ReducerAction, createContext, useContext } from 'react'
@@ -46,7 +45,6 @@ export interface ConfigurationContext {
   scan: React.FC<StackScreenProps<ConnectStackParams>>
   record: React.FC<RecordProps>
   PINSecurity: PINSecurityParams
-  indyLedgers: IndyVdrPoolConfig[]
   settings: SettingSection[]
   customNotification: NotificationConfiguration
   supportedLanguages: Locales[]
