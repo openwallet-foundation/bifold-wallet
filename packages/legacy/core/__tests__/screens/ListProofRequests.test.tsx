@@ -15,10 +15,12 @@ jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
 jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
+  return require('../__mocks__/custom/@react-navigation/native')
 })
+jest.mock('../../App/container-api')
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
+
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 

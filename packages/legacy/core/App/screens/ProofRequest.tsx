@@ -24,6 +24,7 @@ import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
+import { TOKENS, useContainer } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useNetwork } from '../contexts/network'
@@ -68,7 +69,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
-  const { enableTours: enableToursConfig, OCABundleResolver, useAttestation } = useConfiguration()
+  const { enableTours: enableToursConfig, useAttestation } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
@@ -81,6 +82,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { loading: attestationLoading } = useAttestation ? useAttestation() : { loading: false }
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
 
   const hasMatchingCredDef = useMemo(() => activeCreds.some((cred) => cred.credDefId !== undefined), [activeCreds])
 
@@ -297,7 +299,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         return false
       }
       const labels = (item.attributes ?? []).map((field) => field.label ?? field.name ?? '')
-      const bundle = await OCABundleResolver.resolveAllBundles({
+      const bundle = await bundleResolver.resolveAllBundles({
         identifiers: { credentialDefinitionId: item.credDefId, schemaId: item.schemaId },
       })
       const flaggedAttributes: string[] = (bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name)

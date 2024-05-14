@@ -1,4 +1,5 @@
 import { BaseLogger } from '@credo-ts/core'
+import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -45,6 +46,7 @@ export enum OBJECT_TOKENS {
 
 export enum UTILITY_TOKENS {
   UTIL_LOGGER = 'utility.logger',
+  UTIL_OCA_RESOLVER = 'utility.oca-resolver',
 }
 
 export const TOKENS = {
@@ -78,6 +80,7 @@ export interface TokenMapping {
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.OBJECT_ONBOARDINGCONFIG]: ScreenOptionsType
   [TOKENS.UTIL_LOGGER]: BaseLogger
+  [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
 }
 
 export interface Container {

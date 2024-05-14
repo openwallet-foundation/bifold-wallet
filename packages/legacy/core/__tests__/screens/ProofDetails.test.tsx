@@ -14,6 +14,7 @@ import ProofDetails from '../../App/screens/ProofDetails'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 
+jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@react-navigation/core', () => {

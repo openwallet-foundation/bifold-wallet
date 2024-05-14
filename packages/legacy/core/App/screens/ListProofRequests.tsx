@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import EmptyList from '../components/misc/EmptyList'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useContainer } from '../container-api'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplates } from '../hooks/proof-request-templates'
@@ -25,8 +25,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const { ListItems } = useTheme()
-  const { OCABundleResolver } = useConfiguration()
-
+  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
   const style = StyleSheet.create({
     card: {
       ...ListItems.requestTemplateBackground,
@@ -64,7 +63,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
 
   useEffect(() => {
-    OCABundleResolver.resolve({ identifiers: { templateId: template.id }, language: i18n.language }).then((bundle) => {
+    bundleResolver.resolve({ identifiers: { templateId: template.id }, language: i18n.language }).then((bundle) => {
       const metaOverlay =
         bundle?.metaOverlay ||
         new MetaOverlay({

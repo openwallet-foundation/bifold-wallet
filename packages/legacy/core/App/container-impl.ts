@@ -1,8 +1,10 @@
+import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
+import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import { LocalStorageKeys } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
@@ -24,6 +26,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private container: DependencyContainer
@@ -42,7 +45,7 @@ export class MainContainer implements Container {
     this.container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
     this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
     this.container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
-
+    this.container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this.container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
