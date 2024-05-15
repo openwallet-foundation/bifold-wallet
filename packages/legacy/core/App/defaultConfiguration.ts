@@ -1,13 +1,9 @@
 import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-import { IOverlayBundleData } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
-import * as bundle from './assets/oca-bundles.json'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
 import HomeHeaderView from './components/views/HomeHeaderView'
-import defaultIndyLedgers from './configs/ledgers/indy'
 import { PINRules } from './constants'
 import { ConfigurationContext } from './contexts/configuration'
 import { useNotifications } from './hooks/notifications'
@@ -31,13 +27,9 @@ export const defaultConfiguration: ConfigurationContext = {
   credentialListHeaderRight: () => null,
   credentialListOptions: () => null,
   credentialEmptyList: EmptyList,
-  OCABundleResolver: new DefaultOCABundleResolver(bundle as unknown as Record<string, IOverlayBundleData>, {
-    brandingOverlayType: BrandingOverlayType.Branding10,
-  }),
   scan: Scan,
   record: Record,
   PINSecurity: { rules: PINRules, displayHelper: false },
-  indyLedgers: defaultIndyLedgers,
   settings: [],
   customNotification: {
     component: () => null,

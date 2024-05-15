@@ -5,6 +5,8 @@ import VerifierCredentialCard from '../../App/components/misc/VerifierCredential
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import configurationContext from '../contexts/configuration'
 
+jest.mock('../../App/container-api')
+
 const displayItems = [
   {
     name: 'given_names',

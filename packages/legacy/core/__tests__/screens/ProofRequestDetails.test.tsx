@@ -13,6 +13,7 @@ import { useTemplates, useTemplate } from '../../App/hooks/proof-request-templat
 import axios from 'axios'
 import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../../App/utils/proofBundle'
 
+jest.mock('../../App/container-api')
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@react-navigation/core', () => {
@@ -40,7 +41,6 @@ jest.mock('../../App/hooks/proof-request-templates', () => ({
 
 jest.mock('axios', () => ({ create: jest.fn() }))
 
-
 const templates = [
   {
     id: 'Aries:5:StudentFullName:0.0.1:indy',
@@ -57,14 +57,14 @@ const templates = [
               names: ['student_first_name', 'student_last_name'],
               restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
               devRestrictions: [{ schema_name: 'student_card' }],
-              non_revoked: { to: "@{now}" },
+              non_revoked: { to: '@{now}' },
             },
           ],
           requestedPredicates: [
             {
               name: 'expiry_date',
               predicateType: '>=',
-              predicateValue: "@{currentDate(0)}",
+              predicateValue: '@{currentDate(0)}',
               restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
               devRestrictions: [{ schema_name: 'student_card' }],
             },
@@ -72,7 +72,7 @@ const templates = [
         },
       ],
     },
-  }
+  },
 ]
 
 // @ts-ignore
@@ -101,21 +101,21 @@ describe('ProofRequestDetails Component', () => {
   }
 
   test('Proof bundle resolver works correctly', async () => {
-    const resolver = useRemoteProofBundleResolver("http://localhost:3000")
+    const resolver = useRemoteProofBundleResolver('http://localhost:3000')
     const bundle = await resolver.resolve(true)
     expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions.length).toBe(2)
   })
 
-  test("Template is parsed correctly", async () => {
+  test('Template is parsed correctly', async () => {
     const template = templates[0]
     const parsedTemplate = applyTemplateMarkers(template)
-    expect(parsedTemplate.payload.data[0].requestedAttributes[0].non_revoked.to).not.toBe("@{now}")
-    expect(parsedTemplate.payload.data[0].requestedPredicates[0].predicateValue.to).not.toBe("@{currentDate(0)}")
+    expect(parsedTemplate.payload.data[0].requestedAttributes[0].non_revoked.to).not.toBe('@{now}')
+    expect(parsedTemplate.payload.data[0].requestedPredicates[0].predicateValue.to).not.toBe('@{currentDate(0)}')
   })
 
   test('Renders correctly', async () => {
     const tree = renderView({ templateId })
-    await act(async () => { })
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
   })
 
