@@ -36,7 +36,16 @@ function mapPackages(jsonFile, section, aggregated) {
   }
 }
 
-function syncPackageJson(sourcePackageJsonFilePath, destPackageJsonFilePath) {
+/**
+ *
+ * @param {Object} opts
+ * @param {string} opts.src
+ * @param {string} opts.dst
+ * @param {string} opts.fix
+ */
+function syncPackageJson(opts) {
+  const sourcePackageJsonFilePath = opts.src
+  const destPackageJsonFilePath = opts.dst
   const sourcePackageJsonFile = path.resolve(process.cwd(), sourcePackageJsonFilePath)
   const destPackageJsonFile = path.resolve(process.cwd(), destPackageJsonFilePath)
   const destPackageJsonFileDir = path.dirname(destPackageJsonFile)
@@ -278,7 +287,7 @@ module.exports = {
       args.shift()
     }
     if (cmd === 'sync-package-json') {
-      syncPackageJson(args[2], args[4])
+      syncPackageJson(opt)
     } else if (cmd === 'sync-package-lock') {
       syncPackageLock(opt)
     }
