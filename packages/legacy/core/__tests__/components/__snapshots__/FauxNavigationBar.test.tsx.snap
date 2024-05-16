@@ -37,7 +37,7 @@ Array [
           Object {
             "color": "#FFFFFF",
             "flexGrow": 1,
-            "fontSize": 17,
+            "fontSize": 18,
             "fontWeight": "bold",
             "paddingBottom": 12,
             "textAlign": "center",
@@ -147,7 +147,7 @@ Array [
           Object {
             "color": "#FFFFFF",
             "flexGrow": 1,
-            "fontSize": 17,
+            "fontSize": 18,
             "fontWeight": "bold",
             "paddingBottom": 12,
             "textAlign": "center",

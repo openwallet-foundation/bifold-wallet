@@ -34,7 +34,7 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
             style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 38,
+                "fontSize": 24,
                 "fontWeight": "bold",
                 "marginBottom": 30,
                 "marginTop": 60,
@@ -57,7 +57,7 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
             style={
               Object {
                 "color": "#FFFFFF",
-                "fontSize": 22,
+                "fontSize": 18,
                 "fontWeight": "normal",
                 "textAlign": "center",
               }

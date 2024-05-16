@@ -34,8 +34,6 @@ const FauxNavigationBar: React.FC<FauxNavigationBarProps> = ({ title, onHomeTouc
     },
     label: {
       ...TextTheme.bold,
-      color: ColorPallet.brand.headerText,
-      fontSize: 17,
       flexGrow: 1,
       textAlign: 'center',
       paddingBottom: 12,

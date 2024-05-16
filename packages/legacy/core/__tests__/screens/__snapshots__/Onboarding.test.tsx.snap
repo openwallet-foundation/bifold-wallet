@@ -58,9 +58,6 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
                 style={
                   Array [
                     Object {},
-                    Object {
-                      "fontSize": 18,
-                    },
                   ]
                 }
                 testID="com.ariesbifold:id/HeaderText"
@@ -207,9 +204,6 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
                   style={
                     Array [
                       Object {},
-                      Object {
-                        "fontSize": 18,
-                      },
                     ]
                   }
                   testID="com.ariesbifold:id/DeveloperModeTouch"

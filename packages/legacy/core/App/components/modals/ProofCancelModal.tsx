@@ -34,7 +34,7 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
       justifyContent: 'space-around',
     },
     heading: {
-      ...TextTheme.modalHeadingOne,
+      ...TextTheme.modalTitle,
       marginTop: 60,
       marginBottom: 30,
       textAlign: 'center',
@@ -45,7 +45,6 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
     },
     subtext: {
       ...TextTheme.modalNormal,
-      fontSize: 22,
       textAlign: 'center',
     },
   })
