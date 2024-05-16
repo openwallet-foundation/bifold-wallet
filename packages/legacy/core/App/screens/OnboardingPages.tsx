@@ -97,7 +97,7 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
           <SecureImage {...imageDisplayOptions} />
         </View>
         <View style={{ marginBottom: 20 }}>
-          <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+          <Text style={[styles.headerText]} testID={testIdWithKey('HeaderText')}>
             Ornare suspendisse sed nisi lacus
           </Text>
           <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
@@ -144,7 +144,7 @@ export const createPageWith = (
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
   const titleElement = (
-    <Text style={[styles.headerText, { fontSize: 18 }]} testID={testIdWithKey('HeaderText')}>
+    <Text style={[styles.headerText]} testID={testIdWithKey('HeaderText')}>
       {title}
     </Text>
   )

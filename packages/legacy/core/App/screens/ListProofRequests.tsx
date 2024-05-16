@@ -39,24 +39,20 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
     },
     templateTitle: {
       ...ListItems.requestTemplateTitle,
-      fontSize: 16,
       marginBottom: 4,
     },
     templateDetails: {
       ...ListItems.requestTemplateDetails,
-      fontSize: 16,
       marginBottom: 4,
     },
     templateZkpLabel: {
       ...ListItems.requestTemplateZkpLabel,
-      fontSize: 12,
     },
     iconContainer: {
       alignSelf: 'center',
     },
     icon: {
       ...ListItems.requestTemplateIcon,
-      fontSize: 36,
     },
   })
 
