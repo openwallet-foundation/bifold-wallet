@@ -85,8 +85,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       marginVertical: 30,
     },
     descriptionText: {
-      fontSize: 18,
-      color: TextTheme.normal.color,
+      ...TextTheme.normal,
     },
     label: {
       fontWeight: TextTheme.bold.fontWeight,

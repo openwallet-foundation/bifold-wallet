@@ -70,7 +70,6 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
     },
     valueText: {
       ...ListItems.requestTemplateTitle,
-      fontSize: 16,
       marginLeft: 4,
     },
     rightContainer: {
@@ -81,11 +80,9 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
     },
     icon: {
       ...ListItems.requestTemplateIcon,
-      fontSize: 36,
     },
     date: {
       ...ListItems.requestTemplateDate,
-      fontSize: 10,
     },
   })
 

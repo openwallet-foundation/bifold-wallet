@@ -847,6 +847,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
+                "fontWeight": "normal",
               }
             }
           >
