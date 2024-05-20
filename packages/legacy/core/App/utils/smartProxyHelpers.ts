@@ -3,6 +3,7 @@ import Config from "react-native-config";
 
 const smartproxyUrl = Config.PROXY_SERVER_URL
 const connectionApiUrl = Config.CONNECTION_API_URL
+const bffApiUrl = Config.BFF_API_URL
 
 interface OwnerResponse {
     createdAt: string;
@@ -130,6 +131,40 @@ export const createSmartProxyEntry = async (proxyKey: string, details: string, o
 
     } catch (error) {
         console.error('Error Creating proxy entry:', error);
+
+        return "Error Creating Entry"
+    }
+};
+
+export const createEmailSmartProxyViaVCEntry = async (invitation: String) => {
+    try {
+
+        // copy invitation from "didcomm://invite?oob=" to the end of the string
+        const trimmedInvitation = invitation.substring(21);
+        console.log("Untrimmed Invitation:", invitation);
+        console.log("Trimmed Invitation:", trimmedInvitation);
+
+        const response = await fetch(bffApiUrl + '/ssi/connect-and-verify-email?connectionInvitation=' + trimmedInvitation, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        console.log("HTTP Response Code:", response.status);
+
+        if (!response.ok) {
+            console.error(response)
+            return "Error Creating Entry"
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        return response
+
+    } catch (error) {
+        console.error('Error establishing connection to verifier:', error);
 
         return "Error Creating Entry"
     }

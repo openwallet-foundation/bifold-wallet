@@ -4,11 +4,12 @@ import { theme } from '../theme';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAgent, useProofByState } from '@aries-framework/react-hooks'
-import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner } from '../utils/smartProxyHelpers';
+import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner, createEmailSmartProxyViaVCEntry } from '../utils/smartProxyHelpers';
 import { getItem, removeItem } from '../utils/storage';
 import BottomPopup from '../components/toast/popup';
 import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
 import { set } from 'mockdate';
+import { createConnectionInvitation } from '../utils/helpers';
 
 const SmartProxy = () => {
     //make a state varialbe to store the balance
@@ -165,6 +166,37 @@ const SmartProxy = () => {
         else {
             console.error("Owner, proxyIdentifier or proxyValue not found")
             setPopupMessage("Owner, proxyIdentifier or proxyValue not found")
+            setPopupVisible(true);
+        }
+    }
+
+    const handleEmailProxyViaVCCreation = async () => {
+        const storedData = await getItem('proxyOwner');
+        console.log(storedData?.id);
+
+        try {
+            const invitation = await createConnectionInvitation(agent, 'email')
+
+
+            if (storedData?.id && invitation) {
+                const response = await createEmailSmartProxyViaVCEntry(invitation.invitationUrl)
+
+                if (typeof response === 'object' && response.status === 200) {
+                    setPopupMessage("Proxy created successfully")
+                    setPopupVisible(true);
+                } else if (typeof response === 'string') {
+                    setPopupMessage(response)
+                    setPopupVisible(true);
+                }
+            }
+            else {
+                console.error("Owner, proxyIdentifier or proxyValue not found")
+                setPopupMessage("Owner, proxyIdentifier or proxyValue not found")
+                setPopupVisible(true);
+            }
+        } catch (err: any) {
+            console.error(err)
+            setPopupMessage("Error creating proxy via VC")
             setPopupVisible(true);
         }
     }
@@ -452,7 +484,7 @@ const SmartProxy = () => {
                             </View>
 
                             <View style={styles.buttonPadding}>
-                                <TouchableOpacity style={theme.Buttons.primary} onPress={() => handleProxyCreation()}>
+                                <TouchableOpacity style={theme.Buttons.primary} onPress={() => handleEmailProxyViaVCCreation()}>
                                     <Text style={theme.TextTheme.label}>Add Email using VC</Text>
                                 </TouchableOpacity>
                             </View>
