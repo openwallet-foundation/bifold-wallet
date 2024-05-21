@@ -200,6 +200,32 @@ export function formatTime(
   return formattedTime
 }
 
+// need to use rolling b64 encode/decode to prevent hermes from 2048 byte truncation
+export function b64encode(inp: string) {
+  return (
+    inp
+      .match(/.{1,3}/g)
+      ?.map((chunk) => {
+        return Buffer.from(chunk).toString('base64')
+      })
+      .join('') ?? ''
+  )
+}
+
+export function b64decode(b64: string) {
+  return (
+    b64
+      .match(/.{1,4}/g)
+      ?.map((chunk) => {
+        if (chunk.length < 4) {
+          chunk += '='.repeat(4 - chunk.length)
+        }
+        return Buffer.from(chunk, 'base64').toString()
+      })
+      .join('') ?? ''
+  )
+}
+
 export function formatIfDate(format: string | undefined, value: string | number | null) {
   const potentialDate = value ? value.toString() : null
   if (format === 'YYYYMMDD' && potentialDate && potentialDate.length === format.length) {
@@ -284,7 +310,7 @@ export function firstValidCredential(
 export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
   const queryParams = parseUrl(url).query
   const b64Message = queryParams['d_m'] ?? queryParams['c_i']
-  const rawmessage = Buffer.from(b64Message as string, 'base64').toString()
+  const rawmessage = b64decode(b64Message as string)
   const message = JSON.parse(rawmessage)
   await agent?.receiveMessage(message)
   return message
