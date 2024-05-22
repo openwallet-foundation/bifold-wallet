@@ -18,8 +18,6 @@ on:
 jobs:
   build-ios:
     runs-on: macos-latest
-    env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/packages/legacy/app/Gemfile
     steps:
       - uses: actions/checkout@v4
 
@@ -70,12 +68,11 @@ jobs:
 
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
-        working-directory: ./packages/legacy/app/ios
+        working-directory: ./packages/legacy/app
         run: |
-          bundle install --frozen --gemfile=${BUNDLE_GEMFILE} && \
-          pod install && \
+          yarn run ios:setup && \
           git status && \
-          git diff Podfile.lock
+          git diff ios/Podfile.lock
 
       - name: Run release build
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
