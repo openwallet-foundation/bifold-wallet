@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Image, ImageBackground, ActivityIndicator } from 'react-native';
 import { theme } from '../theme';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
@@ -10,8 +10,20 @@ import BottomPopup from '../components/toast/popup';
 import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
 import { set } from 'mockdate';
 import { createConnectionInvitation } from '../utils/helpers';
+import { CommonActions, useFocusEffect } from '@react-navigation/native'
+import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
 
-const SmartProxy = () => {
+type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
+
+type LocalState = {
+    connectionIsActive: boolean
+}
+
+interface SmartProxyProps {
+    navigation: any;
+}
+
+const SmartProxy: React.FC<SmartProxyProps> = ({ navigation }) => {
     //make a state varialbe to store the balance
 
     const [logs, setLogs] = useState<string[]>([]);
@@ -36,8 +48,13 @@ const SmartProxy = () => {
     const [checkedIfRegistered, setCheckedIfRegistered] = useState<boolean>(false)
     const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false)
+    const [requestLoading, setRequestLoading] = useState<boolean>(false)
     const [nodeId, setNodeId] = useState<string | undefined>(undefined)
     const [errorCheckingRegistration, setErrorCheckingRegistration] = useState<boolean>(false)
+    const merge: MergeFunction = (current, next) => ({ ...current, ...next })
+    const [state, dispatch] = useReducer(merge, {
+        connectionIsActive: false,
+    })
 
     const { agent } = useAgent()
 
@@ -171,12 +188,28 @@ const SmartProxy = () => {
     }
 
     const handleEmailProxyViaVCCreation = async () => {
+
+
+
+        // // Navigate to the chat screen
+        // navigation.getParent()?.dispatch(
+        //     CommonActions.reset({
+        //         index: 1,
+        //         routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: "322f76e3-a61b-4d9d-a90b-7603a4a6d281" } }],
+        //     })
+        // )
+
+        // return
+
+
+
         const storedData = await getItem('proxyOwner');
         console.log(storedData?.id);
 
         try {
+            setRequestLoading(true)
             const invitation = await createConnectionInvitation(agent, 'email')
-
+            console.log("Invitation URLLL: ", invitation.invitationUrl)
 
             if (storedData?.id && invitation) {
                 const response = await createEmailSmartProxyViaVCEntry(invitation.invitationUrl)
@@ -184,20 +217,51 @@ const SmartProxy = () => {
                 if (typeof response === 'object' && response.status === 200) {
                     setPopupMessage("Proxy created successfully")
                     setPopupVisible(true);
+                    setRequestLoading(false)
+
+                    let invId = invitation.record.id
+
+                    let connections = await agent?.connections.getAll()
+                    let newestConnection
+
+                    if (connections && connections.length > 1) {
+
+                        connections.sort((a, b) => {
+                            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                        })
+
+                        newestConnection = connections[0]
+
+                        if (invId) {
+                            // Navigate to the chat screen
+                            navigation.getParent()?.dispatch(
+                                CommonActions.reset({
+                                    index: 1,
+                                    routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: newestConnection.id } }],
+                                })
+                            )
+                            dispatch({ connectionIsActive: true })
+                            return
+                        }
+                    }
+
                 } else if (typeof response === 'string') {
                     setPopupMessage(response)
                     setPopupVisible(true);
+                    setRequestLoading(false)
                 }
             }
             else {
                 console.error("Owner, proxyIdentifier or proxyValue not found")
                 setPopupMessage("Owner, proxyIdentifier or proxyValue not found")
                 setPopupVisible(true);
+                setRequestLoading(false)
             }
         } catch (err: any) {
             console.error(err)
             setPopupMessage("Error creating proxy via VC")
             setPopupVisible(true);
+            setRequestLoading(false)
         }
     }
 
@@ -484,8 +548,12 @@ const SmartProxy = () => {
                             </View>
 
                             <View style={styles.buttonPadding}>
-                                <TouchableOpacity style={theme.Buttons.primary} onPress={() => handleEmailProxyViaVCCreation()}>
-                                    <Text style={theme.TextTheme.label}>Add Email using VC</Text>
+                                <TouchableOpacity style={{ ...theme.Buttons.primary, width: 120, height: 52 }} onPress={() => handleEmailProxyViaVCCreation()}>
+                                    {requestLoading ? (
+                                        <ActivityIndicator size="small" color="#FFF" />
+                                    ) : (
+                                        <Text style={theme.TextTheme.label}>Add using VC</Text>
+                                    )}
                                 </TouchableOpacity>
                             </View>
                         </View>
