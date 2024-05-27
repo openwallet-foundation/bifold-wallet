@@ -1,9 +1,9 @@
-import { RemoteOCABundleResolver } from '../src/legacy/resolver/remote-oca'
-import fs from 'fs'
-import { ocaCacheDataFileName, defaultBundleIndexFileName } from '../src/constants'
 import axios from 'axios'
-import MiniLogger from '../src/utils/logger'
+import fs from 'fs'
 import { readFile, writeFile, exists, mkdir, unlink } from 'react-native-fs'
+
+import { ocaCacheDataFileName, defaultBundleIndexFileName } from '../src/constants'
+import { RemoteOCABundleResolver } from '../src/legacy/resolver/remote-oca'
 
 const bundleFileName = 'bundle.json'
 const ocaPath = `${__dirname}/fixtures/${ocaCacheDataFileName}`
@@ -19,6 +19,10 @@ const keysToUpdated = [
   '79e343ab4362d93974cdf78b00a916a5b3659178dfd170fcff90f1b5f10ceb72',
   '29bf8f8729f235450980d0b273f9ca49b7ab73b7358467bf52b311bf40464bb0',
 ]
+// Testing person credential as an example
+const personSha = '9187f651eab59811d8ec1c1257628c08f6daa1eb520bf379f022425f3a9701cf'
+const qualifiedCredDefId = 'did:indy:candy:RGjWbW1eycP7FrMf4QJvX8/anoncreds/v0/CLAIM_DEF/13/Person'
+const qualifiedSchemaId = 'did:indy:candy:RGjWbW1eycP7FrMf4QJvX8/anoncreds/v0/SCHEMA/Person/1.0'
 
 const getMock = jest.fn().mockImplementation((url) => {
   const fileName = url.split('/').pop()
@@ -58,6 +62,8 @@ jest.mock('react-native-fs', () => ({
       }
       case defaultBundleIndexFileName:
         return Promise.resolve(indexAsString)
+      case personSha:
+        return Promise.resolve(bundleAsString)
       default:
         return Promise.resolve('{}')
     }
@@ -158,5 +164,17 @@ describe('RemoteOCABundleResolver', () => {
     expect(mkdir).toHaveBeenCalledTimes(0)
     expect(resolver.indexFileEtag).toEqual(changedEtag)
     expect(resolver['indexFile']).toMatchSnapshot()
+  })
+
+  it('should check unqualified cred def id as key if given qualified cred def id', async () => {
+    await resolver.checkForUpdates()
+    const bundle = await resolver.resolve({ identifiers: { credentialDefinitionId: qualifiedCredDefId } })
+    expect(bundle).toBeDefined()
+  })
+
+  it('should check unqualified schema id as key if given qualified schema id', async () => {
+    await resolver.checkForUpdates()
+    const bundle = await resolver.resolve({ identifiers: { schemaId: qualifiedSchemaId } })
+    expect(bundle).toBeDefined()
   })
 })

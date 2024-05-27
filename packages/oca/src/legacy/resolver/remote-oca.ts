@@ -1,3 +1,4 @@
+import { getUnQualifiedDidIndyDid } from '@credo-ts/anoncreds'
 import axios from 'axios'
 import { CachesDirectoryPath, readFile, writeFile, exists, mkdir, unlink } from 'react-native-fs'
 
@@ -504,9 +505,15 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
    */
   private matchBundleIndexEntry = (identifiers: Identifiers): string | undefined => {
     const { schemaId, credentialDefinitionId, templateId } = identifiers
+    // also check unqualified schema and cred def id's if qualified versions exist
+    const unqualifiedSchemaId = schemaId?.startsWith('did:indy:') ? getUnQualifiedDidIndyDid(schemaId) : undefined
+    const unqualifiedCredDefId = credentialDefinitionId?.startsWith('did:indy:')
+      ? getUnQualifiedDidIndyDid(credentialDefinitionId)
+      : undefined
+
     // If more than one candidate identifier exists in the index file then
     // order matters here.
-    const candidates = [schemaId, credentialDefinitionId, templateId].filter(
+    const candidates = [schemaId, unqualifiedSchemaId, credentialDefinitionId, unqualifiedCredDefId, templateId].filter(
       (value) => value !== undefined && value !== null && value !== ''
     )
 
