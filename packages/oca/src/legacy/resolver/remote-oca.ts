@@ -506,12 +506,10 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
   private matchBundleIndexEntry = (identifiers: Identifiers): string | undefined => {
     const { schemaId, credentialDefinitionId, templateId } = identifiers
     // also check unqualified schema and cred def id's if qualified versions exist
-    const unqualifiedSchemaId =
-      schemaId && schemaId.startsWith('did:indy:') ? getUnQualifiedDidIndyDid(schemaId) : undefined
-    const unqualifiedCredDefId =
-      credentialDefinitionId && credentialDefinitionId.startsWith('did:indy:')
-        ? getUnQualifiedDidIndyDid(credentialDefinitionId)
-        : undefined
+    const unqualifiedSchemaId = schemaId?.startsWith('did:indy:') ? getUnQualifiedDidIndyDid(schemaId) : undefined
+    const unqualifiedCredDefId = credentialDefinitionId?.startsWith('did:indy:')
+      ? getUnQualifiedDidIndyDid(credentialDefinitionId)
+      : undefined
 
     // If more than one candidate identifier exists in the index file then
     // order matters here.
