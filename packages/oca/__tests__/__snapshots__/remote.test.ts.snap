@@ -84,6 +84,10 @@ exports[`RemoteOCABundleResolver should check fetch updated bundles 1`] = `
     "path": "OCABundles/schema/bcgov-digital-trust/student-card/OCABundle.json",
     "sha256": "e65625acad0f1baab8e05b6cd1a5619b22e1f20cb47768616680a0fb2e8dc21d",
   },
+  "RGjWbW1eycP7FrMf4QJvX8:2:Person:1.0": {
+    "path": "OCABundles/schema/bcgov-digital-trust/person/OCABundle.json",
+    "sha256": "9187f651eab59811d8ec1c1257628c08f6daa1eb520bf379f022425f3a9701cf",
+  },
   "RGjWbW1eycP7FrMf4QJvX8:3:CL:13:Person": {
     "path": "OCABundles/schema/bcgov-digital-trust/person/OCABundle.json",
     "sha256": "9187f651eab59811d8ec1c1257628c08f6daa1eb520bf379f022425f3a9701cf",
@@ -224,6 +228,10 @@ exports[`RemoteOCABundleResolver should update demand 1`] = `
   "QEquAHkM35w4XVT3Ku5yat:2:student_card:1.4": {
     "path": "OCABundles/schema/bcgov-digital-trust/student-card/OCABundle.json",
     "sha256": "e65625acad0f1baab8e05b6cd1a5619b22e1f20cb47768616680a0fb2e8dc21d",
+  },
+  "RGjWbW1eycP7FrMf4QJvX8:2:Person:1.0": {
+    "path": "OCABundles/schema/bcgov-digital-trust/person/OCABundle.json",
+    "sha256": "9187f651eab59811d8ec1c1257628c08f6daa1eb520bf379f022425f3a9701cf",
   },
   "RGjWbW1eycP7FrMf4QJvX8:3:CL:13:Person": {
     "path": "OCABundles/schema/bcgov-digital-trust/person/OCABundle.json",
