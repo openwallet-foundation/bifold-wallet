@@ -11,19 +11,19 @@ import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvo
 import { set } from 'mockdate';
 import { createConnectionInvitation } from '../utils/helpers';
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
-import { Screens, TabStacks, DeliveryStackParams, Stacks } from '../types/navigators'
+import { Screens, Stacks, SettingStackParams } from '../types/navigators'
+import { StackScreenProps } from '@react-navigation/stack'
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
 
 type LocalState = {
-    connectionIsActive: boolean
+    connectionIsActive: boolean,
+    isVisible: boolean
 }
 
-interface SmartProxyProps {
-    navigation: any;
-}
+type SmartProxyProps = StackScreenProps<SettingStackParams, Screens.SmartProxy>
 
-const SmartProxy: React.FC<SmartProxyProps> = ({ navigation }) => {
+const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
     //make a state varialbe to store the balance
 
     const [logs, setLogs] = useState<string[]>([]);
@@ -54,6 +54,7 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation }) => {
     const merge: MergeFunction = (current, next) => ({ ...current, ...next })
     const [state, dispatch] = useReducer(merge, {
         connectionIsActive: false,
+        isVisible: false
     })
 
     const { agent } = useAgent()
@@ -79,7 +80,6 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation }) => {
                 }
 
             })
-
 
             const eventSubscription = breezInitHandler(eventHandler).then((res) => {
                 // const nodeId = getNodeId().then((nodeId) => {
@@ -189,42 +189,25 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation }) => {
 
     const handleEmailProxyViaVCCreation = async () => {
 
-
-
-        // // Navigate to the chat screen
-        // navigation.getParent()?.dispatch(
-        //     CommonActions.reset({
-        //         index: 1,
-        //         routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: "322f76e3-a61b-4d9d-a90b-7603a4a6d281" } }],
-        //     })
-        // )
-
-        // return
-
-
-
         const storedData = await getItem('proxyOwner');
         console.log(storedData?.id);
 
         try {
             setRequestLoading(true)
             const invitation = await createConnectionInvitation(agent, 'email')
-            console.log("Invitation URLLL: ", invitation.invitationUrl)
 
             if (storedData?.id && invitation) {
+                const connectionCount = (await agent?.connections.getAll())?.length
                 const response = await createEmailSmartProxyViaVCEntry(invitation.invitationUrl)
 
                 if (typeof response === 'object' && response.status === 200) {
-                    setPopupMessage("Proxy created successfully")
-                    setPopupVisible(true);
-                    setRequestLoading(false)
 
                     let invId = invitation.record.id
 
                     let connections = await agent?.connections.getAll()
                     let newestConnection
 
-                    if (connections && connections.length > 1) {
+                    if (connections && connections.length > 0 && connectionCount && connectionCount < connections.length) {
 
                         connections.sort((a, b) => {
                             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -243,6 +226,11 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation }) => {
                             dispatch({ connectionIsActive: true })
                             return
                         }
+                    } else {
+                        console.error("No new verifier connection found")
+                        setPopupMessage("No new verifier connection found")
+                        setPopupVisible(true);
+                        setRequestLoading(false)
                     }
 
                 } else if (typeof response === 'string') {
