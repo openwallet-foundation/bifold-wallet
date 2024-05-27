@@ -8,7 +8,7 @@ import Config from "react-native-config";
 
 const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
-export const initNodeAndSdk = async (eventHandler: any) => {
+export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string | undefined = undefined) => {
     try {
         const useInviteCode = true;
 
@@ -17,7 +17,19 @@ export const initNodeAndSdk = async (eventHandler: any) => {
         const apiKey = Config.BREEZ_API_KEY;
 
         // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
-        if (useInviteCode) {
+        if (restoreMnemonic) {
+
+            setItem(MNEMONIC_STORE, restoreMnemonic);
+
+            seed = await mnemonicToSeed(restoreMnemonic);
+
+            nodeConfig = {
+                type: NodeConfigVariant.GREENLIGHT,
+                config: { partnerCredentials: { deviceCert: [], deviceKey: [] } }
+            };
+            console.log("Using restore mnemonic")
+        }
+        else if (useInviteCode) {
 
             // Physical phone mnemonic
             // const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
