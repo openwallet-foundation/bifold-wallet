@@ -79,6 +79,10 @@
     "path": "OCABundles/schema/bcgov-digital-trust/person/OCABundle.json",
     "sha256": "9187f651eab59811d8ec1c1257628c08f6daa1eb520bf379f022425f3a9701cf"
   },
+  "RGjWbW1eycP7FrMf4QJvX8:2:Person:1.0": {
+    "path": "OCABundles/schema/bcgov-digital-trust/person/OCABundle.json",
+    "sha256": "9187f651eab59811d8ec1c1257628c08f6daa1eb520bf379f022425f3a9701cf"
+  },
   "L6ASjmDDbDH7yPL1t2yFj9:2:Person:1.2": {
     "path": "OCABundles/schema/bcgov-digital-trust/person-showcase/OCABundle.json",
     "sha256": "84d27be5680762f5d2d59b9cc95a49874ce73dc67af6f854bc246ed7fa8e6dfb"
