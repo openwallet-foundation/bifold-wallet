@@ -7,7 +7,7 @@ import { useAgent, useProofByState } from '@aries-framework/react-hooks'
 import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner, createEmailSmartProxyViaVCEntry } from '../utils/smartProxyHelpers';
 import { getItem, removeItem } from '../utils/storage';
 import BottomPopup from '../components/toast/popup';
-import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
+import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode, getMnemonic } from '../utils/lightningHelpers';
 import { set } from 'mockdate';
 import { createConnectionInvitation } from '../utils/helpers';
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
@@ -51,6 +51,7 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
     const [requestLoading, setRequestLoading] = useState<boolean>(false)
     const [nodeId, setNodeId] = useState<string | undefined>(undefined)
     const [errorCheckingRegistration, setErrorCheckingRegistration] = useState<boolean>(false)
+    const [lightningWalletAvailable, setLightningWalletAvailable] = useState<boolean>(false)
     const merge: MergeFunction = (current, next) => ({ ...current, ...next })
     const [state, dispatch] = useReducer(merge, {
         connectionIsActive: false,
@@ -81,12 +82,16 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
 
             })
 
-            const eventSubscription = breezInitHandler(eventHandler).then((res) => {
-                // const nodeId = getNodeId().then((nodeId) => {
-                //     setNodeId(nodeId)
-                //     setProxyValue(nodeId)
-                // })
+            // check if there is a lightning seed phrase in storage
+            getMnemonic().then((mnemonic) => {
+                if (mnemonic) {
+                    console.log("Mnemonic found in storage")
+                    initNodeAndSdk(eventHandler).then(() => {
+                        setLightningWalletAvailable(true)
+                    })
+                }
             })
+
         } catch (err: any) {
             console.error(err)
         }
@@ -390,7 +395,7 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
     }, [paymentAmount]); // Effect depends on paymentAmount
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             {isRegistered && !errorCheckingRegistration && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.labelTitle}>Your DID: </Text>
@@ -638,7 +643,15 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
                 </Modal>
 
                 <View style={styles.buttonPadding}>
-                    <TouchableOpacity style={theme.Buttons.primary} onPress={() => setShowMakePaymentScreen(true)}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={() => {
+                        if (lightningWalletAvailable) {
+                            setShowMakePaymentScreen(true)
+                        } else {
+                            setPopupMessage("Please create a lightning wallet first")
+                            setPopupVisible(true);
+                        }
+
+                    }}>
                         <Text style={theme.TextTheme.label}>Make Payment</Text>
                     </TouchableOpacity>
                 </View>
@@ -759,6 +772,13 @@ const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
 
 
             </ScrollView >
+
+            {!lightningWalletAvailable && <BottomPopup
+                message={popupMessage}
+                isVisible={popupVisible}
+                onClose={() => setPopupVisible(false)}
+                style={{ position: "absolute", bottom: 0 }}
+            />}
         </View>
     );
 };

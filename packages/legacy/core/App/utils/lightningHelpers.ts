@@ -10,8 +10,6 @@ const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
 export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string | undefined = undefined) => {
     try {
-        const useInviteCode = true;
-
         let seed = <any>[];
         let nodeConfig
         const apiKey = Config.BREEZ_API_KEY;
@@ -29,30 +27,31 @@ export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string 
             };
             console.log("Using restore mnemonic")
         }
-        else if (useInviteCode) {
+        // else if (Config.INVITE_MODE === 'true') {
 
-            // Physical phone mnemonic
-            // const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
+        //     // Physical phone mnemonic
+        //     // const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
 
-            // Emulator mnemonic
-            const mnemonic = 'large artefact physical panel shed movie inhale sausage sense bundle depart ribbon';
+        //     // Emulator mnemonic
+        //     const mnemonic = 'large artefact physical panel shed movie inhale sausage sense bundle depart ribbon';
 
-            // Physical phone invite code
-            // const inviteCode = '6FUD-Z8A9';
+        //     // Physical phone invite code
+        //     // const inviteCode = '6FUD-Z8A9';
 
-            // Emulator invite code
-            const inviteCode = 'XLT3-8WFJ';
+        //     // Emulator invite code
+        //     const inviteCode = 'XLT3-8WFJ';
 
-            setItem(MNEMONIC_STORE, mnemonic);
+        //     setItem(MNEMONIC_STORE, mnemonic);
 
-            seed = await mnemonicToSeed(mnemonic);
+        //     seed = await mnemonicToSeed(mnemonic);
 
-            nodeConfig = {
-                type: NodeConfigVariant.GREENLIGHT,
-                config: { inviteCode }
-            };
-            console.log("Using invite code")
-        } else {
+        //     nodeConfig = {
+        //         type: NodeConfigVariant.GREENLIGHT,
+        //         config: { inviteCode }
+        //     };
+        //     console.log("Using invite code")
+        // }
+        else {
             let mnemonic = await getItem(MNEMONIC_STORE)
             if (!mnemonic) {
                 console.log("No mnemonic found, generating new one");
@@ -106,13 +105,13 @@ export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string 
     }
 }
 
-export const breezInitHandler = async (event: any) => {
+export const breezInitHandler = async (event: any, mnemonic: string | undefined = undefined) => {
     try {
         const retries = 10;
         let retryCount = 0;
 
         while (retryCount < retries) {
-            const res = await initNodeAndSdk(event);
+            const res = await initNodeAndSdk(event, mnemonic);
 
             if (typeof res === 'string' && JSON.stringify(res).includes("os error")) {
                 retryCount++;
@@ -387,5 +386,30 @@ export const getLSPInfo = async () => {
         return JSON.stringify(availableLsps)
     } catch (err) {
         console.error(err)
+    }
+}
+
+export const getMnemonic = async () => {
+    try {
+        const seedPhrase = await getItem(MNEMONIC_STORE);
+        return seedPhrase;
+
+    } catch (err: any) {
+        console.error(err);
+    }
+}
+
+export const checkMnemonic = async () => {
+    try {
+        const seedPhrase = await getItem(MNEMONIC_STORE);
+        if (seedPhrase) {
+            return true
+        }
+        else {
+            return false
+        }
+
+    } catch (err: any) {
+        console.error(err);
     }
 }
