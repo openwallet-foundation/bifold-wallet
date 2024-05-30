@@ -138,13 +138,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.UseBiometry),
         },
         {
-          title: t('Global.History'),
-          value: undefined,
-          accessibilityLabel: t('Global.History'),
-          testID: testIdWithKey('History'),
-          onPress: () => navigation.navigate(Screens.HistorySettings),
-        },
-        {
           title: t('Settings.ChangePin'),
           value: undefined,
           accessibilityLabel: t('Settings.ChangePin'),
@@ -179,6 +172,19 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           navigation
             .getParent()
             ?.navigate(Stacks.SettingStack, { screen: Screens.UsePushNotifications, params: { isMenu: true } }),
+      })
+  }
+
+  // add optional history menu to settings
+  if (store.preferences.useHistoryCapability) {
+    settingsSections
+      .find((item) => item.header.title === t('Settings.AppSettings'))
+      ?.data.push({
+        title: t('Global.History'),
+        value: undefined,
+        accessibilityLabel: t('Global.History'),
+        testID: testIdWithKey('History'),
+        onPress: () => navigation.navigate(Screens.HistorySettings),
       })
   }
 
