@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
+import HistoryMenu from '../modules/history/ui/components/HistoryMenu'
 import Home from '../screens/Home'
 import { HomeStackParams, Screens } from '../types/navigators'
 
@@ -22,7 +23,7 @@ const HomeStack: React.FC = () => {
         component={Home}
         options={() => ({
           title: t('Screens.Home'),
-          headerRight: () => null,
+          headerRight: () => <HistoryMenu />,
           headerLeft: () => <SettingsMenu />,
         })}
       />

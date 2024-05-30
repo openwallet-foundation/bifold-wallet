@@ -1,3 +1,4 @@
+import { Agent } from '@credo-ts/core'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -11,6 +12,8 @@ import { LocalStorageKeys } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import { defaultState } from './contexts/store'
+import HistoryManager from './modules/history/context/historyManager'
+import { IHistoryManager } from './modules/history/types'
 import OnboardingStack from './navigators/OnboardingStack'
 import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
 import Developer from './screens/Developer'
@@ -60,6 +63,9 @@ export class MainContainer implements Container {
         }
       }
     )
+    this.container.registerInstance(TOKENS.FN_LOAD_HISTORY, (agent: Agent<any>): IHistoryManager => {
+      return new HistoryManager(agent)
+    })
 
     this.container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {

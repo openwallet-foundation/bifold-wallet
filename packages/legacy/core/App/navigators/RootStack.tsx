@@ -17,6 +17,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
+import HistoryStack from '../modules/history/navigation/HistoryStack'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -237,6 +238,13 @@ const RootStack: React.FC = () => {
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
         <Stack.Screen name={Stacks.ConnectionStack} component={DeliveryStack} options={{ gestureEnabled: false }} />
         <Stack.Screen name={Stacks.ProofRequestsStack} component={ProofRequestStack} />
+        <Stack.Screen
+          name={Stacks.HistoryStack}
+          component={HistoryStack}
+          options={{
+            cardStyleInterpolator: forFade,
+          }}
+        />
       </Stack.Navigator>
     )
   }

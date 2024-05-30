@@ -1,4 +1,4 @@
-import { BaseLogger } from '@credo-ts/core'
+import { Agent, BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -7,6 +7,7 @@ import { DependencyContainer } from 'tsyringe'
 
 import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
+import { IHistoryManager } from './modules/history/types'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
@@ -27,6 +28,7 @@ export enum STACK_TOKENS {
 }
 export enum FN_TOKENS {
   FN_ONBOARDING_DONE = 'fn.onboardingDone',
+  FN_LOAD_HISTORY = 'fn.loadHistory',
 }
 
 export enum COMP_TOKENS {
@@ -68,6 +70,8 @@ export type FN_ONBOARDING_DONE = (
   navigation: StackNavigationProp<AuthenticateStackParams>
 ) => GenericFn
 
+export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
+
 type FN_LOADSTATE = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 
 export interface TokenMapping {
@@ -84,6 +88,7 @@ export interface TokenMapping {
   [TOKENS.UTIL_LOGGER]: BaseLogger
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
+  [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
 }
 
 export interface Container {
