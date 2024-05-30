@@ -7,7 +7,7 @@ import { DependencyContainer } from 'tsyringe'
 
 import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
-import { IHistoryManager } from './modules/history/types'
+import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'

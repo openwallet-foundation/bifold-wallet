@@ -1,3 +1,4 @@
+import { useAgent } from '@credo-ts/react-hooks'
 import { ParamListBase } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
@@ -9,13 +10,12 @@ import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useContainer } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
-import { useStore } from '../../../contexts/store'
 import { useTheme } from '../../../contexts/theme'
 import { Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
-import { useHistory } from '../context/history'
+import { HistoryBlockSelection, IHistoryManager } from '../types'
 
-import SingleSelectBlock, { BlockSelection } from './components/SingleSelectBlock'
+import SingleSelectBlock from './components/SingleSelectBlock'
 
 interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> {}
 
@@ -24,7 +24,6 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
   const [continueEnabled] = useState(true)
   const [isLoading] = useState(false)
   const { t } = useTranslation()
-  const { historySettingsOptionList, handleStoreHistorySettings, getStoredHistorySettingsOption } = useHistory()
 
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
@@ -32,10 +31,15 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
   const actionButtonTestId = testIdWithKey('Save')
   const container = useContainer()
   const Button = container.resolve(TOKENS.COMP_BUTTON)
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
+  const { agent } = useAgent()
+  const historyManager: IHistoryManager | undefined = agent
+    ? container.resolve(TOKENS.FN_LOAD_HISTORY)(agent)
+    : undefined
 
   //State
-  const [initialHistory, setInitialHistory] = useState<BlockSelection | undefined>() // Initial history settings option
-  const [historyOptionSelected, setHistoryOptionSelected] = useState<BlockSelection | undefined>(initialHistory) // Selected history settings option
+  const [initialHistory, setInitialHistory] = useState<HistoryBlockSelection | undefined>() // Initial history settings option
+  const [historyOptionSelected, setHistoryOptionSelected] = useState<HistoryBlockSelection | undefined>(initialHistory) // Selected history settings option
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -64,7 +68,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
     controlsContainer: {},
   })
 
-  const onSelectHistory = (newHistoryOption: BlockSelection) => {
+  const onSelectHistory = (newHistoryOption: HistoryBlockSelection) => {
     // console.log('on select history:', JSON.stringify(newHistoryOption))
     //TODO: Impliment warning of old history clearing on the below condition
     // if (newHistoryOption && newHistoryOption.key) {
@@ -80,11 +84,15 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
   }
 
   const handleSaveHistorySettings = async () => {
+    if (!historyManager) {
+      logger.error(`[${HistorySettings.name}]: historyManager undefined!`)
+      return
+    }
     try {
       if (!historyOptionSelected && initialHistory) {
-        await handleStoreHistorySettings(initialHistory)
+        await historyManager.handleStoreHistorySettings(initialHistory)
       } else {
-        await handleStoreHistorySettings(historyOptionSelected)
+        await historyManager.handleStoreHistorySettings(historyOptionSelected)
       }
       //TODO: Impliment Alert
       //   setShowWarningDisclaimer(false)
@@ -108,16 +116,20 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
   /**
    * Find current set history
    */
-  let storedHistorySettingsOption: string | BlockSelection | null | undefined
+  let storedHistorySettingsOption: string | HistoryBlockSelection | null | undefined
   async function getSavedHistorySettingsOption() {
-    storedHistorySettingsOption = await getStoredHistorySettingsOption()
+    if (!historyManager) {
+      logger.error(`[${HistorySettings.name}]:[getSavedHistorySettingsOption] historyManager undefined!`)
+      return
+    }
+    storedHistorySettingsOption = await historyManager.getStoredHistorySettingsOption()
     if (storedHistorySettingsOption === 'Never') {
       //TODO: Impliment "Never" option
       //   setIsActivityHistoryDisabled(true)
     } else {
       setInitialHistory(
         storedHistorySettingsOption
-          ? historySettingsOptionList.find((l) => l.id === storedHistorySettingsOption)
+          ? historyManager.getHistorySettingsOptionList().find((l) => l.id === storedHistorySettingsOption)
           : undefined
       )
     }
@@ -137,7 +149,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
             <View style={style.gap} />
             <SingleSelectBlock
               initialSelect={initialHistory}
-              selection={historySettingsOptionList}
+              selection={historyManager?.getHistorySettingsOptionList()}
               onSelect={onSelectHistory}
             />
           </View>

@@ -1,2 +1,2 @@
-import { HistoryProvider } from './context/history'
-export { HistoryProvider }
+import { IHistoryManager } from './types'
+export type { IHistoryManager }

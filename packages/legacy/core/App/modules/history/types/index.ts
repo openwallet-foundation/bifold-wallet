@@ -1,6 +1,25 @@
+import { GenericRecord } from '@credo-ts/core/build/modules/generic-records/repository/GenericRecord'
+import { Moment } from 'moment'
+
 export interface IHistoryManager {
   saveHistory: (recordData: HistoryRecord) => void
   getHistoryItems: (query: HistoryQuery) => Promise<CustomRecord[]>
+  findGenericRecordById: (id: string) => Promise<GenericRecord | null>
+  removeGenericRecord: (genericRecord: GenericRecord) => Promise<void>
+  handleStoreHistorySettings: (selectedValue: HistoryBlockSelection | undefined) => Promise<void>
+  getStoredHistorySettingsOption: () => Promise<string | null>
+  getHistorySettingsOptionList: () => Array<HistoryBlockSelection>
+}
+
+export enum HistorySettingsOptionStorageKey {
+  HistorySettingsOption = 'historySettingsOption',
+}
+
+export interface HistoryBlockSelection {
+  value: string
+  id: string
+  key?: number
+  date?: Moment
 }
 
 export enum HistoryCardType {

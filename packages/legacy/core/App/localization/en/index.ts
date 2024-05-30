@@ -718,6 +718,8 @@ const translation = {
     "NameWallet": "Name your wallet",
     "RenameContact": "Edit Contact Name",
     "HistorySettings": "History Settings",
+    "History": "History",
+    "HistoryDetails": "History Details",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

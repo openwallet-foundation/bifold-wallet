@@ -16,29 +16,34 @@
  */
 
 import { Agent } from '@credo-ts/core'
-import { GenericRecordTags } from '@credo-ts/core/build/modules/generic-records/repository/GenericRecord'
+import { GenericRecord, GenericRecordTags } from '@credo-ts/core/build/modules/generic-records/repository/GenericRecord'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import moment from 'moment'
 
+import { i18n } from '../../../localization/index'
 import { ConsoleLogger } from '../../../services/logger'
 import QueeManager from '../services/quee.service'
 import {
   AppNotificationRecord,
   CustomRecord,
+  HistoryBlockSelection,
   HistoryQuery,
   HistoryRecord,
+  HistorySettingsOptionStorageKey,
   IHistoryManager,
   NotificationRecord,
   RecordType,
 } from '../types'
 
-export enum HistorySettingsOptionStorageKey {
-  HistorySettingsOption = 'historySettingsOption',
-}
 export default class HistoryManager implements IHistoryManager {
-  private agent: Agent<any>
+  private agent: Agent<any> | null
   private logger = new ConsoleLogger()
-  public constructor(agent: Agent<any>) {
+  public constructor(agent: Agent<any> | null) {
     this.agent = agent
+    if (!agent) {
+      this.error(`[${HistoryManager.name}]: History module loaded with undefined agent!!`)
+      return
+    }
     this.trace(`[${HistoryManager.name}]: History module loaded!`)
   }
 
@@ -65,12 +70,12 @@ export default class HistoryManager implements IHistoryManager {
     }
   }
 
-  private error(message: string, data?: Record<string, any>): void {
-    this.logger.error(message, data)
+  private error(message: string): void {
+    this.logger.error(message)
   }
 
-  private trace(message: string, data?: Record<string, any>): void {
-    this.logger.trace(message, data)
+  private trace(message: string): void {
+    this.logger.trace(message)
   }
 
   private async getGenericRecordsbyQuery(query: Partial<GenericRecordTags>): Promise<CustomRecord[]> {
@@ -154,5 +159,77 @@ export default class HistoryManager implements IHistoryManager {
 
   public async getHistoryItems(query: HistoryQuery): Promise<CustomRecord[]> {
     return this.getGenericRecordsbyQuery(query)
+  }
+
+  public async findGenericRecordById(id: string): Promise<GenericRecord | null> {
+    try {
+      if (!this.agent) {
+        this.error(`[${HistoryManager.name}]: Find generic record by id: Agent not set`)
+        throw new Error(`Agent not set `)
+      }
+      return await this.agent.genericRecords.findById(id)
+    } catch (e: unknown) {
+      this.error(`[${HistoryManager.name}]: Find generic record by id: ${e}`)
+      throw new Error(`${e}`)
+    }
+  }
+
+  public async removeGenericRecord(genericRecord: GenericRecord): Promise<void> {
+    try {
+      if (!this.agent) {
+        this.error(`[${HistoryManager.name}]: Remove generic record: Agent not set`)
+        throw new Error(`Agent not set `)
+      }
+      return await this.agent.genericRecords.delete(genericRecord)
+    } catch (e: unknown) {
+      this.error(`[${HistoryManager.name}]: Remove generic record: ${e}`)
+      throw new Error(`${e}`)
+    }
+  }
+
+  public async handleStoreHistorySettings(selectedValue: HistoryBlockSelection | undefined): Promise<void> {
+    if (!selectedValue) {
+      throw new Error('No option selected')
+    }
+
+    await AsyncStorage.setItem(HistorySettingsOptionStorageKey.HistorySettingsOption, selectedValue.id)
+
+    //TODO: Delete old history
+    /*
+    if (selectedValue.id !== 'Always') {
+      // Filter history record data and get the ones that needs to be deleted.
+      const selectedHistoryRecords = historyItems && filterDataByGivenDate(historyItems, selectedValue.date)
+      // Remove history past the selected date.
+      if (selectedHistoryRecords) {
+        for await (const record of selectedHistoryRecords) {
+          const recordHistory = record.content as HistoryRecord
+          if (!recordHistory || !recordHistory.id) {
+            return
+          }
+          const deleteRecord = await findGenericRecordById(recordHistory.id)
+          if (!deleteRecord) {
+            return
+          }
+          await removeGenericRecord(deleteRecord)
+        }
+      }
+    }
+    */
+  }
+
+  public async getStoredHistorySettingsOption(): Promise<string | null> {
+    return await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
+  }
+
+  public getHistorySettingsOptionList(): Array<HistoryBlockSelection> {
+    const oneMonth = moment().subtract(1, 'month')
+    const sixMonth = moment().subtract(6, 'month')
+    const oneYear = moment().subtract(1, 'year')
+    return [
+      { key: 0, id: '1 month', date: oneMonth, value: i18n.t('ActivityHistory.DeleteActivityAfter.1month') },
+      { key: 1, id: '6 month', date: sixMonth, value: i18n.t('ActivityHistory.DeleteActivityAfter.6month') },
+      { key: 2, id: '1 year', date: oneYear, value: i18n.t('ActivityHistory.DeleteActivityAfter.1year') },
+      { key: 3, id: 'Always', value: i18n.t('ActivityHistory.DeleteActivityAfter.Always') },
+    ]
   }
 }

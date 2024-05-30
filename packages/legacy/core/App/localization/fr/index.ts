@@ -702,6 +702,8 @@ const translation = {
         "NameWallet": "Name your wallet (FR)",
         "RenameContact": "Edit Contact Name (FR)",
         "HistorySettings": "History Settings",
+        "History": "History",
+        "HistoryDetails": "History Details",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",

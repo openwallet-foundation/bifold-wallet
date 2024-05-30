@@ -1,10 +1,10 @@
-import { Moment } from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TextTheme } from '../../../../theme'
+import { HistoryBlockSelection } from '../../types'
 
 const styles = StyleSheet.create({
   flexView: {
@@ -18,26 +18,20 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
 })
-export interface BlockSelection {
-  value: string
-  id: string
-  key?: number
-  date?: Moment
-}
 
 interface Props {
-  selection: BlockSelection[]
-  onSelect: (selected: BlockSelection) => void
-  initialSelect?: BlockSelection
+  selection: HistoryBlockSelection[] | undefined
+  onSelect: (selected: HistoryBlockSelection) => void
+  initialSelect?: HistoryBlockSelection
   color?: string
 }
 
 const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect, color = TextTheme.normal.color }) => {
   const { t } = useTranslation()
 
-  const [selected, setSelected] = useState<BlockSelection>()
+  const [selected, setSelected] = useState<HistoryBlockSelection>()
 
-  const handleSelect = (selected: BlockSelection) => {
+  const handleSelect = (selected: HistoryBlockSelection) => {
     setSelected(selected)
     onSelect(selected)
   }
@@ -50,7 +44,7 @@ const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect
 
   return (
     <>
-      {selection.map((item) => (
+      {selection?.map((item) => (
         <TouchableOpacity
           accessible={true}
           accessibilityLabel={

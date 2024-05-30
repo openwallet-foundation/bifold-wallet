@@ -680,6 +680,8 @@ const translation = {
     "NameWallet": "Nomear sua carteira",
     "RenameContact": "Editar nome do contato",
     "HistorySettings": "History Settings",
+    "History": "History",
+    "HistoryDetails": "History Details",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",

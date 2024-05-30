@@ -1,3 +1,4 @@
+import { useAgent } from '@credo-ts/react-hooks'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -14,8 +15,7 @@ import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams, Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
-import { HistorySettingsOptionStorageKey, useHistory } from '../context/history'
-import { CustomRecord, HistoryRecord, RecordType } from '../types'
+import { CustomRecord, HistoryRecord, HistorySettingsOptionStorageKey, IHistoryManager, RecordType } from '../types'
 
 import HistoryListItem from './components/HistoryListItem'
 
@@ -27,14 +27,18 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
   const [isLoading, setLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
   const { t } = useTranslation()
-  const { getHistoryItems, findGenericRecordById, removeGenericRecord } = useHistory()
-
+  const container = useContainer()
+  const { agent } = useAgent()
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
+
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
-  const container = useContainer()
   const Button = container.resolve(TOKENS.COMP_BUTTON)
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
+  const historyManager: IHistoryManager | undefined = agent
+    ? container.resolve(TOKENS.FN_LOAD_HISTORY)(agent)
+    : undefined
 
   //State
 
@@ -66,7 +70,11 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
 
   /** Load history */
   const getAllHistory = async () => {
-    const allRecords = await getHistoryItems({ type: RecordType.HistoryRecord })
+    if (!historyManager) {
+      logger.error(`[${HistoryPage.name}][getAllHistory]: historyManager undefined!`)
+      return
+    }
+    const allRecords = await historyManager.getHistoryItems({ type: RecordType.HistoryRecord })
 
     const historySettingOption = await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
 
@@ -92,15 +100,15 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
         if (!recordHistory || !recordHistory.id) {
           return
         }
-        const deleteRecord = await findGenericRecordById(recordHistory.id)
+        const deleteRecord = await historyManager.findGenericRecordById(recordHistory.id)
         if (!deleteRecord) {
           return
         }
-        await removeGenericRecord(deleteRecord)
+        await historyManager.removeGenericRecord(deleteRecord)
       }
     }
 
-    const newAllRecords = await getHistoryItems({ type: RecordType.HistoryRecord })
+    const newAllRecords = await historyManager.getHistoryItems({ type: RecordType.HistoryRecord })
 
     //TODO: Impliment history sort
     // if (!sortHistoryBy) {
