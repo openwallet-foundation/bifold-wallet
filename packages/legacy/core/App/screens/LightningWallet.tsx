@@ -33,6 +33,7 @@ import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoi
 import * as lightningPayReq from 'bolt11';
 import Clipboard from '@react-native-community/clipboard';
 import CreateLightningWallet from '../components/views/CreateLightningWallet';
+import ShowLightningSeedPhraseModal from '../components/modals/SeedPhraseModal';
 
 const LightningWallet = () => {
     //make a state varialbe to store the balance
@@ -43,6 +44,7 @@ const LightningWallet = () => {
     const [scannedData, setScannedData] = useState<string | undefined>(undefined);
     const [scannerActive, setScannerActive] = useState(false);
     const [showInvoiceQR, setShowInvoiceQR] = useState(false);
+    const [showSeedPhrase, setShowSeedPhrase] = useState(false);
     const [satsAmount, setSatsAmount] = useState('1000');
     const [invoiceGenLoading, setInvoiceGenLoading] = useState(false);
     const [addressInfoLoading, setAddressInfoLoading] = useState(false);
@@ -52,6 +54,7 @@ const LightningWallet = () => {
     const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(0);
     const [amoutZar, setAmountZar] = useState<string | undefined>(undefined);
     const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
+    const [seedPhrase, setSeedPhrase] = useState<string | undefined>(undefined);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -103,11 +106,10 @@ const LightningWallet = () => {
 
     const backupSeedPhraseHandler = async () => {
         try {
-
+            setShowSeedPhrase(true);
             const tmpSeedPhrase = await getItem(MNEMONIC_STORE);
-            console.log('Seed Phrase:', tmpSeedPhrase);
             if (tmpSeedPhrase) {
-                addLog(tmpSeedPhrase);
+                setSeedPhrase(tmpSeedPhrase);
             }
 
         } catch (err: any) {
@@ -344,6 +346,8 @@ const LightningWallet = () => {
                     </TouchableOpacity>
                 </Modal>
 
+                <ShowLightningSeedPhraseModal showModal={showSeedPhrase} setShowModal={setShowSeedPhrase} seedPhrase={mnemonic} />
+
                 <View style={styles.buttonPadding}>
                     <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetDepositButtonPress}>
                         {addressInfoLoading ? (
@@ -381,7 +385,7 @@ const LightningWallet = () => {
                 </View>
             </ScrollView >) : (
             <ScrollView>
-                <CreateLightningWallet setMnemonic={setMnemonic} />
+                <CreateLightningWallet setMnemonic={setMnemonic} setShowSeedPhraseModal={setShowSeedPhrase} />
             </ScrollView>
         )
     );

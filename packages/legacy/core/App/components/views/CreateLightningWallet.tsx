@@ -8,36 +8,41 @@ import { breezInitHandler, getMnemonic } from '../../utils/lightningHelpers'
 
 interface CreateLightningWalletProps {
     setMnemonic: (mnemonic: string) => void;
+    setShowSeedPhraseModal: (show: boolean) => void;
 }
 
 const eventHandler = (breezEvent: any) => {
     console.log("event", JSON.stringify(breezEvent))
 }
 
-export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ setMnemonic }) => {
+export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ setMnemonic, setShowSeedPhraseModal }) => {
     const { TextTheme, Buttons, ColorPallet } = useTheme()
-    const [loading, setLoading] = useState(false)
+    const [loadingRestore, setLoadingRestore] = useState(false)
+    const [loadingCreate, setLoadingCreate] = useState(false)
     const [error, setError] = useState('')
     const [tmpMnemonic, setTmpMnemonic] = useState('')
 
     const handleCreateWallet = () => {
-        setLoading(true)
+        if (loadingCreate) return
+        setLoadingCreate(true)
         breezInitHandler(eventHandler).then(() => {
             getMnemonic().then((mnemonic) => {
                 if (mnemonic) {
                     setMnemonic(mnemonic)
-                    setLoading(false)
+                    setLoadingCreate(false)
+                    setShowSeedPhraseModal(true)
                 }
             })
         })
     }
 
     const handleRestoreWallet = () => {
-        setLoading(true)
+        if (loadingRestore) return
+        setLoadingRestore(true)
         const wordCount = tmpMnemonic.trim().split(/\s+/).length;
         if (wordCount !== 12 && wordCount !== 24) {
             setError('Seed phrase must be 12 or 24 words')
-            setLoading(false)
+            setLoadingRestore(false)
             return
         }
         setError('')
@@ -45,7 +50,7 @@ export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ se
             getMnemonic().then((mnemonic) => {
                 if (mnemonic) {
                     setMnemonic(mnemonic)
-                    setLoading(false)
+                    setLoadingRestore(false)
                 }
             })
         })
@@ -55,16 +60,17 @@ export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ se
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={TextTheme.headerTitle}>Create or Restore Lightning wallet</Text>
             <TouchableOpacity
-                style={{ ...theme.Buttons.primary, margin: 10, minWidth: 200 }}
+                style={{ ...theme.Buttons.primary, margin: 30, minWidth: 200 }}
                 onPress={handleCreateWallet}
             >
-                <Text style={Buttons.buttonText}>Create New Wallet         </Text>
+                {loadingCreate ? <ActivityIndicator size="small" color={ColorPallet.grayscale.white} />
+                    : <Text style={{ ...theme.TextTheme.normal }}>Create New Wallet</Text>}
             </TouchableOpacity>
 
             <Text style={TextTheme.modalNormal}>OR</Text>
 
             <TextInput
-                style={{ ...theme.Inputs.textInput, minWidth: '95%', margin: 10 }}
+                style={{ ...theme.Inputs.textInput, minWidth: '90%', margin: 30 }}
                 placeholder="Enter Existing Seed Phrase"
                 placeholderTextColor={ColorPallet.grayscale.white}
                 value={tmpMnemonic}
@@ -75,10 +81,10 @@ export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ se
                 style={{ ...theme.Buttons.primary, minWidth: 200 }}
                 onPress={handleRestoreWallet}
             >
-                <Text style={Buttons.buttonText}>Restore Existing Wallet</Text>
+                {loadingRestore ? <ActivityIndicator size="small" color={ColorPallet.grayscale.white} />
+                    : <Text style={{ ...theme.TextTheme.normal }}>Restore Existing Wallet</Text>}
             </TouchableOpacity>
 
-            {loading && <ActivityIndicator size="large" style={{ margin: 10 }} color={ColorPallet.grayscale.white} />}
             {
                 error && <Text style={{
                     color: ColorPallet.notification.errorBorder, margin: 10, textAlign: 'center'
