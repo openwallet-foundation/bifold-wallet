@@ -55,6 +55,7 @@ const LightningWallet = () => {
     const [amoutZar, setAmountZar] = useState<string | undefined>(undefined);
     const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
     const [seedPhrase, setSeedPhrase] = useState<string | undefined>(undefined);
+    const [checkingSeedPhrase, setCheckingSeedPhrase] = useState(false);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -67,10 +68,12 @@ const LightningWallet = () => {
     useEffect(() => {
         // const eventSubscription = breezInitHandler(eventHandler);
         try {
+            setCheckingSeedPhrase(true)
             getItem(MNEMONIC_STORE).then((response) => {
                 if (response) {
                     setMnemonic(response)
                 }
+                setCheckingSeedPhrase(false)
             })
 
             getBTCPrice().then((response) => {
@@ -385,7 +388,7 @@ const LightningWallet = () => {
                 </View>
             </ScrollView >) : (
             <ScrollView>
-                <CreateLightningWallet setMnemonic={setMnemonic} setShowSeedPhraseModal={setShowSeedPhrase} />
+                {checkingSeedPhrase ? <ActivityIndicator size="large" color="white" /> : <CreateLightningWallet setMnemonic={setMnemonic} setShowSeedPhraseModal={setShowSeedPhrase} />}
             </ScrollView>
         )
     );
