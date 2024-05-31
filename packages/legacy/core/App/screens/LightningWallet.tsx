@@ -22,7 +22,7 @@ import {
 import { theme } from '../theme';
 import QRCode from 'react-native-qrcode-svg';
 import { generateMnemonic } from '@dreson4/react-native-quick-bip39'
-import { getItem, removeItem, setItem } from '../utils/storage';
+import { getItem, removeItem } from '../utils/storage';
 import { readFile } from 'react-native-fs';
 import { Buffer } from 'buffer';
 import { ScrollView } from 'react-native-gesture-handler';

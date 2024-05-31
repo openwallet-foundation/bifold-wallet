@@ -11,15 +11,15 @@ const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string | undefined = undefined) => {
     try {
         let seed = <any>[];
+        let mnemonic
         let nodeConfig
         const apiKey = Config.BREEZ_API_KEY;
 
         // const apiKey = 'Yk2YFZixwFZai/af49/A/1W1jtPx28MV6IXH8DIzvG0=';
         if (restoreMnemonic) {
 
-            setItem(MNEMONIC_STORE, restoreMnemonic);
-
             seed = await mnemonicToSeed(restoreMnemonic);
+            mnemonic = restoreMnemonic
 
             nodeConfig = {
                 type: NodeConfigVariant.GREENLIGHT,
@@ -27,37 +27,12 @@ export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string 
             };
             console.log("Using restore mnemonic")
         }
-        // else if (Config.INVITE_MODE === 'true') {
-
-        //     // Physical phone mnemonic
-        //     // const mnemonic = 'spring business health luggage word spin start column pipe giant pink spoon';
-
-        //     // Emulator mnemonic
-        //     const mnemonic = 'large artefact physical panel shed movie inhale sausage sense bundle depart ribbon';
-
-        //     // Physical phone invite code
-        //     // const inviteCode = '6FUD-Z8A9';
-
-        //     // Emulator invite code
-        //     const inviteCode = 'XLT3-8WFJ';
-
-        //     setItem(MNEMONIC_STORE, mnemonic);
-
-        //     seed = await mnemonicToSeed(mnemonic);
-
-        //     nodeConfig = {
-        //         type: NodeConfigVariant.GREENLIGHT,
-        //         config: { inviteCode }
-        //     };
-        //     console.log("Using invite code")
-        // }
         else {
-            let mnemonic = await getItem(MNEMONIC_STORE)
+            mnemonic = await getItem(MNEMONIC_STORE)
             if (!mnemonic) {
                 console.log("No mnemonic found, generating new one");
                 mnemonic = generateMnemonic();
                 console.log("Generated mnemonic: ", mnemonic);
-                await setItem(MNEMONIC_STORE, mnemonic);
             }
             else {
                 console.log("Mnemonic found: ", mnemonic);
@@ -86,6 +61,7 @@ export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string 
             );
             const eventSubscription = await connect(config, seed, eventHandler);
             console.log('Breez Initialized');
+            await setItem(MNEMONIC_STORE, mnemonic);
             return eventSubscription
         }
         else {
@@ -100,8 +76,11 @@ export const initNodeAndSdk = async (eventHandler: any, restoreMnemonic: string 
             return undefined
         }
 
-        console.error(err);
-        return JSON.stringify(err)
+        let errorMessage = "Error initializing wallet."
+        if (err?.message) {
+            errorMessage = errorMessage + " Details: " + err.message
+        }
+        return JSON.stringify(errorMessage)
     }
 }
 
@@ -121,9 +100,15 @@ export const breezInitHandler = async (event: any, mnemonic: string | undefined 
             }
         }
 
+        return "Error initializing wallet."
+
     } catch (err: any) {
         console.error(err);
-        return JSON.stringify(err)
+        let errorMessage = "Error initializing wallet."
+        if (err?.message) {
+            errorMessage = errorMessage + " Details: " + err.message
+        }
+        return JSON.stringify(errorMessage)
     }
 }
 

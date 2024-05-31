@@ -25,14 +25,20 @@ export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ se
     const handleCreateWallet = () => {
         if (loadingCreate) return
         setLoadingCreate(true)
-        breezInitHandler(eventHandler).then(() => {
-            getMnemonic().then((mnemonic) => {
-                if (mnemonic) {
-                    setMnemonic(mnemonic)
-                    setLoadingCreate(false)
-                    setShowSeedPhraseModal(true)
-                }
-            })
+        breezInitHandler(eventHandler).then((res) => {
+            if (typeof res === 'string') {
+                setLoadingCreate(false)
+                setError(res)
+                return
+            } else {
+                getMnemonic().then((mnemonic) => {
+                    if (mnemonic) {
+                        setMnemonic(mnemonic)
+                        setLoadingCreate(false)
+                        setShowSeedPhraseModal(true)
+                    }
+                })
+            }
         })
     }
 
@@ -46,13 +52,19 @@ export const CreateLightningWallet: React.FC<CreateLightningWalletProps> = ({ se
             return
         }
         setError('')
-        breezInitHandler(eventHandler, tmpMnemonic).then(() => {
-            getMnemonic().then((mnemonic) => {
-                if (mnemonic) {
-                    setMnemonic(mnemonic)
-                    setLoadingRestore(false)
-                }
-            })
+        breezInitHandler(eventHandler, tmpMnemonic).then((res) => {
+            if (typeof res === 'string') {
+                setError(res)
+                setLoadingRestore(false)
+                return
+            } else {
+                getMnemonic().then((mnemonic) => {
+                    if (mnemonic) {
+                        setMnemonic(mnemonic)
+                        setLoadingRestore(false)
+                    }
+                })
+            }
         })
     }
 
