@@ -22,7 +22,7 @@ import {
 import { theme } from '../theme';
 import QRCode from 'react-native-qrcode-svg';
 import { generateMnemonic } from '@dreson4/react-native-quick-bip39'
-import { getItem, removeItem, setItem } from '../utils/storage';
+import { getItem, removeItem } from '../utils/storage';
 import { readFile } from 'react-native-fs';
 import { Buffer } from 'buffer';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -32,6 +32,8 @@ import { set } from 'mockdate';
 import { breezInitHandler, getBTCDepositInfo, getBTCPrice, getBalances, getInvoice, getLInvoiceZarAmount, getLSPInfo, initNodeAndSdk, invoicePaymentHandler, payInvoice } from '../utils/lightningHelpers';
 import * as lightningPayReq from 'bolt11';
 import Clipboard from '@react-native-community/clipboard';
+import CreateLightningWallet from '../components/views/CreateLightningWallet';
+import ShowLightningSeedPhraseModal from '../components/modals/SeedPhraseModal';
 
 const LightningWallet = () => {
     //make a state varialbe to store the balance
@@ -42,6 +44,7 @@ const LightningWallet = () => {
     const [scannedData, setScannedData] = useState<string | undefined>(undefined);
     const [scannerActive, setScannerActive] = useState(false);
     const [showInvoiceQR, setShowInvoiceQR] = useState(false);
+    const [showSeedPhrase, setShowSeedPhrase] = useState(false);
     const [satsAmount, setSatsAmount] = useState('1000');
     const [invoiceGenLoading, setInvoiceGenLoading] = useState(false);
     const [addressInfoLoading, setAddressInfoLoading] = useState(false);
@@ -51,6 +54,8 @@ const LightningWallet = () => {
     const [btcZarPrice, setBtcZarPrice] = useState<number | undefined>(0);
     const [amoutZar, setAmountZar] = useState<string | undefined>(undefined);
     const [mnemonic, setMnemonic] = useState<string | undefined>(undefined);
+    const [seedPhrase, setSeedPhrase] = useState<string | undefined>(undefined);
+    const [checkingSeedPhrase, setCheckingSeedPhrase] = useState(false);
 
     const MNEMONIC_STORE = "MNEMONIC_SECURE_STORE"
 
@@ -61,8 +66,16 @@ const LightningWallet = () => {
     }
 
     useEffect(() => {
-        const eventSubscription = breezInitHandler(eventHandler);
+        // const eventSubscription = breezInitHandler(eventHandler);
         try {
+            setCheckingSeedPhrase(true)
+            getItem(MNEMONIC_STORE).then((response) => {
+                if (response) {
+                    setMnemonic(response)
+                }
+                setCheckingSeedPhrase(false)
+            })
+
             getBTCPrice().then((response) => {
                 setBtcZarPrice(response)
             })
@@ -70,6 +83,8 @@ const LightningWallet = () => {
             console.error(err)
         }
     }, []);
+
+
 
     useEffect(() => {
         if (scannedData) {
@@ -94,11 +109,10 @@ const LightningWallet = () => {
 
     const backupSeedPhraseHandler = async () => {
         try {
-
+            setShowSeedPhrase(true);
             const tmpSeedPhrase = await getItem(MNEMONIC_STORE);
-            console.log('Seed Phrase:', tmpSeedPhrase);
             if (tmpSeedPhrase) {
-                addLog(tmpSeedPhrase);
+                setSeedPhrase(tmpSeedPhrase);
             }
 
         } catch (err: any) {
@@ -172,179 +186,183 @@ const LightningWallet = () => {
     };
 
     return (
-        <ScrollView>
-            <View style={styles.textPadding}>
-                <Text style={theme.TextTheme.headerTitle}>Lightning tests</Text>
-            </View>
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={() => { setScannerActive(true) }}>
-                    <Text style={theme.TextTheme.label}>Scan Invoice</Text>
-                </TouchableOpacity>
-            </View>
-
-
-
-            <Modal
-                animationType="slide"
-                transparent={true} // Set to true to allow custom styling to be visible
-                visible={scannerActive}
-                onRequestClose={() => {
-                    setScannerActive(!scannerActive);
-                }}
-            >
-                {/* Wrap the content in a View with a style that sets the background color */}
-                <View style={{ flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-                    <QRCodeScanner
-                        onRead={({ data }) => { setScannedData(data); addLog(JSON.stringify("Scanned: " + data)); setScannerActive(false); setPaymentStatusDesc('Invoice Scanned'); }}
-                        reactivate={true}
-                        reactivateTimeout={3000}
-                        showMarker={true}
-                        topContent={
-                            <Text style={{ ...theme.TextTheme.label, color: 'white' }}>Scan an Invoice</Text> // Adjust text color as needed
-                        }
-                        bottomContent={
-                            <TouchableOpacity style={{ ...theme.Buttons.primary, marginTop: 20 }} onPress={() => setScannerActive(false)}>
-                                <Text style={theme.TextTheme.label}>Close Scanner</Text>
-                            </TouchableOpacity>
-                        }
-                        cameraStyle={{ height: 370, width: 290, alignSelf: 'center', marginTop: 20, borderRadius: 10, overflow: 'hidden', position: 'relative' }}
-                    />
+        mnemonic ? (
+            <ScrollView>
+                <View style={styles.textPadding}>
+                    <Text style={theme.TextTheme.headerTitle}>Lightning tests</Text>
                 </View>
-            </Modal>
 
-            <View style={styles.buttonPadding}>
-                <Text style={theme.TextTheme.label}>Invoice Data:</Text>
-                <TextInput
-                    style={theme.Inputs.textInput}
-                    onChangeText={setScannedData}
-                    value={scannedData}
-                    placeholder="Nothing scanned yet"
-                    keyboardType="default"
-                />
-                <Text style={theme.TextTheme.label}>{scannedData && btcZarPrice && ('(R' + amoutZar + ')')}</Text>
-            </View>
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={() => { setScannerActive(true) }}>
+                        <Text style={theme.TextTheme.label}>Scan Invoice</Text>
+                    </TouchableOpacity>
+                </View>
 
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={handlePayInvoiceButtonPress}>
-                    {paymentPending ? (
-                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
-                    ) : (
-                        <Text style={theme.TextTheme.label}>Pay Invoice ({paymentStatusDesc})</Text>
-                    )}
-                </TouchableOpacity>
-            </View>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true} // Set to true to allow custom styling to be visible
+                    visible={scannerActive}
+                    onRequestClose={() => {
+                        setScannerActive(!scannerActive);
+                    }}
+                >
+                    {/* Wrap the content in a View with a style that sets the background color */}
+                    <View style={{ flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+                        <QRCodeScanner
+                            onRead={({ data }) => { setScannedData(data); addLog(JSON.stringify("Scanned: " + data)); setScannerActive(false); setPaymentStatusDesc('Invoice Scanned'); }}
+                            reactivate={true}
+                            reactivateTimeout={3000}
+                            showMarker={true}
+                            topContent={
+                                <Text style={{ ...theme.TextTheme.label, color: 'white' }}>Scan an Invoice</Text> // Adjust text color as needed
+                            }
+                            bottomContent={
+                                <TouchableOpacity style={{ ...theme.Buttons.primary, marginTop: 20 }} onPress={() => setScannerActive(false)}>
+                                    <Text style={theme.TextTheme.label}>Close Scanner</Text>
+                                </TouchableOpacity>
+                            }
+                            cameraStyle={{ height: 370, width: 290, alignSelf: 'center', marginTop: 20, borderRadius: 10, overflow: 'hidden', position: 'relative' }}
+                        />
+                    </View>
+                </Modal>
+
+                <View style={styles.buttonPadding}>
+                    <Text style={theme.TextTheme.label}>Invoice Data:</Text>
+                    <TextInput
+                        style={theme.Inputs.textInput}
+                        onChangeText={setScannedData}
+                        value={scannedData}
+                        placeholder="Nothing scanned yet"
+                        keyboardType="default"
+                    />
+                    <Text style={theme.TextTheme.label}>{scannedData && btcZarPrice && ('(R' + amoutZar + ')')}</Text>
+                </View>
 
 
-            {/* <View style={styles.buttonPadding}>
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={handlePayInvoiceButtonPress}>
+                        {paymentPending ? (
+                            <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                        ) : (
+                            <Text style={theme.TextTheme.label}>Pay Invoice ({paymentStatusDesc})</Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
+
+
+                {/* <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={loadAndConvert}>
                     <Text style={theme.TextTheme.label}>Process Keys</Text>
                 </TouchableOpacity>
             </View> */}
 
-            {/* <View style={styles.buttonPadding}>
+                {/* <View style={styles.buttonPadding}>
                 <TouchableOpacity style={theme.Buttons.primary} onPress={removeMnemonic}>
                     <Text style={theme.TextTheme.label}>Remove Mnemonic</Text>
                 </TouchableOpacity>
             </View> */}
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={backupSeedPhraseHandler}>
-                    <Text style={theme.TextTheme.label}>Backup Seed Phrase</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={backupSeedPhraseHandler}>
+                        <Text style={theme.TextTheme.label}>Backup Seed Phrase</Text>
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetBalancesButtonPress}>
-                    <Text style={theme.TextTheme.label}>Get Balances</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetBalancesButtonPress}>
+                        <Text style={theme.TextTheme.label}>Get Balances</Text>
+                    </TouchableOpacity>
+                </View>
 
-            {/* {channelBalance !== -1 && chainBalance !== -1 && (
+                {/* {channelBalance !== -1 && chainBalance !== -1 && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.label}>Channel balance: {channelBalance} MSats</Text>
                     <Text style={theme.TextTheme.label}>Chain balance: {chainBalance} MSats</Text>
                 </View>
             )} */}
 
-            <View style={styles.buttonPadding}>
-                <Text style={theme.TextTheme.label}>Enter amount in sats:</Text>
-                <TextInput
-                    style={theme.Inputs.textInput}
-                    onChangeText={setSatsAmount}
-                    value={satsAmount}
-                    placeholder="Amount in sats"
-                    keyboardType="numeric"
-                />
-            </View>
+                <View style={styles.buttonPadding}>
+                    <Text style={theme.TextTheme.label}>Enter amount in sats:</Text>
+                    <TextInput
+                        style={theme.Inputs.textInput}
+                        onChangeText={setSatsAmount}
+                        value={satsAmount}
+                        placeholder="Amount in sats"
+                        keyboardType="numeric"
+                    />
+                </View>
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetInvoiceButtonPress}>
-                    {invoiceGenLoading ? (
-                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
-                    ) : (
-                        <Text style={theme.TextTheme.label}>Invoice for {satsAmount} sats</Text>
-                    )}
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetInvoiceButtonPress}>
+                        {invoiceGenLoading ? (
+                            <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                        ) : (
+                            <Text style={theme.TextTheme.label}>Invoice for {satsAmount} sats</Text>
+                        )}
 
-                </TouchableOpacity>
-            </View>
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetLSPInfo}>
-                    {invoiceGenLoading ? (
-                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
-                    ) : (
-                        <Text style={theme.TextTheme.label}>Get LSP Info</Text>
-                    )}
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetLSPInfo}>
+                        {invoiceGenLoading ? (
+                            <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                        ) : (
+                            <Text style={theme.TextTheme.label}>Get LSP Info</Text>
+                        )}
 
-                </TouchableOpacity>
-            </View>
+                    </TouchableOpacity>
+                </View>
 
-            <Modal
-                animationType="slide"
-                transparent={true} // Set to true to allow custom styling to be visible
-                visible={showInvoiceQR}
-                onRequestClose={() => {
-                    setScannerActive(!showInvoiceQR);
-                }}
-            >
-                <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
-                    activeOpacity={1}
-                    onPressOut={() => setShowInvoiceQR(false)} // Use onPressOut for better handling
+                <Modal
+                    animationType="slide"
+                    transparent={true} // Set to true to allow custom styling to be visible
+                    visible={showInvoiceQR}
+                    onRequestClose={() => {
+                        setScannerActive(!showInvoiceQR);
+                    }}
                 >
-                    {invoice !== undefined && (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <QRCode
-                                value={invoice.bolt11}
-                                size={250}
-                            />
-                            <TouchableOpacity
-                                onPress={() => {
-                                    Clipboard.setString(invoice.bolt11);
-                                    // Optionally, add feedback to the user (e.g., Toast, alert)
-                                    console.log('Invoice copied to clipboard!');
-                                }}
-                            >
-                                <Text style={{ ...theme.TextTheme.label, fontSize: 35, marginTop: 20 }}>Copy Invoice ⧉</Text>
-                            </TouchableOpacity>
-                        </View>)}
-                </TouchableOpacity>
-            </Modal>
+                    <TouchableOpacity
+                        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
+                        activeOpacity={1}
+                        onPressOut={() => setShowInvoiceQR(false)} // Use onPressOut for better handling
+                    >
+                        {invoice !== undefined && (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <QRCode
+                                    value={invoice.bolt11}
+                                    size={250}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        Clipboard.setString(invoice.bolt11);
+                                        // Optionally, add feedback to the user (e.g., Toast, alert)
+                                        console.log('Invoice copied to clipboard!');
+                                    }}
+                                >
+                                    <Text style={{ ...theme.TextTheme.label, fontSize: 35, marginTop: 20 }}>Copy Invoice ⧉</Text>
+                                </TouchableOpacity>
+                            </View>)}
+                    </TouchableOpacity>
+                </Modal>
 
-            <View style={styles.buttonPadding}>
-                <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetDepositButtonPress}>
-                    {addressInfoLoading ? (
-                        <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
-                    ) : (
-                        <Text style={theme.TextTheme.label}>Show BTC Deposit Address</Text>
-                    )}
+                <ShowLightningSeedPhraseModal showModal={showSeedPhrase} setShowModal={setShowSeedPhrase} seedPhrase={mnemonic} />
 
-                </TouchableOpacity>
-            </View>
+                <View style={styles.buttonPadding}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={handleGetDepositButtonPress}>
+                        {addressInfoLoading ? (
+                            <ActivityIndicator size="small" color="#FFF" /> // Customize color as needed
+                        ) : (
+                            <Text style={theme.TextTheme.label}>Show BTC Deposit Address</Text>
+                        )}
 
-            {/* {
+                    </TouchableOpacity>
+                </View>
+
+                {/* {
                 depositInfo !== undefined && (
                     <View style={styles.textPadding}>
                         <Text style={theme.TextTheme.label}>Deposit Address: {depositInfo.bitcoinAddress}</Text>
@@ -354,22 +372,25 @@ const LightningWallet = () => {
                 )
             } */}
 
-            <View style={{ margin: 10 }}>
-                {/* Trigger error generation for demonstration */}
-                <Text >
-                    <Text>Logs</Text>
-                </Text>
+                <View style={{ margin: 10 }}>
+                    {/* Trigger error generation for demonstration */}
+                    <Text >
+                        <Text>Logs</Text>
+                    </Text>
 
-                <ScrollView style={{ maxHeight: 200, flex: 1 }}>
-                    {logs.map((log, index) => (
-                        <Text key={index} style={{ backgroundColor: 'grey', color: 'black', padding: 10 }}>
-                            {log}
-                        </Text>
-                    ))}
-                </ScrollView>
-            </View>
-
-        </ScrollView >
+                    <ScrollView style={{ maxHeight: 200, flex: 1 }}>
+                        {logs.map((log, index) => (
+                            <Text key={index} style={{ backgroundColor: 'grey', color: 'white', padding: 10 }}>
+                                {log}
+                            </Text>
+                        ))}
+                    </ScrollView>
+                </View>
+            </ScrollView >) : (
+            <ScrollView>
+                {checkingSeedPhrase ? <ActivityIndicator size="large" color="white" /> : <CreateLightningWallet setMnemonic={setMnemonic} setShowSeedPhraseModal={setShowSeedPhrase} />}
+            </ScrollView>
+        )
     );
 };
 

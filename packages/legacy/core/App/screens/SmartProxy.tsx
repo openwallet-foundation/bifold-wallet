@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Image, ImageBackground, ActivityIndicator } from 'react-native';
 import { theme } from '../theme';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useAgent, useProofByState } from '@aries-framework/react-hooks'
-import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner } from '../utils/smartProxyHelpers';
+import { registerOnSmartProxy, createSmartProxyEntry, getProxies, deRegisterOnSmartProxy, deleteSmartProxyEntry, querySmartProxyEntry, getOwner, createEmailSmartProxyViaVCEntry } from '../utils/smartProxyHelpers';
 import { getItem, removeItem } from '../utils/storage';
 import BottomPopup from '../components/toast/popup';
-import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode } from '../utils/lightningHelpers';
+import { getBTCToZarAmount, getNodeId, initNodeAndSdk, breezInitHandler, payInvoice, payInvoiceWithAmount, sendSpontaneousPaymentToNode, getMnemonic } from '../utils/lightningHelpers';
 import { set } from 'mockdate';
+import { createConnectionInvitation } from '../utils/helpers';
+import { CommonActions, useFocusEffect } from '@react-navigation/native'
+import { Screens, Stacks, SettingStackParams } from '../types/navigators'
+import { StackScreenProps } from '@react-navigation/stack'
 
-const SmartProxy = () => {
+type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
+
+type LocalState = {
+    connectionIsActive: boolean,
+    isVisible: boolean
+}
+
+type SmartProxyProps = StackScreenProps<SettingStackParams, Screens.SmartProxy>
+
+const SmartProxy: React.FC<SmartProxyProps> = ({ navigation, route }) => {
     //make a state varialbe to store the balance
 
     const [logs, setLogs] = useState<string[]>([]);
@@ -35,8 +48,15 @@ const SmartProxy = () => {
     const [checkedIfRegistered, setCheckedIfRegistered] = useState<boolean>(false)
     const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false)
+    const [requestLoading, setRequestLoading] = useState<boolean>(false)
     const [nodeId, setNodeId] = useState<string | undefined>(undefined)
     const [errorCheckingRegistration, setErrorCheckingRegistration] = useState<boolean>(false)
+    const [lightningWalletAvailable, setLightningWalletAvailable] = useState<boolean>(false)
+    const merge: MergeFunction = (current, next) => ({ ...current, ...next })
+    const [state, dispatch] = useReducer(merge, {
+        connectionIsActive: false,
+        isVisible: false
+    })
 
     const { agent } = useAgent()
 
@@ -62,13 +82,16 @@ const SmartProxy = () => {
 
             })
 
-
-            const eventSubscription = breezInitHandler(eventHandler).then((res) => {
-                // const nodeId = getNodeId().then((nodeId) => {
-                //     setNodeId(nodeId)
-                //     setProxyValue(nodeId)
-                // })
+            // check if there is a lightning seed phrase in storage
+            getMnemonic().then((mnemonic) => {
+                if (mnemonic) {
+                    console.log("Mnemonic found in storage")
+                    initNodeAndSdk(eventHandler).then(() => {
+                        setLightningWalletAvailable(true)
+                    })
+                }
             })
+
         } catch (err: any) {
             console.error(err)
         }
@@ -166,6 +189,72 @@ const SmartProxy = () => {
             console.error("Owner, proxyIdentifier or proxyValue not found")
             setPopupMessage("Owner, proxyIdentifier or proxyValue not found")
             setPopupVisible(true);
+        }
+    }
+
+    const handleEmailProxyViaVCCreation = async () => {
+
+        const storedData = await getItem('proxyOwner');
+        console.log(storedData?.id);
+
+        try {
+            setRequestLoading(true)
+            const invitation = await createConnectionInvitation(agent, 'email')
+
+            if (storedData?.id && invitation) {
+                const connectionCount = (await agent?.connections.getAll())?.length
+                const response = await createEmailSmartProxyViaVCEntry(invitation.invitationUrl)
+
+                if (typeof response === 'object' && response.status === 200) {
+
+                    let invId = invitation.record.id
+
+                    let connections = await agent?.connections.getAll()
+                    let newestConnection
+
+                    if (connections && connections.length > 0 && connectionCount && connectionCount < connections.length) {
+
+                        connections.sort((a, b) => {
+                            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                        })
+
+                        newestConnection = connections[0]
+
+                        if (invId) {
+                            // Navigate to the chat screen
+                            navigation.getParent()?.dispatch(
+                                CommonActions.reset({
+                                    index: 1,
+                                    routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: newestConnection.id } }],
+                                })
+                            )
+                            dispatch({ connectionIsActive: true })
+                            return
+                        }
+                    } else {
+                        console.error("No new verifier connection found")
+                        setPopupMessage("No new verifier connection found")
+                        setPopupVisible(true);
+                        setRequestLoading(false)
+                    }
+
+                } else if (typeof response === 'string') {
+                    setPopupMessage(response)
+                    setPopupVisible(true);
+                    setRequestLoading(false)
+                }
+            }
+            else {
+                console.error("Owner, proxyIdentifier or proxyValue not found")
+                setPopupMessage("Owner, proxyIdentifier or proxyValue not found")
+                setPopupVisible(true);
+                setRequestLoading(false)
+            }
+        } catch (err: any) {
+            console.error(err)
+            setPopupMessage("Error creating proxy via VC")
+            setPopupVisible(true);
+            setRequestLoading(false)
         }
     }
 
@@ -306,7 +395,7 @@ const SmartProxy = () => {
     }, [paymentAmount]); // Effect depends on paymentAmount
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             {isRegistered && !errorCheckingRegistration && (
                 <View style={styles.textPadding}>
                     <Text style={theme.TextTheme.labelTitle}>Your DID: </Text>
@@ -450,6 +539,16 @@ const SmartProxy = () => {
                                     <Text style={theme.TextTheme.label}>Create</Text>
                                 </TouchableOpacity>
                             </View>
+
+                            <View style={styles.buttonPadding}>
+                                <TouchableOpacity style={{ ...theme.Buttons.primary, width: 120, height: 52 }} onPress={() => handleEmailProxyViaVCCreation()}>
+                                    {requestLoading ? (
+                                        <ActivityIndicator size="small" color="#FFF" />
+                                    ) : (
+                                        <Text style={theme.TextTheme.label}>Add using VC</Text>
+                                    )}
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     {showProxyCreateScreen && <BottomPopup
@@ -544,7 +643,15 @@ const SmartProxy = () => {
                 </Modal>
 
                 <View style={styles.buttonPadding}>
-                    <TouchableOpacity style={theme.Buttons.primary} onPress={() => setShowMakePaymentScreen(true)}>
+                    <TouchableOpacity style={theme.Buttons.primary} onPress={() => {
+                        if (lightningWalletAvailable) {
+                            setShowMakePaymentScreen(true)
+                        } else {
+                            setPopupMessage("Please create a lightning wallet first")
+                            setPopupVisible(true);
+                        }
+
+                    }}>
                         <Text style={theme.TextTheme.label}>Make Payment</Text>
                     </TouchableOpacity>
                 </View>
@@ -665,6 +772,13 @@ const SmartProxy = () => {
 
 
             </ScrollView >
+
+            {!lightningWalletAvailable && <BottomPopup
+                message={popupMessage}
+                isVisible={popupVisible}
+                onClose={() => setPopupVisible(false)}
+                style={{ position: "absolute", bottom: 0 }}
+            />}
         </View>
     );
 };

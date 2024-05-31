@@ -42,7 +42,7 @@ import {
   getProofEventRole,
 } from '../utils/helpers'
 import { theme as globalTheme } from '../theme';
-import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, breezInitHandler, payInvoice, invoicePaymentHandler } from '../utils/lightningHelpers'
+import { checkStatus, getBTCPrice, getInvoice, initNodeAndSdk, breezInitHandler, payInvoice, invoicePaymentHandler, checkMnemonic } from '../utils/lightningHelpers'
 import { PaymentStatus, paymentByHash } from '@breeztech/react-native-breez-sdk'
 import { set } from 'mockdate'
 import { extract } from 'query-string'
@@ -452,6 +452,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     console.log('Pay invoice handler called')
     let paymentStatus;
     try {
+      if (await checkMnemonic() == false) {
+        console.error('Mnemonic not found')
+        setPaymentStatusDesc('Create or restore Lightning wallet first')
+        return;
+      }
       setPaymentInProgress(true);
       setNodeAndSdkInitializing(true);
       const initRes = await breezInitHandler(eventHandler)
@@ -495,6 +500,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     console.log('Check status handler called')
     let paymentStatus;
     console.log('Hash:', invoiceHash)
+
+    if (await checkMnemonic() == false) {
+      console.error('Mnemonic not found')
+      setPaymentStatusDesc('Create or restore Lightning wallet first')
+      return;
+    }
+
     try {
       if (invoiceHash) {
         setNodeAndSdkInitializing(true);
@@ -522,6 +534,13 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   }
 
   const handleGetInvoiceButtonPress = async () => {
+
+    if (await checkMnemonic() == false) {
+      console.error('Mnemonic not found')
+      setPaymentStatusDesc('Create or restore Lightning wallet first')
+      return;
+    }
+
     setInvoiceGenLoading(true);
     setNodeAndSdkInitializing(true);
     const initRes = await breezInitHandler(eventHandler)
