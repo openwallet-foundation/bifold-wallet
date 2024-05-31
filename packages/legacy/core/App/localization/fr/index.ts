@@ -4,7 +4,7 @@ const translation = {
         "Enter": "Entrer",
         "Submit": "Soumettre",
         "NoneYet!": "Votre portefeuille est vide. Vos justificatifs acceptés seront ajoutés ici.",
-        "Save": "Sauvegarder",
+        "Save": "Enregistrer",
         "Cancel": "Annuler",
         "Confirm": "Confirmer",
         "Accept": "Accepter",
