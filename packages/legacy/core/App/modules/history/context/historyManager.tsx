@@ -1,5 +1,9 @@
 /**
  *  USAGE
+ * 
+        const { agent } = useAgent()
+
+        //Log history
         const historyManager = container.resolve(TOKENS.FN_LOAD_HISTORY)(newAgent)
          const recordData: HistoryRecord = {
            type: HistoryCardType.CardAccepted,
@@ -145,15 +149,21 @@ export default class HistoryManager implements IHistoryManager {
 
   // PUBLIC
   public async saveHistory(recordData: HistoryRecord) {
-    const historySettingsOption = await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
-    // Save History when history settigs option is not 'Never'
-    if (!(historySettingsOption === 'Never')) {
-      await this.addGenericRecord(
-        {
-          content: recordData,
-        },
-        RecordType.HistoryRecord
-      )
+    this.trace(`[${HistoryManager.name}]: Saving history record:${JSON.stringify(recordData)}`)
+    try {
+      const historySettingsOption = await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
+      // Save History when history settigs option is not 'Never'
+      if (!(historySettingsOption === 'Never')) {
+        await this.addGenericRecord(
+          {
+            content: recordData,
+          },
+          RecordType.HistoryRecord
+        )
+      }
+    } catch (e: unknown) {
+      this.error(`[${HistoryManager.name}]: Saving history error: ${e}`)
+      throw new Error(`${e}`)
     }
   }
 
