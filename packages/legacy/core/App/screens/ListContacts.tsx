@@ -1,6 +1,6 @@
 import { ConnectionRecord, ConnectionType, DidExchangeState } from '@aries-framework/core'
 import { useConnections } from '@aries-framework/react-hooks'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, Touchable, View } from 'react-native'
@@ -11,24 +11,25 @@ import EmptyListContacts from '../components/misc/EmptyListContacts'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { ContactStackParams, Screens, Stacks } from '../types/navigators'
+import { ContactStackParams, RootStackParams, Screens, Stacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { theme } from '../theme'
 import { TouchableOpacity } from 'react-native'
 import { set } from 'mockdate'
 import ManageInvitesModal from '../components/modals/ManageInvitesModal'
 import SendInviteModal from '../components/modals/SendInviteModal'
+import { useNavigation } from '@react-navigation/core'
 
-interface ListContactsProps {
-  navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
-}
+type ListContactsProps =
+  StackScreenProps<ContactStackParams, Screens.Contacts>
 
-const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
 
-  const [showInviteModal, setShowInviteModal] = React.useState(false)
+const ListContacts: React.FC<ListContactsProps> = ({ route }) => {
+
+  const [showInviteModal, setShowInviteModal] = React.useState(route.params.showInviteModalOnStart)
   const [showSendInviteModal, setShowSendInviteModal] = React.useState(false)
 
-
+  const navigation = useNavigation<StackNavigationProp<ContactStackParams, Screens.Contacts>>()
 
   const { ColorPallet } = useTheme()
   const { t } = useTranslation()
@@ -59,10 +60,6 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
 
   const onPressAddContact = () => {
     navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan, params: { defaultToConnect: true } })
-  }
-
-  const onPressViewInvites = () => {
-    setShowInviteModal(true)
   }
 
   useEffect(() => {
@@ -105,7 +102,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       />
 
       <ManageInvitesModal
-        showManageInvitesScreen={showInviteModal}
+        showManageInvitesScreen={showInviteModal ? true : false}
         setShowManageInvitesScreen={setShowInviteModal}
         navigation={navigation}
       />

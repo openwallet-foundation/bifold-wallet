@@ -95,7 +95,7 @@ export type OnboardingStackParams = {
 }
 
 export type ContactStackParams = {
-  [Screens.Contacts]: undefined
+  [Screens.Contacts]: { showInviteModalOnStart?: boolean }
   [Screens.Chat]: { connectionId: string }
   [Screens.ContactDetails]: { connectionId: string }
   [Screens.RenameContact]: { connectionId: string }

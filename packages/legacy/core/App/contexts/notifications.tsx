@@ -6,6 +6,10 @@ import { getConnectionRequestCount } from '../utils/connectionRequestHelpers'
 import { getItem } from '../utils/storage'
 import InviteInfoModal from '../components/modals/InviteInfoModal'
 
+import { useNavigation } from '@react-navigation/core'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
+
 export interface NotificationContext {
   newNotificationsCheck: () => boolean
 }
@@ -17,6 +21,7 @@ export const NotificationProvider: React.FC<React.PropsWithChildren> = ({ childr
   const [isInviteInfoModalDisplayed, setIsInviteInfoModalDisplayed] = useState<boolean>(false)
   const [inviteCount, setInviteCount] = useState<number>(-1)
   const inviteCountRef = useRef(inviteCount);
+  const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
 
 
   const displayInviteInfoModal = () => {
@@ -25,6 +30,14 @@ export const NotificationProvider: React.FC<React.PropsWithChildren> = ({ childr
 
   const hideInviteInfoModal = () => {
     setIsInviteInfoModalDisplayed(false)
+
+    // Navigate to contact screen
+    navigation.navigate(Stacks.ContactStack as any, {
+      screen: Screens.Contacts,
+      params: {
+        showInviteModalOnStart: true
+      }
+    })
   }
 
   const newNotificationsCheck = () => {
