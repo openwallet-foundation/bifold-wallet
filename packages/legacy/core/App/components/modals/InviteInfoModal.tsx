@@ -23,7 +23,7 @@ const InviteInfoModal: React.FC<InviteInfoModalProps> = ({ visible, onSubmit = (
             notificationType={InfoBoxType.Info}
             title={'Invite'}
             description={'You received an invitation to connect.'}
-            onCallToActionLabel={t('Global.Okay')}
+            onCallToActionLabel={t('Global.View')}
             onCallToActionPressed={() => onSubmit()}
           ></PopupModal>
         </SafeAreaView>
