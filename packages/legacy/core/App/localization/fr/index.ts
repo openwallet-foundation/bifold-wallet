@@ -176,7 +176,7 @@ const translation = {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
             "NoRepetitionOfTheTwoSameNumbersValidation": "Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
-            "NoRepetitionOfTheSameNumbersValidation": "Votre NIP possède des nombres consécutifs identiques. Veuillez saisir un NIP différent.",
+            "NoRepetitionOfTheSameNumbersValidation": "Votre NIP contient une répétition. Choisissez un NIP différent.",
             "NoSeriesOfNumbersValidation": "Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
             "PINOnlyContainDigitsValidation": "Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.",
             "PINTooShortValidation": "Votre NIP est trop court. Veuillez saisir un NIP différent.",
