@@ -169,7 +169,7 @@ const translation = {
         "AllowCameraUse": "Autoriser l'utilisation de la caméra",
         "CameraDisclosure": "La caméra est utilisée pour capturer les codes QR qui initient une offre d'attestation d'identité ou une demande de preuve. Aucune information de l'image n'est sauvegardée, utilisée pour les analyses, ou partagée.",
         "ToContinueUsing": "Autoriser l'utilisation de la caméra, pour continuer à utiliser la fonctionnalité de balayage du Portefeuille QC.",
-        "OpenSettings": "Ouvrir les Paramètres",
+        "OpenSettings": "Ouvrir les paramètres",
     },
     "PINCreate": {
         "Message": {
