@@ -206,7 +206,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                       }
                     }
                   >
-                    Jan 1, 2020
+                    Jan 2, 2020
                   </Text>
                 </View>
               </View>
@@ -352,7 +352,7 @@ exports[`ListContacts Component Renders correctly 1`] = `
                       }
                     }
                   >
-                    Dec 31, 2019
+                    Jan 1, 2020
                   </Text>
                 </View>
               </View>
