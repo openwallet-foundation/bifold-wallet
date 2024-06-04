@@ -13,7 +13,7 @@ import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useContainer } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
-import { HistoryStackParams, Screens } from '../../../types/navigators'
+import { HistoryStackParams } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 import { CustomRecord, HistoryRecord, HistorySettingsOptionStorageKey, IHistoryManager, RecordType } from '../types'
 
@@ -21,10 +21,10 @@ import HistoryListItem from './components/HistoryListItem'
 
 type HistoryPageProps = StackScreenProps<HistoryStackParams>
 
-const HistoryPage: React.FC<HistoryPageProps> = ({ navigation }) => {
+const HistoryPage: React.FC<HistoryPageProps> = () => {
   //   const updatePin = (route.params as any)?.updatePin
-  const [continueEnabled, setContinueEnabled] = useState(true)
-  const [isLoading, setLoading] = useState(false)
+  const [continueEnabled] = useState(true)
+  const [isLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
   const { t } = useTranslation()
   const container = useContainer()

@@ -19,7 +19,7 @@ import SingleSelectBlock from './components/SingleSelectBlock'
 
 interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> {}
 
-const HistorySettings: React.FC<HistorySettingsProps> = ({ route }) => {
+const HistorySettings: React.FC<HistorySettingsProps> = () => {
   //   const updatePin = (route.params as any)?.updatePin
   const [continueEnabled] = useState(true)
   const [isLoading] = useState(false)

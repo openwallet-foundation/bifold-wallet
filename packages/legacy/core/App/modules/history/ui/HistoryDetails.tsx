@@ -8,10 +8,9 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import CredentialCard from '../../../components/misc/CredentialCard'
 import Link from '../../../components/texts/Link'
 import KeyboardView from '../../../components/views/KeyboardView'
-import { TOKENS, useContainer } from '../../../container-api'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams } from '../../../types/navigators'
-import { CustomRecord, HistoryCardType } from '../types'
+import { HistoryCardType } from '../types'
 
 type HistoryDetailsPageProps = StackScreenProps<HistoryStackParams>
 
@@ -29,8 +28,6 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
   const { ColorPallet, TextTheme } = useTheme()
 
   const historyCardType = historyRecord.content.type
-  const container = useContainer()
-  const Button = container.resolve(TOKENS.COMP_BUTTON)
 
   //State
 
@@ -114,25 +111,27 @@ const HistoryDetailsPage: React.FC<HistoryDetailsPageProps> = ({ route }) => {
       return t('Global.Verifier')
     }
   }
-  const renderDateHeader = () => {
-    switch (historyCardType) {
-      case HistoryCardType.CardAccepted: {
-        return t('Global.Issued')
-      }
-      case HistoryCardType.CardExpired: {
-        return t('Global.Expired')
-      }
-      case HistoryCardType.CardRevoked: {
-        return t('Global.Revoked')
-      }
-      case HistoryCardType.InformationSent: {
-        return t('Global.Requested')
-      }
-      case HistoryCardType.PinChanged: {
-        return t('Global.Updated')
-      }
-    }
-  }
+
+  //TODO
+  // const renderDateHeader = () => {
+  //   switch (historyCardType) {
+  //     case HistoryCardType.CardAccepted: {
+  //       return t('Global.Issued')
+  //     }
+  //     case HistoryCardType.CardExpired: {
+  //       return t('Global.Expired')
+  //     }
+  //     case HistoryCardType.CardRevoked: {
+  //       return t('Global.Revoked')
+  //     }
+  //     case HistoryCardType.InformationSent: {
+  //       return t('Global.Requested')
+  //     }
+  //     case HistoryCardType.PinChanged: {
+  //       return t('Global.Updated')
+  //     }
+  //   }
+  // }
 
   const renderConnectionDetails = () => {
     let connectionId: string | undefined
