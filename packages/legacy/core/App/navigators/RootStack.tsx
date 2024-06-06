@@ -3,7 +3,6 @@ import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackCardStyleInterpolator, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
-import { parseUrl } from 'query-string'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
@@ -20,7 +19,7 @@ import { useDeepLinks } from '../hooks/deep-links'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
+import { connectFromScanOrDeeplink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
@@ -44,7 +43,7 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const { splash, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } = useConfiguration()
+  const { splash, enableImplicitInvitations, enableReuseConnections } = useConfiguration()
   const container = useContainer()
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   const loadState = container.resolve(TOKENS.LOAD_STATE)
@@ -108,45 +107,15 @@ const RootStack: React.FC = () => {
       }
 
       try {
-        // Try connection based
-        const receivedInvitation = await connectFromInvitation(
-          deepLink,
-          agent,
-          enableImplicitInvitations,
-          enableReuseConnections,
-          enableUseMultUseInvitation
+        await connectFromScanOrDeeplink(deepLink, agent, navigation, enableImplicitInvitations, enableReuseConnections)
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1039'),
+          t('Error.Message1039'),
+          (err as Error)?.message ?? err,
+          1039
         )
-        navigation.navigate(Stacks.ConnectionStack as any, {
-          screen: Screens.Connection,
-          params: { connectionId: receivedInvitation?.connectionRecord?.id },
-        })
-      } catch {
-        try {
-          // Try connectionless here
-          const queryParams = parseUrl(deepLink).query
-          const param = queryParams['d_m'] ?? queryParams['c_i']
-          // if missing both of the required params, don't attempt to open OOB
-          if (!param) {
-            dispatch({
-              type: DispatchAction.ACTIVE_DEEP_LINK,
-              payload: [undefined],
-            })
-            return
-          }
-          const message = await getOobDeepLink(deepLink, agent)
-          navigation.navigate(Stacks.ConnectionStack as any, {
-            screen: Screens.Connection,
-            params: { threadId: message['@id'] },
-          })
-        } catch (err: unknown) {
-          const error = new BifoldError(
-            t('Error.Title1039'),
-            t('Error.Message1039'),
-            (err as Error)?.message ?? err,
-            1039
-          )
-          DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-        }
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
 
       // set deeplink as inactive
