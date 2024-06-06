@@ -2,8 +2,6 @@ import { CredentialExchangeRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/core'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
-import { CustomRecord } from '../modules/history/types'
-
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
   Splash = 'Splash',
