@@ -19,6 +19,7 @@ import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
 import HeaderButton, { ButtonLocation } from '../buttons/HeaderButton'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
+import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
@@ -41,6 +42,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const { showScanHelp, showScanButton } = useConfiguration()
   const [showInfoBox, setShowInfoBox] = useState(false)
   const [torchActive, setTorchActive] = useState(false)
+  const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)
   const [firstTabActive, setFirstTabActive] = useState(!defaultToConnect)
   const [invitation, setInvitation] = useState<string | undefined>(undefined)
   const [recordId, setRecordId] = useState<string | undefined>(undefined)
@@ -179,6 +181,15 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                 />
               </View>
             </Modal>
+            {showErrorDetailsModal && (
+              <DismissiblePopupModal
+                title={t('Scan.ErrorDetails')}
+                description={error?.details || t('Scan.NoDetails')}
+                onCallToActionLabel={t('Global.Dismiss')}
+                onCallToActionPressed={() => setShowErrorDetailsModal(false)}
+                onDismissPressed={() => setShowErrorDetailsModal(false)}
+              />
+            )}
             <ScanCamera
               handleCodeScan={handleCodeScan}
               enableCameraOnError={enableCameraOnError}
@@ -193,6 +204,15 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                     <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
                       {error.message}
                     </Text>
+                    <Pressable
+                      onPress={() => setShowErrorDetailsModal(true)}
+                      accessibilityLabel={t('Scan.ShowDetails')}
+                      accessibilityRole={'button'}
+                      testID={testIdWithKey('ShowDetails')}
+                      hitSlop={hitSlop}
+                    >
+                      <Icon name="information-outline" size={40} style={styles.icon} />
+                    </Pressable>
                   </>
                 ) : (
                   <>
