@@ -176,7 +176,6 @@ export type DeliveryStackParams = {
 
 export type HistoryStackParams = {
   [Screens.HistoryPage]: undefined
-  [Screens.HistoryDetails]: { historyRecord: CustomRecord }
 }
 
 export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptions>>

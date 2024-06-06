@@ -131,16 +131,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   }
 
   const renderHistoryListItem = (item: CustomRecord) => {
-    return (
-      <HistoryListItem item={item} />
-      // <TouchableOpacity
-      //   onPress={() => {
-      //     navigation.navigate(Screens.HistoryDetails, { historyRecord: item })
-      //   }}
-      // >
-      //   <HistoryListItem item={item} />
-      // </TouchableOpacity>
-    )
+    return <HistoryListItem item={item} />
   }
 
   useFocusEffect(

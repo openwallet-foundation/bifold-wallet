@@ -6,7 +6,7 @@ import { useTheme } from '../../../contexts/theme'
 import { createDefaultStackOptions } from '../../../navigators/defaultStackOptions'
 import { HistoryStackParams, Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
-import HistoryDetailsPage from '../ui/HistoryDetails'
+// import HistoryDetailsPage from '../ui/HistoryDetails'
 import HistoryPage from '../ui/HistoryPage'
 
 const HistoryStack: React.FC = () => {
@@ -21,11 +21,6 @@ const HistoryStack: React.FC = () => {
         name={Screens.HistoryPage}
         component={HistoryPage}
         options={{ title: t('Screens.History'), headerBackTestID: testIdWithKey('Back') }}
-      />
-      <Stack.Screen
-        name={Screens.HistoryDetails}
-        component={HistoryDetailsPage}
-        options={{ title: t('Screens.HistoryDetails'), headerBackTestID: testIdWithKey('Back') }}
       />
     </Stack.Navigator>
   )
