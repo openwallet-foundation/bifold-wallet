@@ -7,7 +7,7 @@ import { TextTheme } from '../../../../theme'
 interface Props {
   pointsText?: string
   pointsTextAxsLabel?: string
-  pointsTextAxsKey?: string & any
+  pointsTextAxsKey?: any
 }
 
 const styles = StyleSheet.create({

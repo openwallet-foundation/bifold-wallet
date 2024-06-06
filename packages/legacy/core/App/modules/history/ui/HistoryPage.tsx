@@ -1,8 +1,6 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import moment, { Moment } from 'moment'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
@@ -15,7 +13,7 @@ import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
-import { CustomRecord, HistoryRecord, HistorySettingsOptionStorageKey, IHistoryManager, RecordType } from '../types'
+import { CustomRecord, IHistoryManager, RecordType } from '../types'
 
 import HistoryListItem from './components/HistoryListItem'
 
@@ -75,49 +73,10 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
       return
     }
     const allRecords = await historyManager.getHistoryItems({ type: RecordType.HistoryRecord })
+    allRecords.sort((objA, objB) => Number(objB.content.createdAt) - Number(objA.content.createdAt))
 
-    const historySettingOption = await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
-
-    // Filter History record data according to given date.
-    const filterDataByGivenDate = (data: CustomRecord[], givenDate: Moment) =>
-      data.filter((x: CustomRecord) => moment(x.content.createdAt, 'DD-MM-YYYY').isSameOrBefore(givenDate))
-
-    if (historySettingOption !== 'Always' && historySettingOption !== null) {
-      let givenDate = moment()
-      if (historySettingOption === '1 month') {
-        givenDate = moment().subtract(1, 'month')
-      } else if (historySettingOption === '6 month') {
-        givenDate = moment().subtract(6, 'month')
-      } else if (historySettingOption === '1 year') {
-        givenDate = moment().subtract(1, 'year')
-      }
-      // Filter history record data and get the ones that needs to be deleted.
-      const selectedHistoryRecords = filterDataByGivenDate(allRecords, givenDate)
-
-      // Remove history past the selected date.
-      for await (const record of selectedHistoryRecords) {
-        const recordHistory = record.content as HistoryRecord
-        if (!recordHistory || !recordHistory.id) {
-          return
-        }
-        const deleteRecord = await historyManager.findGenericRecordById(recordHistory.id)
-        if (!deleteRecord) {
-          return
-        }
-        await historyManager.removeGenericRecord(deleteRecord)
-      }
-    }
-
-    const newAllRecords = await historyManager.getHistoryItems({ type: RecordType.HistoryRecord })
-
-    //TODO: Impliment history sort
-    // if (!sortHistoryBy) {
-    // Sort history records in descending order
-    newAllRecords.sort((objA, objB) => Number(objB.content.createdAt) - Number(objA.content.createdAt))
-    // }
-
-    if (newAllRecords) {
-      setHistoryItems(newAllRecords)
+    if (allRecords) {
+      setHistoryItems(allRecords)
     }
   }
 
