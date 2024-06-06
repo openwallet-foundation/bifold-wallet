@@ -36,7 +36,7 @@ exports[`ProofRequestDetails Component Renders correctly 1`] = `
           style={
             Object {
               "color": "#FFFFFF",
-              "fontSize": 28,
+              "fontSize": 26,
               "fontWeight": "bold",
             }
           }

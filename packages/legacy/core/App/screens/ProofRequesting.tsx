@@ -85,9 +85,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       textAlign: 'center',
     },
     primaryHeaderText: {
-      ...TextTheme.headerTitle,
+      ...TextTheme.headingThree,
       textAlign: 'center',
-      color: ColorPallet.grayscale.black,
     },
     secondaryHeaderText: {
       ...TextTheme.normal,

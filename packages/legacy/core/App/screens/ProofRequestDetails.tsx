@@ -109,7 +109,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       marginBottom: 36,
     },
     title: {
-      ...TextTheme.headerTitle,
+      ...TextTheme.headingThree,
     },
     description: {
       marginTop: 10,

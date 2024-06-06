@@ -27,7 +27,7 @@ import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
 import moment from 'moment'
-import { ParsedUrl, parseUrl } from 'query-string'
+import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
 import { TFunction } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -36,6 +36,7 @@ import { EventTypes, domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Role } from '../types/chat'
 import { BifoldError } from '../types/error'
+import { Screens, Stacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ChildFn } from '../types/tour'
 
@@ -307,13 +308,43 @@ export function firstValidCredential(
   return first
 }
 
-export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
-  const queryParams = parseUrl(url).query
-  const b64Message = queryParams['d_m'] ?? queryParams['c_i']
-  const rawmessage = b64decode(b64Message as string)
-  const message = JSON.parse(rawmessage)
+/**
+ *
+ * @param url a redirection URL to retrieve a payload for an invite
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
+export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
   await agent?.receiveMessage(message)
   return message
+}
+
+/**
+ *
+ * @param url deeplink URL that should contain only one of the valid query params
+ * @param agent
+ * @returns oob message
+ */
+export const getOobFromDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
+  const queryParams = parseUrl(url).query
+  let b64Message = queryParams['_url']
+  // for _url, fetch from decoded url, parse JSON, then receive
+  if (b64Message) {
+    const url = b64decode(b64Message as string)
+    return await receiveMessageFromUrlRedirect(url, agent)
+    // for all other valid params, decode, parse JSON, and receive
+  } else {
+    b64Message = queryParams['d_m'] ?? queryParams['c_i'] ?? queryParams['oob'] ?? queryParams['_oob']
+    const rawmessage = b64decode(b64Message as string)
+    const message = JSON.parse(rawmessage)
+    await agent?.receiveMessage(message)
+    return message
+  }
 }
 
 /**
@@ -868,38 +899,6 @@ export const sortCredentialsForAutoSelect = (
 }
 
 /**
- *
- * @param url a redirection URL to retrieve a payload for an invite
- * @param agent an Agent instance
- * @returns payload from following the redirection
- */
-export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  })
-  const message = await res.json()
-  await agent?.receiveMessage(message)
-  return message
-}
-
-/**
- *
- * @param url a redirection URL to retrieve a payload for an invite
- * @param agent an Agent instance
- * @returns payload from following the redirection
- */
-export const receiveMessageFromDeepLink = async (url: string, agent: Agent | undefined) => {
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  })
-  const message = await res.json()
-  await agent?.receiveMessage(message)
-  return message
-}
-
-/**
  * Useful for multi use invitations
  * @param agent an Agent instance
  * @param invitationId id of invitation
@@ -929,8 +928,7 @@ export const connectFromInvitation = async (
   uri: string,
   agent: Agent | undefined,
   implicitInvitations: boolean = false,
-  reuseConnection: boolean = false,
-  useMultUseInvitation: boolean = false
+  reuseConnection: boolean = false
 ) => {
   const invitation = await agent?.oob.parseInvitation(uri)
 
@@ -955,13 +953,84 @@ export const connectFromInvitation = async (
   }
 
   if (!record) {
-    if (useMultUseInvitation) {
-      await removeExistingInvitationIfRequired(agent, invitation.id)
-    }
     record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
   }
 
   return record
+}
+
+interface QueryParams {
+  ['d_m']?: string
+  ['c_i']?: string
+  ['oob']?: string
+  ['_oob']?: string
+  ['_url']?: string
+}
+
+/**
+ * @param query a query string
+ * @returns the valid query param or false
+ */
+const hasValidQueryParam = (query: QueryParams) => {
+  return query['d_m'] ?? query['c_i'] ?? query['oob'] ?? query['_oob'] ?? query['_url'] ?? false
+}
+
+/**
+ * Receive a message from a scan or deeplink and navigate accordingly
+ * @param value either a URI containing a base64 encoded connection invite in the query parameters or
+ * @param agent an Agent instance
+ * @param navigation a navigation object either Scan screen or Home screen
+ * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
+ * @param reuseConnection a boolean to determine if the connection reuse should be allowed
+ */
+export const connectFromScanOrDeeplink = async (
+  value: string,
+  agent: Agent | undefined,
+  navigation: any,
+  implicitInvitations: boolean = false,
+  reuseConnection: boolean = false
+) => {
+  if (!agent) {
+    return
+  }
+
+  // Try built in Credo methods first
+  try {
+    // this function uses credo methods and currently only supports oob, c_i, and d_m query params
+    const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnection)
+    if (receivedInvitation?.connectionRecord?.id) {
+      // not connectionless
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { connectionId: receivedInvitation.connectionRecord.id },
+      })
+    } else {
+      // connectionless
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
+      })
+    }
+    // try unsupported deeplink or url redirect if connection based fails. Let this catch block throw any error, it will be caught a level up
+  } catch {
+    // Try unsupported deeplink here
+    const queryParams = parseUrl(value).query
+    // if there's a valid query param, try unpacking and receiving the message
+    if (hasValidQueryParam(queryParams)) {
+      const message = await getOobFromDeepLink(value, agent)
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { threadId: message['@id'] },
+      })
+      // if there's no valid query param, try fetching from the passed value (expect a redirect url if none of the above has worked)
+    } else {
+      const message = await receiveMessageFromUrlRedirect(value, agent)
+      navigation.navigate(Stacks.ConnectionStack, {
+        screen: Screens.Connection,
+        params: { threadId: message['@id'] },
+      })
+    }
+  }
 }
 
 /**
@@ -994,32 +1063,6 @@ export const createConnectionInvitation = async (agent: Agent | undefined, goalC
  */
 export const createTempConnectionInvitation = async (agent: Agent | undefined, type: 'issue' | 'verify') => {
   return createConnectionInvitation(agent, `aries.vc.${type}.once`)
-}
-
-/**
- * Parse URL from provided string
- * @param urlString string to parse
- * @returns ParsedUur object if success or undefined
- */
-export const getUrl = (urlString: string): ParsedUrl | undefined => {
-  try {
-    return parseUrl(urlString)
-  } catch (e) {
-    return undefined
-  }
-}
-
-/**
- * Parse JSON from provided string
- * @param jsonString string to parse
- * @returns JSON object if success or undefined
- */
-export const getJson = (jsonString: string): Record<string, unknown> | undefined => {
-  try {
-    return JSON.parse(jsonString)
-  } catch (e) {
-    return undefined
-  }
 }
 
 /**

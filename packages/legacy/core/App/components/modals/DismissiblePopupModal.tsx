@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   useWindowDimensions,
+  ScrollView,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -54,6 +55,8 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       borderWidth: 1,
       padding: 10,
       minWidth: width - 2 * 25,
+      flex: 1,
+      maxHeight: '50%',
     },
     headerContainer: {
       flexDirection: 'row',
@@ -62,13 +65,13 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       paddingTop: 5,
     },
     bodyContainer: {
-      flexDirection: 'column',
       marginLeft: 10 + iconSize,
       paddingHorizontal: 5,
       paddingBottom: 5,
+      flexShrink: 1,
+      justifyContent: 'space-between',
     },
     headerTextContainer: {
-      flexDirection: 'column',
       flexGrow: 1,
     },
     headerText: {
@@ -76,11 +79,19 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
     },
+    scrollViewContentContainer: {
+      flexGrow: 1,
+    },
+    scrollViewStyle: {
+      flex: 1,
+    },
     bodyText: {
       ...TextTheme.normal,
-      flexShrink: 1,
-      marginVertical: 16,
+      paddingVertical: 16,
       color: ColorPallet.notification.infoText,
+    },
+    footer: {
+      paddingTop: 10,
     },
     infoIcon: {
       marginRight: 10,
@@ -102,7 +113,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
           <TouchableWithoutFeedback accessible={false}>
             <View style={styles.container}>
               <View style={styles.headerContainer}>
-                <View style={[styles.infoIcon]}>
+                <View style={styles.infoIcon}>
                   <Icon name={infoIconName} size={iconSize} color={iconColor} />
                 </View>
                 <View style={styles.headerTextContainer}>
@@ -110,7 +121,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                     {title}
                   </Text>
                 </View>
-                <View style={[styles.dismissIcon]}>
+                <View style={styles.dismissIcon}>
                   <TouchableOpacity
                     onPress={onDismissPressed}
                     testID={testIdWithKey('Dismiss')}
@@ -123,17 +134,23 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                 </View>
               </View>
               <View style={styles.bodyContainer}>
-                <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
-                  {description}
-                </Text>
+                <ScrollView contentContainerStyle={styles.scrollViewContentContainer} style={styles.scrollViewStyle}>
+                  <View onStartShouldSetResponder={() => true}>
+                    <Text selectable={true} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+                      {description}
+                    </Text>
+                  </View>
+                </ScrollView>
                 {onCallToActionPressed && (
-                  <Button
-                    title={onCallToActionLabel || t('Global.Okay')}
-                    accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
-                    testID={testIdWithKey('Okay')}
-                    buttonType={ButtonType.ModalPrimary}
-                    onPress={onCallToActionPressed}
-                  />
+                  <View style={styles.footer}>
+                    <Button
+                      title={onCallToActionLabel || t('Global.Okay')}
+                      accessibilityLabel={onCallToActionLabel || t('Global.Okay')}
+                      testID={testIdWithKey('Okay')}
+                      buttonType={ButtonType.ModalPrimary}
+                      onPress={onCallToActionPressed}
+                    />
+                  </View>
                 )}
               </View>
             </View>

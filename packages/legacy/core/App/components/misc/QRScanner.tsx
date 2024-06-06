@@ -11,6 +11,7 @@ import { QrCodeScanError } from '../../types/error'
 import { Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
+import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
@@ -26,6 +27,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const { showScanHelp, showScanButton } = useConfiguration()
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
+  const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
 
@@ -88,6 +90,15 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           />
         </View>
       </Modal>
+      {showErrorDetailsModal && (
+        <DismissiblePopupModal
+          title={t('Scan.ErrorDetails')}
+          description={error?.details || t('Scan.NoDetails')}
+          onCallToActionLabel={t('Global.Dismiss')}
+          onCallToActionPressed={() => setShowErrorDetailsModal(false)}
+          onDismissPressed={() => setShowErrorDetailsModal(false)}
+        />
+      )}
       <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError}></ScanCamera>
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
@@ -97,6 +108,15 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
                 {error.message}
               </Text>
+              <Pressable
+                onPress={() => setShowErrorDetailsModal(true)}
+                accessibilityLabel={t('Scan.ShowDetails')}
+                accessibilityRole={'button'}
+                testID={testIdWithKey('ShowDetails')}
+                hitSlop={hitSlop}
+              >
+                <Icon name="information-outline" size={40} style={styles.icon} />
+              </Pressable>
             </>
           ) : (
             <>
