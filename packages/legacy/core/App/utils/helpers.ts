@@ -972,7 +972,7 @@ interface QueryParams {
  * @returns the valid query param or false
  */
 const hasValidQueryParam = (query: QueryParams) => {
-  return (query['d_m'] ?? query['c_i'] ?? query['oob'] ?? query['_oob'] ?? query['_url']) || false
+  return query['d_m'] ?? query['c_i'] ?? query['oob'] ?? query['_oob'] ?? query['_url'] ?? false
 }
 
 /**
