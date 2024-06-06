@@ -206,7 +206,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                     </Text>
                     <Pressable
                       onPress={() => setShowErrorDetailsModal(true)}
-                      accessibilityLabel={'ShowDetails'}
+                      accessibilityLabel={t('Scan.ShowDetails')}
                       accessibilityRole={'button'}
                       testID={testIdWithKey('ShowDetails')}
                       hitSlop={hitSlop}

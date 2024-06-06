@@ -378,6 +378,7 @@ const translation = {
     "BadQRCode": "QR Code Not Recognized",
     "BadQRCodeDescription": "Ths QR code scanned doesn't work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can't add digital credentials by taking photos of physical ones.",
     "ErrorDetails": "Scan error details",
+    "ShowDetails": "Show error details",
     "NoDetails": "No error details available",
   },
   "Connection": {

@@ -110,7 +110,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               </Text>
               <Pressable
                 onPress={() => setShowErrorDetailsModal(true)}
-                accessibilityLabel={'ShowDetails'}
+                accessibilityLabel={t('Scan.ShowDetails')}
                 accessibilityRole={'button'}
                 testID={testIdWithKey('ShowDetails')}
                 hitSlop={hitSlop}
