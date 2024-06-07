@@ -136,7 +136,7 @@ describe('displays a proof request screen', () => {
     const attributeBase = {
       referent: '',
       schemaId: '',
-      credentialDefinitionId: 'AAAAAAAAAAAAAAAAAAAAAA:1:AA:1234:test',
+      credentialDefinitionId: 'AAAAAAAAAAAAAAAAAAAAAA:3:CL:1234:test',
       toJSON: jest.fn(),
     }
 
