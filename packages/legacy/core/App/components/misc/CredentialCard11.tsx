@@ -244,7 +244,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
     let parsedItem = item
-    if (item && !item.value) {
+    if (item && item.value != null) {
       parsedItem = pTypeToText(item, t, attributeTypes) as Attribute & Predicate
     }
     const parsedValue = formatIfDate(
@@ -253,7 +253,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
     return {
       label: item?.label ?? item?.name ?? '',
-      value: item?.value ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
+      value: item?.value !== undefined && item?.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
     }
   }
 
@@ -407,7 +407,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       item && (
         <View style={{ marginTop: 15 }}>
-          {!(item?.value || item?.satisfied) ? (
+          {!(item?.value != null || item?.satisfied) ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -420,7 +420,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           ) : (
             <AttributeLabel label={label} />
           )}
-          {!(item?.value || item?.pValue) ? null : (
+          {!(item?.value != null || item?.pValue) ? null : (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
                 <Icon
