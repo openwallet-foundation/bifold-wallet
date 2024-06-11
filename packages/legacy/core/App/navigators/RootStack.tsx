@@ -125,7 +125,19 @@ const RootStack: React.FC = () => {
       })
     }
 
-    if (agent && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
+    if (agent && agent.isInitialized && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
+      const currentTime = Date.now()
+      //user clicked on deeplink while app was in background
+      if (
+        (appStateVisible.match(/inactive|background/) || prevAppStateVisible.match(/inactive|background/)) &&
+        !state.preferences.preventAutoLock &&
+        walletTimeout &&
+        backgroundTime &&
+        currentTime - backgroundTime > walletTimeout
+      ) {
+        return
+      }
+
       handleDeepLink(state.deepLink.activeDeepLink)
     }
   }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate])
