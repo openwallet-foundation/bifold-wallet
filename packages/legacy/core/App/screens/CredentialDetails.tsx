@@ -107,16 +107,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
 
   useEffect(() => {
-    if (!agent) {
-      DeviceEventEmitter.emit(
-        EventTypes.ERROR_ADDED,
-        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
-      )
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!credential) {
+    if (!agent || !credential) {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,
         new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
