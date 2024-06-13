@@ -14,7 +14,7 @@ import { testIdForAccessabilityLabel, testIdWithKey } from '../../utils/testable
 import Button, { ButtonType } from '../buttons/Button'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedListModal from '../misc/UnorderedListModal'
-import BulletPoint from 'components/inputs/BulletPoint'
+import BulletPoint from '../inputs/BulletPoint'
 
 interface CommonRemoveModalProps {
   usage: ModalUsage

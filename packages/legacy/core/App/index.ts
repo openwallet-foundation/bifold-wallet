@@ -43,7 +43,7 @@ import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
-import BulletPoint from 'components/inputs/BulletPoint'
+import BulletPoint from './components/inputs/BulletPoint'
 
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'

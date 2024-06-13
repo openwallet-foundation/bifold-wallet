@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, StyleProp, TextStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 
 interface BulletPointProps {
     text: string
-    textStyle: any
+    textStyle: StyleProp<TextStyle>
 }
 
 const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
