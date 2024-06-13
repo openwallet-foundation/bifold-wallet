@@ -43,6 +43,7 @@ import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
+import BulletPoint from 'components/inputs/BulletPoint'
 
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
@@ -146,5 +147,6 @@ export {
   Text,
   loadLoginAttempt,
   Button,
+  BulletPoint,
 }
 export type { IButton }

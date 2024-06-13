@@ -1,3 +1,4 @@
+import { BulletPoint } from 'components/inputs/BulletPoint'
 import * as React from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,11 +26,6 @@ interface CommonRemoveModalProps {
 interface RemoveProps {
   title: string
   content: string[]
-}
-
-interface BulletPointProps {
-  text: string
-  textStyle: any
 }
 
 const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
@@ -63,25 +59,6 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
         </View>
       </Collapsible>
     </>
-  )
-}
-
-const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
-  const { ColorPallet } = useTheme()
-  const styles = StyleSheet.create({
-    iconContainer: {
-      marginRight: 10,
-      marginVertical: 6,
-    },
-  })
-
-  return (
-    <View style={{ marginVertical: 10, flexDirection: 'row', alignItems: 'flex-start' }}>
-      <View style={styles.iconContainer}>
-        <Icon name={'circle'} size={9} color={ColorPallet.brand.modalIcon} />
-      </View>
-      <Text style={[textStyle, { flexShrink: 1 }]}>{text}</Text>
-    </View>
   )
 }
 
