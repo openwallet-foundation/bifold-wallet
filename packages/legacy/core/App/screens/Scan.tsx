@@ -16,7 +16,7 @@ import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
 import { ConnectStackParams } from '../types/navigators'
 import { PermissionContract } from '../types/permissions'
-import { connectFromScanOrDeeplink } from '../utils/helpers'
+import { connectFromScanOrDeepLink } from '../utils/helpers'
 
 export type ScanProps = StackScreenProps<ConnectStackParams>
 
@@ -35,10 +35,11 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
 
   const handleInvitation = async (value: string): Promise<void> => {
     try {
-      await connectFromScanOrDeeplink(
+      await connectFromScanOrDeepLink(
         value,
         agent,
         navigation?.getParent(),
+        false, // isDeepLink
         enableImplicitInvitations,
         enableReuseConnections
       )

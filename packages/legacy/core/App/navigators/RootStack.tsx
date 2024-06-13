@@ -19,7 +19,7 @@ import { useDeepLinks } from '../hooks/deep-links'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { connectFromScanOrDeeplink } from '../utils/helpers'
+import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
@@ -108,7 +108,14 @@ const RootStack: React.FC = () => {
       }
 
       try {
-        await connectFromScanOrDeeplink(deepLink, agent, navigation, enableImplicitInvitations, enableReuseConnections)
+        await connectFromScanOrDeepLink(
+          deepLink,
+          agent,
+          navigation,
+          true, // isDeepLink
+          enableImplicitInvitations,
+          enableReuseConnections
+        )
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1039'),
