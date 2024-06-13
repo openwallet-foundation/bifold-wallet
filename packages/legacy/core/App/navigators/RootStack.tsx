@@ -46,6 +46,7 @@ const RootStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const { splash, enableImplicitInvitations, enableReuseConnections } = useConfiguration()
   const container = useContainer()
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   const loadState = container.resolve(TOKENS.LOAD_STATE)
   useDeepLinks()
@@ -71,7 +72,7 @@ const RootStack: React.FC = () => {
         await agent.wallet.close()
         await agent.shutdown()
       } catch (error) {
-        agent?.config?.logger?.error(`Error shutting down agent: ${error}`)
+        logger?.error(`Error shutting down agent: ${error}`)
       }
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
@@ -111,6 +112,7 @@ const RootStack: React.FC = () => {
         await connectFromScanOrDeepLink(
           deepLink,
           agent,
+          logger,
           navigation,
           true, // isDeepLink
           enableImplicitInvitations,

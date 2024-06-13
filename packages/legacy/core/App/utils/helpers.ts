@@ -13,6 +13,7 @@ import {
 import {
   Agent,
   BasicMessageRecord,
+  BaseLogger,
   ConnectionRecord,
   CredentialExchangeRecord,
   CredentialState,
@@ -979,6 +980,7 @@ const hasValidQueryParam = (query: QueryParams) => {
  * Receive a message from a scan or deeplink and navigate accordingly
  * @param value a URI either containing a base64 encoded connection invite in the query parameters or a redirect URL itself
  * @param agent an Agent instance
+ * @param logger injected logger from DI container
  * @param navigation a navigation object either Scan screen or Home screen
  * @param isDeepLink a boolean to communicate where the value is coming from
  * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
@@ -987,6 +989,7 @@ const hasValidQueryParam = (query: QueryParams) => {
 export const connectFromScanOrDeepLink = async (
   value: string,
   agent: Agent | undefined,
+  logger: BaseLogger,
   navigation: any,
   isDeepLink: boolean,
   implicitInvitations: boolean = false,
@@ -998,7 +1001,7 @@ export const connectFromScanOrDeepLink = async (
 
   // Try built in Credo methods first
   try {
-    agent.config.logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, value: ${value}`)
+    logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, value: ${value}`)
     // this function uses credo methods and currently only supports oob, c_i, and d_m query params
     const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnection)
     if (receivedInvitation?.connectionRecord?.id) {
@@ -1016,7 +1019,7 @@ export const connectFromScanOrDeepLink = async (
     }
     // try unsupported deeplink if built-in Credo methods fail. Let this catch block throw any error, it will be caught a level up
   } catch (err: unknown) {
-    agent.config.logger.error('Error connecting from invitation, trying unsupported query params. Error:', err as Error)
+    logger.error('Error connecting from invitation, trying unsupported query params. Error:', err as Error)
     // Try unsupported deeplink here
     const queryParams = parseUrl(value)?.query
     // if there's a valid query param, try unpacking and receiving the message
@@ -1031,9 +1034,7 @@ export const connectFromScanOrDeepLink = async (
       throw new Error(`No valid query params found in URI: ${value} and unable to connect from redirect url`)
       // if it's a deeplink and gets this far, fail silently
     } else {
-      agent.config.logger.info(
-        `No valid query params found in deeplink URI: ${value} and unable to connect from redirect url`
-      )
+      logger.info(`No valid query params found in deeplink URI: ${value} and unable to connect from redirect url`)
     }
   }
 }

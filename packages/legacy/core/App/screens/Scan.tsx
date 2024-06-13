@@ -11,6 +11,7 @@ import QRScanner from '../components/misc/QRScanner'
 import CameraDisclosureModal from '../components/modals/CameraDisclosureModal'
 import { ToastType } from '../components/toast/BaseToast'
 import LoadingView from '../components/views/LoadingView'
+import { TOKENS, useContainer } from '../container-api'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { BifoldError, QrCodeScanError } from '../types/error'
@@ -28,6 +29,8 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
   const { enableImplicitInvitations, enableReuseConnections } = useConfiguration()
+  const container = useContainer()
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
   let defaultToConnect = false
   if (route?.params && route.params['defaultToConnect']) {
     defaultToConnect = route.params['defaultToConnect']
@@ -38,6 +41,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
       await connectFromScanOrDeepLink(
         value,
         agent,
+        logger,
         navigation?.getParent(),
         false, // isDeepLink
         enableImplicitInvitations,
