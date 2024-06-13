@@ -13,6 +13,7 @@ import {
 import {
   Agent,
   BasicMessageRecord,
+  BaseLogger,
   ConnectionRecord,
   CredentialExchangeRecord,
   CredentialState,
@@ -977,16 +978,20 @@ const hasValidQueryParam = (query: QueryParams) => {
 
 /**
  * Receive a message from a scan or deeplink and navigate accordingly
- * @param value either a URI containing a base64 encoded connection invite in the query parameters or
+ * @param value a URI either containing a base64 encoded connection invite in the query parameters or a redirect URL itself
  * @param agent an Agent instance
+ * @param logger injected logger from DI container
  * @param navigation a navigation object either Scan screen or Home screen
+ * @param isDeepLink a boolean to communicate where the value is coming from
  * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
  * @param reuseConnection a boolean to determine if the connection reuse should be allowed
  */
-export const connectFromScanOrDeeplink = async (
+export const connectFromScanOrDeepLink = async (
   value: string,
   agent: Agent | undefined,
+  logger: BaseLogger,
   navigation: any,
+  isDeepLink: boolean,
   implicitInvitations: boolean = false,
   reuseConnection: boolean = false
 ) => {
@@ -996,6 +1001,7 @@ export const connectFromScanOrDeeplink = async (
 
   // Try built in Credo methods first
   try {
+    logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, value: ${value}`)
     // this function uses credo methods and currently only supports oob, c_i, and d_m query params
     const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnection)
     if (receivedInvitation?.connectionRecord?.id) {
@@ -1011,24 +1017,24 @@ export const connectFromScanOrDeeplink = async (
         params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
       })
     }
-    // try unsupported deeplink or url redirect if connection based fails. Let this catch block throw any error, it will be caught a level up
-  } catch {
+    // try unsupported deeplink if built-in Credo methods fail. Let this catch block throw any error, it will be caught a level up
+  } catch (err: unknown) {
+    logger.error('Error connecting from invitation, trying unsupported query params. Error:', err as Error)
     // Try unsupported deeplink here
-    const queryParams = parseUrl(value).query
+    const queryParams = parseUrl(value)?.query
     // if there's a valid query param, try unpacking and receiving the message
-    if (hasValidQueryParam(queryParams)) {
+    if (queryParams && hasValidQueryParam(queryParams)) {
       const message = await getOobFromDeepLink(value, agent)
       navigation.navigate(Stacks.ConnectionStack as any, {
         screen: Screens.Connection,
         params: { threadId: message['@id'] },
       })
-      // if there's no valid query param, try fetching from the passed value (expect a redirect url if none of the above has worked)
+      // if there's no valid query param and it's not a deeplink, throw an error
+    } else if (!isDeepLink) {
+      throw new Error(`No valid query params found in URI: ${value} and unable to connect from redirect url`)
+      // if it's a deeplink and gets this far, fail silently
     } else {
-      const message = await receiveMessageFromUrlRedirect(value, agent)
-      navigation.navigate(Stacks.ConnectionStack, {
-        screen: Screens.Connection,
-        params: { threadId: message['@id'] },
-      })
+      logger.info(`No valid query params found in deeplink URI: ${value} and unable to connect from redirect url`)
     }
   }
 }
