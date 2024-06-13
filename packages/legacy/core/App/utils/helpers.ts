@@ -977,9 +977,10 @@ const hasValidQueryParam = (query: QueryParams) => {
 
 /**
  * Receive a message from a scan or deeplink and navigate accordingly
- * @param value either a URI containing a base64 encoded connection invite in the query parameters or
+ * @param value a URI either containing a base64 encoded connection invite in the query parameters or a redirect URL itself
  * @param agent an Agent instance
  * @param navigation a navigation object either Scan screen or Home screen
+ * @param isDeepLink a boolean to communicate where the value is coming from
  * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
  * @param reuseConnection a boolean to determine if the connection reuse should be allowed
  */
