@@ -12,9 +12,9 @@ import { GenericFn } from '../../types/fn'
 import { ModalUsage } from '../../types/remove'
 import { testIdForAccessabilityLabel, testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import BulletPoint from '../inputs/BulletPoint'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedListModal from '../misc/UnorderedListModal'
-import BulletPoint from '../inputs/BulletPoint'
 
 interface CommonRemoveModalProps {
   usage: ModalUsage
