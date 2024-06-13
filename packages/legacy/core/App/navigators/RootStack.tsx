@@ -19,7 +19,7 @@ import { useDeepLinks } from '../hooks/deep-links'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { connectFromScanOrDeeplink } from '../utils/helpers'
+import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
@@ -46,6 +46,7 @@ const RootStack: React.FC = () => {
   const defaultStackOptions = createDefaultStackOptions(theme)
   const { splash, enableImplicitInvitations, enableReuseConnections } = useConfiguration()
   const container = useContainer()
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   const loadState = container.resolve(TOKENS.LOAD_STATE)
   useDeepLinks()
@@ -71,7 +72,7 @@ const RootStack: React.FC = () => {
         await agent.wallet.close()
         await agent.shutdown()
       } catch (error) {
-        agent?.config?.logger?.error(`Error shutting down agent: ${error}`)
+        logger?.error(`Error shutting down agent: ${error}`)
       }
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
@@ -108,7 +109,15 @@ const RootStack: React.FC = () => {
       }
 
       try {
-        await connectFromScanOrDeeplink(deepLink, agent, navigation, enableImplicitInvitations, enableReuseConnections)
+        await connectFromScanOrDeepLink(
+          deepLink,
+          agent,
+          logger,
+          navigation,
+          true, // isDeepLink
+          enableImplicitInvitations,
+          enableReuseConnections
+        )
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1039'),
