@@ -1,4 +1,3 @@
-import { BulletPoint } from 'components/inputs/BulletPoint'
 import * as React from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +14,7 @@ import { testIdForAccessabilityLabel, testIdWithKey } from '../../utils/testable
 import Button, { ButtonType } from '../buttons/Button'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedListModal from '../misc/UnorderedListModal'
+import BulletPoint from 'components/inputs/BulletPoint'
 
 interface CommonRemoveModalProps {
   usage: ModalUsage

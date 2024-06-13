@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 
-
 interface BulletPointProps {
     text: string
     textStyle: any
