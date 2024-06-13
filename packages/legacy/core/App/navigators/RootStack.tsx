@@ -39,6 +39,7 @@ const RootStack: React.FC = () => {
   const [backgroundTime, setBackgroundTime] = useState<number | undefined>(undefined)
   const [prevAppStateVisible, setPrevAppStateVisible] = useState<string>('')
   const [appStateVisible, setAppStateVisible] = useState<string>('')
+  const [inBackground, setInBackground] = useState<boolean>(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
@@ -125,15 +126,20 @@ const RootStack: React.FC = () => {
       })
     }
 
-    if (agent && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
+    if (inBackground) {
+      return
+    }
+
+    if (agent && agent.isInitialized && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
       handleDeepLink(state.deepLink.activeDeepLink)
     }
-  }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate])
+  }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate, inBackground])
 
   useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {
-      if (appState.current.match(/active/) && nextAppState.match(/inactive|background/)) {
+      if (appState.current === 'active' && ['inactive', 'background'].includes(nextAppState)) {
         //update time that app gets put in background
+        setInBackground(true)
         setBackgroundTime(Date.now())
       }
 
@@ -144,9 +150,7 @@ const RootStack: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (appStateVisible.match(/active/) && prevAppStateVisible.match(/inactive|background/) && backgroundTime) {
-      // prevents the user from being locked out during metro reloading
-      setPrevAppStateVisible(appStateVisible)
+    const lockoutCheck = async () => {
       //lock user out after 5 minutes
       if (
         !state.preferences.preventAutoLock &&
@@ -154,8 +158,27 @@ const RootStack: React.FC = () => {
         backgroundTime &&
         Date.now() - backgroundTime > walletTimeout
       ) {
-        lockoutUser()
+        await lockoutUser()
+        return true
       }
+
+      return false
+    }
+
+    if (appStateVisible === 'active' && ['inactive', 'background'].includes(prevAppStateVisible) && backgroundTime) {
+      // prevents the user from being locked out during metro reloading
+      setPrevAppStateVisible(appStateVisible)
+
+      lockoutCheck().then((lockoutInProgress) => {
+        if (lockoutInProgress) {
+          const unsubscribe = navigation.addListener('state', (): void => {
+            setInBackground(false)
+            unsubscribe()
+          })
+        } else {
+          setInBackground(false)
+        }
+      })
     }
   }, [appStateVisible, prevAppStateVisible, backgroundTime])
 
