@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Linting
     steps:
       - name: Checkout aries-mobile-agent-react-native
@@ -39,7 +39,7 @@ jobs:
           yarn run lint
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Testing
     steps:
       - name: Checkout aries-mobile-agent-react-native
