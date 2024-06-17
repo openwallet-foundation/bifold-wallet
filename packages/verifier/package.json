@@ -1,6 +1,6 @@
 {
   "name": "@hyperledger/aries-bifold-verifier",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "build/commonjs/index.js",
   "types": "build/typescript/index.d.ts",
   "module": "build/module/index.js",
