@@ -1,6 +1,6 @@
 {
   "name": "@hyperledger/aries-bifold-core",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "App/index.ts",
@@ -58,8 +58,8 @@
     "@formatjs/intl-relativetimeformat": "9.3.1",
     "@hyperledger/anoncreds-react-native": "0.2.2",
     "@hyperledger/aries-askar-react-native": "0.2.1",
-    "@hyperledger/aries-bifold-verifier": "^1.1.0",
-    "@hyperledger/aries-oca": "^1.1.0",
+    "@hyperledger/aries-bifold-verifier": "^1.0.0",
+    "@hyperledger/aries-oca": "^1.0.0",
     "@hyperledger/indy-vdr-react-native": "0.2.2",
     "@react-native-async-storage/async-storage": "1.15.11",
     "@react-native-community/eslint-config": "^3.2.0",

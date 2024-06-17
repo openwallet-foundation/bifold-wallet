@@ -4422,7 +4422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-bifold-core@^1.1.0, @hyperledger/aries-bifold-core@workspace:packages/legacy/core":
+"@hyperledger/aries-bifold-core@^1.0.0, @hyperledger/aries-bifold-core@workspace:packages/legacy/core":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-bifold-core@workspace:packages/legacy/core"
   dependencies:
@@ -4448,8 +4448,8 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": 0.2.2
     "@hyperledger/aries-askar-react-native": 0.2.1
-    "@hyperledger/aries-bifold-verifier": ^1.1.0
-    "@hyperledger/aries-oca": ^1.1.0
+    "@hyperledger/aries-bifold-verifier": ^1.0.0
+    "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/eslint-config": ^3.2.0
@@ -4632,7 +4632,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperledger/aries-bifold-verifier@^1.1.0, @hyperledger/aries-bifold-verifier@workspace:packages/verifier":
+"@hyperledger/aries-bifold-verifier@^1.0.0, @hyperledger/aries-bifold-verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-bifold-verifier@workspace:packages/verifier"
   dependencies:
@@ -4660,7 +4660,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperledger/aries-oca@^1.1.0, @hyperledger/aries-oca@workspace:packages/oca":
+"@hyperledger/aries-oca@^1.0.0, @hyperledger/aries-oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-oca@workspace:packages/oca"
   dependencies:
@@ -8310,8 +8310,8 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": 0.2.2
     "@hyperledger/aries-askar-react-native": 0.2.1
-    "@hyperledger/aries-bifold-core": ^1.1.0
-    "@hyperledger/aries-oca": ^1.1.0
+    "@hyperledger/aries-bifold-core": ^1.0.0
+    "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/masked-view": 0.1.11
