@@ -1,6 +1,6 @@
 {
   "name": "@hyperledger/aries-bifold-remote-logs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Remote logging for credo-ts agents",
   "main": "build/index.js",
   "types": "build/index.d.ts",
