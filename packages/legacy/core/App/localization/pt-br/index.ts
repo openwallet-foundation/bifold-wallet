@@ -361,6 +361,16 @@ const translation = {
     "ShowDetails": "Show error details (PT-BR)",
     "NoDetails": "No error details available (PT-BR)",
   },
+  "PasteUrl": {
+    "PasteUrl": "Paste a URL (PT-BR)",
+    "PasteUrlDescription": "Paste a URL below to receive a proof request, add a credential or add a Contact. (PT-BR)",
+    "Clear": "Clear (PT-BR)",
+    "UseShareableLink": "Use shareable links (PT-BR)",
+    "ErrorTextboxEmpty": "Textbox Empty (PT-BR)",
+    "ErrorTextboxEmptyDescription": "Please add a URL intended for digital wallets and try again. (PT-BR)",
+    "ErrorInvalidUrl": "URL not recognized (PT-BR)",
+    "ErrorInvalidUrlDescription": "Check if the URL is intended for digital wallets and if it was copied correctly, then try again. (PT-BR)",
+  },
   "Connection": {
     "JustAMoment": "Aguarde um momento enquanto fazemos uma conexão segura...",
     "TakingTooLong": "Isto está demorando mais que o normal. Você pode retornar para a home ou continuar esperando.",
@@ -421,6 +431,7 @@ const translation = {
     "CustomOfferParagraph2": "Não reconhece a organização. Verifique sua lista de Contatos. Você só recebe notificões de Contatos que você tenha adicionado.",
   },
   "ProofRequest": {
+    "RequestForProof": "Request for proof (PT-BR)",
     "JustAMoment": "Aguarde enquanto preparamos as coisas para você...",
     "FromYourWallet": "De sua carteira",
     "MissingCredentials": "Credenciais não encontradas",
