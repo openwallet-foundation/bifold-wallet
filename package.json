@@ -56,6 +56,8 @@
     "@react-navigation/stack": "6.0.11",
     "@types/node": "16.9.6",
     "@credo-ts/react-hooks": "patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch",
-    "@sphereon/pex": "patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch"
+    "@sphereon/pex": "patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch",
+    "@hyperledger/indy-vdr-react-native@0.2.2": "patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch",
+    "@hyperledger/indy-vdr-shared@0.2.2": "patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch"
   }
 }

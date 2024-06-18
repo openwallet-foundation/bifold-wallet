@@ -32,13 +32,22 @@ import { indyVdr } from '@hyperledger/indy-vdr-react-native'
 interface GetAgentModulesOptions {
   indyNetworks: IndyVdrPoolConfig[]
   mediatorInvitationUrl?: string
+  txnCache?: { capacity: number; expiryOffsetMs: number; path?: string }
 }
 
 export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
 
-export function getAgentModules({ indyNetworks, mediatorInvitationUrl }: GetAgentModulesOptions) {
+export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache }: GetAgentModulesOptions) {
   const indyCredentialFormat = new LegacyIndyCredentialFormatService()
   const indyProofFormat = new LegacyIndyProofFormatService()
+
+  if (txnCache) {
+    indyVdr.setLedgerTxnCache({
+      capacity: txnCache.capacity,
+      expiry_offset_ms: txnCache.expiryOffsetMs,
+      path: txnCache.path,
+    })
+  }
 
   return {
     askar: new AskarModule({

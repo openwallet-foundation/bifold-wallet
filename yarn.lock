@@ -4731,10 +4731,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.2.2
+  resolution: "@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch::version=0.2.2&hash=28418c&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@hyperledger/indy-vdr-shared": 0.2.2
+    "@mapbox/node-pre-gyp": ^1.0.10
+  peerDependencies:
+    react: ">= 16"
+    react-native: ">= 0.66.0"
+  checksum: 6f2866e6363d14c3dfc48e78fc66bffbfa40666e3a8cd42354f5fa9f9870ef3a679b33207b0f9366812da16a7ded9e0b94ebcfdaed115e442dcf36260d4ec9a5
+  languageName: node
+  linkType: hard
+
 "@hyperledger/indy-vdr-shared@npm:0.2.2":
   version: 0.2.2
   resolution: "@hyperledger/indy-vdr-shared@npm:0.2.2"
   checksum: 6d0e12591d6f1734a07d4798015f3fc0e84d24c321d7ba5a911ad4e83bb4b07c3b9415d67220f5557b5a90947e5b0de11cc1d52e71c76a55bcbd8196654809fb
+  languageName: node
+  linkType: hard
+
+"@hyperledger/indy-vdr-shared@patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.2.2
+  resolution: "@hyperledger/indy-vdr-shared@patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch::version=0.2.2&hash=4d1d6e&locator=aries-bifold-root%40workspace%3A."
+  checksum: c9b0576703be02428c3d0a0b39474ebca3b2f49c5402f7450003b72157d0bd010fd4dff436d4de422f9b6ea4de05361fa41dc8c470e462eaecb9407474dc4391
   languageName: node
   linkType: hard
 

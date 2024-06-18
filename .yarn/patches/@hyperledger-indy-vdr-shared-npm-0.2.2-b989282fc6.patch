@@ -1,0 +1,16 @@
+diff --git a/build/types/IndyVdr.d.ts b/build/types/IndyVdr.d.ts
+index 99f5d50a851462c8c41e52ceb49795feebce0b4e..3aa7890e1f3c422daa6ec82fd6b42d0b924d18b5 100644
+--- a/build/types/IndyVdr.d.ts
++++ b/build/types/IndyVdr.d.ts
+@@ -11,6 +11,11 @@ export interface IndyVdr {
+     setCacheDirectory(options: {
+         path: string;
+     }): void;
++    setLedgerTxnCache(options: {
++        capacity: number;
++        expiry_offset_ms: number;
++        path?: string;
++    }): void;
+     setDefaultLogger(): void;
+     setProtocolVersion(options: {
+         version: number;
