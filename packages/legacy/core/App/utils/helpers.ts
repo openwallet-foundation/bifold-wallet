@@ -1002,10 +1002,11 @@ export const connectFromScanOrDeepLink = async (
   // Try built in Credo methods first
   try {
     logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, value: ${value}`)
-    // this function uses credo methods and currently only supports oob, c_i, and d_m query params
+
+    // this function uses built-in credo methods and currently only supports oob, c_i, and d_m query params
     const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnection)
     if (receivedInvitation?.connectionRecord?.id) {
-      // not connectionless
+      // connection-based
       navigation.navigate(Stacks.ConnectionStack as any, {
         screen: Screens.Connection,
         params: { connectionId: receivedInvitation.connectionRecord.id },
@@ -1017,24 +1018,36 @@ export const connectFromScanOrDeepLink = async (
         params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
       })
     }
-    // try unsupported deeplink if built-in Credo methods fail. Let this catch block throw any error, it will be caught a level up
-  } catch (err: unknown) {
-    logger.error('Error connecting from invitation, trying unsupported query params. Error:', err as Error)
+
+    // try unsupported query params if built-in Credo methods fail. Let this catch block throw, it will be caught a level up
+  } catch (initialErr: unknown) {
+    logger.error('Error connecting from invitation, trying unsupported query params. Error:', initialErr as Error)
+    const initialErrMsg = (initialErr as Error)?.message ?? 'unknown'
+
     // Try unsupported deeplink here
     const queryParams = parseUrl(value)?.query
+
     // if there's a valid query param, try unpacking and receiving the message
     if (queryParams && hasValidQueryParam(queryParams)) {
-      const message = await getOobFromDeepLink(value, agent)
-      navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
-        params: { threadId: message['@id'] },
-      })
+      try {
+        const message = await getOobFromDeepLink(value, agent)
+        navigation.navigate(Stacks.ConnectionStack as any, {
+          screen: Screens.Connection,
+          params: { threadId: message['@id'] },
+        })
+      } catch (secondErr: unknown) {
+        logger.error('Error connecting from query params. Error:', secondErr as Error)
+        const secondErrMsg = (secondErr as Error)?.message ?? 'unknown'
+        throw new Error(`Initial error: ${initialErrMsg}\nSecond error connecting from query params: ${secondErrMsg}`)
+      }
+
       // if there's no valid query param and it's not a deeplink, throw an error
     } else if (!isDeepLink) {
-      throw new Error(`No valid query params found in URI: ${value} and unable to connect from redirect url`)
+      throw new Error(`Initial error: ${initialErrMsg}\nSecond error: No valid query params found in URI "${value}"`)
+
       // if it's a deeplink and gets this far, fail silently
     } else {
-      logger.info(`No valid query params found in deeplink URI: ${value} and unable to connect from redirect url`)
+      logger.info(`No valid query params found in deeplink URI: "${value}"`)
     }
   }
 }
