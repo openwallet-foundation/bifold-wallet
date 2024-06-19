@@ -12,6 +12,7 @@ export enum Screens {
   EnterPIN = 'Enter PIN',
   Home = 'Home',
   Scan = 'Scan',
+  PasteUrl = 'Paste URL',
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
   CredentialOffer = 'Credential Offer',
@@ -133,6 +134,7 @@ export type ConnectStackParams = {
   [Screens.Scan]: undefined
   [Screens.NameWallet]: undefined
   [Screens.ScanHelp]: undefined
+  [Screens.PasteUrl]: undefined
 }
 
 export type SettingStackParams = {
