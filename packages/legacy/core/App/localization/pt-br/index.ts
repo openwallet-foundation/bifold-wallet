@@ -68,7 +68,7 @@ const translation = {
       "December": "dez",
     },
     "MinuteAgo": "minuto atrás",
-    "MinutesAgo": "minutos atrás",
+    "MinutesAgo": "{{ count }} minutos atrás",
     "JustNow": "Agora",
   },
   "Language": {
