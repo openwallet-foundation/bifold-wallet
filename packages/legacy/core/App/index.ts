@@ -8,6 +8,7 @@ import App from './App'
 import * as components from './components'
 import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
 import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
+import BulletPoint from './components/inputs/BulletPoint'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
 import CredentialCard from './components/misc/CredentialCard'
@@ -146,5 +147,6 @@ export {
   Text,
   loadLoginAttempt,
   Button,
+  BulletPoint,
 }
 export type { IButton }
