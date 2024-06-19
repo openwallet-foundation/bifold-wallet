@@ -3,7 +3,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Share } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -135,9 +135,44 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const handleEdit = () => {
     navigation.navigate(Screens.NameWallet)
   }
+  const scanPasteUrl = () => (
+    <HeaderButton
+      buttonLocation={ButtonLocation.Right}
+      accessibilityLabel={t('Global.Share')}
+      testID={testIdWithKey('ShareButton')}
+      onPress={() => {
+        navigation.navigate(Screens.PasteUrl)
+      }}
+      icon="link"
+    />
+  )
+
+  const scanShareUrl = () => (
+    <HeaderButton
+      buttonLocation={ButtonLocation.Right}
+      accessibilityLabel={t('Global.Share')}
+      testID={testIdWithKey('ShareButton')}
+      onPress={() => {
+        Share.share({ message: invitation ?? '' })
+      }}
+      icon="share-variant"
+    />
+  )
 
   useEffect(() => {
-    navigation.setOptions({ title: firstTabActive ? 'Scan QR code' : 'My QR code' })
+    let headerRight = invitation ? scanShareUrl : undefined
+    let title = t('Scan.MyQRCode')
+    if (firstTabActive) {
+      headerRight = scanPasteUrl
+      title = t('Scan.ScanQRCode')
+    }
+    if (!store.preferences.enableShareableLink) {
+      headerRight = undefined
+    }
+    navigation.setOptions({ title, headerRight })
+  }, [firstTabActive, invitation, store.preferences.enableShareableLink])
+
+  useEffect(() => {
     if (!firstTabActive) {
       createInvitation()
     }

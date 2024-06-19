@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
+import PasteUrl from '../screens/PasteUrl'
 import ScanHelp from '../screens/ScanHelp'
 import { ConnectStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
@@ -25,6 +26,14 @@ const ConnectStack: React.FC = () => {
       }}
     >
       <Stack.Screen name={Screens.Scan} component={scan} options={{ headerBackTestID: testIdWithKey('Back') }} />
+      <Stack.Screen
+        name={Screens.PasteUrl}
+        component={PasteUrl}
+        options={() => ({
+          title: t('PasteUrl.PasteUrl'),
+          headerBackTestID: testIdWithKey('Back'),
+        })}
+      />
       <Stack.Screen name={Screens.ScanHelp} component={ScanHelp} />
       <Stack.Screen
         name={Screens.NameWallet}

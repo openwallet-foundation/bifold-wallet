@@ -18,6 +18,7 @@ import {
   BackHandler,
   DeviceEventEmitter,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   Vibration,
@@ -29,8 +30,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
+import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks/connections'
 import { useTemplate } from '../hooks/proof-request-templates'
@@ -63,6 +66,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const isFocused = useIsFocused()
+  const [store] = useStore()
   const [generating, setGenerating] = useState(true)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [connectionRecordId, setConnectionRecordId] = useState<string | undefined>(undefined)
@@ -149,6 +153,23 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
     }, [])
   )
+
+  useEffect(() => {
+    if (message && store.preferences.enableShareableLink) {
+      const scanShareUrl = () => (
+        <HeaderButton
+          buttonLocation={ButtonLocation.Right}
+          accessibilityLabel={t('Global.Share')}
+          testID={testIdWithKey('ShareButton')}
+          onPress={() => {
+            Share.share({ message })
+          }}
+          icon="share-variant"
+        />
+      )
+      navigation.setOptions({ headerRight: scanShareUrl })
+    }
+  }, [message, store.preferences.enableShareableLink])
 
   useEffect(() => {
     if (isFocused) {
