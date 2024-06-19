@@ -45,7 +45,7 @@ const ProofRequestStack: React.FC = () => {
         name={Screens.ProofRequesting}
         component={ProofRequesting}
         options={({ navigation }) => ({
-          title: '',
+          title: t('ProofRequest.RequestForProof'),
           headerLeft: () => (
             <HeaderButton
               buttonLocation={ButtonLocation.Left}

@@ -57,6 +57,7 @@ enum PreferencesDispatchAction {
   ACCEPT_DEV_CREDENTIALS = 'preferences/acceptDevCredentials',
   USE_DATA_RETENTION = 'preferences/useDataRetention',
   PREVENT_AUTO_LOCK = 'preferences/preventAutoLock',
+  USE_SHAREABLE_LINK = 'preferences/useShareableLink',
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
 }
 
@@ -293,6 +294,17 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     case PreferencesDispatchAction.PREVENT_AUTO_LOCK: {
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, preventAutoLock: choice }
+
+      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+
+      return {
+        ...state,
+        preferences,
+      }
+    }
+    case PreferencesDispatchAction.USE_SHAREABLE_LINK: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = { ...state.preferences, enableShareableLink: choice }
 
       AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 

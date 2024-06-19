@@ -91,6 +91,7 @@ const useAgent = () => ({
     mediationRecipient: mockMediationRecipient,
     oob: mockOobModule,
     context: mockAgentContext,
+    receiveMessage: jest.fn(),
   },
 })
 const useCredentialById = jest.fn()
