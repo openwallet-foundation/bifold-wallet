@@ -1,10 +1,10 @@
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { useEffect, useState } from 'react'
 
+import { TOKENS, useContainer } from '../container-api'
 import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../utils/proofBundle'
-import { TOKENS, useContainer } from '../container-api'
 
 export const useTemplates = (): Array<ProofRequestTemplate> => {
   const [store] = useStore()

@@ -1,10 +1,10 @@
+import { BaseLogger } from '@credo-ts/core'
 import {
   AnonCredsProofRequestTemplatePayload,
   ProofRequestTemplate,
   useProofRequestTemplates,
 } from '@hyperledger/aries-bifold-verifier'
 import axios, { AxiosError } from 'axios'
-import { BaseLogger } from '@credo-ts/core'
 
 import { useConfiguration } from '../contexts/configuration'
 
