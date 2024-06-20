@@ -961,15 +961,13 @@ export const getOobFromBetaQueryParam = async (queryParams: QueryParams, agent: 
   if (b64UrlRedirect) {
     const url = b64decode(b64UrlRedirect as string)
     return await receiveMessageFromUrlRedirect(url, agent)
-
-    // for _oob: decode, parse JSON, and receive
-    // (intentionally throw here if not a valid message eg. b64OobMessage is undefined etc.)
-  } else {
-    const rawmessage = b64decode(b64OobMessage as string)
-    const message = JSON.parse(rawmessage)
-    await agent.receiveMessage(message)
-    return message
   }
+
+  // for _oob: decode, parse JSON, and receive
+  const rawmessage = b64decode(b64OobMessage as string)
+  const message = JSON.parse(rawmessage)
+  await agent.receiveMessage(message)
+  return message
 }
 
 /**
@@ -1023,18 +1021,17 @@ const primaryConnectStrategy = async (
 const betaConnectStrategy = async (uri: string, agent: Agent, navigation: any, isDeepLink: boolean) => {
   const queryParams = parseUrl(uri)?.query
 
-  // if there's a valid query param, try unpacking and receiving the message
-  if (queryParams && queryHasBetaParam(queryParams)) {
-    const message = await getOobFromBetaQueryParam(queryParams, agent)
-    navigation.navigate(Stacks.ConnectionStack as any, {
-      screen: Screens.Connection,
-      params: { threadId: message['@id'] },
-    })
-
-    // if there's no valid query param and it's not a deeplink, throw an error
-  } else if (!isDeepLink) {
+  // only throw here if it's not a deeplink
+  if (!isDeepLink && !(queryParams && queryHasBetaParam(queryParams))) {
     throw new Error('No valid beta query params found in URI')
   }
+
+  // if there's a valid query param, try unpacking and receiving the message
+  const message = await getOobFromBetaQueryParam(queryParams, agent)
+  navigation.navigate(Stacks.ConnectionStack as any, {
+    screen: Screens.Connection,
+    params: { threadId: message['@id'] },
+  })
 }
 
 /**
