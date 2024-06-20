@@ -326,29 +326,6 @@ export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | 
 }
 
 /**
- *
- * @param url deeplink URL that should contain only one of the valid query params
- * @param agent
- * @returns oob message
- */
-export const getOobFromDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
-  const queryParams = parseUrl(url).query
-  let b64Message = queryParams['_url']
-  // for _url, fetch from decoded url, parse JSON, then receive
-  if (b64Message) {
-    const url = b64decode(b64Message as string)
-    return await receiveMessageFromUrlRedirect(url, agent)
-    // for all other valid params, decode, parse JSON, and receive
-  } else {
-    b64Message = queryParams['d_m'] ?? queryParams['c_i'] ?? queryParams['oob'] ?? queryParams['_oob']
-    const rawmessage = b64decode(b64Message as string)
-    const message = JSON.parse(rawmessage)
-    await agent?.receiveMessage(message)
-    return message
-  }
-}
-
-/**
  * A sorting function for the Array `sort()` function
  * @param a First retrieved credential
  * @param b Second retrieved credential
@@ -920,10 +897,12 @@ export const removeExistingInvitationIfRequired = async (
 }
 
 /**
- *
- * @param uri a URI containing a base64 encoded connection invite in the query parameter
+ * Get a oob record and connection record from a URI using built-in Credo methods
+ * @param uri a URI that is either a redirect URL or contains a base64 encoded connection invite in query params
  * @param agent an Agent instance
- * @returns a connection record from parsing and receiving the invitation
+ * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
+ * @param reuseConnection a boolean to determine if connection reuse should be allowed
+ * @returns an object containing an OOB record and, if not connectionless, a connection record
  */
 export const connectFromInvitation = async (
   uri: string,
@@ -969,25 +948,105 @@ interface QueryParams {
 }
 
 /**
- * @param query a query string
- * @returns the valid query param or false
+ * Returns an OOB message from a beta query param (a query param Credo does not yet support but we do)
+ * @param queryParams query params object containing at least one beta query param (_oob, _url)
+ * @param agent
+ * @returns oob message
  */
-const hasValidQueryParam = (query: QueryParams) => {
-  return query['d_m'] ?? query['c_i'] ?? query['oob'] ?? query['_oob'] ?? query['_url'] ?? false
+export const getOobFromBetaQueryParam = async (queryParams: QueryParams, agent: Agent): Promise<any> => {
+  const b64UrlRedirect = queryParams['_url']
+  const b64OobMessage = queryParams['_oob']
+
+  // for _url: decode url, fetch from url, parse JSON, then receive
+  if (b64UrlRedirect) {
+    const url = b64decode(b64UrlRedirect as string)
+    return await receiveMessageFromUrlRedirect(url, agent)
+  }
+
+  // for _oob: decode, parse JSON, and receive
+  const rawmessage = b64decode(b64OobMessage as string)
+  const message = JSON.parse(rawmessage)
+  await agent.receiveMessage(message)
+  return message
+}
+
+/**
+ * Checks if a query param object has a param Credo does not yet support but we are attempting to
+ * @param query a query object
+ * @returns the acceptable beta query param or false
+ */
+const queryHasBetaParam = (query: QueryParams) => {
+  return query['_oob'] ?? query['_url'] ?? false
+}
+
+/**
+ * Using built-in Credo methods, receive a message from a scan or deeplink and navigate accordingly
+ * @param uri a URI either containing a base64 encoded connection invite in its query parameters or a redirect URL itself
+ * @param agent an Agent instance
+ * @param navigation a navigation object from either the Scan screen, Home screen, or PasteUrl screen
+ * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
+ * @param reuseConnection a boolean to determine if connection reuse should be allowed
+ * @throws different types of CredoError if unsuccessful, what type depends on the reason for failure
+ */
+const primaryConnectStrategy = async (
+  uri: string,
+  agent: Agent | undefined,
+  navigation: any,
+  implicitInvitations: boolean = false,
+  reuseConnection: boolean = false
+) => {
+  const receivedInvitation = await connectFromInvitation(uri, agent, implicitInvitations, reuseConnection)
+  if (receivedInvitation?.connectionRecord?.id) {
+    // connection-based
+    navigation.navigate(Stacks.ConnectionStack as any, {
+      screen: Screens.Connection,
+      params: { connectionId: receivedInvitation.connectionRecord.id },
+    })
+  } else {
+    // connectionless
+    navigation.navigate(Stacks.ConnectionStack as any, {
+      screen: Screens.Connection,
+      params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
+    })
+  }
+}
+
+/**
+ * Custom handling of beta query params to receive a message from a scan or deeplink and navigate accordingly
+ * @param uri a URI containing with base64 encoded query parameter
+ * @param agent an Agent instance
+ * @param navigation a navigation object from either the Scan screen, Home screen, or PasteUrl screen
+ * @param isDeepLink a boolean to communicate where the uri is coming from
+ */
+const betaConnectStrategy = async (uri: string, agent: Agent, navigation: any, isDeepLink: boolean) => {
+  const queryParams = parseUrl(uri)?.query
+
+  // only throw here if it's not a deeplink
+  if (!isDeepLink && !(queryParams && queryHasBetaParam(queryParams))) {
+    throw new Error('No valid beta query params found in URI')
+  }
+
+  // if there's a valid query param, try unpacking and receiving the message
+  const message = await getOobFromBetaQueryParam(queryParams, agent)
+  navigation.navigate(Stacks.ConnectionStack as any, {
+    screen: Screens.Connection,
+    params: { threadId: message['@id'] },
+  })
 }
 
 /**
  * Receive a message from a scan or deeplink and navigate accordingly
- * @param value a URI either containing a base64 encoded connection invite in the query parameters or a redirect URL itself
+ * @param uri a URI either containing a base64 encoded connection invite in the query parameters or a redirect URL itself
  * @param agent an Agent instance
  * @param logger injected logger from DI container
- * @param navigation a navigation object either Scan screen or Home screen
- * @param isDeepLink a boolean to communicate where the value is coming from
+ * @param navigation a navigation object from either the Scan screen, Home screen, or PasteUrl screen
+ * @param isDeepLink a boolean to communicate where the uri is coming from
  * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
- * @param reuseConnection a boolean to determine if the connection reuse should be allowed
+ * @param reuseConnection a boolean to determine if connection reuse should be allowed
+ * @throws Error with message containing the primary and beta error messages if both fail
  */
 export const connectFromScanOrDeepLink = async (
-  value: string,
+  uri: string,
   agent: Agent | undefined,
   logger: BaseLogger,
   navigation: any,
@@ -999,42 +1058,21 @@ export const connectFromScanOrDeepLink = async (
     return
   }
 
-  // Try built in Credo methods first
   try {
-    logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, value: ${value}`)
-    // this function uses credo methods and currently only supports oob, c_i, and d_m query params
-    const receivedInvitation = await connectFromInvitation(value, agent, implicitInvitations, reuseConnection)
-    if (receivedInvitation?.connectionRecord?.id) {
-      // not connectionless
-      navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
-        params: { connectionId: receivedInvitation.connectionRecord.id },
-      })
-    } else {
-      // connectionless
-      navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
-        params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
-      })
-    }
-    // try unsupported deeplink if built-in Credo methods fail. Let this catch block throw any error, it will be caught a level up
-  } catch (err: unknown) {
-    logger.error('Error connecting from invitation, trying unsupported query params. Error:', err as Error)
-    // Try unsupported deeplink here
-    const queryParams = parseUrl(value)?.query
-    // if there's a valid query param, try unpacking and receiving the message
-    if (queryParams && hasValidQueryParam(queryParams)) {
-      const message = await getOobFromDeepLink(value, agent)
-      navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
-        params: { threadId: message['@id'] },
-      })
-      // if there's no valid query param and it's not a deeplink, throw an error
-    } else if (!isDeepLink) {
-      throw new Error(`No valid query params found in URI: ${value} and unable to connect from redirect url`)
-      // if it's a deeplink and gets this far, fail silently
-    } else {
-      logger.info(`No valid query params found in deeplink URI: ${value} and unable to connect from redirect url`)
+    logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, URI: ${uri}`)
+
+    await primaryConnectStrategy(uri, agent, navigation, implicitInvitations, reuseConnection)
+  } catch (primaryErr: unknown) {
+    logger.error('Error during primary connect strategy. Error:', primaryErr as Error)
+    const primaryErrMsg = (primaryErr as Error)?.message ?? 'unknown'
+
+    try {
+      await betaConnectStrategy(uri, agent, navigation, isDeepLink)
+    } catch (betaErr: unknown) {
+      logger.error('Error during beta connect strategy. Error:', betaErr as Error)
+      const betaErrMsg = (betaErr as Error)?.message ?? 'unknown'
+
+      throw new Error(`Primary error: ${primaryErrMsg}\nBeta error: ${betaErrMsg}`)
     }
   }
 }
