@@ -239,6 +239,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                 "flexGrow": 1,
               }
             }
+            showsVerticalScrollIndicator={false}
             style={
               Object {
                 "flex": 1,
@@ -588,6 +589,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                 "flexGrow": 1,
               }
             }
+            showsVerticalScrollIndicator={false}
             style={
               Object {
                 "flex": 1,

@@ -134,7 +134,11 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                 </View>
               </View>
               <View style={styles.bodyContainer}>
-                <ScrollView contentContainerStyle={styles.scrollViewContentContainer} style={styles.scrollViewStyle}>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={styles.scrollViewContentContainer}
+                  style={styles.scrollViewStyle}
+                >
                   <View onStartShouldSetResponder={() => true}>
                     <Text selectable={true} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
                       {description}
