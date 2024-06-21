@@ -25,9 +25,6 @@ export class AppContainer implements Container {
     return this._container.resolve(token) as TokenMapping[K]
   }
 
-  public resolveAllX<K extends keyof TokenMapping>(): TokenMapping[K] {
-    return this._container.resolveAll()
-  }
   // public resolveSome<K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][] {
   //   return tokens.map((token) => this.resolve(token))
   // }
