@@ -11,46 +11,55 @@ import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 
-export enum PROOF_TOKENS {
-  GROUP_BY_REFERENT = 'proof.groupByReferant',
-  CRED_HELP_ACTION_OVERRIDES = 'proof.credHelpActionOverride',
-}
+export type FN_ONBOARDING_DONE = (
+  dispatch: React.Dispatch<ReducerAction<unknown>>,
+  navigation: StackNavigationProp<AuthenticateStackParams>
+) => GenericFn
 
-export enum SCREEN_TOKENS {
-  SCREEN_PREFACE = 'screen.preface',
-  SCREEN_TERMS = 'screen.terms',
-  SCREEN_ONBOARDING = 'screen.onboarding',
-  SCREEN_DEVELOPER = 'screen.developer',
-  SCREEN_ONBOARDING_ITEM = 'screen.onboarding.item',
-}
-export enum STACK_TOKENS {
-  STACK_ONBOARDING = 'stack.onboarding',
-}
-export enum FN_TOKENS {
-  FN_ONBOARDING_DONE = 'fn.onboardingDone',
-}
+type FN_LOADSTATE = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 
-export enum COMP_TOKENS {
-  COMP_BUTTON = 'comp.button',
-}
+export const PROOF_TOKENS = {
+  GROUP_BY_REFERENT: 'proof.groupByReferant',
+  CRED_HELP_ACTION_OVERRIDES: 'proof.credHelpActionOverride',
+} as const
 
-export enum SERVICE_TOKENS {
-  SERVICE_TERMS = 'screen.terms',
-}
+export const SCREEN_TOKENS = {
+  SCREEN_PREFACE: 'screen.preface',
+  SCREEN_TERMS: 'screen.terms',
+  SCREEN_ONBOARDING: 'screen.onboarding',
+  SCREEN_DEVELOPER: 'screen.developer',
+  SCREEN_ONBOARDING_ITEM: 'screen.onboarding.item',
+} as const
 
-export enum LOAD_STATE_TOKENS {
-  LOAD_STATE = 'state.load',
-}
+export const STACK_TOKENS = {
+  STACK_ONBOARDING: 'stack.onboarding',
+} as const
 
-export enum OBJECT_TOKENS {
-  OBJECT_ONBOARDINGCONFIG = 'object.onboarding-config',
-}
+export const FN_TOKENS = {
+  FN_ONBOARDING_DONE: 'fn.onboardingDone',
+} as const
 
-export enum UTILITY_TOKENS {
-  UTIL_LOGGER = 'utility.logger',
-  UTIL_OCA_RESOLVER = 'utility.oca-resolver',
-  UTIL_LEDGERS = 'utility.ledgers',
-}
+export const COMP_TOKENS = {
+  COMP_BUTTON: 'comp.button',
+} as const
+
+export const SERVICE_TOKENS = {
+  SERVICE_TERMS: 'screen.terms',
+} as const
+
+export const LOAD_STATE_TOKENS = {
+  LOAD_STATE: 'state.load',
+} as const
+
+export const OBJECT_TOKENS = {
+  OBJECT_ONBOARDINGCONFIG: 'object.onboarding-config',
+} as const
+
+export const UTILITY_TOKENS = {
+  UTIL_LOGGER: 'utility.logger',
+  UTIL_OCA_RESOLVER: 'utility.oca-resolver',
+  UTIL_LEDGERS: 'utility.ledgers',
+} as const
 
 export const TOKENS = {
   ...PROOF_TOKENS,
@@ -62,14 +71,7 @@ export const TOKENS = {
   ...LOAD_STATE_TOKENS,
   ...OBJECT_TOKENS,
   ...UTILITY_TOKENS,
-}
-
-export type FN_ONBOARDING_DONE = (
-  dispatch: React.Dispatch<ReducerAction<unknown>>,
-  navigation: StackNavigationProp<AuthenticateStackParams>
-) => GenericFn
-
-type FN_LOADSTATE = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
+} as const
 
 export interface TokenMapping {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
