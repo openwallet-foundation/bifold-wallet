@@ -73,7 +73,7 @@ export const TOKENS = {
   ...UTILITY_TOKENS,
 } as const
 
-export interface TokenMapping {
+export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
     credDefIds: string[]
     schemaIds: string[]
@@ -97,7 +97,7 @@ export interface TokenMapping {
 export interface Container {
   init(): Container
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
-  resolveSome<K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][]
+  // resolveSome<K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][]
   get container(): DependencyContainer
 }
 
