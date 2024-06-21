@@ -98,7 +98,7 @@ export interface Container {
   init(): Container
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
   resolveSome<K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][]
-  getContainer(): DependencyContainer
+  get container(): DependencyContainer
 }
 
 export const ContainerContext = createContext<Container | undefined>(undefined)
