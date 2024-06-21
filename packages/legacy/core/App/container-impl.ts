@@ -30,27 +30,32 @@ import {
 
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
-  private container: DependencyContainer
+  private _container: DependencyContainer
+
   public constructor(container: DependencyContainer) {
-    this.container = container
+    this._container = container
+  }
+
+  public get container(): DependencyContainer {
+    return this._container
   }
 
   public init(): Container {
     // eslint-disable-next-line no-console
     console.log(`Initializing Bifold container`)
-    this.container.registerInstance(TOKENS.SCREEN_PREFACE, Preface)
-    this.container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
-    this.container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
-    this.container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
-    this.container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
-    this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
-    this.container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
-    this.container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
-    this.container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
-    this.container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
-    this.container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
-    this.container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
-    this.container.registerInstance(
+    this._container.registerInstance(TOKENS.SCREEN_PREFACE, Preface)
+    this._container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
+    this._container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
+    this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
+    this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
+    this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
+    this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
+    this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
+    this._container.registerInstance(TOKENS.OBJECT_ONBOARDINGCONFIG, DefaultScreenOptionsDictionary)
+    this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
+    this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
+    this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
+    this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
         return () => {
@@ -63,7 +68,7 @@ export class MainContainer implements Container {
       }
     )
 
-    this.container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
+    this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
         const data = await AsyncStorage.getItem(key)
         if (data) {
@@ -106,15 +111,11 @@ export class MainContainer implements Container {
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
-    return this.container.resolve(token) as TokenMapping[K]
+    return this._container.resolve(token) as TokenMapping[K]
   }
 
   public resolveSome = <K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][] => {
     return tokens.map((token) => this.resolve(token))
-  }
-
-  public getContainer(): DependencyContainer {
-    return this.container
   }
 }
 
