@@ -107,6 +107,10 @@ export class MainContainer implements Container {
     return this.container.resolve(token) as TokenMapping[K]
   }
 
+  public resolveSome = <K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][] => {
+    return tokens.map((token) => this.resolve(token))
+  }
+
   public getContainer(): DependencyContainer {
     return this.container
   }

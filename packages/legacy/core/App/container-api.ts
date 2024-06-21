@@ -95,6 +95,7 @@ export interface TokenMapping {
 export interface Container {
   init(): Container
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
+  resolveSome<K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][]
   getContainer(): DependencyContainer
 }
 
