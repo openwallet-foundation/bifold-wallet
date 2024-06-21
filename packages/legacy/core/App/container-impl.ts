@@ -34,6 +34,7 @@ export class MainContainer implements Container {
   public constructor(container: DependencyContainer) {
     this.container = container
   }
+
   public init(): Container {
     // eslint-disable-next-line no-console
     console.log(`Initializing Bifold container`)
@@ -97,6 +98,7 @@ export class MainContainer implements Container {
         tours: { ...defaultState.tours, ...tours },
         onboarding: { ...defaultState.onboarding, ...onboarding },
       }
+
       dispatch({ type: DispatchAction.STATE_DISPATCH, payload: [state] })
     })
 
