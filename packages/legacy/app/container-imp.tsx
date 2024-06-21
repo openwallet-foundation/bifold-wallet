@@ -2,10 +2,16 @@ import { Container, TokenMapping } from '@hyperledger/aries-bifold-core'
 import { DependencyContainer } from 'tsyringe'
 
 export class AppContainer implements Container {
-  private container: DependencyContainer
+  private _container: DependencyContainer
+
   public constructor(bifoldContainer: Container) {
-    this.container = bifoldContainer.getContainer().createChildContainer()
+    this._container = bifoldContainer.container.createChildContainer()
   }
+
+  public get container(): DependencyContainer {
+    return this._container
+  }
+
   public init(): Container {
     // eslint-disable-next-line no-console
     console.log(`Initializing App container`)
@@ -19,7 +25,7 @@ export class AppContainer implements Container {
     return this.container.resolve(token) as TokenMapping[K]
   }
 
-  public getContainer(): DependencyContainer {
-    return this.container
+  public resolveSome = <K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][] => {
+    return tokens.map((token) => this.resolve(token))
   }
 }
