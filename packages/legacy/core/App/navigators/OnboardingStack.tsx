@@ -58,7 +58,7 @@ const OnboardingStack: React.FC = () => {
 
   const OnBoardingScreen = () => {
     return (
-      <OnboardingX
+      <Onboarding
         nextButtonText={t('Global.Next')}
         previousButtonText={t('Global.Back')}
         disableSkip={true}
