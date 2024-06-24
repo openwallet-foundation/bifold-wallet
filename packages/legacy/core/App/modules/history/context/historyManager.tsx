@@ -4,7 +4,7 @@
         const { agent } = useAgent()
 
         //Log history
-        const historyManager = container.resolve(TOKENS.FN_LOAD_HISTORY)(newAgent)
+        const historyManager = container.resolve(TOKENS.FN_LOAD_HISTORY)(agent)
          const recordData: HistoryRecord = {
            type: HistoryCardType.CardAccepted,
            message: `Wallet Initialized at ${new Date()}`,
