@@ -13,6 +13,7 @@ import {
 import {
   Agent,
   BasicMessageRecord,
+  BaseLogger,
   ConnectionRecord,
   CredentialExchangeRecord,
   CredentialState,
@@ -27,7 +28,7 @@ import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
 import moment from 'moment'
-import { ParsedUrl, parseUrl } from 'query-string'
+import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
 import { TFunction } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -36,6 +37,7 @@ import { EventTypes, domain } from '../constants'
 import { i18n } from '../localization/index'
 import { Role } from '../types/chat'
 import { BifoldError } from '../types/error'
+import { Screens, Stacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ChildFn } from '../types/tour'
 
@@ -307,11 +309,18 @@ export function firstValidCredential(
   return first
 }
 
-export const getOobDeepLink = async (url: string, agent: Agent | undefined): Promise<any> => {
-  const queryParams = parseUrl(url).query
-  const b64Message = queryParams['d_m'] ?? queryParams['c_i']
-  const rawmessage = b64decode(b64Message as string)
-  const message = JSON.parse(rawmessage)
+/**
+ *
+ * @param url a redirection URL to retrieve a payload for an invite
+ * @param agent an Agent instance
+ * @returns payload from following the redirection
+ */
+export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+  const message = await res.json()
   await agent?.receiveMessage(message)
   return message
 }
@@ -868,38 +877,6 @@ export const sortCredentialsForAutoSelect = (
 }
 
 /**
- *
- * @param url a redirection URL to retrieve a payload for an invite
- * @param agent an Agent instance
- * @returns payload from following the redirection
- */
-export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  })
-  const message = await res.json()
-  await agent?.receiveMessage(message)
-  return message
-}
-
-/**
- *
- * @param url a redirection URL to retrieve a payload for an invite
- * @param agent an Agent instance
- * @returns payload from following the redirection
- */
-export const receiveMessageFromDeepLink = async (url: string, agent: Agent | undefined) => {
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  })
-  const message = await res.json()
-  await agent?.receiveMessage(message)
-  return message
-}
-
-/**
  * Useful for multi use invitations
  * @param agent an Agent instance
  * @param invitationId id of invitation
@@ -920,17 +897,18 @@ export const removeExistingInvitationIfRequired = async (
 }
 
 /**
- *
- * @param uri a URI containing a base64 encoded connection invite in the query parameter
+ * Get a oob record and connection record from a URI using built-in Credo methods
+ * @param uri a URI that is either a redirect URL or contains a base64 encoded connection invite in query params
  * @param agent an Agent instance
- * @returns a connection record from parsing and receiving the invitation
+ * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
+ * @param reuseConnection a boolean to determine if connection reuse should be allowed
+ * @returns an object containing an OOB record and, if not connectionless, a connection record
  */
 export const connectFromInvitation = async (
   uri: string,
   agent: Agent | undefined,
   implicitInvitations: boolean = false,
-  reuseConnection: boolean = false,
-  useMultUseInvitation: boolean = false
+  reuseConnection: boolean = false
 ) => {
   const invitation = await agent?.oob.parseInvitation(uri)
 
@@ -955,13 +933,148 @@ export const connectFromInvitation = async (
   }
 
   if (!record) {
-    if (useMultUseInvitation) {
-      await removeExistingInvitationIfRequired(agent, invitation.id)
-    }
     record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
   }
 
   return record
+}
+
+interface QueryParams {
+  ['d_m']?: string
+  ['c_i']?: string
+  ['oob']?: string
+  ['_oob']?: string
+  ['_url']?: string
+}
+
+/**
+ * Returns an OOB message from a beta query param (a query param Credo does not yet support but we do)
+ * @param queryParams query params object containing at least one beta query param (_oob, _url)
+ * @param agent
+ * @returns oob message
+ */
+export const getOobFromBetaQueryParam = async (queryParams: QueryParams, agent: Agent): Promise<any> => {
+  const b64UrlRedirect = queryParams['_url']
+  const b64OobMessage = queryParams['_oob']
+
+  // for _url: decode url, fetch from url, parse JSON, then receive
+  if (b64UrlRedirect) {
+    const url = b64decode(b64UrlRedirect as string)
+    return await receiveMessageFromUrlRedirect(url, agent)
+  }
+
+  // for _oob: decode, parse JSON, and receive
+  const rawmessage = b64decode(b64OobMessage as string)
+  const message = JSON.parse(rawmessage)
+  await agent.receiveMessage(message)
+  return message
+}
+
+/**
+ * Checks if a query param object has a param Credo does not yet support but we are attempting to
+ * @param query a query object
+ * @returns the acceptable beta query param or false
+ */
+const queryHasBetaParam = (query: QueryParams) => {
+  return query['_oob'] ?? query['_url'] ?? false
+}
+
+/**
+ * Using built-in Credo methods, receive a message from a scan or deeplink and navigate accordingly
+ * @param uri a URI either containing a base64 encoded connection invite in its query parameters or a redirect URL itself
+ * @param agent an Agent instance
+ * @param navigation a navigation object from either the Scan screen, Home screen, or PasteUrl screen
+ * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
+ * @param reuseConnection a boolean to determine if connection reuse should be allowed
+ * @throws different types of CredoError if unsuccessful, what type depends on the reason for failure
+ */
+const primaryConnectStrategy = async (
+  uri: string,
+  agent: Agent | undefined,
+  navigation: any,
+  implicitInvitations: boolean = false,
+  reuseConnection: boolean = false
+) => {
+  const receivedInvitation = await connectFromInvitation(uri, agent, implicitInvitations, reuseConnection)
+  if (receivedInvitation?.connectionRecord?.id) {
+    // connection-based
+    navigation.navigate(Stacks.ConnectionStack as any, {
+      screen: Screens.Connection,
+      params: { connectionId: receivedInvitation.connectionRecord.id },
+    })
+  } else {
+    // connectionless
+    navigation.navigate(Stacks.ConnectionStack as any, {
+      screen: Screens.Connection,
+      params: { threadId: receivedInvitation?.outOfBandRecord.outOfBandInvitation.threadId },
+    })
+  }
+}
+
+/**
+ * Custom handling of beta query params to receive a message from a scan or deeplink and navigate accordingly
+ * @param uri a URI containing with base64 encoded query parameter
+ * @param agent an Agent instance
+ * @param navigation a navigation object from either the Scan screen, Home screen, or PasteUrl screen
+ * @param isDeepLink a boolean to communicate where the uri is coming from
+ */
+const betaConnectStrategy = async (uri: string, agent: Agent, navigation: any, isDeepLink: boolean) => {
+  const queryParams = parseUrl(uri)?.query
+
+  // only throw here if it's not a deeplink
+  if (!isDeepLink && !(queryParams && queryHasBetaParam(queryParams))) {
+    throw new Error('No valid beta query params found in URI')
+  }
+
+  // if there's a valid query param, try unpacking and receiving the message
+  const message = await getOobFromBetaQueryParam(queryParams, agent)
+  navigation.navigate(Stacks.ConnectionStack as any, {
+    screen: Screens.Connection,
+    params: { threadId: message['@id'] },
+  })
+}
+
+/**
+ * Receive a message from a scan or deeplink and navigate accordingly
+ * @param uri a URI either containing a base64 encoded connection invite in the query parameters or a redirect URL itself
+ * @param agent an Agent instance
+ * @param logger injected logger from DI container
+ * @param navigation a navigation object from either the Scan screen, Home screen, or PasteUrl screen
+ * @param isDeepLink a boolean to communicate where the uri is coming from
+ * @param implicitInvitations a boolean to determine if implicit invitation behavior should be used
+ * @param reuseConnection a boolean to determine if connection reuse should be allowed
+ * @throws Error with message containing the primary and beta error messages if both fail
+ */
+export const connectFromScanOrDeepLink = async (
+  uri: string,
+  agent: Agent | undefined,
+  logger: BaseLogger,
+  navigation: any,
+  isDeepLink: boolean,
+  implicitInvitations: boolean = false,
+  reuseConnection: boolean = false
+) => {
+  if (!agent) {
+    return
+  }
+
+  try {
+    logger.info(`Attempting to connect from ${isDeepLink ? 'deep link' : 'scan'}, URI: ${uri}`)
+
+    await primaryConnectStrategy(uri, agent, navigation, implicitInvitations, reuseConnection)
+  } catch (primaryErr: unknown) {
+    logger.error('Error during primary connect strategy. Error:', primaryErr as Error)
+    const primaryErrMsg = (primaryErr as Error)?.message ?? 'unknown'
+
+    try {
+      await betaConnectStrategy(uri, agent, navigation, isDeepLink)
+    } catch (betaErr: unknown) {
+      logger.error('Error during beta connect strategy. Error:', betaErr as Error)
+      const betaErrMsg = (betaErr as Error)?.message ?? 'unknown'
+
+      throw new Error(`Primary error: ${primaryErrMsg}\nBeta error: ${betaErrMsg}`)
+    }
+  }
 }
 
 /**
@@ -994,32 +1107,6 @@ export const createConnectionInvitation = async (agent: Agent | undefined, goalC
  */
 export const createTempConnectionInvitation = async (agent: Agent | undefined, type: 'issue' | 'verify') => {
   return createConnectionInvitation(agent, `aries.vc.${type}.once`)
-}
-
-/**
- * Parse URL from provided string
- * @param urlString string to parse
- * @returns ParsedUur object if success or undefined
- */
-export const getUrl = (urlString: string): ParsedUrl | undefined => {
-  try {
-    return parseUrl(urlString)
-  } catch (e) {
-    return undefined
-  }
-}
-
-/**
- * Parse JSON from provided string
- * @param jsonString string to parse
- * @returns JSON object if success or undefined
- */
-export const getJson = (jsonString: string): Record<string, unknown> | undefined => {
-  try {
-    return JSON.parse(jsonString)
-  } catch (e) {
-    return undefined
-  }
 }
 
 /**

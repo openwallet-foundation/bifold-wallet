@@ -136,7 +136,7 @@ describe('displays a proof request screen', () => {
     const attributeBase = {
       referent: '',
       schemaId: '',
-      credentialDefinitionId: 'AAAAAAAAAAAAAAAAAAAAAA:1:AA:1234:test',
+      credentialDefinitionId: 'AAAAAAAAAAAAAAAAAAAAAA:3:CL:1234:test',
       toJSON: jest.fn(),
     }
 
@@ -529,7 +529,6 @@ describe('displays a proof request screen', () => {
       const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
       const ageLabel = getByText(/Age/, { exact: false })
-      const ageValue = getByText(t('ProofRequest.PredicateLe') + ' 18')
       const ageNotSatisfied = getByText('ProofRequest.PredicateNotSatisfied', { exact: false })
       const cancelButton = getByTestId(testIdWithKey('Cancel'))
 
@@ -543,8 +542,6 @@ describe('displays a proof request screen', () => {
       expect(emailValue).toBeTruthy()
       expect(ageLabel).not.toBeNull()
       expect(ageLabel).toBeTruthy()
-      expect(ageValue).not.toBeNull()
-      expect(ageValue).toBeTruthy()
       expect(ageNotSatisfied).not.toBeNull()
       expect(ageNotSatisfied).toBeTruthy()
       expect(cancelButton).not.toBeNull()

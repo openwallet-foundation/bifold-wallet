@@ -507,6 +507,19 @@ const translation = {
         "WhereToUseLink": "See where you can use Bifold Wallet (FR)",
         "BadQRCode": "QR Code Not Recognized (FR)",
         "BadQRCodeDescription": "Ths QR code scanned doesn't work with Bifold Wallet. Bifold Wallet only works with participating services.\n\nIt currently can't add digital credentials by taking photos of physical ones. (FR)",
+        "ErrorDetails": "Scan error details (FR)",
+        "ShowDetails": "Show error details (FR)",
+        "NoDetails": "No error details available (FR)",
+    },
+    "PasteUrl": {
+        "PasteUrl": "Paste a URL (FR)",
+        "PasteUrlDescription": "Paste a URL below to receive a proof request, add a credential or add a Contact. (FR)",
+        "Clear": "Clear (FR)",
+        "UseShareableLink": "Use shareable links (FR)",
+        "ErrorTextboxEmpty": "Textbox Empty (FR)",
+        "ErrorTextboxEmptyDescription": "Please add a URL intended for digital wallets and try again. (FR)",
+        "ErrorInvalidUrl": "URL not recognized (FR)",
+        "ErrorInvalidUrlDescription": "Check if the URL is intended for digital wallets and if it was copied correctly, then try again. (FR)",
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
@@ -566,6 +579,7 @@ const translation = {
         "CustomOfferParagraph2": "Vous ne reconnaissez pas l'organisation? Vérifiez votre liste de Contacts. Vous ne recevez des notifications que des Contacts que vous avez initiés."
     },
     "ProofRequest": {
+        "RequestForProof": "Request for proof (FR)",
         "JustAMoment": "Just a moment while we prepare things for you... (FR)",
         "FromYourWallet": "From your wallet (FR)",
         "MissingCredentials": "Missing credentials (FR)",

@@ -86,8 +86,8 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
         <Text
           style={
             Object {
-              "color": "#000000",
-              "fontSize": 28,
+              "color": "#FFFFFF",
+              "fontSize": 26,
               "fontWeight": "bold",
               "textAlign": "center",
             }
@@ -283,8 +283,8 @@ exports[`ProofRequesting Component renders correctly 1`] = `
         <Text
           style={
             Object {
-              "color": "#000000",
-              "fontSize": 28,
+              "color": "#FFFFFF",
+              "fontSize": 26,
               "fontWeight": "bold",
               "textAlign": "center",
             }
@@ -436,8 +436,8 @@ exports[`ProofRequesting Component renders correctly 2`] = `
         <Text
           style={
             Object {
-              "color": "#000000",
-              "fontSize": 28,
+              "color": "#FFFFFF",
+              "fontSize": 26,
               "fontWeight": "bold",
               "textAlign": "center",
             }

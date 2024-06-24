@@ -3,7 +3,6 @@ import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/core'
 import { StackCardStyleInterpolator, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
-import { parseUrl } from 'query-string'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
@@ -21,7 +20,7 @@ import HistoryStack from '../modules/history/navigation/HistoryStack'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { connectFromInvitation, getOobDeepLink } from '../utils/helpers'
+import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
@@ -41,12 +40,14 @@ const RootStack: React.FC = () => {
   const [backgroundTime, setBackgroundTime] = useState<number | undefined>(undefined)
   const [prevAppStateVisible, setPrevAppStateVisible] = useState<string>('')
   const [appStateVisible, setAppStateVisible] = useState<string>('')
+  const [inBackground, setInBackground] = useState<boolean>(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const { splash, enableImplicitInvitations, enableReuseConnections, enableUseMultUseInvitation } = useConfiguration()
+  const { splash, enableImplicitInvitations, enableReuseConnections } = useConfiguration()
   const container = useContainer()
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
   const loadState = container.resolve(TOKENS.LOAD_STATE)
   useDeepLinks()
@@ -72,7 +73,7 @@ const RootStack: React.FC = () => {
         await agent.wallet.close()
         await agent.shutdown()
       } catch (error) {
-        agent?.config?.logger?.error(`Error shutting down agent: ${error}`)
+        logger?.error(`Error shutting down agent: ${error}`)
       }
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
@@ -109,45 +110,23 @@ const RootStack: React.FC = () => {
       }
 
       try {
-        // Try connection based
-        const receivedInvitation = await connectFromInvitation(
+        await connectFromScanOrDeepLink(
           deepLink,
           agent,
+          logger,
+          navigation,
+          true, // isDeepLink
           enableImplicitInvitations,
-          enableReuseConnections,
-          enableUseMultUseInvitation
+          enableReuseConnections
         )
-        navigation.navigate(Stacks.ConnectionStack as any, {
-          screen: Screens.Connection,
-          params: { connectionId: receivedInvitation?.connectionRecord?.id },
-        })
-      } catch {
-        try {
-          // Try connectionless here
-          const queryParams = parseUrl(deepLink).query
-          const param = queryParams['d_m'] ?? queryParams['c_i']
-          // if missing both of the required params, don't attempt to open OOB
-          if (!param) {
-            dispatch({
-              type: DispatchAction.ACTIVE_DEEP_LINK,
-              payload: [undefined],
-            })
-            return
-          }
-          const message = await getOobDeepLink(deepLink, agent)
-          navigation.navigate(Stacks.ConnectionStack as any, {
-            screen: Screens.Connection,
-            params: { threadId: message['@id'] },
-          })
-        } catch (err: unknown) {
-          const error = new BifoldError(
-            t('Error.Title1039'),
-            t('Error.Message1039'),
-            (err as Error)?.message ?? err,
-            1039
-          )
-          DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-        }
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1039'),
+          t('Error.Message1039'),
+          (err as Error)?.message ?? err,
+          1039
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
 
       // set deeplink as inactive
@@ -157,15 +136,20 @@ const RootStack: React.FC = () => {
       })
     }
 
-    if (agent && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
+    if (inBackground) {
+      return
+    }
+
+    if (agent && agent.isInitialized && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
       handleDeepLink(state.deepLink.activeDeepLink)
     }
-  }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate])
+  }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate, inBackground])
 
   useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {
-      if (appState.current.match(/active/) && nextAppState.match(/inactive|background/)) {
+      if (appState.current === 'active' && ['inactive', 'background'].includes(nextAppState)) {
         //update time that app gets put in background
+        setInBackground(true)
         setBackgroundTime(Date.now())
       }
 
@@ -176,9 +160,7 @@ const RootStack: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (appStateVisible.match(/active/) && prevAppStateVisible.match(/inactive|background/) && backgroundTime) {
-      // prevents the user from being locked out during metro reloading
-      setPrevAppStateVisible(appStateVisible)
+    const lockoutCheck = async () => {
       //lock user out after 5 minutes
       if (
         !state.preferences.preventAutoLock &&
@@ -186,8 +168,27 @@ const RootStack: React.FC = () => {
         backgroundTime &&
         Date.now() - backgroundTime > walletTimeout
       ) {
-        lockoutUser()
+        await lockoutUser()
+        return true
       }
+
+      return false
+    }
+
+    if (appStateVisible === 'active' && ['inactive', 'background'].includes(prevAppStateVisible) && backgroundTime) {
+      // prevents the user from being locked out during metro reloading
+      setPrevAppStateVisible(appStateVisible)
+
+      lockoutCheck().then((lockoutInProgress) => {
+        if (lockoutInProgress) {
+          const unsubscribe = navigation.addListener('state', (): void => {
+            setInBackground(false)
+            unsubscribe()
+          })
+        } else {
+          setInBackground(false)
+        }
+      })
     }
   }, [appStateVisible, prevAppStateVisible, backgroundTime])
 

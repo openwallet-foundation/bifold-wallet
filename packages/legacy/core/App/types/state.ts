@@ -29,6 +29,7 @@ export interface Preferences {
   acceptDevCredentials: boolean
   useDataRetention: boolean
   preventAutoLock: boolean
+  enableShareableLink: boolean
   alternateContactNames: Record<string, string>
 }
 
