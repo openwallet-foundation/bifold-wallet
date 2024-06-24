@@ -6,9 +6,7 @@ export interface ProofCredentialAttributes {
   credExchangeRecord?: CredentialExchangeRecord
   credId: string
   credDefId?: string
-  proofCredDefId?: string
   schemaId?: string
-  proofSchemaId?: string
   credName: string
   attributes?: Attribute[]
 }
@@ -18,9 +16,7 @@ export interface ProofCredentialPredicates {
   credExchangeRecord?: CredentialExchangeRecord
   credId: string
   credDefId?: string
-  proofCredDefId?: string
   schemaId?: string
-  proofSchemaId?: string
   credName: string
   predicates?: Predicate[]
 }

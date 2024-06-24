@@ -10,6 +10,7 @@ import CredentialCard11 from '../../App/components/misc/CredentialCard11'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
+import { Linking } from 'react-native'
 
 jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
@@ -69,16 +70,14 @@ describe('CredentialCard11 component', () => {
     })
 
     test('Missing credential with help action (cred def ID)', async () => {
-      const helpAction = jest.fn()
-
+      Linking.openURL = jest.fn()
       const { findByTestId } = render(
         <ConfigurationContext.Provider
           value={{
             ...configurationContext,
-            getCredentialHelpDictionary: [{ credDefIds: ['proof_cred_def_id'], schemaIds: [], action: helpAction }],
           }}
         >
-          <CredentialCard11 proof proofCredDefId={'proof_cred_def_id'} error={true} />
+          <CredentialCard11 proof credDefId={'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card'} error={true} />
         </ConfigurationContext.Provider>
       )
 
@@ -87,20 +86,19 @@ describe('CredentialCard11 component', () => {
       expect(getThisCredentialButton).toBeTruthy()
 
       fireEvent(getThisCredentialButton, 'press')
-      expect(helpAction).toBeCalled()
+      expect(Linking.openURL).toBeCalled()
     })
 
     test('Missing credential with help action (schema ID)', async () => {
-      const helpAction = jest.fn()
+      Linking.openURL = jest.fn()
 
       const { findByTestId } = render(
         <ConfigurationContext.Provider
           value={{
             ...configurationContext,
-            getCredentialHelpDictionary: [{ credDefIds: [], schemaIds: ['proof_schema_id'], action: helpAction }],
           }}
         >
-          <CredentialCard11 proof proofSchemaId={'proof_schema_id'} error={true} />
+          <CredentialCard11 proof schemaId={'XUxBrVSALWHLeycAUhrNr9:2:student_card:1.0'} error={true} />
         </ConfigurationContext.Provider>
       )
 
@@ -109,7 +107,7 @@ describe('CredentialCard11 component', () => {
       expect(getThisCredentialButton).toBeTruthy()
 
       fireEvent(getThisCredentialButton, 'press')
-      expect(helpAction).toBeCalled()
+      expect(Linking.openURL).toBeCalled()
     })
   })
 })
