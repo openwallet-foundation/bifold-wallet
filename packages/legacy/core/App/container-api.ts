@@ -1,6 +1,7 @@
 import { BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
+import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -16,7 +17,9 @@ export type FN_ONBOARDING_DONE = (
   navigation: StackNavigationProp<AuthenticateStackParams>
 ) => GenericFn
 
-type FN_LOADSTATE = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
+type LoadStateFn = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
+
+type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
 export const PROOF_TOKENS = {
   GROUP_BY_REFERENT: 'proof.groupByReferant',
@@ -59,6 +62,7 @@ export const UTILITY_TOKENS = {
   UTIL_LOGGER: 'utility.logger',
   UTIL_OCA_RESOLVER: 'utility.oca-resolver',
   UTIL_LEDGERS: 'utility.ledgers',
+  UTIL_PROOF_TEMPLATE: 'utility.proof-template',
 } as const
 
 export const TOKENS = {
@@ -86,12 +90,13 @@ export type TokenMapping = {
   [TOKENS.SCREEN_DEVELOPER]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
-  [TOKENS.LOAD_STATE]: FN_LOADSTATE
+  [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
   [TOKENS.UTIL_LOGGER]: BaseLogger
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
+  [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
 }
 
 export interface Container {

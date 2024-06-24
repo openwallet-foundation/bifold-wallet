@@ -6,7 +6,9 @@ import {
 } from '@hyperledger/aries-bifold-verifier'
 import axios, { AxiosError } from 'axios'
 
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useContainer } from '../container-api'
+
+type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
 const calculatePreviousYear = (yearOffset: number) => {
   const pastDate = new Date()
@@ -73,7 +75,11 @@ export const useRemoteProofBundleResolver = (
   if (indexFileBaseUrl) {
     return new RemoteProofBundleResolver(indexFileBaseUrl, log)
   } else {
-    return new DefaultProofBundleResolver()
+    // const { proofRequestTemplates } = use()
+    const container = useContainer()
+    const proofRequestTemplates = container.resolve(TOKENS.UTIL_PROOF_TEMPLATE)
+
+    return new DefaultProofBundleResolver(proofRequestTemplates)
   }
 }
 

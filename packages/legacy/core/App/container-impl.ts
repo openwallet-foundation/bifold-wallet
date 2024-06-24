@@ -27,6 +27,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
@@ -55,6 +56,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
+    this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, useProofRequestTemplates)
     this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
@@ -67,7 +69,6 @@ export class MainContainer implements Container {
         }
       }
     )
-
     this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
         const data = await AsyncStorage.getItem(key)
