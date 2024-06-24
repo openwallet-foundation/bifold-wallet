@@ -461,7 +461,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {!hasSatisfiedPredicates(getCredentialsFields()) ? (
+              {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ marginLeft: -2, marginRight: 10 }}

@@ -1,4 +1,4 @@
-import { getCredentialsForAnonCredsProofRequest } from '@credo-ts/anoncreds'
+import { AnonCredsCredentialsForProofRequest, getCredentialsForAnonCredsProofRequest } from '@credo-ts/anoncreds'
 import {
   ClaimFormat,
   CredentialExchangeRecord,
@@ -15,8 +15,6 @@ import '@testing-library/jest-native/extend-expect'
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { AnonCredsCredentialsForProofRequest } from '@credo-ts/anoncreds'
-import { useTranslation } from 'react-i18next'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
@@ -24,6 +22,7 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
+
 import {
   anonCredsCredentialsForProofRequest,
   difPexCredentialsForRequest,
@@ -80,8 +79,6 @@ describe('displays a proof request screen', () => {
     const testEmail = 'test@email.com'
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'
-
-    const { t } = useTranslation()
 
     const { id: credentialId } = new CredentialExchangeRecord({
       id: '8eba4449-8a85-4954-b11c-e0590f39cbdb',
@@ -472,9 +469,6 @@ describe('displays a proof request screen', () => {
       })
 
       // @ts-ignore-next-line
-      getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
-
-      // @ts-ignore-next-line
       getCredentialsForAnonCredsProofRequest.mockResolvedValue({
         attributes: anonCredsCredentialsForProofRequest.attributes,
         predicates: {
@@ -492,7 +486,7 @@ describe('displays a proof request screen', () => {
         },
       })
 
-      const { getByText, getByTestId } = render(
+      const tree = render(
         <ConfigurationContext.Provider value={configurationContext}>
           <NetworkContext.Provider value={networkContext}>
             <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
@@ -504,28 +498,7 @@ describe('displays a proof request screen', () => {
         timeTravel(1000)
       })
 
-      const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
-      const contact = getByText('ContactDetails.AContact', { exact: false })
-      const emailLabel = getByText(/Email/, { exact: false })
-      const emailValue = getByText(testEmail)
-      const ageLabel = getByText(/Age/, { exact: false })
-      const ageNotSatisfied = getByText('ProofRequest.PredicateNotSatisfied', { exact: false })
-      const cancelButton = getByTestId(testIdWithKey('Cancel'))
-
-      expect(predicateMessage).not.toBeNull()
-      expect(predicateMessage).toBeTruthy()
-      expect(contact).not.toBeNull()
-      expect(contact).toBeTruthy()
-      expect(emailLabel).not.toBeNull()
-      expect(emailLabel).toBeTruthy()
-      expect(emailValue).not.toBeNull()
-      expect(emailValue).toBeTruthy()
-      expect(ageLabel).not.toBeNull()
-      expect(ageLabel).toBeTruthy()
-      expect(ageNotSatisfied).not.toBeNull()
-      expect(ageNotSatisfied).toBeTruthy()
-      expect(cancelButton).not.toBeNull()
-      expect(cancelButton).not.toBeDisabled()
+      expect(tree).toMatchSnapshot()
     })
   })
 })

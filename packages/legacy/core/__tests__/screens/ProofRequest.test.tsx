@@ -15,7 +15,6 @@ import '@testing-library/jest-native/extend-expect'
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { useTranslation } from 'react-i18next'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
@@ -66,8 +65,6 @@ describe('displays a proof request screen', () => {
     const testEmail = 'test@email.com'
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'
-
-    const { t } = useTranslation()
 
     const { id: credentialId } = new CredentialExchangeRecord({
       role: CredentialRole.Holder,

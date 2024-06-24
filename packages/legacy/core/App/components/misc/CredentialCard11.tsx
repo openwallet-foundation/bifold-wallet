@@ -430,10 +430,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   size={ListItems.recordAttributeText.fontSize}
                 />
               )}
-              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
+              {!error ? (
+                <AttributeValue
+                  warn={flaggedAttributes?.includes(label) && !item.pValue && proof}
+                  value={parsedValue}
+                />
+              ) : null}
             </View>
           )}
-          {item?.satisfied != undefined && item?.satisfied === false ? (
+          {!error && item?.satisfied != undefined && item?.satisfied === false ? (
             <Text style={[styles.errorText]} numberOfLines={1}>
               {t('ProofRequest.PredicateNotSatisfied')}
             </Text>
