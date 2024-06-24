@@ -1,5 +1,6 @@
 import { AnonCredsCredentialsForProofRequest } from '@credo-ts/anoncreds'
 import { ClaimFormat, DifPexCredentialsForRequest, JsonTransformer, W3cCredentialRecord } from '@credo-ts/core'
+
 import { DifPexAnonCredsProofRequest } from '../../../App/utils/anonCredsProofRequestMapper'
 
 export const testW3cCredentialRecord = JsonTransformer.fromJSON(
