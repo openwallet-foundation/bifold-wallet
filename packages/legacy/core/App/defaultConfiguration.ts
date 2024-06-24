@@ -39,7 +39,6 @@ export const defaultConfiguration: ConfigurationContext = {
     buttonTitle: '',
     pageTitle: '',
   },
-  proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
   supportedLanguages: Object.keys(translationResources) as Locales[],
   showPreface: false,
