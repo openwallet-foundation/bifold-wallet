@@ -2,19 +2,26 @@ import { CredentialExchangeRecord } from '@credo-ts/core'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/core'
-import { StackNavigationProp } from '@react-navigation/stack'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, StyleSheet, Text, View, ViewStyle, useWindowDimensions } from 'react-native'
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  Linking,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+  useWindowDimensions,
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useContainer } from '../../container-api'
-import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { NotificationStackParams, Screens } from '../../types/navigators'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import { formatIfDate, getCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
@@ -35,8 +42,6 @@ interface CredentialCard11Props {
   credName?: string
   credDefId?: string
   schemaId?: string
-  proofCredDefId?: string
-  proofSchemaId?: string
   proof?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
@@ -82,8 +87,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credName,
   credDefId,
   schemaId,
-  proofCredDefId,
-  proofSchemaId,
   proof,
   hasAltCredentials,
   handleAltCredChange,
@@ -102,12 +105,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
     credential?.revocationNotification !== undefined && !!proof
   )
-  const { getCredentialHelpDictionary } = useConfiguration()
   const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
-  // below navigation only to be used from proof request screen
-  const navigation = useNavigation<StackNavigationProp<NotificationStackParams, Screens.ProofRequest>>()
   const primaryField = overlay?.presentationFields?.find(
     (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
   )
@@ -123,6 +123,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       return { ...prev, [curr.name]: curr.format }
     }, {})
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
+  const credHelpActionOverrides = useContainer().resolve(TOKENS.CRED_HELP_ACTION_OVERRIDES)
+  const navigation = useNavigation()
 
   const getSecondaryBackgroundColor = () => {
     if (proof) {
@@ -259,17 +261,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   useEffect(() => {
     setAllPI(
-      cardData.every((item) => {
-        if (item === undefined) {
-          return true
-        } else if (item instanceof Attribute) {
-          const { label } = parseAttribute(item as Attribute & Predicate)
-          return flaggedAttributes?.includes(label)
-        } else {
-          // Predicates are not PII
-          return false
-        }
-      })
+      credential &&
+        cardData.every((item) => {
+          if (item === undefined) {
+            return true
+          } else if (item instanceof Attribute) {
+            const { label } = parseAttribute(item as Attribute & Predicate)
+            return flaggedAttributes?.includes(label)
+          } else {
+            // Predicates are not PII
+            return false
+          }
+        })
     )
   }, [flaggedAttributes])
 
@@ -284,9 +287,28 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       },
       language: i18n.language,
     }
-    bundleResolver.resolveAllBundles(params).then((bundle) => {
+    bundleResolver.resolveAllBundles(params).then((bundle: any) => {
       if (proof) {
         setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
+        const credHelpUrl =
+          (bundle as any).bundle.bundle.metadata.credentialSupportUrl[params.language] ??
+          Object.values((bundle as any).bundle.bundle.metadata.credentialSupportUrl)?.[0]
+
+        // Check if there is a help action override for this credential
+        const override = credHelpActionOverrides?.find(
+          (override) =>
+            (credDefId && override.credDefIds.includes(credDefId)) ||
+            (schemaId && override.schemaIds.includes(schemaId))
+        )
+        if (override) {
+          setHelpAction(() => () => {
+            override.action(navigation)
+          })
+        } else if (credHelpUrl) {
+          setHelpAction(() => () => {
+            Linking.openURL(credHelpUrl)
+          })
+        }
       }
       setOverlay({
         ...overlay,
@@ -300,27 +322,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     setIsRevoked(credential?.revocationNotification !== undefined && !proof)
     setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
   }, [credential?.revocationNotification])
-
-  useEffect(() => {
-    if (!error) {
-      return
-    }
-
-    getCredentialHelpDictionary?.some((entry) => {
-      if (proofCredDefId && entry.credDefIds.includes(proofCredDefId)) {
-        setHelpAction(() => () => {
-          entry.action(navigation)
-        })
-        return true
-      }
-      if (proofSchemaId && entry.schemaIds.includes(proofSchemaId)) {
-        setHelpAction(() => () => {
-          entry.action(navigation)
-        })
-        return true
-      }
-    })
-  }, [proofCredDefId, proofSchemaId])
 
   const CredentialCardLogo: React.FC = () => {
     return (
@@ -407,7 +408,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       item && (
         <View style={{ marginTop: 15 }}>
-          {!(item?.value != null || item?.satisfied) ? (
+          {!(item?.value || item?.satisfied) ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -420,7 +421,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           ) : (
             <AttributeLabel label={label} />
           )}
-          {!(item?.value != null || item?.pValue) ? null : (
+          {!(item?.value || item?.pValue) ? null : (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
                 <Icon

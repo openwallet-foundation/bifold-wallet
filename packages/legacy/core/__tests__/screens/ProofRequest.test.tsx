@@ -22,6 +22,7 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
+import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
 
 jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
@@ -66,7 +67,7 @@ describe('displays a proof request screen', () => {
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'
 
-    const { id: credentialId } = new CredentialExchangeRecord({
+    const credExRecord = new CredentialExchangeRecord({
       role: CredentialRole.Holder,
       threadId: '1',
       state: CredentialState.Done,
@@ -89,6 +90,8 @@ describe('displays a proof request screen', () => {
       ],
       protocolVersion: 'v1',
     })
+
+    const { id: credentialId } = credExRecord
 
     const { id: presentationMessageId } = new V1RequestPresentationMessage({
       comment: 'some comment',
@@ -216,7 +219,7 @@ describe('displays a proof request screen', () => {
 
     beforeEach(() => {
       jest.clearAllMocks()
-
+      useCredentials.mockReturnValue({records:[credExRecord]})
       // @ts-ignore-next-line
       useProofById.mockReturnValue(testProofRequest)
     })
