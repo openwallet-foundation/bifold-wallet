@@ -457,19 +457,17 @@ export const evaluatePredicates =
 const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
-  const proofCredDefId = credDefIdFromRestrictions(restrictions)
-  const proofSchemaId = schemaIdFromRestrictions(restrictions)
+  const credDefId = credDefIdFromRestrictions(restrictions)
+  const schemaId = schemaIdFromRestrictions(restrictions)
 
   //there is no credId in this context so use credName as a placeholder
   const processedAttributes: ProofCredentialAttributes = {
     credExchangeRecord: undefined,
     altCredentials: [credName],
     credId: credName,
-    schemaId: undefined,
-    credDefId: undefined,
+    schemaId,
+    credDefId,
     credName: credName,
-    proofCredDefId,
-    proofSchemaId,
     attributes: [] as Attribute[],
   }
 
@@ -534,8 +532,10 @@ export const processProofAttributes = (
       let revoked = false
       let credExchangeRecord = undefined
       if (credential) {
-        credExchangeRecord = credentialRecords?.find((record) =>
-          record.credentials.map((cred) => cred.credentialRecordId).includes(credential.credentialId)
+        credExchangeRecord = credentialRecords?.find(
+          (record) =>
+            record.credentials.map((cred) => cred.credentialRecordId).includes(credential.credentialId) ||
+            record.id === credential.credentialId
         )
         revoked = credExchangeRecord?.revocationNotification !== undefined
       } else {
@@ -548,10 +548,8 @@ export const processProofAttributes = (
             credExchangeRecord,
             altCredentials,
             credId: credential?.credentialId,
-            schemaId: credential?.credentialInfo?.schemaId,
-            credDefId: credential?.credentialInfo?.credentialDefinitionId,
-            proofCredDefId,
-            proofSchemaId,
+            schemaId: credential?.credentialInfo?.schemaId ?? proofSchemaId,
+            credDefId: credential?.credentialInfo?.credentialDefinitionId ?? proofCredDefId,
             credName,
             attributes: [],
           }
@@ -598,18 +596,16 @@ const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
   const { name, p_type: pType, p_value: pValue, restrictions } = predReq
 
   const credName = credNameFromRestriction(restrictions)
-  const proofCredDefId = credDefIdFromRestrictions(restrictions)
-  const proofSchemaId = schemaIdFromRestrictions(restrictions)
+  const credDefId = credDefIdFromRestrictions(restrictions)
+  const schemaId = schemaIdFromRestrictions(restrictions)
 
   //there is no credId in this context so use credName as a placeholder
   const processedPredicates: ProofCredentialPredicates = {
     credExchangeRecord: undefined,
     altCredentials: [credName],
     credId: credName,
-    schemaId: undefined,
-    credDefId: undefined,
-    proofCredDefId,
-    proofSchemaId,
+    schemaId,
+    credDefId,
     credName: credName,
     predicates: [] as Predicate[],
   }
@@ -664,8 +660,10 @@ export const processProofPredicates = (
       let revoked = false
       let credExchangeRecord = undefined
       if (credential) {
-        credExchangeRecord = credentialRecords?.find((record) =>
-          record.credentials.map((cred) => cred.credentialRecordId).includes(credential.credentialId)
+        credExchangeRecord = credentialRecords?.find(
+          (record) =>
+            record.credentials.map((cred) => cred.credentialRecordId).includes(credential.credentialId) ||
+            record.id === credential.credentialId
         )
         revoked = credExchangeRecord?.revocationNotification !== undefined
       } else {
@@ -687,10 +685,8 @@ export const processProofPredicates = (
           altCredentials,
           credExchangeRecord,
           credId: credential.credentialId,
-          schemaId,
-          credDefId: credentialDefinitionId,
-          proofCredDefId,
-          proofSchemaId,
+          schemaId: schemaId ?? proofSchemaId,
+          credDefId: credentialDefinitionId ?? proofCredDefId,
           credName: credName,
           predicates: [],
         }
