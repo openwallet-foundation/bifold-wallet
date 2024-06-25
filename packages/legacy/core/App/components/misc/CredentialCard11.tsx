@@ -1,6 +1,7 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { useNavigation } from '@react-navigation/core'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -122,6 +123,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       return { ...prev, [curr.name]: curr.format }
     }, {})
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
+  const credHelpActionOverrides = useContainer().resolve(TOKENS.CRED_HELP_ACTION_OVERRIDES)
+  const navigation = useNavigation()
 
   const getSecondaryBackgroundColor = () => {
     if (proof) {
@@ -290,7 +293,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         const credHelpUrl =
           (bundle as any).bundle.bundle.metadata.credentialSupportUrl[params.language] ??
           Object.values((bundle as any).bundle.bundle.metadata.credentialSupportUrl)?.[0]
-        if (credHelpUrl) {
+
+        // Check if there is a help action override for this credential
+        const override = credHelpActionOverrides?.find(
+          (override) =>
+            (credDefId && override.credDefIds.includes(credDefId)) ||
+            (schemaId && override.schemaIds.includes(schemaId))
+        )
+        if (override) {
+          setHelpAction(() => () => {
+            override.action(navigation)
+          })
+        } else if (credHelpUrl) {
           setHelpAction(() => () => {
             Linking.openURL(credHelpUrl)
           })

@@ -82,6 +82,7 @@ describe('displays a proof request screen', () => {
     const testAge = '16'
 
     const credExRecord = new CredentialExchangeRecord({
+      createdAt: new Date('2024-02-11 20:00:18.180718'),
       id: '8eba4449-8a85-4954-b11c-e0590f39cbdb',
       role: CredentialRole.Holder,
       threadId: '1',
@@ -213,6 +214,7 @@ describe('displays a proof request screen', () => {
       const testAge2 = '17'
 
       const { id: credentialId2 } = new CredentialExchangeRecord({
+        createdAt: new Date('2024-02-11 20:00:18.180718'),
         id: '8eba4449-8a85-4954-b11c-e0590f39cbdc',
         role: CredentialRole.Holder,
         threadId: '1',
