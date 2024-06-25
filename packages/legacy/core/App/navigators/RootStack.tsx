@@ -100,7 +100,7 @@ const RootStack: React.FC = () => {
   useEffect(() => {
     async function handleDeepLink(deepLink: string) {
       // If it's just the general link with no params, set link inactive and do nothing
-      if (deepLink.endsWith('//')) {
+      if (deepLink.search(/oob=|c_i=|d_m=|url=/) < 0) {
         dispatch({
           type: DispatchAction.ACTIVE_DEEP_LINK,
           payload: [undefined],
