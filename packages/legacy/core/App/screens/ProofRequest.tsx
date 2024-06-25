@@ -33,6 +33,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
+import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -69,6 +70,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
+  const outOfBandInvitation = proof?.parentThreadId
+    ? useOutOfBandByReceivedInvitationId(proof?.parentThreadId)?.outOfBandInvitation
+    : undefined
   const { enableTours: enableToursConfig, useAttestation } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
@@ -475,12 +479,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
                   <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
-                    <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>
+                    <Text style={[TextTheme.title]}>
+                      {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                    </Text>
                   </Text>
                 </View>
               ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                  <Text style={[TextTheme.title]}>
+                    {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                  </Text>{' '}
                   <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
                   <Text style={[TextTheme.title]}>{` ${activeCreds?.length} `}</Text>
                   <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>

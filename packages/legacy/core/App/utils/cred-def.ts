@@ -13,6 +13,8 @@ export function parseCredDefFromId(credDefId?: string, schemaId?: string): strin
     if (schemaId) {
       const parseIndySchema = parseIndySchemaId(schemaId)
       name = parseIndySchema.schemaName
+    } else {
+      name = 'Credential'
     }
   }
   return name
