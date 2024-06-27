@@ -1,5 +1,3 @@
-import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
@@ -39,7 +37,6 @@ export const defaultConfiguration: ConfigurationContext = {
     buttonTitle: '',
     pageTitle: '',
   },
-  proofRequestTemplates: useProofRequestTemplates,
   enableTours: false,
   supportedLanguages: Object.keys(translationResources) as Locales[],
   showPreface: false,

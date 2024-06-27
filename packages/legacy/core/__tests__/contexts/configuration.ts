@@ -2,7 +2,6 @@ import { ConfigurationContext } from '../../App'
 import Record from '../../App/components/record/Record'
 import { useNotifications } from '../../App/hooks/notifications'
 import { Locales } from '../../App/localization'
-import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 
 const configurationContext: ConfigurationContext = {
   pages: () => [],
@@ -41,7 +40,6 @@ const configurationContext: ConfigurationContext = {
     pageTitle: '',
   },
   useCustomNotifications: useNotifications,
-  proofRequestTemplates: useProofRequestTemplates,
   supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   whereToUseWalletUrl: 'https://example.com',
 }
