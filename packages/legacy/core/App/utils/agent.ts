@@ -125,7 +125,7 @@ export function getAgentModules({
       }),
     }
   }
-  
+
   return {
     ...modules,
     anoncreds: new AnonCredsModule({
@@ -154,11 +154,3 @@ export const createLinkSecretIfRequired = async (agent: Agent) => {
     })
   }
 }
-
-/*
-Type 
-'import("/Users/brycem/work/bc-wallet-mobile-dep-upgrade/bifold/packages/legacy/core/node_modules/@credo-ts/core/build/agent/context/AgentContext").AgentContext' 
-is not assignable to type 
-'import("/Users/brycem/work/bc-wallet-mobile-dep-upgrade/bifold/packages/legacy/core/node_modules/@credo-ts/anoncreds/node_modules/@credo-ts/core/build/agent/context/AgentContext").AgentContext'.
-
-*/
