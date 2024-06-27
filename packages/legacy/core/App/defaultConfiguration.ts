@@ -1,5 +1,3 @@
-import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
