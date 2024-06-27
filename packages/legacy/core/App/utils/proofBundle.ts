@@ -155,7 +155,7 @@ export class RemoteProofBundleResolver implements ProofBundleResolverType {
 export class DefaultProofBundleResolver implements ProofBundleResolverType {
   private proofRequestTemplates
 
-  public constructor(proofRequestTemplates: ProofRequestTemplateFn) {
+  public constructor(proofRequestTemplates: ProofRequestTemplateFn | undefined) {
     this.proofRequestTemplates = proofRequestTemplates ?? useProofRequestTemplates
   }
 
