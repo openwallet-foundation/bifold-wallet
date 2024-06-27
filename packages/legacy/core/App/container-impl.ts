@@ -28,13 +28,15 @@ import {
   Tours as ToursState,
 } from './types/state'
 import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-
+import { BaseLogger } from '@credo-ts/core'
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
+  private log?: BaseLogger
 
-  public constructor(container: DependencyContainer) {
+  public constructor(container: DependencyContainer, log?: BaseLogger) {
     this._container = container
+    this.log = log
   }
 
   public get container(): DependencyContainer {
@@ -42,8 +44,8 @@ export class MainContainer implements Container {
   }
 
   public init(): Container {
-    // eslint-disable-next-line no-console
-    console.log(`Initializing Bifold container`)
+    this.log?.info(`Initializing Bifold container`)
+
     this._container.registerInstance(TOKENS.SCREEN_PREFACE, Preface)
     this._container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
     this._container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
