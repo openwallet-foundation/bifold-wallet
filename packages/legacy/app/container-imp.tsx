@@ -1,6 +1,6 @@
+import { BaseLogger } from '@credo-ts/core'
 import { Container, TokenMapping } from '@hyperledger/aries-bifold-core'
 import { DependencyContainer } from 'tsyringe'
-import { BaseLogger } from '@credo-ts/core'
 export class AppContainer implements Container {
   private _container: DependencyContainer
   private log?: BaseLogger

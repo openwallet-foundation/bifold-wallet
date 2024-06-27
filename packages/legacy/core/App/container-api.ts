@@ -1,7 +1,7 @@
 import { BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
-import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
+import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
