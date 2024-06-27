@@ -21,6 +21,7 @@ import {
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
+  DidsModule,
 } from '@credo-ts/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
@@ -28,16 +29,34 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
+import { IndyVdrProxyAnonCredsRegistry, IndyVdrProxyDidResolver, CacheSettings } from 'credo-ts-indy-vdr-proxy-client'
 
 interface GetAgentModulesOptions {
   indyNetworks: IndyVdrPoolConfig[]
   mediatorInvitationUrl?: string
   txnCache?: { capacity: number; expiryOffsetMs: number; path?: string }
+  proxyBaseUrl?: string
+  proxyCacheSettings?: CacheSettings
 }
 
 export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
 
-export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache }: GetAgentModulesOptions) {
+/**
+ * Constructs the modules to be used in the agent setup
+ * @param indyNetworks
+ * @param mediatorInvitationUrl determine which mediator to use
+ * @param txnCache optional local cache config for indyvdr
+ * @param proxyBaseUrl optional indy vdr proxy url to sidestep ZMQ firewall issues
+ * @param proxyCacheSettings optional cache settings for the proxy
+ * @returns modules to be used in agent setup
+ */
+export function getAgentModules({
+  indyNetworks,
+  mediatorInvitationUrl,
+  txnCache,
+  proxyBaseUrl,
+  proxyCacheSettings,
+}: GetAgentModulesOptions) {
   const indyCredentialFormat = new LegacyIndyCredentialFormatService()
   const indyProofFormat = new LegacyIndyProofFormatService()
 
@@ -49,13 +68,9 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     })
   }
 
-  return {
+  const modules = {
     askar: new AskarModule({
       ariesAskar,
-    }),
-    anoncreds: new AnonCredsModule({
-      anoncreds,
-      registries: [new IndyVdrAnonCredsRegistry()],
     }),
     indyVdr: new IndyVdrModule({
       indyVdr,
@@ -97,6 +112,27 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     pushNotificationsFcm: new PushNotificationsFcmModule(),
     pushNotificationsApns: new PushNotificationsApnsModule(),
   }
+
+  if (proxyBaseUrl) {
+    return {
+      ...modules,
+      anoncreds: new AnonCredsModule({
+        anoncreds,
+        registries: [new IndyVdrProxyAnonCredsRegistry({ proxyBaseUrl, cacheOptions: proxyCacheSettings })],
+      }),
+      dids: new DidsModule({
+        resolvers: [new IndyVdrProxyDidResolver(proxyBaseUrl)],
+      }),
+    }
+  } else {
+    return {
+      ...modules,
+      anoncreds: new AnonCredsModule({
+        anoncreds,
+        registries: [new IndyVdrAnonCredsRegistry()],
+      }),
+    }
+  }
 }
 
 interface MyAgentContextInterface {
@@ -118,3 +154,11 @@ export const createLinkSecretIfRequired = async (agent: Agent) => {
     })
   }
 }
+
+/*
+Type 
+'import("/Users/brycem/work/bc-wallet-mobile-dep-upgrade/bifold/packages/legacy/core/node_modules/@credo-ts/core/build/agent/context/AgentContext").AgentContext' 
+is not assignable to type 
+'import("/Users/brycem/work/bc-wallet-mobile-dep-upgrade/bifold/packages/legacy/core/node_modules/@credo-ts/anoncreds/node_modules/@credo-ts/core/build/agent/context/AgentContext").AgentContext'.
+
+*/
