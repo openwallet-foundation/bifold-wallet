@@ -8,8 +8,6 @@ import axios, { AxiosError } from 'axios'
 
 import { TOKENS, useContainer } from '../container-api'
 
-type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
-
 const calculatePreviousYear = (yearOffset: number) => {
   const pastDate = new Date()
   pastDate.setFullYear(pastDate.getFullYear() + yearOffset)
