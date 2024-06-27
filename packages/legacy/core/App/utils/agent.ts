@@ -124,14 +124,14 @@ export function getAgentModules({
         resolvers: [new IndyVdrProxyDidResolver(proxyBaseUrl)],
       }),
     }
-  } else {
-    return {
-      ...modules,
-      anoncreds: new AnonCredsModule({
-        anoncreds,
-        registries: [new IndyVdrAnonCredsRegistry()],
-      }),
-    }
+  }
+  
+  return {
+    ...modules,
+    anoncreds: new AnonCredsModule({
+      anoncreds,
+      registries: [new IndyVdrAnonCredsRegistry()],
+    }),
   }
 }
 
