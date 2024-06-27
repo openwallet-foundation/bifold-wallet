@@ -1,11 +1,13 @@
 import { Container, TokenMapping } from '@hyperledger/aries-bifold-core'
 import { DependencyContainer } from 'tsyringe'
-
+import { BaseLogger } from '@credo-ts/core'
 export class AppContainer implements Container {
   private _container: DependencyContainer
+  private log?: BaseLogger
 
-  public constructor(bifoldContainer: Container) {
+  public constructor(bifoldContainer: Container, log?: BaseLogger) {
     this._container = bifoldContainer.container.createChildContainer()
+    this.log = log
   }
 
   public get container(): DependencyContainer {
@@ -14,7 +16,7 @@ export class AppContainer implements Container {
 
   public init(): Container {
     // eslint-disable-next-line no-console
-    console.log(`Initializing App container`)
+    this.log?.info(`Initializing App container`)
     // Here you can register any component to override components in core package
     // Example: Replacing button in core with custom button
     // this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
