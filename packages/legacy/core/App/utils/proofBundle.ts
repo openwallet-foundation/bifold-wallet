@@ -8,6 +8,8 @@ import axios, { AxiosError } from 'axios'
 
 import { TOKENS, useContainer } from '../container-api'
 
+type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
+
 const calculatePreviousYear = (yearOffset: number) => {
   const pastDate = new Date()
   pastDate.setFullYear(pastDate.getFullYear() + yearOffset)
@@ -153,8 +155,7 @@ export class RemoteProofBundleResolver implements ProofBundleResolverType {
 export class DefaultProofBundleResolver implements ProofBundleResolverType {
   private proofRequestTemplates
 
-  public constructor() {
-    const { proofRequestTemplates } = useConfiguration()
+  public constructor(proofRequestTemplates: ProofRequestTemplateFn) {
     this.proofRequestTemplates = proofRequestTemplates ?? useProofRequestTemplates
   }
 
