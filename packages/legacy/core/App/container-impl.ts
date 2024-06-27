@@ -1,3 +1,5 @@
+import { BaseLogger } from '@credo-ts/core'
+import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -27,8 +29,6 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
-import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-import { BaseLogger } from '@credo-ts/core'
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
