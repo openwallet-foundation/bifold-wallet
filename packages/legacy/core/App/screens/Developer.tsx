@@ -16,6 +16,7 @@ const Developer: React.FC = () => {
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
   )
+  const [useHistoryCapability, setUseHistoryCapability] = useState(!!store.preferences.useHistoryCapability)
   const [acceptDevCredentials, setAcceptDevCredentials] = useState(!!store.preferences.acceptDevCredentials)
   const [useDevVerifierTemplates, setDevVerifierTemplates] = useState(!!store.preferences.useDevVerifierTemplates)
   const [enableWalletNaming, setEnableWalletNaming] = useState(!!store.preferences.enableWalletNaming)
@@ -107,6 +108,14 @@ const Developer: React.FC = () => {
       payload: [!preventAutoLock],
     })
     setPreventAutoLock((previousState) => !previousState)
+  }
+
+  const toggleHistoryCapabilitySwitch = () => {
+    dispatch({
+      type: DispatchAction.HISTORY_CAPABILITY,
+      payload: [!useHistoryCapability],
+    })
+    setUseHistoryCapability((previousState) => !previousState)
   }
 
   const toggleShareableLinkSwitch = () => {
@@ -246,6 +255,26 @@ const Developer: React.FC = () => {
               onValueChange={togglePreventAutoLockSwitch}
               testID={testIdWithKey('PreventAutoLockSwitchElement')}
               value={preventAutoLock}
+            />
+          </Pressable>
+        </View>
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.settingLabelText}>{t('History.UseHistoryCapability')}</Text>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t('History.UseHistoryCapabilityToggle')}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('HistoryCapabilitySwitch')}
+          >
+            <Switch
+              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
+              thumbColor={useHistoryCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              onValueChange={toggleHistoryCapabilitySwitch}
+              testID={testIdWithKey('HistoryCapabilitySwitchElement')}
+              value={useHistoryCapability}
             />
           </Pressable>
         </View>
