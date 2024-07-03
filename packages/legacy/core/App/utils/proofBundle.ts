@@ -75,7 +75,6 @@ export const useRemoteProofBundleResolver = (
   if (indexFileBaseUrl) {
     return new RemoteProofBundleResolver(indexFileBaseUrl, log)
   } else {
-    // const { proofRequestTemplates } = use()
     const container = useContainer()
     const proofRequestTemplates = container.resolve(TOKENS.UTIL_PROOF_TEMPLATE)
 
