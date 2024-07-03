@@ -377,14 +377,14 @@ const translation = {
         "BadQRCodeDescription": "Ce code QR scanné ne fonctionne pas avec Bifold Wallet. Bifold Wallet ne fonctionne qu'avec les services participants.\n\nIl ne peut actuellement pas ajouter d'attestations numériques en prenant des photos d'attestations physiques.",
     },
     "PasteUrl": {
-        "PasteUrl": "Paste a URL (FR)",
-        "PasteUrlDescription": "Paste a URL below to receive a proof request, add a credential or add a Contact. (FR)",
-        "Clear": "Clear (FR)",
-        "UseShareableLink": "Use shareable links (FR)",
-        "ErrorTextboxEmpty": "Textbox Empty (FR)",
-        "ErrorTextboxEmptyDescription": "Please add a URL intended for digital wallets and try again. (FR)",
-        "ErrorInvalidUrl": "URL not recognized (FR)",
-        "ErrorInvalidUrlDescription": "Check if the URL is intended for digital wallets and if it was copied correctly, then try again. (FR)",
+        "PasteUrl": "Coller une URL",
+        "PasteUrlDescription": "Collez une URL ci-dessous pour recevoir une demande de preuve, ajouter un titre ou un contact.",
+        "Clear": "Effacer",
+        "UseShareableLink": "Utiliser des liens partageables",
+        "ErrorTextboxEmpty": "La zone de texte est vide",
+        "ErrorTextboxEmptyDescription": "Veuillez ajouter une URL destinée aux portefeuilles numériques et réessayer.",
+        "ErrorInvalidUrl": "URL non reconnue",
+        "ErrorInvalidUrlDescription": "Vérifiez si l'URL est destinée aux portefeuilles numériques et si elle a été copiée correctement, puis réessayez.",
     },
     "Connection": {
         "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
@@ -444,7 +444,7 @@ const translation = {
         "CustomOfferParagraph2": "Vous ne reconnaissez pas l'organisation? Vérifiez votre liste de Contacts. Vous ne recevez des notifications que des Contacts que vous avez initiés."
     },
     "ProofRequest": {
-	"RequestForProof": "Request for proof (FR)",
+        "RequestForProof": "Demande de preuve",
         "JustAMoment": "Juste un moment pendant que nous préparons les choses pour vous...",
         "FromYourWallet": "Depuis votre portefeuille",
         "MissingCredentials": "Il manque des attestations",
