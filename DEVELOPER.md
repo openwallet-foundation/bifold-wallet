@@ -39,7 +39,7 @@ If you are using Mac OS with ARM64 chip, see this [suggested setup](./DEVELOPER_
 Start by cloning the repository:
 
 ```sh
-git clone https://github.com/hyperledger/aries-mobile-agent-react-native.git bifold \ &&
+git clone https://github.com/openwallet-foundation/bifold-wallet.git bifold \ &&
 cd bifold
 ```
 
