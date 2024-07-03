@@ -21,6 +21,7 @@ export const useTemplates = (): Array<ProofRequestTemplate> => {
       }
     })
   }, [])
+
   return proofRequestTemplates
 }
 
