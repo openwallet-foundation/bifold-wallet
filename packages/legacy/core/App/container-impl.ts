@@ -116,10 +116,6 @@ export class MainContainer implements Container {
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
     return this._container.resolve(token) as TokenMapping[K]
   }
-
-  // public resolveSome<K extends keyof TokenMapping>(tokens: K[]): TokenMapping[K][] {
-  //   return tokens.map((token) => this.resolve(token))
-  // }
 }
 
 export const SystemContext = createContext<Container | undefined>(undefined)
