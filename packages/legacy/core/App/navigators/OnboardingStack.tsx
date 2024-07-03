@@ -43,7 +43,7 @@ const OnboardingStack: React.FC = () => {
   const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
   const { screen: Terms } = container.resolve(TOKENS.SCREEN_TERMS)
   const Developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
-  const ScreenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDINGCONFIG)
+  const ScreenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDING_CONFIG)
   const Preface = container.resolve(TOKENS.SCREEN_PREFACE)
 
   const onAuthenticated = (status: boolean): void => {

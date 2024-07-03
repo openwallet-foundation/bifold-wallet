@@ -8,6 +8,7 @@ import { retrieveCredentialsForProof } from '../utils/helpers'
 
 export const useProofsByConnectionId = (connectionId: string): ProofExchangeRecord[] => {
   const { records: proofs } = useProofs()
+
   return useMemo(
     () => proofs.filter((proof: ProofExchangeRecord) => proof.connectionId === connectionId),
     [proofs, connectionId]
@@ -21,6 +22,7 @@ export const useAllCredentialsForProof = (proofId: string) => {
   const proof = useProofById(proofId)
   const container = useContainer()
   const groupByReferent = container.resolve(TOKENS.GROUP_BY_REFERENT)
+
   return useMemo(() => {
     if (!proof || !agent) {
       return

@@ -1,5 +1,4 @@
 import { Agent } from '@credo-ts/core'
-import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
 import { ReducerAction, createContext, useContext } from 'react'
 
@@ -49,7 +48,6 @@ export interface ConfigurationContext {
   supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
-  proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
