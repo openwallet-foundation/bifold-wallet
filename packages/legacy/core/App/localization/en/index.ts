@@ -68,8 +68,8 @@ const translation = {
       "November": "Nov",
       "December": "Dec",
     },
-    "MinuteAgo": "minute ago",
-    "MinutesAgo": "minutes ago",
+    "MinuteAgo": "1 minute ago",
+    "MinutesAgo": "{{ count }} minutes ago",
     "JustNow": "Just now",
   },
   "Language": {
