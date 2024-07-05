@@ -193,21 +193,37 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (state.isVisible) {
       for (const notification of notifications) {
-        // no action taken for BasicMessageRecords
-        if (notification.type !== 'BasicMessageRecord') {
-          if (
-            !state.notificationRecord &&
-            ((connectionId && notification.connectionId === connectionId) ||
-              (threadId && notification.threadId == threadId))
-          ) {
-            dispatch({ notificationRecord: notification, isVisible: false })
-            break
-          }
-          if (!connection && notification.state === 'request-received') {
-            dispatch({ notificationRecord: notification, isVisible: false })
-            break
-          }
+        // no action taken, we're already processing a notification
+        if (state.notificationRecord) {
+          break
         }
+
+        // no action taken for BasicMessageRecords
+        if (notification.type === 'BasicMessageRecord') {
+          continue
+        }
+
+        // Connection based, we need to match the connectionId.
+        if (connectionId && notification.connectionId === connectionId) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
+        }
+
+        // Connectionless, we need to match the threadId or parentThreadId.
+        if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
+        }
+
+        // TODO:(jl) what other contidions should we check for?
+
+        // offer-received, request-received
+
+        // if (!connection && notification.state === 'request-received') {
+
+        //   dispatch({ notificationRecord: notification, isVisible: false })
+        //   break
+        // }
       }
     }
   }, [notifications])
