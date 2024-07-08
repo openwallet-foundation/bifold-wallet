@@ -4476,7 +4476,6 @@ __metadata:
     babel-jest: ^27.5.1
     babel-plugin-module-resolver: ^5.0.0
     commitlint: ^17.7.1
-    credo-ts-indy-vdr-proxy-client: 0.1.2
     eslint: ^8.48.0
     eslint-import-resolver-typescript: ^2.5.0
     eslint-plugin-import: ^2.28.1
@@ -4564,7 +4563,6 @@ __metadata:
     "@react-navigation/native": 6.0.6
     "@react-navigation/stack": 6.0.11
     axios: ^1.4.0
-    credo-ts-indy-vdr-proxy-client: 0.1.2
     i18next: ^21.4.0
     lodash.flatten: ^4.4.0
     lodash.startcase: ^4.4.0
@@ -8353,7 +8351,6 @@ __metadata:
     "@types/react-native": 0.71.5
     axios: ^1.4.0
     babel-plugin-module-resolver: ^5.0.0
-    credo-ts-indy-vdr-proxy-client: 0.1.2
     eslint: ^8.48.0
     eslint-import-resolver-typescript: ^2.5.0
     i18next: ^21.4.0
@@ -10622,17 +10619,6 @@ __metadata:
   version: 2.0.0
   resolution: "credentials-context@npm:2.0.0"
   checksum: c5ba6d257ef2fb1c21399238f5b1e0b2f7622b1f496f499edbac2d2e0faba40ebc06e0c5acee4bb2fbe712abfa3cbebdcc152f4bcf5a7481430f2731f2c514db
-  languageName: node
-  linkType: hard
-
-"credo-ts-indy-vdr-proxy-client@npm:0.1.2":
-  version: 0.1.2
-  resolution: "credo-ts-indy-vdr-proxy-client@npm:0.1.2"
-  dependencies:
-    "@credo-ts/anoncreds": 0.5.3
-    "@credo-ts/core": 0.5.3
-    uuid: ^9.0.0
-  checksum: ee005b26786ff9562150b42d6a8166610ffb72f4f6674672401eb70a3a0db1d2b462ef3af667ba6802c1c65a4673f5215b92f9ae086cfe4463e36d5b57981c8a
   languageName: node
   linkType: hard
 
