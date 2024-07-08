@@ -204,7 +204,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         }
 
         // Connection based, we need to match the connectionId.
-        if (connectionId && notification.connectionId === connectionId) {
+        if (connection && notification.connectionId === connection.id) {
           dispatch({ notificationRecord: notification, isVisible: false })
           break
         }
@@ -215,15 +215,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
 
-        // TODO:(jl) what other contidions should we check for?
-
-        // offer-received, request-received
-
-        // if (!connection && notification.state === 'request-received') {
-
-        //   dispatch({ notificationRecord: notification, isVisible: false })
-        //   break
-        // }
+        // Connectionless, `goalCode` will be checked in another `useEffect`.
       }
     }
   }, [notifications])
