@@ -218,7 +218,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
         // OOB with `goalCode` will be checked in another `useEffect`.
         if (oobRecord && goalCode) {
-          dispatch({ notificationRecord: notification })
+          dispatch({ notificationRecord: notification, isVisible: false })
           break
         }
       }
