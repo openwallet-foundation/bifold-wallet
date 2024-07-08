@@ -22,6 +22,7 @@ import { Screens, Stacks } from '../types/navigators'
 import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 const OnboardingVersion = 1
 
@@ -98,6 +99,7 @@ const Splash: React.FC = () => {
   const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const indyLedgers = container.resolve(TOKENS.UTIL_LEDGERS)
+  const ocaBundleResolver = container.resolve(TOKENS.UTIL_OCA_RESOLVER) as RemoteOCABundleResolver
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -209,6 +211,10 @@ const Splash: React.FC = () => {
     const initAgent = async (): Promise<void> => {
       try {
         const credentials = await getWalletCredentials()
+
+        if (typeof ocaBundleResolver['checkForUpdates'] != "undefined") {
+          await ocaBundleResolver.checkForUpdates()
+        }
 
         if (!credentials?.id || !credentials.key) {
           // Cannot find wallet id/secret
