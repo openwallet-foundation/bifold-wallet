@@ -21,7 +21,6 @@ import {
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
-  DidsModule,
 } from '@credo-ts/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
@@ -29,14 +28,11 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
-import { IndyVdrProxyAnonCredsRegistry, IndyVdrProxyDidResolver, CacheSettings } from 'credo-ts-indy-vdr-proxy-client'
 
 interface GetAgentModulesOptions {
   indyNetworks: IndyVdrPoolConfig[]
   mediatorInvitationUrl?: string
   txnCache?: { capacity: number; expiryOffsetMs: number; path?: string }
-  proxyBaseUrl?: string
-  proxyCacheSettings?: CacheSettings
 }
 
 export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
@@ -46,17 +42,9 @@ export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
  * @param indyNetworks
  * @param mediatorInvitationUrl determine which mediator to use
  * @param txnCache optional local cache config for indyvdr
- * @param proxyBaseUrl optional indy vdr proxy url to sidestep ZMQ firewall issues
- * @param proxyCacheSettings optional cache settings for the proxy
  * @returns modules to be used in agent setup
  */
-export function getAgentModules({
-  indyNetworks,
-  mediatorInvitationUrl,
-  txnCache,
-  proxyBaseUrl,
-  proxyCacheSettings,
-}: GetAgentModulesOptions) {
+export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache }: GetAgentModulesOptions) {
   const indyCredentialFormat = new LegacyIndyCredentialFormatService()
   const indyProofFormat = new LegacyIndyProofFormatService()
 
@@ -68,9 +56,13 @@ export function getAgentModules({
     })
   }
 
-  const modules = {
+  return {
     askar: new AskarModule({
       ariesAskar,
+    }),
+    anoncreds: new AnonCredsModule({
+      anoncreds,
+      registries: [new IndyVdrAnonCredsRegistry()],
     }),
     indyVdr: new IndyVdrModule({
       indyVdr,
@@ -111,27 +103,6 @@ export function getAgentModules({
     }),
     pushNotificationsFcm: new PushNotificationsFcmModule(),
     pushNotificationsApns: new PushNotificationsApnsModule(),
-  }
-
-  if (proxyBaseUrl) {
-    return {
-      ...modules,
-      anoncreds: new AnonCredsModule({
-        anoncreds,
-        registries: [new IndyVdrProxyAnonCredsRegistry({ proxyBaseUrl, cacheOptions: proxyCacheSettings })],
-      }),
-      dids: new DidsModule({
-        resolvers: [new IndyVdrProxyDidResolver(proxyBaseUrl)],
-      }),
-    }
-  }
-
-  return {
-    ...modules,
-    anoncreds: new AnonCredsModule({
-      anoncreds,
-      registries: [new IndyVdrAnonCredsRegistry()],
-    }),
   }
 }
 
