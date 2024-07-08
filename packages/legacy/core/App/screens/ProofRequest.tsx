@@ -33,6 +33,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
+import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
@@ -69,6 +70,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
+  const outOfBandInvitation = proof?.parentThreadId
+    ? useOutOfBandByReceivedInvitationId(proof?.parentThreadId)?.outOfBandInvitation
+    : undefined
   const { enableTours: enableToursConfig, useAttestation } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
@@ -84,7 +88,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const screenIsFocused = useIsFocused()
   const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
 
-  const hasMatchingCredDef = useMemo(() => activeCreds.some((cred) => cred.credDefId !== undefined), [activeCreds])
+  const hasMatchingCredDef = useMemo(
+    () => activeCreds.some((cred) => cred.credExchangeRecord !== undefined),
+    [activeCreds]
+  )
 
   const styles = StyleSheet.create({
     pageContainer: {
@@ -201,7 +208,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   useEffect(() => {
     setLoading(true)
     credProofPromise
-      ?.then((value) => {
+      ?.then((value: any) => {
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
           setLoading(false)
@@ -212,7 +219,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             credList = selectedCredentials
           } else {
             // we only want one of each satisfying credential
-            groupedProof.forEach((item) => {
+            groupedProof.forEach((item: any) => {
               const credId = item.altCredentials?.[0]
               if (credId && !credList.includes(credId)) {
                 credList.push(credId)
@@ -253,7 +260,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             : undefined
           setRetrievedCredentials(selectRetrievedCredentials)
 
-          const activeCreds = groupedProof.filter((item) => credList.includes(item.credId))
+          const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
           setActiveCreds(activeCreds)
 
           const unpackCredToField = (
@@ -264,8 +271,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
             }, {})
           }
 
-          const records = fullCredentials.filter((record) =>
-            record.credentials.some((cred) => credList.includes(cred.credentialRecordId))
+          const records = fullCredentials.filter((record: any) =>
+            record.credentials.some((cred: any) => credList.includes(cred.credentialRecordId))
           )
           const foundRevocationOffense =
             containsRevokedCreds(records, unpackCredToField(activeCreds)) ||
@@ -461,7 +468,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {!hasSatisfiedPredicates(getCredentialsFields()) ? (
+              {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ marginLeft: -2, marginRight: 10 }}
@@ -472,12 +479,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
                   <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
-                    <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>
+                    <Text style={[TextTheme.title]}>
+                      {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                    </Text>
                   </Text>
                 </View>
               ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>{proofConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+                  <Text style={[TextTheme.title]}>
+                    {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                  </Text>{' '}
                   <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
                   <Text style={[TextTheme.title]}>{` ${activeCreds?.length} `}</Text>
                   <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
@@ -614,14 +625,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
                     schemaId={item.schemaId}
-                    proofCredDefId={item.proofCredDefId}
-                    proofSchemaId={item.proofSchemaId}
                     displayItems={[
                       ...(item.attributes ?? []),
                       ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                     ]}
                     credName={item.credName}
-                    existsInWallet={item.credDefId !== undefined}
+                    existsInWallet={item.credExchangeRecord !== undefined}
                     satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                     hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
                     handleAltCredChange={
@@ -631,7 +640,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                           }
                         : undefined
                     }
-                    proof={true}
+                    proof
                   ></CredentialCard>
                 </View>
               )}
@@ -649,7 +658,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           <CredentialList
             header={proofPageHeader()}
             footer={hasAvailableCredentials ? proofPageFooter() : undefined}
-            items={activeCreds.filter((cred) => cred.credDefId !== undefined) ?? []}
+            items={activeCreds.filter((cred) => cred.credExchangeRecord !== undefined) ?? []}
           />
           {!hasAvailableCredentials && (
             <CredentialList
@@ -680,7 +689,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 </View>
               }
               footer={proofPageFooter()}
-              items={activeCreds.filter((cred) => cred.credDefId === undefined) ?? []}
+              items={activeCreds.filter((cred) => cred.credExchangeRecord === undefined) ?? []}
             />
           )}
         </View>

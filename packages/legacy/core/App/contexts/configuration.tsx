@@ -1,5 +1,4 @@
 import { Agent } from '@credo-ts/core'
-import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
 import { ReducerAction, createContext, useContext } from 'react'
 
@@ -7,7 +6,6 @@ import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
 import { Locales } from '../localization'
 import OnboardingPages from '../screens/OnboardingPages'
-import { GetCredentialHelpEntry } from '../types/get-credential-help'
 import { ConnectStackParams } from '../types/navigators'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
@@ -50,7 +48,6 @@ export interface ConfigurationContext {
   supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
-  proofRequestTemplates?: (useDevTemplates: boolean) => Array<ProofRequestTemplate>
   enableTours?: boolean
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
@@ -65,7 +62,6 @@ export interface ConfigurationContext {
   showScanButton?: boolean
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
-  getCredentialHelpDictionary?: GetCredentialHelpEntry[]
   contactHideList?: string[]
   credentialHideList?: string[]
 }
