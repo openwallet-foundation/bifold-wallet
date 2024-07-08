@@ -32,15 +32,15 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
   // logic should be: if this property is set, rather than showing the
   // delay message, the user should be redirected to the home screen.
+  const { connectionId, threadId } = route.params
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const { connectionId, threadId } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { t } = useTranslation()
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
+  const connection = connectionId ? useConnectionById(connectionId) : undefined
   const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
   const goalCode = oobRecord?.outOfBandInvitation.goalCode
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
@@ -49,6 +49,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     isInitialized: false,
     shouldShowDelayMessage: false,
     connectionIsActive: false,
+    notificationRecord: undefined,
   })
   const styles = StyleSheet.create({
     container: {
@@ -215,7 +216,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
 
-        // Connectionless, `goalCode` will be checked in another `useEffect`.
+        // OOB with `goalCode` will be checked in another `useEffect`.
+        if (oobRecord && goalCode) {
+          dispatch({ notificationRecord: notification })
+          break
+        }
       }
     }
   }, [notifications])
