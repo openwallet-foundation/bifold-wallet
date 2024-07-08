@@ -32,15 +32,15 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
   // logic should be: if this property is set, rather than showing the
   // delay message, the user should be redirected to the home screen.
+  const { connectionId, threadId } = route.params
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const { connectionId, threadId } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const connection = connectionId ? useConnectionById(connectionId) : undefined
   const { t } = useTranslation()
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
+  const connection = connectionId ? useConnectionById(connectionId) : undefined
   const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
   const goalCode = oobRecord?.outOfBandInvitation.goalCode
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
@@ -49,6 +49,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     isInitialized: false,
     shouldShowDelayMessage: false,
     connectionIsActive: false,
+    notificationRecord: undefined,
   })
   const styles = StyleSheet.create({
     container: {
@@ -193,20 +194,32 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (state.isVisible) {
       for (const notification of notifications) {
+        // no action taken, we're already processing a notification
+        if (state.notificationRecord) {
+          break
+        }
+
         // no action taken for BasicMessageRecords
-        if (notification.type !== 'BasicMessageRecord') {
-          if (
-            !state.notificationRecord &&
-            ((connectionId && notification.connectionId === connectionId) ||
-              (threadId && notification.threadId == threadId))
-          ) {
-            dispatch({ notificationRecord: notification, isVisible: false })
-            break
-          }
-          if (!connection && notification.state === 'request-received') {
-            dispatch({ notificationRecord: notification, isVisible: false })
-            break
-          }
+        if (notification.type === 'BasicMessageRecord') {
+          continue
+        }
+
+        // Connection based, we need to match the connectionId.
+        if (connection && notification.connectionId === connection.id) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
+        }
+
+        // Connectionless, we need to match the threadId or parentThreadId.
+        if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
+        }
+
+        // OOB with `goalCode` will be checked in another `useEffect`.
+        if (oobRecord && goalCode) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
         }
       }
     }

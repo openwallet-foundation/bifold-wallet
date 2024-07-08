@@ -187,18 +187,20 @@ describe('ConnectionModal Component', () => {
   })
 
   test('No connection proof request auto navigate', async () => {
+    const parentThreadId = 'abc123'
     const navigation = useNavigation<StackNavigationProp<DeliveryStackParams, Screens.Connection>>()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, parentThreadId }] })
     // @ts-ignore-next-line
     useOutOfBandByConnectionId.mockReturnValue(undefined)
     // @ts-ignore-next-line
     useConnectionById.mockReturnValue(undefined)
     // @ts-ignore-next-line
     useProofById.mockReturnValue(proofNotif)
+
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { threadId: parentThreadId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -210,6 +212,7 @@ describe('ConnectionModal Component', () => {
   })
 
   test('Goal code extracted and navigation to Chat', async () => {
+    const connectionId = 'abc123'
     const navigation = useNavigation()
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
@@ -219,9 +222,10 @@ describe('ConnectionModal Component', () => {
     useConnectionById.mockReturnValue(undefined)
     // @ts-ignore-next-line
     useProofById.mockReturnValue(proofNotif)
+
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
       </ConfigurationContext.Provider>
     )
 
