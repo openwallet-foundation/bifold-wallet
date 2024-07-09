@@ -42,7 +42,7 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(PRODUCT_NAME) Wants to use your FaceID/TouchID to Authenticate your Identity</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Our app does not request this permission or utilize this functionality but it is included in our Info.plist since our app utilizes the react-native-permissions library, which references this permission in its code.</string>
+	<string>We include this permission because a library our app uses references it, even though we don't use it directly.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialIcons.ttf</string>
