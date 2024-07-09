@@ -115,6 +115,20 @@ export class RemoteLogger extends BaseLogger {
     this.eventListener = undefined
   }
 
+  public overrideCurrentAutoDisableExpiration(expirationInMinutes: number) {
+    if (expirationInMinutes <= 0) {
+      return
+    }
+
+    if (this.remoteLoggingAutoDisableTimer) {
+      clearTimeout(this.remoteLoggingAutoDisableTimer)
+    }
+
+    this.remoteLoggingAutoDisableTimer = setTimeout(() => {
+      this.remoteLoggingEnabled = false
+    }, expirationInMinutes * 60000)
+  }
+
   public test(message: string, data?: object | undefined): void {
     this.log?.test({ message, data })
   }
