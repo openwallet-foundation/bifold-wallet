@@ -52,6 +52,12 @@ export class RemoteLogger extends BaseLogger {
     return this._sessionId
   }
 
+  set sessionId(value: number) {
+    this._sessionId = value
+
+    this.configureLogger()
+  }
+
   get autoDisableRemoteLoggingIntervalInMinutes(): number {
     return this._autoDisableRemoteLoggingIntervalInMinutes
   }
