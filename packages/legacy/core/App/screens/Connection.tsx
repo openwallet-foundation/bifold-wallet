@@ -193,65 +193,49 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   )
 
   useEffect(() => {
-    if (state.isVisible) {
-      for (const notification of notifications) {
-        // no action taken, we're already processing a notification
-        if (state.notificationRecord) {
-          break
-        }
+    if (!state.isVisible) {
+      return
+    }
 
-        console.log('A *********************************** 00', threadId, connectionId)
-
-        // no action taken for BasicMessageRecords
-        if (notification.type === 'BasicMessageRecord') {
-          continue
-        }
-
-        console.log('A *********************************** 000EO', JSON.stringify(oobRecord))
-        console.log('A *********************************** 000EC', JSON.stringify(connection))
-
-        // Connection based, we need to match the connectionId.
-        if (connection && notification.connectionId === connection.id) {
-          if (oobRecord && connection.outOfBandId != oobRecord.id) {
-            console.log('A *********************************** 1', JSON.stringify(notification))
-
-            // console.log('A *********************************** 1B', JSON.stringify(notification))
-            dispatch({ notificationRecord: notification, isVisible: false })
-            break
-          }
-        }
-
-        // Connectionless, we need to match the threadId or parentThreadId.
-        if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
-          console.log('A *********************************** 2')
-          dispatch({ notificationRecord: notification, isVisible: false })
-          break
-        }
-
-        // OOB with `goalCode` will be checked in another `useEffect`.
-        // console.log(oobRecord, goalCode, connection, connection && oobRecord && connection.outOfBandId === oobRecord.id)
-        console.log(
-          '********************',
-          oobRecord !== undefined,
-          goalCode,
-          connection !== undefined,
-          connection && oobRecord && connection.outOfBandId === oobRecord.id,
-          connection && connection.id === notification.connectionId
-        )
-        if (
-          goalCode &&
-          oobRecord &&
-          connection &&
-          connection.outOfBandId === oobRecord.id &&
-          connection.id === notification.connectionId
-        ) {
-          console.log('A *********************************** 3', JSON.stringify(notification))
-          dispatch({ notificationRecord: notification, isVisible: false })
-          break
-        }
-
-        console.log('No matching notification found for Connection screen')
+    for (const notification of notifications) {
+      // no action taken, we're already processing a notification
+      if (state.notificationRecord) {
+        break
       }
+
+      // no action taken for BasicMessageRecords
+      if (notification.type === 'BasicMessageRecord') {
+        continue
+      }
+
+      // Connection based, we need to match the connectionId.
+      if (connection && notification.connectionId === connection.id) {
+        if (oobRecord && connection.outOfBandId != oobRecord.id) {
+          dispatch({ notificationRecord: notification, isVisible: false })
+          break
+        }
+      }
+
+      // Connectionless, we need to match the threadId or parentThreadId.
+      if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
+        dispatch({ notificationRecord: notification, isVisible: false })
+        break
+      }
+
+      // OOB with `goalCode` will be checked in another `useEffect`.
+      // console.log(oobRecord, goalCode, connection, connection && oobRecord && connection.outOfBandId === oobRecord.id)
+      if (
+        goalCode &&
+        oobRecord &&
+        connection &&
+        connection.outOfBandId === oobRecord.id &&
+        connection.id === notification.connectionId
+      ) {
+        dispatch({ notificationRecord: notification, isVisible: false })
+        break
+      }
+
+      console.log('No matching notification found for Connection screen')
     }
   }, [notifications])
 
