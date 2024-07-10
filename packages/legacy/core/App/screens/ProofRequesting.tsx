@@ -84,13 +84,14 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     },
     headerContainer: {
       alignItems: 'center',
-      padding: 16,
-      marginHorizontal: 30,
+      paddingVertical: 16,
+      marginHorizontal: 20,
       textAlign: 'center',
     },
     primaryHeaderText: {
       ...TextTheme.headingThree,
       textAlign: 'center',
+      marginTop: 20,
     },
     secondaryHeaderText: {
       ...TextTheme.normal,
@@ -216,8 +217,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           {message && <QRRenderer value={message} size={qrSize} />}
         </View>
         <View style={styles.headerContainer}>
-          <Text style={styles.primaryHeaderText}>{t('Verifier.ScanQR')}</Text>
-          <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQRComment')}</Text>
+          <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQR')}</Text>
+          <Text style={styles.primaryHeaderText}>{template?.name}</Text>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
