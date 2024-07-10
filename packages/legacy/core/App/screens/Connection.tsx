@@ -223,7 +223,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         break
       }
 
-      // OOB with `goalCode` will be checked in another `useEffect`.
+      // OOB with `goalCode` will be checked in another `useEffect`. Expected
+      // as part of a OOB.
       if (
         goalCode &&
         oobRecord &&
