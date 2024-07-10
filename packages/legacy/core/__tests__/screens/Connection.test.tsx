@@ -30,6 +30,7 @@ const props = { params: { connectionId: connection.id } }
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
+jest.mock('../../App/container-api')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
