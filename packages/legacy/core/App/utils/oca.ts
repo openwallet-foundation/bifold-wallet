@@ -62,6 +62,7 @@ export const buildFieldsFromSharedAnonCredsProof = (data: CredentialSharedProofD
         name: predicate.name,
         pType: predicate.predicateType,
         pValue: predicate.predicateValue,
+        satisfied: true,
       })
     )
   }

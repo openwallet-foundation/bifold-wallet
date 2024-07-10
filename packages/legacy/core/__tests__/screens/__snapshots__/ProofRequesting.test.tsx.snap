@@ -77,24 +77,12 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
         style={
           Object {
             "alignItems": "center",
-            "marginHorizontal": 30,
-            "padding": 16,
+            "marginHorizontal": 20,
+            "paddingVertical": 16,
             "textAlign": "center",
           }
         }
       >
-        <Text
-          style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            }
-          }
-        >
-          Verifier.ScanQR
-        </Text>
         <Text
           style={
             Object {
@@ -106,7 +94,20 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
             }
           }
         >
-          Verifier.ScanQRComment
+          Verifier.ScanQR
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+              "marginTop": 20,
+              "textAlign": "center",
+            }
+          }
+        >
+          Student full name
         </Text>
       </View>
     </View>
@@ -274,24 +275,12 @@ exports[`ProofRequesting Component renders correctly 1`] = `
         style={
           Object {
             "alignItems": "center",
-            "marginHorizontal": 30,
-            "padding": 16,
+            "marginHorizontal": 20,
+            "paddingVertical": 16,
             "textAlign": "center",
           }
         }
       >
-        <Text
-          style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            }
-          }
-        >
-          Verifier.ScanQR
-        </Text>
         <Text
           style={
             Object {
@@ -303,7 +292,20 @@ exports[`ProofRequesting Component renders correctly 1`] = `
             }
           }
         >
-          Verifier.ScanQRComment
+          Verifier.ScanQR
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+              "marginTop": 20,
+              "textAlign": "center",
+            }
+          }
+        >
+          Student full name
         </Text>
       </View>
     </View>
@@ -427,24 +429,12 @@ exports[`ProofRequesting Component renders correctly 2`] = `
         style={
           Object {
             "alignItems": "center",
-            "marginHorizontal": 30,
-            "padding": 16,
+            "marginHorizontal": 20,
+            "paddingVertical": 16,
             "textAlign": "center",
           }
         }
       >
-        <Text
-          style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-              "textAlign": "center",
-            }
-          }
-        >
-          Verifier.ScanQR
-        </Text>
         <Text
           style={
             Object {
@@ -456,7 +446,20 @@ exports[`ProofRequesting Component renders correctly 2`] = `
             }
           }
         >
-          Verifier.ScanQRComment
+          Verifier.ScanQR
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+              "marginTop": 20,
+              "textAlign": "center",
+            }
+          }
+        >
+          Student full name
         </Text>
       </View>
     </View>
