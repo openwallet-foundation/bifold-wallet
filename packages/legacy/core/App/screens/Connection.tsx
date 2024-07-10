@@ -175,7 +175,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     if (state.notificationRecord && goalCode) {
-      console.log('*********************************** Z4', goalCode, state.notificationRecord.id)
       goalCodeAction(goalCode)()
     }
   }, [connection, connection?.state, oobRecord, goalCode, state.notificationRecord])
@@ -223,7 +222,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
 
       // OOB with `goalCode` will be checked in another `useEffect`.
-      // console.log(oobRecord, goalCode, connection, connection && oobRecord && connection.outOfBandId === oobRecord.id)
       if (
         goalCode &&
         oobRecord &&
