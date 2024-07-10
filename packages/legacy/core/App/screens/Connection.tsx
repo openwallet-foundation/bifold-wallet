@@ -208,11 +208,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
 
       // Connection based, we need to match the connectionId.
-      if (connection && notification.connectionId === connection.id) {
-        if (oobRecord && connection.outOfBandId != oobRecord.id) {
-          dispatch({ notificationRecord: notification, isVisible: false })
-          break
-        }
+      if (
+        connection &&
+        notification.connectionId === connection.id &&
+        (!oobRecord || connection.outOfBandId !== oobRecord.id)
+      ) {
+        dispatch({ notificationRecord: notification, isVisible: false })
+        break
       }
 
       // Connectionless, we need to match the threadId or parentThreadId.
@@ -232,8 +234,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         dispatch({ notificationRecord: notification, isVisible: false })
         break
       }
-
-      console.log('No matching notification found for Connection screen')
     }
   }, [notifications])
 
