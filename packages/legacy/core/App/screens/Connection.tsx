@@ -16,6 +16,8 @@ import { useNotifications } from '../hooks/notifications'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
+import { useContainer, TOKENS } from './../container-api'
+
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
@@ -40,6 +42,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
+  const container = useContainer()
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const connection = connectionId ? useConnectionById(connectionId) : undefined
   const oobRecord = connectionId ? useOutOfBandByConnectionId(connectionId) : undefined
   const goalCode = oobRecord?.outOfBandInvitation.goalCode
@@ -80,9 +84,14 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   const goalCodeAction = (goalCode: string): (() => void) => {
     const codes: { [key: string]: undefined | (() => void) } = {
-      'aries.vc.verify': () => navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id }),
-      'aries.vc.issue': () =>
-        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id }),
+      'aries.vc.verify': () => {
+        logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
+        navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      },
+      'aries.vc.issue': () => {
+        logger?.info('Connection: Handling aries.vc.issue goal code, navigate to CredentialOffer')
+        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+      },
     }
     let action = codes[goalCode]
 
@@ -140,6 +149,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     // for non-connectionless, invalid connections stay in the below state
     if (connection && connection.state === DidExchangeState.RequestSent) {
+      logger?.info('Connection: Skipping invalid connection state')
+
       return
     }
 
@@ -150,6 +161,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       state.notificationRecord &&
       state.notificationRecord.state === 'request-received'
     ) {
+      logger?.info('Connection: Handling connectionless proof request')
+
       navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
       dispatch({ isVisible: false })
 
@@ -163,6 +176,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     ) {
       // No goal code, we don't know what to expect next,
       // navigate to the chat screen and set home screen as only history
+      logger?.info('Connection: Handling connection with OOB, without goal recognized code')
+
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
@@ -175,6 +190,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     if (state.notificationRecord && goalCode) {
+      logger?.info('Connection: Handling valid goal code')
+
       goalCodeAction(goalCode)()
     }
   }, [connection, connection?.state, oobRecord, goalCode, state.notificationRecord])
@@ -199,11 +216,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     for (const notification of notifications) {
       // no action taken, we're already processing a notification
       if (state.notificationRecord) {
+        logger?.info('Connection: Already processing a notification')
         break
       }
 
       // no action taken for BasicMessageRecords
       if (notification.type === 'BasicMessageRecord') {
+        logger?.info('Connection: BasicMessageRecord, skipping')
         continue
       }
 
@@ -213,12 +232,16 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         notification.connectionId === connection.id &&
         (!oobRecord || connection.outOfBandId !== oobRecord.id)
       ) {
+        logger?.info('Connection: Handling connection based')
+
         dispatch({ notificationRecord: notification, isVisible: false })
         break
       }
 
       // Connectionless, we need to match the threadId or parentThreadId.
       if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
+        logger?.info('Connection: Handling connectionless')
+
         dispatch({ notificationRecord: notification, isVisible: false })
         break
       }
@@ -232,6 +255,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         connection.outOfBandId === oobRecord.id &&
         connection.id === notification.connectionId
       ) {
+        logger?.info('Connection: Handling OOB with goalCode')
+
         dispatch({ notificationRecord: notification, isVisible: false })
         break
       }
