@@ -41,7 +41,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
   const connection = connectionId ? useConnectionById(connectionId) : undefined
-  const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
+  const oobRecord = connectionId ? useOutOfBandByConnectionId(connectionId) : undefined
   const goalCode = oobRecord?.outOfBandInvitation.goalCode
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
@@ -175,6 +175,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     if (state.notificationRecord && goalCode) {
+      console.log('*********************************** Z4', goalCode, state.notificationRecord.id)
       goalCodeAction(goalCode)()
     }
   }, [connection, connection?.state, oobRecord, goalCode, state.notificationRecord])
@@ -199,28 +200,57 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
 
+        console.log('A *********************************** 00', threadId, connectionId)
+
         // no action taken for BasicMessageRecords
         if (notification.type === 'BasicMessageRecord') {
           continue
         }
 
+        console.log('A *********************************** 000EO', JSON.stringify(oobRecord))
+        console.log('A *********************************** 000EC', JSON.stringify(connection))
+
         // Connection based, we need to match the connectionId.
         if (connection && notification.connectionId === connection.id) {
-          dispatch({ notificationRecord: notification, isVisible: false })
-          break
+          if (oobRecord && connection.outOfBandId != oobRecord.id) {
+            console.log('A *********************************** 1', JSON.stringify(notification))
+
+            // console.log('A *********************************** 1B', JSON.stringify(notification))
+            dispatch({ notificationRecord: notification, isVisible: false })
+            break
+          }
         }
 
         // Connectionless, we need to match the threadId or parentThreadId.
         if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
+          console.log('A *********************************** 2')
           dispatch({ notificationRecord: notification, isVisible: false })
           break
         }
 
         // OOB with `goalCode` will be checked in another `useEffect`.
-        if (oobRecord && goalCode) {
+        // console.log(oobRecord, goalCode, connection, connection && oobRecord && connection.outOfBandId === oobRecord.id)
+        console.log(
+          '********************',
+          oobRecord !== undefined,
+          goalCode,
+          connection !== undefined,
+          connection && oobRecord && connection.outOfBandId === oobRecord.id,
+          connection && connection.id === notification.connectionId
+        )
+        if (
+          goalCode &&
+          oobRecord &&
+          connection &&
+          connection.outOfBandId === oobRecord.id &&
+          connection.id === notification.connectionId
+        ) {
+          console.log('A *********************************** 3', JSON.stringify(notification))
           dispatch({ notificationRecord: notification, isVisible: false })
           break
         }
+
+        console.log('No matching notification found for Connection screen')
       }
     }
   }, [notifications])
