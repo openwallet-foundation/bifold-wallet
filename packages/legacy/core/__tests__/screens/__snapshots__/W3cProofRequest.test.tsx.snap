@@ -914,7 +914,7 @@ exports[`displays a proof request screen with a proof request displays a proof r
                           testID="com.ariesbifold:id/CredentialCard"
                         >
                           <View
-                            accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Credential Credentials.Credential. age, <= 18,,"
+                            accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Credential Credentials.Credential. age, ProofRequest.PredicateLe 18,,"
                             accessible={true}
                             style={
                               Object {
