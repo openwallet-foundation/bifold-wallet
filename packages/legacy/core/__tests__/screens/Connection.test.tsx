@@ -51,7 +51,7 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-line
     useNotifications.mockReturnValue({ total: 0, notifications: [] })
     // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
+    // useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
     jest.clearAllMocks()
     jest.clearAllTimers()
   })
@@ -117,6 +117,27 @@ describe('Connection Modal Component', () => {
 
     expect(navigation.navigate).toBeCalledTimes(1)
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
+  })
+
+  test('Connection, no goal code navigation to chat', async () => {
+    const connectionId = 'abc123'
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...offerNotif, connectionId }] })
+    // @ts-ignore-next-line
+    useConnectionById.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
+
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(0)
+    expect(navigation.getParent).toBeCalledTimes(1)
   })
 
   test('Valid goal code aries.vc.issue extracted, navigation to accept offer', async () => {
@@ -210,7 +231,7 @@ describe('Connection Modal Component', () => {
     })
   })
 
-  test('Invalid goal code aries.vc.verify extracted, do nothing', async () => {
+  test('Invalid goal code extracted, do nothing', async () => {
     const connectionId = 'abc123'
     const oobId = 'def456'
     const goalCode = 'aries.vc.happy-teapot'

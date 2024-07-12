@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Connection Modal Component Connection, no goal code navigation to chat 1`] = `
+<Modal
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={false}
+/>
+`;
+
 exports[`Connection Modal Component Dismiss on demand 1`] = `
 <Modal
   animationType="slide"
@@ -207,7 +217,7 @@ exports[`Connection Modal Component Dismiss on demand 1`] = `
 </Modal>
 `;
 
-exports[`Connection Modal Component Invalid goal code aries.vc.verify extracted, do nothing 1`] = `
+exports[`Connection Modal Component Invalid goal code extracted, do nothing 1`] = `
 <Modal
   animationType="slide"
   hardwareAccelerated={false}

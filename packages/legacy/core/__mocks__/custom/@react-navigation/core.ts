@@ -6,11 +6,11 @@ const navigation = {
   navigate,
   replace,
   setOptions: jest.fn(),
-  getParent: () => {return {
+  getParent: jest.fn(() => ({
     navigate,
     dispatch,
     replace,
-  }},
+  })),
   getState: jest.fn(() => ({
     index: jest.fn(),
   })),
