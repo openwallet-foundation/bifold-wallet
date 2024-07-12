@@ -424,6 +424,16 @@ exports[`Connection Modal Component Invalid goal code extracted, do nothing 1`] 
 </Modal>
 `;
 
+exports[`Connection Modal Component No connection, navigation to proof 1`] = `
+<Modal
+  animationType="slide"
+  hardwareAccelerated={false}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={false}
+/>
+`;
+
 exports[`Connection Modal Component Renders correctly 1`] = `
 <Modal
   animationType="slide"

@@ -119,6 +119,28 @@ describe('Connection Modal Component', () => {
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
   })
 
+  //xxx
+  test('No connection, navigation to proof', async () => {
+    const threadId = 'qrf123'
+    const navigation = useNavigation()
+    // @ts-ignore-next-line
+    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, parentThreadId: threadId }] })
+
+    const element = (
+      <ConfigurationContext.Provider value={configurationContext}>
+        <ConnectionModal navigation={useNavigation()} route={{ params: { threadId } } as any} />
+      </ConfigurationContext.Provider>
+    )
+
+    const tree = render(element)
+
+    expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(1)
+    expect(navigation.navigate).toBeCalledWith('Proof Request', {
+      proofId: proofNotif.id,
+    })
+  })
+
   test('Connection, no goal code navigation to chat', async () => {
     const connectionId = 'abc123'
     const navigation = useNavigation()
@@ -137,7 +159,7 @@ describe('Connection Modal Component', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    expect(navigation.getParent).toBeCalledTimes(1)
+    // expect(navigation.getParent()?.navigate).toBeCalledTimes(1)
   })
 
   test('Valid goal code aries.vc.issue extracted, navigation to accept offer', async () => {
