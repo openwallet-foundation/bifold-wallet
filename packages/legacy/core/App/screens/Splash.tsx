@@ -210,11 +210,8 @@ const Splash: React.FC = () => {
 
     const initAgent = async (): Promise<void> => {
       try {
+        await ocaBundleResolver.checkForUpdates?.()
         const credentials = await getWalletCredentials()
-
-        if (typeof ocaBundleResolver['checkForUpdates'] != "undefined") {
-          await ocaBundleResolver.checkForUpdates()
-        }
 
         if (!credentials?.id || !credentials.key) {
           // Cannot find wallet id/secret
