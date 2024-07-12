@@ -1,4 +1,3 @@
-import { DidExchangeState } from '@credo-ts/core'
 import { useConnectionById } from '@credo-ts/react-hooks'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
