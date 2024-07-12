@@ -1,6 +1,7 @@
 import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
+import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
@@ -22,7 +23,6 @@ import { Screens, Stacks } from '../types/navigators'
 import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
-import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 const OnboardingVersion = 1
 
