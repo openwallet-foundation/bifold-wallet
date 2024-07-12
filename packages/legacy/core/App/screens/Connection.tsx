@@ -38,7 +38,7 @@ const GoalCodes = {
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionId, threadId } = route.params
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
-  const connTimerDelay = 10000 //connectionTimerDelay ?? 10000 // in ms
+  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
   const { notifications } = useNotifications()
