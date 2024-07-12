@@ -27,7 +27,7 @@ type LocalState = {
   isInitialized: boolean
   notificationRecord?: any
   shouldShowDelayMessage: boolean
-  connectionIsActive: boolean
+  connectionIsActive: boolean // remove
 }
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
@@ -39,6 +39,9 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
+  // This should be updated to exclude "abandon"
+  // notifications which I think are "Done" notifications.
+  // This should be updated to exclude "Done" notifications.
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
@@ -52,7 +55,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     isVisible: true,
     isInitialized: false,
     shouldShowDelayMessage: false,
-    connectionIsActive: false,
+    connectionIsActive: false, // remove
     notificationRecord: undefined,
   })
   const styles = StyleSheet.create({
@@ -83,6 +86,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   })
 
   const goalCodeAction = (goalCode: string): (() => void) => {
+    // TODO:(JL) we should specifically add the veruf-once there
+    // rater that beingWith so it is more clear.
     const codes: { [key: string]: undefined | (() => void) } = {
       'aries.vc.verify': () => {
         logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
@@ -147,37 +152,48 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
-    // for non-connectionless, invalid connections stay in the below state
-    if (connection && connection.state === DidExchangeState.RequestSent) {
-      logger?.info('Connection: Skipping invalid connection state')
-
+    if (!state.notificationRecord || !state.isVisible) {
       return
     }
 
-    if (
-      !connectionId &&
-      !oobRecord &&
-      !goalCode &&
-      state.notificationRecord &&
-      state.notificationRecord.state === 'request-received'
-    ) {
-      logger?.info('Connection: Handling connectionless proof request')
-
-      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+    // connectionless proof request, we don't have connectionless offers.
+    if (!connection) {
       dispatch({ isVisible: false })
+      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
 
       return
     }
 
-    if (
-      connectionId &&
-      oobRecord &&
-      (!goalCode || (!goalCode.startsWith('aries.vc.verify') && !goalCode.startsWith('aries.vc.issue')))
-    ) {
-      // No goal code, we don't know what to expect next,
-      // navigate to the chat screen and set home screen as only history
-      logger?.info('Connection: Handling connection with OOB, without goal recognized code')
+    // connection based proof or offer
+    if (oobRecord?.outOfBandInvitation.goalCode) {
+      switch (oobRecord.outOfBandInvitation.goalCode) {
+        case 'aries.vc.verify':
+          logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
+          dispatch({ isVisible: false })
+          navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+          break
 
+        case 'aries.vc.verify.once':
+          logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
+
+          dispatch({ isVisible: false })
+          navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+
+          break
+
+        case 'aries.vc.issue':
+          logger?.info('Connection: Handling aries.vc.issue goal code, navigate to CredentialOffer')
+          dispatch({ isVisible: false })
+          navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+
+          break
+
+        default:
+          // unrecognized goal code
+          break
+      }
+    } else {
+      logger?.info('Connection: Handling connection with OOB, without goal recognized code')
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
@@ -186,15 +202,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       )
 
       dispatch({ isVisible: false })
-      return
     }
-
-    if (state.notificationRecord && goalCode) {
-      logger?.info('Connection: Handling valid goal code')
-
-      goalCodeAction(goalCode)()
-    }
-  }, [connection, connection?.state, oobRecord, goalCode, state.notificationRecord])
+  }, [connection, oobRecord, state])
 
   useMemo(() => {
     startTimer()
@@ -209,59 +218,30 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   )
 
   useEffect(() => {
-    if (!state.isVisible) {
+    if (!state.isVisible || state.notificationRecord) {
+      console.log(state.notificationRecord.id)
+
       return
     }
 
     for (const notification of notifications) {
-      // no action taken, we're already processing a notification
-      if (state.notificationRecord) {
-        logger?.info('Connection: Already processing a notification')
-        break
-      }
-
       // no action taken for BasicMessageRecords
       if (notification.type === 'BasicMessageRecord') {
         logger?.info('Connection: BasicMessageRecord, skipping')
         continue
       }
 
-      // Connection based, we need to match the connectionId.
       if (
-        connection &&
-        notification.connectionId === connection.id &&
-        (!oobRecord || connection.outOfBandId !== oobRecord.id)
+        (connection && notification.connectionId === connection.id) ||
+        (threadId && (notification.threadId === threadId || notification.parentThreadId === threadId))
       ) {
-        logger?.info('Connection: Handling connection based')
+        logger?.info(`Connection: Handling notification ${notification.id}`)
 
-        dispatch({ notificationRecord: notification, isVisible: false })
-        break
-      }
-
-      // Connectionless, we need to match the threadId or parentThreadId.
-      if (threadId && (notification.threadId === threadId || notification.parentThreadId == threadId)) {
-        logger?.info('Connection: Handling connectionless')
-
-        dispatch({ notificationRecord: notification, isVisible: false })
-        break
-      }
-
-      // OOB with `goalCode` will be checked in another `useEffect`. Expected
-      // as part of a OOB.
-      if (
-        goalCode &&
-        oobRecord &&
-        connection &&
-        connection.outOfBandId === oobRecord.id &&
-        connection.id === notification.connectionId
-      ) {
-        logger?.info('Connection: Handling OOB with goalCode')
-
-        dispatch({ notificationRecord: notification, isVisible: false })
+        dispatch({ notificationRecord: notification })
         break
       }
     }
-  }, [notifications])
+  }, [notifications, state])
 
   return (
     <Modal
