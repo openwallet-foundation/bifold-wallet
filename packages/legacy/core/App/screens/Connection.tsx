@@ -29,10 +29,16 @@ type LocalState = {
   shouldShowDelayMessage: boolean
 }
 
+const GoalCodes = {
+  proofRequestVerify: 'aries.vc.verify',
+  proofRequestVerifyOnce: 'aries.vc.verify.once',
+  credentialOffer: 'aries.vc.issue',
+} as const
+
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { connectionId, threadId } = route.params
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
-  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+  const connTimerDelay = 10000 //connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
   const { notifications } = useNotifications()
@@ -130,41 +136,27 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     // connection based proof or offer
     if (oobRecord?.outOfBandInvitation.goalCode) {
-      switch (oobRecord.outOfBandInvitation.goalCode) {
-        case 'aries.vc.verify':
-          logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
-          dispatch({ isVisible: false })
-          navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-          break
+      const { goalCode } = oobRecord.outOfBandInvitation
 
-        case 'aries.vc.verify.once':
-          logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
-
-          dispatch({ isVisible: false })
-          navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-
-          break
-
-        case 'aries.vc.issue':
-          logger?.info('Connection: Handling aries.vc.issue goal code, navigate to CredentialOffer')
-          dispatch({ isVisible: false })
-          navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
-
-          break
-
-        default:
-          // unrecognized goal code
-          break
+      if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
+        logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
+        dispatch({ isVisible: false })
+        navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      } else if (goalCode === GoalCodes.credentialOffer) {
+        logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
+        dispatch({ isVisible: false })
+        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+      } else {
+        logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
       }
     } else {
-      logger?.info('Connection: Handling connection with OOB, without goal recognized code')
+      logger?.info('Connection: Handling connection without goal code, navigate to Chat')
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
           routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
         })
       )
-
       dispatch({ isVisible: false })
     }
   }, [connection, oobRecord, state])
@@ -183,8 +175,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (!state.isVisible || state.notificationRecord) {
-      console.log(state.notificationRecord.id)
-
       return
     }
 
