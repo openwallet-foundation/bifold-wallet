@@ -27,35 +27,26 @@ type LocalState = {
   isInitialized: boolean
   notificationRecord?: any
   shouldShowDelayMessage: boolean
-  connectionIsActive: boolean // remove
 }
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  // TODO(jl): When implementing goal codes the `autoRedirectConnectionToHome`
-  // logic should be: if this property is set, rather than showing the
-  // delay message, the user should be redirected to the home screen.
   const { connectionId, threadId } = route.params
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
-  // This should be updated to exclude "abandon"
-  // notifications which I think are "Done" notifications.
-  // This should be updated to exclude "Done" notifications.
   const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
   const container = useContainer()
   const logger = container.resolve(TOKENS.UTIL_LOGGER)
-  const connection = connectionId ? useConnectionById(connectionId) : undefined
-  const oobRecord = connectionId ? useOutOfBandByConnectionId(connectionId) : undefined
-  const goalCode = oobRecord?.outOfBandInvitation.goalCode
+  const connection = useConnectionById(connectionId ?? '')
+  const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     isVisible: true,
     isInitialized: false,
     shouldShowDelayMessage: false,
-    connectionIsActive: false, // remove
     notificationRecord: undefined,
   })
   const styles = StyleSheet.create({
@@ -84,33 +75,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       marginTop: 20,
     },
   })
-
-  const goalCodeAction = (goalCode: string): (() => void) => {
-    // TODO:(JL) we should specifically add the veruf-once there
-    // rater that beingWith so it is more clear.
-    const codes: { [key: string]: undefined | (() => void) } = {
-      'aries.vc.verify': () => {
-        logger?.info('Connection: Handling aries.vc.verify goal code, navigate to ProofRequest')
-        navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-      },
-      'aries.vc.issue': () => {
-        logger?.info('Connection: Handling aries.vc.issue goal code, navigate to CredentialOffer')
-        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
-      },
-    }
-    let action = codes[goalCode]
-
-    if (action === undefined) {
-      const matchCode = Object.keys(codes).find((code) => goalCode.startsWith(code))
-      action = codes[matchCode ?? '']
-
-      if (action === undefined) {
-        throw new Error('Unhandled goal code type')
-      }
-    }
-
-    return action
-  }
 
   const startTimer = () => {
     if (!state.isInitialized) {
