@@ -128,7 +128,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     // connectionless proof request, we don't have connectionless offers.
     if (!connection) {
       dispatch({ isVisible: false })
-      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      // TODO:(jl) Was navigation.replace, but I think it should be navigate
+      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
 
       return
     }
