@@ -15,6 +15,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import ImageModal from '../../components/modals/ImageModal'
 import { TOKENS, useContainer } from '../../container-api'
@@ -261,6 +262,9 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
           {ylabel}
         </Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+          {item.satisfied && !preview ? (
+            <Icon style={{ marginRight: 5 }} size={24} name={'check-circle'} color={ColorPallet.semantic.success} />
+          ) : null}
           <Text style={[TextTheme.bold, styles.textContainer, predicateStyles.predicateType]}>{item.pType}</Text>
           {/* Only allow editing parametrizable predicates in preview mode */}
           {item.parameterizable && preview && onChangeValue ? (

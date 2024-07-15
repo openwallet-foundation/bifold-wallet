@@ -246,7 +246,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
     let parsedItem = item
-    if (item && item.value != null) {
+    if (item && item.pValue != null) {
       parsedItem = pTypeToText(item, t, attributeTypes) as Attribute & Predicate
     }
     const parsedValue = formatIfDate(

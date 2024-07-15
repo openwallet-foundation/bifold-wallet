@@ -406,7 +406,7 @@ exports[`ConnectionModal Component Dismiss on demand 1`] = `
 </Modal>
 `;
 
-exports[`ConnectionModal Component Goal code extracted and navigation to Chat 1`] = `
+exports[`ConnectionModal Component Goal code extracted, navigation to accept offer 1`] = `
 <Modal
   animationType="slide"
   hardwareAccelerated={false}

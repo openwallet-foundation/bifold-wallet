@@ -19,6 +19,8 @@ import timeTravel from '../helpers/timetravel'
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
+const offerNotifPath = path.join(__dirname, '../fixtures/offer-notif.json')
+const offerNotif = JSON.parse(fs.readFileSync(offerNotifPath, 'utf8'))
 const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
 const connectionResponseReceivedPath = path.join(__dirname, '../fixtures/connection-v1-response-received.json')
@@ -28,6 +30,7 @@ const props = { params: { connectionId: connection.id } }
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
+jest.mock('../../App/container-api')
 jest.mock('@react-navigation/core', () => {
   return require('../../__mocks__/custom/@react-navigation/core')
 })
@@ -187,18 +190,20 @@ describe('ConnectionModal Component', () => {
   })
 
   test('No connection proof request auto navigate', async () => {
+    const parentThreadId = 'abc123'
     const navigation = useNavigation<StackNavigationProp<DeliveryStackParams, Screens.Connection>>()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, parentThreadId }] })
     // @ts-ignore-next-line
     useOutOfBandByConnectionId.mockReturnValue(undefined)
     // @ts-ignore-next-line
     useConnectionById.mockReturnValue(undefined)
     // @ts-ignore-next-line
     useProofById.mockReturnValue(proofNotif)
+
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { threadId: parentThreadId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -209,19 +214,22 @@ describe('ConnectionModal Component', () => {
     expect(navigation.replace).toBeCalledWith('Proof Request', { proofId: proofNotif.id })
   })
 
-  test('Goal code extracted and navigation to Chat', async () => {
+  test('Goal code extracted, navigation to accept offer', async () => {
+    const connectionId = 'abc123'
+    const oobId = 'def456'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [proofNotif] })
+    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...offerNotif, connectionId }] })
     // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation })
+    useOutOfBandByConnectionId.mockReturnValue({ id: oobId, outOfBandInvitation: { goalCode: 'aries.vc.issue' } })
     // @ts-ignore-next-line
-    useConnectionById.mockReturnValue(undefined)
+    useConnectionById.mockReturnValue({ ...connection, id: connectionId, outOfBandId: oobId, state: 'offer-received' })
     // @ts-ignore-next-line
-    useProofById.mockReturnValue(proofNotif)
+    useProofById.mockReturnValue(offerNotif)
+
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: {} } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -229,7 +237,9 @@ describe('ConnectionModal Component', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(1)
-    expect(navigation.navigate).toBeCalledWith('Proof Request', { proofId: proofNotif.id })
+    expect(navigation.navigate).toBeCalledWith('Credential Offer', {
+      credentialId: offerNotif.id,
+    })
   })
 
   test('Dismiss navigates Home', async () => {
