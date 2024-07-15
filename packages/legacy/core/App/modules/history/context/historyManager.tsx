@@ -26,7 +26,7 @@ import moment from 'moment'
 
 import { i18n } from '../../../localization/index'
 import { ConsoleLogger } from '../../../services/logger'
-import QueeManager from '../services/quee.service'
+import QueeManager from '../services/queue.service'
 import {
   AppNotificationRecord,
   CustomRecord,
