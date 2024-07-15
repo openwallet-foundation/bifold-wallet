@@ -128,8 +128,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     // connectionless proof request, we don't have connectionless offers.
     if (!connection) {
       dispatch({ isVisible: false })
-      // TODO:(jl) Was navigation.replace, but I think it should be navigate
-      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
 
       return
     }
@@ -140,17 +139,27 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
       if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
         logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
+
         dispatch({ isVisible: false })
         navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
       } else if (goalCode === GoalCodes.credentialOffer) {
         logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
+
         dispatch({ isVisible: false })
         navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
       } else {
         logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
+
+        navigation.getParent()?.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+          })
+        )
       }
     } else {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
+
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
