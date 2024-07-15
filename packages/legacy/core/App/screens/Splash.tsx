@@ -1,6 +1,7 @@
 import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
+import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
@@ -98,6 +99,7 @@ const Splash: React.FC = () => {
   const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
   const logger = container.resolve(TOKENS.UTIL_LOGGER)
   const indyLedgers = container.resolve(TOKENS.UTIL_LEDGERS)
+  const ocaBundleResolver = container.resolve(TOKENS.UTIL_OCA_RESOLVER) as RemoteOCABundleResolver
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -208,6 +210,7 @@ const Splash: React.FC = () => {
 
     const initAgent = async (): Promise<void> => {
       try {
+        await ocaBundleResolver.checkForUpdates?.()
         const credentials = await getWalletCredentials()
 
         if (!credentials?.id || !credentials.key) {
