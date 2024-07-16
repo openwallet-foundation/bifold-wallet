@@ -1,26 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
-import { CommonActions } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import { StackNavigationProp } from '@react-navigation/stack'
 import { ConfigurationContext } from '../../App/contexts/configuration'
-import { useOutOfBandByConnectionId, useOutOfBandById, useConnectionByOutOfBandId } from '../../App/hooks/connections'
+import { useOutOfBandById, useConnectionByOutOfBandId } from '../../App/hooks/connections'
 import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
-import { DeliveryStackParams, Screens } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
-import { getTags } from 'react-native-device-info'
 
 const oobRecordPath = path.join(__dirname, '../fixtures/oob-record.json')
 const oobRecord = JSON.parse(fs.readFileSync(oobRecordPath, 'utf8'))
-
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
 const offerNotifPath = path.join(__dirname, '../fixtures/offer-notif.json')
@@ -28,8 +22,6 @@ const offerNotif = JSON.parse(fs.readFileSync(offerNotifPath, 'utf8'))
 const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
 const connectionResponseReceivedPath = path.join(__dirname, '../fixtures/connection-v1-response-received.json')
-const connectionResponseReceived = JSON.parse(fs.readFileSync(connectionResponseReceivedPath, 'utf8'))
-const outOfBandInvitation = { goalCode: 'aries.vc.verify.once' }
 const props = { params: { oobRecordId: connection.id } }
 
 jest.useFakeTimers({ legacyFakeTimers: true })
