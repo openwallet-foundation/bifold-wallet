@@ -150,6 +150,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       } else {
         logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
 
+        dispatch({ isVisible: false })
         navigation.getParent()?.dispatch(
           CommonActions.reset({
             index: 1,

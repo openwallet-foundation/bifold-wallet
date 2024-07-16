@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
+import { useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
@@ -9,13 +9,17 @@ import React from 'react'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import { ConfigurationContext } from '../../App/contexts/configuration'
-import { useOutOfBandByConnectionId } from '../../App/hooks/connections'
+import { useOutOfBandByConnectionId, useOutOfBandById, useConnectionByOutOfBandId } from '../../App/hooks/connections'
 import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
 import { DeliveryStackParams, Screens } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
+import { getTags } from 'react-native-device-info'
+
+const oobRecordPath = path.join(__dirname, '../fixtures/oob-record.json')
+const oobRecord = JSON.parse(fs.readFileSync(oobRecordPath, 'utf8'))
 
 const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
 const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
@@ -26,7 +30,7 @@ const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
 const connectionResponseReceivedPath = path.join(__dirname, '../fixtures/connection-v1-response-received.json')
 const connectionResponseReceived = JSON.parse(fs.readFileSync(connectionResponseReceivedPath, 'utf8'))
 const outOfBandInvitation = { goalCode: 'aries.vc.verify.once' }
-const props = { params: { connectionId: connection.id } }
+const props = { params: { oobRecordId: connection.id } }
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
@@ -44,6 +48,8 @@ jest.mock('../../App/hooks/notifications', () => ({
 
 jest.mock('../../App/hooks/connections', () => ({
   useOutOfBandByConnectionId: jest.fn(),
+  useConnectionByOutOfBandId: jest.fn(),
+  useOutOfBandById: jest.fn(),
 }))
 
 describe('Connection Modal Component', () => {
@@ -69,7 +75,7 @@ describe('Connection Modal Component', () => {
 
   test('Updates after delay', async () => {
     // @ts-ignore-next-line
-    useConnectionById.mockReturnValueOnce(connection)
+    useConnectionByOutOfBandId.mockReturnValueOnce(connection)
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
         <ConnectionModal navigation={useNavigation()} route={props as any} />
@@ -119,39 +125,59 @@ describe('Connection Modal Component', () => {
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
   })
 
-  //xxx
   test('No connection, navigation to proof', async () => {
     const threadId = 'qrf123'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, parentThreadId: threadId }] })
+    useOutOfBandById.mockReturnValue({
+      ...oobRecord,
+      // _tags: { ...oobRecord._tags, invitationRequestsThreadIds: [threadId] },
+      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
+    })
+    // @ts-ignore-next-lin
+    useNotifications.mockReturnValue({
+      total: 1,
+      notifications: [{ ...proofNotif, threadId }],
+    })
 
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { threadId } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId: oobRecord.id } } as any} />
       </ConfigurationContext.Provider>
     )
 
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(1)
-    expect(navigation.navigate).toBeCalledWith('Proof Request', {
+    // @ts-ignore-next-line
+    expect(navigation.replace).toBeCalledTimes(1)
+    // @ts-ignore-next-line
+    expect(navigation.replace).toBeCalledWith('Proof Request', {
       proofId: proofNotif.id,
     })
   })
 
   test('Connection, no goal code navigation to chat', async () => {
+    const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...offerNotif, connectionId }] })
-    // @ts-ignore-next-line
-    useConnectionById.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
+    useOutOfBandById.mockReturnValue({
+      ...oobRecord,
+      // _tags: { ...oobRecord._tags, invitationRequestsThreadIds: [threadId] },
+      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
+    })
+    // @ts-ignore-next-lin
+    useNotifications.mockReturnValue({
+      total: 1,
+      notifications: [{ ...proofNotif, threadId }],
+    })
+    // @ts-ignore-next-lin
+    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
 
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId: oobRecord.id } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -159,24 +185,33 @@ describe('Connection Modal Component', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
+    // TODO:(jl) Can we enable this test?
     // expect(navigation.getParent()?.navigate).toBeCalledTimes(1)
   })
 
   test('Valid goal code aries.vc.issue extracted, navigation to accept offer', async () => {
-    const connectionId = 'abc123'
-    const oobId = 'def456'
+    const oobRecordId = 'def456'
     const goalCode = 'aries.vc.issue'
+    const threadId = 'qrf123'
+    const connectionId = 'abc123'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...offerNotif, connectionId }] })
-    // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ id: oobId, outOfBandInvitation: { goalCode } })
-    // @ts-ignore-next-line
-    useConnectionById.mockReturnValue({ ...connection, id: connectionId, outOfBandId: oobId, state: 'offer-received' })
+    useOutOfBandById.mockReturnValue({
+      ...oobRecord,
+      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
+      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
+    })
+    // @ts-ignore-next-lin
+    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
+    // @ts-ignore-next-lin
+    useNotifications.mockReturnValue({
+      total: 1,
+      notifications: [{ ...offerNotif, threadId }],
+    })
 
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -190,25 +225,28 @@ describe('Connection Modal Component', () => {
   })
 
   test('Valid goal code aries.vc.verify extracted, navigation to proof request', async () => {
-    const connectionId = 'abc123'
-    const oobId = 'def456'
+    const oobRecordId = 'def456'
     const goalCode = 'aries.vc.verify'
+    const threadId = 'qrf123'
+    const connectionId = 'abc123'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, connectionId }] })
-    // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ id: oobId, outOfBandInvitation: { goalCode } })
-    // @ts-ignore-next-line
-    useConnectionById.mockReturnValue({
-      ...connection,
-      id: connectionId,
-      outOfBandId: oobId,
-      state: 'request-received',
+    useOutOfBandById.mockReturnValue({
+      ...oobRecord,
+      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
+      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
+    })
+    // @ts-ignore-next-lin
+    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
+    // @ts-ignore-next-lin
+    useNotifications.mockReturnValue({
+      total: 1,
+      notifications: [{ ...proofNotif, threadId }],
     })
 
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -222,25 +260,28 @@ describe('Connection Modal Component', () => {
   })
 
   test('Valid goal code aries.vc.verify extracted, navigation to proof request', async () => {
+    const oobRecordId = 'def456'
+    const goalCode = 'aries.vc.verify'
+    const threadId = 'qrf123'
     const connectionId = 'abc123'
-    const oobId = 'def456'
-    const goalCode = 'aries.vc.verify.once'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, connectionId }] })
-    // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ id: oobId, outOfBandInvitation: { goalCode } })
-    // @ts-ignore-next-line
-    useConnectionById.mockReturnValue({
-      ...connection,
-      id: connectionId,
-      outOfBandId: oobId,
-      state: 'request-received',
+    useOutOfBandById.mockReturnValue({
+      ...oobRecord,
+      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
+      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
+    })
+    // @ts-ignore-next-lin
+    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
+    // @ts-ignore-next-lin
+    useNotifications.mockReturnValue({
+      total: 1,
+      notifications: [{ ...proofNotif, threadId }],
     })
 
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -254,25 +295,28 @@ describe('Connection Modal Component', () => {
   })
 
   test('Invalid goal code extracted, do nothing', async () => {
-    const connectionId = 'abc123'
-    const oobId = 'def456'
+    const oobRecordId = 'def456'
     const goalCode = 'aries.vc.happy-teapot'
+    const threadId = 'qrf123'
+    const connectionId = 'abc123'
     const navigation = useNavigation()
     // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 1, notifications: [{ ...proofNotif, connectionId }] })
-    // @ts-ignore-next-line
-    useOutOfBandByConnectionId.mockReturnValue({ id: oobId, outOfBandInvitation: { goalCode } })
-    // @ts-ignore-next-line
-    useConnectionById.mockReturnValue({
-      ...connection,
-      id: connectionId,
-      outOfBandId: oobId,
-      state: 'request-received',
+    useOutOfBandById.mockReturnValue({
+      ...oobRecord,
+      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
+      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
+    })
+    // @ts-ignore-next-lin
+    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
+    // @ts-ignore-next-lin
+    useNotifications.mockReturnValue({
+      total: 1,
+      notifications: [{ ...proofNotif, threadId, state: 'request-received' }],
     })
 
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { connectionId } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </ConfigurationContext.Provider>
     )
 
@@ -284,5 +328,6 @@ describe('Connection Modal Component', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(1)
   })
 })
