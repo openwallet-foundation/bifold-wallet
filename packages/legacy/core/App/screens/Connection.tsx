@@ -1,4 +1,3 @@
-import { useConnectionById } from '@credo-ts/react-hooks'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -10,13 +9,12 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
-import { useConnectionByOutOfBandId, useOutOfBandByConnectionId, useOutOfBandById } from '../hooks/connections'
+import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { useContainer, TOKENS } from './../container-api'
-import { use } from 'i18next'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 

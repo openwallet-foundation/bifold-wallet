@@ -918,14 +918,6 @@ export const connectFromInvitation = async (
   return record?.outOfBandRecord as OutOfBandRecord
 }
 
-interface QueryParams {
-  ['d_m']?: string
-  ['c_i']?: string
-  ['oob']?: string
-  ['_oob']?: string
-  ['_url']?: string
-}
-
 const processBetaUrlIfRequired = (uri: string): string => {
   let aUrl = uri
 
