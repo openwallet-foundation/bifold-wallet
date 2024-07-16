@@ -1,0 +1,40 @@
+{
+  "_tags": {
+    "invitationId": "c449124b-07ec-4f8d-ab46-65519aaa9d5d",
+    "recipientKeyFingerprints": [
+      "123fake"
+    ],
+    "role": "receiver",
+    "state": "prepare-response",
+    "threadId": "c449124b-07ec-4f8d-ab46-65519aaa9d5d"
+  },
+  "autoAcceptConnection": true,
+  "createdAt": "2024-07-16T20:26:23.950Z",
+  "id": "26595026-a6c8-4f84-b5b8-db4d5aa036e4",
+  "metadata": {},
+  "outOfBandInvitation": {
+    "@id": "c449124b-07ec-4f8d-ab46-65519aaa9d5d",
+    "@type": "https://didcomm.org/out-of-band/1.0/invitation",
+    "goal": "Showcase connection",
+    "goal_code": "aries.vc.issue",
+    "handshake_protocols": [
+      "some-cool-protocol"
+    ],
+    "label": "BestBC College",
+    "requests~attach": null,
+    "services": [
+      "some-cool-service"
+    ],
+    "~attach": null,
+    "~l10n": null,
+    "~please_ack": null,
+    "~service": null,
+    "~thread": null,
+    "~timing": null,
+    "~transport": null
+  },
+  "reusable": false,
+  "role": "receiver",
+  "state": "prepare-response",
+  "updatedAt": "2024-07-16T20:26:24.030Z"
+}
