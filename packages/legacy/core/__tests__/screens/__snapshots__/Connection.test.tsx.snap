@@ -653,7 +653,7 @@ exports[`Connection Modal Component Valid goal code aries.vc.verify extracted, n
 />
 `;
 
-exports[`Connection Modal Component Valid goal code aries.vc.verify extracted, navigation to proof request 2`] = `
+exports[`Connection Modal Component Valid goal code aries.vc.verify.once extracted, navigation to proof request 1`] = `
 <Modal
   animationType="slide"
   hardwareAccelerated={false}

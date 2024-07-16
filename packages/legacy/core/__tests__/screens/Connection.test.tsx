@@ -251,9 +251,9 @@ describe('Connection Modal Component', () => {
     })
   })
 
-  test('Valid goal code aries.vc.verify extracted, navigation to proof request', async () => {
+  test('Valid goal code aries.vc.verify.once extracted, navigation to proof request', async () => {
     const oobRecordId = 'def456'
-    const goalCode = 'aries.vc.verify'
+    const goalCode = 'aries.vc.verify.once'
     const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
