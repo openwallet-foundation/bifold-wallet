@@ -10,12 +10,13 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
-import { useOutOfBandByConnectionId } from '../hooks/connections'
+import { useConnectionByOutOfBandId, useOutOfBandByConnectionId, useOutOfBandById } from '../hooks/connections'
 import { useNotifications } from '../hooks/notifications'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { useContainer, TOKENS } from './../container-api'
+import { use } from 'i18next'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -35,7 +36,7 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { connectionId, threadId } = route.params
+  const { oobRecordId } = route.params
   const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
@@ -45,8 +46,9 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { ConnectionLoading } = useAnimatedComponents()
   const container = useContainer()
   const logger = container.resolve(TOKENS.UTIL_LOGGER)
-  const connection = useConnectionById(connectionId ?? '')
-  const oobRecord = useOutOfBandByConnectionId(connectionId ?? '')
+  const oobRecord = useOutOfBandById(oobRecordId)
+  const connection = useConnectionByOutOfBandId(oobRecordId)
+
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     isVisible: true,
@@ -153,7 +155,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         navigation.getParent()?.dispatch(
           CommonActions.reset({
             index: 1,
-            routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+            routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
           })
         )
       }
@@ -163,7 +165,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
         })
       )
       dispatch({ isVisible: false })
@@ -196,7 +198,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
       if (
         (connection && notification.connectionId === connection.id) ||
-        (threadId && (notification.threadId === threadId || notification.parentThreadId === threadId))
+        oobRecord?.getTags()?.invitationRequestsThreadIds?.includes(notification?.threadId)
       ) {
         logger?.info(`Connection: Handling notification ${notification.id}`)
 
