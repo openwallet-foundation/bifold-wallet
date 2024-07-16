@@ -310,22 +310,6 @@ export function firstValidCredential(
 }
 
 /**
- *
- * @param url a redirection URL to retrieve a payload for an invite
- * @param agent an Agent instance
- * @returns payload from following the redirection
- */
-export const receiveMessageFromUrlRedirect = async (url: string, agent: Agent | undefined) => {
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  })
-  const message = await res.json()
-  await agent?.receiveMessage(message)
-  return message
-}
-
-/**
  * A sorting function for the Array `sort()` function
  * @param a First retrieved credential
  * @param b Second retrieved credential
@@ -956,14 +940,15 @@ export const getOobFromBetaQueryParam = async (queryParams: QueryParams, agent: 
   // for _url: decode url, fetch from url, parse JSON, then receive
   if (b64UrlRedirect) {
     const url = b64decode(b64UrlRedirect as string)
-    return await receiveMessageFromUrlRedirect(url, agent)
+    const response = await agent?.oob.receiveInvitationFromUrl(url)
+    return response.outOfBandRecord.outOfBandInvitation.id
   }
 
   // for _oob: decode, parse JSON, and receive
   const rawmessage = b64decode(b64OobMessage as string)
   const message = JSON.parse(rawmessage)
   await agent.receiveMessage(message)
-  return message
+  return message['@id']
 }
 
 /**
@@ -1023,10 +1008,10 @@ const betaConnectStrategy = async (uri: string, agent: Agent, navigation: any, i
   }
 
   // if there's a valid query param, try unpacking and receiving the message
-  const message = await getOobFromBetaQueryParam(queryParams, agent)
+  const messageId = await getOobFromBetaQueryParam(queryParams, agent)
   navigation.navigate(Stacks.ConnectionStack as any, {
     screen: Screens.Connection,
-    params: { threadId: message['@id'] },
+    params: { threadId: messageId },
   })
 }
 
