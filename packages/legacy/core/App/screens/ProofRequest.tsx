@@ -20,6 +20,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
+import { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
@@ -452,6 +453,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
+  const isShareDisabled = () => {
+    return (
+      !hasAvailableCredentials ||
+      !hasSatisfiedPredicates(getCredentialsFields()) ||
+      revocationOffense ||
+      proof?.state !== ProofState.RequestReceived
+    )
+  }
+
   const proofPageHeader = () => {
     return (
       <View style={styles.pageMargin}>
@@ -494,37 +504,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                   <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
               )}
-              {containsPI && (
-                <View
-                  style={{
-                    backgroundColor: ColorPallet.notification.warn,
-                    width: '100%',
-                    marginTop: 10,
-                    borderColor: ColorPallet.notification.warnBorder,
-                    borderWidth: 2,
-                    borderRadius: 4,
-                    flexDirection: 'row',
-                  }}
+              {containsPI ? (
+                <InfoTextBox
+                  type={InfoBoxType.Warn}
+                  style={{ marginTop: 16 }}
+                  textStyle={{ fontSize: TextTheme.title.fontSize }}
                 >
-                  <Icon
-                    style={{ marginTop: 15, marginLeft: 10 }}
-                    name="warning"
-                    color={ColorPallet.notification.warnIcon}
-                    size={TextTheme.title.fontSize + 5}
-                  />
-                  <Text
-                    style={{
-                      ...TextTheme.title,
-                      color: ColorPallet.notification.warnText,
-                      flex: 1,
-                      flexWrap: 'wrap',
-                      margin: 10,
-                    }}
-                  >
-                    {t('ProofRequest.SensitiveInformation')}
-                  </Text>
-                </View>
-              )}
+                  {t('ProofRequest.SensitiveInformation')}
+                </InfoTextBox>
+              ) : null}
+              {isShareDisabled() ? (
+                <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
+                  {t('ProofRequest.YouCantRespond')}
+                </InfoTextBox>
+              ) : null}
             </View>
             {!hasAvailableCredentials && hasMatchingCredDef && (
               <Text
@@ -565,10 +558,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         {!(loading || attestationLoading) && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
-        {!hasAvailableCredentials ||
-        !hasSatisfiedPredicates(getCredentialsFields()) ||
-        revocationOffense ||
-        proof?.state !== ProofState.RequestReceived ? (
+        {isShareDisabled() ? (
           <View style={styles.footerButton}>
             <Button
               title={t('Global.Cancel')}

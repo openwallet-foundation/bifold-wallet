@@ -510,6 +510,7 @@ const translation = {
     "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",
     "NoInfoShared": "No information was shared",
     "YourInfo": "Your information was not shared",
+    "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing.",
   },
   "Settings": {
     "Version": "Version",

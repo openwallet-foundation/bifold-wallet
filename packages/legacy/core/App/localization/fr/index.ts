@@ -495,6 +495,7 @@ const translation = {
         "DeclineBulletPoint3": "Etes-vous sûr vous voulez refuser cette demande de preuve?",
         "NoInfoShared": "Aucune information n'a été partagée",
         "YourInfo": "Votre information n'a pas été partagée",
+        "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (FR)",
     },
     "Settings": {
         "Version": "Version",

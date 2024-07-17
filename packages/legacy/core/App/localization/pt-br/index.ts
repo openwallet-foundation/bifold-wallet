@@ -485,6 +485,7 @@ const translation = {
     "DeclineBulletPoint3": "Você tem certeza que quer recusar esta requisição de prova?",
     "NoInfoShared": "No information was shared (PT-BR)",
     "YourInfo": "Your information was not shared (PT-BR)",
+    "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (PT-BR)",
   },
   "Settings": {
     "Version": "Versão",
