@@ -76,9 +76,9 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
   const { t } = useTranslation()
   const { ChatTheme: theme, ColorPallet } = useTheme()
   const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
-  const basicMessages = useBasicMessagesByConnectionId(connection.id)
-  const credentials = useCredentialsByConnectionId(connection.id)
-  const proofs = useProofsByConnectionId(connection.id)
+  const basicMessages = useBasicMessagesByConnectionId(connection?.id)
+  const credentials = useCredentialsByConnectionId(connection?.id)
+  const proofs = useProofsByConnectionId(connection?.id)
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up

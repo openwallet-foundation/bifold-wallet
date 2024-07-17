@@ -90,6 +90,21 @@ exports[`displays a proof request screen with a proof request displays a proof r
                       ProofRequest.Credentials
                     </Text>
                   </Text>
+                  <InfoTextBox
+                    style={
+                      Object {
+                        "marginTop": 16,
+                      }
+                    }
+                    textStyle={
+                      Object {
+                        "fontWeight": "normal",
+                      }
+                    }
+                    type={3}
+                  >
+                    ProofRequest.YouCantRespond
+                  </InfoTextBox>
                 </View>
                 <Text
                   style={
@@ -261,6 +276,74 @@ exports[`displays a proof request screen with a proof request displays a proof r
                       ProofRequest.Credentials
                     </Text>
                   </Text>
+                  <View
+                    style={
+                      Object {
+                        "backgroundColor": "#313132",
+                        "borderColor": "#D8292F",
+                        "borderRadius": 5,
+                        "borderWidth": 1,
+                        "marginTop": 16,
+                        "padding": 10,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignSelf": "flex-start",
+                            "marginLeft": 0,
+                            "marginRight": 10,
+                          }
+                        }
+                      >
+                        <Text
+                          allowFontScaling={false}
+                          selectable={false}
+                          style={
+                            Array [
+                              Object {
+                                "color": "#D8292F",
+                                "fontSize": 30,
+                              },
+                              undefined,
+                              Object {
+                                "fontFamily": "Material Icons",
+                                "fontStyle": "normal",
+                                "fontWeight": "normal",
+                              },
+                              Object {},
+                            ]
+                          }
+                        >
+                          
+                        </Text>
+                      </View>
+                      <Text
+                        style={
+                          Object {
+                            "alignSelf": "center",
+                            "color": "#FFFFFF",
+                            "flex": 1,
+                            "flexWrap": "wrap",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          }
+                        }
+                      >
+                        ProofRequest.YouCantRespond
+                      </Text>
+                    </View>
+                  </View>
                 </View>
                 <Text
                   style={
