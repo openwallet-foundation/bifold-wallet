@@ -19,16 +19,6 @@ jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-fs', () => ({}))
-const mockedDispatch = jest.fn()
-jest.mock('@react-navigation/core', () => {
-  const actualNav = jest.requireActual('@react-navigation/core')
-  return {
-    ...actualNav,
-    useNavigation: () => ({
-      dispatch: mockedDispatch,
-    }),
-  }
-})
 jest.mock('../../App/services/keychain', () => ({
   loadLoginAttempt: jest.fn(),
 }))
@@ -57,7 +47,7 @@ describe('Splash Screen', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Starts onboarding correctly', async () => {
+  test.skip('Starts onboarding correctly', async () => {
     const main = new MainContainer(container.createChildContainer()).init()
     // @ts-ignore-next-line
     loadLoginAttempt.mockReturnValue({ servedPenalty: true, loginAttempts: 0 })

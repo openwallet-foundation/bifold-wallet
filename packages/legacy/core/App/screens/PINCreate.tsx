@@ -1,5 +1,4 @@
-import { ParamListBase, useNavigation } from '@react-navigation/core'
-import { CommonActions } from '@react-navigation/native'
+import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

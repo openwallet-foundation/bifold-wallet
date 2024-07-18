@@ -1,6 +1,6 @@
 import { BasicMessageRepository, ConnectionRecord } from '@credo-ts/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
-import { useIsFocused, useNavigation } from '@react-navigation/core'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

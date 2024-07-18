@@ -8,7 +8,7 @@ import {
   ProofRole,
   ProofState,
 } from '@credo-ts/core'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
 
 import {
@@ -25,14 +25,6 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import Home from '../../App/screens/Home'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
-
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 
 jest.mock('@credo-ts/react-hooks', () => ({
   ...jest.requireActual('@credo-ts/react-hooks'),

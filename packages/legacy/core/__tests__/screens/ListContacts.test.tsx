@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
@@ -7,12 +7,6 @@ import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListContacts from '../../App/screens/ListContacts'
 import configurationContext from '../contexts/configuration'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 

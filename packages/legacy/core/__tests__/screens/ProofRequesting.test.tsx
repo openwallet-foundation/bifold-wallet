@@ -1,6 +1,6 @@
 import { useConnections } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
@@ -28,12 +28,6 @@ jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 jest.mock('@hyperledger/aries-bifold-verifier', () => {
   const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
   return {

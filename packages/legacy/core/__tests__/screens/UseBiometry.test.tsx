@@ -7,24 +7,20 @@ import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 import timeTravel from '../helpers/timetravel'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn().mockReturnValue({ enablePushNotifications: { setup: jest.fn(), toggle: jest.fn(), status: jest.fn() } }),
+  useConfiguration: jest
+    .fn()
+    .mockReturnValue({ enablePushNotifications: { setup: jest.fn(), toggle: jest.fn(), status: jest.fn() } }),
 }))
 
 describe('UseBiometry Screen', () => {
   beforeAll(() => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(global.console, 'error').mockImplementation(() => { })
+    jest.spyOn(global.console, 'error').mockImplementation(() => {})
   })
 
   test('Renders correctly when biometry available', async () => {
