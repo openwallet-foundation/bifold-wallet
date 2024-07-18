@@ -130,13 +130,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
+      dispatch({ isVisible: false })
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
           routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
         })
       )
-      dispatch({ isVisible: false })
     }
 
     // At this point we should be waiting for a notification
