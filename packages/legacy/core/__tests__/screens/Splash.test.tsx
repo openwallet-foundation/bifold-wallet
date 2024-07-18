@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { act, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
@@ -47,7 +48,8 @@ describe('Splash Screen', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test.skip('Starts onboarding correctly', async () => {
+  test('Starts onboarding correctly', async () => {
+    const navigation = useNavigation()
     const main = new MainContainer(container.createChildContainer()).init()
     // @ts-ignore-next-line
     loadLoginAttempt.mockReturnValue({ servedPenalty: true, loginAttempts: 0 })
@@ -88,6 +90,7 @@ describe('Splash Screen', () => {
           })
       }
     })
+
     await waitFor(() => {
       render(
         <ContainerProvider value={main}>
@@ -105,9 +108,11 @@ describe('Splash Screen', () => {
         </ContainerProvider>
       )
     })
+
     await act(() => {
       jest.runAllTimers()
     })
-    expect(mockedDispatch).toHaveBeenCalled()
+
+    expect(navigation.dispatch).toHaveBeenCalledTimes(1)
   })
 })
