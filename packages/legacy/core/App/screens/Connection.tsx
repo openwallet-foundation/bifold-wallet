@@ -127,11 +127,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     // If we have a connection, but no goal code, we should navigate
     // to Chat
-    if (
-      state.isVisible &&
-      connection &&
-      !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')
-    ) {
+    if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
       navigation.getParent()?.dispatch(
