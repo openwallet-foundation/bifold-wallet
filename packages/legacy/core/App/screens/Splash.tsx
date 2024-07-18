@@ -1,13 +1,16 @@
 import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
+import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
 import { useNavigation } from '@react-navigation/core'
 import { CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
+import { CachesDirectoryPath } from 'react-native-fs'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { EventTypes } from '../constants'
@@ -232,6 +235,11 @@ const Splash: React.FC = () => {
           modules: getAgentModules({
             indyNetworks: indyLedgers,
             mediatorInvitationUrl: Config.MEDIATOR_URL,
+            txnCache: {
+              capacity: 1000,
+              expiryOffsetMs: 1000 * 60 * 60 * 24 * 7,
+              path: CachesDirectoryPath + '/txn-cache',
+            },
           }),
         })
         const wsTransport = new WsOutboundTransport()
@@ -256,6 +264,22 @@ const Splash: React.FC = () => {
         await newAgent.initialize()
 
         await createLinkSecretIfRequired(newAgent)
+
+        const credDefs = container.resolve(TOKENS.CACHE_CRED_DEFS)
+        const schemas = container.resolve(TOKENS.CACHE_SCHEMAS)
+
+        const poolService = newAgent.dependencyManager.resolve(IndyVdrPoolService)
+        credDefs.forEach(async ({ did, id }) => {
+          const pool = await poolService.getPoolForDid(newAgent.context, did)
+          const credDefRequest = new GetCredentialDefinitionRequest({ credentialDefinitionId: id })
+          await pool.pool.submitRequest(credDefRequest)
+        })
+
+        schemas.forEach(async ({ did, id }) => {
+          const pool = await poolService.getPoolForDid(newAgent.context, did)
+          const schemaRequest = new GetSchemaRequest({ schemaId: id })
+          await pool.pool.submitRequest(schemaRequest)
+        })
 
         setAgent(newAgent)
         navigation.dispatch(
