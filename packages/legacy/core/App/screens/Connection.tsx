@@ -15,7 +15,6 @@ import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/naviga
 import { testIdWithKey } from '../utils/testable'
 
 import { useContainer, TOKENS } from './../container-api'
-import { constants } from '@credo-ts/core/build/modules/vc/data-integrity/libraries/jsonld-signatures'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
