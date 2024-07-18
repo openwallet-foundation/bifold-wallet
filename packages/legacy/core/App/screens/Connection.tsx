@@ -121,44 +121,17 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
-    if (!state.notificationRecord || !state.isVisible) {
+    if (!state.isVisible) {
       return
     }
 
-    // connectionless proof request, we don't have connectionless offers.
-    if (!connection) {
-      dispatch({ isVisible: false })
-      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-
-      return
-    }
-
-    // connection based proof or offer
-    if (oobRecord?.outOfBandInvitation.goalCode) {
-      const { goalCode } = oobRecord.outOfBandInvitation
-
-      if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
-        logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
-
-        dispatch({ isVisible: false })
-        navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-      } else if (goalCode === GoalCodes.credentialOffer) {
-        logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
-
-        dispatch({ isVisible: false })
-        navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
-      } else {
-        logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
-
-        dispatch({ isVisible: false })
-        navigation.getParent()?.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
-          })
-        )
-      }
-    } else {
+    // If we have a connection, but no goal code, we should navigate
+    // to Chat
+    if (
+      state.isVisible &&
+      connection &&
+      !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')
+    ) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
       navigation.getParent()?.dispatch(
@@ -168,6 +141,53 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         })
       )
       dispatch({ isVisible: false })
+    }
+
+    // At this point we should be waiting for a notification
+    // to be processed
+    if (!state.notificationRecord) {
+      return
+    }
+
+    // Connectionless proof request, we don't have connectionless offers.
+    if (!connection) {
+      dispatch({ isVisible: false })
+      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+
+      return
+    }
+
+    // At this point, we have connection based proof or offer with
+    // a goal code.
+
+    if (!oobRecord) {
+      logger?.error(`Connection: No OOB record where one is expected`)
+
+      return
+    }
+
+    const { goalCode } = oobRecord.outOfBandInvitation
+
+    if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
+      logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
+
+      dispatch({ isVisible: false })
+      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+    } else if (goalCode === GoalCodes.credentialOffer) {
+      logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
+
+      dispatch({ isVisible: false })
+      navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+    } else {
+      logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
+
+      dispatch({ isVisible: false })
+      navigation.getParent()?.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
+        })
+      )
     }
   }, [connection, oobRecord, state])
 
