@@ -15,6 +15,7 @@ import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/naviga
 import { testIdWithKey } from '../utils/testable'
 
 import { useContainer, TOKENS } from './../container-api'
+import { constants } from '@credo-ts/core/build/modules/vc/data-integrity/libraries/jsonld-signatures'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -121,7 +122,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
-    if (!state.isVisible) {
+    if (!oobRecord || !state.isVisible) {
       return
     }
 
@@ -170,7 +171,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
 
       dispatch({ isVisible: false })
-      navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
 
       return
     }
@@ -179,7 +180,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
 
       dispatch({ isVisible: false })
-      navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+      navigation.replace(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
 
       return
     }
