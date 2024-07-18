@@ -21,18 +21,11 @@ const offerNotifPath = path.join(__dirname, '../fixtures/offer-notif.json')
 const offerNotif = JSON.parse(fs.readFileSync(offerNotifPath, 'utf8'))
 const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
-const connectionResponseReceivedPath = path.join(__dirname, '../fixtures/connection-v1-response-received.json')
 const props = { params: { oobRecordId: connection.id } }
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 jest.mock('../../App/container-api')
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 
 jest.mock('../../App/hooks/notifications', () => ({
   useNotifications: jest.fn(),
@@ -43,6 +36,14 @@ jest.mock('../../App/hooks/connections', () => ({
   useConnectionByOutOfBandId: jest.fn(),
   useOutOfBandById: jest.fn(),
 }))
+
+jest.mock('@react-navigation/core', () => {
+  return require('../../__mocks__/custom/@react-navigation/core')
+})
+
+jest.mock('@react-navigation/native', () => {
+  return require('../../__mocks__/custom/@react-navigation/native')
+})
 
 describe('Connection Modal Component', () => {
   beforeEach(() => {
@@ -177,8 +178,7 @@ describe('Connection Modal Component', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // TODO:(jl) Can we enable this test?
-    // expect(navigation.getParent()?.navigate).toBeCalledTimes(1)
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(1)
   })
 
   test('Valid goal code aries.vc.issue extracted, navigation to accept offer', async () => {
@@ -210,8 +210,9 @@ describe('Connection Modal Component', () => {
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(1)
-    expect(navigation.navigate).toBeCalledWith('Credential Offer', {
+    expect(navigation.navigate).toBeCalledTimes(0)
+    // @ts-ignore-next-lin
+    expect(navigation.replace).toBeCalledWith('Credential Offer', {
       credentialId: offerNotif.id,
     })
   })
@@ -245,8 +246,9 @@ describe('Connection Modal Component', () => {
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(1)
-    expect(navigation.navigate).toBeCalledWith('Proof Request', {
+    expect(navigation.navigate).toBeCalledTimes(0)
+    // @ts-ignore-next-lin
+    expect(navigation.replace).toBeCalledWith('Proof Request', {
       proofId: proofNotif.id,
     })
   })
@@ -280,8 +282,9 @@ describe('Connection Modal Component', () => {
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(1)
-    expect(navigation.navigate).toBeCalledWith('Proof Request', {
+    expect(navigation.navigate).toBeCalledTimes(0)
+    // @ts-ignore-next-lin
+    expect(navigation.replace).toBeCalledWith('Proof Request', {
       proofId: proofNotif.id,
     })
   })
