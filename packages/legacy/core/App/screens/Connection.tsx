@@ -137,6 +137,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
         })
       )
+
+      return
     }
 
     // At this point we should be waiting for a notification
@@ -169,22 +171,28 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
       dispatch({ isVisible: false })
       navigation.navigate(Screens.ProofRequest, { proofId: state.notificationRecord.id })
-    } else if (goalCode === GoalCodes.credentialOffer) {
+
+      return
+    }
+
+    if (goalCode === GoalCodes.credentialOffer) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
 
       dispatch({ isVisible: false })
       navigation.navigate(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
-    } else {
-      logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
 
-      dispatch({ isVisible: false })
-      navigation.getParent()?.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
-        })
-      )
+      return
     }
+
+    logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
+
+    dispatch({ isVisible: false })
+    navigation.getParent()?.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
+      })
+    )
   }, [connection, oobRecord, state])
 
   useMemo(() => {
