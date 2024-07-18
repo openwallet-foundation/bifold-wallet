@@ -58,6 +58,11 @@ export const OBJECT_TOKENS = {
   OBJECT_ONBOARDING_CONFIG: 'object.onboarding-config',
 } as const
 
+export const CACHE_TOKENS = {
+  CACHE_CRED_DEFS: 'cache.cred-defs',
+  CACHE_SCHEMAS: 'cache.schemas',
+} as const
+
 export const UTILITY_TOKENS = {
   UTIL_LOGGER: 'utility.logger',
   UTIL_OCA_RESOLVER: 'utility.oca-resolver',
@@ -74,6 +79,7 @@ export const TOKENS = {
   ...COMP_TOKENS,
   ...LOAD_STATE_TOKENS,
   ...OBJECT_TOKENS,
+  ...CACHE_TOKENS,
   ...UTILITY_TOKENS,
 } as const
 
@@ -93,6 +99,8 @@ export type TokenMapping = {
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
+  [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
+  [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BaseLogger
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
