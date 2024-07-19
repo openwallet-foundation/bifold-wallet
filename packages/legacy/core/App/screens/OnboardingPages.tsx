@@ -98,11 +98,10 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
         </View>
         <View style={{ marginBottom: 20 }}>
           <Text style={[styles.headerText]} testID={testIdWithKey('HeaderText')}>
-            Ornare suspendisse sed nisi lacus
+            Your data is secure
           </Text>
           <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
-            Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer
-            quis auctor elit sed.
+            Our wallet leverages the latest in secure decentralized ID technology to keep your information safe. Try it now!
           </Text>
         </View>
       </ScrollView>
@@ -122,14 +121,14 @@ const customPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
 const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string; devModeListener?: boolean }> = [
   {
     image: CredentialList,
-    title: 'Lorem ipsum dolor sit amet',
-    body: 'Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus.',
+    title: 'Welcome to your CGI Wallet',
+    body: 'Receive, store and share your credentials securely.',
     devModeListener: true,
   },
   {
     image: ScanShare,
-    title: 'Excepteur sint occaecat ',
-    body: 'Mollis aliquam ut porttitor leo a diam sollicitudin tempor.',
+    title: 'Start by scanning a QR code',
+    body: 'Scan a QR code to receive credentials from a trusted CGI source.',
   },
 ]
 

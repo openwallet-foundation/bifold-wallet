@@ -41,6 +41,7 @@ const PINInput: React.FC<PINInputProps & React.RefAttributes<TextInput>> = forwa
         justifyContent: 'flex-start',
         alignItems: 'flex-end',
         flexWrap: 'wrap',
+        minWidth: '100%',
         flex: 1,
         marginBottom: 24,
       },
