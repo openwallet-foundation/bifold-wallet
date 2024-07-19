@@ -8,12 +8,6 @@ import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 import { useConfiguration } from '../../App/contexts/configuration'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
@@ -80,5 +74,4 @@ describe('displays a PIN Enter screen', () => {
     useConfiguration.mockReturnValue({ showDetailsInfo: true })
     jest.clearAllMocks()
   })
-
 })

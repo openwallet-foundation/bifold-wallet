@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
@@ -36,14 +36,6 @@ jest.mock('../../App/hooks/connections', () => ({
   useConnectionByOutOfBandId: jest.fn(),
   useOutOfBandById: jest.fn(),
 }))
-
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 
 describe('Connection Modal Component', () => {
   beforeEach(() => {

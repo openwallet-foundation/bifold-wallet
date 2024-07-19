@@ -16,13 +16,6 @@ jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
-
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))

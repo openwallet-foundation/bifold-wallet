@@ -1,6 +1,6 @@
 import { ProofState } from '@credo-ts/core'
 import { useProofById } from '@credo-ts/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native'

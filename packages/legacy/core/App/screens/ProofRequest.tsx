@@ -8,7 +8,7 @@ import {
 import { CredentialExchangeRecord, DifPexInputDescriptorToCredentials, ProofState } from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
-import { useIsFocused } from '@react-navigation/core'
+import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

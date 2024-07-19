@@ -8,7 +8,7 @@ import {
 } from '@credo-ts/core'
 import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -90,9 +90,9 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
     const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
       const role = getMessageEventRole(record)
       // eslint-disable-next-line
-      const linkRegex = /(?:https?\:\/\/\w+(?:\.\w+)+\S*)|(?:[\w\d\.\_\-]+@\w+(?:\.\w+)+)/gmi
+      const linkRegex = /(?:https?\:\/\/\w+(?:\.\w+)+\S*)|(?:[\w\d\.\_\-]+@\w+(?:\.\w+)+)/gim
       // eslint-disable-next-line
-      const mailRegex = /^[\w\d\.\_\-]+@\w+(?:\.\w+)+$/gmi
+      const mailRegex = /^[\w\d\.\_\-]+@\w+(?:\.\w+)+$/gim
       const links = record.content.match(linkRegex) ?? []
       const handleLinkPress = (link: string) => {
         if (link.match(mailRegex)) {

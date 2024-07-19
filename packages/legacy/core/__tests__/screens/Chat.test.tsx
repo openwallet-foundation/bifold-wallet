@@ -16,13 +16,6 @@ import { BasicMessageMetadata } from '../../App/types/metadata'
 import configurationContext from '../contexts/configuration'
 import navigationContext from '../contexts/navigation'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
-
 const props = { params: { connectionId: '1' } }
 
 const connection = new ConnectionRecord({

@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
-import { CommonActions } from '@react-navigation/native'
+import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'

@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/core'
+import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

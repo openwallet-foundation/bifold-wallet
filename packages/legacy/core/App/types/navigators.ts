@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { NavigatorScreenParams } from '@react-navigation/core'
+import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
 export enum Screens {

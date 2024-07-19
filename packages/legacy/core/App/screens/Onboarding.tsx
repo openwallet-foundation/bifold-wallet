@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
-import { useFocusEffect } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

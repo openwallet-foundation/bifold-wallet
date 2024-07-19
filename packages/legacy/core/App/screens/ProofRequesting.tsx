@@ -10,8 +10,7 @@ import {
   linkProofWithTemplate,
   sendProofRequest,
 } from '@hyperledger/aries-bifold-verifier'
-import { useIsFocused } from '@react-navigation/core'
-import { useFocusEffect } from '@react-navigation/native'
+import { useIsFocused, useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

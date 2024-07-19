@@ -6,13 +6,6 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import configurationContext from '../contexts/configuration'
 import { testIdWithKey } from '../../App/utils/testable'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
-
 describe('ScanHelp Screen', () => {
   test('Renders correctly', async () => {
     const tree = render(

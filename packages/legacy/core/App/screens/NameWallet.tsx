@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'

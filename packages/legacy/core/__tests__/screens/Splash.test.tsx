@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { act, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
@@ -19,16 +20,6 @@ jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-fs', () => ({}))
-const mockedDispatch = jest.fn()
-jest.mock('@react-navigation/core', () => {
-  const actualNav = jest.requireActual('@react-navigation/core')
-  return {
-    ...actualNav,
-    useNavigation: () => ({
-      dispatch: mockedDispatch,
-    }),
-  }
-})
 jest.mock('../../App/services/keychain', () => ({
   loadLoginAttempt: jest.fn(),
 }))
@@ -58,6 +49,7 @@ describe('Splash Screen', () => {
   })
 
   test('Starts onboarding correctly', async () => {
+    const navigation = useNavigation()
     const main = new MainContainer(container.createChildContainer()).init()
     // @ts-ignore-next-line
     loadLoginAttempt.mockReturnValue({ servedPenalty: true, loginAttempts: 0 })
@@ -98,6 +90,7 @@ describe('Splash Screen', () => {
           })
       }
     })
+
     await waitFor(() => {
       render(
         <ContainerProvider value={main}>
@@ -115,9 +108,11 @@ describe('Splash Screen', () => {
         </ContainerProvider>
       )
     })
+
     await act(() => {
       jest.runAllTimers()
     })
-    expect(mockedDispatch).toHaveBeenCalled()
+
+    expect(navigation.dispatch).toHaveBeenCalledTimes(1)
   })
 })
