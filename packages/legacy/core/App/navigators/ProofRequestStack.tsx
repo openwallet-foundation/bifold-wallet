@@ -15,6 +15,7 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { createDefaultStackOptions } from './defaultStackOptions'
+import MobileVerifierLoading from '../screens/MobileVerifierLoading'
 
 const ProofRequestStack: React.FC = () => {
   const Stack = createStackNavigator<ProofRequestsStackParams>()
@@ -36,6 +37,7 @@ const ProofRequestStack: React.FC = () => {
           title: '',
         })}
       />
+      <Stack.Screen name={Screens.MobileVerifierLoading} component={MobileVerifierLoading} options={{ ...defaultStackOptions }} />
       <Stack.Screen
         name={Screens.ProofChangeCredential}
         component={ProofChangeCredential}

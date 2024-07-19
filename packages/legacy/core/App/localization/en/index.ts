@@ -694,6 +694,7 @@ const translation = {
     "InvalidPredicateValueTitle": "Invalid value for {{ predicate }}",
     "InvalidPredicateValueDetails": "Must be a number",
     "ConnectionLessLabel": "Anonymous",
+    "WaitingForResponse": "Waiting for response..."
   }
 }
 
