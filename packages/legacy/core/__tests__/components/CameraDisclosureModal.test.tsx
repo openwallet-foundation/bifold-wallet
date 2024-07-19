@@ -1,16 +1,10 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { render, fireEvent, act } from '@testing-library/react-native'
 import React from 'react'
 import CameraDisclosureModal from '../../App/components/modals/CameraDisclosureModal'
 import { testIdWithKey } from '../../App/utils/testable'
 
 let requestCameraUse = jest.fn(() => Promise.resolve(true))
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 
 describe('CameraDisclosureModal Component', () => {
   beforeAll(() => {

@@ -11,13 +11,6 @@ import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
 
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
-
 const credentialId = '123'
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))

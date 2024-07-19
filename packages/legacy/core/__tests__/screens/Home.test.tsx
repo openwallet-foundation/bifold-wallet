@@ -8,7 +8,7 @@ import {
   ProofRole,
   ProofState,
 } from '@credo-ts/core'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
 
 import {
@@ -25,14 +25,6 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import Home from '../../App/screens/Home'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
-
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
 
 jest.mock('@credo-ts/react-hooks', () => ({
   ...jest.requireActual('@credo-ts/react-hooks'),
@@ -156,7 +148,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the credential offer
    * When the holder is taken to the credential offer screen/flow
    */
-  test.skip('touch notification triggers navigation correctly I', async () => {
+  test('touch notification triggers navigation correctly I', async () => {
     const navigation = useNavigation()
     const view = render(
       <ConfigurationContext.Provider value={configurationContext}>
@@ -185,7 +177,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the proof request
    * When the holder is taken to the proof request screen/flow
    */
-  test.skip('touch notification triggers navigation correctly II', async () => {
+  test('touch notification triggers navigation correctly II', async () => {
     const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -215,7 +207,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder selects the proof request
    * When the holder is taken to the proof request screen/flow
    */
-  test.skip('touch notification triggers navigation correctly III', async () => {
+  test('touch notification triggers navigation correctly III', async () => {
     const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
@@ -244,7 +236,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
    * When the holder taps the View message button
    * The holder is taken to the chat screen for that contact
    */
-  test.skip('touch notification triggers navigation correctly IV', async () => {
+  test('touch notification triggers navigation correctly IV', async () => {
     const { findByTestId } = render(
       <ConfigurationContext.Provider value={configurationContext}>
         <Home route={{} as any} navigation={useNavigation()} />
