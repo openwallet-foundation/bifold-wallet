@@ -32,7 +32,7 @@ import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks/connections'
+import { useConnectionByOutOfBandId } from '../hooks/connections'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
@@ -197,7 +197,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }, [record, template])
 
   useEffect(() => {
-    console.warn(proofRecord?.state)
     if (proofRecord && proofRecord.state === ProofState.RequestSent) {
       navigation.navigate(Screens.MobileVerifierLoading, { proofId: proofRecord.id, connectionId: record?.id ?? '' })
     }

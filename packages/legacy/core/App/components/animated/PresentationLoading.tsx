@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { View, StyleSheet, Animated } from 'react-native'
 
 import ActivityIndicator from '../../assets/img/activity-indicator-circle.svg'
-import Wallet from '../../assets/img/wallet.svg'
+import ChatLoading from '../../assets/img/chat-loading.svg'
 import { useTheme } from '../../contexts/theme'
 
 const PresentationLoading: React.FC = () => {
@@ -24,12 +24,11 @@ const PresentationLoading: React.FC = () => {
     },
     animation: {
       position: 'absolute',
+      zIndex: 1,
     },
   })
-  const credentialInHandDisplayOptions = {
+  const displayOptions = {
     fill: ColorPallet.notification.infoText,
-    height: 130,
-    width: 130,
   }
   const animatedCircleDisplayOptions = {
     fill: ColorPallet.notification.infoText,
@@ -43,7 +42,7 @@ const PresentationLoading: React.FC = () => {
 
   return (
     <View style={style.container}>
-      <Wallet style={style.animation} {...credentialInHandDisplayOptions} />
+      <ChatLoading style={style.animation} {...displayOptions} />
       <Animated.View style={{ transform: [{ rotate: rotation }] }}>
         <ActivityIndicator {...animatedCircleDisplayOptions} />
       </Animated.View>
