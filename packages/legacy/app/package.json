@@ -82,7 +82,7 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-vision-camera": "^3.6.16",
+    "react-native-vision-camera": "4.3.1",
     "react-native-webview": "^11.22.3",
     "tsyringe": "^4.7.0",
     "uuid": "^9.0.0"

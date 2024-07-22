@@ -137,7 +137,7 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-vision-camera": "^3.6.16",
+    "react-native-vision-camera": "4.3.1",
     "react-test-renderer": "^18.2.0",
     "tsyringe": "^4.7.0",
     "typescript": "^5.0.4",
