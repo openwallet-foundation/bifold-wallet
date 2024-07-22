@@ -6,6 +6,7 @@ import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
+import MobileVerifierLoading from '../screens/MobileVerifierLoading'
 import ProofChangeCredential from '../screens/ProofChangeCredential'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequestDetails from '../screens/ProofRequestDetails'
@@ -35,6 +36,11 @@ const ProofRequestStack: React.FC = () => {
         options={() => ({
           title: '',
         })}
+      />
+      <Stack.Screen
+        name={Screens.MobileVerifierLoading}
+        component={MobileVerifierLoading}
+        options={{ ...defaultStackOptions }}
       />
       <Stack.Screen
         name={Screens.ProofChangeCredential}
