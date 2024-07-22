@@ -1,4 +1,4 @@
-import { CommonActions, useNavigation } from '@react-navigation/core'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

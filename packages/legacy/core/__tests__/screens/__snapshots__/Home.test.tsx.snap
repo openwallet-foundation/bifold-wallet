@@ -60,13 +60,15 @@ exports[`displays a home screen renders correctly 1`] = `
             Object {
               "alignItems": "center",
               "flexDirection": "row",
+              "justifyContent": "space-between",
             }
           }
         >
           <View
             style={
               Object {
-                "alignSelf": "center",
+                "alignSelf": "flex-start",
+                "marginLeft": 0,
                 "marginRight": 10,
               }
             }

@@ -6,15 +6,6 @@ import { StoreProvider, defaultState } from '../../App/contexts/store'
 import { testIdWithKey } from '../../App/utils/testable'
 import PushNotification from '../../App/screens/PushNotification'
 
-
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
-jest.mock('@react-navigation/core',)
-
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
@@ -59,8 +50,7 @@ describe('displays a push notification screen', () => {
   })
   test('Push notification screen renders correctly in onboarding', async () => {
     const route = {
-      params: {
-      },
+      params: {},
     } as any
     const tree = render(
       <StoreProvider

@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { NavigatorScreenParams } from '@react-navigation/core'
+import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
 export enum Screens {
@@ -160,7 +160,7 @@ export type NotificationStackParams = {
 }
 
 export type DeliveryStackParams = {
-  [Screens.Connection]: { connectionId?: string; threadId?: string }
+  [Screens.Connection]: { oobRecordId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.OnTheWay]: { credentialId: string }

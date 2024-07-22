@@ -1,6 +1,6 @@
 import { CredentialState } from '@credo-ts/core'
 import { useAgent, useConnectionById, useCredentialByState } from '@credo-ts/react-hooks'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
