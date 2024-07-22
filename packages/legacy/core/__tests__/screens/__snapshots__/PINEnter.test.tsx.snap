@@ -68,17 +68,14 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
             />
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "alignSelf": "center",
-                    "marginBottom": 16,
-                  },
-                ]
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginBottom": 16,
+                  "textAlign": "center",
+                }
               }
             >
               PINEnter.EnterPIN

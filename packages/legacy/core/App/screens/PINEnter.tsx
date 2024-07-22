@@ -62,7 +62,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       ...TextTheme.normal,
       marginVertical: 5,
     },
-    lockoutText: {
+    helpText: {
       ...TextTheme.normal,
       alignSelf: 'center',
       textAlign: 'center',
@@ -296,35 +296,43 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     }
   }
 
+  const displayHelpText = () => {
+    if (store.lockout.displayNotification) {
+      return (
+        <>
+          <Text style={style.helpText}>{t('PINEnter.LockedOut')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
+        </>
+      )
+    }
+
+    if (biometricsEnrollmentChange) {
+      return (
+        <>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsChanged')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsChangedEnterPIN')}</Text>
+        </>
+      )
+    }
+
+    if (biometricsErr) {
+      return (
+        <>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsError')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsErrorEnterPIN')}</Text>
+        </>
+      )
+    }
+
+    return <Text style={style.helpText}>{t('PINEnter.EnterPIN')}</Text>
+  }
+
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <Image source={Assets.img.logoSecondary.src} style={style.image} />
-          {store.lockout.displayNotification ? (
-            <>
-              <Text style={style.lockoutText}>{t('PINEnter.LockedOut')}</Text>
-              <Text style={style.lockoutText}>{t('PINEnter.ReEnterPIN')}</Text>
-            </>
-          ) : biometricsEnrollmentChange ? (
-            <>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', textAlign: 'center' }]}>
-                {t('PINEnter.BiometricsChanged')}
-              </Text>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
-                {t('PINEnter.BiometricsChangedEnterPIN')}
-              </Text>
-            </>
-          ) : biometricsErr ? (
-            <>
-              <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PINEnter.BiometricsError')}</Text>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
-                {t('PINEnter.BiometricsErrorEnterPIN')}
-              </Text>
-            </>
-          ) : (
-            <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PINEnter.EnterPIN')}</Text>
-          )}
+          {displayHelpText()}
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
