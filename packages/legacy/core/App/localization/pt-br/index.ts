@@ -651,7 +651,8 @@ const translation = {
     'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.',
     "InvalidPredicateValueTitle": "Valor inválido para {{ predicate }}",
     "InvalidPredicateValueDetails": "Deve ser um número",
-    "ConnectionLessLabel": "Anônimo"
+    "ConnectionLessLabel": "Anônimo",
+    "WaitingForResponse": "Waiting for response... (PT-BR)"
   }
 }
 

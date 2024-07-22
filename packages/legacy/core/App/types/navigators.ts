@@ -28,6 +28,7 @@ export enum Screens {
   WhatAreContacts = 'What Are Contacts',
   Chat = 'Chat',
   Connection = 'Connection',
+  MobileVerifierLoading = 'Mobile Verifier Loading',
   OnTheWay = 'On The Way',
   Declined = 'Declined',
   UseBiometry = 'Use Biometry',
@@ -112,6 +113,7 @@ export type ProofRequestsStackParams = {
   [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean; senderReview?: boolean }
   [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
+  [Screens.MobileVerifierLoading]: { proofId: string; connectionId: string }
   [Screens.ProofRequestUsageHistory]: { templateId: string }
   [Screens.ProofChangeCredential]: {
     selectedCred: string
@@ -161,6 +163,8 @@ export type NotificationStackParams = {
 
 export type DeliveryStackParams = {
   [Screens.Connection]: { oobRecordId: string }
+  [Screens.MobileVerifierLoading]: { proofId: string; connectionId: string }
+  [Screens.ProofDetails]: { recordId: string }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.OnTheWay]: { credentialId: string }

@@ -1,12 +1,10 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { DidExchangeState } from '@credo-ts/core'
+import { DidExchangeState, ProofState } from '@credo-ts/core'
 import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import {
   ProofCustomMetadata,
   ProofMetadata,
-  isPresentationFailed,
-  isPresentationReceived,
   linkProofWithTemplate,
   sendProofRequest,
 } from '@hyperledger/aries-bifold-verifier'
@@ -34,7 +32,7 @@ import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useConnectionByOutOfBandId, useOutOfBandByConnectionId } from '../hooks/connections'
+import { useConnectionByOutOfBandId } from '../hooks/connections'
 import { useTemplate } from '../hooks/proof-request-templates'
 import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
@@ -73,7 +71,6 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
-  const goalCode = useOutOfBandByConnectionId(record?.id ?? '')?.outOfBandInvitation.goalCode
   const { qrSize, qrContainerSize } = useQrSizeForDevice()
 
   const styles = StyleSheet.create({
@@ -200,11 +197,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }, [record, template])
 
   useEffect(() => {
-    if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {
-      if (goalCode?.endsWith('verify.once')) {
-        agent.connections.deleteById(record?.id ?? '')
-      }
-      navigation.navigate(Screens.ProofDetails, { recordId: proofRecord.id })
+    if (proofRecord && proofRecord.state === ProofState.RequestSent) {
+      navigation.navigate(Screens.MobileVerifierLoading, { proofId: proofRecord.id, connectionId: record?.id ?? '' })
     }
   }, [proofRecord])
 

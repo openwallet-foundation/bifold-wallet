@@ -670,7 +670,8 @@ const translation = {
         'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande d\'attestation.',
         "InvalidPredicateValueTitle": "Valeur invalide pour {{ predicate }}",
         "InvalidPredicateValueDetails": "Doit être un nombre",
-        "ConnectionLessLabel": "Anonyme"
+        "ConnectionLessLabel": "Anonyme",
+        "WaitingForResponse": "Waiting for response... (FR)"
     }
 }
 export default translation
