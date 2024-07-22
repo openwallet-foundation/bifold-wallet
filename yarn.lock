@@ -4527,7 +4527,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
-    react-native-vision-camera: ^3.6.16
+    react-native-vision-camera: 4.3.1
     react-test-renderer: ^18.2.0
     tsyringe: ^4.7.0
     typescript: ^5.0.4
@@ -8396,7 +8396,7 @@ __metadata:
     react-native-toast-message: ^2.1.6
     react-native-uuid: ^2.0.1
     react-native-vector-icons: ^10.0.0
-    react-native-vision-camera: ^3.6.16
+    react-native-vision-camera: 4.3.1
     react-native-webview: ^11.22.3
     tsyringe: ^4.7.0
     typescript: ^5.0.4
@@ -20570,17 +20570,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-vision-camera@npm:^3.6.16":
-  version: 3.6.16
-  resolution: "react-native-vision-camera@npm:3.6.16"
+"react-native-vision-camera@npm:4.3.1":
+  version: 4.3.1
+  resolution: "react-native-vision-camera@npm:4.3.1"
   peerDependencies:
+    "@shopify/react-native-skia": "*"
     react: "*"
     react-native: "*"
+    react-native-reanimated: "*"
     react-native-worklets-core: "*"
   peerDependenciesMeta:
+    "@shopify/react-native-skia":
+      optional: true
+    react-native-reanimated:
+      optional: true
     react-native-worklets-core:
       optional: true
-  checksum: 66828a81962e3a2cac8eced1321c62f5b53338b6b8df971820e771365b96bfe2f314533452ece0a194b542ce4bdf21e45f9bd50cd9f21d452e4ca5128bcb150d
+  checksum: e97ad8503cfd848cc794f95252b5f6385b28cf16c3606c3852654c9ee623288d7e820e3dc95f75e332d31b9a8d01090de281f3bf124d97da8dc786253b1c1283
   languageName: node
   linkType: hard
 
