@@ -38,8 +38,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
   const navigation = useNavigation()
-  // 'You're logged out' popup modal
-  const [displayNotification, setDisplayNotification] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
@@ -63,6 +61,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     notifyText: {
       ...TextTheme.normal,
       marginVertical: 5,
+    },
+    helpText: {
+      ...TextTheme.normal,
+      alignSelf: 'center',
+      textAlign: 'center',
+      marginBottom: 16,
     },
     modalText: {
       ...TextTheme.popupModalText,
@@ -292,42 +296,43 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     }
   }
 
-  // NOTE: Using local state here is to prevent modal issues caused by other modals being left open when the device sleeps.
-  // When two modals are attempted to be mounted at once it causes issues on iOS - in this case it causes the second modal
-  // to be invisible and prevent interaction with other elements on the screen. Using this approach ensures that the previous
-  // screen (and modal) is fully unmounted before this one is mounted. A similar approach would be to use a setTimeout.
-  useEffect(() => {
+  const displayHelpText = () => {
     if (store.lockout.displayNotification) {
-      setDisplayNotification(true)
-    } else {
-      setDisplayNotification(false)
+      return (
+        <>
+          <Text style={style.helpText}>{t('PINEnter.LockedOut')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
+        </>
+      )
     }
-  }, [store.lockout.displayNotification])
+
+    if (biometricsEnrollmentChange) {
+      return (
+        <>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsChanged')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsChangedEnterPIN')}</Text>
+        </>
+      )
+    }
+
+    if (biometricsErr) {
+      return (
+        <>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsError')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.BiometricsErrorEnterPIN')}</Text>
+        </>
+      )
+    }
+
+    return <Text style={style.helpText}>{t('PINEnter.EnterPIN')}</Text>
+  }
 
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <Image source={Assets.img.logoSecondary.src} style={style.image} />
-          {biometricsEnrollmentChange ? (
-            <>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', textAlign: 'center' }]}>
-                {t('PINEnter.BiometricsChanged')}
-              </Text>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
-                {t('PINEnter.BiometricsChangedEnterPIN')}
-              </Text>
-            </>
-          ) : biometricsErr ? (
-            <>
-              <Text style={[TextTheme.normal, { alignSelf: 'center' }]}>{t('PINEnter.BiometricsError')}</Text>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>
-                {t('PINEnter.BiometricsErrorEnterPIN')}
-              </Text>
-            </>
-          ) : (
-            <Text style={[TextTheme.normal, { alignSelf: 'center', marginBottom: 16 }]}>{t('PINEnter.EnterPIN')}</Text>
-          )}
+          {displayHelpText()}
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
@@ -340,24 +345,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
             autoFocus={true}
           />
         </View>
-        {displayNotification && (
-          <PopupModal
-            notificationType={InfoBoxType.Info}
-            title={t('PINEnter.LoggedOut')}
-            bodyContent={
-              <View>
-                <Text style={style.modalText}>{t('PINEnter.LoggedOutDescription')}</Text>
-              </View>
-            }
-            onCallToActionLabel={t('Global.Okay')}
-            onCallToActionPressed={() => {
-              dispatch({
-                type: DispatchAction.LOCKOUT_UPDATED,
-                payload: [{ displayNotification: false }],
-              })
-            }}
-          />
-        )}
         <View style={style.controlsContainer}>
           <View style={style.buttonContainer}>
             <Button

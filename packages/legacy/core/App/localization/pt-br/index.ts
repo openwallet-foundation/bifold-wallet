@@ -219,6 +219,8 @@ const translation = {
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
+    "LockedOut": "You locked out after 5 minutes of inactivity. (PT-BR)",
+    "ReEnterPIN": "Re-enter your wallet PIN (PT-BR)",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
     "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira.",
     "BiometricsError": "Biometrics were not successful.",

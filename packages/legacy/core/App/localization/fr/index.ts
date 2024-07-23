@@ -230,8 +230,8 @@ const translation = {
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
         "BiometricsError": "La biométrie n'a pas réussi.",
         "BiometricsErrorEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
-        "LoggedOut": "Vous avez été déconnecté du portefeuille.",
-        "LoggedOutDescription": "Pour protéger vos informations, vous êtes déconnecté de votre portefeuille si vous ne l'avez pas utilisé pendant 5 minutes.",
+        "LockedOut": "You locked out after 5 minutes of inactivity. (FR)",
+        "ReEnterPIN": "Re-enter your wallet PIN (FR)",
         "BiometricsChanged": "Le déverrouillage avec la biométrie a été désactivé, car les données biométriques de votre appareil ont changé.",
         "BiometricsChangedEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
         "AttemptLockoutWarning": "Note: pour votre sécurité, la saisie d'un autre NIP incorrect verrouillera temporairement le portefeuille."

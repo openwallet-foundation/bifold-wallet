@@ -68,17 +68,14 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
             />
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "alignSelf": "center",
-                    "marginBottom": 16,
-                  },
-                ]
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginBottom": 16,
+                  "textAlign": "center",
+                }
               }
             >
               PINEnter.EnterPIN
@@ -533,20 +530,31 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
             />
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "alignSelf": "center",
-                    "marginBottom": 16,
-                  },
-                ]
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginBottom": 16,
+                  "textAlign": "center",
+                }
               }
             >
-              PINEnter.EnterPIN
+              PINEnter.LockedOut
+            </Text>
+            <Text
+              style={
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginBottom": 16,
+                  "textAlign": "center",
+                }
+              }
+            >
+              PINEnter.ReEnterPIN
             </Text>
             <View
               style={
@@ -838,202 +846,6 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out
               </View>
             </View>
           </View>
-          <Modal
-            hardwareAccelerated={false}
-            transparent={true}
-            visible={true}
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "rgba(0, 0, 0, 0.5)",
-                  "flex": 1,
-                  "justifyContent": "center",
-                  "padding": 20,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "#313132",
-                    "borderColor": "#0099FF",
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                    "minWidth": 700,
-                    "padding": 10,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "flexDirection": "row",
-                      "paddingHorizontal": 5,
-                      "paddingTop": 5,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "alignSelf": "center",
-                          "marginRight": 10,
-                        },
-                        Object {
-                          "flexDirection": "row",
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      accessible={false}
-                      allowFontScaling={false}
-                      selectable={false}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#0099FF",
-                            "fontSize": 30,
-                          },
-                          undefined,
-                          Object {
-                            "fontFamily": "Material Icons",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
-                        ]
-                      }
-                    >
-                      
-                    </Text>
-                    <Text
-                      style={
-                        Object {
-                          "alignSelf": "center",
-                          "color": "#FFFFFF",
-                          "flexShrink": 1,
-                          "fontSize": 18,
-                          "fontWeight": "bold",
-                          "marginLeft": 7,
-                        }
-                      }
-                      testID="com.ariesbifold:id/HeaderText"
-                    >
-                      PINEnter.LoggedOut
-                    </Text>
-                  </View>
-                </View>
-                <RCTScrollView
-                  style={
-                    Object {
-                      "flexDirection": "column",
-                      "flexGrow": 0,
-                      "marginLeft": 40,
-                      "paddingBottom": 5,
-                      "paddingHorizontal": 5,
-                    }
-                  }
-                >
-                  <View>
-                    <View>
-                      <Text
-                        style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 18,
-                            "fontWeight": "normal",
-                            "marginVertical": 5,
-                          }
-                        }
-                      >
-                        PINEnter.LoggedOutDescription
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        Object {
-                          "paddingTop": 10,
-                        }
-                      }
-                    >
-                      <View
-                        accessibilityLabel="Global.Okay"
-                        accessibilityRole="button"
-                        accessibilityState={
-                          Object {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": false,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          Object {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onClick={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                        style={
-                          Object {
-                            "backgroundColor": "#42803E",
-                            "borderRadius": 4,
-                            "opacity": 1,
-                            "padding": 16,
-                          }
-                        }
-                        testID="com.ariesbifold:id/Global.Okay"
-                      >
-                        <View
-                          style={
-                            Object {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                              "justifyContent": "center",
-                            }
-                          }
-                        >
-                          <Text
-                            style={
-                              Array [
-                                Object {
-                                  "color": "#FFFFFF",
-                                  "fontSize": 18,
-                                  "fontWeight": "bold",
-                                  "textAlign": "center",
-                                },
-                                false,
-                                false,
-                                false,
-                              ]
-                            }
-                          >
-                            Global.Okay
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </RCTScrollView>
-              </View>
-            </View>
-          </Modal>
           <View
             style={Object {}}
           >
