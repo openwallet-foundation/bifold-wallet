@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/core'
+import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/native'
 import { StackNavigationOptions, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
 import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
 import React from 'react'

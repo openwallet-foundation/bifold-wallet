@@ -627,6 +627,7 @@ const translation = {
         "DeclineBulletPoint3": "Etes-vous sûr vous voulez refuser cette demande de preuve?",
         "NoInfoShared": "Aucune information n'a été partagée",
         "YourInfo": "Votre information n'a pas été partagée",
+        "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (FR)",
     },
     "Settings": {
         "Version": "Version",
@@ -804,7 +805,8 @@ const translation = {
         'TutorialStep1Description': 'Vous vous connecterez avec l\'autre personne. Ils recevront une demande d\'attestation.',
         "InvalidPredicateValueTitle": "Valeur invalide pour {{ predicate }}",
         "InvalidPredicateValueDetails": "Doit être un nombre",
-        "ConnectionLessLabel": "Anonyme"
+        "ConnectionLessLabel": "Anonyme",
+        "WaitingForResponse": "Waiting for response... (FR)"
     }
 }
 export default translation

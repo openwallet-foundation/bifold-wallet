@@ -617,6 +617,7 @@ const translation = {
     "DeclineBulletPoint3": "Você tem certeza que quer recusar esta requisição de prova?",
     "NoInfoShared": "No information was shared (PT-BR)",
     "YourInfo": "Your information was not shared (PT-BR)",
+    "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (PT-BR)",
   },
   "Settings": {
     "Version": "Versão",
@@ -785,7 +786,8 @@ const translation = {
     'TutorialStep1Description': 'Você se conectará com a outra pessoa. Eles receberão uma solicitação de prova.',
     "InvalidPredicateValueTitle": "Valor inválido para {{ predicate }}",
     "InvalidPredicateValueDetails": "Deve ser um número",
-    "ConnectionLessLabel": "Anônimo"
+    "ConnectionLessLabel": "Anônimo",
+    "WaitingForResponse": "Waiting for response... (PT-BR)"
   }
 }
 

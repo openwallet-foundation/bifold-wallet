@@ -1,3 +1,5 @@
+// import { useFocusEffect } from '@react-navigation/native'
+
 const navigate = jest.fn()
 const dispatch = jest.fn()
 const replace = jest.fn()
@@ -6,11 +8,13 @@ const navigation = {
   navigate,
   replace,
   setOptions: jest.fn(),
-  getParent: () => {return {
-    navigate,
-    dispatch,
-    replace,
-  }},
+  getParent: () => {
+    return {
+      navigate,
+      dispatch,
+      replace,
+    }
+  },
   getState: jest.fn(() => ({
     index: jest.fn(),
   })),
@@ -35,4 +39,7 @@ const CommonActions = {
   goBack: jest.fn(),
 }
 
-export { useNavigation, useIsFocused, CommonActions }
+const useFocusEffect = jest.fn()
+const createNavigatorFactory = jest.fn()
+
+export { useNavigation, useIsFocused, useFocusEffect, createNavigatorFactory, CommonActions }

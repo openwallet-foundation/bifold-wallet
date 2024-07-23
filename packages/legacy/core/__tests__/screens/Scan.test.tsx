@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 import { container } from 'tsyringe'
@@ -9,13 +9,6 @@ import { useConfiguration } from '../../App/contexts/configuration'
 import Scan from '../../App/screens/Scan'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
-jest.mock('@react-navigation/core', () => {
-  return require('../../__mocks__/custom/@react-navigation/core')
-})
-jest.mock('@react-navigation/native', () => {
-  return require('../../__mocks__/custom/@react-navigation/native')
-})
-
 jest.mock('react-native-vision-camera', () => {
   return require('../../__mocks__/custom/react-native-camera')
 })
