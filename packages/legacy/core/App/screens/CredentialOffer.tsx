@@ -26,11 +26,13 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
+import { parseCredDefFromId } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { getCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
@@ -64,6 +66,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation.goalCode
   const { enableTours: enableToursConfig } = useConfiguration()
+  const container = useContainer()
+  const logger = container.resolve(TOKENS.UTIL_LOGGER)
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -155,6 +159,37 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
+  const logHistoryRecord = async () => {
+    try {
+      if (!(agent && store.preferences.useHistoryCapability)) {
+        logger.trace(
+          `[${CredentialOffer.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+        )
+        return
+      }
+      const historyManager = container.resolve(TOKENS.FN_LOAD_HISTORY)(agent)
+
+      const type = HistoryCardType.CardAccepted
+      if (!credential) {
+        logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
+        return
+      }
+      const ids = getCredentialIdentifiers(credential)
+      const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+
+      /** Save history record for card accepted */
+      const recordData: HistoryRecord = {
+        type: type,
+        message: type,
+        createdAt: credential?.createdAt,
+        correspondenceId: credentialId,
+        correspondenceName: name,
+      }
+      await historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }
   const handleAcceptTouched = async () => {
     try {
       if (!(agent && credential && assertConnectedNetwork())) {
@@ -164,6 +199,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       setAcceptModalVisible(true)
 
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
+      await logHistoryRecord()
     } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)

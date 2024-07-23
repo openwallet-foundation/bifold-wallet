@@ -1,4 +1,4 @@
-import { BaseLogger } from '@credo-ts/core'
+import { Agent, BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -8,6 +8,7 @@ import { DependencyContainer } from 'tsyringe'
 
 import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
+import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
@@ -40,6 +41,7 @@ export const STACK_TOKENS = {
 
 export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
+  FN_LOAD_HISTORY: 'fn.loadHistory',
 } as const
 
 export const COMP_TOKENS = {
@@ -83,6 +85,8 @@ export const TOKENS = {
   ...UTILITY_TOKENS,
 } as const
 
+export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
+
 export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
     credDefIds: string[]
@@ -105,6 +109,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
+  [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
 }
 
 export interface Container {

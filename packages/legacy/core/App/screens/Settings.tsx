@@ -175,6 +175,19 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       })
   }
 
+  // add optional history menu to settings
+  if (store.preferences.useHistoryCapability) {
+    settingsSections
+      .find((item) => item.header.title === t('Settings.AppSettings'))
+      ?.data.push({
+        title: t('Global.History'),
+        value: undefined,
+        accessibilityLabel: t('Global.History'),
+        testID: testIdWithKey('History'),
+        onPress: () => navigation.navigate(Screens.HistorySettings),
+      })
+  }
+
   if (enableTours) {
     const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
     if (section) {
