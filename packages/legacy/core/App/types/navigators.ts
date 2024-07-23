@@ -42,6 +42,9 @@ export enum Screens {
   NameWallet = 'Name Wallet',
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
+  HistorySettings = 'History Settings',
+  HistoryPage = 'History',
+  HistoryDetails = 'History details',
 }
 
 export enum Stacks {
@@ -54,6 +57,7 @@ export enum Stacks {
   ProofRequestsStack = 'Proof Requests Stack',
   NotificationStack = 'Notifications Stack',
   ConnectionStack = 'Connection Stack',
+  HistoryStack = 'History Stack',
 }
 
 export enum TabStacks {
@@ -71,6 +75,7 @@ export type RootStackParams = {
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
+  [Stacks.HistoryStack]: NavigatorScreenParams<HistoryStackParams>
 }
 
 export type TabStackParams = {
@@ -151,6 +156,7 @@ export type SettingStackParams = {
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
   [Screens.UsePushNotifications]: { isMenu?: boolean }
+  [Screens.HistorySettings]: undefined
 }
 
 export type NotificationStackParams = {
@@ -170,6 +176,10 @@ export type DeliveryStackParams = {
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
+}
+
+export type HistoryStackParams = {
+  [Screens.HistoryPage]: undefined
 }
 
 export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptions>>

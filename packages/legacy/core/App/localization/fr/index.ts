@@ -34,6 +34,17 @@ const translation = {
         "Biometrics": "Biométrie",
         "On": "Activé",
         "Off": "Désactivé",
+        "History": "History(fr)",
+        "SaveSettings": "Save Settings(fr)",
+        "organization": "Organization(fr)",
+        "Issuer": "Issuer(fr)",
+        "RevokedByIssuer": "Revoked by this issuer(fr)",
+        "Verifier": "Verifier(fr)",
+        "Expired": "Expired(fr)",
+        "Revoked": "Revoked(fr)",
+        "Issued": "Issued(fr)",
+        "Requested": "Requested(fr)",
+        "Updated": "Updated(fr)",
         "Remove": "Supprimer",
         "Close": "Fermer",
     },
@@ -128,6 +139,10 @@ const translation = {
         "Message1045": "Il y a eu un problème lors de l'initialisation de l'agent.",
         "Title1046": "Impossible de récupérer les contacts.",
         "Message1046": "Il y a eu un problème lors de la récupération des contacts.",
+    },
+    "SelectionAxs": {
+        "RadioChecked": "checked(fr)",
+        "RadioUnchecked": "unchecked(fr)"
     },
     "ActivityLog": {
         "Your": "Votre ",
@@ -254,6 +269,123 @@ const translation = {
         "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
         "UnlockPromptTitle": "Déverrouillage du portefeuille",
         "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
+    },
+    "ActivityHistory": {
+        "Header": "Activity history(fr)",
+        "Title": "Manage activity history(fr)",
+        "Description": "Set how long you want to keep your activity history before it is deleted from your device (it is not stored anywhere else).(fr)",
+        "DeleteActivity": "Delete activity history after:(fr)",
+        "DeleteActivityAfter": {
+          "1month":"1 month(fr)",
+          "6month":"6 month(fr)",
+          "1year":"1 year(fr)",
+          "Always":"Always(fr)",
+        },
+        "WarningDisclaimerAlert": {
+          "Title": "Past activity will be deleted(fr)",
+          "Description": "Any activity before the period you've just selected will be deleted as soon as you save.(fr)"
+        },
+        "SettingsSaved": "History settings saved(fr)",
+        "NoOptionSelectedError": "No option selected(fr)",
+        "StopKeepingHistory": "Stop keeping activity history(fr)",
+        "StoppedLoggingAlert": "You are not logging your activity history.(fr)",
+        "StoppedLoggingAlertYes": "Turn on activity history(fr)",
+        "DeleteActivityHistory": {
+          "Title": "Delete activity history(fr)",
+          "Description": "Individual history can be deleted in the history tab or you can delete all activity history. This action cannot be undone.(fr)",
+          "Link": "Delete all activity history(fr)"
+        },
+        "StopActivityHistoryScreen": {
+          "Header": "Turn off activity history?(fr)",
+          "Title": "Are you sure you want to turn off history?(fr)",
+          "Description": "No further activity history will be kept in the Ontario Wallet. All previous history will remain.(fr)",
+          "Yes": "Yes turn off activity history(fr)",
+          "No": "No, go back(fr)"
+        },
+        "StopActivityHistoryScreenConfirmed": {
+          "Header": "Activity history turned off(fr)",
+          "Title": "History turned off(fr)",
+          "Description": "The Ontario Wallet is no longer storing your activity history(fr)",
+          "Back": "Back to settings(fr)",
+        },
+        "DeleteActivityHistoryScreen": {
+          "Header": "Delete all activity history?(fr)",
+          "Title": "Are you sure you want to delete all history?(fr)",
+          "Description": "You will not be able to get your activity history back after you delete it.(fr)",
+          "Yes": "Yes, delete all activity history(fr)",
+          "No": "No, go back(fr)"
+        },
+        "DeleteActivityHistoryScreenConfirmed": {
+          "Header": "History activty deleted(fr)",
+          "Title": "All history activity deleted(fr)",
+          "Description": "The Ontario Wallet deleted all your activity history.(fr)",
+          "Continue": "Continue(fr)",
+        },
+        "NoHistory": "No History(fr)",
+      },
+      "History": {
+        "SortFilterButton":"Sort/Filter(fr)",
+        "SortBy": "Sort by(fr)",
+        "Sort": {
+          "Newest": "Newest to oldest(fr)",
+          "Oldest": "Oldest to Newest(fr)"
+        },
+        "Filter": {
+          "FilterByDate": "Filter by date range(fr)",
+          "Select": "Select(fr)",
+          "Today": "Today(fr)",
+          "Week": "Last week(fr)",
+          "Month": "Last 30 days(fr)",
+          "TwoMonth": "Last 60 days(fr)",
+          "ThreeMonth": "Last 90 days(fr)",
+          "Year": "This year(fr)",
+          "AllTime": "All time(fr)",
+          "FilterByActivity": "Filter by activity type(fr)",
+          "CardUpdates": "Card updates(fr)",
+          "InformationRequests": "Information requests(fr)",
+          "WalletPinUpdates": "Wallet PIN updates(fr)",
+          "Buttons": {
+            "Apply": "Apply filters(fr)",
+            "Close": "Close(fr)"
+          }
+        },
+        "Initial":{
+          "Title": "Do you want to log your wallet activity?(fr)",
+          "Description": {
+            "Header": "This History section can list when:(fr)\n",
+            "PointA": "You have <b>shared information</b> with a verifier(fr)",
+            "PointAAxs": "You have shared information with a verifier(fr)",
+            "PointB": "A card is <b>accepted, revoked or expired(fr)</b>",
+            "PointBAxs": "A card is accepted, revoked or expired(fr)",
+            "PointC": "You have updated your <b>PIN</b>(fr)",
+            "PointCAxs": "You have updated your PIN(fr)",
+            "Footer": "\nYour wallet activity will <b>only be stored on your device</b>, and you can choose how often it is automatically deleted.(fr)",
+            "FooterAxs": "Your wallet activity will only be stored on your device, and you can choose how often it is automatically deleted.(fr)"
+          },
+          "Button": {
+            "SetUpHistoryLog": "Set up your History log(fr)",
+            "StartLoggingWalletActivity": "Start logging wallet activity(fr)",
+            "DoNotLogWalletActivity": "Do not log any wallet activity(fr)"
+          }
+        },
+        "Button":"Sort/Filter(fr)",
+        "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.(fr)",
+        "CardTitle":{
+          "CardAccepted": "Card accepted:(fr)",
+          "CardDeclined": "Card declined:(fr)",
+          "CardExpired": "Card expired(fr)",
+          "CardRevoked": "Card revoked(fr)",
+          "InformationSent": "Information sent to:(fr)",
+          "WalletPinUpdated": "Wallet PIN updated(fr)",
+        },
+        "CardDescription":{
+          "CardExpired": "{{cardName}} expired(fr)",
+          "CardRevoked": "{{cardName}} revoked(fr)",
+          "WalletPinUpdated": "New PIN set(fr)",
+        },
+        "Today": "Today(fr)",
+        "UseHistoryCapability": "Enable history(fr)",
+        "UseHistoryCapabilityToggle": "Toggle Enable history(fr)",
     },
     "Contacts": {
         "EmptyList": "Vos Contacts sont vides!",
@@ -581,6 +713,9 @@ const translation = {
         "ProofRequesting": 'Demande de preuve',
         "NameWallet": "Nommer le portefeuille",
         "RenameContact": "Modifier le nom du contact",
+        "HistorySettings": "History Settings(fr)",
+        "History": "History(fr)",
+        "HistoryDetails": "History Details(fr)",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
