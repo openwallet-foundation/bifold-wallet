@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@credo-ts/anoncreds": "0.5.3",
-    "@credo-ts/core": "0.5.3",
+    "@credo-ts/anoncreds": "0.5.9",
+    "@credo-ts/core": "0.5.9",
     "@credo-ts/react-hooks": "^0.6.0",
     "@hyperledger/anoncreds-shared": "0.2.2",
     "@types/jest": "^29.5.5",
@@ -36,8 +36,8 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
-    "@credo-ts/anoncreds": "0.5.3",
-    "@credo-ts/core": "0.5.3",
+    "@credo-ts/anoncreds": "0.5.9",
+    "@credo-ts/core": "0.5.9",
     "@credo-ts/react-hooks": "^0.6.0",
     "@hyperledger/anoncreds-shared": "0.2.2",
     "react": "^18.2.0"
