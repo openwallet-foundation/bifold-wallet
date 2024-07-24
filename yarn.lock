@@ -4408,25 +4408,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-askar-react-native@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@hyperledger/aries-askar-react-native@npm:0.2.1"
+"@hyperledger/aries-askar-react-native@npm:0.2.3":
+  version: 0.2.3
+  resolution: "@hyperledger/aries-askar-react-native@npm:0.2.3"
   dependencies:
-    "@hyperledger/aries-askar-shared": 0.2.1
-    "@mapbox/node-pre-gyp": ^1.0.10
+    "@hyperledger/aries-askar-shared": 0.2.3
+    "@mapbox/node-pre-gyp": ^1.0.11
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.66.0"
-  checksum: 0c615b89d5426962af09d59b0e566712ea9cc034773cb01d7a4e4803c7d4817bdedaad08a48ecaf423283471275c1946b3002d373df5f2cfbe7aac18056aa3d0
+  checksum: b25a1d0f5828feca78e1b46c636994ac5c244e0c49a990b5c91180be389e307b36cf42408e65a1cef4b6dd63512a956b7bba07f564cf26e036690fc4c67b2adf
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-askar-shared@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@hyperledger/aries-askar-shared@npm:0.2.1"
+"@hyperledger/aries-askar-shared@npm:0.2.3":
+  version: 0.2.3
+  resolution: "@hyperledger/aries-askar-shared@npm:0.2.3"
   dependencies:
     buffer: ^6.0.3
-  checksum: 26596d376f2196f6c7feeb574281ed58db6680e97a21c8feb552f8d0b74b146096655437504915394fe539d84d9dfb5d94a9b7caae3a8e9962166a3c6c8b108b
+  checksum: 3aafb0abd09f28f2991ed7e69df040227e3773ad5686c1d2f1d5dce8bb452f730bc28d1a5e5ce8bc349e31aae0c78e5569ad55d59f904947e5dcc56ac9420e99
   languageName: node
   linkType: hard
 
@@ -4455,7 +4455,7 @@ __metadata:
     "@formatjs/intl-pluralrules": 4.1.4
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": 0.2.2
-    "@hyperledger/aries-askar-react-native": 0.2.1
+    "@hyperledger/aries-askar-react-native": 0.2.3
     "@hyperledger/aries-bifold-verifier": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
@@ -4559,7 +4559,7 @@ __metadata:
     "@formatjs/intl-pluralrules": 4.1.4
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": 0.2.2
-    "@hyperledger/aries-askar-react-native": 0.2.1
+    "@hyperledger/aries-askar-react-native": 0.2.3
     "@hyperledger/aries-bifold-verifier": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
@@ -5406,6 +5406,25 @@ __metadata:
   bin:
     node-pre-gyp: bin/node-pre-gyp
   checksum: 1a98db05d955b74dad3814679593df293b9194853698f3f5f1ed00ecd93128cdd4b14fb8767fe44ac6981ef05c23effcfdc88710e7c1de99ccb6f647890597c8
+  languageName: node
+  linkType: hard
+
+"@mapbox/node-pre-gyp@npm:^1.0.11":
+  version: 1.0.11
+  resolution: "@mapbox/node-pre-gyp@npm:1.0.11"
+  dependencies:
+    detect-libc: ^2.0.0
+    https-proxy-agent: ^5.0.0
+    make-dir: ^3.1.0
+    node-fetch: ^2.6.7
+    nopt: ^5.0.0
+    npmlog: ^5.0.1
+    rimraf: ^3.0.2
+    semver: ^7.3.5
+    tar: ^6.1.11
+  bin:
+    node-pre-gyp: bin/node-pre-gyp
+  checksum: b848f6abc531a11961d780db813cc510ca5a5b6bf3184d72134089c6875a91c44d571ba6c1879470020803f7803609e7b2e6e429651c026fe202facd11d444b8
   languageName: node
   linkType: hard
 
@@ -8541,7 +8560,7 @@ __metadata:
     "@formatjs/intl-pluralrules": 4.1.4
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": 0.2.2
-    "@hyperledger/aries-askar-react-native": 0.2.1
+    "@hyperledger/aries-askar-react-native": 0.2.3
     "@hyperledger/aries-bifold-core": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
