@@ -12,10 +12,6 @@ import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 
-jest.mock('react-native-fs', () => ({}))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
 }))
