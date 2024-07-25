@@ -49,6 +49,7 @@ const TabStack: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
       <Tab.Navigator
+        initialRouteName={TabStacks.HomeStack}
         screenOptions={{
           unmountOnBlur: true,
           tabBarStyle: {

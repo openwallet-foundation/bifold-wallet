@@ -29,7 +29,11 @@ const DeliveryStack: React.FC = () => {
         headerRight: () => <HeaderRightHome />,
       }}
     >
-      <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
+      <Stack.Screen
+        name={Screens.Connection}
+        component={Connection}
+        options={{ ...defaultStackOptions, headerShown: false }}
+      />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}

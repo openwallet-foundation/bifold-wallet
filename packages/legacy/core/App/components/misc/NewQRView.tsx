@@ -184,7 +184,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
     if (record?.state === DidExchangeState.Completed) {
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
-        params: { connectionId: record.id },
+        params: { oobRecordId: recordId },
       })
     }
   }, [record])
