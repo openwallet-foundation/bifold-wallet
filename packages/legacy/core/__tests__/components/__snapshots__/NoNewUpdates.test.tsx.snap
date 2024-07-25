@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoNewUpdates Component Renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "borderColor": "#0099FF",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "padding": 10,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignSelf": "flex-start",
+          "marginLeft": 0,
+          "marginRight": 10,
+        }
+      }
+    >
+      <Icon
+        color="#0099FF"
+        name="info"
+        size={30}
+      />
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+          "color": "#FFFFFF",
+          "flex": 1,
+          "flexWrap": "wrap",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        }
+      }
+      testID="com.ariesbifold:id/NoNewUpdates"
+    >
+      Home.NoNewUpdates
+    </Text>
+  </View>
+</View>
+`;
