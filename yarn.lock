@@ -4458,7 +4458,6 @@ __metadata:
     "@hyperledger/aries-askar-react-native": 0.2.3
     "@hyperledger/aries-bifold-verifier": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
-    "@hyperledger/aries-react-native-attestation": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
     "@hyperledger/indy-vdr-shared": 0.2.2
     "@react-native-async-storage/async-storage": 1.15.11
@@ -4563,7 +4562,6 @@ __metadata:
     "@hyperledger/aries-askar-react-native": 0.2.3
     "@hyperledger/aries-bifold-verifier": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
-    "@hyperledger/aries-react-native-attestation": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
     "@hyperledger/indy-vdr-shared": 0.2.2
     "@react-native-async-storage/async-storage": 1.15.11
@@ -4694,7 +4692,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperledger/aries-react-native-attestation@^1.0.0, @hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation":
+"@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation"
   dependencies:
@@ -8565,7 +8563,6 @@ __metadata:
     "@hyperledger/aries-askar-react-native": 0.2.3
     "@hyperledger/aries-bifold-core": ^1.0.0
     "@hyperledger/aries-oca": ^1.0.0
-    "@hyperledger/aries-react-native-attestation": ^1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
     "@react-native-async-storage/async-storage": 1.15.11
     "@react-native-community/masked-view": 0.1.11
