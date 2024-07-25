@@ -29,6 +29,7 @@ import { didMigrateToAskar, migrateToAskar } from '../utils/migration'
 export interface AuthContext {
   checkPIN: (PIN: string) => Promise<boolean>
   getWalletCredentials: () => Promise<WalletSecret | undefined>
+  walletSecret?: WalletSecret
   removeSavedWalletSecret: () => void
   disableBiometrics: () => Promise<void>
   setPIN: (PIN: string) => Promise<void>
@@ -170,6 +171,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         setPIN,
         isBiometricsActive,
         rekeyWallet,
+        walletSecret,
       }}
     >
       {children}
