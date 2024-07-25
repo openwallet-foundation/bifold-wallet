@@ -2,6 +2,7 @@ import { Agent, BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
+import { AttestationMonitor } from '@hyperledger/aries-react-native-attestation'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -75,6 +76,7 @@ export const UTILITY_TOKENS = {
   UTIL_OCA_RESOLVER: 'utility.oca-resolver',
   UTIL_LEDGERS: 'utility.ledgers',
   UTIL_PROOF_TEMPLATE: 'utility.proof-template',
+  UTIL_ATTESTATION_MONITOR: 'utility.attestation-monitor',
 } as const
 
 export const TOKENS = {
@@ -116,6 +118,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
+  [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
 }
 

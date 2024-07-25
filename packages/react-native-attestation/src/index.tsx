@@ -1,5 +1,6 @@
 import { NativeModules, Platform } from 'react-native';
 import { Buffer } from 'buffer';
+export * from './AttestationMonitor';
 
 const LINKING_ERROR =
   `The package 'react-native-attestation' doesn't seem to be linked. Make sure: \n\n` +
