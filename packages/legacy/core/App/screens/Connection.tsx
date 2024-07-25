@@ -2,7 +2,7 @@ import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, BackHandler, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -21,7 +21,7 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
 
 type LocalState = {
-  isVisible: boolean
+  inProgress: boolean
   isInitialized: boolean
   notificationRecord?: any
   shouldShowDelayMessage: boolean
@@ -49,7 +49,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
-    isVisible: true,
+    inProgress: true,
     isInitialized: false,
     shouldShowDelayMessage: false,
     notificationRecord: undefined,
@@ -100,7 +100,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }
 
   const onDismissModalTouched = () => {
-    dispatch({ shouldShowDelayMessage: false, isVisible: false })
+    dispatch({ shouldShowDelayMessage: false, inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
@@ -112,7 +112,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (state.shouldShowDelayMessage && !state.notificationRecord) {
       if (autoRedirectConnectionToHome) {
-        dispatch({ shouldShowDelayMessage: false, isVisible: false })
+        dispatch({ shouldShowDelayMessage: false, inProgress: false })
         navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
       } else {
         AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
@@ -121,7 +121,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.shouldShowDelayMessage])
 
   useEffect(() => {
-    if (!oobRecord || !state.isVisible) {
+    if (!oobRecord || !state.inProgress) {
       return
     }
 
@@ -130,7 +130,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
-      dispatch({ isVisible: false })
+      dispatch({ inProgress: false })
       navigation.getParent()?.dispatch(
         CommonActions.reset({
           index: 1,
@@ -149,7 +149,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     // Connectionless proof request, we don't have connectionless offers.
     if (!connection) {
-      dispatch({ isVisible: false })
+      dispatch({ inProgress: false })
       navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
 
       return
@@ -169,7 +169,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
 
-      dispatch({ isVisible: false })
+      dispatch({ inProgress: false })
       navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
 
       return
@@ -178,7 +178,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (goalCode === GoalCodes.credentialOffer) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
 
-      dispatch({ isVisible: false })
+      dispatch({ inProgress: false })
       navigation.replace(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
 
       return
@@ -186,7 +186,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
 
-    dispatch({ isVisible: false })
+    dispatch({ inProgress: false })
     navigation.getParent()?.dispatch(
       CommonActions.reset({
         index: 1,
@@ -208,7 +208,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   )
 
   useEffect(() => {
-    if (!state.isVisible || state.notificationRecord) {
+    if (!state.inProgress || state.notificationRecord) {
       return
     }
 
@@ -232,46 +232,34 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [notifications, state])
 
   return (
-    <Modal
-      visible={state.isVisible}
-      transparent={true}
-      animationType={'slide'}
-      onRequestClose={() => {
-        dispatch({ isVisible: false })
-      }}
-    >
-      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <ScrollView style={[styles.container]}>
-          <View style={[styles.messageContainer]}>
-            <Text
-              style={[TextTheme.modalHeadingThree, styles.messageText]}
-              testID={testIdWithKey('CredentialOnTheWay')}
-            >
-              {t('Connection.JustAMoment')}
-            </Text>
-          </View>
-
-          <View style={[styles.image]}>
-            <ConnectionLoading />
-          </View>
-
-          {state.shouldShowDelayMessage && (
-            <Text style={[TextTheme.modalNormal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
-              {t('Connection.TakingTooLong')}
-            </Text>
-          )}
-        </ScrollView>
-        <View style={[styles.controlsContainer]}>
-          <Button
-            title={t('Loading.BackToHome')}
-            accessibilityLabel={t('Loading.BackToHome')}
-            testID={testIdWithKey('BackToHome')}
-            onPress={onDismissModalTouched}
-            buttonType={ButtonType.ModalSecondary}
-          />
+    <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
+      <ScrollView style={styles.container}>
+        <View style={styles.messageContainer}>
+          <Text style={[TextTheme.modalHeadingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
+            {t('Connection.JustAMoment')}
+          </Text>
         </View>
-      </SafeAreaView>
-    </Modal>
+
+        <View style={styles.image}>
+          <ConnectionLoading />
+        </View>
+
+        {state.shouldShowDelayMessage && (
+          <Text style={[TextTheme.modalNormal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
+            {t('Connection.TakingTooLong')}
+          </Text>
+        )}
+      </ScrollView>
+      <View style={styles.controlsContainer}>
+        <Button
+          title={t('Loading.BackToHome')}
+          accessibilityLabel={t('Loading.BackToHome')}
+          testID={testIdWithKey('BackToHome')}
+          onPress={onDismissModalTouched}
+          buttonType={ButtonType.ModalSecondary}
+        />
+      </View>
+    </SafeAreaView>
   )
 }
 
