@@ -1,4 +1,5 @@
 import { Agent } from '@credo-ts/core'
+
 export const AttestationEventTypes = {
   Started: 'AttestationEvent.Started',
   Completed: 'AttestationEvent.Completed',
