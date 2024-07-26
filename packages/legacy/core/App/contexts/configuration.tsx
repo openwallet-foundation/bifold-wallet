@@ -1,6 +1,6 @@
 import { Agent } from '@credo-ts/core'
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack'
-import { ReducerAction, createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
 
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { RecordProps } from '../components/record/Record'
@@ -9,15 +9,6 @@ import OnboardingPages from '../screens/OnboardingPages'
 import { ConnectStackParams } from '../types/navigators'
 import { PINSecurityParams } from '../types/security'
 import { SettingSection } from '../types/settings'
-
-interface NotificationConfiguration {
-  component: React.FC
-  onCloseAction: (dispatch?: React.Dispatch<ReducerAction<any>>) => void
-  title: string
-  description: string
-  buttonTitle: string
-  pageTitle: string
-}
 
 interface PushNotificationConfiguration {
   // function to get the current push notification permission status
@@ -44,7 +35,6 @@ export interface ConfigurationContext {
   record: React.FC<RecordProps>
   PINSecurity: PINSecurityParams
   settings: SettingSection[]
-  customNotification: NotificationConfiguration
   supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean

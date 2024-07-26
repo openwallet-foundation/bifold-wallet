@@ -12,6 +12,7 @@ import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
+import { CustomNotification } from './types/notification'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -33,6 +34,10 @@ export const SCREEN_TOKENS = {
   SCREEN_ONBOARDING: 'screen.onboarding',
   SCREEN_DEVELOPER: 'screen.developer',
   SCREEN_ONBOARDING_ITEM: 'screen.onboarding.item',
+} as const
+
+export const NOTIFICATION_TOKENS = {
+  CUSTOM_NOTIFICATION: 'custom.notification',
 } as const
 
 export const STACK_TOKENS = {
@@ -77,6 +82,7 @@ export const TOKENS = {
   ...SCREEN_TOKENS,
   ...SERVICE_TOKENS,
   ...STACK_TOKENS,
+  ...NOTIFICATION_TOKENS,
   ...FN_TOKENS,
   ...COMP_TOKENS,
   ...LOAD_STATE_TOKENS,
@@ -102,6 +108,7 @@ export type TokenMapping = {
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
+  [TOKENS.CUSTOM_NOTIFICATION]: CustomNotification | undefined
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]

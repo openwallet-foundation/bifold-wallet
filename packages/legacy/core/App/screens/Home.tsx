@@ -7,6 +7,7 @@ import { FlatList, View, StyleSheet } from 'react-native'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import AppGuideModal from '../components/modals/AppGuideModal'
+import { TOKENS, useContainer } from '../container-api'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -25,6 +26,8 @@ const Home: React.FC<HomeProps> = () => {
     homeHeaderView: HomeHeaderView,
   } = useConfiguration()
   const { notifications } = useCustomNotifications()
+  const container = useContainer()
+  const customNotification = container?.resolve(TOKENS.CUSTOM_NOTIFICATION)
   const { t } = useTranslation()
 
   const { ColorPallet } = useTheme()
@@ -55,7 +58,13 @@ const Home: React.FC<HomeProps> = () => {
       }
       component = <NotificationListItem notificationType={notificationType} notification={item} />
     } else if (item.type === 'CustomNotification') {
-      component = <NotificationListItem notificationType={NotificationType.Custom} notification={item} />
+      component = (
+        <NotificationListItem
+          notificationType={NotificationType.Custom}
+          notification={item}
+          customNotification={customNotification}
+        />
+      )
     } else {
       component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
     }
