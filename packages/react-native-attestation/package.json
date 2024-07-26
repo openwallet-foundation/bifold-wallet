@@ -5,8 +5,12 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "module": "build/index.ts",
-  "react-native": "src/index.ts",
   "source": "src/index.ts",
+  "files": [
+    "src",
+    "build"
+  ],
+  "react-native": "src/index.ts",
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
