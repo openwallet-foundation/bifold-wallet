@@ -1,5 +1,4 @@
-import { BaseLogger } from '@credo-ts/core'
-import { Agent } from '@credo-ts/core'
+import { BaseLogger, Agent } from '@credo-ts/core'
 import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import AsyncStorage from '@react-native-async-storage/async-storage'
