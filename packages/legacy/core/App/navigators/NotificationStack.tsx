@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useContainer } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'
 import CredentialOffer from '../screens/CredentialOffer'
@@ -16,7 +16,8 @@ const NotificationStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = createDefaultStackOptions(theme)
-  const { customNotification } = useConfiguration()
+  const container = useContainer()
+  const customNotification = container.resolve(TOKENS.CUSTOM_NOTIFICATION)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -35,11 +36,18 @@ const NotificationStack: React.FC = () => {
         component={ProofRequest}
         options={{ title: t('Screens.ProofRequest') }}
       />
-      <Stack.Screen
-        name={Screens.CustomNotification}
-        component={customNotification.component}
-        options={{ title: t(customNotification.pageTitle as any) }}
-      />
+      {customNotification && (
+        <Stack.Screen
+          name={Screens.CustomNotification}
+          component={customNotification.component}
+          options={{ title: t(customNotification.pageTitle as any) }}
+        />
+      )}
+      {customNotification &&
+        customNotification.additionalStackItems?.length &&
+        customNotification.additionalStackItems.map((item) => (
+          <Stack.Screen name={item.name as any} component={item.component} options={item.stackOptions}></Stack.Screen>
+        ))}
     </Stack.Navigator>
   )
 }

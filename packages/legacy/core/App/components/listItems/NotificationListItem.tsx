@@ -17,13 +17,13 @@ import { DeviceEventEmitter, StyleSheet, Text, TextStyle, TouchableOpacity, View
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes, hitSlop } from '../../constants'
-import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../../types/metadata'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
+import { CustomNotification } from '../../types/notification'
 import { ModalUsage } from '../../types/remove'
 import { getConnectionName, parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
@@ -45,6 +45,7 @@ export enum NotificationType {
 interface NotificationListItemProps {
   notificationType: NotificationType
   notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+  customNotification?: CustomNotification
 }
 
 type DisplayDetails = {
@@ -68,9 +69,12 @@ const markMessageAsSeen = async (agent: Agent, record: BasicMessageRecord) => {
   await basicMessageRepository.update(agent.context, record)
 }
 
-const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificationType, notification }) => {
+const NotificationListItem: React.FC<NotificationListItemProps> = ({
+  notificationType,
+  notification,
+  customNotification,
+}) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
-  const { customNotification } = useConfiguration()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
@@ -186,7 +190,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
   }
 
   const declineCustomNotification = async () => {
-    customNotification.onCloseAction(dispatch as any)
+    customNotification?.onCloseAction(dispatch as any)
     toggleDeclineModalVisible()
   }
 
@@ -275,9 +279,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({ notificatio
         case NotificationType.Custom:
           resolve({
             type: InfoBoxType.Info,
-            title: t(customNotification.title as any),
-            body: t(customNotification.description as any),
-            buttonTitle: t(customNotification.buttonTitle as any),
+            title: t(customNotification?.title as any),
+            body: t(customNotification?.description as any),
+            buttonTitle: t(customNotification?.buttonTitle as any),
           })
           break
         default:
