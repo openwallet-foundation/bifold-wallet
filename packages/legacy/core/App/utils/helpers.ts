@@ -962,7 +962,6 @@ export const connectFromScanOrDeepLink = async (
 
   // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
-
   try {
     const parseResult = await parseInvitationUrl(uri)
     if (!parseResult.success) {
@@ -981,7 +980,7 @@ export const connectFromScanOrDeepLink = async (
       }
     } else if (invitationData.type === 'openid-credential-offer') {
       const record = await receiveCredentialFromOpenId4VciOffer({ agent: agent, uri: uri })
-      console.log("$$: OPENID-Cred:", JSON.stringify(record))
+      //TODO: Impliment Navigation to display credential
     } else {
       logger.error('Primary error: Invitation not recognised')
     }
