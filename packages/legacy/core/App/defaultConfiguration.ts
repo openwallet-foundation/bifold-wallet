@@ -1,4 +1,3 @@
-import { CustomNotification } from './types/notification'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
@@ -14,9 +13,9 @@ import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
+import { CustomNotification } from './types/notification'
 
-export const defaultCustomNotifications: CustomNotification = 
-{
+export const defaultCustomNotifications: CustomNotification = {
   component: () => null,
   onCloseAction: () => null,
   title: '',
