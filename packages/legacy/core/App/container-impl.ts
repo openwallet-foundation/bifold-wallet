@@ -31,6 +31,17 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+
+//TODO: Remove after merging
+//https://github.com/openwallet-foundation/bifold-wallet/pull/1213
+const defaultCustomNotifications = {
+  component: () => null,
+  onCloseAction: () => null,
+  title: '',
+  description: '',
+  buttonTitle: '',
+  pageTitle: '',
+}
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
@@ -61,6 +72,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, useProofRequestTemplates)
+    this._container.registerInstance(TOKENS.CUSTOM_NOTIFICATION, defaultCustomNotifications)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
     this._container.registerInstance(

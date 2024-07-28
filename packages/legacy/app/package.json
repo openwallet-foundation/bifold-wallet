@@ -51,7 +51,7 @@
     "lodash.startcase": "^4.4.0",
     "moment": "^2.29.4",
     "patch-package": "^6.4.4",
-    "query-string": "^7.0.1",
+    "query-string": "8.1.0",
     "react": "*",
     "react-i18next": "11.13.0",
     "react-native": "*",

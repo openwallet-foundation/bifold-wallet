@@ -29,13 +29,14 @@ import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
 import moment from 'moment'
-import { parseUrl } from 'query-string'
+import { queryString } from 'query-string'
 import { ReactNode } from 'react'
 import { TFunction } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
 import { i18n } from '../localization/index'
+import { receiveCredentialFromOpenId4VciOffer } from '../modules/openid/resolver'
 import { Role } from '../types/chat'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
@@ -49,6 +50,7 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
+import { parseInvitationUrl } from './parsers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -926,7 +928,8 @@ const processBetaUrlIfRequired = (uri: string): string => {
 
   // _url is a beta query param, not supported by Credo.
   if (uri.includes('_url')) {
-    const queryParams = parseUrl(uri)?.query
+    const parsedUrl = queryString.parseUrl(uri)
+    const queryParams = parsedUrl?.query
     const b64UrlRedirect = queryParams['_url']
     aUrl = b64decode(b64UrlRedirect as string)
   }
@@ -962,14 +965,26 @@ export const connectFromScanOrDeepLink = async (
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
 
   try {
-    const aUrl = processBetaUrlIfRequired(uri)
-    const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
+    const parseResult = await parseInvitationUrl(uri)
+    if (!parseResult.success) {
+      throw new Error(`Primary error: ${parseResult.error}`)
+    }
+    const invitationData = parseResult.result
+    if (invitationData.type === 'didcomm') {
+      const aUrl = processBetaUrlIfRequired(uri)
+      const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
 
-    if (receivedInvitation?.id) {
-      navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
-        params: { oobRecordId: receivedInvitation.id },
-      })
+      if (receivedInvitation?.id) {
+        navigation.navigate(Stacks.ConnectionStack as any, {
+          screen: Screens.Connection,
+          params: { oobRecordId: receivedInvitation.id },
+        })
+      }
+    } else if (invitationData.type === 'openid-credential-offer') {
+      const record = await receiveCredentialFromOpenId4VciOffer({ agent: agent, uri: uri })
+      console.log("$$: OPENID-Cred:", JSON.stringify(record))
+    } else {
+      logger.error('Primary error: Invitation not recognised')
     }
   } catch (error: unknown) {
     logger.error('Problem during connect strategy, error:', error as Error)
