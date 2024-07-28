@@ -29,7 +29,7 @@ import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
 import moment from 'moment'
-import { queryString } from 'query-string'
+import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
 import { TFunction } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -928,8 +928,7 @@ const processBetaUrlIfRequired = (uri: string): string => {
 
   // _url is a beta query param, not supported by Credo.
   if (uri.includes('_url')) {
-    const parsedUrl = queryString.parseUrl(uri)
-    const queryParams = parsedUrl?.query
+    const queryParams = parseUrl(uri)?.query
     const b64UrlRedirect = queryParams['_url']
     aUrl = b64decode(b64UrlRedirect as string)
   }
