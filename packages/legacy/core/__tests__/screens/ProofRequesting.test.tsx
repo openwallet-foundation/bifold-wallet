@@ -24,10 +24,6 @@ import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templ
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('react-native-fs', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('@hyperledger/aries-bifold-verifier', () => {
   const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
   return {

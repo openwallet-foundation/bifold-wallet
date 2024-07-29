@@ -16,10 +16,6 @@ import authContext from '../contexts/auth'
 import configurationContext from '../contexts/configuration'
 import { loadLoginAttempt } from '../../App/services/keychain'
 
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
-jest.mock('react-native-fs', () => ({}))
 jest.mock('../../App/services/keychain', () => ({
   loadLoginAttempt: jest.fn(),
 }))

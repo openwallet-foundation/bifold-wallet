@@ -23,5 +23,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-  }
+    "outDir": "./build" /* Specify an output folder for all emitted files. */,
+    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+  },
+  "exclude": ["build", "node_modules", "jest.config.js", "jestSetup.js", "src/__tests__", "example"]
 }

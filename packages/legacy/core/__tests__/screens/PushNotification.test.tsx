@@ -6,9 +6,6 @@ import { StoreProvider, defaultState } from '../../App/contexts/store'
 import { testIdWithKey } from '../../App/utils/testable'
 import PushNotification from '../../App/screens/PushNotification'
 
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
 }))

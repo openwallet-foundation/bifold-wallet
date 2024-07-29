@@ -10,6 +10,7 @@ import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
+import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 import { CustomNotification } from './types/notification'
@@ -75,6 +76,7 @@ export const UTILITY_TOKENS = {
   UTIL_OCA_RESOLVER: 'utility.oca-resolver',
   UTIL_LEDGERS: 'utility.ledgers',
   UTIL_PROOF_TEMPLATE: 'utility.proof-template',
+  UTIL_ATTESTATION_MONITOR: 'utility.attestation-monitor',
 } as const
 
 export const TOKENS = {
@@ -116,6 +118,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
+  [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
 }
 
