@@ -18,9 +18,6 @@ jest.mock('react-native-orientation-locker', () => {
 jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
 }))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 
 describe('Scan Screen', () => {
   beforeEach(() => {

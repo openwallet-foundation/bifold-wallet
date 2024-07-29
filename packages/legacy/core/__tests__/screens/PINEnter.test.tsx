@@ -8,11 +8,6 @@ import PINEnter from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 
-jest.mock('react-native-fs', () => ({}))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
-
 jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
 }))

@@ -16,24 +16,18 @@ import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../../App/ut
 jest.mock('../../App/container-api')
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
-jest.mock('react-native-fs', () => ({}))
 jest.mock('react-native-vision-camera', () => {
   return require('../../__mocks__/custom/react-native-camera')
 })
 jest.mock('react-native-device-info', () => () => jest.fn())
-
-jest.useFakeTimers({ legacyFakeTimers: true })
-jest.spyOn(global, 'setTimeout')
-
 jest.mock('../../App/hooks/proof-request-templates', () => ({
   useTemplates: jest.fn(),
   useTemplate: jest.fn(),
 }))
-
 jest.mock('axios', () => ({ create: jest.fn() }))
+
+jest.useFakeTimers({ legacyFakeTimers: true })
+jest.spyOn(global, 'setTimeout')
 
 const templates = [
   {

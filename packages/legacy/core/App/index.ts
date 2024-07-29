@@ -45,6 +45,7 @@ import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 
+export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
 export { ConfigurationProvider, useConfiguration } from './contexts/configuration'

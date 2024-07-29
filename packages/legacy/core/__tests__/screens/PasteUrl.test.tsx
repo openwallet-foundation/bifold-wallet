@@ -10,10 +10,6 @@ import { container } from 'tsyringe'
 import { testIdWithKey } from '../../App/utils/testable'
 import { useTranslation } from 'react-i18next'
 
-jest.mock('react-native-fs', () => ({}))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn().mockReturnValue({ enableImplicitInvitations: true, enableReuseConnections: true }),
 }))

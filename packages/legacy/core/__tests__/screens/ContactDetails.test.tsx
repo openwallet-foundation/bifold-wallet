@@ -12,10 +12,6 @@ import { ContactStackParams, Screens } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 import { testDefaultState } from '../contexts/store'
 
-jest.mock('react-native-fs', () => ({}))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('react-native-vision-camera', () => {
   return require('../../__mocks__/custom/react-native-camera')
