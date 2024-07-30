@@ -3060,12 +3060,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hyperledger/aries-react-native-attestation@link:../::locator=AttestationExample%40workspace%3Apackages%2Freact-native-attestation%2Fexample":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-react-native-attestation@link:../::locator=AttestationExample%40workspace%3Apackages%2Freact-native-attestation%2Fexample"
-  languageName: node
-  linkType: soft
-
 "@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation"
@@ -6369,23 +6363,6 @@ __metadata:
   checksum: 51b81597a1d1d79c778b8fae48317eaad78d75223d0b7477ad2b35f47cf63b19504da430bb7a03b326e668b282874242cc123e323e57293be038684cb5e755f8
   languageName: node
   linkType: hard
-
-"AttestationExample@workspace:packages/react-native-attestation/example":
-  version: 0.0.0-use.local
-  resolution: "AttestationExample@workspace:packages/react-native-attestation/example"
-  dependencies:
-    "@babel/core": ^7.20.0
-    "@babel/preset-env": ^7.20.0
-    "@babel/runtime": ^7.20.0
-    "@hyperledger/aries-react-native-attestation": "link:../"
-    "@react-native/eslint-config": ^0.72.2
-    "@react-native/metro-config": ^0.72.11
-    babel-plugin-module-resolver: ^5.0.0
-    metro-react-native-babel-preset: 0.76.8
-    react: 18.2.0
-    react-native: 0.72.4
-  languageName: unknown
-  linkType: soft
 
 "JSONStream@npm:^1.0.4, JSONStream@npm:^1.3.5":
   version: 1.3.5
