@@ -4,13 +4,13 @@
   "description": "Mobile app attestation",
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "module": "build/index.ts",
+  "module": "build/index.js",
   "source": "src/index.ts",
+  "react-native": "src/index.ts",
   "files": [
     "src",
     "build"
   ],
-  "react-native": "src/index.ts",
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
@@ -69,6 +69,7 @@
     "react-native": "*",
     "react-native-builder-bob": "^0.21.3",
     "release-it": "^15.0.0",
+    "rimraf": "^5.0.0",
     "turbo": "^1.10.7",
     "typescript": "^5.0.4"
   },
@@ -140,7 +141,7 @@
   },
   "react-native-builder-bob": {
     "source": "src",
-    "output": "lib",
+    "output": "build",
     "targets": [
       "commonjs",
       "module",
