@@ -4720,6 +4720,7 @@ __metadata:
     react-native: "*"
     react-native-builder-bob: ^0.21.3
     release-it: ^15.0.0
+    rimraf: ^5.0.0
     turbo: ^1.10.7
     typescript: ^5.0.4
   peerDependencies:
