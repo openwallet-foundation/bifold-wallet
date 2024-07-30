@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "build": "yarn run clean && yarn run compile",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build",
+    "clean": "rimraf ./build && del-cli android/build example/android/build example/android/app/build example/ios/build",
     "compile": "tsc",
     "prepack": "bob build",
     "release": "release-it",
