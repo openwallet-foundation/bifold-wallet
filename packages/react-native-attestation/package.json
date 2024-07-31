@@ -11,7 +11,8 @@
     "src",
     "build",
     "ios",
-    "android"
+    "android",
+    "react-native-attestation.podspec"
   ],
   "scripts": {
     "test": "jest",
