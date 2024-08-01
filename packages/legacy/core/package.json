@@ -20,7 +20,7 @@
     "android": "react-native run-android",
     "postinstall": "npx patch-package",
     "ios": "npx react-native run-ios --device",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx --color .",
+    "lint": "eslint --color .",
     "build": "bob build",
     "prepack": "bob build",
     "pre-commit-lint": "npx lint-staged",
