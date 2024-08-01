@@ -17,7 +17,7 @@
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint": "eslint .",
     "build": "yarn run clean && bob build",
     "clean": "rimraf ./build && del-cli android/build ios/build",
     "compile": "tsc",
