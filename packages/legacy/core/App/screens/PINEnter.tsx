@@ -237,6 +237,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         payload: [{ loginAttempts: 0 }],
       })
 
+      // remove lockout notification if login is successful
+      dispatch({
+        type: DispatchAction.LOCKOUT_UPDATED,
+        payload: [{ displayNotification: false }],
+      })
+
       setAuthenticated(true)
       gotoPostAuthScreens()
     } catch (err: unknown) {
