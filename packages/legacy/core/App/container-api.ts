@@ -1,4 +1,10 @@
-import { Agent, BaseLogger } from '@credo-ts/core'
+import {
+  Agent,
+  BaseLogger,
+  BasicMessageRecord,
+  ProofExchangeRecord,
+  CredentialExchangeRecord as CredentialRecord,
+} from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -38,7 +44,7 @@ export const SCREEN_TOKENS = {
 } as const
 
 export const NOTIFICATION_TOKENS = {
-  CUSTOM_NOTIFICATION: 'custom.notification',
+  NOTIFICATIONS: 'notification.list',
 } as const
 
 export const STACK_TOKENS = {
@@ -110,7 +116,10 @@ export type TokenMapping = {
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
-  [TOKENS.CUSTOM_NOTIFICATION]: CustomNotification | undefined
+  [TOKENS.NOTIFICATIONS]: {
+    useNotifications: () => Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification>
+    customNotificationConfig?: CustomNotification
+  }
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]

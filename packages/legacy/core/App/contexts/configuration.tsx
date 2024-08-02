@@ -45,7 +45,6 @@ export interface ConfigurationContext {
   disableOnboardingSkip?: boolean
   useBiometry: React.FC
   enablePushNotifications?: PushNotificationConfiguration
-  useCustomNotifications: () => { total: number; notifications: any }
   whereToUseWalletUrl: string
   showScanHelp?: boolean
   showScanButton?: boolean
