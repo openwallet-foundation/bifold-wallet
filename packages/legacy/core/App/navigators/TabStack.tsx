@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { AttachTourStep } from '../components/tour/AttachTourStep'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useContainer } from '../container-api'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
@@ -20,8 +20,9 @@ import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const { useCustomNotifications } = useConfiguration()
-  const { total } = useCustomNotifications()
+  const container = useContainer()
+  const { useNotifications } = container.resolve(TOKENS.NOTIFICATIONS)
+  const notifications = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()
@@ -85,9 +86,9 @@ const TabStack: React.FC = () => {
               </AttachTourStep>
             ),
             tabBarShowLabel: false,
-            tabBarAccessibilityLabel: `${t('TabStack.Home')} (${total ?? 0})`,
+            tabBarAccessibilityLabel: `${t('TabStack.Home')} (${notifications.length ?? 0})`,
             tabBarTestID: testIdWithKey(t('TabStack.Home')),
-            tabBarBadge: total || undefined,
+            tabBarBadge: notifications.length || undefined,
             tabBarBadgeStyle: {
               marginLeft: leftMarginForDevice(),
               backgroundColor: ColorPallet.semantic.error,

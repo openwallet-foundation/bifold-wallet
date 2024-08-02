@@ -80,6 +80,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
+  const [action, setAction] = useState<any>()
+  const [closeAction, setCloseAction] = useState<any>()
   const connection = useConnectionById(notification.connectionId ?? '')
   const [details, setDetails] = useState<DisplayDetails>({
     type: InfoBoxType.Info,
@@ -136,18 +138,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     },
   })
 
-  let onPress: GenericFn = () => {
-    return
-  }
-  let onClose: GenericFn = () => {
-    return
-  }
-
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
-
-  const isReceivedProof =
-    notificationType === NotificationType.ProofRequest &&
-    (notification as ProofExchangeRecord).state === ProofState.Done
 
   const declineProofRequest = async () => {
     try {
@@ -290,7 +281,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     })
   }
 
-  const setActionForNotificationType = (notificationType: NotificationType): void => {
+  const getActionForNotificationType = (
+    notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord,
+    notificationType: NotificationType
+  ) => {
+    let onPress
+    let onClose
     switch (notificationType) {
       case NotificationType.BasicMessage:
         onPress = () => {
@@ -311,7 +307,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         onClose = toggleDeclineModalVisible
         break
       case NotificationType.ProofRequest:
-        if (isReceivedProof) {
+        if (
+          (notification as ProofExchangeRecord).state === ProofState.Done ||
+          (notification as ProofExchangeRecord).state === ProofState.PresentationReceived
+        ) {
           onPress = () => {
             navigation.getParent()?.navigate(Stacks.ContactStack, {
               screen: Screens.ProofDetails,
@@ -352,9 +351,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       default:
         throw new Error('NotificationType was not set correctly.')
     }
+    return { onPress, onClose }
   }
 
-  setActionForNotificationType(notificationType)
+  useEffect(() => {
+    const { onPress, onClose } = getActionForNotificationType(notification, notificationType)
+    setAction(() => onPress)
+    setCloseAction(() => onClose)
+  }, [notification])
 
   useEffect(() => {
     const detailsPromise = async () => {
@@ -421,6 +425,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
   }, [details])
 
+  const isReceivedProof =
+    notificationType === NotificationType.ProofRequest &&
+    ((notification as ProofExchangeRecord).state === ProofState.Done ||
+      (notification as ProofExchangeRecord).state === ProofState.PresentationSent)
   return (
     <View style={[styles.container, styleConfig.containerStyle]} testID={testIdWithKey('NotificationListItem')}>
       <View style={styles.headerContainer}>
@@ -441,7 +449,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
               accessibilityLabel={t('Global.Dismiss')}
               accessibilityRole={'button'}
               testID={testIdWithKey(`Dismiss${notificationType}`)}
-              onPress={onClose}
+              onPress={closeAction}
               hitSlop={hitSlop}
             >
               <Icon name={'close'} size={iconSize} color={styleConfig.iconColor} />
@@ -458,7 +466,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           accessibilityLabel={details.buttonTitle ?? t('Global.View')}
           testID={testIdWithKey(`View${notificationType}${isReceivedProof ? 'Received' : ''}`)}
           buttonType={ButtonType.Primary}
-          onPress={onPress}
+          onPress={action}
         />
       </View>
       {commonRemoveModal()}

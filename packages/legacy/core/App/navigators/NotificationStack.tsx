@@ -17,7 +17,7 @@ const NotificationStack: React.FC = () => {
   const { t } = useTranslation()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const container = useContainer()
-  const customNotification = container.resolve(TOKENS.CUSTOM_NOTIFICATION)
+  const { customNotificationConfig: customNotification } = container.resolve(TOKENS.NOTIFICATIONS)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

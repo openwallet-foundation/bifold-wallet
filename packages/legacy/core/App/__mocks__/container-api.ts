@@ -15,6 +15,8 @@ export const useContainer = jest.fn().mockReturnValue({
         return resolver
       case T.CRED_HELP_ACTION_OVERRIDES:
         return []
+      case T.NOTIFICATIONS:
+        return { useNotifications: jest.fn(), customNotificationConfig: undefined }
       default:
         return undefined
     }
