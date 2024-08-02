@@ -43,7 +43,7 @@ describe('Connection Modal Component', () => {
 
     // @ts-ignore
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [] }
         }
@@ -87,7 +87,7 @@ describe('Connection Modal Component', () => {
   test('Dismiss on demand', async () => {
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [proofNotif] }
         }
@@ -135,7 +135,7 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [{ ...proofNotif, threadId }] }
         }
@@ -171,7 +171,7 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [{ ...proofNotif, threadId }] }
         }
@@ -210,7 +210,7 @@ describe('Connection Modal Component', () => {
 
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [{ ...offerNotif, threadId }] }
         }
@@ -249,7 +249,7 @@ describe('Connection Modal Component', () => {
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [{ ...proofNotif, threadId }] }
         }
@@ -288,7 +288,7 @@ describe('Connection Modal Component', () => {
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [{ ...proofNotif, threadId }] }
         }
@@ -327,7 +327,7 @@ describe('Connection Modal Component', () => {
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
     // @ts-ignore-next-line
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [{ ...proofNotif, threadId, state: 'request-received' }] }
         }

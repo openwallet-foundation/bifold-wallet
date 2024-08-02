@@ -285,8 +285,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord,
     notificationType: NotificationType
   ) => {
-    let onPress = () => {}
-    let onClose = () => {}
+    let onPress
+    let onClose
     switch (notificationType) {
       case NotificationType.BasicMessage:
         onPress = () => {

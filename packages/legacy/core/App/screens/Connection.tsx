@@ -1,4 +1,4 @@
-import { BasicMessageRecord } from '@credo-ts/core'
+import { BasicMessageRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@credo-ts/core'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -212,7 +212,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (!state.inProgress || state.notificationRecord) {
       return
     }
-
+    type notCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
     for (const notification of notifications) {
       // no action taken for BasicMessageRecords
       if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
@@ -221,10 +221,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
 
       if (
-        (connection && (notification as any).connectionId === connection.id) ||
-        oobRecord?.getTags()?.invitationRequestsThreadIds?.includes((notification as any)?.threadId)
+        (connection && (notification as notCustomNotification).connectionId === connection.id) ||
+        oobRecord?.getTags()?.invitationRequestsThreadIds?.includes((notification as notCustomNotification)?.threadId ?? "")
       ) {
-        logger?.info(`Connection: Handling notification ${(notification as any).id}`)
+        logger?.info(`Connection: Handling notification ${(notification as notCustomNotification).id}`)
 
         dispatch({ notificationRecord: notification })
         break

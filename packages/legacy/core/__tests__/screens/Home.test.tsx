@@ -122,7 +122,7 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     // @ts-ignore
     useContainer.mockReturnValue({
-      resolve: (a: String) => {
+      resolve: (a: string) => {
         if (a === TOKENS.NOTIFICATIONS) {
           return { useNotifications: () => [...testBasicMessages, ...testProofRecords, ...testCredentialRecords] }
         }
