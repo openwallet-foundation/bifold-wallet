@@ -50,9 +50,9 @@ import {
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
 import { isOpenIdPresentationRequest } from './parsers'
+import { LedgerNodeList } from '../contexts/network'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
-
 export { parsedCredDefName } from './cred-def'
 export { parsedSchema } from './schema'
 
@@ -1164,14 +1164,46 @@ export function getProofEventLabel(record: ProofExchangeRecord) {
   }
 }
 
-export function getMessageEventRole(record: BasicMessageRecord) {
+export const getMessageEventRole = (record: BasicMessageRecord) => {
   return record.role === BasicMessageRole.Sender ? Role.me : Role.them
 }
 
-export function generateRandomWalletName() {
+export const generateRandomWalletName = () => {
   let name = 'My Wallet - '
   for (let i = 0; i < 4; i++) {
     name = name.concat(Math.floor(Math.random() * 10).toString())
   }
   return name
+}
+
+export const sampleIndyVdrTransactions = (
+  raw_transactions: Array<{ status: string; value: any }>,
+  size = 10
+): LedgerNodeList => {
+  return (
+    raw_transactions
+      // @ts-ignore:next-line
+      .map((item) => item.value)
+      // @ts-ignore:next-line
+      .flatMap(({ transactions }) =>
+        transactions.map(
+          ({
+            txn: {
+              data: {
+                // @ts-ignore:next-line
+                data: { client_ip, client_port },
+              },
+            },
+          }) => ({ client_ip, client_port })
+        )
+      )
+      // @ts-ignore:next-line
+      .filter(({ client_ip, client_port }) => client_ip !== undefined && client_port !== undefined)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, size)
+      .map(({ client_ip, client_port }) => ({
+        host: client_ip,
+        port: client_port,
+      }))
+  )
 }

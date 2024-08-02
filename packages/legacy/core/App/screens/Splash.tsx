@@ -25,6 +25,8 @@ import { Screens, Stacks } from '../types/navigators'
 import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { useNetwork } from '../contexts/network'
+import { sampleIndyVdrTransactions } from '../utils/helpers'
 
 const OnboardingVersion = 1
 
@@ -90,6 +92,7 @@ const resumeOnboardingAt = (
 const Splash: React.FC = () => {
   const { showPreface, enablePushNotifications } = useConfiguration()
   const { setAgent } = useAgent()
+  const { setLedgerNodes } = useNetwork()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -266,8 +269,14 @@ const Splash: React.FC = () => {
 
         const credDefs = container.resolve(TOKENS.CACHE_CRED_DEFS)
         const schemas = container.resolve(TOKENS.CACHE_SCHEMAS)
-
         const poolService = newAgent.dependencyManager.resolve(IndyVdrPoolService)
+
+        await poolService.refreshPoolConnections()
+        const raw_transactions = await poolService.getAllPoolTransactions()
+        // @ts-ignore:next-line
+        const transactions = sampleIndyVdrTransactions(raw_transactions)
+        setLedgerNodes(transactions)
+
         credDefs.forEach(async ({ did, id }) => {
           const pool = await poolService.getPoolForDid(newAgent.context, did)
           const credDefRequest = new GetCredentialDefinitionRequest({ credentialDefinitionId: id })

@@ -3,14 +3,16 @@ import * as React from 'react'
 import { createContext, useContext, useState } from 'react'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
-import { fetchLedgerNodes, canConnectToLedgerNode } from '../utils/ledger'
+import { canConnectToLedgerNode } from '../utils/ledger'
 
+export type LedgerNodeList = Array<{ host: string; port: number }>
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean
   assertConnectedNetwork: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertLedgerConnectivity: () => Promise<boolean>
+  assertLedgerConnectivity: () => Promise<boolean | undefined>
+  setLedgerNodes: (nodes: LedgerNodeList) => void
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
@@ -18,6 +20,11 @@ export const NetworkContext = createContext<NetworkContext>(null as unknown as N
 export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const netInfo = useNetInfo()
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
+  let currentNodes: LedgerNodeList | undefined = undefined
+
+  const setLedgerNodes = (nodes: LedgerNodeList) => {
+    currentNodes = nodes
+  }
 
   const displayNetInfoModal = () => {
     setIsNetInfoModalDisplayed(true)
@@ -40,14 +47,19 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return isConnected
   }
 
-  const assertLedgerConnectivity = async (): Promise<boolean> => {
-    const nodes = fetchLedgerNodes()
+  const assertLedgerConnectivity = async (): Promise<boolean | undefined> => {
+    if (typeof currentNodes === 'undefined') {
+      return undefined
+    }
 
-    if (typeof nodes === 'undefined' || nodes.length === 0) {
+    if (currentNodes.length === 0) {
       return false
     }
 
-    const connections = await Promise.all(nodes.map((n: { host: string; port: number }) => canConnectToLedgerNode(n)))
+    const connections = await Promise.all(
+      currentNodes.map((n: { host: string; port: number }) => canConnectToLedgerNode(n))
+    )
+
     return connections.includes(true)
   }
 
@@ -59,6 +71,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
         displayNetInfoModal,
         hideNetInfoModal,
         assertLedgerConnectivity,
+        setLedgerNodes,
       }}
     >
       {children}
