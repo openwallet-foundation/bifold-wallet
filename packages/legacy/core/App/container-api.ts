@@ -134,6 +134,7 @@ export type TokenMapping = {
 export interface Container {
   init(): Container
   resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K]
+  resolveAll<K extends keyof TokenMapping, T extends K[]>(tokens: [...T]): { [I in keyof T]: TokenMapping[T[I]] }
   get container(): DependencyContainer
 }
 
@@ -143,3 +144,7 @@ export const ContainerProvider = ContainerContext.Provider
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 export const useContainer = () => useContext(ContainerContext)!
+
+export const useServices = <K extends keyof TokenMapping, T extends K[]>(tokens: [...T]) => {
+  return useContainer().resolveAll(tokens)
+}
