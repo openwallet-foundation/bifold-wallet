@@ -33,16 +33,6 @@ import {
   Tours as ToursState,
 } from './types/state'
 
-//TODO: Remove after merging
-//https://github.com/openwallet-foundation/bifold-wallet/pull/1213
-const defaultCustomNotifications = {
-  component: () => null,
-  onCloseAction: () => null,
-  title: '',
-  description: '',
-  buttonTitle: '',
-  pageTitle: '',
-}
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer

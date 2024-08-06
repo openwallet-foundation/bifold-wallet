@@ -36,7 +36,6 @@ import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
 import { i18n } from '../localization/index'
-import { receiveCredentialFromOpenId4VciOffer } from '../modules/openid/resolver'
 import { Role } from '../types/chat'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
@@ -1031,8 +1030,8 @@ export const connectFromScanOrDeepLink = async (
         })
       }
     } else if (invitationData.type === 'openid-credential-offer') {
-      const record = await receiveCredentialFromOpenId4VciOffer({ agent: agent, uri: uri })
       //TODO: Impliment Navigation to display credential
+       // const record = await receiveCredentialFromOpenId4VciOffer({ agent: agent, uri: uri })
     } else {
       logger.error('Primary error: Invitation not recognised')
     }
