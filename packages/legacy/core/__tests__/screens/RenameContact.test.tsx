@@ -8,10 +8,6 @@ import React from 'react'
 import RenameContact from '../../App/screens/RenameContact'
 import { testIdWithKey } from '../../App/utils/testable'
 
-jest.mock('react-native-fs', () => ({}))
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('react-native-device-info', () => {
   return {

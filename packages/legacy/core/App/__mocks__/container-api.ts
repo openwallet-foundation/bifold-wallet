@@ -9,16 +9,18 @@ const resolver = new DefaultOCABundleResolver(require('../../App/assets/oca-bund
 })
 
 export const useContainer = jest.fn().mockReturnValue({
-  resolve: (token: typeof T)=>{
+  resolve: (token: typeof T) => {
     switch (token) {
       case T.UTIL_OCA_RESOLVER:
         return resolver
       case T.CRED_HELP_ACTION_OVERRIDES:
         return []
+      case T.NOTIFICATIONS:
+        return { useNotifications: jest.fn(), customNotificationConfig: undefined }
       default:
         return undefined
     }
-  }
+  },
 })
 
 // export const useContainer = jest.fn().mockReturnValue({

@@ -36,9 +36,6 @@ jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
-jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
-jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('@credo-ts/anoncreds', () => {
   return {
     ...jest.requireActual('@credo-ts/anoncreds'),

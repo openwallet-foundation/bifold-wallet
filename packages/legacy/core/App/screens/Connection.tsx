@@ -1,3 +1,4 @@
+import { BasicMessageRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@credo-ts/core'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -10,7 +11,6 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connections'
-import { useNotifications } from '../hooks/notifications'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -39,11 +39,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
-  const { notifications } = useNotifications()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
   const container = useContainer()
   const logger = container.resolve(TOKENS.UTIL_LOGGER)
+  const { useNotifications } = container.resolve(TOKENS.NOTIFICATIONS)
+  const notifications = useNotifications()
   const oobRecord = useOutOfBandById(oobRecordId)
   const connection = useConnectionByOutOfBandId(oobRecordId)
 
@@ -211,19 +212,19 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (!state.inProgress || state.notificationRecord) {
       return
     }
-
+    type notCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
     for (const notification of notifications) {
       // no action taken for BasicMessageRecords
-      if (notification.type === 'BasicMessageRecord') {
+      if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
         logger?.info('Connection: BasicMessageRecord, skipping')
         continue
       }
 
       if (
-        (connection && notification.connectionId === connection.id) ||
-        oobRecord?.getTags()?.invitationRequestsThreadIds?.includes(notification?.threadId)
+        (connection && (notification as notCustomNotification).connectionId === connection.id) ||
+        oobRecord?.getTags()?.invitationRequestsThreadIds?.includes((notification as notCustomNotification)?.threadId ?? "")
       ) {
-        logger?.info(`Connection: Handling notification ${notification.id}`)
+        logger?.info(`Connection: Handling notification ${(notification as notCustomNotification).id}`)
 
         dispatch({ notificationRecord: notification })
         break

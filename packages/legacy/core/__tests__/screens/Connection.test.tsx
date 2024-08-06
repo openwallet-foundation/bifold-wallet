@@ -7,11 +7,11 @@ import React from 'react'
 
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { useOutOfBandById, useConnectionByOutOfBandId } from '../../App/hooks/connections'
-import { useNotifications } from '../../App/hooks/notifications'
 import ConnectionModal from '../../App/screens/Connection'
 import { testIdWithKey } from '../../App/utils/testable'
 import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
+import { TOKENS, useContainer } from '../../App/container-api'
 
 const oobRecordPath = path.join(__dirname, '../fixtures/oob-record.json')
 const oobRecord = JSON.parse(fs.readFileSync(oobRecordPath, 'utf8'))
@@ -27,8 +27,9 @@ jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 jest.mock('../../App/container-api')
 
-jest.mock('../../App/hooks/notifications', () => ({
-  useNotifications: jest.fn(),
+jest.mock('../../App/container-api', () => ({
+  ...jest.requireActual('../../App/container-api'),
+  useContainer: jest.fn().mockReturnValue({ resolve: (a: any) => undefined })
 }))
 
 jest.mock('../../App/hooks/connections', () => ({
@@ -39,8 +40,15 @@ jest.mock('../../App/hooks/connections', () => ({
 
 describe('Connection Modal Component', () => {
   beforeEach(() => {
-    // @ts-ignore-next-line
-    useNotifications.mockReturnValue({ total: 0, notifications: [] })
+
+    // @ts-ignore
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [] }
+        }
+      }
+    })
     // @ts-ignore-next-line
     // useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
     jest.clearAllMocks()
@@ -78,7 +86,13 @@ describe('Connection Modal Component', () => {
 
   test('Dismiss on demand', async () => {
     // @ts-ignore-next-line
-    useNotifications.mockReturnValueOnce({ total: 1, notifications: [proofNotif] })
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [proofNotif] }
+        }
+      }
+    })
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
         <ConnectionModal navigation={useNavigation()} route={props as any} />
@@ -119,10 +133,13 @@ describe('Connection Modal Component', () => {
       // _tags: { ...oobRecord._tags, invitationRequestsThreadIds: [threadId] },
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
     })
-    // @ts-ignore-next-lin
-    useNotifications.mockReturnValue({
-      total: 1,
-      notifications: [{ ...proofNotif, threadId }],
+    // @ts-ignore-next-line
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [{ ...proofNotif, threadId }] }
+        }
+      }
     })
 
     const element = (
@@ -152,10 +169,13 @@ describe('Connection Modal Component', () => {
       // _tags: { ...oobRecord._tags, invitationRequestsThreadIds: [threadId] },
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
     })
-    // @ts-ignore-next-lin
-    useNotifications.mockReturnValue({
-      total: 1,
-      notifications: [{ ...proofNotif, threadId }],
+    // @ts-ignore-next-line
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [{ ...proofNotif, threadId }] }
+        }
+      }
     })
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
@@ -187,10 +207,14 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-lin
-    useNotifications.mockReturnValue({
-      total: 1,
-      notifications: [{ ...offerNotif, threadId }],
+
+    // @ts-ignore-next-line
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [{ ...offerNotif, threadId }] }
+        }
+      }
     })
 
     const element = (
@@ -223,10 +247,13 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-lin
-    useNotifications.mockReturnValue({
-      total: 1,
-      notifications: [{ ...proofNotif, threadId }],
+    // @ts-ignore-next-line
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [{ ...proofNotif, threadId }] }
+        }
+      }
     })
 
     const element = (
@@ -259,10 +286,13 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-lin
-    useNotifications.mockReturnValue({
-      total: 1,
-      notifications: [{ ...proofNotif, threadId }],
+    // @ts-ignore-next-line
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [{ ...proofNotif, threadId }] }
+        }
+      }
     })
 
     const element = (
@@ -295,10 +325,13 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-lin
-    useNotifications.mockReturnValue({
-      total: 1,
-      notifications: [{ ...proofNotif, threadId, state: 'request-received' }],
+    // @ts-ignore-next-line
+    useContainer.mockReturnValue({
+      resolve: (a: string) => {
+        if (a === TOKENS.NOTIFICATIONS) {
+          return { useNotifications: () => [{ ...proofNotif, threadId, state: 'request-received' }] }
+        }
+      }
     })
 
     const element = (

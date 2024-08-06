@@ -1,4 +1,10 @@
-import { Agent, BaseLogger } from '@credo-ts/core'
+import {
+  Agent,
+  BaseLogger,
+  BasicMessageRecord,
+  ProofExchangeRecord,
+  CredentialExchangeRecord as CredentialRecord,
+} from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -10,6 +16,7 @@ import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
+import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 import { CustomNotification } from './types/notification'
@@ -37,7 +44,7 @@ export const SCREEN_TOKENS = {
 } as const
 
 export const NOTIFICATION_TOKENS = {
-  CUSTOM_NOTIFICATION: 'custom.notification',
+  NOTIFICATIONS: 'notification.list',
 } as const
 
 export const STACK_TOKENS = {
@@ -75,6 +82,7 @@ export const UTILITY_TOKENS = {
   UTIL_OCA_RESOLVER: 'utility.oca-resolver',
   UTIL_LEDGERS: 'utility.ledgers',
   UTIL_PROOF_TEMPLATE: 'utility.proof-template',
+  UTIL_ATTESTATION_MONITOR: 'utility.attestation-monitor',
 } as const
 
 export const TOKENS = {
@@ -108,7 +116,10 @@ export type TokenMapping = {
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
-  [TOKENS.CUSTOM_NOTIFICATION]: CustomNotification | undefined
+  [TOKENS.NOTIFICATIONS]: {
+    useNotifications: () => Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification>
+    customNotificationConfig?: CustomNotification
+  }
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
@@ -116,6 +127,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
+  [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
 }
 

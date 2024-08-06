@@ -12,7 +12,7 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -36,6 +36,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
+import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
@@ -74,20 +75,21 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const outOfBandInvitation = proof?.parentThreadId
     ? useOutOfBandByReceivedInvitationId(proof?.parentThreadId)?.outOfBandInvitation
     : undefined
-  const { enableTours: enableToursConfig, useAttestation } = useConfiguration()
+  const { enableTours: enableToursConfig } = useConfiguration()
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
+  const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const proofConnectionLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
   )
-  const { loading: attestationLoading } = useAttestation ? useAttestation() : { loading: false }
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const attestationMonitor = useContainer().resolve(TOKENS.UTIL_ATTESTATION_MONITOR)
 
   const hasMatchingCredDef = useMemo(
     () => activeCreds.some((cred) => cred.credExchangeRecord !== undefined),
@@ -141,6 +143,37 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       paddingHorizontal: 10,
     },
   })
+
+  useEffect(() => {
+    if (!attestationMonitor) {
+      return
+    }
+
+    const handleStartedAttestation = () => {
+      setAttestationLoading(true)
+    }
+
+    const handleStartedCompleted = () => {
+      setAttestationLoading(false)
+    }
+
+    const handleFailedAttestation = (error: BifoldError) => {
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    const subscriptions = Array<EmitterSubscription>()
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
+    subscriptions.push(
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
+    )
+
+    return () => {
+      subscriptions.forEach((subscription) => subscription.remove())
+    }
+  }, [attestationMonitor])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
