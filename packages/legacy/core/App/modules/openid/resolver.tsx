@@ -10,7 +10,8 @@ import {
   W3cCredentialRecord,
   getJwkFromKey,
 } from '@credo-ts/core'
-import { OpenId4VciCredentialFormatProfile, OpenId4VciSupportedCredentialFormats } from '@credo-ts/openid4vc'
+import { OpenId4VciCredentialFormatProfile, OpenId4VciCredentialSupportedWithId, OpenId4VciSupportedCredentialFormats } from '@credo-ts/openid4vc'
+import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
 
 export type OpenID4VCIParam = {
   agent: Agent
@@ -144,12 +145,12 @@ export const receiveCredentialFromOpenId4VciOffer = async ({ agent, data, uri }:
     })
   }
 
-  // const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
-  //   resolvedCredentialOffer.offeredCredentials[0] as OpenId4VciCredentialSupportedWithId,
-  //   resolvedCredentialOffer.metadata
-  // )
+  const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
+    resolvedCredentialOffer.offeredCredentials[0] as OpenId4VciCredentialSupportedWithId,
+    resolvedCredentialOffer.metadata
+  )
 
-  // setOpenId4VcCredentialMetadata(record, openId4VcMetadata)
+  setOpenId4VcCredentialMetadata(record, openId4VcMetadata)
   console.log("$$openID Cred:", JSON.stringify(record))
   return record
 }
