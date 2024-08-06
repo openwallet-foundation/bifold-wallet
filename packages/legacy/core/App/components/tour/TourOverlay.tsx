@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState, useEffect } from 'react'
-import { ColorValue, LayoutRectangle, Modal, View, ViewStyle, useWindowDimensions } from 'react-native'
+import { ColorValue, LayoutRectangle, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { Defs, Mask, Rect, Svg } from 'react-native-svg'
 
 import { tourMargin } from '../../constants'
