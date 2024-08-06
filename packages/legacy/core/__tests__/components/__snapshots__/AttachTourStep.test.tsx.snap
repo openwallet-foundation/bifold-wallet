@@ -1,25 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AttachTourStep Renders properly with defaults 1`] = `
-Array [
-  <View
-    collapsable={false}
-    focusable={false}
-    style={
-      Object {
-        "alignSelf": "center",
-      }
+<View
+  collapsable={false}
+  focusable={false}
+  style={
+    Object {
+      "alignSelf": "center",
     }
-    testID="com.ariesbifold:id/AttachTourStep"
-  >
-    <View />
-  </View>,
-  <Modal
-    animationType="fade"
-    hardwareAccelerated={false}
-    presentationStyle="overFullScreen"
-    transparent={true}
-    visible={false}
-  />,
-]
+  }
+  testID="com.ariesbifold:id/AttachTourStep"
+>
+  <View />
+</View>
 `;
