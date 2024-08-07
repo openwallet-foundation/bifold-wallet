@@ -152,7 +152,7 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
             <Text
@@ -191,7 +191,7 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
                 Object {
                   "busy": undefined,
                   "checked": undefined,
-                  "disabled": false,
+                  "disabled": true,
                   "expanded": undefined,
                   "selected": undefined,
                 }
@@ -216,7 +216,7 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "backgroundColor": "#42803E",
+                  "backgroundColor": "rgba(53, 130, 63, 0.35)",
                   "borderRadius": 4,
                   "opacity": 1,
                   "padding": 16,
@@ -242,7 +242,12 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
                       false,
                       false,
                     ]

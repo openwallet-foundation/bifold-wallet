@@ -4,7 +4,6 @@ import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { ReactTestInstance } from 'react-test-renderer'
 
 import CredentialCard from '../../App/components/misc/CredentialCard'
 import { ConfigurationContext } from '../../App/contexts/configuration'

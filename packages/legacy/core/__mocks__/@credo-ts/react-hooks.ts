@@ -92,6 +92,7 @@ const useAgent = () => ({
     oob: mockOobModule,
     context: mockAgentContext,
     receiveMessage: jest.fn(),
+    config: {logger: {error: jest.fn()}}
   },
 })
 const useCredentialById = jest.fn()

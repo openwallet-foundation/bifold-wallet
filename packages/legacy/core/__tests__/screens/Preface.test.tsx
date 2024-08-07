@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react-native'
+import { act, fireEvent, render, screen } from '@testing-library/react-native'
 import React from 'react'
 
 import Preface from '../../App/screens/Preface'
@@ -11,10 +11,12 @@ describe('Preface Screen', () => {
   })
 
   test('Button enabled by checkbox being checked', async () => {
-    const tree = render(<Preface />)
-    const { getByTestId } = tree
-    const checkbox = getByTestId(testIdWithKey('IAgree'))
-    fireEvent(checkbox, 'press')
-    expect(tree).toMatchSnapshot()
+    render(<Preface />)
+
+    await act(()=>{
+      const checkbox = screen.getByTestId(testIdWithKey('IAgree'))
+      fireEvent(checkbox, 'press')
+      expect(screen).toMatchSnapshot()
+    })
   })
 })
