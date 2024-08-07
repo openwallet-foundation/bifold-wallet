@@ -14,7 +14,7 @@ const NetInfo: React.FC = () => {
   useEffect(() => {
     if (isConnected) {
       assertLedgerConnectivity().then((status) => {
-        if (status) {
+        if (typeof status === 'undefined' || status) {
           return
         }
 
