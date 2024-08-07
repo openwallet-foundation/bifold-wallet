@@ -2,7 +2,6 @@ import {
   AgentProvider,
   AnimatedComponentsProvider,
   AuthProvider,
-  CommonUtilProvider,
   ConfigurationProvider,
   ErrorModal,
   NetInfo,
@@ -54,31 +53,29 @@ const App = () => {
         <ThemeProvider value={theme}>
           <AnimatedComponentsProvider value={animatedComponents}>
             <ConfigurationProvider value={defaultConfiguration}>
-              <CommonUtilProvider>
-                <AuthProvider>
-                  <NetworkProvider>
-                    <StatusBar
-                      hidden={false}
-                      barStyle="light-content"
-                      backgroundColor={theme.ColorPallet.brand.primary}
-                      translucent={false}
-                    />
-                    <NetInfo />
-                    <ErrorModal />
-                    <TourProvider
-                      homeTourSteps={homeTourSteps}
-                      credentialsTourSteps={credentialsTourSteps}
-                      credentialOfferTourSteps={credentialOfferTourSteps}
-                      proofRequestTourSteps={proofRequestTourSteps}
-                      overlayColor={'gray'}
-                      overlayOpacity={0.7}
-                    >
-                      <RootStack />
-                    </TourProvider>
-                    <Toast topOffset={15} config={toastConfig} />
-                  </NetworkProvider>
-                </AuthProvider>
-              </CommonUtilProvider>
+              <AuthProvider>
+                <NetworkProvider>
+                  <StatusBar
+                    hidden={false}
+                    barStyle="light-content"
+                    backgroundColor={theme.ColorPallet.brand.primary}
+                    translucent={false}
+                  />
+                  <NetInfo />
+                  <ErrorModal />
+                  <TourProvider
+                    homeTourSteps={homeTourSteps}
+                    credentialsTourSteps={credentialsTourSteps}
+                    credentialOfferTourSteps={credentialOfferTourSteps}
+                    proofRequestTourSteps={proofRequestTourSteps}
+                    overlayColor={'gray'}
+                    overlayOpacity={0.7}
+                  >
+                    <RootStack />
+                  </TourProvider>
+                  <Toast topOffset={15} config={toastConfig} />
+                </NetworkProvider>
+              </AuthProvider>
             </ConfigurationProvider>
           </AnimatedComponentsProvider>
         </ThemeProvider>

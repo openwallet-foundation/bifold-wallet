@@ -10,7 +10,7 @@ jest.mock('../../App/contexts/configuration', () => ({
   useConfiguration: jest.fn(),
 }))
 
-describe('ErrorModal Component', () => {
+describe('InfoBox Component', () => {
   test('Renders correctly as Info', async () => {
     const tree = render(
       <InfoBox
@@ -95,6 +95,7 @@ describe('ErrorModal Component', () => {
 
     expect(callToAction).toBeCalledTimes(1)
   })
+
   beforeEach(() => {
     // @ts-ignore-next-line
     useConfiguration.mockReturnValue({ showDetailsInfo: true })

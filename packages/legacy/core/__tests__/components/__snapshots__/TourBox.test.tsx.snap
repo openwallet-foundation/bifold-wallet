@@ -1,282 +1,273 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TourBox Renders properly with defaults 1`] = `
-Array [
+<View
+  onTouchEnd={[Function]}
+  onTouchStart={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#313132",
+      "borderColor": "#0099FF",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "flex": 1,
+      "margin": "auto",
+      "padding": 20,
+    }
+  }
+>
   <View
-    onTouchEnd={[Function]}
-    onTouchStart={[Function]}
     style={
       Object {
-        "backgroundColor": "#313132",
-        "borderColor": "#0099FF",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "flex": 1,
-        "margin": "auto",
-        "padding": 20,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
       }
     }
   >
     <View
       style={
         Object {
-          "flexDirection": "row",
-          "justifyContent": "space-between",
+          "flexGrow": 1,
         }
       }
     >
-      <View
+      <Text
+        allowFontScaling={false}
         style={
           Object {
-            "flexGrow": 1,
+            "alignSelf": "flex-start",
+            "color": "#FFFFFF",
+            "fontSize": 26,
+            "fontWeight": "bold",
           }
         }
+        testID="com.ariesbifold:id/HeaderText"
+      >
+        Title
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "alignSelf": "flex-end",
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityLabel="Global.Close"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/Close"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#0099FF",
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginVertical": 16,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View>
+      <View
+        accessibilityLabel="Left"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/Back"
       >
         <Text
           allowFontScaling={false}
           style={
             Object {
-              "alignSelf": "flex-start",
-              "color": "#FFFFFF",
-              "fontSize": 26,
+              "color": "#42803E",
+              "fontSize": 18,
               "fontWeight": "bold",
             }
           }
-          testID="com.ariesbifold:id/HeaderText"
         >
-          Title
+          Left
         </Text>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "alignSelf": "flex-end",
-            },
-          ]
-        }
-      >
-        <View
-          accessibilityLabel="Global.Close"
-          accessibilityRole="button"
-          accessibilityState={
-            Object {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            Object {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 44,
-              "left": 44,
-              "right": 44,
-              "top": 44,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="com.ariesbifold:id/Close"
-        >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              Array [
-                Object {
-                  "color": "#0099FF",
-                  "fontSize": 30,
-                },
-                undefined,
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
       </View>
     </View>
     <View
       style={
         Object {
-          "flex": 1,
-          "marginVertical": 16,
+          "alignSelf": "center",
+          "flexDirection": "row",
         }
       }
     />
-    <View
-      style={
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "space-around",
-        }
-      }
-    >
-      <View>
-        <View
-          accessibilityLabel="Left"
-          accessibilityRole="button"
-          accessibilityState={
-            Object {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            Object {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 44,
-              "left": 44,
-              "right": 44,
-              "top": 44,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="com.ariesbifold:id/Back"
-        >
-          <Text
-            allowFontScaling={false}
-            style={
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
-            }
-          >
-            Left
-          </Text>
-        </View>
-      </View>
+    <View>
       <View
+        accessibilityLabel="Right"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "alignSelf": "center",
-            "flexDirection": "row",
+            "opacity": 1,
           }
         }
-      />
-      <View>
-        <View
-          accessibilityLabel="Right"
-          accessibilityRole="button"
-          accessibilityState={
-            Object {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            Object {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 44,
-              "left": 44,
-              "right": 44,
-              "top": 44,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+        testID="com.ariesbifold:id/Next"
+      >
+        <Text
+          allowFontScaling={false}
           style={
             Object {
-              "opacity": 1,
+              "color": "#42803E",
+              "fontSize": 18,
+              "fontWeight": "bold",
             }
           }
-          testID="com.ariesbifold:id/Next"
         >
-          <Text
-            allowFontScaling={false}
-            style={
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
-            }
-          >
-            Right
-          </Text>
-        </View>
+          Right
+        </Text>
       </View>
     </View>
-  </View>,
-  <Modal
-    animationType="fade"
-    hardwareAccelerated={false}
-    presentationStyle="overFullScreen"
-    transparent={true}
-    visible={false}
-  />,
-]
+  </View>
+</View>
 `;

@@ -1,11 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SpotCutout Renders properly with defaults 1`] = `
-<Modal
-  animationType="fade"
-  hardwareAccelerated={false}
-  presentationStyle="overFullScreen"
-  transparent={true}
-  visible={false}
-/>
-`;
+exports[`SpotCutout Renders properly with defaults 1`] = `null`;
