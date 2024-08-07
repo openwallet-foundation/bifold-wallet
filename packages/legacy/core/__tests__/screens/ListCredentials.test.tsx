@@ -10,6 +10,7 @@ import { ConfigurationContext } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListCredentials from '../../App/screens/ListCredentials'
 import configurationContext from '../contexts/configuration'
+import { ReactTestInstance } from 'react-test-renderer'
 
 interface CredentialContextInterface {
   loading: boolean
