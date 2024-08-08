@@ -23,9 +23,10 @@ describe('ListContacts Component', () => {
         <ListContacts navigation={navigation as any} />
       </ConfigurationContext.Provider>
     )
-    await waitFor(() => {})
-    await new Promise((r) => setTimeout(r, 2000))
-    expect(tree).toMatchSnapshot()
+    await waitFor(async () => {
+      await tree.findByText('Faber', { exact: true })
+      expect(tree).toMatchSnapshot()
+    })
   })
 
   test('pressing on a contact in the list takes the user to a contact history screen', async () => {

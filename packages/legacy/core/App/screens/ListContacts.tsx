@@ -64,7 +64,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       const error = new BifoldError(t('Error.Title1046'), t('Error.Message1046'), (err as Error)?.message ?? err, 1046)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     })
-  }, [agent])
+  }, [])
 
   const onPressAddContact = () => {
     navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan, params: { defaultToConnect: true } })
