@@ -5,18 +5,24 @@ import Preface from '../../App/screens/Preface'
 import { testIdWithKey } from '../../App/utils/testable'
 
 describe('Preface Screen', () => {
+  beforeEach(()=>{
+    jest.useFakeTimers()
+  })
+  afterEach(()=>{
+    jest.clearAllTimers()
+  })
   test('Renders correctly', async () => {
     const tree = render(<Preface />)
     expect(tree).toMatchSnapshot()
   })
-
   test('Button enabled by checkbox being checked', async () => {
     render(<Preface />)
 
-    await act(()=>{
-      const checkbox = screen.getByTestId(testIdWithKey('IAgree'))
-      fireEvent(checkbox, 'press')
-      expect(screen).toMatchSnapshot()
-    })
+    
+    //expect((await screen.findByTestId(testIdWithKey('IAgree')))).toBe(true)
+    const checkbox = await screen.findByTestId(testIdWithKey('IAgree'))
+    fireEvent(checkbox, 'press')
+    
+    expect(screen).toMatchSnapshot()
   })
 })

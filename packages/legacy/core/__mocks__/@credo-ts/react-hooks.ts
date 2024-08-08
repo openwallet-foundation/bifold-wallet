@@ -82,7 +82,7 @@ const mockAgentContext = {
     resolve: jest.fn().mockReturnValue(mockBasicMessageRepository),
   },
 }
-const useAgent = () => ({
+const agent = {
   agent: {
     credentials: mockCredentialModule,
     proofs: mockProofModule,
@@ -94,7 +94,10 @@ const useAgent = () => ({
     receiveMessage: jest.fn(),
     config: {logger: {error: jest.fn()}}
   },
-})
+}
+
+//mocked react hooks should return singleton objects to avoid unecessary re-renderings
+const useAgent = () => agent
 const useCredentialById = jest.fn()
 const useProofById = jest.fn()
 const useConnectionById = jest.fn()
