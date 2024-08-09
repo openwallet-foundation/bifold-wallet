@@ -134,8 +134,6 @@ describe('getDescriptorMetadata', () => {
   })
 
   test('Returns Correct filteredProofRequestMatches', async () => {
-    const record1 = testW3cCredentialRecord
-
     const anonCredsCredentialsForRequest = {
       attributes: {
         email: [{ credentialId: '1' }],
