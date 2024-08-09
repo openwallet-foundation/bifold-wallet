@@ -77,6 +77,7 @@ describe('displays a credential details screen', () => {
   describe('with a credential list item (CardLayout aries/overlays/branding/0.1)', () => {
     const configurationContext_branding01 = {
       ...configurationContext,
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       OCABundleResolver: new DefaultOCABundleResolver(require('../../App/assets/oca-bundles.json'), {
         brandingOverlayType: BrandingOverlayType.Branding01,
       }),
