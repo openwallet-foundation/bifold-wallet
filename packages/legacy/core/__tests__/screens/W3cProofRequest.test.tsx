@@ -15,12 +15,8 @@ import '@testing-library/jest-native/extend-expect'
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import { NetworkContext, NetworkProvider } from '../../App/contexts/network'
 import ProofRequest from '../../App/screens/ProofRequest'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
-import networkContext from '../contexts/network'
 import timeTravel from '../helpers/timetravel'
 
 import {
@@ -31,8 +27,8 @@ import {
   testW3cCredentialRecord,
 } from './fixtures/w3c-proof-request'
 import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
+import { BasicAppContext } from '../helpers/app'
 
-jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
@@ -123,11 +119,9 @@ describe('displays a proof request screen', () => {
 
     test('loading screen displays', async () => {
       const tree = render(
-        <ConfigurationContext.Provider value={configurationContext}>
-          <NetworkProvider>
-            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-          </NetworkProvider>
-        </ConfigurationContext.Provider>
+        <BasicAppContext>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </BasicAppContext>
       )
 
       await waitFor(() => {
@@ -159,11 +153,9 @@ describe('displays a proof request screen', () => {
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const { getByText, getByTestId, queryByText } = render(
-        <ConfigurationContext.Provider value={configurationContext}>
-          <NetworkProvider>
-            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-          </NetworkProvider>
-        </ConfigurationContext.Provider>
+        <BasicAppContext>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </BasicAppContext>
       )
 
       await waitFor(() => {
@@ -316,11 +308,9 @@ describe('displays a proof request screen', () => {
       const navigation = useNavigation()
 
       const { getByText, getByTestId, queryByText } = render(
-        <ConfigurationContext.Provider value={configurationContext}>
-          <NetworkProvider>
-            <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
-          </NetworkProvider>
-        </ConfigurationContext.Provider>
+        <BasicAppContext>
+          <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </BasicAppContext>
       )
 
       await waitFor(() => {
@@ -389,11 +379,9 @@ describe('displays a proof request screen', () => {
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(credentialsForRequest)
 
       const tree = render(
-        <ConfigurationContext.Provider value={configurationContext}>
-          <NetworkContext.Provider value={networkContext}>
-            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-          </NetworkContext.Provider>
-        </ConfigurationContext.Provider>
+        <BasicAppContext>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </BasicAppContext>
       )
 
       await waitFor(() => {
@@ -482,11 +470,9 @@ describe('displays a proof request screen', () => {
       })
 
       const tree = render(
-        <ConfigurationContext.Provider value={configurationContext}>
-          <NetworkContext.Provider value={networkContext}>
-            <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
-          </NetworkContext.Provider>
-        </ConfigurationContext.Provider>
+        <BasicAppContext>
+          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+        </BasicAppContext>
       )
 
       await waitFor(() => {

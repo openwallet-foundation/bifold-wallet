@@ -14,7 +14,7 @@ import { AppState, DeviceEventEmitter } from 'react-native'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
 import { EventTypes, walletTimeout } from '../constants'
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 import { useAuth } from '../contexts/auth'
 import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -51,10 +51,8 @@ const RootStack: React.FC = () => {
   const theme = useTheme()
   const defaultStackOptions = createDefaultStackOptions(theme)
   const { splash, enableImplicitInvitations, enableReuseConnections } = useConfiguration()
-  const container = useContainer()
-  const logger = container.resolve(TOKENS.UTIL_LOGGER)
-  const OnboardingStack = container.resolve(TOKENS.STACK_ONBOARDING)
-  const loadState = container.resolve(TOKENS.LOAD_STATE)
+  const [logger, OnboardingStack, loadState] = useServices([TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected regardless of if it has been opened

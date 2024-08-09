@@ -4,13 +4,13 @@ import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { ReactTestInstance } from 'react-test-renderer'
 
 import CredentialCard from '../../App/components/misc/CredentialCard'
 import { ConfigurationContext } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListCredentials from '../../App/screens/ListCredentials'
 import configurationContext from '../contexts/configuration'
+import { ReactTestInstance } from 'react-test-renderer'
 
 interface CredentialContextInterface {
   loading: boolean
