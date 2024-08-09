@@ -13,7 +13,7 @@ export interface OpenId4VcCredentialMetadata {
   }
 }
 
-const openId4VcCredentialMetadataKey = '_paradym/openId4VcCredentialMetadata'
+const openId4VcCredentialMetadataKey = '_bifold/openId4VcCredentialMetadata'
 
 export function extractOpenId4VcCredentialMetadata(
   credentialMetadata: OpenId4VciCredentialSupported,
