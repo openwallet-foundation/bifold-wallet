@@ -19,6 +19,7 @@
     "@credo-ts/core": "0.5.9",
     "@credo-ts/indy-sdk-to-askar-migration": "0.5.9",
     "@credo-ts/indy-vdr": "0.5.9",
+    "@credo-ts/openid4vc": "0.5.9",
     "@credo-ts/push-notifications": "^0.7.0",
     "@credo-ts/question-answer": "0.5.9",
     "@credo-ts/react-hooks": "^0.6.0",
