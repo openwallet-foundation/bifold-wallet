@@ -4,7 +4,7 @@ import { NetworkContext } from '../../App/contexts/network'
 
 import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
-import { Container, ContainerProvider } from '../../App/container-api'
+import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 
