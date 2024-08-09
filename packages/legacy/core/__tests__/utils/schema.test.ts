@@ -19,7 +19,7 @@ describe('orientation', () => {
     expect(result).toStrictEqual({ name: 'Credential', version: '' })
   })
 
-  test('Return the default value', async () => {
+  test('Return the default value2', async () => {
     const result = parseSchemaFromId(notASchema)
 
     expect(result).toStrictEqual({ name: 'Credential', version: '' })

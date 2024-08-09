@@ -35,7 +35,7 @@ describe('CommonRemoveModal Component', () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test('Remove contact renders correctly', async () => {
+  test('Remove contact renders correctly2', async () => {
     const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ContactRemoveWithCredentials} />)
 
     expect(tree).toMatchSnapshot()

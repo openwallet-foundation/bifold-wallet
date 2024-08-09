@@ -4,5 +4,5 @@
     "baseUrl": "./App",
     "outDir": "./lib"
   },
-  "exclude": ["node_modules", "babel.config.js", "jest.config.js", "jestSetup.js", "lib"]
+  "exclude": ["node_modules", "babel.config.js", "jest.config.js", "jestSetup.js", "lib", "build"]
 }

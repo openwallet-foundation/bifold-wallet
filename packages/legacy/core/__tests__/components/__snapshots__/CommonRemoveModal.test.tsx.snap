@@ -1988,7 +1988,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
 </Modal>
 `;
 
-exports[`CommonRemoveModal Component Remove contact renders correctly 2`] = `
+exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
 <Modal
   animationType="slide"
   hardwareAccelerated={false}

@@ -18,9 +18,7 @@ describe('displays loading screen', () => {
   })
 
   test('contains testIDs', async () => {
-    let tree: ReturnType<typeof render>
-
-    tree = render(<LoadingView />)
+    const tree = render(<LoadingView />)
     await act(() => {
       jest.runAllTimers()
     })

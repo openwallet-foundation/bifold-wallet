@@ -4,6 +4,7 @@ const { TOKENS: T } = jest.requireActual('../../App/container-api')
 
 export { T as TOKENS }
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const resolver = new DefaultOCABundleResolver(require('../../App/assets/oca-bundles.json'), {
   brandingOverlayType: BrandingOverlayType.Branding10,
 })

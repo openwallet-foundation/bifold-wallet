@@ -1,6 +1,6 @@
 // const eventEmitter = new events.EventEmitter()
 
-let aNode = undefined
+let aNode: any = undefined
 
 const ports = {
   connect: 8001,
@@ -8,7 +8,7 @@ const ports = {
   timeout: 8003,
 }
 
-const on = (event, cb) => {
+const on = (event: any, cb: any) => {
   switch (event) {
     case 'timeout':
       if (aNode.port === ports.timeout) {

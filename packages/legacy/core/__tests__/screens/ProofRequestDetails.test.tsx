@@ -68,7 +68,7 @@ axios.create.mockImplementation(() => ({ get: () => Promise.resolve({ data: temp
 // @ts-ignore
 useTemplates.mockImplementation(() => templates)
 // @ts-ignore
-useTemplate.mockImplementation((id) => templates[0])
+useTemplate.mockImplementation(() => templates[0])
 const templateId = templates[0].id
 const connectionId = 'test'
 const navigation = useNavigation()
