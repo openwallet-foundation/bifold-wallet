@@ -31,7 +31,7 @@ useContext.mockImplementation(() => [state, setState])
 describe('ErrorModal Component', () => {
   test('Renders correctly', async () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
-    let tree = render(<ErrorModal />)
+    const tree = render(<ErrorModal />)
     act(() => {
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, {title: 'title', message: 'message', code: 123})
     }) 

@@ -21,7 +21,7 @@ jest.spyOn(global, 'setTimeout')
 const navigation = useNavigation()
 
 describe('ListProofRequests Component', () => {
-  const renderView = (params?: {}) => {
+  const renderView = (params?: any) => {
     return render(
       <ConfigurationContext.Provider value={configurationContext}>
         <NetworkProvider>

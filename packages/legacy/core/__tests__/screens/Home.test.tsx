@@ -35,7 +35,7 @@ jest.mock('@credo-ts/react-hooks', () => ({
 
 jest.mock('../../App/container-api', () => ({
   ...jest.requireActual('../../App/container-api'),
-  useContainer: jest.fn().mockReturnValue({ resolve: (a: any) => undefined })
+  useContainer: jest.fn().mockReturnValue({ resolve: () => undefined })
 }))
 
 describe('displays a home screen', () => {

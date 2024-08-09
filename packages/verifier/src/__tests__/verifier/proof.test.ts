@@ -18,6 +18,7 @@ const proof_request = {
   requested_predicates: {
     predicate_1: {
       name: 'age',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       p_type: '>=' as any,
       p_value: 1,
     },
@@ -61,7 +62,6 @@ const proof: AnonCredsProof = {
     },
     self_attested_attrs: {},
     unrevealed_attrs: {},
-    // @ts-ignore
     predicates: {
       predicate_1: {
         sub_proof_index: 0,
