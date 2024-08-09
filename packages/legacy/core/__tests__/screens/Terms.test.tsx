@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react-native'
+import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 import { container } from 'tsyringe'
 
@@ -44,8 +44,10 @@ describe('Terms Screen', () => {
       </ContainerProvider>
     )
     const { getByTestId } = tree
-    const checkbox = getByTestId(testIdWithKey('IAgree'))
-    fireEvent(checkbox, 'press')
-    expect(tree).toMatchSnapshot()
+    await act(async () => {
+      const checkbox = getByTestId(testIdWithKey('IAgree'))
+      fireEvent(checkbox, 'press')
+      expect(tree).toMatchSnapshot()
+    })
   })
 })

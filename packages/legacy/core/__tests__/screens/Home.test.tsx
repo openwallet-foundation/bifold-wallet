@@ -263,7 +263,6 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     //xxx
     const navigation = useNavigation()
-    console.log(navigation.getParent())
     expect(navigation.getParent()?.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.getParent()?.navigate).toHaveBeenCalledWith('Contacts Stack', {
       screen: 'Chat',
