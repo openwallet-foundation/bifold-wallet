@@ -87,7 +87,9 @@ describe('Chat screen', () => {
       assertLedgerConnectivity: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
+      setLedgerNodes: jest.fn(),
     }))
+
     const element = (
       <ConfigurationContext.Provider value={configurationContext}>
         <Chat navigation={navigationContext} route={props as any} />
@@ -112,6 +114,7 @@ describe('Chat screen with messages', () => {
       assertLedgerConnectivity: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
+      setLedgerNodes: jest.fn(),
     }))
   })
 
