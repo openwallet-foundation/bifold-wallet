@@ -2238,6 +2238,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/openid4vc@npm:0.5.9":
+  version: 0.5.9
+  resolution: "@credo-ts/openid4vc@npm:0.5.9"
+  dependencies:
+    "@credo-ts/core": 0.5.9
+    "@sphereon/did-auth-siop": 0.15.1-next.4
+    "@sphereon/oid4vci-client": 0.15.1-next.4
+    "@sphereon/oid4vci-common": 0.15.1-next.4
+    "@sphereon/oid4vci-issuer": 0.15.1-next.4
+    "@sphereon/ssi-types": 0.26.1-next.132
+    class-transformer: ^0.5.1
+    rxjs: ^7.8.0
+  checksum: 900ffe004e25459ace205b704b2dd16845f0911716c3ea293d11161b730b723aacb03e7554ba630a7927fd66577bf326b8d55956ed6b98f9375d3ea96403b175
+  languageName: node
+  linkType: hard
+
 "@credo-ts/push-notifications@npm:^0.7.0":
   version: 0.7.1
   resolution: "@credo-ts/push-notifications@npm:0.7.1"
@@ -2810,6 +2826,7 @@ __metadata:
     "@credo-ts/core": 0.5.9
     "@credo-ts/indy-sdk-to-askar-migration": 0.5.9
     "@credo-ts/indy-vdr": 0.5.9
+    "@credo-ts/openid4vc": 0.5.9
     "@credo-ts/push-notifications": ^0.7.0
     "@credo-ts/question-answer": 0.5.9
     "@credo-ts/react-hooks": ^0.6.0
@@ -2914,6 +2931,7 @@ __metadata:
     "@credo-ts/core": 0.5.9
     "@credo-ts/indy-sdk-to-askar-migration": 0.5.9
     "@credo-ts/indy-vdr": 0.5.9
+    "@credo-ts/openid4vc": 0.5.9
     "@credo-ts/push-notifications": ^0.7.0
     "@credo-ts/question-answer": 0.5.9
     "@credo-ts/react-hooks": ^0.6.0
@@ -5114,6 +5132,80 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sphereon/did-auth-siop@npm:0.15.1-next.4":
+  version: 0.15.1-next.4
+  resolution: "@sphereon/did-auth-siop@npm:0.15.1-next.4"
+  dependencies:
+    "@astronautlabs/jsonpath": ^1.1.2
+    "@sphereon/did-uni-client": ^0.6.2
+    "@sphereon/pex": ^3.3.2
+    "@sphereon/pex-models": ^2.2.4
+    "@sphereon/ssi-types": 0.22.0
+    "@sphereon/wellknown-dids-client": ^0.1.3
+    cross-fetch: ^4.0.0
+    events: ^3.3.0
+    jwt-decode: ^4.0.0
+    language-tags: ^1.0.9
+    multiformats: ^12.1.3
+    qs: ^6.11.2
+    sha.js: ^2.4.11
+    uint8arrays: ^3.1.1
+    uuid: ^9.0.0
+  checksum: 8c3f324350803c6aacb812c64d86060aeb9112e6ef550d10544cc55fc353ca74b0763918722561b74c4974ad8a5cbf9ad479a336047ad3fd8b839408a17d2692
+  languageName: node
+  linkType: hard
+
+"@sphereon/did-uni-client@npm:^0.6.2":
+  version: 0.6.3
+  resolution: "@sphereon/did-uni-client@npm:0.6.3"
+  dependencies:
+    cross-fetch: ^3.1.8
+    did-resolver: ^4.1.0
+  checksum: 6b3d09d067570b6854244b7db24fa4f2c6b18b18150fc5df61165cc058f44f680fd4ba44a71662ef1a3a3acd67566b9fb00f23a1e182de37d6d83aec39d94143
+  languageName: node
+  linkType: hard
+
+"@sphereon/oid4vci-client@npm:0.15.1-next.4":
+  version: 0.15.1-next.4
+  resolution: "@sphereon/oid4vci-client@npm:0.15.1-next.4"
+  dependencies:
+    "@sphereon/oid4vci-common": 0.15.1-next.4+c5cb3cd
+    "@sphereon/ssi-types": 0.26.1-next.132
+    cross-fetch: ^3.1.8
+    debug: ^4.3.5
+  checksum: f2080e344e3e7139405229d9dec0667aa20edb93e933b5efb3d1577fd32b8476a5c497a63fcb8f379d80df3aa2086463db22d9f9bbb2fedf27dd6baa9b123cea
+  languageName: node
+  linkType: hard
+
+"@sphereon/oid4vci-common@npm:0.15.1-next.4, @sphereon/oid4vci-common@npm:0.15.1-next.4+c5cb3cd":
+  version: 0.15.1-next.4
+  resolution: "@sphereon/oid4vci-common@npm:0.15.1-next.4"
+  dependencies:
+    "@sphereon/ssi-types": 0.26.1-next.132
+    cross-fetch: ^3.1.8
+    jwt-decode: ^4.0.0
+    sha.js: ^2.4.11
+    uint8arrays: 3.1.1
+  checksum: bca7d22087d54f1c50570f2b82e94288297479693106a9e075476180e9d28b6536f0e51ea0e4d31fc59afeeb379f35261989985cb331abc6e5341d556ea7b9b2
+  languageName: node
+  linkType: hard
+
+"@sphereon/oid4vci-issuer@npm:0.15.1-next.4":
+  version: 0.15.1-next.4
+  resolution: "@sphereon/oid4vci-issuer@npm:0.15.1-next.4"
+  dependencies:
+    "@sphereon/oid4vci-common": 0.15.1-next.4+c5cb3cd
+    "@sphereon/ssi-types": 0.26.1-next.132
+    uuid: ^9.0.0
+  peerDependencies:
+    awesome-qr: ^2.1.5-rc.0
+  peerDependenciesMeta:
+    awesome-qr:
+      optional: true
+  checksum: f31071007f4d24e0907eed9cc4b8f05b05f46bb7b4685430e650943153c3fd5d0e719d5b490afc36a8e7f0d787a26859ab9ed6e86546773d97ab10d9a0b05063
+  languageName: node
+  linkType: hard
+
 "@sphereon/pex-models@npm:^2.2.4":
   version: 2.2.4
   resolution: "@sphereon/pex-models@npm:2.2.4"
@@ -5171,6 +5263,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sphereon/ssi-types@npm:0.26.1-next.132":
+  version: 0.26.1-next.132
+  resolution: "@sphereon/ssi-types@npm:0.26.1-next.132"
+  dependencies:
+    "@sd-jwt/decode": ^0.6.1
+    debug: ^4.3.5
+    events: ^3.3.0
+    jwt-decode: ^3.1.2
+  checksum: 73fc6feadb4385681536474a62e2b77a4d6552d417c49d5f78dd60c1104b56ae64e24585941bc7461243e3c40ed1c0bd85a8c9ddbee1bcc3f20d09c9c489186f
+  languageName: node
+  linkType: hard
+
 "@sphereon/ssi-types@npm:^0.23.0":
   version: 0.23.4
   resolution: "@sphereon/ssi-types@npm:0.23.4"
@@ -5178,6 +5282,26 @@ __metadata:
     "@sd-jwt/decode": ^0.6.1
     jwt-decode: ^3.1.2
   checksum: c4366d1beda54f5e0e49ba09638ca3107add4e5ca022c131a3fd9de766f86fa2ba67df83abcbecab2d130c2145a63c9477d413ed7dfe9c558f95156a652ac804
+  languageName: node
+  linkType: hard
+
+"@sphereon/ssi-types@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@sphereon/ssi-types@npm:0.9.0"
+  dependencies:
+    jwt-decode: ^3.1.2
+  checksum: 1d5ca535f2eb79835c9e6b4dd92bb767d25973560950e752300b6ef647c6a4964e202413dc08b1c41768756a81b2cbe7a97f3fcc8a6555c6c98754ba6800a43c
+  languageName: node
+  linkType: hard
+
+"@sphereon/wellknown-dids-client@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@sphereon/wellknown-dids-client@npm:0.1.3"
+  dependencies:
+    "@sphereon/ssi-types": ^0.9.0
+    cross-fetch: ^3.1.5
+    jwt-decode: ^3.1.2
+  checksum: 1cf247fc05452676f4af523c57cd978b6aaf688821c5581d6184b0ea4ac70b5f3b1303d565ebd345e885df64575bf18f5f98d2d6b7b5c6dc974b9f6a1c91569c
   languageName: node
   linkType: hard
 
@@ -6773,6 +6897,7 @@ __metadata:
     "@credo-ts/core": 0.5.9
     "@credo-ts/indy-sdk-to-askar-migration": 0.5.9
     "@credo-ts/indy-vdr": 0.5.9
+    "@credo-ts/openid4vc": 0.5.9
     "@credo-ts/push-notifications": ^0.7.0
     "@credo-ts/question-answer": 0.5.9
     "@credo-ts/react-hooks": ^0.6.0
@@ -8042,7 +8167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-transformer@npm:0.5.1":
+"class-transformer@npm:0.5.1, class-transformer@npm:^0.5.1":
   version: 0.5.1
   resolution: "class-transformer@npm:0.5.1"
   checksum: f191c8b4cc4239990f5efdd790cabdd852c243ed66248e39f6616a349c910c6eed2d9fd1fbf7ee6ea89f69b4f1d0b493b27347fe0cd0ae26b47c3745a805b6d3
@@ -8980,6 +9105,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-fetch@npm:^3.1.8":
+  version: 3.1.8
+  resolution: "cross-fetch@npm:3.1.8"
+  dependencies:
+    node-fetch: ^2.6.12
+  checksum: 78f993fa099eaaa041122ab037fe9503ecbbcb9daef234d1d2e0b9230a983f64d645d088c464e21a247b825a08dc444a6e7064adfa93536d3a9454b4745b3632
+  languageName: node
+  linkType: hard
+
+"cross-fetch@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cross-fetch@npm:4.0.0"
+  dependencies:
+    node-fetch: ^2.6.12
+  checksum: ecca4f37ffa0e8283e7a8a590926b66713a7ef7892757aa36c2d20ffa27b0ac5c60dcf453119c809abe5923fc0bae3702a4d896bfb406ef1077b0d0018213e24
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^6.0.5":
   version: 6.0.5
   resolution: "cross-spawn@npm:6.0.5"
@@ -9237,6 +9380,18 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
+  languageName: node
+  linkType: hard
+
+"debug@npm:^4.3.5":
+  version: 4.3.6
+  resolution: "debug@npm:4.3.6"
+  dependencies:
+    ms: 2.1.2
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 1630b748dea3c581295e02137a9f5cbe2c1d85fea35c1e6597a65ca2b16a6fce68cec61b299d480787ef310ba927dc8c92d3061faba0ad06c6a724672f66be7f
   languageName: node
   linkType: hard
 
@@ -12294,7 +12449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3":
+"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 4a48a733847879d6cf6691860a6b1e3f0f4754176e4d71494c41f3475553768b10f84b5ce1d40fbd0e34e6bfbb864ee35858ad4dd2cf31e02fc4a154b724d7f1
@@ -14105,6 +14260,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jwt-decode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "jwt-decode@npm:4.0.0"
+  checksum: 390e2edcb31a92e86c8cbdd1edeea4c0d62acd371f8a8f0a8878e499390c0ecf4c658b365c4e941e4ef37d0170e4ca650aaa49f99a45c0b9695a235b210154b0
+  languageName: node
+  linkType: hard
+
 "keyv@npm:^4.5.3":
   version: 4.5.3
   resolution: "keyv@npm:4.5.3"
@@ -14205,6 +14367,22 @@ __metadata:
   version: 0.33.3
   resolution: "ky@npm:0.33.3"
   checksum: d1869e1f33c0165355f621b6726fcc1a9de20a31f4a826ca0cfd5753d83b9cba8723402d554a00194e0ee3959e0dda0638f4b99d54a3a7de928b55ff870b0bcc
+  languageName: node
+  linkType: hard
+
+"language-subtag-registry@npm:^0.3.20":
+  version: 0.3.23
+  resolution: "language-subtag-registry@npm:0.3.23"
+  checksum: 0b64c1a6c5431c8df648a6d25594ff280613c886f4a1a542d9b864e5472fb93e5c7856b9c41595c38fac31370328fc79fcc521712e89ea6d6866cbb8e0995d81
+  languageName: node
+  linkType: hard
+
+"language-tags@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "language-tags@npm:1.0.9"
+  dependencies:
+    language-subtag-registry: ^0.3.20
+  checksum: 57c530796dc7179914dee71bc94f3747fd694612480241d0453a063777265dfe3a951037f7acb48f456bf167d6eb419d4c00263745326b3ba1cdcf4657070e78
   languageName: node
   linkType: hard
 
@@ -15719,6 +15897,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"multiformats@npm:^12.1.3":
+  version: 12.1.3
+  resolution: "multiformats@npm:12.1.3"
+  checksum: 1060488612f8e6729c600f47a8741b91aa6e7b807ce165eca3c8cf07ab7465d2d9b212415a9c18886938b9e35b30ea7b9ae19b5ab5122589c65063440643e6bb
+  languageName: node
+  linkType: hard
+
 "multiformats@npm:^9.4.2":
   version: 9.9.0
   resolution: "multiformats@npm:9.9.0"
@@ -15905,6 +16090,20 @@ __metadata:
     encoding:
       optional: true
   checksum: acb04f9ce7224965b2b59e71b33c639794d8991efd73855b0b250921382b38331ffc9d61bce502571f6cc6e11a8905ca9b1b6d4aeb586ab093e2756a1fd190d0
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.6.12":
+  version: 2.7.0
+  resolution: "node-fetch@npm:2.7.0"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: d76d2f5edb451a3f05b15115ec89fc6be39de37c6089f1b6368df03b91e1633fd379a7e01b7ab05089a25034b2023d959b47e59759cb38d88341b2459e89d6e5
   languageName: node
   linkType: hard
 
@@ -17603,6 +17802,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:^6.11.2":
+  version: 6.12.3
+  resolution: "qs@npm:6.12.3"
+  dependencies:
+    side-channel: ^1.0.6
+  checksum: 9a9228a623bc36d41648237667d7342fb8d64d1cfeb29e474b0c44591ba06ac507e2d726f60eca5af8dc420e5dd23370af408ef8c28e0405675c7187b736a693
+  languageName: node
+  linkType: hard
+
 "query-string@npm:^7.0.0, query-string@npm:^7.0.1":
   version: 7.1.3
   resolution: "query-string@npm:7.1.3"
@@ -19022,7 +19230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:5.2.1, safe-buffer@npm:~5.2.0":
+"safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
@@ -19261,6 +19469,18 @@ __metadata:
   version: 1.2.0
   resolution: "setprototypeof@npm:1.2.0"
   checksum: be18cbbf70e7d8097c97f713a2e76edf84e87299b40d085c6bf8b65314e994cc15e2e317727342fa6996e38e1f52c59720b53fe621e2eb593a6847bf0356db89
+  languageName: node
+  linkType: hard
+
+"sha.js@npm:^2.4.11":
+  version: 2.4.11
+  resolution: "sha.js@npm:2.4.11"
+  dependencies:
+    inherits: ^2.0.1
+    safe-buffer: ^5.0.1
+  bin:
+    sha.js: ./bin.js
+  checksum: ebd3f59d4b799000699097dadb831c8e3da3eb579144fd7eb7a19484cbcbb7aca3c68ba2bb362242eb09e33217de3b4ea56e4678184c334323eca24a58e3ad07
   languageName: node
   linkType: hard
 
@@ -20770,7 +20990,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uint8arrays@npm:^3.1.1":
+"uint8arrays@npm:3.1.1, uint8arrays@npm:^3.1.1":
   version: 3.1.1
   resolution: "uint8arrays@npm:3.1.1"
   dependencies:

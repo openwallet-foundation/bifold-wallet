@@ -49,6 +49,7 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
+import { isOpenIdPresentationRequest } from './parsers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -1012,8 +1013,12 @@ export const connectFromScanOrDeepLink = async (
 
   // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
-
   try {
+    const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
+    if (isOpenIDInvitation) {
+      //TODO: Impliment Navigation to display credential
+      throw new Error(`OpenID4VCI is not supported yet`)
+    }
     const aUrl = processBetaUrlIfRequired(uri)
     const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
 
