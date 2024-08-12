@@ -20,6 +20,19 @@ jest.mock('../../App/services/keychain', () => ({
   loadLoginAttempt: jest.fn(),
 }))
 
+jest.mock('../../App/contexts/network', () => ({
+  useNetwork: () => {
+    return {
+      silentAssertConnectedNetwork: () => true,
+      assertConnectedNetwork: () => true,
+      assertLedgerConnectivity: jest.fn(),
+      displayNetInfoModal: jest.fn(),
+      hideNetInfoModal: jest.fn(),
+      setLedgerNodes: jest.fn(),
+    }
+  },
+}))
+
 describe('Splash Screen', () => {
   beforeAll(() => {
     jest.useFakeTimers()
