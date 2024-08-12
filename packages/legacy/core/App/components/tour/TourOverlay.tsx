@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState, useEffect } from 'react'
-import { ColorValue, LayoutRectangle, Modal, View, ViewStyle, useWindowDimensions } from 'react-native'
+import { ColorValue, LayoutRectangle, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { Defs, Mask, Rect, Svg } from 'react-native-svg'
 
 import { tourMargin } from '../../constants'
@@ -84,56 +84,47 @@ export const TourOverlay = (props: TourOverlayProps) => {
     setViewBox(`0 0 ${windowWidth + 1} ${windowHeight + 1}`)
   }, [windowWidth, windowHeight])
 
-  return (
-    <Modal
-      animationType="fade"
-      presentationStyle="overFullScreen"
-      transparent={true}
-      visible={currentStep !== undefined}
-    >
-      <View style={{ height: windowHeight + 1, width: windowWidth + 1 }} testID={testIdWithKey('SpotlightOverlay')}>
-        <Svg
-          testID={testIdWithKey('SpotOverlay')}
+  return currentStep !== undefined ? (
+    <View style={{ position: 'absolute', top: 0, left: 0, height: windowHeight + 1, width: windowWidth + 1 }} testID={testIdWithKey('SpotlightOverlay')}>
+      <Svg
+        testID={testIdWithKey('SpotOverlay')}
+        height={windowHeight + 1}
+        width={windowWidth + 1}
+        viewBox={viewBox}
+        onPress={handleBackdropPress}
+        shouldRasterizeIOS={true}
+        renderToHardwareTextureAndroid={true}
+      >
+        <Defs>
+          <Mask id="mask" x={0} y={0} height={windowHeight + 1} width={windowWidth + 1}>
+            <Rect height={windowHeight + 1} width={windowWidth + 1} fill="#fff" />
+            <SpotCutout />
+          </Mask>
+        </Defs>
+
+        <Rect
           height={windowHeight + 1}
           width={windowWidth + 1}
-          viewBox={viewBox}
-          onPress={handleBackdropPress}
-          shouldRasterizeIOS={true}
-          renderToHardwareTextureAndroid={true}
-        >
-          <Defs>
-            <Mask id="mask" x={0} y={0} height={windowHeight + 1} width={windowWidth + 1}>
-              <Rect height={windowHeight + 1} width={windowWidth + 1} fill="#fff" />
-              <SpotCutout />
-            </Mask>
-          </Defs>
+          fill={color}
+          mask="url(#mask)"
+          opacity={backdropOpacity}
+        />
+      </Svg>
 
-          <Rect
-            height={windowHeight + 1}
-            width={windowWidth + 1}
-            fill={color}
-            mask="url(#mask)"
-            opacity={backdropOpacity}
-          />
-        </Svg>
-
-        <View
-          ref={tooltipRef}
-          testID={testIdWithKey('SpotTooltip')}
-          style={{ ...tooltipStyle, opacity: 1, position: 'absolute' }}
-        >
-          {currentStep !== undefined && (
-            <tourStep.render
-              currentTour={currentTour}
-              currentStep={currentStep}
-              changeSpot={changeSpot}
-              next={next}
-              previous={previous}
-              stop={stop}
-            />
-          )}
-        </View>
+      <View
+        ref={tooltipRef}
+        testID={testIdWithKey('SpotTooltip')}
+        style={{ ...tooltipStyle, opacity: 1, position: 'absolute' }}
+      >
+        <tourStep.render
+          currentTour={currentTour}
+          currentStep={currentStep}
+          changeSpot={changeSpot}
+          next={next}
+          previous={previous}
+          stop={stop}
+        />
       </View>
-    </Modal>
-  )
+    </View>
+  ) : null
 }

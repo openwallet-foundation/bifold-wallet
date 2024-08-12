@@ -1,100 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TourBox Renders properly with defaults 1`] = `
-Array [
-  <Modal
-    animationType="fade"
-    hardwareAccelerated={false}
-    presentationStyle="overFullScreen"
-    transparent={true}
-    visible={true}
-  >
-    <View
-      style={
+<View
+  style={
+    Object {
+      "height": 1335,
+      "left": 0,
+      "position": "absolute",
+      "top": 0,
+      "width": 751,
+    }
+  }
+  testID="com.ariesbifold:id/SpotlightOverlay"
+>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={1335}
+    bbWidth={751}
+    focusable={false}
+    height={1335}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    onPress={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    renderToHardwareTextureAndroid={true}
+    responsible={true}
+    shouldRasterizeIOS={true}
+    style={
+      Array [
         Object {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        Object {
+          "flex": 0,
           "height": 1335,
           "width": 751,
-        }
-      }
-      testID="com.ariesbifold:id/SpotlightOverlay"
-    >
-      <RNSVGSvgView
-        align="xMidYMid"
-        bbHeight={1335}
-        bbWidth={751}
-        focusable={false}
-        height={1335}
-        meetOrSlice={0}
-        minX={0}
-        minY={0}
-        onPress={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        renderToHardwareTextureAndroid={true}
-        responsible={true}
-        shouldRasterizeIOS={true}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderWidth": 0,
-            },
-            Object {
-              "flex": 0,
-              "height": 1335,
-              "width": 751,
-            },
-          ]
-        }
-        testID="com.ariesbifold:id/SpotOverlay"
-        vbHeight={1335}
-        vbWidth={751}
-        width={751}
-      >
-        <RNSVGGroup>
-          <RNSVGDefs>
-            <RNSVGMask
-              height={1335}
-              maskContentUnits={1}
-              maskTransform={
-                Array [
-                  1,
-                  0,
-                  0,
-                  1,
-                  0,
-                  0,
-                ]
-              }
-              maskUnits={0}
-              name="mask"
-              width={751}
-              x={0}
-              y={0}
-            >
-              <RNSVGRect
-                fill={4294967295}
-                height={1335}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-                width={751}
-                x={0}
-                y={0}
-              />
-            </RNSVGMask>
-          </RNSVGDefs>
+        },
+      ]
+    }
+    testID="com.ariesbifold:id/SpotOverlay"
+    vbHeight={1335}
+    vbWidth={751}
+    width={751}
+  >
+    <RNSVGGroup>
+      <RNSVGDefs>
+        <RNSVGMask
+          height={1335}
+          maskContentUnits={1}
+          maskTransform={
+            Array [
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+            ]
+          }
+          maskUnits={0}
+          name="mask"
+          width={751}
+          x={0}
+          y={0}
+        >
           <RNSVGRect
-            fill={4286611584}
+            fill={4294967295}
             height={1335}
-            mask="mask"
-            opacity={0.7}
             propList={
               Array [
                 "fill",
@@ -104,34 +83,41 @@ Array [
             x={0}
             y={0}
           />
-        </RNSVGGroup>
-      </RNSVGSvgView>
-      <View
-        style={
-          Object {
-            "left": 25,
-            "opacity": 1,
-            "position": "absolute",
-            "right": 25,
-            "top": 222.33333333333334,
-          }
+        </RNSVGMask>
+      </RNSVGDefs>
+      <RNSVGRect
+        fill={4286611584}
+        height={1335}
+        mask="mask"
+        opacity={0.7}
+        propList={
+          Array [
+            "fill",
+          ]
         }
-        testID="com.ariesbifold:id/SpotTooltip"
-      >
-        <View>
-          <Text>
-            Test
-          </Text>
-        </View>
-      </View>
+        width={751}
+        x={0}
+        y={0}
+      />
+    </RNSVGGroup>
+  </RNSVGSvgView>
+  <View
+    style={
+      Object {
+        "left": 25,
+        "opacity": 1,
+        "position": "absolute",
+        "right": 25,
+        "top": 222.33333333333334,
+      }
+    }
+    testID="com.ariesbifold:id/SpotTooltip"
+  >
+    <View>
+      <Text>
+        Test
+      </Text>
     </View>
-  </Modal>,
-  <Modal
-    animationType="fade"
-    hardwareAccelerated={false}
-    presentationStyle="overFullScreen"
-    transparent={true}
-    visible={false}
-  />,
-]
+  </View>
+</View>
 `;

@@ -29,7 +29,7 @@ jest.mock('../../App/container-api')
 
 jest.mock('../../App/container-api', () => ({
   ...jest.requireActual('../../App/container-api'),
-  useContainer: jest.fn().mockReturnValue({ resolve: (a: any) => undefined })
+  useContainer: jest.fn().mockReturnValue({ resolve: () => undefined })
 }))
 
 jest.mock('../../App/hooks/connections', () => ({

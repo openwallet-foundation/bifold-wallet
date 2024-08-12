@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ErrorModal Component Renders correctly as Error 1`] = `
+exports[`InfoBox Component Renders correctly as Error 1`] = `
 <View
   style={
     Object {
@@ -254,7 +254,7 @@ exports[`ErrorModal Component Renders correctly as Error 1`] = `
 </View>
 `;
 
-exports[`ErrorModal Component Renders correctly as Info 1`] = `
+exports[`InfoBox Component Renders correctly as Info 1`] = `
 <View
   style={
     Object {
@@ -508,7 +508,7 @@ exports[`ErrorModal Component Renders correctly as Info 1`] = `
 </View>
 `;
 
-exports[`ErrorModal Component Renders correctly as Success 1`] = `
+exports[`InfoBox Component Renders correctly as Success 1`] = `
 <View
   style={
     Object {
@@ -762,7 +762,7 @@ exports[`ErrorModal Component Renders correctly as Success 1`] = `
 </View>
 `;
 
-exports[`ErrorModal Component Renders correctly as Warning 1`] = `
+exports[`InfoBox Component Renders correctly as Warning 1`] = `
 <View
   style={
     Object {

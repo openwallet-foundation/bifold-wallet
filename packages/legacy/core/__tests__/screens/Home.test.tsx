@@ -35,7 +35,7 @@ jest.mock('@credo-ts/react-hooks', () => ({
 
 jest.mock('../../App/container-api', () => ({
   ...jest.requireActual('../../App/container-api'),
-  useContainer: jest.fn().mockReturnValue({ resolve: (a: any) => undefined })
+  useContainer: jest.fn().mockReturnValue({ resolve: () => undefined })
 }))
 
 describe('displays a home screen', () => {
@@ -263,7 +263,6 @@ describe('with a notifications module, when an issuer sends a credential offer',
 
     //xxx
     const navigation = useNavigation()
-    console.log(navigation.getParent())
     expect(navigation.getParent()?.navigate).toHaveBeenCalledTimes(1)
     expect(navigation.getParent()?.navigate).toHaveBeenCalledWith('Contacts Stack', {
       screen: 'Chat',
