@@ -1,4 +1,4 @@
-import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/ledger'
+import { canConnectToLedgerNode } from '../App/utils/ledger'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../App/configs/ledgers/indy')
@@ -14,18 +14,6 @@ const ports = {
 }
 
 describe('Ledger utility', () => {
-  test('The default ledger nodes are fetched', async () => {
-    const results = fetchLedgerNodes()
-
-    expect(results).toMatchSnapshot()
-  })
-
-  test('No nodes are returned for a faux ledger', async () => {
-    const results = fetchLedgerNodes('springfield')
-
-    expect(results.length).toBe(0)
-  })
-
   test('An available host returns "true"', async () => {
     const result = await canConnectToLedgerNode({ host: '192.168.100.1', port: ports.connect })
 

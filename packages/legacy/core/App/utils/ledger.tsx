@@ -29,27 +29,3 @@ export const canConnectToLedgerNode = async (node: { host: string; port: number 
 
     client.setTimeout(socketTimeoutInMs)
   })
-
-export const fetchLedgerNodes = (indyNamespace = 'sovrin'): Array<{ host: string; port: number }> => {
-  const [pool] = pools.filter((p) => p.indyNamespace === indyNamespace)
-  if (!pool) {
-    return []
-  }
-
-  const genesisTransactionsAsString = pool.genesisTransactions
-  let genesisTransactions: Array<GenesisTransaction> = []
-
-  if (genesisTransactionsAsString) {
-    try {
-      genesisTransactions = genesisTransactionsAsString.split('\n').map((g) => JSON.parse(g))
-    } catch (error: unknown) {
-      return []
-    }
-  }
-
-  const nodes = genesisTransactions.map((g) => {
-    return { host: g.txn.data.data.client_ip, port: parseInt(g.txn.data.data.client_port) }
-  })
-
-  return nodes
-}
