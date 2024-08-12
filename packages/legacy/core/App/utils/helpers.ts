@@ -49,7 +49,7 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
-import { parseInvitationUrl } from './parsers'
+import { isOpenIdPresentationRequest } from './parsers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -1014,26 +1014,19 @@ export const connectFromScanOrDeepLink = async (
   // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
   try {
-    const parseResult = await parseInvitationUrl(uri)
-    if (!parseResult.success) {
-      throw new Error(`Primary error: ${parseResult.error}`)
-    }
-    const invitationData = parseResult.result
-    if (invitationData.type === 'didcomm') {
-      const aUrl = processBetaUrlIfRequired(uri)
-      const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
-
-      if (receivedInvitation?.id) {
-        navigation.navigate(Stacks.ConnectionStack as any, {
-          screen: Screens.Connection,
-          params: { oobRecordId: receivedInvitation.id },
-        })
-      }
-    } else if (invitationData.type === 'openid-credential-offer') {
+    const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
+    if (isOpenIDInvitation) {
       //TODO: Impliment Navigation to display credential
-       // const record = await receiveCredentialFromOpenId4VciOffer({ agent: agent, uri: uri })
-    } else {
-      logger.error('Primary error: Invitation not recognised')
+      throw new Error(`OpenID4VCI is not supported yet`)
+    }
+    const aUrl = processBetaUrlIfRequired(uri)
+    const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
+
+    if (receivedInvitation?.id) {
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { oobRecordId: receivedInvitation.id },
+      })
     }
   } catch (error: unknown) {
     logger.error('Problem during connect strategy, error:', error as Error)
