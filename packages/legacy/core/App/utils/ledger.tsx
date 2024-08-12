@@ -1,8 +1,5 @@
 import TcpSocket from 'react-native-tcp-socket'
 
-import pools from '../configs/ledgers/indy'
-import { GenesisTransaction } from '../types/genesis'
-
 export const canConnectToLedgerNode = async (node: { host: string; port: number }): Promise<boolean> =>
   new Promise((resolve) => {
     const socketTimeoutInMs = 3000
