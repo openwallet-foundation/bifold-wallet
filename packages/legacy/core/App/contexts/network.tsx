@@ -1,9 +1,10 @@
 import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
-import * as React from 'react'
-import { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
+import { DeviceEventEmitter } from 'react-native'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
 import { canConnectToLedgerNode } from '../utils/ledger'
+import { NetworkEventTypes } from '../types/network'
 
 export type LedgerNodeList = Array<{ host: string; port: number }>
 export interface NetworkContext {
@@ -24,6 +25,8 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
 
   const setLedgerNodes = (nodes: LedgerNodeList) => {
     currentNodes = nodes
+
+    DeviceEventEmitter.emit(NetworkEventTypes.LedgerNodesUpdated)
   }
 
   const displayNetInfoModal = () => {
@@ -56,11 +59,11 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
       return false
     }
 
-    const connections = await Promise.all(
-      currentNodes.map((n: { host: string; port: number }) => canConnectToLedgerNode(n))
-    )
-
-    return connections.includes(true)
+    try {
+      return await Promise.any(currentNodes.map((n: { host: string; port: number }) => canConnectToLedgerNode(n)))
+    } catch (error) {
+      return false
+    }
   }
 
   return (

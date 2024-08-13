@@ -1,7 +1,7 @@
 import TcpSocket from 'react-native-tcp-socket'
 
 export const canConnectToLedgerNode = async (node: { host: string; port: number }): Promise<boolean> =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     const socketTimeoutInMs = 3000
     const client = TcpSocket.createConnection(node, () => {
       resolve(true)
@@ -14,14 +14,14 @@ export const canConnectToLedgerNode = async (node: { host: string; port: number 
 
     client.on('error', () => {
       client.destroy()
-      resolve(false)
+      reject()
     })
 
     client.on('timeout', () => {
       client.destroy()
       client.removeAllListeners()
 
-      resolve(false)
+      reject()
     })
 
     client.setTimeout(socketTimeoutInMs)

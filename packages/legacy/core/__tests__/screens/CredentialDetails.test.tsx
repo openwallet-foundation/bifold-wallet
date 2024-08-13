@@ -166,7 +166,7 @@ describe('displays a credential details screen', () => {
 
     const hiddenValues = await findAllByText(hiddenFieldValue)
 
-    expect(hiddenValues.length).toBe(3)
+    expect(hiddenValues).toHaveLength(3)
   })
 
   test('pressing the `Show` button un-hides an attribute value', async () => {
@@ -183,8 +183,8 @@ describe('displays a credential details screen', () => {
     let hiddenValues = await findAllByText(hiddenFieldValue)
     let familyName = await queryByText('Last', { exact: false })
 
-    expect(showButtons.length).toBe(3)
-    expect(hiddenValues.length).toBe(3)
+    expect(showButtons).toHaveLength(3)
+    expect(hiddenValues).toHaveLength(3)
     expect(familyName).toBe(null)
 
     fireEvent(showButtons[0], 'press')
@@ -193,8 +193,8 @@ describe('displays a credential details screen', () => {
     hiddenValues = await findAllByText(hiddenFieldValue)
     familyName = await queryByText('Last', { exact: false })
 
-    expect(showButtons.length).toBe(2)
-    expect(hiddenValues.length).toBe(2)
+    expect(showButtons).toHaveLength(2)
+    expect(hiddenValues).toHaveLength(2)
     expect(familyName).not.toBe(null)
   })
 
@@ -216,8 +216,8 @@ describe('displays a credential details screen', () => {
       showButtons = await queryAllByText('Record.Show')
       hiddenValues = await queryAllByText(hiddenFieldValue)
 
-      expect(showButtons.length).toBe(0)
-      expect(hiddenValues.length).toBe(0)
+      expect(showButtons).toHaveLength(0)
+      expect(hiddenValues).toHaveLength(0)
 
       const hideAllButton = await findByText('Record.HideAll')
 
@@ -228,8 +228,8 @@ describe('displays a credential details screen', () => {
       showButtons = await findAllByText('Record.Show')
       hiddenValues = await findAllByText(hiddenFieldValue)
 
-      expect(showButtons.length).toBe(3)
-      expect(hiddenValues.length).toBe(3)
+      expect(showButtons).toHaveLength(3)
+      expect(hiddenValues).toHaveLength(3)
     })
   }, 10000)
 })

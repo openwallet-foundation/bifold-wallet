@@ -89,7 +89,7 @@ describe('displays a credentials list screen', () => {
       await act(async () => {
         const credentialItemInstances = await findAllByText('Person', { exact: false })
 
-        expect(credentialItemInstances.length).toBe(1)
+        expect(credentialItemInstances).toHaveLength(1)
 
         const credentialItemInstance = credentialItemInstances[0]
 
@@ -118,7 +118,7 @@ describe('displays a credentials list screen', () => {
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-      expect(credentialCards.length).toBe(3)
+      expect(credentialCards).toHaveLength(3)
 
       const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
 
@@ -149,7 +149,7 @@ describe('displays a credentials list screen', () => {
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-      expect(credentialCards.length).toBe(2)
+      expect(credentialCards).toHaveLength(2)
     })
   })
 
@@ -174,7 +174,7 @@ describe('displays a credentials list screen', () => {
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-      expect(credentialCards.length).toBe(3)
+      expect(credentialCards).toHaveLength(3)
     })
   })
 })

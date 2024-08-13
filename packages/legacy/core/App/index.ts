@@ -58,6 +58,7 @@ export { ColorPallet } from './theme'
 export { animatedComponents } from './animated-components'
 export { theme } from './theme'
 export { useAuth } from './contexts/auth'
+export { useNetwork } from './contexts/network'
 export { NavigationTheme } from './theme'
 export { testIdWithKey, testIdForAccessabilityLabel } from './utils/testable'
 export { Screens, Stacks, TabStacks } from './types/navigators'
@@ -67,7 +68,7 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { didMigrateToAskar, migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
-export { removeExistingInvitationIfRequired } from './utils/helpers'
+export { removeExistingInvitationIfRequired, sampleIndyVdrTransactions } from './utils/helpers'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
@@ -100,6 +101,7 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+export type { NetworkEventTypes } from './types/network'
 export * from './container-api'
 export { MainContainer } from './container-impl'
 

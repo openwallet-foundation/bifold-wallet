@@ -91,7 +91,7 @@ describe('ProofRequestDetails Component', () => {
   test('Proof bundle resolver works correctly', async () => {
     const resolver = useRemoteProofBundleResolver('http://localhost:3000')
     const bundle = await resolver.resolve(true)
-    expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions.length).toBe(2)
+    expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions).toHaveLength(2)
   })
 
   test('Template is parsed correctly', async () => {
@@ -116,7 +116,7 @@ describe('ProofRequestDetails Component', () => {
     const familyName = await tree.findByText('Last Name', { exact: false })
 
     expect(schema).not.toBe(null)
-    expect(credential.length).toBe(3)
+    expect(credential).toHaveLength(3)
     expect(givenNames).not.toBe(null)
     expect(familyName).not.toBe(null)
   })
