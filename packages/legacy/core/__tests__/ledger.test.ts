@@ -25,13 +25,11 @@ describe('Ledger utility', () => {
     const result = canConnectToLedgerNode({ host: '192.168.100.1', port: ports.timeout })
 
     await expect(result).rejects.toThrow('Timeout opening connection to ledger node')
-    // expect(result).toBe(false)
   })
 
   test('An bad host returns errors out', async () => {
     const result = canConnectToLedgerNode({ host: '192.168.100.1', port: ports.error })
-    await expect(result).rejects.toThrow('Error opening connection to ledger node')
 
-    // expect(result).toBe(false)
+    await expect(result).rejects.toThrow('Error opening connection to ledger node')
   })
 })
