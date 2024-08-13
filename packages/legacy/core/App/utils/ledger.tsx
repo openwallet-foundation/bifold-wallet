@@ -14,14 +14,14 @@ export const canConnectToLedgerNode = async (node: { host: string; port: number 
 
     client.on('error', () => {
       client.destroy()
-      reject()
+      reject(new Error('Error opening connection to ledger node'))
     })
 
     client.on('timeout', () => {
       client.destroy()
       client.removeAllListeners()
 
-      reject()
+      reject(new Error('Timeout opening connection to ledger node'))
     })
 
     client.setTimeout(socketTimeoutInMs)

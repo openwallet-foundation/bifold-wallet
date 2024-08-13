@@ -4,6 +4,7 @@ jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../App/configs/ledgers/indy')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
+jest.mock('react-native-tcp-socket')
 
 // Use these ports to trigger TCP socket behaviour in the
 // mock.
@@ -20,15 +21,17 @@ describe('Ledger utility', () => {
     expect(result).toBe(true)
   })
 
-  test('An un-available host returns "false"', async () => {
-    const result = await canConnectToLedgerNode({ host: '192.168.100.1', port: ports.timeout })
+  test('An un-available host returns times out', async () => {
+    const result = canConnectToLedgerNode({ host: '192.168.100.1', port: ports.timeout })
 
-    expect(result).toBe(false)
+    await expect(result).rejects.toThrow('Timeout opening connection to ledger node')
+    // expect(result).toBe(false)
   })
 
-  test('An bad host returns "false"', async () => {
-    const result = await canConnectToLedgerNode({ host: '192.168.100.1', port: ports.error })
+  test('An bad host returns errors out', async () => {
+    const result = canConnectToLedgerNode({ host: '192.168.100.1', port: ports.error })
+    await expect(result).rejects.toThrow('Error opening connection to ledger node')
 
-    expect(result).toBe(false)
+    // expect(result).toBe(false)
   })
 })
