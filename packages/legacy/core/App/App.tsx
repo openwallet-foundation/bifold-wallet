@@ -26,7 +26,7 @@ import { initLanguages, initStoredLanguage, translationResources } from './local
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
 
-function App(system: Container) {
+const App = (system: Container) => {
   initLanguages(translationResources)
 
   return () => {
