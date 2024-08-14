@@ -45,8 +45,8 @@ const NotificationStack: React.FC = () => {
       )}
       {customNotification &&
         customNotification.additionalStackItems?.length &&
-        customNotification.additionalStackItems.map((item) => (
-          <Stack.Screen name={item.name as any} component={item.component} options={item.stackOptions}></Stack.Screen>
+        customNotification.additionalStackItems.map((item, i) => (
+          <Stack.Screen key={i+1} name={item.name as any} component={item.component} options={item.stackOptions}></Stack.Screen>
         ))}
     </Stack.Navigator>
   )

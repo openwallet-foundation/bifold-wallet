@@ -110,10 +110,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           title: t('Screens.Contacts'),
           accessibilityLabel: t('Screens.Contacts'),
           testID: testIdWithKey('Contacts'),
-          onPress: () =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } }),
+          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts }),
         },
         {
           title: t('Settings.WhatAreContacts'),
@@ -233,7 +230,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () =>
             navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
               screen: Screens.ProofRequests,
-              params: { navigation: navigation },
             }),
         },
       ],
