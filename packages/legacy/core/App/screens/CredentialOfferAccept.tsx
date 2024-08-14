@@ -8,10 +8,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 
 enum DeliveryStatus {
   Pending,
@@ -34,7 +34,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const navigation = useNavigation()
   const { ListItems } = useTheme()
   const { CredentialAdded, CredentialPending } = useAnimatedComponents()
-  const { connectionTimerDelay } = useConfiguration()
+  const [{ connectionTimerDelay }] = useServices([TOKENS.CONFIG])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
     container: {

@@ -3,17 +3,15 @@ import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
-import configurationContext from '../contexts/configuration'
 import ListProofRequests from '../../App/screens/ListProofRequests'
 import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('../../App/container-api')
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => {})
+jest.mock('react-native-localize', () => { })
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
@@ -23,17 +21,17 @@ const navigation = useNavigation()
 describe('ListProofRequests Component', () => {
   const renderView = (params?: any) => {
     return render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <NetworkProvider>
           <ListProofRequests navigation={navigation as any} route={{ params: params || {} } as any} />
         </NetworkProvider>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
   }
 
   test('Renders correctly', async () => {
     const tree = renderView()
-    await act(async () => {})
+    await act(async () => { })
     expect(tree).toMatchSnapshot()
   })
 

@@ -5,12 +5,10 @@ import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { hiddenFieldValue } from '../../App/constants'
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 import { formatTime } from '../../App/utils/helpers'
-import configurationContext from '../contexts/configuration'
+import { BasicAppContext } from '../helpers/app'
 
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
@@ -47,7 +45,6 @@ const buildCredentialExchangeRecord = () => {
   return testOpenVPCredentialRecord
 }
 
-jest.mock('../../App/container-api')
 jest.mock('react-native-localize', () => {
   return require('../../__mocks__/custom/react-native-localize')
 })
@@ -75,13 +72,6 @@ describe('displays a credential details screen', () => {
   })
 
   describe('with a credential list item (CardLayout aries/overlays/branding/0.1)', () => {
-    const configurationContext_branding01 = {
-      ...configurationContext,
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      OCABundleResolver: new DefaultOCABundleResolver(require('../../App/assets/oca-bundles.json'), {
-        brandingOverlayType: BrandingOverlayType.Branding01,
-      }),
-    }
 
     beforeEach(() => {
       jest.clearAllMocks()
@@ -92,12 +82,12 @@ describe('displays a credential details screen', () => {
 
     test.skip('a credential name and issue date is displayed', async () => {
       const { findByText } = render(
-        <ConfigurationContext.Provider value={configurationContext_branding01}>
+        <BasicAppContext>
           <CredentialDetails
             navigation={useNavigation()}
             route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
           ></CredentialDetails>
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       )
 
       const credentialName = await findByText('Unverified Person', { exact: false })
@@ -121,12 +111,12 @@ describe('displays a credential details screen', () => {
 
     test('a credential name is displayed', async () => {
       const { findByText } = render(
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <CredentialDetails
             navigation={useNavigation()}
             route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
           ></CredentialDetails>
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       )
 
       const credentialName = await findByText('Unverified Person', { exact: false })
@@ -137,12 +127,12 @@ describe('displays a credential details screen', () => {
 
   test('a list of credential details is displayed, attribute names are human readable', async () => {
     const { findByText } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
           route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const familyName = await findByText('Family Name', { exact: false })
@@ -156,35 +146,35 @@ describe('displays a credential details screen', () => {
 
   test('a list of credential details is displayed, attribute values are hidden by default', async () => {
     const { findAllByText } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
           route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const hiddenValues = await findAllByText(hiddenFieldValue)
 
-    expect(hiddenValues.length).toBe(3)
+    expect(hiddenValues).toHaveLength(3)
   })
 
   test('pressing the `Show` button un-hides an attribute value', async () => {
     const { queryByText, findAllByText } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
           route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     let showButtons = await findAllByText('Record.Show')
     let hiddenValues = await findAllByText(hiddenFieldValue)
     let familyName = await queryByText('Last', { exact: false })
 
-    expect(showButtons.length).toBe(3)
-    expect(hiddenValues.length).toBe(3)
+    expect(showButtons).toHaveLength(3)
+    expect(hiddenValues).toHaveLength(3)
     expect(familyName).toBe(null)
 
     fireEvent(showButtons[0], 'press')
@@ -193,19 +183,19 @@ describe('displays a credential details screen', () => {
     hiddenValues = await findAllByText(hiddenFieldValue)
     familyName = await queryByText('Last', { exact: false })
 
-    expect(showButtons.length).toBe(2)
-    expect(hiddenValues.length).toBe(2)
+    expect(showButtons).toHaveLength(2)
+    expect(hiddenValues).toHaveLength(2)
     expect(familyName).not.toBe(null)
   })
 
   test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
     const { queryAllByText, findAllByText, findByText } = await render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
           route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
         ></CredentialDetails>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
     await act(async () => {
       let showButtons = await findAllByText('Record.Show')
@@ -216,8 +206,8 @@ describe('displays a credential details screen', () => {
       showButtons = await queryAllByText('Record.Show')
       hiddenValues = await queryAllByText(hiddenFieldValue)
 
-      expect(showButtons.length).toBe(0)
-      expect(hiddenValues.length).toBe(0)
+      expect(showButtons).toHaveLength(0)
+      expect(hiddenValues).toHaveLength(0)
 
       const hideAllButton = await findByText('Record.HideAll')
 
@@ -228,8 +218,8 @@ describe('displays a credential details screen', () => {
       showButtons = await findAllByText('Record.Show')
       hiddenValues = await findAllByText(hiddenFieldValue)
 
-      expect(showButtons.length).toBe(3)
-      expect(hiddenValues.length).toBe(3)
+      expect(showButtons).toHaveLength(3)
+      expect(hiddenValues).toHaveLength(3)
     })
   }, 10000)
 })

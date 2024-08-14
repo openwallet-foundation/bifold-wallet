@@ -23,7 +23,7 @@ describe('Ledger utility', () => {
   test('No nodes are returned for a faux ledger', async () => {
     const results = fetchLedgerNodes('springfield')
 
-    expect(results.length).toBe(0)
+    expect(results).toHaveLength(0)
   })
 
   test('An available host returns "true"', async () => {

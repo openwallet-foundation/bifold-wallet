@@ -22,7 +22,6 @@ import {
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
 
-jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@hyperledger/aries-bifold-verifier', () => {
   const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
@@ -34,9 +33,6 @@ jest.mock('@hyperledger/aries-bifold-verifier', () => {
 })
 jest.mock('react-native-device-info', () => {
   return require('../../__mocks__/custom/react-native-device-info')
-})
-jest.mock('react-native-vision-camera', () => {
-  return require('../../__mocks__/custom/react-native-camera')
 })
 
 jest.useFakeTimers({ legacyFakeTimers: true })

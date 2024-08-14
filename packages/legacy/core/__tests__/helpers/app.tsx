@@ -1,20 +1,28 @@
 import { PropsWithChildren, useMemo } from 'react'
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkContext } from '../../App/contexts/network'
 
-import configurationContext from '../contexts/configuration'
 import networkContext from '../contexts/network'
-import { ContainerProvider } from '../../App/container-api'
+import { Container, ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 
 export const BasicAppContext: React.FC<PropsWithChildren> = ({ children }) => {
-      const context = useMemo(()=>new MainContainer(container.createChildContainer()).init(),[])
+  const context = useMemo(() => new MainContainer(container.createChildContainer()).init(), [])
   return (
     <ContainerProvider value={context}>
-      <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkContext.Provider value={networkContext}>{children}</NetworkContext.Provider>
-      </ConfigurationContext.Provider>
+      <NetworkContext.Provider value={networkContext}>{children}</NetworkContext.Provider>
+    </ContainerProvider>
+  )
+}
+
+interface CustomBasicAppContextProps extends PropsWithChildren {
+  container: Container
+}
+export const CustomBasicAppContext: React.FC<CustomBasicAppContextProps> = ({ children, container }) => {
+  const context = container
+  return (
+    <ContainerProvider value={context}>
+      <NetworkContext.Provider value={networkContext}>{children}</NetworkContext.Provider>
     </ContainerProvider>
   )
 }

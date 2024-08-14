@@ -8,13 +8,10 @@ import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native/extend-expect'
 import { RenderAPI, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import { NetworkProvider } from '../../App/contexts/network'
 import ProofDetails from '../../App/screens/ProofDetails'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
+import { BasicAppContext } from '../helpers/app'
 
-jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@hyperledger/aries-bifold-verifier', () => {
@@ -26,7 +23,7 @@ jest.mock('@hyperledger/aries-bifold-verifier', () => {
   }
 })
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => {})
+jest.mock('react-native-localize', () => { })
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
@@ -109,11 +106,9 @@ describe('ProofDetails Component', () => {
 
   const renderView = (params?: { recordId: string; isHistory: boolean }) => {
     return render(
-      <ConfigurationContext.Provider value={configurationContext}>
-        <NetworkProvider>
-          <ProofDetails navigation={useNavigation()} route={{ params } as any} />
-        </NetworkProvider>
-      </ConfigurationContext.Provider>
+      <BasicAppContext>
+        <ProofDetails navigation={useNavigation()} route={{ params } as any} />
+      </BasicAppContext>
     )
   }
 

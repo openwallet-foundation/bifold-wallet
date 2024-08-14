@@ -5,11 +5,10 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
+import { BasicAppContext } from '../helpers/app'
 
 const credentialId = '123'
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
@@ -24,9 +23,9 @@ useCredentialById.mockReturnValue(credentialRecord)
 describe('displays a credential accept screen', () => {
   test('renders correctly', () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialOfferAccept visible={true} credentialId={credentialId} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const doneButton = tree.queryByTestId('Done')
@@ -38,9 +37,9 @@ describe('displays a credential accept screen', () => {
 
   test('transitions to taking too delay message', async () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialOfferAccept visible={true} credentialId={credentialId} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     await waitFor(() => {
@@ -59,9 +58,9 @@ describe('displays a credential accept screen', () => {
     credentialRecord.state = CredentialState.CredentialReceived
 
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <CredentialOfferAccept visible={true} credentialId={credentialId} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const doneButton = tree.getByTestId(testIdWithKey('Done'))

@@ -1,17 +1,14 @@
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { useEffect, useState } from 'react'
 
-import { TOKENS, useContainer } from '../container-api'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useServices } from '../container-api'
 import { useStore } from '../contexts/store'
 import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../utils/proofBundle'
 
 export const useTemplates = (): Array<ProofRequestTemplate> => {
   const [store] = useStore()
   const [proofRequestTemplates, setProofRequestTemplates] = useState<ProofRequestTemplate[]>([])
-  const { proofTemplateBaseUrl } = useConfiguration()
-  const container = useContainer()
-  const logger = container.resolve(TOKENS.UTIL_LOGGER)
+  const [{proofTemplateBaseUrl}, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const resolver = useRemoteProofBundleResolver(proofTemplateBaseUrl, logger)
 
   useEffect(() => {
@@ -28,7 +25,7 @@ export const useTemplates = (): Array<ProofRequestTemplate> => {
 export const useTemplate = (templateId: string): ProofRequestTemplate | undefined => {
   const [store] = useStore()
   const [proofRequestTemplate, setProofRequestTemplate] = useState<ProofRequestTemplate | undefined>(undefined)
-  const { proofTemplateBaseUrl } = useConfiguration()
+  const [{proofTemplateBaseUrl}] = useServices([TOKENS.CONFIG])
   const resolver = useRemoteProofBundleResolver(proofTemplateBaseUrl)
   useEffect(() => {
     resolver.resolveById(templateId, store.preferences.acceptDevCredentials).then((template) => {
