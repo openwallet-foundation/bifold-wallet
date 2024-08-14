@@ -117,7 +117,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
     },
   })
 
-  const { connectionId } = route?.params
+  const connectionId = route?.params?.connectionId
 
   // if useDevVerifierTemplates not set then exclude dev templates
   const proofRequestTemplates = useTemplates().filter(

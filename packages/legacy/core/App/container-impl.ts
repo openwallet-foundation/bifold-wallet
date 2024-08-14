@@ -127,8 +127,10 @@ export class MainContainer implements Container {
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
     return this._container.resolve(token) as TokenMapping[K]
   }
-  resolveAll<K extends keyof TokenMapping, T extends K[]>(tokens: [...T]): { [I in keyof T]: TokenMapping[T[I]] } {
-    return tokens.map(key => this.resolve(key)!) as { [I in keyof T]: TokenMapping[T[I]] }
+  public resolveAll<K extends keyof TokenMapping, T extends K[]>(
+    tokens: [...T]
+  ): { [I in keyof T]: TokenMapping[T[I]] } {
+    return tokens.map((key) => this.resolve(key)!) as { [I in keyof T]: TokenMapping[T[I]] }
   }
 }
 

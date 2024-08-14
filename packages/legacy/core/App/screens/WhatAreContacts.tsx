@@ -34,7 +34,7 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
   const goToContactList = () => {
     navigation
       .getParent()
-      ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts, params: { navigation: navigation } })
+      ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })
   }
 
   const bulletPoints = [
