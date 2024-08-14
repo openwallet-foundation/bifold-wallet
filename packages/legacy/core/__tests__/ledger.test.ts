@@ -4,7 +4,6 @@ jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../App/configs/ledgers/indy')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
-jest.mock('react-native-tcp-socket')
 
 // Use these ports to trigger TCP socket behaviour in the
 // mock.
