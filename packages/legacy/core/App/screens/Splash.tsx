@@ -23,6 +23,7 @@ import { Screens, Stacks } from '../types/navigators'
 import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 const OnboardingVersion = 1
 
@@ -211,7 +212,7 @@ const Splash: React.FC = () => {
           return
         }
 
-        await ocaBundleResolver.checkForUpdates?.()
+        await (ocaBundleResolver as RemoteOCABundleResolver)?.checkForUpdates?.()
 
         const newAgent = new Agent({
           config: {
