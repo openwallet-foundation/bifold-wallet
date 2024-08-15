@@ -2,12 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { BaseLogger } from '@credo-ts/core'
 
 // TODO: should monitor for any shutdowns and save state?
-// TODO: should save state on any changes?
 // TODO: add `language` to an enum, convert enums to `as const`
 // const storeLanguage = async (id: string) => {
 //   await AsyncStorage.setItem('language', id)
 // }
-// TODO: can State become a generic?
 
 export class PersistentStorage<T> {
   private _state?: T
