@@ -1,13 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { BaseLogger } from '@credo-ts/core'
 
-export interface PersistentStorage<T> {
-  setValueForKey(key: string, value: Partial<T>): Promise<void>
-  getValueForKey(key: string): Promise<Partial<T> | undefined>
-  load(): Promise<void>
-  flush(): Promise<void>
-}
-
 // TODO: should monitor for any shutdowns and save state?
 // TODO: should save state on any changes?
 // TODO: add `language` to an enum, convert enums to `as const`
@@ -16,7 +9,7 @@ export interface PersistentStorage<T> {
 // }
 // TODO: can State become a generic?
 
-export class PersistentStorage<T> implements PersistentStorage<T> {
+export class PersistentStorage<T> {
   private _state?: T
   private log?: BaseLogger
 
@@ -27,10 +20,10 @@ export class PersistentStorage<T> implements PersistentStorage<T> {
 
   public async setValueForKey(key: string, value: Partial<T>) {
     if (!this._state) {
-      // throw error?
+      throw new Error("State hasn't been initialized")
     }
 
-    // @ts-ignore-next-line
+    // @ts-expect-error
     this._state[key] = value
 
     try {
@@ -46,7 +39,7 @@ export class PersistentStorage<T> implements PersistentStorage<T> {
       await this.load()
     }
 
-    // @ts-ignore-next-line
+    // @ts-expect-error
     return this._state[key]
   }
 
@@ -58,7 +51,7 @@ export class PersistentStorage<T> implements PersistentStorage<T> {
     try {
       const keys = Object.keys(this._state)
       for (const key of keys) {
-        // @ts-ignore-next-line
+        // @ts-expect-error
         const value = this._state[key]
         const serializedState = JSON.stringify(value)
         await AsyncStorage.setItem(key, serializedState)
@@ -78,11 +71,9 @@ export class PersistentStorage<T> implements PersistentStorage<T> {
           return
         }
 
-        // @ts-ignore-next-line
+        // @ts-expect-error
         this._state[key] = JSON.parse(value)
       })
-
-      console.log('**************** Loaded', JSON.stringify(this._state))
     } catch (error) {
       this.log?.error('Error loading state', error as Error)
     }
