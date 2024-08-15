@@ -7,7 +7,7 @@ import {
 } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
-import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
+import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -148,7 +148,7 @@ export type TokenMapping = {
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BaseLogger
-  [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
+  [TOKENS.UTIL_OCA_RESOLVER]: RemoteOCABundleResolver
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
