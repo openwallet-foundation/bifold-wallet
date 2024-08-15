@@ -9,12 +9,11 @@ import { useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/rea
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import * as network from '../../App/contexts/network'
 import Chat from '../../App/screens/Chat'
 import { BasicMessageMetadata } from '../../App/types/metadata'
-import configurationContext from '../contexts/configuration'
 import navigationContext from '../contexts/navigation'
+import { BasicAppContext } from '../helpers/app'
 
 const props = { params: { connectionId: '1' } }
 
@@ -89,9 +88,9 @@ describe('Chat screen', () => {
       hideNetInfoModal: jest.fn(),
     }))
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <Chat navigation={navigationContext} route={props as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
     const tree = render(element)
 
@@ -117,9 +116,9 @@ describe('Chat screen with messages', () => {
 
   test('Marks messages as seen', async () => {
     render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <Chat navigation={navigationContext} route={props as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     expect(unseenMessage.metadata.set).toBeCalled()

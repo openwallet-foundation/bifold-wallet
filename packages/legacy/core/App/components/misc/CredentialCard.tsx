@@ -3,7 +3,7 @@ import { Attribute, BrandingOverlayType, Predicate } from '@hyperledger/aries-oc
 import React from 'react'
 import { ViewStyle } from 'react-native'
 
-import { TOKENS, useContainer } from '../../container-api'
+import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 
@@ -40,7 +40,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   onPress = undefined,
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const { ColorPallet } = useTheme()
   const getCredOverlayType = (type: BrandingOverlayType) => {
     if (proof) {

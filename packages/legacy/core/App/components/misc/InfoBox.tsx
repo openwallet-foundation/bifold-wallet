@@ -4,12 +4,12 @@ import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useWindowDimensio
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
-import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 // eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../buttons/Button'
+import { TOKENS, useServices } from '../../container-api'
 
 const iconSize = 30
 
@@ -49,7 +49,7 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const [showDetails, setShowDetails] = useState<boolean>(false)
-  const { showDetailsInfo } = useConfiguration()
+  const [{ showDetailsInfo }] = useServices([TOKENS.CONFIG])
   const styles = StyleSheet.create({
     container: {
       backgroundColor: ColorPallet.brand.modalPrimaryBackground,

@@ -18,7 +18,7 @@ import Record from '../components/record/Record'
 import RecordRemove from '../components/record/RecordRemove'
 import { ToastType } from '../components/toast/BaseToast'
 import { EventTypes } from '../constants'
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
@@ -49,7 +49,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')

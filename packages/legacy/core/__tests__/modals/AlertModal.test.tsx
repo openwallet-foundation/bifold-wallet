@@ -2,23 +2,15 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import AlertModal from '../../App/components/modals/AlertModal'
-import { useConfiguration } from '../../App/contexts/configuration'
+import { BasicAppContext } from '../helpers/app'
 
-jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn(),
-}))
+
 
 describe('AlertModal Component', () => {
   test('Renders correctly', async () => {
-    const tree = render(<AlertModal title="Hello" message="World" />)
+    const tree = render(<BasicAppContext><AlertModal title="Hello" message="World" /></BasicAppContext>)
 
     expect(tree).toMatchSnapshot()
-  })
-
-  beforeEach(() => {
-    // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ showDetailsInfo: true })
-    jest.clearAllMocks()
   })
 
 })

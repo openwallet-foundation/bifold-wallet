@@ -8,7 +8,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
-import { TOKENS, useContainer } from '../../../container-api'
+import { TOKENS, useServices } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams } from '../../../types/navigators'
@@ -25,17 +25,15 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const [isLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
   const { t } = useTranslation()
-  const container = useContainer()
   const { agent } = useAgent()
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
 
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
-  const Button = container.resolve(TOKENS.COMP_BUTTON)
-  const logger = container.resolve(TOKENS.UTIL_LOGGER)
+  const [Button, logger, loadHistory] = useServices([TOKENS.COMP_BUTTON, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY])
   const historyManager: IHistoryManager | undefined = agent
-    ? container.resolve(TOKENS.FN_LOAD_HISTORY)(agent)
+    ? loadHistory(agent)
     : undefined
 
   //State

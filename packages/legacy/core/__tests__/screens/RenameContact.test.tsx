@@ -8,7 +8,6 @@ import React from 'react'
 import RenameContact from '../../App/screens/RenameContact'
 import { testIdWithKey } from '../../App/utils/testable'
 
-jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('react-native-device-info', () => {
   return {
     getVersion: () => 1,

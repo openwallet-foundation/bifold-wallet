@@ -9,14 +9,14 @@ import HistoryMenu from '../modules/history/ui/components/HistoryMenu'
 import Home from '../screens/Home'
 import { HomeStackParams, Screens } from '../types/navigators'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
   const [store] = useStore()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

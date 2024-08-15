@@ -4,10 +4,12 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import HomeFooterView from '../../App/components/views/HomeFooterView'
+import { BasicAppContext } from '../helpers/app'
 
 describe('HomeFooterView Component', () => {
   test('Renders correctly with no notifications', async () => {
-    const tree = render(<HomeFooterView />)
+    const tree = render(
+      <BasicAppContext><HomeFooterView /></BasicAppContext>)
 
     expect(tree).toMatchSnapshot()
   })
@@ -24,7 +26,7 @@ describe('HomeFooterView Component', () => {
     // @ts-ignore
     useCredentialByState.mockReturnValue(testCredentialRecords)
 
-    const tree = render(<HomeFooterView />)
+    const tree = render(<BasicAppContext><HomeFooterView /></BasicAppContext>)
 
     expect(tree).toMatchSnapshot()
   })

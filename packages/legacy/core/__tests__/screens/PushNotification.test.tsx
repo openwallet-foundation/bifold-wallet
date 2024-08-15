@@ -1,24 +1,25 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
-import { useConfiguration } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import { testIdWithKey } from '../../App/utils/testable'
 import PushNotification from '../../App/screens/PushNotification'
-
-jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn(),
-}))
+import { CustomBasicAppContext } from '../helpers/app'
+import { MainContainer } from '../../App/container-impl'
+import { container } from 'tsyringe'
+import { TOKENS } from '../../App/container-api'
+import { Config } from '../../App/types/config'
 
 describe('displays a push notification screen', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
   const setup = jest.fn()
   const toggle = jest.fn()
   const status = async () => await Promise.resolve('denied')
-  beforeEach(() => {
-    // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ enablePushNotifications: { setup, toggle, status } })
-    jest.clearAllMocks()
-  })
+  const context = new MainContainer(container.createChildContainer()).init()
+  const config: Config = context.container.resolve(TOKENS.CONFIG)
+  context.container.registerInstance(TOKENS.CONFIG, { ...config, enablePushNotifications: { status, setup, toggle } })
 
   test('Push notification screen renders correctly in settings', async () => {
     const route = {
@@ -32,7 +33,9 @@ describe('displays a push notification screen', () => {
           ...defaultState,
         }}
       >
-        <PushNotification route={route} navigation={jest.fn() as any} />
+        <CustomBasicAppContext container={context}>
+          <PushNotification route={route} navigation={jest.fn() as any} />
+        </CustomBasicAppContext>
       </StoreProvider>
     )
 
@@ -55,7 +58,9 @@ describe('displays a push notification screen', () => {
           ...defaultState,
         }}
       >
-        <PushNotification route={route} navigation={jest.fn() as any} />
+        <CustomBasicAppContext container={context}>
+          <PushNotification route={route} navigation={jest.fn() as any} />
+        </CustomBasicAppContext>
       </StoreProvider>
     )
 

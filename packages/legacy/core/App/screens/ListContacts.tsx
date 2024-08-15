@@ -9,7 +9,6 @@ import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton
 import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyListContacts from '../components/misc/EmptyListContacts'
 import { EventTypes } from '../constants'
-import { useConfiguration } from '../contexts/configuration'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
@@ -17,6 +16,7 @@ import { ContactStackParams, Screens, Stacks } from '../types/navigators'
 import { BifoldAgent } from '../utils/agent'
 import { fetchContactsByLatestMessage } from '../utils/contacts'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 
 interface ListContactsProps {
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
@@ -28,7 +28,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const [connections, setConnections] = useState<ConnectionRecord[]>([])
   const [store] = useStore()
-  const { contactHideList } = useConfiguration()
+  const [{ contactHideList }] = useServices([TOKENS.CONFIG])
   const style = StyleSheet.create({
     list: {
       backgroundColor: ColorPallet.brand.secondaryBackground,

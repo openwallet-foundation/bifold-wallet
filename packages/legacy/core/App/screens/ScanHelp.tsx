@@ -4,13 +4,13 @@ import { Linking, ScrollView, StyleSheet, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Link from '../components/texts/Link'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 
 const ScanHelp: React.FC = () => {
   const { t } = useTranslation()
-  const { whereToUseWalletUrl } = useConfiguration()
+  const [{ whereToUseWalletUrl }] = useServices([TOKENS.CONFIG])
 
   const { TextTheme } = useTheme()
   const style = StyleSheet.create({
@@ -36,7 +36,7 @@ const ScanHelp: React.FC = () => {
         <Link
           linkText={t('Scan.WhereToUseLink')}
           style={style.text}
-          onPress={() => Linking.openURL(whereToUseWalletUrl)}
+          onPress={() => whereToUseWalletUrl && Linking.openURL(whereToUseWalletUrl)}
           testID={testIdWithKey('WhereToUseLink')}
         />
         <Text style={style.text}>{t('Scan.ScanOnlySpecial3')}</Text>

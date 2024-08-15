@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Image, ImageBackground, StyleSheet, Text, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { TOKENS, useContainer } from '../../container-api'
+import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import {
@@ -75,7 +75,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const [overlay, setOverlay] = useState<CredentialOverlay<LegacyBrandingOverlay>>({})
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const credentialConnectionLabel = getCredentialConnectionLabel(credential)
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
     container: {
