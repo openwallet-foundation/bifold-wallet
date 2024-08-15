@@ -2,7 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import NameWallet from '../screens/NameWallet'
 import PasteUrl from '../screens/PasteUrl'
@@ -10,13 +9,14 @@ import ScanHelp from '../screens/ScanHelp'
 import { ConnectStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
+import { TOKENS, useServices } from '../container-api'
 
 const ConnectStack: React.FC = () => {
   const Stack = createStackNavigator<ConnectStackParams>()
   const theme = useTheme()
-  const defaultStackOptions = createDefaultStackOptions(theme)
-  const { scan } = useConfiguration()
+  const defaultStackOptions = useDefaultStackOptions(theme)
+  const [scan] = useServices([TOKENS.SCREEN_SCAN])
   const { t } = useTranslation()
 
   return (

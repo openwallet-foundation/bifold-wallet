@@ -15,7 +15,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
-import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -24,6 +23,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -34,7 +34,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const { settings, enableTours, enablePushNotifications } = useConfiguration()
+  const [{ settings, enableTours, enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
@@ -269,51 +269,51 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     title: string
     titleTestID?: string
   }> = ({ icon, iconRight, title, titleTestID }) =>
-    // gate keep behind developer mode
-    store.preferences.useConnectionInviterCapability ? (
-      <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
-        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+      // gate keep behind developer mode
+      store.preferences.useConnectionInviterCapability ? (
+        <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
+          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Icon
+              importantForAccessibility={'no-hide-descendants'}
+              accessible={false}
+              name={icon.name}
+              size={icon.size ?? defaultIconSize}
+              style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
+            />
+            <Text
+              testID={titleTestID}
+              numberOfLines={1}
+              accessibilityRole={'header'}
+              style={[TextTheme.headingThree, { flexShrink: 1 }]}
+            >
+              {title}
+            </Text>
+          </View>
+          {iconRight && (
+            <HeaderButton
+              buttonLocation={ButtonLocation.Right}
+              accessibilityLabel={iconRight.accessibilityLabel!}
+              testID={iconRight.testID!}
+              onPress={iconRight.action!}
+              icon={'pencil'}
+              iconTintColor={TextTheme.headingThree.color}
+            />
+          )}
+        </View>
+      ) : (
+        <View style={[styles.section, styles.sectionHeader]}>
           <Icon
             importantForAccessibility={'no-hide-descendants'}
             accessible={false}
             name={icon.name}
-            size={icon.size ?? defaultIconSize}
-            style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
+            size={24}
+            style={{ marginRight: 10, color: SettingsTheme.iconColor }}
           />
-          <Text
-            testID={titleTestID}
-            numberOfLines={1}
-            accessibilityRole={'header'}
-            style={[TextTheme.headingThree, { flexShrink: 1 }]}
-          >
+          <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
             {title}
           </Text>
         </View>
-        {iconRight && (
-          <HeaderButton
-            buttonLocation={ButtonLocation.Right}
-            accessibilityLabel={iconRight.accessibilityLabel!}
-            testID={iconRight.testID!}
-            onPress={iconRight.action!}
-            icon={'pencil'}
-            iconTintColor={TextTheme.headingThree.color}
-          />
-        )}
-      </View>
-    ) : (
-      <View style={[styles.section, styles.sectionHeader]}>
-        <Icon
-          importantForAccessibility={'no-hide-descendants'}
-          accessible={false}
-          name={icon.name}
-          size={24}
-          style={{ marginRight: 10, color: SettingsTheme.iconColor }}
-        />
-        <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
-          {title}
-        </Text>
-      </View>
-    )
+      )
 
   const SectionRow: React.FC<{
     title: string

@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import VerifierCredentialCard from '../components/misc/VerifierCredentialCard'
 import AlertModal from '../components/modals/AlertModal'
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplate } from '../hooks/proof-request-templates'
@@ -35,7 +35,7 @@ interface ProofRequestAttributesCardProps {
 const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({ data, onChangeValue }) => {
   const { ColorPallet } = useTheme()
   const { i18n } = useTranslation()
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [attributes, setAttributes] = useState<Field[] | undefined>(undefined)
   const [credDefId, setCredDefId] = useState<string | undefined>(undefined)
 
@@ -91,7 +91,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const [store] = useStore()
   const { t } = useTranslation()
   const { i18n } = useTranslation()
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const { agent } = useAgent()
   if (!agent) {

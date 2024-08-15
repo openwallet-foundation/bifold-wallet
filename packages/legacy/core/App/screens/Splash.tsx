@@ -2,7 +2,6 @@ import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/cor
 import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
-import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
@@ -13,10 +12,9 @@ import { CachesDirectoryPath } from 'react-native-fs'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { EventTypes } from '../constants'
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
-import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -25,6 +23,7 @@ import { Screens, Stacks } from '../types/navigators'
 import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
+import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 const OnboardingVersion = 1
 
@@ -88,7 +87,6 @@ const resumeOnboardingAt = (
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { showPreface, enablePushNotifications } = useConfiguration()
   const { setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
@@ -96,12 +94,8 @@ const Splash: React.FC = () => {
   const { walletSecret } = useAuth()
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
-  const container = useContainer()
   const [mounted, setMounted] = useState(false)
-  const { version: TermsVersion } = container.resolve(TOKENS.SCREEN_TERMS)
-  const logger = container.resolve(TOKENS.UTIL_LOGGER)
-  const indyLedgers = container.resolve(TOKENS.UTIL_LEDGERS)
-  const ocaBundleResolver = container.resolve(TOKENS.UTIL_OCA_RESOLVER) as RemoteOCABundleResolver
+  const [cacheSchemas, cacheCredDefs, { version: TermsVersion }, logger, indyLedgers, { showPreface, enablePushNotifications }, ocaBundleResolver] = useServices([TOKENS.CACHE_SCHEMAS, TOKENS.CACHE_CRED_DEFS, TOKENS.SCREEN_TERMS, TOKENS.UTIL_LOGGER, TOKENS.UTIL_LEDGERS, TOKENS.CONFIG, TOKENS.UTIL_OCA_RESOLVER])
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -218,7 +212,7 @@ const Splash: React.FC = () => {
           return
         }
 
-        await ocaBundleResolver.checkForUpdates?.()
+        await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
         const newAgent = new Agent({
           config: {
@@ -264,17 +258,14 @@ const Splash: React.FC = () => {
 
         await createLinkSecretIfRequired(newAgent)
 
-        const credDefs = container.resolve(TOKENS.CACHE_CRED_DEFS)
-        const schemas = container.resolve(TOKENS.CACHE_SCHEMAS)
-
         const poolService = newAgent.dependencyManager.resolve(IndyVdrPoolService)
-        credDefs.forEach(async ({ did, id }) => {
+        cacheCredDefs.forEach(async ({ did, id }) => {
           const pool = await poolService.getPoolForDid(newAgent.context, did)
           const credDefRequest = new GetCredentialDefinitionRequest({ credentialDefinitionId: id })
           await pool.pool.submitRequest(credDefRequest)
         })
 
-        schemas.forEach(async ({ did, id }) => {
+        cacheSchemas.forEach(async ({ did, id }) => {
           const pool = await poolService.getPoolForDid(newAgent.context, did)
           const schemaRequest = new GetSchemaRequest({ schemaId: id })
           await pool.pool.submitRequest(schemaRequest)

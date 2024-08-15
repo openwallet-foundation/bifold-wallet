@@ -35,7 +35,7 @@ describe('Onboarding', () => {
     )
     const foundPages = await findAllByTestId('bodyText')
 
-    expect(foundPages.length).toBe(2)
+    expect(foundPages).toHaveLength(2)
   })
 
   test('Onboarding Developer mode', async () => {

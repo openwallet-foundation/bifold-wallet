@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import EmptyList from '../components/misc/EmptyList'
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTemplates } from '../hooks/proof-request-templates'
@@ -25,7 +25,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
   const { t } = useTranslation()
   const { i18n } = useTranslation()
   const { ListItems } = useTheme()
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const style = StyleSheet.create({
     card: {
       ...ListItems.requestTemplateBackground,

@@ -7,8 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
-import { TOKENS, useContainer } from '../container-api'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { ConnectStackParams } from '../types/navigators'
 import { connectFromScanOrDeepLink } from '../utils/helpers'
@@ -22,9 +21,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState<{ title: string; message: string } | undefined>()
   const { t } = useTranslation()
   const { agent } = useAgent()
-  const container = useContainer()
-  const logger = container.resolve(TOKENS.UTIL_LOGGER)
-  const { enableImplicitInvitations, enableReuseConnections } = useConfiguration()
+  const [logger, { enableImplicitInvitations, enableReuseConnections }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const styles = StyleSheet.create({
     container: {
       flex: 1,

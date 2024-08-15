@@ -6,7 +6,7 @@ import {
 } from '@hyperledger/aries-bifold-verifier'
 import axios, { AxiosError } from 'axios'
 
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
@@ -75,8 +75,7 @@ export const useRemoteProofBundleResolver = (
   if (indexFileBaseUrl) {
     return new RemoteProofBundleResolver(indexFileBaseUrl, log)
   } else {
-    const container = useContainer()
-    const proofRequestTemplates = container.resolve(TOKENS.UTIL_PROOF_TEMPLATE)
+    const [proofRequestTemplates] = useServices([TOKENS.UTIL_PROOF_TEMPLATE])
 
     return new DefaultProofBundleResolver(proofRequestTemplates)
   }

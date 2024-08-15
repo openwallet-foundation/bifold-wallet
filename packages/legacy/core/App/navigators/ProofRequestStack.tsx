@@ -15,13 +15,13 @@ import ProofRequesting from '../screens/ProofRequesting'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
 
 const ProofRequestStack: React.FC = () => {
   const Stack = createStackNavigator<ProofRequestsStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

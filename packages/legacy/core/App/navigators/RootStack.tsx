@@ -16,7 +16,6 @@ import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton
 import { EventTypes, walletTimeout } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAuth } from '../contexts/auth'
-import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -35,7 +34,7 @@ import NotificationStack from './NotificationStack'
 import ProofRequestStack from './ProofRequestStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
   const [state, dispatch] = useStore()
@@ -49,9 +48,8 @@ const RootStack: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
-  const defaultStackOptions = createDefaultStackOptions(theme)
-  const { splash, enableImplicitInvitations, enableReuseConnections } = useConfiguration()
-  const [logger, OnboardingStack, loadState] = useServices([TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const defaultStackOptions = useDefaultStackOptions(theme)
+  const [splash, {enableImplicitInvitations, enableReuseConnections}, logger, OnboardingStack, loadState] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 

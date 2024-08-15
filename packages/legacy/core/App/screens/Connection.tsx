@@ -8,13 +8,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { useAnimatedComponents } from '../contexts/animated-components'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connections'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-import { useContainer, TOKENS } from './../container-api'
+import { useServices, TOKENS } from './../container-api'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -35,15 +34,12 @@ const GoalCodes = {
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { oobRecordId } = route.params
-  const { connectionTimerDelay, autoRedirectConnectionToHome } = useConfiguration()
-  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
-  const container = useContainer()
-  const logger = container.resolve(TOKENS.UTIL_LOGGER)
-  const { useNotifications } = container.resolve(TOKENS.NOTIFICATIONS)
+  const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG])
+  const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications()
   const oobRecord = useOutOfBandById(oobRecordId)
   const connection = useConnectionByOutOfBandId(oobRecordId)

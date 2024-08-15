@@ -15,13 +15,13 @@ import RenameContact from '../screens/RenameContact'
 import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

@@ -9,7 +9,6 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
-import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -17,6 +16,7 @@ import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
+import { TOKENS, useServices } from '../container-api'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -26,7 +26,7 @@ enum UseBiometryUsage {
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { enablePushNotifications } = useConfiguration()
+  const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)

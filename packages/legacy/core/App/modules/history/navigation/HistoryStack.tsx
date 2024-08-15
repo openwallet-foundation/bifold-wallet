@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../../contexts/theme'
-import { createDefaultStackOptions } from '../../../navigators/defaultStackOptions'
+import { useDefaultStackOptions } from '../../../navigators/defaultStackOptions'
 import { HistoryStackParams, Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 // import HistoryDetailsPage from '../ui/HistoryDetails'
@@ -13,7 +13,7 @@ const HistoryStack: React.FC = () => {
   const Stack = createStackNavigator<HistoryStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

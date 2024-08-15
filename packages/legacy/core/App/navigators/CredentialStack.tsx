@@ -3,20 +3,20 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import SettingsMenu from '../components/buttons/SettingsMenu'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'
 import ListCredentials from '../screens/ListCredentials'
 import { CredentialStackParams, Screens } from '../types/navigators'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
+import { TOKENS, useServices } from '../container-api'
 
 const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const { credentialListHeaderRight: CredentialListHeaderRight } = useConfiguration()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const [CredentialListHeaderRight] = useServices([TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT])
+  const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

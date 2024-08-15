@@ -4,7 +4,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { TOKENS, useContainer } from '../../container-api'
+import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 
 const offset = 25
@@ -18,9 +18,7 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-  const container = useContainer()
-  const notificationObj = container?.resolve(TOKENS.NOTIFICATIONS)
-  const useNotifications = notificationObj?.useNotifications ?? (() => [])
+  const [{useNotifications}] = useServices([TOKENS.NOTIFICATIONS])
   const notifications = useNotifications()
   const { HomeTheme, TextTheme } = useTheme()
   const { t } = useTranslation()

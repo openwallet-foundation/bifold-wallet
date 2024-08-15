@@ -1,9 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import { PINRules } from '../../App/constants'
 import { AuthContext } from '../../App/contexts/auth'
-import { useConfiguration } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINCreate from '../../App/screens/PINCreate'
 import { testIdWithKey } from '../../App/utils/testable'
@@ -12,16 +10,7 @@ import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 
-jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn(),
-}))
-
 describe('displays a PIN create screen', () => {
-  beforeEach(() => {
-    // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ PINSecurity: { rules: PINRules, displayHelper: false } })
-    jest.clearAllMocks()
-  })
   test('PIN create renders correctly', async () => {
     const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(

@@ -2,11 +2,10 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import { StoreContext } from '../../App'
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import NameWallet from '../../App/screens/NameWallet'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
 import { testDefaultState } from '../contexts/store'
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('react-native-vision-camera', () => {
@@ -57,9 +56,9 @@ describe('NameWallet Screen', () => {
           },
         ]}
       >
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <NameWallet />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreContext.Provider>
     )
 

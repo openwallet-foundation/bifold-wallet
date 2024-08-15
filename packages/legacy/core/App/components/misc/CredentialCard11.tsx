@@ -19,7 +19,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { TOKENS, useContainer } from '../../container-api'
+import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
@@ -105,7 +105,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
     credential?.revocationNotification !== undefined && !!proof
   )
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver, credHelpActionOverrides] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.CRED_HELP_ACTION_OVERRIDES])
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const primaryField = overlay?.presentationFields?.find(
@@ -123,7 +123,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       return { ...prev, [curr.name]: curr.format }
     }, {})
   const cardData = [...(displayItems ?? []), primaryField, secondaryField]
-  const credHelpActionOverrides = useContainer().resolve(TOKENS.CRED_HELP_ACTION_OVERRIDES)
   const navigation = useNavigation()
 
   const getSecondaryBackgroundColor = () => {

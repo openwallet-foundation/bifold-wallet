@@ -5,13 +5,12 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import { useOutOfBandById, useConnectionByOutOfBandId } from '../../App/hooks/connections'
 import ConnectionModal from '../../App/screens/Connection'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
 import timeTravel from '../helpers/timetravel'
-import { TOKENS, useContainer } from '../../App/container-api'
+import { useProofByState } from '../../__mocks__/@credo-ts/react-hooks'
+import { BasicAppContext } from '../helpers/app'
 
 const oobRecordPath = path.join(__dirname, '../fixtures/oob-record.json')
 const oobRecord = JSON.parse(fs.readFileSync(oobRecordPath, 'utf8'))
@@ -25,12 +24,7 @@ const props = { params: { oobRecordId: connection.id } }
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
-jest.mock('../../App/container-api')
 
-jest.mock('../../App/container-api', () => ({
-  ...jest.requireActual('../../App/container-api'),
-  useContainer: jest.fn().mockReturnValue({ resolve: () => undefined })
-}))
 
 jest.mock('../../App/hooks/connections', () => ({
   useOutOfBandByConnectionId: jest.fn(),
@@ -40,26 +34,16 @@ jest.mock('../../App/hooks/connections', () => ({
 
 describe('Connection Modal Component', () => {
   beforeEach(() => {
-
-    // @ts-ignore
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [] }
-        }
-      }
-    })
-    // @ts-ignore-next-line
-    // useOutOfBandByConnectionId.mockReturnValue({ outOfBandInvitation: { goalCode: 'aries.vc.verify.once' } })
+    useProofByState.mockReturnValue([proofNotif])
     jest.clearAllMocks()
     jest.clearAllTimers()
   })
 
   test('Renders correctly', async () => {
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={props as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
     const tree = render(element)
 
@@ -70,9 +54,9 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-line
     useConnectionByOutOfBandId.mockReturnValueOnce(connection)
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={props as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -85,18 +69,10 @@ describe('Connection Modal Component', () => {
   })
 
   test('Dismiss on demand', async () => {
-    // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [proofNotif] }
-        }
-      }
-    })
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={props as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -111,9 +87,9 @@ describe('Connection Modal Component', () => {
   test('Dismiss navigates Home', async () => {
     const navigation = useNavigation()
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={props as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const { getByTestId } = render(element)
@@ -130,22 +106,14 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-line
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
-      // _tags: { ...oobRecord._tags, invitationRequestsThreadIds: [threadId] },
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
     })
-    // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [{ ...proofNotif, threadId }] }
-        }
-      }
-    })
+    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
 
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId: oobRecord.id } } as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -166,24 +134,16 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-line
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
-      // _tags: { ...oobRecord._tags, invitationRequestsThreadIds: [threadId] },
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
     })
+    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
     // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [{ ...proofNotif, threadId }] }
-        }
-      }
-    })
-    // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
 
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId: oobRecord.id } } as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -208,19 +168,12 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
 
-    // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [{ ...offerNotif, threadId }] }
-        }
-      }
-    })
+    useProofByState.mockReturnValue([{ ...offerNotif, threadId }])
 
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -247,19 +200,12 @@ describe('Connection Modal Component', () => {
     })
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [{ ...proofNotif, threadId }] }
-        }
-      }
-    })
+    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
 
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -287,18 +233,11 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
     // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [{ ...proofNotif, threadId }] }
-        }
-      }
-    })
-
+    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)
@@ -326,18 +265,13 @@ describe('Connection Modal Component', () => {
     // @ts-ignore-next-lin
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
     // @ts-ignore-next-line
-    useContainer.mockReturnValue({
-      resolve: (a: string) => {
-        if (a === TOKENS.NOTIFICATIONS) {
-          return { useNotifications: () => [{ ...proofNotif, threadId, state: 'request-received' }] }
-        }
-      }
-    })
+    useProofByState.mockReturnValue([{ ...proofNotif, threadId, state: 'request-received' }])
+
 
     const element = (
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     const tree = render(element)

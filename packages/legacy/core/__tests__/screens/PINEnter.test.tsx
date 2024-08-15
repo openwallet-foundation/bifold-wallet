@@ -2,15 +2,10 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import { AuthContext } from '../../App/contexts/auth'
-import { useConfiguration } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINEnter from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
-
-jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn(),
-}))
 
 describe('displays a PIN Enter screen', () => {
   test('PIN Enter renders correctly', () => {
@@ -64,9 +59,4 @@ describe('displays a PIN Enter screen', () => {
     expect(EnterButton).not.toBeNull()
   })
 
-  beforeEach(() => {
-    // @ts-ignore-next-line
-    useConfiguration.mockReturnValue({ showDetailsInfo: true })
-    jest.clearAllMocks()
-  })
 })

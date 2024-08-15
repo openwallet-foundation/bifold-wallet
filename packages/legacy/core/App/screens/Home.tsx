@@ -7,8 +7,7 @@ import { FlatList, View, StyleSheet } from 'react-native'
 import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import AppGuideModal from '../components/modals/AppGuideModal'
-import { TOKENS, useContainer } from '../container-api'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -19,15 +18,12 @@ import { TourID } from '../types/tour'
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = () => {
-  const {
-    enableTours: enableToursConfig,
-    homeFooterView: HomeFooterView,
-    homeHeaderView: HomeHeaderView,
-  } = useConfiguration()
-  const container = useContainer()
-  const notificationObj = container?.resolve(TOKENS.NOTIFICATIONS)
-  const customNotification = notificationObj?.customNotificationConfig
-  const useNotifications = notificationObj?.useNotifications ?? (() => [])
+  const [HomeHeaderView, HomeFooterView, { enableTours: enableToursConfig }, { customNotificationConfig: customNotification, useNotifications }] = useServices([
+    TOKENS.COMPONENT_HOME_HEADER,
+    TOKENS.COMPONENT_HOME_FOOTER,
+    TOKENS.CONFIG,
+    TOKENS.NOTIFICATIONS,
+  ])
   const notifications = useNotifications()
   const { t } = useTranslation()
 

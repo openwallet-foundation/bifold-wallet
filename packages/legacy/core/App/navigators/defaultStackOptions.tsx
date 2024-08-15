@@ -3,10 +3,10 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import HeaderTitle from '../components/texts/HeaderTitle'
-import { useConfiguration } from '../contexts/configuration'
 import { ITheme, OnboardingTheme } from '../theme'
 import { ScreenOptionsType, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 
 export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.Preface]: {
@@ -46,9 +46,9 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
 }
 
-export function createDefaultStackOptions({ ColorPallet }: ITheme): StackNavigationOptions {
+export function useDefaultStackOptions({ ColorPallet }: ITheme): StackNavigationOptions {
   const { t } = useTranslation()
-  const { globalScreenOptions } = useConfiguration()
+  const [{ globalScreenOptions }] = useServices([TOKENS.CONFIG])
 
   return (
     globalScreenOptions ?? {

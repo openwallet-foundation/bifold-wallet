@@ -9,19 +9,19 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import PushNotificationImg from '../assets/img/push-notifications.svg'
 // import { setup } from '../utils/PushNotificationsHelper'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { useConfiguration } from '../contexts/configuration'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 
 const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePushNotifications>> = ({ route }) => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
   const { TextTheme, ColorPallet } = useTheme()
-  const { enablePushNotifications } = useConfiguration()
+  const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const [notificationState, setNotificationState] = useState<boolean>(store.preferences.usePushNotifications)
   const [notificationStatus, setNotificationStatus] = useState<'denied' | 'granted' | 'unknown'>('unknown')
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()

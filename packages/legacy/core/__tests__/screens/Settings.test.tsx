@@ -3,16 +3,10 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import { StoreContext } from '../../App'
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import Settings from '../../App/screens/Settings'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
 import { testDefaultState } from '../contexts/store'
-
-jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
-jest.mock('react-native-vision-camera', () => {
-  return require('../../__mocks__/custom/react-native-camera')
-})
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('react-native-device-info', () => {
   return {
@@ -45,9 +39,9 @@ describe('Settings Screen', () => {
           },
         ]}
       >
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <Settings navigation={useNavigation()} route={{} as any} />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreContext.Provider>
     )
     expect(tree).toMatchSnapshot()
@@ -73,9 +67,9 @@ describe('Settings Screen', () => {
           },
         ]}
       >
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <Settings navigation={useNavigation()} route={{} as any} />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreContext.Provider>
     )
 
@@ -104,9 +98,9 @@ describe('Settings Screen', () => {
           },
         ]}
       >
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <Settings navigation={useNavigation()} route={{} as any} />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreContext.Provider>
     )
 
@@ -132,9 +126,9 @@ describe('Settings Screen', () => {
           },
         ]}
       >
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <Settings navigation={useNavigation()} route={{} as any} />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreContext.Provider>
     )
     const proofButton = tree.getByTestId(testIdWithKey('ProofRequests'))

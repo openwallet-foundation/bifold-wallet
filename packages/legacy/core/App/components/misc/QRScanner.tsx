@@ -5,7 +5,6 @@ import { View, Modal, Pressable, StyleSheet, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
-import { useConfiguration } from '../../contexts/configuration'
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
 import { Screens } from '../../types/navigators'
@@ -15,6 +14,7 @@ import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
+import { TOKENS, useServices } from '../../container-api'
 
 interface Props {
   handleCodeScan: (value: string) => Promise<void>
@@ -24,7 +24,7 @@ interface Props {
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
   const navigation = useNavigation()
-  const { showScanHelp, showScanButton } = useConfiguration()
+  const [{ showScanHelp, showScanButton }] = useServices([TOKENS.CONFIG])
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
   const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)

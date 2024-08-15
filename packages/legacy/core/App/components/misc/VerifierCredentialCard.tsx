@@ -18,7 +18,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import ImageModal from '../../components/modals/ImageModal'
-import { TOKENS, useContainer } from '../../container-api'
+import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
 import { formatIfDate, isDataUrl, pTypeToText } from '../../utils/helpers'
@@ -57,7 +57,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
-  const bundleResolver = useContainer().resolve(TOKENS.UTIL_OCA_RESOLVER)
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
 
   const attributeTypes = overlay.bundle?.captureBase.attributes

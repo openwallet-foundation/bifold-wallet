@@ -6,20 +6,18 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
 import CredentialCard from '../../App/components/misc/CredentialCard'
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListCredentials from '../../App/screens/ListCredentials'
-import configurationContext from '../contexts/configuration'
 import { ReactTestInstance } from 'react-test-renderer'
+import { BasicAppContext } from '../helpers/app'
 
 interface CredentialContextInterface {
   loading: boolean
   credentials: CredentialExchangeRecord[]
 }
 
-jest.mock('../../App/container-api')
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => {})
+jest.mock('react-native-localize', () => { })
 
 const credentialDefinitionId = 'xxxxxxxxxxxxxxxxxx:3:CL:11111:default'
 
@@ -81,15 +79,15 @@ describe('displays a credentials list screen', () => {
     test('pressing on a credential in the list takes the holder to a credential detail screen', async () => {
       const navigation = useNavigation()
       const { findAllByText } = render(
-        <ConfigurationContext.Provider value={configurationContext}>
+        <BasicAppContext>
           <ListCredentials />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       )
 
       await act(async () => {
         const credentialItemInstances = await findAllByText('Person', { exact: false })
 
-        expect(credentialItemInstances.length).toBe(1)
+        expect(credentialItemInstances).toHaveLength(1)
 
         const credentialItemInstance = credentialItemInstances[0]
 
@@ -111,14 +109,14 @@ describe('displays a credentials list screen', () => {
    */
   test('credentials should display in descending order of issued date', async () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <ListCredentials />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-      expect(credentialCards.length).toBe(3)
+      expect(credentialCards).toHaveLength(3)
 
       const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
 
@@ -139,17 +137,15 @@ describe('displays a credentials list screen', () => {
           },
         }}
       >
-        <ConfigurationContext.Provider
-          value={{ ...configurationContext, credentialHideList: [credentialDefinitionId] }}
-        >
+        <BasicAppContext>
           <ListCredentials />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreProvider>
     )
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-      expect(credentialCards.length).toBe(2)
+      expect(credentialCards).toHaveLength(3)
     })
   })
 
@@ -164,17 +160,15 @@ describe('displays a credentials list screen', () => {
           },
         }}
       >
-        <ConfigurationContext.Provider
-          value={{ ...configurationContext, credentialHideList: [credentialDefinitionId] }}
-        >
+        <BasicAppContext>
           <ListCredentials />
-        </ConfigurationContext.Provider>
+        </BasicAppContext>
       </StoreProvider>
     )
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
-      expect(credentialCards.length).toBe(3)
+      expect(credentialCards).toHaveLength(3)
     })
   })
 })

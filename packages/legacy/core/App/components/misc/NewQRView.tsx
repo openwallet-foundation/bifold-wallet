@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
-import { useConfiguration } from '../../contexts/configuration'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { useConnectionByOutOfBandId } from '../../hooks/connections'
@@ -25,6 +24,7 @@ import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
 import ScanTab from './ScanTab'
+import { TOKENS, useServices } from '../../container-api'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -39,7 +39,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
   const { width } = useWindowDimensions()
   const qrSize = width - 40
   const [store] = useStore()
-  const { showScanHelp, showScanButton } = useConfiguration()
+  const [{ showScanHelp, showScanButton }] = useServices([TOKENS.CONFIG])
   const [showInfoBox, setShowInfoBox] = useState(false)
   const [torchActive, setTorchActive] = useState(false)
   const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)

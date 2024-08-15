@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes } from '../constants'
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import HistorySettings from '../modules/history/ui/HistorySettings'
 import DataRetention from '../screens/DataRetention'
@@ -20,15 +19,16 @@ import UseBiometry from '../screens/UseBiometry'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
+import { TOKENS, useServices } from '../container-api'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
   const [biometryUpdatePending, setBiometryUpdatePending] = useState<boolean>(false)
   const { t } = useTranslation()
-  const { pages, terms, developer } = useConfiguration()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const [pages, { screen: terms }, developer] = useServices([TOKENS.SCREEN_ONBOARDING_PAGES, TOKENS.SCREEN_TERMS, TOKENS.SCREEN_DEVELOPER])
+  const defaultStackOptions = useDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
 
