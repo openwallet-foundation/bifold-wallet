@@ -7,7 +7,7 @@ import {
 } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
-import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -66,8 +66,8 @@ export const STACK_TOKENS = {
 export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
   FN_LOAD_HISTORY: 'fn.loadHistory',
-  FN_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
-  FN_CRED_LIST_OPTIONS: 'fn.credListOptions',
+  COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
+  COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
 } as const
 
 export const COMP_TOKENS = {
@@ -148,14 +148,14 @@ export type TokenMapping = {
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BaseLogger
-  [TOKENS.UTIL_OCA_RESOLVER]: DefaultOCABundleResolver
+  [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.CONFIG]: Config
-  [TOKENS.FN_CRED_LIST_HEADER_RIGHT]: React.FC
-  [TOKENS.FN_CRED_LIST_OPTIONS]: React.FC
+  [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
+  [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC

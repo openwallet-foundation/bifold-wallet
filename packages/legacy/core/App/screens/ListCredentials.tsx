@@ -23,7 +23,7 @@ const ListCredentials: React.FC = () => {
   const [CredentialListOptions, credentialEmptyList, {
     enableTours: enableToursConfig,
     credentialHideList,
-  }] = useServices([TOKENS.FN_CRED_LIST_OPTIONS, TOKENS.COMPONENT_CRED_EMPTY_LIST, TOKENS.CONFIG])
+  }] = useServices([TOKENS.COMPONENT_CRED_LIST_OPTIONS, TOKENS.COMPONENT_CRED_EMPTY_LIST, TOKENS.CONFIG])
 
   let credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),

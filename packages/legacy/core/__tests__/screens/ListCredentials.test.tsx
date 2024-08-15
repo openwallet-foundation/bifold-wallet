@@ -127,8 +127,6 @@ describe('displays a credentials list screen', () => {
   })
 
   test('Hide list filters out specific credentials', async () => {
-    // @ts-ignore next-line
-    // useServices.mockReturnValue([() => null, () => null, { ...defaultConfig, credentialHideList: [credentialDefinitionId] }])
     const tree = render(
       <StoreProvider
         initialState={{
@@ -152,8 +150,6 @@ describe('displays a credentials list screen', () => {
   })
 
   test('Hide list does not filter out specific credentials when developer mode is enabled', async () => {
-    // @ts-ignore next-line
-    // useServices.mockReturnValue([() => null, () => null, { ...defaultConfig, credentialHideList: [credentialDefinitionId] }])
     const tree = render(
       <StoreProvider
         initialState={{

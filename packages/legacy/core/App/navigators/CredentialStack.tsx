@@ -15,7 +15,7 @@ const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const [CredentialListHeaderRight] = useServices([TOKENS.FN_CRED_LIST_HEADER_RIGHT])
+  const [CredentialListHeaderRight] = useServices([TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT])
   const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
