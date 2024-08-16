@@ -74,4 +74,6 @@ export type PersistentState = {
   MigrationState: Migration
   OnboardingState: Onboarding
   PreferencesState: Preferences
+  historySettingsOption: boolean // TODO: Migrate to proper name (Caps)
+  language: string // TODO: Migrate to proper name (Caps)
 }

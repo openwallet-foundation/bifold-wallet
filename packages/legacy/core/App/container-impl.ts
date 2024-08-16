@@ -1,7 +1,6 @@
 import { BaseLogger, Agent } from '@credo-ts/core'
 import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'

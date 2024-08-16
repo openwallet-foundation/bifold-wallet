@@ -32,11 +32,11 @@ import {
   HistoryBlockSelection,
   HistoryQuery,
   HistoryRecord,
-  HistorySettingsOptionStorageKey,
   IHistoryManager,
   NotificationRecord,
   RecordType,
 } from '../types'
+import { LocalStorageKeys } from '../../../constants'
 import { getValueForKey, setValueForKey } from '../../../services/storage'
 export default class HistoryManager implements IHistoryManager {
   private agent: Agent<any> | null
@@ -150,7 +150,7 @@ export default class HistoryManager implements IHistoryManager {
   public async saveHistory(recordData: HistoryRecord) {
     this.trace(`[${HistoryManager.name}]: Saving history record:${JSON.stringify(recordData)}`)
     try {
-      const historySettingsOption = await getValueForKey<string>(HistorySettingsOptionStorageKey.HistorySettingsOption)
+      const historySettingsOption = await getValueForKey<string>(LocalStorageKeys.HistorySettingsOption)
 
       // Save History when history settings option is not 'Never'
       if (!(historySettingsOption === 'Never')) {
@@ -202,7 +202,7 @@ export default class HistoryManager implements IHistoryManager {
       throw new Error('No option selected')
     }
 
-    await setValueForKey<string>(HistorySettingsOptionStorageKey.HistorySettingsOption, selectedValue.id)
+    await setValueForKey<string>(LocalStorageKeys.HistorySettingsOption, selectedValue.id)
 
     //TODO: Delete old history
     /*
@@ -228,7 +228,7 @@ export default class HistoryManager implements IHistoryManager {
   }
 
   public async getStoredHistorySettingsOption(): Promise<string | null> {
-    return (await getValueForKey<string>(HistorySettingsOptionStorageKey.HistorySettingsOption)) ?? null
+    return (await getValueForKey<string>(LocalStorageKeys.HistorySettingsOption)) ?? null
   }
 
   public getHistorySettingsOptionList(): Array<HistoryBlockSelection> {

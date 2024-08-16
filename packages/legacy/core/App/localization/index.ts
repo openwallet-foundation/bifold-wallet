@@ -2,6 +2,7 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import * as RNLocalize from 'react-native-localize'
 import { getValueForKey, setValueForKey } from '../services/storage'
+import { LocalStorageKeys } from '../constants'
 
 import en from './en'
 import fr from './fr'
@@ -35,7 +36,7 @@ const currentLanguage = i18n.language
 
 //** Store language into the AsyncStorage  */
 const storeLanguage = async (id: string) => {
-  await setValueForKey<string>('language', id)
+  await setValueForKey<string>(LocalStorageKeys.Language, id)
 }
 
 const initLanguages = (resources: TranslationResources, fallbackLng: Locales = Locales.en) => {
@@ -57,7 +58,7 @@ const initLanguages = (resources: TranslationResources, fallbackLng: Locales = L
 
 //** Fetch user preference language from the AsyncStorage and set if require  */
 const initStoredLanguage = async () => {
-  const langId = await getValueForKey<string>('language')
+  const langId = await getValueForKey<string>(LocalStorageKeys.Language)
 
   if (langId && langId !== currentLanguage) {
     await i18n.changeLanguage(langId)
