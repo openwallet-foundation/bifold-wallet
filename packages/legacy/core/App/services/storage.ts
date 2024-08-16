@@ -70,6 +70,31 @@ export class PersistentStorage<T> {
     }
   }
 
+  public async migrateStorageKey(oldKey: string, newKey: string): Promise<boolean> {
+    try {
+      const value = await AsyncStorage.getItem(oldKey)
+      if (!value) {
+        return false
+      }
+
+      await AsyncStorage.setItem(newKey, value)
+      await AsyncStorage.removeItem(oldKey)
+
+      // @ts-expect-error
+      // Fix complicated type error
+      delete this._state[oldKey]
+      // @ts-expect-error
+      // Fix complicated type error
+      this._state[newKey] = JSON.parse(value)
+
+      return true
+    } catch (error) {
+      this.log?.error(`Error migrating state for key ${oldKey}, ${error as Error}`)
+    }
+
+    return false
+  }
+
   public async flush() {
     if (!this._state) {
       return
