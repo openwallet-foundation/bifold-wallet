@@ -1,6 +1,30 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { BaseLogger } from '@credo-ts/core'
 
+export const getValueForKey = async <T>(key: string, log?: BaseLogger): Promise<T | undefined> => {
+  try {
+    const value = await AsyncStorage.getItem(key)
+    if (!value) {
+      return
+    }
+
+    return JSON.parse(value)
+  } catch (error) {
+    log?.error(`Error loading state for key ${key}, ${error as Error}`)
+  }
+}
+
+export const setValueForKey = async <T>(key: string, value: T, log?: BaseLogger): Promise<void> => {
+  try {
+    const serializedState = JSON.stringify(value)
+    return AsyncStorage.setItem(key, serializedState)
+  } catch (error) {
+    log?.error(`Error loading state for key ${key}, ${error as Error}`)
+
+    throw error
+  }
+}
+
 export class PersistentStorage<T> {
   private _state?: T
   private log?: BaseLogger
@@ -8,30 +32,6 @@ export class PersistentStorage<T> {
   constructor(logger: any) {
     // this._state = state
     this.log = logger
-  }
-
-  public static async getValueForKey<T>(key: string, log?: BaseLogger): Promise<T | undefined> {
-    try {
-      const value = await AsyncStorage.getItem(key)
-      if (!value) {
-        return
-      }
-
-      return JSON.parse(value)
-    } catch (error) {
-      log?.error(`Error loading state for key ${key}, ${error as Error}`)
-    }
-  }
-
-  public static async setValueForKey<T>(key: string, value: T, log?: BaseLogger): Promise<void> {
-    try {
-      const serializedState = JSON.stringify(value)
-      return AsyncStorage.setItem(key, serializedState)
-    } catch (error) {
-      log?.error(`Error loading state for key ${key}, ${error as Error}`)
-
-      throw error
-    }
   }
 
   public async setValueForKey(key: string, value: Partial<T>) {
