@@ -37,7 +37,7 @@ const currentLanguage = i18n.language
 
 //** Store language into the AsyncStorage  */
 const storeLanguage = async (id: string) => {
-  await PersistentStorage.setSingleValueForKey<string>('language', id)
+  await PersistentStorage.setValueForKey<string>('language', id)
 }
 
 const initLanguages = (resources: TranslationResources, fallbackLng: Locales = Locales.en) => {
@@ -59,7 +59,7 @@ const initLanguages = (resources: TranslationResources, fallbackLng: Locales = L
 
 //** Fetch user preference language from the AsyncStorage and set if require  */
 const initStoredLanguage = async () => {
-  const langId = await PersistentStorage.getSingleValueForKey<string>('language')
+  const langId = await PersistentStorage.getValueForKey<string>('language')
 
   if (langId && langId !== currentLanguage) {
     await i18n.changeLanguage(langId)
