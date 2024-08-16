@@ -21,7 +21,6 @@
 
 import { Agent } from '@credo-ts/core'
 import { GenericRecord, GenericRecordTags } from '@credo-ts/core/build/modules/generic-records/repository/GenericRecord'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import moment from 'moment'
 
 import { i18n } from '../../../localization/index'
@@ -38,7 +37,7 @@ import {
   NotificationRecord,
   RecordType,
 } from '../types'
-
+import { PersistentStorage } from '../../../services/storage'
 export default class HistoryManager implements IHistoryManager {
   private agent: Agent<any> | null
   private logger = new ConsoleLogger()
@@ -151,8 +150,11 @@ export default class HistoryManager implements IHistoryManager {
   public async saveHistory(recordData: HistoryRecord) {
     this.trace(`[${HistoryManager.name}]: Saving history record:${JSON.stringify(recordData)}`)
     try {
-      const historySettingsOption = await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
-      // Save History when history settigs option is not 'Never'
+      const historySettingsOption = await PersistentStorage.getValueForKey<string>(
+        HistorySettingsOptionStorageKey.HistorySettingsOption
+      )
+
+      // Save History when history settings option is not 'Never'
       if (!(historySettingsOption === 'Never')) {
         await this.addGenericRecord(
           {
@@ -202,7 +204,10 @@ export default class HistoryManager implements IHistoryManager {
       throw new Error('No option selected')
     }
 
-    await AsyncStorage.setItem(HistorySettingsOptionStorageKey.HistorySettingsOption, selectedValue.id)
+    await PersistentStorage.setValueForKey<string>(
+      HistorySettingsOptionStorageKey.HistorySettingsOption,
+      selectedValue.id
+    )
 
     //TODO: Delete old history
     /*
@@ -228,7 +233,9 @@ export default class HistoryManager implements IHistoryManager {
   }
 
   public async getStoredHistorySettingsOption(): Promise<string | null> {
-    return await AsyncStorage.getItem(HistorySettingsOptionStorageKey.HistorySettingsOption)
+    return (
+      (await PersistentStorage.getValueForKey<string>(HistorySettingsOptionStorageKey.HistorySettingsOption)) ?? null
+    )
   }
 
   public getHistorySettingsOptionList(): Array<HistoryBlockSelection> {

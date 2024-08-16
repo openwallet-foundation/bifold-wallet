@@ -69,3 +69,9 @@ export interface State {
   migration: Migration
   loading: boolean
 }
+
+export type PersistentState = {
+  MigrationState: Migration
+  OnboardingState: Onboarding
+  PreferencesState: Preferences
+}

@@ -6,14 +6,37 @@ import { BaseLogger } from '@credo-ts/core'
 // const storeLanguage = async (id: string) => {
 //   await AsyncStorage.setItem('language', id)
 // }
-
 export class PersistentStorage<T> {
   private _state?: T
   private log?: BaseLogger
 
-  constructor(state: T, logger: any) {
-    this._state = state
+  constructor(logger: any) {
+    // this._state = state
     this.log = logger
+  }
+
+  public static async getValueForKey<T>(key: string, log?: BaseLogger): Promise<T | undefined> {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      if (!value) {
+        return
+      }
+
+      return JSON.parse(value)
+    } catch (error) {
+      log?.error(`Error loading state for key ${key}, ${error as Error}`)
+    }
+  }
+
+  public static async setValueForKey<T>(key: string, value: T, log?: BaseLogger): Promise<void> {
+    try {
+      const serializedState = JSON.stringify(value)
+      return AsyncStorage.setItem(key, serializedState)
+    } catch (error) {
+      log?.error(`Error loading state for key ${key}, ${error as Error}`)
+
+      throw error
+    }
   }
 
   public async setValueForKey(key: string, value: Partial<T>) {
@@ -22,6 +45,7 @@ export class PersistentStorage<T> {
     }
 
     // @ts-expect-error
+    // Fix complicated type error
     this._state[key] = value
 
     try {
@@ -33,12 +57,22 @@ export class PersistentStorage<T> {
   }
 
   public async getValueForKey(key: string): Promise<Partial<T> | undefined> {
-    if (!this._state) {
-      await this.load()
-    }
+    try {
+      console.log('************** A ')
+      if (!this._state) {
+        console.log('************** B ')
 
-    // @ts-expect-error
-    return this._state[key]
+        await this.load()
+      }
+
+      console.log('************** C ', this._state)
+
+      // @ts-expect-error
+      // Fix complicated type error
+      return this._state[key] as Partial<T>
+    } catch (error) {
+      this.log?.error(`Error loading state for key ${key}, ${error as Error}`)
+    }
   }
 
   public async flush() {
@@ -50,6 +84,7 @@ export class PersistentStorage<T> {
       const keys = Object.keys(this._state)
       for (const key of keys) {
         // @ts-expect-error
+        // Fix complicated type error
         const value = this._state[key]
         const serializedState = JSON.stringify(value)
         await AsyncStorage.setItem(key, serializedState)
@@ -69,8 +104,11 @@ export class PersistentStorage<T> {
           return
         }
 
+        const parsedValue = JSON.parse(value)
+
         // @ts-expect-error
-        this._state[key] = JSON.parse(value)
+        // Fix complicated type error
+        this._state = { ...this._state, [key]: parsedValue }
       })
     } catch (error) {
       this.log?.error('Error loading state', error as Error)
