@@ -16,7 +16,7 @@ import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, 
 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
   indexFileName?: string
-  preLoad?: boolean
+  verifyCacheIntegrity?: boolean
 }
 
 type BundleIndexEntry = {
@@ -294,6 +294,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     try {
       const fileExists = await exists(pathToFile)
       this.log?.info(`File ${fileName} ${fileExists ? 'does' : 'does not'} exist at ${pathToFile}`)
+
       return fileExists
     } catch (error) {
       this.log?.error(`Failed to check existence of ${fileName} at ${pathToFile}`)
@@ -451,6 +452,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
         // etag is the same, no need to refresh
         this.indexFile = response.data
 
+        const fetchMissingFiles = true
+        const status = await this.verifyCacheIntegrity(fetchMissingFiles)
+        if (!status) {
+          this.log?.error(`Cache integrity broken, unable to re-fetch missing files`)
+        }
+
         return
       }
 
@@ -460,7 +467,11 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       this.indexFile = response.data
       this.indexFileEtag = etag
 
-      await this.processQueue(items)
+      const processed = await this.processQueue(items)
+      if (processed.length !== items.length) {
+        this.log?.info(`Processed ${processed.length} items, expected ${items.length}`)
+      }
+
       await this.saveFileToLocalStorage(filePath, JSON.stringify(this.indexFile))
     } catch (error) {
       this.log?.error(`Failed to fetch OCA index ${filePath}`)
@@ -482,18 +493,12 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       return []
     }
 
-    const data = await this.loadFileFromLocalStorage(fileName!)
-    if (data) {
-      return JSON.parse(data)
-    }
-
-    // the queue is empty, try to fetch the file
     const cachedData = await this.loadFileFromLocalStorage(fileName)
-    if (!cachedData) {
-      return []
+    if (cachedData) {
+      return JSON.parse(cachedData)
     }
 
-    return JSON.parse(cachedData)
+    return []
   }
 
   /**
@@ -605,5 +610,52 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     })
 
     return [legacyBrandingOverlay, brandingOverlay]
+  }
+
+  private async verifyCacheIntegrity(fetchMissing: boolean = false): Promise<boolean> {
+    const indexItemHashes = [...new Set(Object.keys(this.indexFile).map((key) => this.indexFile[key].sha256))]
+    const queue = []
+
+    this.log?.info(`Checking bundle cache integrity`)
+
+    for (const hash of indexItemHashes) {
+      const fileName = this.fileNameForBundleAtPath(this.findPathBySha256(hash)!)
+      if (!fileName) {
+        continue
+      }
+
+      const fileExists = await this.checkFileExists(fileName)
+      if (!fileExists) {
+        this.log?.warn(`File ${fileName} does not exist, re-fetching`)
+        queue.push({
+          sha256: hash,
+          operation: OCABundleQueueEntryOperation.Add,
+        })
+      }
+    }
+
+    if (queue.length === 0) {
+      this.log?.info(`Cache integrity verified`)
+
+      return true
+    }
+
+    if (queue.length > 0 && !fetchMissing) {
+      this.log?.info(`Missing ${queue.length} files, cache broken`)
+
+      return false
+    }
+
+    const processed = await this.processQueue(queue)
+
+    if (processed.length !== queue.length) {
+      this.log?.error(`Processed ${processed.length} items, expected ${queue.length}`)
+
+      return false
+    }
+
+    this.log?.info(`Cache was broken, now fixed`)
+
+    return true
   }
 }
