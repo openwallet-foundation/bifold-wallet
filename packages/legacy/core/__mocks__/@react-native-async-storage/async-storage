@@ -1,7 +1,0 @@
-export default class AsyncStorage {
-  static async setItem(key, value) {}
-
-  static async getItem(key) {
-    return null
-  }
-}
