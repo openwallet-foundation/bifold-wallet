@@ -200,14 +200,14 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
    * @param value - The new value for the log.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  set log(value: any) {
+  public set log(value: any) {
     this._log = value
   }
 
   /**
    * Get the log value.
    */
-  get log() {
+  public get log() {
     return this._log
   }
 
