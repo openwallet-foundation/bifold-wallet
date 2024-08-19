@@ -16,7 +16,6 @@ import { BrandingOverlayType, DefaultOCABundleResolver, Identifiers, OCABundle, 
 
 export interface RemoteOCABundleResolverOptions extends OCABundleResolverOptions {
   indexFileName?: string
-  preLoad?: boolean
   verifyCacheIntegrity?: boolean
 }
 
