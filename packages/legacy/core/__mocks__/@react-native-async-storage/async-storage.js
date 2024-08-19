@@ -1,10 +1,14 @@
 const AsyncStorage = {}
 
-AsyncStorage.getItem = () => {
-  return null
+const store = {}
+
+AsyncStorage.getItem = (key) => {
+  return store[key]
 }
 
-AsyncStorage.setItem = () => {
+AsyncStorage.setItem = (key, value) => {
+  store[key] = value
+
   return null
 }
 
