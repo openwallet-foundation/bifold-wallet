@@ -356,7 +356,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
           data={displayItems}
           scrollEnabled={false}
           initialNumToRender={displayItems?.length}
-          keyExtractor={(item) => item.name!}
+          keyExtractor={({ name }) => name}
           renderItem={({ item }) => {
             return renderCardAttribute(item as Attribute & Predicate)
           }}

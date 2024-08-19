@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
+import React, { forwardRef, Ref, useCallback, useImperativeHandle, useMemo, useState } from 'react'
 import { ColorValue, LayoutRectangle } from 'react-native'
 
 import { TourOverlay } from '../../components/tour/TourOverlay'
@@ -60,7 +60,7 @@ export interface TourProviderProps {
   proofRequestTourSteps: TourStep[]
 }
 
-export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => {
+const TourProviderComponent = (props: TourProviderProps, ref:  Ref<Tour>) => {
   const {
     children,
     onBackdropPress,
@@ -212,4 +212,6 @@ export const TourProvider = forwardRef<Tour, TourProviderProps>((props, ref) => 
       />
     </TourContext.Provider>
   )
-})
+}
+
+export const TourProvider = forwardRef<Tour, TourProviderProps>(TourProviderComponent)
