@@ -1,4 +1,4 @@
-import { PropsWithChildren, useMemo } from 'react'
+import React, { PropsWithChildren, useMemo } from 'react'
 import { NetworkContext } from '../../App/contexts/network'
 
 import networkContext from '../contexts/network'
