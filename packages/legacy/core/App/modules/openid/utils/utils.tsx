@@ -32,7 +32,7 @@ export const buildFieldsFromOpenIDTemplate = (
 
      let pushedVal: string | number | null = null
      if (typeof data[key] === "string" || typeof data[key] === "number"){
-      pushedVal = data[key]
+      pushedVal = data[key] as string | number | null
      }
      fields.push(new Attribute({ name: key, value: pushedVal }))
   }
