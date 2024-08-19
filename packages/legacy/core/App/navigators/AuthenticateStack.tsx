@@ -6,7 +6,7 @@ import AttemptLockout from '../screens/AttemptLockout'
 import PINEnter from '../screens/PINEnter'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
 
 interface AuthenticateStackProps {
   setAuthenticated: (status: boolean) => void
@@ -15,7 +15,7 @@ interface AuthenticateStackProps {
 const AuthenticateStack: React.FC<AuthenticateStackProps> = ({ setAuthenticated }) => {
   const Stack = createStackNavigator<AuthenticateStackParams>()
   const theme = useTheme()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions, presentation: 'transparentModal', headerShown: false }}>

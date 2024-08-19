@@ -9,7 +9,7 @@ import { DependencyContainer } from 'tsyringe'
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import defaultIndyLedgers from './configs/ledgers/indy'
-import { LocalStorageKeys } from './constants'
+import { LocalStorageKeys, PINRules } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import { defaultState } from './contexts/store'
@@ -21,6 +21,7 @@ import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions
 import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
+import Splash from './screens/Splash'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
 import { ConsoleLogger } from './services/logger'
@@ -32,7 +33,26 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+import OnboardingPages from './screens/OnboardingPages'
+import UseBiometry from './screens/UseBiometry'
+import Scan from './screens/Scan'
+import HomeHeaderView from './components/views/HomeHeaderView'
+import HomeFooterView from './components/views/HomeFooterView'
+import EmptyList from './components/misc/EmptyList'
+import Record from './components/record/Record'
 
+export const defaultConfig = {
+  PINSecurity: { rules: PINRules, displayHelper: false },
+  settings: [],
+  enableTours: false,
+  supportedLanguages: ['en'],
+  showPreface: false,
+  disableOnboardingSkip: false,
+  whereToUseWalletUrl: 'https://example.com',
+  showScanHelp: true,
+  showScanButton: true,
+  showDetailsInfo: true,
+}
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
@@ -53,6 +73,11 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_PREFACE, Preface)
     this._container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
     this._container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
+    this._container.registerInstance(TOKENS.SCREEN_SPLASH, Splash)
+    this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_PAGES, OnboardingPages)
+    this._container.registerInstance(TOKENS.SCREEN_USE_BIOMETRY, UseBiometry)
+    this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
+    this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
@@ -65,6 +90,13 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, useProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
     this._container.registerInstance(TOKENS.NOTIFICATIONS, { useNotifications })
+    this._container.registerInstance(TOKENS.CONFIG, defaultConfig)
+    this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)
+    this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
+    this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
+    this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
     this._container.registerInstance(

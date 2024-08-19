@@ -7,13 +7,11 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import { ConfigurationContext } from '../../App/contexts/configuration'
 import { NetworkProvider } from '../../App/contexts/network'
 import CredentialOffer from '../../App/screens/CredentialOffer'
 import { testIdWithKey } from '../../App/utils/testable'
-import configurationContext from '../contexts/configuration'
+import { BasicAppContext } from '../helpers/app'
 
-jest.mock('../../App/container-api')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
@@ -49,11 +47,11 @@ useCredentialById.mockReturnValue(credentialRecord)
 describe('displays a credential offer screen', () => {
   test('renders correctly', async () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <NetworkProvider>
           <CredentialOffer route={props as any} navigation={useNavigation()} />
         </NetworkProvider>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     await act(async () => {})
@@ -63,11 +61,11 @@ describe('displays a credential offer screen', () => {
 
   test('shows offer controls', async () => {
     const { getByTestId } = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <NetworkProvider>
           <CredentialOffer route={props as any} navigation={useNavigation()} />
         </NetworkProvider>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     await act(async () => {})
@@ -81,11 +79,11 @@ describe('displays a credential offer screen', () => {
 
   test('accepting a credential', async () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <NetworkProvider>
           <CredentialOffer route={props as any} navigation={useNavigation()} />
         </NetworkProvider>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     await act(async () => {})
@@ -99,11 +97,11 @@ describe('displays a credential offer screen', () => {
 
   test('declining a credential', async () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <NetworkProvider>
           <CredentialOffer route={props as any} navigation={useNavigation()} />
         </NetworkProvider>
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
 
     await act(async () => {})

@@ -5,10 +5,10 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { useConfiguration } from '../contexts/configuration'
 import { useTheme } from '../contexts/theme'
 import { Locales, storeLanguage } from '../localization'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
 interface Language {
   id: Locales
   value: string
@@ -17,7 +17,7 @@ interface Language {
 const Language = () => {
   const { i18n } = useTranslation()
   const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
-  const { supportedLanguages } = useConfiguration()
+  const [{ supportedLanguages }] = useServices([TOKENS.CONFIG])
 
   const languages: Language[] = supportedLanguages.map((lang) => ({
     id: lang,

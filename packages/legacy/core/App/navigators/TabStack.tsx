@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { AttachTourStep } from '../components/tour/AttachTourStep'
-import { TOKENS, useContainer } from '../container-api'
+import { TOKENS, useServices } from '../container-api'
 import { useNetwork } from '../contexts/network'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
@@ -20,8 +20,7 @@ import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const container = useContainer()
-  const { useNotifications } = container.resolve(TOKENS.NOTIFICATIONS)
+  const [{ useNotifications }] = useServices([TOKENS.NOTIFICATIONS])
   const notifications = useNotifications()
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()

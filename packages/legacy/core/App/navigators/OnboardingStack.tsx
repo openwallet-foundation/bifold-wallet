@@ -5,8 +5,7 @@ import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TOKENS, useContainer } from '../container-api'
-import { useConfiguration } from '../contexts/configuration'
+import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -18,7 +17,7 @@ import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 
-import { createDefaultStackOptions } from './defaultStackOptions'
+import { useDefaultStackOptions } from './defaultStackOptions'
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
@@ -31,20 +30,14 @@ type ScreenOptions = RouteConfig<
 const OnboardingStack: React.FC = () => {
   const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const container = useContainer()
   const Stack = createStackNavigator()
   const theme = useTheme()
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
-  const Onboarding = container.resolve(TOKENS.SCREEN_ONBOARDING)
-  const { pages, splash, useBiometry } = useConfiguration()
-  const defaultStackOptions = createDefaultStackOptions(theme)
+  const [splash, pages, useBiometry, Onboarding, Developer, { screen: Terms }, onTutorialCompletedCurried, ScreenOptionsDictionary, Preface] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.SCREEN_ONBOARDING_PAGES, TOKENS.SCREEN_USE_BIOMETRY, TOKENS.SCREEN_ONBOARDING, TOKENS.SCREEN_DEVELOPER, TOKENS.SCREEN_TERMS, TOKENS.FN_ONBOARDING_DONE, TOKENS.OBJECT_ONBOARDING_CONFIG, TOKENS.SCREEN_PREFACE])
+  const defaultStackOptions = useDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const onTutorialCompleted = container.resolve(TOKENS.FN_ONBOARDING_DONE)(dispatch, navigation)
-  const { screen: Terms } = container.resolve(TOKENS.SCREEN_TERMS)
-  const Developer = container.resolve(TOKENS.SCREEN_DEVELOPER)
-  const ScreenOptionsDictionary = container.resolve(TOKENS.OBJECT_ONBOARDING_CONFIG)
-  const Preface = container.resolve(TOKENS.SCREEN_PREFACE)
+  const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
 
   const onAuthenticated = (status: boolean): void => {
     if (!status) {

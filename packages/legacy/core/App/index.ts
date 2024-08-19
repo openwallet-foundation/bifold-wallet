@@ -33,7 +33,6 @@ import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
-import { defaultConfiguration } from './defaultConfiguration'
 import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
 import Developer from './screens/Developer'
@@ -44,11 +43,13 @@ import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
+import Scan from './screens/Scan'
+import Onboarding from './screens/Onboarding'
+import { PINRules } from './constants'
 
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
-export { ConfigurationProvider, useConfiguration } from './contexts/configuration'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
 export { Assets as ImageAssets } from './theme'
@@ -84,7 +85,6 @@ export type {
   IAssets,
   ITheme,
 } from './theme'
-export type { ConfigurationContext } from './contexts/configuration'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
@@ -141,7 +141,8 @@ export {
   UseBiometry,
   AttemptLockout,
   Record,
-  defaultConfiguration,
+  Scan,
+  Onboarding,
   types,
   components,
   contexts,
@@ -149,5 +150,6 @@ export {
   loadLoginAttempt,
   Button,
   BulletPoint,
+  PINRules,
 }
 export type { IButton }

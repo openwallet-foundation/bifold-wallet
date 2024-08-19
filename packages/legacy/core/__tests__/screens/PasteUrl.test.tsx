@@ -10,10 +10,6 @@ import { container } from 'tsyringe'
 import { testIdWithKey } from '../../App/utils/testable'
 import { useTranslation } from 'react-i18next'
 
-jest.mock('../../App/contexts/configuration', () => ({
-  useConfiguration: jest.fn().mockReturnValue({ enableImplicitInvitations: true, enableReuseConnections: true }),
-}))
-
 const { t } = useTranslation()
 
 describe('displays a paste url screen', () => {

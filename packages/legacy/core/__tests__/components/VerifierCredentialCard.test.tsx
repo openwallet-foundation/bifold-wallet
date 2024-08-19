@@ -2,10 +2,8 @@ import { act, render } from '@testing-library/react-native'
 import React from 'react'
 
 import VerifierCredentialCard from '../../App/components/misc/VerifierCredentialCard'
-import { ConfigurationContext } from '../../App/contexts/configuration'
-import configurationContext from '../contexts/configuration'
+import { BasicAppContext } from '../helpers/app'
 
-jest.mock('../../App/container-api')
 
 const displayItems = [
   {
@@ -33,16 +31,16 @@ const displayItems = [
 describe('VerifierCredentialCard Component', () => {
   test('Renders correctly', async () => {
     const tree = render(
-      <ConfigurationContext.Provider value={configurationContext}>
+      <BasicAppContext>
         <VerifierCredentialCard
           schemaId={'4eCXHS79ykiMv2PoBxPK23:2:unverified_person:0.1.0'}
           onChangeValue={jest.fn()}
           displayItems={displayItems}
           elevated
         />
-      </ConfigurationContext.Provider>
+      </BasicAppContext>
     )
-    await act(async () => {})
+    await act(async () => { })
     expect(tree).toMatchSnapshot()
   })
 })
