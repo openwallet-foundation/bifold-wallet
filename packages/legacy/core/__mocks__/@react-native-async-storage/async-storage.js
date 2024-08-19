@@ -1,15 +1,13 @@
-const AsyncStorage = {}
-
 const store = {}
 
-AsyncStorage.getItem = (key) => {
-  return store[key]
+export default class AsyncStorage {
+  static getItem = (key) => {
+    return store[key]
+  }
+
+  static setItem = (key, value) => {
+    store[key] = value
+
+    return null
+  }
 }
-
-AsyncStorage.setItem = (key, value) => {
-  store[key] = value
-
-  return null
-}
-
-export default AsyncStorage
