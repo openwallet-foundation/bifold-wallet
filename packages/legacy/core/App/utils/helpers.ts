@@ -50,6 +50,7 @@ import {
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
 import { isOpenIdPresentationRequest } from './parsers'
+import { receiveCredentialFromOpenId4VciOffer } from '../modules/openid/resolver'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -1016,9 +1017,18 @@ export const connectFromScanOrDeepLink = async (
   try {
     const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
     if (isOpenIDInvitation) {
-      //TODO: Impliment Navigation to display credential
-      throw new Error(`OpenID4VCI is not supported yet`)
+      const record = await receiveCredentialFromOpenId4VciOffer({
+        agent: agent,
+        uri: uri
+      })
+
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.OpenIDCredentialDetails,
+        params: { credential:  record},
+      })
+      return
     }
+    
     const aUrl = processBetaUrlIfRequired(uri)
     const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
 
