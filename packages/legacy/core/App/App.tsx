@@ -26,10 +26,10 @@ import { initLanguages, initStoredLanguage, translationResources } from './local
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
 
-const App = (system: Container) => {
+const App = (system: Container): React.FC => {
   initLanguages(translationResources)
 
-  return () => {
+  const AppComponent = () => {
     useMemo(() => {
       initStoredLanguage().then()
     }, [])
@@ -78,5 +78,7 @@ const App = (system: Container) => {
       </ContainerProvider>
     )
   }
+
+  return AppComponent
 }
 export default App

@@ -1,7 +1,7 @@
 import { AnonCredsNonRevokedInterval, AnonCredsProofRequestRestriction } from '@credo-ts/anoncreds'
 
 export interface FieldParams {
-  name: string | null
+  name: string
   format?: string
   type?: string
   encoding?: string
@@ -26,7 +26,7 @@ export interface PredicateParams extends FieldParams {
 }
 
 export class Field {
-  public name: string | null
+  public name: string
   public format?: string
   public type?: string
   public encoding?: string
