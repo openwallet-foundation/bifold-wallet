@@ -87,10 +87,6 @@ export default [
       'no-unsafe-optional-chaining': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/ban-ts-comment': 'warn',
-      'react/prop-types': 'warn',
-      'react/display-name': 'warn',
-      'react/react-in-jsx-scope': 'warn',
-      'react/jsx-key': 'warn',
       'react-hooks/rules-of-hooks': 'warn',
       "react-hooks/exhaustive-deps": "warn",
     }
