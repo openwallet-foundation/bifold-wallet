@@ -1,30 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { BaseLogger } from '@credo-ts/core'
 
-export const getValueForKey = async <T>(key: string, log?: BaseLogger): Promise<T | undefined> => {
-  try {
-    const value = await AsyncStorage.getItem(key)
-    if (!value) {
-      return
-    }
-
-    return JSON.parse(value)
-  } catch (error) {
-    log?.error(`Error loading state for key ${key}, ${error as Error}`)
-  }
-}
-
-export const setValueForKey = async <T>(key: string, value: T, log?: BaseLogger): Promise<void> => {
-  try {
-    const serializedState = JSON.stringify(value)
-    return AsyncStorage.setItem(key, serializedState)
-  } catch (error) {
-    log?.error(`Error loading state for key ${key}, ${error as Error}`)
-
-    throw error
-  }
-}
-
 export class PersistentStorage<T> {
   private _state?: T
   private log?: BaseLogger
@@ -32,6 +8,40 @@ export class PersistentStorage<T> {
   constructor(logger: any) {
     // this._state = state
     this.log = logger
+  }
+
+  public static fetchValueForKey = async <T>(key: string, log?: BaseLogger): Promise<T | undefined> => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      if (!value) {
+        return
+      }
+
+      return JSON.parse(value)
+    } catch (error) {
+      log?.error(`Error loading state for key ${key}, ${error as Error}`)
+    }
+  }
+
+  public static storeValueForKey = async <T>(key: string, value: T, log?: BaseLogger): Promise<void> => {
+    try {
+      const serializedState = JSON.stringify(value)
+      return AsyncStorage.setItem(key, serializedState)
+    } catch (error) {
+      log?.error(`Error loading state for key ${key}, ${error as Error}`)
+
+      throw error
+    }
+  }
+
+  public static removeValueForKey = async (key: string, log?: BaseLogger): Promise<void> => {
+    try {
+      return AsyncStorage.removeItem(key)
+    } catch (error) {
+      log?.error(`Error removing state for key ${key}, ${error as Error}`)
+
+      throw error
+    }
   }
 
   public async setValueForKey(key: string, value: Partial<T>) {
@@ -53,14 +63,9 @@ export class PersistentStorage<T> {
 
   public async getValueForKey(key: string): Promise<Partial<T> | undefined> {
     try {
-      console.log('************** A ')
       if (!this._state) {
-        console.log('************** B ')
-
         await this.load()
       }
-
-      console.log('************** C ', this._state)
 
       // @ts-expect-error
       // Fix complicated type error
