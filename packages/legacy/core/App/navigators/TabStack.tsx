@@ -21,7 +21,7 @@ import HomeStack from './HomeStack'
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
   const [{ useNotifications }] = useServices([TOKENS.NOTIFICATIONS])
-  const notifications = useNotifications()
+  const notifications = useNotifications({})
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertConnectedNetwork } = useNetwork()

@@ -50,7 +50,6 @@ import {
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
 import { isOpenIdPresentationRequest } from './parsers'
-import { receiveCredentialFromOpenId4VciOffer } from '../modules/openid/resolver'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -1017,15 +1016,11 @@ export const connectFromScanOrDeepLink = async (
   try {
     const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
     if (isOpenIDInvitation) {
-      const record = await receiveCredentialFromOpenId4VciOffer({
-        agent: agent,
-        uri: uri
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { openIDUri: uri },
       })
 
-      navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.OpenIDCredentialDetails,
-        params: { credential:  record},
-      })
       return
     }
     

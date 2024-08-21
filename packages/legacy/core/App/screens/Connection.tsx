@@ -1,4 +1,4 @@
-import { BasicMessageRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@credo-ts/core'
+import { BasicMessageRecord, ConnectionRecord, CredentialExchangeRecord, OutOfBandRecord, ProofExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -33,16 +33,22 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { oobRecordId } = route.params
+  const { oobRecordId, openIDUri } = route.params
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { ConnectionLoading } = useAnimatedComponents()
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const notifications = useNotifications()
-  const oobRecord = useOutOfBandById(oobRecordId)
-  const connection = useConnectionByOutOfBandId(oobRecordId)
+  const notifications = useNotifications({openIDUri: openIDUri})
+  
+  let oobRecord: OutOfBandRecord | undefined
+  let connection: ConnectionRecord | undefined
+  
+  if(oobRecordId) {
+    oobRecord = useOutOfBandById(oobRecordId)
+    connection = useConnectionByOutOfBandId(oobRecordId)
+  }
 
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
@@ -192,6 +198,25 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     )
   }, [connection, oobRecord, state])
 
+  // This hook will monitor notification for openID type credentials where there is not connection or oobID present
+  useEffect(() => {
+    if (!state.inProgress) {
+      return
+    }
+
+    if (!state.notificationRecord) {
+      return
+    }
+
+    if((state.notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' || (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord') {
+      logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
+      dispatch({ inProgress: false })
+      navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
+      return
+    }
+
+  }, [state])
+
   useMemo(() => {
     startTimer()
     return () => abortTimer
@@ -225,6 +250,17 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         dispatch({ notificationRecord: notification })
         break
       }
+
+      if((notification as W3cCredentialRecord).type === 'W3cCredentialRecord') {
+        dispatch({ notificationRecord: notification })
+        break
+      }
+
+      if((notification as SdJwtVcRecord).type === 'SdJwtVcRecord') {
+        dispatch({ notificationRecord: notification })
+        break
+      }
+
     }
   }, [notifications, state])
 

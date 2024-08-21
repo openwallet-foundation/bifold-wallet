@@ -4,6 +4,8 @@ import {
   CredentialState,
   ProofExchangeRecord,
   ProofState,
+  SdJwtVcRecord,
+  W3cCredentialRecord,
 } from '@credo-ts/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
@@ -15,10 +17,17 @@ import {
   basicMessageCustomMetadata,
   credentialCustomMetadata,
 } from '../types/metadata'
+import { useOpenID } from '../modules/openid/hooks/openid'
 
-export const useNotifications = (): Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord> => {
+export type NotificationsInputProps = {
+  openIDUri?: string
+}
+
+export type NotificationReturnType = Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | SdJwtVcRecord | W3cCredentialRecord>
+
+export const useNotifications = ({ openIDUri } : NotificationsInputProps): NotificationReturnType => {
   const { records: basicMessages } = useBasicMessages()
-  const [notifications, setNotifications] = useState<(BasicMessageRecord | CredentialRecord | ProofExchangeRecord)[]>(
+  const [notifications, setNotifications] = useState<NotificationReturnType>(
     []
   )
 
@@ -27,6 +36,7 @@ export const useNotifications = (): Array<BasicMessageRecord | CredentialRecord 
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsRequested = useProofByState(ProofState.RequestReceived)
+  const openIDCredsRecieved = useOpenID({openIDUri: openIDUri})
 
   useEffect(() => {
     // get all unseen messages
@@ -63,6 +73,12 @@ export const useNotifications = (): Array<BasicMessageRecord | CredentialRecord 
     )
     setNotifications(notif)
   }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone])
+
+  useEffect(()=> {
+    if(openIDCredsRecieved) {
+      setNotifications([openIDCredsRecieved])
+    } 
+  }, [openIDCredsRecieved])
 
   return notifications
 }

@@ -1,10 +1,4 @@
-import {
-  Agent,
-  BaseLogger,
-  BasicMessageRecord,
-  ProofExchangeRecord,
-  CredentialExchangeRecord as CredentialRecord,
-} from '@credo-ts/core'
+import { Agent, BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -21,6 +15,7 @@ import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 import { CustomNotification } from './types/notification'
 import { Config } from './types/config'
+import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -141,7 +136,7 @@ export type TokenMapping = {
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.NOTIFICATIONS]: {
-    useNotifications: () => Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification>
+    useNotifications: ({ openIDUri } : NotificationsInputProps) => NotificationReturnType
     customNotificationConfig?: CustomNotification
   }
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType

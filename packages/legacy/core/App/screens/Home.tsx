@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = () => {
     TOKENS.CONFIG,
     TOKENS.NOTIFICATIONS,
   ])
-  const notifications = useNotifications()
+  const notifications = useNotifications({})
   const { t } = useTranslation()
 
   const { ColorPallet } = useTheme()
