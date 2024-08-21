@@ -1,6 +1,6 @@
 import { ProofRequestTemplate, ProofRequestType } from './types/proof-reqeust-template'
 
-export const useProofRequestTemplates = (useDevRestrictions: boolean) => {
+export const getProofRequestTemplates = (useDevRestrictions: boolean) => {
   const studentRestrictions = [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }]
   const studentDevRestrictions = [{ schema_name: 'student_card' }]
   const restrictions = useDevRestrictions ? studentDevRestrictions : studentRestrictions

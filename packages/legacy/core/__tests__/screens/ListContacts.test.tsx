@@ -1,18 +1,18 @@
-import { useNavigation } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
+import { container } from 'tsyringe'
 
+import { useNavigation as testUseNavigation } from '../../__mocks__/@react-navigation/native'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import ListContacts from '../../App/screens/ListContacts'
 import { BasicAppContext, CustomBasicAppContext } from '../helpers/app'
 import { TOKENS } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
-import { container } from 'tsyringe'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => { })
 
-const navigation = useNavigation()
+const navigation = testUseNavigation()
 
 describe('ListContacts Component', () => {
   beforeEach(() => {
@@ -77,7 +77,6 @@ describe('ListContacts Component', () => {
   })
 
   test('Hide list does not filter out specific contacts when developer mode is enabled', async () => {
-    const navigation = useNavigation()
     const context = new MainContainer(container.createChildContainer()).init()
     const config = context.resolve(TOKENS.CONFIG)
     context.container.registerInstance(TOKENS.CONFIG, { ...config, contactHideList: ['Faber'] })

@@ -151,7 +151,7 @@ const TourProviderComponent = (props: TourProviderProps, ref:  Ref<Tour>) => {
     }
 
     stepToRender = currentStep !== undefined ? steps[currentStep] : undefined
-    return stepToRender ?? { render: () => <></> }
+    return stepToRender ?? { Render: () => <></> }
   }, [homeTourSteps, credentialsTourSteps, credentialOfferTourSteps, proofRequestTourSteps, currentStep])
 
   const tour = useMemo(

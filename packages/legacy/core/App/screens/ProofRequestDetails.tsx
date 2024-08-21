@@ -181,7 +181,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     [setCustomPredicateValues, setInvalidPredicate]
   )
 
-  const useProofRequest = useCallback(async () => {
+  const activateProofRequest = useCallback(async () => {
     if (!template) {
       return
     }
@@ -228,7 +228,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
             accessibilityLabel={connectionId ? t('Verifier.SendThisProofRequest') : t('Verifier.UseProofRequest')}
             testID={connectionId ? testIdWithKey('SendThisProofRequest') : testIdWithKey('UseProofRequest')}
             buttonType={ButtonType.Primary}
-            onPress={() => useProofRequest()}
+            onPress={() => activateProofRequest()}
           />
         </View>
         {store.preferences.useDataRetention && (

@@ -42,7 +42,7 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
   const { t } = useTranslation()
   const { ListItems, ColorPallet } = useTheme()
   const [store] = useStore()
-  const connection = record.connectionId ? useConnectionById(record.connectionId) : undefined
+  const connection = useConnectionById(record.connectionId ?? '')
   const theirLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
