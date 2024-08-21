@@ -49,7 +49,7 @@ describe('check rolling base64 encode/decode', () => {
 
 // This is a difficult function to test completely because of the i18n
 describe('formatTime', () => {
-  test.skip('without params', () => {
+  test('without params', () => {
     const result = formatTime(new Date('December 17, 2012 03:24:00'))
     // This would be December 17, 2012 but the i18n is not working in Jest
     expect(result).toBe('Dec 17, 2012')

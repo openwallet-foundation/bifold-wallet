@@ -86,7 +86,7 @@ export type {
   ITheme,
 } from './theme'
 export type { BifoldAgent } from './utils/agent'
-export type { TourStep } from './contexts/tour/tour-context'
+export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
 export type { AuthenticateStackParams, OnboardingStackParams, NotificationStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }

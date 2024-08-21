@@ -245,15 +245,6 @@ export function formatIfDate(format: string | undefined, value: string | number 
   return value
 }
 
-/**
- * @deprecated The function should not be used
- */
-export function connectionRecordFromId(connectionId?: string): ConnectionRecord | void {
-  if (connectionId) {
-    return useConnectionById(connectionId)
-  }
-}
-
 export function getConnectionName(
   connection: ConnectionRecord | undefined,
   alternateContactNames: Record<string, string>
@@ -267,20 +258,21 @@ export function getConnectionName(
   )
 }
 
-export function getCredentialConnectionLabel(credential?: CredentialExchangeRecord) {
+export function useCredentialConnectionLabel(credential?: CredentialExchangeRecord) {
+  const connection = useConnectionById(credential?.connectionId ?? '')
+
   if (!credential) {
     return ''
   }
 
   if (credential.connectionId) {
-    const connection = useConnectionById(credential.connectionId)
     return connection?.alias || connection?.theirLabel || credential.connectionId
   }
 
   return 'Unknown Contact'
 }
 
-export function getConnectionImageUrl(connectionId: string) {
+export function useConnectionImageUrl(connectionId: string) {
   const connection = useConnectionById(connectionId)
   if (!connection) {
     return undefined

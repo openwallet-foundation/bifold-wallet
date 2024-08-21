@@ -8,9 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 import { testIdWithKey } from '../../App/utils/testable'
-import { useTranslation } from 'react-i18next'
 
-const { t } = useTranslation()
 
 describe('displays a paste url screen', () => {
   test('Paste URL renders correctly', () => {
@@ -48,7 +46,7 @@ describe('displays a paste url screen', () => {
     expect(touchableDisabled).not.toBeNull()
     fireEvent.press(touchableDisabled, 'press')
 
-    const errorModal = await tree.findByText(t('PasteUrl.ErrorTextboxEmpty'))
+    const errorModal = await tree.findByText('PasteUrl.ErrorTextboxEmpty')
     expect(errorModal).not.toBeNull()
   })
 
@@ -74,7 +72,7 @@ describe('displays a paste url screen', () => {
     expect(continueButton).not.toBeNull()
     fireEvent.press(continueButton, 'press')
 
-    const errorModal = await tree.findByText(t('PasteUrl.ErrorInvalidUrl'))
+    const errorModal = await tree.findByText('PasteUrl.ErrorInvalidUrl')
     expect(errorModal).not.toBeNull()
   })
 
@@ -103,7 +101,7 @@ describe('displays a paste url screen', () => {
     expect(continueButton).not.toBeNull()
     fireEvent.press(continueButton, 'press')
 
-    const errorModal = tree.queryByText(t('PasteUrl.ErrorInvalidUrl'))
+    const errorModal = tree.queryByText('PasteUrl.ErrorInvalidUrl')
     expect(errorModal).toBeNull()
   })
 })
