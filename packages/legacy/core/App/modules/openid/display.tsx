@@ -163,6 +163,11 @@ function getW3cCredentialDisplay(
     }
   }
 
+  // Use background color from the JFF credential if not provided by the OID4VCI metadata
+  if (!credentialDisplay.backgroundColor && jffCredential.credentialBranding?.backgroundColor) {
+    credentialDisplay.backgroundColor = jffCredential.credentialBranding.backgroundColor
+  }
+
   return {
     ...credentialDisplay,
     // Last fallback, if there's really no name for the credential, we use a generic name
