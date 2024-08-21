@@ -73,6 +73,8 @@ const mockOobModule = {
   findById: jest.fn().mockReturnValue(Promise.resolve(null)),
   createInvitation: jest.fn(),
   toUrl: jest.fn(),
+  findByReceivedInvitationId: jest.fn().mockReturnValue(Promise.resolve(null)),
+  parseInvitation: jest.fn().mockReturnValue(Promise.resolve(null)),
 }
 const mockBasicMessageRepository = {
   update: jest.fn(),

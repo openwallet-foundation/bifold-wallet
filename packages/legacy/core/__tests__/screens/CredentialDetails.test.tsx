@@ -7,7 +7,6 @@ import React from 'react'
 
 import { hiddenFieldValue } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
-import { formatTime } from '../../App/utils/helpers'
 import { BasicAppContext } from '../helpers/app'
 
 const buildCredentialExchangeRecord = () => {
@@ -80,7 +79,7 @@ describe('displays a credential details screen', () => {
       useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
     })
 
-    test.skip('a credential name and issue date is displayed', async () => {
+    test('a credential name and issued by is displayed', async () => {
       const { findByText } = render(
         <BasicAppContext>
           <CredentialDetails
@@ -91,13 +90,10 @@ describe('displays a credential details screen', () => {
       )
 
       const credentialName = await findByText('Unverified Person', { exact: false })
-      const credentialIssuedAt = await findByText(
-        `CredentialDetails.Issued: ${formatTime(mock_testOpenVPCredentialRecord.createdAt, { format: 'MMM D, YYYY' })}`,
-        { exact: false }
-      )
+      const credentialIssuedBy = await findByText('CredentialDetails.IssuedBy')
 
       expect(credentialName).not.toBe(null)
-      expect(credentialIssuedAt).not.toBe(null)
+      expect(credentialIssuedBy).not.toBe(null)
     })
   })
 

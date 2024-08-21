@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
-import { TourStep } from '../../contexts/tour/tour-context'
+import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 
 import { TourBox } from './TourBox'
 
 export const credentialsTourSteps: TourStep[] = [
   {
-    render: (props) => {
+    Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()

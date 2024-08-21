@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
-import { getConnectionImageUrl } from '../../utils/helpers'
+import { useConnectionImageUrl } from '../../utils/helpers'
 
 interface ConnectionImageProps {
   connectionId?: string
@@ -30,7 +30,7 @@ const ConnectionImage: React.FC<ConnectionImageProps> = ({ connectionId }) => {
     },
   })
 
-  const connectionImage = getConnectionImageUrl(connectionId ?? '')
+  const connectionImage = useConnectionImageUrl(connectionId ?? '')
 
   return connectionImage ? (
     <View style={styles.connectionImageContainer}>

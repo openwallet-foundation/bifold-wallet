@@ -1,5 +1,5 @@
 import { BaseLogger, Agent } from '@credo-ts/core'
-import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
+import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -87,7 +87,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
-    this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, useProofRequestTemplates)
+    this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
     this._container.registerInstance(TOKENS.NOTIFICATIONS, { useNotifications })
     this._container.registerInstance(TOKENS.CONFIG, defaultConfig)

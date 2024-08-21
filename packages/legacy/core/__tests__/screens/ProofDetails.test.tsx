@@ -4,10 +4,10 @@ import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/atta
 import { useProofById } from '@credo-ts/react-hooks'
 import * as verifier from '@hyperledger/aries-bifold-verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native/extend-expect'
 import { RenderAPI, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
+import { useNavigation as testUseNavigation } from '../../__mocks__/@react-navigation/native'
 import ProofDetails from '../../App/screens/ProofDetails'
 import { testIdWithKey } from '../../App/utils/testable'
 import { BasicAppContext } from '../helpers/app'
@@ -107,7 +107,7 @@ describe('ProofDetails Component', () => {
   const renderView = (params?: { recordId: string; isHistory: boolean }) => {
     return render(
       <BasicAppContext>
-        <ProofDetails navigation={useNavigation()} route={{ params } as any} />
+        <ProofDetails navigation={testUseNavigation() as any} route={{ params } as any} />
       </BasicAppContext>
     )
   }
@@ -168,7 +168,7 @@ describe('ProofDetails Component', () => {
     })
 
     test('Generate new QR code button should navigate correctly', async () => {
-      const navigation = useNavigation()
+      const navigation = testUseNavigation() as any
       const tree = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
       const generateNewButton = await tree.findByTestId(testIdWithKey('GenerateNewQR'))
@@ -179,7 +179,7 @@ describe('ProofDetails Component', () => {
     })
 
     test('Done', async () => {
-      const navigation = useNavigation()
+      const navigation = testUseNavigation() as any
       const { findByTestId } = renderView({ recordId: testVerifiedProofRequest.id, isHistory: false })
 
       const doneButton = await findByTestId(testIdWithKey('BackToList'))

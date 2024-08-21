@@ -11,7 +11,7 @@ import { TourProvider } from '../../App/contexts/tour/tour-provider'
 import { TourID } from '../../App/types/tour'
 
 const tourStep = {
-  render: () => {
+  Render: () => {
     return (
       <View>
         <Text>Test</Text>

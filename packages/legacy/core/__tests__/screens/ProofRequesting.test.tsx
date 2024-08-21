@@ -1,14 +1,3 @@
-import { useConnections } from '@credo-ts/react-hooks'
-import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useNavigation } from '@react-navigation/native'
-import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
-import React from 'react'
-
-import * as verifier from '@hyperledger/aries-bifold-verifier'
-import { useProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-import { testIdWithKey } from '../../App'
-import ProofRequesting from '../../App/screens/ProofRequesting'
-
 import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import {
   ConnectionRecord,
@@ -20,7 +9,17 @@ import {
   ProofState,
 } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+import { useConnections } from '@credo-ts/react-hooks'
+import * as verifier from '@hyperledger/aries-bifold-verifier'
+import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
+import React from 'react'
+
+import { useNavigation as testUseNavigation } from '../../__mocks__/@react-navigation/native'
+import { testIdWithKey } from '../../App'
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
+import ProofRequesting from '../../App/screens/ProofRequesting'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@hyperledger/aries-bifold-verifier', () => {
@@ -38,7 +37,7 @@ jest.mock('react-native-device-info', () => {
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-const templates = useProofRequestTemplates(true)
+const templates = getProofRequestTemplates(true)
 const template = templates[0]
 const templateId = template.id
 
@@ -121,7 +120,7 @@ describe('ProofRequesting Component', () => {
   })
 
   const renderView = (params?: { templateId: string; predicateValues: any }) => {
-    return render(<ProofRequesting navigation={useNavigation()} route={{ params } as any} />)
+    return render(<ProofRequesting navigation={testUseNavigation() as any} route={{ params } as any} />)
   }
 
   test('renders correctly', async () => {

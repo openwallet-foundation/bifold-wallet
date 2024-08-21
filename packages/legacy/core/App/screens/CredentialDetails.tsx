@@ -30,7 +30,7 @@ import {
   isValidAnonCredsCredential,
   toImageSource,
 } from '../utils/credential'
-import { formatTime, getCredentialConnectionLabel } from '../utils/helpers'
+import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
@@ -64,7 +64,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     metaOverlay: undefined,
     brandingOverlay: undefined,
   })
-  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+  const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const { width, height } = useWindowDimensions()
 
   const styles = StyleSheet.create({

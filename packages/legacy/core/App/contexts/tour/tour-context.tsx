@@ -66,7 +66,7 @@ export interface TourStep {
    * It receives the {@link RenderProps} so you can access the context of the
    * tour within the tooltip.
    */
-  render: (props: RenderProps) => ReactElement
+  Render: (props: RenderProps) => ReactElement
 }
 
 export interface Tour {

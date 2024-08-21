@@ -1,15 +1,16 @@
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
-import { useNavigation } from '@react-navigation/native'
-import { act, fireEvent, render } from '@testing-library/react-native'
-import React from 'react'
+import { act, fireEvent, render, renderHook } from '@testing-library/react-native'
+import React, { PropsWithChildren } from 'react'
 
+import { useNavigation as testUseNavigation } from '../../__mocks__/@react-navigation/native'
 import ProofRequestDetails from '../../App/screens/ProofRequestDetails'
-import { testIdWithKey } from '../../App'
+import { ContainerProvider, MainContainer, testIdWithKey } from '../../App'
 import { ProofRequestType } from '@hyperledger/aries-bifold-verifier'
 import { useTemplates, useTemplate } from '../../App/hooks/proof-request-templates'
 import axios from 'axios'
 import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../../App/utils/proofBundle'
 import { BasicAppContext } from '../helpers/app'
+import { container } from 'tsyringe'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -65,7 +66,7 @@ useTemplates.mockImplementation(() => templates)
 useTemplate.mockImplementation(() => templates[0])
 const templateId = templates[0].id
 const connectionId = 'test'
-const navigation = useNavigation()
+const navigation = testUseNavigation()
 
 describe('ProofRequestDetails Component', () => {
   beforeEach(() => {
@@ -81,8 +82,10 @@ describe('ProofRequestDetails Component', () => {
   }
 
   test('Proof bundle resolver works correctly', async () => {
-    const resolver = useRemoteProofBundleResolver('http://localhost:3000')
-    const bundle = await resolver.resolve(true)
+    const context = new MainContainer(container.createChildContainer()).init()
+    const wrapper = ({ children }: PropsWithChildren ) => <ContainerProvider value={context}>{children}</ContainerProvider>
+    const { result }  = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
+    const bundle = await result.current.resolve(true)
     expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions).toHaveLength(2)
   })
 
