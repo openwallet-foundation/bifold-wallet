@@ -66,7 +66,8 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({ timeoutDuration
 
   return (
     <View>
-      <Text>{'Some key step is going on'}</Text>
+      <View style={[{ backgroundColor: 'red', height: 5, width: '100%', position: 'absolute' }]} />
+      <Text style={[styles.noNewUpdatesText]}>{'Some key step is going on'}</Text>
       <View>
         {overtime && (
           <>

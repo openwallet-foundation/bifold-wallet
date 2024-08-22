@@ -86,7 +86,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [cancelModalVisible, setCancelModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
-  const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
   const outOfBandInvitation = useOutOfBandByReceivedInvitationId(proof?.parentThreadId ?? '')?.outOfBandInvitation
   const [containsPI, setContainsPI] = useState(false)
@@ -511,7 +510,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   //xxx
   const proofPageHeader = () => {
     return (
-      <View style={styles.pageMargin}>
+      <View style={[styles.pageMargin]}>
         {loading || attestationLoading ? (
           <LoadingPlaceholder timeoutDurationInMs={10000} onCancelTouched={() => {}} />
         ) : (
@@ -684,9 +683,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView style={[styles.pageContainer, { position: 'relative' }]} edges={['bottom', 'left', 'right']}>
       <ScrollView>
-        <View style={styles.pageContent}>
+        <View style={[styles.pageContent]}>
           <CredentialList
             header={proofPageHeader()}
             footer={hasAvailableCredentials ? proofPageFooter() : undefined}

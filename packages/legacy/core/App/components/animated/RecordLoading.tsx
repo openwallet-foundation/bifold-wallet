@@ -32,38 +32,11 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
     Animated.loop(Animated.timing(rowFadeAnim, fadeTiming)).start()
   }, [rowFadeAnim, fadeTiming])
 
-  // const skeletonLayout = () => {
-  //   return (
-  //     <View style={{ flexDirection: 'row' }}>
-  //       <View
-  //         style={{
-  //           marginLeft: 0,
-  //           backgroundColor: ColorPallet.grayscale.lightGrey,
-  //           width: 60,
-  //           borderTopLeftRadius: 15,
-  //           borderBottomLeftRadius: 15,
-  //         }}
-  //       />
-  //       <View
-  //         style={{
-  //           marginLeft: -22,
-  //           marginTop: 20,
-  //           backgroundColor: ColorPallet.grayscale.veryLightGrey,
-  //           height: 45,
-  //           width: 45,
-  //           borderRadius: 5,
-  //         }}
-  //       />
-  //       <View style={{ marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
-  //         <View style={[myStyle.rectangle, { width: 240, height: 20 }]} />
-  //         <View style={[myStyle.rectangle, { width: 145, height: 25 }]} />
-  //         <View style={[myStyle.rectangle, { width: 75, height: 20, marginTop: 20 }]} />
-  //         <View style={[myStyle.rectangle, { width: 210, height: 25 }]} />
-  //       </View>
-  //     </View>
-  //   )
+  // const getRandomViewWidth = () => {
+  //   const min = 75;
+  //   const max = 240;
+  //   return Math.floor(Math.random() * (max - min + 1)) + min;
   // }
-  //
 
   return (
     <Animated.View
@@ -78,7 +51,6 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
               width: 60,
               borderTopLeftRadius: 15,
               borderBottomLeftRadius: 15,
-              // overflow: 'hidden',
             }}
           />
           <View
