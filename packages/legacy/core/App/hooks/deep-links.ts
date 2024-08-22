@@ -25,7 +25,7 @@ export const useDeepLinks = () => {
   useEffect(() => {
     const getUrlAsync = async () => {
       const initialUrl = await Linking.getInitialURL()
-      logger.warn(`initialUrl from sleep: ${initialUrl}`)
+      logger.info(`initialUrl from sleep: ${initialUrl}`)
       if (initialUrl) {
         dispatch({
           type: DispatchAction.ACTIVE_DEEP_LINK,
@@ -38,7 +38,7 @@ export const useDeepLinks = () => {
 
   useEffect(() => {
     Linking.addEventListener('url', async ({ url }) => {
-      logger.warn(`initialUrl from background: ${url}`)
+      logger.info(`initialUrl from background: ${url}`)
       if (url) {
         dispatch({
           type: DispatchAction.ACTIVE_DEEP_LINK,
