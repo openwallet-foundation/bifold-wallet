@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import InfoTextBox from '../../components/texts/InfoTextBox'
 import { InfoBoxType } from '.././misc/InfoBox'
+import ProgressBar from './ProgressBar'
 
 type LoadingPlaceholderProps = {
   timeoutDurationInMs: number
@@ -66,7 +67,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({ timeoutDuration
 
   return (
     <View>
-      <View style={[{ backgroundColor: 'red', height: 5, width: '100%', position: 'absolute' }]} />
+      <ProgressBar progressPercent={50} />
       <Text style={[styles.noNewUpdatesText]}>{'Some key step is going on'}</Text>
       <View>
         {overtime && (
