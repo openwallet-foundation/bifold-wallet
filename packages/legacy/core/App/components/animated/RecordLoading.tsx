@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from 'react'
-import { View, StyleSheet, Animated } from 'react-native'
+import { StyleProp, ViewStyle, View, StyleSheet, Animated } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
-const RecordLoading: React.FC = () => {
+type RecordLoadingProps = {
+  style: StyleProp<ViewStyle>
+}
+
+const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
   const { ColorPallet } = useTheme()
   const rowFadeAnim = useRef(new Animated.Value(1)).current
   const fadeTiming: Animated.TimingAnimationConfig = {
@@ -12,7 +16,7 @@ const RecordLoading: React.FC = () => {
     duration: 1100,
     useNativeDriver: true,
   }
-  const style = StyleSheet.create({
+  const myStyle = StyleSheet.create({
     container: {
       flexDirection: 'column',
     },
@@ -51,19 +55,21 @@ const RecordLoading: React.FC = () => {
   //         }}
   //       />
   //       <View style={{ marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
-  //         <View style={[style.rectangle, { width: 240, height: 20 }]} />
-  //         <View style={[style.rectangle, { width: 145, height: 25 }]} />
-  //         <View style={[style.rectangle, { width: 75, height: 20, marginTop: 20 }]} />
-  //         <View style={[style.rectangle, { width: 210, height: 25 }]} />
+  //         <View style={[myStyle.rectangle, { width: 240, height: 20 }]} />
+  //         <View style={[myStyle.rectangle, { width: 145, height: 25 }]} />
+  //         <View style={[myStyle.rectangle, { width: 75, height: 20, marginTop: 20 }]} />
+  //         <View style={[myStyle.rectangle, { width: 210, height: 25 }]} />
   //       </View>
   //     </View>
   //   )
   // }
-  // ColorPallet.brand.secondaryBackground
+  //
 
   return (
-    <Animated.View style={[{ opacity: rowFadeAnim, backgroundColor: ColorPallet.grayscale.white, borderRadius: 15 }]}>
-      <View style={[style.container]} testID={testIdWithKey('RecordLoading')}>
+    <Animated.View
+      style={[{ opacity: rowFadeAnim, backgroundColor: ColorPallet.grayscale.white, borderRadius: 15 }, style]}
+    >
+      <View style={[myStyle.container]} testID={testIdWithKey('RecordLoading')}>
         <View style={{ flexDirection: 'row' }}>
           <View
             style={{
@@ -86,10 +92,10 @@ const RecordLoading: React.FC = () => {
             }}
           />
           <View style={{ marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
-            <View style={[style.rectangle, { width: 240, height: 20 }]} />
-            <View style={[style.rectangle, { width: 145, height: 25 }]} />
-            <View style={[style.rectangle, { width: 75, height: 20, marginTop: 20 }]} />
-            <View style={[style.rectangle, { width: 210, height: 25 }]} />
+            <View style={[myStyle.rectangle, { width: 240, height: 20 }]} />
+            <View style={[myStyle.rectangle, { width: 145, height: 25 }]} />
+            <View style={[myStyle.rectangle, { width: 75, height: 20, marginTop: 20 }]} />
+            <View style={[myStyle.rectangle, { width: 210, height: 25 }]} />
           </View>
         </View>
       </View>

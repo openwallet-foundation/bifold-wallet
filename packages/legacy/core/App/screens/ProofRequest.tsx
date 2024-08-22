@@ -10,7 +10,7 @@ import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -47,8 +47,25 @@ import { Fields, evaluatePredicates, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
+import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
+
+/*
+State
+1. loading attestation, show skeleton.
+2. loading proof request details, show skeleton.
+3. either 1 or 2 is longer than 10s, then
+3.1 Show "this is slower than usual" message.
+4. 1 and 2 are done, show proof request details.
+
+*/
 
 type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
+
+type CredentialListProps = {
+  header?: JSX.Element
+  footer?: JSX.Element
+  items: ProofCredentialItems[]
+}
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -134,12 +151,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       textDecorationLine: 'underline',
     },
     cardLoading: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
       flex: 1,
       flexGrow: 1,
       marginVertical: 35,
       borderRadius: 15,
-      paddingHorizontal: 10,
+      // paddingHorizontal: 10,
     },
   })
 
@@ -235,7 +251,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ?.then((value: any) => {
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
-          setLoading(false)
+          // setLoading(false)
           setDescriptorMetadata(descriptorMetadata)
 
           let credList: string[] = []
@@ -315,13 +331,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       })
   }, [selectedCredentials, credProofPromise, t])
 
-  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible(prev => !prev), [])
-  const toggleCancelModalVisible = useCallback(() => setCancelModalVisible(prev => !prev), [])
+  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
+  const toggleCancelModalVisible = useCallback(() => setCancelModalVisible((prev) => !prev), [])
 
-  const getCredentialsFields = useCallback((): Fields => ({
-    ...retrievedCredentials?.attributes,
-    ...retrievedCredentials?.predicates,
-  }), [retrievedCredentials])
+  const getCredentialsFields = useCallback(
+    (): Fields => ({
+      ...retrievedCredentials?.attributes,
+      ...retrievedCredentials?.predicates,
+    }),
+    [retrievedCredentials]
+  )
 
   useEffect(() => {
     // get oca bundle to see if we're presenting personally identifiable elements
@@ -346,9 +365,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }, [retrievedCredentials, getCredentialsFields])
 
-  const hasSatisfiedPredicates = useCallback((fields: Fields, credId?: string) => {
-    return activeCreds.flatMap((item) => evaluatePredicates(fields, credId)(item)).every((p) => p.satisfied)
-  }, [activeCreds])
+  const hasSatisfiedPredicates = useCallback(
+    (fields: Fields, credId?: string) => {
+      return activeCreds.flatMap((item) => evaluatePredicates(fields, credId)(item)).every((p) => p.satisfied)
+    },
+    [activeCreds]
+  )
 
   const handleAcceptPress = useCallback(async () => {
     try {
@@ -486,18 +508,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     )
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
 
+  //xxx
   const proofPageHeader = () => {
     return (
       <View style={styles.pageMargin}>
-        {attestationLoading && (
-          <View style={{ paddingTop: 20 }}>
-            <InfoTextBox>{t('ProofRequest.JustAMoment')}</InfoTextBox>
-          </View>
-        )}
         {loading || attestationLoading ? (
-          <View style={styles.cardLoading}>
-            <RecordLoading />
-          </View>
+          <LoadingPlaceholder timeoutDurationInMs={10000} onCancelTouched={() => {}} />
         ) : (
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
@@ -558,23 +574,26 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     )
   }
 
-  const handleAltCredChange = useCallback((selectedCred: string, altCredentials: string[]) => {
-    const onCredChange = (cred: string) => {
-      const newSelectedCreds = (
-        selectedCredentials.length > 0 ? selectedCredentials : activeCreds.map((item) => item.credId)
-      ).filter((id) => !altCredentials.includes(id))
-      setSelectedCredentials([cred, ...newSelectedCreds])
-    }
-    navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
-      screen: Screens.ProofChangeCredential,
-      params: {
-        selectedCred,
-        altCredentials,
-        proofId,
-        onCredChange,
-      },
-    })
-  }, [selectedCredentials, activeCreds, proofId, navigation])
+  const handleAltCredChange = useCallback(
+    (selectedCred: string, altCredentials: string[]) => {
+      const onCredChange = (cred: string) => {
+        const newSelectedCreds = (
+          selectedCredentials.length > 0 ? selectedCredentials : activeCreds.map((item) => item.credId)
+        ).filter((id) => !altCredentials.includes(id))
+        setSelectedCredentials([cred, ...newSelectedCreds])
+      }
+      navigation.getParent()?.navigate(Stacks.ProofRequestsStack, {
+        screen: Screens.ProofChangeCredential,
+        params: {
+          selectedCred,
+          altCredentials,
+          proofId,
+          onCredChange,
+        },
+      })
+    },
+    [selectedCredentials, activeCreds, proofId, navigation]
+  )
 
   const proofPageFooter = () => {
     return (
@@ -594,35 +613,34 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           </View>
         ) : (
           <>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Share')}
-                accessibilityLabel={t('Global.Share')}
-                testID={testIdWithKey('Share')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptPress}
-              />
-            </View>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Decline')}
-                accessibilityLabel={t('Global.Decline')}
-                testID={testIdWithKey('Decline')}
-                buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
-                onPress={toggleDeclineModalVisible}
-              />
-            </View>
+            {!loading && !attestationLoading && (
+              <>
+                <View style={styles.footerButton}>
+                  <Button
+                    title={t('Global.Share')}
+                    accessibilityLabel={t('Global.Share')}
+                    testID={testIdWithKey('Share')}
+                    buttonType={ButtonType.Primary}
+                    onPress={handleAcceptPress}
+                  />
+                </View>
+                <View style={styles.footerButton}>
+                  <Button
+                    title={t('Global.Decline')}
+                    accessibilityLabel={t('Global.Decline')}
+                    testID={testIdWithKey('Decline')}
+                    buttonType={!retrievedCredentials ? ButtonType.Primary : ButtonType.Secondary}
+                    onPress={toggleDeclineModalVisible}
+                  />
+                </View>
+              </>
+            )}
           </>
         )}
       </View>
     )
   }
 
-  interface CredentialListProps {
-    header?: JSX.Element
-    footer?: JSX.Element
-    items: ProofCredentialItems[]
-  }
   const CredentialList: React.FC<CredentialListProps> = ({ header, footer, items }) => {
     return (
       <FlatList
