@@ -48,7 +48,7 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
             style={{
               marginLeft: 0,
               backgroundColor: ColorPallet.grayscale.lightGrey,
-              width: 60,
+              width: 40,
               borderTopLeftRadius: 15,
               borderBottomLeftRadius: 15,
             }}

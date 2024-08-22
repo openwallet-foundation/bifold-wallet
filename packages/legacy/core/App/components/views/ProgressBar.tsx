@@ -4,9 +4,11 @@ import { StyleSheet, View, Animated, useWindowDimensions } from 'react-native'
 
 export type ProgressBarProps = {
   progressPercent: number
+  backgroundColor?: string
+  progressColor?: string
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progressPercent }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ progressPercent, backgroundColor, progressColor }) => {
   const { ColorPallet } = useTheme()
   const { width: windowWidth } = useWindowDimensions()
   const [progressBarScale] = useState(new Animated.Value(0))
@@ -22,8 +24,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progressPercent }) => {
   const styles = StyleSheet.create({
     progressBarContainer: {
       width: '100%',
-      height: 11,
-      backgroundColor: '#001e3d',
+      height: 8,
+      backgroundColor: ColorPallet.brand.primaryBackground,
     },
     progressBar: {
       height: '100%',

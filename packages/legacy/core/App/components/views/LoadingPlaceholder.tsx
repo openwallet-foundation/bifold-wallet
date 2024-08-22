@@ -11,11 +11,16 @@ import { InfoBoxType } from '.././misc/InfoBox'
 import ProgressBar from './ProgressBar'
 
 type LoadingPlaceholderProps = {
-  timeoutDurationInMs: number
+  timeoutDurationInMs?: number
+  loadingProgressPercent?: number
   onCancelTouched: () => void
 }
 
-const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({ timeoutDurationInMs, onCancelTouched }) => {
+const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
+  timeoutDurationInMs = 10000,
+  loadingProgressPercent = 0,
+  onCancelTouched,
+}) => {
   const { ColorPallet, ListItems, TextTheme, HomeTheme } = useTheme()
   const { t } = useTranslation()
   const { RecordLoading } = useAnimatedComponents()
@@ -36,9 +41,11 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({ timeoutDuration
       flexGrow: 1,
       borderRadius: 15,
     },
-    noNewUpdatesText: {
-      ...HomeTheme.noNewUpdatesText,
-      flexWrap: 'wrap',
+    slowLoadTitle: {
+      ...TextTheme.title,
+    },
+    slowLoadBody: {
+      ...TextTheme.normal,
     },
     infoTextBoxContainer: {
       flexShrink: 1,
@@ -67,45 +74,49 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({ timeoutDuration
 
   return (
     <View>
-      <ProgressBar progressPercent={50} />
-      <Text style={[styles.noNewUpdatesText]}>{'Some key step is going on'}</Text>
-      <View>
-        {overtime && (
-          <>
-            <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
-              <View style={styles.infoTextBoxContainer}>
-                <Text
-                  style={[styles.noNewUpdatesText, { fontWeight: 'bold', marginBottom: 20 }]}
-                  testID={testIdWithKey('NoNewUpdates')}
-                >
-                  {'This is slower than usual'}
-                </Text>
-                <Text style={[styles.noNewUpdatesText]} testID={testIdWithKey('NoNewUpdates')}>
-                  {'Check your internet connection and try again. '}
-                </Text>
-              </View>
-            </InfoTextBox>
-          </>
-        )}
-
-        <Text style={[styles.noNewUpdatesText, { marginTop: 25, marginBottom: 10 }]}>
-          {"You'll be requested to share the following information."}
+      {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
+      <View style={{ marginTop: 8, marginHorizontal: 20 }}>
+        <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
+          {'Some key step is going on'}
         </Text>
+        <View>
+          {overtime && (
+            <>
+              <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
+                <View style={styles.infoTextBoxContainer}>
+                  <Text
+                    style={[styles.slowLoadTitle, { fontWeight: 'bold', marginBottom: 10 }]}
+                    testID={testIdWithKey('SlowLoadTitle')}
+                  >
+                    {'This is slower than usual'}
+                  </Text>
+                  <Text style={[styles.slowLoadBody]} testID={testIdWithKey('SlowLoadBody')}>
+                    {'Check your internet connection and try again. '}
+                  </Text>
+                </View>
+              </InfoTextBox>
+            </>
+          )}
 
-        <View style={styles.loadingAnimationContainer}>
-          <RecordLoading />
-          <RecordLoading style={{ marginTop: 10 }} />
+          <Text style={[TextTheme.normal, { marginTop: 25, marginBottom: 10 }]}>
+            {"You'll be requested to share the following information."}
+          </Text>
+
+          <View style={styles.loadingAnimationContainer}>
+            <RecordLoading />
+            <RecordLoading style={{ marginTop: 10 }} />
+          </View>
         </View>
-      </View>
 
-      <View style={[styles.buttonContainer]}>
-        <Button
-          title={t('Global.Cancel')}
-          accessibilityLabel={t('Global.Cancel')}
-          testID={testIdWithKey('Cancel')}
-          buttonType={ButtonType.Primary}
-          onPress={onCancelTouched}
-        />
+        <View style={[styles.buttonContainer]}>
+          <Button
+            title={t('Global.Cancel')}
+            accessibilityLabel={t('Global.Cancel')}
+            testID={testIdWithKey('Cancel')}
+            buttonType={ButtonType.Primary}
+            onPress={onCancelTouched}
+          />
+        </View>
       </View>
     </View>
   )
