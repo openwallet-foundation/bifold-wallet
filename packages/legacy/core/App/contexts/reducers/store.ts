@@ -643,7 +643,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const value = (action?.payload || []).pop()
       return {
         ...state,
-        ...{ deepLink: { activeDeepLink: value } },
+        ...{ deepLink: value },
       }
     }
     default:
