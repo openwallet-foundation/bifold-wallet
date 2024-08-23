@@ -16,6 +16,8 @@ import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connectio
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
 import ProofRequest from './ProofRequest'
+import CredentialOffer from './CredentialOffer'
+
 import { useServices, TOKENS } from './../container-api'
 import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
@@ -193,8 +195,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (goalCode === GoalCodes.credentialOffer) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
 
-      dispatch({ inProgress: false })
-      navigation.replace(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+      dispatch({ inProgress: false, shouldShowProofComponent: false, shouldShowOfferComponent: true })
 
       return
     }
@@ -284,7 +285,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     if (state.shouldShowOfferComponent) {
-      return null
+      return <CredentialOffer credentialId={state.notificationRecord.id} navigation={navigation} />
     }
   }
 
