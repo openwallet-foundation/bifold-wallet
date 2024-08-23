@@ -1,5 +1,3 @@
-// import type { StackScreenProps } from '@react-navigation/stack'
-
 import {
   AnonCredsCredentialsForProofRequest,
   AnonCredsRequestedAttributeMatch,
@@ -12,7 +10,7 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -26,7 +24,6 @@ import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
-import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -35,9 +32,8 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
-// import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { Screens, Stacks, TabStacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
@@ -48,8 +44,6 @@ import { testIdWithKey } from '../utils/testable'
 
 import ProofRequestAccept from './ProofRequestAccept'
 import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
-
-// type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
 type ProofRequestProps = {
   navigation: any
@@ -81,7 +75,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
-  // const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const proofConnectionLabel = useMemo(
@@ -90,11 +83,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  // const [bundleResolver, attestationMonitor, { enableTours: enableToursConfig }] = useServices([
-  //   TOKENS.UTIL_OCA_RESOLVER,
-  //   TOKENS.UTIL_ATTESTATION_MONITOR,
-  //   TOKENS.CONFIG,
-  // ])
   const [bundleResolver, { enableTours: enableToursConfig }] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.CONFIG])
   const hasMatchingCredDef = useMemo(
     () => activeCreds.some((cred) => cred.credExchangeRecord !== undefined),
@@ -147,37 +135,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       // paddingHorizontal: 10,
     },
   })
-
-  // useEffect(() => {
-  //   if (!attestationMonitor) {
-  //     return
-  //   }
-
-  //   const handleStartedAttestation = () => {
-  //     setAttestationLoading(true)
-  //   }
-
-  //   const handleStartedCompleted = () => {
-  //     setAttestationLoading(false)
-  //   }
-
-  //   const handleFailedAttestation = (error: BifoldError) => {
-  //     DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-  //   }
-
-  //   const subscriptions = Array<EmitterSubscription>()
-  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
-  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
-  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
-  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
-  //   subscriptions.push(
-  //     DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
-  //   )
-
-  //   return () => {
-  //     subscriptions.forEach((subscription) => subscription.remove())
-  //   }
-  // }, [attestationMonitor])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour

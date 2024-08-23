@@ -23,21 +23,9 @@ import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 
-/*
-- The proof screen monitors for Attestation as one of its "in progress" states.
-Well need to add a new "in progress" state for the connection screen.
-- Move proof request component to components folder.
-*/
-
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
-
-// const DisplayingComponent = {
-//   ShowProofRequest: 'showProofRequest',
-//   ShowOffer: 'showOffer',
-//   ShowLoadingPlaceholder: 'showLoadingPlaceholder',
-// } as const
 
 type LocalState = {
   inProgress: boolean
