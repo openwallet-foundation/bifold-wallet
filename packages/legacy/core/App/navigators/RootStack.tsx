@@ -49,7 +49,7 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, {enableImplicitInvitations, enableReuseConnections}, logger, OnboardingStack, loadState] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 
@@ -60,7 +60,7 @@ const RootStack: React.FC = () => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => { })
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
@@ -97,6 +97,10 @@ const RootStack: React.FC = () => {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [])
+
+  useEffect(() => {
+    logger.info(`Deeplink state (from rootstack) ${state.deepLink}`)
+  }, [state.deepLink])
 
   // handle deeplink events
   useEffect(() => {
@@ -142,10 +146,22 @@ const RootStack: React.FC = () => {
       return
     }
 
-    if (agent && agent.isInitialized && state.deepLink.activeDeepLink && state.authentication.didAuthenticate) {
-      handleDeepLink(state.deepLink.activeDeepLink)
+    if (agent?.isInitialized && state.deepLink && state.authentication.didAuthenticate) {
+      handleDeepLink(state.deepLink)
     }
-  }, [agent, state.deepLink.activeDeepLink, state.authentication.didAuthenticate, inBackground])
+  }, [
+    dispatch,
+    agent,
+    logger,
+    navigation,
+    enableImplicitInvitations,
+    enableReuseConnections,
+    t,
+    inBackground,
+    agent?.isInitialized,
+    state.deepLink,
+    state.authentication.didAuthenticate,
+  ])
 
   useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {
