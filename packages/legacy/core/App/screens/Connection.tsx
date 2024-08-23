@@ -7,8 +7,8 @@ import {
 } from '@credo-ts/core'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useReducer, useRef } from 'react'
-import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useEffect, useReducer } from 'react'
+import { DeviceEventEmitter, EmitterSubscription, BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../contexts/theme'
@@ -17,6 +17,9 @@ import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/naviga
 import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
 import ProofRequest from './ProofRequest'
 import { useServices, TOKENS } from './../container-api'
+import { AttestationEventTypes } from '../types/attestation'
+import { BifoldError } from '../types/error'
+import { EventTypes } from '../constants'
 
 /*
 - The proof screen monitors for Attestation as one of its "in progress" states.
@@ -37,8 +40,10 @@ type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalSt
 type LocalState = {
   inProgress: boolean
   notificationRecord?: any
+  attestationLoading: boolean
   shouldShowProofComponent: boolean
   shouldShowOfferComponent: boolean
+  percentComplete: number
 }
 
 const GoalCodes = {
@@ -50,11 +55,8 @@ const GoalCodes = {
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { oobRecordId, openIDUri } = route.params
   const { ColorPallet, TextTheme } = useTheme()
-  const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }] = useServices([
-    TOKENS.UTIL_LOGGER,
-    TOKENS.NOTIFICATIONS,
-    TOKENS.CONFIG,
-  ])
+  const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
+    useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({ openIDUri: openIDUri })
   const oobRecord = useOutOfBandById(oobRecordId)
@@ -63,8 +65,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,
     notificationRecord: undefined,
+    attestationLoading: false,
     shouldShowProofComponent: false,
     shouldShowOfferComponent: false,
+    percentComplete: 30,
   })
   const styles = StyleSheet.create({
     container: {
@@ -95,7 +99,38 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const onDismissModalTouched = () => {
     dispatch({ inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }, [dispatch, navigation])
+  }
+
+  useEffect(() => {
+    if (!attestationMonitor) {
+      return
+    }
+
+    const handleStartedAttestation = () => {
+      dispatch({ attestationLoading: true })
+    }
+
+    const handleStartedCompleted = () => {
+      dispatch({ attestationLoading: false })
+    }
+
+    const handleFailedAttestation = (error: BifoldError) => {
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    const subscriptions = Array<EmitterSubscription>()
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
+    subscriptions.push(
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
+    )
+
+    return () => {
+      subscriptions.forEach((subscription) => subscription.remove())
+    }
+  }, [attestationMonitor])
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -234,11 +269,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch])
 
   const displayComponent = () => {
-    if (state.inProgress) {
+    if (state.inProgress || state.attestationLoading) {
       return (
         <LoadingPlaceholder
           timeoutDurationInMs={connTimerDelay}
-          loadingProgressPercent={30}
+          loadingProgressPercent={state.percentComplete}
           onCancelTouched={onDismissModalTouched}
         />
       )
