@@ -13,7 +13,7 @@ import ProgressBar from './ProgressBar'
 type LoadingPlaceholderProps = {
   timeoutDurationInMs?: number
   loadingProgressPercent?: number
-  onCancelTouched: () => void
+  onCancelTouched?: () => void
 }
 
 const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
@@ -21,16 +21,19 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   loadingProgressPercent = 0,
   onCancelTouched,
 }) => {
-  const { ColorPallet, ListItems, TextTheme, HomeTheme } = useTheme()
+  const { ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
   const { RecordLoading } = useAnimatedComponents()
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const [overtime, setOvertime] = useState(false)
   const styles = StyleSheet.create({
+    container: {
+      marginTop: 8,
+      marginHorizontal: 20,
+    },
     buttonContainer: {
       marginVertical: 25,
     },
-
     link: {
       ...ListItems.recordAttributeText,
       ...ListItems.recordLink,
@@ -73,9 +76,9 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   }, [timeoutDurationInMs])
 
   return (
-    <View>
+    <>
       {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
-      <View style={{ marginTop: 8, marginHorizontal: 20 }}>
+      <View style={styles.container}>
         <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
           {'Some key step is going on'}
         </Text>
@@ -107,18 +110,19 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
             <RecordLoading style={{ marginTop: 10 }} />
           </View>
         </View>
-
-        <View style={[styles.buttonContainer]}>
-          <Button
-            title={t('Global.Cancel')}
-            accessibilityLabel={t('Global.Cancel')}
-            testID={testIdWithKey('Cancel')}
-            buttonType={ButtonType.Primary}
-            onPress={onCancelTouched}
-          />
-        </View>
+        {onCancelTouched && (
+          <View style={[styles.buttonContainer]}>
+            <Button
+              title={t('Global.Cancel')}
+              accessibilityLabel={t('Global.Cancel')}
+              testID={testIdWithKey('Cancel')}
+              buttonType={ButtonType.Primary}
+              onPress={onCancelTouched}
+            />
+          </View>
+        )}
       </View>
-    </View>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import type { StackScreenProps } from '@react-navigation/stack'
+// import type { StackScreenProps } from '@react-navigation/stack'
 
 import {
   AnonCredsCredentialsForProofRequest,
@@ -35,7 +35,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
-import { AttestationEventTypes } from '../types/attestation'
+// import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
@@ -49,17 +49,12 @@ import { testIdWithKey } from '../utils/testable'
 import ProofRequestAccept from './ProofRequestAccept'
 import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
 
-/*
-State
-1. loading attestation, show skeleton.
-2. loading proof request details, show skeleton.
-3. either 1 or 2 is longer than 10s, then
-3.1 Show "this is slower than usual" message.
-4. 1 and 2 are done, show proof request details.
+// type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
 
-*/
-
-type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
+type ProofRequestProps = {
+  navigation: any
+  proofId: string
+}
 
 type CredentialListProps = {
   header?: JSX.Element
@@ -67,12 +62,7 @@ type CredentialListProps = {
   items: ProofCredentialItems[]
 }
 
-const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
-  if (!route?.params) {
-    throw new Error('ProofRequest route params were not set properly')
-  }
-
-  const { proofId } = route.params
+const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertConnectedNetwork } = useNetwork()
@@ -82,7 +72,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
   const [descriptorMetadata, setDescriptorMetadata] = useState<DescriptorMetadata | undefined>()
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [cancelModalVisible, setCancelModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
@@ -91,7 +81,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
-  const [attestationLoading, setAttestationLoading] = useState(false)
+  // const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const proofConnectionLabel = useMemo(
@@ -100,12 +90,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const [bundleResolver, attestationMonitor, { enableTours: enableToursConfig }] = useServices([
-    TOKENS.UTIL_OCA_RESOLVER,
-    TOKENS.UTIL_ATTESTATION_MONITOR,
-    TOKENS.CONFIG,
-  ])
-
+  // const [bundleResolver, attestationMonitor, { enableTours: enableToursConfig }] = useServices([
+  //   TOKENS.UTIL_OCA_RESOLVER,
+  //   TOKENS.UTIL_ATTESTATION_MONITOR,
+  //   TOKENS.CONFIG,
+  // ])
+  const [bundleResolver, { enableTours: enableToursConfig }] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.CONFIG])
   const hasMatchingCredDef = useMemo(
     () => activeCreds.some((cred) => cred.credExchangeRecord !== undefined),
     [activeCreds]
@@ -158,36 +148,36 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     },
   })
 
-  useEffect(() => {
-    if (!attestationMonitor) {
-      return
-    }
+  // useEffect(() => {
+  //   if (!attestationMonitor) {
+  //     return
+  //   }
 
-    const handleStartedAttestation = () => {
-      setAttestationLoading(true)
-    }
+  //   const handleStartedAttestation = () => {
+  //     setAttestationLoading(true)
+  //   }
 
-    const handleStartedCompleted = () => {
-      setAttestationLoading(false)
-    }
+  //   const handleStartedCompleted = () => {
+  //     setAttestationLoading(false)
+  //   }
 
-    const handleFailedAttestation = (error: BifoldError) => {
-      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-    }
+  //   const handleFailedAttestation = (error: BifoldError) => {
+  //     DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+  //   }
 
-    const subscriptions = Array<EmitterSubscription>()
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
-    subscriptions.push(
-      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
-    )
+  //   const subscriptions = Array<EmitterSubscription>()
+  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
+  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
+  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
+  //   subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
+  //   subscriptions.push(
+  //     DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
+  //   )
 
-    return () => {
-      subscriptions.forEach((subscription) => subscription.remove())
-    }
-  }, [attestationMonitor])
+  //   return () => {
+  //     subscriptions.forEach((subscription) => subscription.remove())
+  //   }
+  // }, [attestationMonitor])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
@@ -250,7 +240,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
       ?.then((value: any) => {
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
-          // setLoading(false)
+          setLoading(false)
           setDescriptorMetadata(descriptorMetadata)
 
           let credList: string[] = []
@@ -507,7 +497,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
     )
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
 
-  //xxx
   const proofPageHeader = () => {
     return (
       <View style={[styles.pageMargin]}>
@@ -593,7 +582,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   const proofPageFooter = () => {
     return (
       <View style={[styles.pageFooter, styles.pageMargin]}>
-        {!(loading || attestationLoading) && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
         {isShareDisabled() ? (
@@ -608,7 +597,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
           </View>
         ) : (
           <>
-            {!loading && !attestationLoading && (
+            {!loading && (
               <>
                 <View style={styles.footerButton}>
                   <Button
@@ -646,7 +635,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
         renderItem={({ item }) => {
           return (
             <View>
-              {loading || attestationLoading ? null : (
+              {loading ? null : (
                 <View style={{ marginTop: 10, marginHorizontal: 20 }}>
                   <CredentialCard
                     credential={item.credExchangeRecord}
@@ -681,9 +670,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
   return (
     <SafeAreaView style={[styles.pageContainer, { position: 'relative' }]} edges={['bottom', 'left', 'right']}>
       <ScrollView>
-        {loading || attestationLoading ? (
+        {loading ? (
           <>
-            <LoadingPlaceholder timeoutDurationInMs={10000} loadingProgressPercent={30} onCancelTouched={() => {}} />
+            <LoadingPlaceholder
+              timeoutDurationInMs={10000}
+              loadingProgressPercent={30}
+              onCancelTouched={async () => {
+                await handleDeclineTouched()
+              }}
+            />
           </>
         ) : (
           <>
@@ -697,7 +692,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
                 <CredentialList
                   header={
                     <View style={styles.pageMargin}>
-                      {!(loading || attestationLoading) && (
+                      {!loading && (
                         <>
                           {hasMatchingCredDef && (
                             <View

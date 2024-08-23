@@ -5,7 +5,7 @@ import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
 type RecordLoadingProps = {
-  style: StyleProp<ViewStyle>
+  style: ViewStyle
 }
 
 const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
@@ -31,12 +31,6 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
   useEffect(() => {
     Animated.loop(Animated.timing(rowFadeAnim, fadeTiming)).start()
   }, [rowFadeAnim, fadeTiming])
-
-  // const getRandomViewWidth = () => {
-  //   const min = 75;
-  //   const max = 240;
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // }
 
   return (
     <Animated.View
