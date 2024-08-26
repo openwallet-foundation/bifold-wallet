@@ -153,7 +153,6 @@ export const receiveCredentialFromOpenId4VciOffer = async ({ agent, data, uri }:
   )
 
   setOpenId4VcCredentialMetadata(record, openId4VcMetadata)
-  console.log("$$openID Cred:", JSON.stringify(record))
   return record
 }
 
