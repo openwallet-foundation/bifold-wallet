@@ -22,6 +22,7 @@ import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { useAgent } from '@credo-ts/react-hooks'
 import { storeCredential } from '../resolver'
+import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialDetails>
 
@@ -38,6 +39,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     
     const [declineModalVisible, setDeclineModalVisible] = useState(false)
     const [buttonsVisible, setButtonsVisible] = useState(true)
+    const [acceptModalVisible, setAcceptModalVisible] = useState(false)
 
     const styles = StyleSheet.create({
         headerTextContainer: {
@@ -66,7 +68,8 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
           return
         }
         await storeCredential(agent, credential)
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+        // navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+        setAcceptModalVisible(true)
       } catch (err: unknown) {
         const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
@@ -152,6 +155,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     return (
         <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
           {body()}
+          <CredentialOfferAccept visible={acceptModalVisible} credentialId={""} confirmationOnly={true} />
           <CommonRemoveModal
             usage={ModalUsage.CredentialOfferDecline}
             visible={declineModalVisible}

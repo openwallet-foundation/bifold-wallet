@@ -1,4 +1,4 @@
-import { BasicMessageRecord, ConnectionRecord, CredentialExchangeRecord, OutOfBandRecord, ProofExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { BasicMessageRecord, CredentialExchangeRecord, ProofExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
@@ -41,15 +41,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({openIDUri: openIDUri})
-  
-  let oobRecord: OutOfBandRecord | undefined
-  let connection: ConnectionRecord | undefined
-  
-  if(oobRecordId) {
-    oobRecord = useOutOfBandById(oobRecordId)
-    connection = useConnectionByOutOfBandId(oobRecordId)
-  }
-
+  const oobRecord = useOutOfBandById(oobRecordId)
+  const connection = useConnectionByOutOfBandId(oobRecordId)
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,

@@ -1018,7 +1018,7 @@ export const connectFromScanOrDeepLink = async (
     if (isOpenIDInvitation) {
       navigation.navigate(Stacks.ConnectionStack as any, {
         screen: Screens.Connection,
-        params: { openIDUri: uri },
+        params: { oobRecordId: "", openIDUri: uri },
       })
 
       return
