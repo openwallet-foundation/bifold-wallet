@@ -65,7 +65,6 @@ export const defaultState: State = {
     seenCredentialOfferTour: false,
     seenProofRequestTour: false,
   },
-  deepLink: '',
   loading: false,
   stateLoaded: false,
 }
