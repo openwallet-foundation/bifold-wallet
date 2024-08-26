@@ -1,4 +1,3 @@
-import { SdJwtVcRecord, W3cCredentialRecord } from "@credo-ts/core"
 import { OpenId4VciCredentialSupported, OpenId4VciIssuerMetadataDisplay } from "@credo-ts/openid4vc"
 
 export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}`

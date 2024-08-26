@@ -1,4 +1,4 @@
-import type { CredentialDisplay, CredentialIssuerDisplay, JffW3cCredentialJson, OpenId4VcCredentialMetadata, W3cCredentialDisplay, W3cCredentialJson, W3cIssuerJson } from './types'
+import type { CredentialDisplay, CredentialIssuerDisplay, JffW3cCredentialJson, OpenId4VcCredentialMetadata, W3cCredentialDisplay, W3cCredentialJson } from './types'
 import type { W3cCredentialRecord } from '@credo-ts/core'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'

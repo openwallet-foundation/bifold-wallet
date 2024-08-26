@@ -5,8 +5,8 @@ import { getCredentialForDisplay } from "../display"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CommonRemoveModal from "../../../components/modals/CommonRemoveModal"
 import { ModalUsage } from "../../../types/remove"
-import { useEffect, useState } from "react"
-import { DeviceEventEmitter, FlatList, Image, StyleSheet, Text, View } from "react-native"
+import { useState } from "react"
+import { DeviceEventEmitter, FlatList, StyleSheet, Text, View } from "react-native"
 import { TextTheme } from "../../../theme"
 import { useTranslation } from "react-i18next"
 import Button, { ButtonType } from "../../../components/buttons/Button"
@@ -14,7 +14,6 @@ import { testIdWithKey } from "../../../utils/testable"
 import RecordHeader from "../../../components/record/RecordHeader"
 import RecordFooter from "../../../components/record/RecordFooter"
 import { useTheme } from "../../../contexts/theme"
-import { toImageSource } from "../../../utils/credential"
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { buildFieldsFromOpenIDTemplate } from '../utils/utils'
 import RecordField from '../../../components/record/RecordField'
@@ -71,6 +70,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         // navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
         setAcceptModalVisible(true)
       } catch (err: unknown) {
+        setButtonsVisible(true)
         const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
