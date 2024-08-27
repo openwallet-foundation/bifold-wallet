@@ -3,8 +3,8 @@ import { CredentialPreviewAttribute } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { useIsFocused } from '@react-navigation/native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useIsFocused, useRoute, RouteProp } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -44,6 +44,14 @@ type CredentialOfferProps = {
 }
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentialId }) => {
+  const route = useRoute<RouteProp<{ params: Partial<CredentialOfferProps> }, 'params'>>()
+  credentialId = route.params.credentialId ?? credentialId
+
+  // Assert that credentialId is defined
+  if (!credentialId) {
+    throw new Error('credentialId is required but was not provided.')
+  }
+
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
