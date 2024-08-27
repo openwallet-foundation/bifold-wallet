@@ -622,7 +622,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                         : undefined
                     }
                     proof
-                  ></CredentialCard>
+                  />
                 </View>
               )}
             </View>
