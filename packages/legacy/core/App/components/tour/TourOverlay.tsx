@@ -116,7 +116,7 @@ export const TourOverlay = (props: TourOverlayProps) => {
         testID={testIdWithKey('SpotTooltip')}
         style={{ ...tooltipStyle, opacity: 1, position: 'absolute' }}
       >
-        <tourStep.render
+        <tourStep.Render
           currentTour={currentTour}
           currentStep={currentStep}
           changeSpot={changeSpot}

@@ -33,7 +33,7 @@ import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { parseCredDefFromId } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
-import { getCredentialConnectionLabel } from '../utils/helpers'
+import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
@@ -59,7 +59,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
-  const credentialConnectionLabel = getCredentialConnectionLabel(credential)
+  const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const [store, dispatch] = useStore()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()

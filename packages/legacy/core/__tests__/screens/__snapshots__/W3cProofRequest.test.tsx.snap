@@ -811,7 +811,7 @@ exports[`displays a proof request screen with a proof request displays a proof r
                   }
                 }
               >
-                <ForwardRef
+                <ForwardRef(ButtonImplComponent)
                   accessibilityLabel="Global.Cancel"
                   buttonType={1}
                   onPress={[Function]}
