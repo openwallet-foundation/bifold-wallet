@@ -109,7 +109,7 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
     }
     
    
-    const CredentialCardHeader: React.FC = () => {
+    const CardHeader: React.FC = () => {
       return (
         <View style={[styles.outerHeaderContainer]}>
           <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
@@ -166,23 +166,13 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
       )
   }
     
-  const CredentialCardBody: React.FC = () => {
+  const CardBody: React.FC = () => {
     return <View style={styles.bodyContainer} testID={testIdWithKey('CredentialCardBody')}></View>
   }
     
-  const CredentialCardFooter: React.FC<{ revoked: boolean }> = ({ revoked = false }) => {
+  const CardFooter: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
-        {revoked ? (
-          <View style={styles.revokedFooter}>
-            <Text
-              style={[TextTheme.label, { color: ColorPallet.semantic.error }]}
-              testID={testIdWithKey('CredentialRevoked')}
-            >
-              {t('CredentialDetails.Revoked')}
-            </Text>
-          </View>
-        ) : (
           <Text
             style={[
               TextTheme.caption,
@@ -200,16 +190,15 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
           >
             {t('CredentialDetails.Issued')}: {formatTime(new Date(), { shortMonth: true })}
           </Text>
-        )}
       </View>
     )
   }
-  const CredentialCard: React.FC<{ revoked?: boolean }> = ({ revoked = false }) => {
+  const CredentialCard: React.FC = () => {
     return (
       <>
-        <CredentialCardHeader />
-        <CredentialCardBody />
-        <CredentialCardFooter revoked={revoked} />
+        <CardHeader />
+        <CardBody />
+        <CardFooter />
       </>
     )
   }
@@ -232,10 +221,10 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
                 style={styles.flexGrow}
                 imageStyle={{ borderRadius }}
               >
-                <CredentialCard revoked={false} />
+                <CredentialCard/>
               </ImageBackground>
             ) : (
-                <CredentialCard revoked={false} />
+                <CredentialCard/>
             )}
           </View>
         </TouchableOpacity>

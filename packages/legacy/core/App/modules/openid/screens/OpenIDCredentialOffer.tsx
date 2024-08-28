@@ -67,7 +67,6 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
           return
         }
         await storeCredential(agent, credential)
-        // navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
         setAcceptModalVisible(true)
       } catch (err: unknown) {
         setButtonsVisible(true)
@@ -75,6 +74,27 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
+
+    const footerButton = (
+      title: string,
+      buttonPress: () => void, 
+      buttonType: ButtonType,
+      testID: string,
+      accessibilityLabel: string
+    ) => {
+     return (
+      <View style={styles.footerButton}>
+        <Button
+          title={title}
+          accessibilityLabel={accessibilityLabel}
+          testID={testID}
+          buttonType={buttonType}
+          onPress={buttonPress}
+          disabled={!buttonsVisible}
+        />
+      </View>
+     )
+    } 
 
     const header = () => {
         return (
@@ -104,31 +124,12 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
               backgroundColor: ColorPallet.brand.secondaryBackground,
             }}
           >
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Accept')}
-                accessibilityLabel={t('Global.Accept')}
-                testID={testIdWithKey('AcceptCredentialOffer')}
-                buttonType={ButtonType.Primary}
-                onPress={handleAcceptTouched}
-                disabled={!buttonsVisible}
-              />
-            </View>
-            <View style={styles.footerButton}>
-              <Button
-                title={t('Global.Decline')}
-                accessibilityLabel={t('Global.Decline')}
-                testID={testIdWithKey('DeclineCredentialOffer')}
-                buttonType={ButtonType.Secondary}
-                onPress={toggleDeclineModalVisible}
-                disabled={!buttonsVisible}
-              />
-            </View>
+            {footerButton(t('Global.Accept'), handleAcceptTouched,ButtonType.Primary,testIdWithKey('AcceptCredentialOffer'),t('Global.Accept'))}
+            {footerButton(t('Global.Decline'), toggleDeclineModalVisible,ButtonType.Secondary,testIdWithKey('DeclineCredentialOffer'),t('Global.Decline'))}
           </View>
         )
     }
 
-    //TODO: Extract to Record
     const body = () => {
         return (
             <FlatList
