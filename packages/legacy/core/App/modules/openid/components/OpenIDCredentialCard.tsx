@@ -114,19 +114,31 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
         <View style={[styles.outerHeaderContainer]}>
           <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
             {logoContaineter(display.issuer.logo)}
-            {display.issuer.logo && (
-              <Image
-                source={toImageSource(display.issuer.logo)}
-                style={{
-                  flex: 4,
-                  resizeMode: 'contain',
-                  maxHeight: styles.outerHeaderContainer.height - borderPadding,
-                }}
-              />
-            )}
             <View>
-            <View>
-              <Text
+              <View>
+                <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={[
+                      TextTheme.label,
+                      {
+                        color:
+                          display.textColor ??
+                          credentialTextColor(
+                            ColorPallet,
+                            display.backgroundColor
+                          ),
+                        textAlignVertical: 'center',
+                      },
+                    ]}
+                    testID={testIdWithKey('CredentialIssuer')}
+                    maxFontSizeMultiplier={1}
+                  >
+                    {display.name}
+                </Text>
+              </View>
+              <View>
+                <Text
                   numberOfLines={1}
                   ellipsizeMode="tail"
                   style={[
@@ -138,38 +150,16 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
                           ColorPallet,
                           display.backgroundColor
                         ),
+                      textAlign: 'right',
                       textAlignVertical: 'center',
                     },
                   ]}
-                  testID={testIdWithKey('CredentialIssuer')}
+                  testID={testIdWithKey('CredentialName')}
                   maxFontSizeMultiplier={1}
                 >
-                  {display.name}
-              </Text>
-            </View>
-            <View>
-              <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={[
-                  TextTheme.label,
-                  {
-                    color:
-                      display.textColor ??
-                      credentialTextColor(
-                        ColorPallet,
-                        display.backgroundColor
-                      ),
-                    textAlign: 'right',
-                    textAlignVertical: 'center',
-                  },
-                ]}
-                testID={testIdWithKey('CredentialName')}
-                maxFontSizeMultiplier={1}
-              >
-                {display.description}
-              </Text>
-            </View>
+                  {display.description}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
