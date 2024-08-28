@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { W3cCredentialDisplay } from '../types'
+import { DisplayImage, W3cCredentialDisplay } from '../types'
 import { useTranslation } from 'react-i18next'
 import { GenericFn } from '../../../types/fn'
 import { Image, ImageBackground, StyleSheet, Text, useWindowDimensions, View, ViewStyle } from 'react-native'
@@ -8,6 +8,7 @@ import { testIdWithKey } from '../../../utils/testable'
 import { credentialTextColor, toImageSource } from '../../../utils/credential'
 import { useTheme } from '../../../contexts/theme'
 import { formatTime } from '../../../utils/helpers'
+import { SvgUri } from 'react-native-svg'
 
 interface CredentialCard10Props {
     credentialDisplay: W3cCredentialDisplay
@@ -83,12 +84,36 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
           transform: [{ rotate: '-30deg' }],
         },
     })
+
+    const logoContaineter = (logo: DisplayImage | undefined) => {
+      const width = 64
+      const height = 48
+      const src = logo?.url
+      if(!src) {
+        return <View/>
+      }
+      if (typeof src === 'string' && src.endsWith('.svg'))
+        return <SvgUri role="img" width={width} height={height} uri={src} aria-label={logo.altText} />
+    
+      return (
+        <Image
+        source={toImageSource(display.issuer.logo)}
+        style={{
+          flex: 4,
+          resizeMode: 'contain',
+          width: width,
+          height: height
+        }}
+      />
+      )
+    }
     
    
     const CredentialCardHeader: React.FC = () => {
       return (
         <View style={[styles.outerHeaderContainer]}>
           <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
+            {logoContaineter(display.issuer.logo)}
             {display.issuer.logo && (
               <Image
                 source={toImageSource(display.issuer.logo)}
@@ -119,7 +144,7 @@ const OpenIDCredentialCard: React.FC<CredentialCard10Props> = ({ credentialDispl
                   testID={testIdWithKey('CredentialIssuer')}
                   maxFontSizeMultiplier={1}
                 >
-                  {display.issuer.name}
+                  {display.name}
               </Text>
             </View>
             <View>
