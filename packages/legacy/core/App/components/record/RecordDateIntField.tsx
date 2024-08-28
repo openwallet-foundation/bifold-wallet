@@ -38,7 +38,7 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, st
       }
     }
     setDate(t('Record.InvalidDate') + dateint)
-  }, [field])
+  }, [field, t])
 
   const styles = StyleSheet.create({
     text: {

@@ -25,6 +25,8 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
+const onlyNumberRegex = /^\d+$/
+
 type ProofRequestDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestDetails>
 
 interface ProofRequestAttributesCardProps {
@@ -50,7 +52,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({
       .then((fields) => {
         setAttributes(fields)
       })
-  }, [data.schema])
+  }, [data, bundleResolver, i18n.language])
 
   useEffect(() => {
     const credDefId = (data.requestedAttributes ?? data.requestedPredicates)
@@ -100,6 +102,12 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     throw new Error('Unable to fetch agent from Credo')
   }
 
+  if (!route?.params) {
+    throw new Error('ProofRequestDetails route params were not set properly')
+  }
+
+  const { templateId, connectionId } = route.params
+
   const style = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -123,8 +131,6 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       marginBottom: 10,
     },
   })
-
-  const { templateId, connectionId } = route?.params
 
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
   const [attributes, setAttributes] = useState<Array<AnonCredsProofRequestTemplatePayloadData> | undefined>(undefined)
@@ -159,9 +165,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       setMeta(metaOverlay)
       setAttributes(attributes)
     })
-  }, [templateId, template])
-
-  const onlyNumberRegex = /^\d+$/
+  }, [template, bundleResolver, templateId, i18n.language])
 
   const onChangeValue = useCallback(
     (schema: string, label: string, name: string, value: string) => {
@@ -204,7 +208,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       // Else redirect to the screen with connectionless request
       navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
     }
-  }, [agent, template, templateId, connectionId, customPredicateValues, invalidPredicate])
+  }, [template, invalidPredicate, connectionId, agent, customPredicateValues, templateId, navigation])
 
   const showTemplateUsageHistory = useCallback(async () => {
     navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })

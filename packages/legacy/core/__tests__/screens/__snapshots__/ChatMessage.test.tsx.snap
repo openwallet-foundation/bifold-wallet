@@ -108,7 +108,24 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
                 undefined,
               ]
             }
-          />
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "color": "#D3D3D3",
+                    "fontSize": 12,
+                    "marginTop": 8,
+                  },
+                ]
+              }
+            >
+              Jan 1, 12:00 am
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -292,7 +309,24 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
                 undefined,
               ]
             }
-          />
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "color": "#D3D3D3",
+                    "fontSize": 12,
+                    "marginTop": 8,
+                  },
+                ]
+              }
+            >
+              Jan 1, 12:00 am
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -476,7 +510,24 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
                 undefined,
               ]
             }
-          />
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                  Object {
+                    "color": "#D3D3D3",
+                    "fontSize": 12,
+                    "marginTop": 8,
+                  },
+                ]
+              }
+            >
+              Jan 1, 12:00 am
+            </Text>
+          </View>
         </View>
       </View>
     </View>

@@ -24,7 +24,7 @@ describe('NewQRView Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    // @ts-ignore
+    // @ts-expect-error useConnections will be replaced with a mock which will have this method
     useConnections.mockReturnValue({ records: [] })
   })
 
@@ -50,7 +50,7 @@ describe('NewQRView Component', () => {
   })
 
   test('Renders correctly on second tab', async () => {
-    // @ts-ignore
+    // @ts-expect-error useAgent will be replaced with a mock which will have this method
     useAgent().agent?.oob.createInvitation.mockReturnValue({
       outOfBandInvitation: {
         toUrl: () => {
@@ -87,7 +87,7 @@ describe('NewQRView Component', () => {
   })
 
   test('Contains test IDs', async () => {
-    // @ts-ignore
+    // @ts-expect-error useAgent will be replaced with a mock which will have this method
     useAgent().agent?.oob.createInvitation.mockReturnValue({
       outOfBandInvitation: {
         toUrl: () => {

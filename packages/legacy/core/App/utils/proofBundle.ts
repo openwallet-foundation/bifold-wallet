@@ -5,6 +5,7 @@ import {
   getProofRequestTemplates,
 } from '@hyperledger/aries-bifold-verifier'
 import axios, { AxiosError } from 'axios'
+import { useState, useEffect } from 'react'
 
 import { TOKENS, useServices } from '../container-api'
 
@@ -73,11 +74,17 @@ export const useRemoteProofBundleResolver = (
   log?: BaseLogger
 ): ProofBundleResolverType => {
   const [proofRequestTemplates] = useServices([TOKENS.UTIL_PROOF_TEMPLATE])
-  if (indexFileBaseUrl) {
-    return new RemoteProofBundleResolver(indexFileBaseUrl, log)
-  } else {
-    return new DefaultProofBundleResolver(proofRequestTemplates)
-  }
+  const [resolver, setResolver] = useState<ProofBundleResolverType>(new DefaultProofBundleResolver(proofRequestTemplates))
+
+  useEffect(() => {
+    if (indexFileBaseUrl) {
+      setResolver(new RemoteProofBundleResolver(indexFileBaseUrl, log))
+    } else {
+      setResolver(new DefaultProofBundleResolver(proofRequestTemplates))
+    }
+  }, [log, indexFileBaseUrl, proofRequestTemplates])
+
+  return resolver
 }
 
 export class RemoteProofBundleResolver implements ProofBundleResolverType {

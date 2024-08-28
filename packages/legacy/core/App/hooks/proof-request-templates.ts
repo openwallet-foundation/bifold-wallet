@@ -17,7 +17,7 @@ export const useTemplates = (): Array<ProofRequestTemplate> => {
         setProofRequestTemplates(applyTemplateMarkers(templates))
       }
     })
-  }, [])
+  }, [resolver, store.preferences.acceptDevCredentials])
 
   return proofRequestTemplates
 }
@@ -33,6 +33,6 @@ export const useTemplate = (templateId: string): ProofRequestTemplate | undefine
         setProofRequestTemplate(applyTemplateMarkers(template))
       }
     })
-  }, [])
+  }, [resolver, templateId, store.preferences.acceptDevCredentials])
   return proofRequestTemplate
 }

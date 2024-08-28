@@ -17,8 +17,14 @@ jest.mock('../../App/services/keychain', () => ({
 }))
 
 describe('Splash Screen', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
   beforeAll(() => {
     jest.useFakeTimers()
+  })
+  afterEach(() => {
+    jest.clearAllTimers()
   })
   afterAll(() => {
     jest.useRealTimers()
@@ -39,7 +45,7 @@ describe('Splash Screen', () => {
 
   test('Starts onboarding correctly', async () => {
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error this function will be replaced with a mock which does have this method
     loadLoginAttempt.mockReturnValue({ servedPenalty: true, loginAttempts: 0 })
 
     AsyncStorage.getItem = jest.fn().mockImplementation((key: string) => {

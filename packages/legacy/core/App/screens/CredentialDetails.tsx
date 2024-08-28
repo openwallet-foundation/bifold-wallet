@@ -42,10 +42,10 @@ const logoHeight = 80
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
-    throw new Error('CredentialDetails route prams were not set properly')
+    throw new Error('CredentialDetails route params were not set properly')
   }
 
-  const { credential } = route?.params
+  const { credential } = route.params
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
@@ -113,7 +113,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
       )
     }
-  }, [])
+  }, [agent, credential, t])
 
   useEffect(() => {
     if (!(credential && isValidAnonCredsCredential(credential))) {
@@ -138,13 +138,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay({
-        ...overlay,
+      setOverlay(o => ({
+        ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
-      })
+      }))
     })
-  }, [credential])
+  }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
 
   useEffect(() => {
     if (credential?.revocationNotification) {
@@ -152,13 +152,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
       agent?.credentials.update(credential)
     }
-  }, [isRevoked])
+  }, [credential, agent])
 
-  const handleOnRemove = () => {
+  const callOnRemove = useCallback(() => {
     setIsRemoveModalDisplayed(true)
-  }
+  }, [])
 
-  const handleSubmitRemove = async () => {
+  const callSubmitRemove = useCallback(async () => {
     try {
       if (!(agent && credential)) {
         return
@@ -179,23 +179,18 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error)?.message ?? err, 1032)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }
+  }, [agent, credential, navigation, t])
 
-  const handleCancelRemove = () => {
+  const callCancelRemove = useCallback(() => {
     setIsRemoveModalDisplayed(false)
-  }
+  }, [])
 
-  const handleDismissRevokedMessage = () => {
+  const callDismissRevokedMessage = useCallback(() => {
     setIsRevokedMessageHidden(true)
     const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
     credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
     agent?.credentials.update(credential)
-  }
-
-  const callOnRemove = useCallback(() => handleOnRemove(), [])
-  const callSubmitRemove = useCallback(() => handleSubmitRemove(), [])
-  const callCancelRemove = useCallback(() => handleCancelRemove(), [])
-  const callDismissRevokedMessage = useCallback(() => handleDismissRevokedMessage(), [])
+  }, [credential, agent])
 
   const CredentialCardLogo: React.FC = () => {
     return (

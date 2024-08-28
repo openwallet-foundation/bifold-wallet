@@ -22,7 +22,10 @@ import { testIdWithKey } from '../utils/testable'
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
-  const { connectionId } = route?.params
+  if (!route?.params) {
+    throw new Error('ContactDetails route params were not set properly')
+  }
+  const { connectionId } = route.params
   const { agent } = useAgent()
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<ContactStackParams>>()
@@ -44,15 +47,15 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     },
   })
 
-  const handleOnRemove = () => {
+  const callOnRemove = useCallback(() => {
     if (connectionCredentials?.length) {
       setIsCredentialsRemoveModalDisplayed(true)
     } else {
       setIsRemoveModalDisplayed(true)
     }
-  }
+  }, [connectionCredentials])
 
-  const handleSubmitRemove = async () => {
+  const callSubmitRemove = useCallback(async () => {
     try {
       if (!(agent && connection)) {
         return
@@ -73,30 +76,23 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error)?.message ?? err, 1037)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }
+  }, [agent, connection, navigation, t])
 
-  const handleCancelRemove = () => {
+  const callCancelRemove = useCallback(() => {
     setIsRemoveModalDisplayed(false)
-  }
+  }, [])
 
-  const handleGoToCredentials = () => {
+  const callGoToCredentials = useCallback(() => {
     navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
-  }
+  }, [navigation])
 
-  const handleCancelUnableRemove = () => {
+  const callCancelUnableToRemove = useCallback(() => {
     setIsCredentialsRemoveModalDisplayed(false)
-  }
+  }, [])
 
-  const handleGoToRename = () => {
+  const callGoToRename = useCallback(() => {
     navigation.navigate(Screens.RenameContact, { connectionId })
-  }
-
-  const callGoToRename = useCallback(() => handleGoToRename(), [])
-  const callOnRemove = useCallback(() => handleOnRemove(), [])
-  const callSubmitRemove = useCallback(() => handleSubmitRemove(), [])
-  const callCancelRemove = useCallback(() => handleCancelRemove(), [])
-  const callGoToCredentials = useCallback(() => handleGoToCredentials(), [])
-  const callCancelUnableToRemove = useCallback(() => handleCancelUnableRemove(), [])
+  }, [navigation, connectionId])
 
   const contactLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),

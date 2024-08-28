@@ -74,7 +74,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     navigation
       .getParent()
       ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
-  }, [contact])
+  }, [navigation, contact])
 
   const contactLabel = useMemo(
     () => getConnectionName(contact, store.preferences.alternateContactNames),
@@ -82,7 +82,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   )
   const contactLabelAbbr = useMemo(
     () => contactLabel?.charAt(0).toUpperCase(),
-    [contact, store.preferences.alternateContactNames]
+    [contactLabel]
   )
 
   return (

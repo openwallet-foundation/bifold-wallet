@@ -11,7 +11,7 @@ import { useAgent, useConnectionById } from '@credo-ts/react-hooks'
 import { markProofAsViewed } from '@hyperledger/aries-bifold-verifier'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -69,6 +69,13 @@ const markMessageAsSeen = async (agent: Agent, record: BasicMessageRecord) => {
   await basicMessageRepository.update(agent.context, record)
 }
 
+const defaultDetails: DisplayDetails = {
+  type: InfoBoxType.Info,
+  title: undefined,
+  body: undefined,
+  buttonTitle: undefined,
+}
+
 const NotificationListItem: React.FC<NotificationListItemProps> = ({
   notificationType,
   notification,
@@ -83,12 +90,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [action, setAction] = useState<any>()
   const [closeAction, setCloseAction] = useState<any>()
   const connection = useConnectionById(notification.connectionId ?? '')
-  const [details, setDetails] = useState<DisplayDetails>({
-    type: InfoBoxType.Info,
-    title: undefined,
-    body: undefined,
-    buttonTitle: undefined,
-  })
+  const [details, setDetails] = useState<DisplayDetails>(defaultDetails)
   const [styleConfig, setStyleConfig] = useState<StyleConfig>({
     containerStyle: {
       backgroundColor: ColorPallet.notification.info,
@@ -100,7 +102,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     iconColor: ColorPallet.notification.infoIcon,
     iconName: 'info',
   })
-  const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
 
   const styles = StyleSheet.create({
     container: {
@@ -138,9 +139,15 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     },
   })
 
-  const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+  const isReceivedProof = useMemo(() => {
+    return notificationType === NotificationType.ProofRequest &&
+    ((notification as ProofExchangeRecord).state === ProofState.Done ||
+      (notification as ProofExchangeRecord).state === ProofState.PresentationSent)
+  }, [notificationType, notification])
 
-  const declineProofRequest = async () => {
+  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible(prev => !prev), [])
+
+  const declineProofRequest = useCallback(async () => {
     try {
       const proofId = (notification as ProofExchangeRecord).id
       if (agent) {
@@ -152,21 +159,21 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
 
     toggleDeclineModalVisible()
-  }
+  }, [notification, agent, t, toggleDeclineModalVisible])
 
-  const dismissProofRequest = async () => {
+  const dismissProofRequest = useCallback(async () => {
     if (agent && notificationType === NotificationType.ProofRequest) {
       markProofAsViewed(agent, notification as ProofExchangeRecord)
     }
-  }
+  }, [agent, notification, notificationType])
 
-  const dismissBasicMessage = async () => {
+  const dismissBasicMessage = useCallback(async () => {
     if (agent && notificationType === NotificationType.BasicMessage) {
       markMessageAsSeen(agent, notification as BasicMessageRecord)
     }
-  }
+  }, [agent, notification, notificationType])
 
-  const declineCredentialOffer = async () => {
+  const declineCredentialOffer = useCallback(async () => {
     try {
       const credentialId = (notification as CredentialExchangeRecord).id
       if (agent) {
@@ -178,12 +185,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
 
     toggleDeclineModalVisible()
-  }
+  }, [notification, agent, t, toggleDeclineModalVisible])
 
-  const declineCustomNotification = async () => {
+  const declineCustomNotification = useCallback(async () => {
     customNotification?.onCloseAction(dispatch as any)
     toggleDeclineModalVisible()
-  }
+  }, [customNotification, dispatch, toggleDeclineModalVisible])
 
   const commonRemoveModal = () => {
     let usage: ModalUsage | undefined
@@ -216,13 +223,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     ) : null
   }
 
-  const detailsForNotificationType = async (notificationType: NotificationType): Promise<DisplayDetails> => {
-    return new Promise((resolve) => {
+  useEffect(() => {
+    const getDetails = async () => {
+      const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
       const theirLabel = getConnectionName(connection, store.preferences.alternateContactNames)
-
+      let details
       switch (notificationType) {
         case NotificationType.BasicMessage:
-          resolve({
+          details = ({
             type: InfoBoxType.Info,
             title: t('Home.NewMessage'),
             body: theirLabel ? `${theirLabel} ${t('Home.SentMessage')}` : t('Home.ReceivedMessage'),
@@ -230,7 +238,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           })
           break
         case NotificationType.CredentialOffer:
-          resolve({
+          details = ({
             type: InfoBoxType.Info,
             title: t('CredentialOffer.NewCredentialOffer'),
             body: `${name + (version ? ` v${version}` : '')}`,
@@ -241,15 +249,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           const proofId = (notification as ProofExchangeRecord).id
           agent?.proofs.findRequestMessage(proofId).then((message) => {
             if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
-              resolve({
+              details = ({
                 type: InfoBoxType.Info,
                 title: t('ProofRequest.NewProofRequest'),
                 body: message.indyProofRequest.name,
                 buttonTitle: undefined,
               })
             } else {
-              //TODO:(jl) Should we have a default message or stick with an empty string?
-              resolve({
+              details = ({
                 type: InfoBoxType.Info,
                 title: t('ProofRequest.NewProofRequest'),
                 body: '',
@@ -260,7 +267,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           break
         }
         case NotificationType.Revocation:
-          resolve({
+          details =  ({
             type: InfoBoxType.Error,
             title: t('CredentialDetails.NewRevoked'),
             body: `${name + (version ? ` v${version}` : '')}`,
@@ -268,7 +275,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           })
           break
         case NotificationType.Custom:
-          resolve({
+          details =  ({
             type: InfoBoxType.Info,
             title: t(customNotification?.title as any),
             body: t(customNotification?.description as any),
@@ -278,15 +285,16 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         default:
           throw new Error('NotificationType was not set correctly.')
       }
-    })
-  }
 
-  const getActionForNotificationType = (
-    notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord,
-    notificationType: NotificationType
-  ) => {
-    let onPress
-    let onClose
+      setDetails(details ?? defaultDetails)
+    }
+
+    getDetails()
+  }, [notification, notificationType, connection, store.preferences.alternateContactNames, t, agent, customNotification])
+
+  useEffect(() => {
+    let onPress: () => void
+    let onClose: () => void
     switch (notificationType) {
       case NotificationType.BasicMessage:
         onPress = () => {
@@ -351,22 +359,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       default:
         throw new Error('NotificationType was not set correctly.')
     }
-    return { onPress, onClose }
-  }
-
-  useEffect(() => {
-    const { onPress, onClose } = getActionForNotificationType(notification, notificationType)
     setAction(() => onPress)
     setCloseAction(() => onClose)
-  }, [notification])
-
-  useEffect(() => {
-    const detailsPromise = async () => {
-      const details = await detailsForNotificationType(notificationType)
-      setDetails(details)
-    }
-    detailsPromise()
-  }, [notificationType])
+  }, [navigation, notification, notificationType, toggleDeclineModalVisible, dismissBasicMessage])
 
   useEffect(() => {
     switch (details.type) {
@@ -423,12 +418,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           iconName: 'info',
         })
     }
-  }, [details])
+  }, [details, ColorPallet])
 
-  const isReceivedProof =
-    notificationType === NotificationType.ProofRequest &&
-    ((notification as ProofExchangeRecord).state === ProofState.Done ||
-      (notification as ProofExchangeRecord).state === ProofState.PresentationSent)
   return (
     <View style={[styles.container, styleConfig.containerStyle]} testID={testIdWithKey('NotificationListItem')}>
       <View style={styles.headerContainer}>

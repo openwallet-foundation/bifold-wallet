@@ -33,7 +33,7 @@ const NetInfo: React.FC = () => {
       autoHide: true,
       text1: t('NetInfo.NoInternetConnectionTitle'),
     })
-  }, [isConnected])
+  }, [isConnected, assertLedgerConnectivity, t])
 
   return null
 }

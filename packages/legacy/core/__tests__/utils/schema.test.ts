@@ -6,7 +6,7 @@ const notASchema = 'XUxBrVSALWHLeycAUhrNr9:Student Card'
 
 const credential = { metadata: { get: jest.fn().mockReturnValue({ schemaId: schemaWithVersion }) } }
 
-describe('orientation', () => {
+describe('schema utils', () => {
   test('Extract name and version', async () => {
     const result = parseSchemaFromId(schemaWithVersion)
 
@@ -26,14 +26,14 @@ describe('orientation', () => {
   })
 
   test('Schema ID extracted from credential exchange record', async () => {
-    // @ts-ignore
+    // @ts-expect-error not using the full object because we are not testing CredentialExchangeRecord
     const result = credentialSchema(credential)
 
     expect(result).toBe(schemaWithVersion)
   })
 
   test('Schema parsed from credential record', async () => {
-    // @ts-ignore
+    // @ts-expect-error not using the full object because we are not testing CredentialExchangeRecord
     const result = parsedSchema(credential)
 
     expect(result).toStrictEqual({ name: 'BasicIdentity', version: '1.0.0' })

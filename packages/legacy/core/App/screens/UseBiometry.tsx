@@ -1,6 +1,6 @@
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -56,8 +56,8 @@ const UseBiometry: React.FC = () => {
     isBiometricsActive().then((result) => {
       setBiometryAvailable(result)
     })
-  }, [])
-
+  }, [isBiometricsActive])
+  
   useEffect(() => {
     if (screenUsage === UseBiometryUsage.InitialSetup) {
       return
@@ -78,9 +78,9 @@ const UseBiometry: React.FC = () => {
         })
       })
     }
-  }, [biometryEnabled])
+  }, [commitPIN, disableBiometrics, dispatch])
 
-  const continueTouched = async () => {
+  const continueTouched = useCallback(async () => {
     setContinueEnabled(false)
 
     await commitPIN(biometryEnabled)
@@ -99,9 +99,9 @@ const UseBiometry: React.FC = () => {
     } else {
       dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
     }
-  }
+  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
 
-  const toggleSwitch = () => {
+  const toggleSwitch = useCallback(() => {
     // If the user is toggling biometrics on/off they need
     // to first authenticate before this action is accepted
     if (screenUsage === UseBiometryUsage.ToggleOnOff) {
@@ -111,37 +111,37 @@ const UseBiometry: React.FC = () => {
     }
 
     setBiometryEnabled((previousState) => !previousState)
-  }
+  }, [screenUsage])
 
-  const onAuthenticationComplete = (status: boolean) => {
+  const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
       setBiometryEnabled((previousState) => !previousState)
     }
     DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     setCanSeeCheckPIN(false)
-  }
+  }, [])
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
-          <Assets.svg.biometrics style={[styles.image]} />
+          <Assets.svg.biometrics style={styles.image} />
         </View>
         {biometryAvailable ? (
           <View>
-            <Text style={[TextTheme.normal]}>{t('Biometry.EnabledText1')}</Text>
+            <Text style={TextTheme.normal}>{t('Biometry.EnabledText1')}</Text>
             <Text></Text>
-            <Text style={[TextTheme.normal]}>
+            <Text style={TextTheme.normal}>
               {t('Biometry.EnabledText2')}
-              <Text style={[TextTheme.bold]}> {t('Biometry.Warning')}</Text>
+              <Text style={TextTheme.bold}> {t('Biometry.Warning')}</Text>
             </Text>
           </View>
         ) : (
           <View>
-            <Text style={[TextTheme.normal]}>{t('Biometry.NotEnabledText1')}</Text>
+            <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText1')}</Text>
             <Text></Text>
-            <Text style={[TextTheme.normal]}>{t('Biometry.NotEnabledText2')}</Text>
+            <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
           </View>
         )}
         <View
@@ -151,7 +151,7 @@ const UseBiometry: React.FC = () => {
           }}
         >
           <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
-            <Text style={[TextTheme.bold]}>{t('Biometry.UseToUnlock')}</Text>
+            <Text style={TextTheme.bold}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
             <Pressable

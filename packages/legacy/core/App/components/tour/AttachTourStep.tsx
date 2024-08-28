@@ -55,7 +55,7 @@ export function AttachTourStep<T>({ children, fill = false, index, tourID }: Att
         changeSpot({ height, width, x, y })
       })
     }
-  }, [windowWidth, windowHeight, changeSpot, currentTour, currentStep, index])
+  }, [currentTour, tourID, currentStep, index, windowWidth, windowHeight, changeSpot])
 
   const { style, ...rest } = children.props
   const childStyle = style ?? {}

@@ -1,6 +1,6 @@
 import { useIsFocused } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View, StyleSheet } from 'react-native'
 
@@ -18,12 +18,12 @@ import { TourID } from '../types/tour'
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = () => {
-  const [HomeHeaderView, HomeFooterView, { enableTours: enableToursConfig }, { customNotificationConfig: customNotification, useNotifications }] = useServices([
-    TOKENS.COMPONENT_HOME_HEADER,
-    TOKENS.COMPONENT_HOME_FOOTER,
-    TOKENS.CONFIG,
-    TOKENS.NOTIFICATIONS,
-  ])
+  const [
+    HomeHeaderView,
+    HomeFooterView,
+    { enableTours: enableToursConfig },
+    { customNotificationConfig: customNotification, useNotifications },
+  ] = useServices([TOKENS.COMPONENT_HOME_HEADER, TOKENS.COMPONENT_HOME_FOOTER, TOKENS.CONFIG, TOKENS.NOTIFICATIONS])
   const notifications = useNotifications()
   const { t } = useTranslation()
 
@@ -44,7 +44,7 @@ const Home: React.FC<HomeProps> = () => {
     },
   })
 
-  const DisplayListItemType = (item: any): React.ReactNode => {
+  const DisplayListItemType = useCallback((item: any): React.ReactNode => {
     let component: React.ReactNode
     if (item.type === 'BasicMessageRecord') {
       component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
@@ -66,7 +66,7 @@ const Home: React.FC<HomeProps> = () => {
       component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
     }
     return component
-  }
+  }, [customNotification])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
@@ -86,28 +86,36 @@ const Home: React.FC<HomeProps> = () => {
         setShowTourPopup(true)
       }
     }
-  }, [screenIsFocused])
+  }, [
+    enableToursConfig,
+    store.tours.enableTours,
+    store.tours.seenHomeTour,
+    screenIsFocused,
+    store.tours.seenToursPrompt,
+    dispatch,
+    start,
+  ])
 
-  const onCTAPressed = () => {
+  const onCTAPressed = useCallback(() => {
     setShowTourPopup(false)
-    dispatch({
-      type: DispatchAction.ENABLE_TOURS,
-      payload: [true],
-    })
     dispatch({
       type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
       payload: [true],
     })
+    dispatch({
+      type: DispatchAction.ENABLE_TOURS,
+      payload: [true],
+    })
     start(TourID.HomeTour)
-  }
+  }, [dispatch, start])
 
-  const onDismissPressed = () => {
+  const onDismissPressed = useCallback(() => {
     setShowTourPopup(false)
     dispatch({
       type: DispatchAction.ENABLE_TOURS,
       payload: [false],
     })
-  }
+  }, [dispatch])
 
   return (
     <>

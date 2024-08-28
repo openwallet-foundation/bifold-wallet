@@ -1,12 +1,14 @@
 const reactI18Next: any = jest.createMockFromModule('react-i18next');
 
+const t = (str: string) => str
+
 reactI18Next.useTranslation = () => {
   return {
-    t: (str: string) => str,
+    t,
     i18n: {
       changeLanguage: () => new Promise(() => {}),
       language: 'en',
-      t: (str: string) => str,
+      t,
     },
   };
 };

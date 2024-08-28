@@ -62,23 +62,23 @@ const Onboarding: React.FC<OnboardingProps> = ({
     useNativeDriver: false,
   })
 
-  const next = () => {
+  const next = useCallback(() => {
     if (activeIndex + 1 < pages.length) {
       flatList?.current?.scrollToIndex({
         index: activeIndex + 1,
         animated: true,
       })
     }
-  }
+  }, [activeIndex, pages, flatList])
 
-  const previous = () => {
+  const previous = useCallback(() => {
     if (activeIndex !== 0) {
       flatList?.current?.scrollToIndex({
         index: activeIndex - 1,
         animated: true,
       })
     }
-  }
+  }, [activeIndex, flatList])
 
   const renderItem = useCallback(
     ({ item, index }: { item: Element; index: number }) => (
@@ -86,16 +86,16 @@ const Onboarding: React.FC<OnboardingProps> = ({
         {item as React.ReactNode}
       </View>
     ),
-    []
+    [width, style.carouselContainer]
   )
 
-  const onSkipTouched = () => {
+  const onSkipTouched = useCallback(() => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
 
     navigation.navigate(Screens.Terms)
-  }
+  }, [dispatch, navigation])
 
   useEffect(() => {
     !disableSkip &&
@@ -117,7 +117,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
         headerRight: () => false,
       })
     }
-  }, [activeIndex])
+  }, [disableSkip, navigation, t, onSkipTouched, activeIndex, pages])
 
   useFocusEffect(
     useCallback(() => {

@@ -8,7 +8,7 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
@@ -37,7 +37,7 @@ import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
-  const [state, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const { removeSavedWalletSecret } = useAuth()
   const { agent } = useAgent()
   const appState = useRef(AppState.currentState)
@@ -49,7 +49,8 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] =
+    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 
@@ -60,14 +61,14 @@ const RootStack: React.FC = () => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => { })
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
-  }, [declinedProofs, state.preferences.useDataRetention])
+  }, [declinedProofs, agent, store.preferences.useDataRetention])
 
-  const lockoutUser = async () => {
-    if (agent && state.authentication.didAuthenticate) {
+  const lockoutUser = useCallback(async () => {
+    if (agent && store.authentication.didAuthenticate) {
       // make sure agent is shutdown so wallet isn't still open
       removeSavedWalletSecret()
       try {
@@ -85,7 +86,7 @@ const RootStack: React.FC = () => {
         payload: [{ displayNotification: true }],
       })
     }
-  }
+  }, [agent, dispatch, logger, removeSavedWalletSecret, store.authentication.didAuthenticate])
 
   useEffect(() => {
     loadState(dispatch)
@@ -96,11 +97,11 @@ const RootStack: React.FC = () => {
         const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), err.message, 1001)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
-  }, [])
+  }, [dispatch, loadState, t])
 
   useEffect(() => {
-    logger.info(`Deeplink state (from rootstack) ${state.deepLink}`)
-  }, [state.deepLink])
+    logger.info(`Deeplink state (from rootstack) ${store.deepLink}`)
+  }, [logger, store.deepLink])
 
   // handle deeplink events
   useEffect(() => {
@@ -146,8 +147,8 @@ const RootStack: React.FC = () => {
       return
     }
 
-    if (agent?.isInitialized && state.deepLink && state.authentication.didAuthenticate) {
-      handleDeepLink(state.deepLink)
+    if (agent?.isInitialized && store.deepLink && store.authentication.didAuthenticate) {
+      handleDeepLink(store.deepLink)
     }
   }, [
     dispatch,
@@ -159,8 +160,8 @@ const RootStack: React.FC = () => {
     t,
     inBackground,
     agent?.isInitialized,
-    state.deepLink,
-    state.authentication.didAuthenticate,
+    store.deepLink,
+    store.authentication.didAuthenticate,
   ])
 
   useEffect(() => {
@@ -181,7 +182,7 @@ const RootStack: React.FC = () => {
     const lockoutCheck = async () => {
       //lock user out after 5 minutes
       if (
-        !state.preferences.preventAutoLock &&
+        !store.preferences.preventAutoLock &&
         walletTimeout &&
         backgroundTime &&
         Date.now() - backgroundTime > walletTimeout
@@ -208,9 +209,7 @@ const RootStack: React.FC = () => {
         }
       })
     }
-  }, [appStateVisible, prevAppStateVisible, backgroundTime])
-
-  // auth stack should now be in the OnboardingStack
+  }, [store.preferences.preventAutoLock, lockoutUser, navigation, appStateVisible, prevAppStateVisible, backgroundTime])
 
   const mainStack = () => {
     const Stack = createStackNavigator()
@@ -277,10 +276,10 @@ const RootStack: React.FC = () => {
   }
 
   if (
-    ((state.onboarding.onboardingVersion !== 0 && state.onboarding.didCompleteOnboarding) ||
-      (state.onboarding.onboardingVersion === 0 && state.onboarding.didConsiderBiometry)) &&
-    state.authentication.didAuthenticate &&
-    state.onboarding.postAuthScreens.length === 0
+    ((store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
+      (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry)) &&
+    store.authentication.didAuthenticate &&
+    store.onboarding.postAuthScreens.length === 0
   ) {
     return mainStack()
   }

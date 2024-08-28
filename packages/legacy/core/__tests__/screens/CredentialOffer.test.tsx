@@ -39,12 +39,13 @@ credentialRecord.credentials.push({
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 
-// @ts-ignore
-useConnectionById.mockReturnValue(connectionRecord)
-// @ts-ignore
-useCredentialById.mockReturnValue(credentialRecord)
 
 describe('displays a credential offer screen', () => {
+  // @ts-expect-error useConnectionById will be replaced with a mock which does have this method
+  useConnectionById.mockReturnValue(connectionRecord)
+  // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
+  useCredentialById.mockReturnValue(credentialRecord)
+
   test('renders correctly', async () => {
     const tree = render(
       <BasicAppContext>

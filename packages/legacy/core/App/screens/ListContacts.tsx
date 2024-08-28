@@ -1,7 +1,7 @@
 import { ConnectionRecord, ConnectionType, DidExchangeState } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, View } from 'react-native'
 
@@ -64,11 +64,11 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       const error = new BifoldError(t('Error.Title1046'), t('Error.Message1046'), (err as Error)?.message ?? err, 1046)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     })
-  }, [agent])
+  }, [agent, store.preferences.developerModeEnabled, contactHideList, t])
 
-  const onPressAddContact = () => {
+  const onPressAddContact = useCallback(() => {
     navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan, params: { defaultToConnect: true } })
-  }
+  }, [navigation])
 
   useEffect(() => {
     if (store.preferences.useConnectionInviterCapability) {
@@ -88,7 +88,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
         headerRight: () => false,
       })
     }
-  }, [store.preferences.useConnectionInviterCapability])
+  }, [store.preferences.useConnectionInviterCapability, navigation, t, onPressAddContact])
 
   return (
     <View>
