@@ -82,31 +82,32 @@ function getSdJwtIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetadata |
   return processIssuerDisplay(openId4VcMetadata, issuerDisplay)
 }
 
-function getW3cCredentialDisplay(
-  credential: W3cCredentialJson,
+function getCredentialDisplay(
+  credentialPayload: Record<string, unknown>,
   openId4VcMetadata?: OpenId4VcCredentialMetadata | null
-) {
+): Partial<CredentialDisplay> {
   const credentialDisplay: Partial<CredentialDisplay> = {}
 
   if (openId4VcMetadata) {
     const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
-
-    if (openidCredentialDisplay) {
-      credentialDisplay.name = openidCredentialDisplay.name
-      credentialDisplay.description = openidCredentialDisplay.description
-      credentialDisplay.textColor = openidCredentialDisplay.text_color
-      credentialDisplay.backgroundColor = openidCredentialDisplay.background_color
-
-      if (openidCredentialDisplay.background_image) {
-        credentialDisplay.backgroundImage = {
-          url: openidCredentialDisplay.background_image.url,
-          altText: openidCredentialDisplay.background_image.alt_text,
-        }
-      }
-
-      // NOTE: logo is used in issuer display (not sure if that's right though)
-    }
+    credentialDisplay.name = openidCredentialDisplay?.name
+    credentialDisplay.description = openidCredentialDisplay?.description
+    credentialDisplay.textColor = openidCredentialDisplay?.text_color
+    credentialDisplay.backgroundColor = openidCredentialDisplay?.background_color
+    credentialDisplay.backgroundImage = openidCredentialDisplay?.background_image ? {
+      url: openidCredentialDisplay.background_image.url,
+      altText: openidCredentialDisplay.background_image.alt_text,
+    } : undefined
   }
+
+  return credentialDisplay
+}
+
+function getW3cCredentialDisplay(
+  credential: W3cCredentialJson,
+  openId4VcMetadata?: OpenId4VcCredentialMetadata | null
+) {
+  const credentialDisplay: Partial<CredentialDisplay> = getCredentialDisplay(credential, openId4VcMetadata)
 
   // If openid metadata is not available, try to extract display metadata from the credential based on JFF metadata
   const jffCredential = credential as JffW3cCredentialJson
@@ -119,9 +120,7 @@ function getW3cCredentialDisplay(
   // and sanitize it. This is not optimal. But provides at least something.
   if (!credentialDisplay.name && jffCredential.type.length > 1) {
     const lastType = jffCredential.type[jffCredential.type.length - 1]
-    if (lastType && !lastType.startsWith('http')) {
-      credentialDisplay.name = sanitizeString(lastType)
-    }
+    credentialDisplay.name = (lastType && !lastType.startsWith('http')) ? sanitizeString(lastType) : undefined
   }
 
   // Use background color from the JFF credential if not provided by the OID4VCI metadata
@@ -140,37 +139,14 @@ function getSdJwtCredentialDisplay(
   credentialPayload: Record<string, unknown>,
   openId4VcMetadata?: OpenId4VcCredentialMetadata | null
 ) {
-  const credentialDisplay: Partial<CredentialDisplay> = {}
+  const credentialDisplay: Partial<CredentialDisplay> = getCredentialDisplay(credentialPayload, openId4VcMetadata)
 
-  if (openId4VcMetadata) {
-    const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
-
-    if (openidCredentialDisplay) {
-      credentialDisplay.name = openidCredentialDisplay.name
-      credentialDisplay.description = openidCredentialDisplay.description
-      credentialDisplay.textColor = openidCredentialDisplay.text_color
-      credentialDisplay.backgroundColor = openidCredentialDisplay.background_color
-
-      if (openidCredentialDisplay.background_image) {
-        credentialDisplay.backgroundImage = {
-          url: openidCredentialDisplay.background_image.url,
-          altText: openidCredentialDisplay.background_image.alt_text,
-        }
-      }
-
-      // NOTE: logo is used in issuer display (not sure if that's right though)
-    }
-  }
-
-  // If there's no name for the credential, we extract it from the last type
-  // and sanitize it. This is not optimal. But provides at least something.
   if (!credentialDisplay.name && typeof credentialPayload.vct === 'string') {
     credentialDisplay.name = sanitizeString(credentialPayload.vct)
   }
 
   return {
     ...credentialDisplay,
-    // Last fallback, if there's really no name for the credential, we use a generic name
     name: credentialDisplay.name ?? 'Credential',
   }
 }
@@ -245,9 +221,7 @@ export function getCredentialForDisplay(credentialRecord: W3cCredentialRecord | 
   const openId4VcMetadata = getOpenId4VcCredentialMetadata(credentialRecord)
   
   if (credentialRecord instanceof SdJwtVcRecord) {
-    const gg = getCredentialForDisplaySdJwt(credentialRecord, openId4VcMetadata)
-    console.log("$$: SDJW:", JSON.stringify(gg))
-    return gg
+    return getCredentialForDisplaySdJwt(credentialRecord, openId4VcMetadata)
   }
 
   const credential = JsonTransformer.toJSON(
@@ -264,9 +238,6 @@ export function getCredentialForDisplay(credentialRecord: W3cCredentialRecord | 
     ? credential.credentialSubject[0] ?? {}
     : credential.credentialSubject
 
-  console.log("$$: W3C Record:", JSON.stringify(credentialRecord))
-  console.log("$$: W3C issuerDisplay:", JSON.stringify(issuerDisplay))
-  console.log("$$: W3C credentialDisplay:", JSON.stringify(credentialDisplay))
   return {
     id: `w3c-credential-${credentialRecord.id}` satisfies CredentialForDisplayId,
     createdAt: credentialRecord.createdAt,
