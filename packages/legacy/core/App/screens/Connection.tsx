@@ -27,6 +27,8 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
 
+type NotCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+
 type LocalState = {
   inProgress: boolean
   notificationRecord?: any
@@ -43,7 +45,7 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { oobRecordId, openIDUri } = route.params
+  const { oobRecordId, openIDUri, proofId, credentialId } = route.params
   const { ColorPallet, TextTheme } = useTheme()
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
@@ -126,6 +128,18 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
     return () => backHandler.remove()
   }, [])
+
+  useEffect(() => {
+    if (proofId) {
+      dispatch({ inProgress: false, shouldShowProofComponent: true })
+      return
+    }
+
+    if (credentialId) {
+      dispatch({ inProgress: false, shouldShowOfferComponent: true })
+      return
+    }
+  }, [proofId, credentialId])
 
   useEffect(() => {
     if (!oobRecord || !state.inProgress) {
@@ -225,7 +239,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (!state.inProgress || state.notificationRecord) {
       return
     }
-    type notCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+
     for (const notification of notifications) {
       // no action taken for BasicMessageRecords
       if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
@@ -234,12 +248,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
 
       if (
-        (connection && (notification as notCustomNotification).connectionId === connection.id) ||
+        (connection && (notification as NotCustomNotification).connectionId === connection.id) ||
         oobRecord
           ?.getTags()
-          ?.invitationRequestsThreadIds?.includes((notification as notCustomNotification)?.threadId ?? '')
+          ?.invitationRequestsThreadIds?.includes((notification as NotCustomNotification)?.threadId ?? '')
       ) {
-        logger?.info(`Connection: Handling notification ${(notification as notCustomNotification).id}`)
+        logger?.info(`Connection: Handling notification ${(notification as NotCustomNotification).id}`)
 
         dispatch({ notificationRecord: notification })
         break
@@ -269,11 +283,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     if (state.shouldShowProofComponent) {
-      return <ProofRequest proofId={state.notificationRecord.id} navigation={navigation} />
+      return <ProofRequest proofId={proofId ?? state.notificationRecord.id} navigation={navigation} />
     }
 
     if (state.shouldShowOfferComponent) {
-      return <CredentialOffer credentialId={state.notificationRecord.id} navigation={navigation} />
+      return <CredentialOffer credentialId={credentialId ?? state.notificationRecord.id} navigation={navigation} />
     }
   }
 

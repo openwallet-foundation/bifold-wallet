@@ -6,7 +6,7 @@ import {
 import { CredentialExchangeRecord, DifPexInputDescriptorToCredentials, ProofState } from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
-import { useIsFocused, useRoute, RouteProp } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -57,14 +57,6 @@ type CredentialListProps = {
 }
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
-  const route = useRoute<RouteProp<{ params: Partial<ProofRequestProps> }, 'params'>>()
-  proofId = route.params.proofId ?? proofId
-
-  // Assert that proofId is defined
-  if (!proofId) {
-    throw new Error('proofId is required but was not provided.')
-  }
-
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertConnectedNetwork } = useNetwork()

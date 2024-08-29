@@ -313,8 +313,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.CredentialOffer:
         onPress = () => {
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CredentialOffer,
+          navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+            screen: Screens.Connection,
             params: { credentialId: notification.id },
           })
         }
@@ -333,8 +333,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           }
         } else {
           onPress = () => {
-            navigation.getParent()?.navigate(Stacks.NotificationStack, {
-              screen: Screens.ProofRequest,
+            navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+              screen: Screens.Connection,
               params: { proofId: (notification as ProofExchangeRecord).id },
             })
           }
@@ -365,6 +365,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       default:
         throw new Error('NotificationType was not set correctly.')
     }
+
+    return { onPress, onClose }
+  }
+
+  useEffect(() => {
+    const { onPress, onClose } = getActionForNotificationType(notification, notificationType)
     setAction(() => onPress)
     setCloseAction(() => onClose)
   }, [navigation, notification, notificationType, toggleDeclineModalVisible, dismissBasicMessage])
