@@ -45,7 +45,7 @@ export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   settings: [],
   enableTours: false,
-  supportedLanguages: ['en'],
+  supportedLanguages: ['en', 'fr', 'pt-BR'],
   showPreface: false,
   disableOnboardingSkip: false,
   whereToUseWalletUrl: 'https://example.com',
