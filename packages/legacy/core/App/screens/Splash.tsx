@@ -138,6 +138,7 @@ const Splash: React.FC = () => {
       try {
         if (store.onboarding.onboardingVersion !== OnboardingVersion) {
           dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+          return
         }
 
         if (
@@ -173,16 +174,19 @@ const Splash: React.FC = () => {
 
         if (store.onboarding.onboardingVersion !== OnboardingVersion) {
           dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+          return
         }
 
         // if they previously completed onboarding before wallet naming was enabled, mark complete
         if (!store.onboarding.didNameWallet) {
           dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
+          return
         }
 
         // if they previously completed onboarding before preface was enabled, mark seen
         if (!store.onboarding.didSeePreface) {
           dispatch({ type: DispatchAction.DID_SEE_PREFACE })
+          return
         }
 
         // add post authentication screens
