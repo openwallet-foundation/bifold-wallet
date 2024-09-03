@@ -34,7 +34,7 @@ export const useDeepLinks = () => {
       }
     }
     getUrlAsync()
-  }, [])
+  }, [logger, dispatch])
 
   useEffect(() => {
     Linking.addEventListener('url', async ({ url }) => {

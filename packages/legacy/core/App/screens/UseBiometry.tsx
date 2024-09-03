@@ -1,6 +1,6 @@
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -35,9 +35,11 @@ const UseBiometry: React.FC = () => {
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
-  const screenUsage = store.onboarding.didCompleteOnboarding
-    ? UseBiometryUsage.ToggleOnOff
-    : UseBiometryUsage.InitialSetup
+  const screenUsage = useMemo(() => {
+    return store.onboarding.didCompleteOnboarding
+      ? UseBiometryUsage.ToggleOnOff
+      : UseBiometryUsage.InitialSetup
+  }, [store.onboarding.didCompleteOnboarding])
 
   const styles = StyleSheet.create({
     container: {
@@ -78,7 +80,7 @@ const UseBiometry: React.FC = () => {
         })
       })
     }
-  }, [commitPIN, disableBiometrics, dispatch])
+  }, [screenUsage, biometryEnabled, commitPIN, disableBiometrics, dispatch])
 
   const continueTouched = useCallback(async () => {
     setContinueEnabled(false)

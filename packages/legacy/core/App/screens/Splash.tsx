@@ -228,6 +228,8 @@ const Splash: React.FC = () => {
     mounted,
     store.authentication.didAuthenticate,
     store.stateLoaded,
+    store.onboarding.onboardingVersion,
+    store.onboarding.didCompleteOnboarding,
     store.onboarding.didSeePreface,
     store.onboarding.didCompleteTutorial,
     store.onboarding.didAgreeToTerms,
