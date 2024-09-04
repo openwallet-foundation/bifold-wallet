@@ -117,7 +117,7 @@ const Home: React.FC<HomeProps> = () => {
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"
-        ListEmptyComponent={() => <NoNewUpdates />}
+        ListEmptyComponent={NoNewUpdates}
         ListHeaderComponent={() => <HomeHeaderView />}
         ListFooterComponent={() => <HomeFooterView />}
         data={notifications}
