@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { fireEvent, render, waitFor, act } from '@testing-library/react-native'
-import fs from 'fs'
-import path from 'path'
 import React from 'react'
 
 import ConnectionModal from '../../App/screens/Connection'
