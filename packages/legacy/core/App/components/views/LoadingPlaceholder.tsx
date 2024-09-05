@@ -14,12 +14,14 @@ type LoadingPlaceholderProps = {
   timeoutDurationInMs?: number
   loadingProgressPercent?: number
   onCancelTouched?: () => void
+  testID?: string
 }
 
 const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   timeoutDurationInMs = 10000,
   loadingProgressPercent = 0,
   onCancelTouched,
+  testID,
 }) => {
   const { ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -76,7 +78,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   }, [timeoutDurationInMs])
 
   return (
-    <>
+    <View testID={testID ?? testIdWithKey('LoadingPlaceholder')}>
       {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
       <View style={styles.container}>
         <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
@@ -122,7 +124,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
           </View>
         )}
       </View>
-    </>
+    </View>
   )
 }
 

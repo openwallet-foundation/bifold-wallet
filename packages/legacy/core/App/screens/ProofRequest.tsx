@@ -155,7 +155,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
       )
     }
-  }, [agent, proof, t])
+  }, [agent])
+
+  useEffect(() => {
+    if (!proof) {
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
+      )
+    }
+  }, [proof])
 
   const containsRevokedCreds = (
     credExRecords: CredentialExchangeRecord[],
@@ -193,6 +202,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
   useEffect(() => {
     setLoading(true)
+
     credProofPromise
       ?.then((value: any) => {
         if (value) {
@@ -628,15 +638,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     <SafeAreaView style={[styles.pageContainer, { position: 'relative' }]} edges={['bottom', 'left', 'right']}>
       <ScrollView>
         {loading ? (
-          <>
-            <LoadingPlaceholder
-              timeoutDurationInMs={10000}
-              loadingProgressPercent={30}
-              onCancelTouched={async () => {
-                await handleDeclineTouched()
-              }}
-            />
-          </>
+          <LoadingPlaceholder
+            timeoutDurationInMs={10000}
+            loadingProgressPercent={30}
+            onCancelTouched={async () => {
+              await handleDeclineTouched()
+            }}
+            testID={testIdWithKey('ProofRequestLoading')}
+          />
         ) : (
           <>
             <View style={[styles.pageContent]}>

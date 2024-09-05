@@ -10,28 +10,37 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
     ]
   }
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "position": "relative",
+      },
+    ]
   }
 >
   <RCTScrollView>
     <View>
       <View
         style={
-          Object {
-            "flexGrow": 1,
-            "justifyContent": "space-between",
-          }
+          Array [
+            Object {
+              "flexGrow": 1,
+              "justifyContent": "space-between",
+            },
+          ]
         }
       >
         <RCTScrollView
           ListHeaderComponent={
             <View
               style={
-                Object {
-                  "marginHorizontal": 20,
-                }
+                Array [
+                  Object {
+                    "marginHorizontal": 20,
+                  },
+                ]
               }
             >
               <React.Fragment>
@@ -215,9 +224,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
             >
               <View
                 style={
-                  Object {
-                    "marginHorizontal": 20,
-                  }
+                  Array [
+                    Object {
+                      "marginHorizontal": 20,
+                    },
+                  ]
                 }
               >
                 <View

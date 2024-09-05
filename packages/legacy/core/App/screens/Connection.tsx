@@ -8,7 +8,7 @@ import {
 import { CommonActions, useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useReducer } from 'react'
-import { DeviceEventEmitter, EmitterSubscription, BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, EmitterSubscription, BackHandler, ScrollView, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../contexts/theme'
@@ -22,6 +22,7 @@ import { useServices, TOKENS } from './../container-api'
 import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
+import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -50,9 +51,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+
   const notifications = useNotifications({ openIDUri: openIDUri })
-  const oobRecord = useOutOfBandById(oobRecordId)
-  const connection = useConnectionByOutOfBandId(oobRecordId)
+  const oobRecord = useOutOfBandById(oobRecordId ?? '')
+  const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,
@@ -185,7 +187,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     const { goalCode } = oobRecord.outOfBandInvitation
-
     if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
 
@@ -278,6 +279,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           timeoutDurationInMs={connTimerDelay}
           loadingProgressPercent={state.percentComplete}
           onCancelTouched={onDismissModalTouched}
+          testID={testIdWithKey('ConnectionLoading')}
         />
       )
     }

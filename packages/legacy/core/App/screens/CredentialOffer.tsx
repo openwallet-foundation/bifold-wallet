@@ -44,14 +44,6 @@ type CredentialOfferProps = {
 }
 
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentialId }) => {
-  const route = useRoute<RouteProp<{ params: Partial<CredentialOfferProps> }, 'params'>>()
-  credentialId = route.params.credentialId ?? credentialId
-
-  // Assert that credentialId is defined
-  if (!credentialId) {
-    throw new Error('credentialId is required but was not provided.')
-  }
-
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()

@@ -83,9 +83,12 @@ describe('ProofRequestDetails Screen', () => {
 
   test('Proof bundle resolver works correctly', async () => {
     const context = new MainContainer(container.createChildContainer()).init()
-    const wrapper = ({ children }: PropsWithChildren ) => <ContainerProvider value={context}>{children}</ContainerProvider>
-    const { result }  = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <ContainerProvider value={context}>{children}</ContainerProvider>
+    )
+    const { result } = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
     const bundle = await result.current.resolve(true)
+
     expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions).toHaveLength(2)
   })
 
@@ -98,7 +101,7 @@ describe('ProofRequestDetails Screen', () => {
 
   test('Renders correctly', async () => {
     const tree = renderView({ templateId })
-    await act(async () => { })
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
   })
 
