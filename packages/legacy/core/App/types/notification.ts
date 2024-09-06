@@ -16,3 +16,9 @@ export interface CustomNotification {
     }
   ]
 }
+
+export interface CustomNotificationRecord {
+  type: 'CustomNotification'
+  createdAt: Date
+  id: string
+}

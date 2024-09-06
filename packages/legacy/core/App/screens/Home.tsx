@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View, StyleSheet } from 'react-native'
 
-import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
+import { NotificationType } from '../components/listItems/NotificationListItem'
 import NoNewUpdates from '../components/misc/NoNewUpdates'
 import AppGuideModal from '../components/modals/AppGuideModal'
 import { TOKENS, useServices } from '../container-api'
@@ -18,11 +18,18 @@ import { TourID } from '../types/tour'
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = () => {
-  const [HomeHeaderView, HomeFooterView, { enableTours: enableToursConfig }, { customNotificationConfig: customNotification, useNotifications }] = useServices([
+  const [
+    HomeHeaderView,
+    HomeFooterView,
+    { enableTours: enableToursConfig },
+    { customNotificationConfig: customNotification, useNotifications },
+    NotificationListItem,
+  ] = useServices([
     TOKENS.COMPONENT_HOME_HEADER,
     TOKENS.COMPONENT_HOME_FOOTER,
     TOKENS.CONFIG,
     TOKENS.NOTIFICATIONS,
+    TOKENS.NOTIFICATIONS_LIST_ITEM,
   ])
   const notifications = useNotifications()
   const { t } = useTranslation()
