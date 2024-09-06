@@ -5,7 +5,420 @@ exports[`Home Screen renders correctly 1`] = `
   ListEmptyComponent={[Function]}
   ListFooterComponent={[Function]}
   ListHeaderComponent={[Function]}
-  data={Array []}
+  data={
+    Array [
+      Object {
+        "_tags": Object {},
+        "autoAcceptProof": undefined,
+        "connectionId": undefined,
+        "createdAt": "2024-09-05T18:56:08.770Z",
+        "errorMessage": undefined,
+        "id": "5658ee3f-04dc-487a-8524-3e070c820b8e",
+        "isVerified": undefined,
+        "metadata": Object {},
+        "parentThreadId": "d06b0c33-ba17-42d7-9334-afdf60403f02",
+        "protocolVersion": "v1",
+        "role": "prover",
+        "state": "request-received",
+        "threadId": "dbc57c37-63b8-40ed-bb14-4b58e86db4ec",
+      },
+      Object {
+        "_tags": Object {
+          "connectionId": "20f1f732-b64f-4d52-99fd-e13fe0d9e62f",
+          "role": "prover",
+          "state": "request-received",
+          "threadId": "985a0d98-bc31-435c-a3fe-2f884acae4fe",
+        },
+        "autoAcceptProof": undefined,
+        "connectionId": "20f1f732-b64f-4d52-99fd-e13fe0d9e62f",
+        "createdAt": "2024-09-04T21:12:14.072Z",
+        "errorMessage": undefined,
+        "id": "c54dfe4e-925d-4b9a-9f2c-2adeb308c5de",
+        "isVerified": undefined,
+        "metadata": Object {},
+        "parentThreadId": undefined,
+        "protocolVersion": "v1",
+        "role": "prover",
+        "state": "request-received",
+        "threadId": "985a0d98-bc31-435c-a3fe-2f884acae4fe",
+      },
+      Object {
+        "_tags": Object {
+          "connectionId": "efa7d36e-9dbe-4c0b-b128-556e731d329a",
+          "role": "prover",
+          "state": "request-received",
+          "threadId": "78de35dd-980e-4379-a668-3a6e9c4365d4",
+        },
+        "autoAcceptProof": undefined,
+        "connectionId": "efa7d36e-9dbe-4c0b-b128-556e731d329a",
+        "createdAt": "2024-09-04T21:12:14.072Z",
+        "errorMessage": undefined,
+        "id": "bbbf9c83-7930-4c97-944f-9b6adbbc8f49",
+        "isVerified": undefined,
+        "metadata": Object {},
+        "parentThreadId": undefined,
+        "protocolVersion": "v1",
+        "role": "prover",
+        "state": "request-received",
+        "threadId": "78de35dd-980e-4379-a668-3a6e9c4365d4",
+      },
+      Object {
+        "_tags": Object {},
+        "connectionId": "c426f2dc-0ffc-4252-b7d6-2304755f84d9",
+        "content": "Earl Grey",
+        "createdAt": "2024-09-04T18:53:11.771Z",
+        "id": "cbd8f4f0-36ce-4a2e-8c47-d9d5cbaa5617",
+        "metadata": Object {},
+        "parentThreadId": undefined,
+        "role": "receiver",
+        "sentTime": "20200303",
+        "threadId": "18b5dad0-49d1-4e26-b52d-bb01ee5f4f53",
+      },
+      Object {
+        "_tags": Object {},
+        "autoAcceptCredential": undefined,
+        "connectionId": "b4b1b9cd-a445-4bb3-9645-a2377471965a",
+        "createdAt": "2024-09-04T18:50:29.771Z",
+        "credentialAttributes": Array [
+          Object {
+            "mime-type": "text/plain",
+            "name": "student_first_name",
+            "value": "Alice",
+          },
+          Object {
+            "mime-type": "text/plain",
+            "name": "student_last_name",
+            "value": "Smith",
+          },
+          Object {
+            "mime-type": "text/plain",
+            "name": "expiry_date",
+            "value": "20280820",
+          },
+        ],
+        "credentials": Array [],
+        "errorMessage": undefined,
+        "id": "99bbf805-fc82-44dc-82eb-e3eb1e7f8ab7",
+        "linkedAttachments": undefined,
+        "metadata": Object {
+          "_anoncreds/credential": Object {
+            "credentialDefinitionId": "QEquAHkM35w4XVT3Ku5yat:3:CL:834668:student_card",
+            "schemaId": "QEquAHkM35w4XVT3Ku5yat:2:student_card:1.6",
+          },
+        },
+        "parentThreadId": undefined,
+        "protocolVersion": "v1",
+        "revocationNotification": undefined,
+        "role": "holder",
+        "state": "offer-received",
+        "threadId": "735df561-5346-4cb0-b11f-44a49984c0c3",
+      },
+    ]
+  }
+  decelerationRate="fast"
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEnabled={false}
+  scrollEventThrottle={50}
+  showsVerticalScrollIndicator={false}
+  stickyHeaderIndices={Array []}
+  style={
+    Object {
+      "marginBottom": 35,
+    }
+  }
+  viewabilityConfigCallbackPairs={Array []}
+>
+  <View>
+    <View
+      collapsable={false}
+      onLayout={[Function]}
+    >
+      <View />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "paddingHorizontal": 20,
+          "paddingVertical": 20,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#313132",
+            "borderColor": "#0099FF",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "padding": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignSelf": "flex-start",
+                "marginLeft": 0,
+                "marginRight": 10,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#0099FF",
+                    "fontSize": 30,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "alignSelf": "center",
+                "color": "#FFFFFF",
+                "flex": 1,
+                "flexWrap": "wrap",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              }
+            }
+            testID="com.ariesbifold:id/NoNewUpdates"
+          >
+            Home.NoNewUpdates
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "paddingBottom": 75,
+              "paddingHorizontal": 25,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "marginHorizontal": 25,
+                  "marginTop": 35,
+                },
+              ]
+            }
+          >
+            <Text
+              adjustsFontSizeToFit={true}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 38,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "marginBottom": 20,
+                    "marginTop": 25,
+                  },
+                ]
+              }
+            >
+              Home.Welcome
+            </Text>
+          </View>
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "marginHorizontal": 25,
+                  "marginTop": 35,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginTop": 25,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Home.NoCredentials
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`with a notifications module, when an issuer sends a credential offer notifications are displayed 1`] = `
+<RCTScrollView
+  ListEmptyComponent={[Function]}
+  ListFooterComponent={[Function]}
+  ListHeaderComponent={[Function]}
+  data={
+    Array [
+      Object {
+        "_tags": Object {},
+        "autoAcceptProof": undefined,
+        "connectionId": undefined,
+        "createdAt": "2024-09-05T18:56:08.770Z",
+        "errorMessage": undefined,
+        "id": "5658ee3f-04dc-487a-8524-3e070c820b8e",
+        "isVerified": undefined,
+        "metadata": Object {},
+        "parentThreadId": "d06b0c33-ba17-42d7-9334-afdf60403f02",
+        "protocolVersion": "v1",
+        "role": "prover",
+        "state": "request-received",
+        "threadId": "dbc57c37-63b8-40ed-bb14-4b58e86db4ec",
+      },
+      Object {
+        "_tags": Object {
+          "connectionId": "20f1f732-b64f-4d52-99fd-e13fe0d9e62f",
+          "role": "prover",
+          "state": "request-received",
+          "threadId": "985a0d98-bc31-435c-a3fe-2f884acae4fe",
+        },
+        "autoAcceptProof": undefined,
+        "connectionId": "20f1f732-b64f-4d52-99fd-e13fe0d9e62f",
+        "createdAt": "2024-09-04T21:12:14.072Z",
+        "errorMessage": undefined,
+        "id": "c54dfe4e-925d-4b9a-9f2c-2adeb308c5de",
+        "isVerified": undefined,
+        "metadata": Object {},
+        "parentThreadId": undefined,
+        "protocolVersion": "v1",
+        "role": "prover",
+        "state": "request-received",
+        "threadId": "985a0d98-bc31-435c-a3fe-2f884acae4fe",
+      },
+      Object {
+        "_tags": Object {
+          "connectionId": "efa7d36e-9dbe-4c0b-b128-556e731d329a",
+          "role": "prover",
+          "state": "request-received",
+          "threadId": "78de35dd-980e-4379-a668-3a6e9c4365d4",
+        },
+        "autoAcceptProof": undefined,
+        "connectionId": "efa7d36e-9dbe-4c0b-b128-556e731d329a",
+        "createdAt": "2024-09-04T21:12:14.072Z",
+        "errorMessage": undefined,
+        "id": "bbbf9c83-7930-4c97-944f-9b6adbbc8f49",
+        "isVerified": undefined,
+        "metadata": Object {},
+        "parentThreadId": undefined,
+        "protocolVersion": "v1",
+        "role": "prover",
+        "state": "request-received",
+        "threadId": "78de35dd-980e-4379-a668-3a6e9c4365d4",
+      },
+      Object {
+        "_tags": Object {},
+        "connectionId": "c426f2dc-0ffc-4252-b7d6-2304755f84d9",
+        "content": "Earl Grey",
+        "createdAt": "2024-09-04T18:53:11.771Z",
+        "id": "cbd8f4f0-36ce-4a2e-8c47-d9d5cbaa5617",
+        "metadata": Object {},
+        "parentThreadId": undefined,
+        "role": "receiver",
+        "sentTime": "20200303",
+        "threadId": "18b5dad0-49d1-4e26-b52d-bb01ee5f4f53",
+      },
+      Object {
+        "_tags": Object {},
+        "autoAcceptCredential": undefined,
+        "connectionId": "b4b1b9cd-a445-4bb3-9645-a2377471965a",
+        "createdAt": "2024-09-04T18:50:29.771Z",
+        "credentialAttributes": Array [
+          Object {
+            "mime-type": "text/plain",
+            "name": "student_first_name",
+            "value": "Alice",
+          },
+          Object {
+            "mime-type": "text/plain",
+            "name": "student_last_name",
+            "value": "Smith",
+          },
+          Object {
+            "mime-type": "text/plain",
+            "name": "expiry_date",
+            "value": "20280820",
+          },
+        ],
+        "credentials": Array [],
+        "errorMessage": undefined,
+        "id": "99bbf805-fc82-44dc-82eb-e3eb1e7f8ab7",
+        "linkedAttachments": undefined,
+        "metadata": Object {
+          "_anoncreds/credential": Object {
+            "credentialDefinitionId": "QEquAHkM35w4XVT3Ku5yat:3:CL:834668:student_card",
+            "schemaId": "QEquAHkM35w4XVT3Ku5yat:2:student_card:1.6",
+          },
+        },
+        "parentThreadId": undefined,
+        "protocolVersion": "v1",
+        "revocationNotification": undefined,
+        "role": "holder",
+        "state": "offer-received",
+        "threadId": "735df561-5346-4cb0-b11f-44a49984c0c3",
+      },
+    ]
+  }
   decelerationRate="fast"
   getItem={[Function]}
   getItemCount={[Function]}
