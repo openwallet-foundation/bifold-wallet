@@ -82,11 +82,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [action, setAction] = useState<any>()
   const [closeAction, setCloseAction] = useState<any>()
-  const isNotCustomNotificationRecord =
+  const connectionId =
     notification instanceof BasicMessageRecord ||
     notification instanceof CredentialExchangeRecord ||
     notification instanceof ProofExchangeRecord
-  const connection = isNotCustomNotificationRecord ? useConnectionById(notification.connectionId ?? '') : undefined
+      ? notification.connectionId ?? ''
+      : ''
+  const connection = useConnectionById(connectionId)
   const [details, setDetails] = useState<DisplayDetails>({
     type: InfoBoxType.Info,
     title: undefined,
