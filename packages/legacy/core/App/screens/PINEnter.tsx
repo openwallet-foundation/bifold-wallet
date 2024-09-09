@@ -18,6 +18,8 @@ import { BifoldError } from '../types/error'
 import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
 import { testIdWithKey } from '../utils/testable'
+import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
+import { TOKENS, useServices } from '../container-api'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -42,6 +44,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
+  const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
+  const [inlineMessagesEnabled] = useServices([TOKENS.ENABLE_INLINE_ERRORS])
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -87,6 +91,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         navigation.navigate(screen as never)
       }
     }
+  }
+
+  const isContinueDisabled = (): boolean => {
+    if (inlineMessagesEnabled) {
+      return false
+    }
+    return !continueEnabled || PIN.length < minPINLength
   }
 
   // listen for biometrics error event
@@ -203,6 +214,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     setDisplayLockoutWarning(displayWarning)
   }, [store.loginAttempt.loginAttempts])
 
+  useEffect(() => {
+    setInlineMessageField(undefined)
+  }, [PIN])
+
   const unlockWalletWithPIN = async (PIN: string) => {
     try {
       setContinueEnabled(false)
@@ -291,6 +306,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
   // both of the async functions called in this function are completely wrapped in trycatch
   const onPINInputCompleted = async (PIN: string) => {
+    if (inlineMessagesEnabled && PIN.length < minPINLength) {
+      setInlineMessageField({
+        message: t('PINCreate.PINTooShort'),
+        inlineType: InlineErrorType.error,
+      })
+      return
+    }
+
     setContinueEnabled(false)
 
     if (usage === PINEntryUsage.PINCheck) {
@@ -349,6 +372,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
             testID={testIdWithKey('EnterPIN')}
             accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
+            inlineMessage={inlineMessageField}
           />
         </View>
         <View style={style.controlsContainer}>
@@ -357,7 +381,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
               title={t('PINEnter.Unlock')}
               buttonType={ButtonType.Primary}
               testID={testIdWithKey('Enter')}
-              disabled={!continueEnabled || PIN.length < minPINLength}
+              disabled={isContinueDisabled()}
               accessibilityLabel={t('PINEnter.Unlock')}
               onPress={() => {
                 Keyboard.dismiss()

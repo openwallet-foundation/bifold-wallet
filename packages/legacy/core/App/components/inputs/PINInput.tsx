@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { hitSlop, minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
 
 interface PINInputProps {
   label?: string
@@ -14,9 +15,13 @@ interface PINInputProps {
   testID?: string
   accessibilityLabel?: string
   autoFocus?: boolean
+  inlineMessage?: InlineMessageProps
 }
 
-const PINInputComponent = ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }: PINInputProps, ref: Ref<TextInput>) => {
+const PINInputComponent = (
+  { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage }: PINInputProps,
+  ref: Ref<TextInput>
+) => {
   // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
@@ -70,49 +75,52 @@ const PINInputComponent = ({ label, onPINChanged, testID, accessibilityLabel, au
   })
 
   return (
-    <View style={style.container}>
-      <View style={style.labelAndFieldContainer}>
-        {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
-        <CodeField
-          {...props}
-          testID={testID}
-          accessibilityLabel={accessibilityLabel}
-          accessible
-          value={PIN}
-          rootStyle={style.codeFieldRoot}
-          onChangeText={onChangeText}
-          cellCount={minPINLength}
-          keyboardType="numeric"
-          textContentType="password"
-          renderCell={({ index, symbol, isFocused }) => {
-            let child: React.ReactNode | string = ''
-            if (symbol) {
-              child = showPIN ? symbol : '●'
-            } else if (isFocused) {
-              child = <Cursor />
-            }
-            return (
-              <View key={index} style={style.cell} onLayout={getCellOnLayoutHandler(index)}>
-                <Text style={style.cellText} maxFontSizeMultiplier={1}>
-                  {child}
-                </Text>
-              </View>
-            )
-          }}
-          autoFocus={autoFocus}
-          ref={ref}
-        />
-      </View>
-      <View style={style.hideIcon}>
-        <TouchableOpacity
-          accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
-          accessibilityRole={'button'}
-          testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
-          onPress={() => setShowPIN(!showPIN)}
-          hitSlop={hitSlop}
-        >
-          <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
-        </TouchableOpacity>
+    <View>
+      {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
+      {inlineMessage && <InlineErrorText message={inlineMessage.message} inlineType={inlineMessage.inlineType} />}
+      <View style={style.container}>
+        <View style={style.labelAndFieldContainer}>
+          <CodeField
+            {...props}
+            testID={testID}
+            accessibilityLabel={accessibilityLabel}
+            accessible
+            value={PIN}
+            rootStyle={style.codeFieldRoot}
+            onChangeText={onChangeText}
+            cellCount={minPINLength}
+            keyboardType="numeric"
+            textContentType="password"
+            renderCell={({ index, symbol, isFocused }) => {
+              let child: React.ReactNode | string = ''
+              if (symbol) {
+                child = showPIN ? symbol : '●'
+              } else if (isFocused) {
+                child = <Cursor />
+              }
+              return (
+                <View key={index} style={style.cell} onLayout={getCellOnLayoutHandler(index)}>
+                  <Text style={style.cellText} maxFontSizeMultiplier={1}>
+                    {child}
+                  </Text>
+                </View>
+              )
+            }}
+            autoFocus={autoFocus}
+            ref={ref}
+          />
+        </View>
+        <View style={style.hideIcon}>
+          <TouchableOpacity
+            accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
+            accessibilityRole={'button'}
+            testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
+            onPress={() => setShowPIN(!showPIN)}
+            hitSlop={hitSlop}
+          >
+            <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
