@@ -31,6 +31,7 @@ import { BifoldError } from '../types/error'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { PINCreationValidations, PINValidationsType } from '../utils/PINCreationValidation'
 import { testIdWithKey } from '../utils/testable'
+import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
@@ -60,7 +61,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-
+  const [inlineMessageField1, setInlineMessageField1] = useState<InlineMessageProps>()
+  const [inlineMessageField2, setInlineMessageField2] = useState<InlineMessageProps>()
 
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
@@ -68,7 +70,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [{ PINSecurity }, Button] = useServices([TOKENS.CONFIG, TOKENS.COMP_BUTTON])
+  const [{ PINSecurity }, Button, inlineMessagesEnabled] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.COMP_BUTTON,
+    TOKENS.ENABLE_INLINE_ERRORS,
+  ])
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)
@@ -109,23 +115,41 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     }
   }
 
+  const displayModalMessage = (title: string, message: string) => {
+    setModalState({
+      visible: true,
+      title: title,
+      message: message,
+    })
+  }
+
+  const attentionMessage = (title: string, message: string, pinOne: boolean) => {
+    if (inlineMessagesEnabled) {
+      if (pinOne) {
+        setInlineMessageField1({
+          message: message,
+          inlineType: InlineErrorType.error,
+        })
+      } else {
+        setInlineMessageField2({
+          message: message,
+          inlineType: InlineErrorType.error,
+        })
+      }
+    } else {
+      displayModalMessage(title, message)
+    }
+  }
+
   const validatePINEntry = (PINOne: string, PINTwo: string): boolean => {
     for (const validation of PINOneValidations) {
       if (validation.isInvalid) {
-        setModalState({
-          visible: true,
-          title: t('PINCreate.InvalidPIN'),
-          message: t(`PINCreate.Message.${validation.errorName}`),
-        })
+        attentionMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.${validation.errorName}`), true)
         return false
       }
     }
     if (PINOne !== PINTwo) {
-      setModalState({
-        visible: true,
-        title: t('PINCreate.InvalidPIN'),
-        message: t('PINCreate.PINsDoNotMatch'),
-      })
+      attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
       return false
     }
     return true
@@ -134,11 +158,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const checkOldPIN = async (PIN: string): Promise<boolean> => {
     const valid = await checkPIN(PIN)
     if (!valid) {
-      setModalState({
-        visible: true,
-        title: t('PINCreate.InvalidPIN'),
-        message: t(`PINCreate.Message.OldPINIncorrect`),
-      })
+      displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
     }
     return valid
   }
@@ -150,11 +170,53 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
 
     await passcodeCreate(PINOne)
   }
+
+  const handleCreatePinTap = async () => {
+    console.log('ff')
+    setLoading(true)
+    if (updatePin) {
+      const valid = validatePINEntry(PIN, PINTwo)
+      if (valid) {
+        setContinueEnabled(false)
+        const oldPinValid = await checkOldPIN(PINOld)
+        if (oldPinValid) {
+          const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
+          if (success) {
+            setModalState({
+              visible: true,
+              title: t('PINCreate.PinChangeSuccessTitle'),
+              message: t('PINCreate.PinChangeSuccessMessage'),
+              onModalDismiss: () => {
+                navigation.navigate(Screens.Settings as never)
+              },
+            })
+          }
+        }
+        setContinueEnabled(true)
+      }
+    } else {
+      await confirmEntry(PIN, PINTwo)
+    }
+    setLoading(false)
+  }
+
+  const isContinueDisabled = (): boolean => {
+    if (inlineMessagesEnabled) {
+      return false
+    }
+    return !continueEnabled || PIN.length < minPINLength || PINTwo.length < minPINLength
+  }
+
   useEffect(() => {
     if (updatePin) {
       setContinueEnabled(PIN !== '' && PINTwo !== '' && PINOld !== '')
     }
   }, [PINOld, PIN, PINTwo])
+
+  useEffect(() => {
+    setInlineMessageField1(undefined)
+    setInlineMessageField2(undefined)
+  }, [PIN, PINTwo])
 
   return (
     <KeyboardView>
@@ -196,6 +258,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             testID={testIdWithKey('EnterPIN')}
             accessibilityLabel={t('PINCreate.EnterPIN')}
             autoFocus={false}
+            inlineMessage={inlineMessageField1}
           />
           {PINSecurity.displayHelper && (
             <View style={{ marginBottom: 16 }}>
@@ -235,6 +298,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             accessibilityLabel={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             autoFocus={false}
             ref={PINTwoInputRef}
+            inlineMessage={inlineMessageField2}
           />
           {modalState.visible && (
             <AlertModal
@@ -255,34 +319,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             testID={actionButtonTestId}
             accessibilityLabel={actionButtonLabel}
             buttonType={ButtonType.Primary}
-            disabled={!continueEnabled || PIN.length < minPINLength || PINTwo.length < minPINLength}
-            onPress={async () => {
-              setLoading(true)
-              if (updatePin) {
-                const valid = validatePINEntry(PIN, PINTwo)
-                if (valid) {
-                  setContinueEnabled(false)
-                  const oldPinValid = await checkOldPIN(PINOld)
-                  if (oldPinValid) {
-                    const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
-                    if (success) {
-                      setModalState({
-                        visible: true,
-                        title: t('PINCreate.PinChangeSuccessTitle'),
-                        message: t('PINCreate.PinChangeSuccessMessage'),
-                        onModalDismiss: () => {
-                          navigation.navigate(Screens.Settings as never)
-                        },
-                      })
-                    }
-                  }
-                  setContinueEnabled(true)
-                }
-              } else {
-                await confirmEntry(PIN, PINTwo)
-              }
-              setLoading(false)
-            }}
+            disabled={isContinueDisabled()}
+            onPress={handleCreatePinTap}
             ref={createPINButtonRef}
           >
             {!continueEnabled && isLoading ? <ButtonLoading /> : null}

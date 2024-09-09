@@ -101,6 +101,7 @@ export const UTILITY_TOKENS = {
 
 export const CONFIG_TOKENS = {
   CONFIG: 'config',
+  ENABLE_INLINE_ERRORS: 'errors.enable.inline',
 } as const
 
 export const TOKENS = {
@@ -160,6 +161,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
+  [TOKENS.ENABLE_INLINE_ERRORS]: boolean
 }
 
 export interface Container {
