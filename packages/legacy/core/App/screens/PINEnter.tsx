@@ -1,7 +1,7 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
+import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter, InteractionManager } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -9,6 +9,7 @@ import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
 import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules, EventTypes } from '../constants'
+import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -42,6 +43,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -168,25 +170,29 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   }
 
   useEffect(() => {
-    if (!store.preferences.useBiometry) {
-      return
-    }
-
-    isBiometricsActive().then((res) => {
-      if (!res) {
-        // biometry state has changed, display message and disable biometry
-        setBiometricsEnrollmentChange(true)
-        disableBiometrics()
-        dispatch({
-          type: DispatchAction.USE_BIOMETRY,
-          payload: [false],
-        })
+    const handle = InteractionManager.runAfterInteractions(async () => {
+      if (!store.preferences.useBiometry) {
+        return
+      }
+  
+      try {
+        const active = await isBiometricsActive()
+        if (!active) {
+          // biometry state has changed, display message and disable biometry
+          setBiometricsEnrollmentChange(true)
+          await disableBiometrics()
+          dispatch({
+            type: DispatchAction.USE_BIOMETRY,
+            payload: [false],
+          })
+        }
+        await loadWalletCredentials()
+      } catch (error) {
+        logger.error(`error checking biometrics / loading credentials: ${JSON.stringify(error)}`)
       }
     })
 
-    loadWalletCredentials().catch(() => {
-      // TODO:(jl) Handle error
-    })
+    return handle.cancel
   }, [])
 
   useEffect(() => {
