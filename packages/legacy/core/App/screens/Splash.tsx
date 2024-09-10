@@ -95,7 +95,25 @@ const Splash: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
   const [mounted, setMounted] = useState(false)
-  const [cacheSchemas, cacheCredDefs, { version: TermsVersion }, logger, indyLedgers, { showPreface, enablePushNotifications }, ocaBundleResolver] = useServices([TOKENS.CACHE_SCHEMAS, TOKENS.CACHE_CRED_DEFS, TOKENS.SCREEN_TERMS, TOKENS.UTIL_LOGGER, TOKENS.UTIL_LEDGERS, TOKENS.CONFIG, TOKENS.UTIL_OCA_RESOLVER])
+  const [
+    cacheSchemas, 
+    cacheCredDefs, 
+    { version: TermsVersion }, 
+    logger, 
+    indyLedgers, 
+    { showPreface, enablePushNotifications }, 
+    ocaBundleResolver,
+    historyEnabled,
+  ] = useServices(
+    [TOKENS.CACHE_SCHEMAS, 
+    TOKENS.CACHE_CRED_DEFS, 
+    TOKENS.SCREEN_TERMS, 
+    TOKENS.UTIL_LOGGER, 
+    TOKENS.UTIL_LEDGERS, 
+    TOKENS.CONFIG, 
+    TOKENS.UTIL_OCA_RESOLVER, 
+    TOKENS.HISTORY_ENABLED]
+  )
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -291,6 +309,16 @@ const Splash: React.FC = () => {
 
     initAgent()
   }, [mounted, store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry, walletSecret])
+
+  useEffect(()=>{
+    if (!mounted || !historyEnabled) {
+      return
+    }
+    dispatch({
+      type: DispatchAction.HISTORY_CAPABILITY,
+      payload: [true],
+    })
+  },[mounted, historyEnabled])
 
   return (
     <SafeAreaView style={styles.container}>
