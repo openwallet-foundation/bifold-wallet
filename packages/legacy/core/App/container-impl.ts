@@ -40,6 +40,7 @@ import HomeHeaderView from './components/views/HomeHeaderView'
 import HomeFooterView from './components/views/HomeFooterView'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
+import NoNewUpdates from './components/misc/NoNewUpdates'
 
 export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -95,6 +96,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)
+    this._container.registerInstance(TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST, NoNewUpdates)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
