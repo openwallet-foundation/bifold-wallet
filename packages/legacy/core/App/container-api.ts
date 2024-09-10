@@ -65,9 +65,13 @@ export const STACK_TOKENS = {
 
 export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
-  FN_LOAD_HISTORY: 'fn.loadHistory',
   COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
+} as const
+
+export const HISTORY_TOKENS = {
+  FN_LOAD_HISTORY: 'fn.loadHistory',
+  HISTORY_ENABLED: 'history.enabled',
 } as const
 
 export const COMP_TOKENS = {
@@ -117,6 +121,7 @@ export const TOKENS = {
   ...CACHE_TOKENS,
   ...UTILITY_TOKENS,
   ...CONFIG_TOKENS,
+  ...HISTORY_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
@@ -153,6 +158,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
+  [TOKENS.HISTORY_ENABLED]: boolean,
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
