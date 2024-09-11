@@ -46,6 +46,7 @@ import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { PINRules } from './constants'
+import NotificationListItem from './components/listItems/NotificationListItem'
 
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
@@ -133,6 +134,7 @@ export {
   RootStack,
   NetInfo,
   OnboardingPages,
+  NotificationListItem,
   Splash,
   Developer,
   Terms,

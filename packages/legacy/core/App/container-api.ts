@@ -19,8 +19,9 @@ import Onboarding from './screens/Onboarding'
 import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
-import { CustomNotification } from './types/notification'
+import { CustomNotification, CustomNotificationRecord } from './types/notification'
 import { Config } from './types/config'
+import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -58,6 +59,7 @@ export const COMPONENT_TOKENS = {
 
 export const NOTIFICATION_TOKENS = {
   NOTIFICATIONS: 'notification.list',
+  NOTIFICATIONS_LIST_ITEM: 'notification.list-item',
 } as const
 
 export const STACK_TOKENS = {
@@ -147,9 +149,12 @@ export type TokenMapping = {
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.NOTIFICATIONS]: {
-    useNotifications: () => Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification>
+    useNotifications: () => Array<
+      BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotificationRecord
+    >
     customNotificationConfig?: CustomNotification
   }
+  [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
