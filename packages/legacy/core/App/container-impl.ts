@@ -40,6 +40,7 @@ import HomeHeaderView from './components/views/HomeHeaderView'
 import HomeFooterView from './components/views/HomeFooterView'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
+import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 
 export const defaultConfig = {
@@ -91,7 +92,10 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
-    this._container.registerInstance(TOKENS.NOTIFICATIONS, { useNotifications })
+    this._container.registerInstance(TOKENS.NOTIFICATIONS, {
+      useNotifications,
+    })
+    this._container.registerInstance(TOKENS.NOTIFICATIONS_LIST_ITEM, NotificationListItem)
     this._container.registerInstance(TOKENS.CONFIG, defaultConfig)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
