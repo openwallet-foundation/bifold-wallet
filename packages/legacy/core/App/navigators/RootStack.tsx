@@ -98,10 +98,6 @@ const RootStack: React.FC = () => {
       })
   }, [])
 
-  useEffect(() => {
-    logger.info(`Deeplink state (from rootstack) ${state.deepLink}`)
-  }, [state.deepLink])
-
   // handle deeplink events
   useEffect(() => {
     async function handleDeepLink(deepLink: string) {

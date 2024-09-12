@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Onboarding Onboarding Developer mode 1`] = `
+exports[`Onboarding Screen Onboarding Developer mode 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -414,7 +414,7 @@ exports[`Onboarding Onboarding Developer mode 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Onboarding Renders correctly 1`] = `
+exports[`Onboarding Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UnorderedList Component Renders correctly 1`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+          "marginBottom": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "paddingLeft": 5,
+          },
+        ]
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "flex": 1,
+            "paddingLeft": 5,
+          },
+        ]
+      }
+    >
+      item1
+    </Text>
+  </View>,
+  <View
+    style={
+      Array [
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+          "marginBottom": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "paddingLeft": 5,
+          },
+        ]
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "flex": 1,
+            "paddingLeft": 5,
+          },
+        ]
+      }
+    >
+      item2
+    </Text>
+  </View>,
+  <View
+    style={
+      Array [
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+          "marginBottom": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "paddingLeft": 5,
+          },
+        ]
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "flex": 1,
+            "paddingLeft": 5,
+          },
+        ]
+      }
+    >
+      item3
+    </Text>
+  </View>,
+]
+`;

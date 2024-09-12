@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a push notification screen Push notification screen renders correctly in settings 1`] = `
+exports[`PushNotification Screen Push notification screen renders correctly in settings 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
