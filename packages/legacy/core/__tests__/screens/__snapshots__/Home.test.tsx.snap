@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a home screen renders correctly 1`] = `
+exports[`Home Screen renders correctly 1`] = `
 <RCTScrollView
   ListEmptyComponent={[Function]}
   ListFooterComponent={[Function]}

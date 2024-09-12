@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Data Retention screen screen renders correctly 1`] = `
+exports[`DataRetention Screen screen renders correctly 1`] = `
 <RNCSafeAreaView
   style={
     Array [

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListContacts Component Renders correctly 1`] = `
+exports[`ListContacts Screen Renders correctly 1`] = `
 <View>
   <RCTScrollView
     ItemSeparatorComponent={[Function]}

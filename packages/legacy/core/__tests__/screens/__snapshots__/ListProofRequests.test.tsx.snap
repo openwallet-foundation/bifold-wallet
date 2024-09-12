@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListProofRequests Component Renders correctly 1`] = `
+exports[`ListProofRequests Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

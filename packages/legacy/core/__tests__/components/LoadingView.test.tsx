@@ -4,7 +4,7 @@ import React from 'react'
 import LoadingView from '../../App/components/views/LoadingView'
 import { testIdWithKey } from '../../App/utils/testable'
 
-describe('displays loading screen', () => {
+describe('LoadingView Component', () => {
   beforeAll(() => {
     jest.useFakeTimers()
   })

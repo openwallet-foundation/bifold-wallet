@@ -27,7 +27,7 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-describe('displays a proof request screen', () => {
+describe('ProofRequest Screen', () => {
   afterEach(() => {
     cleanup()
   })

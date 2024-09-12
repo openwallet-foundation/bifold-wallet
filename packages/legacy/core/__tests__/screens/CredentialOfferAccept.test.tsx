@@ -20,7 +20,7 @@ credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 // @ts-ignore
 useCredentialById.mockReturnValue(credentialRecord)
 
-describe('displays a credential accept screen', () => {
+describe('CredentialOfferAccept Screen', () => {
   test('renders correctly', () => {
     const tree = render(
       <BasicAppContext>

@@ -21,7 +21,7 @@ jest.mock('react-native-localize', () => { })
 
 const credentialDefinitionId = 'xxxxxxxxxxxxxxxxxx:3:CL:11111:default'
 
-describe('displays a credentials list screen', () => {
+describe('CredentialList Screen', () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
     role: CredentialRole.Holder,
     threadId: '1',

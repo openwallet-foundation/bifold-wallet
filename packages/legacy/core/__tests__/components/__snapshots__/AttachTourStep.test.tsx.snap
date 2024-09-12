@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachTourStep Renders properly with defaults 1`] = `
+exports[`AttachTourStep Component Renders properly with defaults 1`] = `
 <View
   collapsable={false}
   focusable={false}

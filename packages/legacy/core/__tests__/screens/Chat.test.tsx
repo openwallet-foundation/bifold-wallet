@@ -70,7 +70,7 @@ seenMessage.metadata = {
 
 const testBasicMessages: BasicMessageRecord[] = [unseenMessage, seenMessage]
 
-describe('Chat screen', () => {
+describe('Chat Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     // @ts-ignore

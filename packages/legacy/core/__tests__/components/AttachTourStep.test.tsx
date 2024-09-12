@@ -10,7 +10,7 @@ import { proofRequestTourSteps } from '../../App/components/tour/ProofRequestTou
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
 import { TourID } from '../../App/types/tour'
 
-describe('AttachTourStep', () => {
+describe('AttachTourStep Component', () => {
   test('Renders properly with defaults', () => {
     const tree = render(
       <TourProvider

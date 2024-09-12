@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProofDetails Component renders correctly with an unverified proof Unverified proof view should be rendered correctly 1`] = `
+exports[`ProofDetails Screen renders correctly with an unverified proof Unverified proof view should be rendered correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -231,7 +231,7 @@ exports[`ProofDetails Component renders correctly with an unverified proof Unver
 </RNCSafeAreaView>
 `;
 
-exports[`ProofDetails Component with a verified proof record renders correctly when history is false 1`] = `
+exports[`ProofDetails Screen with a verified proof record renders correctly when history is false 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -804,7 +804,7 @@ exports[`ProofDetails Component with a verified proof record renders correctly w
 </RNCSafeAreaView>
 `;
 
-exports[`ProofDetails Component with a verified proof record renders correctly when history is true 1`] = `
+exports[`ProofDetails Screen with a verified proof record renders correctly when history is true 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

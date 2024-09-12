@@ -10,7 +10,7 @@ import { container } from 'tsyringe'
 import { testIdWithKey } from '../../App/utils/testable'
 
 
-describe('displays a paste url screen', () => {
+describe('PasteUrl Screen', () => {
   test('Paste URL renders correctly', () => {
     const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(

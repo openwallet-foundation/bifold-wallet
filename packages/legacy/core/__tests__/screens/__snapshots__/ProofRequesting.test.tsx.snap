@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProofRequesting Component generate new qr works correctly 1`] = `
+exports[`ProofRequesting Screen generate new qr works correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -198,7 +198,7 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`ProofRequesting Component renders correctly 1`] = `
+exports[`ProofRequesting Screen renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -396,7 +396,7 @@ exports[`ProofRequesting Component renders correctly 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`ProofRequesting Component renders correctly 2`] = `
+exports[`ProofRequesting Screen renders correctly 2`] = `
 <RNCSafeAreaView
   edges={
     Array [

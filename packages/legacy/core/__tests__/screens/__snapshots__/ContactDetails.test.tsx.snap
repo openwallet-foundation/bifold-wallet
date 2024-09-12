@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Contact Details Screen Renders correctly 1`] = `
+exports[`ContactDetails Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -166,7 +166,7 @@ exports[`Contact Details Screen Renders correctly 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Contact Details Screen Renders correctly with alt contact name 1`] = `
+exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

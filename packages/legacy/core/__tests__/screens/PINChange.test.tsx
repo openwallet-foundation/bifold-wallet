@@ -10,7 +10,7 @@ import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 import { ContainerProvider } from '../../App/container-api'
 
-describe('displays a PIN change screen', () => {
+describe('PINChange Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })

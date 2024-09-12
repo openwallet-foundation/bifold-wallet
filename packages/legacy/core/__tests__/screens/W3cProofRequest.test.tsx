@@ -62,7 +62,7 @@ describe('displays a proof request screen', () => {
    * AND there is a "Decline" Button
    * AND there is a "Share" Button
    */
-  describe('with a proof request', () => {
+  describe('ProofRequest Screen, W3C', () => {
     const testEmail = 'test@email.com'
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'

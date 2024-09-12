@@ -3,7 +3,7 @@ import React from 'react'
 
 import HeaderRightHome from '../../App/components/buttons/HeaderHome'
 
-describe('Header Right Home Component', () => {
+describe('HeaderRightHome Component', () => {
   test('Renders correctly', () => {
     const tree = render(<HeaderRightHome />)
 

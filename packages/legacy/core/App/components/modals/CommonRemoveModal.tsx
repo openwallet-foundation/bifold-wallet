@@ -14,7 +14,7 @@ import { testIdForAccessabilityLabel, testIdWithKey } from '../../utils/testable
 import Button, { ButtonType } from '../buttons/Button'
 import BulletPoint from '../inputs/BulletPoint'
 import ContentGradient from '../misc/ContentGradient'
-import UnorderedListModal from '../misc/UnorderedListModal'
+import UnorderedList from '../misc/UnorderedList'
 
 interface CommonRemoveModalProps {
   usage: ModalUsage
@@ -55,7 +55,7 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
         <View
           style={[{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.modalSecondaryBackground }]}
         >
-          <UnorderedListModal UnorderedListItems={content} />
+          <UnorderedList unorderedListItems={content} />
         </View>
       </Collapsible>
     </>

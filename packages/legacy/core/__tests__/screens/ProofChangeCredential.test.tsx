@@ -26,7 +26,7 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-describe('displays a credential selection screen', () => {
+describe('ProofChangeCredential Screen', () => {
   const testEmail = 'test@email.com'
   const testTime = '2022-02-11 20:00:18.180718'
   const testAge = '16'

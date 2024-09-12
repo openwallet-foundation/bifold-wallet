@@ -10,7 +10,7 @@ import PINEnter from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 
-describe('displays a PIN Enter screen', () => {
+describe('PINEnter Screen', () => {
   test('PIN Enter renders correctly', () => {
     const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(

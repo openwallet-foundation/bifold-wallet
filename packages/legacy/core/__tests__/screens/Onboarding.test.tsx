@@ -20,7 +20,7 @@ const pages = [
   </>,
 ]
 
-describe('Onboarding', () => {
+describe('Onboarding Screen', () => {
   test('Renders correctly', () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)

@@ -65,7 +65,7 @@ const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
  *  List of Claims/Attributes
  *  Attribute names are just capitalized name
  */
-describe('displays a credential details screen', () => {
+describe('CredentialDetails Screen', () => {
   afterEach(() => {
     cleanup()
   })

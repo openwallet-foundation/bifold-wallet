@@ -4,15 +4,15 @@ import { Text, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 
 type UnorderedListProps = {
-  UnorderedListItems: any
+  unorderedListItems: string[]
 }
 
-const UnorderedList: React.FC<UnorderedListProps> = ({ UnorderedListItems }) => {
+const UnorderedList: React.FC<UnorderedListProps> = ({ unorderedListItems }) => {
   const { TextTheme, ColorPallet } = useTheme()
 
   return (
     <>
-      {UnorderedListItems.map((item: string, i: number) => {
+      {unorderedListItems.map((item: string, i: number) => {
         return (
           <View key={i} style={[{ display: 'flex', flexDirection: 'row', marginBottom: 5 }]}>
             <Text

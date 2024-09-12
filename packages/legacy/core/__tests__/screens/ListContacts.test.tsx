@@ -14,7 +14,7 @@ jest.mock('react-native-localize', () => { })
 
 const navigation = testUseNavigation()
 
-describe('ListContacts Component', () => {
+describe('ListContacts Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })

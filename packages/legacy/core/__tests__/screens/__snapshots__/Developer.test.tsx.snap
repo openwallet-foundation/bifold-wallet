@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
+exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -816,7 +816,7 @@ exports[`Developer screen acceptDevCredentials can be toggled 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Developer screen enableWalletNaming can be toggled 1`] = `
+exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -1632,7 +1632,7 @@ exports[`Developer screen enableWalletNaming can be toggled 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Developer screen preventAutoLock can be toggled 1`] = `
+exports[`Developer Screen preventAutoLock can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -2448,7 +2448,7 @@ exports[`Developer screen preventAutoLock can be toggled 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Developer screen screen renders correctly 1`] = `
+exports[`Developer Screen screen renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -3264,7 +3264,7 @@ exports[`Developer screen screen renders correctly 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
+exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -4080,7 +4080,7 @@ exports[`Developer screen useConnectionInviterCapability can be toggled 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
+exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -4896,7 +4896,7 @@ exports[`Developer screen useDevVerifierTemplates can be toggled 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Developer screen useVerifierCapability can be toggled 1`] = `
+exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
