@@ -107,8 +107,8 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
-        <ScrollView style={[styles.container]}>
-          <View style={[styles.messageContainer]}>
+        <ScrollView style={styles.container}>
+          <View style={styles.messageContainer}>
             {credentialDeliveryStatus === DeliveryStatus.Pending && (
               <Text
                 style={[ListItems.credentialOfferTitle, styles.messageText]}
@@ -143,7 +143,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           )}
         </ScrollView>
 
-        <View style={[styles.controlsContainer]}>
+        <View style={styles.controlsContainer}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
             <View>
               <Button

@@ -3,23 +3,19 @@
 exports[`HighlightTextBox Component Renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
-        "backgroundColor": "#000000",
-        "flexDirection": "row",
-      },
-    ]
+    Object {
+      "backgroundColor": "#000000",
+      "flexDirection": "row",
+    }
   }
 >
   <View
     style={
-      Array [
-        Object {
-          "backgroundColor": "#FCBA19",
-          "marginRight": 10,
-          "width": 8,
-        },
-      ]
+      Object {
+        "backgroundColor": "#FCBA19",
+        "marginRight": 10,
+        "width": 8,
+      }
     }
   />
   <Text
