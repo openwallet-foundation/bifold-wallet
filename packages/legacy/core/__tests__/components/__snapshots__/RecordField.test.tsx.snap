@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Record Field Component Shown binary field should render a binary field 1`] = `
+exports[`RecordField Component Shown binary field should render a binary field 1`] = `
 <View
   style={
     Object {
@@ -124,7 +124,7 @@ exports[`Record Field Component Shown binary field should render a binary field 
 </View>
 `;
 
-exports[`Record Field Component Shown date field should render a date field 1`] = `
+exports[`RecordField Component Shown date field should render a date field 1`] = `
 <View
   style={
     Object {

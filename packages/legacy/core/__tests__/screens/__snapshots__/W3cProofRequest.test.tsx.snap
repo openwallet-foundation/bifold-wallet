@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a proof request screen with a proof request displays a proof request with one or more predicates not satisfied 1`] = `
+exports[`displays a proof request screen ProofRequest Screen, W3C displays a proof request with one or more predicates not satisfied 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

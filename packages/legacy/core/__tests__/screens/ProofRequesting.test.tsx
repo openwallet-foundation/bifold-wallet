@@ -86,7 +86,7 @@ const data = {
   invitationUrl,
 }
 
-describe('ProofRequesting Component', () => {
+describe('ProofRequesting Screen', () => {
   const testContactRecord1 = new ConnectionRecord({
     id: '1',
     did: '9gtPKWtaUKxJir5YG2VPxX',

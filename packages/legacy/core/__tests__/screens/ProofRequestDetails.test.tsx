@@ -68,7 +68,7 @@ const templateId = templates[0].id
 const connectionId = 'test'
 const navigation = testUseNavigation()
 
-describe('ProofRequestDetails Component', () => {
+describe('ProofRequestDetails Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })

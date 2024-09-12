@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoTextBox Component Renders correctly 1`] = `
+exports[`HighlightTextBox Component Renders correctly 1`] = `
 <View
   style={
     Array [

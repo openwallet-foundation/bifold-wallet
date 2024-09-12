@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays loading screen renders correctly 1`] = `
+exports[`LoadingView Component renders correctly 1`] = `
 <RNCSafeAreaView
   style={
     Array [
