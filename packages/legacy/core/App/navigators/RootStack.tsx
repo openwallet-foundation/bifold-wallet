@@ -35,7 +35,6 @@ import ProofRequestStack from './ProofRequestStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
-import { use } from 'i18next'
 
 const RootStack: React.FC = () => {
   const [state, dispatch] = useStore()
