@@ -3,15 +3,13 @@
 exports[`LoadingView Component renders correctly 1`] = `
 <RNCSafeAreaView
   style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#000000",
-        "flexDirection": "column",
-        "justifyContent": "center",
-        "minHeight": 1334,
-      },
-    ]
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#000000",
+      "flexDirection": "column",
+      "justifyContent": "center",
+      "minHeight": 1334,
+    }
   }
 >
   <View

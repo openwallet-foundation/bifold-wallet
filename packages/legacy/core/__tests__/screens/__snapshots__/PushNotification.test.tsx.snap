@@ -59,13 +59,11 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
         </Text>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           PushNotifications.BeNotified

@@ -47,9 +47,9 @@ const DataRetention: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={[styles.container]}>
+    <SafeAreaView style={styles.container}>
       <View style={[styles.section, styles.sectionRow]}>
-        <Text style={[TextTheme.title]}>{t('Global.On')}</Text>
+        <Text style={TextTheme.title}>{t('Global.On')}</Text>
         <BouncyCheckbox
           accessibilityLabel={t('Global.On')}
           disableText
@@ -65,10 +65,10 @@ const DataRetention: React.FC = () => {
         />
       </View>
       <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-        <View style={[styles.itemSeparator]}></View>
+        <View style={styles.itemSeparator}></View>
       </View>
       <View style={[styles.section, styles.sectionRow]}>
-        <Text style={[TextTheme.title]}>{t('Global.Off')}</Text>
+        <Text style={TextTheme.title}>{t('Global.Off')}</Text>
         <BouncyCheckbox
           accessibilityLabel={t('Global.Off')}
           disableText

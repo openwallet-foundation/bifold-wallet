@@ -73,7 +73,7 @@ const Terms: React.FC = () => {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
-      <ScrollView style={[style.container]}>
+      <ScrollView style={style.container}>
         <InfoTextBox>Please agree to the terms and conditions below before using this application.</InfoTextBox>
         <Text style={[style.bodyText, { marginTop: 20, marginBottom: 20 }]}>
           <Text style={[style.bodyText, { fontWeight: TextTheme.bold.fontWeight }]}>
@@ -94,7 +94,7 @@ const Terms: React.FC = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
           est laborum.
         </Text>
-        <View style={[style.controlsContainer]}>
+        <View style={style.controlsContainer}>
           {!agreedToPreviousTerms && (
             <CheckBoxRow
               title={t('Terms.Attestation')}
@@ -104,7 +104,7 @@ const Terms: React.FC = () => {
               onPress={() => setChecked(!checked)}
             />
           )}
-          <View style={[{ paddingTop: 10 }]}>
+          <View style={{ paddingTop: 10 }}>
             <Button
               title={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
               accessibilityLabel={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
@@ -115,7 +115,7 @@ const Terms: React.FC = () => {
             />
           </View>
           {!agreedToPreviousTerms && (
-            <View style={[{ paddingTop: 10, marginBottom: 20 }]}>
+            <View style={{ paddingTop: 10, marginBottom: 20 }}>
               <Button
                 title={t('Global.Back')}
                 accessibilityLabel={t('Global.Back')}

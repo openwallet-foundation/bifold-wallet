@@ -21,7 +21,7 @@ export const ChatEvent: React.FC<ChatEventProps> = ({ userLabel, actionLabel, ro
         </Text>
       )}
       {actionLabel && (
-        <Text style={[role === Role.me ? ChatTheme.rightTextHighlighted : ChatTheme.leftTextHighlighted]}>
+        <Text style={role === Role.me ? ChatTheme.rightTextHighlighted : ChatTheme.leftTextHighlighted}>
           {actionLabel}
         </Text>
       )}

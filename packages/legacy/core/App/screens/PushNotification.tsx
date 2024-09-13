@@ -125,7 +125,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
             </View>
           ) : (
             <>
-              <Text style={[TextTheme.normal]}>{t('PushNotifications.BeNotified')}</Text>
+              <Text style={TextTheme.normal}>{t('PushNotifications.BeNotified')}</Text>
               {list.map((item, index) => (
                 <View style={{ flexDirection: 'row', marginTop: 20 }} key={index}>
                   <Text style={TextTheme.normal}>{'\u2022'}</Text>

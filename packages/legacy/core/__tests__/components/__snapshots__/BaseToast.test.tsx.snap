@@ -63,12 +63,10 @@ exports[`BaseToast Component Error renders correctly 1`] = `
             "color": "#D8292F",
             "fontSize": 24,
           },
-          Array [
-            Object {
-              "marginHorizontal": 15,
-              "marginTop": 15,
-            },
-          ],
+          Object {
+            "marginHorizontal": 15,
+            "marginTop": 15,
+          },
           Object {
             "fontFamily": "Material Icons",
             "fontStyle": "normal",
@@ -82,13 +80,11 @@ exports[`BaseToast Component Error renders correctly 1`] = `
     </Text>
     <View
       style={
-        Array [
-          Object {
-            "flexShrink": 1,
-            "marginRight": 10,
-            "marginVertical": 15,
-          },
-        ]
+        Object {
+          "flexShrink": 1,
+          "marginRight": 10,
+          "marginVertical": 15,
+        }
       }
     >
       <Text
@@ -199,12 +195,10 @@ exports[`BaseToast Component Info renders correctly 1`] = `
             "color": "#0099FF",
             "fontSize": 24,
           },
-          Array [
-            Object {
-              "marginHorizontal": 15,
-              "marginTop": 15,
-            },
-          ],
+          Object {
+            "marginHorizontal": 15,
+            "marginTop": 15,
+          },
           Object {
             "fontFamily": "Material Icons",
             "fontStyle": "normal",
@@ -218,13 +212,11 @@ exports[`BaseToast Component Info renders correctly 1`] = `
     </Text>
     <View
       style={
-        Array [
-          Object {
-            "flexShrink": 1,
-            "marginRight": 10,
-            "marginVertical": 15,
-          },
-        ]
+        Object {
+          "flexShrink": 1,
+          "marginRight": 10,
+          "marginVertical": 15,
+        }
       }
     >
       <Text
@@ -335,12 +327,10 @@ exports[`BaseToast Component Success renders correctly 1`] = `
             "color": "#2E8540",
             "fontSize": 24,
           },
-          Array [
-            Object {
-              "marginHorizontal": 15,
-              "marginTop": 15,
-            },
-          ],
+          Object {
+            "marginHorizontal": 15,
+            "marginTop": 15,
+          },
           Object {
             "fontFamily": "Material Icons",
             "fontStyle": "normal",
@@ -354,13 +344,11 @@ exports[`BaseToast Component Success renders correctly 1`] = `
     </Text>
     <View
       style={
-        Array [
-          Object {
-            "flexShrink": 1,
-            "marginRight": 10,
-            "marginVertical": 15,
-          },
-        ]
+        Object {
+          "flexShrink": 1,
+          "marginRight": 10,
+          "marginVertical": 15,
+        }
       }
     >
       <Text
@@ -471,12 +459,10 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
             "color": "#FCBA19",
             "fontSize": 24,
           },
-          Array [
-            Object {
-              "marginHorizontal": 15,
-              "marginTop": 15,
-            },
-          ],
+          Object {
+            "marginHorizontal": 15,
+            "marginTop": 15,
+          },
           Object {
             "fontFamily": "Material Icons",
             "fontStyle": "normal",
@@ -490,13 +476,11 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
     </Text>
     <View
       style={
-        Array [
-          Object {
-            "flexShrink": 1,
-            "marginRight": 10,
-            "marginVertical": 15,
-          },
-        ]
+        Object {
+          "flexShrink": 1,
+          "marginRight": 10,
+          "marginVertical": 15,
+        }
       }
     >
       <Text

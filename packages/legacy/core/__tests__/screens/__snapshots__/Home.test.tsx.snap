@@ -129,14 +129,12 @@ exports[`Home Screen renders correctly 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "marginHorizontal": 25,
-                  "marginTop": 35,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "marginHorizontal": 25,
+                "marginTop": 35,
+              }
             }
           >
             <Text
@@ -160,14 +158,12 @@ exports[`Home Screen renders correctly 1`] = `
           </View>
           <View
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "marginHorizontal": 25,
-                  "marginTop": 35,
-                },
-              ]
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "marginHorizontal": 25,
+                "marginTop": 35,
+              }
             }
           >
             <Text

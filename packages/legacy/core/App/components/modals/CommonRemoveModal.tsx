@@ -53,7 +53,7 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>
         <View
-          style={[{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.modalSecondaryBackground }]}
+          style={{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.modalSecondaryBackground }}
         >
           <UnorderedList unorderedListItems={content} />
         </View>
@@ -184,12 +184,12 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     switch (usage) {
       case ModalUsage.ContactRemove:
         return (
-          <View style={[{ marginBottom: 25 }]}>
-            <View style={[{ marginBottom: 25 }]}>
-              <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.RemoveTitle')}</Text>
+          <View style={{ marginBottom: 25 }}>
+            <View style={{ marginBottom: 25 }}>
+              <Text style={TextTheme.modalTitle}>{t('ContactDetails.RemoveTitle')}</Text>
             </View>
             <View>
-              <Text style={[styles.bodyText]}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
+              <Text style={styles.bodyText}>{t('ContactDetails.RemoveContactMessageTop')}</Text>
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
@@ -200,12 +200,12 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         )
       case ModalUsage.CredentialRemove:
         return (
-          <View style={[{ marginBottom: 25 }]}>
-            <View style={[{ marginBottom: 25 }]}>
-              <Text style={[TextTheme.modalTitle]}>{t('CredentialDetails.RemoveTitle')}</Text>
+          <View style={{ marginBottom: 25 }}>
+            <View style={{ marginBottom: 25 }}>
+              <Text style={TextTheme.modalTitle}>{t('CredentialDetails.RemoveTitle')}</Text>
             </View>
             <View>
-              <Text style={[TextTheme.modalNormal]}>{t('CredentialDetails.RemoveCaption')}</Text>
+              <Text style={TextTheme.modalNormal}>{t('CredentialDetails.RemoveCaption')}</Text>
             </View>
             <View style={{ marginTop: 25 }}>
               <Dropdown
@@ -226,40 +226,40 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         )
       case ModalUsage.ContactRemoveWithCredentials:
         return (
-          <View style={[{ marginBottom: 25 }]}>
-            <View style={[{ marginBottom: 25 }]}>
-              <Text style={[TextTheme.modalTitle]}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
+          <View style={{ marginBottom: 25 }}>
+            <View style={{ marginBottom: 25 }}>
+              <Text style={TextTheme.modalTitle}>{t('ContactDetails.UnableToRemoveTitle')}</Text>
             </View>
             <View>
-              <Text style={[styles.bodyText]}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
+              <Text style={styles.bodyText}>{t('ContactDetails.UnableToRemoveCaption')}</Text>
             </View>
           </View>
         )
       case ModalUsage.CredentialOfferDecline:
         return (
-          <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.DeclineTitle')}</Text>
+          <View style={{ marginBottom: 25 }}>
+            <Text style={TextTheme.modalTitle}>{t('CredentialOffer.DeclineTitle')}</Text>
             <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('CredentialOffer.DeclineParagraph1')}</Text>
-            <Text style={[styles.declineBodyText]}>{t('CredentialOffer.DeclineParagraph2')}</Text>
+            <Text style={styles.declineBodyText}>{t('CredentialOffer.DeclineParagraph2')}</Text>
           </View>
         )
       case ModalUsage.ProofRequestDecline:
         return (
-          <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle]}>{t('ProofRequest.DeclineTitle')}</Text>
+          <View style={{ marginBottom: 25 }}>
+            <Text style={TextTheme.modalTitle}>{t('ProofRequest.DeclineTitle')}</Text>
             <Text style={[styles.declineBodyText, { marginTop: 30 }]}>{t('ProofRequest.DeclineBulletPoint1')}</Text>
-            <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
-            <Text style={[styles.declineBodyText]}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
+            <Text style={styles.declineBodyText}>{t('ProofRequest.DeclineBulletPoint2')}</Text>
+            <Text style={styles.declineBodyText}>{t('ProofRequest.DeclineBulletPoint3')}</Text>
           </View>
         )
       case ModalUsage.CustomNotificationDecline:
         return (
-          <View style={[{ marginBottom: 25 }]}>
-            <Text style={[TextTheme.modalTitle]}>{t('CredentialOffer.CustomOfferTitle')}</Text>
+          <View style={{ marginBottom: 25 }}>
+            <Text style={TextTheme.modalTitle}>{t('CredentialOffer.CustomOfferTitle')}</Text>
             <Text style={[styles.declineBodyText, { marginTop: 30 }]}>
               {t('CredentialOffer.CustomOfferParagraph1')}
             </Text>
-            <Text style={[styles.declineBodyText]}>{t('CredentialOffer.CustomOfferParagraph2')}</Text>
+            <Text style={styles.declineBodyText}>{t('CredentialOffer.CustomOfferParagraph2')}</Text>
           </View>
         )
       default:

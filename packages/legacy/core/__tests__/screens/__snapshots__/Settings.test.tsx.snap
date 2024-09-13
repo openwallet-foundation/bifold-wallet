@@ -184,11 +184,9 @@ exports[`Settings Screen Renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 10,
-                },
-              ]
+              Object {
+                "marginBottom": 10,
+              }
             }
           />
           <RCTScrollView
@@ -290,13 +288,11 @@ exports[`Settings Screen Renders correctly 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
-                    "borderBottomColor": "#000000",
-                    "borderBottomWidth": 1,
-                    "marginHorizontal": 25,
-                  },
-                ]
+                Object {
+                  "borderBottomColor": "#000000",
+                  "borderBottomWidth": 1,
+                  "marginHorizontal": 25,
+                }
               }
             />
           </View>
@@ -400,11 +396,9 @@ exports[`Settings Screen Renders correctly 1`] = `
           </RCTScrollView>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 10,
-                },
-              ]
+              Object {
+                "marginBottom": 10,
+              }
             }
           />
         </View>
@@ -490,11 +484,9 @@ exports[`Settings Screen Renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 10,
-                },
-              ]
+              Object {
+                "marginBottom": 10,
+              }
             }
           />
           <RCTScrollView
@@ -598,13 +590,11 @@ exports[`Settings Screen Renders correctly 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
-                    "borderBottomColor": "#000000",
-                    "borderBottomWidth": 1,
-                    "marginHorizontal": 25,
-                  },
-                ]
+                Object {
+                  "borderBottomColor": "#000000",
+                  "borderBottomWidth": 1,
+                  "marginHorizontal": 25,
+                }
               }
             />
           </View>
@@ -715,13 +705,11 @@ exports[`Settings Screen Renders correctly 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
-                    "borderBottomColor": "#000000",
-                    "borderBottomWidth": 1,
-                    "marginHorizontal": 25,
-                  },
-                ]
+                Object {
+                  "borderBottomColor": "#000000",
+                  "borderBottomWidth": 1,
+                  "marginHorizontal": 25,
+                }
               }
             />
           </View>
@@ -834,13 +822,11 @@ exports[`Settings Screen Renders correctly 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
-                    "borderBottomColor": "#000000",
-                    "borderBottomWidth": 1,
-                    "marginHorizontal": 25,
-                  },
-                ]
+                Object {
+                  "borderBottomColor": "#000000",
+                  "borderBottomWidth": 1,
+                  "marginHorizontal": 25,
+                }
               }
             />
           </View>
@@ -944,11 +930,9 @@ exports[`Settings Screen Renders correctly 1`] = `
           </RCTScrollView>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 10,
-                },
-              ]
+              Object {
+                "marginBottom": 10,
+              }
             }
           />
         </View>

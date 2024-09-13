@@ -140,7 +140,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        style={[{ width }]}
+        style={{ width }}
         data={pages}
         renderItem={renderItem}
         viewabilityConfig={viewabilityConfigRef.current}

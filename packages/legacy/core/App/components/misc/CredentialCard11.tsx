@@ -439,7 +439,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </View>
           )}
           {!error && item?.satisfied != undefined && item?.satisfied === false ? (
-            <Text style={[styles.errorText]} numberOfLines={1}>
+            <Text style={styles.errorText} numberOfLines={1}>
               {t('ProofRequest.PredicateNotSatisfied')}
             </Text>
           ) : null}
@@ -491,9 +491,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         </View>
         {(error || isProofRevoked) && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon style={[styles.errorIcon]} name="close" size={30} />
+            <Icon style={styles.errorIcon} name="close" size={30} />
 
-            <Text style={[styles.errorText]} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+            <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
               {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
             </Text>
           </View>
@@ -586,7 +586,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               />
             </View>
           ) : (
-            <View style={[styles.statusContainer]} />
+            <View style={styles.statusContainer} />
           )}
         </>
       )

@@ -355,10 +355,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         }) => <SectionHeader icon={icon} iconRight={iconRight} title={title} titleTestID={titleTestID} />}
         ItemSeparatorComponent={() => (
           <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={[styles.itemSeparator]}></View>
+            <View style={styles.itemSeparator}></View>
           </View>
         )}
-        SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
+        SectionSeparatorComponent={() => <View style={styles.sectionSeparator}></View>}
         ListFooterComponent={() => (
           <View style={styles.footer}>
             <TouchableWithoutFeedback

@@ -55,11 +55,7 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
               testID="com.ariesbifold:id/DeveloperModeTouch"
             >
               <Text
-                style={
-                  Array [
-                    Object {},
-                  ]
-                }
+                style={Object {}}
                 testID="com.ariesbifold:id/HeaderText"
               >
                 test
@@ -103,11 +99,9 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
     showsHorizontalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     style={
-      Array [
-        Object {
-          "width": 750,
-        },
-      ]
+      Object {
+        "width": 750,
+      }
     }
     viewabilityConfig={
       Object {
@@ -201,11 +195,7 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {},
-                    ]
-                  }
+                  style={Object {}}
                   testID="com.ariesbifold:id/DeveloperModeTouch"
                 >
                   test
@@ -469,11 +459,9 @@ exports[`Onboarding Screen Renders correctly 1`] = `
     showsHorizontalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     style={
-      Array [
-        Object {
-          "width": 750,
-        },
-      ]
+      Object {
+        "width": 750,
+      }
     }
     viewabilityConfig={
       Object {

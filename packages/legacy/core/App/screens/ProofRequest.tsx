@@ -517,18 +517,18 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, route }) => {
 
                   <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
-                    <Text style={[TextTheme.title]}>
+                    <Text style={TextTheme.title}>
                       {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
                     </Text>
                   </Text>
                 </View>
               ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={[TextTheme.title]}>
+                  <Text style={TextTheme.title}>
                     {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
                   </Text>{' '}
                   <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
-                  <Text style={[TextTheme.title]}>{` ${activeCreds?.length} `}</Text>
+                  <Text style={TextTheme.title}>{` ${activeCreds?.length} `}</Text>
                   <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
               )}

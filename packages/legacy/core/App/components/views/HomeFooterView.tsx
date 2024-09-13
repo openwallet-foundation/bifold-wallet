@@ -64,13 +64,13 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     return (
       <>
         {notifications.length === 0 && (
-          <View style={[styles.messageContainer]}>
+          <View style={styles.messageContainer}>
             <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
               {t('Home.Welcome')}
             </Text>
           </View>
         )}
-        <View style={[styles.messageContainer]}>
+        <View style={styles.messageContainer}>
           <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
         </View>
       </>

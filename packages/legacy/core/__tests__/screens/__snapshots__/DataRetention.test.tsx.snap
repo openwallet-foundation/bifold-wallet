@@ -3,12 +3,10 @@
 exports[`DataRetention Screen screen renders correctly 1`] = `
 <RNCSafeAreaView
   style={
-    Array [
-      Object {
-        "backgroundColor": "#000000",
-        "width": "100%",
-      },
-    ]
+    Object {
+      "backgroundColor": "#000000",
+      "width": "100%",
+    }
   }
 >
   <View
@@ -29,13 +27,11 @@ exports[`DataRetention Screen screen renders correctly 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 20,
-            "fontWeight": "bold",
-          },
-        ]
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
       }
     >
       Global.On
@@ -166,13 +162,11 @@ exports[`DataRetention Screen screen renders correctly 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "borderBottomColor": "#000000",
-            "borderBottomWidth": 1,
-            "marginHorizontal": 25,
-          },
-        ]
+        Object {
+          "borderBottomColor": "#000000",
+          "borderBottomWidth": 1,
+          "marginHorizontal": 25,
+        }
       }
     />
   </View>
@@ -194,13 +188,11 @@ exports[`DataRetention Screen screen renders correctly 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 20,
-            "fontWeight": "bold",
-          },
-        ]
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
       }
     >
       Global.Off
