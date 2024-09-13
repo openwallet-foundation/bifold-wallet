@@ -66,6 +66,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     if (!secret) {
       return
     }
+
     setWalletSecret(secret)
 
     return secret
