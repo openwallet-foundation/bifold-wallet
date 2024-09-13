@@ -49,7 +49,8 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] =
+    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 
@@ -60,7 +61,7 @@ const RootStack: React.FC = () => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => { })
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
@@ -70,16 +71,20 @@ const RootStack: React.FC = () => {
     if (agent && state.authentication.didAuthenticate) {
       // make sure agent is shutdown so wallet isn't still open
       removeSavedWalletSecret()
+
       try {
         await agent.wallet.close()
-        await agent.shutdown()
+
+        logger.info('Closed agent wallet')
       } catch (error) {
-        logger?.error(`Error shutting down agent: ${error}`)
+        logger.error(`Error closing agent wallet, ${error}`)
       }
+
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
         payload: [{ didAuthenticate: false }],
       })
+
       dispatch({
         type: DispatchAction.LOCKOUT_UPDATED,
         payload: [{ displayNotification: true }],
@@ -160,8 +165,47 @@ const RootStack: React.FC = () => {
   ])
 
   useEffect(() => {
+    if (!agent) {
+      return
+    }
+
+    if (inBackground) {
+      agent.mediationRecipient
+        .stopMessagePickup()
+        .then(() => {
+          logger.info('Stopped agent message pickup')
+        })
+        .catch((err) => {
+          logger.error(`Error stopping agent message pickup, ${err}`)
+        })
+
+      return
+    }
+
+    if (!inBackground) {
+      agent.mediationRecipient
+        .initiateMessagePickup()
+        .then(() => {
+          logger.info('Resuming agent message pickup')
+        })
+        .catch((err) => {
+          logger.error(`Error resuming agent message pickup, ${err}`)
+        })
+
+      return
+    }
+  }, [agent, inBackground])
+
+  useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {
       if (appState.current === 'active' && ['inactive', 'background'].includes(nextAppState)) {
+        if (nextAppState === 'inactive') {
+          // on iOS this happens when any OS prompt is shown. We
+          // don't want to lock the user out in this case or preform
+          // background tasks.
+          return
+        }
+
         //update time that app gets put in background
         setInBackground(true)
         setBackgroundTime(Date.now())
