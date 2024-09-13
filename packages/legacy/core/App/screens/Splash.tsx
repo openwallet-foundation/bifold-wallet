@@ -87,7 +87,7 @@ const resumeOnboardingAt = (
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { setAgent } = useAgent()
+  const { agent, setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -96,24 +96,24 @@ const Splash: React.FC = () => {
   const { LoadingIndicator } = useAnimatedComponents()
   const [mounted, setMounted] = useState(false)
   const [
-    cacheSchemas, 
-    cacheCredDefs, 
-    { version: TermsVersion }, 
-    logger, 
-    indyLedgers, 
-    { showPreface, enablePushNotifications }, 
+    cacheSchemas,
+    cacheCredDefs,
+    { version: TermsVersion },
+    logger,
+    indyLedgers,
+    { showPreface, enablePushNotifications },
     ocaBundleResolver,
     historyEnabled,
-  ] = useServices(
-    [TOKENS.CACHE_SCHEMAS, 
-    TOKENS.CACHE_CRED_DEFS, 
-    TOKENS.SCREEN_TERMS, 
-    TOKENS.UTIL_LOGGER, 
-    TOKENS.UTIL_LEDGERS, 
-    TOKENS.CONFIG, 
-    TOKENS.UTIL_OCA_RESOLVER, 
-    TOKENS.HISTORY_ENABLED]
-  )
+  ] = useServices([
+    TOKENS.CACHE_SCHEMAS,
+    TOKENS.CACHE_CRED_DEFS,
+    TOKENS.SCREEN_TERMS,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.UTIL_LEDGERS,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.HISTORY_ENABLED,
+  ])
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -230,6 +230,32 @@ const Splash: React.FC = () => {
           return
         }
 
+        if (agent) {
+          logger.info('Agent already initialized, restarting...')
+
+          try {
+            await agent.wallet.open({
+              id: walletSecret.id,
+              key: walletSecret.key,
+            })
+          } catch (error: unknown) {
+            logger.error('Error opening existing wallet', error as Error)
+          }
+
+          await agent.mediationRecipient.initiateMessagePickup()
+
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Stacks.TabStack }],
+            })
+          )
+
+          return
+        }
+
+        logger.info('No agent initialized, creating a new one')
+
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
         const newAgent = new Agent({
@@ -310,7 +336,7 @@ const Splash: React.FC = () => {
     initAgent()
   }, [mounted, store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry, walletSecret])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!mounted || !historyEnabled) {
       return
     }
@@ -318,7 +344,7 @@ const Splash: React.FC = () => {
       type: DispatchAction.HISTORY_CAPABILITY,
       payload: [true],
     })
-  },[mounted, historyEnabled])
+  }, [mounted, historyEnabled])
 
   return (
     <SafeAreaView style={styles.container}>
