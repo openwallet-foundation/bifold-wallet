@@ -161,19 +161,19 @@ const RootStack: React.FC = () => {
       return
     }
 
-    agent?.mediationRecipient
+    agent.mediationRecipient
       .stopMessagePickup()
       .then(() => {
-        logger.info('Stopping agent message pickup')
+        logger.info('Stopped agent message pickup')
       })
       .catch((err) => {
         logger.error(`Error stopping agent message pickup, ${err}`)
       })
 
-    agent?.wallet
+    agent.wallet
       .close()
       .then(() => {
-        logger.info('Closing agent wallet')
+        logger.info('Closed agent wallet')
       })
       .catch((err) => {
         logger.error(`Error closing agent wallet, ${err}`)

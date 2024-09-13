@@ -230,6 +230,8 @@ const Splash: React.FC = () => {
           return
         }
 
+        await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
+
         if (agent) {
           logger.info('Agent already initialized, restarting...')
 
@@ -255,8 +257,6 @@ const Splash: React.FC = () => {
         }
 
         logger.info('No agent initialized, creating a new one')
-
-        await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
         const newAgent = new Agent({
           config: {
