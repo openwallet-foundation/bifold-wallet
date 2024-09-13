@@ -72,6 +72,14 @@ const RootStack: React.FC = () => {
       // make sure agent is shutdown so wallet isn't still open
       removeSavedWalletSecret()
 
+      try {
+        await agent.wallet.close()
+
+        logger.info('Closed agent wallet')
+      } catch (error) {
+        logger.error(`Error closing agent wallet, ${error}`)
+      }
+
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
         payload: [{ didAuthenticate: false }],
@@ -157,27 +165,35 @@ const RootStack: React.FC = () => {
   ])
 
   useEffect(() => {
-    if (!inBackground || !agent) {
+    if (!agent) {
       return
     }
 
-    agent.mediationRecipient
-      .stopMessagePickup()
-      .then(() => {
-        logger.info('Stopped agent message pickup')
-      })
-      .catch((err) => {
-        logger.error(`Error stopping agent message pickup, ${err}`)
-      })
+    if (inBackground) {
+      agent.mediationRecipient
+        .stopMessagePickup()
+        .then(() => {
+          logger.info('Stopped agent message pickup')
+        })
+        .catch((err) => {
+          logger.error(`Error stopping agent message pickup, ${err}`)
+        })
 
-    agent.wallet
-      .close()
-      .then(() => {
-        logger.info('Closed agent wallet')
-      })
-      .catch((err) => {
-        logger.error(`Error closing agent wallet, ${err}`)
-      })
+      return
+    }
+
+    if (!inBackground) {
+      agent.mediationRecipient
+        .initiateMessagePickup()
+        .then(() => {
+          logger.info('Resuming agent message pickup')
+        })
+        .catch((err) => {
+          logger.error(`Error resuming agent message pickup, ${err}`)
+        })
+
+      return
+    }
   }, [agent, inBackground])
 
   useEffect(() => {

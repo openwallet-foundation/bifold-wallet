@@ -240,6 +240,8 @@ const Splash: React.FC = () => {
               id: walletSecret.id,
               key: walletSecret.key,
             })
+
+            logger.info('Opened agent wallet')
           } catch (error: unknown) {
             logger.error('Error opening existing wallet', error as BifoldError)
 
