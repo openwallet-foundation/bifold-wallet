@@ -4,13 +4,11 @@ exports[`UnorderedList Component Renders correctly 1`] = `
 Array [
   <View
     style={
-      Array [
-        Object {
-          "display": "flex",
-          "flexDirection": "row",
-          "marginBottom": 5,
-        },
-      ]
+      Object {
+        "display": "flex",
+        "flexDirection": "row",
+        "marginBottom": 5,
+      }
     }
   >
     <Text
@@ -51,13 +49,11 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "display": "flex",
-          "flexDirection": "row",
-          "marginBottom": 5,
-        },
-      ]
+      Object {
+        "display": "flex",
+        "flexDirection": "row",
+        "marginBottom": 5,
+      }
     }
   >
     <Text
@@ -98,13 +94,11 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "display": "flex",
-          "flexDirection": "row",
-          "marginBottom": 5,
-        },
-      ]
+      Object {
+        "display": "flex",
+        "flexDirection": "row",
+        "marginBottom": 5,
+      }
     }
   >
     <Text

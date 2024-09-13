@@ -68,18 +68,18 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
   return (
     <Modal transparent animationType={'slide'}>
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <ScrollView style={[styles.container]}>
-          <View style={[styles.messageContainer]}>
+        <ScrollView style={styles.container}>
+          <View style={styles.messageContainer}>
             <Text style={[TextTheme.modalHeadingThree, styles.messageText]} testID={testIdWithKey('VerifierLoading')}>
               {t('Verifier.WaitingForResponse')}
             </Text>
           </View>
 
-          <View style={[styles.image]}>
+          <View style={styles.image}>
             <PresentationLoading />
           </View>
         </ScrollView>
-        <View style={[styles.controlsContainer]}>
+        <View style={styles.controlsContainer}>
           <Button
             title={t('Global.GoBack')}
             accessibilityLabel={t('Global.GoBack')}

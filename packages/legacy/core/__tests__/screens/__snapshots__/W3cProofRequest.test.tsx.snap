@@ -58,13 +58,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   >
                     <Text
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 20,
-                            "fontWeight": "bold",
-                          },
-                        ]
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 20,
+                          "fontWeight": "bold",
+                        }
                       }
                     >
                       ContactDetails.AContact
@@ -75,13 +73,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                     </Text>
                     <Text
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 20,
-                            "fontWeight": "bold",
-                          },
-                        ]
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 20,
+                          "fontWeight": "bold",
+                        }
                       }
                     >
                        2 
@@ -244,13 +240,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   >
                     <Text
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 20,
-                            "fontWeight": "bold",
-                          },
-                        ]
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 20,
+                          "fontWeight": "bold",
+                        }
                       }
                     >
                       ContactDetails.AContact
@@ -261,13 +255,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                     </Text>
                     <Text
                       style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 20,
-                            "fontWeight": "bold",
-                          },
-                        ]
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 20,
+                          "fontWeight": "bold",
+                        }
                       }
                     >
                        2 
@@ -766,17 +758,15 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
-                                      "alignItems": "center",
-                                      "backgroundColor": "rgba(0, 0, 0, 0)",
-                                      "borderBottomLeftRadius": 10,
-                                      "borderTopRightRadius": 10,
-                                      "height": 90,
-                                      "justifyContent": "center",
-                                      "width": 90,
-                                    },
-                                  ]
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                                    "borderBottomLeftRadius": 10,
+                                    "borderTopRightRadius": 10,
+                                    "height": 90,
+                                    "justifyContent": "center",
+                                    "width": 90,
+                                  }
                                 }
                               />
                             </View>
@@ -1150,11 +1140,9 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                         "color": undefined,
                                         "fontSize": 30,
                                       },
-                                      Array [
-                                        Object {
-                                          "color": "#D8292F",
-                                        },
-                                      ],
+                                      Object {
+                                        "color": "#D8292F",
+                                      },
                                       Object {
                                         "fontFamily": "Material Icons",
                                         "fontStyle": "normal",
@@ -1169,13 +1157,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <Text
                                   numberOfLines={1}
                                   style={
-                                    Array [
-                                      Object {
-                                        "color": "#D8292F",
-                                        "fontSize": 18,
-                                        "fontWeight": "normal",
-                                      },
-                                    ]
+                                    Object {
+                                      "color": "#D8292F",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal",
+                                    }
                                   }
                                   testID="com.ariesbifold:id/RevokedOrNotAvailable"
                                 >
@@ -1336,17 +1322,15 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             >
                               <View
                                 style={
-                                  Array [
-                                    Object {
-                                      "alignItems": "center",
-                                      "backgroundColor": "rgba(0, 0, 0, 0)",
-                                      "borderBottomLeftRadius": 10,
-                                      "borderTopRightRadius": 10,
-                                      "height": 90,
-                                      "justifyContent": "center",
-                                      "width": 90,
-                                    },
-                                  ]
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                                    "borderBottomLeftRadius": 10,
+                                    "borderTopRightRadius": 10,
+                                    "height": 90,
+                                    "justifyContent": "center",
+                                    "width": 90,
+                                  }
                                 }
                               />
                             </View>

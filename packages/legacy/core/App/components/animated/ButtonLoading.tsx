@@ -22,7 +22,7 @@ const ButtonLoading: React.FC = () => {
   }, [rotationAnim])
 
   return (
-    <Animated.View style={[{ transform: [{ rotate: rotation }] }]}>
+    <Animated.View style={{ transform: [{ rotate: rotation }] }}>
       <Icon style={{ color: ColorPallet.brand.icon }} size={25} name="refresh" />
     </Animated.View>
   )

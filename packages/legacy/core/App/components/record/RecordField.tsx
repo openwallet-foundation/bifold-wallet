@@ -98,7 +98,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
         {fieldLabel ? (
           fieldLabel(field)
         ) : (
-          <Text style={[ListItems.recordAttributeLabel]} testID={testIdWithKey('AttributeName')}>
+          <Text style={ListItems.recordAttributeLabel} testID={testIdWithKey('AttributeName')}>
             {field.label ?? startCase(field.name || '')}
           </Text>
         )}

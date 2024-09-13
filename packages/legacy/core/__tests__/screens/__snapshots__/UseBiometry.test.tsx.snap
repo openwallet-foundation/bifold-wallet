@@ -29,26 +29,22 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
       >
         <
           style={
-            Array [
-              Object {
-                "marginBottom": 66,
-                "minHeight": 200,
-                "minWidth": 200,
-              },
-            ]
+            Object {
+              "marginBottom": 66,
+              "minHeight": 200,
+              "minWidth": 200,
+            }
           }
         />
       </View>
       <View>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           Biometry.EnabledText1
@@ -56,25 +52,21 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
         <Text />
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           Biometry.EnabledText2
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-              ]
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
             }
           >
              
@@ -101,13 +93,11 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-              ]
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
             }
           >
             Biometry.UseToUnlock
@@ -302,26 +292,22 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
       >
         <
           style={
-            Array [
-              Object {
-                "marginBottom": 66,
-                "minHeight": 200,
-                "minWidth": 200,
-              },
-            ]
+            Object {
+              "marginBottom": 66,
+              "minHeight": 200,
+              "minWidth": 200,
+            }
           }
         />
       </View>
       <View>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           Biometry.NotEnabledText1
@@ -329,13 +315,11 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
         <Text />
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           Biometry.NotEnabledText2
@@ -360,13 +344,11 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-              ]
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
             }
           >
             Biometry.UseToUnlock
@@ -561,26 +543,22 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
       >
         <
           style={
-            Array [
-              Object {
-                "marginBottom": 66,
-                "minHeight": 200,
-                "minWidth": 200,
-              },
-            ]
+            Object {
+              "marginBottom": 66,
+              "minHeight": 200,
+              "minWidth": 200,
+            }
           }
         />
       </View>
       <View>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           Biometry.EnabledText1
@@ -588,25 +566,21 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
         <Text />
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            }
           }
         >
           Biometry.EnabledText2
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-              ]
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
             }
           >
              
@@ -633,13 +607,11 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
         >
           <Text
             style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-              ]
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
             }
           >
             Biometry.UseToUnlock

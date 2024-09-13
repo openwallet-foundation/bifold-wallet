@@ -3,14 +3,12 @@
 exports[`AlertModal Component Renders correctly 1`] = `
 <RNCSafeAreaView
   style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "flexDirection": "column",
-        "justifyContent": "center",
-        "minHeight": 1334,
-      },
-    ]
+    Object {
+      "alignItems": "center",
+      "flexDirection": "column",
+      "justifyContent": "center",
+      "minHeight": 1334,
+    }
   }
 >
   <Modal

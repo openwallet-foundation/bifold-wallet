@@ -21,13 +21,11 @@ exports[`RecordField Component Shown binary field should render a binary field 1
   >
     <Text
       style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "bold",
-          },
-        ]
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
       }
       testID="com.ariesbifold:id/AttributeName"
     >
@@ -145,13 +143,11 @@ exports[`RecordField Component Shown date field should render a date field 1`] =
   >
     <Text
       style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "bold",
-          },
-        ]
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
       }
       testID="com.ariesbifold:id/AttributeName"
     >

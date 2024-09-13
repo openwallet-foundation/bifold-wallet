@@ -126,22 +126,22 @@ const UseBiometry: React.FC = () => {
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
-          <Assets.svg.biometrics style={[styles.image]} />
+          <Assets.svg.biometrics style={styles.image} />
         </View>
         {biometryAvailable ? (
           <View>
-            <Text style={[TextTheme.normal]}>{t('Biometry.EnabledText1')}</Text>
+            <Text style={TextTheme.normal}>{t('Biometry.EnabledText1')}</Text>
             <Text></Text>
-            <Text style={[TextTheme.normal]}>
+            <Text style={TextTheme.normal}>
               {t('Biometry.EnabledText2')}
-              <Text style={[TextTheme.bold]}> {t('Biometry.Warning')}</Text>
+              <Text style={TextTheme.bold}> {t('Biometry.Warning')}</Text>
             </Text>
           </View>
         ) : (
           <View>
-            <Text style={[TextTheme.normal]}>{t('Biometry.NotEnabledText1')}</Text>
+            <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText1')}</Text>
             <Text></Text>
-            <Text style={[TextTheme.normal]}>{t('Biometry.NotEnabledText2')}</Text>
+            <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
           </View>
         )}
         <View
@@ -151,7 +151,7 @@ const UseBiometry: React.FC = () => {
           }}
         >
           <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
-            <Text style={[TextTheme.bold]}>{t('Biometry.UseToUnlock')}</Text>
+            <Text style={TextTheme.bold}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
             <Pressable
