@@ -241,7 +241,14 @@ const Splash: React.FC = () => {
               key: walletSecret.key,
             })
           } catch (error: unknown) {
-            logger.error('Error opening existing wallet', error as Error)
+            logger.error('Error opening existing wallet', error as BifoldError)
+
+            throw new BifoldError(
+              'Wallet Service',
+              'There was a problem unlocking the wallet.',
+              (error as Error).message,
+              1047
+            )
           }
 
           await agent.mediationRecipient.initiateMessagePickup()
