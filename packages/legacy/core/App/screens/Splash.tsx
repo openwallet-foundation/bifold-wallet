@@ -96,24 +96,24 @@ const Splash: React.FC = () => {
   const { LoadingIndicator } = useAnimatedComponents()
   const [mounted, setMounted] = useState(false)
   const [
-    cacheSchemas, 
-    cacheCredDefs, 
-    { version: TermsVersion }, 
-    logger, 
-    indyLedgers, 
-    { showPreface, enablePushNotifications }, 
+    cacheSchemas,
+    cacheCredDefs,
+    { version: TermsVersion },
+    logger,
+    indyLedgers,
+    { showPreface, enablePushNotifications },
     ocaBundleResolver,
     historyEnabled,
-  ] = useServices(
-    [TOKENS.CACHE_SCHEMAS, 
-    TOKENS.CACHE_CRED_DEFS, 
-    TOKENS.SCREEN_TERMS, 
-    TOKENS.UTIL_LOGGER, 
-    TOKENS.UTIL_LEDGERS, 
-    TOKENS.CONFIG, 
-    TOKENS.UTIL_OCA_RESOLVER, 
-    TOKENS.HISTORY_ENABLED]
-  )
+  ] = useServices([
+    TOKENS.CACHE_SCHEMAS,
+    TOKENS.CACHE_CRED_DEFS,
+    TOKENS.SCREEN_TERMS,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.UTIL_LEDGERS,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.HISTORY_ENABLED,
+  ])
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -211,6 +211,7 @@ const Splash: React.FC = () => {
           1044
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
       }
     }
 
@@ -304,6 +305,7 @@ const Splash: React.FC = () => {
           1045
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
       }
     }
 
