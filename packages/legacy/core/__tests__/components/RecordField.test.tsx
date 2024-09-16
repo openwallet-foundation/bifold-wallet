@@ -18,7 +18,7 @@ const defaultField = {
   value: 'Test',
 }
 
-describe('Record Field Component', () => {
+describe('RecordField Component', () => {
   test('Hidden normal field', async () => {
     const tree = render(<RecordField field={defaultField} shown={false} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))

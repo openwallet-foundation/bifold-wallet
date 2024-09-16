@@ -56,16 +56,16 @@ const CredentialAdded: React.FC = () => {
   }, [])
 
   return (
-    <View style={[style.container]}>
+    <View style={style.container}>
       <Animated.View style={[{ opacity: checkFadeAnim }, style.check]}>
         <CheckInCircle {...{ height: 45, width: 45 }} />
       </Animated.View>
       <View>
-        <WalletBack style={[style.back]} {...{ height: 110, width: 110 }} />
-        <Animated.View style={[{ opacity: cardFadeAnim, transform: [{ translateY: tranAnim }] }]}>
-          <CredentialCard style={[style.card]} {...{ height: 110, width: 110 }} />
+        <WalletBack style={style.back} {...{ height: 110, width: 110 }} />
+        <Animated.View style={{ opacity: cardFadeAnim, transform: [{ translateY: tranAnim }] }}>
+          <CredentialCard style={style.card} {...{ height: 110, width: 110 }} />
         </Animated.View>
-        <WalletFront style={[style.front]} {...{ height: 140, width: 140 }} />
+        <WalletFront style={style.front} {...{ height: 140, width: 140 }} />
       </View>
     </View>
   )

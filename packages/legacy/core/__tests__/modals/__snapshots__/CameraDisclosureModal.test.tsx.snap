@@ -22,25 +22,21 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
   >
     <RCTScrollView
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-            "height": "100%",
-            "padding": 20,
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "height": "100%",
+          "padding": 20,
+        }
       }
     >
       <View>
         <Text
           style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 38,
-                "fontWeight": "bold",
-              },
-            ]
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 38,
+              "fontWeight": "bold",
+            }
           }
           testID="com.ariesbifold:id/AllowCameraUse"
         >
@@ -82,13 +78,11 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
     </RCTScrollView>
     <View
       style={
-        Array [
-          Object {
-            "backgroundColor": "#000000",
-            "margin": 20,
-            "marginTop": "auto",
-          },
-        ]
+        Object {
+          "backgroundColor": "#000000",
+          "margin": 20,
+          "marginTop": "auto",
+        }
       }
     >
       <View

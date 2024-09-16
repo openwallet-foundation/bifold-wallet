@@ -8,7 +8,7 @@ import { proofRequestTourSteps } from '../../App/components/tour/ProofRequestTou
 import { SpotCutout } from '../../App/components/tour/SpotCutout'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
 
-describe('SpotCutout', () => {
+describe('SpotCutout Component', () => {
   beforeAll(()=>{
     jest.useFakeTimers()
   })

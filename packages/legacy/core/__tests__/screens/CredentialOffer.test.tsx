@@ -44,7 +44,7 @@ useConnectionById.mockReturnValue(connectionRecord)
 // @ts-ignore
 useCredentialById.mockReturnValue(credentialRecord)
 
-describe('displays a credential offer screen', () => {
+describe('CredentialOffer Screen', () => {
   test('renders correctly', async () => {
     const tree = render(
       <BasicAppContext>

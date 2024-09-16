@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TourBox Renders properly with defaults 1`] = `
+exports[`TourBox Component Renders properly with defaults 1`] = `
 <View
   onTouchEnd={[Function]}
   onTouchStart={[Function]}
@@ -48,11 +48,9 @@ exports[`TourBox Renders properly with defaults 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
-            "alignSelf": "flex-end",
-          },
-        ]
+        Object {
+          "alignSelf": "flex-end",
+        }
       }
     >
       <View

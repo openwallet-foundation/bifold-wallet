@@ -10,7 +10,7 @@ import { TourProvider } from '../../App/contexts/tour/tour-provider'
 import { TourID } from '../../App/types/tour'
 import { testIdWithKey } from '../../App/utils/testable'
 
-describe('TourBox', () => {
+describe('TourBox Component', () => {
   test('Renders properly with defaults', () => {
     const previous = jest.fn()
     const next = jest.fn()

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ScanTab Renders correctly 1`] = `
+exports[`ScanTab Component Renders correctly 1`] = `
 <View
   accessibilityLabel="title"
   accessibilityState={
