@@ -87,7 +87,7 @@ const resumeOnboardingAt = (
  * of this view.
  */
 const Splash: React.FC = () => {
-  const { setAgent } = useAgent()
+  const { agent, setAgent } = useAgent()
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const navigation = useNavigation()
@@ -233,6 +233,41 @@ const Splash: React.FC = () => {
 
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
+        if (agent) {
+          logger.info('Agent already initialized, restarting...')
+
+          try {
+            await agent.wallet.open({
+              id: walletSecret.id,
+              key: walletSecret.key,
+            })
+
+            logger.info('Opened agent wallet')
+          } catch (error: unknown) {
+            logger.error('Error opening existing wallet', error as BifoldError)
+
+            throw new BifoldError(
+              'Wallet Service',
+              'There was a problem unlocking the wallet.',
+              (error as Error).message,
+              1047
+            )
+          }
+
+          await agent.mediationRecipient.initiateMessagePickup()
+
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Stacks.TabStack }],
+            })
+          )
+
+          return
+        }
+
+        logger.info('No agent initialized, creating a new one')
+
         const newAgent = new Agent({
           config: {
             label: store.preferences.walletName || 'Aries Bifold',
@@ -312,7 +347,7 @@ const Splash: React.FC = () => {
     initAgent()
   }, [mounted, store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry, walletSecret])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!mounted || !historyEnabled) {
       return
     }
@@ -320,7 +355,7 @@ const Splash: React.FC = () => {
       type: DispatchAction.HISTORY_CAPABILITY,
       payload: [true],
     })
-  },[mounted, historyEnabled])
+  }, [mounted, historyEnabled])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -48,12 +48,12 @@ const CredentialPending: React.FC = () => {
   }, [])
 
   return (
-    <View style={[style.container]}>
-      <WalletBack style={[style.back]} {...{ height: 110, width: 110 }} />
-      <Animated.View style={[{ opacity: fadeAnim, transform: [{ translateY: tranAnim }] }]}>
-        <CredentialCard style={[style.card]} {...{ height: 110, width: 110 }} />
+    <View style={style.container}>
+      <WalletBack style={style.back} {...{ height: 110, width: 110 }} />
+      <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: tranAnim }] }}>
+        <CredentialCard style={style.card} {...{ height: 110, width: 110 }} />
       </Animated.View>
-      <WalletFront style={[style.front]} {...{ height: 140, width: 140 }} />
+      <WalletFront style={style.front} {...{ height: 140, width: 140 }} />
     </View>
   )
 }

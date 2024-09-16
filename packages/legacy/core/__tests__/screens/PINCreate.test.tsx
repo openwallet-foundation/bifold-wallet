@@ -10,7 +10,7 @@ import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 
-describe('displays a PIN create screen', () => {
+describe('PINCreate Screen', () => {
   test('PIN create renders correctly', async () => {
     const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(

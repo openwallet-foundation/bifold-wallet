@@ -43,8 +43,8 @@ const RecordLoading: React.FC = () => {
   }
 
   return (
-    <View style={[style.container]} testID={testIdWithKey('RecordLoading')}>
-      <Animated.View style={[{ opacity: rowFadeAnim }]}>
+    <View style={style.container} testID={testIdWithKey('RecordLoading')}>
+      <Animated.View style={{ opacity: rowFadeAnim }}>
         {makeARow()}
         {makeARow()}
       </Animated.View>

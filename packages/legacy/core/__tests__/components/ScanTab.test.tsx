@@ -4,7 +4,7 @@ import React from 'react'
 import ScanTab from '../../App/components/misc/ScanTab'
 import { testIdWithKey } from '../../App/utils/testable'
 
-describe('ScanTab', () => {
+describe('ScanTab Component', () => {
   test('Renders correctly', () => {
     const title = 'title'
     const callback = jest.fn()
