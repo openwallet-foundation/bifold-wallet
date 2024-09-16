@@ -28,6 +28,7 @@ export interface Preferences {
   walletName: string
   acceptDevCredentials: boolean
   useDataRetention: boolean
+  disableDataRetentionOption?: boolean
   preventAutoLock: boolean
   enableShareableLink: boolean
   alternateContactNames: Record<string, string>

@@ -234,16 +234,17 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         },
       ],
     })
-
-    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
-    if (section) {
-      section.data.splice(3, 0, {
-        title: t('Settings.DataRetention'),
-        value: store.preferences.useDataRetention ? t('Global.On') : t('Global.Off'),
-        accessibilityLabel: t('Settings.DataRetention'),
-        testID: testIdWithKey('DataRetention'),
-        onPress: () => navigation.navigate(Screens.DataRetention),
-      })
+    if (!store.preferences.disableDataRetentionOption) {
+      const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+      if (section) {
+        section.data.splice(3, 0, {
+          title: t('Settings.DataRetention'),
+          value: store.preferences.useDataRetention ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Settings.DataRetention'),
+          testID: testIdWithKey('DataRetention'),
+          onPress: () => navigation.navigate(Screens.DataRetention),
+        })
+      }
     }
   }
 
