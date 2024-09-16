@@ -77,7 +77,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
 
   useEffect(() => {
     if (openIDCredsRecieved) {
-      setNotifications([openIDCredsRecieved])
+      setNotifications([...notifications, openIDCredsRecieved])
     }
   }, [openIDCredsRecieved])
 
