@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Connection Modal Component Connection, no goal code navigation to chat 1`] = `
+exports[`Connection Screen Connection, no goal code navigation to chat 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -173,7 +173,7 @@ exports[`Connection Modal Component Connection, no goal code navigation to chat 
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Dismiss on demand 1`] = `
+exports[`Connection Screen Dismiss on demand 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -364,7 +364,7 @@ exports[`Connection Modal Component Dismiss on demand 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Invalid goal code extracted, do nothing 1`] = `
+exports[`Connection Screen Invalid goal code extracted, do nothing 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -555,7 +555,7 @@ exports[`Connection Modal Component Invalid goal code extracted, do nothing 1`] 
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component No connection, navigation to proof 1`] = `
+exports[`Connection Screen No connection, navigation to proof 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -728,7 +728,7 @@ exports[`Connection Modal Component No connection, navigation to proof 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Renders correctly 1`] = `
+exports[`Connection Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -901,7 +901,7 @@ exports[`Connection Modal Component Renders correctly 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Updates after delay 1`] = `
+exports[`Connection Screen Updates after delay 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -1092,7 +1092,7 @@ exports[`Connection Modal Component Updates after delay 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Valid goal code aries.vc.issue extracted, navigation to accept offer 1`] = `
+exports[`Connection Screen Valid goal code aries.vc.issue extracted, navigation to accept offer 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -1265,7 +1265,7 @@ exports[`Connection Modal Component Valid goal code aries.vc.issue extracted, na
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Valid goal code aries.vc.verify extracted, navigation to proof request 1`] = `
+exports[`Connection Screen Valid goal code aries.vc.verify extracted, navigation to proof request 1`] = `
 <RNCSafeAreaView
   style={
     Object {
@@ -1438,7 +1438,7 @@ exports[`Connection Modal Component Valid goal code aries.vc.verify extracted, n
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Modal Component Valid goal code aries.vc.verify.once extracted, navigation to proof request 1`] = `
+exports[`Connection Screen Valid goal code aries.vc.verify.once extracted, navigation to proof request 1`] = `
 <RNCSafeAreaView
   style={
     Object {

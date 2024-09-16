@@ -68,7 +68,7 @@ const SentProof: React.FC = () => {
         </Animated.View>
       </View>
       <View style={style.ring}>
-        <Animated.View style={[{ opacity: ringFadeAnim }]}>
+        <Animated.View style={{ opacity: ringFadeAnim }}>
           <ActivityIndicator {...animatedCircleDisplayOptions} />
         </Animated.View>
       </View>

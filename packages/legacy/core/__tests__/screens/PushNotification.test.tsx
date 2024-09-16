@@ -10,7 +10,7 @@ import { container } from 'tsyringe'
 import { TOKENS } from '../../App/container-api'
 import { Config } from '../../App/types/config'
 
-describe('displays a push notification screen', () => {
+describe('PushNotification Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })

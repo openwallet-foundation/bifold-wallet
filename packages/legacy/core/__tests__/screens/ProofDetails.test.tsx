@@ -95,7 +95,7 @@ const requestPresentationMessage = new V1RequestPresentationMessage({
 
 const data = verifier.parseAnonCredsProof(proof_request, proof)
 
-describe('ProofDetails Component', () => {
+describe('ProofDetails Screen', () => {
   afterEach(() => {
     cleanup()
   })

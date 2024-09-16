@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View, StyleSheet } from 'react-native'
 
-import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
-import NoNewUpdates from '../components/misc/NoNewUpdates'
+import { NotificationType } from '../components/listItems/NotificationListItem'
 import AppGuideModal from '../components/modals/AppGuideModal'
 import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -18,11 +17,20 @@ import { TourID } from '../types/tour'
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
 const Home: React.FC<HomeProps> = () => {
-  const [HomeHeaderView, HomeFooterView, { enableTours: enableToursConfig }, { customNotificationConfig: customNotification, useNotifications }] = useServices([
+  const [
+    HomeHeaderView,
+    NoNewUpdates,
+    HomeFooterView,
+    { enableTours: enableToursConfig },
+    { customNotificationConfig: customNotification, useNotifications },
+    NotificationListItem,
+  ] = useServices([
     TOKENS.COMPONENT_HOME_HEADER,
+    TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST,
     TOKENS.COMPONENT_HOME_FOOTER,
     TOKENS.CONFIG,
     TOKENS.NOTIFICATIONS,
+    TOKENS.NOTIFICATIONS_LIST_ITEM,
   ])
   const notifications = useNotifications({})
   const { t } = useTranslation()
@@ -36,11 +44,6 @@ const Home: React.FC<HomeProps> = () => {
   const styles = StyleSheet.create({
     flatlist: {
       marginBottom: 35,
-    },
-    noNewUpdatesContainer: {
-      paddingHorizontal: 20,
-      paddingVertical: 20,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
     },
   })
 
@@ -116,11 +119,7 @@ const Home: React.FC<HomeProps> = () => {
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"
-        ListEmptyComponent={() => (
-          <View style={styles.noNewUpdatesContainer}>
-            <NoNewUpdates />
-          </View>
-        )}
+        ListEmptyComponent={NoNewUpdates}
         ListHeaderComponent={() => <HomeHeaderView />}
         ListFooterComponent={() => <HomeFooterView />}
         data={notifications}
