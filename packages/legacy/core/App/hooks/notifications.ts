@@ -18,25 +18,26 @@ import {
   credentialCustomMetadata,
 } from '../types/metadata'
 import { useOpenID } from '../modules/openid/hooks/openid'
+import { CustomNotification } from '../types/notification'
 
 export type NotificationsInputProps = {
   openIDUri?: string
 }
 
-export type NotificationReturnType = Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | SdJwtVcRecord | W3cCredentialRecord>
+export type NotificationReturnType = Array<
+  BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification | SdJwtVcRecord | W3cCredentialRecord
+>
 
-export const useNotifications = ({ openIDUri } : NotificationsInputProps): NotificationReturnType => {
+export const useNotifications = ({ openIDUri }: NotificationsInputProps): NotificationReturnType => {
   const { records: basicMessages } = useBasicMessages()
-  const [notifications, setNotifications] = useState<NotificationReturnType>(
-    []
-  )
+  const [notifications, setNotifications] = useState<NotificationReturnType>([])
 
   const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsRequested = useProofByState(ProofState.RequestReceived)
-  const openIDCredsRecieved = useOpenID({openIDUri: openIDUri})
+  const openIDCredsRecieved = useOpenID({ openIDUri: openIDUri })
 
   useEffect(() => {
     // get all unseen messages
@@ -74,10 +75,10 @@ export const useNotifications = ({ openIDUri } : NotificationsInputProps): Notif
     setNotifications(notif)
   }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone])
 
-  useEffect(()=> {
-    if(openIDCredsRecieved) {
+  useEffect(() => {
+    if (openIDCredsRecieved) {
       setNotifications([openIDCredsRecieved])
-    } 
+    }
   }, [openIDCredsRecieved])
 
   return notifications
