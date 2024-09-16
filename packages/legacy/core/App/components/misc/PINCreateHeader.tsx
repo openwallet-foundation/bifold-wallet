@@ -6,7 +6,7 @@ export interface PINCreateHeaderProps {
   updatePin?: boolean
 }
 
-const PINCreateHeader: React.FC<PINCreateHeaderProps> = ({ updatePin }) => {
+const PINCreateHeader = ({ updatePin }: PINCreateHeaderProps) => {
   const { TextTheme } = useTheme()
   const { t } = useTranslation()
   return (
