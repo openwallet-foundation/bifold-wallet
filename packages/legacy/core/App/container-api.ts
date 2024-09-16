@@ -22,6 +22,7 @@ import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 import { CustomNotification, CustomNotificationRecord } from './types/notification'
 import { Config } from './types/config'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
+import { PINCreateHeaderProps } from 'components/misc/PINCreateHeader'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -55,6 +56,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_HOME_FOOTER: 'component.home.footer',
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
   COMPONENT_RECORD: 'component.record',
+  COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -156,6 +158,7 @@ export type TokenMapping = {
   }
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
+  [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BaseLogger
@@ -164,7 +167,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
-  [TOKENS.HISTORY_ENABLED]: boolean,
+  [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
