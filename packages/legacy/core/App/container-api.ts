@@ -22,7 +22,7 @@ import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 import { CustomNotification, CustomNotificationRecord } from './types/notification'
 import { Config } from './types/config'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
-import { PINCreateHeaderProps } from 'components/misc/PINCreateHeader'
+import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
