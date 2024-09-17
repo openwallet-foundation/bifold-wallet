@@ -61,14 +61,17 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
 
-
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [{ PINSecurity }, Button] = useServices([TOKENS.CONFIG, TOKENS.COMP_BUTTON])
+  const [PINCreateHeader, { PINSecurity }, Button] = useServices([
+    TOKENS.COMPONENT_PIN_CREATE_HEADER,
+    TOKENS.CONFIG,
+    TOKENS.COMP_BUTTON,
+  ])
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)
@@ -160,12 +163,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-            <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>
-              {updatePin ? t('PINCreate.RememberChangePIN') : t('PINCreate.RememberPIN')}
-            </Text>{' '}
-            {t('PINCreate.PINDisclaimer')}
-          </Text>
+          <PINCreateHeader updatePin={updatePin} />
           {updatePin && (
             <PINInput
               label={t('PINCreate.EnterOldPINTitle')}
