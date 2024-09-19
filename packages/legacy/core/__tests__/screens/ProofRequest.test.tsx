@@ -224,7 +224,7 @@ describe('displays a proof request screen', () => {
       })
 
       const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
-      const recordLoading = tree.getByTestId(testIdWithKey('RecordLoading'))
+      const recordLoading = tree.getByTestId(testIdWithKey('ProofRequestLoading'))
 
       expect(recordLoading).not.toBeNull()
       expect(cancelButton).not.toBeNull()
