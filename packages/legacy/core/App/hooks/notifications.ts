@@ -34,10 +34,9 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
 
   const { records: basicMessages } = useBasicMessages()
-  const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
-  const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const offers = useCredentialByState(CredentialState.OfferReceived)
+  const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const proofsRequested = useProofByState(ProofState.RequestReceived)
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri })
 

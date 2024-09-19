@@ -81,8 +81,10 @@ describe('ProofRequestDetails Screen', () => {
     )
   }
 
-  test('Proof bundle resolver works correctly', async () => {
+  test.only('Proof bundle resolver works correctly', async () => {
     const context = new MainContainer(container.createChildContainer()).init()
+    // const context = useMemo(() => new MainContainer(container.createChildContainer()).init(), [])
+
     const wrapper = ({ children }: PropsWithChildren) => (
       <ContainerProvider value={context}>{children}</ContainerProvider>
     )

@@ -18,11 +18,16 @@ import {
   OutOfBandInvitation,
   OutOfBandRole,
   OutOfBandState,
+  OutOfBandRequest,
   OutOfBandDidCommService,
   Attachment,
+  Agent,
+  AgentMessage,
 } from '@credo-ts/core'
+import React, { useMemo } from 'react'
+import { log } from 'console'
 
-// This is the test data set that is used to mock
+// This is the test data set thatd is used to mock
 // the react hooks. Use `uuidgen | tr '[:upper:]' '[:lower:]'`
 // to generate new UUIDs.
 // To create a new "transaction":
@@ -57,6 +62,56 @@ import {
 // services: Array<OutOfBandDidCommService | string>
 // imageUrl?: string
 // appendedAttachments?: Attachment[]
+
+const oobForProofNoConnection = new OutOfBandRecord({
+  id: '548ee21c-5b98-4eeb-8fe0-5a5019a5f4a5',
+  createdAt: new Date('2024-09-05T18:56:08.454Z'),
+  autoAcceptConnection: true,
+  outOfBandInvitation: new OutOfBandInvitation({
+    id: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
+    handshakeProtocols: [],
+    services: [
+      new OutOfBandDidCommService({
+        id: 'e6b8315d-ef44-4f64-9a2b-b994ecd8c2d4',
+        serviceEndpoint: 'https://vc-authn-oidc-agent-test.apps.silver.devops.gov.bc.ca',
+        recipientKeys: ['did:key:z6Mkn7npqdZrsdyrakARurzW67MEjYjJCtWeNU2MvF2h5dor'],
+        routingKeys: [],
+      }),
+    ],
+    appendedAttachments: [
+      new Attachment({
+        id: '9641549a-59ce-4cd1-b96f-559aa1752c72',
+        mimeType: 'application/json',
+        data: {
+          base64:
+            'eyJAaWQiOiJkYmM1N2MzNy02M2I4LTQwZWQtYmIxNC00YjU4ZTg2ZGI0ZWMiLCJAdHlwZSI6ImRpZDpzb3Y6QnpDYnNOWWhNcmpIaXFaRFRVQVNIZztzcGVjL3ByZXNlbnQtcHJvb2YvMS4wL3JlcXVlc3QtcHJlc2VudGF0aW9uIiwicmVxdWVzdF9wcmVzZW50YXRpb25zfmF0dGFjaCI6W3siQGlkIjoibGliaW5keS1yZXF1ZXN0LXByZXNlbnRhdGlvbi0wIiwibWltZS10eXBlIjoiYXBwbGljYXRpb24vanNvbiIsImRhdGEiOnsiYmFzZTY0IjoiZXlKdWIyNWpaU0k2SUNJeE9Ea3pPVEE0TURZNE9USTRNRFEyTVRZNU5UYzVJaXdnSW01aGJXVWlPaUFpY0hKdmIyWmZjbVZ4ZFdWemRHVmtJaXdnSW5abGNuTnBiMjRpT2lBaU1DNHdMakVpTENBaWNtVnhkV1Z6ZEdWa1gyRjBkSEpwWW5WMFpYTWlPaUI3SW5KbGNWOWhkSFJ5WHpBaU9pQjdJbTVoYldWeklqb2dXeUpRVUVsRUlpd2dJa2RwZG1WdUlFNWhiV1VpTENBaVUzVnlibUZ0WlNJc0lDSk5aVzFpWlhJZ1UzUmhkSFZ6SWl3Z0lrMWxiV0psY2lCVGRHRjBkWE1nUTI5a1pTSmRMQ0FpY21WemRISnBZM1JwYjI1eklqb2dXM3NpYzJOb1pXMWhYMjVoYldVaU9pQWlUV1Z0WW1WeUlFTmxjblJwWm1sallYUmxJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpFdU1DNHhJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlSRnBDWVVobmFFdHpWa2hqU205cGQydDVhMGN6Y2lKOUxDQjdJbk5qYUdWdFlWOXVZVzFsSWpvZ0lrMWxiV0psY2lCRFlYSmtJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpFdU5TNHhJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlRWFZLY21sblMxRkhVa3hLWVdwTFFXVmlWR2RYZFNKOUxDQjdJbk5qYUdWdFlWOXVZVzFsSWpvZ0lrMWxiV0psY2lCRFlYSmtJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpFdU5TNHhJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlOSGhGTmpoaU5sTTFWbEpHY2t0TlRVY3hWVGsxVFNKOVhTd2dJbTV2Ymw5eVpYWnZhMlZrSWpvZ2V5Sm1jbTl0SWpvZ01UY3lOVFUyTWpVMU1pd2dJblJ2SWpvZ01UY3lOVFUyTWpVMU1uMTlMQ0FpY21WeFgyRjBkSEpmTVNJNklIc2libUZ0WlhNaU9pQmJJbVpoYldsc2VWOXVZVzFsSWl3Z0ltZHBkbVZ1WDI1aGJXVnpJbDBzSUNKeVpYTjBjbWxqZEdsdmJuTWlPaUJiZXlKelkyaGxiV0ZmYm1GdFpTSTZJQ0pRWlhKemIyNGlMQ0FpYzJOb1pXMWhYM1psY25OcGIyNGlPaUFpTVM0d0lpd2dJbWx6YzNWbGNsOWthV1FpT2lBaVMwTjRWa000UjJ0TGVYZHFhRmRLYmxWbVEyMXJWeUo5TENCN0luTmphR1Z0WVY5dVlXMWxJam9nSW5WdWRtVnlhV1pwWldSZmNHVnljMjl1SWl3Z0luTmphR1Z0WVY5MlpYSnphVzl1SWpvZ0lqQXVNUzR3SWl3Z0ltbHpjM1ZsY2w5a2FXUWlPaUFpV0ZwUmNIbGhSbUU1YUVKVlpFcFlaa3RJVlhaV1p5SjlMQ0I3SW5OamFHVnRZVjl1WVcxbElqb2dJblZ1ZG1WeWFXWnBaV1JmY0dWeWMyOXVJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpBdU1TNHdJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlTRlJyYUdoRFZ6RmlRVmhYYm5oRE1YVXpXVlp2WVNKOUxDQjdJbk5qYUdWdFlWOXVZVzFsSWpvZ0luVnVkbVZ5YVdacFpXUmZjR1Z5YzI5dUlpd2dJbk5qYUdWdFlWOTJaWEp6YVc5dUlqb2dJakF1TkM0d0lpd2dJbWx6YzNWbGNsOWthV1FpT2lBaU9GbHhOMFZvUzBKTmRXcG9NalZPYTB4SFIySXlkQ0o5TENCN0luTmphR1Z0WVY5dVlXMWxJam9nSWxCbGNuTnZiaUlzSUNKelkyaGxiV0ZmZG1WeWMybHZiaUk2SUNJeExqQWlMQ0FpYVhOemRXVnlYMlJwWkNJNklDSlNSMnBYWWxjeFpYbGpVRGRHY2sxbU5GRktkbGc0SW4xZExDQWlibTl1WDNKbGRtOXJaV1FpT2lCN0ltWnliMjBpT2lBeE56STFOVFl5TlRVeUxDQWlkRzhpT2lBeE56STFOVFl5TlRVeWZYMTlMQ0FpY21WeGRXVnpkR1ZrWDNCeVpXUnBZMkYwWlhNaU9pQjdmWDA9In19XSwiY29tbWVudCI6bnVsbH0',
+        },
+      }),
+    ],
+  }),
+  tags: {
+    //xxx
+    invitationId: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
+    // invitationRequestsThreadIds: ['dbc57c37-63b8-40ed-bb14-4b58e86db4ec'],
+    recipientKeyFingerprints: ['z6Mkn7npqdZrsdyrakARurzW67MEjYjJCtWeNU2MvF2h5dor'],
+    role: 'receiver',
+    state: 'prepare-response',
+    threadId: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
+  },
+  reusable: false,
+  role: OutOfBandRole.Receiver,
+  state: OutOfBandState.PrepareResponse,
+  updatedAt: new Date('2024-09-05T18:56:08.530Z'),
+})
+
+const message = new AgentMessage()
+message.setThread({
+  // This will become an invitationRequestsThreadId which matches the
+  // connectionless proof request to the OOB record.
+  threadId: 'dbc57c37-63b8-40ed-bb14-4b58e86db4ec',
+})
+
+oobForProofNoConnection.outOfBandInvitation.addRequest(message)
 
 const mockOobRecords = [
   new OutOfBandRecord({
@@ -129,45 +184,7 @@ const mockOobRecords = [
     state: OutOfBandState.PrepareResponse,
     updatedAt: new Date('2024-09-04T18:50:27.404Z'),
   }),
-  new OutOfBandRecord({
-    id: '548ee21c-5b98-4eeb-8fe0-5a5019a5f4a5',
-    createdAt: new Date('2024-09-05T18:56:08.454Z'),
-    autoAcceptConnection: true,
-    outOfBandInvitation: new OutOfBandInvitation({
-      id: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
-      handshakeProtocols: [],
-      services: [
-        new OutOfBandDidCommService({
-          id: 'e6b8315d-ef44-4f64-9a2b-b994ecd8c2d4',
-          serviceEndpoint: 'https://vc-authn-oidc-agent-test.apps.silver.devops.gov.bc.ca',
-          recipientKeys: ['did:key:z6Mkn7npqdZrsdyrakARurzW67MEjYjJCtWeNU2MvF2h5dor'],
-          routingKeys: [],
-        }),
-      ],
-      appendedAttachments: [
-        new Attachment({
-          id: '9641549a-59ce-4cd1-b96f-559aa1752c72',
-          mimeType: 'application/json',
-          data: {
-            base64:
-              'eyJAaWQiOiJkYmM1N2MzNy02M2I4LTQwZWQtYmIxNC00YjU4ZTg2ZGI0ZWMiLCJAdHlwZSI6ImRpZDpzb3Y6QnpDYnNOWWhNcmpIaXFaRFRVQVNIZztzcGVjL3ByZXNlbnQtcHJvb2YvMS4wL3JlcXVlc3QtcHJlc2VudGF0aW9uIiwicmVxdWVzdF9wcmVzZW50YXRpb25zfmF0dGFjaCI6W3siQGlkIjoibGliaW5keS1yZXF1ZXN0LXByZXNlbnRhdGlvbi0wIiwibWltZS10eXBlIjoiYXBwbGljYXRpb24vanNvbiIsImRhdGEiOnsiYmFzZTY0IjoiZXlKdWIyNWpaU0k2SUNJeE9Ea3pPVEE0TURZNE9USTRNRFEyTVRZNU5UYzVJaXdnSW01aGJXVWlPaUFpY0hKdmIyWmZjbVZ4ZFdWemRHVmtJaXdnSW5abGNuTnBiMjRpT2lBaU1DNHdMakVpTENBaWNtVnhkV1Z6ZEdWa1gyRjBkSEpwWW5WMFpYTWlPaUI3SW5KbGNWOWhkSFJ5WHpBaU9pQjdJbTVoYldWeklqb2dXeUpRVUVsRUlpd2dJa2RwZG1WdUlFNWhiV1VpTENBaVUzVnlibUZ0WlNJc0lDSk5aVzFpWlhJZ1UzUmhkSFZ6SWl3Z0lrMWxiV0psY2lCVGRHRjBkWE1nUTI5a1pTSmRMQ0FpY21WemRISnBZM1JwYjI1eklqb2dXM3NpYzJOb1pXMWhYMjVoYldVaU9pQWlUV1Z0WW1WeUlFTmxjblJwWm1sallYUmxJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpFdU1DNHhJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlSRnBDWVVobmFFdHpWa2hqU205cGQydDVhMGN6Y2lKOUxDQjdJbk5qYUdWdFlWOXVZVzFsSWpvZ0lrMWxiV0psY2lCRFlYSmtJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpFdU5TNHhJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlRWFZLY21sblMxRkhVa3hLWVdwTFFXVmlWR2RYZFNKOUxDQjdJbk5qYUdWdFlWOXVZVzFsSWpvZ0lrMWxiV0psY2lCRFlYSmtJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpFdU5TNHhJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlOSGhGTmpoaU5sTTFWbEpHY2t0TlRVY3hWVGsxVFNKOVhTd2dJbTV2Ymw5eVpYWnZhMlZrSWpvZ2V5Sm1jbTl0SWpvZ01UY3lOVFUyTWpVMU1pd2dJblJ2SWpvZ01UY3lOVFUyTWpVMU1uMTlMQ0FpY21WeFgyRjBkSEpmTVNJNklIc2libUZ0WlhNaU9pQmJJbVpoYldsc2VWOXVZVzFsSWl3Z0ltZHBkbVZ1WDI1aGJXVnpJbDBzSUNKeVpYTjBjbWxqZEdsdmJuTWlPaUJiZXlKelkyaGxiV0ZmYm1GdFpTSTZJQ0pRWlhKemIyNGlMQ0FpYzJOb1pXMWhYM1psY25OcGIyNGlPaUFpTVM0d0lpd2dJbWx6YzNWbGNsOWthV1FpT2lBaVMwTjRWa000UjJ0TGVYZHFhRmRLYmxWbVEyMXJWeUo5TENCN0luTmphR1Z0WVY5dVlXMWxJam9nSW5WdWRtVnlhV1pwWldSZmNHVnljMjl1SWl3Z0luTmphR1Z0WVY5MlpYSnphVzl1SWpvZ0lqQXVNUzR3SWl3Z0ltbHpjM1ZsY2w5a2FXUWlPaUFpV0ZwUmNIbGhSbUU1YUVKVlpFcFlaa3RJVlhaV1p5SjlMQ0I3SW5OamFHVnRZVjl1WVcxbElqb2dJblZ1ZG1WeWFXWnBaV1JmY0dWeWMyOXVJaXdnSW5OamFHVnRZVjkyWlhKemFXOXVJam9nSWpBdU1TNHdJaXdnSW1semMzVmxjbDlrYVdRaU9pQWlTRlJyYUdoRFZ6RmlRVmhYYm5oRE1YVXpXVlp2WVNKOUxDQjdJbk5qYUdWdFlWOXVZVzFsSWpvZ0luVnVkbVZ5YVdacFpXUmZjR1Z5YzI5dUlpd2dJbk5qYUdWdFlWOTJaWEp6YVc5dUlqb2dJakF1TkM0d0lpd2dJbWx6YzNWbGNsOWthV1FpT2lBaU9GbHhOMFZvUzBKTmRXcG9NalZPYTB4SFIySXlkQ0o5TENCN0luTmphR1Z0WVY5dVlXMWxJam9nSWxCbGNuTnZiaUlzSUNKelkyaGxiV0ZmZG1WeWMybHZiaUk2SUNJeExqQWlMQ0FpYVhOemRXVnlYMlJwWkNJNklDSlNSMnBYWWxjeFpYbGpVRGRHY2sxbU5GRktkbGc0SW4xZExDQWlibTl1WDNKbGRtOXJaV1FpT2lCN0ltWnliMjBpT2lBeE56STFOVFl5TlRVeUxDQWlkRzhpT2lBeE56STFOVFl5TlRVeWZYMTlMQ0FpY21WeGRXVnpkR1ZrWDNCeVpXUnBZMkYwWlhNaU9pQjdmWDA9In19XSwiY29tbWVudCI6bnVsbH0',
-          },
-        }),
-      ],
-    }),
-    tags: {
-      invitationId: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
-      invitationRequestsThreadIds: ['dbc57c37-63b8-40ed-bb14-4b58e86db4ec'],
-      recipientKeyFingerprints: ['z6Mkn7npqdZrsdyrakARurzW67MEjYjJCtWeNU2MvF2h5dor'],
-      role: 'receiver',
-      state: 'prepare-response',
-      threadId: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
-    },
-    reusable: false,
-    role: OutOfBandRole.Receiver,
-    state: OutOfBandState.PrepareResponse,
-    updatedAt: new Date('2024-09-05T18:56:08.530Z'),
-  }),
+  oobForProofNoConnection,
   new OutOfBandRecord({
     id: '27cfe0f6-253d-4105-a87e-2d8b1b0234c3',
     createdAt: new Date('2024-09-01T21:12:12.014Z'),
@@ -217,6 +234,7 @@ const mockOobRecords = [
     updatedAt: new Date('2024-09-06T18:50:27.404Z'),
   }),
 ]
+
 const mockConnectionRecords = [
   new ConnectionRecord({
     // Offer
@@ -403,6 +421,10 @@ const mockCredentialModule = {
   findAllByQuery: jest.fn().mockReturnValue(Promise.resolve([])),
 }
 
+// const useProofByState = jest.fn().mockImplementation((state: string) => {
+//   return useMemo(() => mockProofRecords.filter((proof) => proof.state === state), [state])
+// })
+
 const useProofByState = jest.fn().mockReturnValue(mockProofRecords)
 const useBasicMessagesByConnectionId = jest.fn().mockReturnValue([] as BasicMessageRecord[])
 const useBasicMessages = jest.fn().mockReturnValue(mockBasicMessages)
@@ -474,8 +496,9 @@ const useConnections = jest.fn().mockReturnValue(usedConnections)
 
 const useCredentials = jest.fn().mockReturnValue({ records: [] } as any)
 const useProofs = jest.fn().mockReturnValue({ records: [] } as any)
+
 const useCredentialByState = jest.fn().mockImplementation((state: string) => {
-  return mockCredentialModule.credentials.filter((cred) => cred.state === state)
+  return useMemo(() => mockCredentialModule.credentials.filter((cred) => cred.state === state), [state])
 })
 
 export {

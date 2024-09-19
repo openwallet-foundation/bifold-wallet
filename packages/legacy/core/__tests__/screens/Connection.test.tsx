@@ -69,20 +69,20 @@ describe('Connection Screen', () => {
       </BasicAppContext>
     )
 
-    await waitFor(() => {
-      timeTravel(1000)
-    })
-
     const tree = render(element)
-    // to ensure we're  rendering the correct component
-    const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
 
-    expect(view).not.toBeNull()
-    expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-line
-    expect(navigation.replace).toBeCalledTimes(0)
-    expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
+    await act(async () => {
+      timeTravel(1000)
+
+      const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
+
+      expect(view).not.toBeNull()
+      expect(tree).toMatchSnapshot()
+      expect(navigation.navigate).toBeCalledTimes(0)
+      // @ts-ignore-next-line
+      expect(navigation.replace).toBeCalledTimes(0)
+      expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
+    })
   })
 
   test('Connection, no goal code navigation to chat', async () => {
