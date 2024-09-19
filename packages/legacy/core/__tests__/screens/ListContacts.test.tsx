@@ -40,8 +40,6 @@ describe('ListContacts Screen', () => {
       </BasicAppContext>
     )
 
-    // await waitFor(() => {})
-
     await waitFor(async () => {
       const connectionRecord = await findByText('BestBC Tea', { exact: true })
       fireEvent(connectionRecord, 'press')

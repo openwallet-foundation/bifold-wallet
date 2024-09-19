@@ -55,9 +55,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const notifications = useNotifications({ openIDUri: openIDUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
-  console.log('********************************** o', oobRecord)
-  console.log('********************************** c1', connection)
-
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,
