@@ -38,6 +38,7 @@ const OnboardingStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
+  const [{ disableOnboardingSkip }] = useServices([TOKENS.CONFIG])
 
   const onAuthenticated = (status: boolean): void => {
     if (!status) {
@@ -54,7 +55,7 @@ const OnboardingStack: React.FC = () => {
       <Onboarding
         nextButtonText={t('Global.Next')}
         previousButtonText={t('Global.Back')}
-        disableSkip={true}
+        disableSkip={disableOnboardingSkip}
         pages={pages(onTutorialCompleted, OnboardingTheme)}
         style={carousel}
       />
