@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native'
+import { fireEvent, render, waitFor, act } from '@testing-library/react-native'
 import React from 'react'
 import { container } from 'tsyringe'
 
@@ -17,6 +17,7 @@ const navigation = testUseNavigation()
 
 describe('ListContacts Screen', () => {
   beforeEach(() => {
+    jest.clearAllTimers()
     jest.clearAllMocks()
   })
 
@@ -38,6 +39,8 @@ describe('ListContacts Screen', () => {
         <ListContacts navigation={navigation as any} />
       </BasicAppContext>
     )
+
+    // await waitFor(() => {})
 
     await waitFor(async () => {
       const connectionRecord = await findByText('BestBC Tea', { exact: true })

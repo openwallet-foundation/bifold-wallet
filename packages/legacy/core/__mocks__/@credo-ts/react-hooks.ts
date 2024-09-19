@@ -353,6 +353,7 @@ const mockProofRecords = [
     },
   }),
 ] as ProofExchangeRecord[]
+
 const mockBasicMessages = {
   records: [
     new BasicMessageRecord({
@@ -439,7 +440,7 @@ const mockProofModule = {
   findAllByQuery: jest.fn().mockReturnValue(Promise.resolve([])),
 }
 const mockBasicMessagesModule = {
-  findAllByQuery: jest.fn().mockReturnValue(Promise.resolve(mockBasicMessages)),
+  findAllByQuery: jest.fn().mockReturnValue(Promise.resolve([])),
 }
 const mockConnectionsModule = {
   getAll: jest.fn().mockReturnValue(Promise.resolve(mockConnectionRecords)),
