@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleProp, ViewStyle, View, StyleSheet, Animated } from 'react-native'
+import { ViewStyle, View, StyleSheet, Animated } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'

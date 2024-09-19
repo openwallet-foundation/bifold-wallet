@@ -8,7 +8,7 @@ export type ProgressBarProps = {
   progressColor?: string
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progressPercent, backgroundColor, progressColor }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ progressPercent }) => {
   const { ColorPallet } = useTheme()
   const { width: windowWidth } = useWindowDimensions()
   const [progressBarScale] = useState(new Animated.Value(0))

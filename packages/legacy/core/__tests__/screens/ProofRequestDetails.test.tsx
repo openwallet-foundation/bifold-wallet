@@ -81,7 +81,7 @@ describe('ProofRequestDetails Screen', () => {
     )
   }
 
-  test.only('Proof bundle resolver works correctly', async () => {
+  test('Proof bundle resolver works correctly', async () => {
     const context = new MainContainer(container.createChildContainer()).init()
     // const context = useMemo(() => new MainContainer(container.createChildContainer()).init(), [])
 

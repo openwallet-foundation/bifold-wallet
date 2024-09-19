@@ -18,14 +18,11 @@ import {
   OutOfBandInvitation,
   OutOfBandRole,
   OutOfBandState,
-  OutOfBandRequest,
   OutOfBandDidCommService,
   Attachment,
-  Agent,
   AgentMessage,
 } from '@credo-ts/core'
-import React, { useMemo } from 'react'
-import { log } from 'console'
+import { useMemo } from 'react'
 
 // This is the test data set thatd is used to mock
 // the react hooks. Use `uuidgen | tr '[:upper:]' '[:lower:]'`

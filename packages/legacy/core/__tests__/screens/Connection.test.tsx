@@ -94,7 +94,7 @@ describe('Connection Screen', () => {
       </BasicAppContext>
     )
 
-    const tree = render(element)
+    render(element)
 
     await waitFor(() => {
       timeTravel(1000)
@@ -191,7 +191,7 @@ describe('Connection Screen', () => {
       </BasicAppContext>
     )
 
-    const tree = render(element)
+    render(element)
 
     await waitFor(() => {
       timeTravel(1000)

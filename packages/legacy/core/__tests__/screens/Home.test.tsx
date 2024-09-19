@@ -1,16 +1,6 @@
-import {
-  BasicMessageRecord,
-  BasicMessageRole,
-  CredentialExchangeRecord as CredentialRecord,
-  CredentialRole,
-  CredentialState,
-  ProofExchangeRecord,
-  ProofRole,
-  ProofState,
-} from '@credo-ts/core'
+import { BasicMessageRecord, CredentialExchangeRecord as CredentialRecord, ProofExchangeRecord } from '@credo-ts/core'
 import { useNavigation } from '@react-navigation/native'
-import { fireEvent, render, waitFor, act } from '@testing-library/react-native'
-// import { useAgent } from '@credo-ts/react-hooks'
+import { fireEvent, render, act } from '@testing-library/react-native'
 
 import React, { useMemo } from 'react'
 
@@ -18,7 +8,6 @@ import React, { useMemo } from 'react'
 import Home from '../../App/screens/Home'
 import { testIdWithKey } from '../../App/utils/testable'
 import { BasicAppContext } from '../helpers/app'
-import timeTravel from '../helpers/timetravel'
 
 import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
 
