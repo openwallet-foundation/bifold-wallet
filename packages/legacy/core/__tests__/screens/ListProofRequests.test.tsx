@@ -18,7 +18,7 @@ jest.spyOn(global, 'setTimeout')
 
 const navigation = testUseNavigation()
 
-describe.skip('ListProofRequests Component', () => {
+describe('ListProofRequests Component', () => {
   const renderView = (params?: any) => {
     return render(
       <BasicAppContext>
