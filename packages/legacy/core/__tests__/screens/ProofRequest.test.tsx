@@ -215,7 +215,7 @@ describe('displays a proof request screen', () => {
     test('loading screen displays', async () => {
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -242,7 +242,7 @@ describe('displays a proof request screen', () => {
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -388,7 +388,7 @@ describe('displays a proof request screen', () => {
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={navigation as any} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -449,7 +449,7 @@ describe('displays a proof request screen', () => {
       })
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -493,7 +493,7 @@ describe('displays a proof request screen', () => {
 
       const { getByText, getByTestId } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 

@@ -9,6 +9,7 @@ import { useAnimatedComponents } from '../../contexts/animated-components'
 import InfoTextBox from '../../components/texts/InfoTextBox'
 import { InfoBoxType } from '.././misc/InfoBox'
 import ProgressBar from './ProgressBar'
+import RecordLoading from '../animated/RecordLoading'
 
 type LoadingPlaceholderProps = {
   timeoutDurationInMs?: number
@@ -25,7 +26,6 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
 }) => {
   const { ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
-  const { RecordLoading } = useAnimatedComponents()
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const [overtime, setOvertime] = useState(false)
   const styles = StyleSheet.create({
@@ -113,7 +113,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
           </View>
         </View>
         {onCancelTouched && (
-          <View style={[styles.buttonContainer]}>
+          <View style={styles.buttonContainer}>
             <Button
               title={t('Global.Cancel')}
               accessibilityLabel={t('Global.Cancel')}

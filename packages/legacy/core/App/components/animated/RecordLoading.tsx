@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
-import { ViewStyle, View, StyleSheet, Animated } from 'react-native'
+import { StyleProp, ViewStyle, View, StyleSheet, Animated } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
 type RecordLoadingProps = {
-  style: ViewStyle
+  style?: StyleProp<ViewStyle>
 }
 
 const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {

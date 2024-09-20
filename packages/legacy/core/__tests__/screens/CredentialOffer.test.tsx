@@ -46,10 +46,11 @@ useCredentialById.mockReturnValue(credentialRecord)
 
 describe('CredentialOffer Screen', () => {
   test('renders correctly', async () => {
+    const credentialId = '123'
     const tree = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
@@ -60,10 +61,11 @@ describe('CredentialOffer Screen', () => {
   })
 
   test('shows offer controls', async () => {
+    const credentialId = '123'
     const { getByTestId } = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
@@ -78,10 +80,11 @@ describe('CredentialOffer Screen', () => {
   })
 
   test('accepting a credential', async () => {
+    const credentialId = '123'
     const tree = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
@@ -96,10 +99,11 @@ describe('CredentialOffer Screen', () => {
   })
 
   test('declining a credential', async () => {
+    const credentialId = '123'
     const tree = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
