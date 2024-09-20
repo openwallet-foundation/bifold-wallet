@@ -23,6 +23,7 @@ import { CustomNotification, CustomNotificationRecord } from './types/notificati
 import { Config } from './types/config'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
+import { CredentialListFooterProps } from './types/credential-list-footer'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -72,6 +73,7 @@ export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
   COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
+  COMPONENT_CRED_LIST_FOOTER: 'fn.credListFooter',
 } as const
 
 export const HISTORY_TOKENS = {
@@ -171,6 +173,7 @@ export type TokenMapping = {
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
+  [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
   [TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC

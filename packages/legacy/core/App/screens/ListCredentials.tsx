@@ -20,10 +20,17 @@ import { EmptyListProps } from '../components/misc/EmptyList'
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
-  const [CredentialListOptions, credentialEmptyList, {
-    enableTours: enableToursConfig,
-    credentialHideList,
-  }] = useServices([TOKENS.COMPONENT_CRED_LIST_OPTIONS, TOKENS.COMPONENT_CRED_EMPTY_LIST, TOKENS.CONFIG])
+  const [
+    CredentialListOptions,
+    credentialEmptyList,
+    CredentialListFooter,
+    { enableTours: enableToursConfig, credentialHideList },
+  ] = useServices([
+    TOKENS.COMPONENT_CRED_LIST_OPTIONS,
+    TOKENS.COMPONENT_CRED_EMPTY_LIST,
+    TOKENS.COMPONENT_CRED_LIST_FOOTER,
+    TOKENS.CONFIG,
+  ])
 
   let credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
@@ -82,6 +89,7 @@ const ListCredentials: React.FC = () => {
           )
         }}
         ListEmptyComponent={() => <CredentialEmptyList message={t('Credentials.EmptyList')} />}
+        ListFooterComponent={() => <CredentialListFooter credentialsCount={credentials.length} />}
       />
       <CredentialListOptions />
     </View>
