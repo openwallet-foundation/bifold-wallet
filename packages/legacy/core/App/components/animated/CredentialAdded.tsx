@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { View, StyleSheet, Animated } from 'react-native'
 
-import CheckInCircle from '../../assets/img/check-in-circle.svg'
-import CredentialCard from '../../assets/img/credential-card.svg'
-import WalletBack from '../../assets/img/wallet-back.svg'
-import WalletFront from '../../assets/img/wallet-front.svg'
+import { useTheme } from '../../contexts/theme'
 
 const CredentialAdded: React.FC = () => {
+  const { Assets } = useTheme()
   const cardFadeAnim = useRef(new Animated.Value(0)).current
   const checkFadeAnim = useRef(new Animated.Value(0)).current
   const tranAnim = useRef(new Animated.Value(-90)).current
@@ -58,14 +56,14 @@ const CredentialAdded: React.FC = () => {
   return (
     <View style={style.container}>
       <Animated.View style={[{ opacity: checkFadeAnim }, style.check]}>
-        <CheckInCircle {...{ height: 45, width: 45 }} />
+        <Assets.svg.checkInCircle {...{ height: 45, width: 45 }} />
       </Animated.View>
       <View>
-        <WalletBack style={style.back} {...{ height: 110, width: 110 }} />
+        <Assets.svg.walletBack style={style.back} {...{ height: 110, width: 110 }} />
         <Animated.View style={{ opacity: cardFadeAnim, transform: [{ translateY: tranAnim }] }}>
-          <CredentialCard style={style.card} {...{ height: 110, width: 110 }} />
+          <Assets.svg.credentialCard style={style.card} {...{ height: 110, width: 110 }} />
         </Animated.View>
-        <WalletFront style={style.front} {...{ height: 140, width: 140 }} />
+        <Assets.svg.walletFront style={style.front} {...{ height: 140, width: 140 }} />
       </View>
     </View>
   )

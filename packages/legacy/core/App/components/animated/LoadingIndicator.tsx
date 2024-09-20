@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { View, StyleSheet, Animated, Image } from 'react-native'
 
-import ActivityIndicator from '../../assets/img/activity-indicator-circle.svg'
+
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -40,7 +40,7 @@ const LoadingIndicator: React.FC = () => {
         testID={testIdWithKey('LoadingActivityIndicatorImage')}
       />
       <Animated.View style={[style.animation, { transform: [{ rotate: rotation }] }]}>
-        <ActivityIndicator {...imageDisplayOptions} />
+        <Assets.svg.activityIndicator {...imageDisplayOptions} />
       </Animated.View>
     </View>
   )

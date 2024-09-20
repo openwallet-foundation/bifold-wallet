@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next'
 import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import InformationReceived from '../assets/img/information-received.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useStore } from '../contexts/store'
@@ -45,7 +44,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   senderReview,
 }: VerifiedProofProps) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
   const [store] = useStore()
 
   const styles = StyleSheet.create({
@@ -167,7 +166,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.iconContainer}>
-            <InformationReceived></InformationReceived>
+            <Assets.svg.informationReceived />
           </View>
           <Text>
             <Text style={styles.headerTitle}>{t('Verifier.InformationReceived') + ' '}</Text>

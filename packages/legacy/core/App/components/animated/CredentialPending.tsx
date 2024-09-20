@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { View, StyleSheet, Animated } from 'react-native'
 
-import CredentialCard from '../../assets/img/credential-card.svg'
-import WalletBack from '../../assets/img/wallet-back.svg'
-import WalletFront from '../../assets/img/wallet-front.svg'
+import { useTheme } from '../../contexts/theme'
+
 
 const CredentialPending: React.FC = () => {
+  const { Assets } = useTheme()
   const fadeAnim = useRef(new Animated.Value(0)).current
   const tranAnim = useRef(new Animated.Value(-90)).current
   const slideTiming: Animated.TimingAnimationConfig = {
@@ -49,11 +49,11 @@ const CredentialPending: React.FC = () => {
 
   return (
     <View style={style.container}>
-      <WalletBack style={style.back} {...{ height: 110, width: 110 }} />
+      <Assets.svg.walletBack style={style.back} {...{ height: 110, width: 110 }} />
       <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: tranAnim }] }}>
-        <CredentialCard style={style.card} {...{ height: 110, width: 110 }} />
+        <Assets.svg.credentialCard style={style.card} {...{ height: 110, width: 110 }} />
       </Animated.View>
-      <WalletFront style={style.front} {...{ height: 140, width: 140 }} />
+      <Assets.svg.walletFront style={style.front} {...{ height: 140, width: 140 }} />
     </View>
   )
 }
