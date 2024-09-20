@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import { View, StyleSheet, Animated } from 'react-native'
 
-import ActivityIndicator from '../../assets/img/activity-indicator-circle.svg'
-import ChatLoading from '../../assets/img/chat-loading.svg'
 import { useTheme } from '../../contexts/theme'
 
 const PresentationLoading: React.FC = () => {
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0)).current
   const timing: Animated.TimingAnimationConfig = {
     toValue: 1,
@@ -42,9 +40,9 @@ const PresentationLoading: React.FC = () => {
 
   return (
     <View style={style.container}>
-      <ChatLoading style={style.animation} {...displayOptions} />
+      <Assets.svg.chatLoading style={style.animation} {...displayOptions} />
       <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-        <ActivityIndicator {...animatedCircleDisplayOptions} />
+        <Assets.svg.activityIndicator {...animatedCircleDisplayOptions} />
       </Animated.View>
     </View>
   )

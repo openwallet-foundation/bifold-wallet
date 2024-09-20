@@ -7,13 +7,14 @@ import { SvgProps } from 'react-native-svg'
 
 import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
-import SecureImage from '../assets/img/secure-image.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { GenericFn } from '../types/fn'
 import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+
+import { useTheme } from '../contexts/theme'
 
 import { OnboardingStyleSheet } from './Onboarding'
 
@@ -87,6 +88,7 @@ const createImageDisplayOptions = (OnboardingTheme: any) => {
 }
 
 const CustomPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
+  const { Assets } = useTheme()
   const { t } = useTranslation()
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
@@ -94,7 +96,7 @@ const CustomPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
     <>
       <ScrollView style={{ padding: 20 }}>
         <View style={{ alignItems: 'center' }}>
-          <SecureImage {...imageDisplayOptions} />
+          <Assets.svg.secureImage {...imageDisplayOptions} />
         </View>
         <View style={{ marginBottom: 20 }}>
           <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
