@@ -42,6 +42,7 @@ import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
+import PINCreateHeader from './components/misc/PINCreateHeader'
 
 export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -77,6 +78,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
     this._container.registerInstance(TOKENS.SCREEN_SPLASH, Splash)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_PAGES, OnboardingPages)
+    this._container.registerInstance(TOKENS.COMPONENT_PIN_CREATE_HEADER, PINCreateHeader)
     this._container.registerInstance(TOKENS.SCREEN_USE_BIOMETRY, UseBiometry)
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
