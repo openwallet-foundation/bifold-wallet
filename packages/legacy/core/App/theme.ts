@@ -34,12 +34,12 @@ import SecureImage from './assets/img/secure-image.svg'
 import InformationReceived from './assets/img/information-received.svg'
 import PushNotificationImg from './assets/img/push-notifications.svg'
 import ChatLoading from './assets/img/chat-loading.svg'
-import HistoryCardAcceptedIcon from '../assets/img/HistoryCardAcceptedIcon.svg'
-import HistoryCardExpiredIcon from '../assets/img/HistoryCardExpiredIcon.svg'
-import HistoryCardRevokedIcon from '../assets/img/HistoryCardRevokedIcon.svg'
-import HistoryInformationSentIcon from '../assets/img/HistoryInformationSentIcon.svg'
-import HistoryPinUpdatedIcon from '../assets/img/HistoryPinUpdatedIcon.svg'
-import IconChevronRight from '../assets/img/IconChevronRight.svg'
+import HistoryCardAcceptedIcon from './assets/img/HistoryCardAcceptedIcon.svg'
+import HistoryCardExpiredIcon from './assets/img/HistoryCardExpiredIcon.svg'
+import HistoryCardRevokedIcon from './assets/img/HistoryCardRevokedIcon.svg'
+import HistoryInformationSentIcon from './assets/img/HistoryInformationSentIcon.svg'
+import HistoryPinUpdatedIcon from './assets/img/HistoryPinUpdatedIcon.svg'
+import IconChevronRight from './assets/img/IconChevronRight.svg'
 
 export interface ISVGAssets {
   activityIndicator: React.FC<SvgProps>
