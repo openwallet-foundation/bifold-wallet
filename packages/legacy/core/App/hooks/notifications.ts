@@ -4,6 +4,8 @@ import {
   CredentialState,
   ProofExchangeRecord,
   ProofState,
+  SdJwtVcRecord,
+  W3cCredentialRecord,
 } from '@credo-ts/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
@@ -15,18 +17,27 @@ import {
   basicMessageCustomMetadata,
   credentialCustomMetadata,
 } from '../types/metadata'
+import { useOpenID } from '../modules/openid/hooks/openid'
+import { CustomNotification } from '../types/notification'
 
-export const useNotifications = (): Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord> => {
+export type NotificationsInputProps = {
+  openIDUri?: string
+}
+
+export type NotificationReturnType = Array<
+  BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification | SdJwtVcRecord | W3cCredentialRecord
+>
+
+export const useNotifications = ({ openIDUri }: NotificationsInputProps): NotificationReturnType => {
   const { records: basicMessages } = useBasicMessages()
-  const [notifications, setNotifications] = useState<(BasicMessageRecord | CredentialRecord | ProofExchangeRecord)[]>(
-    []
-  )
+  const [notifications, setNotifications] = useState<NotificationReturnType>([])
 
   const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsRequested = useProofByState(ProofState.RequestReceived)
+  const openIDCredRecieved = useOpenID({ openIDUri: openIDUri })
 
   useEffect(() => {
     // get all unseen messages
@@ -58,11 +69,21 @@ export const useNotifications = (): Array<BasicMessageRecord | CredentialRecord 
       }
     })
 
-    const notif = [...messagesToShow, ...offers, ...proofsRequested, ...validProofsDone, ...revoked].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
+    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord> = []
+    if (openIDCredRecieved) {
+      openIDCreds.push(openIDCredRecieved)
+    }
+
+    const notif = [
+      ...messagesToShow,
+      ...offers,
+      ...proofsRequested,
+      ...validProofsDone,
+      ...revoked,
+      ...openIDCreds,
+    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     setNotifications(notif)
-  }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone])
+  }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone, openIDCredRecieved])
 
   return notifications
 }

@@ -10,6 +10,7 @@ import ProofRequest from '../screens/ProofRequest'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
+import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
@@ -42,6 +43,11 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
+        options={{ title: t('Screens.CredentialOffer') }}
+      />
+      <Stack.Screen
+        name={Screens.OpenIDCredentialDetails}
+        component={OpenIDCredentialDetails}
         options={{ title: t('Screens.CredentialOffer') }}
       />
     </Stack.Navigator>

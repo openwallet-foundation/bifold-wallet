@@ -1,10 +1,4 @@
-import {
-  Agent,
-  BaseLogger,
-  BasicMessageRecord,
-  ProofExchangeRecord,
-  CredentialExchangeRecord as CredentialRecord,
-} from '@credo-ts/core'
+import { Agent, BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -19,8 +13,9 @@ import Onboarding from './screens/Onboarding'
 import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
-import { CustomNotification, CustomNotificationRecord } from './types/notification'
+import { CustomNotification } from './types/notification'
 import { Config } from './types/config'
+import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
 
@@ -151,9 +146,7 @@ export type TokenMapping = {
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.NOTIFICATIONS]: {
-    useNotifications: () => Array<
-      BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotificationRecord
-    >
+    useNotifications: ({ openIDUri }: NotificationsInputProps) => NotificationReturnType
     customNotificationConfig?: CustomNotification
   }
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>

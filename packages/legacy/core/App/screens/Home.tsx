@@ -32,7 +32,7 @@ const Home: React.FC<HomeProps> = () => {
     TOKENS.NOTIFICATIONS,
     TOKENS.NOTIFICATIONS_LIST_ITEM,
   ])
-  const notifications = useNotifications()
+  const notifications = useNotifications({})
   const { t } = useTranslation()
 
   const { ColorPallet } = useTheme()

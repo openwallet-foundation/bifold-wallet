@@ -19,7 +19,7 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.Done),
   ]
   const [{useNotifications}] = useServices([TOKENS.NOTIFICATIONS])
-  const notifications = useNotifications()
+  const notifications = useNotifications({})
   const { HomeTheme, TextTheme } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({

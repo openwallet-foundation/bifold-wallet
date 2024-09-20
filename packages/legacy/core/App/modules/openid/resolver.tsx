@@ -7,7 +7,9 @@ import {
   KeyDidCreateOptions,
   KeyType,
   SdJwtVcRecord,
+  SdJwtVcRepository,
   W3cCredentialRecord,
+  W3cCredentialRepository,
   getJwkFromKey,
 } from '@credo-ts/core'
 import { OpenId4VciCredentialFormatProfile, OpenId4VciCredentialSupportedWithId, OpenId4VciSupportedCredentialFormats } from '@credo-ts/openid4vc'
@@ -151,6 +153,14 @@ export const receiveCredentialFromOpenId4VciOffer = async ({ agent, data, uri }:
   )
 
   setOpenId4VcCredentialMetadata(record, openId4VcMetadata)
-  console.log("$$openID Cred:", JSON.stringify(record))
   return record
+}
+
+
+export async function storeCredential(agent: Agent, credentialRecord: W3cCredentialRecord | SdJwtVcRecord) {
+  if (credentialRecord instanceof W3cCredentialRecord) {
+    await agent.dependencyManager.resolve(W3cCredentialRepository).save(agent.context, credentialRecord)
+  } else {
+    await agent.dependencyManager.resolve(SdJwtVcRepository).save(agent.context, credentialRecord)
+  }
 }
