@@ -37,7 +37,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsRequested = useProofByState(ProofState.RequestReceived)
-  const openIDCredsRecieved = useOpenID({ openIDUri: openIDUri })
+  const openIDCredRecieved = useOpenID({ openIDUri: openIDUri })
 
   useEffect(() => {
     // get all unseen messages
@@ -69,17 +69,21 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
       }
     })
 
-    const notif = [...messagesToShow, ...offers, ...proofsRequested, ...validProofsDone, ...revoked].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
-    setNotifications(notif)
-  }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone])
-
-  useEffect(() => {
-    if (openIDCredsRecieved) {
-      setNotifications([...notifications, openIDCredsRecieved])
+    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord> = []
+    if (openIDCredRecieved) {
+      openIDCreds.push(openIDCredRecieved)
     }
-  }, [openIDCredsRecieved])
+
+    const notif = [
+      ...messagesToShow,
+      ...offers,
+      ...proofsRequested,
+      ...validProofsDone,
+      ...revoked,
+      ...openIDCreds,
+    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    setNotifications(notif)
+  }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone, openIDCredRecieved])
 
   return notifications
 }
