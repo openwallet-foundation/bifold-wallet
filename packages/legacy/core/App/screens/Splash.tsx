@@ -211,6 +211,7 @@ const Splash: React.FC = () => {
           1044
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
       }
     }
 
@@ -339,6 +340,7 @@ const Splash: React.FC = () => {
           1045
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
       }
     }
 
