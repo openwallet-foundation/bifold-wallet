@@ -392,11 +392,9 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                 </View>
                 <View
                   style={
-                    Array [
-                      Object {
-                        "marginVertical": 25,
-                      },
-                    ]
+                    Object {
+                      "marginVertical": 25,
+                    }
                   }
                 >
                   <View
