@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { AppState, Linking, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import PushNotificationImg from '../assets/img/push-notifications.svg'
 // import { setup } from '../utils/PushNotificationsHelper'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -20,7 +19,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPallet, Assets } = useTheme()
   const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const [notificationState, setNotificationState] = useState<boolean>(store.preferences.usePushNotifications)
   const [notificationStatus, setNotificationStatus] = useState<'denied' | 'granted' | 'unknown'>('unknown')
@@ -115,7 +114,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
         <View style={style.screenContainer}>
           {!hasNotificationsDisabled && (
             <View style={style.image}>
-              <PushNotificationImg />
+              <Assets.svg.pushNotificationImg />
             </View>
           )}
           <Text style={[TextTheme.headingThree, style.heading]}>{t('PushNotifications.EnableNotifiactions')}</Text>

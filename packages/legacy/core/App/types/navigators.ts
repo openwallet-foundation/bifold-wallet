@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { CredentialExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
@@ -16,6 +16,7 @@ export enum Screens {
   Credentials = 'Credentials',
   CredentialDetails = 'Credential Details',
   CredentialOffer = 'Credential Offer',
+  OpenIDCredentialDetails = 'Open ID Credential details',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
   ProofRequestUsageHistory = 'Proof Request Usage History',
@@ -168,7 +169,7 @@ export type NotificationStackParams = {
 }
 
 export type DeliveryStackParams = {
-  [Screens.Connection]: { oobRecordId: string }
+  [Screens.Connection]: { oobRecordId: string, openIDUri?: string }
   [Screens.MobileVerifierLoading]: { proofId: string; connectionId: string }
   [Screens.ProofDetails]: { recordId: string }
   [Screens.CredentialOffer]: { credentialId: string }
@@ -176,6 +177,7 @@ export type DeliveryStackParams = {
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
+  [Screens.OpenIDCredentialDetails]: { credential: SdJwtVcRecord | W3cCredentialRecord }
 }
 
 export type HistoryStackParams = {
