@@ -1,4 +1,5 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { ConnectionRecord, CredentialExchangeRecord } from '@credo-ts/core'
+import { useConnectionById, useCredentialById } from '@credo-ts/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
@@ -23,9 +24,13 @@ jest.spyOn(global, 'setTimeout')
 
 const props = { params: { visible: true, credentialId: '123' } }
 
+const connectionPath = path.join(__dirname, '../fixtures/faber-connection.json')
+const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
+
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
 
+const connectionRecord = new ConnectionRecord(connection)
 const credentialRecord = new CredentialExchangeRecord(credential)
 credentialRecord.credentials.push({
   credentialRecordType: 'anoncreds',
@@ -34,6 +39,10 @@ credentialRecord.credentials.push({
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 
+// @ts-expect-error useConnectionById will be replaced with a mock which does have this method
+useConnectionById.mockReturnValue(connectionRecord)
+// @ts-expect-error useCredentialById will be replaced with a mock which does have this method
+useCredentialById.mockReturnValue(credentialRecord)
 
 describe('CredentialOffer Screen', () => {
   test('renders correctly', async () => {

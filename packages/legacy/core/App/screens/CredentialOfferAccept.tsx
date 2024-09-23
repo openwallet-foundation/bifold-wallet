@@ -107,7 +107,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     return () => {
       timer && clearTimeout(timer)
     }
-  }, [timer, timerDidFire, credentialDeliveryStatus, visible, connTimerDelay])
+  }, [timerDidFire, credentialDeliveryStatus, visible, connTimerDelay])
 
   useEffect(() => {
     if (shouldShowDelayMessage && credentialDeliveryStatus !== DeliveryStatus.Completed) {
