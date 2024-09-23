@@ -6,6 +6,8 @@ on:
     paths:
       - 'packages/**'
   workflow_dispatch:
+permissions:
+  contents: write
 env:
   NPM_PKG: '@hyperledger/aries-oca'
   NPM_TAG: 'alpha'
