@@ -5,7 +5,7 @@ import {
   SdJwtVcRecord,
   W3cCredentialRecord,
 } from '@credo-ts/core'
-import { CommonActions, useFocusEffect } from '@react-navigation/native'
+import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useReducer } from 'react'
 import { DeviceEventEmitter, EmitterSubscription, BackHandler, ScrollView, StyleSheet } from 'react-native'
