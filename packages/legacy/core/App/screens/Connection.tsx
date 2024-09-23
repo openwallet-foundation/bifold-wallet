@@ -203,7 +203,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
-  }, [state])
+  }, [state, logger, navigation])
 
   useEffect(() => {
     startTimer()

@@ -252,6 +252,7 @@ const Splash: React.FC = () => {
     store.loginAttempt.lockoutDate,
     navigation,
     t,
+    logger,
   ])
 
   useEffect(() => {
@@ -410,7 +411,7 @@ const Splash: React.FC = () => {
       type: DispatchAction.HISTORY_CAPABILITY,
       payload: [true],
     })
-  }, [mounted, historyEnabled])
+  }, [mounted, historyEnabled, dispatch])
 
   return (
     <SafeAreaView style={styles.container}>

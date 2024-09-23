@@ -194,7 +194,7 @@ const RootStack: React.FC = () => {
 
       return
     }
-  }, [agent, inBackground])
+  }, [agent, inBackground, logger])
 
   useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {

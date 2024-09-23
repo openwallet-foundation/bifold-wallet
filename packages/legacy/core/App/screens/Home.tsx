@@ -69,7 +69,7 @@ const Home: React.FC<HomeProps> = () => {
       component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
     }
     return component
-  }, [customNotification])
+  }, [customNotification, NotificationListItem])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour

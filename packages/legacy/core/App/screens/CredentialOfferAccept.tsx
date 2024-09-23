@@ -76,7 +76,9 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }, [navigation])
 
   useEffect(() => {
-    if(!credential) { return }
+    if (!credential) {
+      return
+    }
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
@@ -88,7 +90,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
     }
-  }, [confirmationOnly])
+  }, [confirmationOnly, timer])
 
   useEffect(() => {
     if (timerDidFire || credentialDeliveryStatus !== DeliveryStatus.Pending || !visible) {
@@ -105,7 +107,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     return () => {
       timer && clearTimeout(timer)
     }
-  }, [timerDidFire, credentialDeliveryStatus, visible, connTimerDelay])
+  }, [timer, timerDidFire, credentialDeliveryStatus, visible, connTimerDelay])
 
   useEffect(() => {
     if (shouldShowDelayMessage && credentialDeliveryStatus !== DeliveryStatus.Completed) {
