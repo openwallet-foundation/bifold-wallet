@@ -32,8 +32,6 @@ export type NotificationReturnType = Array<
 export const useNotifications = ({ openIDUri }: NotificationsInputProps): NotificationReturnType => {
   const { records: basicMessages } = useBasicMessages()
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
-
-  const { records: basicMessages } = useBasicMessages()
   const credsDone = useCredentialByState(CredentialState.Done)
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
