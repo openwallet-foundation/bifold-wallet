@@ -51,7 +51,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-
   const notifications = useNotifications({ openIDUri: openIDUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
@@ -279,6 +278,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           timeoutDurationInMs={connTimerDelay}
           loadingProgressPercent={state.percentComplete}
           onCancelTouched={onDismissModalTouched}
+          onTimeoutTriggered={autoRedirectConnectionToHome ? onDismissModalTouched : undefined}
           testID={testIdWithKey('ConnectionLoading')}
         />
       )

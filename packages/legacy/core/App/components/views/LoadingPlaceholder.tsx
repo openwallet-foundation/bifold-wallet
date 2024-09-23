@@ -14,13 +14,18 @@ type LoadingPlaceholderProps = {
   timeoutDurationInMs?: number
   loadingProgressPercent?: number
   onCancelTouched?: () => void
+  onTimeoutTriggered?: () => void
   testID?: string
 }
+
+// TODO:(jl) Add `AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
+// when the timeout is triggered.
 
 const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   timeoutDurationInMs = 10000,
   loadingProgressPercent = 0,
   onCancelTouched,
+  onTimeoutTriggered,
   testID,
 }) => {
   const { ListItems, TextTheme } = useTheme()
@@ -67,6 +72,9 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
 
     timerRef.current = setTimeout(() => {
       setOvertime(true)
+      if (onTimeoutTriggered) {
+        onTimeoutTriggered()
+      }
     }, timeoutDurationInMs)
 
     return () => {
