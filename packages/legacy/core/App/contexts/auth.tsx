@@ -63,7 +63,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
     DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, err !== undefined)
 
-    if (!secret) {
+    if (!secret?.key) {
+      setWalletSecret(undefined)
       return
     }
 
