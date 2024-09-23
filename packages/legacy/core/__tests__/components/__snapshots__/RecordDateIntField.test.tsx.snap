@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Record DateInt Field Component Invalid dateInt render field value as is 1`] = `
+exports[`RecordDateIntField Component Invalid dateInt render field value as is 1`] = `
 <Text
   style={
     Object {

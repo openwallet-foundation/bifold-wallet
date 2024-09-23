@@ -40,12 +40,7 @@ credentialRecord.credentials.push({
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 
 
-describe('displays a credential offer screen', () => {
-  // @ts-expect-error useConnectionById will be replaced with a mock which does have this method
-  useConnectionById.mockReturnValue(connectionRecord)
-  // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
-  useCredentialById.mockReturnValue(credentialRecord)
-
+describe('CredentialOffer Screen', () => {
   test('renders correctly', async () => {
     const tree = render(
       <BasicAppContext>

@@ -50,7 +50,7 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
 
   const myIcon = () => <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPallet.brand.headerIcon} />
 
-  const myText = () => (text ? <Text style={[style.title]}>{text}</Text> : null)
+  const myText = () => (text ? <Text style={style.title}>{text}</Text> : null)
 
   const layoutForButtonLocation = (buttonLocation: ButtonLocation) => {
     switch (buttonLocation) {

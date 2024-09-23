@@ -96,8 +96,8 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
       <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
-        <Icon style={[styles.icon]} name={iconName} color={iconColor} size={iconSize} />
-        <View style={[styles.textContainer]}>
+        <Icon style={styles.icon} name={iconName} color={iconColor} size={iconSize} />
+        <View style={styles.textContainer}>
           <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
             {title}
           </Text>

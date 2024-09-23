@@ -22,9 +22,10 @@ enum DeliveryStatus {
 export interface CredentialOfferAcceptProps {
   visible: boolean
   credentialId: string
+  confirmationOnly?: boolean
 }
 
-const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, credentialId }) => {
+const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, credentialId, confirmationOnly }) => {
   const { t } = useTranslation()
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [credentialDeliveryStatus, setCredentialDeliveryStatus] = useState<DeliveryStatus>(DeliveryStatus.Pending)
@@ -62,7 +63,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     },
   })
 
-  if (!credential) {
+  if (!credential && !confirmationOnly) {
     throw new Error('Unable to fetch credential from Credo')
   }
 
@@ -75,11 +76,19 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }, [navigation])
 
   useEffect(() => {
+    if(!credential) { return }
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
     }
   }, [credential, timer])
+
+  useEffect(() => {
+    if (confirmationOnly) {
+      timer && clearTimeout(timer)
+      setCredentialDeliveryStatus(DeliveryStatus.Completed)
+    }
+  }, [confirmationOnly])
 
   useEffect(() => {
     if (timerDidFire || credentialDeliveryStatus !== DeliveryStatus.Pending || !visible) {
@@ -107,8 +116,8 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
-        <ScrollView style={[styles.container]}>
-          <View style={[styles.messageContainer]}>
+        <ScrollView style={styles.container}>
+          <View style={styles.messageContainer}>
             {credentialDeliveryStatus === DeliveryStatus.Pending && (
               <Text
                 style={[ListItems.credentialOfferTitle, styles.messageText]}
@@ -143,7 +152,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           )}
         </ScrollView>
 
-        <View style={[styles.controlsContainer]}>
+        <View style={styles.controlsContainer}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
             <View>
               <Button

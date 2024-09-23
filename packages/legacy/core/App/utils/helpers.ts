@@ -1008,9 +1008,14 @@ export const connectFromScanOrDeepLink = async (
   try {
     const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
     if (isOpenIDInvitation) {
-      //TODO: Impliment Navigation to display credential
-      throw new Error(`OpenID4VCI is not supported yet`)
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { oobRecordId: "", openIDUri: uri },
+      })
+
+      return
     }
+    
     const aUrl = processBetaUrlIfRequired(uri)
     const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
 

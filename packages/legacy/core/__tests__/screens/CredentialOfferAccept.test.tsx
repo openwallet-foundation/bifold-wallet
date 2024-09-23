@@ -18,10 +18,7 @@ const credentialRecord = new CredentialRecord(credential)
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 
 
-describe('displays a credential accept screen', () => {
-  // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
-  useCredentialById.mockReturnValue(credentialRecord)
-
+describe('CredentialOfferAccept Screen', () => {
   test('renders correctly', () => {
     const tree = render(
       <BasicAppContext>

@@ -70,7 +70,7 @@ seenMessage.metadata = {
 
 const testBasicMessages: BasicMessageRecord[] = [unseenMessage, seenMessage]
 
-describe('Chat screen', () => {
+describe('Chat Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     // @ts-expect-error useConnectionById will be replaced with a mock which will have this method

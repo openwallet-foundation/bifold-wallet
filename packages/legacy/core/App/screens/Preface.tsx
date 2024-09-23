@@ -44,7 +44,7 @@ const Preface: React.FC = () => {
         <View style={style.screenContainer}>
           <View style={style.contentContainer}>
             <Assets.svg.preface style={{ alignSelf: 'center', marginBottom: 20 }} height={200} />
-            <Text style={[TextTheme.headingTwo]}>{t('Preface.PrimaryHeading')}</Text>
+            <Text style={TextTheme.headingTwo}>{t('Preface.PrimaryHeading')}</Text>
             <Text style={[TextTheme.normal, { marginTop: 20, marginBottom: 20 }]}>{t('Preface.Paragraph1')}</Text>
           </View>
           <View style={style.controlsContainer}>
@@ -57,7 +57,7 @@ const Preface: React.FC = () => {
               reverse
               titleStyle={{ fontWeight: TextTheme.bold.fontWeight }}
             />
-            <View style={[{ paddingTop: 10 }]}>
+            <View style={{ paddingTop: 10 }}>
               <Button
                 title={t('Global.Continue')}
                 accessibilityLabel={t('Global.Continue')}

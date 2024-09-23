@@ -4,8 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View, StyleSheet } from 'react-native'
 
-import NotificationListItem, { NotificationType } from '../components/listItems/NotificationListItem'
-import NoNewUpdates from '../components/misc/NoNewUpdates'
+import { NotificationType } from '../components/listItems/NotificationListItem'
 import AppGuideModal from '../components/modals/AppGuideModal'
 import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -20,11 +19,20 @@ type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 const Home: React.FC<HomeProps> = () => {
   const [
     HomeHeaderView,
+    NoNewUpdates,
     HomeFooterView,
     { enableTours: enableToursConfig },
     { customNotificationConfig: customNotification, useNotifications },
-  ] = useServices([TOKENS.COMPONENT_HOME_HEADER, TOKENS.COMPONENT_HOME_FOOTER, TOKENS.CONFIG, TOKENS.NOTIFICATIONS])
-  const notifications = useNotifications()
+    NotificationListItem,
+  ] = useServices([
+    TOKENS.COMPONENT_HOME_HEADER,
+    TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST,
+    TOKENS.COMPONENT_HOME_FOOTER,
+    TOKENS.CONFIG,
+    TOKENS.NOTIFICATIONS,
+    TOKENS.NOTIFICATIONS_LIST_ITEM,
+  ])
+  const notifications = useNotifications({})
   const { t } = useTranslation()
 
   const { ColorPallet } = useTheme()
@@ -36,11 +44,6 @@ const Home: React.FC<HomeProps> = () => {
   const styles = StyleSheet.create({
     flatlist: {
       marginBottom: 35,
-    },
-    noNewUpdatesContainer: {
-      paddingHorizontal: 20,
-      paddingVertical: 20,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
     },
   })
 
@@ -70,7 +73,6 @@ const Home: React.FC<HomeProps> = () => {
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
-
     if (shouldShowTour && screenIsFocused) {
       if (store.tours.seenToursPrompt) {
         dispatch({
@@ -79,10 +81,6 @@ const Home: React.FC<HomeProps> = () => {
         })
         start(TourID.HomeTour)
       } else {
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
-          payload: [true],
-        })
         setShowTourPopup(true)
       }
     }
@@ -106,6 +104,10 @@ const Home: React.FC<HomeProps> = () => {
       type: DispatchAction.ENABLE_TOURS,
       payload: [true],
     })
+    dispatch({
+      type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
+      payload: [true],
+    })
     start(TourID.HomeTour)
   }, [dispatch, start])
 
@@ -114,6 +116,10 @@ const Home: React.FC<HomeProps> = () => {
     dispatch({
       type: DispatchAction.ENABLE_TOURS,
       payload: [false],
+    })
+    dispatch({
+      type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
+      payload: [true],
     })
   }, [dispatch])
 
@@ -124,11 +130,7 @@ const Home: React.FC<HomeProps> = () => {
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"
-        ListEmptyComponent={() => (
-          <View style={styles.noNewUpdatesContainer}>
-            <NoNewUpdates />
-          </View>
-        )}
+        ListEmptyComponent={NoNewUpdates}
         ListHeaderComponent={() => <HomeHeaderView />}
         ListFooterComponent={() => <HomeFooterView />}
         data={notifications}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
+exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [
@@ -462,7 +462,7 @@ exports[`displays a PIN Enter screen PIN Enter renders correctly 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`displays a PIN Enter screen PIN Enter renders correctly when logged out message is present 1`] = `
+exports[`PINEnter Screen PIN Enter renders correctly when logged out message is present 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

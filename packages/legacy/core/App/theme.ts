@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
+import ActivityIndicator from './assets/img/activity-indicator-circle.svg'
 import AppLockout from './assets/img/app-lockout.svg'
 import Biometrics from './assets/img/biometrics.svg'
 import ContactBook from './assets/img/contact-book.svg'
@@ -21,8 +22,27 @@ import NoInfoShared from './assets/img/no_information_shared.svg'
 import Preface from './assets/img/preface.svg'
 import ProofRequestDeclined from './assets/img/proof-declined.svg'
 import VerifierRequestDeclined from './assets/img/verifier-request-declined.svg'
+import Wallet from './assets/img/wallet.svg'
+import CheckInCircle from './assets/img/check-in-circle.svg'
+import CredentialCard from './assets/img/credential-card.svg'
+import WalletBack from './assets/img/wallet-back.svg'
+import WalletFront from './assets/img/wallet-front.svg'
+import CredentialInHand from './assets/img/credential-in-hand.svg'
+import CredentialList from './assets/img/credential-list.svg'
+import ScanShare from './assets/img/scan-share.svg'
+import SecureImage from './assets/img/secure-image.svg'
+import InformationReceived from './assets/img/information-received.svg'
+import PushNotificationImg from './assets/img/push-notifications.svg'
+import ChatLoading from './assets/img/chat-loading.svg'
+import HistoryCardAcceptedIcon from './assets/img/HistoryCardAcceptedIcon.svg'
+import HistoryCardExpiredIcon from './assets/img/HistoryCardExpiredIcon.svg'
+import HistoryCardRevokedIcon from './assets/img/HistoryCardRevokedIcon.svg'
+import HistoryInformationSentIcon from './assets/img/HistoryInformationSentIcon.svg'
+import HistoryPinUpdatedIcon from './assets/img/HistoryPinUpdatedIcon.svg'
+import IconChevronRight from './assets/img/IconChevronRight.svg'
 
 export interface ISVGAssets {
+  activityIndicator: React.FC<SvgProps>
   appLockout: React.FC<SvgProps>
   biometrics: React.FC<SvgProps>
   contactBook: React.FC<SvgProps>
@@ -43,6 +63,24 @@ export interface ISVGAssets {
   preface: React.FC<SvgProps>
   verifierRequestDeclined: React.FC<SvgProps>
   noInfoShared: React.FC<SvgProps>
+  wallet: React.FC<SvgProps>
+  checkInCircle: React.FC<SvgProps>
+  credentialCard: React.FC<SvgProps>
+  walletBack: React.FC<SvgProps>
+  walletFront: React.FC<SvgProps>
+  credentialInHand: React.FC<SvgProps>
+  credentialList: React.FC<SvgProps>
+  scanShare: React.FC<SvgProps>
+  secureImage: React.FC<SvgProps>
+  informationReceived: React.FC<SvgProps>
+  pushNotificationImg: React.FC<SvgProps>
+  chatLoading: React.FC<SvgProps>
+  historyCardAcceptedIcon: React.FC<SvgProps>
+  historyCardExpiredIcon: React.FC<SvgProps>
+  historyCardRevokedIcon: React.FC<SvgProps>
+  historyInformationSentIcon: React.FC<SvgProps>
+  historyPinUpdatedIcon: React.FC<SvgProps>
+  iconChevronRight: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -818,6 +856,7 @@ const PINInputTheme = {
 
 export const Assets = {
   svg: {
+    activityIndicator: ActivityIndicator,
     appLockout: AppLockout,
     biometrics: Biometrics,
     credentialDeclined: CredentialDeclined,
@@ -838,6 +877,24 @@ export const Assets = {
     preface: Preface,
     verifierRequestDeclined: VerifierRequestDeclined,
     noInfoShared: NoInfoShared,
+    wallet: Wallet,
+    checkInCircle: CheckInCircle,
+    credentialCard: CredentialCard,
+    walletBack: WalletBack,
+    walletFront: WalletFront,
+    credentialInHand: CredentialInHand,
+    credentialList: CredentialList,
+    scanShare: ScanShare,
+    secureImage: SecureImage,
+    informationReceived: InformationReceived,
+    pushNotificationImg: PushNotificationImg,
+    chatLoading: ChatLoading,
+    historyCardAcceptedIcon: HistoryCardAcceptedIcon,
+    historyCardExpiredIcon: HistoryCardExpiredIcon,
+    historyCardRevokedIcon: HistoryCardRevokedIcon,
+    historyInformationSentIcon: HistoryInformationSentIcon,
+    historyPinUpdatedIcon: HistoryPinUpdatedIcon,
+    iconChevronRight: IconChevronRight,
   },
   img: {
     logoPrimary: {

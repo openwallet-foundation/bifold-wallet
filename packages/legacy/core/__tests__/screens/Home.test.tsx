@@ -21,7 +21,7 @@ import { testIdWithKey } from '../../App/utils/testable'
 import { BasicAppContext } from '../helpers/app'
 import { useProofByState, useBasicMessages, useConnectionById, useCredentialByState, useAgent } from '../../__mocks__/@credo-ts/react-hooks'
 
-describe('displays a home screen', () => {
+describe('Home Screen', () => {
   beforeEach(() => { })
 
   test('renders correctly', () => {

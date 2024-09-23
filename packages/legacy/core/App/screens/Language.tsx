@@ -59,14 +59,14 @@ const Language = () => {
   }
 
   return (
-    <SafeAreaView style={[styles.container]}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={languages}
         renderItem={({ item: language }) => {
           const { id, value }: Language = language
           return (
             <View style={[styles.section, styles.sectionRow]}>
-              <Text style={[TextTheme.title]}>{value}</Text>
+              <Text style={TextTheme.title}>{value}</Text>
               <BouncyCheckbox
                 accessibilityLabel={value}
                 disableText
@@ -85,7 +85,7 @@ const Language = () => {
         }}
         ItemSeparatorComponent={() => (
           <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={[styles.itemSeparator]}></View>
+            <View style={styles.itemSeparator}></View>
           </View>
         )}
       />

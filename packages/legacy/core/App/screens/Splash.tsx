@@ -105,6 +105,7 @@ const Splash: React.FC = () => {
     indyLedgers,
     { showPreface, enablePushNotifications },
     ocaBundleResolver,
+    historyEnabled,
   ] = useServices([
     TOKENS.CACHE_SCHEMAS,
     TOKENS.CACHE_CRED_DEFS,
@@ -113,6 +114,7 @@ const Splash: React.FC = () => {
     TOKENS.UTIL_LEDGERS,
     TOKENS.CONFIG,
     TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.HISTORY_ENABLED,
   ])
   const styles = StyleSheet.create({
     container: {
@@ -224,6 +226,7 @@ const Splash: React.FC = () => {
           1044
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
       }
     }
 
@@ -256,7 +259,6 @@ const Splash: React.FC = () => {
       try {
         if (
           !mounted ||
-          agent ||
           !store.authentication.didAuthenticate ||
           !store.onboarding.didConsiderBiometry ||
           !walletSecret?.id ||
@@ -266,6 +268,41 @@ const Splash: React.FC = () => {
         }
 
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
+
+        if (agent) {
+          logger.info('Agent already initialized, restarting...')
+
+          try {
+            await agent.wallet.open({
+              id: walletSecret.id,
+              key: walletSecret.key,
+            })
+
+            logger.info('Opened agent wallet')
+          } catch (error: unknown) {
+            logger.error('Error opening existing wallet', error as BifoldError)
+
+            throw new BifoldError(
+              'Wallet Service',
+              'There was a problem unlocking the wallet.',
+              (error as Error).message,
+              1047
+            )
+          }
+
+          await agent.mediationRecipient.initiateMessagePickup()
+
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Stacks.TabStack }],
+            })
+          )
+
+          return
+        }
+
+        logger.info('No agent initialized, creating a new one')
 
         const newAgent = new Agent({
           config: {
@@ -339,6 +376,7 @@ const Splash: React.FC = () => {
           1045
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
       }
     }
 
@@ -363,6 +401,16 @@ const Splash: React.FC = () => {
     navigation,
     t,
   ])
+
+  useEffect(() => {
+    if (!mounted || !historyEnabled) {
+      return
+    }
+    dispatch({
+      type: DispatchAction.HISTORY_CAPABILITY,
+      payload: [true],
+    })
+  }, [mounted, historyEnabled])
 
   return (
     <SafeAreaView style={styles.container}>

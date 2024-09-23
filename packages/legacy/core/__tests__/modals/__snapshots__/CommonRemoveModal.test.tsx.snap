@@ -135,22 +135,18 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
           </View>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 24,
+                  "fontWeight": "bold",
+                }
               }
             >
               CredentialOffer.DeclineTitle
@@ -174,14 +170,12 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
             </Text>
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                    "marginTop": 25,
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginTop": 25,
+                }
               }
             >
               CredentialOffer.DeclineParagraph2
@@ -575,22 +569,18 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
           </View>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 24,
+                  "fontWeight": "bold",
+                }
               }
             >
               CredentialOffer.CustomOfferTitle
@@ -614,14 +604,12 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
             </Text>
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                    "marginTop": 25,
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginTop": 25,
+                }
               }
             >
               CredentialOffer.CustomOfferParagraph2
@@ -1010,22 +998,18 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
           </View>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 24,
+                  "fontWeight": "bold",
+                }
               }
             >
               ProofRequest.DeclineTitle
@@ -1049,28 +1033,24 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
             </Text>
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                    "marginTop": 25,
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginTop": 25,
+                }
               }
             >
               ProofRequest.DeclineBulletPoint2
             </Text>
             <Text
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                    "marginTop": 25,
-                  },
-                ]
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginTop": 25,
+                }
               }
             >
               ProofRequest.DeclineBulletPoint3
@@ -1454,31 +1434,25 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
           />
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <View
               style={
-                Array [
-                  Object {
-                    "marginBottom": 25,
-                  },
-                ]
+                Object {
+                  "marginBottom": 25,
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  }
                 }
               >
                 ContactDetails.RemoveTitle
@@ -1487,13 +1461,11 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
             <View>
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  }
                 }
               >
                 ContactDetails.RemoveContactMessageTop
@@ -2118,31 +2090,25 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
           />
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <View
               style={
-                Array [
-                  Object {
-                    "marginBottom": 25,
-                  },
-                ]
+                Object {
+                  "marginBottom": 25,
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  }
                 }
               >
                 ContactDetails.UnableToRemoveTitle
@@ -2151,13 +2117,11 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
             <View>
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  }
                 }
               >
                 ContactDetails.UnableToRemoveCaption
@@ -2542,31 +2506,25 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
           />
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <View
               style={
-                Array [
-                  Object {
-                    "marginBottom": 25,
-                  },
-                ]
+                Object {
+                  "marginBottom": 25,
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  }
                 }
               >
                 CredentialDetails.RemoveTitle
@@ -2575,13 +2533,11 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             <View>
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  }
                 }
               >
                 CredentialDetails.RemoveCaption
@@ -2690,24 +2646,20 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                 >
                   <View
                     style={
-                      Array [
-                        Object {
-                          "borderLeftColor": "#313132",
-                          "borderLeftWidth": 2,
-                          "marginTop": 10,
-                        },
-                      ]
+                      Object {
+                        "borderLeftColor": "#313132",
+                        "borderLeftWidth": 2,
+                        "marginTop": 10,
+                      }
                     }
                   >
                     <View
                       style={
-                        Array [
-                          Object {
-                            "display": "flex",
-                            "flexDirection": "row",
-                            "marginBottom": 5,
-                          },
-                        ]
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        }
                       }
                     >
                       <Text
@@ -2748,13 +2700,11 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                     </View>
                     <View
                       style={
-                        Array [
-                          Object {
-                            "display": "flex",
-                            "flexDirection": "row",
-                            "marginBottom": 5,
-                          },
-                        ]
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        }
                       }
                     >
                       <Text
@@ -2900,24 +2850,20 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                 >
                   <View
                     style={
-                      Array [
-                        Object {
-                          "borderLeftColor": "#313132",
-                          "borderLeftWidth": 2,
-                          "marginTop": 10,
-                        },
-                      ]
+                      Object {
+                        "borderLeftColor": "#313132",
+                        "borderLeftWidth": 2,
+                        "marginTop": 10,
+                      }
                     }
                   >
                     <View
                       style={
-                        Array [
-                          Object {
-                            "display": "flex",
-                            "flexDirection": "row",
-                            "marginBottom": 5,
-                          },
-                        ]
+                        Object {
+                          "display": "flex",
+                          "flexDirection": "row",
+                          "marginBottom": 5,
+                        }
                       }
                     >
                       <Text
@@ -3339,31 +3285,25 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
           />
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 25,
-                },
-              ]
+              Object {
+                "marginBottom": 25,
+              }
             }
           >
             <View
               style={
-                Array [
-                  Object {
-                    "marginBottom": 25,
-                  },
-                ]
+                Object {
+                  "marginBottom": 25,
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 24,
-                      "fontWeight": "bold",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  }
                 }
               >
                 ContactDetails.RemoveTitle
@@ -3372,13 +3312,11 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
             <View>
               <Text
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    },
-                  ]
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  }
                 }
               >
                 ContactDetails.RemoveContactMessageTop

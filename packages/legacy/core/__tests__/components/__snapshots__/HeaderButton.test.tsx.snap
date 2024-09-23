@@ -217,14 +217,12 @@ exports[`HeaderButton Component Right alignment with text renders correctly 1`] 
   >
     <Text
       style={
-        Array [
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 14,
-            "fontWeight": "bold",
-            "marginRight": 4,
-          },
-        ]
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 14,
+          "fontWeight": "bold",
+          "marginRight": 4,
+        }
       }
     >
       RightButton

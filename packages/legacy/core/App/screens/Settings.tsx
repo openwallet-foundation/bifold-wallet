@@ -234,16 +234,17 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         },
       ],
     })
-
-    const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
-    if (section) {
-      section.data.splice(3, 0, {
-        title: t('Settings.DataRetention'),
-        value: store.preferences.useDataRetention ? t('Global.On') : t('Global.Off'),
-        accessibilityLabel: t('Settings.DataRetention'),
-        testID: testIdWithKey('DataRetention'),
-        onPress: () => navigation.navigate(Screens.DataRetention),
-      })
+    if (!store.preferences.disableDataRetentionOption) {
+      const section = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
+      if (section) {
+        section.data.splice(3, 0, {
+          title: t('Settings.DataRetention'),
+          value: store.preferences.useDataRetention ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Settings.DataRetention'),
+          testID: testIdWithKey('DataRetention'),
+          onPress: () => navigation.navigate(Screens.DataRetention),
+        })
+      }
     }
   }
 
@@ -355,10 +356,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         }) => <SectionHeader icon={icon} iconRight={iconRight} title={title} titleTestID={titleTestID} />}
         ItemSeparatorComponent={() => (
           <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={[styles.itemSeparator]}></View>
+            <View style={styles.itemSeparator}></View>
           </View>
         )}
-        SectionSeparatorComponent={() => <View style={[styles.sectionSeparator]}></View>}
+        SectionSeparatorComponent={() => <View style={styles.sectionSeparator}></View>}
         ListFooterComponent={() => (
           <View style={styles.footer}>
             <TouchableWithoutFeedback

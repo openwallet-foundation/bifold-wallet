@@ -4,12 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../../../contexts/theme'
 import { CustomRecord, HistoryCardType } from '../../types'
-import HistoryCardAcceptedIcon from '../assets/img/HistoryCardAcceptedIcon.svg'
-import HistoryCardExpiredIcon from '../assets/img/HistoryCardExpiredIcon.svg'
-import HistoryCardRevokedIcon from '../assets/img/HistoryCardRevokedIcon.svg'
-import HistoryInformationSentIcon from '../assets/img/HistoryInformationSentIcon.svg'
-import HistoryPinUpdatedIcon from '../assets/img/HistoryPinUpdatedIcon.svg'
-import IconChevronRight from '../assets/img/IconChevronRight.svg'
+
 
 interface Props {
   item: CustomRecord
@@ -54,7 +49,7 @@ const styles = StyleSheet.create({
 
 const HistoryListItem: React.FC<Props> = ({ item }) => {
   const { t } = useTranslation()
-  const { TextTheme } = useTheme()
+  const { TextTheme, Assets } = useTheme()
   //TODO: navigate to history details
   //   const navigation = useNavigation<StackNavigationProp<RootStackParams, 'HistoryDetails'>>()
 
@@ -62,23 +57,23 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
   const renderCardIcon = (item: CustomRecord) => {
     switch (item.content.type) {
       case HistoryCardType.CardAccepted: {
-        return <HistoryCardAcceptedIcon />
+        return <Assets.svg.historyCardAcceptedIcon />
       }
       case HistoryCardType.CardDeclined: {
         //TODO: return different icon
-        return <HistoryCardRevokedIcon />
+        return <Assets.svg.historyCardRevokedIcon />
       }
       case HistoryCardType.CardExpired: {
-        return <HistoryCardExpiredIcon />
+        return <Assets.svg.historyCardExpiredIcon />
       }
       case HistoryCardType.CardRevoked: {
-        return <HistoryCardRevokedIcon />
+        return <Assets.svg.historyCardRevokedIcon />
       }
       case HistoryCardType.InformationSent: {
-        return <HistoryInformationSentIcon />
+        return <Assets.svg.historyInformationSentIcon />
       }
       case HistoryCardType.PinChanged: {
-        return <HistoryPinUpdatedIcon />
+        return <Assets.svg.historyPinUpdatedIcon />
       }
       default:
         return null
@@ -192,7 +187,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
             {renderCardDate(item.content.createdAt)}
           </View>
           <View style={styles.arrowContainer}>
-            <IconChevronRight />
+            <Assets.svg.iconChevronRight />
           </View>
         </View>
         <View style={styles.cardBottomBorder} />

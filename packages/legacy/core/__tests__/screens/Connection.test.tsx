@@ -31,7 +31,7 @@ jest.mock('../../App/hooks/connections', () => ({
   useOutOfBandById: jest.fn(),
 }))
 
-describe('Connection Modal Component', () => {
+describe('Connection Screen', () => {
   beforeEach(() => {
     useProofByState.mockReturnValue([proofNotif])
     jest.clearAllMocks()

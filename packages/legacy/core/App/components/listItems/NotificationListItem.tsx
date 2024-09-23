@@ -23,7 +23,7 @@ import { BifoldError } from '../../types/error'
 import { GenericFn } from '../../types/fn'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../../types/metadata'
 import { HomeStackParams, Screens, Stacks } from '../../types/navigators'
-import { CustomNotification } from '../../types/notification'
+import { CustomNotification, CustomNotificationRecord } from '../../types/notification'
 import { ModalUsage } from '../../types/remove'
 import { getConnectionName, parsedSchema } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
@@ -42,9 +42,9 @@ export enum NotificationType {
   Proof = 'Proof',
 }
 
-interface NotificationListItemProps {
+export interface NotificationListItemProps {
   notificationType: NotificationType
-  notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+  notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord | CustomNotificationRecord
   customNotification?: CustomNotification
 }
 
@@ -89,7 +89,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [action, setAction] = useState<any>()
   const [closeAction, setCloseAction] = useState<any>()
-  const connection = useConnectionById(notification.connectionId ?? '')
+  const connectionId =
+    notification instanceof BasicMessageRecord ||
+    notification instanceof CredentialExchangeRecord ||
+    notification instanceof ProofExchangeRecord
+      ? notification.connectionId ?? ''
+      : ''
+  const connection = useConnectionById(connectionId)
   const [details, setDetails] = useState<DisplayDetails>(defaultDetails)
   const [styleConfig, setStyleConfig] = useState<StyleConfig>({
     containerStyle: {
@@ -252,7 +258,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
               details = ({
                 type: InfoBoxType.Info,
                 title: t('ProofRequest.NewProofRequest'),
-                body: message.indyProofRequest.name,
+                body: message.indyProofRequest.name ?? message.comment ?? '',
                 buttonTitle: undefined,
               })
             } else {
@@ -300,7 +306,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         onPress = () => {
           navigation.getParent()?.navigate(Stacks.ContactStack, {
             screen: Screens.Chat,
-            params: { connectionId: notification.connectionId },
+            params: { connectionId: (notification as BasicMessageRecord).connectionId },
           })
         }
         onClose = dismissBasicMessage
