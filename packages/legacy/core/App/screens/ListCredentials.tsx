@@ -16,6 +16,7 @@ import { CredentialStackParams, Screens } from '../types/navigators'
 import { TourID } from '../types/tour'
 import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
+import { CredentialListFooterProps } from '../types/credential-list-footer'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -23,7 +24,7 @@ const ListCredentials: React.FC = () => {
   const [
     CredentialListOptions,
     credentialEmptyList,
-    CredentialListFooter,
+    credentialListFooter,
     { enableTours: enableToursConfig, credentialHideList },
   ] = useServices([
     TOKENS.COMPONENT_CRED_LIST_OPTIONS,
@@ -38,6 +39,7 @@ const ListCredentials: React.FC = () => {
   ]
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
+  const CredentialListFooter = credentialListFooter as React.FC<CredentialListFooterProps>
 
   // Filter out hidden credentials when not in dev mode
   if (!store.preferences.developerModeEnabled) {
