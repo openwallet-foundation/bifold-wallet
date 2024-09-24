@@ -130,7 +130,7 @@ export class MainContainer implements Container {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
         const data = await this.storage.getValueForKey(key)
         if (data) {
-          // @ts-expect-error
+          // @ts-expect-error Fix complicated type error
           updateVal(data)
         }
       }

@@ -49,8 +49,7 @@ export class PersistentStorage<T> {
       throw new Error("State hasn't been initialized")
     }
 
-    // @ts-expect-error
-    // Fix complicated type error
+    // @ts-expect-error Fix complicated type error
     this._state[key] = value
 
     try {
@@ -67,8 +66,7 @@ export class PersistentStorage<T> {
         await this.load()
       }
 
-      // @ts-expect-error
-      // Fix complicated type error
+      // @ts-expect-error Fix complicated type error
       return this._state[key] as Partial<T>
     } catch (error) {
       this.log?.error(`Error loading state for key ${key}, ${error as Error}`)
@@ -85,11 +83,9 @@ export class PersistentStorage<T> {
       await AsyncStorage.setItem(newKey, value)
       await AsyncStorage.removeItem(oldKey)
 
-      // @ts-expect-error
-      // Fix complicated type error
+      // @ts-expect-error Fix complicated type error
       delete this._state[oldKey]
-      // @ts-expect-error
-      // Fix complicated type error
+      // @ts-expect-error Fix complicated type error
       this._state[newKey] = JSON.parse(value)
 
       return true
@@ -108,8 +104,7 @@ export class PersistentStorage<T> {
     try {
       const keys = Object.keys(this._state)
       for (const key of keys) {
-        // @ts-expect-error
-        // Fix complicated type error
+        // @ts-expect-error Fix complicated type error
         const value = this._state[key]
         const serializedState = JSON.stringify(value)
         await AsyncStorage.setItem(key, serializedState)
@@ -131,8 +126,7 @@ export class PersistentStorage<T> {
 
         const parsedValue = JSON.parse(value)
 
-        // @ts-expect-error
-        // Fix complicated type error
+        // @ts-expect-error Fix complicated type error
         this._state = { ...this._state, [key]: parsedValue }
       })
     } catch (error) {
