@@ -44,7 +44,7 @@ const Terms: React.FC = () => {
         dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
       }
     }
-  }, [])
+  }, [dispatch, agreedToPreviousTerms, navigation, store.onboarding.postAuthScreens])
   const style = StyleSheet.create({
     container: {
       ...OnboardingTheme.container,

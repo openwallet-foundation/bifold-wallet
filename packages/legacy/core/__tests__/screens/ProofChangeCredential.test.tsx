@@ -243,17 +243,17 @@ describe('ProofChangeCredential Screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testProofRequest)
     })
 
     test('test credential selection', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials2)
 
       const navigation = useNavigation()

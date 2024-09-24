@@ -1,12 +1,11 @@
 import { useAgent } from '@credo-ts/react-hooks'
 import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, Linking, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-// import { setup } from '../utils/PushNotificationsHelper'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -28,14 +27,17 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
     throw new Error('Push notification configuration not found')
   }
   const isMenu = (route.params as any)?.isMenu
-  const updateNotificationState = async () => {
-    const status = await enablePushNotifications.status()
-    setNotificationStatus(status)
-  }
-  useMemo(() => {
+  useEffect(() => {
+    const updateNotificationState = async () => {
+      const status = await enablePushNotifications.status()
+      setNotificationStatus(status)
+    }
+
     updateNotificationState()
-    AppState.addEventListener('change', updateNotificationState)
-  }, [])
+    const subscription = AppState.addEventListener('change', updateNotificationState)
+    
+    return () => subscription.remove()
+  }, [enablePushNotifications])
 
   const style = StyleSheet.create({
     screenContainer: {

@@ -3,7 +3,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FlatList,
@@ -105,24 +105,33 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
     credential?.revocationNotification !== undefined && !!proof
   )
-  const [bundleResolver, credHelpActionOverrides] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.CRED_HELP_ACTION_OVERRIDES])
+  const [bundleResolver, credHelpActionOverrides] = useServices([
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.CRED_HELP_ACTION_OVERRIDES,
+  ])
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
-  const primaryField = overlay?.presentationFields?.find(
-    (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
-  )
-  const secondaryField = overlay?.presentationFields?.find(
-    (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
-  )
-  const attributeTypes = overlay.bundle?.captureBase.attributes
-  const attributeFormats: Record<string, string | undefined> = (overlay.bundle as any)?.bundle.attributes
-    .map((attr: any) => {
-      return { name: attr.name, format: attr.format }
-    })
-    .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
-      return { ...prev, [curr.name]: curr.format }
-    }, {})
-  const cardData = [...(displayItems ?? []), primaryField, secondaryField]
+  const attributeFormats: Record<string, string | undefined> = useMemo(() => {
+    return (overlay.bundle as any)?.bundle.attributes
+      .map((attr: any) => {
+        return { name: attr.name, format: attr.format }
+      })
+      .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
+        return { ...prev, [curr.name]: curr.format }
+      }, {})
+  }, [overlay])
+
+  const cardData = useMemo(() => {
+    const primaryField = overlay?.presentationFields?.find(
+      (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
+    )
+    const secondaryField = overlay?.presentationFields?.find(
+      (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
+    )
+
+    return [...(displayItems ?? []), primaryField, secondaryField]
+  }, [displayItems, overlay])
+
   const navigation = useNavigation()
 
   const getSecondaryBackgroundColor = () => {
@@ -243,20 +252,23 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
   }
 
-  const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
-    let parsedItem = item
-    if (item && item.pValue != null) {
-      parsedItem = pTypeToText(item, t, attributeTypes) as Attribute & Predicate
-    }
-    const parsedValue = formatIfDate(
-      attributeFormats?.[item?.name ?? ''],
-      parsedItem?.value ?? parsedItem?.pValue ?? null
-    )
-    return {
-      label: item?.label ?? item?.name ?? '',
-      value: item?.value !== undefined && item?.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
-    }
-  }
+  const parseAttribute = useCallback(
+    (item: (Attribute & Predicate) | undefined) => {
+      let parsedItem = item
+      if (item && item.pValue != null) {
+        parsedItem = pTypeToText(item, t, overlay.bundle?.captureBase.attributes) as Attribute & Predicate
+      }
+      const parsedValue = formatIfDate(
+        attributeFormats?.[item?.name ?? ''],
+        parsedItem?.value ?? parsedItem?.pValue ?? null
+      )
+      return {
+        label: item?.label ?? item?.name ?? '',
+        value: item?.value !== undefined && item?.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
+      }
+    },
+    [t, overlay, attributeFormats]
+  )
 
   useEffect(() => {
     setAllPI(
@@ -273,14 +285,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           }
         })
     )
-  }, [flaggedAttributes])
+  }, [credential, cardData, parseAttribute, flaggedAttributes])
 
   useEffect(() => {
     const params = {
       identifiers: credential ? getCredentialIdentifiers(credential) : { schemaId, credentialDefinitionId: credDefId },
       attributes: proof ? [] : credential?.credentialAttributes,
       meta: {
-        credName: credName,
+        credName,
         credConnectionId: credential?.connectionId,
         alias: credentialConnectionLabel,
       },
@@ -309,18 +321,29 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           })
         }
       }
-      setOverlay({
-        ...overlay,
+      setOverlay((o) => ({
+        ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
-      })
+      }))
     })
-  }, [credential, i18n.language])
+  }, [
+    credential,
+    schemaId,
+    credDefId,
+    credName,
+    credentialConnectionLabel,
+    i18n.language,
+    bundleResolver,
+    proof,
+    credHelpActionOverrides,
+    navigation,
+  ])
 
   useEffect(() => {
     setIsRevoked(credential?.revocationNotification !== undefined && !proof)
     setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
-  }, [credential?.revocationNotification])
+  }, [credential?.revocationNotification, proof])
 
   const CredentialCardLogo: React.FC = () => {
     return (

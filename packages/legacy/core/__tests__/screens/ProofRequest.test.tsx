@@ -206,7 +206,7 @@ describe('ProofRequest Screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
       useCredentials.mockReturnValue({ records: [credExRecord] })
-      // @ts-ignore-next-line
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testProofRequest)
     })
 
@@ -232,10 +232,10 @@ describe('ProofRequest Screen', () => {
     test('displays a proof request with all claims available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
 
       const { getByText, getByTestId, queryByText } = render(
@@ -376,10 +376,10 @@ describe('ProofRequest Screen', () => {
         },
       }
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials2)
 
       const navigation = useNavigation()
@@ -430,10 +430,10 @@ describe('ProofRequest Screen', () => {
     test('displays a proof request with one or more claims not available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           indy: {
@@ -464,10 +464,10 @@ describe('ProofRequest Screen', () => {
     test('displays a proof request with one or more predicates not satisfied', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           indy: {

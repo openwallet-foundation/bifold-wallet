@@ -24,7 +24,10 @@ const ListCredentials: React.FC = () => {
     enableTours: enableToursConfig,
     credentialHideList,
   }] = useServices([TOKENS.COMPONENT_CRED_LIST_OPTIONS, TOKENS.COMPONENT_CRED_EMPTY_LIST, TOKENS.CONFIG])
-
+  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  const { ColorPallet } = useTheme()
+  const { start } = useTour()
+  const screenIsFocused = useIsFocused()
   let credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
@@ -40,11 +43,6 @@ const ListCredentials: React.FC = () => {
     })
   }
 
-  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
-  const { ColorPallet } = useTheme()
-  const { start, stop } = useTour()
-  const screenIsFocused = useIsFocused()
-
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
@@ -55,9 +53,7 @@ const ListCredentials: React.FC = () => {
         payload: [true],
       })
     }
-
-    return stop
-  }, [screenIsFocused])
+  }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
 
   return (
     <View>

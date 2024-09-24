@@ -237,7 +237,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
         ? [...transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt), connectedMessage]
         : transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)
     )
-  }, [basicMessages, credentials, proofs, theirLabel])
+  }, [ColorPallet, basicMessages, theme, credentials, t, navigation, proofs, theirLabel, connection])
 
   return messages
 }
