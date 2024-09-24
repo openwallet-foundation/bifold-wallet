@@ -1,7 +1,7 @@
 import { useAgent } from '@credo-ts/react-hooks'
 import { ParamListBase } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -17,10 +17,9 @@ import { HistoryBlockSelection, IHistoryManager } from '../types'
 
 import SingleSelectBlock from './components/SingleSelectBlock'
 
-interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> { }
+interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> {}
 
 const HistorySettings: React.FC<HistorySettingsProps> = () => {
-  //   const updatePin = (route.params as any)?.updatePin
   const [continueEnabled] = useState(true)
   const [isLoading] = useState(false)
   const { t } = useTranslation()
@@ -31,9 +30,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
   const actionButtonTestId = testIdWithKey('Save')
   const [Button, logger, loadHistory] = useServices([TOKENS.COMP_BUTTON, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY])
   const { agent } = useAgent()
-  const historyManager: IHistoryManager | undefined = agent
-    ? loadHistory(agent)
-    : undefined
+  const historyManager: IHistoryManager | undefined = agent ? loadHistory(agent) : undefined
 
   //State
   const [initialHistory, setInitialHistory] = useState<HistoryBlockSelection | undefined>() // Initial history settings option
@@ -81,7 +78,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
     // setIsSuccess(false)
   }
 
-  const handleSaveHistorySettings = async () => {
+  const handleSaveHistorySettings = useCallback(async () => {
     if (!historyManager) {
       logger.error(`[${HistorySettings.name}]: historyManager undefined!`)
       return
@@ -109,33 +106,34 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
       //     text1: (e as Error)?.message || t('Global.Failure'),
       //   })
     }
-  }
+  }, [historyManager, logger, historyOptionSelected, initialHistory])
 
   /**
    * Find current set history
    */
-  let storedHistorySettingsOption: string | HistoryBlockSelection | null | undefined
-  async function getSavedHistorySettingsOption() {
-    if (!historyManager) {
-      logger.error(`[${HistorySettings.name}]:[getSavedHistorySettingsOption] historyManager undefined!`)
-      return
-    }
-    storedHistorySettingsOption = await historyManager.getStoredHistorySettingsOption()
-    if (storedHistorySettingsOption === 'Never') {
-      //TODO: Impliment "Never" option
-      //   setIsActivityHistoryDisabled(true)
-    } else {
-      setInitialHistory(
-        storedHistorySettingsOption
-          ? historyManager.getHistorySettingsOptionList().find((l) => l.id === storedHistorySettingsOption)
-          : undefined
-      )
-    }
-  }
-
   useEffect(() => {
-    getSavedHistorySettingsOption()
-  }, [])
+    const getSavedHistorySettingsOption = async () => {
+      if (!historyManager) {
+        logger.error(`[${HistorySettings.name}]:[getSavedHistorySettingsOption] historyManager undefined!`)
+        return
+      }
+      const storedHistorySettingsOption = await historyManager.getStoredHistorySettingsOption()
+      if (storedHistorySettingsOption === 'Never') {
+        //TODO: Impliment "Never" option
+        //   setIsActivityHistoryDisabled(true)
+      } else {
+        setInitialHistory(
+          storedHistorySettingsOption
+            ? historyManager.getHistorySettingsOptionList().find((l) => l.id === storedHistorySettingsOption)
+            : undefined
+        )
+      }
+    }
+
+    getSavedHistorySettingsOption().catch((e) => {
+      logger.error(`[${HistorySettings.name}]:[getSavedHistorySettingsOption] Error: ${e}`)
+    })
+    }, [historyManager, logger])
 
   return (
     <KeyboardView>

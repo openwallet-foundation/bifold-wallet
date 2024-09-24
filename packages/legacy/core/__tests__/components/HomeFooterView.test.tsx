@@ -23,7 +23,7 @@ describe('HomeFooterView Component', () => {
         protocolVersion: 'v1',
       }),
     ]
-    // @ts-ignore
+    // @ts-expect-error useCredentialByState will be replaced with a mock which will have this method
     useCredentialByState.mockReturnValue(testCredentialRecords)
 
     const tree = render(<BasicAppContext><HomeFooterView /></BasicAppContext>)

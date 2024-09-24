@@ -39,8 +39,10 @@ export default [
       },
     },
     rules: {
+      ...reactHooks.configs.recommended.rules,
       ...reactPlugin.configs.flat.recommended.rules,
       'react/react-in-jsx-scope': 'off',
+      'react-hooks/exhaustive-deps': 'error',
     },
   },
   {
@@ -52,7 +54,6 @@ export default [
       'scripts/make-blocks.js',
       'scripts/get-next-bump.ts',
       '**/jest.config.js',
-      '**/babel.config.js',
       '**/metro.config.js',
       '.yarn/',
       'packages/verifier/build/',
@@ -84,24 +85,7 @@ export default [
     files: ['packages/legacy/core/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      'no-unsafe-optional-chaining': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/ban-ts-comment': 'warn',
-      "react-hooks/exhaustive-deps": "warn",
     }
   },
-  {
-    files: ['packages/react-native-attestation/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    rules: {
-      "@typescript-eslint/no-var-requires": "warn",
-      "@typescript-eslint/ban-ts-comment": "warn",
-    }
-  },
-  {
-    files: ['packages/verifier/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    rules: {
-      "@typescript-eslint/no-var-requires": "warn",
-      "@typescript-eslint/ban-ts-comment": "warn",
-    }
-  }
 ]

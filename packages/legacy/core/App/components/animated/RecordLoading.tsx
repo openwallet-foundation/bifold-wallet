@@ -4,14 +4,15 @@ import { View, StyleSheet, Animated } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
+const fadeTiming: Animated.TimingAnimationConfig = {
+  toValue: 0.2,
+  duration: 1100,
+  useNativeDriver: true,
+}
+
 const RecordLoading: React.FC = () => {
   const { ColorPallet } = useTheme()
-  const rowFadeAnim = useRef(new Animated.Value(1)).current
-  const fadeTiming: Animated.TimingAnimationConfig = {
-    toValue: 0.2,
-    duration: 1100,
-    useNativeDriver: true,
-  }
+  const rowFadeAnim = useRef(new Animated.Value(1))
   const style = StyleSheet.create({
     container: {
       flexDirection: 'column',
@@ -29,7 +30,7 @@ const RecordLoading: React.FC = () => {
   })
 
   useEffect(() => {
-    Animated.loop(Animated.timing(rowFadeAnim, fadeTiming)).start()
+    Animated.loop(Animated.timing(rowFadeAnim.current, fadeTiming)).start()
   }, [])
 
   const makeARow = () => {
@@ -44,7 +45,7 @@ const RecordLoading: React.FC = () => {
 
   return (
     <View style={style.container} testID={testIdWithKey('RecordLoading')}>
-      <Animated.View style={{ opacity: rowFadeAnim }}>
+      <Animated.View style={{ opacity: rowFadeAnim.current }}>
         {makeARow()}
         {makeARow()}
       </Animated.View>

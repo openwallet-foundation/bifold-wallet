@@ -20,61 +20,63 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
-import { Onboarding as StoreOnboardingState } from '../types/state'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar, didMigrateToAskar } from '../utils/migration'
 import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 
 const OnboardingVersion = 1
 
-const onboardingComplete = (state: StoreOnboardingState): boolean => {
-  return (
-    (state.onboardingVersion !== 0 && state.didCompleteOnboarding) ||
-    (state.onboardingVersion === 0 && state.didConsiderBiometry)
-  )
+const onboardingComplete = (
+  onboardingVersion: number,
+  didCompleteOnboarding: boolean,
+  didConsiderBiometry: boolean
+): boolean => {
+  return (onboardingVersion !== 0 && didCompleteOnboarding) || (onboardingVersion === 0 && didConsiderBiometry)
 }
 
 const resumeOnboardingAt = (
-  state: StoreOnboardingState,
-  params: { enableWalletNaming?: boolean; showPreface?: boolean; termsVersion?: boolean | string }
+  didSeePreface: boolean,
+  didCompleteTutorial: boolean,
+  didAgreeToTerms: boolean | string,
+  didCreatePIN: boolean,
+  didNameWallet: boolean,
+  didConsiderBiometry: boolean,
+  termsVersion?: boolean | string,
+  enableWalletNaming?: boolean,
+  showPreface?: boolean
 ): Screens => {
-  const termsVer = params.termsVersion ?? true
+  const termsVer = termsVersion ?? true
   if (
-    (state.didSeePreface || !params.showPreface) &&
-    state.didCompleteTutorial &&
-    state.didAgreeToTerms === termsVer &&
-    state.didCreatePIN &&
-    (state.didNameWallet || !params.enableWalletNaming) &&
-    !state.didConsiderBiometry
+    (didSeePreface || !showPreface) &&
+    didCompleteTutorial &&
+    didAgreeToTerms === termsVer &&
+    didCreatePIN &&
+    (didNameWallet || !enableWalletNaming) &&
+    !didConsiderBiometry
   ) {
     return Screens.UseBiometry
   }
 
   if (
-    (state.didSeePreface || !params.showPreface) &&
-    state.didCompleteTutorial &&
-    state.didAgreeToTerms === termsVer &&
-    state.didCreatePIN &&
-    params.enableWalletNaming &&
-    !state.didNameWallet
+    (didSeePreface || !showPreface) &&
+    didCompleteTutorial &&
+    didAgreeToTerms === termsVer &&
+    didCreatePIN &&
+    enableWalletNaming &&
+    !didNameWallet
   ) {
     return Screens.NameWallet
   }
 
-  if (
-    (state.didSeePreface || !params.showPreface) &&
-    state.didCompleteTutorial &&
-    state.didAgreeToTerms === termsVer &&
-    !state.didCreatePIN
-  ) {
+  if ((didSeePreface || !showPreface) && didCompleteTutorial && didAgreeToTerms === termsVer && !didCreatePIN) {
     return Screens.CreatePIN
   }
 
-  if ((state.didSeePreface || !params.showPreface) && state.didCompleteTutorial && state.didAgreeToTerms !== termsVer) {
+  if ((didSeePreface || !showPreface) && didCompleteTutorial && !didAgreeToTerms) {
     return Screens.Terms
   }
 
-  if (state.didSeePreface || !params.showPreface) {
+  if (didSeePreface || !showPreface) {
     return Screens.Onboarding
   }
 
@@ -130,79 +132,92 @@ const Splash: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (!mounted || store.authentication.didAuthenticate) {
+    if (!mounted || store.authentication.didAuthenticate || !store.stateLoaded) {
       return
     }
 
     const initOnboarding = async (): Promise<void> => {
       try {
-        // load authentication attempts from storage
-        if (!store.stateLoaded) {
-          return
-        }
-
         if (store.onboarding.onboardingVersion !== OnboardingVersion) {
           dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+          return
         }
 
-        if (onboardingComplete(store.onboarding)) {
-          if (store.onboarding.onboardingVersion !== OnboardingVersion) {
-            dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
-          }
-          // if they previously completed onboarding before wallet naming was enabled, mark complete
-          if (!store.onboarding.didNameWallet) {
-            dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
-          }
-
-          // if they previously completed onboarding before preface was enabled, mark seen
-          if (!store.onboarding.didSeePreface) {
-            dispatch({ type: DispatchAction.DID_SEE_PREFACE })
-          }
-
-          // add post authentication screens
-          const postAuthScreens = []
-          if (store.onboarding.didAgreeToTerms !== TermsVersion) {
-            postAuthScreens.push(Screens.Terms)
-          }
-          if (!store.onboarding.didConsiderPushNotifications && enablePushNotifications) {
-            postAuthScreens.push(Screens.UsePushNotifications)
-          }
-          dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [postAuthScreens] })
-
-          if (!store.loginAttempt.lockoutDate) {
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [{ name: Screens.EnterPIN }],
-              })
-            )
-          } else {
-            // return to lockout screen if lockout date is set
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [{ name: Screens.AttemptLockout }],
-              })
-            )
-          }
-          return
-        } else {
+        if (
+          !onboardingComplete(
+            store.onboarding.onboardingVersion,
+            store.onboarding.didCompleteOnboarding,
+            store.onboarding.didConsiderBiometry
+          )
+        ) {
           // If onboarding was interrupted we need to pickup from where we left off.
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
               routes: [
                 {
-                  name: resumeOnboardingAt(store.onboarding, {
-                    enableWalletNaming: store.preferences.enableWalletNaming,
-                    showPreface,
-                    termsVersion: TermsVersion,
-                  }),
+                  name: resumeOnboardingAt(
+                    store.onboarding.didSeePreface,
+                    store.onboarding.didCompleteTutorial,
+                    store.onboarding.didAgreeToTerms,
+                    store.onboarding.didCreatePIN,
+                    store.onboarding.didNameWallet,
+                    store.onboarding.didConsiderBiometry,
+                    TermsVersion,
+                    store.preferences.enableWalletNaming,
+                    showPreface
+                  ),
                 },
               ],
             })
           )
+          return
         }
+
+        if (store.onboarding.onboardingVersion !== OnboardingVersion) {
+          dispatch({ type: DispatchAction.ONBOARDING_VERSION, payload: [OnboardingVersion] })
+          return
+        }
+
+        // if they previously completed onboarding before wallet naming was enabled, mark complete
+        if (!store.onboarding.didNameWallet) {
+          dispatch({ type: DispatchAction.DID_NAME_WALLET, payload: [true] })
+          return
+        }
+
+        // if they previously completed onboarding before preface was enabled, mark seen
+        if (!store.onboarding.didSeePreface) {
+          dispatch({ type: DispatchAction.DID_SEE_PREFACE })
+          return
+        }
+
+        // add post authentication screens
+        const postAuthScreens = []
+        if (store.onboarding.didAgreeToTerms !== TermsVersion) {
+          postAuthScreens.push(Screens.Terms)
+        }
+        if (!store.onboarding.didConsiderPushNotifications && enablePushNotifications) {
+          postAuthScreens.push(Screens.UsePushNotifications)
+        }
+        dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [postAuthScreens] })
+
+        if (!store.loginAttempt.lockoutDate) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Screens.EnterPIN }],
+            })
+          )
+        } else {
+          // return to lockout screen if lockout date is set
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: Screens.AttemptLockout }],
+            })
+          )
+        }
+        return
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1044'),
@@ -216,7 +231,29 @@ const Splash: React.FC = () => {
     }
 
     initOnboarding()
-  }, [mounted, store.authentication.didAuthenticate, store.stateLoaded])
+  }, [
+    mounted,
+    store.authentication.didAuthenticate,
+    store.stateLoaded,
+    store.onboarding.onboardingVersion,
+    store.onboarding.didCompleteOnboarding,
+    store.onboarding.didSeePreface,
+    store.onboarding.didCompleteTutorial,
+    store.onboarding.didAgreeToTerms,
+    store.onboarding.didCreatePIN,
+    store.onboarding.didConsiderPushNotifications,
+    store.onboarding.didNameWallet,
+    store.onboarding.didConsiderBiometry,
+    store.preferences.enableWalletNaming,
+    enablePushNotifications,
+    TermsVersion,
+    showPreface,
+    dispatch,
+    store.loginAttempt.lockoutDate,
+    navigation,
+    t,
+    logger,
+  ])
 
   useEffect(() => {
     const initAgent = async (): Promise<void> => {
@@ -345,7 +382,26 @@ const Splash: React.FC = () => {
     }
 
     initAgent()
-  }, [mounted, store.authentication.didAuthenticate, store.onboarding.didConsiderBiometry, walletSecret])
+  }, [
+    mounted,
+    agent,
+    store.authentication.didAuthenticate,
+    store.onboarding.didConsiderBiometry,
+    walletSecret,
+    store.onboarding.postAuthScreens.length,
+    ocaBundleResolver,
+    indyLedgers,
+    store.preferences.walletName,
+    logger,
+    store.migration,
+    dispatch,
+    cacheCredDefs,
+    cacheSchemas,
+    setAgent,
+    store.preferences.usePushNotifications,
+    navigation,
+    t,
+  ])
 
   useEffect(() => {
     if (!mounted || !historyEnabled) {
@@ -355,7 +411,7 @@ const Splash: React.FC = () => {
       type: DispatchAction.HISTORY_CAPABILITY,
       payload: [true],
     })
-  }, [mounted, historyEnabled])
+  }, [mounted, historyEnabled, dispatch])
 
   return (
     <SafeAreaView style={styles.container}>

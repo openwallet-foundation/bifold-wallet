@@ -51,10 +51,10 @@ const useQrSizeForDevice = () => {
 
 const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) => {
   if (!route?.params) {
-    throw new Error('ProofRequesting route prams were not set properly')
+    throw new Error('ProofRequesting route params were not set properly')
   }
 
-  const { templateId, predicateValues } = route?.params
+  const { templateId, predicateValues } = route.params
   const { agent } = useAgent()
   if (!agent) {
     throw new Error('Unable to fetch agent from Credo')
@@ -136,7 +136,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     } finally {
       setGenerating(false)
     }
-  }, [])
+  }, [agent, t, navigation])
 
   useFocusEffect(
     useCallback(() => {
@@ -148,7 +148,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
-    }, [])
+    }, [navigation])
   )
 
   useEffect(() => {
@@ -166,13 +166,13 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       )
       navigation.setOptions({ headerRight: scanShareUrl })
     }
-  }, [message, store.preferences.enableShareableLink])
+  }, [message, store.preferences.enableShareableLink, t, navigation])
 
   useEffect(() => {
     if (isFocused) {
       createProofRequest()
     }
-  }, [isFocused])
+  }, [isFocused, createProofRequest])
 
   useEffect(() => {
     if (!template) {
@@ -194,13 +194,13 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       }
     }
     sendAsyncProof()
-  }, [record, template])
+  }, [template, record, agent, predicateValues, templateId])
 
   useEffect(() => {
     if (proofRecord && proofRecord.state === ProofState.RequestSent) {
       navigation.navigate(Screens.MobileVerifierLoading, { proofId: proofRecord.id, connectionId: record?.id ?? '' })
     }
-  }, [proofRecord])
+  }, [proofRecord, navigation, record?.id])
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>

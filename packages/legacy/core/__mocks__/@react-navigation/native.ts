@@ -1,5 +1,3 @@
-// import { useFocusEffect } from '@react-navigation/native'
-
 const navigate = jest.fn()
 const dispatch = jest.fn()
 const replace = jest.fn()

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigation } from '@react-navigation/native'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
@@ -51,7 +50,7 @@ describe('Connection Screen', () => {
   })
 
   test('Updates after delay', async () => {
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useConnectionByOutOfBandId.mockReturnValueOnce(connection)
     const element = (
       <BasicAppContext>
@@ -103,7 +102,7 @@ describe('Connection Screen', () => {
   test('No connection, navigation to proof', async () => {
     const threadId = 'qrf123'
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
@@ -119,9 +118,9 @@ describe('Connection Screen', () => {
     const tree = render(element)
 
     expect(tree).toMatchSnapshot()
-    // @ts-ignore-next-line
+    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
     expect(navigation.replace).toBeCalledTimes(1)
-    // @ts-ignore-next-line
+    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
     expect(navigation.replace).toBeCalledWith('Proof Request', {
       proofId: proofNotif.id,
     })
@@ -131,13 +130,13 @@ describe('Connection Screen', () => {
     const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
     })
     useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
 
     const element = (
@@ -159,13 +158,13 @@ describe('Connection Screen', () => {
     const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
       outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
     })
-    // @ts-ignore-next-lin
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
 
     useProofByState.mockReturnValue([{ ...offerNotif, threadId }])
@@ -180,7 +179,7 @@ describe('Connection Screen', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-lin
+    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
     expect(navigation.replace).toBeCalledWith('Credential Offer', {
       credentialId: offerNotif.id,
     })
@@ -192,13 +191,13 @@ describe('Connection Screen', () => {
     const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
       outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
     })
-    // @ts-ignore-next-lin
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
     useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
 
@@ -212,7 +211,7 @@ describe('Connection Screen', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-lin
+    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
     expect(navigation.replace).toBeCalledWith('Proof Request', {
       proofId: proofNotif.id,
     })
@@ -224,15 +223,14 @@ describe('Connection Screen', () => {
     const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error useOutOfBandById will be replaced with a mock which does have this method
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
       outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
     })
-    // @ts-ignore-next-lin
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-line
     useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
     const element = (
       <BasicAppContext>
@@ -244,7 +242,7 @@ describe('Connection Screen', () => {
 
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-lin
+    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
     expect(navigation.replace).toBeCalledWith('Proof Request', {
       proofId: proofNotif.id,
     })
@@ -256,15 +254,14 @@ describe('Connection Screen', () => {
     const threadId = 'qrf123'
     const connectionId = 'abc123'
     const navigation = useNavigation()
-    // @ts-ignore-next-line
+    // @ts-expect-error useOutOfBandById will be replaced with a mock which does have this method
     useOutOfBandById.mockReturnValue({
       ...oobRecord,
       getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
       outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
     })
-    // @ts-ignore-next-lin
+    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
     useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    // @ts-ignore-next-line
     useProofByState.mockReturnValue([{ ...proofNotif, threadId, state: 'request-received' }])
 
 

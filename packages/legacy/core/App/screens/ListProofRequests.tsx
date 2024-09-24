@@ -76,7 +76,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
         })
       setMeta(metaOverlay)
     })
-  }, [template])
+  }, [bundleResolver, template, i18n.language])
 
   return meta ? (
     <TouchableOpacity

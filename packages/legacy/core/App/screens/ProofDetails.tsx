@@ -105,14 +105,14 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       connection
         ? getConnectionName(connection, store.preferences.alternateContactNames)
         : t('Verifier.ConnectionLessLabel'),
-    [connection, store.preferences.alternateContactNames]
+    [connection, store.preferences.alternateContactNames, t]
   )
 
   const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
 
-  const onSharedProofDataLoad = (data: GroupedSharedProofDataItem[]) => {
+  const onSharedProofDataLoad = useCallback((data: GroupedSharedProofDataItem[]) => {
     setSharedProofDataItems(data)
-  }
+  }, [])
 
   const onGenerateNew = useCallback(() => {
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
@@ -121,7 +121,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
     } else {
       navigation.navigate(Screens.ProofRequests, {})
     }
-  }, [navigation])
+  }, [record, navigation])
 
   const onBack = useCallback(() => {
     navigation.navigate(Screens.ProofRequests, {})
@@ -130,7 +130,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   useEffect(() => {
     if (!connection || !isHistory) return
     navigation.setOptions({ title: connectionLabel })
-  }, [connection])
+  }, [connection, isHistory, navigation, connectionLabel])
 
   if (isHistory) {
     return (
@@ -234,7 +234,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
     } else {
       navigation.navigate(Screens.ProofRequests, {})
     }
-  }, [navigation])
+  }, [record, navigation])
 
   const onBackToList = useCallback(() => {
     navigation.navigate(Screens.ProofRequests, {})
@@ -279,10 +279,10 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
 
 const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   if (!route?.params) {
-    throw new Error('ProofRequesting route prams were not set properly')
+    throw new Error('ProofRequesting route params were not set properly')
   }
 
-  const { recordId, isHistory, senderReview } = route?.params
+  const { recordId, isHistory, senderReview } = route.params
   const record = useProofById(recordId)
   const { agent } = useAgent()
   const [store] = useStore()
@@ -296,13 +296,13 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
         agent?.connections.deleteById(record?.connectionId ?? '')
       }
     }
-  }, [])
+  }, [store.preferences.useDataRetention, agent, recordId, record])
 
   useEffect(() => {
     if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
       markProofAsViewed(agent, record)
     }
-  }, [record])
+  }, [agent, record])
 
   useFocusEffect(
     useCallback(() => {
@@ -318,7 +318,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
-    }, [])
+    }, [route.params, navigation])
   )
 
   if (!record) return null

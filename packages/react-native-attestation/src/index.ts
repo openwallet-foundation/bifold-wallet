@@ -1,17 +1,19 @@
 import { NativeModules, Platform } from 'react-native';
 import { Buffer } from 'buffer';
 
+import NativeAttestationSpec from './NativeAttestation';
+
 const LINKING_ERROR =
   `The package 'react-native-attestation' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-// @ts-expect-error
+// @ts-expect-error global.__turboModuleProxy is a global variable injected by TurboModuleProxy
 const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
 const AttestationModule = isTurboModuleEnabled
-  ? require('./NativeAttestation').default
+  ? NativeAttestationSpec
   : NativeModules.Attestation;
 
 const Attestation = AttestationModule

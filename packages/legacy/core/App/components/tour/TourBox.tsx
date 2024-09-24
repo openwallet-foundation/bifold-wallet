@@ -160,7 +160,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
     }
 
     setPaginationDots(arr)
-  }, [])
+  }, [stepOn, stepsOutOf])
 
   return (
     <View

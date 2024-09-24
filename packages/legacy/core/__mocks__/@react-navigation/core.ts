@@ -13,12 +13,6 @@ const navigation = {
       replace,
     }
   },
-  // getParent: jest.fn().mockReturnValue({
-  //   navigate,
-  //   dispatch,
-  //   replace,
-  // }),
-
   getState: jest.fn(() => ({
     index: jest.fn(),
   })),

@@ -60,7 +60,7 @@ export interface TourProviderProps {
   proofRequestTourSteps: TourStep[]
 }
 
-const TourProviderComponent = (props: TourProviderProps, ref:  Ref<Tour>) => {
+const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
   const {
     children,
     onBackdropPress,
@@ -152,7 +152,7 @@ const TourProviderComponent = (props: TourProviderProps, ref:  Ref<Tour>) => {
 
     stepToRender = currentStep !== undefined ? steps[currentStep] : undefined
     return stepToRender ?? { Render: () => <></> }
-  }, [homeTourSteps, credentialsTourSteps, credentialOfferTourSteps, proofRequestTourSteps, currentStep])
+  }, [homeTourSteps, currentTour, credentialsTourSteps, credentialOfferTourSteps, proofRequestTourSteps, currentStep])
 
   const tour = useMemo(
     (): TourCtx => ({

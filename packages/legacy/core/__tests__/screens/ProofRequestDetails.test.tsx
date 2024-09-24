@@ -58,11 +58,11 @@ const templates = [
   },
 ]
 
-// @ts-ignore
+// @ts-expect-error axios create will be replaced with a mock which does have this method
 axios.create.mockImplementation(() => ({ get: () => Promise.resolve({ data: templates }) }))
-// @ts-ignore
+// @ts-expect-error useTemplates will be replaced with a mock which does have this method
 useTemplates.mockImplementation(() => templates)
-// @ts-ignore
+// @ts-expect-error useTemplate will be replaced with a mock which does have this method
 useTemplate.mockImplementation(() => templates[0])
 const templateId = templates[0].id
 const connectionId = 'test'

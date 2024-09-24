@@ -75,7 +75,7 @@ describe('CredentialDetails Screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
       useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
     })
 
@@ -101,7 +101,7 @@ describe('CredentialDetails Screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
       useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
     })
 

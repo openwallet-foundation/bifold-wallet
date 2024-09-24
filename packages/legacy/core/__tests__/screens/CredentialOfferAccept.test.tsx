@@ -17,7 +17,7 @@ const credentialRecord = new CredentialRecord(credential)
 // TODO:(jl) Make a fn to revive JSON dates properly and pass to `parse`
 credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 
-// @ts-ignore
+// @ts-expect-error useCredentialById will be replaced with a mock which does have this method
 useCredentialById.mockReturnValue(credentialRecord)
 
 describe('CredentialOfferAccept Screen', () => {

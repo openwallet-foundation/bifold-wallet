@@ -1,6 +1,6 @@
 import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
@@ -90,7 +90,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     controlsContainer: {},
   })
 
-  const passcodeCreate = async (PIN: string) => {
+  const passcodeCreate = useCallback(async (PIN: string) => {
     try {
       setContinueEnabled(false)
       await setWalletPIN(PIN)
@@ -110,9 +110,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
       const error = new BifoldError(t('Error.Title1040'), t('Error.Message1040'), (err as Error)?.message ?? err, 1040)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }
+  }, [setWalletPIN, setAuthenticated, dispatch, navigation, t])
 
-  const validatePINEntry = (PINOne: string, PINTwo: string): boolean => {
+  const validatePINEntry = useCallback((PINOne: string, PINTwo: string): boolean => {
     for (const validation of PINOneValidations) {
       if (validation.isInvalid) {
         setModalState({
@@ -132,9 +132,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
       return false
     }
     return true
-  }
+  }, [PINOneValidations, t])
 
-  const checkOldPIN = async (PIN: string): Promise<boolean> => {
+  const checkOldPIN = useCallback(async (PIN: string): Promise<boolean> => {
     const valid = await checkPIN(PIN)
     if (!valid) {
       setModalState({
@@ -144,20 +144,21 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
       })
     }
     return valid
-  }
+  }, [checkPIN, t])
 
-  const confirmEntry = async (PINOne: string, PINTwo: string) => {
+  const confirmEntry = useCallback(async (PINOne: string, PINTwo: string) => {
     if (!validatePINEntry(PINOne, PINTwo)) {
       return
     }
 
     await passcodeCreate(PINOne)
-  }
+  }, [validatePINEntry, passcodeCreate])
+
   useEffect(() => {
     if (updatePin) {
       setContinueEnabled(PIN !== '' && PINTwo !== '' && PINOld !== '')
     }
-  }, [PINOld, PIN, PINTwo])
+  }, [updatePin, PIN, PINTwo, PINOld])
 
   return (
     <KeyboardView>

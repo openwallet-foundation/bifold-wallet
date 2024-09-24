@@ -1,5 +1,5 @@
 import { Field } from '@hyperledger/aries-oca/build/legacy'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
@@ -21,7 +21,6 @@ export interface RecordProps {
 const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
-  const [showAll, setShowAll] = useState<boolean>(false)
   const { ListItems, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
@@ -38,20 +37,13 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
     },
   })
 
-  const resetShown = (): void => {
-    setShown(fields.map(() => showAll))
-    setShowAll(!showAll)
-  }
-
-  const toggleShownState = (newShowStates: boolean[]): void => {
-    if (newShowStates.filter((shownState) => shownState === showAll).length > Math.floor(fields.length / 2)) {
-      setShowAll(!showAll)
-    }
-  }
+  const hideAll = useCallback((): void => {
+    setShown(fields.map(() => false))
+  }, [fields])
 
   useEffect(() => {
-    resetShown()
-  }, [])
+    hideAll()
+  }, [hideAll])
 
   return (
     <FlatList
@@ -68,7 +60,6 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
               const newShowState = [...shown]
               newShowState[index] = !shown[index]
               setShown(newShowState)
-              toggleShownState(newShowState)
             }}
             shown={hideFieldValues ? !!shown[index] : true}
             hideBottomBorder={index === fields.length - 1}
@@ -84,12 +75,12 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                 <TouchableOpacity
                   style={styles.link}
                   activeOpacity={1}
-                  onPress={() => resetShown()}
+                  onPress={hideAll}
                   testID={testIdWithKey('HideAll')}
                   accessible={true}
-                  accessibilityLabel={showAll ? t('Record.ShowAll') : t('Record.HideAll')}
+                  accessibilityLabel={t('Record.HideAll')}
                 >
-                  <Text style={ListItems.recordLink}>{showAll ? t('Record.ShowAll') : t('Record.HideAll')}</Text>
+                  <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
                 </TouchableOpacity>
               </View>
             ) : null}

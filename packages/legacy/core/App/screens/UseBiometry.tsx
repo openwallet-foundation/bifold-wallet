@@ -1,6 +1,6 @@
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -35,9 +35,11 @@ const UseBiometry: React.FC = () => {
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
-  const screenUsage = store.onboarding.didCompleteOnboarding
-    ? UseBiometryUsage.ToggleOnOff
-    : UseBiometryUsage.InitialSetup
+  const screenUsage = useMemo(() => {
+    return store.onboarding.didCompleteOnboarding
+      ? UseBiometryUsage.ToggleOnOff
+      : UseBiometryUsage.InitialSetup
+  }, [store.onboarding.didCompleteOnboarding])
 
   const styles = StyleSheet.create({
     container: {
@@ -56,8 +58,8 @@ const UseBiometry: React.FC = () => {
     isBiometricsActive().then((result) => {
       setBiometryAvailable(result)
     })
-  }, [])
-
+  }, [isBiometricsActive])
+  
   useEffect(() => {
     if (screenUsage === UseBiometryUsage.InitialSetup) {
       return
@@ -78,9 +80,9 @@ const UseBiometry: React.FC = () => {
         })
       })
     }
-  }, [biometryEnabled])
+  }, [screenUsage, biometryEnabled, commitPIN, disableBiometrics, dispatch])
 
-  const continueTouched = async () => {
+  const continueTouched = useCallback(async () => {
     setContinueEnabled(false)
 
     await commitPIN(biometryEnabled)
@@ -99,9 +101,9 @@ const UseBiometry: React.FC = () => {
     } else {
       dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
     }
-  }
+  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
 
-  const toggleSwitch = () => {
+  const toggleSwitch = useCallback(() => {
     // If the user is toggling biometrics on/off they need
     // to first authenticate before this action is accepted
     if (screenUsage === UseBiometryUsage.ToggleOnOff) {
@@ -111,16 +113,16 @@ const UseBiometry: React.FC = () => {
     }
 
     setBiometryEnabled((previousState) => !previousState)
-  }
+  }, [screenUsage])
 
-  const onAuthenticationComplete = (status: boolean) => {
+  const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
       setBiometryEnabled((previousState) => !previousState)
     }
     DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
     setCanSeeCheckPIN(false)
-  }
+  }, [])
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>

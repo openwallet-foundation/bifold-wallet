@@ -1,6 +1,6 @@
 import { useIsFocused } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View, StyleSheet } from 'react-native'
 
@@ -47,7 +47,7 @@ const Home: React.FC<HomeProps> = () => {
     },
   })
 
-  const DisplayListItemType = (item: any): React.ReactNode => {
+  const DisplayListItemType = useCallback((item: any): React.ReactNode => {
     let component: React.ReactNode
     if (item.type === 'BasicMessageRecord') {
       component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
@@ -69,11 +69,10 @@ const Home: React.FC<HomeProps> = () => {
       component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
     }
     return component
-  }
+  }, [customNotification, NotificationListItem])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
-
     if (shouldShowTour && screenIsFocused) {
       if (store.tours.seenToursPrompt) {
         dispatch({
@@ -82,35 +81,47 @@ const Home: React.FC<HomeProps> = () => {
         })
         start(TourID.HomeTour)
       } else {
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
-          payload: [true],
-        })
         setShowTourPopup(true)
       }
     }
-  }, [screenIsFocused])
+  }, [
+    enableToursConfig,
+    store.tours.enableTours,
+    store.tours.seenHomeTour,
+    screenIsFocused,
+    store.tours.seenToursPrompt,
+    dispatch,
+    start,
+  ])
 
-  const onCTAPressed = () => {
+  const onCTAPressed = useCallback(() => {
     setShowTourPopup(false)
+    dispatch({
+      type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
+      payload: [true],
+    })
     dispatch({
       type: DispatchAction.ENABLE_TOURS,
       payload: [true],
     })
     dispatch({
-      type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
+      type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
       payload: [true],
     })
     start(TourID.HomeTour)
-  }
+  }, [dispatch, start])
 
-  const onDismissPressed = () => {
+  const onDismissPressed = useCallback(() => {
     setShowTourPopup(false)
     dispatch({
       type: DispatchAction.ENABLE_TOURS,
       payload: [false],
     })
-  }
+    dispatch({
+      type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
+      payload: [true],
+    })
+  }, [dispatch])
 
   return (
     <>

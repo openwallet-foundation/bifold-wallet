@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, Modal, Pressable, StyleSheet, Text } from 'react-native'
@@ -7,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { QrCodeScanError } from '../../types/error'
-import { Screens } from '../../types/navigators'
+import { ConnectStackParams, Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
@@ -23,7 +24,7 @@ interface Props {
 }
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<StackNavigationProp<ConnectStackParams>>()
   const [{ showScanHelp, showScanButton }] = useServices([TOKENS.CONFIG])
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
@@ -149,7 +150,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               accessibilityLabel={t('Scan.ScanHelp')}
               accessibilityRole={'button'}
               testID={testIdWithKey('ScanHelp')}
-              // @ts-ignore
               onPress={() => navigation.navigate(Screens.ScanHelp)}
               style={styleForState}
               hitSlop={hitSlop}

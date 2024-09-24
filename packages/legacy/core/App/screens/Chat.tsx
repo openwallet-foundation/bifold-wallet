@@ -47,16 +47,16 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
     setTheirLabel(getConnectionName(connection, store.preferences.alternateContactNames))
   }, [isFocused, connection, store.preferences.alternateContactNames])
 
-  useMemo(() => {
+  useEffect(() => {
     assertConnectedNetwork()
-  }, [])
+  }, [assertConnectedNetwork])
 
   useEffect(() => {
     navigation.setOptions({
       title: theirLabel,
       headerRight: () => <InfoIcon connectionId={connection?.id as string} />,
     })
-  }, [connection, theirLabel])
+  }, [navigation, theirLabel, connection])
 
   // when chat is open, mark messages as seen
   useEffect(() => {
@@ -68,7 +68,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
         basicMessageRepository.update(agent.context, msg)
       }
     })
-  }, [basicMessages])
+  }, [basicMessages, agent])
 
   const onSend = useCallback(
     async (messages: IMessage[]) => {
@@ -80,7 +80,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const onSendRequest = useCallback(async () => {
     navigation.navigate(Stacks.ProofRequestsStack as any, {
       screen: Screens.ProofRequests,
-      params: { navigation: navigation, connectionId },
+      params: { connectionId },
     })
   }, [navigation, connectionId])
 
@@ -97,11 +97,11 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
           },
         ]
       : undefined
-  }, [t, store.preferences.useVerifierCapability, onSendRequest])
+  }, [store.preferences.useVerifierCapability, t, onSendRequest, Assets])
 
-  const onDismiss = () => {
+  const onDismiss = useCallback(() => {
     setShowActionSlider(false)
-  }
+  }, [])
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>

@@ -1,23 +1,29 @@
 import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
+import { MessageProps } from 'react-native-gifted-chat'
 
-import { ChatMessage, CallbackType } from '../../App/components/chat/ChatMessage'
+import { ChatMessage, CallbackType, ExtendedChatMessage } from '../../App/components/chat/ChatMessage'
+import { Role } from '../../App/types/chat'
 import { testIdWithKey } from '../../App/utils/testable'
 
 const onDetailsMock = jest.fn()
 const user = {
-  _id: 'me',
+  _id: Role.me,
 }
-const currentMessage = {
+const currentMessage: ExtendedChatMessage = {
   _id: '1',
   user,
   messageOpensCallbackType: CallbackType.CredentialOffer,
   onDetails: onDetailsMock,
   renderEvent: jest.fn(),
+  text: 'test',
+  createdAt: new Date('2024-01-01'),
 }
-const props = {
+const props: MessageProps<ExtendedChatMessage> = {
   user,
-  currentMessage,
+  currentMessage: currentMessage,
+  key: '1',
+  position: 'left',
 }
 
 describe('ChatMessage', () => {
@@ -26,8 +32,7 @@ describe('ChatMessage', () => {
   })
 
   test('Credential offer renders correctly', () => {
-    props.currentMessage.messageOpensCallbackType = CallbackType.CredentialOffer
-    // @ts-ignore
+    props.currentMessage!.messageOpensCallbackType = CallbackType.CredentialOffer
     const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.ViewOffer'))
 
@@ -39,8 +44,7 @@ describe('ChatMessage', () => {
   })
 
   test('Proof request renders correctly', () => {
-    props.currentMessage.messageOpensCallbackType = CallbackType.ProofRequest
-    // @ts-ignore
+    props.currentMessage!.messageOpensCallbackType = CallbackType.ProofRequest
     const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.ViewRequest'))
 
@@ -52,8 +56,7 @@ describe('ChatMessage', () => {
   })
 
   test('Sent presentation renders correctly', () => {
-    props.currentMessage.messageOpensCallbackType = CallbackType.PresentationSent
-    // @ts-ignore
+    props.currentMessage!.messageOpensCallbackType = CallbackType.PresentationSent
     const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.OpenPresentation'))
 

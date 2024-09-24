@@ -7,7 +7,7 @@ import { AskarWallet } from '@credo-ts/askar'
 import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
@@ -46,12 +46,12 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const { agent } = useAgent()
   const { t } = useTranslation()
 
-  const setPIN = async (PIN: string): Promise<void> => {
+  const setPIN = useCallback(async (PIN: string): Promise<void> => {
     const secret = await secretForPIN(PIN)
     await storeWalletSecret(secret)
-  }
+  }, [])
 
-  const getWalletCredentials = async (): Promise<WalletSecret | undefined> => {
+  const getWalletCredentials = useCallback(async (): Promise<WalletSecret | undefined> => {
     if (walletSecret && walletSecret.key) {
       return walletSecret
     }
@@ -63,16 +63,17 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
     DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, err !== undefined)
 
-    if (!secret) {
+    if (!secret?.key) {
+      setWalletSecret(undefined)
       return
     }
 
     setWalletSecret(secret)
 
     return secret
-  }
+  }, [t, walletSecret])
 
-  const commitPIN = async (useBiometry: boolean): Promise<boolean> => {
+  const commitPIN = useCallback(async (useBiometry: boolean): Promise<boolean> => {
     const secret = await getWalletCredentials()
     if (!secret) {
       return false
@@ -88,9 +89,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       await wipeWalletKey(useBiometry)
     }
     return true
-  }
+  }, [dispatch, getWalletCredentials])
 
-  const checkPIN = async (PIN: string): Promise<boolean> => {
+  const checkPIN = useCallback(async (PIN: string): Promise<boolean> => {
     try {
       const secret = await loadWalletSalt()
 
@@ -127,17 +128,17 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     } catch (e) {
       return false
     }
-  }
+  }, [dispatch, store.migration])
 
-  const removeSavedWalletSecret = () => {
+  const removeSavedWalletSecret = useCallback(() => {
     setWalletSecret(undefined)
-  }
+  }, [])
 
-  const disableBiometrics = async () => {
+  const disableBiometrics = useCallback(async () => {
     await wipeWalletKey(true)
-  }
+  }, [])
 
-  const rekeyWallet = async (oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
+  const rekeyWallet = useCallback(async (oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
     try {
       // argon2.hash can sometimes generate an error
       const secret = await loadWalletSalt()
@@ -159,7 +160,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       return false
     }
     return true
-  }
+  }, [agent])
 
   return (
     <AuthContext.Provider

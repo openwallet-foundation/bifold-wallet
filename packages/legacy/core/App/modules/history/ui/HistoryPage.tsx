@@ -1,10 +1,8 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import { useFocusEffect } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-// import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { ButtonType } from '../../../components/buttons/Button-api'
 import KeyboardView from '../../../components/views/KeyboardView'
@@ -20,7 +18,6 @@ import HistoryListItem from './components/HistoryListItem'
 type HistoryPageProps = StackScreenProps<HistoryStackParams>
 
 const HistoryPage: React.FC<HistoryPageProps> = () => {
-  //   const updatePin = (route.params as any)?.updatePin
   const [continueEnabled] = useState(true)
   const [isLoading] = useState(false)
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
@@ -32,11 +29,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
   const [Button, logger, loadHistory] = useServices([TOKENS.COMP_BUTTON, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY])
-  const historyManager: IHistoryManager | undefined = agent
-    ? loadHistory(agent)
-    : undefined
-
-  //State
+  const historyManager: IHistoryManager | undefined = agent ? loadHistory(agent) : undefined
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -64,20 +57,6 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
     controlsContainer: {},
   })
 
-  /** Load history */
-  const getAllHistory = async () => {
-    if (!historyManager) {
-      logger.error(`[${HistoryPage.name}][getAllHistory]: historyManager undefined!`)
-      return
-    }
-    const allRecords = await historyManager.getHistoryItems({ type: RecordType.HistoryRecord })
-    allRecords.sort((objA, objB) => Number(objB.content.createdAt) - Number(objA.content.createdAt))
-
-    if (allRecords) {
-      setHistoryItems(allRecords)
-    }
-  }
-
   //UI
   const renderEmptyListComponent = () => {
     return (
@@ -91,11 +70,24 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
     return <HistoryListItem item={item} />
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      getAllHistory()
-    }, [])
-  )
+  useEffect(() => {
+    const getHistory = async () => {
+      if (!historyManager) {
+        logger.error(`[${HistoryPage.name}][getAllHistory]: historyManager undefined!`)
+        return
+      }
+      const allRecords = await historyManager.getHistoryItems({ type: RecordType.HistoryRecord })
+      allRecords.sort((objA, objB) => Number(objB.content.createdAt) - Number(objA.content.createdAt))
+
+      if (allRecords) {
+        setHistoryItems(allRecords)
+      }
+    }
+
+    getHistory().catch(e => {
+      logger.error(`[${HistoryPage.name}][getAllHistory]: ${e}`)
+    })
+  }, [historyManager, logger])
 
   return (
     <KeyboardView>

@@ -1,5 +1,5 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -60,7 +60,7 @@ const AttemptLockout: React.FC = () => {
   })
 
   // update the countdown timer. Return true if the lockout penalty time is over
-  const updateTimeRemaining = (): boolean => {
+  const updateTimeRemaining = useCallback((): boolean => {
     let penaltyServed = true
     const penalty = state.loginAttempt.lockoutDate
     const currDate = Date.now()
@@ -84,12 +84,12 @@ const AttemptLockout: React.FC = () => {
       }
     }
     return penaltyServed
-  }
+  }, [state.loginAttempt.lockoutDate])
 
   // run once immediately at screen initialization
   useEffect(() => {
     setTimeoutDone(updateTimeRemaining())
-  }, [])
+  }, [updateTimeRemaining])
 
   // make sure set timeout only runs once
   useEffect(() => {
@@ -103,7 +103,7 @@ const AttemptLockout: React.FC = () => {
     }, 1000)
   })
 
-  const unlock = async () => {
+  const unlock = useCallback(async () => {
     dispatch({
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [{ loginAttempts: state.loginAttempt.loginAttempts, lockoutDate: undefined, servedPenalty: true }],
@@ -114,7 +114,7 @@ const AttemptLockout: React.FC = () => {
         routes: [{ name: Screens.EnterPIN }],
       })
     )
-  }
+  }, [dispatch, state.loginAttempt.loginAttempts, navigation])
 
   return (
     <SafeAreaView style={styles.container}>

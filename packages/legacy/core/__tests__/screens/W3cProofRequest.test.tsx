@@ -113,7 +113,7 @@ describe('displays a proof request screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
       useCredentials.mockReturnValue({ records: [credExRecord] })
-      // @ts-ignore-next-line
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testProofRequest)
     })
 
@@ -139,17 +139,17 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with all claims available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: { presentationExchange: difPexCredentialsForRequest },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const { getByText, getByTestId, queryByText } = render(
@@ -292,17 +292,17 @@ describe('displays a proof request screen', () => {
         },
       }
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: { presentationExchange: difPexCredentialsForRequest2 },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(testRetrievedCredentials2.proofFormats.indy)
 
       const navigation = useNavigation()
@@ -353,17 +353,17 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with one or more claims not available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: { presentationExchange: difPexCredentialsForRequest },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const credentialsForRequest: AnonCredsCredentialsForProofRequest = {
@@ -375,7 +375,7 @@ describe('displays a proof request screen', () => {
         predicates: {},
       }
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(credentialsForRequest)
 
       const tree = render(
@@ -397,12 +397,12 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with one or more predicates not satisfied', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           presentationExchange: {
@@ -451,7 +451,7 @@ describe('displays a proof request screen', () => {
         },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue({
         attributes: anonCredsCredentialsForProofRequest.attributes,
         predicates: {

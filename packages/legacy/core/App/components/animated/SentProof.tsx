@@ -3,25 +3,25 @@ import { View, StyleSheet, Animated } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
+const ringFadeTiming: Animated.TimingAnimationConfig = {
+  toValue: 0,
+  duration: 600,
+  useNativeDriver: true,
+}
+const checkFadeTiming: Animated.TimingAnimationConfig = {
+  toValue: 1,
+  duration: 600,
+  useNativeDriver: true,
+}
+
 const SentProof: React.FC = () => {
   const { ColorPallet, Assets } = useTheme()
-  const ringFadeAnim = useRef(new Animated.Value(1)).current
-  const checkFadeAnim = useRef(new Animated.Value(0)).current
-  const ringFadeTiming: Animated.TimingAnimationConfig = {
-    toValue: 0,
-    duration: 600,
-    useNativeDriver: true,
-  }
-  const checkFadeTiming: Animated.TimingAnimationConfig = {
-    toValue: 1,
-    duration: 600,
-    useNativeDriver: true,
-  }
+  const ringFadeAnim = useRef(new Animated.Value(1))
+  const checkFadeAnim = useRef(new Animated.Value(0))
   const style = StyleSheet.create({
     container: {
       alignItems: 'center',
       justifyContent: 'center',
-      // backgroundColor: 'red',
     },
     credential: {
       marginTop: 25,
@@ -29,7 +29,6 @@ const SentProof: React.FC = () => {
     ring: {
       flexGrow: 3,
       position: 'absolute',
-      // backgroundColor: 'yellow',
     },
     check: {
       position: 'absolute',
@@ -47,25 +46,22 @@ const SentProof: React.FC = () => {
   }
 
   useEffect(() => {
-    // Animated.loop(
     Animated.parallel([
-      Animated.timing(ringFadeAnim, ringFadeTiming),
-      Animated.timing(checkFadeAnim, checkFadeTiming),
+      Animated.timing(ringFadeAnim.current, ringFadeTiming),
+      Animated.timing(checkFadeAnim.current, checkFadeTiming),
     ]).start()
-    // ).start()
-    // Animated.loop(Animated.timing(rotationAnim, rotationTiming)).start()
   }, [])
 
   return (
     <View style={style.container}>
       <View style={{ alignItems: 'center' }}>
         <Assets.svg.credentialInHand style={style.credential} {...credentialInHandDisplayOptions} />
-        <Animated.View style={[{ opacity: checkFadeAnim }, style.check]}>
+        <Animated.View style={[{ opacity: checkFadeAnim.current }, style.check]}>
           <Assets.svg.checkInCircle {...{ height: 45, width: 45 }} />
         </Animated.View>
       </View>
       <View style={style.ring}>
-        <Animated.View style={{ opacity: ringFadeAnim }}>
+        <Animated.View style={{ opacity: ringFadeAnim.current }}>
           <Assets.svg.activityIndicator {...animatedCircleDisplayOptions} />
         </Animated.View>
       </View>
