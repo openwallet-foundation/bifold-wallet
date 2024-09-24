@@ -8,14 +8,15 @@ type RecordLoadingProps = {
   style?: StyleProp<ViewStyle>
 }
 
+const fadeTiming: Animated.TimingAnimationConfig = {
+  toValue: 0.4,
+  duration: 1100,
+  useNativeDriver: true,
+}
+
 const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
   const { ColorPallet } = useTheme()
-  const rowFadeAnim = useRef(new Animated.Value(1)).current
-  const fadeTiming: Animated.TimingAnimationConfig = {
-    toValue: 0.4,
-    duration: 1100,
-    useNativeDriver: true,
-  }
+  const rowFadeAnim = useRef(new Animated.Value(1))
   const myStyle = StyleSheet.create({
     container: {
       flexDirection: 'column',
@@ -29,14 +30,14 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
   })
 
   useEffect(() => {
-    Animated.loop(Animated.timing(rowFadeAnim, fadeTiming)).start()
-  }, [rowFadeAnim, fadeTiming])
+    Animated.loop(Animated.timing(rowFadeAnim.current, fadeTiming)).start()
+  }, [])
 
   return (
     <Animated.View
-      style={[{ opacity: rowFadeAnim, backgroundColor: ColorPallet.grayscale.white, borderRadius: 15 }, style]}
+      style={[{ opacity: rowFadeAnim.current, backgroundColor: ColorPallet.grayscale.white, borderRadius: 15 }, style]}
     >
-      <View style={[myStyle.container]} testID={testIdWithKey('RecordLoading')}>
+      <View style={myStyle.container} testID={testIdWithKey('RecordLoading')}>
         <View style={{ flexDirection: 'row' }}>
           <View
             style={{

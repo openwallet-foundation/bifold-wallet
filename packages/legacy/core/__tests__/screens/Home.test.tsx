@@ -21,17 +21,13 @@ describe('displays a home screen', () => {
   })
 
   test.skip('defaults to no notifications', async () => {
-    // @ts-ignore-next-line
+    // @ts-expect-error This is a mock object and the fn exists
     useBasicMessages.mockReturnValue({ records: [] as BasicMessageRecord[] })
-    // @ts-ignore-next-line
-    useCredentialByState.mockImplementation((state: string) => {
-      return useMemo(() => [] as CredentialRecord[], [state])
+    // @ts-expect-error This is a mock object and the fn exists
+    useCredentialByState.mockImplementation(() => {
+      return useMemo(() => [] as CredentialRecord[], [])
     })
-    // @ts-ignore-next-line
-    // useProofByState.mockImplementation((state: string) => {
-    //   return useMemo(() => [] as ProofExchangeRecord[], [state])
-    // })
-    // @ts-ignore-next-line
+    // @ts-expect-error This is a mock object and the fn exists
     useProofByState.mockReturnValue([] as ProofExchangeRecord[])
 
     const tree = render(

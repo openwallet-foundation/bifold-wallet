@@ -89,10 +89,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     },
   })
 
-  const onDismissModalTouched = () => {
+  const onDismissModalTouched = useCallback(() => {
     dispatch({ inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
+  }, [dispatch, navigation])
 
   useEffect(() => {
     if (!attestationMonitor) {
@@ -233,7 +233,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
       return
     }
-  }, [state])
+  }, [logger, navigation, state])
 
   useEffect(() => {
     if (!state.inProgress || state.notificationRecord) {

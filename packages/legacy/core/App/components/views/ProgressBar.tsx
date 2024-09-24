@@ -19,7 +19,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progressPercent }) => {
       duration: 300,
       useNativeDriver: true, // allows for much smoother animation
     }).start()
-  }, [progressPercent])
+  }, [progressBarScale, progressPercent])
 
   const styles = StyleSheet.create({
     progressBarContainer: {

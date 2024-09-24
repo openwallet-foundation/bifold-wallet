@@ -82,7 +82,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
         clearTimeout(timerRef.current)
       }
     }
-  }, [timeoutDurationInMs])
+  }, [timeoutDurationInMs, onTimeoutTriggered])
 
   return (
     <View testID={testID ?? testIdWithKey('LoadingPlaceholder')}>

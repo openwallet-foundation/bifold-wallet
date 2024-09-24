@@ -54,7 +54,7 @@ describe('Connection Screen', () => {
 
     expect(navigation.navigate).toBeCalledTimes(1)
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
-    // @ts-ignore-next-line
+    // @ts-expect-error This is a mock object and the fn exists
     expect(navigation.replace).toBeCalledTimes(0)
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
   })
@@ -79,7 +79,7 @@ describe('Connection Screen', () => {
       expect(view).not.toBeNull()
       expect(tree).toMatchSnapshot()
       expect(navigation.navigate).toBeCalledTimes(0)
-      // @ts-ignore-next-line
+      // @ts-expect-error This is a mock object and the fn exists
       expect(navigation.replace).toBeCalledTimes(0)
       expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
     })
@@ -125,7 +125,7 @@ describe('Connection Screen', () => {
     expect(button).not.toBeNull()
     expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-line
+    // @ts-expect-error This is a mock object and the fn exists
     expect(navigation.replace).toBeCalledTimes(0)
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
   })
@@ -151,7 +151,7 @@ describe('Connection Screen', () => {
     expect(view).not.toBeNull()
     // expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-line
+    // @ts-expect-error This is a mock object and the fn exists
     expect(navigation.replace).toBeCalledTimes(0)
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
   })
@@ -177,7 +177,7 @@ describe('Connection Screen', () => {
     expect(view).not.toBeNull()
     // expect(tree).toMatchSnapshot()
     expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-ignore-next-line
+    // @ts-expect-error This is a mock object and the fn exists
     expect(navigation.replace).toBeCalledTimes(0)
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
   })

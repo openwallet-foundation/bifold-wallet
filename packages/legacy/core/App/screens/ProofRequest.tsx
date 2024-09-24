@@ -8,7 +8,7 @@ import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -155,7 +155,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
       )
     }
-  }, [agent])
+  }, [agent, proof, t])
 
   useEffect(() => {
     if (!proof) {
@@ -164,7 +164,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
       )
     }
-  }, [proof])
+  }, [proof, t])
 
   const containsRevokedCreds = (
     credExRecords: CredentialExchangeRecord[],

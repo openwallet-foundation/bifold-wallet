@@ -295,7 +295,6 @@ const mockConnectionRecords = [
   }),
 ]
 
-// @ts-ignore-next-line
 const mockProofRecords = [
   new ProofExchangeRecord({
     id: 'c54dfe4e-925d-4b9a-9f2c-2adeb308c5de',
@@ -480,7 +479,6 @@ const agent = {
 //mocked react hooks should return singleton objects to avoid unecessary re-renderings
 const useAgent = jest.fn().mockReturnValue(agent)
 
-// @ts-ignore-next-line
 // const useCredentialById = jest.fn().mockReturnValue(mockCredentialModule.credentials[0] as CredentialExchangeRecord)
 const useCredentialById = jest.fn().mockImplementation((id: string) => {
   return mockCredentialModule.credentials.find((cred) => cred.id === id)
