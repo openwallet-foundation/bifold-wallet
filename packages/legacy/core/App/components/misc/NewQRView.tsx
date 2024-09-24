@@ -149,6 +149,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
       />
     ) : undefined
     let title = t('Scan.MyQRCode')
+
     if (firstTabActive) {
       headerRight = (
         <HeaderButton
@@ -163,9 +164,11 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
       )
       title = t('Scan.ScanQRCode')
     }
+
     if (!store.preferences.enableShareableLink) {
       headerRight = undefined
     }
+
     navigation.setOptions({ title, headerRight: () => headerRight })
   }, [invitation, t, firstTabActive, navigation, store.preferences.enableShareableLink])
 
