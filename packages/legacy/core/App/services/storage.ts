@@ -66,7 +66,7 @@ export class PersistentStorage<T> {
         await this.load()
       }
 
-      // @ts-expect-error Fix complicated type error
+      // @ts-expect-error Fix complicated type error.
       return this._state[key] as Partial<T>
     } catch (error) {
       this.log?.error(`Error loading state for key ${key}, ${error as Error}`)
