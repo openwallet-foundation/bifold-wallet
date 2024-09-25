@@ -18,6 +18,8 @@ export enum LocalStorageKeys {
   Preferences = 'PreferencesState',
   Migration = 'MigrationState',
   Tours = 'ToursState',
+  HistorySettingsOption = 'historySettingsOption',
+  Language = 'language',
 }
 
 export enum KeychainServices {

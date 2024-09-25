@@ -1,5 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import { LocalStorageKeys } from '../../constants'
 import { storeLoginAttempt } from '../../services/keychain'
 import {
@@ -13,6 +11,7 @@ import {
   State,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
+import { PersistentStorage } from '../../services/storage'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -121,7 +120,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, developerModeEnabled: choice }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return {
         ...state,
@@ -144,8 +143,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -165,8 +164,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -181,7 +180,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -196,7 +195,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -211,7 +210,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -226,7 +225,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -241,7 +240,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -256,7 +255,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -284,7 +283,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, enableWalletNaming: choice }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return {
         ...state,
@@ -303,7 +302,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -311,7 +310,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, preventAutoLock: choice }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return {
         ...state,
@@ -322,7 +321,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, enableShareableLink: choice }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return {
         ...state,
@@ -343,7 +342,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
 
       return newState
     }
@@ -392,7 +391,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
 
       return newState
     }
@@ -412,7 +411,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
 
       return newState
     }
@@ -432,7 +431,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
 
       return newState
     }
@@ -452,7 +451,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
 
       return newState
     }
@@ -472,7 +471,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
 
       return newState
     }
@@ -503,7 +502,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       return newState
     }
     case OnboardingDispatchAction.DID_COMPLETE_ONBOARDING: {
@@ -515,7 +514,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       return newState
     }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
@@ -534,7 +533,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       return newState
     }
     case OnboardingDispatchAction.DID_COMPLETE_TUTORIAL: {
@@ -546,7 +545,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       return newState
     }
     case OnboardingDispatchAction.DID_AGREE_TO_TERMS: {
@@ -560,7 +559,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
       return newState
     }
     case OnboardingDispatchAction.DID_CREATE_PIN: {
@@ -581,8 +580,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         onboarding,
         migration,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
-      AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
       return newState
     }
     case OnboardingDispatchAction.DID_NAME_WALLET: {
@@ -595,7 +594,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         onboarding,
       }
 
-      AsyncStorage.setItem(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
 
       return newState
     }
@@ -620,7 +619,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         migration,
       }
-      AsyncStorage.setItem(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
       return newState
     }
     case MigrationDispatchAction.MIGRATION_UPDATED: {

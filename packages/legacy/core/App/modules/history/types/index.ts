@@ -11,10 +11,6 @@ export interface IHistoryManager {
   getHistorySettingsOptionList: () => Array<HistoryBlockSelection>
 }
 
-export enum HistorySettingsOptionStorageKey {
-  HistorySettingsOption = 'historySettingsOption',
-}
-
 export interface HistoryBlockSelection {
   value: string
   id: string

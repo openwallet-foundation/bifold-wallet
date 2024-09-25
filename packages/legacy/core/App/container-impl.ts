@@ -1,7 +1,6 @@
 import { BaseLogger, Agent } from '@credo-ts/core'
 import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -32,6 +31,7 @@ import {
   State,
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
+  PersistentState,
 } from './types/state'
 import OnboardingPages from './screens/OnboardingPages'
 import UseBiometry from './screens/UseBiometry'
@@ -43,6 +43,7 @@ import Record from './components/record/Record'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
+import { PersistentStorage } from './services/storage'
 
 export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -60,10 +61,12 @@ export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
   private log?: BaseLogger
+  private storage: PersistentStorage<PersistentState>
 
   public constructor(container: DependencyContainer, log?: BaseLogger) {
     this._container = container
     this.log = log
+    this.storage = new PersistentStorage(log)
   }
 
   public get container(): DependencyContainer {
@@ -125,10 +128,10 @@ export class MainContainer implements Container {
     })
     this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
-        const data = await AsyncStorage.getItem(key)
+        const data = await this.storage.getValueForKey(key)
         if (data) {
-          const dataAsJSON = JSON.parse(data) as Type
-          updateVal(dataAsJSON)
+          // @ts-expect-error Fix complicated type error
+          updateVal(data)
         }
       }
 
