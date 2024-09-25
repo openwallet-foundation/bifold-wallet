@@ -1,5 +1,3 @@
-import type { StackScreenProps } from '@react-navigation/stack'
-
 import {
   AnonCredsCredentialsForProofRequest,
   AnonCredsRequestedAttributeMatch,
@@ -26,7 +24,6 @@ import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
-import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -37,7 +34,7 @@ import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
 import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { Screens, Stacks, TabStacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
@@ -60,8 +57,6 @@ type CredentialListProps = {
   items: ProofCredentialItems[]
 }
 
-// type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
-
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
@@ -76,7 +71,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [cancelModalVisible, setCancelModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
-  const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
   const outOfBandInvitation = useOutOfBandByReceivedInvitationId(proof?.parentThreadId ?? '')?.outOfBandInvitation
   const [containsPI, setContainsPI] = useState(false)
