@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../contexts/theme'
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connections'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
+import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 import ProofRequest from './ProofRequest'
 import CredentialOffer from './CredentialOffer'
 
@@ -271,10 +271,23 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
   }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch])
 
+  const loadingPlaceholderWorkflowType = () => {
+    if (state.shouldShowProofComponent) {
+      return LoadingPlaceholderWorkflowType.ProofRequested
+    }
+
+    if (state.shouldShowOfferComponent) {
+      return LoadingPlaceholderWorkflowType.ReceiveOffer
+    }
+
+    return LoadingPlaceholderWorkflowType.Connection
+  }
+
   const displayComponent = () => {
     if (state.inProgress || state.attestationLoading) {
       return (
         <LoadingPlaceholder
+          workflowType={loadingPlaceholderWorkflowType()}
           timeoutDurationInMs={connTimerDelay}
           loadingProgressPercent={state.percentComplete}
           onCancelTouched={onDismissModalTouched}

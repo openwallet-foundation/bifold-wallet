@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
 import Button, { ButtonType } from '../../components/buttons/Button'
@@ -10,7 +10,14 @@ import { InfoBoxType } from '.././misc/InfoBox'
 import ProgressBar from './ProgressBar'
 import RecordLoading from '../animated/RecordLoading'
 
+export const LoadingPlaceholderWorkflowType = {
+  Connection: 'Connection',
+  ReceiveOffer: 'ReceiveOffer',
+  ProofRequested: 'ProofRequested',
+} as const
+
 type LoadingPlaceholderProps = {
+  workflowType: (typeof LoadingPlaceholderWorkflowType)[keyof typeof LoadingPlaceholderWorkflowType]
   timeoutDurationInMs?: number
   loadingProgressPercent?: number
   onCancelTouched?: () => void
@@ -22,6 +29,7 @@ type LoadingPlaceholderProps = {
 // when the timeout is triggered.
 
 const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
+  workflowType,
   timeoutDurationInMs = 10000,
   loadingProgressPercent = 0,
   onCancelTouched,
@@ -84,12 +92,34 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
     }
   }, [timeoutDurationInMs, onTimeoutTriggered])
 
+  const textForProgressIndication = useCallback(() => {
+    switch (workflowType) {
+      case LoadingPlaceholderWorkflowType.Connection:
+        return t('LoadingPlaceholder.Connecting')
+      case LoadingPlaceholderWorkflowType.ProofRequested:
+        return t('LoadingPlaceholder.ProofRequest')
+      case LoadingPlaceholderWorkflowType.ReceiveOffer:
+        return t('LoadingPlaceholder.CredentialOffer')
+    }
+  }, [workflowType, t])
+
+  const textForWorkflowType = useCallback(() => {
+    switch (workflowType) {
+      case LoadingPlaceholderWorkflowType.ProofRequested:
+        return t('LoadingPlaceholder.YourRequest')
+      case LoadingPlaceholderWorkflowType.ReceiveOffer:
+        return t('LoadingPlaceholder.YourOffer')
+      default:
+        return t('LoadingPlaceholder.Connecting')
+    }
+  }, [workflowType, t])
+
   return (
     <View testID={testID ?? testIdWithKey('LoadingPlaceholder')}>
       {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
       <View style={styles.container}>
         <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
-          {'Some key step is going on'}
+          {textForProgressIndication()}
         </Text>
         <View>
           {overtime && (
@@ -100,19 +130,17 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
                     style={[styles.slowLoadTitle, { fontWeight: 'bold', marginBottom: 10 }]}
                     testID={testIdWithKey('SlowLoadTitle')}
                   >
-                    {'This is slower than usual'}
+                    {t('LoadingPlaceholder.SlowLoadingTitle')}
                   </Text>
                   <Text style={[styles.slowLoadBody]} testID={testIdWithKey('SlowLoadBody')}>
-                    {'Check your internet connection and try again. '}
+                    {t('LoadingPlaceholder.SlowLoadingBody')}
                   </Text>
                 </View>
               </InfoTextBox>
             </>
           )}
 
-          <Text style={[TextTheme.normal, { marginTop: 25, marginBottom: 10 }]}>
-            {"You'll be requested to share the following information."}
-          </Text>
+          <Text style={[TextTheme.normal, { marginTop: 25, marginBottom: 10 }]}>{textForWorkflowType()}</Text>
 
           <View style={styles.loadingAnimationContainer}>
             <RecordLoading />
