@@ -1,3 +1,5 @@
+import type { StackScreenProps } from '@react-navigation/stack'
+
 import {
   AnonCredsCredentialsForProofRequest,
   AnonCredsRequestedAttributeMatch,
@@ -10,7 +12,7 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -24,6 +26,7 @@ import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -32,8 +35,9 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
+import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
-import { Screens, Stacks, TabStacks } from '../types/navigators'
+import { NotificationStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
@@ -41,9 +45,9 @@ import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import { Fields, evaluatePredicates, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
 
 import ProofRequestAccept from './ProofRequestAccept'
-import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
 
 type ProofRequestProps = {
   navigation: any
@@ -56,6 +60,8 @@ type CredentialListProps = {
   items: ProofCredentialItems[]
 }
 
+// type ProofRequestProps = StackScreenProps<NotificationStackParams, Screens.ProofRequest>
+
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
@@ -66,15 +72,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
   const [descriptorMetadata, setDescriptorMetadata] = useState<DescriptorMetadata | undefined>()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [cancelModalVisible, setCancelModalVisible] = useState(false)
   const { ColorPallet, ListItems, TextTheme } = useTheme()
+  const { RecordLoading } = useAnimatedComponents()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
   const outOfBandInvitation = useOutOfBandByReceivedInvitationId(proof?.parentThreadId ?? '')?.outOfBandInvitation
   const [containsPI, setContainsPI] = useState(false)
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
+  const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const proofConnectionLabel = useMemo(
@@ -83,7 +91,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const [bundleResolver, { enableTours: enableToursConfig }] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.CONFIG])
+  const [bundleResolver, attestationMonitor, { enableTours: enableToursConfig }] = useServices([
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.UTIL_ATTESTATION_MONITOR,
+    TOKENS.CONFIG,
+  ])
+
   const hasMatchingCredDef = useMemo(
     () => activeCreds.some((cred) => cred.credExchangeRecord !== undefined),
     [activeCreds]
@@ -128,13 +141,45 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       textDecorationLine: 'underline',
     },
     cardLoading: {
+      backgroundColor: ColorPallet.brand.secondaryBackground,
       flex: 1,
       flexGrow: 1,
       marginVertical: 35,
       borderRadius: 15,
-      // paddingHorizontal: 10,
+      paddingHorizontal: 10,
     },
   })
+
+  useEffect(() => {
+    if (!attestationMonitor) {
+      return
+    }
+
+    const handleStartedAttestation = () => {
+      setAttestationLoading(true)
+    }
+
+    const handleStartedCompleted = () => {
+      setAttestationLoading(false)
+    }
+
+    const handleFailedAttestation = (error: BifoldError) => {
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    const subscriptions = Array<EmitterSubscription>()
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
+    subscriptions.push(
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
+    )
+
+    return () => {
+      subscriptions.forEach((subscription) => subscription.remove())
+    }
+  }, [attestationMonitor])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
@@ -156,15 +201,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       )
     }
   }, [agent, proof, t])
-
-  useEffect(() => {
-    if (!proof) {
-      DeviceEventEmitter.emit(
-        EventTypes.ERROR_ADDED,
-        new BifoldError(t('Error.Title1034'), t('Error.Message1034'), t('ProofRequest.ProofRequestNotFound'), 1034)
-      )
-    }
-  }, [proof, t])
 
   const containsRevokedCreds = (
     credExRecords: CredentialExchangeRecord[],
@@ -202,7 +238,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
   useEffect(() => {
     setLoading(true)
-
     credProofPromise
       ?.then((value: any) => {
         if (value) {
@@ -466,61 +501,79 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
   const proofPageHeader = () => {
     return (
-      <View style={[styles.pageMargin]}>
-        <>
-          <ConnectionImage connectionId={proof?.connectionId} />
-          <View style={styles.headerTextContainer}>
-            {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon
-                  style={{ marginLeft: -2, marginRight: 10 }}
-                  name="highlight-off"
-                  color={ListItems.proofIcon.color}
-                  size={ListItems.proofIcon.fontSize}
-                />
+      <View style={styles.pageMargin}>
+        {attestationLoading && (
+          <View style={{ paddingTop: 20 }}>
+            <InfoTextBox>{t('ProofRequest.JustAMoment')}</InfoTextBox>
+          </View>
+        )}
+        {loading || attestationLoading ? (
+          <View style={styles.cardLoading}>
+            <LoadingPlaceholder
+              timeoutDurationInMs={10000}
+              loadingProgressPercent={30}
+              onCancelTouched={async () => {
+                await handleDeclineTouched()
+              }}
+              testID={testIdWithKey('ProofRequestLoading')}
+            />
+          </View>
+        ) : (
+          <>
+            <ConnectionImage connectionId={proof?.connectionId} />
+            <View style={styles.headerTextContainer}>
+              {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon
+                    style={{ marginLeft: -2, marginRight: 10 }}
+                    name="highlight-off"
+                    color={ListItems.proofIcon.color}
+                    size={ListItems.proofIcon.fontSize}
+                  />
 
+                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                    {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
+                    <Text style={TextTheme.title}>
+                      {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                    </Text>
+                  </Text>
+                </View>
+              ) : (
                 <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
                   <Text style={TextTheme.title}>
                     {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
-                  </Text>
+                  </Text>{' '}
+                  <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
+                  <Text style={TextTheme.title}>{` ${activeCreds?.length} `}</Text>
+                  <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
-              </View>
-            ) : (
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                <Text style={TextTheme.title}>
-                  {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
-                </Text>{' '}
-                <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
-                <Text style={TextTheme.title}>{` ${activeCreds?.length} `}</Text>
-                <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
+              )}
+              {containsPI ? (
+                <InfoTextBox
+                  type={InfoBoxType.Warn}
+                  style={{ marginTop: 16 }}
+                  textStyle={{ fontSize: TextTheme.title.fontSize }}
+                >
+                  {t('ProofRequest.SensitiveInformation')}
+                </InfoTextBox>
+              ) : null}
+              {isShareDisabled() ? (
+                <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
+                  {t('ProofRequest.YouCantRespond')}
+                </InfoTextBox>
+              ) : null}
+            </View>
+            {!hasAvailableCredentials && hasMatchingCredDef && (
+              <Text
+                style={{
+                  ...TextTheme.title,
+                }}
+              >
+                {t('ProofRequest.FromYourWallet')}
               </Text>
             )}
-            {containsPI ? (
-              <InfoTextBox
-                type={InfoBoxType.Warn}
-                style={{ marginTop: 16 }}
-                textStyle={{ fontSize: TextTheme.title.fontSize }}
-              >
-                {t('ProofRequest.SensitiveInformation')}
-              </InfoTextBox>
-            ) : null}
-            {isShareDisabled() ? (
-              <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
-                {t('ProofRequest.YouCantRespond')}
-              </InfoTextBox>
-            ) : null}
-          </View>
-          {!hasAvailableCredentials && hasMatchingCredDef && (
-            <Text
-              style={{
-                ...TextTheme.title,
-              }}
-            >
-              {t('ProofRequest.FromYourWallet')}
-            </Text>
-          )}
-        </>
+          </>
+        )}
       </View>
     )
   }
@@ -552,7 +605,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
-        {isShareDisabled() ? (
+        {!loading && isShareDisabled() ? (
           <View style={styles.footerButton}>
             <Button
               title={t('Global.Cancel')}
@@ -602,7 +655,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         renderItem={({ item }) => {
           return (
             <View>
-              {loading ? null : (
+              {loading || attestationLoading ? null : (
                 <View style={{ marginTop: 10, marginHorizontal: 20 }}>
                   <CredentialCard
                     credential={item.credExchangeRecord}
@@ -624,7 +677,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                         : undefined
                     }
                     proof
-                  />
+                  ></CredentialCard>
                 </View>
               )}
             </View>
@@ -635,68 +688,55 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }
 
   return (
-    <SafeAreaView style={[styles.pageContainer, { position: 'relative' }]} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <ScrollView>
-        {loading ? (
-          <LoadingPlaceholder
-            timeoutDurationInMs={10000}
-            loadingProgressPercent={30}
-            onCancelTouched={async () => {
-              await handleDeclineTouched()
-            }}
-            testID={testIdWithKey('ProofRequestLoading')}
+        <View style={styles.pageContent}>
+          <CredentialList
+            header={proofPageHeader()}
+            footer={hasAvailableCredentials ? proofPageFooter() : undefined}
+            items={activeCreds.filter((cred) => cred.credExchangeRecord !== undefined) ?? []}
           />
-        ) : (
-          <>
-            <View style={[styles.pageContent]}>
-              <CredentialList
-                header={proofPageHeader()}
-                footer={hasAvailableCredentials ? proofPageFooter() : undefined}
-                items={activeCreds.filter((cred) => cred.credExchangeRecord !== undefined) ?? []}
-              />
-              {!hasAvailableCredentials && (
-                <CredentialList
-                  header={
-                    <View style={styles.pageMargin}>
-                      {!loading && (
-                        <>
-                          {hasMatchingCredDef && (
-                            <View
-                              style={{
-                                width: 'auto',
-                                borderWidth: 1,
-                                borderColor: ColorPallet.grayscale.lightGrey,
-                                marginTop: 20,
-                              }}
-                            />
-                          )}
-                          <Text
-                            style={{
-                              ...TextTheme.title,
-                              marginTop: 10,
-                            }}
-                          >
-                            {t('ProofRequest.MissingCredentials')}
-                          </Text>
-                        </>
+          {!hasAvailableCredentials && (
+            <CredentialList
+              header={
+                <View style={styles.pageMargin}>
+                  {!(loading || attestationLoading) && (
+                    <>
+                      {hasMatchingCredDef && (
+                        <View
+                          style={{
+                            width: 'auto',
+                            borderWidth: 1,
+                            borderColor: ColorPallet.grayscale.lightGrey,
+                            marginTop: 20,
+                          }}
+                        />
                       )}
-                    </View>
-                  }
-                  footer={proofPageFooter()}
-                  items={activeCreds.filter((cred) => cred.credExchangeRecord === undefined) ?? []}
-                />
-              )}
-            </View>
-            <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
-            <CommonRemoveModal
-              usage={ModalUsage.ProofRequestDecline}
-              visible={declineModalVisible}
-              onSubmit={handleDeclineTouched}
-              onCancel={toggleDeclineModalVisible}
+                      <Text
+                        style={{
+                          ...TextTheme.title,
+                          marginTop: 10,
+                        }}
+                      >
+                        {t('ProofRequest.MissingCredentials')}
+                      </Text>
+                    </>
+                  )}
+                </View>
+              }
+              footer={proofPageFooter()}
+              items={activeCreds.filter((cred) => cred.credExchangeRecord === undefined) ?? []}
             />
-            <ProofCancelModal visible={cancelModalVisible} onDone={onCancelDone} />
-          </>
-        )}
+          )}
+        </View>
+        <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
+        <CommonRemoveModal
+          usage={ModalUsage.ProofRequestDecline}
+          visible={declineModalVisible}
+          onSubmit={handleDeclineTouched}
+          onCancel={toggleDeclineModalVisible}
+        />
+        <ProofCancelModal visible={cancelModalVisible} onDone={onCancelDone} />
       </ScrollView>
     </SafeAreaView>
   )
