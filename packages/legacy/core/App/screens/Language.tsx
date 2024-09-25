@@ -55,7 +55,6 @@ const Language = () => {
   const handleLanguageChange = async (language: Language) => {
     await i18n.changeLanguage(language.id as Locales)
     await storeLanguage(language.id)
-    // const langId = await AsyncStorage.getItem('language')
   }
 
   return (

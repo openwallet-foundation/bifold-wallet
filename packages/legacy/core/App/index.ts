@@ -48,6 +48,7 @@ import Onboarding from './screens/Onboarding'
 import { PINRules } from './constants'
 import NotificationListItem from './components/listItems/NotificationListItem'
 
+export * from './services/storage'
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'

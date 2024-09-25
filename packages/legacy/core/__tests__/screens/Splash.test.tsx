@@ -7,7 +7,7 @@ import { AuthContext } from '../../App/contexts/auth'
 import { testDefaultState } from '../contexts/store'
 import { StoreProvider } from '../../App/contexts/store'
 import Splash from '../../App/screens/Splash'
-import AsyncStorage from '../../__mocks__/@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import authContext from '../contexts/auth'
 import { loadLoginAttempt } from '../../App/services/keychain'
 import { BasicAppContext } from '../helpers/app'
@@ -31,11 +31,11 @@ describe('Splash Screen', () => {
   })
   test('Renders default correctly', async () => {
     const tree = render(
-        <BasicAppContext>
-          <AuthContext.Provider value={authContext}>
-            <Splash />
-          </AuthContext.Provider>
-        </BasicAppContext>
+      <BasicAppContext>
+        <AuthContext.Provider value={authContext}>
+          <Splash />
+        </AuthContext.Provider>
+      </BasicAppContext>
     )
     await act(() => {
       jest.runAllTimers()
@@ -87,17 +87,17 @@ describe('Splash Screen', () => {
 
     await waitFor(() => {
       render(
-          <StoreProvider
-            initialState={{
-              ...testDefaultState,
-            }}
-          >
-            <BasicAppContext>
-              <AuthContext.Provider value={authContext}>
-                <Splash />
-              </AuthContext.Provider>
-            </BasicAppContext>
-          </StoreProvider>
+        <StoreProvider
+          initialState={{
+            ...testDefaultState,
+          }}
+        >
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <Splash />
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
       )
     })
 
