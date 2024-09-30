@@ -5,15 +5,16 @@ import { View, StyleSheet, Animated, Image } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 
+const timing: Animated.TimingAnimationConfig = {
+  toValue: 1,
+  duration: 2000,
+  useNativeDriver: true,
+}
+
 const LoadingIndicator: React.FC = () => {
   const { ColorPallet, Assets } = useTheme()
-  const rotationAnim = useRef(new Animated.Value(0)).current
-  const timing: Animated.TimingAnimationConfig = {
-    toValue: 1,
-    duration: 2000,
-    useNativeDriver: true,
-  }
-  const rotation = rotationAnim.interpolate({
+  const rotationAnim = useRef(new Animated.Value(0))
+  const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   })
@@ -29,8 +30,8 @@ const LoadingIndicator: React.FC = () => {
   }
 
   useEffect(() => {
-    Animated.loop(Animated.timing(rotationAnim, timing)).start()
-  }, [rotationAnim])
+    Animated.loop(Animated.timing(rotationAnim.current, timing)).start()
+  }, [])
 
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }} testID={testIdWithKey('LoadingActivityIndicator')}>

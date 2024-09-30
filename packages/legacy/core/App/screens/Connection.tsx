@@ -1,7 +1,7 @@
 import { BasicMessageRecord, CredentialExchangeRecord, ProofExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
-import { CommonActions, useFocusEffect } from '@react-navigation/native'
+import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
+import React, { useCallback, useEffect, useReducer, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AccessibilityInfo, BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -21,7 +21,6 @@ type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalSt
 
 type LocalState = {
   inProgress: boolean
-  isInitialized: boolean
   notificationRecord?: any
   shouldShowDelayMessage: boolean
 }
@@ -46,7 +45,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,
-    isInitialized: false,
     shouldShowDelayMessage: false,
     notificationRecord: undefined,
   })
@@ -77,28 +75,25 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     },
   })
 
-  const startTimer = () => {
-    if (!state.isInitialized) {
-      timerRef.current = setTimeout(() => {
-        dispatch({ shouldShowDelayMessage: true })
-        timerRef.current = null
-      }, connTimerDelay)
+  const startTimer = useCallback(() => {
+    timerRef.current = setTimeout(() => {
+      dispatch({ shouldShowDelayMessage: true })
+      timerRef.current = null
+    }, connTimerDelay)
 
-      dispatch({ isInitialized: true })
-    }
-  }
+  }, [dispatch, connTimerDelay])
 
-  const abortTimer = () => {
+  const abortTimer = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
       timerRef.current = null
     }
-  }
+  }, [])
 
-  const onDismissModalTouched = () => {
+  const onDismissModalTouched = useCallback(() => {
     dispatch({ shouldShowDelayMessage: false, inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
+  }, [dispatch, navigation])
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -114,7 +109,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
       }
     }
-  }, [state.shouldShowDelayMessage])
+  }, [state.shouldShowDelayMessage, state.notificationRecord, autoRedirectConnectionToHome, dispatch, navigation, t])
 
   useEffect(() => {
     if (!oobRecord || !state.inProgress) {
@@ -189,7 +184,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
       })
     )
-  }, [connection, oobRecord, state])
+  }, [oobRecord, state.inProgress, connection, logger, dispatch, navigation, state.notificationRecord])
 
   // This hook will monitor notification for openID type credentials where there is not connection or oobID present
   useEffect(() => {
@@ -208,19 +203,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
-  }, [state])
+  }, [state, logger, navigation])
 
-  useMemo(() => {
+  useEffect(() => {
     startTimer()
-    return () => abortTimer
-  }, [])
-
-  useFocusEffect(
-    useCallback(() => {
-      startTimer()
-      return () => abortTimer
-    }, [])
-  )
+    return () => abortTimer()
+  }, [startTimer, abortTimer])
 
   useEffect(() => {
     if (!state.inProgress || state.notificationRecord) {
@@ -255,7 +243,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
 
     }
-  }, [notifications, state])
+  }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch])
 
   return (
     <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>

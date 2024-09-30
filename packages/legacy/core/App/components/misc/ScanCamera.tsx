@@ -20,7 +20,7 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
     [OrientationType['PORTRAIT-UPSIDEDOWN']]: '180deg',
     [OrientationType['LANDSCAPE-RIGHT']]: '90deg',
   }
-  const invalidQrCodes = new Set<string>()
+  const [invalidQrCodes, setInvalidQrCodes] = useState(new Set<string>())
   const device = useCameraDevice('back')
   const screenAspectRatio = useWindowDimensions().scale
   const format = useCameraFormat(device, [
@@ -42,7 +42,7 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
       }
 
       if (error?.data === value) {
-        invalidQrCodes.add(value)
+        setInvalidQrCodes((prev) => new Set([...prev, value]))
         if (enableCameraOnError) {
           return setCameraActive(true)
         }
@@ -54,14 +54,14 @@ const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnErro
         return setCameraActive(false)
       }
     },
-    [cameraActive]
+    [invalidQrCodes, error, enableCameraOnError, cameraActive, handleCodeScan]
   )
 
   useEffect(() => {
     if (error?.data && enableCameraOnError) {
       setCameraActive(true)
     }
-  }, [error])
+  }, [error, enableCameraOnError])
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr'],

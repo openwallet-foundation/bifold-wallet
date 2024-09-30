@@ -1,6 +1,6 @@
 import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 import { PERMISSIONS, Permission, RESULTS, Rationale, check, request } from 'react-native-permissions'
@@ -33,7 +33,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     defaultToConnect = route.params['defaultToConnect']
   }
 
-  const handleInvitation = async (value: string): Promise<void> => {
+  const handleInvitation = useCallback(async (value: string): Promise<void> => {
     try {
       await connectFromScanOrDeepLink(
         value,
@@ -49,9 +49,9 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
       // throwing for QrCodeScanError
       throw error
     }
-  }
+  }, [agent, logger, navigation, enableImplicitInvitations, enableReuseConnections, t])
 
-  const handleCodeScan = async (value: string) => {
+  const handleCodeScan = useCallback(async (value: string) => {
     setQrCodeScanError(null)
     try {
       const uri = value
@@ -60,9 +60,9 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
       const error = new QrCodeScanError(t('Scan.InvalidQrCode'), value, (e as Error)?.message)
       setQrCodeScanError(error)
     }
-  }
+  }, [handleInvitation, t])
 
-  const permissionFlow = async (
+  const permissionFlow = useCallback(async (
     method: PermissionContract,
     permission: Permission,
     rationale?: Rationale
@@ -84,7 +84,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     }
 
     return false
-  }
+  }, [t])
 
   const requestCameraUse = async (rationale?: Rationale): Promise<boolean> => {
     if (Platform.OS === 'android') {
@@ -107,7 +107,7 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     }
 
     asyncEffect()
-  }, [])
+  }, [permissionFlow])
 
   if (loading) {
     return <LoadingView />

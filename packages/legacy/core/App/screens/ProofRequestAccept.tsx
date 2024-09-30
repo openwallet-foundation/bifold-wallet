@@ -68,7 +68,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
     if (proof.state === ProofState.Done || proof.state === ProofState.PresentationSent) {
       setProofDeliveryStatus(proof.state)
     }
-  }, [proof])
+  }, [proof, proofDeliveryStatus])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>

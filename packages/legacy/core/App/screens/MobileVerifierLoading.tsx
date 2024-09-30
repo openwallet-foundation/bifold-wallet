@@ -1,7 +1,7 @@
 import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import { isPresentationFailed, isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 
@@ -52,9 +52,9 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
     },
   })
 
-  const onDismissModalTouched = () => {
+  const onDismissModalTouched = useCallback(() => {
     navigation.pop()
-  }
+  }, [navigation])
 
   useEffect(() => {
     if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {
@@ -63,7 +63,7 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
       }
       navigation.replace(Screens.ProofDetails, { recordId: proofRecord.id })
     }
-  }, [proofRecord])
+  }, [proofRecord, goalCode, agent, connectionId, navigation])
 
   return (
     <Modal transparent animationType={'slide'}>

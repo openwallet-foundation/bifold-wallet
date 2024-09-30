@@ -64,7 +64,7 @@ describe('CredentialList Screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useCredentialByState will be replaced with a mock which does have this method
       useCredentialByState.mockImplementation((state) =>
         testCredentialRecords.credentials.filter((c) => c.state === state)
       )

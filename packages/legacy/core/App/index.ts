@@ -49,6 +49,7 @@ import { PINRules } from './constants'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 
+export * from './services/storage'
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'

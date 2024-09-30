@@ -145,13 +145,13 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay({
-        ...overlay,
+      setOverlay(o => ({
+        ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as LegacyBrandingOverlay,
-      })
+      }))
     })
-  }, [])
+  }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])
 
   useEffect(() => {
     setIsRevoked(credential.revocationNotification !== undefined)

@@ -130,53 +130,53 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
       setRecordId(result.record.id)
       setInvitation(result.invitationUrl)
     }
-  }, [])
+  }, [agent])
 
-  const handleEdit = () => {
+  const handleEdit = useCallback(() => {
     navigation.navigate(Screens.NameWallet)
-  }
-  const scanPasteUrl = () => (
-    <HeaderButton
-      buttonLocation={ButtonLocation.Right}
-      accessibilityLabel={t('Global.Share')}
-      testID={testIdWithKey('ShareButton')}
-      onPress={() => {
-        navigation.navigate(Screens.PasteUrl)
-      }}
-      icon="link"
-    />
-  )
-
-  const scanShareUrl = () => (
-    <HeaderButton
-      buttonLocation={ButtonLocation.Right}
-      accessibilityLabel={t('Global.Share')}
-      testID={testIdWithKey('ShareButton')}
-      onPress={() => {
-        Share.share({ message: invitation ?? '' })
-      }}
-      icon="share-variant"
-    />
-  )
+  }, [navigation])
 
   useEffect(() => {
-    let headerRight = invitation ? scanShareUrl : undefined
+    let headerRight = invitation ? (
+      <HeaderButton
+        buttonLocation={ButtonLocation.Right}
+        accessibilityLabel={t('Global.Share')}
+        testID={testIdWithKey('ShareButton')}
+        onPress={() => {
+          Share.share({ message: invitation ?? '' })
+        }}
+        icon="share-variant"
+      />
+    ) : undefined
     let title = t('Scan.MyQRCode')
+
     if (firstTabActive) {
-      headerRight = scanPasteUrl
+      headerRight = (
+        <HeaderButton
+          buttonLocation={ButtonLocation.Right}
+          accessibilityLabel={t('Global.Share')}
+          testID={testIdWithKey('ShareButton')}
+          onPress={() => {
+            navigation.navigate(Screens.PasteUrl)
+          }}
+          icon="link"
+        />
+      )
       title = t('Scan.ScanQRCode')
     }
+
     if (!store.preferences.enableShareableLink) {
       headerRight = undefined
     }
-    navigation.setOptions({ title, headerRight })
-  }, [firstTabActive, invitation, store.preferences.enableShareableLink])
+
+    navigation.setOptions({ title, headerRight: () => headerRight })
+  }, [invitation, t, firstTabActive, navigation, store.preferences.enableShareableLink])
 
   useEffect(() => {
     if (!firstTabActive) {
       createInvitation()
     }
-  }, [firstTabActive, store.preferences.walletName])
+  }, [firstTabActive, createInvitation, store.preferences.walletName])
 
   const record = useConnectionByOutOfBandId(recordId || '')
 
@@ -187,11 +187,11 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
         params: { oobRecordId: recordId },
       })
     }
-  }, [record])
+  }, [record, navigation, recordId])
 
   const styleForState = ({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.2 : 1 }]
 
-  const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
+  const toggleShowInfoBox = useCallback(() => setShowInfoBox((prev) => !prev), [])
 
   return (
     <>

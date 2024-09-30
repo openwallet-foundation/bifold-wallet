@@ -113,7 +113,7 @@ describe('ProofRequesting Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    // @ts-ignore
+    // @ts-expect-error useConnections will be replaced with a mock which does have this method
     useConnections.mockReturnValue({ records: [testContactRecord1, testContactRecord2] })
     jest.spyOn(verifier, 'createConnectionlessProofRequestInvitation').mockReturnValue(Promise.resolve(data))
     jest.spyOn(proofRequestTemplatesHooks, 'useTemplate').mockReturnValue(template)
