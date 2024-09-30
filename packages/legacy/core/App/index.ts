@@ -51,6 +51,7 @@ export * from './navigators'
 export * from './services/storage'
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
+export * from './services/storage'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
@@ -88,6 +89,7 @@ export type {
   IAssets,
   ITheme,
 } from './theme'
+export type { PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
