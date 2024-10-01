@@ -501,6 +501,7 @@ describe('displays a proof request screen', () => {
         timeTravel(1000)
       })
 
+      // fails
       const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })

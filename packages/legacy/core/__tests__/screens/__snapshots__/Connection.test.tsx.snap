@@ -69,6 +69,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                         onCancelTouched={[Function]}
                         testID="com.ariesbifold:id/ProofRequestLoading"
                         timeoutDurationInMs={10000}
+                        workflowType="ProofRequested"
                       />
                     </View>
                   </View>
@@ -177,7 +178,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                 ]
                               }
                             >
-                              Some key step is going on
+                              LoadingPlaceholder.ProofRequest
                             </Text>
                             <View>
                               <Text
@@ -195,7 +196,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                   ]
                                 }
                               >
-                                You'll be requested to share the following information.
+                                LoadingPlaceholder.YourRequest
                               </Text>
                               <View
                                 style={

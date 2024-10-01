@@ -42,7 +42,7 @@ import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import { Fields, evaluatePredicates, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import LoadingPlaceholder from '../components/views/LoadingPlaceholder'
+import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 
 import ProofRequestAccept from './ProofRequestAccept'
 
@@ -504,6 +504,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         {loading || attestationLoading ? (
           <View style={styles.cardLoading}>
             <LoadingPlaceholder
+              workflowType={LoadingPlaceholderWorkflowType.ProofRequested}
               timeoutDurationInMs={10000}
               loadingProgressPercent={30}
               onCancelTouched={async () => {
