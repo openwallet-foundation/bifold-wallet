@@ -46,6 +46,7 @@ import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { PINRules, walletTimeout } from './constants'
+import { CredentialListFooterProps } from './types/credential-list-footer'
 
 export * from './navigators'
 export * from './services/storage'
@@ -105,6 +106,7 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
 
