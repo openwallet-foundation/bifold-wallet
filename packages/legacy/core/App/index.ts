@@ -47,6 +47,7 @@ import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { PINRules } from './constants'
 import NotificationListItem from './components/listItems/NotificationListItem'
+import { CredentialListFooterProps } from './types/credential-list-footer'
 
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
@@ -103,6 +104,7 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
 
