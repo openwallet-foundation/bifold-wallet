@@ -120,7 +120,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, developerModeEnabled: choice }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return {
         ...state,
@@ -143,8 +143,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, onboarding)
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -164,8 +164,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, onboarding)
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -180,7 +180,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -195,7 +195,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -210,7 +210,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -225,7 +225,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -240,7 +240,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -255,7 +255,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -283,7 +283,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, enableWalletNaming: choice }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return {
         ...state,
@@ -302,7 +302,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -310,7 +310,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, preventAutoLock: choice }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return {
         ...state,
@@ -321,7 +321,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const choice = (action?.payload ?? []).pop() ?? false
       const preferences = { ...state.preferences, enableShareableLink: choice }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return {
         ...state,
@@ -342,7 +342,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, JSON.stringify(preferences))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
     }
@@ -391,7 +391,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, tours)
 
       return newState
     }
@@ -411,7 +411,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, tours)
 
       return newState
     }
@@ -431,7 +431,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, tours)
 
       return newState
     }
@@ -451,7 +451,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, tours)
 
       return newState
     }
@@ -471,7 +471,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         tours,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, JSON.stringify(tours))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Tours, tours)
 
       return newState
     }
@@ -502,7 +502,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       return newState
     }
     case OnboardingDispatchAction.DID_COMPLETE_ONBOARDING: {
@@ -514,7 +514,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       return newState
     }
     case OnboardingDispatchAction.ONBOARDING_UPDATED: {
@@ -533,7 +533,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       return newState
     }
     case OnboardingDispatchAction.DID_COMPLETE_TUTORIAL: {
@@ -545,7 +545,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       return newState
     }
     case OnboardingDispatchAction.DID_AGREE_TO_TERMS: {
@@ -559,7 +559,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         onboarding,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       return newState
     }
     case OnboardingDispatchAction.DID_CREATE_PIN: {
@@ -580,8 +580,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         onboarding,
         migration,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(newState.onboarding))
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, newState.migration)
       return newState
     }
     case OnboardingDispatchAction.DID_NAME_WALLET: {
@@ -594,7 +594,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         onboarding,
       }
 
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, JSON.stringify(onboarding))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, onboarding)
 
       return newState
     }
@@ -619,7 +619,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state,
         migration,
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, JSON.stringify(newState.migration))
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, newState.migration)
       return newState
     }
     case MigrationDispatchAction.MIGRATION_UPDATED: {
