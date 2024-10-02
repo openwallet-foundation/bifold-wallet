@@ -10,7 +10,6 @@ import {
 import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
 import { useEffect, useState } from 'react'
-// import { log } from 'console'
 
 import {
   BasicMessageMetadata,

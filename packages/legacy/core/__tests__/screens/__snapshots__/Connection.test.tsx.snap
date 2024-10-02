@@ -236,9 +236,8 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                         style={
                                           Object {
                                             "backgroundColor": "#D3D3D3",
-                                            "borderBottomLeftRadius": 15,
-                                            "borderTopLeftRadius": 15,
-                                            "marginLeft": 0,
+                                            "borderBottomLeftRadius": 10,
+                                            "borderTopLeftRadius": 10,
                                             "width": 40,
                                           }
                                         }
@@ -247,17 +246,18 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                         style={
                                           Object {
                                             "backgroundColor": "#D3D3D3",
-                                            "borderRadius": 5,
-                                            "height": 45,
-                                            "marginLeft": -22,
-                                            "marginTop": 20,
-                                            "width": 45,
+                                            "borderRadius": 10,
+                                            "height": 90,
+                                            "marginLeft": -52.5,
+                                            "marginTop": 37.5,
+                                            "width": 90,
                                           }
                                         }
                                       />
                                       <View
                                         style={
                                           Object {
+                                            "flexGrow": 1,
                                             "marginBottom": 15,
                                             "marginLeft": 15,
                                             "marginTop": 15,
@@ -275,7 +275,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               },
                                               Object {
                                                 "height": 20,
-                                                "width": 240,
+                                                "width": "100%",
                                               },
                                             ]
                                           }
@@ -291,7 +291,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               },
                                               Object {
                                                 "height": 25,
-                                                "width": 145,
+                                                "width": "75%",
                                               },
                                             ]
                                           }
@@ -308,7 +308,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               Object {
                                                 "height": 20,
                                                 "marginTop": 20,
-                                                "width": 75,
+                                                "width": "35%",
                                               },
                                             ]
                                           }
@@ -324,7 +324,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               },
                                               Object {
                                                 "height": 25,
-                                                "width": 210,
+                                                "width": "90%",
                                               },
                                             ]
                                           }
@@ -363,9 +363,8 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                         style={
                                           Object {
                                             "backgroundColor": "#D3D3D3",
-                                            "borderBottomLeftRadius": 15,
-                                            "borderTopLeftRadius": 15,
-                                            "marginLeft": 0,
+                                            "borderBottomLeftRadius": 10,
+                                            "borderTopLeftRadius": 10,
                                             "width": 40,
                                           }
                                         }
@@ -374,17 +373,18 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                         style={
                                           Object {
                                             "backgroundColor": "#D3D3D3",
-                                            "borderRadius": 5,
-                                            "height": 45,
-                                            "marginLeft": -22,
-                                            "marginTop": 20,
-                                            "width": 45,
+                                            "borderRadius": 10,
+                                            "height": 90,
+                                            "marginLeft": -52.5,
+                                            "marginTop": 37.5,
+                                            "width": 90,
                                           }
                                         }
                                       />
                                       <View
                                         style={
                                           Object {
+                                            "flexGrow": 1,
                                             "marginBottom": 15,
                                             "marginLeft": 15,
                                             "marginTop": 15,
@@ -402,7 +402,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               },
                                               Object {
                                                 "height": 20,
-                                                "width": 240,
+                                                "width": "100%",
                                               },
                                             ]
                                           }
@@ -418,7 +418,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               },
                                               Object {
                                                 "height": 25,
-                                                "width": 145,
+                                                "width": "75%",
                                               },
                                             ]
                                           }
@@ -435,7 +435,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               Object {
                                                 "height": 20,
                                                 "marginTop": 20,
-                                                "width": 75,
+                                                "width": "35%",
                                               },
                                             ]
                                           }
@@ -451,7 +451,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                               },
                                               Object {
                                                 "height": 25,
-                                                "width": 210,
+                                                "width": "90%",
                                               },
                                             ]
                                           }

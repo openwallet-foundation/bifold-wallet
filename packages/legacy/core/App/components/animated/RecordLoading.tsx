@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleProp, ViewStyle, View, StyleSheet, Animated } from 'react-native'
+import { StyleProp, ViewStyle, View, StyleSheet, Animated, useWindowDimensions } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
@@ -14,7 +14,12 @@ const fadeTiming: Animated.TimingAnimationConfig = {
   useNativeDriver: true,
 }
 
+const borderRadius = 10
+
 const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
+  const { width } = useWindowDimensions()
+  const padding = width * 0.05
+  const logoHeight = width * 0.12
   const { ColorPallet } = useTheme()
   const rowFadeAnim = useRef(new Animated.Value(1))
   const myStyle = StyleSheet.create({
@@ -25,7 +30,21 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
       backgroundColor: ColorPallet.grayscale.lightGrey,
       height: 30,
       marginVertical: 5,
-      borderRadius: 10,
+      borderRadius,
+    },
+    margin: {
+      backgroundColor: ColorPallet.grayscale.lightGrey,
+      width: 40,
+      borderTopLeftRadius: borderRadius,
+      borderBottomLeftRadius: borderRadius,
+    },
+    logo: {
+      marginLeft: -1 * logoHeight + padding,
+      marginTop: padding,
+      backgroundColor: ColorPallet.grayscale.lightGrey,
+      height: logoHeight,
+      width: logoHeight,
+      borderRadius,
     },
   })
 
@@ -39,30 +58,13 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
     >
       <View style={myStyle.container} testID={testIdWithKey('RecordLoading')}>
         <View style={{ flexDirection: 'row' }}>
-          <View
-            style={{
-              marginLeft: 0,
-              backgroundColor: ColorPallet.grayscale.lightGrey,
-              width: 40,
-              borderTopLeftRadius: 15,
-              borderBottomLeftRadius: 15,
-            }}
-          />
-          <View
-            style={{
-              marginLeft: -22,
-              marginTop: 20,
-              backgroundColor: ColorPallet.grayscale.lightGrey,
-              height: 45,
-              width: 45,
-              borderRadius: 5,
-            }}
-          />
-          <View style={{ marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
-            <View style={[myStyle.rectangle, { width: 240, height: 20 }]} />
-            <View style={[myStyle.rectangle, { width: 145, height: 25 }]} />
-            <View style={[myStyle.rectangle, { width: 75, height: 20, marginTop: 20 }]} />
-            <View style={[myStyle.rectangle, { width: 210, height: 25 }]} />
+          <View style={myStyle.margin} />
+          <View style={myStyle.logo} />
+          <View style={{ flexGrow: 1, marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
+            <View style={[myStyle.rectangle, { width: '100%', height: 20 }]} />
+            <View style={[myStyle.rectangle, { width: '75%', height: 25 }]} />
+            <View style={[myStyle.rectangle, { width: '35%', height: 20, marginTop: 20 }]} />
+            <View style={[myStyle.rectangle, { width: '90%', height: 25 }]} />
           </View>
         </View>
       </View>
