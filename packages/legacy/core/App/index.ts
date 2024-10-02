@@ -28,12 +28,12 @@ import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
 import HomeFooterView from './components/views/HomeFooterView'
+import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
-import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
@@ -45,16 +45,18 @@ import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
-import { PINRules } from './constants'
-import NotificationListItem from './components/listItems/NotificationListItem'
+import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 
+export * from './navigators'
+export * from './services/storage'
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
 export * from './services/storage'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
+export { useDeepLinks } from './hooks/deep-links'
 export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
@@ -71,7 +73,7 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { didMigrateToAskar, migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
-export { removeExistingInvitationIfRequired } from './utils/helpers'
+export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink } from './utils/helpers'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
@@ -135,7 +137,6 @@ export {
   Link,
   ToastType,
   toastConfig,
-  RootStack,
   NetInfo,
   OnboardingPages,
   NotificationListItem,
@@ -157,5 +158,6 @@ export {
   Button,
   BulletPoint,
   PINRules,
+  walletTimeout,
 }
 export type { IButton }
