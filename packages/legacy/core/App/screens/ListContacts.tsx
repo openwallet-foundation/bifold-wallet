@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, View } from 'react-native'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
+import ButtonWithIcon, { ButtonLocation } from '../components/buttons/ButtonWithIcon'
 import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyListContacts from '../components/misc/EmptyListContacts'
 import { EventTypes } from '../constants'
@@ -74,7 +74,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
     if (store.preferences.useConnectionInviterCapability) {
       navigation.setOptions({
         headerRight: () => (
-          <HeaderButton
+          <ButtonWithIcon
             buttonLocation={ButtonLocation.Right}
             accessibilityLabel={t('Contacts.AddContact')}
             testID={testIdWithKey('AddContact')}

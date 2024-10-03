@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
+import ButtonWithIcon, { ButtonLocation } from '../components/buttons/ButtonWithIcon'
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
@@ -53,7 +53,7 @@ const ProofRequestStack: React.FC = () => {
         options={({ navigation }) => ({
           title: t('ProofRequest.RequestForProof'),
           headerLeft: () => (
-            <HeaderButton
+            <ButtonWithIcon
               buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
               testID={testIdWithKey('BackButton')}
@@ -69,7 +69,7 @@ const ProofRequestStack: React.FC = () => {
         options={({ navigation, route }) => ({
           title: '',
           headerLeft: () => (
-            <HeaderButton
+            <ButtonWithIcon
               buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
               testID={testIdWithKey('BackButton')}

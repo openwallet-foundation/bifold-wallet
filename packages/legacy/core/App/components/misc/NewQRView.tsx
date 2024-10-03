@@ -16,7 +16,7 @@ import { ConnectStackParams, Screens, Stacks } from '../../types/navigators'
 import { createConnectionInvitation } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
-import HeaderButton, { ButtonLocation } from '../buttons/HeaderButton'
+import ButtonWithIcon, { ButtonLocation } from '../buttons/ButtonWithIcon'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 
@@ -138,7 +138,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
 
   useEffect(() => {
     let headerRight = invitation ? (
-      <HeaderButton
+      <ButtonWithIcon
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={t('Global.Share')}
         testID={testIdWithKey('ShareButton')}
@@ -152,7 +152,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
 
     if (firstTabActive) {
       headerRight = (
-        <HeaderButton
+        <ButtonWithIcon
           buttonLocation={ButtonLocation.Right}
           accessibilityLabel={t('Global.Share')}
           testID={testIdWithKey('ShareButton')}
@@ -312,7 +312,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                   <Text testID={testIdWithKey('WalletName')} style={[styles.walletName, { paddingHorizontal: 20 }]}>
                     {store.preferences.walletName}
                   </Text>
-                  <HeaderButton
+                  <ButtonWithIcon
                     buttonLocation={ButtonLocation.Right}
                     accessibilityLabel={t('NameWallet.EditWalletName')}
                     testID={testIdWithKey('EditWalletName')}

@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderButton, { ButtonLocation } from '../../../../components/buttons/HeaderButton'
+import ButtonWithIcon, { ButtonLocation } from '../../../../components/buttons/ButtonWithIcon'
 import { RootStackParams, Screens, Stacks } from '../../../../types/navigators'
 import { testIdWithKey } from '../../../../utils/testable'
 
@@ -12,7 +12,7 @@ const HistoryMenu: React.FC = () => {
   const { t } = useTranslation()
 
   return (
-    <HeaderButton
+    <ButtonWithIcon
       buttonLocation={ButtonLocation.Right}
       accessibilityLabel={t('Screens.Settings')}
       testID={testIdWithKey('Settings')}

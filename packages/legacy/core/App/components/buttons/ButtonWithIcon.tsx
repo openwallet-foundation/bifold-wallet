@@ -12,7 +12,7 @@ export enum ButtonLocation {
   Right,
 }
 
-interface HeaderButtonProps {
+interface ButtonWithIconProps {
   buttonLocation: ButtonLocation
   accessibilityLabel: string
   testID: string
@@ -22,7 +22,7 @@ interface HeaderButtonProps {
   iconTintColor?: string
 }
 
-const HeaderButton: React.FC<HeaderButtonProps> = ({
+const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
   buttonLocation,
   icon,
   text,
@@ -83,4 +83,4 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
   )
 }
 
-export default HeaderButton
+export default ButtonWithIcon

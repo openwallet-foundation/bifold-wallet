@@ -6,14 +6,14 @@ import { useTranslation } from 'react-i18next'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
-import HeaderButton, { ButtonLocation } from './HeaderButton'
+import ButtonWithIcon, { ButtonLocation } from './ButtonWithIcon'
 
 const SettingsMenu: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { t } = useTranslation()
 
   return (
-    <HeaderButton
+    <ButtonWithIcon
       buttonLocation={ButtonLocation.Left}
       accessibilityLabel={t('Screens.Settings')}
       testID={testIdWithKey('Settings')}
