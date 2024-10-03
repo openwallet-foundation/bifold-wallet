@@ -1,11 +1,12 @@
 import { CredentialState } from '@credo-ts/core'
-import { useCredentialByState } from '@credo-ts/react-hooks'
+import { useAgent, useCredentialByState } from '@credo-ts/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
+import InactivityWrapper, { LockOutTime } from '../misc/InactivityWrapper'
 
 const offset = 25
 
@@ -18,7 +19,8 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
-  const [{useNotifications}] = useServices([TOKENS.NOTIFICATIONS])
+  const [{ useNotifications }] = useServices([TOKENS.NOTIFICATIONS])
+  const { agent } = useAgent()
   const notifications = useNotifications({})
   const { HomeTheme, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -33,6 +35,8 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
       justifyContent: 'center',
       marginTop: 35,
       marginHorizontal: offset,
+      borderColor: 'red',
+      borderWidth: 1,
     },
   })
 
@@ -63,16 +67,29 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
 
     return (
       <>
-        {notifications.length === 0 && (
-          <View style={styles.messageContainer}>
-            <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-              {t('Home.Welcome')}
-            </Text>
-          </View>
-        )}
-        <View style={styles.messageContainer}>
-          <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
-        </View>
+        <InactivityWrapper
+          timeoutLength={LockOutTime.OneMinute}
+          timeoutAction={async () => {
+            console.log('Timeout has finished, close wallet')
+            // await agent?.wallet.close()
+          }}
+        >
+          {notifications.length === 0 && (
+            <View style={styles.messageContainer}>
+              <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+                {t('Home.Welcome')}
+              </Text>
+            </View>
+          )}
+          <TouchableOpacity
+            style={{ margin: 10, padding: 10, borderColor: 'blue', borderWidth: 1 }}
+            onPress={() => {
+              console.log('I was touched!')
+            }}
+          >
+            <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+          </TouchableOpacity>
+        </InactivityWrapper>
       </>
     )
   }
