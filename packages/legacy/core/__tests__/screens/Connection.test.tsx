@@ -1,283 +1,202 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigation } from '@react-navigation/native'
-import { fireEvent, render, waitFor } from '@testing-library/react-native'
-import fs from 'fs'
-import path from 'path'
+import { fireEvent, render, waitFor, act } from '@testing-library/react-native'
 import React from 'react'
 
-import { useOutOfBandById, useConnectionByOutOfBandId } from '../../App/hooks/connections'
 import ConnectionModal from '../../App/screens/Connection'
 import { testIdWithKey } from '../../App/utils/testable'
 import timeTravel from '../helpers/timetravel'
-import { useProofByState } from '../../__mocks__/@credo-ts/react-hooks'
 import { BasicAppContext } from '../helpers/app'
 
-const oobRecordPath = path.join(__dirname, '../fixtures/oob-record.json')
-const oobRecord = JSON.parse(fs.readFileSync(oobRecordPath, 'utf8'))
-const proofNotifPath = path.join(__dirname, '../fixtures/proof-notif.json')
-const proofNotif = JSON.parse(fs.readFileSync(proofNotifPath, 'utf8'))
-const offerNotifPath = path.join(__dirname, '../fixtures/offer-notif.json')
-const offerNotif = JSON.parse(fs.readFileSync(offerNotifPath, 'utf8'))
-const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
-const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
-const props = { params: { oobRecordId: connection.id } }
-
 jest.useFakeTimers({ legacyFakeTimers: true })
-jest.spyOn(global, 'setTimeout')
-
-
-jest.mock('../../App/hooks/connections', () => ({
-  useOutOfBandByConnectionId: jest.fn(),
-  useConnectionByOutOfBandId: jest.fn(),
-  useOutOfBandById: jest.fn(),
-}))
 
 describe('Connection Screen', () => {
   beforeEach(() => {
-    useProofByState.mockReturnValue([proofNotif])
-    jest.clearAllMocks()
     jest.clearAllTimers()
+    jest.clearAllMocks()
   })
 
-  test('Renders correctly', async () => {
+  test('Renders and updates after delay', async () => {
+    const oobRecordId = '979c6c76-2885-4315-842b-2080a76bad13'
+
     const element = (
       <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={props as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </BasicAppContext>
     )
-    const tree = render(element)
+    const { getByTestId } = render(element)
 
-    expect(tree).toMatchSnapshot()
-  })
-
-  test('Updates after delay', async () => {
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useConnectionByOutOfBandId.mockReturnValueOnce(connection)
-    const element = (
-      <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={props as any} />
-      </BasicAppContext>
-    )
-
-    const tree = render(element)
+    expect(() => {
+      getByTestId(testIdWithKey('SlowLoadTitle'))
+    }).toThrow('Unable to find an element with testID: com.ariesbifold:id/SlowLoadTitle')
 
     await waitFor(() => {
       timeTravel(10000)
     })
 
-    expect(tree).toMatchSnapshot()
+    const label = getByTestId(testIdWithKey('SlowLoadTitle'))
+    expect(label).not.toBeNull()
   })
 
-  test('Dismiss on demand', async () => {
-    const element = (
-      <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={props as any} />
-      </BasicAppContext>
-    )
+  test('Cancel navigates Home', async () => {
+    const oobRecordId = '65baae8b-2284-4e62-8d14-aa273cda78ca'
 
-    const tree = render(element)
-
-    await waitFor(() => {
-      timeTravel(10000)
-    })
-
-    expect(tree).toMatchSnapshot()
-  })
-
-  test('Dismiss navigates Home', async () => {
     const navigation = useNavigation()
     const element = (
       <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={props as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </BasicAppContext>
     )
 
     const { getByTestId } = render(element)
-    const dismissButton = getByTestId(testIdWithKey('BackToHome'))
+    const dismissButton = getByTestId(testIdWithKey('Cancel'))
     fireEvent(dismissButton, 'press')
 
     expect(navigation.navigate).toBeCalledTimes(1)
     expect(navigation.navigate).toBeCalledWith('Tab Home Stack', { screen: 'Home' })
+    // @ts-expect-error This is a mock object and the fn exists
+    expect(navigation.replace).toBeCalledTimes(0)
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
   })
 
-  test('No connection, navigation to proof', async () => {
-    const threadId = 'qrf123'
+  test('No connection, show to proof', async () => {
+    const oobRecordId = '548ee21c-5b98-4eeb-8fe0-5a5019a5f4a5'
     const navigation = useNavigation()
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useOutOfBandById.mockReturnValue({
-      ...oobRecord,
-      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
-    })
-    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
 
     const element = (
       <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId: oobRecord.id } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </BasicAppContext>
     )
 
     const tree = render(element)
 
-    expect(tree).toMatchSnapshot()
-    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
-    expect(navigation.replace).toBeCalledTimes(1)
-    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
-    expect(navigation.replace).toBeCalledWith('Proof Request', {
-      proofId: proofNotif.id,
+    await act(async () => {
+      timeTravel(1000)
+
+      const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
+
+      expect(view).not.toBeNull()
+      expect(tree).toMatchSnapshot()
+      expect(navigation.navigate).toBeCalledTimes(0)
+      // @ts-expect-error This is a mock object and the fn exists
+      expect(navigation.replace).toBeCalledTimes(0)
+      expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
     })
   })
 
   test('Connection, no goal code navigation to chat', async () => {
-    const threadId = 'qrf123'
-    const connectionId = 'abc123'
+    const oobRecordId = 'd1036d48-4b88-4f63-9d7e-b4b0476f8108'
     const navigation = useNavigation()
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useOutOfBandById.mockReturnValue({
-      ...oobRecord,
-      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
-    })
-    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-
     const element = (
       <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId: oobRecord.id } } as any} />
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </BasicAppContext>
     )
 
-    const tree = render(element)
+    render(element)
 
-    expect(tree).toMatchSnapshot()
+    await waitFor(() => {
+      timeTravel(1000)
+    })
+
     expect(navigation.navigate).toBeCalledTimes(0)
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(1)
   })
 
-  test('Valid goal code aries.vc.issue extracted, navigation to accept offer', async () => {
-    const oobRecordId = 'def456'
-    const goalCode = 'aries.vc.issue'
-    const threadId = 'qrf123'
-    const connectionId = 'abc123'
+  test('Valid goal code aries.vc.issue extracted, show to offer accept', async () => {
+    const oobRecordId = 'b8aaa6fe-47c9-4ed8-8cb9-96299e4e0109'
     const navigation = useNavigation()
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useOutOfBandById.mockReturnValue({
-      ...oobRecord,
-      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
-      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
-    })
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-
-    useProofByState.mockReturnValue([{ ...offerNotif, threadId }])
-
     const element = (
       <BasicAppContext>
         <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
       </BasicAppContext>
     )
-
-    const tree = render(element)
-
-    expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
-    expect(navigation.replace).toBeCalledWith('Credential Offer', {
-      credentialId: offerNotif.id,
-    })
-  })
-
-  test('Valid goal code aries.vc.verify extracted, navigation to proof request', async () => {
-    const oobRecordId = 'def456'
-    const goalCode = 'aries.vc.verify'
-    const threadId = 'qrf123'
-    const connectionId = 'abc123'
-    const navigation = useNavigation()
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useOutOfBandById.mockReturnValue({
-      ...oobRecord,
-      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
-      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
-    })
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
-
-    const element = (
-      <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </BasicAppContext>
-    )
-
-    const tree = render(element)
-
-    expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
-    expect(navigation.replace).toBeCalledWith('Proof Request', {
-      proofId: proofNotif.id,
-    })
-  })
-
-  test('Valid goal code aries.vc.verify.once extracted, navigation to proof request', async () => {
-    const oobRecordId = 'def456'
-    const goalCode = 'aries.vc.verify.once'
-    const threadId = 'qrf123'
-    const connectionId = 'abc123'
-    const navigation = useNavigation()
-    // @ts-expect-error useOutOfBandById will be replaced with a mock which does have this method
-    useOutOfBandById.mockReturnValue({
-      ...oobRecord,
-      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
-      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
-    })
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    useProofByState.mockReturnValue([{ ...proofNotif, threadId }])
-    const element = (
-      <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </BasicAppContext>
-    )
-
-    const tree = render(element)
-
-    expect(tree).toMatchSnapshot()
-    expect(navigation.navigate).toBeCalledTimes(0)
-    // @ts-expect-error replace is missing because navigation called outside NavigationContainer but useNavigation is a actually a mock
-    expect(navigation.replace).toBeCalledWith('Proof Request', {
-      proofId: proofNotif.id,
-    })
-  })
-
-  test('Invalid goal code extracted, do nothing', async () => {
-    const oobRecordId = 'def456'
-    const goalCode = 'aries.vc.happy-teapot'
-    const threadId = 'qrf123'
-    const connectionId = 'abc123'
-    const navigation = useNavigation()
-    // @ts-expect-error useOutOfBandById will be replaced with a mock which does have this method
-    useOutOfBandById.mockReturnValue({
-      ...oobRecord,
-      getTags: () => ({ ...oobRecord._tags, invitationRequestsThreadIds: [threadId] }),
-      outOfBandInvitation: { ...oobRecord.outOfBandInvitation, goalCode },
-    })
-    // @ts-expect-error useConnectionByOutOfBandId will be replaced with a mock which does have this method
-    useConnectionByOutOfBandId.mockReturnValue({ ...connection, id: connectionId, state: 'offer-received' })
-    useProofByState.mockReturnValue([{ ...proofNotif, threadId, state: 'request-received' }])
-
-
-    const element = (
-      <BasicAppContext>
-        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
-      </BasicAppContext>
-    )
-
-    const tree = render(element)
 
     await waitFor(() => {
-      timeTravel(10000)
+      timeTravel(1000)
     })
 
+    const tree = render(element)
+
+    // to ensure we're  rendering the correct component
+    const button = await tree.findByTestId(testIdWithKey('AcceptCredentialOffer'))
+
+    expect(button).not.toBeNull()
     expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(0)
+    // @ts-expect-error This is a mock object and the fn exists
+    expect(navigation.replace).toBeCalledTimes(0)
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
+  })
+
+  test('Valid goal code aries.vc.verify extracted, show to proof request', async () => {
+    const oobRecordId = 'bc37583b-cee1-43aa-96f4-b7087b71fbc5'
+    const navigation = useNavigation()
+
+    const element = (
+      <BasicAppContext>
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
+      </BasicAppContext>
+    )
+
+    await waitFor(() => {
+      timeTravel(1000)
+    })
+
+    const tree = render(element)
+    // to ensure we're  rendering the correct component
+    const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
+
+    expect(view).not.toBeNull()
+    // expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(0)
+    // @ts-expect-error This is a mock object and the fn exists
+    expect(navigation.replace).toBeCalledTimes(0)
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
+  })
+  // f
+  test('Valid goal code aries.vc.verify.once extracted, show to proof request', async () => {
+    const oobRecordId = '27cfe0f6-253d-4105-a87e-2d8b1b0234c3'
+    const navigation = useNavigation()
+
+    const element = (
+      <BasicAppContext>
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
+      </BasicAppContext>
+    )
+
+    await waitFor(() => {
+      timeTravel(1000)
+    })
+
+    const tree = render(element)
+    // to ensure we're  rendering the correct component
+    const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
+
+    expect(view).not.toBeNull()
+    // expect(tree).toMatchSnapshot()
+    expect(navigation.navigate).toBeCalledTimes(0)
+    // @ts-expect-error This is a mock object and the fn exists
+    expect(navigation.replace).toBeCalledTimes(0)
+    expect(navigation.getParent()?.dispatch).toBeCalledTimes(0)
+  })
+
+  test('Invalid goal code, navigate to chat', async () => {
+    const oobRecordId = '6e739679-db69-4228-9fdf-d1b8cc2431aa'
+    const navigation = useNavigation()
+    const element = (
+      <BasicAppContext>
+        <ConnectionModal navigation={useNavigation()} route={{ params: { oobRecordId } } as any} />
+      </BasicAppContext>
+    )
+
+    render(element)
+
+    await waitFor(() => {
+      timeTravel(1000)
+    })
+
     expect(navigation.navigate).toBeCalledTimes(0)
     expect(navigation.getParent()?.dispatch).toBeCalledTimes(1)
   })

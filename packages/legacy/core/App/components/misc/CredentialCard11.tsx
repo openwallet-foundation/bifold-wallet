@@ -168,7 +168,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       height: 150,
       aspectRatio: 1,
       resizeMode: 'contain',
-      borderRadius: 10,
+      borderRadius: borderRadius,
     },
     statusContainer: {
       backgroundColor: 'rgba(0, 0, 0, 0)',

@@ -31,6 +31,8 @@ const useIsFocused = () => {
   return true
 }
 
+const useRoute = jest.fn().mockReturnValue({ params: {} })
+
 const CommonActions = {
   navigate: jest.fn(),
   reset: jest.fn(),
@@ -40,4 +42,4 @@ const CommonActions = {
 const useFocusEffect = jest.fn()
 const createNavigatorFactory = jest.fn()
 
-export { useNavigation, useIsFocused, useFocusEffect, createNavigatorFactory, CommonActions }
+export { useNavigation, useIsFocused, useRoute, useFocusEffect, createNavigatorFactory, CommonActions }

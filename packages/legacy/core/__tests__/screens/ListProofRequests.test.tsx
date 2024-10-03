@@ -11,14 +11,14 @@ import { BasicAppContext } from '../helpers/app'
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => { })
+jest.mock('react-native-localize', () => {})
 
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 const navigation = testUseNavigation()
 
-describe('ListProofRequests Screen', () => {
+describe('ListProofRequests Component', () => {
   const renderView = (params?: any) => {
     return render(
       <BasicAppContext>
@@ -30,8 +30,13 @@ describe('ListProofRequests Screen', () => {
   }
 
   test('Renders correctly', async () => {
-    const tree = renderView()
-    await act(async () => { })
+    // const tree = renderView()
+    const tree = render(
+      <BasicAppContext>
+        <ListProofRequests navigation={navigation as any} route={{ params: {} } as any} />
+      </BasicAppContext>
+    )
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
   })
 
