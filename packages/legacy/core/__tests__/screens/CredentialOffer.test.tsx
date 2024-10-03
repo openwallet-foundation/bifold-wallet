@@ -22,14 +22,10 @@ jest.mock('react-native-localize', () => {})
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-const props = { params: { visible: true, credentialId: '123' } }
-
 const connectionPath = path.join(__dirname, '../fixtures/faber-connection.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
-
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
-
 const connectionRecord = new ConnectionRecord(connection)
 const credentialRecord = new CredentialExchangeRecord(credential)
 credentialRecord.credentials.push({
@@ -46,10 +42,11 @@ useCredentialById.mockReturnValue(credentialRecord)
 
 describe('CredentialOffer Screen', () => {
   test('renders correctly', async () => {
+    const credentialId = '123'
     const tree = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
@@ -60,10 +57,11 @@ describe('CredentialOffer Screen', () => {
   })
 
   test('shows offer controls', async () => {
+    const credentialId = '123'
     const { getByTestId } = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
@@ -78,10 +76,11 @@ describe('CredentialOffer Screen', () => {
   })
 
   test('accepting a credential', async () => {
+    const credentialId = '123'
     const tree = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )
@@ -96,10 +95,11 @@ describe('CredentialOffer Screen', () => {
   })
 
   test('declining a credential', async () => {
+    const credentialId = '123'
     const tree = render(
       <BasicAppContext>
         <NetworkProvider>
-          <CredentialOffer route={props as any} navigation={useNavigation()} />
+          <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
       </BasicAppContext>
     )

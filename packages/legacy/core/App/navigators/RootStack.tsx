@@ -69,7 +69,8 @@ const RootStack: React.FC = () => {
 
   const lockoutUser = useCallback(async () => {
     if (agent && store.authentication.didAuthenticate) {
-      // make sure agent is shutdown so wallet isn't still open
+      // make sure agent is shutdown so wallet
+      // isn't still open
       removeSavedWalletSecret()
 
       try {
