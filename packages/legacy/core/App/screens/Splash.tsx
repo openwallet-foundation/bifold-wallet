@@ -1,4 +1,4 @@
-import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
+import { Agent, HttpOutboundTransport, WsOutboundTransport, WalletError } from '@credo-ts/core'
 import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
@@ -281,14 +281,22 @@ const Splash: React.FC = () => {
 
             logger.info('Opened agent wallet')
           } catch (error: unknown) {
-            logger.error('Error opening existing wallet', error as BifoldError)
+            // Credo does not use error codes but this will be in the
+            // the error message if the wallet is already open.
+            const catchPhrase = 'instance already opened'
 
-            throw new BifoldError(
-              'Wallet Service',
-              'There was a problem unlocking the wallet.',
-              (error as Error).message,
-              1047
-            )
+            if (error instanceof WalletError && error.message.includes(catchPhrase)) {
+              logger.warn('Wallet already open, nothing to do')
+            } else {
+              logger.error('Error opening existing wallet:', error as Error)
+
+              throw new BifoldError(
+                'Wallet Service',
+                'There was a problem unlocking the wallet.',
+                (error as Error).message,
+                1047
+              )
+            }
           }
 
           await agent.mediationRecipient.initiateMessagePickup()
