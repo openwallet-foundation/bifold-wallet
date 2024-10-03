@@ -27,13 +27,15 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-describe('ProofRequest Screen', () => {
-  afterEach(() => {
-    cleanup()
+describe('displays a proof request screen', () => {
+  beforeEach(() => {
+    jest.clearAllTimers()
+    jest.clearAllMocks()
+    // jest.resetAllMocks()
   })
 
-  beforeEach(() => {
-    jest.clearAllMocks()
+  afterEach(() => {
+    cleanup()
   })
 
   /**
@@ -213,7 +215,7 @@ describe('ProofRequest Screen', () => {
     test('loading screen displays', async () => {
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -222,7 +224,7 @@ describe('ProofRequest Screen', () => {
       })
 
       const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
-      const recordLoading = tree.getByTestId(testIdWithKey('RecordLoading'))
+      const recordLoading = tree.getByTestId(testIdWithKey('ProofRequestLoading'))
 
       expect(recordLoading).not.toBeNull()
       expect(cancelButton).not.toBeNull()
@@ -240,7 +242,7 @@ describe('ProofRequest Screen', () => {
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -386,7 +388,7 @@ describe('ProofRequest Screen', () => {
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={navigation as any} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -447,7 +449,7 @@ describe('ProofRequest Screen', () => {
       })
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -491,7 +493,7 @@ describe('ProofRequest Screen', () => {
 
       const { getByText, getByTestId } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -499,6 +501,7 @@ describe('ProofRequest Screen', () => {
         timeTravel(1000)
       })
 
+      // fails
       const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })

@@ -29,14 +29,13 @@ export type NotificationReturnType = Array<
 >
 
 export const useNotifications = ({ openIDUri }: NotificationsInputProps): NotificationReturnType => {
-  const { records: basicMessages } = useBasicMessages()
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
-
+  const { records: basicMessages } = useBasicMessages()
+  const offers = useCredentialByState(CredentialState.OfferReceived)
+  const proofsRequested = useProofByState(ProofState.RequestReceived)
   const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
-  const offers = useCredentialByState(CredentialState.OfferReceived)
-  const proofsRequested = useProofByState(ProofState.RequestReceived)
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri })
 
   useEffect(() => {
@@ -49,6 +48,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
     // add one unseen message per contact to notifications
     const contactsWithUnseenMessages: string[] = []
     const messagesToShow: BasicMessageRecord[] = []
+
     unseenMessages.forEach((msg) => {
       if (!contactsWithUnseenMessages.includes(msg.connectionId)) {
         contactsWithUnseenMessages.push(msg.connectionId)
@@ -61,6 +61,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
       const metadata = proof.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       return !metadata?.details_seen
     })
+
     const revoked = credsDone.filter((cred: CredentialRecord) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const metadata = cred!.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata
@@ -82,6 +83,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
       ...revoked,
       ...openIDCreds,
     ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
     setNotifications(notif)
   }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone, openIDCredRecieved])
 

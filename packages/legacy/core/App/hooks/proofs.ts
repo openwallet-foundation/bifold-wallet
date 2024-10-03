@@ -26,6 +26,7 @@ export const useAllCredentialsForProof = (proofId: string) => {
     if (!proof || !agent) {
       return
     }
+
     return retrieveCredentialsForProof(agent, proof, fullCredentials, t, groupByReferent)
   }, [proof, agent, fullCredentials, t, groupByReferent])
 }

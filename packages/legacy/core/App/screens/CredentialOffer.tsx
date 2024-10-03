@@ -4,7 +4,6 @@ import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
-import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
@@ -27,7 +26,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
+import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -39,14 +38,12 @@ import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
 
-type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
+type CredentialOfferProps = {
+  navigation: any
+  credentialId: string
+}
 
-const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
-  if (!route?.params) {
-    throw new Error('CredentialOffer route params were not set properly')
-  }
-
-  const { credentialId } = route.params
+const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentialId }) => {
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
@@ -93,7 +90,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         payload: [true],
       })
     }
-  }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialOfferTour, screenIsFocused, start, dispatch])
+  }, [
+    enableToursConfig,
+    store.tours.enableTours,
+    store.tours.seenCredentialOfferTour,
+    screenIsFocused,
+    start,
+    dispatch,
+  ])
 
   useEffect(() => {
     if (!agent || !credential) {
@@ -144,12 +148,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields }) => {
-        setOverlay(o => ({ ...o, presentationFields: (fields as Attribute[]).filter((field) => field.value) }))
+        setOverlay((o) => ({ ...o, presentationFields: (fields as Attribute[]).filter((field) => field.value) }))
         setLoading(false)
       })
   }, [credential, agent, bundleResolver, i18n.language])
 
-  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible(prev => !prev), [])
+  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
   const logHistoryRecord = useCallback(async () => {
     try {

@@ -531,6 +531,15 @@ const translation = {
         "UseConnectionInviterCapability": "Utiliser la fonction d'invitation à la connexion ?",
         "OpenContact": "Contact ouvert",
     },
+    "LoadingPlaceholder": {
+        "Connecting": "Connecting...",
+        "SlowLoadingTitle": "This is slower than usual (FR)",
+        "SlowLoadingBody": "Check your internet connection and try again. (FR)",
+        "CredentialOffer": "Loading credential offer... (FR)",
+        "YourOffer": "You're being offered a credential (FR)",
+        "ProofRequest": "Loading proof request... (FR)",
+        "YourRequest": "You're being requested for proof (FR)",
+    },
     "ConnectionAlert": {
         "AddedContacts": "Ajouté aux Contacts",
         "WhatAreContacts": "Que sont les Contacts ?",

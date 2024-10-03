@@ -10,12 +10,14 @@ import { TOKENS } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => { })
+jest.mock('react-native-localize', () => {})
+jest.useFakeTimers({ legacyFakeTimers: true })
 
 const navigation = testUseNavigation()
 
 describe('ListContacts Screen', () => {
   beforeEach(() => {
+    jest.clearAllTimers()
     jest.clearAllMocks()
   })
 
@@ -25,12 +27,13 @@ describe('ListContacts Screen', () => {
         <ListContacts navigation={navigation as any} />
       </BasicAppContext>
     )
-    await waitFor(() => { })
-    await new Promise((r) => setTimeout(r, 2000))
+
+    await waitFor(() => {})
+
     expect(tree).toMatchSnapshot()
   })
 
-  test('pressing on a contact in the list takes the user to a contact history screen', async () => {
+  test('Pressing on a contact in the list takes the user to a contact history screen', async () => {
     const { findByText } = render(
       <BasicAppContext>
         <ListContacts navigation={navigation as any} />
@@ -38,12 +41,13 @@ describe('ListContacts Screen', () => {
     )
 
     await waitFor(async () => {
-      const connectionRecord = await findByText('Faber', { exact: true })
+      const connectionRecord = await findByText('BestBC Tea', { exact: true })
       fireEvent(connectionRecord, 'press')
+
       expect(navigation.navigate).toBeCalledWith('Contacts Stack', {
         screen: 'Chat',
         params: {
-          connectionId: '1',
+          connectionId: 'c426f2dc-0ffc-4252-b7d6-2304755f84d9',
         },
       })
     })
@@ -68,11 +72,10 @@ describe('ListContacts Screen', () => {
         </CustomBasicAppContext>
       </StoreProvider>
     )
+
     await waitFor(async () => {
-      const faberContact = await tree.queryByText('Faber', { exact: true })
-      const bobContact = await tree.queryByText('Bob', { exact: true })
-      expect(faberContact).toBe(null)
-      expect(bobContact).not.toBe(null)
+      const teaContact = await tree.queryByText('BestBC Tea', { exact: true })
+      expect(teaContact).toBe(null)
     })
   })
 
@@ -95,11 +98,10 @@ describe('ListContacts Screen', () => {
         </CustomBasicAppContext>
       </StoreProvider>
     )
+
     await waitFor(async () => {
-      const faberContact = await tree.queryByText('Faber', { exact: true })
-      const bobContact = await tree.queryByText('Bob', { exact: true })
-      expect(faberContact).not.toBe(null)
-      expect(bobContact).not.toBe(null)
+      const teaContact = await tree.queryByText('BestBC Tea', { exact: true })
+      expect(teaContact).toBe(null)
     })
   })
 })

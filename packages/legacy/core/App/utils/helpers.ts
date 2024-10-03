@@ -775,11 +775,13 @@ export const retrieveCredentialsForProof = async (
         })
       }
     }
+
     for (const proofFormat of ['indy', 'anoncreds']) {
       for (const proofItem of ['attributes', 'predicates']) {
         addRevokedCredsIfNeeded(proofFormat as 'indy' | 'anoncreds', proofItem as 'attributes' | 'predicates')
       }
     }
+
     if (!credentials) {
       throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
     }
@@ -800,10 +802,8 @@ export const retrieveCredentialsForProof = async (
       if (!difPexCredentialsForRequest || !presentationExchange) throw new Error('Invalid presentation request')
 
       const presentationDefinition = presentationExchange.presentation_definition
-
       const descriptorMetadata = getDescriptorMetadata(difPexCredentialsForRequest)
       const anonCredsProofRequest = createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
-
       const anonCredsCredentialsForRequest = await getCredentialsForAnonCredsProofRequest(
         agent.context,
         anonCredsProofRequest,

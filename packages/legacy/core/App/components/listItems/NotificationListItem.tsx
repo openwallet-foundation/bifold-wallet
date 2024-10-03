@@ -146,12 +146,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   })
 
   const isReceivedProof = useMemo(() => {
-    return notificationType === NotificationType.ProofRequest &&
-    ((notification as ProofExchangeRecord).state === ProofState.Done ||
-      (notification as ProofExchangeRecord).state === ProofState.PresentationSent)
+    return (
+      notificationType === NotificationType.ProofRequest &&
+      ((notification as ProofExchangeRecord).state === ProofState.Done ||
+        (notification as ProofExchangeRecord).state === ProofState.PresentationSent)
+    )
   }, [notificationType, notification])
 
-  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible(prev => !prev), [])
+  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
   const declineProofRequest = useCallback(async () => {
     try {
@@ -236,57 +238,57 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       let details
       switch (notificationType) {
         case NotificationType.BasicMessage:
-          details = ({
+          details = {
             type: InfoBoxType.Info,
             title: t('Home.NewMessage'),
             body: theirLabel ? `${theirLabel} ${t('Home.SentMessage')}` : t('Home.ReceivedMessage'),
             buttonTitle: t('Home.ViewMessage'),
-          })
+          }
           break
         case NotificationType.CredentialOffer:
-          details = ({
+          details = {
             type: InfoBoxType.Info,
             title: t('CredentialOffer.NewCredentialOffer'),
             body: `${name + (version ? ` v${version}` : '')}`,
             buttonTitle: undefined,
-          })
+          }
           break
         case NotificationType.ProofRequest: {
           const proofId = (notification as ProofExchangeRecord).id
           agent?.proofs.findRequestMessage(proofId).then((message) => {
             if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
-              details = ({
+              details = {
                 type: InfoBoxType.Info,
                 title: t('ProofRequest.NewProofRequest'),
                 body: message.indyProofRequest.name ?? message.comment ?? '',
                 buttonTitle: undefined,
-              })
+              }
             } else {
-              details = ({
+              details = {
                 type: InfoBoxType.Info,
                 title: t('ProofRequest.NewProofRequest'),
                 body: '',
                 buttonTitle: undefined,
-              })
+              }
             }
           })
           break
         }
         case NotificationType.Revocation:
-          details =  ({
+          details = {
             type: InfoBoxType.Error,
             title: t('CredentialDetails.NewRevoked'),
             body: `${name + (version ? ` v${version}` : '')}`,
             buttonTitle: undefined,
-          })
+          }
           break
         case NotificationType.Custom:
-          details =  ({
+          details = {
             type: InfoBoxType.Info,
             title: t(customNotification?.title as any),
             body: t(customNotification?.description as any),
             buttonTitle: t(customNotification?.buttonTitle as any),
-          })
+          }
           break
         default:
           throw new Error('NotificationType was not set correctly.')
@@ -296,7 +298,15 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
 
     getDetails()
-  }, [notification, notificationType, connection, store.preferences.alternateContactNames, t, agent, customNotification])
+  }, [
+    notification,
+    notificationType,
+    connection,
+    store.preferences.alternateContactNames,
+    t,
+    agent,
+    customNotification,
+  ])
 
   useEffect(() => {
     let onPress: () => void
@@ -313,8 +323,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.CredentialOffer:
         onPress = () => {
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CredentialOffer,
+          navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+            screen: Screens.Connection,
             params: { credentialId: notification.id },
           })
         }
@@ -333,8 +343,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           }
         } else {
           onPress = () => {
-            navigation.getParent()?.navigate(Stacks.NotificationStack, {
-              screen: Screens.ProofRequest,
+            navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+              screen: Screens.Connection,
               params: { proofId: (notification as ProofExchangeRecord).id },
             })
           }

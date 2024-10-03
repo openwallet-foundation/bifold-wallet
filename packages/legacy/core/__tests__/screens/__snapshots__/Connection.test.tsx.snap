@@ -1,1612 +1,1654 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Connection Screen Connection, no goal code navigation to chat 1`] = `
+exports[`Connection Screen No connection, show to proof 1`] = `
 <RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
   style={
-    Object {
-      "backgroundColor": "#000000",
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+    ]
   }
 >
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
+  <RCTScrollView>
     <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen Dismiss on demand 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "rotate": "360deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-      <Text
-        style={
+      <RNCSafeAreaView
+        edges={
           Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Object {
-              "marginTop": 20,
-              "textAlign": "center",
-            },
+            "bottom",
+            "left",
+            "right",
           ]
         }
-        testID="com.ariesbifold:id/TakingTooLong"
-      >
-        Connection.TakingTooLong
-      </Text>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+            "flex": 1,
           }
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
+        <RCTScrollView>
+          <View>
+            <View
+              style={
+                Object {
+                  "flexGrow": 1,
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <RCTScrollView
+                ListHeaderComponent={
+                  <View
+                    style={
+                      Object {
+                        "marginHorizontal": 20,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderRadius": 15,
+                          "flex": 1,
+                          "flexGrow": 1,
+                          "marginVertical": 35,
+                          "paddingHorizontal": 10,
+                        }
+                      }
+                    >
+                      <LoadingPlaceholder
+                        loadingProgressPercent={30}
+                        onCancelTouched={[Function]}
+                        testID="com.ariesbifold:id/ProofRequestLoading"
+                        timeoutDurationInMs={10000}
+                        workflowType="ProofRequested"
+                      />
+                    </View>
+                  </View>
+                }
+                data={Array []}
+                getItem={[Function]}
+                getItemCount={[Function]}
+                keyExtractor={[Function]}
+                onContentSizeChange={[Function]}
+                onLayout={[Function]}
+                onMomentumScrollBegin={[Function]}
+                onMomentumScrollEnd={[Function]}
+                onScroll={[Function]}
+                onScrollBeginDrag={[Function]}
+                onScrollEndDrag={[Function]}
+                removeClippedSubviews={false}
+                renderItem={[Function]}
+                scrollEnabled={false}
+                scrollEventThrottle={50}
+                stickyHeaderIndices={Array []}
+                viewabilityConfigCallbackPairs={Array []}
+              >
+                <View>
+                  <View
+                    collapsable={false}
+                    onLayout={[Function]}
+                  >
+                    <View
+                      style={
+                        Object {
+                          "marginHorizontal": 20,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "backgroundColor": "#313132",
+                            "borderRadius": 15,
+                            "flex": 1,
+                            "flexGrow": 1,
+                            "marginVertical": 35,
+                            "paddingHorizontal": 10,
+                          }
+                        }
+                      >
+                        <View
+                          testID="com.ariesbifold:id/ProofRequestLoading"
+                        >
+                          <View
+                            style={
+                              Object {
+                                "backgroundColor": "#000000",
+                                "height": 8,
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              style={
+                                Object {
+                                  "backgroundColor": "#FCBA19",
+                                  "bottom": 0,
+                                  "height": "100%",
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                  "transform": Array [
+                                    Object {
+                                      "translateX": -375,
+                                    },
+                                    Object {
+                                      "scaleX": 0,
+                                    },
+                                    Object {
+                                      "translateX": 375,
+                                    },
+                                  ],
+                                  "width": "100%",
+                                }
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "marginHorizontal": 20,
+                                "marginTop": 8,
+                              }
+                            }
+                          >
+                            <Text
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "fontSize": 14,
+                                    "fontWeight": "bold",
+                                  },
+                                  Object {
+                                    "fontWeight": "normal",
+                                    "textAlign": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              LoadingPlaceholder.ProofRequest
+                            </Text>
+                            <View>
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal",
+                                    },
+                                    Object {
+                                      "marginBottom": 10,
+                                      "marginTop": 25,
+                                    },
+                                  ]
+                                }
+                              >
+                                LoadingPlaceholder.YourRequest
+                              </Text>
+                              <View
+                                style={
+                                  Object {
+                                    "borderRadius": 15,
+                                    "flex": 1,
+                                    "flexGrow": 1,
+                                  }
+                                }
+                              >
+                                <View
+                                  collapsable={false}
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#FFFFFF",
+                                      "borderRadius": 15,
+                                      "opacity": 1,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flexDirection": "column",
+                                      }
+                                    }
+                                    testID="com.ariesbifold:id/RecordLoading"
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "flexDirection": "row",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "backgroundColor": "#D3D3D3",
+                                            "borderBottomLeftRadius": 10,
+                                            "borderTopLeftRadius": 10,
+                                            "width": 40,
+                                          }
+                                        }
+                                      />
+                                      <View
+                                        style={
+                                          Object {
+                                            "backgroundColor": "#D3D3D3",
+                                            "borderRadius": 10,
+                                            "height": 90,
+                                            "marginLeft": -52.5,
+                                            "marginTop": 37.5,
+                                            "width": 90,
+                                          }
+                                        }
+                                      />
+                                      <View
+                                        style={
+                                          Object {
+                                            "flexGrow": 1,
+                                            "marginBottom": 15,
+                                            "marginLeft": 15,
+                                            "marginTop": 15,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 20,
+                                                "width": "100%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 25,
+                                                "width": "75%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 20,
+                                                "marginTop": 20,
+                                                "width": "35%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 25,
+                                                "width": "90%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                                <View
+                                  collapsable={false}
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#FFFFFF",
+                                      "borderRadius": 15,
+                                      "marginTop": 10,
+                                      "opacity": 1,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flexDirection": "column",
+                                      }
+                                    }
+                                    testID="com.ariesbifold:id/RecordLoading"
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "flexDirection": "row",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "backgroundColor": "#D3D3D3",
+                                            "borderBottomLeftRadius": 10,
+                                            "borderTopLeftRadius": 10,
+                                            "width": 40,
+                                          }
+                                        }
+                                      />
+                                      <View
+                                        style={
+                                          Object {
+                                            "backgroundColor": "#D3D3D3",
+                                            "borderRadius": 10,
+                                            "height": 90,
+                                            "marginLeft": -52.5,
+                                            "marginTop": 37.5,
+                                            "width": 90,
+                                          }
+                                        }
+                                      />
+                                      <View
+                                        style={
+                                          Object {
+                                            "flexGrow": 1,
+                                            "marginBottom": 15,
+                                            "marginLeft": 15,
+                                            "marginTop": 15,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 20,
+                                                "width": "100%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 25,
+                                                "width": "75%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 20,
+                                                "marginTop": 20,
+                                                "width": "35%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                        <View
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "#D3D3D3",
+                                                "borderRadius": 10,
+                                                "height": 30,
+                                                "marginVertical": 5,
+                                              },
+                                              Object {
+                                                "height": 25,
+                                                "width": "90%",
+                                              },
+                                            ]
+                                          }
+                                        />
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "marginVertical": 25,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityLabel="Global.Cancel"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  Object {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  Object {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#42803E",
+                                    "borderRadius": 4,
+                                    "opacity": 1,
+                                    "padding": 16,
+                                  }
+                                }
+                                testID="com.ariesbifold:id/Cancel"
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    }
+                                  }
+                                >
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "fontSize": 18,
+                                          "fontWeight": "bold",
+                                          "textAlign": "center",
+                                        },
+                                        false,
+                                        false,
+                                        false,
+                                      ]
+                                    }
+                                  >
+                                    Global.Cancel
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </RCTScrollView>
+              <RCTScrollView
+                ListFooterComponent={
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "marginVertical": 15,
+                        },
+                        Object {
+                          "marginHorizontal": 20,
+                        },
+                      ]
+                    }
+                  >
+                    <React.Fragment />
+                  </View>
+                }
+                ListHeaderComponent={
+                  <View
+                    style={
+                      Object {
+                        "marginHorizontal": 20,
+                      }
+                    }
+                  />
+                }
+                data={Array []}
+                getItem={[Function]}
+                getItemCount={[Function]}
+                keyExtractor={[Function]}
+                onContentSizeChange={[Function]}
+                onLayout={[Function]}
+                onMomentumScrollBegin={[Function]}
+                onMomentumScrollEnd={[Function]}
+                onScroll={[Function]}
+                onScrollBeginDrag={[Function]}
+                onScrollEndDrag={[Function]}
+                removeClippedSubviews={false}
+                renderItem={[Function]}
+                scrollEnabled={false}
+                scrollEventThrottle={50}
+                stickyHeaderIndices={Array []}
+                viewabilityConfigCallbackPairs={Array []}
+              >
+                <View>
+                  <View
+                    collapsable={false}
+                    onLayout={[Function]}
+                  >
+                    <View
+                      style={
+                        Object {
+                          "marginHorizontal": 20,
+                        }
+                      }
+                    />
+                  </View>
+                  <View
+                    onLayout={[Function]}
+                  >
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "marginVertical": 15,
+                          },
+                          Object {
+                            "marginHorizontal": 20,
+                          },
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </RCTScrollView>
+            </View>
+            <Modal
+              animationType="none"
+              hardwareAccelerated={false}
+              transparent={true}
+              visible={false}
+            />
+            <Modal
+              animationType="slide"
+              hardwareAccelerated={false}
+              transparent={true}
+              visible={false}
+            />
+            <Modal
+              animationType="slide"
+              hardwareAccelerated={false}
+              visible={false}
+            />
+          </View>
+        </RCTScrollView>
+      </RNCSafeAreaView>
     </View>
-  </View>
+  </RCTScrollView>
 </RNCSafeAreaView>
 `;
 
-exports[`Connection Screen Invalid goal code extracted, do nothing 1`] = `
+exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to offer accept 1`] = `
 <RNCSafeAreaView
+  edges={
+    Array [
+      "bottom",
+      "left",
+      "right",
+    ]
+  }
   style={
-    Object {
-      "backgroundColor": "#000000",
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+    ]
   }
 >
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
+  <RCTScrollView>
     <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
-                  Object {
-                    "rotate": "360deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-      <Text
-        style={
+      <RNCSafeAreaView
+        edges={
           Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Object {
-              "marginTop": 20,
-              "textAlign": "center",
-            },
+            "bottom",
+            "left",
+            "right",
           ]
         }
-        testID="com.ariesbifold:id/TakingTooLong"
-      >
-        Connection.TakingTooLong
-      </Text>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+            "flexGrow": 1,
           }
         }
       >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen No connection, navigation to proof 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
+        <RCTScrollView
+          ListFooterComponent={
+            <RecordFooter>
+              <View
+                style={
                   Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
+                    "backgroundColor": "#313132",
+                    "paddingBottom": 26,
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 16,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "paddingTop": 10,
+                    }
+                  }
+                >
+                  <ForwardRef(ButtonImplComponent)
+                    accessibilityLabel="Global.Accept"
+                    buttonType={1}
+                    disabled={false}
+                    onPress={[Function]}
+                    testID="com.ariesbifold:id/AcceptCredentialOffer"
+                    title="Global.Accept"
+                  />
+                </View>
+                <View
+                  style={
+                    Object {
+                      "paddingTop": 10,
+                    }
+                  }
+                >
+                  <ForwardRef(ButtonImplComponent)
+                    accessibilityLabel="Global.Decline"
+                    buttonType={2}
+                    disabled={false}
+                    onPress={[Function]}
+                    testID="com.ariesbifold:id/DeclineCredentialOffer"
+                    title="Global.Decline"
+                  />
+                </View>
+              </View>
+            </RecordFooter>
           }
-        }
-      >
-        <Text
-          style={
+          ListHeaderComponent={
+            <RecordHeader>
+              <React.Fragment>
+                <ConnectionImage
+                  connectionId="b4b1b9cd-a445-4bb3-9645-a2377471965a"
+                />
+                <View
+                  style={
+                    Object {
+                      "paddingHorizontal": 25,
+                      "paddingVertical": 16,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "flexShrink": 1,
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      }
+                    }
+                    testID="com.ariesbifold:id/HeaderText"
+                  >
+                    <Text>
+                      b4b1b9cd-a445-4bb3-9645-a2377471965a
+                    </Text>
+                     
+                    CredentialOffer.IsOfferingYouACredential
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "marginBottom": 16,
+                      "marginHorizontal": 15,
+                    }
+                  }
+                >
+                  <CredentialCard
+                    credential={
+                      Object {
+                        "_tags": Object {},
+                        "autoAcceptCredential": undefined,
+                        "connectionId": "b4b1b9cd-a445-4bb3-9645-a2377471965a",
+                        "createdAt": "2024-09-04T18:50:29.771Z",
+                        "credentialAttributes": Array [
+                          Object {
+                            "mime-type": "text/plain",
+                            "name": "student_first_name",
+                            "value": "Alice",
+                          },
+                          Object {
+                            "mime-type": "text/plain",
+                            "name": "student_last_name",
+                            "value": "Smith",
+                          },
+                          Object {
+                            "mime-type": "text/plain",
+                            "name": "expiry_date",
+                            "value": "20280820",
+                          },
+                        ],
+                        "credentials": Array [],
+                        "errorMessage": undefined,
+                        "id": "99bbf805-fc82-44dc-82eb-e3eb1e7f8ab7",
+                        "linkedAttachments": undefined,
+                        "metadata": Object {
+                          "_anoncreds/credential": Object {
+                            "credentialDefinitionId": "QEquAHkM35w4XVT3Ku5yat:3:CL:834668:student_card",
+                            "schemaId": "QEquAHkM35w4XVT3Ku5yat:2:student_card:1.6",
+                          },
+                        },
+                        "parentThreadId": undefined,
+                        "protocolVersion": "v1",
+                        "revocationNotification": undefined,
+                        "role": "holder",
+                        "state": "offer-received",
+                        "threadId": "735df561-5346-4cb0-b11f-44a49984c0c3",
+                      }
+                    }
+                  />
+                </View>
+              </React.Fragment>
+            </RecordHeader>
+          }
+          data={
             Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+              Attribute {
+                "credentialId": undefined,
+                "encoding": undefined,
+                "format": undefined,
+                "label": undefined,
+                "mimeType": "text/plain",
+                "name": "student_first_name",
+                "nonRevoked": undefined,
+                "restrictions": undefined,
+                "revealed": undefined,
+                "revoked": undefined,
+                "type": undefined,
+                "value": "Alice",
               },
-              false,
-              false,
-              false,
+              Attribute {
+                "credentialId": undefined,
+                "encoding": undefined,
+                "format": undefined,
+                "label": undefined,
+                "mimeType": "text/plain",
+                "name": "student_last_name",
+                "nonRevoked": undefined,
+                "restrictions": undefined,
+                "revealed": undefined,
+                "revoked": undefined,
+                "type": undefined,
+                "value": "Smith",
+              },
+              Attribute {
+                "credentialId": undefined,
+                "encoding": undefined,
+                "format": undefined,
+                "label": undefined,
+                "mimeType": "text/plain",
+                "name": "expiry_date",
+                "nonRevoked": undefined,
+                "restrictions": undefined,
+                "revealed": undefined,
+                "revoked": undefined,
+                "type": undefined,
+                "value": "20280820",
+              },
             ]
           }
+          getItem={[Function]}
+          getItemCount={[Function]}
+          keyExtractor={[Function]}
+          onContentSizeChange={[Function]}
+          onLayout={[Function]}
+          onMomentumScrollBegin={[Function]}
+          onMomentumScrollEnd={[Function]}
+          onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onScrollEndDrag={[Function]}
+          removeClippedSubviews={false}
+          renderItem={[Function]}
+          scrollEventThrottle={50}
+          stickyHeaderIndices={Array []}
+          viewabilityConfigCallbackPairs={Array []}
         >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen Renders correctly 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
+          <View>
+            <View
+              collapsable={false}
+              onLayout={[Function]}
+            >
+              <View
+                style={
                   Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen Updates after delay 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
+                    "backgroundColor": "#000000",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "paddingHorizontal": 25,
+                      "paddingVertical": 16,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "flexShrink": 1,
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      }
+                    }
+                    testID="com.ariesbifold:id/HeaderText"
+                  >
+                    <Text>
+                      b4b1b9cd-a445-4bb3-9645-a2377471965a
+                    </Text>
+                     
+                    CredentialOffer.IsOfferingYouACredential
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "marginBottom": 16,
+                      "marginHorizontal": 15,
+                    }
+                  }
+                >
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#602809",
+                          "borderRadius": 10,
+                        },
+                        Object {},
+                        Object {
+                          "elevation": 0,
+                          "overflow": "hidden",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    <RNGestureHandlerButton
+                      collapsable={false}
+                      onGestureEvent={[Function]}
+                      onGestureHandlerEvent={[Function]}
+                      onGestureHandlerStateChange={[Function]}
+                      onHandlerStateChange={[Function]}
+                      rippleColor={0}
+                      testID="com.ariesbifold:id/ShowCredentialDetails"
+                    >
+                      <View
+                        accessible={false}
+                        collapsable={false}
+                        style={
+                          Object {
+                            "backgroundColor": undefined,
+                            "borderRadius": 10,
+                            "opacity": 1,
+                          }
+                        }
+                      >
+                        <View
+                          testID="com.ariesbifold:id/CredentialCard"
+                        >
+                          <View
+                            accessibilityLabel="Credentials.IssuedBy b4b1b9cd-a445-4bb3-9645-a2377471965a,  Student Card Credentials.Credential.,"
+                            accessible={true}
+                            style={
+                              Object {
+                                "flexDirection": "row",
+                                "minHeight": 247.5,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "backgroundColor": "#602809",
+                                    "borderBottomLeftRadius": 10,
+                                    "borderTopLeftRadius": 10,
+                                    "width": 90,
+                                  },
+                                  Object {
+                                    "backgroundColor": "#602809",
+                                    "overflow": "hidden",
+                                  },
+                                ]
+                              }
+                              testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+                            >
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "backgroundColor": "rgba(0,0,0,0.24)",
+                                      "borderBottomLeftRadius": 10,
+                                      "borderTopLeftRadius": 10,
+                                      "height": "100%",
+                                      "position": "absolute",
+                                      "width": 90,
+                                    },
+                                  ]
+                                }
+                              />
+                            </View>
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "#ffffff",
+                                    "borderRadius": 8,
+                                    "height": 90,
+                                    "justifyContent": "center",
+                                    "left": -52.5,
+                                    "shadowColor": "#000",
+                                    "shadowOffset": Object {
+                                      "height": 1,
+                                      "width": 1,
+                                    },
+                                    "shadowOpacity": 0.3,
+                                    "top": 37.5,
+                                    "width": 90,
+                                  },
+                                  Object {
+                                    "elevation": 0,
+                                  },
+                                ]
+                              }
+                            >
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontSize": 18,
+                                      "fontWeight": "bold",
+                                    },
+                                    Object {
+                                      "alignSelf": "center",
+                                      "color": "#000",
+                                      "fontSize": 45,
+                                    },
+                                  ]
+                                }
+                              >
+                                S
+                              </Text>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "flex": 1,
+                                  "marginLeft": -52.5,
+                                  "padding": 37.5,
+                                }
+                              }
+                              testID="com.ariesbifold:id/CredentialCardPrimaryBody"
+                            >
+                              <View>
+                                <View
+                                  style={
+                                    Object {
+                                      "flexDirection": "row",
+                                    }
+                                  }
+                                >
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "fontSize": 14,
+                                          "fontWeight": "bold",
+                                        },
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "flexShrink": 1,
+                                        },
+                                        Object {
+                                          "flex": 1,
+                                          "flexWrap": "wrap",
+                                          "lineHeight": 19,
+                                          "opacity": 0.8,
+                                        },
+                                      ]
+                                    }
+                                    testID="com.ariesbifold:id/CredentialIssuer"
+                                  >
+                                    b4b1b9cd-a445-4bb3-9645-a2377471965a
+                                  </Text>
+                                </View>
+                                <View
+                                  style={
+                                    Object {
+                                      "flexDirection": "row",
+                                    }
+                                  }
+                                >
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "fontSize": 18,
+                                          "fontWeight": "bold",
+                                        },
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "flexShrink": 1,
+                                        },
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "flex": 1,
+                                          "flexWrap": "wrap",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                    testID="com.ariesbifold:id/CredentialName"
+                                  >
+                                    Student Card
+                                  </Text>
+                                </View>
+                              </View>
+                              <View
+                                ListFooterComponent={null}
+                                data={
+                                  Array [
+                                    undefined,
+                                    undefined,
+                                  ]
+                                }
+                                getItem={[Function]}
+                                getItemCount={[Function]}
+                                initialNumToRender={2}
+                                keyExtractor={[Function]}
+                                onContentSizeChange={[Function]}
+                                onLayout={[Function]}
+                                onMomentumScrollBegin={[Function]}
+                                onMomentumScrollEnd={[Function]}
+                                onScroll={[Function]}
+                                onScrollBeginDrag={[Function]}
+                                onScrollEndDrag={[Function]}
+                                removeClippedSubviews={false}
+                                renderItem={[Function]}
+                                scrollEnabled={false}
+                                scrollEventThrottle={50}
+                                stickyHeaderIndices={Array []}
+                                viewabilityConfigCallbackPairs={Array []}
+                              >
+                                <View
+                                  onFocusCapture={[Function]}
+                                  onLayout={[Function]}
+                                  style={null}
+                                />
+                                <View
+                                  onFocusCapture={[Function]}
+                                  onLayout={[Function]}
+                                  style={null}
+                                />
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                                    "borderBottomLeftRadius": 10,
+                                    "borderTopRightRadius": 10,
+                                    "height": 90,
+                                    "justifyContent": "center",
+                                    "width": 90,
+                                  },
+                                  Object {
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                ]
+                              }
+                              testID="com.ariesbifold:id/CredentialCardStatus"
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "rgba(0, 0, 0, 0)",
+                                    "borderBottomLeftRadius": 10,
+                                    "borderTopRightRadius": 10,
+                                    "height": 90,
+                                    "justifyContent": "center",
+                                    "width": 90,
+                                  }
+                                }
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </RNGestureHandlerButton>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              onFocusCapture={[Function]}
+              onLayout={[Function]}
+              style={null}
+            >
+              <View
+                style={
                   Object {
-                    "rotate": "360deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Object {
-              "marginTop": 20,
-              "textAlign": "center",
-            },
-          ]
-        }
-        testID="com.ariesbifold:id/TakingTooLong"
-      >
-        Connection.TakingTooLong
-      </Text>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen Valid goal code aries.vc.issue extracted, navigation to accept offer 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
+                    "backgroundColor": "#313132",
+                    "paddingHorizontal": 25,
+                    "paddingTop": 16,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      }
+                    }
+                    testID="com.ariesbifold:id/AttributeName"
+                  >
+                    Student First Name
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                        "paddingVertical": 4,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      Alice
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderBottomColor": "#000000",
+                        "borderBottomWidth": 2,
+                        "paddingTop": 12,
+                      },
+                      false,
+                    ]
+                  }
+                />
+              </View>
+            </View>
+            <View
+              onFocusCapture={[Function]}
+              onLayout={[Function]}
+              style={null}
+            >
+              <View
+                style={
                   Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen Valid goal code aries.vc.verify extracted, navigation to proof request 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
+                    "backgroundColor": "#313132",
+                    "paddingHorizontal": 25,
+                    "paddingTop": 16,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      }
+                    }
+                    testID="com.ariesbifold:id/AttributeName"
+                  >
+                    Student Last Name
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                        "paddingVertical": 4,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      Smith
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderBottomColor": "#000000",
+                        "borderBottomWidth": 2,
+                        "paddingTop": 12,
+                      },
+                      false,
+                    ]
+                  }
+                />
+              </View>
+            </View>
+            <View
+              onFocusCapture={[Function]}
+              onLayout={[Function]}
+              style={null}
+            >
+              <View
+                style={
                   Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`Connection Screen Valid goal code aries.vc.verify.once extracted, navigation to proof request 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#000000",
-    }
-  }
->
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "fontWeight": "normal",
-                "marginTop": 30,
-                "textAlign": "center",
-              },
-            ]
-          }
-          testID="com.ariesbifold:id/CredentialOnTheWay"
-        >
-          Connection.JustAMoment
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "marginTop": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <
-            fill="#FFFFFF"
-            height={130}
-            style={
-              Object {
-                "position": "absolute",
-              }
-            }
-            width={130}
-          />
-          <View
-            collapsable={false}
-            style={
-              Object {
-                "transform": Array [
+                    "backgroundColor": "#313132",
+                    "paddingHorizontal": 25,
+                    "paddingTop": 16,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      }
+                    }
+                    testID="com.ariesbifold:id/AttributeName"
+                  >
+                    Expiry Date
+                  </Text>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
+                      "paddingTop": 5,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                        "paddingVertical": 4,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        }
+                      }
+                      testID="com.ariesbifold:id/AttributeValue"
+                    >
+                      20280820
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "borderBottomColor": "#000000",
+                        "borderBottomWidth": 2,
+                        "paddingTop": 12,
+                      },
+                      Object {
+                        "borderBottomWidth": 0,
+                      },
+                    ]
+                  }
+                />
+              </View>
+            </View>
+            <View
+              onLayout={[Function]}
+            >
+              <View
+                style={
                   Object {
-                    "rotate": "0deg",
-                  },
-                ],
-              }
-            }
-          >
-            <
-              fill="#FFFFFF"
-              height={250}
-              width={250}
-            />
+                    "backgroundColor": "#000000",
+                    "height": "100%",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "#313132",
+                      "paddingBottom": 26,
+                      "paddingHorizontal": 25,
+                      "paddingVertical": 16,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "paddingTop": 10,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityLabel="Global.Accept"
+                      accessibilityRole="button"
+                      accessibilityState={
+                        Object {
+                          "busy": undefined,
+                          "checked": undefined,
+                          "disabled": false,
+                          "expanded": undefined,
+                          "selected": undefined,
+                        }
+                      }
+                      accessibilityValue={
+                        Object {
+                          "max": undefined,
+                          "min": undefined,
+                          "now": undefined,
+                          "text": undefined,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#42803E",
+                          "borderRadius": 4,
+                          "opacity": 1,
+                          "padding": 16,
+                        }
+                      }
+                      testID="com.ariesbifold:id/AcceptCredentialOffer"
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                          }
+                        }
+                      >
+                        <Text
+                          style={
+                            Array [
+                              Object {
+                                "color": "#FFFFFF",
+                                "fontSize": 18,
+                                "fontWeight": "bold",
+                                "textAlign": "center",
+                              },
+                              false,
+                              false,
+                              false,
+                            ]
+                          }
+                        >
+                          Global.Accept
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "paddingTop": 10,
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityLabel="Global.Decline"
+                      accessibilityRole="button"
+                      accessibilityState={
+                        Object {
+                          "busy": undefined,
+                          "checked": undefined,
+                          "disabled": false,
+                          "expanded": undefined,
+                          "selected": undefined,
+                        }
+                      }
+                      accessibilityValue={
+                        Object {
+                          "max": undefined,
+                          "min": undefined,
+                          "now": undefined,
+                          "text": undefined,
+                        }
+                      }
+                      accessible={true}
+                      collapsable={false}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "borderColor": "#42803E",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "opacity": 1,
+                          "padding": 16,
+                        }
+                      }
+                      testID="com.ariesbifold:id/DeclineCredentialOffer"
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                          }
+                        }
+                      >
+                        <Text
+                          style={
+                            Array [
+                              Object {
+                                "color": "#42803E",
+                                "fontSize": 18,
+                                "fontWeight": "bold",
+                                "textAlign": "center",
+                              },
+                              false,
+                              false,
+                              false,
+                            ]
+                          }
+                        >
+                          Global.Decline
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        </RCTScrollView>
+        <Modal
+          animationType="none"
+          hardwareAccelerated={false}
+          transparent={true}
+          visible={false}
+        />
+        <Modal
+          animationType="slide"
+          hardwareAccelerated={false}
+          transparent={true}
+          visible={false}
+        />
+      </RNCSafeAreaView>
     </View>
   </RCTScrollView>
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Loading.BackToHome"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": false,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "borderColor": "#42803E",
-          "borderRadius": 4,
-          "borderWidth": 2,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/BackToHome"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#42803E",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-              false,
-            ]
-          }
-        >
-          Loading.BackToHome
-        </Text>
-      </View>
-    </View>
-  </View>
 </RNCSafeAreaView>
 `;

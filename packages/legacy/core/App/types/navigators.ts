@@ -169,7 +169,7 @@ export type NotificationStackParams = {
 }
 
 export type DeliveryStackParams = {
-  [Screens.Connection]: { oobRecordId: string, openIDUri?: string }
+  [Screens.Connection]: { oobRecordId?: string; proofId?: string; credentialId?: string; openIDUri?: string }
   [Screens.MobileVerifierLoading]: { proofId: string; connectionId: string }
   [Screens.ProofDetails]: { recordId: string }
   [Screens.CredentialOffer]: { credentialId: string }

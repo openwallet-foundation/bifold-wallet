@@ -34,7 +34,6 @@ const Home: React.FC<HomeProps> = () => {
   ])
   const notifications = useNotifications({})
   const { t } = useTranslation()
-
   const { ColorPallet } = useTheme()
   const [store, dispatch] = useStore()
   const { start } = useTour()
