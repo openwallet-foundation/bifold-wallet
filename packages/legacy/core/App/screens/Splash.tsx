@@ -281,6 +281,8 @@ const Splash: React.FC = () => {
 
             logger.info('Opened agent wallet')
           } catch (error: unknown) {
+            // Credo does not use error codes but this will be in the
+            // the error message if the wallet is already open.
             const catchPhrase = 'instance already opened'
 
             if (error instanceof WalletError && error.message.includes(catchPhrase)) {
