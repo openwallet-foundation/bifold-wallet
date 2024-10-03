@@ -12,46 +12,69 @@ exports[`ListContacts Screen Renders correctly 1`] = `
           "alias": undefined,
           "autoAcceptConnection": undefined,
           "connectionTypes": Array [],
-          "createdAt": "2020-01-02T00:00:00.000Z",
-          "did": "9gtPKWtaUKxJir5YG2VPxX",
+          "createdAt": "2024-09-04T18:50:28.647Z",
+          "did": "did:peer:1zQmZYcmJeMX5Lc2HvQjf4VXSC3raHfBci6A4MnjDNCZTVp9",
           "errorMessage": undefined,
-          "id": "1",
+          "id": "b4b1b9cd-a445-4bb3-9645-a2377471965a",
           "imageUrl": undefined,
           "invitationDid": undefined,
           "mediatorId": undefined,
           "metadata": Object {},
-          "outOfBandId": undefined,
+          "outOfBandId": "b8aaa6fe-47c9-4ed8-8cb9-96299e4e0109",
           "previousDids": Array [],
           "previousTheirDids": Array [],
           "protocol": undefined,
-          "role": "responder",
+          "role": "requester",
           "state": "completed",
-          "theirDid": "2SBuq9fpLT8qUiQKr2RgBe",
-          "theirLabel": "Faber",
-          "threadId": "1",
+          "theirDid": "did:peer:1zQmaiE6oyFzYYdBtKD3fJW6yfXE1r5hXMLfa7Ve8nundki6",
+          "theirLabel": "BestBC College",
+          "threadId": "5c667314-6465-4fa8-9a45-f66e571e99e2",
         },
         Object {
           "_tags": Object {},
           "alias": undefined,
           "autoAcceptConnection": undefined,
           "connectionTypes": Array [],
-          "createdAt": "2020-01-01T00:00:00.000Z",
-          "did": "2SBuq9fpLT8qUiQKr2RgBe",
+          "createdAt": "2024-09-04T18:50:28.647Z",
+          "did": "did:peer:1zQmZYcmJeMX5Lc2HvQjf4VXSC3raHfBci6A4MnjDNCZTVp9",
           "errorMessage": undefined,
-          "id": "2",
+          "id": "3712d956-7731-428b-bcbb-127c0f6d615d",
           "imageUrl": undefined,
           "invitationDid": undefined,
           "mediatorId": undefined,
           "metadata": Object {},
-          "outOfBandId": undefined,
+          "outOfBandId": "d1036d48-4b88-4f63-9d7e-b4b0476f8108",
           "previousDids": Array [],
           "previousTheirDids": Array [],
           "protocol": undefined,
           "role": "requester",
           "state": "completed",
-          "theirDid": "9gtPKWtaUKxJir5YG2VPxX",
-          "theirLabel": "Bob",
-          "threadId": "1",
+          "theirDid": "did:peer:1zQmaiE6oyFzYYdBtKD3fJW6yfXE1r5hXMLfa7Ve8nundki6",
+          "theirLabel": "BestBC College",
+          "threadId": "8df1d523-5415-4e62-9975-4d248fcb8f4a",
+        },
+        Object {
+          "_tags": Object {},
+          "alias": undefined,
+          "autoAcceptConnection": undefined,
+          "connectionTypes": Array [],
+          "createdAt": "2024-09-04T18:50:28.647Z",
+          "did": "did:peer:1zQmZYcmJeMX5Lc2HvQjf4VXSC3raHfBci6A4MnjDNCZTVp9",
+          "errorMessage": undefined,
+          "id": "c426f2dc-0ffc-4252-b7d6-2304755f84d9",
+          "imageUrl": undefined,
+          "invitationDid": undefined,
+          "mediatorId": undefined,
+          "metadata": Object {},
+          "outOfBandId": "6e739679-db69-4228-9fdf-d1b8cc2431aa",
+          "previousDids": Array [],
+          "previousTheirDids": Array [],
+          "protocol": undefined,
+          "role": "requester",
+          "state": "completed",
+          "theirDid": "did:peer:1zQmaiE6oyFzYYdBtKD3fJW6yfXE1r5hXMLfa7Ve8nundki6",
+          "theirLabel": "BestBC Tea",
+          "threadId": "fc7405e5-039c-4b7a-bc3d-f9626fc96d25",
         },
       ]
     }
@@ -152,7 +175,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                   }
                 }
               >
-                F
+                B
               </Text>
             </View>
             <View
@@ -188,7 +211,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       }
                     }
                   >
-                    Faber
+                    BestBC College
                   </Text>
                 </View>
                 <View
@@ -198,17 +221,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       "paddingVertical": 4,
                     }
                   }
-                >
-                  <Text
-                    style={
-                      Object {
-                        "color": "#FFFFFF",
-                      }
-                    }
-                  >
-                    Jan 2, 2020
-                  </Text>
-                </View>
+                />
               </View>
               <View />
             </View>
@@ -334,7 +347,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       }
                     }
                   >
-                    Bob
+                    BestBC College
                   </Text>
                 </View>
                 <View
@@ -344,17 +357,143 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       "paddingVertical": 4,
                     }
                   }
+                />
+              </View>
+              <View />
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "height": 1,
+              "marginHorizontal": 16,
+            }
+          }
+        />
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityLabel="ContactDetails.AContact"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="com.ariesbifold:id/Contact"
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#313132",
+                "flexDirection": "row",
+                "padding": 16,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#FFFFFF",
+                  "borderRadius": 25,
+                  "borderWidth": 1,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "marginRight": 16,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 21,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  }
+                }
+              >
+                B
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "paddingVertical": 4,
+                    }
+                  }
                 >
                   <Text
                     style={
                       Object {
                         "color": "#FFFFFF",
+                        "fontSize": 16,
+                        "fontWeight": "bold",
                       }
                     }
                   >
-                    Jan 1, 2020
+                    BestBC Tea
                   </Text>
                 </View>
+                <View
+                  style={
+                    Object {
+                      "alignSelf": "center",
+                      "paddingVertical": 4,
+                    }
+                  }
+                />
               </View>
               <View />
             </View>
