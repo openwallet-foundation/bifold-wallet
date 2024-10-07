@@ -385,7 +385,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
     setAction(() => onPress)
     setCloseAction(() => onClose)
-  }, [navigation, notification, notificationType, toggleDeclineModalVisible, dismissBasicMessage])
+  }, [navigation, notification, notificationType, logger, toggleDeclineModalVisible, dismissBasicMessage])
 
   useEffect(() => {
     switch (details.type) {
