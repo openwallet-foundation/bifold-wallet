@@ -35,8 +35,6 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
       justifyContent: 'center',
       marginTop: 35,
       marginHorizontal: offset,
-      borderColor: 'red',
-      borderWidth: 1,
     },
   })
 
@@ -67,29 +65,14 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
 
     return (
       <>
-        <InactivityWrapper
-          timeoutLength={LockOutTime.OneMinute}
-          timeoutAction={async () => {
-            console.log('Timeout has finished, close wallet')
-            // await agent?.wallet.close()
-          }}
-        >
-          {notifications.length === 0 && (
-            <View style={styles.messageContainer}>
-              <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
-                {t('Home.Welcome')}
-              </Text>
-            </View>
-          )}
-          <TouchableOpacity
-            style={{ margin: 10, padding: 10, borderColor: 'blue', borderWidth: 1 }}
-            onPress={() => {
-              console.log('I was touched!')
-            }}
-          >
-            <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
-          </TouchableOpacity>
-        </InactivityWrapper>
+        {notifications.length === 0 && (
+          <View style={styles.messageContainer}>
+            <Text adjustsFontSizeToFit style={[HomeTheme.welcomeHeader, { marginTop: offset, marginBottom: 20 }]}>
+              {t('Home.Welcome')}
+            </Text>
+          </View>
+        )}
+        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
       </>
     )
   }
