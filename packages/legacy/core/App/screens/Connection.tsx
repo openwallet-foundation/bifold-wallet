@@ -23,6 +23,7 @@ import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { testIdWithKey } from '../utils/testable'
+import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -230,7 +231,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     ) {
       logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
       dispatch({ inProgress: false })
-      navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
+      navigation.replace(Screens.OpenIDCredentialDetails, {
+        credential: state.notificationRecord,
+        screenMode: OpenIDCredScreenMode.offer,
+      })
       return
     }
   }, [logger, navigation, state])

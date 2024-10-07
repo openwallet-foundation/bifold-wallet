@@ -1,6 +1,7 @@
 import { CredentialExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
+import { OpenIDCredScreenMode } from 'modules/openid/screens/OpenIDCredentialOffer'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -132,6 +133,10 @@ export type ProofRequestsStackParams = {
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
   [Screens.CredentialDetails]: { credential: CredentialExchangeRecord }
+  [Screens.OpenIDCredentialDetails]: {
+    credential: SdJwtVcRecord | W3cCredentialRecord
+    screenMode: OpenIDCredScreenMode
+  }
 }
 
 export type HomeStackParams = {
@@ -162,6 +167,10 @@ export type SettingStackParams = {
 
 export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.OpenIDCredentialDetails]: {
+    credential: SdJwtVcRecord | W3cCredentialRecord
+    screenMode: OpenIDCredScreenMode
+  }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
   [Screens.CustomNotification]: undefined
@@ -177,7 +186,10 @@ export type DeliveryStackParams = {
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
-  [Screens.OpenIDCredentialDetails]: { credential: SdJwtVcRecord | W3cCredentialRecord }
+  [Screens.OpenIDCredentialDetails]: {
+    credential: SdJwtVcRecord | W3cCredentialRecord
+    screenMode: OpenIDCredScreenMode
+  }
 }
 
 export type HistoryStackParams = {
