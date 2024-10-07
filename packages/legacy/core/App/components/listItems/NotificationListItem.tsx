@@ -4,6 +4,7 @@ import {
   BasicMessageRecord,
   BasicMessageRepository,
   CredentialExchangeRecord,
+  CredoError,
   ProofExchangeRecord,
   ProofState,
 } from '@credo-ts/core'
@@ -255,23 +256,28 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           break
         case NotificationType.ProofRequest: {
           const proofId = (notification as ProofExchangeRecord).id
-          agent?.proofs.findRequestMessage(proofId).then((message) => {
-            if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
-              details = {
-                type: InfoBoxType.Info,
-                title: t('ProofRequest.NewProofRequest'),
-                body: message.indyProofRequest.name ?? message.comment ?? '',
-                buttonTitle: undefined,
-              }
-            } else {
-              details = {
-                type: InfoBoxType.Info,
-                title: t('ProofRequest.NewProofRequest'),
-                body: '',
-                buttonTitle: undefined,
-              }
+          let message
+          try {
+            message = await agent?.proofs.findRequestMessage(proofId)
+          } catch (error) {
+            agent?.config.logger.error('Error finding request message:', error as CredoError)
+          }
+
+          if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+            details = {
+              type: InfoBoxType.Info,
+              title: t('ProofRequest.NewProofRequest'),
+              body: message.indyProofRequest.name ?? message.comment ?? '',
+              buttonTitle: undefined,
             }
-          })
+          } else {
+            details = {
+              type: InfoBoxType.Info,
+              title: t('ProofRequest.NewProofRequest'),
+              body: '',
+              buttonTitle: undefined,
+            }
+          }
           break
         }
         case NotificationType.Revocation:
