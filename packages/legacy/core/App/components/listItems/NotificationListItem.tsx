@@ -309,6 +309,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   }, [
     notification,
     notificationType,
+    logger,
     connection,
     store.preferences.alternateContactNames,
     t,
@@ -385,7 +386,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
     setAction(() => onPress)
     setCloseAction(() => onClose)
-  }, [navigation, notification, notificationType, logger, toggleDeclineModalVisible, dismissBasicMessage])
+  }, [navigation, notification, notificationType, toggleDeclineModalVisible, dismissBasicMessage])
 
   useEffect(() => {
     switch (details.type) {
