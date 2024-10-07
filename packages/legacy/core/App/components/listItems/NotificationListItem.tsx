@@ -4,6 +4,7 @@ import {
   BasicMessageRecord,
   BasicMessageRepository,
   CredentialExchangeRecord,
+  CredoError,
   ProofExchangeRecord,
   ProofState,
 } from '@credo-ts/core'
@@ -17,6 +18,7 @@ import { DeviceEventEmitter, StyleSheet, Text, TextStyle, TouchableOpacity, View
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes, hitSlop } from '../../constants'
+import { TOKENS, useServices } from '../../container-api'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
@@ -89,6 +91,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [action, setAction] = useState<any>()
   const [closeAction, setCloseAction] = useState<any>()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const connectionId =
     notification instanceof BasicMessageRecord ||
     notification instanceof CredentialExchangeRecord ||
@@ -255,23 +258,28 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           break
         case NotificationType.ProofRequest: {
           const proofId = (notification as ProofExchangeRecord).id
-          agent?.proofs.findRequestMessage(proofId).then((message) => {
-            if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
-              details = {
-                type: InfoBoxType.Info,
-                title: t('ProofRequest.NewProofRequest'),
-                body: message.indyProofRequest.name ?? message.comment ?? '',
-                buttonTitle: undefined,
-              }
-            } else {
-              details = {
-                type: InfoBoxType.Info,
-                title: t('ProofRequest.NewProofRequest'),
-                body: '',
-                buttonTitle: undefined,
-              }
+          let message
+          try {
+            message = await agent?.proofs.findRequestMessage(proofId)
+          } catch (error) {
+            logger.error('Error finding request message:', error as CredoError)
+          }
+
+          if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+            details = {
+              type: InfoBoxType.Info,
+              title: t('ProofRequest.NewProofRequest'),
+              body: message.indyProofRequest.name ?? message.comment ?? '',
+              buttonTitle: undefined,
             }
-          })
+          } else {
+            details = {
+              type: InfoBoxType.Info,
+              title: t('ProofRequest.NewProofRequest'),
+              body: '',
+              buttonTitle: undefined,
+            }
+          }
           break
         }
         case NotificationType.Revocation:
@@ -377,7 +385,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
     setAction(() => onPress)
     setCloseAction(() => onClose)
-  }, [navigation, notification, notificationType, toggleDeclineModalVisible, dismissBasicMessage])
+  }, [navigation, notification, notificationType, logger, toggleDeclineModalVisible, dismissBasicMessage])
 
   useEffect(() => {
     switch (details.type) {
