@@ -4,7 +4,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
 import { useNavigation, CommonActions } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet } from 'react-native'
 import { Config } from 'react-native-config'
@@ -97,6 +97,7 @@ const Splash: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
   const [mounted, setMounted] = useState(false)
+  const initializing = useRef(false)
   const [
     cacheSchemas,
     cacheCredDefs,
@@ -260,6 +261,7 @@ const Splash: React.FC = () => {
       try {
         if (
           !mounted ||
+          initializing.current ||
           !store.authentication.didAuthenticate ||
           !store.onboarding.didConsiderBiometry ||
           !walletSecret?.id ||
@@ -267,6 +269,7 @@ const Splash: React.FC = () => {
         ) {
           return
         }
+        initializing.current = true
 
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
