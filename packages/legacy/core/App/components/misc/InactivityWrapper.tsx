@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
+import React, { PropsWithChildren, useEffect, useRef } from 'react'
 import { AppState, PanResponder, View } from 'react-native'
 
 export enum LockOutTime {
@@ -39,9 +39,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     // do not start timer if timeout is set to 0
     if (minutes > 0) {
       // create new timeout
-      console.log("Haven't timed out yet, reset")
       inactivityTimer.current = setTimeout(() => {
-        console.log('Time out, log user out')
         timeoutAction()
       }, minutesToMilliseconds(minutes))
     }
