@@ -18,6 +18,7 @@ import { DeviceEventEmitter, StyleSheet, Text, TextStyle, TouchableOpacity, View
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes, hitSlop } from '../../constants'
+import { TOKENS, useServices } from '../../container-api'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
@@ -90,6 +91,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [action, setAction] = useState<any>()
   const [closeAction, setCloseAction] = useState<any>()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const connectionId =
     notification instanceof BasicMessageRecord ||
     notification instanceof CredentialExchangeRecord ||
@@ -260,7 +262,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           try {
             message = await agent?.proofs.findRequestMessage(proofId)
           } catch (error) {
-            agent?.config.logger.error('Error finding request message:', error as CredoError)
+            logger.error('Error finding request message:', error as CredoError)
           }
 
           if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
