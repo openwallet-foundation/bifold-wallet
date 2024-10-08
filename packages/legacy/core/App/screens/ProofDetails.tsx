@@ -48,7 +48,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   onGenerateNewPressed,
 }: VerifiedProofProps) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
   const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
   const styles = StyleSheet.create({
     container: {
@@ -139,7 +139,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('ProofDetailsView')}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.iconContainer}>{/* <Assets.svg.informationReceived /> */}</View>
+          <View style={styles.iconContainer}>{<Assets.svg.informationReceived />}</View>
           <Text>
             <Text style={styles.headerTitle}>{t('Verifier.InformationReceived') + ' '}</Text>
             <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
@@ -280,7 +280,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     navigation.navigate(Screens.ProofRequests, {})
 
     return null
-  }, [navigation])
+  }, [navigation, cleanup, route.params.isHistory, connection, connectionLabel])
 
   const onGenerateNewPressed = useCallback(() => {
     if (!record) {
@@ -295,7 +295,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     } else {
       navigation.navigate(Screens.ProofRequests, {})
     }
-  }, [record, navigation])
+  }, [record, navigation, cleanup])
 
   useEffect(() => {
     if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
@@ -308,7 +308,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       BackHandler.addEventListener('hardwareBackPress', onBackPressed)
 
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPressed)
-    }, [route.params, navigation])
+    }, [onBackPressed])
   )
 
   if (!record) return null
