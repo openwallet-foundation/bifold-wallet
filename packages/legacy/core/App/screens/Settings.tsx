@@ -14,7 +14,7 @@ import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import ButtonWithIcon, { ButtonLocation } from '../components/buttons/ButtonWithIcon'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -291,7 +291,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             </Text>
           </View>
           {iconRight && (
-            <ButtonWithIcon
+            <IconButton
               buttonLocation={ButtonLocation.Right}
               accessibilityLabel={iconRight.accessibilityLabel!}
               testID={iconRight.testID!}

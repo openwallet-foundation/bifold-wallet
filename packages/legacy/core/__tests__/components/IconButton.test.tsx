@@ -1,13 +1,13 @@
 import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
-import ButtonWithIcon, { ButtonLocation } from '../../App/components/buttons/ButtonWithIcon'
+import IconButton, { ButtonLocation } from '../../App/components/buttons/IconButton'
 import { testIdWithKey } from '../../App/utils/testable'
 
-describe('ButtonWithIcon Component', () => {
+describe('IconButton Component', () => {
   test('Left alignment renders correctly', () => {
     const tree = render(
-      <ButtonWithIcon
+      <IconButton
         buttonLocation={ButtonLocation.Left}
         accessibilityLabel={'LeftButton'}
         testID={testIdWithKey('LeftButton')}
@@ -21,7 +21,7 @@ describe('ButtonWithIcon Component', () => {
 
   test('Right alignment renders correctly', () => {
     const tree = render(
-      <ButtonWithIcon
+      <IconButton
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={'RightButton'}
         testID={testIdWithKey('RightButton')}
@@ -35,7 +35,7 @@ describe('ButtonWithIcon Component', () => {
 
   test('Right alignment with text renders correctly', () => {
     const tree = render(
-      <ButtonWithIcon
+      <IconButton
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={'RightButton'}
         testID={testIdWithKey('RightButton')}
@@ -51,7 +51,7 @@ describe('ButtonWithIcon Component', () => {
   test('Button onPress triggers on press', () => {
     const callback = jest.fn()
     const { getByTestId } = render(
-      <ButtonWithIcon
+      <IconButton
         buttonLocation={ButtonLocation.Left}
         accessibilityLabel={'LeftButton'}
         testID={testIdWithKey('LeftButton')}

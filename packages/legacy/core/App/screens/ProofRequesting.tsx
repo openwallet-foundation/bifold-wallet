@@ -27,7 +27,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
-import ButtonWithIcon, { ButtonLocation } from '../components/buttons/ButtonWithIcon'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import QRRenderer from '../components/misc/QRRenderer'
 import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
@@ -154,7 +154,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   useEffect(() => {
     if (message && store.preferences.enableShareableLink) {
       const scanShareUrl = () => (
-        <ButtonWithIcon
+        <IconButton
           buttonLocation={ButtonLocation.Right}
           accessibilityLabel={t('Global.Share')}
           testID={testIdWithKey('ShareButton')}

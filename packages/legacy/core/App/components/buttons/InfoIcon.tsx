@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { RootStackParams, Screens, Stacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
-import ButtonWithIcon, { ButtonLocation } from './ButtonWithIcon'
+import IconButton, { ButtonLocation } from './IconButton'
 
 interface InfoIconProps {
   connectionId: string
@@ -17,7 +17,7 @@ const InfoIcon: React.FC<InfoIconProps> = ({ connectionId }) => {
   const { t } = useTranslation()
 
   return (
-    <ButtonWithIcon
+    <IconButton
       buttonLocation={ButtonLocation.Right}
       accessibilityLabel={t('Screens.Settings')}
       testID={testIdWithKey('Settings')}

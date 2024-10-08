@@ -12,7 +12,7 @@ export enum ButtonLocation {
   Right,
 }
 
-interface ButtonWithIconProps {
+interface IconButtonProps {
   buttonLocation: ButtonLocation
   accessibilityLabel: string
   testID: string
@@ -22,7 +22,7 @@ interface ButtonWithIconProps {
   iconTintColor?: string
 }
 
-const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
+const IconButton: React.FC<IconButtonProps> = ({
   buttonLocation,
   icon,
   text,
@@ -83,4 +83,4 @@ const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
   )
 }
 
-export default ButtonWithIcon
+export default IconButton
