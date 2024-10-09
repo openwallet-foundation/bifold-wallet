@@ -255,14 +255,25 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     [connection, store.preferences.alternateContactNames, t]
   )
 
-  const cleanup = useCallback((): Promise<void> | undefined => {
-    if (!store.preferences.useDataRetention) {
-      return agent?.proofs.deleteById(recordId)
+  const cleanup = useCallback((): Promise<PromiseSettledResult<void>[]> | undefined => {
+    if (!agent) {
+      return
     }
 
-    if (record && (record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen) {
-      return agent?.connections.deleteById(record?.connectionId ?? '')
+    const promises = Array<Promise<void>>()
+    if (!store.preferences.useDataRetention) {
+      promises.push(agent.proofs.deleteById(recordId))
     }
+
+    if (
+      record &&
+      record.connectionId &&
+      (record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen
+    ) {
+      promises.push(agent.connections.deleteById(record.connectionId))
+    }
+
+    return Promise.allSettled(promises)
   }, [store.preferences.useDataRetention, agent, recordId, record])
 
   const onBackPressed = useCallback(() => {
