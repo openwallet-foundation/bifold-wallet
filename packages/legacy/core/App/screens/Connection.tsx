@@ -9,7 +9,6 @@ import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useReducer } from 'react'
 
-import { useTheme } from '../contexts/theme'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, EmitterSubscription, BackHandler, View, StyleSheet } from 'react-native'
 
@@ -48,7 +47,6 @@ const GoalCodes = {
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { oobRecordId, openIDUri, proofId, credentialId } = route.params
-  const { ColorPallet, TextTheme } = useTheme()
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
