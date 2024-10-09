@@ -286,10 +286,6 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       return null
     }
 
-    if (connection) {
-      navigation.setOptions({ title: connectionLabel })
-    }
-
     navigation.navigate(Screens.ProofRequests, {})
 
     return null
@@ -323,6 +319,14 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPressed)
     }, [onBackPressed])
   )
+
+  useEffect(() => {
+    if (!connectionLabel || !isHistory) {
+      return
+    }
+
+    navigation.setOptions({ title: connectionLabel })
+  }, [isHistory, navigation, connectionLabel])
 
   if (!record) return null
 
