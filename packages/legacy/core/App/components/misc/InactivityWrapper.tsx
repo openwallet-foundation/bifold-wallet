@@ -1,28 +1,34 @@
+import { useAgent } from '@credo-ts/react-hooks'
 import React, { PropsWithChildren, useEffect, useRef } from 'react'
 import { AppState, PanResponder, View } from 'react-native'
+import { useAuth } from '../../contexts/auth'
+import { useStore } from '../../contexts/store'
+import { DispatchAction } from '../../contexts/reducers/store'
+import { TOKENS, useServices } from '../../container-api'
 
 export enum LockOutTime {
   OneMinute = 1,
   ThreeMinutes = 3,
-  FiveMinutes = 5,
+  FiveMinutes = 1,
   Never = 0,
 }
 
 interface InactivityWrapperProps {
   timeoutLength?: LockOutTime // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
-  timeoutAction: () => void
 }
 
-const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = ({
-  children,
-  timeoutAction,
-  timeoutLength,
-}) => {
-  const timeout_minutes = timeoutLength !== undefined ? timeoutLength : LockOutTime.FiveMinutes
+const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = ({ children, timeoutLength }) => {
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  useStore()
+  const [_, dispatch] = useStore()
+  const { agent } = useAgent()
+  const { removeSavedWalletSecret } = useAuth()
+  const timeout_minutes = timeoutLength !== undefined ? timeoutLength : LockOutTime.OneMinute
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => {
+        console.log('Pan responder responding')
         // some user interaction, reset timeout
         resetInactivityTimeout(timeout_minutes)
 
@@ -39,8 +45,23 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     // do not start timer if timeout is set to 0
     if (minutes > 0) {
       // create new timeout
-      inactivityTimer.current = setTimeout(() => {
-        timeoutAction()
+      inactivityTimer.current = setTimeout(async () => {
+        try {
+          removeSavedWalletSecret()
+          await agent?.wallet.close()
+        } catch (error) {
+          logger.error(`Error closing agent wallet, ${error}`)
+        }
+
+        dispatch({
+          type: DispatchAction.DID_AUTHENTICATE,
+          payload: [{ didAuthenticate: false }],
+        })
+
+        dispatch({
+          type: DispatchAction.LOCKOUT_UPDATED,
+          payload: [{ displayNotification: true }],
+        })
       }, minutesToMilliseconds(minutes))
     }
   }
@@ -89,7 +110,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
   }, [])
 
   return (
-    <View style={{ borderWidth: 1, borderColor: 'green' }} {...panResponder.panHandlers}>
+    <View style={{ flex: 1 }} {...panResponder.panHandlers}>
       {children}
     </View>
   )
