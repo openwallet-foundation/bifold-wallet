@@ -9,7 +9,6 @@ import {
   markProofAsViewed,
 } from '@hyperledger/aries-bifold-verifier'
 import { useFocusEffect } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -18,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useStore } from '../contexts/store'
+import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
@@ -25,28 +25,32 @@ import { testIdWithKey } from '../utils/testable'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
-interface VerifiedProofProps {
+type VerifiedProofProps = {
   record: ProofExchangeRecord
   isHistory?: boolean
   senderReview?: boolean
-  navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
+  connectionLabel: string
+  onBackPressed: () => void
+  onGenerateNewPressed: () => void
 }
 
-interface UnverifiedProofProps {
+type UnverifiedProofProps = {
   record: ProofExchangeRecord
-  navigation: StackNavigationProp<ProofRequestsStackParams, Screens.ProofDetails>
+  onBackPressed: () => void
+  onGenerateNewPressed: () => void
 }
 
 const VerifiedProof: React.FC<VerifiedProofProps> = ({
   record,
-  navigation,
   isHistory,
   senderReview,
+  connectionLabel,
+  onBackPressed,
+  onGenerateNewPressed,
 }: VerifiedProofProps) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme, Assets } = useTheme()
-  const [store] = useStore()
-
+  const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -99,38 +103,9 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
     },
   })
 
-  const connection = useConnectionById(record.connectionId || '')
-  const connectionLabel = useMemo(
-    () =>
-      connection
-        ? getConnectionName(connection, store.preferences.alternateContactNames)
-        : t('Verifier.ConnectionLessLabel'),
-    [connection, store.preferences.alternateContactNames, t]
-  )
-
-  const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
-
   const onSharedProofDataLoad = useCallback((data: GroupedSharedProofDataItem[]) => {
     setSharedProofDataItems(data)
   }, [])
-
-  const onGenerateNew = useCallback(() => {
-    const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
-    if (metadata?.proof_request_template_id) {
-      navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
-    } else {
-      navigation.navigate(Screens.ProofRequests, {})
-    }
-  }, [record, navigation])
-
-  const onBack = useCallback(() => {
-    navigation.navigate(Screens.ProofRequests, {})
-  }, [navigation])
-
-  useEffect(() => {
-    if (!connection || !isHistory) return
-    navigation.setOptions({ title: connectionLabel })
-  }, [connection, isHistory, navigation, connectionLabel])
 
   if (isHistory) {
     return (
@@ -165,9 +140,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('ProofDetailsView')}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.iconContainer}>
-            <Assets.svg.informationReceived />
-          </View>
+          <View style={styles.iconContainer}>{<Assets.svg.informationReceived />}</View>
           <Text>
             <Text style={styles.headerTitle}>{t('Verifier.InformationReceived') + ' '}</Text>
             <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
@@ -183,7 +156,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
               accessibilityLabel={t('Verifier.GenerateNewQR')}
               testID={testIdWithKey('GenerateNewQR')}
               buttonType={ButtonType.Primary}
-              onPress={onGenerateNew}
+              onPress={onGenerateNewPressed}
             />
           </View>
           <Button
@@ -191,7 +164,7 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
             accessibilityLabel={t('Verifier.BackToList')}
             testID={testIdWithKey('BackToList')}
             buttonType={ButtonType.Secondary}
-            onPress={onBack}
+            onPress={onBackPressed}
           />
         </View>
       </View>
@@ -199,10 +172,9 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   )
 }
 
-const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation }) => {
+const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, onBackPressed, onGenerateNewPressed }) => {
   const { t } = useTranslation()
   const { TextTheme, Assets } = useTheme()
-
   const styles = StyleSheet.create({
     header: {
       paddingHorizontal: 20,
@@ -227,19 +199,6 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
     },
   })
 
-  const onGenerateNew = useCallback(() => {
-    const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
-    if (metadata?.proof_request_template_id) {
-      navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
-    } else {
-      navigation.navigate(Screens.ProofRequests, {})
-    }
-  }, [record, navigation])
-
-  const onBackToList = useCallback(() => {
-    navigation.navigate(Screens.ProofRequests, {})
-  }, [navigation])
-
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} testID={testIdWithKey('UnverifiedProofView')}>
       <View style={styles.header}>
@@ -260,7 +219,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
             accessibilityLabel={t('Verifier.GenerateNewQR')}
             testID={testIdWithKey('GenerateNewQR')}
             buttonType={ButtonType.Primary}
-            onPress={onGenerateNew}
+            onPress={onGenerateNewPressed}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -269,7 +228,7 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, navigation })
             accessibilityLabel={t('Verifier.BackToList')}
             testID={testIdWithKey('BackToList')}
             buttonType={ButtonType.Secondary}
-            onPress={onBackToList}
+            onPress={onBackPressed}
           />
         </View>
       </View>
@@ -284,19 +243,68 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   const { recordId, isHistory, senderReview } = route.params
   const record = useProofById(recordId)
+  const connection = useConnectionById(record?.connectionId ?? '')
+  const { t } = useTranslation()
   const { agent } = useAgent()
   const [store] = useStore()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
-  useEffect(() => {
-    return () => {
-      if (!store.preferences.useDataRetention) {
-        agent?.proofs.deleteById(recordId)
-      }
-      if ((record?.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen) {
-        agent?.connections.deleteById(record?.connectionId ?? '')
-      }
+  const connectionLabel = useMemo(
+    () =>
+      connection
+        ? getConnectionName(connection, store.preferences.alternateContactNames)
+        : t('Verifier.ConnectionLessLabel'),
+    [connection, store.preferences.alternateContactNames, t]
+  )
+
+  const cleanup = useCallback((): Promise<PromiseSettledResult<void>[]> | undefined => {
+    if (!agent) {
+      return
     }
+
+    const promises = Array<Promise<void>>()
+    if (!store.preferences.useDataRetention) {
+      promises.push(agent.proofs.deleteById(recordId))
+    }
+
+    if (
+      record &&
+      record.connectionId &&
+      (record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen
+    ) {
+      promises.push(agent.connections.deleteById(record.connectionId))
+    }
+
+    return Promise.allSettled(promises)
   }, [store.preferences.useDataRetention, agent, recordId, record])
+
+  const onBackPressed = useCallback(() => {
+    cleanup()?.catch((err) => logger.error(`Error cleaning up proof, ${err}`))
+
+    if (route.params.isHistory) {
+      navigation.goBack()
+      return null
+    }
+
+    navigation.navigate(Screens.ProofRequests, {})
+
+    return null
+  }, [navigation, cleanup, route.params.isHistory, logger])
+
+  const onGenerateNewPressed = useCallback(() => {
+    if (!record) {
+      return
+    }
+
+    cleanup()?.catch((err) => logger.error(`Error cleaning up proof, ${err}`))
+
+    const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+    if (metadata?.proof_request_template_id) {
+      navigation.navigate(Screens.ProofRequesting, { templateId: metadata.proof_request_template_id })
+    } else {
+      navigation.navigate(Screens.ProofRequests, {})
+    }
+  }, [record, navigation, cleanup, logger])
 
   useEffect(() => {
     if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
@@ -306,29 +314,37 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      const onBackPress = () => {
-        if (route.params.isHistory) {
-          navigation.goBack()
-        } else {
-          navigation.navigate(Screens.ProofRequests, {})
-        }
-        return true
-      }
+      BackHandler.addEventListener('hardwareBackPress', onBackPressed)
 
-      BackHandler.addEventListener('hardwareBackPress', onBackPress)
-
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
-    }, [route.params, navigation])
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPressed)
+    }, [onBackPressed])
   )
+
+  useEffect(() => {
+    if (!connectionLabel || !isHistory) {
+      return
+    }
+
+    navigation.setOptions({ title: connectionLabel })
+  }, [isHistory, navigation, connectionLabel])
 
   if (!record) return null
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
       {(record.isVerified || senderReview) && (
-        <VerifiedProof record={record} isHistory={isHistory} navigation={navigation} senderReview={senderReview} />
+        <VerifiedProof
+          record={record}
+          isHistory={isHistory}
+          senderReview={senderReview}
+          connectionLabel={connectionLabel}
+          onBackPressed={onBackPressed}
+          onGenerateNewPressed={onGenerateNewPressed}
+        />
       )}
-      {!(record.isVerified || senderReview) && <UnverifiedProof record={record} navigation={navigation} />}
+      {!(record.isVerified || senderReview) && (
+        <UnverifiedProof record={record} onBackPressed={onBackPressed} onGenerateNewPressed={onGenerateNewPressed} />
+      )}
     </SafeAreaView>
   )
 }
