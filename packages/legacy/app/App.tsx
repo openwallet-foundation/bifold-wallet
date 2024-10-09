@@ -4,7 +4,6 @@ import {
   AuthProvider,
   ConfigurationProvider,
   ErrorModal,
-  InactivityWrapper,
   NetInfo,
   NetworkProvider,
   RootStack,
@@ -23,7 +22,6 @@ import {
   toastConfig,
   translationResources,
 } from '@hyperledger/aries-bifold-core'
-import { LockOutTime } from '@hyperledger/aries-bifold-core/lib/typescript/App/components/misc/InactivityWrapper'
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
 import { StatusBar } from 'react-native'

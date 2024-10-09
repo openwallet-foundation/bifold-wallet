@@ -1,12 +1,11 @@
 import { CredentialState } from '@credo-ts/core'
-import { useAgent, useCredentialByState } from '@credo-ts/react-hooks'
+import { useCredentialByState } from '@credo-ts/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
-import InactivityWrapper, { LockOutTime } from '../misc/InactivityWrapper'
 
 const offset = 25
 
@@ -20,7 +19,6 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
     ...useCredentialByState(CredentialState.Done),
   ]
   const [{ useNotifications }] = useServices([TOKENS.NOTIFICATIONS])
-  const { agent } = useAgent()
   const notifications = useNotifications({})
   const { HomeTheme, TextTheme } = useTheme()
   const { t } = useTranslation()
