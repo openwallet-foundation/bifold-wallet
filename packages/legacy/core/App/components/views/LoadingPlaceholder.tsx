@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, ScrollView } from 'react-native'
 
 import Button, { ButtonType } from '../../components/buttons/Button'
 import { testIdWithKey } from '../../utils/testable'
@@ -9,6 +9,7 @@ import InfoTextBox from '../../components/texts/InfoTextBox'
 import { InfoBoxType } from '.././misc/InfoBox'
 import ProgressBar from './ProgressBar'
 import RecordLoading from '../animated/RecordLoading'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const LoadingPlaceholderWorkflowType = {
   Connection: 'Connection',
@@ -41,7 +42,11 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const [overtime, setOvertime] = useState(false)
   const styles = StyleSheet.create({
+    safeAreaView: {
+      flex: 1,
+    },
     container: {
+      flex: 1,
       marginTop: 8,
       marginHorizontal: 20,
     },
@@ -115,13 +120,17 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   }, [workflowType, t])
 
   return (
-    <View testID={testID ?? testIdWithKey('LoadingPlaceholder')}>
-      {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
-      <View style={styles.container}>
-        <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
-          {textForProgressIndication()}
-        </Text>
-        <View>
+    <SafeAreaView
+      style={styles.safeAreaView}
+      testID={testID ?? testIdWithKey('LoadingPlaceholder')}
+      edges={['bottom', 'left', 'right']}
+    >
+      <ScrollView>
+        {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
+        <View style={styles.container}>
+          <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
+            {textForProgressIndication()}
+          </Text>
           {overtime && (
             <>
               <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
@@ -146,20 +155,20 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
             <RecordLoading />
             <RecordLoading style={{ marginTop: 10 }} />
           </View>
+          {onCancelTouched && (
+            <View style={styles.buttonContainer}>
+              <Button
+                title={t('Global.Cancel')}
+                accessibilityLabel={t('Global.Cancel')}
+                testID={testIdWithKey('Cancel')}
+                buttonType={ButtonType.Primary}
+                onPress={onCancelTouched}
+              />
+            </View>
+          )}
         </View>
-        {onCancelTouched && (
-          <View style={styles.buttonContainer}>
-            <Button
-              title={t('Global.Cancel')}
-              accessibilityLabel={t('Global.Cancel')}
-              testID={testIdWithKey('Cancel')}
-              buttonType={ButtonType.Primary}
-              onPress={onCancelTouched}
-            />
-          </View>
-        )}
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

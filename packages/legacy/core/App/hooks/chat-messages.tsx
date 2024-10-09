@@ -155,10 +155,19 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
                 })
               },
               [CredentialState.OfferReceived]: () => {
-                navigation.navigate(Stacks.ContactStack as any, {
-                  screen: Screens.CredentialOffer,
-                  params: { credentialId: record.id },
-                })
+                // if we are in the contact stack, use the parent navigator
+                if (navigation.getParent()) {
+                  navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+                    screen: Screens.Connection,
+                    params: { credentialId: record.id },
+                  })
+                } else {
+                  // if we are in the root stack, use the current navigator
+                  navigation.navigate(Stacks.ConnectionStack as any, {
+                    screen: Screens.Connection,
+                    params: { credentialId: record.id },
+                  })
+                }
               },
             }
             const nav = navMap[record.state]
@@ -202,10 +211,19 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
               [ProofState.PresentationSent]: toProofDetails,
               [ProofState.PresentationReceived]: toProofDetails,
               [ProofState.RequestReceived]: () => {
-                navigation.navigate(Stacks.ContactStack as any, {
-                  screen: Screens.ProofRequest,
-                  params: { proofId: record.id },
-                })
+                // if we are in the contact stack, use the parent navigator
+                if (navigation.getParent()) {
+                  navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+                    screen: Screens.Connection,
+                    params: { proofId: record.id },
+                  })
+                } else {
+                  // if we are in the root stack, use the current navigator
+                  navigation.navigate(Stacks.ConnectionStack as any, {
+                    screen: Screens.Connection,
+                    params: { proofId: record.id },
+                  })
+                }
               },
             }
             const nav = navMap[record.state]

@@ -33,7 +33,7 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Connection}
         component={Connection}
-        options={{ ...defaultStackOptions, headerShown: false }}
+        options={{ ...defaultStackOptions }}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
