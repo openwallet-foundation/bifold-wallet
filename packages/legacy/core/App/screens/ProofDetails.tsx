@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SharedProofData from '../components/misc/SharedProofData'
 import { useStore } from '../contexts/store'
+import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
@@ -246,6 +247,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [store] = useStore()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   const connectionLabel = useMemo(
     () =>
@@ -277,7 +279,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   }, [store.preferences.useDataRetention, agent, recordId, record])
 
   const onBackPressed = useCallback(() => {
-    cleanup()?.catch((err) => console.error(err))
+    cleanup()?.catch((err) => logger.error(`Error cleaning up proof, ${err}`))
 
     if (route.params.isHistory) {
       navigation.goBack()
@@ -291,14 +293,14 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     navigation.navigate(Screens.ProofRequests, {})
 
     return null
-  }, [navigation, cleanup, route.params.isHistory, connection, connectionLabel])
+  }, [navigation, cleanup, route.params.isHistory, connection, connectionLabel, logger])
 
   const onGenerateNewPressed = useCallback(() => {
     if (!record) {
       return
     }
 
-    cleanup()?.catch((err) => console.error(err))
+    cleanup()?.catch((err) => logger.error(`Error cleaning up proof, ${err}`))
 
     const metadata = record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
     if (metadata?.proof_request_template_id) {
@@ -306,7 +308,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     } else {
       navigation.navigate(Screens.ProofRequests, {})
     }
-  }, [record, navigation, cleanup])
+  }, [record, navigation, cleanup, logger])
 
   useEffect(() => {
     if (agent && record && !record.metadata?.data?.customMetadata?.details_seen) {
