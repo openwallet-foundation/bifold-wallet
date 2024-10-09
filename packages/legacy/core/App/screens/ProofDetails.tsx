@@ -289,7 +289,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     navigation.navigate(Screens.ProofRequests, {})
 
     return null
-  }, [navigation, cleanup, route.params.isHistory, connection, connectionLabel, logger])
+  }, [navigation, cleanup, route.params.isHistory, logger])
 
   const onGenerateNewPressed = useCallback(() => {
     if (!record) {
