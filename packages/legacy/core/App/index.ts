@@ -7,7 +7,7 @@ import AgentProvider from '@credo-ts/react-hooks'
 import App from './App'
 import * as components from './components'
 import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
-import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
+import IconButton, { ButtonLocation } from './components/buttons/IconButton'
 import BulletPoint from './components/inputs/BulletPoint'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
@@ -125,7 +125,7 @@ export {
   credentialOfferTourSteps,
   proofRequestTourSteps,
   ButtonType,
-  HeaderButton,
+  IconButton,
   ButtonLocation,
   CheckBoxRow,
   CredentialCard,
