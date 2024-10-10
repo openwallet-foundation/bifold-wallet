@@ -7,7 +7,6 @@ import {
   Text,
   View,
   Modal,
-  Switch,
   ScrollView,
   Pressable,
   DeviceEventEmitter,
