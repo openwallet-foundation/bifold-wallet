@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { Screens, TabStacks } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 
-import HeaderButton, { ButtonLocation } from './HeaderButton'
+import IconButton, { ButtonLocation } from './IconButton'
 
 const HeaderRightHome: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation()
 
   return (
-    <HeaderButton
+    <IconButton
       buttonLocation={ButtonLocation.Right}
       accessibilityLabel={t('Global.Home')}
       testID={testIdWithKey('HomeButton')}
