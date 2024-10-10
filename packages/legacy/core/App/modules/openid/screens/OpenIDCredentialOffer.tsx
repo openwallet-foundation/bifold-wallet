@@ -2,7 +2,7 @@ import React from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { useState } from 'react'
@@ -20,9 +20,9 @@ import RecordField from '../../../components/record/RecordField'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { useAgent } from '@credo-ts/react-hooks'
-import { storeCredential } from '../resolver'
 import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 import RecordRemove from '../../../components/record/RecordRemove'
+import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -39,8 +39,9 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const { agent } = useAgent()
+  const { storeCredential, removeCredential } = useOpenIDCredentials()
 
-  const [declineModalVisible, setDeclineModalVisible] = useState(false)
+  const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
 
@@ -58,11 +59,13 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     },
   })
 
-  const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+  const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
 
   const handleDeclineTouched = async () => {
     toggleDeclineModalVisible()
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    if (screenMode === OpenIDCredScreenMode.offer)
+      navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    else handleRemove()
   }
 
   const handleAcceptTouched = async () => {
@@ -70,17 +73,23 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       if (!agent) {
         return
       }
-      await storeCredential(agent, credential)
+      await storeCredential(credential)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
-      const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
+      const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
 
-  const handleRemove = () => {
-    console.log('$$Remove cred')
+  const handleRemove = async () => {
+    try {
+      await removeCredential(credential)
+      navigation.pop()
+    } catch (err) {
+      const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
   }
 
   const footerButton = (
@@ -118,7 +127,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
 
         {credential && (
           <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-            <OpenIDCredentialCard credentialDisplay={credentialDisplay} />
+            <OpenIDCredentialCard credentialDisplay={display} />
           </View>
         )}
       </>
@@ -170,7 +179,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
                 <Text style={[TextTheme.normal]}>{display.issuer.name || t('ContactDetails.AContact')}</Text>
               </Text>
             </View>
-            <RecordRemove onRemove={handleRemove} />
+            <RecordRemove onRemove={toggleDeclineModalVisible} />
           </>
         )}
       </View>
@@ -196,20 +205,23 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     )
   }
 
+  const screenEdges: Edge[] =
+    screenMode === OpenIDCredScreenMode.offer ? ['bottom', 'left', 'right'] : ['left', 'right']
+
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={screenEdges}>
       {body()}
       {screenMode === OpenIDCredScreenMode.offer && (
-        <>
-          <CredentialOfferAccept visible={acceptModalVisible} credentialId={''} confirmationOnly={true} />
-          <CommonRemoveModal
-            usage={ModalUsage.CredentialOfferDecline}
-            visible={declineModalVisible}
-            onSubmit={handleDeclineTouched}
-            onCancel={toggleDeclineModalVisible}
-          />
-        </>
+        <CredentialOfferAccept visible={acceptModalVisible} credentialId={''} confirmationOnly={true} />
       )}
+      <CommonRemoveModal
+        usage={
+          screenMode === OpenIDCredScreenMode.offer ? ModalUsage.CredentialOfferDecline : ModalUsage.CredentialRemove
+        }
+        visible={isRemoveModalDisplayed}
+        onSubmit={handleDeclineTouched}
+        onCancel={toggleDeclineModalVisible}
+      />
     </SafeAreaView>
   )
 }

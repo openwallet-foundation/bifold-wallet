@@ -15,7 +15,8 @@ interface HomeFooterViewProps {
 }
 
 const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
-  const { w3cCredentialRecords } = useOpenIDCredentials()
+  const { openIdState } = useOpenIDCredentials()
+  const { w3cCredentialRecords } = openIdState
 
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),

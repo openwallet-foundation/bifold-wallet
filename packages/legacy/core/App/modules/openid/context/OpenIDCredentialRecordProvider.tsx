@@ -1,9 +1,23 @@
-import { ClaimFormat, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
-import { recordsAddedByType } from '@credo-ts/react-hooks/build/recordUtils'
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 
+import {
+  ClaimFormat,
+  SdJwtVcRecord,
+  SdJwtVcRepository,
+  W3cCredentialRecord,
+  W3cCredentialRepository,
+} from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
+import { recordsAddedByType, recordsRemovedByType } from '@credo-ts/react-hooks/build/recordUtils'
+import { TOKENS, useServices } from '../../../container-api'
+
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | undefined
+
+export type OpenIDCredentialContext = {
+  openIdState: OpenIDCredentialRecordState
+  storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord) => Promise<void>
+  removeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord) => Promise<void>
+}
 
 export type OpenIDCredentialRecordState = {
   openIDCredentialRecords: Array<OpenIDCredentialRecord>
@@ -15,14 +29,26 @@ export type OpenIDCredentialRecordState = {
 const addRecord = (record: W3cCredentialRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
   const newRecordsState = [...state.w3cCredentialRecords]
   newRecordsState.unshift(record)
-  console.log('$$addRecord: -->', newRecordsState.length)
-  console.log('##addRecord: -->', JSON.stringify(record))
 
   return {
     ...state,
     w3cCredentialRecords: newRecordsState,
   }
 }
+
+const removeRecord = (record: W3cCredentialRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.w3cCredentialRecords]
+  const index = newRecordsState.findIndex((r) => r.id === record.id)
+  if (index > -1) {
+    newRecordsState.splice(index, 1)
+  }
+
+  return {
+    ...state,
+    w3cCredentialRecords: newRecordsState,
+  }
+}
+
 const defaultSate: OpenIDCredentialRecordState = {
   openIDCredentialRecords: [],
   w3cCredentialRecords: [],
@@ -34,7 +60,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const OpenIDCredentialRecordContext = createContext<OpenIDCredentialRecordState>(defaultSate)
+const OpenIDCredentialRecordContext = createContext<OpenIDCredentialContext>(null as unknown as OpenIDCredentialContext)
 
 const isW3CCredentialRecord = (record: W3cCredentialRecord) => {
   return record.getTags()?.claimFormat === ClaimFormat.JwtVc
@@ -49,6 +75,33 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<Props>> 
   const [state, setState] = useState<OpenIDCredentialRecordState>(defaultSate)
 
   const { agent } = useAgent()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+
+  function checkAgent() {
+    if (!agent) {
+      const error = 'Agent undefined!'
+      logger.error(`[OpenIDCredentialRecordProvider][deleteCredential] ${error}`)
+      throw new Error(error)
+    }
+  }
+
+  async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord): Promise<void> {
+    checkAgent()
+    if (cred instanceof W3cCredentialRecord) {
+      await agent?.dependencyManager.resolve(W3cCredentialRepository).save(agent.context, cred)
+    } else {
+      await agent?.dependencyManager.resolve(SdJwtVcRepository).save(agent.context, cred)
+    }
+  }
+
+  async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord) {
+    checkAgent()
+    if (cred instanceof W3cCredentialRecord) {
+      await agent?.w3cCredentials.removeCredentialRecord(cred.id)
+    } else if (cred instanceof SdJwtVcRecord) {
+      await agent?.sdJwtVc.deleteById(cred.id)
+    }
+  }
 
   useEffect(() => {
     if (!agent) {
@@ -71,13 +124,28 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<Props>> 
         }
       })
 
+      const credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
+        setState(removeRecord(record, state))
+      })
+
       return () => {
         credentialAdded$.unsubscribe()
+        credentialRemoved$.unsubscribe()
       }
     }
   }, [state, agent])
 
-  return <OpenIDCredentialRecordContext.Provider value={state}>{children}</OpenIDCredentialRecordContext.Provider>
+  return (
+    <OpenIDCredentialRecordContext.Provider
+      value={{
+        openIdState: state,
+        storeCredential: storeCredential,
+        removeCredential: deleteCredential,
+      }}
+    >
+      {children}
+    </OpenIDCredentialRecordContext.Provider>
+  )
 }
 
 export const useOpenIDCredentials = () => useContext(OpenIDCredentialRecordContext)

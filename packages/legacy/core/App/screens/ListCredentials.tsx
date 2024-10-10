@@ -18,8 +18,6 @@ import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
-import OpenIDCredentialCard from '../modules/openid/components/OpenIDCredentialCard'
-import { getCredentialForDisplay } from '../modules/openid/display'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 
 export type GenericCredentialExchangeRecord = CredentialExchangeRecord | W3cCredentialRecord | SdJwtVcRecord
@@ -42,7 +40,8 @@ const ListCredentials: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const { w3cCredentialRecords } = useOpenIDCredentials()
+  const { openIdState } = useOpenIDCredentials()
+  const { w3cCredentialRecords } = openIdState
 
   let credentials: GenericCredentialExchangeRecord[] = [
     ...useCredentialByState(CredentialState.CredentialReceived),
@@ -74,29 +73,21 @@ const ListCredentials: React.FC = () => {
   }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
 
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
-    if (cred instanceof W3cCredentialRecord) {
-      const credentialDisplay = getCredentialForDisplay(cred)
-      return (
-        <OpenIDCredentialCard
-          credentialDisplay={credentialDisplay}
-          onPress={() =>
+    return (
+      <CredentialCard
+        credential={cred as CredentialExchangeRecord}
+        onPress={() => {
+          if (cred instanceof W3cCredentialRecord) {
             navigation.navigate(Screens.OpenIDCredentialDetails, {
               credential: cred,
               screenMode: OpenIDCredScreenMode.details,
             })
-          }
-        />
-      )
-    } else {
-      return (
-        <CredentialCard
-          credential={cred as CredentialExchangeRecord}
-          onPress={() =>
+          } else {
             navigation.navigate(Screens.CredentialDetails, { credential: cred as CredentialExchangeRecord })
           }
-        />
-      )
-    }
+        }}
+      />
+    )
   }
 
   return (
