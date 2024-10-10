@@ -6,25 +6,13 @@ import Toast from 'react-native-toast-message'
 import { useNetwork } from '../../contexts/network'
 
 const NetInfo: React.FC = () => {
-  const { silentAssertConnectedNetwork, assertLedgerConnectivity } = useNetwork()
+  const { silentAssertConnectedNetwork } = useNetwork()
   const { t } = useTranslation()
 
   const isConnected = silentAssertConnectedNetwork()
 
   useEffect(() => {
     if (isConnected) {
-      assertLedgerConnectivity().then((status) => {
-        if (status) {
-          return
-        }
-
-        Toast.show({
-          type: 'warn',
-          autoHide: false,
-          text1: t('NetInfo.LedgerConnectivityIssueMessage'),
-        })
-      })
-
       return
     }
 
@@ -33,7 +21,7 @@ const NetInfo: React.FC = () => {
       autoHide: true,
       text1: t('NetInfo.NoInternetConnectionTitle'),
     })
-  }, [isConnected, assertLedgerConnectivity, t])
+  }, [isConnected, t])
 
   return null
 }
