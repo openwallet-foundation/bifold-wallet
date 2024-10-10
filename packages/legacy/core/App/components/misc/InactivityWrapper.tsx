@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import React, { PropsWithChildren, useEffect, useRef } from 'react'
+import React, { PropsWithChildren, useCallback, useEffect, useRef } from 'react'
 import { AppState, PanResponder, View } from 'react-native'
 import { useAuth } from '../../contexts/auth'
 import { useStore } from '../../contexts/store'
@@ -9,9 +9,9 @@ import { TOKENS, useServices } from '../../container-api'
 export const LockOutTime = {
   OneMinute: 1,
   ThreeMinutes: 3,
-  FiveMinutes: 1,
+  FiveMinutes: 5,
   Never: 0,
-}
+} as const
 
 interface InactivityWrapperProps {
   timeoutLength?: number // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
@@ -27,7 +27,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => {
-        // some user interaction, reset timeout
+        // some user interaction detected, reset timeout
         resetInactivityTimeout(timeoutAsMilliseconds)
 
         // returns false so the PanResponder doesn't consume the touch event
@@ -36,20 +36,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     })
   ).current
 
-  const resetInactivityTimeout = (milliseconds: number) => {
-    // remove existing timeout
-    clearTimer()
-
-    // do not start timer if timeout is set to 0
-    if (milliseconds > 0) {
-      // create new timeout
-      inactivityTimer.current = setTimeout(async () => {
-        lockUserOut()
-      }, milliseconds)
-    }
-  }
-
-  const lockUserOut = async () => {
+  const lockUserOut = useCallback(async () => {
     try {
       removeSavedWalletSecret()
       await agent?.wallet.close()
@@ -66,13 +53,29 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
       type: DispatchAction.LOCKOUT_UPDATED,
       payload: [{ displayNotification: true }],
     })
-  }
+  }, [agent, removeSavedWalletSecret, dispatch, logger])
 
-  const clearTimer = () => {
+  const clearTimer = useCallback(() => {
     if (inactivityTimer.current) {
       clearTimeout(inactivityTimer.current)
     }
-  }
+  }, [])
+
+  const resetInactivityTimeout = useCallback(
+    (milliseconds: number) => {
+      // remove existing timeout
+      clearTimer()
+
+      // do not start timer if timeout is set to 0
+      if (milliseconds > 0) {
+        // create new timeout
+        inactivityTimer.current = setTimeout(async () => {
+          lockUserOut()
+        }, milliseconds)
+      }
+    },
+    [clearTimer, lockUserOut]
+  )
 
   useEffect(() => {
     // Setup listener for app state changes (background/ foreground movement)
