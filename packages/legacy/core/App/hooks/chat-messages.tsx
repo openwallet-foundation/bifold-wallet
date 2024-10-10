@@ -122,11 +122,12 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
           })}
         </Text>
       )
+
       return {
         _id: record.id,
         text: record.content,
         renderEvent: () => msgText,
-        createdAt: record.updatedAt || record.createdAt,
+        createdAt: record.createdAt,
         type: record.type,
         user: { _id: role },
       }
