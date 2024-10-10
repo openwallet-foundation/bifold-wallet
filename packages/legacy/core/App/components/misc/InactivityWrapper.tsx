@@ -19,7 +19,7 @@ type InactivityWrapperProps = {
 
 const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = ({ children, timeoutLength }) => {
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const [_, dispatch] = useStore()
+  const [, dispatch] = useStore()
   const { agent } = useAgent()
   const { removeSavedWalletSecret } = useAuth()
   const timeoutAsMilliseconds = (timeoutLength !== undefined ? timeoutLength : LockOutTime.OneMinute) * 60000
@@ -108,7 +108,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
       clearTimer()
       eventSubscription.remove()
     }
-  }, [])
+  })
 
   return (
     <View style={{ flex: 1 }} {...panResponder.panHandlers}>
