@@ -70,7 +70,9 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
             </Text>
           </View>
         )}
-        <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+        <View style={styles.messageContainer}>
+          <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+        </View>
       </>
     )
   }
