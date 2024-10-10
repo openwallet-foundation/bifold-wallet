@@ -13,7 +13,7 @@ export const LockOutTime = {
   Never: 0,
 } as const
 
-interface InactivityWrapperProps {
+type InactivityWrapperProps = {
   timeoutLength?: number // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
 }
 
