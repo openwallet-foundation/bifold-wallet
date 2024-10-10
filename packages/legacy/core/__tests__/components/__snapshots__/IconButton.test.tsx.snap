@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HeaderButton Component Left alignment renders correctly 1`] = `
+exports[`IconButton Component Left alignment renders correctly 1`] = `
 <View
   accessibilityLabel="LeftButton"
   accessibilityRole="button"
@@ -80,7 +80,7 @@ exports[`HeaderButton Component Left alignment renders correctly 1`] = `
 </View>
 `;
 
-exports[`HeaderButton Component Right alignment renders correctly 1`] = `
+exports[`IconButton Component Right alignment renders correctly 1`] = `
 <View
   accessibilityLabel="RightButton"
   accessibilityRole="button"
@@ -160,7 +160,7 @@ exports[`HeaderButton Component Right alignment renders correctly 1`] = `
 </View>
 `;
 
-exports[`HeaderButton Component Right alignment with text renders correctly 1`] = `
+exports[`IconButton Component Right alignment with text renders correctly 1`] = `
 <View
   accessibilityLabel="RightButton"
   accessibilityRole="button"

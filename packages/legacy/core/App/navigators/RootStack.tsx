@@ -12,7 +12,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { EventTypes, walletTimeout } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAuth } from '../contexts/auth'
@@ -272,7 +272,7 @@ const RootStack: React.FC = () => {
             headerShown: true,
             title: t('Screens.CredentialOffer'),
             headerLeft: () => (
-              <HeaderButton
+              <IconButton
                 buttonLocation={ButtonLocation.Left}
                 accessibilityLabel={t('Global.Back')}
                 testID={testIdWithKey('BackButton')}
