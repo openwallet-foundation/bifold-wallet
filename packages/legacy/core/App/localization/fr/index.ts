@@ -139,6 +139,8 @@ const translation = {
         "Message1045": "Il y a eu un problème lors de l'initialisation de l'agent.",
         "Title1046": "Impossible de récupérer les contacts.",
         "Message1046": "Il y a eu un problème lors de la récupération des contacts.",
+        "Title1047": "Unable to display card. (PT-FR)",
+        "Message1047": "There was a problem parsing credential card. (PT-FR)",
     },
     "SelectionAxs": {
         "RadioChecked": "checked(fr)",
