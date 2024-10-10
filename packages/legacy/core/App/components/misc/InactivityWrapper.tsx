@@ -28,7 +28,6 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => {
-        console.log('Pan responder responding')
         // some user interaction, reset timeout
         resetInactivityTimeout(timeout_minutes)
 
@@ -46,24 +45,28 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     if (minutes > 0) {
       // create new timeout
       inactivityTimer.current = setTimeout(async () => {
-        try {
-          removeSavedWalletSecret()
-          await agent?.wallet.close()
-        } catch (error) {
-          logger.error(`Error closing agent wallet, ${error}`)
-        }
-
-        dispatch({
-          type: DispatchAction.DID_AUTHENTICATE,
-          payload: [{ didAuthenticate: false }],
-        })
-
-        dispatch({
-          type: DispatchAction.LOCKOUT_UPDATED,
-          payload: [{ displayNotification: true }],
-        })
+        lockUserOut()
       }, minutesToMilliseconds(minutes))
     }
+  }
+
+  const lockUserOut = async () => {
+    try {
+      removeSavedWalletSecret()
+      await agent?.wallet.close()
+    } catch (error) {
+      logger.error(`Error closing agent wallet, ${error}`)
+    }
+
+    dispatch({
+      type: DispatchAction.DID_AUTHENTICATE,
+      payload: [{ didAuthenticate: false }],
+    })
+
+    dispatch({
+      type: DispatchAction.LOCKOUT_UPDATED,
+      payload: [{ displayNotification: true }],
+    })
   }
 
   const clearTimer = () => {
