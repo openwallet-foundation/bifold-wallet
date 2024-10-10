@@ -122,11 +122,12 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
           })}
         </Text>
       )
+
       return {
         _id: record.id,
         text: record.content,
         renderEvent: () => msgText,
-        createdAt: record.updatedAt || record.createdAt,
+        createdAt: record.createdAt,
         type: record.type,
         user: { _id: role },
       }
@@ -142,7 +143,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
           _id: record.id,
           text: actionLabel,
           renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
-          createdAt: record.updatedAt || record.createdAt,
+          createdAt: record.createdAt,
           type: record.type,
           user: { _id: role },
           messageOpensCallbackType: callbackTypeForMessage(record),
@@ -189,7 +190,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
           _id: record.id,
           text: actionLabel,
           renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
-          createdAt: record.updatedAt || record.createdAt,
+          createdAt: record.createdAt,
           type: record.type,
           user: { _id: role },
           messageOpensCallbackType: callbackTypeForMessage(record),
