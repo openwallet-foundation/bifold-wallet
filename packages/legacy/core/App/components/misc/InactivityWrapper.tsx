@@ -6,30 +6,29 @@ import { useStore } from '../../contexts/store'
 import { DispatchAction } from '../../contexts/reducers/store'
 import { TOKENS, useServices } from '../../container-api'
 
-export enum LockOutTime {
-  OneMinute = 1,
-  ThreeMinutes = 3,
-  FiveMinutes = 1,
-  Never = 0,
+export const LockOutTime = {
+  OneMinute: 1,
+  ThreeMinutes: 3,
+  FiveMinutes: 1,
+  Never: 0,
 }
 
 interface InactivityWrapperProps {
-  timeoutLength?: LockOutTime // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
+  timeoutLength?: number // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
 }
 
 const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = ({ children, timeoutLength }) => {
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  useStore()
   const [_, dispatch] = useStore()
   const { agent } = useAgent()
   const { removeSavedWalletSecret } = useAuth()
-  const timeout_minutes = timeoutLength !== undefined ? timeoutLength : LockOutTime.OneMinute
+  const timeoutAsMilliseconds = (timeoutLength !== undefined ? timeoutLength : LockOutTime.OneMinute) * 60000
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => {
         // some user interaction, reset timeout
-        resetInactivityTimeout(timeout_minutes)
+        resetInactivityTimeout(timeoutAsMilliseconds)
 
         // returns false so the PanResponder doesn't consume the touch event
         return false
@@ -37,16 +36,16 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     })
   ).current
 
-  const resetInactivityTimeout = (minutes: number) => {
+  const resetInactivityTimeout = (milliseconds: number) => {
     // remove existing timeout
     clearTimer()
 
     // do not start timer if timeout is set to 0
-    if (minutes > 0) {
+    if (milliseconds > 0) {
       // create new timeout
       inactivityTimer.current = setTimeout(async () => {
         lockUserOut()
-      }, minutesToMilliseconds(minutes))
+      }, milliseconds)
     }
   }
 
@@ -75,10 +74,6 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     }
   }
 
-  const minutesToMilliseconds = (minutes: number) => {
-    return minutes * 60000
-  }
-
   useEffect(() => {
     // Setup listener for app state changes (background/ foreground movement)
     const eventSubscription = AppState.addEventListener('change', (nextAppState) => {
@@ -99,12 +94,12 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
         }
 
         // app coming into the foreground is 'user activity', restart timer
-        resetInactivityTimeout(timeout_minutes)
+        resetInactivityTimeout(timeoutAsMilliseconds)
       }
     })
 
     // initiate inactivity timer
-    resetInactivityTimeout(timeout_minutes)
+    resetInactivityTimeout(timeoutAsMilliseconds)
 
     return () => {
       clearTimer()
