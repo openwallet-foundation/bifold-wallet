@@ -32,7 +32,7 @@
   "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "devDependencies": {
     "@babel/runtime": "^7.20.0",
-    "@credo-ts/core": "0.5.9",
+    "@credo-ts/core": "0.5.11",
     "@typescript-eslint/parser": "^6.6.0",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
@@ -45,7 +45,7 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.5.9",
+    "@credo-ts/core": "0.5.11",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "react": "^18.2.0",
