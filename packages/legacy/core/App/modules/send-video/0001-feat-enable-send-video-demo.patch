@@ -1,0 +1,161 @@
+From 4d1d904385a26f2092de348fe64eda4ee6c68307 Mon Sep 17 00:00:00 2001
+From: "Jason C. Leach" <jason.leach@fullboar.ca>
+Date: Fri, 11 Oct 2024 12:10:46 -0700
+Subject: [PATCH] feat: enable send video demo
+
+Signed-off-by: Jason C. Leach <jason.leach@fullboar.ca>
+---
+ .../legacy/core/App/localization/index.ts     |  8 +--
+ .../legacy/core/App/navigators/RootStack.tsx  |  8 +++
+ packages/legacy/core/App/screens/Home.tsx     | 57 ++++++++++++-------
+ 3 files changed, 47 insertions(+), 26 deletions(-)
+
+diff --git a/packages/legacy/core/App/localization/index.ts b/packages/legacy/core/App/localization/index.ts
+index 7b557c35..f46dd332 100644
+--- a/packages/legacy/core/App/localization/index.ts
++++ b/packages/legacy/core/App/localization/index.ts
+@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next'
+ import * as RNLocalize from 'react-native-localize'
+ import { PersistentStorage } from '../services/storage'
+ import { LocalStorageKeys } from '../constants'
+-
++import { en as sendVideoEn, fr as sendVideoFr, ptBr as sendVideoPtBr } from '../modules/send-video/localization'
+ import en from './en'
+ import fr from './fr'
+ import ptBr from './pt-br'
+@@ -16,13 +16,13 @@ export type TranslationResources = {
+ 
+ export const translationResources: TranslationResources = {
+   en: {
+-    translation: en,
++    translation: { ...en, ...sendVideoEn },
+   },
+   fr: {
+-    translation: fr,
++    translation: { ...fr, ...sendVideoFr },
+   },
+   'pt-BR': {
+-    translation: ptBr,
++    translation: { ...ptBr, ...sendVideoPtBr },
+   },
+ }
+ 
+diff --git a/packages/legacy/core/App/navigators/RootStack.tsx b/packages/legacy/core/App/navigators/RootStack.tsx
+index d11472aa..8294279e 100644
+--- a/packages/legacy/core/App/navigators/RootStack.tsx
++++ b/packages/legacy/core/App/navigators/RootStack.tsx
+@@ -33,6 +33,7 @@ import DeliveryStack from './DeliveryStack'
+ import NotificationStack from './NotificationStack'
+ import ProofRequestStack from './ProofRequestStack'
+ import SettingStack from './SettingStack'
++import SendVideoStack from '../modules/send-video/SendVideoStack'
+ import TabStack from './TabStack'
+ import { useDefaultStackOptions } from './defaultStackOptions'
+ 
+@@ -311,6 +312,13 @@ const RootStack: React.FC = () => {
+             cardStyleInterpolator: forFade,
+           }}
+         />
++        <Stack.Screen
++          name={'Send Video'}
++          component={SendVideoStack}
++          options={{
++            cardStyleInterpolator: forFade,
++          }}
++        />
+       </Stack.Navigator>
+     )
+   }
+diff --git a/packages/legacy/core/App/screens/Home.tsx b/packages/legacy/core/App/screens/Home.tsx
+index 09e11c19..4f01e1c8 100644
+--- a/packages/legacy/core/App/screens/Home.tsx
++++ b/packages/legacy/core/App/screens/Home.tsx
+@@ -13,6 +13,8 @@ import { useTheme } from '../contexts/theme'
+ import { useTour } from '../contexts/tour/tour-context'
+ import { HomeStackParams, Screens } from '../types/navigators'
+ import { TourID } from '../types/tour'
++import Button, { ButtonType } from '../components/buttons/Button'
++import { useNavigation } from '@react-navigation/native'
+ 
+ type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
+ 
+@@ -39,6 +41,7 @@ const Home: React.FC<HomeProps> = () => {
+   const { start } = useTour()
+   const [showTourPopup, setShowTourPopup] = useState(false)
+   const screenIsFocused = useIsFocused()
++  const navigation = useNavigation()
+ 
+   const styles = StyleSheet.create({
+     flatlist: {
+@@ -46,29 +49,32 @@ const Home: React.FC<HomeProps> = () => {
+     },
+   })
+ 
+-  const DisplayListItemType = useCallback((item: any): React.ReactNode => {
+-    let component: React.ReactNode
+-    if (item.type === 'BasicMessageRecord') {
+-      component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
+-    } else if (item.type === 'CredentialRecord') {
+-      let notificationType = NotificationType.CredentialOffer
+-      if (item.revocationNotification) {
+-        notificationType = NotificationType.Revocation
++  const DisplayListItemType = useCallback(
++    (item: any): React.ReactNode => {
++      let component: React.ReactNode
++      if (item.type === 'BasicMessageRecord') {
++        component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
++      } else if (item.type === 'CredentialRecord') {
++        let notificationType = NotificationType.CredentialOffer
++        if (item.revocationNotification) {
++          notificationType = NotificationType.Revocation
++        }
++        component = <NotificationListItem notificationType={notificationType} notification={item} />
++      } else if (item.type === 'CustomNotification' && customNotification) {
++        component = (
++          <NotificationListItem
++            notificationType={NotificationType.Custom}
++            notification={item}
++            customNotification={customNotification}
++          />
++        )
++      } else {
++        component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+       }
+-      component = <NotificationListItem notificationType={notificationType} notification={item} />
+-    } else if (item.type === 'CustomNotification' && customNotification) {
+-      component = (
+-        <NotificationListItem
+-          notificationType={NotificationType.Custom}
+-          notification={item}
+-          customNotification={customNotification}
+-        />
+-      )
+-    } else {
+-      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
+-    }
+-    return component
+-  }, [customNotification, NotificationListItem])
++      return component
++    },
++    [customNotification, NotificationListItem]
++  )
+ 
+   useEffect(() => {
+     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
+@@ -158,6 +164,13 @@ const Home: React.FC<HomeProps> = () => {
+           onDismissPressed={onDismissPressed}
+         />
+       )}
++      <View style={{ marginBottom: 100 }}>
++        <Button
++          title={'Verify by Video (DEMO)'}
++          onPress={() => navigation.getParent()?.navigate('Send Video', { screen: 'Instructions' })}
++          buttonType={ButtonType.Primary}
++        />
++      </View>
+     </>
+   )
+ }
+-- 
+2.46.0
+
