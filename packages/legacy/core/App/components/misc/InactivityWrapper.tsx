@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import React, { PropsWithChildren, useCallback, useEffect, useRef } from 'react'
+import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
 import { AppState, PanResponder, View } from 'react-native'
 import { useAuth } from '../../contexts/auth'
 import { useStore } from '../../contexts/store'
@@ -14,7 +14,7 @@ export const LockOutTime = {
 } as const
 
 type InactivityWrapperProps = {
-  timeoutLength?: number // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
+  timeoutLength?: (typeof LockOutTime)[keyof typeof LockOutTime] // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
 }
 
 const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = ({ children, timeoutLength }) => {
@@ -22,7 +22,8 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
   const [, dispatch] = useStore()
   const { agent } = useAgent()
   const { removeSavedWalletSecret } = useAuth()
-  const timeoutAsMilliseconds = (timeoutLength !== undefined ? timeoutLength : LockOutTime.OneMinute) * 60000
+  const timer = useRef<number | undefined>(undefined)
+  const timeoutAsMilliseconds = (timeoutLength !== undefined ? timeoutLength : LockOutTime.FiveMinutes) * 60000
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const panResponder = React.useRef(
     PanResponder.create({
@@ -65,6 +66,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     (milliseconds: number) => {
       // remove existing timeout
       clearTimer()
+      timer.current = Date.now()
 
       // do not start timer if timeout is set to 0
       if (milliseconds > 0) {
@@ -96,6 +98,13 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
           return
         }
 
+        if (timer.current) {
+          if (Date.now() - timer.current >= timeoutAsMilliseconds && timeoutAsMilliseconds > 0) {
+            // app has been in the background/ inactive for longer than the timeout set, lock user out
+            lockUserOut()
+          }
+        }
+
         // app coming into the foreground is 'user activity', restart timer
         resetInactivityTimeout(timeoutAsMilliseconds)
       }
@@ -105,10 +114,11 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
     resetInactivityTimeout(timeoutAsMilliseconds)
 
     return () => {
+      // clean up timer and event listener when component unmounts
       clearTimer()
       eventSubscription.remove()
     }
-  })
+  }, [])
 
   return (
     <View style={{ flex: 1 }} {...panResponder.panHandlers}>
