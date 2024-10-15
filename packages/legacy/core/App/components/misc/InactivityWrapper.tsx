@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
+import React, { PropsWithChildren, useCallback, useEffect, useRef } from 'react'
 import { AppState, PanResponder, View } from 'react-native'
 import { useAuth } from '../../contexts/auth'
 import { useStore } from '../../contexts/store'
@@ -118,7 +118,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
       clearTimer()
       eventSubscription.remove()
     }
-  }, [])
+  }, [clearTimer, lockUserOut, resetInactivityTimeout, timeoutAsMilliseconds])
 
   return (
     <View style={{ flex: 1 }} {...panResponder.panHandlers}>

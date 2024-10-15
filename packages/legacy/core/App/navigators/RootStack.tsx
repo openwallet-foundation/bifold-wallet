@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
-import { EventTypes, walletTimeout } from '../constants'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
