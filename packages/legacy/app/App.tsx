@@ -5,6 +5,7 @@ import {
   ConfigurationProvider,
   ErrorModal,
   InactivityWrapper,
+  LockOutTime,
   NetInfo,
   NetworkProvider,
   RootStack,
@@ -56,7 +57,7 @@ const App = () => {
             <ConfigurationProvider value={defaultConfiguration}>
               <AuthProvider>
                 <NetworkProvider>
-                  <InactivityWrapper>
+                  <InactivityWrapper timeoutLength={LockOutTime.FiveMinutes}>
                     <StatusBar
                       hidden={false}
                       barStyle="light-content"
