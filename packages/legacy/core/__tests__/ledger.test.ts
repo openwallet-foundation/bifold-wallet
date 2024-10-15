@@ -1,4 +1,4 @@
-import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/ledger'
+import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/network'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../App/configs/ledgers/indy')

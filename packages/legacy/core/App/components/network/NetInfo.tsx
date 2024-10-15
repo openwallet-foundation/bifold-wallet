@@ -2,7 +2,6 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message'
-
 import { useNetwork } from '../../contexts/network'
 
 const NetInfo: React.FC = () => {
@@ -21,7 +20,7 @@ const NetInfo: React.FC = () => {
         Toast.show({
           type: 'warn',
           autoHide: false,
-          text1: t('NetInfo.LedgerConnectivityIssueMessage'),
+          text1: t('NetInfo.NoInternetConnectionMessage'),
         })
       })
 
