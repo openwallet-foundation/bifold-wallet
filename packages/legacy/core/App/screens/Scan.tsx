@@ -27,64 +27,78 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [showDisclosureModal, setShowDisclosureModal] = useState<boolean>(true)
   const [qrCodeScanError, setQrCodeScanError] = useState<QrCodeScanError | null>(null)
-  const [{ enableImplicitInvitations, enableReuseConnections }, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
+  const [{ enableImplicitInvitations, enableReuseConnections }, logger] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+  ])
   let defaultToConnect = false
   if (route?.params && route.params['defaultToConnect']) {
     defaultToConnect = route.params['defaultToConnect']
   }
 
-  const handleInvitation = useCallback(async (value: string): Promise<void> => {
-    try {
-      await connectFromScanOrDeepLink(
-        value,
-        agent,
-        logger,
-        navigation?.getParent(),
-        false, // isDeepLink
-        enableImplicitInvitations,
-        enableReuseConnections
-      )
-    } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1031'), t('Error.Message1031'), (err as Error)?.message ?? err, 1031)
-      // throwing for QrCodeScanError
-      throw error
-    }
-  }, [agent, logger, navigation, enableImplicitInvitations, enableReuseConnections, t])
-
-  const handleCodeScan = useCallback(async (value: string) => {
-    setQrCodeScanError(null)
-    try {
-      const uri = value
-      await handleInvitation(uri)
-    } catch (e: unknown) {
-      const error = new QrCodeScanError(t('Scan.InvalidQrCode'), value, (e as Error)?.message)
-      setQrCodeScanError(error)
-    }
-  }, [handleInvitation, t])
-
-  const permissionFlow = useCallback(async (
-    method: PermissionContract,
-    permission: Permission,
-    rationale?: Rationale
-  ): Promise<boolean> => {
-    try {
-      const permissionResult = await method(permission, rationale)
-      if (permissionResult === RESULTS.GRANTED) {
-        setShowDisclosureModal(false)
-        return true
+  const handleInvitation = useCallback(
+    async (value: string): Promise<void> => {
+      try {
+        await connectFromScanOrDeepLink(
+          value,
+          agent,
+          logger,
+          navigation?.getParent(),
+          false, // isDeepLink
+          enableImplicitInvitations,
+          enableReuseConnections
+        )
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1031'),
+          t('Error.Message1031'),
+          (err as Error)?.message ?? err,
+          1031
+        )
+        // throwing for QrCodeScanError
+        throw error
       }
-    } catch (error: unknown) {
-      Toast.show({
-        type: ToastType.Error,
-        text1: t('Global.Failure'),
-        text2: (error as Error)?.message || t('Error.Unknown'),
-        visibilityTime: 2000,
-        position: 'bottom',
-      })
-    }
+    },
+    [agent, logger, navigation, enableImplicitInvitations, enableReuseConnections, t]
+  )
 
-    return false
-  }, [t])
+  const handleCodeScan = useCallback(
+    async (value: string) => {
+      setQrCodeScanError(null)
+
+      try {
+        const uri = value
+        await handleInvitation(uri)
+      } catch (e: unknown) {
+        const error = new QrCodeScanError(t('Scan.InvalidQrCode'), value, (e as Error)?.message)
+        setQrCodeScanError(error)
+      }
+    },
+    [handleInvitation, t]
+  )
+
+  const permissionFlow = useCallback(
+    async (method: PermissionContract, permission: Permission, rationale?: Rationale): Promise<boolean> => {
+      try {
+        const permissionResult = await method(permission, rationale)
+        if (permissionResult === RESULTS.GRANTED) {
+          setShowDisclosureModal(false)
+          return true
+        }
+      } catch (error: unknown) {
+        Toast.show({
+          type: ToastType.Error,
+          text1: t('Global.Failure'),
+          text2: (error as Error)?.message || t('Error.Unknown'),
+          visibilityTime: 2000,
+          position: 'bottom',
+        })
+      }
+
+      return false
+    },
+    [t]
+  )
 
   const requestCameraUse = async (rationale?: Rationale): Promise<boolean> => {
     if (Platform.OS === 'android') {

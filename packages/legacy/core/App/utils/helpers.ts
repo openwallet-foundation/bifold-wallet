@@ -934,7 +934,7 @@ export const connectFromInvitation = async (
   uri: string,
   agent: Agent | undefined,
   implicitInvitations: boolean = false,
-  reuseConnection: boolean = false
+  reuseConnection: boolean = true
 ): Promise<OutOfBandRecord> => {
   const invitation = await agent?.oob.parseInvitation(uri)
 
@@ -959,7 +959,24 @@ export const connectFromInvitation = async (
     }
   }
 
-  const record = await agent?.oob.receiveInvitation(invitation, { reuseConnection })
+  // Work around for the `reuseConnection` option issue noted below.
+  let record
+  if (agent && reuseConnection) {
+    const allOobRecords = await agent.oob.getAll()
+
+    if (allOobRecords !== undefined && allOobRecords.length > 0) {
+      record = allOobRecords.find((o) => o.outOfBandInvitation.id === invitation.id)
+      if (record) {
+        return record as OutOfBandRecord
+      }
+    }
+  }
+
+  // The config option `reuseConnection: true` from `BaseReceiveOutOfBandInvitationConfig`
+  // does not work as expected. If set to `true`, it will not allow an invitation
+  // to be reused if the connection is already established. Ref. Credo 0.5.11
+  record = await agent?.oob.receiveInvitation(invitation)
+
   return record?.outOfBandRecord as OutOfBandRecord
 }
 
@@ -997,7 +1014,7 @@ export const connectFromScanOrDeepLink = async (
   navigation: any,
   isDeepLink: boolean,
   implicitInvitations: boolean = false,
-  reuseConnection: boolean = false
+  reuseConnection: boolean = true
 ) => {
   if (!agent) {
     return
@@ -1005,6 +1022,7 @@ export const connectFromScanOrDeepLink = async (
 
   // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
+
   try {
     const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
     if (isOpenIDInvitation) {
@@ -1017,6 +1035,7 @@ export const connectFromScanOrDeepLink = async (
     }
 
     const aUrl = processBetaUrlIfRequired(uri)
+
     const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
 
     if (receivedInvitation?.id) {
