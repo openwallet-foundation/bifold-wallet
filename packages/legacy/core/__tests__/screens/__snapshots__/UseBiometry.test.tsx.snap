@@ -111,7 +111,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
           }
         >
           <View
-            accessibilityLabel="Biometry.Toggle"
+            accessibilityLabel="Toggle Button"
             accessibilityRole="switch"
             accessibilityState={
               Object {
@@ -152,6 +152,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                   "borderRadius": 25,
                   "height": 30,
                   "justifyContent": "center",
+                  "opacity": 1,
                   "padding": 3,
                   "width": 55,
                 }
@@ -162,7 +163,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                 style={
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#FFFFFFFF",
+                    "backgroundColor": "#FFFFFF",
                     "borderRadius": 20,
                     "height": 25,
                     "justifyContent": "center",
@@ -393,7 +394,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
           }
         >
           <View
-            accessibilityLabel="Biometry.Toggle"
+            accessibilityLabel="Toggle Button"
             accessibilityRole="switch"
             accessibilityState={
               Object {
@@ -434,6 +435,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                   "borderRadius": 25,
                   "height": 30,
                   "justifyContent": "center",
+                  "opacity": 0.5,
                   "padding": 3,
                   "width": 55,
                 }
@@ -444,7 +446,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                 style={
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#FFFFFFFF",
+                    "backgroundColor": "#FFFFFF",
                     "borderRadius": 20,
                     "height": 25,
                     "justifyContent": "center",
@@ -687,7 +689,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
           }
         >
           <View
-            accessibilityLabel="Biometry.Toggle"
+            accessibilityLabel="Toggle Button"
             accessibilityRole="switch"
             accessibilityState={
               Object {
@@ -728,6 +730,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                   "borderRadius": 25,
                   "height": 30,
                   "justifyContent": "center",
+                  "opacity": 1,
                   "padding": 3,
                   "width": 55,
                 }
@@ -738,7 +741,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                 style={
                   Object {
                     "alignItems": "center",
-                    "backgroundColor": "#FFFFFFFF",
+                    "backgroundColor": "#FFFFFF",
                     "borderRadius": 20,
                     "height": 25,
                     "justifyContent": "center",

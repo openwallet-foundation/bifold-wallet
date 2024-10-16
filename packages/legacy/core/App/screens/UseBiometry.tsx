@@ -2,20 +2,12 @@ import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Modal,
-  ScrollView,
-  Pressable,
-  DeviceEventEmitter,
-  Animated,
-} from 'react-native'
+import { StyleSheet, Text, View, Modal, ScrollView, Pressable, DeviceEventEmitter, Animated } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import ToggleButton from '../components/buttons/ToggleButton'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
@@ -43,7 +35,6 @@ const UseBiometry: React.FC = () => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
-  const [toggleAnim] = useState(new Animated.Value(biometryEnabled ? 1 : 0))
   const { ButtonLoading } = useAnimatedComponents()
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = useMemo(() => {
@@ -124,25 +115,6 @@ const UseBiometry: React.FC = () => {
     setBiometryEnabled((previousState) => !previousState)
   }, [screenUsage])
 
-  const handleToggle = () => {
-    Animated.timing(toggleAnim, {
-      toValue: biometryEnabled ? 0 : 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start()
-    toggleSwitch()
-  }
-
-  const backgroundColor = toggleAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [ColorPallet.grayscale.lightGrey, ColorPallet.brand.primaryDisabled],
-  })
-
-  const translateX = toggleAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [2, 25],
-  })
-
   const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
     if (status) {
@@ -174,53 +146,20 @@ const UseBiometry: React.FC = () => {
             <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
           </View>
         )}
-        <View
-          style={{
-            flexDirection: 'row',
-            marginVertical: 20,
-          }}
-        >
+        <View style={{ flexDirection: 'row', marginVertical: 20 }}>
           <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
             <Text style={TextTheme.bold}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <Pressable
-              testID={testIdWithKey('ToggleBiometrics')}
-              accessible
-              accessibilityLabel={t('Biometry.Toggle')}
-              accessibilityRole={'switch'}
-              onPress={handleToggle}
+            <ToggleButton
+              testID={testIdWithKey("ToggleBiometrics")}
+              isEnabled={biometryEnabled}
+              isAvailable={biometryAvailable}
+              toggleAction={toggleSwitch}
               disabled={!biometryAvailable}
-            >
-              <Animated.View
-                style={{
-                  width: 55,
-                  height: 30,
-                  borderRadius: 25,
-                  backgroundColor,
-                  padding: 3,
-                  justifyContent: 'center',
-                }}
-              >
-                <Animated.View
-                  style={{
-                    transform: [{ translateX }],
-                    width: 25,
-                    height: 25,
-                    borderRadius: 20,
-                    backgroundColor: ColorPallet.brand.secondary,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  {biometryEnabled ? (
-                    <Icon name="check" size={15} color={ColorPallet.brand.primary} />
-                  ) : (
-                    <Icon name="close" size={15} color={ColorPallet.grayscale.mediumGrey} />
-                  )}
-                </Animated.View>
-              </Animated.View>
-            </Pressable>
+              enabledIcon="check"
+              disabledIcon="close"
+            />
           </View>
         </View>
       </ScrollView>
