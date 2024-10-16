@@ -6,8 +6,6 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ButtonType } from '../components/buttons/Button-api'
-import ToggleButton from '../components/buttons/ToggleButton'
-
 import CheckBoxRow from '../components/inputs/CheckBoxRow'
 import HighlightTextBox from '../components/texts/HighlightTextBox'
 import InfoTextBox from '../components/texts/InfoTextBox'
@@ -28,9 +26,6 @@ const Terms: React.FC = () => {
   const { OnboardingTheme, TextTheme } = useTheme()
   const [Button] = useServices([TOKENS.COMP_BUTTON])
   const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
-  const [biometryEnabled, setBiometryEnabled] = useState(false) // State to track biometry toggle
-  const biometryAvailable = true // Set this to true or false based on your logic
-
   const onSubmitPressed = useCallback(() => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,
@@ -76,11 +71,6 @@ const Terms: React.FC = () => {
     navigation.navigate(Screens.Onboarding)
   }
 
-  // Toggle switch handler
-  const toggleSwitch = () => {
-    setBiometryEnabled(!biometryEnabled) // Toggle the state between true and false
-  }
-
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       <ScrollView style={style.container}>
@@ -104,15 +94,6 @@ const Terms: React.FC = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
           est laborum.
         </Text>
-        <ToggleButton
-          testID="toggle-biometrics"
-          isEnabled={biometryEnabled}
-          isAvailable={biometryAvailable}
-          toggleAction={toggleSwitch}
-          disabled={!biometryAvailable}
-          enabledIcon="check"
-          disabledIcon="close"
-        />
         <View style={style.controlsContainer}>
           {!agreedToPreviousTerms && (
             <CheckBoxRow
@@ -133,7 +114,6 @@ const Terms: React.FC = () => {
               buttonType={ButtonType.Primary}
             />
           </View>
-
           {!agreedToPreviousTerms && (
             <View style={{ paddingTop: 10, marginBottom: 20 }}>
               <Button
