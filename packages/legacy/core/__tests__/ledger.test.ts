@@ -1,4 +1,4 @@
-import { canConnectToLedgerNode, fetchLedgerNodes } from '../App/utils/ledger'
+import { canConnectToHost, fetchLedgerNodes } from '../App/utils/network'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('../App/configs/ledgers/indy')
@@ -27,19 +27,19 @@ describe('Ledger utility', () => {
   })
 
   test('An available host returns "true"', async () => {
-    const result = await canConnectToLedgerNode({ host: '192.168.100.1', port: ports.connect })
+    const result = await canConnectToHost({ host: '192.168.100.1', port: ports.connect })
 
     expect(result).toBe(true)
   })
 
   test('An un-available host returns "false"', async () => {
-    const result = await canConnectToLedgerNode({ host: '192.168.100.1', port: ports.timeout })
+    const result = await canConnectToHost({ host: '192.168.100.1', port: ports.timeout })
 
     expect(result).toBe(false)
   })
 
   test('An bad host returns "false"', async () => {
-    const result = await canConnectToLedgerNode({ host: '192.168.100.1', port: ports.error })
+    const result = await canConnectToHost({ host: '192.168.100.1', port: ports.error })
 
     expect(result).toBe(false)
   })
