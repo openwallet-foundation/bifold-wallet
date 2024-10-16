@@ -41,7 +41,9 @@ class OverlayBundle {
     )
     this.overlays.push(
       ...bundle.overlays
-        .filter((overlay) => overlay.type === 'aries/overlays/branding/1.0')
+        .filter(
+          (overlay) => overlay.type === 'aries/overlays/branding/1.0' || overlay.type === 'aries/overlays/branding/1.1'
+        )
         .map((overlay) => {
           const OverlayClass = (OverlayTypeMap.get(overlay.type) || BrandingOverlay) as typeof BrandingOverlay
           return new OverlayClass(credentialDefinitionId, overlay as IBrandingOverlayData)
@@ -56,7 +58,10 @@ class OverlayBundle {
   }
 
   get branding(): BrandingOverlay | undefined {
-    return this.#overlaysForType<BrandingOverlay>('aries/overlays/branding/1.0')[0]
+    return (
+      this.#overlaysForType<BrandingOverlay>('aries/overlays/branding/1.0')[0] ||
+      this.#overlaysForType<BrandingOverlay>('aries/overlays/branding/1.1')[0]
+    )
   }
 
   getAttribute(name: string): IOverlayBundleAttribute | undefined {

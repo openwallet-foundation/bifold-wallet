@@ -27,6 +27,7 @@ import { Field } from './record'
 export enum BrandingOverlayType {
   Branding01 = OverlayType.Branding01,
   Branding10 = OverlayType.Branding10,
+  Branding11 = OverlayType.Branding11,
 }
 
 export interface CredentialOverlay<T> {
@@ -243,17 +244,31 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       colorHash = metaOverlay.issuer
     }
 
-    const brandingoOverlay01: ILegacyBrandingOverlayData = {
+    const brandingOverlay01: ILegacyBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding01,
       background_color: generateColor(colorHash),
     }
 
-    const brandingoOverlay10: IBrandingOverlayData = {
+    const brandingOverlay10: IBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding10,
       primary_background_color: generateColor(colorHash),
     }
+
+    const brandingOverlay11: IBrandingOverlayData = {
+      capture_base: '',
+      type: OverlayType.Branding11,
+      primary_background_color: '#FFFFFF',
+      secondary_background_color: generateColor(colorHash),
+    }
+
+    const overlayType =
+      this.getBrandingOverlayType() === BrandingOverlayType.Branding01
+        ? brandingOverlay01
+        : this.getBrandingOverlayType() === BrandingOverlayType.Branding11
+        ? brandingOverlay11
+        : brandingOverlay10
 
     const bundle: OverlayBundle = new OverlayBundle(params.identifiers?.credentialDefinitionId as string, {
       capture_base: {
@@ -262,10 +277,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
         type: OverlayType.CaptureBase10,
         flagged_attributes: [],
       },
-      overlays: [
-        metaOverlay,
-        this.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? brandingoOverlay01 : brandingoOverlay10,
-      ],
+      overlays: [metaOverlay, overlayType],
     })
 
     return Promise.resolve(

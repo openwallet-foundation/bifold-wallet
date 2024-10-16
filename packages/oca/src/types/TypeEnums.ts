@@ -14,4 +14,5 @@ export enum OverlayType {
   CharacterEncoding10 = 'spec/overlays/character_encoding/1.0',
   Branding01 = 'aries/overlays/branding/0.1',
   Branding10 = 'aries/overlays/branding/1.0',
+  Branding11 = 'aries/overlays/branding/1.1',
 }
