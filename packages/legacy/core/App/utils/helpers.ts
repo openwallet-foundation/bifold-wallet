@@ -960,12 +960,11 @@ export const connectFromInvitation = async (
   }
 
   // Work around for the `reuseConnection` option issue noted below.
-  let record
   if (agent && reuseConnection) {
     const allOobRecords = await agent.oob.getAll()
 
     if (allOobRecords !== undefined && allOobRecords.length > 0) {
-      record = allOobRecords.find((o) => o.outOfBandInvitation.id === invitation.id)
+      const record = allOobRecords.find((o) => o.outOfBandInvitation.id === invitation.id)
       if (record) {
         return record as OutOfBandRecord
       }
@@ -975,7 +974,7 @@ export const connectFromInvitation = async (
   // The config option `reuseConnection: true` from `BaseReceiveOutOfBandInvitationConfig`
   // does not work as expected. If set to `true`, it will not allow an invitation
   // to be reused if the connection is already established. Ref. Credo 0.5.11
-  record = await agent?.oob.receiveInvitation(invitation)
+  const record = await agent?.oob.receiveInvitation(invitation)
 
   return record?.outOfBandRecord as OutOfBandRecord
 }
