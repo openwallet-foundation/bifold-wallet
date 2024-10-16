@@ -1,0 +1,280 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToggleButton Component renders correctly when disabled 1`] = `
+<View
+  accessibilityLabel="Toggle Button"
+  accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="toggle-button"
+>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "backgroundColor": "rgba(211, 211, 211, 1)",
+        "borderRadius": 25,
+        "height": 30,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 3,
+        "width": 55,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 20,
+          "height": 25,
+          "justifyContent": "center",
+          "transform": Array [
+            Object {
+              "translateX": 2,
+            },
+          ],
+          "width": 25,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          Array [
+            Object {
+              "color": "#606060",
+              "fontSize": 15,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ToggleButton Component renders correctly when enabled 1`] = `
+<View
+  accessibilityLabel="Toggle Button"
+  accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="toggle-button"
+>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "backgroundColor": "rgba(53, 130, 63, 0.349)",
+        "borderRadius": 25,
+        "height": 30,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 3,
+        "width": 55,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 20,
+          "height": 25,
+          "justifyContent": "center",
+          "transform": Array [
+            Object {
+              "translateX": 25,
+            },
+          ],
+          "width": 25,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 15,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ToggleButton Component renders correctly when not available 1`] = `
+<View
+  accessibilityLabel="Toggle Button"
+  accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    Object {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="toggle-button"
+>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "backgroundColor": "rgba(211, 211, 211, 1)",
+        "borderRadius": 25,
+        "height": 30,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 3,
+        "width": 55,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 20,
+          "height": 25,
+          "justifyContent": "center",
+          "transform": Array [
+            Object {
+              "translateX": 2,
+            },
+          ],
+          "width": 25,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          Array [
+            Object {
+              "color": "#606060",
+              "fontSize": 15,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
+</View>
+`;

@@ -1,3 +1,4 @@
 import * as Button from './Button'
+import * as ToggleButton from './ToggleButton'
 
-export { Button }
+export { Button, ToggleButton }
