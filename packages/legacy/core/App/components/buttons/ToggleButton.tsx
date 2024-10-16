@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Pressable, Animated } from 'react-native'
+import { Pressable, Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '../../contexts/theme'
 
@@ -22,7 +22,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   disabledIcon = 'close',
   disabled = false,
 }) => {
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPallet } = useTheme()
   const [toggleAnim] = useState(new Animated.Value(isEnabled ? 1 : 0))
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       duration: 200,
       useNativeDriver: false,
     }).start()
-  }, [isEnabled])
+  }, [isEnabled, toggleAnim])
 
   const backgroundColor = toggleAnim.interpolate({
     inputRange: [0, 1],
