@@ -3,10 +3,10 @@ import TcpSocket from 'react-native-tcp-socket'
 import pools from '../configs/ledgers/indy'
 import { GenesisTransaction } from '../types/genesis'
 
-export const canConnectToLedgerNode = async (node: { host: string; port: number }): Promise<boolean> =>
+export const canConnectToHost = async (host: { host: string; port: number }): Promise<boolean> =>
   new Promise((resolve) => {
     const socketTimeoutInMs = 3000
-    const client = TcpSocket.createConnection(node, () => {
+    const client = TcpSocket.createConnection(host, () => {
       resolve(true)
       client.destroy()
     })
@@ -52,4 +52,28 @@ export const fetchLedgerNodes = (indyNamespace = 'sovrin'): Array<{ host: string
   })
 
   return nodes
+}
+
+export const hostnameFromURL = (fullUrl: string): string | null => {
+  try {
+    // Start of the hostname after "//"
+    const startIndex = fullUrl.indexOf('//') + 2
+
+    // End of the hostname (before the next '/' or '?')
+    let endIndex = fullUrl.indexOf('/', startIndex)
+
+    // If no '/', look for '?'
+    if (endIndex === -1) {
+      endIndex = fullUrl.indexOf('?', startIndex)
+    }
+
+    // If no '/' or '?', hostname is till the end
+    if (endIndex === -1) {
+      endIndex = fullUrl.length
+    }
+
+    return fullUrl.substring(startIndex, endIndex)
+  } catch (error) {
+    return null
+  }
 }

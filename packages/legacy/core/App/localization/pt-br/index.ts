@@ -731,8 +731,6 @@ const translation = {
   "NetInfo": {
     "NoInternetConnectionTitle": "Sem conexão com a internet",
     "NoInternetConnectionMessage": "Não é possivel acessar serviços utilizando a Bifold ou receber credenciais até você voltar a estar online.\n\nFavor checkar sua conexão com a internet.",
-    "LedgerConnectivityIssueTitle": "Serviços de Carteira",
-    "LedgerConnectivityIssueMessage": "Um firewall pode estar te impedindo de conectar-se a serviços relacionados a carteira.",
   },
   "Onboarding": {
     "SkipA11y": "Pular introdução a Aries Bifold",
