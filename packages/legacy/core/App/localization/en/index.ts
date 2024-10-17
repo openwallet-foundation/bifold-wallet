@@ -236,6 +236,8 @@ const translation = {
     "EnterYourCurrentPIN": "Enter your current PIN"
   },
   "PINEnter": {
+    "Title": "Welcome back",
+    "SubText": "Enter your wallet PIN to sign-in",
     "EnterPIN": "Enter your wallet PIN",
     "Unlock": "Unlock",
     "Or": "Or",
