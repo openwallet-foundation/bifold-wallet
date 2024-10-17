@@ -66,7 +66,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     helpText: {
       ...TextTheme.normal,
-      alignSelf: 'left',
+      alignSelf: 'auto',
       textAlign: 'left',
       marginBottom: 16,
     },
