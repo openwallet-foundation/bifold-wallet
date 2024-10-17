@@ -4,6 +4,7 @@ import { State } from '../types/state'
 import { generateRandomWalletName } from '../utils/helpers'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
+import { stat } from 'react-native-fs'
 
 type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
@@ -39,6 +40,7 @@ export const defaultState: State = {
   },
   lockout: {
     displayNotification: false,
+    lockoutTime: 5, // default wallets lockout time to 5 minutes
   },
   preferences: {
     developerModeEnabled: false,

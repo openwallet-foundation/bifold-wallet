@@ -45,6 +45,7 @@ export interface Tours {
 
 export interface Lockout {
   displayNotification: boolean
+  lockoutTime: number
 }
 
 export interface LoginAttempt {
