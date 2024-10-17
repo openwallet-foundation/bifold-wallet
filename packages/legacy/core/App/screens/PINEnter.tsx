@@ -1,7 +1,7 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter, InteractionManager } from 'react-native'
+import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -384,7 +384,15 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         <Text style={style.subTitle}>{t('PINEnter.SubText')}</Text>
       </>
     )
-  }, [store.lockout.displayNotification, style.helpText, t, biometricsEnrollmentChange, biometricsErr])
+  }, [
+    store.lockout.displayNotification,
+    style.helpText,
+    t,
+    biometricsEnrollmentChange,
+    biometricsErr,
+    style.subTitle,
+    style.title,
+  ])
 
   return (
     <KeyboardView>
