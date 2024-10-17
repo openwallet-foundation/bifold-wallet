@@ -46,6 +46,7 @@ export enum Screens {
   HistorySettings = 'History Settings',
   HistoryPage = 'History',
   HistoryDetails = 'History details',
+  Lockout = 'Lockout',
 }
 
 export enum Stacks {
@@ -158,6 +159,7 @@ export type SettingStackParams = {
   [Screens.Developer]: undefined
   [Screens.UsePushNotifications]: { isMenu?: boolean }
   [Screens.HistorySettings]: undefined
+  [Screens.Lockout]: undefined
 }
 
 export type NotificationStackParams = {

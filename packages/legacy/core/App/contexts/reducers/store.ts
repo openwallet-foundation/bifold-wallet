@@ -37,6 +37,7 @@ enum MigrationDispatchAction {
 
 enum LockoutDispatchAction {
   LOCKOUT_UPDATED = 'lockout/lockoutUpdated',
+  LOCKOUT_TIME_UPDATED = 'lockout/lockoutTimeUpdated',
 }
 
 enum LoginAttemptDispatchAction {
@@ -486,7 +487,24 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case LockoutDispatchAction.LOCKOUT_UPDATED: {
-      const lockout: LockoutState = (action?.payload || []).pop()
+      const displayNotification: boolean = (action?.payload ?? []).pop() ?? false
+      const lockout: LockoutState = {
+        ...state.lockout,
+        displayNotification,
+      }
+
+      return {
+        ...state,
+        lockout,
+      }
+    }
+    case LockoutDispatchAction.LOCKOUT_TIME_UPDATED: {
+      const lockoutTime = (action?.payload ?? []).pop() ?? 5
+      const lockout: LockoutState = {
+        ...state.lockout,
+        lockoutTime,
+      }
+
       return {
         ...state,
         lockout,
@@ -646,6 +664,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     default:
+      console.log(`${action.type} is not available`)
       return state
   }
 }

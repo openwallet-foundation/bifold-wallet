@@ -38,6 +38,7 @@ describe('PINEnter Screen', () => {
             ...defaultState,
             lockout: {
               displayNotification: true,
+              lockoutTime: 5,
             },
           }}
         >
@@ -70,5 +71,4 @@ describe('PINEnter Screen', () => {
     const EnterButton = await tree.getByTestId(testIdWithKey('Enter'))
     expect(EnterButton).not.toBeNull()
   })
-
 })
