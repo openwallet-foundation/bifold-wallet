@@ -20,6 +20,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import Lockout from '../screens/Lockout'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -62,6 +63,11 @@ const SettingStack: React.FC = () => {
         name={Screens.Language}
         component={Language}
         options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.Lockout}
+        component={Lockout}
+        options={{ title: 'Lockout Options', headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.DataRetention}
