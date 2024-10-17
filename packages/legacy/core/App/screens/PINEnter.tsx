@@ -66,8 +66,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     helpText: {
       ...TextTheme.normal,
-      alignSelf: 'center',
-      textAlign: 'center',
+      alignSelf: 'left',
+      textAlign: 'left',
       marginBottom: 16,
     },
     modalText: {
@@ -79,6 +79,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       height: Assets.img.logoSecondary.height,
       width: Assets.img.logoSecondary.width,
       resizeMode: Assets.img.logoSecondary.resizeMode,
+    },
+    title: {
+      ...TextTheme.headingTwo,
+      marginBottom: 20,
+    },
+    subTitle: {
+      ...TextTheme.labelSubtitle,
+      marginBottom: 20,
+    },
+    subText: {
+      ...TextTheme.bold,
+      marginBottom: 20,
     },
   })
 
@@ -366,14 +378,20 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       )
     }
 
-    return <Text style={style.helpText}>{t('PINEnter.EnterPIN')}</Text>
+    return (
+      <>
+        <Text style={style.title}>{t('PINEnter.Title')}</Text>
+        <Text style={style.subTitle}>{t('PINEnter.SubText')}</Text>
+        <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
+      </>
+    )
   }, [store.lockout.displayNotification, style.helpText, t, biometricsEnrollmentChange, biometricsErr])
 
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <Image source={Assets.img.logoSecondary.src} style={style.image} />
+          {/* <Image source={Assets.img.logoSecondary.src} style={style.image} /> */}
           {displayHelpText()}
           <PINInput
             onPINChanged={(p: string) => {

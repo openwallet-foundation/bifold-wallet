@@ -235,6 +235,8 @@ const translation = {
         "EnterYourCurrentPIN": "Entrez votre NIP actuel"
     },
     "PINEnter": {
+        "Title": "Content de te revoir",
+        "SubText": "Entrez le code PIN de votre portefeuille pour vous connecter",
         "EnterPIN": "Veuillez saisir votre NIP",
         "Unlock": "Déverrouiller",
         "Or": "Ou",

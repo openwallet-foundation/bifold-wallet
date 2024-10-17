@@ -16,7 +16,10 @@ interface PINInputProps {
   autoFocus?: boolean
 }
 
-const PINInputComponent = ({ label, onPINChanged, testID, accessibilityLabel, autoFocus = false }: PINInputProps, ref: Ref<TextInput>) => {
+const PINInputComponent = (
+  { label, onPINChanged, testID, accessibilityLabel, autoFocus = false }: PINInputProps,
+  ref: Ref<TextInput>
+) => {
   // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
@@ -34,22 +37,23 @@ const PINInputComponent = ({ label, onPINChanged, testID, accessibilityLabel, au
 
   const style = StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'flex-end',
-      flexWrap: 'wrap',
-      flex: 1,
+      flexDirection: 'column',
       marginBottom: 24,
     },
     labelAndFieldContainer: {
-      flexGrow: 1,
+      flexDirection: 'column',
     },
     codeFieldRoot: {
+      flexDirection: 'row',
       borderRadius: 5,
       paddingHorizontal: 12,
       paddingVertical: 4,
       justifyContent: 'flex-start',
-      ...PINInputTheme.cell,
+      alignItems: 'center',
+      backgroundColor: PINInputTheme.cell.backgroundColor,
+    },
+    codeFieldContainer: {
+      flex: 1,
     },
     cell: {
       height: cellHeight,
@@ -63,56 +67,57 @@ const PINInputComponent = ({ label, onPINChanged, testID, accessibilityLabel, au
       lineHeight: cellHeight,
     },
     hideIcon: {
-      flexShrink: 1,
-      marginVertical: 10,
       paddingHorizontal: 10,
     },
   })
 
   return (
     <View style={style.container}>
+      {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
       <View style={style.labelAndFieldContainer}>
-        {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
-        <CodeField
-          {...props}
-          testID={testID}
-          accessibilityLabel={accessibilityLabel}
-          accessible
-          value={PIN}
-          rootStyle={style.codeFieldRoot}
-          onChangeText={onChangeText}
-          cellCount={minPINLength}
-          keyboardType="numeric"
-          textContentType="password"
-          renderCell={({ index, symbol, isFocused }) => {
-            let child: React.ReactNode | string = ''
-            if (symbol) {
-              child = showPIN ? symbol : '●'
-            } else if (isFocused) {
-              child = <Cursor />
-            }
-            return (
-              <View key={index} style={style.cell} onLayout={getCellOnLayoutHandler(index)}>
-                <Text style={style.cellText} maxFontSizeMultiplier={1}>
-                  {child}
-                </Text>
-              </View>
-            )
-          }}
-          autoFocus={autoFocus}
-          ref={ref}
-        />
-      </View>
-      <View style={style.hideIcon}>
-        <TouchableOpacity
-          accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
-          accessibilityRole={'button'}
-          testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
-          onPress={() => setShowPIN(!showPIN)}
-          hitSlop={hitSlop}
-        >
-          <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30}></Icon>
-        </TouchableOpacity>
+        <View style={style.codeFieldRoot}>
+          <View style={style.codeFieldContainer}>
+            <CodeField
+              {...props}
+              testID={testID}
+              accessibilityLabel={accessibilityLabel}
+              accessible
+              value={PIN}
+              rootStyle={style.codeFieldRoot}
+              onChangeText={onChangeText}
+              cellCount={minPINLength}
+              keyboardType="numeric"
+              textContentType="password"
+              renderCell={({ index, symbol, isFocused }) => {
+                let child: React.ReactNode | string = ''
+                if (symbol) {
+                  child = showPIN ? symbol : '●' // Show or hide PIN
+                } else if (isFocused) {
+                  child = <Cursor />
+                }
+                return (
+                  <View key={index} style={style.cell} onLayout={getCellOnLayoutHandler(index)}>
+                    <Text style={style.cellText} maxFontSizeMultiplier={1}>
+                      {child}
+                    </Text>
+                  </View>
+                )
+              }}
+              autoFocus={autoFocus}
+              ref={ref}
+            />
+          </View>
+          <TouchableOpacity
+            style={style.hideIcon}
+            accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
+            accessibilityRole={'button'}
+            testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
+            onPress={() => setShowPIN(!showPIN)}
+            hitSlop={hitSlop}
+          >
+            <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
