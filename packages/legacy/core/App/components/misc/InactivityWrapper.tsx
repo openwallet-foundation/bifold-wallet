@@ -6,6 +6,8 @@ import { useStore } from '../../contexts/store'
 import { DispatchAction } from '../../contexts/reducers/store'
 import { TOKENS, useServices } from '../../container-api'
 
+// number of minutes before the timeout action is triggered
+// a value of 0 will never trigger the time action and an undefined value will default to 5 minutes
 export const LockOutTime = {
   OneMinute: 1,
   ThreeMinutes: 3,
@@ -13,17 +15,14 @@ export const LockOutTime = {
   Never: 0,
 } as const
 
-type InactivityWrapperProps = {
-  timeoutLength?: (typeof LockOutTime)[keyof typeof LockOutTime] // number of minutes before timeoutAction is triggered, a value of 0 will never trigger the timeoutAction and an undefined value will default to 5 minutes
-}
-
-const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = ({ children, timeoutLength }) => {
+const InactivityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const { agent } = useAgent()
   const { removeSavedWalletSecret } = useAuth()
   const timer = useRef<number | undefined>(undefined)
-  const timeoutAsMilliseconds = (timeoutLength !== undefined ? timeoutLength : LockOutTime.FiveMinutes) * 60000
+  const timeoutAsMilliseconds =
+    (store.lockout.lockoutTime !== undefined ? store.lockout.lockoutTime : LockOutTime.FiveMinutes) * 60000
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const panResponder = React.useRef(
     PanResponder.create({
@@ -31,6 +30,7 @@ const InactivityWrapper: React.FC<PropsWithChildren<InactivityWrapperProps>> = (
         // some user interaction detected, reset timeout
         resetInactivityTimeout(timeoutAsMilliseconds)
 
+        store.lockout.lockoutTime === 1
         // returns false so the PanResponder doesn't consume the touch event
         return false
       },

@@ -72,7 +72,7 @@ const Lockout: React.FC = () => {
             onPress={() => onPress(value)}
             isChecked={selected}
             disableBuiltInState
-            testID={testIdWithKey('')}
+            testID={testIdWithKey(testID)}
           />
         </Pressable>
       </View>
