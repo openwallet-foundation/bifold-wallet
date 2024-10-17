@@ -382,7 +382,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       <>
         <Text style={style.title}>{t('PINEnter.Title')}</Text>
         <Text style={style.subTitle}>{t('PINEnter.SubText')}</Text>
-        <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
       </>
     )
   }, [store.lockout.displayNotification, style.helpText, t, biometricsEnrollmentChange, biometricsErr])
@@ -393,6 +392,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         <View style={style.contentContainer}>
           {/* <Image source={Assets.img.logoSecondary.src} style={style.image} /> */}
           {displayHelpText()}
+          <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
