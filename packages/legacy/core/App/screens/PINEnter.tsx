@@ -342,7 +342,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     if (store.lockout.displayNotification) {
       return (
         <>
-          <Text style={style.helpText}>{t('PINEnter.LockedOut')}</Text>
+          <Text style={style.helpText}>
+            {t('PINEnter.LockedOut').replace('##', String(store.preferences.autoLockTime ?? 5))}
+          </Text>
           <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
         </>
       )

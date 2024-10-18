@@ -246,7 +246,7 @@ const translation = {
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
     "BiometricsError": "Biometrics were not successful.",
     "BiometricsErrorEnterPIN": "Please enter your wallet PIN.",
-    "LockedOut": "You locked out after 5 minutes of inactivity.",
+    "LockedOut": "You were locked out after ## minute(s) of inactivity.",
     "ReEnterPIN": "Re-enter your wallet PIN",
     "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
     "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
