@@ -47,7 +47,7 @@ import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
-import InactivityWrapper, { LockOutTime } from './components/misc/InactivityWrapper'
+import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
 
 export * from './navigators'
 export * from './services/storage'
@@ -137,7 +137,7 @@ export {
   InfoBox,
   InfoBoxType,
   Link,
-  LockOutTime,
+  AutoLockTime,
   ToastType,
   toastConfig,
   NetInfo,

@@ -9,6 +9,7 @@ import {
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
   State,
+  Preferences,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
@@ -37,7 +38,6 @@ enum MigrationDispatchAction {
 
 enum LockoutDispatchAction {
   LOCKOUT_UPDATED = 'lockout/lockoutUpdated',
-  LOCKOUT_TIME_UPDATED = 'lockout/lockoutTimeUpdated',
 }
 
 enum LoginAttemptDispatchAction {
@@ -60,6 +60,7 @@ enum PreferencesDispatchAction {
   PREVENT_AUTO_LOCK = 'preferences/preventAutoLock',
   USE_SHAREABLE_LINK = 'preferences/useShareableLink',
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
+  AUTO_LOCK_TIME = 'preferences/autoLockTime',
 }
 
 enum ToursDispatchAction {
@@ -498,16 +499,20 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         lockout,
       }
     }
-    case LockoutDispatchAction.LOCKOUT_TIME_UPDATED: {
-      const lockoutTime = (action?.payload ?? []).pop() ?? 5
-      const lockout: LockoutState = {
-        ...state.lockout,
-        lockoutTime,
+    case PreferencesDispatchAction.AUTO_LOCK_TIME: {
+      console.log(`ACTION: Auto Lock: ${action?.payload}`)
+      const autoLockTime = (action?.payload ?? []).pop() ?? 5
+      const preferences: Preferences = {
+        ...state.preferences,
+        autoLockTime,
       }
-
+      console.log(state.preferences)
+      console.log('______')
+      console.log(preferences)
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
       return {
         ...state,
-        lockout,
+        preferences,
       }
     }
     case OnboardingDispatchAction.ONBOARDING_VERSION: {

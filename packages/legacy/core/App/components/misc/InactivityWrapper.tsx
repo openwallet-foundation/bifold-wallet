@@ -8,7 +8,7 @@ import { TOKENS, useServices } from '../../container-api'
 
 // number of minutes before the timeout action is triggered
 // a value of 0 will never trigger the time action and an undefined value will default to 5 minutes
-export const LockOutTime = {
+export const AutoLockTime = {
   OneMinute: 1,
   ThreeMinutes: 3,
   FiveMinutes: 5,
@@ -22,15 +22,15 @@ const InactivityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const { removeSavedWalletSecret } = useAuth()
   const timer = useRef<number | undefined>(undefined)
   const timeoutAsMilliseconds =
-    (store.lockout.lockoutTime !== undefined ? store.lockout.lockoutTime : LockOutTime.FiveMinutes) * 60000
+    (store.preferences.autoLockTime !== undefined ? store.preferences.autoLockTime : AutoLockTime.FiveMinutes) * 60000
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: () => {
+        console.log('Pan responder responded')
         // some user interaction detected, reset timeout
         resetInactivityTimeout(timeoutAsMilliseconds)
 
-        store.lockout.lockoutTime === 1
         // returns false so the PanResponder doesn't consume the touch event
         return false
       },
@@ -38,6 +38,7 @@ const InactivityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   ).current
 
   const lockUserOut = useCallback(async () => {
+    console.log('LOCK USER OUT')
     try {
       removeSavedWalletSecret()
       await agent?.wallet.close()
@@ -70,6 +71,9 @@ const InactivityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
       // do not start timer if timeout is set to 0
       if (milliseconds > 0) {
+        console.log('SET NEW TIMER')
+        console.log(`Stored time: ${store.preferences.autoLockTime}`)
+        console.log(`Time in MS: ${timeoutAsMilliseconds}`)
         // create new timeout
         inactivityTimer.current = setTimeout(async () => {
           lockUserOut()

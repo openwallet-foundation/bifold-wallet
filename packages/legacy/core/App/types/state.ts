@@ -32,6 +32,7 @@ export interface Preferences {
   preventAutoLock: boolean
   enableShareableLink: boolean
   alternateContactNames: Record<string, string>
+  autoLockTime: number
 }
 
 export interface Tours {
@@ -45,7 +46,6 @@ export interface Tours {
 
 export interface Lockout {
   displayNotification: boolean
-  lockoutTime: number
 }
 
 export interface LoginAttempt {
@@ -77,4 +77,5 @@ export type PersistentState = {
   PreferencesState: Preferences
   historySettingsOption: boolean // TODO: Migrate to proper name (Caps)
   language: string // TODO: Migrate to proper name (Caps)
+  Lockout: string
 }

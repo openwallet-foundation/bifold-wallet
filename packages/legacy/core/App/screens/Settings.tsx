@@ -24,6 +24,7 @@ import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import { AutoLockTime } from '../components/misc/InactivityWrapper'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -152,11 +153,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.Language),
         },
         {
-          title: 'Lockout time',
-          value: '5 mins',
-          accessibilityLabel: 'Lockout Options',
+          title: 'Auto lock time',
+          value:
+            store.preferences.autoLockTime !== AutoLockTime.Never ? `${store.preferences.autoLockTime} min` : 'Never',
+          accessibilityLabel: 'Auto lock options',
           testID: testIdWithKey('Lockout'),
-          onPress: () => navigation.navigate(Screens.Lockout),
+          onPress: () => navigation.navigate(Screens.AutoLock),
         },
       ],
     },
