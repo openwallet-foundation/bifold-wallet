@@ -2,10 +2,11 @@ import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, Switch, ScrollView, Pressable, DeviceEventEmitter } from 'react-native'
+import { StyleSheet, Text, View, Modal, ScrollView, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import ToggleButton from '../components/buttons/ToggleButton'
 import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
@@ -36,9 +37,7 @@ const UseBiometry: React.FC = () => {
   const { ButtonLoading } = useAnimatedComponents()
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = useMemo(() => {
-    return store.onboarding.didCompleteOnboarding
-      ? UseBiometryUsage.ToggleOnOff
-      : UseBiometryUsage.InitialSetup
+    return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
 
   const styles = StyleSheet.create({
@@ -59,7 +58,7 @@ const UseBiometry: React.FC = () => {
       setBiometryAvailable(result)
     })
   }, [isBiometricsActive])
-  
+
   useEffect(() => {
     if (screenUsage === UseBiometryUsage.InitialSetup) {
       return
@@ -146,31 +145,20 @@ const UseBiometry: React.FC = () => {
             <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
           </View>
         )}
-        <View
-          style={{
-            flexDirection: 'row',
-            marginVertical: 20,
-          }}
-        >
+        <View style={{ flexDirection: 'row', marginVertical: 20 }}>
           <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
             <Text style={TextTheme.bold}>{t('Biometry.UseToUnlock')}</Text>
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <Pressable
-              testID={testIdWithKey('ToggleBiometrics')}
-              accessible
-              accessibilityLabel={t('Biometry.Toggle')}
-              accessibilityRole={'switch'}
-            >
-              <Switch
-                trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-                thumbColor={biometryEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-                ios_backgroundColor={ColorPallet.grayscale.lightGrey}
-                onValueChange={toggleSwitch}
-                value={biometryEnabled}
-                disabled={!biometryAvailable}
-              />
-            </Pressable>
+            <ToggleButton
+              testID={testIdWithKey("ToggleBiometrics")}
+              isEnabled={biometryEnabled}
+              isAvailable={biometryAvailable}
+              toggleAction={toggleSwitch}
+              disabled={!biometryAvailable}
+              enabledIcon="check"
+              disabledIcon="close"
+            />
           </View>
         </View>
       </ScrollView>
