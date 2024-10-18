@@ -449,6 +449,7 @@ const mockOobModule = {
   findById: jest.fn().mockImplementation((id: string) => {
     return Promise.resolve(mockOobRecords.find((oob) => oob.id === id))
   }),
+  getAll: jest.fn().mockReturnValue(Promise.resolve(mockOobRecords)),
   createInvitation: jest.fn(),
   toUrl: jest.fn(),
   findByReceivedInvitationId: jest.fn().mockReturnValue(Promise.resolve(null)),
