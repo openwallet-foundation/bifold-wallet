@@ -39,6 +39,7 @@ export const defaultState: State = {
   },
   lockout: {
     displayNotification: false,
+    lockoutTime: 5, // default wallets lockout time to 5 minutes
   },
   preferences: {
     developerModeEnabled: false,
