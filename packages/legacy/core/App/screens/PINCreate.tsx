@@ -56,6 +56,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     title: '',
     message: '',
   })
+  const [explained, setExplained] = useState(false);
   const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
@@ -67,7 +68,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [PINCreateHeader, { PINSecurity }, Button] = useServices([
+  const [PINExplainer, PINCreateHeader, { PINSecurity }, Button] = useServices([
+    TOKENS.COMPONENT_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
@@ -160,7 +162,16 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     }
   }, [updatePin, PIN, PINTwo, PINOld])
 
+  const continueCreatePIN = () => {
+    setExplained(true);
+  }
+
   return (
+    <>
+      { explained ||
+        <PINExplainer continueCreatePIN={continueCreatePIN} />
+      }
+      { explained &&
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
@@ -289,6 +300,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
         </View>
       </View>
     </KeyboardView>
+      }
+    </>
   )
 }
 

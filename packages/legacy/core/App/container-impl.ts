@@ -43,6 +43,7 @@ import Record from './components/record/Record'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
+import PINExplainer from './components/misc/PINExplainer'
 import { PersistentStorage } from './services/storage'
 
 export const defaultConfig = {
@@ -82,6 +83,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_SPLASH, Splash)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_PAGES, OnboardingPages)
     this._container.registerInstance(TOKENS.COMPONENT_PIN_CREATE_HEADER, PINCreateHeader)
+    this._container.registerInstance(TOKENS.COMPONENT_PIN_EXPLAINER, PINExplainer)
     this._container.registerInstance(TOKENS.SCREEN_USE_BIOMETRY, UseBiometry)
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)

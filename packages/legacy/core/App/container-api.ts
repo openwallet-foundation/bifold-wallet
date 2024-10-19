@@ -18,6 +18,7 @@ import { Config } from './types/config'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
+import { PINExplainerProps } from './components/misc/PINExplainer'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 
 export type FN_ONBOARDING_DONE = (
@@ -53,6 +54,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
   COMPONENT_RECORD: 'component.record',
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
+  COMPONENT_PIN_EXPLAINER: 'component.pin-explainer'
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -154,6 +156,7 @@ export type TokenMapping = {
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
   [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
+  [TOKENS.COMPONENT_PIN_EXPLAINER]: React.FC<PINExplainerProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BaseLogger
