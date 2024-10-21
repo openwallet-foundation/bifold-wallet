@@ -247,7 +247,7 @@ const translation = {
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
         "BiometricsError": "La biométrie n'a pas réussi.",
         "BiometricsErrorEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
-        "LockedOut": "You locked out after 5 minutes of inactivity. (FR)",
+        "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity. (FR)",
         "ReEnterPIN": "Re-enter your wallet PIN (FR)",
         "BiometricsChanged": "Le déverrouillage avec la biométrie a été désactivé, car les données biométriques de votre appareil ont changé.",
         "BiometricsChangedEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
@@ -654,7 +654,14 @@ const translation = {
         "Build": "Créer",
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
         "ScanMyQR": "Scanner mon code QR",
-        "Developer": "Options de développeur"
+        "Developer": "Options de développeur",
+        "AutoLockTime": "Auto lock time (fr)",
+    },
+    "AutoLockTimes": {
+        "FiveMinutes": "Five Minutes (fr)",
+        "ThreeMinutes": "Three Minutes (fr)",
+        "OneMinute": "One Minute (fr)",
+        "Never": "Never (fr)",
     },
     "TabStack": {
         "Home": "Notifications",

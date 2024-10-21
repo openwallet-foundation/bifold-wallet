@@ -56,6 +56,7 @@ export const defaultState: State = {
     preventAutoLock: false,
     enableShareableLink: false,
     alternateContactNames: {},
+    autoLockTime: 5, // default wallets lockout time to 5 minutes
   },
   tours: {
     seenToursPrompt: false,
