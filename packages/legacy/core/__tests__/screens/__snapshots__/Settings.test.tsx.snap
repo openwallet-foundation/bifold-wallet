@@ -78,6 +78,13 @@ exports[`Settings Screen Renders correctly 1`] = `
               "value": "Language.code",
             },
             Object {
+              "accessibilityLabel": "Settings.AutoLockTime",
+              "onPress": [Function],
+              "testID": "com.ariesbifold:id/Lockout",
+              "title": "Settings.AutoLockTime",
+              "value": "5 min",
+            },
+            Object {
               "accessibilityLabel": "Settings.Developer",
               "onPress": [Function],
               "testID": "com.ariesbifold:id/DeveloperOptions",
@@ -855,6 +862,123 @@ exports[`Settings Screen Renders correctly 1`] = `
           >
             <View>
               <View
+                accessibilityLabel="Settings.AutoLockTime"
+                accessibilityState={
+                  Object {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  Object {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "flexGrow": 1,
+                    "justifyContent": "space-between",
+                    "opacity": 1,
+                    "paddingHorizontal": 25,
+                  }
+                }
+                testID="com.ariesbifold:id/Lockout"
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 21,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "marginRight": 14,
+                      },
+                    ]
+                  }
+                >
+                  Settings.AutoLockTime
+                </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 21,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                    ]
+                  }
+                >
+                  5 min
+                </Text>
+              </View>
+            </View>
+          </RCTScrollView>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#313132",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "borderBottomColor": "#000000",
+                  "borderBottomWidth": 1,
+                  "marginHorizontal": 25,
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View>
+          <RCTScrollView
+            contentContainerStyle={
+              Object {
+                "flexGrow": 1,
+              }
+            }
+            horizontal={true}
+            style={
+              Object {
+                "backgroundColor": "#313132",
+                "flexGrow": 1,
+                "paddingVertical": 24,
+              }
+            }
+          >
+            <View>
+              <View
                 accessibilityLabel="Settings.Developer"
                 accessibilityState={
                   Object {
@@ -938,9 +1062,11 @@ exports[`Settings Screen Renders correctly 1`] = `
         </View>
       </View>
       <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
+        style={
+          Object {
+            "height": 0,
+          }
+        }
       />
       <View
         onLayout={[Function]}

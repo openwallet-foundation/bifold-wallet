@@ -9,6 +9,7 @@ import {
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
   State,
+  Preferences,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
@@ -59,6 +60,7 @@ enum PreferencesDispatchAction {
   PREVENT_AUTO_LOCK = 'preferences/preventAutoLock',
   USE_SHAREABLE_LINK = 'preferences/useShareableLink',
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
+  AUTO_LOCK_TIME = 'preferences/autoLockTime',
 }
 
 enum ToursDispatchAction {
@@ -486,10 +488,27 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case LockoutDispatchAction.LOCKOUT_UPDATED: {
-      const lockout: LockoutState = (action?.payload || []).pop()
+      const displayNotification: boolean = (action?.payload ?? []).pop() ?? false
+      const lockout: LockoutState = {
+        ...state.lockout,
+        displayNotification,
+      }
+
       return {
         ...state,
         lockout,
+      }
+    }
+    case PreferencesDispatchAction.AUTO_LOCK_TIME: {
+      const autoLockTime = (action?.payload ?? []).pop() ?? 5
+      const preferences: Preferences = {
+        ...state.preferences,
+        autoLockTime,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
       }
     }
     case OnboardingDispatchAction.ONBOARDING_VERSION: {

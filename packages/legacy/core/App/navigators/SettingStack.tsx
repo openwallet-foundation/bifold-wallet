@@ -20,6 +20,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import AutoLock from '../screens/AutoLock'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -62,6 +63,11 @@ const SettingStack: React.FC = () => {
         name={Screens.Language}
         component={Language}
         options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.AutoLock}
+        component={AutoLock}
+        options={{ title: 'Auto lock Options', headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.DataRetention}
