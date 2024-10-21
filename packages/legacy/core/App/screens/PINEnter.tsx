@@ -369,7 +369,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     }
 
     return <Text style={style.helpText}>{t('PINEnter.EnterPIN')}</Text>
-  }, [store.lockout.displayNotification, style.helpText, t, biometricsEnrollmentChange, biometricsErr])
+  }, [
+    store.lockout.displayNotification,
+    store.preferences.autoLockTime,
+    style.helpText,
+    t,
+    biometricsEnrollmentChange,
+    biometricsErr,
+  ])
 
   return (
     <KeyboardView>

@@ -38,7 +38,6 @@ describe('PINEnter Screen', () => {
             ...defaultState,
             lockout: {
               displayNotification: true,
-              lockoutTime: 5,
             },
           }}
         >
