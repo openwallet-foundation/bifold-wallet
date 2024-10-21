@@ -3,7 +3,7 @@ const networkContext = {
   silentAssertConnectedNetwork: jest.fn(),
   displayNetInfoModal: jest.fn(),
   hideNetInfoModal: jest.fn(),
-  assertLedgerConnectivity: jest.fn(),
+  assertNetworkReachable: jest.fn(),
 }
 
 export default networkContext

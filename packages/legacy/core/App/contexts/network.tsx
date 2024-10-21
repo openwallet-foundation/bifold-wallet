@@ -10,7 +10,7 @@ export interface NetworkContext {
   assertConnectedNetwork: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertLedgerConnectivity: () => Promise<boolean>
+  assertNetworkReachable: () => Promise<boolean>
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
@@ -40,7 +40,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return isConnected
   }
 
-  const assertLedgerConnectivity = async (): Promise<boolean> => {
+  const assertNetworkReachable = async (): Promise<boolean> => {
     const hostname = hostnameFromURL(Config.MEDIATOR_URL!)
 
     if (hostname === null || hostname.length === 0) {
@@ -60,7 +60,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
         assertConnectedNetwork,
         displayNetInfoModal,
         hideNetInfoModal,
-        assertLedgerConnectivity,
+        assertNetworkReachable,
       }}
     >
       {children}
