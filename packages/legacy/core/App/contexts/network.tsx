@@ -7,7 +7,7 @@ import { hostnameFromURL, canConnectToHost } from '../utils/network'
 import { Config } from 'react-native-config'
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean
-  assertConnectedNetwork: () => boolean
+  assertNetworkConnected: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
   assertNetworkReachable: () => Promise<boolean>
@@ -31,7 +31,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return netInfo.isConnected || netInfo.type !== NetInfoStateType.none
   }
 
-  const assertConnectedNetwork = () => {
+  const assertNetworkConnected = () => {
     const isConnected = silentAssertConnectedNetwork()
     if (!isConnected) {
       displayNetInfoModal()
@@ -57,7 +57,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     <NetworkContext.Provider
       value={{
         silentAssertConnectedNetwork,
-        assertConnectedNetwork,
+        assertNetworkConnected,
         displayNetInfoModal,
         hideNetInfoModal,
         assertNetworkReachable,

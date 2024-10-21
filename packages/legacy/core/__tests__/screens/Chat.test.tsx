@@ -82,7 +82,7 @@ describe('Chat Screen', () => {
   test('Renders correctly', async () => {
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({
       silentAssertConnectedNetwork: () => true,
-      assertConnectedNetwork: () => true,
+      assertNetworkConnected: () => true,
       assertNetworkReachable: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
@@ -107,7 +107,7 @@ describe('Chat screen with messages', () => {
     useBasicMessagesByConnectionId.mockReturnValue(testBasicMessages)
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({
       silentAssertConnectedNetwork: () => true,
-      assertConnectedNetwork: () => true,
+      assertNetworkConnected: () => true,
       assertNetworkReachable: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),

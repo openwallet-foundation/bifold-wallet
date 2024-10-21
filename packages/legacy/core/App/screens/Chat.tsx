@@ -37,7 +37,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const chatMessages = useChatMessagesByConnection(connection)
   const isFocused = useIsFocused()
-  const { assertConnectedNetwork, silentAssertConnectedNetwork } = useNetwork()
+  const { assertNetworkConnected, silentAssertConnectedNetwork } = useNetwork()
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
@@ -48,8 +48,8 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   }, [isFocused, connection, store.preferences.alternateContactNames])
 
   useEffect(() => {
-    assertConnectedNetwork()
-  }, [assertConnectedNetwork])
+    assertNetworkConnected()
+  }, [assertNetworkConnected])
 
   useEffect(() => {
     navigation.setOptions({
