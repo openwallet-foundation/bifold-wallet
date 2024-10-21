@@ -58,7 +58,7 @@ const AutoLock: React.FC = () => {
       <Text style={TextTheme.title}>{title}</Text>
       <Pressable
         style={styles.checkboxContainer}
-        accessibilityLabel={''}
+        accessibilityLabel={title}
         accessibilityRole={'checkbox'}
         testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
       >
@@ -83,10 +83,30 @@ const AutoLock: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={[
-          { title: 'Five Minutes', value: AutoLockTime.FiveMinutes, testId: '', onPress: handleTimeoutChange },
-          { title: 'Three Minutes', value: AutoLockTime.ThreeMinutes, testId: '', onPress: handleTimeoutChange },
-          { title: 'One Minute', value: AutoLockTime.OneMinute, testId: '', onPress: handleTimeoutChange },
-          { title: 'Never', value: AutoLockTime.Never, testId: '', onPress: handleTimeoutChange },
+          {
+            title: 'Five Minutes',
+            value: AutoLockTime.FiveMinutes,
+            testId: `auto-lock-time-${AutoLockTime.FiveMinutes}`,
+            onPress: handleTimeoutChange,
+          },
+          {
+            title: 'Three Minutes',
+            value: AutoLockTime.ThreeMinutes,
+            testId: `auto-lock-time-${AutoLockTime.ThreeMinutes}`,
+            onPress: handleTimeoutChange,
+          },
+          {
+            title: 'One Minute',
+            value: AutoLockTime.OneMinute,
+            testId: `auto-lock-time-${AutoLockTime.OneMinute}`,
+            onPress: handleTimeoutChange,
+          },
+          {
+            title: 'Never',
+            value: AutoLockTime.Never,
+            testId: `auto-lock-time-${AutoLockTime.Never}`,
+            onPress: handleTimeoutChange,
+          },
         ]}
         renderItem={({ item }) => {
           const data: AutoLockListItem = item
