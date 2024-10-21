@@ -153,10 +153,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.Language),
         },
         {
-          title: 'Auto lock time',
+          title: t('Settings.AutoLockTime'),
           value:
             store.preferences.autoLockTime !== AutoLockTime.Never ? `${store.preferences.autoLockTime} min` : 'Never',
-          accessibilityLabel: 'Auto lock options',
+          accessibilityLabel: t('Settings.AutoLockTime'),
           testID: testIdWithKey('Lockout'),
           onPress: () => navigation.navigate(Screens.AutoLock),
         },

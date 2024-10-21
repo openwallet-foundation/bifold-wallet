@@ -643,7 +643,14 @@ const translation = {
     "AppGuides": "Guia do app",
     "WhatAreContacts": "O que são Contatos?",
     "ScanMyQR": "Scanear meu QR code",
-    "Developer": "Opções de Desenvolvedor"
+    "Developer": "Opções de Desenvolvedor",
+    "AutoLockTime": "Auto lock time (PT-BR)",
+  },
+  "AutoLockTimes": {
+    "FiveMinutes": "Five Minutes (PT-BR)",
+    "ThreeMinutes": "Three Minutes (PT-BR)",
+    "OneMinute": "One Minute (PT-BR)",
+    "Never": "Never (PT-BR)",
   },
   "TabStack": {
     "Home": "Notificações",

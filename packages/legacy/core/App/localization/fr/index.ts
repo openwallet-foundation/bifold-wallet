@@ -654,7 +654,14 @@ const translation = {
         "Build": "Créer",
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
         "ScanMyQR": "Scanner mon code QR",
-        "Developer": "Options de développeur"
+        "Developer": "Options de développeur",
+        "AutoLockTime": "Auto lock time (fr)",
+    },
+    "AutoLockTimes": {
+        "FiveMinutes": "Five Minutes (fr)",
+        "ThreeMinutes": "Three Minutes (fr)",
+        "OneMinute": "One Minute (fr)",
+        "Never": "Never (fr)",
     },
     "TabStack": {
         "Home": "Notifications",

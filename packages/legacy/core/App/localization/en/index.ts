@@ -673,6 +673,13 @@ const translation = {
     "MoreInformation": "More information",
     "Developer": "Developer options",
     "Notifications": "Notifications",
+    "AutoLockTime": "Auto lock time",
+  },
+  "AutoLockTimes": {
+    "FiveMinutes": "Five Minutes",
+    "ThreeMinutes": "Three Minutes",
+    "OneMinute": "One Minute",
+    "Never": "Never",
   },
   "TabStack": {
     "Home": "Notifications",

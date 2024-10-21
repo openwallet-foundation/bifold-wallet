@@ -9,6 +9,7 @@ import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import React from 'react'
 import { FlatList } from 'react-native-gesture-handler'
+import { useTranslation } from 'react-i18next'
 
 type AutoLockListItem = {
   title: string
@@ -19,6 +20,7 @@ type AutoLockListItem = {
 }
 
 const AutoLock: React.FC = () => {
+  const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const currentLockoutTime = store.preferences.autoLockTime ?? AutoLockTime.FiveMinutes
   const styles = StyleSheet.create({
@@ -84,25 +86,25 @@ const AutoLock: React.FC = () => {
       <FlatList
         data={[
           {
-            title: 'Five Minutes',
+            title: t('AutoLockTimes.FiveMinutes'),
             value: AutoLockTime.FiveMinutes,
             testId: `auto-lock-time-${AutoLockTime.FiveMinutes}`,
             onPress: handleTimeoutChange,
           },
           {
-            title: 'Three Minutes',
+            title: t('AutoLockTimes.ThreeMinutes'),
             value: AutoLockTime.ThreeMinutes,
             testId: `auto-lock-time-${AutoLockTime.ThreeMinutes}`,
             onPress: handleTimeoutChange,
           },
           {
-            title: 'One Minute',
+            title: t('AutoLockTimes.OneMinute'),
             value: AutoLockTime.OneMinute,
             testId: `auto-lock-time-${AutoLockTime.OneMinute}`,
             onPress: handleTimeoutChange,
           },
           {
-            title: 'Never',
+            title: t('AutoLockTimes.Never'),
             value: AutoLockTime.Never,
             testId: `auto-lock-time-${AutoLockTime.Never}`,
             onPress: handleTimeoutChange,
