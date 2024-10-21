@@ -7,10 +7,10 @@ import { hostnameFromURL, canConnectToHost } from '../utils/network'
 import { Config } from 'react-native-config'
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean
-  assertConnectedNetwork: () => boolean
+  assertNetworkConnected: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertLedgerConnectivity: () => Promise<boolean>
+  assertNetworkReachable: () => Promise<boolean>
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
@@ -31,7 +31,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return netInfo.isConnected || netInfo.type !== NetInfoStateType.none
   }
 
-  const assertConnectedNetwork = () => {
+  const assertNetworkConnected = () => {
     const isConnected = silentAssertConnectedNetwork()
     if (!isConnected) {
       displayNetInfoModal()
@@ -40,7 +40,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return isConnected
   }
 
-  const assertLedgerConnectivity = async (): Promise<boolean> => {
+  const assertNetworkReachable = async (): Promise<boolean> => {
     const hostname = hostnameFromURL(Config.MEDIATOR_URL!)
 
     if (hostname === null || hostname.length === 0) {
@@ -57,10 +57,10 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     <NetworkContext.Provider
       value={{
         silentAssertConnectedNetwork,
-        assertConnectedNetwork,
+        assertNetworkConnected,
         displayNetInfoModal,
         hideNetInfoModal,
-        assertLedgerConnectivity,
+        assertNetworkReachable,
       }}
     >
       {children}

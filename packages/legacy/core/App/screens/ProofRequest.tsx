@@ -60,7 +60,7 @@ type CredentialListProps = {
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
-  const { assertConnectedNetwork } = useNetwork()
+  const { assertNetworkConnected } = useNetwork()
   const proof = useProofById(proofId)
   const connection = useConnectionById(proof?.connectionId ?? '')
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
@@ -359,7 +359,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
   const handleAcceptPress = useCallback(async () => {
     try {
-      if (!(agent && proof && assertConnectedNetwork())) {
+      if (!(agent && proof && assertNetworkConnected())) {
         return
       }
       setPendingModalVisible(true)
@@ -440,7 +440,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error)?.message ?? err, 1027)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, proof, assertConnectedNetwork, retrievedCredentials, activeCreds, descriptorMetadata, goalCode, t])
+  }, [agent, proof, assertNetworkConnected, retrievedCredentials, activeCreds, descriptorMetadata, goalCode, t])
 
   const handleDeclineTouched = useCallback(async () => {
     try {
