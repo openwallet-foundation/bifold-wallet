@@ -2,12 +2,21 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { ColorPallet, TextTheme } from '../theme'
+import { ColorPallet, SettingsTheme, TextTheme } from '../theme'
 import { AutoLockTime } from '../components/misc/InactivityWrapper'
 import { testIdWithKey } from '../utils/testable'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import React from 'react'
+import { FlatList } from 'react-native-gesture-handler'
+
+type AutoLockListItem = {
+  title: string
+  selected: boolean
+  value: (typeof AutoLockTime)[keyof typeof AutoLockTime]
+  testID: string
+  onPress: (val: (typeof AutoLockTime)[keyof typeof AutoLockTime]) => void
+}
 
 const AutoLock: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -17,22 +26,23 @@ const AutoLock: React.FC = () => {
       backgroundColor: ColorPallet.brand.primaryBackground,
       width: '100%',
     },
-    settingContainer: {
-      flexDirection: 'row',
-      marginVertical: 1,
-      padding: 10,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+    section: {
+      backgroundColor: SettingsTheme.groupBackground,
+      paddingHorizontal: 25,
+      paddingVertical: 16,
     },
-    settingLabelText: {
-      ...TextTheme.bold,
-      marginRight: 10,
-      textAlign: 'left',
+    sectionRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    itemSeparator: {
+      borderBottomWidth: 1,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      marginHorizontal: 25,
     },
     checkboxContainer: {
       justifyContent: 'center',
-      marginRight: 20,
     },
   })
 
@@ -43,17 +53,9 @@ const AutoLock: React.FC = () => {
     })
   }
 
-  const LockoutRow: React.FC<{
-    title: string
-    selected: boolean
-    value: (typeof AutoLockTime)[keyof typeof AutoLockTime]
-    testID: string
-    onPress: (val: (typeof AutoLockTime)[keyof typeof AutoLockTime]) => void
-  }> = ({ title, value, selected, testID, onPress }) => (
-    <View style={styles.settingContainer}>
-      <View style={{ flex: 1 }}>
-        <Text style={styles.settingLabelText}>{title}</Text>
-      </View>
+  const LockoutRow: React.FC<AutoLockListItem> = ({ title, value, selected, testID, onPress }) => (
+    <View style={[styles.section, styles.sectionRow]}>
+      <Text style={TextTheme.title}>{title}</Text>
       <Pressable
         style={styles.checkboxContainer}
         accessibilityLabel={''}
@@ -78,37 +80,32 @@ const AutoLock: React.FC = () => {
   )
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
-      <ScrollView style={styles.container}>
-        <LockoutRow
-          title={'Five Minutes'}
-          selected={currentLockoutTime === AutoLockTime.FiveMinutes}
-          value={AutoLockTime.FiveMinutes}
-          testID={''}
-          onPress={handleTimeoutChange}
-        />
-        <LockoutRow
-          title={'Three Minutes'}
-          selected={currentLockoutTime === AutoLockTime.ThreeMinutes}
-          value={AutoLockTime.ThreeMinutes}
-          testID={''}
-          onPress={handleTimeoutChange}
-        />
-        <LockoutRow
-          title={'One Minutes'}
-          selected={currentLockoutTime === AutoLockTime.OneMinute}
-          value={AutoLockTime.OneMinute}
-          testID={''}
-          onPress={handleTimeoutChange}
-        />
-        <LockoutRow
-          title={'Never'}
-          selected={currentLockoutTime === AutoLockTime.Never}
-          value={AutoLockTime.Never}
-          testID={''}
-          onPress={handleTimeoutChange}
-        />
-      </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={[
+          { title: 'Five Minutes', value: AutoLockTime.FiveMinutes, testId: '', onPress: handleTimeoutChange },
+          { title: 'Three Minutes', value: AutoLockTime.ThreeMinutes, testId: '', onPress: handleTimeoutChange },
+          { title: 'One Minute', value: AutoLockTime.OneMinute, testId: '', onPress: handleTimeoutChange },
+          { title: 'Never', value: AutoLockTime.Never, testId: '', onPress: handleTimeoutChange },
+        ]}
+        renderItem={({ item }) => {
+          const data: AutoLockListItem = item
+          return (
+            <LockoutRow
+              title={data.title}
+              selected={currentLockoutTime === data.value}
+              value={data.value}
+              testID={data.testID}
+              onPress={data.onPress}
+            />
+          )
+        }}
+        ItemSeparatorComponent={() => (
+          <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
+            <View style={styles.itemSeparator} />
+          </View>
+        )}
+      />
     </SafeAreaView>
   )
 }

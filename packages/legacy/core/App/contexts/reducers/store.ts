@@ -500,15 +500,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     case PreferencesDispatchAction.AUTO_LOCK_TIME: {
-      console.log(`ACTION: Auto Lock: ${action?.payload}`)
       const autoLockTime = (action?.payload ?? []).pop() ?? 5
       const preferences: Preferences = {
         ...state.preferences,
         autoLockTime,
       }
-      console.log(state.preferences)
-      console.log('______')
-      console.log(preferences)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
       return {
         ...state,
