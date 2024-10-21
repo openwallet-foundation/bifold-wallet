@@ -60,6 +60,7 @@ export enum Stacks {
   NotificationStack = 'Notifications Stack',
   ConnectionStack = 'Connection Stack',
   HistoryStack = 'History Stack',
+  CustomNavStack1 = 'Custom Nav Stack 1',
 }
 
 export enum TabStacks {
@@ -78,6 +79,7 @@ export type RootStackParams = {
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
   [Stacks.HistoryStack]: NavigatorScreenParams<HistoryStackParams>
+  [Stacks.CustomNavStack1]: undefined
 }
 
 export type TabStackParams = {

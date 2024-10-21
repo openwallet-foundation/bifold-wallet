@@ -235,6 +235,8 @@ const translation = {
         "EnterYourCurrentPIN": "Entrez votre NIP actuel"
     },
     "PINEnter": {
+        "Title": "Content de te revoir",
+        "SubText": "Entrez le code PIN de votre portefeuille pour vous connecter",
         "EnterPIN": "Veuillez saisir votre NIP",
         "Unlock": "Déverrouiller",
         "Or": "Ou",
@@ -748,8 +750,6 @@ const translation = {
     "NetInfo": {
         "NoInternetConnectionTitle": "Aucune connexion Internet",
         "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet.",
-        "LedgerConnectivityIssueTitle": "Services de portefeuille",
-        "LedgerConnectivityIssueMessage": "Il se peut qu'un pare-feu vous empêche de vous connecter aux services liés au portefeuille.",
     },
     "Onboarding": {
         "SkipA11y": "Passer l'introduction à Aries Bifold",
