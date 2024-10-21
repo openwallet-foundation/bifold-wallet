@@ -127,6 +127,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.FN_LOAD_HISTORY, (agent: Agent<any>): IHistoryManager => {
       return new HistoryManager(agent)
     })
+    this._container.registerInstance(TOKENS.CUSTOM_NAV_STACK_1, false)
     this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
         const data = await this.storage.getValueForKey(key)

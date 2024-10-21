@@ -45,6 +45,7 @@ import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
+import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 
@@ -140,6 +141,7 @@ export {
   NetInfo,
   OnboardingPages,
   NotificationListItem,
+  useDefaultStackOptions,
   Splash,
   Developer,
   Terms,

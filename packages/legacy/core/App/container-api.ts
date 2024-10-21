@@ -46,6 +46,10 @@ export const SCREEN_TOKENS = {
   SCREEN_USE_BIOMETRY: 'screen.use-biometry',
 } as const
 
+export const NAV_TOKENS = {
+  CUSTOM_NAV_STACK_1: 'nav.slot1',
+} as const
+
 export const COMPONENT_TOKENS = {
   COMPONENT_HOME_HEADER: 'component.home.header',
   COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST: 'component.home.notifications-empty-list',
@@ -113,6 +117,7 @@ export const TOKENS = {
   ...PROOF_TOKENS,
   ...COMPONENT_TOKENS,
   ...SCREEN_TOKENS,
+  ...NAV_TOKENS,
   ...SERVICE_TOKENS,
   ...STACK_TOKENS,
   ...NOTIFICATION_TOKENS,
@@ -172,6 +177,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
+  [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
 }
 
 export interface Container {
