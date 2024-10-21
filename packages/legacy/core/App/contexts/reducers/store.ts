@@ -665,7 +665,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     default:
-      console.log(`${action.type} is not available`)
       return state
   }
 }
