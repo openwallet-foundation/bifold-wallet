@@ -49,8 +49,8 @@ const RootStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] =
-    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, CustomNavStack1, loadState] =
+    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.CUSTOM_NAV_STACK_1, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 
@@ -98,8 +98,8 @@ const RootStack: React.FC = () => {
       .then(() => {
         dispatch({ type: DispatchAction.STATE_LOADED })
       })
-      .catch((err) => {
-        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), err.message, 1001)
+      .catch((err: unknown) => {
+        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [dispatch, loadState, t])
@@ -311,6 +311,9 @@ const RootStack: React.FC = () => {
             cardStyleInterpolator: forFade,
           }}
         />
+        {CustomNavStack1 ? (
+          <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} />
+        ) : null}
       </Stack.Navigator>
     )
   }

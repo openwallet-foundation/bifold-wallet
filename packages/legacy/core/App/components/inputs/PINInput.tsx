@@ -50,6 +50,7 @@ const PINInputComponent = (
       paddingVertical: 4,
       justifyContent: 'flex-start',
       alignItems: 'center',
+      ...PINInputTheme.cell,
     },
     codeFieldContainer: {
       flex: 1,
@@ -57,6 +58,7 @@ const PINInputComponent = (
     cell: {
       height: cellHeight,
       paddingHorizontal: 2,
+      backgroundColor: PINInputTheme.cell.backgroundColor,
     },
     cellText: {
       ...TextTheme.headingThree,
