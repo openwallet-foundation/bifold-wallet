@@ -187,6 +187,16 @@ const translation = {
         "OpenSettings": "Ouvrir les paramètres",
     },
     "PINCreate": {
+        "Explainer": {
+          "PrimaryHeading": "Secure your Ontario Wallet",
+          "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN).",
+          "WhyNeedPin": {
+            "Header": "Why you need a PIN",
+            "Paragraph": "Your PIN is an important security feature:",
+            "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet",
+            "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet"
+          }
+        },
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
