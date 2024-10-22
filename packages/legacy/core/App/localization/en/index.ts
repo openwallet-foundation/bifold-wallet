@@ -190,7 +190,7 @@ const translation = {
   },
   "PINCreate": {
     "Explainer": {
-      "PrimaryHeading": "Secure your Ontario Wallet",
+      "PrimaryHeading": "Secure your Wallet",
       "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN).",
       "WhyNeedPin": {
         "Header": "Why you need a PIN",
