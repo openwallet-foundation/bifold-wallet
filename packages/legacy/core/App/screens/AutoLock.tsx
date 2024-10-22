@@ -2,7 +2,6 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { ColorPallet, SettingsTheme, TextTheme } from '../theme'
 import { AutoLockTime } from '../components/misc/InactivityWrapper'
 import { testIdWithKey } from '../utils/testable'
 import { useStore } from '../contexts/store'
@@ -10,6 +9,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import React from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from '../contexts/theme'
 
 type AutoLockListItem = {
   title: string
@@ -22,6 +22,7 @@ type AutoLockListItem = {
 const AutoLock: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
+  const { ColorPallet, SettingsTheme, TextTheme } = useTheme()
   const currentLockoutTime = store.preferences.autoLockTime ?? AutoLockTime.FiveMinutes
   const styles = StyleSheet.create({
     container: {

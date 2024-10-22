@@ -655,13 +655,13 @@ const translation = {
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
         "ScanMyQR": "Scanner mon code QR",
         "Developer": "Options de développeur",
-        "AutoLockTime": "Auto lock time (fr)",
+        "AutoLockTime": "Auto lock time (FR)",
     },
     "AutoLockTimes": {
-        "FiveMinutes": "Five Minutes (fr)",
-        "ThreeMinutes": "Three Minutes (fr)",
-        "OneMinute": "One Minute (fr)",
-        "Never": "Never (fr)",
+        "FiveMinutes": "Five Minutes (FR)",
+        "ThreeMinutes": "Three Minutes (FR)",
+        "OneMinute": "One Minute (FR)",
+        "Never": "Never (FR)",
     },
     "TabStack": {
         "Home": "Notifications",
