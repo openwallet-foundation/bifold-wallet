@@ -44,6 +44,7 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
+import ContactDetails from './screens/ContactDetails'
 
 export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -86,6 +87,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
+    this.container.registerInstance(TOKENS.SCREEN_CONTACT_DETAILS, { showConnectedTime: true, editContact: true })
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)

@@ -44,6 +44,7 @@ export const SCREEN_TOKENS = {
   SCREEN_SPLASH: 'screen.splash',
   SCREEN_SCAN: 'screen.scan',
   SCREEN_USE_BIOMETRY: 'screen.use-biometry',
+  SCREEN_CONTACT_DETAILS: 'screen.contact-details',
 } as const
 
 export const COMPONENT_TOKENS = {
@@ -144,6 +145,7 @@ export type TokenMapping = {
   [TOKENS.SCREEN_SCAN]: React.FC
   [TOKENS.SCREEN_USE_BIOMETRY]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
+  [TOKENS.SCREEN_CONTACT_DETAILS]: { showConnectedTime: boolean; editContact: boolean }
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
