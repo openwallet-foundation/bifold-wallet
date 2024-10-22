@@ -80,7 +80,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   "color": "#FFFFFF",
                   "fontSize": 18,
                   "fontWeight": "bold",
-                  "marginBottom": 20,
+                  "marginBottom": 8,
                 }
               }
             >
@@ -107,7 +107,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#313132",
-                        "borderColor": "#FFFFFFFF",
+                        "borderColor": "#313132",
                         "borderRadius": 5,
                         "borderWidth": 1,
                         "flexDirection": "row",
@@ -139,7 +139,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                           Object {
                             "alignItems": "center",
                             "backgroundColor": "#313132",
-                            "borderColor": "#FFFFFFFF",
+                            "borderColor": "#313132",
                             "borderRadius": 5,
                             "borderWidth": 1,
                             "flexDirection": "row",
@@ -571,7 +571,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   "color": "#FFFFFF",
                   "fontSize": 18,
                   "fontWeight": "bold",
-                  "marginBottom": 20,
+                  "marginBottom": 8,
                 }
               }
             >
@@ -598,7 +598,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       Object {
                         "alignItems": "center",
                         "backgroundColor": "#313132",
-                        "borderColor": "#FFFFFFFF",
+                        "borderColor": "#313132",
                         "borderRadius": 5,
                         "borderWidth": 1,
                         "flexDirection": "row",
@@ -630,7 +630,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                           Object {
                             "alignItems": "center",
                             "backgroundColor": "#313132",
-                            "borderColor": "#FFFFFFFF",
+                            "borderColor": "#313132",
                             "borderRadius": 5,
                             "borderWidth": 1,
                             "flexDirection": "row",

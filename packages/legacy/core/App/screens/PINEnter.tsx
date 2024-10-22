@@ -2,6 +2,7 @@ import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -37,6 +38,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [PIN, setPIN] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null) // State for inline error message
   const [biometricsErr, setBiometricsErr] = useState(false)
   const navigation = useNavigation()
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
@@ -90,7 +92,21 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     subText: {
       ...TextTheme.bold,
-      marginBottom: 20,
+      marginBottom: 8,
+    },
+    errorText: {
+      ...TextTheme.normal,
+      color: ColorPallet.semantic.error,
+      marginBottom: 4,
+    },
+    inlineErrorContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 12,
+    },
+    inlineErrorSvg: {
+      color: ColorPallet.semantic.error,
+      margin: 2,
     },
   })
 
@@ -236,14 +252,19 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
         if (!result) {
           const newAttempt = store.loginAttempt.loginAttempts + 1
-          if (!getLockoutPenalty(newAttempt)) {
-            // skip displaying modals if we are going to lockout
-            setAlertModalVisible(true)
+          const attemptsLeft = 5 - newAttempt // 5 total attempts allowed
+
+          if (attemptsLeft > 1) {
+            setErrorMessage(t('PINEnter.IncorrectPINTries', { tries: attemptsLeft })) // Example: 'Incorrect PIN: 4 tries before timeout'
+          } else if (attemptsLeft === 1) {
+            setErrorMessage(t('PINEnter.LastTryBeforeTimeout')) // Show last try warning
+          } else {
+            // No more attempts left, navigate to lockout screen directly
+            attemptLockout(getLockoutPenalty(newAttempt))
+            return
           }
 
           setContinueEnabled(true)
-
-          // log incorrect login attempts
           dispatch({
             type: DispatchAction.ATTEMPT_UPDATED,
             payload: [{ loginAttempts: newAttempt }],
@@ -252,13 +273,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           return
         }
 
-        // reset login attempts if login is successful
+        // If PIN is correct, reset attempts and clear error messages
         dispatch({
           type: DispatchAction.ATTEMPT_UPDATED,
           payload: [{ loginAttempts: 0 }],
         })
 
-        // remove lockout notification if login is successful
         dispatch({
           type: DispatchAction.LOCKOUT_UPDATED,
           payload: [{ displayNotification: false }],
@@ -280,29 +300,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       checkPIN,
       store.loginAttempt,
       unMarkServedPenalty,
-      getLockoutPenalty,
       dispatch,
       setAuthenticated,
       gotoPostAuthScreens,
       t,
+      attemptLockout,
+      getLockoutPenalty,
     ]
   )
 
   const clearAlertModal = useCallback(() => {
-    switch (usage) {
-      case PINEntryUsage.PINCheck:
-        setAlertModalVisible(false)
-        setAuthenticated(false)
-        break
-
-      default:
-        setAlertModalVisible(false)
-
-        break
-    }
-
     setAlertModalVisible(false)
-  }, [usage, setAuthenticated])
+  }, [])
 
   const verifyPIN = useCallback(
     async (PIN: string) => {
@@ -404,6 +413,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           {/* <Image source={Assets.img.logoSecondary.src} style={style.image} /> */}
           {displayHelpText()}
           <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
+          {errorMessage && (
+            <View style={style.inlineErrorContainer}>
+              <Icon name="error" style={style.inlineErrorSvg} size={24} />
+              <Text style={style.errorText}>{errorMessage}</Text>
+            </View>
+          )}
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)

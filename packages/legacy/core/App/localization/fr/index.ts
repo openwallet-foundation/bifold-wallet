@@ -242,6 +242,8 @@ const translation = {
         "Or": "Ou",
         "BiometricsUnlock": "Déverrouiller avec la biométrie",
         "IncorrectPIN": "NIP erroné",
+        "IncorrectPINTries": "Code PIN incorrect : {{tries}} essaie avant l'expiration du délai",
+        "LastTryBeforeTimeout": "Code PIN incorrect : dernier essai avant expiration du délai",
         "RepeatPIN": "Essayez votre NIP à nouveau",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",

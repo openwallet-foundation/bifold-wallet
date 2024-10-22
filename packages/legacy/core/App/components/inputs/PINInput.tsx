@@ -51,6 +51,7 @@ const PINInputComponent = (
       justifyContent: 'flex-start',
       alignItems: 'center',
       ...PINInputTheme.cell,
+      borderColor: PINInputTheme.cell.backgroundColor
     },
     codeFieldContainer: {
       flex: 1,
