@@ -53,7 +53,7 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
       accessibilityRole={'button'}
     >
       <View style={{ flex: 4 }}>
-        <Text style={{ ...TextTheme.normal }}>{overlay?.metaOverlay?.name ?? 'TOTO'}</Text>
+        <Text style={{ ...TextTheme.normal }}>{overlay?.metaOverlay?.name}</Text>
       </View>
       <View style={styles.iconContainer}>
         <Assets.svg.iconChevronRight {...icon} />
