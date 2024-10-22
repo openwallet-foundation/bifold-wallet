@@ -61,7 +61,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertNetworkConnected } = useNetwork()
+  console.log('ProofRequest AA1')
   const proof = useProofById(proofId)
+  console.log('ProofRequest AA2')
+
   const connection = useConnectionById(proof?.connectionId ?? '')
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
