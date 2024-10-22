@@ -3,14 +3,14 @@ import * as React from 'react'
 import { createContext, useContext, useState } from 'react'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
-import { fetchLedgerNodes, canConnectToLedgerNode } from '../utils/ledger'
-
+import { hostnameFromURL, canConnectToHost } from '../utils/network'
+import { Config } from 'react-native-config'
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean
-  assertConnectedNetwork: () => boolean
+  assertNetworkConnected: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertLedgerConnectivity: () => Promise<boolean>
+  assertNetworkReachable: () => Promise<boolean>
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
@@ -31,7 +31,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return netInfo.isConnected || netInfo.type !== NetInfoStateType.none
   }
 
-  const assertConnectedNetwork = () => {
+  const assertNetworkConnected = () => {
     const isConnected = silentAssertConnectedNetwork()
     if (!isConnected) {
       displayNetInfoModal()
@@ -40,14 +40,16 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return isConnected
   }
 
-  const assertLedgerConnectivity = async (): Promise<boolean> => {
-    const nodes = fetchLedgerNodes()
+  const assertNetworkReachable = async (): Promise<boolean> => {
+    const hostname = hostnameFromURL(Config.MEDIATOR_URL!)
 
-    if (typeof nodes === 'undefined' || nodes.length === 0) {
+    if (hostname === null || hostname.length === 0) {
       return false
     }
 
-    const connections = await Promise.all(nodes.map((n: { host: string; port: number }) => canConnectToLedgerNode(n)))
+    const nodes = [{ host: hostname, port: 443 }]
+    const connections = await Promise.all(nodes.map((n: { host: string; port: number }) => canConnectToHost(n)))
+
     return connections.includes(true)
   }
 
@@ -55,10 +57,10 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     <NetworkContext.Provider
       value={{
         silentAssertConnectedNetwork,
-        assertConnectedNetwork,
+        assertNetworkConnected,
         displayNetInfoModal,
         hideNetInfoModal,
-        assertLedgerConnectivity,
+        assertNetworkReachable,
       }}
     >
       {children}

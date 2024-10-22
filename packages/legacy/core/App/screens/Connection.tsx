@@ -8,10 +8,9 @@ import {
 import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useReducer } from 'react'
-import { DeviceEventEmitter, EmitterSubscription, BackHandler, ScrollView, StyleSheet } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useTranslation } from 'react-i18next'
+import { DeviceEventEmitter, EmitterSubscription, BackHandler, View, StyleSheet } from 'react-native'
 
-import { useTheme } from '../contexts/theme'
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connections'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
@@ -47,13 +46,13 @@ const GoalCodes = {
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { oobRecordId, openIDUri, proofId, credentialId } = route.params
-  const { ColorPallet, TextTheme } = useTheme()
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({ openIDUri: openIDUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
+  const { t } = useTranslation()
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,
@@ -64,28 +63,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     percentComplete: 30,
   })
   const styles = StyleSheet.create({
-    container: {
-      height: '100%',
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-      padding: 20,
-    },
     pageContainer: {
       flex: 1,
-    },
-    image: {
-      marginTop: 20,
-    },
-    messageContainer: {
-      alignItems: 'center',
-    },
-    messageText: {
-      fontWeight: TextTheme.normal.fontWeight,
-      textAlign: 'center',
-      marginTop: 30,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      margin: 20,
     },
   })
 
@@ -132,15 +111,17 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (proofId) {
+      navigation.setOptions({ title: t('Screens.ProofRequest') })
       dispatch({ inProgress: false, shouldShowProofComponent: true })
       return
     }
 
     if (credentialId) {
+      navigation.setOptions({ title: t('Screens.CredentialOffer') })
       dispatch({ inProgress: false, shouldShowOfferComponent: true })
       return
     }
-  }, [proofId, credentialId])
+  }, [proofId, credentialId, navigation, t])
 
   useEffect(() => {
     if (!oobRecord || !state.inProgress) {
@@ -171,6 +152,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     // Connectionless proof request, we don't have connectionless offers.
     if (!connection) {
+      navigation.setOptions({ title: t('Screens.ProofRequest') })
       dispatch({ inProgress: false, shouldShowProofComponent: true })
 
       return
@@ -189,6 +171,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
 
+      navigation.setOptions({ title: t('Screens.ProofRequest') })
       dispatch({ inProgress: false, shouldShowProofComponent: true })
 
       return
@@ -197,6 +180,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (goalCode === GoalCodes.credentialOffer) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
 
+      navigation.setOptions({ title: t('Screens.CredentialOffer') })
       dispatch({ inProgress: false, shouldShowProofComponent: false, shouldShowOfferComponent: true })
 
       return
@@ -211,7 +195,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
       })
     )
-  }, [oobRecord, state.inProgress, connection, logger, dispatch, navigation, state.notificationRecord])
+  }, [oobRecord, state.inProgress, connection, logger, dispatch, navigation, t, state.notificationRecord])
 
   // This hook will monitor notification for openID type credentials
   // where there is not connection or oobID present
@@ -306,11 +290,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
   }
 
-  return (
-    <SafeAreaView style={[styles.pageContainer]} edges={['bottom', 'left', 'right']}>
-      <ScrollView>{displayComponent()}</ScrollView>
-    </SafeAreaView>
-  )
+  return <View style={styles.pageContainer}>{displayComponent()}</View>
 }
 
 export default Connection

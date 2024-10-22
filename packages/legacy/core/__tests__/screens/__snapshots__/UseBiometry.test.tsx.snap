@@ -111,13 +111,13 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
           }
         >
           <View
-            accessibilityLabel="Biometry.Toggle"
+            accessibilityLabel="Toggle Button"
             accessibilityRole="switch"
             accessibilityState={
               Object {
                 "busy": undefined,
                 "checked": undefined,
-                "disabled": undefined,
+                "disabled": false,
                 "expanded": undefined,
                 "selected": undefined,
               }
@@ -144,29 +144,61 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
             onStartShouldSetResponder={[Function]}
             testID="com.ariesbifold:id/ToggleBiometrics"
           >
-            <RCTSwitch
-              accessibilityRole="switch"
-              disabled={false}
-              onChange={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              onTintColor="rgba(53, 130, 63, 0.35)"
+            <View
+              collapsable={false}
               style={
-                Array [
-                  Object {
-                    "height": 31,
-                    "width": 51,
-                  },
-                  Object {
-                    "backgroundColor": "#D3D3D3",
-                    "borderRadius": 16,
-                  },
-                ]
+                Object {
+                  "backgroundColor": "rgba(211, 211, 211, 1)",
+                  "borderRadius": 25,
+                  "height": 30,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "padding": 3,
+                  "width": 55,
+                }
               }
-              thumbTintColor="#606060"
-              tintColor="#D3D3D3"
-              value={false}
-            />
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 20,
+                    "height": 25,
+                    "justifyContent": "center",
+                    "transform": Array [
+                      Object {
+                        "translateX": 2,
+                      },
+                    ],
+                    "width": 25,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#606060",
+                        "fontSize": 15,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -362,13 +394,13 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
           }
         >
           <View
-            accessibilityLabel="Biometry.Toggle"
+            accessibilityLabel="Toggle Button"
             accessibilityRole="switch"
             accessibilityState={
               Object {
                 "busy": undefined,
                 "checked": undefined,
-                "disabled": undefined,
+                "disabled": true,
                 "expanded": undefined,
                 "selected": undefined,
               }
@@ -395,29 +427,61 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
             onStartShouldSetResponder={[Function]}
             testID="com.ariesbifold:id/ToggleBiometrics"
           >
-            <RCTSwitch
-              accessibilityRole="switch"
-              disabled={true}
-              onChange={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              onTintColor="rgba(53, 130, 63, 0.35)"
+            <View
+              collapsable={false}
               style={
-                Array [
-                  Object {
-                    "height": 31,
-                    "width": 51,
-                  },
-                  Object {
-                    "backgroundColor": "#D3D3D3",
-                    "borderRadius": 16,
-                  },
-                ]
+                Object {
+                  "backgroundColor": "rgba(211, 211, 211, 1)",
+                  "borderRadius": 25,
+                  "height": 30,
+                  "justifyContent": "center",
+                  "opacity": 0.5,
+                  "padding": 3,
+                  "width": 55,
+                }
               }
-              thumbTintColor="#606060"
-              tintColor="#D3D3D3"
-              value={false}
-            />
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 20,
+                    "height": 25,
+                    "justifyContent": "center",
+                    "transform": Array [
+                      Object {
+                        "translateX": 2,
+                      },
+                    ],
+                    "width": 25,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#606060",
+                        "fontSize": 15,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -625,13 +689,13 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
           }
         >
           <View
-            accessibilityLabel="Biometry.Toggle"
+            accessibilityLabel="Toggle Button"
             accessibilityRole="switch"
             accessibilityState={
               Object {
                 "busy": undefined,
                 "checked": undefined,
-                "disabled": undefined,
+                "disabled": false,
                 "expanded": undefined,
                 "selected": undefined,
               }
@@ -658,29 +722,61 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
             onStartShouldSetResponder={[Function]}
             testID="com.ariesbifold:id/ToggleBiometrics"
           >
-            <RCTSwitch
-              accessibilityRole="switch"
-              disabled={false}
-              onChange={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              onTintColor="rgba(53, 130, 63, 0.35)"
+            <View
+              collapsable={false}
               style={
-                Array [
-                  Object {
-                    "height": 31,
-                    "width": 51,
-                  },
-                  Object {
-                    "backgroundColor": "#D3D3D3",
-                    "borderRadius": 16,
-                  },
-                ]
+                Object {
+                  "backgroundColor": "rgba(211, 211, 211, 1)",
+                  "borderRadius": 25,
+                  "height": 30,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "padding": 3,
+                  "width": 55,
+                }
               }
-              thumbTintColor="#606060"
-              tintColor="#D3D3D3"
-              value={false}
-            />
+            >
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 20,
+                    "height": 25,
+                    "justifyContent": "center",
+                    "transform": Array [
+                      Object {
+                        "translateX": 2,
+                      },
+                    ],
+                    "width": 25,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#606060",
+                        "fontSize": 15,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>

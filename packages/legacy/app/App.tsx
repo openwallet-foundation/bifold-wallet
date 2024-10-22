@@ -4,6 +4,7 @@ import {
   AuthProvider,
   ConfigurationProvider,
   ErrorModal,
+  InactivityWrapper,
   NetInfo,
   NetworkProvider,
   RootStack,
@@ -55,25 +56,27 @@ const App = () => {
             <ConfigurationProvider value={defaultConfiguration}>
               <AuthProvider>
                 <NetworkProvider>
-                  <StatusBar
-                    hidden={false}
-                    barStyle="light-content"
-                    backgroundColor={theme.ColorPallet.brand.primary}
-                    translucent={false}
-                  />
-                  <NetInfo />
-                  <ErrorModal />
-                  <TourProvider
-                    homeTourSteps={homeTourSteps}
-                    credentialsTourSteps={credentialsTourSteps}
-                    credentialOfferTourSteps={credentialOfferTourSteps}
-                    proofRequestTourSteps={proofRequestTourSteps}
-                    overlayColor={'gray'}
-                    overlayOpacity={0.7}
-                  >
-                    <RootStack />
-                  </TourProvider>
-                  <Toast topOffset={15} config={toastConfig} />
+                  <InactivityWrapper>
+                    <StatusBar
+                      hidden={false}
+                      barStyle="light-content"
+                      backgroundColor={theme.ColorPallet.brand.primary}
+                      translucent={false}
+                    />
+                    <NetInfo />
+                    <ErrorModal />
+                    <TourProvider
+                      homeTourSteps={homeTourSteps}
+                      credentialsTourSteps={credentialsTourSteps}
+                      credentialOfferTourSteps={credentialOfferTourSteps}
+                      proofRequestTourSteps={proofRequestTourSteps}
+                      overlayColor={'gray'}
+                      overlayOpacity={0.7}
+                    >
+                      <RootStack />
+                    </TourProvider>
+                    <Toast topOffset={15} config={toastConfig} />
+                  </InactivityWrapper>
                 </NetworkProvider>
               </AuthProvider>
             </ConfigurationProvider>

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, BackHandler, FlatList, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -101,7 +101,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
     !disableSkip &&
       navigation.setOptions({
         headerRight: () => (
-          <HeaderButton
+          <IconButton
             buttonLocation={ButtonLocation.Right}
             accessibilityLabel={t('Onboarding.SkipA11y')}
             testID={testIdWithKey('Skip')}

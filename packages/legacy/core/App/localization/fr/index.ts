@@ -235,6 +235,8 @@ const translation = {
         "EnterYourCurrentPIN": "Entrez votre NIP actuel"
     },
     "PINEnter": {
+        "Title": "Content de te revoir",
+        "SubText": "Entrez le code PIN de votre portefeuille pour vous connecter",
         "EnterPIN": "Veuillez saisir votre NIP",
         "Unlock": "Déverrouiller",
         "Or": "Ou",
@@ -245,7 +247,7 @@ const translation = {
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
         "BiometricsError": "La biométrie n'a pas réussi.",
         "BiometricsErrorEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
-        "LockedOut": "You locked out after 5 minutes of inactivity. (FR)",
+        "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity. (FR)",
         "ReEnterPIN": "Re-enter your wallet PIN (FR)",
         "BiometricsChanged": "Le déverrouillage avec la biométrie a été désactivé, car les données biométriques de votre appareil ont changé.",
         "BiometricsChangedEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
@@ -652,7 +654,14 @@ const translation = {
         "Build": "Créer",
         "WhatAreContacts": "Qu’est-ce qu’un Contact?",
         "ScanMyQR": "Scanner mon code QR",
-        "Developer": "Options de développeur"
+        "Developer": "Options de développeur",
+        "AutoLockTime": "Auto lock time (fr)",
+    },
+    "AutoLockTimes": {
+        "FiveMinutes": "Five Minutes (fr)",
+        "ThreeMinutes": "Three Minutes (fr)",
+        "OneMinute": "One Minute (fr)",
+        "Never": "Never (fr)",
     },
     "TabStack": {
         "Home": "Notifications",
@@ -748,8 +757,6 @@ const translation = {
     "NetInfo": {
         "NoInternetConnectionTitle": "Aucune connexion Internet",
         "NoInternetConnectionMessage": "Vous ne pouvez pas accéder aux services à l'aide de Bifold ou recevoir des informations d'identification tant que vous n'êtes pas de nouveau en ligne.\n\nS'il vous plait, vérifiez votre connexion internet.",
-        "LedgerConnectivityIssueTitle": "Services de portefeuille",
-        "LedgerConnectivityIssueMessage": "Il se peut qu'un pare-feu vous empêche de vous connecter aux services liés au portefeuille.",
     },
     "Onboarding": {
         "SkipA11y": "Passer l'introduction à Aries Bifold",

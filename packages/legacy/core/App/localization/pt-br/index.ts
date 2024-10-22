@@ -234,7 +234,7 @@ const translation = {
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
-    "LockedOut": "You locked out after 5 minutes of inactivity. (PT-BR)",
+    "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity. (PT-BR)",
     "ReEnterPIN": "Re-enter your wallet PIN (PT-BR)",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
     "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira.",
@@ -643,7 +643,14 @@ const translation = {
     "AppGuides": "Guia do app",
     "WhatAreContacts": "O que são Contatos?",
     "ScanMyQR": "Scanear meu QR code",
-    "Developer": "Opções de Desenvolvedor"
+    "Developer": "Opções de Desenvolvedor",
+    "AutoLockTime": "Auto lock time (PT-BR)",
+  },
+  "AutoLockTimes": {
+    "FiveMinutes": "Five Minutes (PT-BR)",
+    "ThreeMinutes": "Three Minutes (PT-BR)",
+    "OneMinute": "One Minute (PT-BR)",
+    "Never": "Never (PT-BR)",
   },
   "TabStack": {
     "Home": "Notificações",
@@ -731,8 +738,6 @@ const translation = {
   "NetInfo": {
     "NoInternetConnectionTitle": "Sem conexão com a internet",
     "NoInternetConnectionMessage": "Não é possivel acessar serviços utilizando a Bifold ou receber credenciais até você voltar a estar online.\n\nFavor checkar sua conexão com a internet.",
-    "LedgerConnectivityIssueTitle": "Serviços de Carteira",
-    "LedgerConnectivityIssueMessage": "Um firewall pode estar te impedindo de conectar-se a serviços relacionados a carteira.",
   },
   "Onboarding": {
     "SkipA11y": "Pular introdução a Aries Bifold",
