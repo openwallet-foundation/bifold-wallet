@@ -33,6 +33,8 @@ import { toImageSource } from '../utils/credential'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
+const CONTACT_IMG_PERCENTAGE = 0.12
+
 const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   if (!route?.params) {
     throw new Error('ContactDetails route params were not set properly')
@@ -53,7 +55,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { ColorPallet, TextTheme } = useTheme()
   const [store] = useStore()
   const { width } = useWindowDimensions()
-  const contactImageHeight = width * 0.12
+  const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
 
   const [{ showConnectedTime, editContact }] = useServices([TOKENS.SCREEN_CONTACT_DETAILS])
 
@@ -68,7 +70,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       gap: 8,
     },
     contactImgContainer: {
-      top: contactImageHeight * 0.12,
+      top: contactImageHeight * CONTACT_IMG_PERCENTAGE,
       alignSelf: 'flex-start',
       backgroundColor: '#ffffff',
       width: contactImageHeight,
