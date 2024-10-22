@@ -70,5 +70,4 @@ describe('PINEnter Screen', () => {
     const EnterButton = await tree.getByTestId(testIdWithKey('Enter'))
     expect(EnterButton).not.toBeNull()
   })
-
 })

@@ -236,6 +236,8 @@ const translation = {
     "EnterYourCurrentPIN": "Enter your current PIN"
   },
   "PINEnter": {
+    "Title": "Welcome back",
+    "SubText": "Enter your wallet PIN to sign-in",
     "EnterPIN": "Enter your wallet PIN",
     "Unlock": "Unlock",
     "Or": "Or",
@@ -246,7 +248,7 @@ const translation = {
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
     "BiometricsError": "Biometrics were not successful.",
     "BiometricsErrorEnterPIN": "Please enter your wallet PIN.",
-    "LockedOut": "You locked out after 5 minutes of inactivity.",
+    "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity.",
     "ReEnterPIN": "Re-enter your wallet PIN",
     "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
     "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
@@ -675,6 +677,13 @@ const translation = {
     "MoreInformation": "More information",
     "Developer": "Developer options",
     "Notifications": "Notifications",
+    "AutoLockTime": "Auto lock time",
+  },
+  "AutoLockTimes": {
+    "FiveMinutes": "Five Minutes",
+    "ThreeMinutes": "Three Minutes",
+    "OneMinute": "One Minute",
+    "Never": "Never",
   },
   "TabStack": {
     "Home": "Notifications",

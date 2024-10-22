@@ -48,7 +48,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
-  const { assertConnectedNetwork } = useNetwork()
+  const { assertNetworkConnected } = useNetwork()
   const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CONFIG,
@@ -189,7 +189,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
 
   const handleAcceptTouched = useCallback(async () => {
     try {
-      if (!(agent && credential && assertConnectedNetwork())) {
+      if (!(agent && credential && assertNetworkConnected())) {
         return
       }
 
@@ -202,7 +202,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, credential, assertConnectedNetwork, logHistoryRecord, t])
+  }, [agent, credential, assertNetworkConnected, logHistoryRecord, t])
 
   const handleDeclineTouched = useCallback(async () => {
     try {

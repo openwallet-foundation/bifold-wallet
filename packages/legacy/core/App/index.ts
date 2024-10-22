@@ -45,8 +45,10 @@ import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
+import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
+import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
 
 export * from './navigators'
 export * from './services/storage'
@@ -125,21 +127,24 @@ export {
   credentialOfferTourSteps,
   proofRequestTourSteps,
   ButtonType,
-  IconButton,
   ButtonLocation,
   CheckBoxRow,
   CredentialCard,
   ContentGradient,
   ErrorModal,
+  IconButton,
+  InactivityWrapper,
   InfoTextBox,
   InfoBox,
   InfoBoxType,
   Link,
+  AutoLockTime,
   ToastType,
   toastConfig,
   NetInfo,
   OnboardingPages,
   NotificationListItem,
+  useDefaultStackOptions,
   Splash,
   Developer,
   Terms,
