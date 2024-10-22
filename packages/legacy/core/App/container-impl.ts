@@ -44,7 +44,6 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
-import ContactDetails from './screens/ContactDetails'
 
 export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },

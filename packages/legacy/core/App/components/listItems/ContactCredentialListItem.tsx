@@ -13,7 +13,7 @@ type ContactCredentialListItemProps = {
   onPress: () => void
 }
 
-const ContactCredentialListItem: React.FC<ContactCredentialListItemProps> = ({ credential, onPress }) => {
+const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialListItemProps) => {
   const { TextTheme, Assets, ColorPallet } = useTheme()
   const { t, i18n } = useTranslation()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)

@@ -1,5 +1,5 @@
 import { CredentialState } from '@credo-ts/core'
-import { useAgent, useConnectionById, useCredentialByState, useCredentialsByConnectionId } from '@credo-ts/react-hooks'
+import { useAgent, useConnectionById, useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useState } from 'react'
@@ -23,14 +23,13 @@ import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
-import { ContactStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
+import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { formatTime, getConnectionName, useConnectionImageUrl } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import ContactCredentialListItem from '../components/listItems/ContactCredentialListItem'
 import { toImageSource } from '../utils/credential'
-import _ from 'lodash'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 

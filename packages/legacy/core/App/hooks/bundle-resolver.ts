@@ -5,7 +5,6 @@ import {
   OCABundleResolveAllParams,
   OCABundleResolveDefaultParams,
   OCABundleResolvePresentationFieldsParams,
-  OCABundleResolverType,
 } from '@hyperledger/aries-oca/build/legacy'
 import { TOKENS, useServices } from '../container-api'
 import { useEffect, useState } from 'react'
@@ -41,11 +40,9 @@ export function useBranding<
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [overlay, setOverlay] = useState<T>({} as T)
 
-  const bResolver = bundleResolver as OCABundleResolverType
-
   useEffect(() => {
     if (isOCABundleResolveDefaultParams(params)) {
-      bResolver.resolveDefaultBundle(params).then((bundle) => {
+      bundleResolver.resolveDefaultBundle(params).then((bundle) => {
         if (bundle) {
           setOverlay(
             (o) =>
@@ -58,7 +55,7 @@ export function useBranding<
         }
       })
     } else if (isOCABundleResolveAllParams(params)) {
-      bResolver.resolveAllBundles(params).then((bundle) => {
+      bundleResolver.resolveAllBundles(params).then((bundle) => {
         setOverlay(
           (o) =>
             ({
@@ -69,7 +66,7 @@ export function useBranding<
         )
       })
     } else if (isOCABundleResolvePresentationFieldsParams(params)) {
-      bResolver.presentationFields(params).then((fields) => {
+      bundleResolver.presentationFields(params).then((fields) => {
         setOverlay(
           (o) =>
             ({
@@ -79,7 +76,7 @@ export function useBranding<
         )
       })
     } else {
-      bResolver.resolve(params).then((bundle) => {
+      bundleResolver.resolve(params).then((bundle) => {
         if (bundle) {
           setOverlay(
             (o) =>
@@ -92,7 +89,7 @@ export function useBranding<
         }
       })
     }
-  }, [params])
+  }, [params, bundleResolver])
 
   return { overlay }
 }
