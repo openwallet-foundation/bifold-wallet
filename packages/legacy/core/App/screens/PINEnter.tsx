@@ -8,7 +8,13 @@ import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
-import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules, EventTypes } from '../constants'
+import {
+  minPINLength,
+  attemptLockoutBaseRules,
+  attemptLockoutThresholdRules,
+  EventTypes,
+  defaultAutoLockTime,
+} from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
@@ -355,7 +361,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       return (
         <>
           <Text style={style.helpText}>
-            {t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? 5) })}
+            {t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })}
           </Text>
           <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
         </>

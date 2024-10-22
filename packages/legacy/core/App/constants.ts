@@ -61,6 +61,8 @@ export const attemptLockoutThresholdRules = {
   attemptPenalty: 24 * hour,
 }
 
+export const defaultAutoLockTime = 5
+
 export const walletId = 'walletId'
 
 export const minPINLength = 6
