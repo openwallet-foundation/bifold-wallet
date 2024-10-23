@@ -9,9 +9,6 @@ import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINEnter from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
-import { ContainerProvider } from '../../App/container-api'
-import { MainContainer } from '../../App/container-impl'
-import { container } from 'tsyringe'
 
 describe('PINEnter Screen', () => {
   test('PIN Enter renders correctly', () => {

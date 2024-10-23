@@ -124,6 +124,32 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     [setWalletPIN, setAuthenticated, dispatch, navigation, t]
   )
 
+  const displayModalMessage = (title: string, message: string) => {
+    setModalState({
+      visible: true,
+      title: title,
+      message: message,
+    })
+  }
+
+  const attentionMessage = (title: string, message: string, pinOne: boolean) => {
+    if (inlineMessagesEnabled) {
+      if (pinOne) {
+        setInlineMessageField1({
+          message: message,
+          inlineType: InlineErrorType.error,
+        })
+      } else {
+        setInlineMessageField2({
+          message: message,
+          inlineType: InlineErrorType.error,
+        })
+      }
+    } else {
+      displayModalMessage(title, message)
+    }
+  }
+
   const validatePINEntry = useCallback(
     (PINOne: string, PINTwo: string): boolean => {
       for (const validation of PINOneValidations) {
@@ -164,7 +190,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   )
 
   const handleCreatePinTap = async () => {
-    console.log('ff')
     setLoading(true)
     if (updatePin) {
       const valid = validatePINEntry(PIN, PINTwo)

@@ -292,6 +292,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                         accessibilityLabel="PINEnter.EnterPIN"
                         accessible={true}
                         autoCapitalize="characters"
+                        autoComplete="one-time-code"
                         autoCorrect={false}
                         autoFocus={true}
                         blurOnSubmit={false}
@@ -310,7 +311,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                             "bottom": 0,
                             "fontSize": 1,
                             "left": 0,
-                            "opacity": 0.01,
+                            "opacity": 0.015,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,
@@ -783,6 +784,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                         accessibilityLabel="PINEnter.EnterPIN"
                         accessible={true}
                         autoCapitalize="characters"
+                        autoComplete="one-time-code"
                         autoCorrect={false}
                         autoFocus={true}
                         blurOnSubmit={false}
@@ -801,7 +803,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                             "bottom": 0,
                             "fontSize": 1,
                             "left": 0,
-                            "opacity": 0.01,
+                            "opacity": 0.015,
                             "position": "absolute",
                             "right": 0,
                             "top": 0,

@@ -26,7 +26,6 @@ import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
 import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
-import { TOKENS, useServices } from '../container-api'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
