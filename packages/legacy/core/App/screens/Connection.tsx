@@ -220,9 +220,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     if ((state.notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
-      logger?.info(`Connection: Handling OpenID4VP Authorization request, navigate to Credential Proof Request`)
       dispatch({ inProgress: false })
-      // navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
+      navigation.replace(Screens.OpenIDProofPresentation, { credential: state.notificationRecord })
     }
   }, [logger, navigation, state])
 

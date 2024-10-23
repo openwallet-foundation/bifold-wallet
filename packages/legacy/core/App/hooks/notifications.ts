@@ -83,7 +83,6 @@ export const useNotifications = ({
 
     const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | OpenId4VPRequestRecord> = []
     if (openIDCredRecieved) {
-      console.log('$$[openIDCredRecieved]', openIDCredRecieved.type)
       openIDCreds.push(openIDCredRecieved)
     }
 
