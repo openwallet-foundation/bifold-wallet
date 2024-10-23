@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/auth'
 import { useStore } from '../../contexts/store'
 import { DispatchAction } from '../../contexts/reducers/store'
 import { TOKENS, useServices } from '../../container-api'
+import { defaultAutoLockTime } from '../../constants'
 
 // number of minutes before the timeout action is triggered
 // a value of 0 will never trigger the lock out  action and an undefined value will default to 5 minutes
@@ -21,9 +22,7 @@ const InactivityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const { agent } = useAgent()
   const { removeSavedWalletSecret } = useAuth()
   const timer = useRef<number | undefined>(undefined)
-  const timeoutAsMilliseconds = useRef<number>(
-    (store.preferences.autoLockTime !== undefined ? store.preferences.autoLockTime : AutoLockTime.FiveMinutes) * 60000
-  )
+  const timeoutAsMilliseconds = useRef<number>((store.preferences.autoLockTime ?? defaultAutoLockTime) * 60000)
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const panResponder = React.useRef(
     PanResponder.create({
