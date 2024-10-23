@@ -132,23 +132,26 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     })
   }
 
-  const attentionMessage = (title: string, message: string, pinOne: boolean) => {
-    if (inlineMessagesEnabled) {
-      if (pinOne) {
-        setInlineMessageField1({
-          message: message,
-          inlineType: InlineErrorType.error,
-        })
+  const attentionMessage = useCallback(
+    (title: string, message: string, pinOne: boolean) => {
+      if (inlineMessagesEnabled) {
+        if (pinOne) {
+          setInlineMessageField1({
+            message: message,
+            inlineType: InlineErrorType.error,
+          })
+        } else {
+          setInlineMessageField2({
+            message: message,
+            inlineType: InlineErrorType.error,
+          })
+        }
       } else {
-        setInlineMessageField2({
-          message: message,
-          inlineType: InlineErrorType.error,
-        })
+        displayModalMessage(title, message)
       }
-    } else {
-      displayModalMessage(title, message)
-    }
-  }
+    },
+    [inlineMessagesEnabled]
+  )
 
   const validatePINEntry = useCallback(
     (PINOne: string, PINTwo: string): boolean => {
@@ -164,7 +167,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
       }
       return true
     },
-    [PINOneValidations, t]
+    [PINOneValidations, t, attentionMessage]
   )
 
   const checkOldPIN = useCallback(
