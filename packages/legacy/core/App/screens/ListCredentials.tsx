@@ -16,21 +16,33 @@ import { CredentialStackParams, Screens } from '../types/navigators'
 import { TourID } from '../types/tour'
 import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
+import { CredentialListFooterProps } from '../types/credential-list-footer'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
-  const [CredentialListOptions, credentialEmptyList, {
-    enableTours: enableToursConfig,
-    credentialHideList,
-  }] = useServices([TOKENS.COMPONENT_CRED_LIST_OPTIONS, TOKENS.COMPONENT_CRED_EMPTY_LIST, TOKENS.CONFIG])
-
+  const [
+    CredentialListOptions,
+    credentialEmptyList,
+    credentialListFooter,
+    { enableTours: enableToursConfig, credentialHideList },
+  ] = useServices([
+    TOKENS.COMPONENT_CRED_LIST_OPTIONS,
+    TOKENS.COMPONENT_CRED_EMPTY_LIST,
+    TOKENS.COMPONENT_CRED_LIST_FOOTER,
+    TOKENS.CONFIG,
+  ])
+  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  const { ColorPallet } = useTheme()
+  const { start } = useTour()
+  const screenIsFocused = useIsFocused()
   let credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ]
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
+  const CredentialListFooter = credentialListFooter as React.FC<CredentialListFooterProps>
 
   // Filter out hidden credentials when not in dev mode
   if (!store.preferences.developerModeEnabled) {
@@ -39,11 +51,6 @@ const ListCredentials: React.FC = () => {
       return !credentialHideList?.includes(credDefId)
     })
   }
-
-  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
-  const { ColorPallet } = useTheme()
-  const { start, stop } = useTour()
-  const screenIsFocused = useIsFocused()
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
@@ -55,9 +62,7 @@ const ListCredentials: React.FC = () => {
         payload: [true],
       })
     }
-
-    return stop
-  }, [screenIsFocused])
+  }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
 
   return (
     <View>
@@ -82,6 +87,7 @@ const ListCredentials: React.FC = () => {
           )
         }}
         ListEmptyComponent={() => <CredentialEmptyList message={t('Credentials.EmptyList')} />}
+        ListFooterComponent={() => <CredentialListFooter credentialsCount={credentials.length} />}
       />
       <CredentialListOptions />
     </View>

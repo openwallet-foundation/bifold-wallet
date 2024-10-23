@@ -1,14 +1,21 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter } from 'react-native'
+import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
-import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules, EventTypes } from '../constants'
+import {
+  minPINLength,
+  attemptLockoutBaseRules,
+  attemptLockoutThresholdRules,
+  EventTypes,
+  defaultAutoLockTime,
+} from '../constants'
+import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -44,6 +51,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessagesEnabled] = useServices([TOKENS.ENABLE_INLINE_ERRORS])
 
@@ -68,8 +76,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     helpText: {
       ...TextTheme.normal,
-      alignSelf: 'center',
-      textAlign: 'center',
+      alignSelf: 'auto',
+      textAlign: 'left',
       marginBottom: 16,
     },
     modalText: {
@@ -82,16 +90,28 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       width: Assets.img.logoSecondary.width,
       resizeMode: Assets.img.logoSecondary.resizeMode,
     },
+    title: {
+      ...TextTheme.headingTwo,
+      marginBottom: 20,
+    },
+    subTitle: {
+      ...TextTheme.labelSubtitle,
+      marginBottom: 20,
+    },
+    subText: {
+      ...TextTheme.bold,
+      marginBottom: 20,
+    },
   })
 
-  const gotoPostAuthScreens = () => {
+  const gotoPostAuthScreens = useCallback(() => {
     if (store.onboarding.postAuthScreens.length) {
       const screen = store.onboarding.postAuthScreens[0]
       if (screen) {
         navigation.navigate(screen as never)
       }
     }
-  }
+  }, [store.onboarding.postAuthScreens, navigation])
 
   const isContinueDisabled = (): boolean => {
     if (inlineMessagesEnabled) {
@@ -103,8 +123,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   // listen for biometrics error event
   useEffect(() => {
     const handle = DeviceEventEmitter.addListener(EventTypes.BIOMETRY_ERROR, (value?: boolean) => {
-      const newVal = value === undefined ? !biometricsErr : value
-      setBiometricsErr(newVal)
+      setBiometricsErr((prev) => value ?? !prev)
     })
 
     return () => {
@@ -113,7 +132,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   }, [])
 
   // This method is used to notify the app that the user is able to receive another lockout penalty
-  const unMarkServedPenalty = () => {
+  const unMarkServedPenalty = useCallback(() => {
     dispatch({
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [
@@ -124,25 +143,28 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         },
       ],
     })
-  }
+  }, [dispatch, store.loginAttempt.loginAttempts, store.loginAttempt.lockoutDate])
 
-  const attemptLockout = async (penalty: number) => {
-    // set the attempt lockout time
-    dispatch({
-      type: DispatchAction.ATTEMPT_UPDATED,
-      payload: [
-        { loginAttempts: store.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
-      ],
-    })
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: Screens.AttemptLockout }],
+  const attemptLockout = useCallback(
+    async (penalty: number) => {
+      // set the attempt lockout time
+      dispatch({
+        type: DispatchAction.ATTEMPT_UPDATED,
+        payload: [
+          { loginAttempts: store.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
+        ],
       })
-    )
-  }
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: Screens.AttemptLockout }],
+        })
+      )
+    },
+    [dispatch, store.loginAttempt.loginAttempts, navigation]
+  )
 
-  const getLockoutPenalty = (attempts: number): number | undefined => {
+  const getLockoutPenalty = useCallback((attempts: number): number | undefined => {
     let penalty = attemptLockoutBaseRules[attempts]
     if (
       !penalty &&
@@ -152,9 +174,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       penalty = attemptLockoutThresholdRules.attemptPenalty
     }
     return penalty
-  }
+  }, [])
 
-  const loadWalletCredentials = async () => {
+  const loadWalletCredentials = useCallback(async () => {
     if (usage === PINEntryUsage.PINCheck) {
       return
     }
@@ -176,29 +198,33 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       setAuthenticated(true)
       gotoPostAuthScreens()
     }
-  }
+  }, [usage, getWalletCredentials, dispatch, setAuthenticated, gotoPostAuthScreens])
 
   useEffect(() => {
-    if (!store.preferences.useBiometry) {
-      return
-    }
+    const handle = InteractionManager.runAfterInteractions(async () => {
+      if (!store.preferences.useBiometry) {
+        return
+      }
 
-    isBiometricsActive().then((res) => {
-      if (!res) {
-        // biometry state has changed, display message and disable biometry
-        setBiometricsEnrollmentChange(true)
-        disableBiometrics()
-        dispatch({
-          type: DispatchAction.USE_BIOMETRY,
-          payload: [false],
-        })
+      try {
+        const active = await isBiometricsActive()
+        if (!active) {
+          // biometry state has changed, display message and disable biometry
+          setBiometricsEnrollmentChange(true)
+          await disableBiometrics()
+          dispatch({
+            type: DispatchAction.USE_BIOMETRY,
+            payload: [false],
+          })
+        }
+        await loadWalletCredentials()
+      } catch (error) {
+        logger.error(`error checking biometrics / loading credentials: ${JSON.stringify(error)}`)
       }
     })
 
-    loadWalletCredentials().catch(() => {
-      // TODO:(jl) Handle error
-    })
-  }, [])
+    return handle.cancel
+  }, [store.preferences.useBiometry, isBiometricsActive, disableBiometrics, dispatch, loadWalletCredentials, logger])
 
   useEffect(() => {
     // check number of login attempts and determine if app should apply lockout
@@ -212,61 +238,78 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     // display warning if we are one away from a lockout
     const displayWarning = !!getLockoutPenalty(attempts + 1)
     setDisplayLockoutWarning(displayWarning)
-  }, [store.loginAttempt.loginAttempts])
+  }, [store.loginAttempt.loginAttempts, getLockoutPenalty, store.loginAttempt.servedPenalty, attemptLockout])
 
   useEffect(() => {
     setInlineMessageField(undefined)
   }, [PIN])
 
-  const unlockWalletWithPIN = async (PIN: string) => {
-    try {
-      setContinueEnabled(false)
-      const result = await checkPIN(PIN)
+  const unlockWalletWithPIN = useCallback(
+    async (PIN: string) => {
+      try {
+        setContinueEnabled(false)
+        const result = await checkPIN(PIN)
 
-      if (store.loginAttempt.servedPenalty) {
-        // once the user starts entering their PIN, unMark them as having served their lockout penalty
-        unMarkServedPenalty()
-      }
-
-      if (!result) {
-        const newAttempt = store.loginAttempt.loginAttempts + 1
-        if (!getLockoutPenalty(newAttempt)) {
-          // skip displaying modals if we are going to lockout
-          setAlertModalVisible(true)
+        if (store.loginAttempt.servedPenalty) {
+          // once the user starts entering their PIN, unMark them as having served their lockout penalty
+          unMarkServedPenalty()
         }
 
-        setContinueEnabled(true)
+        if (!result) {
+          const newAttempt = store.loginAttempt.loginAttempts + 1
+          if (!getLockoutPenalty(newAttempt)) {
+            // skip displaying modals if we are going to lockout
+            setAlertModalVisible(true)
+          }
 
-        // log incorrect login attempts
+          setContinueEnabled(true)
+
+          // log incorrect login attempts
+          dispatch({
+            type: DispatchAction.ATTEMPT_UPDATED,
+            payload: [{ loginAttempts: newAttempt }],
+          })
+
+          return
+        }
+
+        // reset login attempts if login is successful
         dispatch({
           type: DispatchAction.ATTEMPT_UPDATED,
-          payload: [{ loginAttempts: newAttempt }],
+          payload: [{ loginAttempts: 0 }],
         })
 
-        return
+        // remove lockout notification if login is successful
+        dispatch({
+          type: DispatchAction.LOCKOUT_UPDATED,
+          payload: [{ displayNotification: false }],
+        })
+
+        setAuthenticated(true)
+        gotoPostAuthScreens()
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1041'),
+          t('Error.Message1041'),
+          (err as Error)?.message ?? err,
+          1041
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
+    },
+    [
+      checkPIN,
+      store.loginAttempt,
+      unMarkServedPenalty,
+      getLockoutPenalty,
+      dispatch,
+      setAuthenticated,
+      gotoPostAuthScreens,
+      t,
+    ]
+  )
 
-      // reset login attempts if login is successful
-      dispatch({
-        type: DispatchAction.ATTEMPT_UPDATED,
-        payload: [{ loginAttempts: 0 }],
-      })
-
-      // remove lockout notification if login is successful
-      dispatch({
-        type: DispatchAction.LOCKOUT_UPDATED,
-        payload: [{ displayNotification: false }],
-      })
-
-      setAuthenticated(true)
-      gotoPostAuthScreens()
-    } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1041'), t('Error.Message1041'), (err as Error)?.message ?? err, 1041)
-      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-    }
-  }
-
-  const clearAlertModal = () => {
+  const clearAlertModal = useCallback(() => {
     switch (usage) {
       case PINEntryUsage.PINCheck:
         setAlertModalVisible(false)
@@ -280,56 +323,69 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     }
 
     setAlertModalVisible(false)
-  }
+  }, [usage, setAuthenticated])
 
-  const verifyPIN = async (PIN: string) => {
-    try {
-      const credentials = await getWalletCredentials()
-      if (!credentials) {
-        throw new Error('Problem')
+  const verifyPIN = useCallback(
+    async (PIN: string) => {
+      try {
+        const credentials = await getWalletCredentials()
+        if (!credentials) {
+          throw new Error('Problem')
+        }
+
+        const key = await hashPIN(PIN, credentials.salt)
+
+        if (credentials.key !== key) {
+          setAlertModalVisible(true)
+
+          return
+        }
+
+        setAuthenticated(true)
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1042'),
+          t('Error.Message1042'),
+          (err as Error)?.message ?? err,
+          1042
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
+    },
+    [getWalletCredentials, setAuthenticated, t]
+  )
 
-      const key = await hashPIN(PIN, credentials.salt)
-
-      if (credentials.key !== key) {
-        setAlertModalVisible(true)
-
+  // both of the async functions called in this function are completely wrapped in trycatch
+  const onPINInputCompleted = useCallback(
+    async (PIN: string) => {
+      if (inlineMessagesEnabled && PIN.length < minPINLength) {
+        setInlineMessageField({
+          message: t('PINCreate.PINTooShort'),
+          inlineType: InlineErrorType.error,
+        })
         return
       }
 
-      setAuthenticated(true)
-    } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1042'), t('Error.Message1042'), (err as Error)?.message ?? err, 1042)
-      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-    }
-  }
+      setContinueEnabled(false)
 
-  // both of the async functions called in this function are completely wrapped in trycatch
-  const onPINInputCompleted = async (PIN: string) => {
-    if (inlineMessagesEnabled && PIN.length < minPINLength) {
-      setInlineMessageField({
-        message: t('PINCreate.PINTooShort'),
-        inlineType: InlineErrorType.error,
-      })
-      return
-    }
+      if (usage === PINEntryUsage.PINCheck) {
+        await verifyPIN(PIN)
+      }
 
-    setContinueEnabled(false)
+      if (usage === PINEntryUsage.WalletUnlock) {
+        await unlockWalletWithPIN(PIN)
+      }
+    },
+    [usage, verifyPIN, unlockWalletWithPIN]
+  )
 
-    if (usage === PINEntryUsage.PINCheck) {
-      await verifyPIN(PIN)
-    }
-
-    if (usage === PINEntryUsage.WalletUnlock) {
-      await unlockWalletWithPIN(PIN)
-    }
-  }
-
-  const displayHelpText = () => {
+  const displayHelpText = useCallback(() => {
     if (store.lockout.displayNotification) {
       return (
         <>
-          <Text style={style.helpText}>{t('PINEnter.LockedOut')}</Text>
+          <Text style={style.helpText}>
+            {t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })}
+          </Text>
           <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
         </>
       )
@@ -353,15 +409,30 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       )
     }
 
-    return <Text style={style.helpText}>{t('PINEnter.EnterPIN')}</Text>
-  }
+    return (
+      <>
+        <Text style={style.title}>{t('PINEnter.Title')}</Text>
+        <Text style={style.subTitle}>{t('PINEnter.SubText')}</Text>
+      </>
+    )
+  }, [
+    store.lockout.displayNotification,
+    style.helpText,
+    t,
+    biometricsEnrollmentChange,
+    biometricsErr,
+    style.subTitle,
+    style.title,
+    store.preferences.autoLockTime,
+  ])
 
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <Image source={Assets.img.logoSecondary.src} style={style.image} />
+          {/* <Image source={Assets.img.logoSecondary.src} style={style.image} /> */}
           {displayHelpText()}
+          <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)

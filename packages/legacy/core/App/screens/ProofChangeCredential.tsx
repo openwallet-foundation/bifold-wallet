@@ -4,7 +4,7 @@ import {
   AnonCredsRequestedPredicateMatch,
 } from '@credo-ts/anoncreds'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -58,10 +58,10 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
     },
   })
 
-  const getCredentialsFields = (): Fields => ({
+  const getCredentialsFields = useCallback((): Fields => ({
     ...retrievedCredentials?.attributes,
     ...retrievedCredentials?.predicates,
-  })
+  }), [retrievedCredentials])
 
   useEffect(() => {
     setLoading(true)
@@ -115,7 +115,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
-  }, [])
+  }, [credProofPromise, altCredentials, t])
 
   const listHeader = () => {
     return (

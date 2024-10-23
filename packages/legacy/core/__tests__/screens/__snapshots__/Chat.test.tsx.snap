@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Chat screen Renders correctly 1`] = `
+exports[`Chat Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
     Array [

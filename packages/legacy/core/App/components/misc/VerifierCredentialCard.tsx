@@ -139,13 +139,13 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay({
-        ...overlay,
+      setOverlay(o => ({
+        ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
-      })
+      }))
     })
-  }, [credDefId, schemaId])
+  }, [schemaId, credDefId, displayItems, i18n.language, bundleResolver])
 
   const CredentialCardLogo: React.FC = () => {
     return (
@@ -185,8 +185,8 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     const [showImageModal, setShowImageModal] = useState(false)
 
     useEffect(() => {
-      setValue(formatIfDate(item.format, value))
-    }, [])
+      setValue(v => formatIfDate(item.format, v))
+    }, [item.format])
 
     return (
       <View>

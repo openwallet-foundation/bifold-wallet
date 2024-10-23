@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TourBox Renders properly with defaults 1`] = `
+exports[`TourOverlay Component Renders properly with defaults 1`] = `
 <View
   style={
     Object {

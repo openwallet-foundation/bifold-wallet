@@ -62,7 +62,7 @@ describe('displays a proof request screen', () => {
    * AND there is a "Decline" Button
    * AND there is a "Share" Button
    */
-  describe('with a proof request', () => {
+  describe('ProofRequest Screen, W3C', () => {
     const testEmail = 'test@email.com'
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'
@@ -113,14 +113,14 @@ describe('displays a proof request screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
       useCredentials.mockReturnValue({ records: [credExRecord] })
-      // @ts-ignore-next-line
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testProofRequest)
     })
 
     test('loading screen displays', async () => {
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -129,7 +129,7 @@ describe('displays a proof request screen', () => {
       })
 
       const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
-      const recordLoading = tree.getByTestId(testIdWithKey('RecordLoading'))
+      const recordLoading = tree.getByTestId(testIdWithKey('ProofRequestLoading'))
 
       expect(recordLoading).not.toBeNull()
       expect(cancelButton).not.toBeNull()
@@ -139,22 +139,22 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with all claims available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: { presentationExchange: difPexCredentialsForRequest },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -292,24 +292,24 @@ describe('displays a proof request screen', () => {
         },
       }
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: { presentationExchange: difPexCredentialsForRequest2 },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(testRetrievedCredentials2.proofFormats.indy)
 
       const navigation = useNavigation()
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={navigation as any} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -353,17 +353,17 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with one or more claims not available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: { presentationExchange: difPexCredentialsForRequest },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
       const credentialsForRequest: AnonCredsCredentialsForProofRequest = {
@@ -375,12 +375,12 @@ describe('displays a proof request screen', () => {
         predicates: {},
       }
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(credentialsForRequest)
 
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -397,12 +397,12 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with one or more predicates not satisfied', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue({
         request: { presentationExchange: { presentation_definition: testPresentationDefinition1 } },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           presentationExchange: {
@@ -451,7 +451,7 @@ describe('displays a proof request screen', () => {
         },
       })
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue({
         attributes: anonCredsCredentialsForProofRequest.attributes,
         predicates: {
@@ -471,7 +471,7 @@ describe('displays a proof request screen', () => {
 
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header Right Home Component Renders correctly 1`] = `
+exports[`HeaderRightHome Component Renders correctly 1`] = `
 <View
   accessibilityLabel="Global.Home"
   accessibilityRole="button"

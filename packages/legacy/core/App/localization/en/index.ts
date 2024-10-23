@@ -236,6 +236,8 @@ const translation = {
     "EnterYourCurrentPIN": "Enter your current PIN"
   },
   "PINEnter": {
+    "Title": "Welcome back",
+    "SubText": "Enter your wallet PIN to sign-in",
     "EnterPIN": "Enter your wallet PIN",
     "Unlock": "Unlock",
     "Or": "Or",
@@ -246,7 +248,7 @@ const translation = {
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
     "BiometricsError": "Biometrics were not successful.",
     "BiometricsErrorEnterPIN": "Please enter your wallet PIN.",
-    "LockedOut": "You locked out after 5 minutes of inactivity.",
+    "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity.",
     "ReEnterPIN": "Re-enter your wallet PIN",
     "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
     "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
@@ -536,6 +538,15 @@ const translation = {
     "UseConnectionInviterCapability": "Use connection inviter capability?",
     "OpenContact": "Open Contact",
   },
+  "LoadingPlaceholder": {
+    "Connecting": "Connecting...",
+    "SlowLoadingTitle": "This is slower than usual",
+    "SlowLoadingBody": "Check your internet connection and try again.",
+    "CredentialOffer": "Loading credential offer...",
+    "YourOffer": "You're being offered a credential",
+    "ProofRequest": "Loading proof request...",
+    "YourRequest": "You're being requested for proof",
+  },
   "ConnectionAlert": {
     "AddedContacts": "Added to Contacts",
     "WhatAreContacts": "What are Contacts?",
@@ -662,6 +673,13 @@ const translation = {
     "MoreInformation": "More information",
     "Developer": "Developer options",
     "Notifications": "Notifications",
+    "AutoLockTime": "Auto lock time",
+  },
+  "AutoLockTimes": {
+    "FiveMinutes": "Five Minutes",
+    "ThreeMinutes": "Three Minutes",
+    "OneMinute": "One Minute",
+    "Never": "Never",
   },
   "TabStack": {
     "Home": "Notifications",
@@ -762,8 +780,6 @@ const translation = {
   "NetInfo": {
     "NoInternetConnectionTitle": "No internet connection",
     "NoInternetConnectionMessage": "You're unable to access services using Bifold or receive credentials until you're back online.\n\nPlease check your internet connection.",
-    "LedgerConnectivityIssueTitle": "Wallet Services",
-    "LedgerConnectivityIssueMessage": "A firewall may be preventing you from connecting to wallet related services.",
   },
   "Onboarding": {
     "SkipA11y": "Skip introduction to Aries Bifold",

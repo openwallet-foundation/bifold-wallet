@@ -4,7 +4,7 @@ import React from 'react'
 
 import CredentialActionFooter from '../../App/components/misc/CredentialCard11ActionFooter'
 
-describe('CredentialCard11ActionFooter component', () => {
+describe('CredentialCard11ActionFooter Component', () => {
   test('Matches snapshot', async () => {
     const tree = render(<CredentialActionFooter testID={'test'} text={'sample'} onPress={jest.fn()} />)
 

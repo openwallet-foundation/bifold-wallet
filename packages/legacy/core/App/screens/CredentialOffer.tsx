@@ -4,8 +4,7 @@ import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
-import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -27,7 +26,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { NotificationStackParams, Screens, TabStacks } from '../types/navigators'
+import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
@@ -39,20 +38,23 @@ import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
 
-type CredentialOfferProps = StackScreenProps<NotificationStackParams, Screens.CredentialOffer>
+type CredentialOfferProps = {
+  navigation: any
+  credentialId: string
+}
 
-const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) => {
-  if (!route?.params) {
-    throw new Error('CredentialOffer route prams were not set properly')
-  }
-
-  const { credentialId } = route.params
+const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentialId }) => {
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
-  const { assertConnectedNetwork } = useNetwork()
-  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY])
+  const { assertNetworkConnected } = useNetwork()
+  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried] = useServices([
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+  ])
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
@@ -63,7 +65,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
   const [store, dispatch] = useStore()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation.goalCode
+  const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -88,33 +90,31 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
         payload: [true],
       })
     }
-  }, [screenIsFocused])
+  }, [
+    enableToursConfig,
+    store.tours.enableTours,
+    store.tours.seenCredentialOfferTour,
+    screenIsFocused,
+    start,
+    dispatch,
+  ])
 
   useEffect(() => {
-    if (!agent) {
+    if (!agent || !credential) {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,
         new BifoldError(t('Error.Title1035'), t('Error.Message1035'), t('CredentialOffer.CredentialNotFound'), 1035)
       )
     }
-  }, [])
+  }, [agent, credential, t])
 
   useEffect(() => {
-    if (!credential) {
-      DeviceEventEmitter.emit(
-        EventTypes.ERROR_ADDED,
-        new BifoldError(t('Error.Title1035'), t('Error.Message1035'), t('CredentialOffer.CredentialNotFound'), 1035)
-      )
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!(credential && isValidAnonCredsCredential(credential))) {
+    if (!(credential && isValidAnonCredsCredential(credential) && agent)) {
       return
     }
 
     const updateCredentialPreview = async () => {
-      const { ...formatData } = await agent?.credentials.getFormatData(credential.id)
+      const { ...formatData } = await agent.credentials.getFormatData(credential.id)
       const { offer, offerAttributes } = formatData
       const offerData = offer?.anoncreds ?? offer?.indy
 
@@ -148,14 +148,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields }) => {
-        setOverlay({ ...overlay, presentationFields: (fields as Attribute[]).filter((field) => field.value) })
+        setOverlay((o) => ({ ...o, presentationFields: (fields as Attribute[]).filter((field) => field.value) }))
         setLoading(false)
       })
-  }, [credential])
+  }, [credential, agent, bundleResolver, i18n.language])
 
-  const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+  const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
-  const logHistoryRecord = async () => {
+  const logHistoryRecord = useCallback(async () => {
     try {
       if (!(agent && store.preferences.useHistoryCapability)) {
         logger.trace(
@@ -185,10 +185,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
     } catch (err: unknown) {
       logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }
-  const handleAcceptTouched = async () => {
+  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, credential, credentialId])
+
+  const handleAcceptTouched = useCallback(async () => {
     try {
-      if (!(agent && credential && assertConnectedNetwork())) {
+      if (!(agent && credential && assertNetworkConnected())) {
         return
       }
 
@@ -201,9 +202,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }
+  }, [agent, credential, assertNetworkConnected, logHistoryRecord, t])
 
-  const handleDeclineTouched = async () => {
+  const handleDeclineTouched = useCallback(async () => {
     try {
       if (agent && credential) {
         await agent.credentials.declineOffer(credential.id)
@@ -219,7 +220,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, route }) 
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }
+  }, [agent, credential, t, toggleDeclineModalVisible, navigation])
 
   const header = () => {
     return (

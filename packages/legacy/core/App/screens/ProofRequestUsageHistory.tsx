@@ -119,7 +119,11 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
 }
 
 const ProofRequestUsageHistory: React.FC<ProofRequestUsageHistoryProps> = ({ route, navigation }) => {
-  const { templateId } = route?.params
+  if (!route?.params) {
+    throw new Error('ProofRequestUsageHistory route params were not set properly')
+  }
+
+  const { templateId } = route.params
 
   const style = StyleSheet.create({
     container: {

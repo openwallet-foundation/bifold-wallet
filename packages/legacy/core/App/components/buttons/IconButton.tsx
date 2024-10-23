@@ -12,7 +12,7 @@ export enum ButtonLocation {
   Right,
 }
 
-interface HeaderButtonProps {
+interface IconButtonProps {
   buttonLocation: ButtonLocation
   accessibilityLabel: string
   testID: string
@@ -22,7 +22,7 @@ interface HeaderButtonProps {
   iconTintColor?: string
 }
 
-const HeaderButton: React.FC<HeaderButtonProps> = ({
+const IconButton: React.FC<IconButtonProps> = ({
   buttonLocation,
   icon,
   text,
@@ -50,7 +50,7 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
 
   const myIcon = () => <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPallet.brand.headerIcon} />
 
-  const myText = () => (text ? <Text style={[style.title]}>{text}</Text> : null)
+  const myText = () => (text ? <Text style={style.title}>{text}</Text> : null)
 
   const layoutForButtonLocation = (buttonLocation: ButtonLocation) => {
     switch (buttonLocation) {
@@ -83,4 +83,4 @@ const HeaderButton: React.FC<HeaderButtonProps> = ({
   )
 }
 
-export default HeaderButton
+export default IconButton

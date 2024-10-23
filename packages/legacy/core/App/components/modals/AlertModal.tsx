@@ -27,7 +27,7 @@ const AlertModal: React.FC<AlertModalProps> = ({ title, message, submit }) => {
   })
 
   return (
-    <SafeAreaView style={[styles.container]}>
+    <SafeAreaView style={styles.container}>
       <PopupModal
         notificationType={InfoBoxType.Info}
         title={title}

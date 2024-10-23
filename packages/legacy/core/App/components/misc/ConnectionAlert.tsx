@@ -94,7 +94,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
             <View>
               <Text style={styles.modalText}>{t('ConnectionAlert.PopupIntro')}</Text>
               <UnorderedList
-                UnorderedListItems={[
+                unorderedListItems={[
                   t('ConnectionAlert.PopupPoint1'),
                   t('ConnectionAlert.PopupPoint2'),
                   t('ConnectionAlert.PopupPoint3'),

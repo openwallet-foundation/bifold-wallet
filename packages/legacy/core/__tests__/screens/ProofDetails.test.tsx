@@ -65,7 +65,6 @@ const proof: AnonCredsProof = {
     },
     self_attested_attrs: {},
     unrevealed_attrs: {},
-    // @ts-ignore
     predicates: {},
   },
   identifiers: [
@@ -95,7 +94,7 @@ const requestPresentationMessage = new V1RequestPresentationMessage({
 
 const data = verifier.parseAnonCredsProof(proof_request, proof)
 
-describe('ProofDetails Component', () => {
+describe('ProofDetails Screen', () => {
   afterEach(() => {
     cleanup()
   })
@@ -137,9 +136,8 @@ describe('ProofDetails Component', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testVerifiedProofRequest)
-      // @ts-ignore
       jest.spyOn(verifier, 'getProofData').mockReturnValue(Promise.resolve(data))
     })
 
@@ -203,7 +201,7 @@ describe('ProofDetails Component', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testUnverifiedProofRequest)
     })
 

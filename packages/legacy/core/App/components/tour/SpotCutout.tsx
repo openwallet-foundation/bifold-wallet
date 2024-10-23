@@ -45,7 +45,7 @@ export const SpotCutout = () => {
     }
 
     transition().start()
-  }, [spot.height, spot.width, spot.x, spot.y])
+  }, [spot])
 
   if ([spot.height, spot.width].every((value) => value <= 0)) {
     return null

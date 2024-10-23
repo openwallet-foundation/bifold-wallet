@@ -1,7 +1,7 @@
 import { CredentialState } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -22,9 +22,10 @@ enum DeliveryStatus {
 export interface CredentialOfferAcceptProps {
   visible: boolean
   credentialId: string
+  confirmationOnly?: boolean
 }
 
-const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, credentialId }) => {
+const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, credentialId, confirmationOnly }) => {
   const { t } = useTranslation()
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [credentialDeliveryStatus, setCredentialDeliveryStatus] = useState<DeliveryStatus>(DeliveryStatus.Pending)
@@ -62,24 +63,34 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     },
   })
 
-  if (!credential) {
+  if (!credential && !confirmationOnly) {
     throw new Error('Unable to fetch credential from Credo')
   }
 
-  const onBackToHomeTouched = () => {
+  const onBackToHomeTouched = useCallback(() => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
+  }, [navigation])
 
-  const onDoneTouched = () => {
+  const onDoneTouched = useCallback(() => {
     navigation.getParent()?.navigate(TabStacks.CredentialStack, { screen: Screens.Credentials })
-  }
+  }, [navigation])
 
   useEffect(() => {
+    if (!credential) {
+      return
+    }
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
     }
-  }, [credential])
+  }, [credential, timer])
+
+  useEffect(() => {
+    if (confirmationOnly) {
+      timer && clearTimeout(timer)
+      setCredentialDeliveryStatus(DeliveryStatus.Completed)
+    }
+  }, [confirmationOnly, timer])
 
   useEffect(() => {
     if (timerDidFire || credentialDeliveryStatus !== DeliveryStatus.Pending || !visible) {
@@ -96,19 +107,19 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     return () => {
       timer && clearTimeout(timer)
     }
-  }, [visible])
+  }, [timerDidFire, credentialDeliveryStatus, visible, connTimerDelay])
 
   useEffect(() => {
     if (shouldShowDelayMessage && credentialDeliveryStatus !== DeliveryStatus.Completed) {
       AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
     }
-  }, [shouldShowDelayMessage])
+  }, [shouldShowDelayMessage, credentialDeliveryStatus, t])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
-        <ScrollView style={[styles.container]}>
-          <View style={[styles.messageContainer]}>
+        <ScrollView style={styles.container}>
+          <View style={styles.messageContainer}>
             {credentialDeliveryStatus === DeliveryStatus.Pending && (
               <Text
                 style={[ListItems.credentialOfferTitle, styles.messageText]}
@@ -143,7 +154,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           )}
         </ScrollView>
 
-        <View style={[styles.controlsContainer]}>
+        <View style={styles.controlsContainer}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
             <View>
               <Button

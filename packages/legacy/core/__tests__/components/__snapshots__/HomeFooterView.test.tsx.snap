@@ -12,45 +12,12 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-            "marginHorizontal": 25,
-            "marginTop": 35,
-          },
-        ]
-      }
-    >
-      <Text
-        adjustsFontSizeToFit={true}
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 38,
-              "fontWeight": "bold",
-            },
-            Object {
-              "marginBottom": 20,
-              "marginTop": 25,
-            },
-          ]
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginHorizontal": 25,
+          "marginTop": 35,
         }
-      >
-        Home.Welcome
-      </Text>
-    </View>
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-            "marginHorizontal": 25,
-            "marginTop": 35,
-          },
-        ]
       }
     >
       <Text
@@ -87,14 +54,12 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-            "marginHorizontal": 25,
-            "marginTop": 35,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginHorizontal": 25,
+          "marginTop": 35,
+        }
       }
     >
       <Text

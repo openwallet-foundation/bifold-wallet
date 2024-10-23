@@ -27,10 +27,10 @@ const connectionPath = path.join(__dirname, '../fixtures/connection-v1.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
 connection.createdAt = new Date('20230303')
 
-describe('Contact Details Screen', () => {
+describe('ContactDetails Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    // @ts-ignore-next-line
+    // @ts-expect-error useConnectionById will be replaced with a mock which does have this method
     useConnectionById.mockReturnValue(connection)
   })
 

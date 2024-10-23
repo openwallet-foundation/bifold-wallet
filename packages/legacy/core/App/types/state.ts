@@ -28,9 +28,11 @@ export interface Preferences {
   walletName: string
   acceptDevCredentials: boolean
   useDataRetention: boolean
+  disableDataRetentionOption?: boolean
   preventAutoLock: boolean
   enableShareableLink: boolean
   alternateContactNames: Record<string, string>
+  autoLockTime: number
 }
 
 export interface Tours {
@@ -67,4 +69,13 @@ export interface State {
   deepLink?: string
   migration: Migration
   loading: boolean
+}
+
+export type PersistentState = {
+  MigrationState: Migration
+  OnboardingState: Onboarding
+  PreferencesState: Preferences
+  historySettingsOption: boolean // TODO: Migrate to proper name (Caps)
+  language: string // TODO: Migrate to proper name (Caps)
+  Lockout: string
 }

@@ -5,7 +5,7 @@ import RecordDateIntField from '../../App/components/record/RecordDateIntField'
 import { hiddenFieldValue } from '../../App/constants'
 import { testIdWithKey } from '../../App/utils/testable'
 
-describe('Record DateInt Field Component', () => {
+describe('RecordDateIntField Component', () => {
   test('Invalid dateInt render field value as is', async () => {
     const field = {
       name: 'Test',

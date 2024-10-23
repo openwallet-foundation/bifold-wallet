@@ -1,6 +1,6 @@
 import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
@@ -70,7 +70,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [{ PINSecurity }, Button, inlineMessagesEnabled] = useServices([
+  const [PINCreateHeader, { PINSecurity }, Button, inlineMessagesEnabled] = useServices([
+    TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
     TOKENS.ENABLE_INLINE_ERRORS,
@@ -93,83 +94,74 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     controlsContainer: {},
   })
 
-  const passcodeCreate = async (PIN: string) => {
-    try {
-      setContinueEnabled(false)
-      await setWalletPIN(PIN)
-      // This will trigger initAgent
-      setAuthenticated(true)
+  const passcodeCreate = useCallback(
+    async (PIN: string) => {
+      try {
+        setContinueEnabled(false)
+        await setWalletPIN(PIN)
+        // This will trigger initAgent
+        setAuthenticated(true)
 
-      dispatch({
-        type: DispatchAction.DID_CREATE_PIN,
-      })
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.UseBiometry }],
+        dispatch({
+          type: DispatchAction.DID_CREATE_PIN,
         })
-      )
-    } catch (err: unknown) {
-      const error = new BifoldError(t('Error.Title1040'), t('Error.Message1040'), (err as Error)?.message ?? err, 1040)
-      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-    }
-  }
-
-  const displayModalMessage = (title: string, message: string) => {
-    setModalState({
-      visible: true,
-      title: title,
-      message: message,
-    })
-  }
-
-  const attentionMessage = (title: string, message: string, pinOne: boolean) => {
-    if (inlineMessagesEnabled) {
-      if (pinOne) {
-        setInlineMessageField1({
-          message: message,
-          inlineType: InlineErrorType.error,
-        })
-      } else {
-        setInlineMessageField2({
-          message: message,
-          inlineType: InlineErrorType.error,
-        })
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: Screens.UseBiometry }],
+          })
+        )
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1040'),
+          t('Error.Message1040'),
+          (err as Error)?.message ?? err,
+          1040
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
-    } else {
-      displayModalMessage(title, message)
-    }
-  }
+    },
+    [setWalletPIN, setAuthenticated, dispatch, navigation, t]
+  )
 
-  const validatePINEntry = (PINOne: string, PINTwo: string): boolean => {
-    for (const validation of PINOneValidations) {
-      if (validation.isInvalid) {
-        attentionMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.${validation.errorName}`), true)
+  const validatePINEntry = useCallback(
+    (PINOne: string, PINTwo: string): boolean => {
+      for (const validation of PINOneValidations) {
+        if (validation.isInvalid) {
+          attentionMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.${validation.errorName}`), true)
+          return false
+        }
+      }
+      if (PINOne !== PINTwo) {
+        attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
         return false
       }
-    }
-    if (PINOne !== PINTwo) {
-      attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
-      return false
-    }
-    return true
-  }
+      return true
+    },
+    [PINOneValidations, t]
+  )
 
-  const checkOldPIN = async (PIN: string): Promise<boolean> => {
-    const valid = await checkPIN(PIN)
-    if (!valid) {
-      displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
-    }
-    return valid
-  }
+  const checkOldPIN = useCallback(
+    async (PIN: string): Promise<boolean> => {
+      const valid = await checkPIN(PIN)
+      if (!valid) {
+        displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
+      }
+      return valid
+    },
+    [checkPIN, t]
+  )
 
-  const confirmEntry = async (PINOne: string, PINTwo: string) => {
-    if (!validatePINEntry(PINOne, PINTwo)) {
-      return
-    }
+  const confirmEntry = useCallback(
+    async (PINOne: string, PINTwo: string) => {
+      if (!validatePINEntry(PINOne, PINTwo)) {
+        return
+      }
 
-    await passcodeCreate(PINOne)
-  }
+      await passcodeCreate(PINOne)
+    },
+    [validatePINEntry, passcodeCreate]
+  )
 
   const handleCreatePinTap = async () => {
     console.log('ff')
@@ -211,7 +203,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     if (updatePin) {
       setContinueEnabled(PIN !== '' && PINTwo !== '' && PINOld !== '')
     }
-  }, [PINOld, PIN, PINTwo])
+  }, [updatePin, PIN, PINTwo, PINOld])
 
   useEffect(() => {
     setInlineMessageField1(undefined)
@@ -222,12 +214,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-            <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>
-              {updatePin ? t('PINCreate.RememberChangePIN') : t('PINCreate.RememberPIN')}
-            </Text>{' '}
-            {t('PINCreate.PINDisclaimer')}
-          </Text>
+          <PINCreateHeader updatePin={updatePin} />
           {updatePin && (
             <PINInput
               label={t('PINCreate.EnterOldPINTitle')}

@@ -1,7 +1,6 @@
 import { BaseLogger, Agent } from '@credo-ts/core'
 import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
@@ -32,6 +31,7 @@ import {
   State,
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
+  PersistentState,
 } from './types/state'
 import OnboardingPages from './screens/OnboardingPages'
 import UseBiometry from './screens/UseBiometry'
@@ -40,6 +40,10 @@ import HomeHeaderView from './components/views/HomeHeaderView'
 import HomeFooterView from './components/views/HomeFooterView'
 import EmptyList from './components/misc/EmptyList'
 import Record from './components/record/Record'
+import NotificationListItem from './components/listItems/NotificationListItem'
+import NoNewUpdates from './components/misc/NoNewUpdates'
+import PINCreateHeader from './components/misc/PINCreateHeader'
+import { PersistentStorage } from './services/storage'
 
 export const defaultConfig = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -57,10 +61,12 @@ export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
   private log?: BaseLogger
+  private storage: PersistentStorage<PersistentState>
 
   public constructor(container: DependencyContainer, log?: BaseLogger) {
     this._container = container
     this.log = log
+    this.storage = new PersistentStorage(log)
   }
 
   public get container(): DependencyContainer {
@@ -75,6 +81,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
     this._container.registerInstance(TOKENS.SCREEN_SPLASH, Splash)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_PAGES, OnboardingPages)
+    this._container.registerInstance(TOKENS.COMPONENT_PIN_CREATE_HEADER, PINCreateHeader)
     this._container.registerInstance(TOKENS.SCREEN_USE_BIOMETRY, UseBiometry)
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
@@ -82,6 +89,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
+    this._container.registerInstance(TOKENS.HISTORY_ENABLED, false)
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_ONBOARDING_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
@@ -89,11 +97,16 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
-    this._container.registerInstance(TOKENS.NOTIFICATIONS, { useNotifications })
+    this._container.registerInstance(TOKENS.NOTIFICATIONS, {
+      useNotifications,
+    })
+    this._container.registerInstance(TOKENS.NOTIFICATIONS_LIST_ITEM, NotificationListItem)
     this._container.registerInstance(TOKENS.CONFIG, defaultConfig)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_FOOTER, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)
+    this._container.registerInstance(TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST, NoNewUpdates)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
@@ -115,12 +128,13 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.FN_LOAD_HISTORY, (agent: Agent<any>): IHistoryManager => {
       return new HistoryManager(agent)
     })
+    this._container.registerInstance(TOKENS.CUSTOM_NAV_STACK_1, false)
     this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
-        const data = await AsyncStorage.getItem(key)
+        const data = await this.storage.getValueForKey(key)
         if (data) {
-          const dataAsJSON = JSON.parse(data) as Type
-          updateVal(dataAsJSON)
+          // @ts-expect-error Fix complicated type error
+          updateVal(data)
         }
       }
 

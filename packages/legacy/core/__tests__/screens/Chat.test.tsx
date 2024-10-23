@@ -70,20 +70,20 @@ seenMessage.metadata = {
 
 const testBasicMessages: BasicMessageRecord[] = [unseenMessage, seenMessage]
 
-describe('Chat screen', () => {
+describe('Chat Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    // @ts-ignore
+    // @ts-expect-error useConnectionById will be replaced with a mock which will have this method
     useConnectionById.mockReturnValue(connection)
-    // @ts-ignore
+    // @ts-expect-error useBasicMessagesByConnectionId will be replaced with a mock which will have this method
     useBasicMessagesByConnectionId.mockReturnValue(testBasicMessages)
   })
 
   test('Renders correctly', async () => {
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({
       silentAssertConnectedNetwork: () => true,
-      assertConnectedNetwork: () => true,
-      assertLedgerConnectivity: jest.fn(),
+      assertNetworkConnected: () => true,
+      assertNetworkReachable: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
     }))
@@ -101,14 +101,14 @@ describe('Chat screen', () => {
 describe('Chat screen with messages', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    // @ts-ignore
+    // @ts-expect-error useConnectionById will be replaced with a mock which will have this method
     useConnectionById.mockReturnValue(connection)
-    // @ts-ignore
+    // @ts-expect-error useBasicMessagesByConnectionId will be replaced with a mock which will have this method
     useBasicMessagesByConnectionId.mockReturnValue(testBasicMessages)
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({
       silentAssertConnectedNetwork: () => true,
-      assertConnectedNetwork: () => true,
-      assertLedgerConnectivity: jest.fn(),
+      assertNetworkConnected: () => true,
+      assertNetworkReachable: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
     }))

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Record Binary Field Component Base64 render field value as image 1`] = `
+exports[`RecordBinaryField Component Base64 render field value as image 1`] = `
 <View>
   <View
     accessibilityLabel="Record.Zoom"

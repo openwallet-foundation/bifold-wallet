@@ -145,13 +145,13 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay({
-        ...overlay,
+      setOverlay(o => ({
+        ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as LegacyBrandingOverlay,
-      })
+      }))
     })
-  }, [])
+  }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])
 
   useEffect(() => {
     setIsRevoked(credential.revocationNotification !== undefined)
@@ -159,8 +159,8 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
 
   const CredentialCardHeader: React.FC = () => {
     return (
-      <View style={[styles.outerHeaderContainer]}>
-        <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
+      <View style={styles.outerHeaderContainer}>
+        <View testID={testIdWithKey('CredentialCardHeader')} style={styles.innerHeaderContainer}>
           {overlay?.brandingOverlay?.header?.imageSource && (
             <Image
               source={toImageSource(overlay?.brandingOverlay?.header?.imageSource)}

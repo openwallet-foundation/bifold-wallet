@@ -58,17 +58,17 @@ const templates = [
   },
 ]
 
-// @ts-ignore
+// @ts-expect-error axios create will be replaced with a mock which does have this method
 axios.create.mockImplementation(() => ({ get: () => Promise.resolve({ data: templates }) }))
-// @ts-ignore
+// @ts-expect-error useTemplates will be replaced with a mock which does have this method
 useTemplates.mockImplementation(() => templates)
-// @ts-ignore
+// @ts-expect-error useTemplate will be replaced with a mock which does have this method
 useTemplate.mockImplementation(() => templates[0])
 const templateId = templates[0].id
 const connectionId = 'test'
 const navigation = testUseNavigation()
 
-describe('ProofRequestDetails Component', () => {
+describe('ProofRequestDetails Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -83,9 +83,14 @@ describe('ProofRequestDetails Component', () => {
 
   test('Proof bundle resolver works correctly', async () => {
     const context = new MainContainer(container.createChildContainer()).init()
-    const wrapper = ({ children }: PropsWithChildren ) => <ContainerProvider value={context}>{children}</ContainerProvider>
-    const { result }  = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
+    // const context = useMemo(() => new MainContainer(container.createChildContainer()).init(), [])
+
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <ContainerProvider value={context}>{children}</ContainerProvider>
+    )
+    const { result } = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
     const bundle = await result.current.resolve(true)
+
     expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions).toHaveLength(2)
   })
 
@@ -98,7 +103,7 @@ describe('ProofRequestDetails Component', () => {
 
   test('Renders correctly', async () => {
     const tree = renderView({ templateId })
-    await act(async () => { })
+    await act(async () => {})
     expect(tree).toMatchSnapshot()
   })
 

@@ -30,8 +30,8 @@ const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
     },
   })
   return (
-    <View style={[style.container]}>
-      <View style={[style.accentBox]} />
+    <View style={style.container}>
+      <View style={style.accentBox} />
       <Text style={[style.headerText, { paddingTop: offset, paddingBottom: offset }]}>{children}</Text>
     </View>
   )

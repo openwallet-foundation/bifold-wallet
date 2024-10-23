@@ -12,10 +12,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
-import { EventTypes, walletTimeout } from '../constants'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
-import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -37,19 +36,16 @@ import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
-  const [state, dispatch] = useStore()
-  const { removeSavedWalletSecret } = useAuth()
+  const [store, dispatch] = useStore()
   const { agent } = useAgent()
   const appState = useRef(AppState.currentState)
-  const [backgroundTime, setBackgroundTime] = useState<number | undefined>(undefined)
-  const [prevAppStateVisible, setPrevAppStateVisible] = useState<string>('')
-  const [appStateVisible, setAppStateVisible] = useState<string>('')
   const [inBackground, setInBackground] = useState<boolean>(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, CustomNavStack1, loadState] =
+    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.CUSTOM_NAV_STACK_1, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 
@@ -60,47 +56,22 @@ const RootStack: React.FC = () => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => { })
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
-  }, [declinedProofs, state.preferences.useDataRetention])
-
-  const lockoutUser = async () => {
-    if (agent && state.authentication.didAuthenticate) {
-      // make sure agent is shutdown so wallet isn't still open
-      removeSavedWalletSecret()
-      try {
-        await agent.wallet.close()
-        await agent.shutdown()
-      } catch (error) {
-        logger?.error(`Error shutting down agent: ${error}`)
-      }
-      dispatch({
-        type: DispatchAction.DID_AUTHENTICATE,
-        payload: [{ didAuthenticate: false }],
-      })
-      dispatch({
-        type: DispatchAction.LOCKOUT_UPDATED,
-        payload: [{ displayNotification: true }],
-      })
-    }
-  }
+  }, [declinedProofs, agent, store.preferences.useDataRetention])
 
   useEffect(() => {
     loadState(dispatch)
       .then(() => {
         dispatch({ type: DispatchAction.STATE_LOADED })
       })
-      .catch((err) => {
-        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), err.message, 1001)
+      .catch((err: unknown) => {
+        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
-  }, [])
-
-  useEffect(() => {
-    logger.info(`Deeplink state (from rootstack) ${state.deepLink}`)
-  }, [state.deepLink])
+  }, [dispatch, loadState, t])
 
   // handle deeplink events
   useEffect(() => {
@@ -146,8 +117,8 @@ const RootStack: React.FC = () => {
       return
     }
 
-    if (agent?.isInitialized && state.deepLink && state.authentication.didAuthenticate) {
-      handleDeepLink(state.deepLink)
+    if (agent?.isInitialized && store.deepLink && store.authentication.didAuthenticate) {
+      handleDeepLink(store.deepLink)
     }
   }, [
     dispatch,
@@ -159,58 +130,58 @@ const RootStack: React.FC = () => {
     t,
     inBackground,
     agent?.isInitialized,
-    state.deepLink,
-    state.authentication.didAuthenticate,
+    store.deepLink,
+    store.authentication.didAuthenticate,
   ])
+
+  useEffect(() => {
+    if (!agent) {
+      return
+    }
+
+    if (inBackground) {
+      agent.mediationRecipient
+        .stopMessagePickup()
+        .then(() => {
+          logger.info('Stopped agent message pickup')
+        })
+        .catch((err) => {
+          logger.error(`Error stopping agent message pickup, ${err}`)
+        })
+
+      return
+    }
+
+    if (!inBackground) {
+      agent.mediationRecipient
+        .initiateMessagePickup()
+        .then(() => {
+          logger.info('Resuming agent message pickup')
+        })
+        .catch((err) => {
+          logger.error(`Error resuming agent message pickup, ${err}`)
+        })
+
+      return
+    }
+  }, [agent, inBackground, logger])
 
   useEffect(() => {
     AppState.addEventListener('change', (nextAppState) => {
       if (appState.current === 'active' && ['inactive', 'background'].includes(nextAppState)) {
-        //update time that app gets put in background
+        if (nextAppState === 'inactive') {
+          // on iOS this happens when any OS prompt is shown. We
+          // don't want to lock the user out in this case or preform
+          // background tasks.
+          return
+        }
+
         setInBackground(true)
-        setBackgroundTime(Date.now())
       }
 
-      setPrevAppStateVisible(appState.current)
       appState.current = nextAppState
-      setAppStateVisible(appState.current)
     })
   }, [])
-
-  useEffect(() => {
-    const lockoutCheck = async () => {
-      //lock user out after 5 minutes
-      if (
-        !state.preferences.preventAutoLock &&
-        walletTimeout &&
-        backgroundTime &&
-        Date.now() - backgroundTime > walletTimeout
-      ) {
-        await lockoutUser()
-        return true
-      }
-
-      return false
-    }
-
-    if (appStateVisible === 'active' && ['inactive', 'background'].includes(prevAppStateVisible) && backgroundTime) {
-      // prevents the user from being locked out during metro reloading
-      setPrevAppStateVisible(appStateVisible)
-
-      lockoutCheck().then((lockoutInProgress) => {
-        if (lockoutInProgress) {
-          const unsubscribe = navigation.addListener('state', (): void => {
-            setInBackground(false)
-            unsubscribe()
-          })
-        } else {
-          setInBackground(false)
-        }
-      })
-    }
-  }, [appStateVisible, prevAppStateVisible, backgroundTime])
-
-  // auth stack should now be in the OnboardingStack
 
   const mainStack = () => {
     const Stack = createStackNavigator()
@@ -233,7 +204,7 @@ const RootStack: React.FC = () => {
             headerShown: true,
             title: t('Screens.CredentialOffer'),
             headerLeft: () => (
-              <HeaderButton
+              <IconButton
                 buttonLocation={ButtonLocation.Left}
                 accessibilityLabel={t('Global.Back')}
                 testID={testIdWithKey('BackButton')}
@@ -272,15 +243,18 @@ const RootStack: React.FC = () => {
             cardStyleInterpolator: forFade,
           }}
         />
+        {CustomNavStack1 ? (
+          <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} />
+        ) : null}
       </Stack.Navigator>
     )
   }
 
   if (
-    ((state.onboarding.onboardingVersion !== 0 && state.onboarding.didCompleteOnboarding) ||
-      (state.onboarding.onboardingVersion === 0 && state.onboarding.didConsiderBiometry)) &&
-    state.authentication.didAuthenticate &&
-    state.onboarding.postAuthScreens.length === 0
+    ((store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
+      (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry)) &&
+    store.authentication.didAuthenticate &&
+    store.onboarding.postAuthScreens.length === 0
   ) {
     return mainStack()
   }

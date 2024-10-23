@@ -68,13 +68,13 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
     if (proof.state === ProofState.Done || proof.state === ProofState.PresentationSent) {
       setProofDeliveryStatus(proof.state)
     }
-  }, [proof])
+  }, [proof, proofDeliveryStatus])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-        <ScrollView style={[styles.container]}>
-          <View style={[styles.messageContainer]}>
+        <ScrollView style={styles.container}>
+          <View style={styles.messageContainer}>
             {proofDeliveryStatus === ProofState.RequestReceived && (
               <Text
                 style={[TextTheme.modalHeadingThree, styles.messageText]}
@@ -102,7 +102,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
           </View>
         </ScrollView>
 
-        <View style={[styles.controlsContainer]}>
+        <View style={styles.controlsContainer}>
           <View>
             <Button
               title={t('Loading.BackToHome')}

@@ -5,52 +5,62 @@ exports[`NoNewUpdates Component Renders correctly 1`] = `
   style={
     Object {
       "backgroundColor": "#313132",
-      "borderColor": "#0099FF",
-      "borderRadius": 5,
-      "borderWidth": 1,
-      "padding": 10,
+      "paddingHorizontal": 20,
+      "paddingVertical": 20,
     }
   }
 >
   <View
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
+        "backgroundColor": "#313132",
+        "borderColor": "#0099FF",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "padding": 10,
       }
     }
   >
     <View
       style={
         Object {
-          "alignSelf": "flex-start",
-          "marginLeft": 0,
-          "marginRight": 10,
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         }
       }
     >
-      <Icon
-        color="#0099FF"
-        name="info"
-        size={30}
-      />
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "marginLeft": 0,
+            "marginRight": 10,
+          }
+        }
+      >
+        <Icon
+          color="#0099FF"
+          name="info"
+          size={30}
+        />
+      </View>
+      <Text
+        style={
+          Object {
+            "alignSelf": "center",
+            "color": "#FFFFFF",
+            "flex": 1,
+            "flexWrap": "wrap",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+        testID="com.ariesbifold:id/NoNewUpdates"
+      >
+        Home.NoNewUpdates
+      </Text>
     </View>
-    <Text
-      style={
-        Object {
-          "alignSelf": "center",
-          "color": "#FFFFFF",
-          "flex": 1,
-          "flexWrap": "wrap",
-          "fontSize": 18,
-          "fontWeight": "normal",
-        }
-      }
-      testID="com.ariesbifold:id/NoNewUpdates"
-    >
-      Home.NoNewUpdates
-    </Text>
   </View>
 </View>
 `;

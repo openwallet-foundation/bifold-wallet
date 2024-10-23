@@ -2,7 +2,7 @@
 import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/native'
 import { StackNavigationOptions, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
 import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TOKENS, useServices } from '../container-api'
@@ -38,8 +38,9 @@ const OnboardingStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
+  const [{ disableOnboardingSkip }] = useServices([TOKENS.CONFIG])
 
-  const onAuthenticated = (status: boolean): void => {
+  const onAuthenticated = useCallback((status: boolean): void => {
     if (!status) {
       return
     }
@@ -47,14 +48,14 @@ const OnboardingStack: React.FC = () => {
     dispatch({
       type: DispatchAction.DID_AUTHENTICATE,
     })
-  }
+  }, [dispatch])
 
   const OnBoardingScreen = () => {
     return (
       <Onboarding
         nextButtonText={t('Global.Next')}
         previousButtonText={t('Global.Back')}
-        disableSkip={true}
+        disableSkip={disableOnboardingSkip}
         pages={pages(onTutorialCompleted, OnboardingTheme)}
         style={carousel}
       />

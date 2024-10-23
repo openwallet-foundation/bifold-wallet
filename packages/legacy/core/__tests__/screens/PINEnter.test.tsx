@@ -1,6 +1,9 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
+import { container } from 'tsyringe'
 
+import { ContainerProvider } from '../../App/container-api'
+import { MainContainer } from '../../App/container-impl'
 import { AuthContext } from '../../App/contexts/auth'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINEnter from '../../App/screens/PINEnter'
@@ -10,10 +13,9 @@ import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { container } from 'tsyringe'
 
-describe('displays a PIN Enter screen', () => {
-  const main = new MainContainer(container.createChildContainer()).init()
-
+describe('PINEnter Screen', () => {
   test('PIN Enter renders correctly', () => {
+    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
       <ContainerProvider value={main}>
         <StoreProvider
@@ -31,6 +33,7 @@ describe('displays a PIN Enter screen', () => {
   })
 
   test('PIN Enter renders correctly when logged out message is present', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
       <ContainerProvider value={main}>
         <StoreProvider
@@ -53,6 +56,7 @@ describe('displays a PIN Enter screen', () => {
   })
 
   test('PIN Enter button exists', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
       <ContainerProvider value={main}>
         <StoreProvider

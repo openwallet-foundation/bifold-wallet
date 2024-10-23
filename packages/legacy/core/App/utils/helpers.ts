@@ -775,11 +775,13 @@ export const retrieveCredentialsForProof = async (
         })
       }
     }
+
     for (const proofFormat of ['indy', 'anoncreds']) {
       for (const proofItem of ['attributes', 'predicates']) {
         addRevokedCredsIfNeeded(proofFormat as 'indy' | 'anoncreds', proofItem as 'attributes' | 'predicates')
       }
     }
+
     if (!credentials) {
       throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
     }
@@ -800,10 +802,8 @@ export const retrieveCredentialsForProof = async (
       if (!difPexCredentialsForRequest || !presentationExchange) throw new Error('Invalid presentation request')
 
       const presentationDefinition = presentationExchange.presentation_definition
-
       const descriptorMetadata = getDescriptorMetadata(difPexCredentialsForRequest)
       const anonCredsProofRequest = createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
-
       const anonCredsCredentialsForRequest = await getCredentialsForAnonCredsProofRequest(
         agent.context,
         anonCredsProofRequest,
@@ -1008,9 +1008,14 @@ export const connectFromScanOrDeepLink = async (
   try {
     const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
     if (isOpenIDInvitation) {
-      //TODO: Impliment Navigation to display credential
-      throw new Error(`OpenID4VCI is not supported yet`)
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { oobRecordId: '', openIDUri: uri },
+      })
+
+      return
     }
+
     const aUrl = processBetaUrlIfRequired(uri)
     const receivedInvitation = await connectFromInvitation(aUrl, agent, implicitInvitations, reuseConnection)
 
@@ -1165,5 +1170,6 @@ export function generateRandomWalletName() {
   for (let i = 0; i < 4; i++) {
     name = name.concat(Math.floor(Math.random() * 10).toString())
   }
+
   return name
 }

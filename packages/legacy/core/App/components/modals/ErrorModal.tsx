@@ -61,7 +61,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ reportProblemAction }) => {
   return (
     <Modal visible={modalVisible} transparent={true}>
       <StatusBar hidden={true} />
-      <SafeAreaView style={[styles.container]}>
+      <SafeAreaView style={styles.container}>
         <InfoBox
           notificationType={InfoBoxType.Error}
           title={error ? error.title : t('Error.Unknown')}

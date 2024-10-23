@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, BackHandler, FlatList, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -62,23 +62,23 @@ const Onboarding: React.FC<OnboardingProps> = ({
     useNativeDriver: false,
   })
 
-  const next = () => {
+  const next = useCallback(() => {
     if (activeIndex + 1 < pages.length) {
       flatList?.current?.scrollToIndex({
         index: activeIndex + 1,
         animated: true,
       })
     }
-  }
+  }, [activeIndex, pages, flatList])
 
-  const previous = () => {
+  const previous = useCallback(() => {
     if (activeIndex !== 0) {
       flatList?.current?.scrollToIndex({
         index: activeIndex - 1,
         animated: true,
       })
     }
-  }
+  }, [activeIndex, flatList])
 
   const renderItem = useCallback(
     ({ item, index }: { item: Element; index: number }) => (
@@ -86,22 +86,22 @@ const Onboarding: React.FC<OnboardingProps> = ({
         {item as React.ReactNode}
       </View>
     ),
-    []
+    [width, style.carouselContainer]
   )
 
-  const onSkipTouched = () => {
+  const onSkipTouched = useCallback(() => {
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
 
     navigation.navigate(Screens.Terms)
-  }
+  }, [dispatch, navigation])
 
   useEffect(() => {
     !disableSkip &&
       navigation.setOptions({
         headerRight: () => (
-          <HeaderButton
+          <IconButton
             buttonLocation={ButtonLocation.Right}
             accessibilityLabel={t('Onboarding.SkipA11y')}
             testID={testIdWithKey('Skip')}
@@ -117,7 +117,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
         headerRight: () => false,
       })
     }
-  }, [activeIndex])
+  }, [disableSkip, navigation, t, onSkipTouched, activeIndex, pages])
 
   useFocusEffect(
     useCallback(() => {
@@ -140,7 +140,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        style={[{ width }]}
+        style={{ width }}
         data={pages}
         renderItem={renderItem}
         viewabilityConfig={viewabilityConfigRef.current}

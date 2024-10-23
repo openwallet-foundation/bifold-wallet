@@ -12,12 +12,10 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
 >
   <RCTScrollView
     style={
-      Array [
-        Object {
-          "backgroundColor": "#000000",
-          "padding": 20,
-        },
-      ]
+      Object {
+        "backgroundColor": "#000000",
+        "padding": 20,
+      }
     }
   >
     <View>
@@ -126,23 +124,19 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "flexDirection": "row",
-            },
-          ]
+          Object {
+            "backgroundColor": "#000000",
+            "flexDirection": "row",
+          }
         }
       >
         <View
           style={
-            Array [
-              Object {
-                "backgroundColor": "#FCBA19",
-                "marginRight": 10,
-                "width": 8,
-              },
-            ]
+            Object {
+              "backgroundColor": "#FCBA19",
+              "marginRight": 10,
+              "width": 8,
+            }
           }
         />
         <Text
@@ -183,12 +177,10 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 20,
-              "marginTop": "auto",
-            },
-          ]
+          Object {
+            "marginBottom": 20,
+            "marginTop": "auto",
+          }
         }
       >
         <View
@@ -287,11 +279,9 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -370,12 +360,10 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "marginBottom": 20,
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "marginBottom": 20,
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -466,12 +454,10 @@ exports[`Terms Screen Renders correctly 1`] = `
 >
   <RCTScrollView
     style={
-      Array [
-        Object {
-          "backgroundColor": "#000000",
-          "padding": 20,
-        },
-      ]
+      Object {
+        "backgroundColor": "#000000",
+        "padding": 20,
+      }
     }
   >
     <View>
@@ -580,23 +566,19 @@ exports[`Terms Screen Renders correctly 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
-              "backgroundColor": "#000000",
-              "flexDirection": "row",
-            },
-          ]
+          Object {
+            "backgroundColor": "#000000",
+            "flexDirection": "row",
+          }
         }
       >
         <View
           style={
-            Array [
-              Object {
-                "backgroundColor": "#FCBA19",
-                "marginRight": 10,
-                "width": 8,
-              },
-            ]
+            Object {
+              "backgroundColor": "#FCBA19",
+              "marginRight": 10,
+              "width": 8,
+            }
           }
         />
         <Text
@@ -637,12 +619,10 @@ exports[`Terms Screen Renders correctly 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 20,
-              "marginTop": "auto",
-            },
-          ]
+          Object {
+            "marginBottom": 20,
+            "marginTop": "auto",
+          }
         }
       >
         <View
@@ -741,11 +721,9 @@ exports[`Terms Screen Renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "paddingTop": 10,
+            }
           }
         >
           <View
@@ -824,12 +802,10 @@ exports[`Terms Screen Renders correctly 1`] = `
         </View>
         <View
           style={
-            Array [
-              Object {
-                "marginBottom": 20,
-                "paddingTop": 10,
-              },
-            ]
+            Object {
+              "marginBottom": 20,
+              "paddingTop": 10,
+            }
           }
         >
           <View

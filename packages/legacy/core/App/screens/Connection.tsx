@@ -1,29 +1,41 @@
-import { BasicMessageRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@credo-ts/core'
-import { CommonActions, useFocusEffect } from '@react-navigation/native'
+import {
+  BasicMessageRecord,
+  CredentialExchangeRecord,
+  ProofExchangeRecord,
+  SdJwtVcRecord,
+  W3cCredentialRecord,
+} from '@credo-ts/core'
+import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
+import React, { useCallback, useEffect, useReducer } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { DeviceEventEmitter, EmitterSubscription, BackHandler, View, StyleSheet } from 'react-native'
 
-import Button, { ButtonType } from '../components/buttons/Button'
-import { useAnimatedComponents } from '../contexts/animated-components'
-import { useTheme } from '../contexts/theme'
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../hooks/connections'
 import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { testIdWithKey } from '../utils/testable'
+import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
+import ProofRequest from './ProofRequest'
+import CredentialOffer from './CredentialOffer'
 
 import { useServices, TOKENS } from './../container-api'
+import { AttestationEventTypes } from '../types/attestation'
+import { BifoldError } from '../types/error'
+import { EventTypes } from '../constants'
+import { testIdWithKey } from '../utils/testable'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
 
+type NotCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+
 type LocalState = {
   inProgress: boolean
-  isInitialized: boolean
   notificationRecord?: any
-  shouldShowDelayMessage: boolean
+  attestationLoading: boolean
+  shouldShowProofComponent: boolean
+  shouldShowOfferComponent: boolean
+  percentComplete: number
 }
 
 const GoalCodes = {
@@ -33,73 +45,64 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { oobRecordId } = route.params
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
-  const { ConnectionLoading } = useAnimatedComponents()
-  const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG])
+  const { oobRecordId, openIDUri, proofId, credentialId } = route.params
+  const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
+    useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const notifications = useNotifications()
-  const oobRecord = useOutOfBandById(oobRecordId)
-  const connection = useConnectionByOutOfBandId(oobRecordId)
-
+  const notifications = useNotifications({ openIDUri: openIDUri })
+  const oobRecord = useOutOfBandById(oobRecordId ?? '')
+  const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
+  const { t } = useTranslation()
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
     inProgress: true,
-    isInitialized: false,
-    shouldShowDelayMessage: false,
     notificationRecord: undefined,
+    attestationLoading: false,
+    shouldShowProofComponent: false,
+    shouldShowOfferComponent: false,
+    percentComplete: 30,
   })
   const styles = StyleSheet.create({
-    container: {
-      height: '100%',
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-      padding: 20,
-    },
-    image: {
-      marginTop: 20,
-    },
-    messageContainer: {
-      alignItems: 'center',
-    },
-    messageText: {
-      fontWeight: TextTheme.normal.fontWeight,
-      textAlign: 'center',
-      marginTop: 30,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      margin: 20,
-    },
-    delayMessageText: {
-      textAlign: 'center',
-      marginTop: 20,
+    pageContainer: {
+      flex: 1,
     },
   })
 
-  const startTimer = () => {
-    if (!state.isInitialized) {
-      timerRef.current = setTimeout(() => {
-        dispatch({ shouldShowDelayMessage: true })
-        timerRef.current = null
-      }, connTimerDelay)
-
-      dispatch({ isInitialized: true })
-    }
-  }
-
-  const abortTimer = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current)
-      timerRef.current = null
-    }
-  }
-
-  const onDismissModalTouched = () => {
-    dispatch({ shouldShowDelayMessage: false, inProgress: false })
+  const onDismissModalTouched = useCallback(() => {
+    dispatch({ inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }
+  }, [dispatch, navigation])
+
+  useEffect(() => {
+    if (!attestationMonitor) {
+      return
+    }
+
+    const handleStartedAttestation = () => {
+      dispatch({ attestationLoading: true })
+    }
+
+    const handleStartedCompleted = () => {
+      dispatch({ attestationLoading: false })
+    }
+
+    const handleFailedAttestation = (error: BifoldError) => {
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+
+    const subscriptions = Array<EmitterSubscription>()
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
+    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
+    subscriptions.push(
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
+    )
+
+    return () => {
+      subscriptions.forEach((subscription) => subscription.remove())
+    }
+  }, [attestationMonitor])
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -107,15 +110,18 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [])
 
   useEffect(() => {
-    if (state.shouldShowDelayMessage && !state.notificationRecord) {
-      if (autoRedirectConnectionToHome) {
-        dispatch({ shouldShowDelayMessage: false, inProgress: false })
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-      } else {
-        AccessibilityInfo.announceForAccessibility(t('Connection.TakingTooLong'))
-      }
+    if (proofId) {
+      navigation.setOptions({ title: t('Screens.ProofRequest') })
+      dispatch({ inProgress: false, shouldShowProofComponent: true })
+      return
     }
-  }, [state.shouldShowDelayMessage])
+
+    if (credentialId) {
+      navigation.setOptions({ title: t('Screens.CredentialOffer') })
+      dispatch({ inProgress: false, shouldShowOfferComponent: true })
+      return
+    }
+  }, [proofId, credentialId, navigation, t])
 
   useEffect(() => {
     if (!oobRecord || !state.inProgress) {
@@ -146,8 +152,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     // Connectionless proof request, we don't have connectionless offers.
     if (!connection) {
-      dispatch({ inProgress: false })
-      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      navigation.setOptions({ title: t('Screens.ProofRequest') })
+      dispatch({ inProgress: false, shouldShowProofComponent: true })
 
       return
     }
@@ -162,12 +168,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     const { goalCode } = oobRecord.outOfBandInvitation
-
     if (goalCode === GoalCodes.proofRequestVerify || goalCode === GoalCodes.proofRequestVerifyOnce) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to ProofRequest`)
 
-      dispatch({ inProgress: false })
-      navigation.replace(Screens.ProofRequest, { proofId: state.notificationRecord.id })
+      navigation.setOptions({ title: t('Screens.ProofRequest') })
+      dispatch({ inProgress: false, shouldShowProofComponent: true })
 
       return
     }
@@ -175,8 +180,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (goalCode === GoalCodes.credentialOffer) {
       logger?.info(`Connection: Handling ${goalCode} goal code, navigate to CredentialOffer`)
 
-      dispatch({ inProgress: false })
-      navigation.replace(Screens.CredentialOffer, { credentialId: state.notificationRecord.id })
+      navigation.setOptions({ title: t('Screens.CredentialOffer') })
+      dispatch({ inProgress: false, shouldShowProofComponent: false, shouldShowOfferComponent: true })
 
       return
     }
@@ -190,25 +195,35 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
       })
     )
-  }, [connection, oobRecord, state])
+  }, [oobRecord, state.inProgress, connection, logger, dispatch, navigation, t, state.notificationRecord])
 
-  useMemo(() => {
-    startTimer()
-    return () => abortTimer
-  }, [])
+  // This hook will monitor notification for openID type credentials
+  // where there is not connection or oobID present
+  useEffect(() => {
+    if (!state.inProgress) {
+      return
+    }
 
-  useFocusEffect(
-    useCallback(() => {
-      startTimer()
-      return () => abortTimer
-    }, [])
-  )
+    if (!state.notificationRecord) {
+      return
+    }
+
+    if (
+      (state.notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+      (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord'
+    ) {
+      logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
+      dispatch({ inProgress: false })
+      navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
+      return
+    }
+  }, [logger, navigation, state])
 
   useEffect(() => {
     if (!state.inProgress || state.notificationRecord) {
       return
     }
-    type notCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+
     for (const notification of notifications) {
       // no action taken for BasicMessageRecords
       if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
@@ -217,47 +232,65 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
 
       if (
-        (connection && (notification as notCustomNotification).connectionId === connection.id) ||
-        oobRecord?.getTags()?.invitationRequestsThreadIds?.includes((notification as notCustomNotification)?.threadId ?? "")
+        (connection && (notification as NotCustomNotification).connectionId === connection.id) ||
+        oobRecord
+          ?.getTags()
+          ?.invitationRequestsThreadIds?.includes((notification as NotCustomNotification)?.threadId ?? '')
       ) {
-        logger?.info(`Connection: Handling notification ${(notification as notCustomNotification).id}`)
+        logger?.info(`Connection: Handling notification ${(notification as NotCustomNotification).id}`)
 
         dispatch({ notificationRecord: notification })
         break
       }
+
+      if ((notification as W3cCredentialRecord).type === 'W3cCredentialRecord') {
+        dispatch({ notificationRecord: notification })
+        break
+      }
+
+      if ((notification as SdJwtVcRecord).type === 'SdJwtVcRecord') {
+        dispatch({ notificationRecord: notification })
+        break
+      }
     }
-  }, [notifications, state])
+  }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch])
 
-  return (
-    <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
-      <ScrollView style={styles.container}>
-        <View style={styles.messageContainer}>
-          <Text style={[TextTheme.modalHeadingThree, styles.messageText]} testID={testIdWithKey('CredentialOnTheWay')}>
-            {t('Connection.JustAMoment')}
-          </Text>
-        </View>
+  const loadingPlaceholderWorkflowType = () => {
+    if (state.shouldShowProofComponent) {
+      return LoadingPlaceholderWorkflowType.ProofRequested
+    }
 
-        <View style={styles.image}>
-          <ConnectionLoading />
-        </View>
+    if (state.shouldShowOfferComponent) {
+      return LoadingPlaceholderWorkflowType.ReceiveOffer
+    }
 
-        {state.shouldShowDelayMessage && (
-          <Text style={[TextTheme.modalNormal, styles.delayMessageText]} testID={testIdWithKey('TakingTooLong')}>
-            {t('Connection.TakingTooLong')}
-          </Text>
-        )}
-      </ScrollView>
-      <View style={styles.controlsContainer}>
-        <Button
-          title={t('Loading.BackToHome')}
-          accessibilityLabel={t('Loading.BackToHome')}
-          testID={testIdWithKey('BackToHome')}
-          onPress={onDismissModalTouched}
-          buttonType={ButtonType.ModalSecondary}
+    return LoadingPlaceholderWorkflowType.Connection
+  }
+
+  const displayComponent = () => {
+    if (state.inProgress || state.attestationLoading) {
+      return (
+        <LoadingPlaceholder
+          workflowType={loadingPlaceholderWorkflowType()}
+          timeoutDurationInMs={connTimerDelay}
+          loadingProgressPercent={state.percentComplete}
+          onCancelTouched={onDismissModalTouched}
+          onTimeoutTriggered={autoRedirectConnectionToHome ? onDismissModalTouched : undefined}
+          testID={testIdWithKey('ConnectionLoading')}
         />
-      </View>
-    </SafeAreaView>
-  )
+      )
+    }
+
+    if (state.shouldShowProofComponent) {
+      return <ProofRequest proofId={proofId ?? state.notificationRecord.id} navigation={navigation} />
+    }
+
+    if (state.shouldShowOfferComponent) {
+      return <CredentialOffer credentialId={credentialId ?? state.notificationRecord.id} navigation={navigation} />
+    }
+  }
+
+  return <View style={styles.pageContainer}>{displayComponent()}</View>
 }
 
 export default Connection

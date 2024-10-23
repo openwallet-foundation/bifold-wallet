@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
@@ -13,8 +13,6 @@ interface RecordRemoveProps {
 const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-
-  const callOnRemove = useCallback(() => onRemove(), [])
 
   const styles = StyleSheet.create({
     headerText: {
@@ -48,7 +46,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
         accessibilityRole={'button'}
         testID={testIdWithKey('RemoveFromWallet')}
         activeOpacity={1}
-        onPress={callOnRemove}
+        onPress={onRemove}
       >
         <Text
           style={[

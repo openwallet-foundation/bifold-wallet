@@ -15,19 +15,24 @@ import PINCreate from '../screens/PINCreate'
 import PushNotification from '../screens/PushNotification'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
-import UseBiometry from '../screens/UseBiometry'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import AutoLock from '../screens/AutoLock'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
   const [biometryUpdatePending, setBiometryUpdatePending] = useState<boolean>(false)
   const { t } = useTranslation()
-  const [pages, { screen: terms }, developer] = useServices([TOKENS.SCREEN_ONBOARDING_PAGES, TOKENS.SCREEN_TERMS, TOKENS.SCREEN_DEVELOPER])
+  const [pages, { screen: terms }, UseBiometry, developer] = useServices([
+    TOKENS.SCREEN_ONBOARDING_PAGES,
+    TOKENS.SCREEN_TERMS,
+    TOKENS.SCREEN_USE_BIOMETRY,
+    TOKENS.SCREEN_DEVELOPER,
+  ])
   const defaultStackOptions = useDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
@@ -58,6 +63,11 @@ const SettingStack: React.FC = () => {
         name={Screens.Language}
         component={Language}
         options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+      />
+      <Stack.Screen
+        name={Screens.AutoLock}
+        component={AutoLock}
+        options={{ title: 'Auto lock Options', headerBackTestID: testIdWithKey('Back') }}
       />
       <Stack.Screen
         name={Screens.DataRetention}

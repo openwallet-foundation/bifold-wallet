@@ -160,7 +160,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
     }
 
     setPaginationDots(arr)
-  }, [])
+  }, [stepOn, stepsOutOf])
 
   return (
     <View
@@ -183,7 +183,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
             {title}
           </Text>
         </View>
-        <View style={[styles.dismissIcon]}>
+        <View style={styles.dismissIcon}>
           <TouchableOpacity
             onPress={stop}
             testID={testIdWithKey('Close')}

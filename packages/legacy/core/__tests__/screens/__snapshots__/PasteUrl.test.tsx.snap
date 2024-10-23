@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays a paste url screen Paste URL renders correctly 1`] = `
+exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {

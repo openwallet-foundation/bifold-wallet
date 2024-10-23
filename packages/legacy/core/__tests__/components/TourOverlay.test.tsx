@@ -20,7 +20,7 @@ const tourStep = {
   },
 }
 
-describe('TourBox', () => {
+describe('TourOverlay Component', () => {
   beforeAll(()=>{
     jest.useFakeTimers()
   })

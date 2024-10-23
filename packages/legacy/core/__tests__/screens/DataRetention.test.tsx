@@ -4,7 +4,7 @@ import React from 'react'
 import DataRetention from '../../App/screens/DataRetention'
 import { testIdWithKey } from '../../App/utils/testable'
 
-describe('Data Retention screen', () => {
+describe('DataRetention Screen', () => {
   beforeEach(() => {
     // Silence console.error because it will print a warning about Switch
     // "Warning: dispatchCommand was called with a ref ...".

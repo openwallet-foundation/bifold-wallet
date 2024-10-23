@@ -18,6 +18,8 @@ export enum LocalStorageKeys {
   Preferences = 'PreferencesState',
   Migration = 'MigrationState',
   Tours = 'ToursState',
+  HistorySettingsOption = 'historySettingsOption',
+  Language = 'language',
 }
 
 export enum KeychainServices {
@@ -58,6 +60,8 @@ export const attemptLockoutThresholdRules = {
   attemptIncrement: 5,
   attemptPenalty: 24 * hour,
 }
+
+export const defaultAutoLockTime = 5
 
 export const walletId = 'walletId'
 

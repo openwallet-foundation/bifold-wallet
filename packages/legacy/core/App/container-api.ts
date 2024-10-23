@@ -1,10 +1,4 @@
-import {
-  Agent,
-  BaseLogger,
-  BasicMessageRecord,
-  ProofExchangeRecord,
-  CredentialExchangeRecord as CredentialRecord,
-} from '@credo-ts/core'
+import { Agent, BaseLogger } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -21,6 +15,10 @@ import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
 import { CustomNotification } from './types/notification'
 import { Config } from './types/config'
+import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
+import { NotificationListItemProps } from './components/listItems/NotificationListItem'
+import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
+import { CredentialListFooterProps } from './types/credential-list-footer'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -48,15 +46,22 @@ export const SCREEN_TOKENS = {
   SCREEN_USE_BIOMETRY: 'screen.use-biometry',
 } as const
 
+export const NAV_TOKENS = {
+  CUSTOM_NAV_STACK_1: 'nav.slot1',
+} as const
+
 export const COMPONENT_TOKENS = {
   COMPONENT_HOME_HEADER: 'component.home.header',
+  COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST: 'component.home.notifications-empty-list',
   COMPONENT_HOME_FOOTER: 'component.home.footer',
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
   COMPONENT_RECORD: 'component.record',
+  COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
 } as const
 
 export const NOTIFICATION_TOKENS = {
   NOTIFICATIONS: 'notification.list',
+  NOTIFICATIONS_LIST_ITEM: 'notification.list-item',
 } as const
 
 export const STACK_TOKENS = {
@@ -65,9 +70,14 @@ export const STACK_TOKENS = {
 
 export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
-  FN_LOAD_HISTORY: 'fn.loadHistory',
   COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
+  COMPONENT_CRED_LIST_FOOTER: 'fn.credListFooter',
+} as const
+
+export const HISTORY_TOKENS = {
+  FN_LOAD_HISTORY: 'fn.loadHistory',
+  HISTORY_ENABLED: 'history.enabled',
 } as const
 
 export const COMP_TOKENS = {
@@ -108,6 +118,7 @@ export const TOKENS = {
   ...PROOF_TOKENS,
   ...COMPONENT_TOKENS,
   ...SCREEN_TOKENS,
+  ...NAV_TOKENS,
   ...SERVICE_TOKENS,
   ...STACK_TOKENS,
   ...NOTIFICATION_TOKENS,
@@ -118,6 +129,7 @@ export const TOKENS = {
   ...CACHE_TOKENS,
   ...UTILITY_TOKENS,
   ...CONFIG_TOKENS,
+  ...HISTORY_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
@@ -142,10 +154,12 @@ export type TokenMapping = {
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
   [TOKENS.NOTIFICATIONS]: {
-    useNotifications: () => Array<BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification>
+    useNotifications: ({ openIDUri }: NotificationsInputProps) => NotificationReturnType
     customNotificationConfig?: CustomNotification
   }
+  [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
+  [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BaseLogger
@@ -154,14 +168,18 @@ export type TokenMapping = {
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
+  [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
+  [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
+  [TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
   [TOKENS.ENABLE_INLINE_ERRORS]: boolean
+  [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
 }
 
 export interface Container {

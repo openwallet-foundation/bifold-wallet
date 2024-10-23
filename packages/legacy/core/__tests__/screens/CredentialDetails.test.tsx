@@ -65,7 +65,7 @@ const mock_testOpenVPCredentialRecord = buildCredentialExchangeRecord()
  *  List of Claims/Attributes
  *  Attribute names are just capitalized name
  */
-describe('displays a credential details screen', () => {
+describe('CredentialDetails Screen', () => {
   afterEach(() => {
     cleanup()
   })
@@ -75,7 +75,7 @@ describe('displays a credential details screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
       useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
     })
 
@@ -101,7 +101,7 @@ describe('displays a credential details screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      // @ts-ignore
+      // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
       useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
     })
 

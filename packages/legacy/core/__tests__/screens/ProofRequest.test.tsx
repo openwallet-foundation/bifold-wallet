@@ -28,12 +28,14 @@ jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
 describe('displays a proof request screen', () => {
-  afterEach(() => {
-    cleanup()
+  beforeEach(() => {
+    jest.clearAllTimers()
+    jest.clearAllMocks()
+    // jest.resetAllMocks()
   })
 
-  beforeEach(() => {
-    jest.clearAllMocks()
+  afterEach(() => {
+    cleanup()
   })
 
   /**
@@ -206,14 +208,14 @@ describe('displays a proof request screen', () => {
     beforeEach(() => {
       jest.clearAllMocks()
       useCredentials.mockReturnValue({ records: [credExRecord] })
-      // @ts-ignore-next-line
+      // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testProofRequest)
     })
 
     test('loading screen displays', async () => {
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -222,7 +224,7 @@ describe('displays a proof request screen', () => {
       })
 
       const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
-      const recordLoading = tree.getByTestId(testIdWithKey('RecordLoading'))
+      const recordLoading = tree.getByTestId(testIdWithKey('ProofRequestLoading'))
 
       expect(recordLoading).not.toBeNull()
       expect(cancelButton).not.toBeNull()
@@ -232,15 +234,15 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with all claims available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -376,17 +378,17 @@ describe('displays a proof request screen', () => {
         },
       }
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials2)
 
       const navigation = useNavigation()
 
       const { getByText, getByTestId, queryByText } = render(
         <BasicAppContext>
-          <ProofRequest navigation={navigation as any} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={navigation as any} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -430,10 +432,10 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with one or more claims not available', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           indy: {
@@ -447,7 +449,7 @@ describe('displays a proof request screen', () => {
       })
       const tree = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -464,10 +466,10 @@ describe('displays a proof request screen', () => {
     test('displays a proof request with one or more predicates not satisfied', async () => {
       const { agent } = useAgent()
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
 
-      // @ts-ignore-next-line
+      // @ts-expect-error this method will be replaced with a mock which does have this method
       agent?.proofs.getCredentialsForRequest.mockResolvedValue({
         proofFormats: {
           indy: {
@@ -491,7 +493,7 @@ describe('displays a proof request screen', () => {
 
       const { getByText, getByTestId } = render(
         <BasicAppContext>
-          <ProofRequest navigation={useNavigation()} route={{ params: { proofId: testProofRequest.id } } as any} />
+          <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
@@ -499,6 +501,7 @@ describe('displays a proof request screen', () => {
         timeTravel(1000)
       })
 
+      // fails
       const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })

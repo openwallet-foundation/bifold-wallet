@@ -7,7 +7,7 @@ import AgentProvider from '@credo-ts/react-hooks'
 import App from './App'
 import * as components from './components'
 import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
-import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
+import IconButton, { ButtonLocation } from './components/buttons/IconButton'
 import BulletPoint from './components/inputs/BulletPoint'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
@@ -28,12 +28,12 @@ import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
 import HomeFooterView from './components/views/HomeFooterView'
+import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
-import RootStack from './navigators/RootStack'
 import AttemptLockout from './screens/AttemptLockout'
 import Developer from './screens/Developer'
 import OnboardingPages from './screens/OnboardingPages'
@@ -45,13 +45,20 @@ import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
-import { PINRules } from './constants'
+import { useDefaultStackOptions } from './navigators/defaultStackOptions'
+import { PINRules, walletTimeout } from './constants'
+import { CredentialListFooterProps } from './types/credential-list-footer'
+import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
 
+export * from './navigators'
+export * from './services/storage'
 export * from './types/attestation'
 export { LocalStorageKeys } from './constants'
+export * from './services/storage'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
 export { defaultState, mergeReducers, StoreProvider, StoreContext, useStore } from './contexts/store'
 export { default as Store, DispatchAction, reducer } from './contexts/reducers/store'
+export { useDeepLinks } from './hooks/deep-links'
 export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
@@ -68,7 +75,7 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { didMigrateToAskar, migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
-export { removeExistingInvitationIfRequired } from './utils/helpers'
+export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink } from './utils/helpers'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
@@ -85,6 +92,7 @@ export type {
   IAssets,
   ITheme,
 } from './theme'
+export type { PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
@@ -103,6 +111,7 @@ export type {
 
 export type { InlineMessageProps } from './components/inputs/InlineErrorText'
 
+export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
 
@@ -121,21 +130,24 @@ export {
   credentialOfferTourSteps,
   proofRequestTourSteps,
   ButtonType,
-  HeaderButton,
   ButtonLocation,
   CheckBoxRow,
   CredentialCard,
   ContentGradient,
   ErrorModal,
+  IconButton,
+  InactivityWrapper,
   InfoTextBox,
   InfoBox,
   InfoBoxType,
   Link,
+  AutoLockTime,
   ToastType,
   toastConfig,
-  RootStack,
   NetInfo,
   OnboardingPages,
+  NotificationListItem,
+  useDefaultStackOptions,
   Splash,
   Developer,
   Terms,
@@ -154,5 +166,6 @@ export {
   Button,
   BulletPoint,
   PINRules,
+  walletTimeout,
 }
 export type { IButton }
