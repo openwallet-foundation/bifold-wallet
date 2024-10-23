@@ -259,8 +259,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           } else if (attemptsLeft === 1) {
             setErrorMessage(t('PINEnter.LastTryBeforeTimeout')) // Show last try warning
           } else {
-            // No more attempts left, navigate to lockout screen directly
-            attemptLockout(getLockoutPenalty(newAttempt))
+            const penalty = getLockoutPenalty(newAttempt)
+            if (penalty !== undefined) {
+              attemptLockout(penalty) // Only call attemptLockout if penalty is defined
+            }
             return
           }
 
