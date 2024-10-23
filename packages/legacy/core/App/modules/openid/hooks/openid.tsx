@@ -6,12 +6,17 @@ import { EventTypes } from '../../../constants'
 import { BifoldError } from '../../../types/error'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
+import { getCredentialsForProofRequest } from '../resolverProof'
 
 type OpenIDContextProps = {
   openIDUri?: string
+  openIDPresentationUri?: string
 }
 
-export const useOpenID = ({ openIDUri }: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | undefined => {
+export const useOpenID = ({
+  openIDUri,
+  openIDPresentationUri,
+}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | undefined => {
   const [openIdRecord, setOpenIdRecord] = useState<SdJwtVcRecord | W3cCredentialRecord>()
 
   const { agent } = useAgent()
@@ -41,6 +46,40 @@ export const useOpenID = ({ openIDUri }: OpenIDContextProps): SdJwtVcRecord | W3
     },
     [agent, t]
   )
+
+  const resolveOpenIDPresentationRequest = useCallback(
+    async (uri: string) => {
+      if (!agent) {
+        return
+      }
+      try {
+        const record = await getCredentialsForProofRequest({
+          agent: agent,
+          uri: uri,
+        })
+        return record
+      } catch (err: unknown) {
+        //TODO: Sppecify different error
+        console.log('$$[ERROR][resolveOpenIDPresentationRequest]', JSON.stringify(err))
+        const error = new BifoldError(
+          t('Error.Title1043'),
+          t('Error.Message1043'),
+          (err as Error)?.message ?? err,
+          1043
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+      }
+    },
+    [agent, t]
+  )
+
+  useEffect(() => {
+    if (!openIDPresentationUri) {
+      return
+    }
+    console.log('$$Please resolve presentation for: ', openIDPresentationUri)
+    resolveOpenIDPresentationRequest(openIDPresentationUri)
+  }, [openIDPresentationUri, resolveOpenIDPresentationRequest])
 
   useEffect(() => {
     if (!openIDUri) {

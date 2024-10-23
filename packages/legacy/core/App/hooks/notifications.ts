@@ -22,13 +22,17 @@ import { CustomNotification } from '../types/notification'
 
 export type NotificationsInputProps = {
   openIDUri?: string
+  penIDPresentationUri?: string
 }
 
 export type NotificationReturnType = Array<
   BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification | SdJwtVcRecord | W3cCredentialRecord
 >
 
-export const useNotifications = ({ openIDUri }: NotificationsInputProps): NotificationReturnType => {
+export const useNotifications = ({
+  openIDUri,
+  penIDPresentationUri,
+}: NotificationsInputProps): NotificationReturnType => {
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
   const { records: basicMessages } = useBasicMessages()
   const offers = useCredentialByState(CredentialState.OfferReceived)
@@ -36,7 +40,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
   const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
-  const openIDCredRecieved = useOpenID({ openIDUri: openIDUri })
+  const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: penIDPresentationUri })
 
   useEffect(() => {
     // get all unseen messages
