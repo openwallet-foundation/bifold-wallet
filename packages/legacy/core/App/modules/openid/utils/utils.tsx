@@ -38,3 +38,15 @@ export const buildFieldsFromOpenIDTemplate = (data: { [key: string]: unknown }):
   }
   return fields
 }
+
+export function formatDate(input: string | Date): string {
+  const date = input instanceof Date ? input : new Date(input)
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  })
+}
