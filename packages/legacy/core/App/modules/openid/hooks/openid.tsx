@@ -7,6 +7,7 @@ import { BifoldError } from '../../../types/error'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { getCredentialsForProofRequest } from '../resolverProof'
+import { OpenId4VPRequestRecord } from '../types'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -16,8 +17,8 @@ type OpenIDContextProps = {
 export const useOpenID = ({
   openIDUri,
   openIDPresentationUri,
-}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | undefined => {
-  const [openIdRecord, setOpenIdRecord] = useState<SdJwtVcRecord | W3cCredentialRecord>()
+}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | OpenId4VPRequestRecord | undefined => {
+  const [openIdRecord, setOpenIdRecord] = useState<SdJwtVcRecord | W3cCredentialRecord | OpenId4VPRequestRecord>()
 
   const { agent } = useAgent()
   const { t } = useTranslation()
@@ -77,8 +78,11 @@ export const useOpenID = ({
     if (!openIDPresentationUri) {
       return
     }
-    console.log('$$Please resolve presentation for: ', openIDPresentationUri)
-    resolveOpenIDPresentationRequest(openIDPresentationUri)
+    resolveOpenIDPresentationRequest(openIDPresentationUri).then((value) => {
+      if (value) {
+        setOpenIdRecord(value)
+      }
+    })
   }, [openIDPresentationUri, resolveOpenIDPresentationRequest])
 
   useEffect(() => {

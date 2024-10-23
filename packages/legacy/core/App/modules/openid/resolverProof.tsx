@@ -2,6 +2,8 @@ import { Agent, Jwt, X509ModuleConfig } from '@credo-ts/core'
 import { OpenID4VCIParam } from './resolver'
 import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
+import { OpenId4VPRequestRecord } from './types'
+import { getHostNameFromUrl } from './utils/utils'
 
 function handleTextResponse(text: string): ParseInvitationResult {
   // If the text starts with 'ey' we assume it's a JWT and thus an OpenID authorization request
@@ -116,14 +118,8 @@ export const extractCertificateFromAuthorizationRequest = async ({
 
     if (uri) {
       const query = q.parseUrl(uri).query
-
-      console.log('$$[extractCertificateFromAuthorizationRequest][query]:', query)
-
       if (query.request_uri && typeof query.request_uri === 'string') {
         const result = await fetchInvitationDataUrl(query.request_uri)
-
-        console.log('$$[extractCertificateFromAuthorizationRequest][fetchInvitationDataUrl]:', result)
-
         if (
           result.success &&
           result.result.type === 'openid-authorization-request' &&
@@ -133,33 +129,21 @@ export const extractCertificateFromAuthorizationRequest = async ({
             data: result.result.data,
             certificate: extractCertificateFromJwt(result.result.data),
           }
-
-          console.log('$$[extractCertificateFromAuthorizationRequest][if 1]:', _res)
-
           return {
             data: result.result.data,
             certificate: extractCertificateFromJwt(result.result.data),
           }
-        } else {
-          console.log('$$[extractCertificateFromAuthorizationRequest][if 1][result fail]!')
         }
       } else if (query.request && typeof query.request === 'string') {
         const _res = {
           data: query.request,
           certificate: extractCertificateFromJwt(query.request),
         }
-        console.log('$$[extractCertificateFromAuthorizationRequest][if 2]:', _res)
-
         return _res
       }
     }
-
-    console.log('$$[extractCertificateFromAuthorizationRequest] end of function')
-
     return { data: null, certificate: null }
   } catch (error) {
-    console.log('$$[extractCertificateFromAuthorizationRequest][catch error]:', JSON.stringify(error))
-
     return { data: null, certificate: null }
   }
 }
@@ -182,9 +166,14 @@ export async function withTrustedCertificate<T>(
   }
 }
 
+//This settings should be moved to an injectable config
 const allowUntrustedCertificates = false
 
-export const getCredentialsForProofRequest = async ({ agent, data, uri }: OpenID4VCIParam) => {
+export const getCredentialsForProofRequest = async ({
+  agent,
+  data,
+  uri,
+}: OpenID4VCIParam): Promise<OpenId4VPRequestRecord | undefined> => {
   let requestUri = uri
 
   try {
@@ -196,10 +185,7 @@ export const getCredentialsForProofRequest = async ({ agent, data, uri }: OpenID
       // FIXME: Credo only support request string, but we already parsed it before. So we construct an request here
       // but in the future we need to support the parsed request in Credo directly
       requestUri = `openid://?request=${encodeURIComponent(newData)}`
-      console.log('$$Request URI set with data:')
     } else if (uri) {
-      console.log('$$Request URI set with uri')
-
       requestUri = uri
     } else {
       throw new Error('Either data or uri must be provided')
@@ -209,17 +195,23 @@ export const getCredentialsForProofRequest = async ({ agent, data, uri }: OpenID
 
     // Temp solution to add and remove the trusted certificate
     const resolved = await withTrustedCertificate(agent, certificate, () => {
-      console.log('$$to agent:', requestUri)
       return agent.modules.openId4VcHolder.resolveSiopAuthorizationRequest(requestUri)
     })
 
-    console.log('$$RESOLVEDDDDDDD:', JSON.stringify(resolved))
-
-    //   if (!resolved.presentationExchange) {
-    //     throw new Error('No presentation exchange found in authorization request.')
-    //   }
+    if (!resolved.presentationExchange) {
+      throw new Error('No presentation exchange found in authorization request.')
+    }
+    return {
+      ...resolved.presentationExchange,
+      authorizationRequest: resolved.authorizationRequest,
+      verifierHostName: resolved.authorizationRequest.responseURI
+        ? getHostNameFromUrl(resolved.authorizationRequest.responseURI)
+        : undefined,
+      createdAt: new Date(),
+      type: 'OpenId4VPRequestRecord',
+    }
   } catch (err) {
-    console.log('$$Error: ', (err as Error)?.message ?? err)
+    agent.config.logger.error(`Parsing presentation request:  ${(err as Error)?.message ?? err}`)
     throw err
   }
 }

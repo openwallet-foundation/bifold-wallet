@@ -22,6 +22,7 @@ import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { testIdWithKey } from '../utils/testable'
+import { OpenId4VPRequestRecord } from 'modules/openid/types'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -49,7 +50,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const notifications = useNotifications({ openIDUri: openIDUri })
+  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
   const { t } = useTranslation()
@@ -217,6 +218,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
       return
     }
+
+    if ((state.notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
+      logger?.info(`Connection: Handling OpenID4VP Authorization request, navigate to Credential Proof Request`)
+      dispatch({ inProgress: false })
+      // navigation.replace(Screens.OpenIDCredentialDetails, { credential: state.notificationRecord })
+    }
   }, [logger, navigation, state])
 
   useEffect(() => {
@@ -243,12 +250,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         break
       }
 
-      if ((notification as W3cCredentialRecord).type === 'W3cCredentialRecord') {
-        dispatch({ notificationRecord: notification })
-        break
-      }
-
-      if ((notification as SdJwtVcRecord).type === 'SdJwtVcRecord') {
+      if (
+        (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+        (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+        (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
+      ) {
         dispatch({ notificationRecord: notification })
         break
       }
