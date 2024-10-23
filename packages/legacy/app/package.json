@@ -73,7 +73,7 @@
     "react-native-logs": "^5.1.0",
     "react-native-orientation-locker": "^1.6.0",
     "react-native-permissions": "^4.0.1",
-    "react-native-qrcode-svg": "^6.2.0",
+    "react-native-qrcode-svg": "6.2.0",
     "react-native-reanimated": "^3.4.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-scalable-image": "^1.1.0",
