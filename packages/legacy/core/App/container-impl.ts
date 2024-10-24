@@ -112,7 +112,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
-    this._container.registerInstance(TOKENS.ENABLE_INLINE_ERRORS, false)
+    this._container.registerInstance(TOKENS.INLINE_ERRORS, { enabled: false })
     this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {

@@ -19,11 +19,23 @@ import { NotificationReturnType, NotificationsInputProps } from './hooks/notific
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
 import { CredentialListFooterProps } from './types/credential-list-footer'
+import { ViewStyle } from 'react-native'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
   navigation: StackNavigationProp<AuthenticateStackParams>
 ) => GenericFn
+
+export enum InlineErrorPosition {
+  Above,
+  Below,
+}
+
+export type InlineErrorConfig = {
+  enabled: boolean
+  position?: InlineErrorPosition
+  style?: ViewStyle
+}
 
 type LoadStateFn = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 
@@ -111,7 +123,7 @@ export const UTILITY_TOKENS = {
 
 export const CONFIG_TOKENS = {
   CONFIG: 'config',
-  ENABLE_INLINE_ERRORS: 'errors.enable.inline',
+  INLINE_ERRORS: 'errors.inline',
 } as const
 
 export const TOKENS = {
@@ -178,7 +190,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
-  [TOKENS.ENABLE_INLINE_ERRORS]: boolean
+  [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
 }
 

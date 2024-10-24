@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { SvgProps } from 'react-native-svg'
+import { InlineErrorConfig } from '../../container-api'
 
 export enum InlineErrorType {
   error,
@@ -12,6 +13,7 @@ export enum InlineErrorType {
 export interface InlineMessageProps {
   message: string
   inlineType: InlineErrorType
+  config: InlineErrorConfig
 }
 
 const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType }) => {
@@ -20,7 +22,7 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType }) 
     container: {
       flexDirection: 'row',
       alignContent: 'center',
-      marginBottom: 5,
+      marginVertical: 5,
       paddingRight: 20,
     },
     icon: { marginRight: 4 },

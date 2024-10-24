@@ -70,11 +70,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [PINCreateHeader, { PINSecurity }, Button, inlineMessagesEnabled] = useServices([
+  const [PINCreateHeader, { PINSecurity }, Button, inlineMessages] = useServices([
     TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
-    TOKENS.ENABLE_INLINE_ERRORS,
+    TOKENS.INLINE_ERRORS,
   ])
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
@@ -134,23 +134,22 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
 
   const attentionMessage = useCallback(
     (title: string, message: string, pinOne: boolean) => {
-      if (inlineMessagesEnabled) {
+      if (inlineMessages.enabled) {
+        const config = {
+          message: message,
+          inlineType: InlineErrorType.error,
+          config: inlineMessages,
+        }
         if (pinOne) {
-          setInlineMessageField1({
-            message: message,
-            inlineType: InlineErrorType.error,
-          })
+          setInlineMessageField1(config)
         } else {
-          setInlineMessageField2({
-            message: message,
-            inlineType: InlineErrorType.error,
-          })
+          setInlineMessageField2(config)
         }
       } else {
         displayModalMessage(title, message)
       }
     },
-    [inlineMessagesEnabled]
+    [inlineMessages]
   )
 
   const validatePINEntry = useCallback(
@@ -221,7 +220,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   }
 
   const isContinueDisabled = (): boolean => {
-    if (inlineMessagesEnabled) {
+    if (inlineMessages) {
       return false
     }
     return !continueEnabled || PIN.length < minPINLength || PINTwo.length < minPINLength
