@@ -1,14 +1,20 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, Image, View, DeviceEventEmitter, InteractionManager } from 'react-native'
+import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
-import { minPINLength, attemptLockoutBaseRules, attemptLockoutThresholdRules, EventTypes } from '../constants'
+import {
+  minPINLength,
+  attemptLockoutBaseRules,
+  attemptLockoutThresholdRules,
+  EventTypes,
+  defaultAutoLockTime,
+} from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
@@ -66,8 +72,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     helpText: {
       ...TextTheme.normal,
-      alignSelf: 'center',
-      textAlign: 'center',
+      alignSelf: 'auto',
+      textAlign: 'left',
       marginBottom: 16,
     },
     modalText: {
@@ -79,6 +85,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       height: Assets.img.logoSecondary.height,
       width: Assets.img.logoSecondary.width,
       resizeMode: Assets.img.logoSecondary.resizeMode,
+    },
+    title: {
+      ...TextTheme.headingTwo,
+      marginBottom: 20,
+    },
+    subTitle: {
+      ...TextTheme.labelSubtitle,
+      marginBottom: 20,
+    },
+    subText: {
+      ...TextTheme.bold,
+      marginBottom: 20,
     },
   })
 
@@ -342,7 +360,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     if (store.lockout.displayNotification) {
       return (
         <>
-          <Text style={style.helpText}>{t('PINEnter.LockedOut')}</Text>
+          <Text style={style.helpText}>
+            {t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })}
+          </Text>
           <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
         </>
       )
@@ -366,15 +386,30 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       )
     }
 
-    return <Text style={style.helpText}>{t('PINEnter.EnterPIN')}</Text>
-  }, [store.lockout.displayNotification, style.helpText, t, biometricsEnrollmentChange, biometricsErr])
+    return (
+      <>
+        <Text style={style.title}>{t('PINEnter.Title')}</Text>
+        <Text style={style.subTitle}>{t('PINEnter.SubText')}</Text>
+      </>
+    )
+  }, [
+    store.lockout.displayNotification,
+    style.helpText,
+    t,
+    biometricsEnrollmentChange,
+    biometricsErr,
+    style.subTitle,
+    style.title,
+    store.preferences.autoLockTime,
+  ])
 
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <Image source={Assets.img.logoSecondary.src} style={style.image} />
+          {/* <Image source={Assets.img.logoSecondary.src} style={style.image} /> */}
           {displayHelpText()}
+          <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)

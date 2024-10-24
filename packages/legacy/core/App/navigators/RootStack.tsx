@@ -8,14 +8,13 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, DeviceEventEmitter } from 'react-native'
 
-import HeaderButton, { ButtonLocation } from '../components/buttons/HeaderButton'
-import { EventTypes, walletTimeout } from '../constants'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
-import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -38,19 +37,15 @@ import { useDefaultStackOptions } from './defaultStackOptions'
 
 const RootStack: React.FC = () => {
   const [store, dispatch] = useStore()
-  const { removeSavedWalletSecret } = useAuth()
   const { agent } = useAgent()
   const appState = useRef(AppState.currentState)
-  const [backgroundTime, setBackgroundTime] = useState<number | undefined>(undefined)
-  const [prevAppStateVisible, setPrevAppStateVisible] = useState<string>('')
-  const [appStateVisible, setAppStateVisible] = useState<string>('')
   const [inBackground, setInBackground] = useState<boolean>(false)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, loadState] =
-    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.LOAD_STATE])
+  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, CustomNavStack1, loadState] =
+    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.CUSTOM_NAV_STACK_1, TOKENS.LOAD_STATE])
 
   useDeepLinks()
 
@@ -67,39 +62,13 @@ const RootStack: React.FC = () => {
     })
   }, [declinedProofs, agent, store.preferences.useDataRetention])
 
-  const lockoutUser = useCallback(async () => {
-    if (agent && store.authentication.didAuthenticate) {
-      // make sure agent is shutdown so wallet
-      // isn't still open
-      removeSavedWalletSecret()
-
-      try {
-        await agent.wallet.close()
-
-        logger.info('Closed agent wallet')
-      } catch (error) {
-        logger.error(`Error closing agent wallet, ${error}`)
-      }
-
-      dispatch({
-        type: DispatchAction.DID_AUTHENTICATE,
-        payload: [{ didAuthenticate: false }],
-      })
-
-      dispatch({
-        type: DispatchAction.LOCKOUT_UPDATED,
-        payload: [{ displayNotification: true }],
-      })
-    }
-  }, [agent, dispatch, logger, removeSavedWalletSecret, store.authentication.didAuthenticate])
-
   useEffect(() => {
     loadState(dispatch)
       .then(() => {
         dispatch({ type: DispatchAction.STATE_LOADED })
       })
-      .catch((err) => {
-        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), err.message, 1001)
+      .catch((err: unknown) => {
+        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [dispatch, loadState, t])
@@ -207,49 +176,12 @@ const RootStack: React.FC = () => {
           return
         }
 
-        //update time that app gets put in background
         setInBackground(true)
-        setBackgroundTime(Date.now())
       }
 
-      setPrevAppStateVisible(appState.current)
       appState.current = nextAppState
-      setAppStateVisible(appState.current)
     })
   }, [])
-
-  useEffect(() => {
-    const lockoutCheck = async () => {
-      //lock user out after 5 minutes
-      if (
-        !store.preferences.preventAutoLock &&
-        walletTimeout &&
-        backgroundTime &&
-        Date.now() - backgroundTime > walletTimeout
-      ) {
-        await lockoutUser()
-        return true
-      }
-
-      return false
-    }
-
-    if (appStateVisible === 'active' && ['inactive', 'background'].includes(prevAppStateVisible) && backgroundTime) {
-      // prevents the user from being locked out during metro reloading
-      setPrevAppStateVisible(appStateVisible)
-
-      lockoutCheck().then((lockoutInProgress) => {
-        if (lockoutInProgress) {
-          const unsubscribe = navigation.addListener('state', (): void => {
-            setInBackground(false)
-            unsubscribe()
-          })
-        } else {
-          setInBackground(false)
-        }
-      })
-    }
-  }, [store.preferences.preventAutoLock, lockoutUser, navigation, appStateVisible, prevAppStateVisible, backgroundTime])
 
   const mainStack = () => {
     const Stack = createStackNavigator()
@@ -272,7 +204,7 @@ const RootStack: React.FC = () => {
             headerShown: true,
             title: t('Screens.CredentialOffer'),
             headerLeft: () => (
-              <HeaderButton
+              <IconButton
                 buttonLocation={ButtonLocation.Left}
                 accessibilityLabel={t('Global.Back')}
                 testID={testIdWithKey('BackButton')}
@@ -311,6 +243,9 @@ const RootStack: React.FC = () => {
             cardStyleInterpolator: forFade,
           }}
         />
+        {CustomNavStack1 ? (
+          <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} />
+        ) : null}
       </Stack.Navigator>
     )
   }

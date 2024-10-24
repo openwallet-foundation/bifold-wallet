@@ -24,7 +24,7 @@ const TabStack: React.FC = () => {
   const notifications = useNotifications({})
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
-  const { assertConnectedNetwork } = useNetwork()
+  const { assertNetworkConnected } = useNetwork()
   const { ColorPallet, TabTheme, TextTheme } = useTheme()
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
@@ -161,7 +161,7 @@ const TabStack: React.FC = () => {
           listeners={({ navigation }) => ({
             tabPress: (e) => {
               e.preventDefault()
-              if (!assertConnectedNetwork()) {
+              if (!assertNetworkConnected()) {
                 return
               }
               navigation.navigate(Stacks.ConnectStack, { screen: Screens.Scan })

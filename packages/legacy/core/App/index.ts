@@ -7,7 +7,7 @@ import AgentProvider from '@credo-ts/react-hooks'
 import App from './App'
 import * as components from './components'
 import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
-import HeaderButton, { ButtonLocation } from './components/buttons/HeaderButton'
+import IconButton, { ButtonLocation } from './components/buttons/IconButton'
 import BulletPoint from './components/inputs/BulletPoint'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
@@ -45,8 +45,10 @@ import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
+import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
+import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
 
 export * from './navigators'
 export * from './services/storage'
@@ -125,21 +127,24 @@ export {
   credentialOfferTourSteps,
   proofRequestTourSteps,
   ButtonType,
-  HeaderButton,
   ButtonLocation,
   CheckBoxRow,
   CredentialCard,
   ContentGradient,
   ErrorModal,
+  IconButton,
+  InactivityWrapper,
   InfoTextBox,
   InfoBox,
   InfoBoxType,
   Link,
+  AutoLockTime,
   ToastType,
   toastConfig,
   NetInfo,
   OnboardingPages,
   NotificationListItem,
+  useDefaultStackOptions,
   Splash,
   Developer,
   Terms,
