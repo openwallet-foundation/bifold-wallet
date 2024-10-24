@@ -31,17 +31,21 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 8,
+      justifyContent: 'space-between',
+    },
+    credentialContainer: {
+      flex: 9,
     },
     iconContainer: {
+      flex: 1,
       padding: 8,
     },
   })
 
   const icon = {
     color: ColorPallet.brand.primary,
-    height: 48,
     width: 48,
+    height: 48,
   }
 
   return (
@@ -52,7 +56,7 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
       accessibilityLabel={`${t('ContactDetails.CredentialName')}: ${overlay?.metaOverlay?.name}`}
       accessibilityRole={'button'}
     >
-      <View style={{ flex: 4 }}>
+      <View style={styles.credentialContainer}>
         <Text style={{ ...TextTheme.normal }}>{overlay?.metaOverlay?.name}</Text>
       </View>
       <View style={styles.iconContainer}>
