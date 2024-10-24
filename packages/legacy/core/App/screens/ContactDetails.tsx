@@ -57,7 +57,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
 
-  const [{ showConnectedTime, editContact }] = useServices([TOKENS.SCREEN_CONTACT_DETAILS])
+  const [{ contactDetailsOptions }] = useServices([TOKENS.CONFIG])
 
   const styles = StyleSheet.create({
     contentContainer: {
@@ -173,7 +173,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           {contactImage()}
           <Text style={styles.contactLabel}>{contactLabel}</Text>
         </View>
-        {showConnectedTime && (
+        {contactDetailsOptions?.showConnectedTime && (
           <Text style={{ ...TextTheme.normal, marginTop: 20 }}>
             {t('ContactDetails.DateOfConnection', {
               date: connection?.createdAt ? formatTime(connection.createdAt, { includeHour: true }) : '',
@@ -200,7 +200,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         />
       </View>
       <View>
-        {editContact && (
+        {contactDetailsOptions?.enableEditContactName && (
           <TouchableOpacity
             onPress={callGoToRename}
             accessibilityLabel={t('Screens.RenameContact')}

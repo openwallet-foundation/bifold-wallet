@@ -44,18 +44,25 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
+import { Config } from './types/config'
+import { Locales } from './localization'
+import ContactListItem from './components/listItems/ContactListItem'
 
-export const defaultConfig = {
+export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   settings: [],
   enableTours: false,
-  supportedLanguages: ['en', 'fr', 'pt-BR'],
+  supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   showPreface: false,
   disableOnboardingSkip: false,
   whereToUseWalletUrl: 'https://example.com',
   showScanHelp: true,
   showScanButton: true,
   showDetailsInfo: true,
+  contactDetailsOptions: {
+    showConnectedTime: true,
+    enableEditContactName: true,
+  },
 }
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
@@ -86,7 +93,6 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
-    this.container.registerInstance(TOKENS.SCREEN_CONTACT_DETAILS, { showConnectedTime: true, editContact: true })
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
@@ -111,6 +117,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
+    this._container.registerInstance(TOKENS.COMPONENT_CONTACT_LIST_ITEM, ContactListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
     this._container.registerInstance(

@@ -186,7 +186,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
             {renderCardDate(item.content.createdAt)}
           </View>
           <View style={styles.arrowContainer}>
-            <Assets.svg.iconChevronRight {...{ color: ColorPallet.brand.primary }} />
+            <Assets.svg.iconChevronRight color={ColorPallet.brand.primary} />
           </View>
         </View>
         <View style={styles.cardBottomBorder} />

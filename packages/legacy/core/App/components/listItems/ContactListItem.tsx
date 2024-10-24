@@ -12,12 +12,12 @@ import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import { formatTime, getConnectionName } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
-interface Props {
+export interface ContactListItemProps {
   contact: ConnectionRecord
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
 }
 
-const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
+const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet, ListItems } = useTheme()
   const messages = useChatMessagesByConnection(contact)
@@ -80,10 +80,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
     () => getConnectionName(contact, store.preferences.alternateContactNames),
     [contact, store.preferences.alternateContactNames]
   )
-  const contactLabelAbbr = useMemo(
-    () => contactLabel?.charAt(0).toUpperCase(),
-    [contactLabel]
-  )
+  const contactLabelAbbr = useMemo(() => contactLabel?.charAt(0).toUpperCase(), [contactLabel])
 
   return (
     <TouchableOpacity
