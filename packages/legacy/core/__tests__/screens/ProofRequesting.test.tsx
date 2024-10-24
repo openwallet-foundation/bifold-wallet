@@ -20,6 +20,7 @@ import { useNavigation as testUseNavigation } from '../../__mocks__/@react-navig
 import { testIdWithKey } from '../../App'
 import * as proofRequestTemplatesHooks from '../../App/hooks/proof-request-templates'
 import ProofRequesting from '../../App/screens/ProofRequesting'
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@hyperledger/aries-bifold-verifier', () => {
@@ -120,7 +121,11 @@ describe('ProofRequesting Component', () => {
   })
 
   const renderView = (params?: { templateId: string; predicateValues: any }) => {
-    return render(<ProofRequesting navigation={testUseNavigation() as any} route={{ params } as any} />)
+    return render(
+      <BasicAppContext>
+        <ProofRequesting navigation={testUseNavigation() as any} route={{ params } as any} />
+      </BasicAppContext>
+    )
   }
 
   test('renders correctly', async () => {
