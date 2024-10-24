@@ -80,7 +80,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<Props>> 
   function checkAgent() {
     if (!agent) {
       const error = 'Agent undefined!'
-      logger.error(`[OpenIDCredentialRecordProvider][deleteCredential] ${error}`)
+      logger.error(`[OpenIDCredentialRecordProvider] ${error}`)
       throw new Error(error)
     }
   }
