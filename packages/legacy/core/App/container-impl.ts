@@ -44,12 +44,15 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
+import { Config } from './types/config'
+import { Locales } from './localization'
 
-export const defaultConfig = {
+export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   settings: [],
+  enableChat: true,
   enableTours: false,
-  supportedLanguages: ['en', 'fr', 'pt-BR'],
+  supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   showPreface: false,
   disableOnboardingSkip: false,
   whereToUseWalletUrl: 'https://example.com',
