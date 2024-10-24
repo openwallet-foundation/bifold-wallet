@@ -84,6 +84,10 @@ export const COMP_TOKENS = {
   COMP_BUTTON: 'comp.button',
 } as const
 
+export const CHAT_TOKENS = {
+  CHAT_ENABLED: 'chat.enabled',
+} as const
+
 export const SERVICE_TOKENS = {
   SERVICE_TERMS: 'screen.terms',
 } as const
@@ -129,6 +133,7 @@ export const TOKENS = {
   ...UTILITY_TOKENS,
   ...CONFIG_TOKENS,
   ...HISTORY_TOKENS,
+  ...CHAT_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
@@ -168,6 +173,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.HISTORY_ENABLED]: boolean
+  [TOKENS.CHAT_ENABLED]: boolean
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
