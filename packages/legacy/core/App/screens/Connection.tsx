@@ -22,6 +22,8 @@ import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { testIdWithKey } from '../utils/testable'
+import Toast from 'react-native-toast-message'
+import { ToastType } from '../components/toast/BaseToast'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -46,8 +48,12 @@ const GoalCodes = {
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { oobRecordId, openIDUri, proofId, credentialId } = route.params
-  const [logger, { useNotifications }, { connectionTimerDelay, autoRedirectConnectionToHome }, attestationMonitor] =
-    useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
+  const [
+    logger,
+    { useNotifications },
+    { connectionTimerDelay, autoRedirectConnectionToHome, enableChat },
+    attestationMonitor,
+  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({ openIDUri: openIDUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
@@ -67,6 +73,27 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       flex: 1,
     },
   })
+
+  const handleNavigation = useCallback(
+    (connectionId: string) => {
+      dispatch({ inProgress: false })
+      if (enableChat) {
+        navigation.getParent()?.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId } }],
+          })
+        )
+      } else {
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+        Toast.show({
+          type: ToastType.Success,
+          text1: t('Connection.ConnectionCompleted'),
+        })
+      }
+    },
+    [dispatch, navigation, enableChat, t]
+  )
 
   const onDismissModalTouched = useCallback(() => {
     dispatch({ inProgress: false })
@@ -133,13 +160,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
-      dispatch({ inProgress: false })
-      navigation.getParent()?.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
-        })
-      )
+      handleNavigation(connection.id)
 
       return
     }
@@ -188,14 +209,18 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
 
-    dispatch({ inProgress: false })
-    navigation.getParent()?.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: Stacks.TabStack }, { name: Screens.Chat, params: { connectionId: connection.id } }],
-      })
-    )
-  }, [oobRecord, state.inProgress, connection, logger, dispatch, navigation, t, state.notificationRecord])
+    handleNavigation(connection.id)
+  }, [
+    oobRecord,
+    state.inProgress,
+    connection,
+    logger,
+    dispatch,
+    navigation,
+    t,
+    state.notificationRecord,
+    handleNavigation,
+  ])
 
   // This hook will monitor notification for openID type credentials
   // where there is not connection or oobID present

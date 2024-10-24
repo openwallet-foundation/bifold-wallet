@@ -51,6 +51,7 @@ import ContactListItem from './components/listItems/ContactListItem'
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   settings: [],
+  enableChat: true,
   enableTours: false,
   supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   showPreface: false,
