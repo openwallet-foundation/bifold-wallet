@@ -24,7 +24,7 @@ const PINInputComponent = (
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
-  const { TextTheme, PINInputTheme, ColorPallet } = useTheme()
+  const { TextTheme, PINInputTheme } = useTheme()
   const cellHeight = 48
   const onChangeText = (value: string) => {
     onPINChanged && onPINChanged(value)
@@ -39,18 +39,6 @@ const PINInputComponent = (
     container: {
       flexDirection: 'column',
       marginBottom: 24,
-    },
-    labelAndFieldContainer: {
-      flexDirection: 'column',
-    },
-    codeFieldRoot: {
-      flexDirection: 'row',
-      borderRadius: 5,
-      paddingHorizontal: 12,
-      paddingVertical: 4,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      ...PINInputTheme.cell,
     },
     codeFieldContainer: {
       flex: 1,
@@ -74,8 +62,7 @@ const PINInputComponent = (
   return (
     <View style={style.container}>
       {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
-      <View style={style.labelAndFieldContainer}>
-        <View style={[style.codeFieldRoot, { borderWidth: 1, borderColor: ColorPallet.brand.text }]}>
+      <View style={PINInputTheme.labelAndFieldContainer}>
           <View style={style.codeFieldContainer}>
             <CodeField
               {...props}
@@ -83,7 +70,7 @@ const PINInputComponent = (
               accessibilityLabel={accessibilityLabel}
               accessible
               value={PIN}
-              rootStyle={style.codeFieldRoot}
+              rootStyle={PINInputTheme.codeFieldRoot}
               onChangeText={onChangeText}
               cellCount={minPINLength}
               keyboardType="numeric"
@@ -117,7 +104,6 @@ const PINInputComponent = (
           >
             <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30} />
           </TouchableOpacity>
-        </View>
       </View>
     </View>
   )
