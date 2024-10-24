@@ -46,6 +46,7 @@ import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
 import { Config } from './types/config'
 import { Locales } from './localization'
+import ContactListItem from './components/listItems/ContactListItem'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -59,6 +60,10 @@ export const defaultConfig: Config = {
   showScanHelp: true,
   showScanButton: true,
   showDetailsInfo: true,
+  contactDetailsOptions: {
+    showConnectedTime: true,
+    enableEditContactName: true,
+  },
 }
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
@@ -113,6 +118,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
+    this._container.registerInstance(TOKENS.COMPONENT_CONTACT_LIST_ITEM, ContactListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
     this._container.registerInstance(

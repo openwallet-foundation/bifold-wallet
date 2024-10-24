@@ -5,7 +5,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../../../../contexts/theme'
 import { CustomRecord, HistoryCardType } from '../../types'
 
-
 interface Props {
   item: CustomRecord
 }
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
 
 const HistoryListItem: React.FC<Props> = ({ item }) => {
   const { t } = useTranslation()
-  const { TextTheme, Assets } = useTheme()
+  const { TextTheme, Assets, ColorPallet } = useTheme()
   //TODO: navigate to history details
   //   const navigation = useNavigation<StackNavigationProp<RootStackParams, 'HistoryDetails'>>()
 
@@ -187,7 +186,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
             {renderCardDate(item.content.createdAt)}
           </View>
           <View style={styles.arrowContainer}>
-            <Assets.svg.iconChevronRight />
+            <Assets.svg.iconChevronRight color={ColorPallet.brand.primary} />
           </View>
         </View>
         <View style={styles.cardBottomBorder} />
