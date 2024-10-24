@@ -167,12 +167,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   }
 
   return (
-    <>
-    { explained ||
-      <PINExplainer continueCreatePIN={continueCreatePIN} />
-    }
-    { explained &&
-      <KeyboardView>
+    explained ?
+      (<KeyboardView>
         <View style={style.screenContainer}>
           <View style={style.contentContainer}>
             <PINCreateHeader updatePin={updatePin} />
@@ -299,9 +295,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
             </Button>
           </View>
         </View>
-      </KeyboardView>
-    }
-    </>
+      </KeyboardView>)
+      : (<PINExplainer continueCreatePIN={continueCreatePIN} />)
   )
 }
 
