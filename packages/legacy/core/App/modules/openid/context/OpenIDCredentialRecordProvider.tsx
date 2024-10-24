@@ -49,7 +49,7 @@ const removeRecord = (record: W3cCredentialRecord, state: OpenIDCredentialRecord
   }
 }
 
-const defaultSate: OpenIDCredentialRecordState = {
+const defaultState: OpenIDCredentialRecordState = {
   openIDCredentialRecords: [],
   w3cCredentialRecords: [],
   sdJwtVcRecords: [],
@@ -72,7 +72,7 @@ const filterW3CCredentialsOnly = (credentials: W3cCredentialRecord[]) => {
 
 // eslint-disable-next-line react/prop-types
 export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<Props>> = ({ children }) => {
-  const [state, setState] = useState<OpenIDCredentialRecordState>(defaultSate)
+  const [state, setState] = useState<OpenIDCredentialRecordState>(defaultState)
 
   const { agent } = useAgent()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
