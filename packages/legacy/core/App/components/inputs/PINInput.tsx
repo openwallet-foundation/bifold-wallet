@@ -24,7 +24,7 @@ const PINInputComponent = (
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
-  const { TextTheme, PINInputTheme, ColorPallet } = useTheme()
+  const { TextTheme, PINInputTheme } = useTheme()
   const cellHeight = 48
   const onChangeText = (value: string) => {
     onPINChanged && onPINChanged(value)
