@@ -18,6 +18,7 @@ export interface Config {
   supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
+  enableChat?: boolean
   enableTours?: boolean
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
