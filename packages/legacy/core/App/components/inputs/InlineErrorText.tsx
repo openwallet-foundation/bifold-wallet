@@ -16,7 +16,7 @@ export interface InlineMessageProps {
   config: InlineErrorConfig
 }
 
-const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType }) => {
+const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType, config }) => {
   const { InputInlineMessage } = useTheme()
   const style = StyleSheet.create({
     container: {
@@ -36,7 +36,7 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType }) 
   const props: SvgProps = { height: 16, width: 16, color: color, style: style.icon }
 
   return (
-    <View style={style.container}>
+    <View style={[style.container, config.style]}>
       {inlineType === InlineErrorType.warning ? (
         <InputInlineMessage.InlineWarningIcon {...props} />
       ) : (
