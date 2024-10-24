@@ -53,7 +53,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       const error = new BifoldError(
         t('Error.Title1047'),
         t('Error.Message1047'),
-        'Error[Logical] credentialDisplay and  credentialRecord are undefined!',
+        'Error[Logical] credentialDisplay and credentialRecord are undefined',
         1047
       )
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
