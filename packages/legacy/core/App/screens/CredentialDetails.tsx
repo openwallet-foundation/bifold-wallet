@@ -138,7 +138,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay(o => ({
+      setOverlay((o) => ({
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
