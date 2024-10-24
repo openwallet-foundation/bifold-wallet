@@ -40,8 +40,7 @@ const ListCredentials: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const { openIdState } = useOpenIDCredentials()
-  const { w3cCredentialRecords } = openIdState
+  const { openIdState: { w3cCredentialRecords } } = useOpenIDCredentials()
 
   let credentials: GenericCredentialExchangeRecord[] = [
     ...useCredentialByState(CredentialState.CredentialReceived),
