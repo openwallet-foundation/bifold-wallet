@@ -22,6 +22,7 @@ import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { useOutOfBandByConnectionId } from '../hooks/connections'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -244,6 +245,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { recordId, isHistory, senderReview } = route.params
   const record = useProofById(recordId)
   const connection = useConnectionById(record?.connectionId ?? '')
+  const goalCode = useOutOfBandByConnectionId(connection?.id ?? '')?.outOfBandInvitation.goalCode
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [store] = useStore()
@@ -270,13 +272,14 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
     if (
       record &&
       record.connectionId &&
-      (record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen
+      ((record.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata).delete_conn_after_seen ||
+        goalCode?.endsWith('verify.once'))
     ) {
       promises.push(agent.connections.deleteById(record.connectionId))
     }
 
     return Promise.allSettled(promises)
-  }, [store.preferences.useDataRetention, agent, recordId, record])
+  }, [store.preferences.useDataRetention, agent, recordId, record, goalCode])
 
   const onBackPressed = useCallback(() => {
     cleanup()?.catch((err) => logger.error(`Error cleaning up proof, ${err}`))
