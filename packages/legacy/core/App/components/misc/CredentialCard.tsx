@@ -84,11 +84,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
   }
 
-  const renderOpenIDCredential = () => {
-    return <OpenIDCredentialCard credentialRecord={credential as W3cCredentialRecord} onPress={onPress} />
-  }
   if (credential instanceof W3cCredentialRecord) {
-    return renderOpenIDCredential()
+    return <OpenIDCredentialCard credentialRecord={credential as W3cCredentialRecord} onPress={onPress} />
   } else {
     return getCredOverlayType(bundleResolver.getBrandingOverlayType())
   }
