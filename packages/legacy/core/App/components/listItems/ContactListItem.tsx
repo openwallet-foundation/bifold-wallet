@@ -25,7 +25,7 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   const message = messages[0]
   const hasOnlyInitialMessage = messages.length < 2
   const [store] = useStore()
-  const [chatEnabled] = useServices([TOKENS.CHAT_ENABLED])
+  const [{ enableChat }] = useServices([TOKENS.CONFIG])
 
   const styles = StyleSheet.create({
     container: {
@@ -74,10 +74,10 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
 
   const navigateToContact = useCallback(() => {
     navigation.getParent()?.navigate(Stacks.ContactStack, {
-      screen: chatEnabled ? Screens.Chat : Screens.ContactDetails,
+      screen: enableChat ? Screens.Chat : Screens.ContactDetails,
       params: { connectionId: contact.id },
     })
-  }, [navigation, contact, chatEnabled])
+  }, [navigation, contact, enableChat])
 
   const contactLabel = useMemo(
     () => getConnectionName(contact, store.preferences.alternateContactNames),

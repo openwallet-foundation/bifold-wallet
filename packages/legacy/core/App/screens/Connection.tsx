@@ -51,16 +51,9 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const [
     logger,
     { useNotifications },
-    { connectionTimerDelay, autoRedirectConnectionToHome },
+    { connectionTimerDelay, autoRedirectConnectionToHome, enableChat },
     attestationMonitor,
-    chatEnabled,
-  ] = useServices([
-    TOKENS.UTIL_LOGGER,
-    TOKENS.NOTIFICATIONS,
-    TOKENS.CONFIG,
-    TOKENS.UTIL_ATTESTATION_MONITOR,
-    TOKENS.CHAT_ENABLED,
-  ])
+  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({ openIDUri: openIDUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
@@ -84,7 +77,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const handleNavigation = useCallback(
     (connectionId: string) => {
       dispatch({ inProgress: false })
-      if (chatEnabled) {
+      if (enableChat) {
         navigation.getParent()?.dispatch(
           CommonActions.reset({
             index: 1,
@@ -99,7 +92,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         })
       }
     },
-    [dispatch, navigation, chatEnabled, t]
+    [dispatch, navigation, enableChat, t]
   )
 
   const onDismissModalTouched = useCallback(() => {

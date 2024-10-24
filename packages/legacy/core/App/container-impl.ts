@@ -44,12 +44,15 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
+import { Config } from './types/config'
+import { Locales } from './localization'
 
-export const defaultConfig = {
+export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   settings: [],
+  enableChat: true,
   enableTours: false,
-  supportedLanguages: ['en', 'fr', 'pt-BR'],
+  supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   showPreface: false,
   disableOnboardingSkip: false,
   whereToUseWalletUrl: 'https://example.com',
@@ -90,7 +93,6 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
     this._container.registerInstance(TOKENS.HISTORY_ENABLED, false)
-    this._container.registerInstance(TOKENS.CHAT_ENABLED, true)
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_ONBOARDING_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
