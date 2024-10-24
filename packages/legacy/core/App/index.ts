@@ -108,6 +108,9 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+
+export type { InlineMessageProps } from './components/inputs/InlineErrorText'
+
 export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
