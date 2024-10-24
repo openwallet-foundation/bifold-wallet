@@ -1,9 +1,4 @@
-import React, { useEffect } from 'react'
-/*
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { AuthenticateStackParams, Screens } from '../../types/navigators'
-*/
+import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Button, { ButtonType } from '../components/buttons/Button'
 import BulletPoint from '../components/inputs/BulletPoint'
@@ -17,7 +12,7 @@ export interface PINExplainerProps {
   continueCreatePIN: () => void
 }
 
-const Component: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
+const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme, Assets } = useTheme()
 
@@ -42,12 +37,6 @@ const Component: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
     fill: ColorPallet.notification.infoText,
     height: 150,
     width: 150,
-  }
-  
-  // const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const pressBack = () => {
-    // No handler on Back action yet
-    // navigation.navigate(Screens.Terms)
   }
 
   return (
@@ -85,19 +74,10 @@ const Component: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
               buttonType={ButtonType.Primary}
             />
           </View>
-          <View style={[{ paddingTop: 10, marginBottom: 20 }]}>
-            <Button
-              title={t('Global.Back')}
-              accessibilityLabel={t('Global.Back')}
-              testID={testIdWithKey('Back')}
-              onPress={pressBack}
-              buttonType={ButtonType.Secondary}
-            />
-          </View>
         </View>
       </View>
     </ScrollView>
   )
 }
 
-export default Component
+export default PINExplainer
