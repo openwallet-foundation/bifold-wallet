@@ -35,7 +35,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
 
   const backgroundColor = toggleAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [ColorPallet.grayscale.lightGrey, ColorPallet.brand.primaryDisabled],
+    outputRange: [ColorPallet.grayscale.lightGrey, ColorPallet.brand.primary],
   })
 
   const translateX = toggleAnim.interpolate({

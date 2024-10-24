@@ -132,7 +132,7 @@ exports[`ToggleButton Component renders correctly when enabled 1`] = `
     collapsable={false}
     style={
       Object {
-        "backgroundColor": "rgba(53, 130, 63, 0.349)",
+        "backgroundColor": "rgba(66, 128, 62, 1)",
         "borderRadius": 25,
         "height": 30,
         "justifyContent": "center",
