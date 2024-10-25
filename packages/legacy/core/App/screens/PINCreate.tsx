@@ -34,6 +34,7 @@ import { testIdWithKey } from '../utils/testable'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
+  explainedStatus: boolean
 }
 
 interface ModalState {
@@ -43,7 +44,7 @@ interface ModalState {
   onModalDismiss?: () => void
 }
 
-const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
+const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus, route }) => {
   const updatePin = (route.params as any)?.updatePin
   const { setPIN: setWalletPIN, checkPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
@@ -56,7 +57,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     title: '',
     message: '',
   })
-  const [explained, setExplained] = useState(false);
+  const [explained, setExplained] = useState(explainedStatus);
   const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
