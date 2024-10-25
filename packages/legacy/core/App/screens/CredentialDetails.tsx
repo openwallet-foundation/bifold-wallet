@@ -166,7 +166,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
 
   useEffect(() => {
-    if (credential && credential?.revocationNotification) {
+    if (credential?.revocationNotification) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
       agent?.credentials.update(credential)
