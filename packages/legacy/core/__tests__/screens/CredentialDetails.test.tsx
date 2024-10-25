@@ -9,8 +9,6 @@ import { hiddenFieldValue } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 import { BasicAppContext } from '../helpers/app'
 
-jest.mock('@credo-ts/react-hooks')
-
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
     role: CredentialRole.Holder,
@@ -46,6 +44,7 @@ const buildCredentialExchangeRecord = () => {
   return testOpenVPCredentialRecord
 }
 
+jest.mock('@credo-ts/react-hooks')
 jest.mock('react-native-localize', () => {
   return require('../../__mocks__/custom/react-native-localize')
 })
