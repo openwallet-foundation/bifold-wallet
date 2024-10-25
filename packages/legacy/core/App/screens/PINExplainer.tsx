@@ -3,9 +3,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import Button, { ButtonType } from '../components/buttons/Button'
 import BulletPoint from '../components/inputs/BulletPoint'
 import { testIdWithKey } from '../utils/testable'
-
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-
 import { useTheme } from '../contexts/theme'
 
 export interface PINExplainerProps {
@@ -53,6 +51,7 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
               t={t}
             />
           </Text>
+          
         </View>
         <View style={style.imageContainer}>
           <Assets.svg.secureCheck {...imageDisplayOptions} />
@@ -69,7 +68,7 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
             <Button
               title={t('Global.Continue')}
               accessibilityLabel={t('Global.Continue')}
-              testID={testIdWithKey('Continue')}
+              testID={testIdWithKey('ContinueCreatePIN')}
               onPress={continueCreatePIN}
               buttonType={ButtonType.Primary}
             />

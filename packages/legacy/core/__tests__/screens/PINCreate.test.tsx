@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native'
+import { render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
 import { AuthContext } from '../../App/contexts/auth'
@@ -26,7 +26,9 @@ describe('PINCreate Screen', () => {
         </StoreProvider>
       </ContainerProvider>
     )
-
+    const continueButton = tree.getByTestId(testIdWithKey('ContinueCreatePIN'))
+    fireEvent(continueButton, 'press')
+    
     // Causes RangeError: Invalid string length
     // expect(tree).toMatchSnapshot()
     const pinInput1 = tree.getByTestId(testIdWithKey('EnterPIN'))

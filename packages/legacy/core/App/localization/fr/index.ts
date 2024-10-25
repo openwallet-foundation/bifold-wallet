@@ -190,13 +190,13 @@ const translation = {
     },
     "PINCreate": {
         "Explainer": {
-          "PrimaryHeading": "Secure your Wallet",
-          "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN).",
+          "PrimaryHeading": "Secure your Wallet (FR)",
+          "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN). (FR)",
           "WhyNeedPin": {
-            "Header": "Why you need a PIN",
-            "Paragraph": "Your PIN is an important security feature:",
-            "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet",
-            "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet"
+            "Header": "Why you need a PIN (FR)",
+            "Paragraph": "Your PIN is an important security feature: (FR)",
+            "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet (FR)",
+            "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet (FR)"
           }
         },
         "Message": {
