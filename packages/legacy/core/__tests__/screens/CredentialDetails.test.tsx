@@ -1,6 +1,6 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
-import { useCredentialById } from '@credo-ts/react-hooks'
+import { useAgent, useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
@@ -8,6 +8,8 @@ import React from 'react'
 import { hiddenFieldValue } from '../../App/constants'
 import CredentialDetails from '../../App/screens/CredentialDetails'
 import { BasicAppContext } from '../helpers/app'
+
+jest.mock('@credo-ts/react-hooks')
 
 const buildCredentialExchangeRecord = () => {
   const testOpenVPCredentialRecord = new CredentialExchangeRecord({
@@ -70,21 +72,26 @@ describe('CredentialDetails Screen', () => {
     cleanup()
   })
 
-  describe('with a credential list item (CardLayout aries/overlays/branding/0.1)', () => {
-
-    beforeEach(() => {
-      jest.clearAllMocks()
-
-      // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
-      useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
+  beforeEach(() => {
+    jest.clearAllMocks()
+    ;(useAgent as jest.Mock).mockReturnValue({
+      agent: {
+        credentials: {
+          getById: jest.fn().mockResolvedValue(mock_testOpenVPCredentialRecord),
+        },
+      },
     })
+    // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
+    useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
+  })
 
+  describe('with a credential list item (CardLayout aries/overlays/branding/0.1)', () => {
     test('a credential name and issued by is displayed', async () => {
       const { findByText } = render(
         <BasicAppContext>
           <CredentialDetails
             navigation={useNavigation()}
-            route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+            route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
           ></CredentialDetails>
         </BasicAppContext>
       )
@@ -98,19 +105,12 @@ describe('CredentialDetails Screen', () => {
   })
 
   describe('with a credential list item (CardLayout aries/overlays/branding/1.0)', () => {
-    beforeEach(() => {
-      jest.clearAllMocks()
-
-      // @ts-expect-error useCredentialById will be replaced with a mock which does have this method
-      useCredentialById.mockReturnValue(mock_testOpenVPCredentialRecord)
-    })
-
     test('a credential name is displayed', async () => {
       const { findByText } = render(
         <BasicAppContext>
           <CredentialDetails
             navigation={useNavigation()}
-            route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+            route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
           ></CredentialDetails>
         </BasicAppContext>
       )
@@ -126,7 +126,7 @@ describe('CredentialDetails Screen', () => {
       <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+          route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
         ></CredentialDetails>
       </BasicAppContext>
     )
@@ -145,7 +145,7 @@ describe('CredentialDetails Screen', () => {
       <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+          route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
         ></CredentialDetails>
       </BasicAppContext>
     )
@@ -160,7 +160,7 @@ describe('CredentialDetails Screen', () => {
       <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+          route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
         ></CredentialDetails>
       </BasicAppContext>
     )
@@ -189,7 +189,7 @@ describe('CredentialDetails Screen', () => {
       <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
-          route={{ params: { credential: mock_testOpenVPCredentialRecord } } as any}
+          route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
         ></CredentialDetails>
       </BasicAppContext>
     )
