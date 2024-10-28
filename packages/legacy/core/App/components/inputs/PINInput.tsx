@@ -27,7 +27,7 @@ const PINInputComponent = (
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
-  const { TextTheme, PINInputTheme, ColorPallet } = useTheme()
+  const { TextTheme, PINInputTheme } = useTheme()
   const cellHeight = 48
   const onChangeText = (value: string) => {
     onPINChanged && onPINChanged(value)
@@ -42,18 +42,6 @@ const PINInputComponent = (
     container: {
       flexDirection: 'column',
       marginBottom: 24,
-    },
-    labelAndFieldContainer: {
-      flexDirection: 'column',
-    },
-    codeFieldRoot: {
-      flexDirection: 'row',
-      borderRadius: 5,
-      paddingHorizontal: 12,
-      paddingVertical: 4,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      ...PINInputTheme.cell,
     },
     codeFieldContainer: {
       flex: 1,

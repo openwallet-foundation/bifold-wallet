@@ -8,6 +8,7 @@ import {
   linkProofWithTemplate,
   sendProofRequest,
 } from '@hyperledger/aries-bifold-verifier'
+import { TOKENS, useServices } from '../container-api'
 import { useIsFocused, useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -72,6 +73,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const proofRecord = useProofById(proofRecordId ?? '')
   const template = useTemplate(templateId)
   const { qrSize, qrContainerSize } = useQrSizeForDevice()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   const styles = StyleSheet.create({
     container: {
@@ -124,14 +126,18 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     try {
       setMessage(undefined)
       setGenerating(true)
+
       const result = await createTempConnectionInvitation(agent, 'verify')
+
       if (result) {
         setConnectionRecordId(result.record.id)
         setMessage(result.invitationUrl)
       }
     } catch (e: unknown) {
       const error = new BifoldError(t('Error.Title1038'), t('Error.Message1038'), (e as Error)?.message ?? e, 1038)
+
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+
       navigation.goBack()
     } finally {
       setGenerating(false)
@@ -142,6 +148,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     useCallback(() => {
       const onBackPress = () => {
         navigation.navigate(Screens.ProofRequests, {})
+
         return true
       }
 
@@ -164,6 +171,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           icon="share-variant"
         />
       )
+
       navigation.setOptions({ headerRight: scanShareUrl })
     }
   }, [message, store.preferences.enableShareableLink, t, navigation])
@@ -178,10 +186,12 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     if (!template) {
       return
     }
+
     const sendAsyncProof = async () => {
       if (record && record.state === DidExchangeState.Completed) {
         //send haptic feedback to verifier that connection is completed
         Vibration.vibrate()
+
         // send proof logic
         const result = await sendProofRequest(agent, template, record.id, predicateValues)
         if (result?.proofRecord) {
@@ -190,15 +200,24 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           result.proofRecord.metadata.set(ProofMetadata.customMetadata, { ...metadata, delete_conn_after_seen: true })
           linkProofWithTemplate(agent, result.proofRecord, templateId)
         }
+
         setProofRecordId(result?.proofRecord.id)
       }
     }
-    sendAsyncProof()
-  }, [template, record, agent, predicateValues, templateId])
+
+    sendAsyncProof().catch((err) => {
+      logger.error(`Error sending proof request ${err}`)
+    })
+  }, [template, record, agent, predicateValues, templateId, logger])
 
   useEffect(() => {
     if (proofRecord && proofRecord.state === ProofState.RequestSent) {
       navigation.navigate(Screens.MobileVerifierLoading, { proofId: proofRecord.id, connectionId: record?.id ?? '' })
+
+      setProofRecordId(undefined)
+      setConnectionRecordId(undefined)
+      setMessage(undefined)
+      setGenerating(true)
     }
   }, [proofRecord, navigation, record?.id])
 
