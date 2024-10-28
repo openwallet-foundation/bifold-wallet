@@ -62,8 +62,7 @@ const PINInputComponent = (
     },
   })
   const content = () => (
-    <View style={style.labelAndFieldContainer}>
-      <View style={[style.codeFieldRoot, { borderWidth: 1, borderColor: ColorPallet.brand.text }]}>
+    <View style={PINInputTheme.labelAndFieldContainer}>
         <View style={style.codeFieldContainer}>
           <CodeField
             {...props}
@@ -71,7 +70,7 @@ const PINInputComponent = (
             accessibilityLabel={accessibilityLabel}
             accessible
             value={PIN}
-            rootStyle={style.codeFieldRoot}
+            rootStyle={PINInputTheme.codeFieldRoot}
             onChangeText={onChangeText}
             cellCount={minPINLength}
             keyboardType="numeric"
@@ -105,7 +104,6 @@ const PINInputComponent = (
         >
           <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30} />
         </TouchableOpacity>
-      </View>
     </View>
   )
 
