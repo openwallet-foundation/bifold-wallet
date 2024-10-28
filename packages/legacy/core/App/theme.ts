@@ -852,6 +852,20 @@ const PINInputTheme = {
   icon: {
     color: ColorPallet.brand.headerIcon,
   },
+  codeFieldRoot: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  labelAndFieldContainer: {
+    flexDirection: 'row',
+    borderRadius: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    alignItems: 'center',
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    borderColor: ColorPallet.brand.secondary,
+    borderWidth: 1,
+  },
 }
 
 export const Assets = {

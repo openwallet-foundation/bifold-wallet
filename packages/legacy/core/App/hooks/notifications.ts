@@ -57,8 +57,12 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
     })
 
     const validProofsDone = proofsDone.filter((proof: ProofExchangeRecord) => {
-      if (proof.isVerified === undefined) return false
+      if (proof.isVerified === undefined) {
+        return false
+      }
+
       const metadata = proof.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
+
       return !metadata?.details_seen
     })
 

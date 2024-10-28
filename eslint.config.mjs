@@ -43,6 +43,7 @@ export default [
       ...reactPlugin.configs.flat.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'error',
+      'no-console': "error",
     },
   },
   {
