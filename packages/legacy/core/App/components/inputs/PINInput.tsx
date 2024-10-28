@@ -107,8 +107,8 @@ const PINInputComponent = (
     </View>
   )
 
-  const inlineMessageView = (props: InlineMessageProps) => (
-    <InlineErrorText message={props.message} inlineType={props.inlineType} config={props.config} />
+  const inlineMessageView = ({message, inlineType, config}: InlineMessageProps) => (
+    <InlineErrorText message={message} inlineType={inlineType} config={config} />
   )
   const inlineMessagePlaceholder = (placment: InlineErrorPosition) => {
     if (inlineMessage && inlineMessage.config.position === placment) {

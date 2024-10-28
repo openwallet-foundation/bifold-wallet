@@ -376,7 +376,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         await unlockWalletWithPIN(PIN)
       }
     },
-    [usage, verifyPIN, unlockWalletWithPIN, inlineMessages.enabled, t]
+    [usage, verifyPIN, unlockWalletWithPIN, t, inlineMessages]
   )
 
   const displayHelpText = useCallback(() => {
