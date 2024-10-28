@@ -16,6 +16,7 @@ const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...
   const styles = StyleSheet.create({
     container: {
       marginVertical: 10,
+      width: '100%',
     },
     label: {
       ...TextTheme.normal,
