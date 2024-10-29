@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenIDCredScreenMode } from 'modules/openid/screens/OpenIDCredentialOffer'
@@ -135,7 +135,7 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
-  [Screens.CredentialDetails]: { credential: CredentialExchangeRecord }
+  [Screens.CredentialDetails]: { credentialId: string }
   [Screens.OpenIDCredentialDetails]: {
     credential: SdJwtVcRecord | W3cCredentialRecord
     screenMode: OpenIDCredScreenMode

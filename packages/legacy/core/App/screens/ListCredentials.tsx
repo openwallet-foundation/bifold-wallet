@@ -83,7 +83,7 @@ const ListCredentials: React.FC = () => {
               screenMode: OpenIDCredScreenMode.details,
             })
           } else {
-            navigation.navigate(Screens.CredentialDetails, { credential: cred as CredentialExchangeRecord })
+            navigation.navigate(Screens.CredentialDetails, { credentialId: cred.id })
           }
         }}
       />

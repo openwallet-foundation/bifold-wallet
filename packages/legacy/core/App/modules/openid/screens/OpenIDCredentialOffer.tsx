@@ -32,6 +32,7 @@ export enum OpenIDCredScreenMode {
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialDetails>
 
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
+  // FIXME: change params to accept credential id to avoid 'non-serializable' warnings
   const { credential, screenMode } = route.params
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display, attributes } = credentialDisplay
