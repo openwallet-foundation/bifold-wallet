@@ -27,7 +27,7 @@ type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screen
 
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
 
-
+    // FIXME: change params to accept credential id to avoid 'non-serializable' warnings
     const { credential } = route.params
     const credentialDisplay = getCredentialForDisplay(credential)
     const { display, attributes } = credentialDisplay
