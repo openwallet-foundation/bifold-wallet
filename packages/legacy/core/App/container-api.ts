@@ -47,7 +47,7 @@ export const SCREEN_TOKENS = {
   SCREEN_SPLASH: 'screen.splash',
   SCREEN_SCAN: 'screen.scan',
   SCREEN_USE_BIOMETRY: 'screen.use-biometry',
-  SCREEN_PIN_EXPLAINER: 'component.pin-explainer'
+  SCREEN_PIN_EXPLAINER: 'screen.pin-explainer'
 } as const
 
 export const NAV_TOKENS = {
