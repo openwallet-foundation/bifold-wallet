@@ -24,6 +24,7 @@ import { initLanguages, initStoredLanguage, translationResources } from './local
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
 import InactivityWrapper from './components/misc/InactivityWrapper'
+import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 
 const App = (system: Container): React.FC => {
   initLanguages(translationResources)
@@ -43,35 +44,37 @@ const App = (system: Container): React.FC => {
       <ContainerProvider value={system}>
         <StoreProvider>
           <AgentProvider agent={undefined}>
-            <ThemeProvider value={theme}>
-              <AnimatedComponentsProvider value={animatedComponents}>
-                <AuthProvider>
-                  <NetworkProvider>
-                    <InactivityWrapper>
-                      <StatusBar
-                        hidden={false}
-                        barStyle="light-content"
-                        backgroundColor={theme.ColorPallet.brand.primary}
-                        translucent={false}
-                      />
-                      <NetInfo />
-                      <ErrorModal />
-                      <TourProvider
-                        homeTourSteps={homeTourSteps}
-                        credentialsTourSteps={credentialsTourSteps}
-                        credentialOfferTourSteps={credentialOfferTourSteps}
-                        proofRequestTourSteps={proofRequestTourSteps}
-                        overlayColor={'gray'}
-                        overlayOpacity={0.7}
-                      >
-                        <RootStack />
-                      </TourProvider>
-                      <Toast topOffset={15} config={toastConfig} />
-                    </InactivityWrapper>
-                  </NetworkProvider>
-                </AuthProvider>
-              </AnimatedComponentsProvider>
-            </ThemeProvider>
+            <OpenIDCredentialRecordProvider>
+              <ThemeProvider value={theme}>
+                <AnimatedComponentsProvider value={animatedComponents}>
+                  <AuthProvider>
+                    <NetworkProvider>
+                      <InactivityWrapper>
+                        <StatusBar
+                          hidden={false}
+                          barStyle="light-content"
+                          backgroundColor={theme.ColorPallet.brand.primary}
+                          translucent={false}
+                        />
+                        <NetInfo />
+                        <ErrorModal />
+                        <TourProvider
+                          homeTourSteps={homeTourSteps}
+                          credentialsTourSteps={credentialsTourSteps}
+                          credentialOfferTourSteps={credentialOfferTourSteps}
+                          proofRequestTourSteps={proofRequestTourSteps}
+                          overlayColor={'gray'}
+                          overlayOpacity={0.7}
+                        >
+                          <RootStack />
+                        </TourProvider>
+                        <Toast topOffset={15} config={toastConfig} />
+                      </InactivityWrapper>
+                    </NetworkProvider>
+                  </AuthProvider>
+                </AnimatedComponentsProvider>
+              </ThemeProvider>
+            </OpenIDCredentialRecordProvider>
           </AgentProvider>
         </StoreProvider>
       </ContainerProvider>
