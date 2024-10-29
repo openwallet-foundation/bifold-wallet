@@ -45,7 +45,8 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     throw new Error('CredentialDetails route params were not set properly')
   }
 
-  const { credential } = route.params
+  const { credentialId } = route.params
+  const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
@@ -55,9 +56,27 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isRevokedMessageHidden, setIsRevokedMessageHidden] = useState<boolean>(
-    (credential!.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
+    (credential?.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
       ?.revoked_detail_dismissed ?? false
   )
+
+  useEffect(() => {
+    // fetch credential for ID
+    const fetchCredential = async () => {
+      try {
+        const credentialExchangeRecord = await agent?.credentials.getById(credentialId)
+        setCredential(credentialExchangeRecord)
+      } catch (error) {
+        // credential not found for id, display an error
+        DeviceEventEmitter.emit(
+          EventTypes.ERROR_ADDED,
+          new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+        )
+      }
+    }
+    fetchCredential()
+  }, [credentialId, agent, t])
+
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
     presentationFields: [],
@@ -107,13 +126,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
 
   useEffect(() => {
-    if (!agent || !credential) {
+    if (!agent) {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,
         new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
       )
     }
-  }, [agent, credential, t])
+  }, [agent, t])
 
   useEffect(() => {
     if (!(credential && isValidAnonCredsCredential(credential))) {
@@ -138,7 +157,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay(o => ({
+      setOverlay((o) => ({
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
@@ -148,7 +167,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   useEffect(() => {
     if (credential?.revocationNotification) {
-      const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
+      const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
       agent?.credentials.update(credential)
     }
@@ -187,9 +206,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const callDismissRevokedMessage = useCallback(() => {
     setIsRevokedMessageHidden(true)
-    const meta = credential!.metadata.get(CredentialMetadata.customMetadata)
-    credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
-    agent?.credentials.update(credential)
+    if (credential) {
+      const meta = credential.metadata.get(CredentialMetadata.customMetadata)
+      credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
+      agent?.credentials.update(credential)
+    }
   }, [credential, agent])
 
   const CredentialCardLogo: React.FC = () => {
