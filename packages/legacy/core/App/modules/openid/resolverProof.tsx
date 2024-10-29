@@ -1,9 +1,11 @@
-import { Agent, Jwt, X509ModuleConfig } from '@credo-ts/core'
+import { Agent, DifPexCredentialsForRequest, Jwt, X509ModuleConfig } from '@credo-ts/core'
 import { OpenID4VCIParam } from './resolver'
 import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
+import { OpenId4VcSiopVerifiedAuthorizationRequest } from '@credo-ts/openid4vc'
+import { Linking } from 'react-native'
 
 function handleTextResponse(text: string): ParseInvitationResult {
   // If the text starts with 'ey' we assume it's a JWT and thus an OpenID authorization request
@@ -125,10 +127,6 @@ export const extractCertificateFromAuthorizationRequest = async ({
           result.result.type === 'openid-authorization-request' &&
           typeof result.result.data === 'string'
         ) {
-          const _res = {
-            data: result.result.data,
-            certificate: extractCertificateFromJwt(result.result.data),
-          }
           return {
             data: result.result.data,
             certificate: extractCertificateFromJwt(result.result.data),
@@ -213,5 +211,69 @@ export const getCredentialsForProofRequest = async ({
   } catch (err) {
     agent.config.logger.error(`Parsing presentation request:  ${(err as Error)?.message ?? err}`)
     throw err
+  }
+}
+
+export const shareProof = async ({
+  agent,
+  authorizationRequest,
+  credentialsForRequest,
+  selectedCredentials,
+  allowUntrustedCertificate = false,
+}: {
+  agent: Agent
+  authorizationRequest: OpenId4VcSiopVerifiedAuthorizationRequest
+  credentialsForRequest: DifPexCredentialsForRequest
+  selectedCredentials: { [inputDescriptorId: string]: string }
+  allowUntrustedCertificate?: boolean
+}) => {
+  if (!credentialsForRequest.areRequirementsSatisfied) {
+    throw new Error('Requirements from proof request are not satisfied')
+  }
+
+  // Map all requirements and entries to a credential record. If a credential record for an
+  // input descriptor has been provided in `selectedCredentials` we will use that. Otherwise
+  // it will pick the first available credential.
+  const credentials = Object.fromEntries(
+    credentialsForRequest.requirements.flatMap((requirement) =>
+      requirement.submissionEntry.map((entry) => {
+        const credentialId = selectedCredentials[entry.inputDescriptorId]
+        const credential =
+          entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
+          entry.verifiableCredentials[0]
+
+        return [entry.inputDescriptorId, [credential.credentialRecord]]
+      })
+    )
+  )
+
+  try {
+    // Temp solution to add and remove the trusted certicaite
+    const certificate =
+      authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest.jwt) : null
+
+    const result = await withTrustedCertificate(agent, certificate, () =>
+      agent.modules.openId4VcHolder.acceptSiopAuthorizationRequest({
+        authorizationRequest,
+        presentationExchange: {
+          credentials,
+        },
+      })
+    )
+
+    // if redirect_uri is provided, open it in the browser
+    // Even if the response returned an error, we must open this uri
+    if (typeof result.serverResponse.body === 'object' && typeof result.serverResponse.body.redirect_uri === 'string') {
+      await Linking.openURL(result.serverResponse.body.redirect_uri)
+    }
+
+    if (result.serverResponse.status < 200 || result.serverResponse.status > 299) {
+      throw new Error(`Error while accepting authorization request. ${result.serverResponse.body as string}`)
+    }
+
+    return result
+  } catch (error) {
+    // Handle biometric authentication errors
+    throw new Error(`Error accepting proof request. ${(error as Error)?.message ?? error}`)
   }
 }
