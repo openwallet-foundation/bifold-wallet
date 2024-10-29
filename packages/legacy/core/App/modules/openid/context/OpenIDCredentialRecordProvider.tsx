@@ -112,7 +112,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     agent.w3cCredentials?.getAllCredentialRecords().then((w3cCredentialRecords) => {
       setState({ ...state, w3cCredentialRecords: filterW3CCredentialsOnly(w3cCredentialRecords), isLoading: false })
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setState((prev) => ({ ...prev, w3cCredentialRecords: filterW3CCredentialsOnly(w3cCredentialRecords), isLoading: false }))
   }, [agent])
 
   useEffect(() => {
