@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialState, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -19,8 +19,7 @@ import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
-
-export type GenericCredentialExchangeRecord = CredentialExchangeRecord | W3cCredentialRecord | SdJwtVcRecord
+import { GenericCredentialExchangeRecord } from '../types/credentials'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -40,7 +39,9 @@ const ListCredentials: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const { openIdState: { w3cCredentialRecords } } = useOpenIDCredentials()
+  const {
+    openIdState: { w3cCredentialRecords },
+  } = useOpenIDCredentials()
 
   let credentials: GenericCredentialExchangeRecord[] = [
     ...useCredentialByState(CredentialState.CredentialReceived),

@@ -44,7 +44,6 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
 }) => {
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
-  // const {display} = credentialDisplay
 
   const display = useMemo((): CredentialDisplay | undefined => {
     if (credentialDisplay) return credentialDisplay

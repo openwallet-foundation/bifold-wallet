@@ -9,8 +9,8 @@ import { GenericFn } from '../../types/fn'
 
 import CredentialCard10 from './CredentialCard10'
 import CredentialCard11 from './CredentialCard11'
-import { GenericCredentialExchangeRecord } from '../../screens/ListCredentials'
 import OpenIDCredentialCard from '../../modules/openid/components/OpenIDCredentialCard'
+import { GenericCredentialExchangeRecord } from '../../types/credentials'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord

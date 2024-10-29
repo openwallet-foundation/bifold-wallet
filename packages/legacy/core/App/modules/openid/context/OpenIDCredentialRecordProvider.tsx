@@ -56,7 +56,7 @@ const defaultState: OpenIDCredentialRecordState = {
   isLoading: true,
 }
 
-interface Props {
+interface OpenIDCredentialProviderProps {
   children: React.ReactNode
 }
 
@@ -71,7 +71,9 @@ const filterW3CCredentialsOnly = (credentials: W3cCredentialRecord[]) => {
 }
 
 // eslint-disable-next-line react/prop-types
-export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<Props>> = ({ children }) => {
+export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCredentialProviderProps>> = ({
+  children,
+}: OpenIDCredentialProviderProps) => {
   const [state, setState] = useState<OpenIDCredentialRecordState>(defaultState)
 
   const { agent } = useAgent()
