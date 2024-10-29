@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialState } from '@credo-ts/core'
+import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -17,6 +17,9 @@ import { TourID } from '../types/tour'
 import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
+import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
+import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
+import { GenericCredentialExchangeRecord } from '../types/credentials'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -36,9 +39,14 @@ const ListCredentials: React.FC = () => {
   const { ColorPallet } = useTheme()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  let credentials = [
+  const {
+    openIdState: { w3cCredentialRecords },
+  } = useOpenIDCredentials()
+
+  let credentials: GenericCredentialExchangeRecord[] = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
+    ...w3cCredentialRecords,
   ]
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
@@ -64,6 +72,24 @@ const ListCredentials: React.FC = () => {
     }
   }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
 
+  const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
+    return (
+      <CredentialCard
+        credential={cred as CredentialExchangeRecord}
+        onPress={() => {
+          if (cred instanceof W3cCredentialRecord) {
+            navigation.navigate(Screens.OpenIDCredentialDetails, {
+              credential: cred,
+              screenMode: OpenIDCredScreenMode.details,
+            })
+          } else {
+            navigation.navigate(Screens.CredentialDetails, { credentialId: cred.id })
+          }
+        }}
+      />
+    )
+  }
+
   return (
     <View>
       <FlatList
@@ -79,10 +105,7 @@ const ListCredentials: React.FC = () => {
                 marginBottom: index === credentials.length - 1 ? 45 : 0,
               }}
             >
-              <CredentialCard
-                credential={credential}
-                onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: credential.id })}
-              />
+              {renderCardItem(credential)}
             </View>
           )
         }}

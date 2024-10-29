@@ -10,6 +10,7 @@ import { CredentialStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
 
 const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
@@ -32,6 +33,11 @@ const CredentialStack: React.FC = () => {
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}
+        options={{ title: t('Screens.CredentialDetails') }}
+      />
+      <Stack.Screen
+        name={Screens.OpenIDCredentialDetails}
+        component={OpenIDCredentialDetails}
         options={{ title: t('Screens.CredentialDetails') }}
       />
     </Stack.Navigator>
