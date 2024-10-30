@@ -17,7 +17,7 @@ interface CredentialContextInterface {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-jest.mock('react-native-localize', () => { })
+jest.mock('react-native-localize', () => {})
 
 const credentialDefinitionId = 'xxxxxxxxxxxxxxxxxx:3:CL:11111:default'
 
@@ -94,7 +94,7 @@ describe('CredentialList Screen', () => {
         fireEvent(credentialItemInstance, 'press')
 
         expect(navigation.navigate).toBeCalledWith('Credential Details', {
-          credential: testOpenVPCredentialRecord,
+          credentialId: testOpenVPCredentialRecord.id,
         })
       })
     })
