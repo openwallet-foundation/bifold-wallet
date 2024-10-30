@@ -699,6 +699,7 @@ const translation = {
     "GenerationError": "Unable to generate QR code",
   },
   "Record": {
+    "CrendentialInformation": "Credential Information",
     "Hide": "Hide",
     "Show": "Show",
     "HideAll": "Hide all",

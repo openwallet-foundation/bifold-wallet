@@ -681,6 +681,7 @@ const translation = {
         "GenerationError": "Impossible de générer le code QR",
     },
     "Record": {
+        "CrendentialInformation": "Informations de l'attestation",
         "Hide": "Masquer",
         "Show": "Afficher",
         "HideAll": "Masquer tout",

@@ -36,9 +36,9 @@ import { testIdWithKey } from '../utils/testable'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
-const paddingHorizontal = 24
-const paddingVertical = 16
-const logoHeight = 80
+const paddingHorizontal = 16
+const paddingVertical = 12
+const secondaryBodyHeight = 80
 
 const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route }) => {
   if (!route?.params) {
@@ -48,7 +48,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { credential } = route.params
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPallet, Assets } = useTheme()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
@@ -66,6 +66,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const { width, height } = useWindowDimensions()
+  const logoHeight = width * 0.12
 
   const styles = StyleSheet.create({
     container: {
@@ -73,7 +74,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       display: 'flex',
     },
     secondaryHeaderContainer: {
-      height: 1.5 * logoHeight,
+      height: 1.5 * secondaryBodyHeight,
       backgroundColor:
         (overlay.brandingOverlay?.backgroundImage
           ? 'rgba(0, 0, 0, 0)'
@@ -85,9 +86,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     },
     statusContainer: {},
     logoContainer: {
-      top: -0.5 * logoHeight,
-      left: paddingHorizontal,
-      marginBottom: -1 * logoHeight,
+      top: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? -0.5 * logoHeight : 0,
+      left: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? paddingHorizontal : 0,
+      marginBottom: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? -1 * logoHeight : 0,
       width: logoHeight,
       height: logoHeight,
       backgroundColor: '#ffffff',
@@ -138,7 +139,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay(o => ({
+      setOverlay((o) => ({
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
@@ -220,27 +221,35 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         testID={testIdWithKey('CredentialDetailsPrimaryHeader')}
         style={[styles.primaryHeaderContainer, { zIndex: -1 }]}
       >
-        <View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           {overlay.metaOverlay?.watermark && (
             <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
           )}
+          {bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding11 && <CredentialCardLogo />}
           <Text
             testID={testIdWithKey('CredentialIssuer')}
             style={[
               TextTheme.label,
               styles.textContainer,
               {
-                paddingLeft: logoHeight + paddingVertical,
-                paddingBottom: paddingVertical,
+                flex: 1,
+                flexWrap: 'wrap',
+                marginHorizontal: 8,
+                paddingLeft:
+                  bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding10
+                    ? logoHeight + paddingVertical
+                    : 0,
+                paddingBottom:
+                  bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding11 ? paddingVertical : 0,
                 lineHeight: 19,
                 opacity: 0.8,
               },
             ]}
-            numberOfLines={1}
           >
             {overlay.metaOverlay?.issuer}
           </Text>
-          <Text
+          <Assets.svg.iconChevronRight width={48} height={48} />
+          {/* <Text
             testID={testIdWithKey('CredentialName')}
             style={[
               TextTheme.normal,
@@ -251,7 +260,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             ]}
           >
             {overlay.metaOverlay?.name}
-          </Text>
+          </Text> */}
         </View>
       </View>
     )
@@ -305,9 +314,41 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     ) : (
       <View style={styles.container}>
         <CredentialDetailSecondaryHeader />
-        <CredentialCardLogo />
         <CredentialDetailPrimaryHeader />
-
+        <View
+          style={{
+            backgroundColor: ColorPallet.brand.secondaryBackground,
+            paddingHorizontal: 25,
+            paddingVertical,
+          }}
+        >
+          <Text
+            testID={testIdWithKey('CredentialName')}
+            style={[
+              TextTheme.normal,
+              styles.textContainer,
+              {
+                color: ColorPallet.brand.link,
+                lineHeight: 24,
+                marginBottom: 8,
+              },
+            ]}
+          >
+            {overlay.metaOverlay?.name}
+          </Text>
+          <Text
+            style={[
+              TextTheme.labelSubtitle,
+              styles.textContainer,
+              {
+                color: ColorPallet.brand.link,
+                lineHeight: 18,
+              },
+            ]}
+          >
+            Issued on ...
+          </Text>
+        </View>
         {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ padding: paddingVertical, paddingTop: 0 }}>
             {credential && <CredentialRevocationMessage credential={credential} />}
