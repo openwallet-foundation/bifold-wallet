@@ -22,9 +22,7 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
           "backgroundColor": "#313132",
           "padding": 20,
         },
-        Object {
-          "flex": 2,
-        },
+        false,
       ]
     }
   >
@@ -97,61 +95,6 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
     >
       ContactDetails.DateOfConnection
     </Text>
-    <View
-      style={
-        Object {
-          "borderTopColor": "#D3D3D3",
-          "borderWidth": 1,
-          "marginTop": 20,
-        }
-      }
-    />
-    <Text
-      style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 21,
-          "fontWeight": "bold",
-          "marginVertical": 16,
-        }
-      }
-    >
-      ContactDetails.Credentials
-    </Text>
-    <RCTScrollView
-      ItemSeparatorComponent={[Function]}
-      ListEmptyComponent={[Function]}
-      data={Array []}
-      getItem={[Function]}
-      getItemCount={[Function]}
-      keyExtractor={[Function]}
-      onContentSizeChange={[Function]}
-      onLayout={[Function]}
-      onMomentumScrollBegin={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      removeClippedSubviews={false}
-      renderItem={[Function]}
-      scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      viewabilityConfigCallbackPairs={Array []}
-    >
-      <View>
-        <Text
-          style={
-            Object {
-              "color": "#D3D3D3",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
-          }
-        >
-          ContactDetails.NoCredentials
-        </Text>
-      </View>
-    </RCTScrollView>
   </View>
   <View>
     <View
@@ -296,9 +239,7 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
           "backgroundColor": "#313132",
           "padding": 20,
         },
-        Object {
-          "flex": 2,
-        },
+        false,
       ]
     }
   >
@@ -371,61 +312,6 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
     >
       ContactDetails.DateOfConnection
     </Text>
-    <View
-      style={
-        Object {
-          "borderTopColor": "#D3D3D3",
-          "borderWidth": 1,
-          "marginTop": 20,
-        }
-      }
-    />
-    <Text
-      style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 21,
-          "fontWeight": "bold",
-          "marginVertical": 16,
-        }
-      }
-    >
-      ContactDetails.Credentials
-    </Text>
-    <RCTScrollView
-      ItemSeparatorComponent={[Function]}
-      ListEmptyComponent={[Function]}
-      data={Array []}
-      getItem={[Function]}
-      getItemCount={[Function]}
-      keyExtractor={[Function]}
-      onContentSizeChange={[Function]}
-      onLayout={[Function]}
-      onMomentumScrollBegin={[Function]}
-      onMomentumScrollEnd={[Function]}
-      onScroll={[Function]}
-      onScrollBeginDrag={[Function]}
-      onScrollEndDrag={[Function]}
-      removeClippedSubviews={false}
-      renderItem={[Function]}
-      scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      viewabilityConfigCallbackPairs={Array []}
-    >
-      <View>
-        <Text
-          style={
-            Object {
-              "color": "#D3D3D3",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
-          }
-        >
-          ContactDetails.NoCredentials
-        </Text>
-      </View>
-    </RCTScrollView>
   </View>
   <View>
     <View

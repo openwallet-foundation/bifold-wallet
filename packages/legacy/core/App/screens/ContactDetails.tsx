@@ -197,7 +197,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
               renderItem={({ item }) => (
                 <ContactCredentialListItem
                   credential={item}
-                  onPress={() => navigation.navigate(Screens.CredentialDetails, { credential: item })}
+                  onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: item.id })}
                 />
               )}
               keyExtractor={(item) => item.id}
