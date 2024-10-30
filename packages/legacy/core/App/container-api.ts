@@ -20,6 +20,7 @@ import { NotificationListItemProps } from './components/listItems/NotificationLi
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { ContactListItemProps } from './components/listItems/ContactListItem'
+import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -59,6 +60,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_RECORD: 'component.record',
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
+  COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -180,6 +182,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
   [TOKENS.COMPONENT_CONTACT_LIST_ITEM]: React.FC<ContactListItemProps>
+  [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
 }
 

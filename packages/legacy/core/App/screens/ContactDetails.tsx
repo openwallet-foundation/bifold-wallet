@@ -28,7 +28,6 @@ import { ModalUsage } from '../types/remove'
 import { formatTime, getConnectionName, useConnectionImageUrl } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
-import ContactCredentialListItem from '../components/listItems/ContactCredentialListItem'
 import { toImageSource } from '../utils/credential'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
@@ -57,7 +56,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
 
-  const [{ contactDetailsOptions }] = useServices([TOKENS.CONFIG])
+  const [{ contactDetailsOptions }, ContactCredentialListItem] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM,
+  ])
 
   const styles = StyleSheet.create({
     contentContainer: {

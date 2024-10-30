@@ -8,7 +8,7 @@ import { useCredentialConnectionLabel } from '../../utils/helpers'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@hyperledger/aries-oca'
 
-type ContactCredentialListItemProps = {
+export type ContactCredentialListItemProps = {
   credential: CredentialExchangeRecord
   onPress: () => void
 }
