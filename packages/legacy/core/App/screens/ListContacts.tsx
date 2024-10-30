@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, FlatList, StyleSheet, View } from 'react-native'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
-import ContactListItem from '../components/listItems/ContactListItem'
 import EmptyListContacts from '../components/misc/EmptyListContacts'
 import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
@@ -28,7 +27,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { agent } = useAgent()
   const [connections, setConnections] = useState<ConnectionRecord[]>([])
   const [store] = useStore()
-  const [{ contactHideList }] = useServices([TOKENS.CONFIG])
+  const [{ contactHideList }, ContactListItem] = useServices([TOKENS.CONFIG, TOKENS.COMPONENT_CONTACT_LIST_ITEM])
   const style = StyleSheet.create({
     list: {
       backgroundColor: ColorPallet.brand.secondaryBackground,

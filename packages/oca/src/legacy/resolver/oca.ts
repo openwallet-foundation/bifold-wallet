@@ -49,27 +49,40 @@ interface LanguageOverlay {
   language: string
 }
 
+export type OCABundleResolveParams = {
+  identifiers: Identifiers
+  language?: string
+}
+
+export type OCABundleResolveDefaultParams = {
+  identifiers: Identifiers
+  meta?: Meta
+  language?: string
+}
+
+export type OCABundleResolveAllParams = {
+  identifiers: Identifiers
+  attributes?: Array<Field>
+  meta?: Meta
+  language?: string
+}
+
+export type OCABundleResolvePresentationFieldsParams = {
+  identifiers: Identifiers
+  attributes: Array<Field>
+  language?: string
+}
+
 export interface OCABundleResolverType {
-  resolve(params: { identifiers: Identifiers; language?: string }): Promise<OCABundle | undefined>
+  resolve(params: OCABundleResolveParams): Promise<OCABundle | undefined>
 
-  resolveDefaultBundle(params: {
-    identifiers: Identifiers
-    meeta?: Meta
-    language?: string
-  }): Promise<OCABundle | undefined>
+  resolveDefaultBundle(params: OCABundleResolveDefaultParams): Promise<OCABundle | undefined>
 
-  presentationFields(params: {
-    identifiers: Identifiers
-    attributes: Array<Field>
-    language?: string
-  }): Promise<Field[]>
+  presentationFields(params: OCABundleResolvePresentationFieldsParams): Promise<Field[]>
 
-  resolveAllBundles(params: {
-    identifiers: Identifiers
-    attributes?: Array<Field>
-    meta?: Meta
-    language?: string
-  }): Promise<CredentialOverlay<BaseOverlay | BrandingOverlay | LegacyBrandingOverlay>>
+  resolveAllBundles(
+    params: OCABundleResolveAllParams
+  ): Promise<CredentialOverlay<BaseOverlay | BrandingOverlay | LegacyBrandingOverlay>>
 
   getBrandingOverlayType(): BrandingOverlayType
 }
@@ -215,7 +228,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     return this.options.brandingOverlayType ?? BrandingOverlayType.Branding10
   }
 
-  private getDefaultBundle(params: { language?: string; identifiers?: Identifiers; meta?: Meta }) {
+  private getDefaultBundle(params: OCABundleResolveDefaultParams) {
     if (!params.language) {
       params.language = defaultBundleLanguage
     }
@@ -273,15 +286,11 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     )
   }
 
-  public resolveDefaultBundle(params: {
-    identifiers: Identifiers
-    meta?: Meta
-    language?: string
-  }): Promise<OCABundle | undefined> {
+  public resolveDefaultBundle(params: OCABundleResolveDefaultParams): Promise<OCABundle | undefined> {
     return this.getDefaultBundle(params)
   }
 
-  public resolve(params: { identifiers: Identifiers; language?: string }): Promise<OCABundle | undefined> {
+  public resolve(params: OCABundleResolveParams): Promise<OCABundle | undefined> {
     const language = params.language || defaultBundleLanguage
     for (const item of [
       params.identifiers?.credentialDefinitionId,
@@ -302,11 +311,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     return Promise.resolve(undefined)
   }
 
-  public async presentationFields(params: {
-    identifiers: Identifiers
-    attributes: Array<Field>
-    language?: string
-  }): Promise<Field[]> {
+  public async presentationFields(params: OCABundleResolvePresentationFieldsParams): Promise<Field[]> {
     const bundle = await this.resolve(params)
     let presentationFields = [...params.attributes]
     if (bundle?.captureBase?.attributes) {
@@ -327,12 +332,9 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     return presentationFields
   }
 
-  public async resolveAllBundles(params: {
-    identifiers: Identifiers
-    attributes?: Array<Field>
-    meta?: Meta
-    language?: string
-  }): Promise<CredentialOverlay<BaseOverlay | BrandingOverlay | LegacyBrandingOverlay>> {
+  public async resolveAllBundles(
+    params: OCABundleResolveAllParams
+  ): Promise<CredentialOverlay<BaseOverlay | BrandingOverlay | LegacyBrandingOverlay>> {
     const [bundle, defaultBundle] = await Promise.all([this.resolve(params), this.resolveDefaultBundle(params)])
 
     const fields = params.attributes

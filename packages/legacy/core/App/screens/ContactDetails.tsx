@@ -4,7 +4,16 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  DeviceEventEmitter,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -16,10 +25,14 @@ import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { ContactStackParams, Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { formatTime, getConnectionName } from '../utils/helpers'
+import { formatTime, getConnectionName, useConnectionImageUrl } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { TOKENS, useServices } from '../container-api'
+import { toImageSource } from '../utils/credential'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
+
+const CONTACT_IMG_PERCENTAGE = 0.12
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   if (!route?.params) {
@@ -32,6 +45,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState<boolean>(false)
   const [isCredentialsRemoveModalDisplayed, setIsCredentialsRemoveModalDisplayed] = useState<boolean>(false)
   const connection = useConnectionById(connectionId)
+  const contactImageUrl = useConnectionImageUrl(connectionId)
   // FIXME: This should be exposed via a react hook that allows to filter credentials by connection id
   const connectionCredentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
@@ -39,11 +53,43 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   ].filter((credential) => credential.connectionId === connection?.id)
   const { ColorPallet, TextTheme } = useTheme()
   const [store] = useStore()
+  const { width } = useWindowDimensions()
+  const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
+
+  const [{ contactDetailsOptions }, ContactCredentialListItem] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM,
+  ])
 
   const styles = StyleSheet.create({
     contentContainer: {
       padding: 20,
       backgroundColor: ColorPallet.brand.secondaryBackground,
+    },
+    contactContainer: {
+      flexDirection: 'row',
+      alignSelf: 'flex-start',
+      gap: 8,
+    },
+    contactImgContainer: {
+      top: contactImageHeight * CONTACT_IMG_PERCENTAGE,
+      alignSelf: 'flex-start',
+      backgroundColor: '#ffffff',
+      width: contactImageHeight,
+      height: contactImageHeight,
+      borderRadius: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    contactImg: {
+      width: contactImageHeight,
+      height: contactImageHeight,
+    },
+    contactLabel: {
+      ...TextTheme.headingThree,
+      flex: 2,
+      flexShrink: 1,
+      alignSelf: 'flex-start',
     },
   })
 
@@ -99,36 +145,90 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     [connection, store.preferences.alternateContactNames]
   )
 
+  const contactImage = () => {
+    return (
+      <View style={styles.contactImgContainer}>
+        {contactImageUrl ? (
+          <Image style={styles.contactImg} source={toImageSource(contactImageUrl)} />
+        ) : (
+          <Text
+            style={[
+              TextTheme.bold,
+              {
+                fontSize: 0.5 * contactImageHeight,
+                alignSelf: 'center',
+                color: ColorPallet.grayscale.black,
+              },
+            ]}
+          >
+            {contactLabel.charAt(0).toUpperCase()}
+          </Text>
+        )}
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <View style={styles.contentContainer}>
-        <Text style={{ ...TextTheme.headingThree }}>{contactLabel}</Text>
-        <Text style={{ ...TextTheme.normal, marginTop: 20 }}>
-          {t('ContactDetails.DateOfConnection', {
-            date: connection?.createdAt ? formatTime(connection.createdAt, { includeHour: true }) : '',
-          })}
-        </Text>
+      <View style={[styles.contentContainer, contactDetailsOptions?.enableCredentialList && { flex: 2 }]}>
+        <View style={styles.contactContainer}>
+          {contactImage()}
+          <Text style={styles.contactLabel}>{contactLabel}</Text>
+        </View>
+        {contactDetailsOptions?.showConnectedTime && (
+          <Text style={{ ...TextTheme.normal, marginTop: 20 }}>
+            {t('ContactDetails.DateOfConnection', {
+              date: connection?.createdAt ? formatTime(connection.createdAt, { includeHour: true }) : '',
+            })}
+          </Text>
+        )}
+        {contactDetailsOptions?.enableCredentialList && (
+          <>
+            <View style={{ borderTopColor: ColorPallet.grayscale.lightGrey, borderWidth: 1, marginTop: 20 }}></View>
+            <Text style={{ ...TextTheme.headingFour, marginVertical: 16 }}>{t('ContactDetails.Credentials')}</Text>
+            <FlatList
+              ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
+              ListEmptyComponent={() => (
+                <Text style={{ ...TextTheme.normal, color: ColorPallet.grayscale.lightGrey }}>
+                  {t('ContactDetails.NoCredentials')}
+                </Text>
+              )}
+              data={connectionCredentials}
+              renderItem={({ item }) => (
+                <ContactCredentialListItem
+                  credential={item}
+                  onPress={() => navigation.navigate(Screens.CredentialDetails, { credentialId: item.id })}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          </>
+        )}
       </View>
-      <TouchableOpacity
-        onPress={callGoToRename}
-        accessibilityLabel={t('Screens.RenameContact')}
-        accessibilityRole={'button'}
-        testID={testIdWithKey('RenameContact')}
-        style={[styles.contentContainer, { marginTop: 10 }]}
-      >
-        <Text style={{ ...TextTheme.normal }}>{t('Screens.RenameContact')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={callOnRemove}
-        accessibilityLabel={t('ContactDetails.RemoveContact')}
-        accessibilityRole={'button'}
-        testID={testIdWithKey('RemoveFromWallet')}
-        style={[styles.contentContainer, { marginTop: 10 }]}
-      >
-        <Text style={{ ...TextTheme.normal, color: ColorPallet.semantic.error }}>
-          {t('ContactDetails.RemoveContact')}
-        </Text>
-      </TouchableOpacity>
+      <View>
+        {contactDetailsOptions?.enableEditContactName && (
+          <TouchableOpacity
+            onPress={callGoToRename}
+            accessibilityLabel={t('Screens.RenameContact')}
+            accessibilityRole={'button'}
+            testID={testIdWithKey('RenameContact')}
+            style={[styles.contentContainer, { marginTop: 10 }]}
+          >
+            <Text style={{ ...TextTheme.normal }}>{t('Screens.RenameContact')}</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity
+          onPress={callOnRemove}
+          accessibilityLabel={t('ContactDetails.RemoveContact')}
+          accessibilityRole={'button'}
+          testID={testIdWithKey('RemoveFromWallet')}
+          style={[styles.contentContainer, { marginTop: 10 }]}
+        >
+          <Text style={{ ...TextTheme.normal, color: ColorPallet.semantic.error }}>
+            {t('ContactDetails.RemoveContact')}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <CommonRemoveModal
         usage={ModalUsage.ContactRemove}
         visible={isRemoveModalDisplayed}

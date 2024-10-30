@@ -17,23 +17,72 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
 >
   <View
     style={
-      Object {
-        "backgroundColor": "#313132",
-        "padding": 20,
-      }
+      Array [
+        Object {
+          "backgroundColor": "#313132",
+          "padding": 20,
+        },
+        false,
+      ]
     }
   >
-    <Text
+    <View
       style={
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 26,
-          "fontWeight": "bold",
+          "alignSelf": "flex-start",
+          "flexDirection": "row",
+          "gap": 8,
         }
       }
     >
-      BestBC College
-    </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "alignSelf": "flex-start",
+            "backgroundColor": "#ffffff",
+            "borderRadius": 8,
+            "height": 90,
+            "justifyContent": "center",
+            "top": 10.799999999999999,
+            "width": 90,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "alignSelf": "center",
+                "color": "#000000",
+                "fontSize": 45,
+              },
+            ]
+          }
+        >
+          B
+        </Text>
+      </View>
+      <Text
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#FFFFFF",
+            "flex": 2,
+            "flexShrink": 1,
+            "fontSize": 26,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        BestBC College
+      </Text>
+    </View>
     <Text
       style={
         Object {
@@ -47,109 +96,111 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
       ContactDetails.DateOfConnection
     </Text>
   </View>
-  <View
-    accessibilityLabel="Screens.RenameContact"
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      Object {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#313132",
-        "marginTop": 10,
-        "opacity": 1,
-        "padding": 20,
-      }
-    }
-    testID="com.ariesbifold:id/RenameContact"
-  >
-    <Text
-      style={
+  <View>
+    <View
+      accessibilityLabel="Screens.RenameContact"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
         }
       }
-    >
-      Screens.RenameContact
-    </Text>
-  </View>
-  <View
-    accessibilityLabel="ContactDetails.RemoveContact"
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      Object {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#313132",
-        "marginTop": 10,
-        "opacity": 1,
-        "padding": 20,
-      }
-    }
-    testID="com.ariesbifold:id/RemoveFromWallet"
-  >
-    <Text
-      style={
+      accessibilityValue={
         Object {
-          "color": "#D8292F",
-          "fontSize": 18,
-          "fontWeight": "normal",
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
         }
       }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "marginTop": 10,
+          "opacity": 1,
+          "padding": 20,
+        }
+      }
+      testID="com.ariesbifold:id/RenameContact"
     >
-      ContactDetails.RemoveContact
-    </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        Screens.RenameContact
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="ContactDetails.RemoveContact"
+      accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "marginTop": 10,
+          "opacity": 1,
+          "padding": 20,
+        }
+      }
+      testID="com.ariesbifold:id/RemoveFromWallet"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#D8292F",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        ContactDetails.RemoveContact
+      </Text>
+    </View>
   </View>
   <Modal
     animationType="slide"
@@ -183,23 +234,72 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
 >
   <View
     style={
-      Object {
-        "backgroundColor": "#313132",
-        "padding": 20,
-      }
+      Array [
+        Object {
+          "backgroundColor": "#313132",
+          "padding": 20,
+        },
+        false,
+      ]
     }
   >
-    <Text
+    <View
       style={
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 26,
-          "fontWeight": "bold",
+          "alignSelf": "flex-start",
+          "flexDirection": "row",
+          "gap": 8,
         }
       }
     >
-      Alt Name
-    </Text>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "alignSelf": "flex-start",
+            "backgroundColor": "#ffffff",
+            "borderRadius": 8,
+            "height": 90,
+            "justifyContent": "center",
+            "top": 10.799999999999999,
+            "width": 90,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "alignSelf": "center",
+                "color": "#000000",
+                "fontSize": 45,
+              },
+            ]
+          }
+        >
+          A
+        </Text>
+      </View>
+      <Text
+        style={
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#FFFFFF",
+            "flex": 2,
+            "flexShrink": 1,
+            "fontSize": 26,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Alt Name
+      </Text>
+    </View>
     <Text
       style={
         Object {
@@ -213,109 +313,111 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
       ContactDetails.DateOfConnection
     </Text>
   </View>
-  <View
-    accessibilityLabel="Screens.RenameContact"
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      Object {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#313132",
-        "marginTop": 10,
-        "opacity": 1,
-        "padding": 20,
-      }
-    }
-    testID="com.ariesbifold:id/RenameContact"
-  >
-    <Text
-      style={
+  <View>
+    <View
+      accessibilityLabel="Screens.RenameContact"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
         }
       }
-    >
-      Screens.RenameContact
-    </Text>
-  </View>
-  <View
-    accessibilityLabel="ContactDetails.RemoveContact"
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      Object {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "backgroundColor": "#313132",
-        "marginTop": 10,
-        "opacity": 1,
-        "padding": 20,
-      }
-    }
-    testID="com.ariesbifold:id/RemoveFromWallet"
-  >
-    <Text
-      style={
+      accessibilityValue={
         Object {
-          "color": "#D8292F",
-          "fontSize": 18,
-          "fontWeight": "normal",
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
         }
       }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "marginTop": 10,
+          "opacity": 1,
+          "padding": 20,
+        }
+      }
+      testID="com.ariesbifold:id/RenameContact"
     >
-      ContactDetails.RemoveContact
-    </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        Screens.RenameContact
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="ContactDetails.RemoveContact"
+      accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "marginTop": 10,
+          "opacity": 1,
+          "padding": 20,
+        }
+      }
+      testID="com.ariesbifold:id/RemoveFromWallet"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#D8292F",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        ContactDetails.RemoveContact
+      </Text>
+    </View>
   </View>
   <Modal
     animationType="slide"
