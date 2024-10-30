@@ -1,4 +1,5 @@
 import { Locales } from '../localization'
+import { ContactDetailsOptionsParams } from './contact-details'
 import { PINSecurityParams } from './security'
 import { SettingSection } from './settings'
 import { Agent } from '@credo-ts/core'
@@ -31,5 +32,6 @@ export interface Config {
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
   contactHideList?: string[]
+  contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
 }

@@ -98,7 +98,12 @@ export type { PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
-export type { AuthenticateStackParams, OnboardingStackParams, NotificationStackParams } from './types/navigators'
+export type {
+  AuthenticateStackParams,
+  OnboardingStackParams,
+  NotificationStackParams,
+  ContactStackParams,
+} from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
 export type { ReducerAction } from './contexts/reducers/store'
