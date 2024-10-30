@@ -170,7 +170,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
-      <View style={[styles.contentContainer, { flex: 2 }]}>
+      <View style={[styles.contentContainer, contactDetailsOptions?.enableCredentialList && { flex: 2 }]}>
         <View style={styles.contactContainer}>
           {contactImage()}
           <Text style={styles.contactLabel}>{contactLabel}</Text>
@@ -182,24 +182,28 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
             })}
           </Text>
         )}
-        <View style={{ borderTopColor: ColorPallet.grayscale.lightGrey, borderWidth: 1, marginTop: 20 }}></View>
-        <Text style={{ ...TextTheme.headingFour, marginVertical: 16 }}>{t('ContactDetails.Credentials')}</Text>
-        <FlatList
-          ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
-          ListEmptyComponent={() => (
-            <Text style={{ ...TextTheme.normal, color: ColorPallet.grayscale.lightGrey }}>
-              {t('ContactDetails.NoCredentials')}
-            </Text>
-          )}
-          data={connectionCredentials}
-          renderItem={({ item }) => (
-            <ContactCredentialListItem
-              credential={item}
-              onPress={() => navigation.navigate(Screens.CredentialDetails, { credential: item })}
+        {contactDetailsOptions?.enableCredentialList && (
+          <>
+            <View style={{ borderTopColor: ColorPallet.grayscale.lightGrey, borderWidth: 1, marginTop: 20 }}></View>
+            <Text style={{ ...TextTheme.headingFour, marginVertical: 16 }}>{t('ContactDetails.Credentials')}</Text>
+            <FlatList
+              ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
+              ListEmptyComponent={() => (
+                <Text style={{ ...TextTheme.normal, color: ColorPallet.grayscale.lightGrey }}>
+                  {t('ContactDetails.NoCredentials')}
+                </Text>
+              )}
+              data={connectionCredentials}
+              renderItem={({ item }) => (
+                <ContactCredentialListItem
+                  credential={item}
+                  onPress={() => navigation.navigate(Screens.CredentialDetails, { credential: item })}
+                />
+              )}
+              keyExtractor={(item) => item.id}
             />
-          )}
-          keyExtractor={(item) => item.id}
-        />
+          </>
+        )}
       </View>
       <View>
         {contactDetailsOptions?.enableEditContactName && (

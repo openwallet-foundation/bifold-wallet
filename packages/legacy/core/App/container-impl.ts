@@ -64,6 +64,7 @@ export const defaultConfig: Config = {
   contactDetailsOptions: {
     showConnectedTime: true,
     enableEditContactName: true,
+    enableCredentialList: false,
   },
 }
 export class MainContainer implements Container {
