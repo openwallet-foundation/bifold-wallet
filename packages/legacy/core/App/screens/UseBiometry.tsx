@@ -140,7 +140,9 @@ const UseBiometry: React.FC = () => {
     }
   }, [onSwitchToggleAllowed])
 
-  const toggleSwitch = useCallback(async (newValue: boolean) => {
+  const toggleSwitch = useCallback(async () => {
+    const newValue = !biometryEnabled
+
     if (!newValue) {
       // Turning off doesn't require OS'es biometrics enabled
       onSwitchToggleAllowed(newValue)
@@ -176,7 +178,7 @@ const UseBiometry: React.FC = () => {
       default:
         break
     }
-  }, [onSwitchToggleAllowed, onRequestSystemBiometrics])
+  }, [onSwitchToggleAllowed, onRequestSystemBiometrics, biometryEnabled])
 
   const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
@@ -226,9 +228,9 @@ const UseBiometry: React.FC = () => {
             <ToggleButton
               testID={testIdWithKey("ToggleBiometrics")}
               isEnabled={biometryEnabled}
-              isAvailable={biometryAvailable}
+              isAvailable={true}
               toggleAction={toggleSwitch}
-              disabled={!biometryAvailable}
+              disabled={false}
               enabledIcon="check"
               disabledIcon="close"
             />
