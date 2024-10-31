@@ -30,6 +30,7 @@ import WalletFront from './assets/img/wallet-front.svg'
 import CredentialInHand from './assets/img/credential-in-hand.svg'
 import CredentialList from './assets/img/credential-list.svg'
 import ScanShare from './assets/img/scan-share.svg'
+import SecureCheck from './assets/img/secure-check.svg'
 import SecureImage from './assets/img/secure-image.svg'
 import InformationReceived from './assets/img/information-received.svg'
 import PushNotificationImg from './assets/img/push-notifications.svg'
@@ -71,6 +72,7 @@ export interface ISVGAssets {
   credentialInHand: React.FC<SvgProps>
   credentialList: React.FC<SvgProps>
   scanShare: React.FC<SvgProps>
+  secureCheck: React.FC<SvgProps>
   secureImage: React.FC<SvgProps>
   informationReceived: React.FC<SvgProps>
   pushNotificationImg: React.FC<SvgProps>
@@ -899,6 +901,7 @@ export const Assets = {
     credentialInHand: CredentialInHand,
     credentialList: CredentialList,
     scanShare: ScanShare,
+    secureCheck: SecureCheck,
     secureImage: SecureImage,
     informationReceived: InformationReceived,
     pushNotificationImg: PushNotificationImg,

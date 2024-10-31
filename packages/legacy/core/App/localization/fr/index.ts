@@ -189,6 +189,16 @@ const translation = {
         "OpenSettings": "Ouvrir les paramètres",
     },
     "PINCreate": {
+        "Explainer": {
+          "PrimaryHeading": "Secure your Wallet (FR)",
+          "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN). (FR)",
+          "WhyNeedPin": {
+            "Header": "Why you need a PIN (FR)",
+            "Paragraph": "Your PIN is an important security feature: (FR)",
+            "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet (FR)",
+            "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet (FR)"
+          }
+        },
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",

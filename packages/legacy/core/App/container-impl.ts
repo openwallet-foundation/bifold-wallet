@@ -36,6 +36,7 @@ import {
 import OnboardingPages from './screens/OnboardingPages'
 import UseBiometry from './screens/UseBiometry'
 import Scan from './screens/Scan'
+import PINExplainer from './screens/PINExplainer'
 import HomeHeaderView from './components/views/HomeHeaderView'
 import HomeFooterView from './components/views/HomeFooterView'
 import EmptyList from './components/misc/EmptyList'
@@ -96,6 +97,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
+    this._container.registerInstance(TOKENS.SCREEN_PIN_EXPLAINER, PINExplainer)
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
