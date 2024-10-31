@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { DeviceEventEmitter } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +12,6 @@ import { formatDifPexCredentialsForRequest } from '../displayProof'
 import { testIdWithKey } from '../../../utils/testable'
 import { sanitizeString } from '../utils/utils'
 import { OpenIDCredentialRowCard } from '../components/CredentialRowCard'
-import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import Button, { ButtonType } from '../../../components/buttons/Button'
@@ -20,6 +19,7 @@ import { useTheme } from '../../../contexts/theme'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { shareProof } from '../resolverProof'
+import ProofRequestAccept from '../../../screens/ProofRequestAccept'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -92,23 +92,21 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }, [credential])
 
   const handleAcceptTouched = async () => {
-    console.log('$$selectedCredentials:', selectedCredentials)
     try {
       if (!agent || !credential.credentialsForRequest || !selectedCredentials) {
         return
       }
-      const result = await shareProof({
+      await shareProof({
         agent,
         authorizationRequest: credential.authorizationRequest,
         credentialsForRequest: credential.credentialsForRequest,
         selectedCredentials,
       })
 
-      console.log('$$Proof Shared  Result: ', result)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
-      const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
+      const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error)?.message ?? err, 1027)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
   }
@@ -213,9 +211,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     )
   }
 
-  useEffect(() => {
-    console.log('$$Submittion:', JSON.stringify(submission))
-  }, [submission])
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <ScrollView>
@@ -226,7 +221,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         </View>
       </ScrollView>
       {footer()}
-      <CredentialOfferAccept visible={acceptModalVisible} credentialId={''} confirmationOnly={true} />
+
+      <ProofRequestAccept visible={acceptModalVisible} proofId={''} confirmationOnly = {true} />
       <CommonRemoveModal
         usage={ModalUsage.ProofRequestDecline}
         visible={declineModalVisible}
