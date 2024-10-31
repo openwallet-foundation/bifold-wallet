@@ -284,9 +284,9 @@ const translation = {
     "UseToUnlock": "Use biometrics to unlock wallet?",
     "UnlockPromptTitle": "Wallet Unlock",
     "UnlockPromptDescription": "Use biometrics to unlock your wallet",
-    "AllowBiometricsTitle": "Allow use of biometrics",
+    "AllowBiometricsTitle": "Enable biometrics",
     "AllowBiometricsDesc": "To unlock BC Wallet with your biometrics, please allow biometrics use within your device's settings.",
-    "SetupBiometricsTitle": "Set up your biometrics",
+    "SetupBiometricsTitle": "Biometrics is not enabled",
     "SetupBiometricsDesc": "To unlock BC Wallet with your biometrics, please set up your biometrics in your device's settings.",
     "OpenSettings": "Open settings"
   },
