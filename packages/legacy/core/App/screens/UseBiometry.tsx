@@ -2,7 +2,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, ScrollView, DeviceEventEmitter, Linking } from 'react-native'
+import { StyleSheet, Text, View, Modal, ScrollView, DeviceEventEmitter, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -140,6 +140,18 @@ const UseBiometry: React.FC = () => {
     }
   }, [onSwitchToggleAllowed])
 
+  const onCheckSystemBiometrics = useCallback(async (): Promise<PermissionStatus> => {
+    if (Platform.OS === 'android') {
+      // Android doesn't need to prompt biometric permission 
+      // for an app to use it.
+      return biometryAvailable ? RESULTS.GRANTED : RESULTS.UNAVAILABLE
+    } else if (Platform.OS === 'ios') {
+      return await check(BIOMETRY_PERMISSION)
+    }
+
+    return RESULTS.UNAVAILABLE
+  }, [biometryAvailable])
+
   const toggleSwitch = useCallback(async () => {
     const newValue = !biometryEnabled
 
@@ -151,7 +163,7 @@ const UseBiometry: React.FC = () => {
 
     // If the user is turning it on, they need
     // to first authenticate the OS'es biometrics before this action is accepted
-    const permissionResult: PermissionStatus = await check(BIOMETRY_PERMISSION)
+    const permissionResult: PermissionStatus = await onCheckSystemBiometrics()
     switch (permissionResult) {
       case RESULTS.GRANTED:
       case RESULTS.LIMITED:
@@ -178,7 +190,7 @@ const UseBiometry: React.FC = () => {
       default:
         break
     }
-  }, [onSwitchToggleAllowed, onRequestSystemBiometrics, biometryEnabled])
+  }, [onSwitchToggleAllowed, onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled])
 
   const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
