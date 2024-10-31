@@ -21,12 +21,12 @@ describe('PINCreate Screen', () => {
           }}
         >
           <AuthContext.Provider value={authContext}>
-            <PINCreate route={{} as any} navigation={jest.fn() as any} setAuthenticated={jest.fn()} />
+            <PINCreate route={{} as any} navigation={jest.fn() as any} setAuthenticated={jest.fn()} explainedStatus={true} />
           </AuthContext.Provider>
         </StoreProvider>
       </ContainerProvider>
     )
-
+    
     // Causes RangeError: Invalid string length
     // expect(tree).toMatchSnapshot()
     const pinInput1 = tree.getByTestId(testIdWithKey('EnterPIN'))
