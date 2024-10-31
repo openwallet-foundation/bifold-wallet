@@ -12,7 +12,7 @@ interface CredentialRowCardProps {
 }
 
 export function OpenIDCredentialRowCard({ name, issuer, bgColor, onPress }: CredentialRowCardProps) {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { TextTheme } = useTheme()
   const { width } = useWindowDimensions()
 
   const style = StyleSheet.create({

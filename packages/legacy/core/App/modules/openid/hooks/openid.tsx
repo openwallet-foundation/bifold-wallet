@@ -60,8 +60,6 @@ export const useOpenID = ({
         })
         return record
       } catch (err: unknown) {
-        //TODO: Sppecify different error
-        console.log('$$[ERROR][resolveOpenIDPresentationRequest]', JSON.stringify(err))
         const error = new BifoldError(
           t('Error.Title1043'),
           t('Error.Message1043'),
