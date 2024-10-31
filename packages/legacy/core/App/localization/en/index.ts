@@ -417,6 +417,10 @@ const translation = {
     "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact",
     "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact",
     "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you",
+    "GoToCredentialDetail": "Go to credential details",
+    "CredentialName": "Credential name",
+    "Credentials": "My credentials from this contact",
+    "NoCredentials": "You don't have any credentials from this contact."
   },
   "WhatAreContacts": {
     "Title": "What are Contacts?",

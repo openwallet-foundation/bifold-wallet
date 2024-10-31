@@ -415,7 +415,11 @@ const translation = {
         "UnableToRemoveTitle": "Impossible de supprimer le Contact",
         "UnableToRemoveCaption": "Impossible de supprimer car il y a des attestations d'identité émises par ce Contact dans votre portefeuille. Supprimez d'abord les attestations d'identité, puis supprimez ce Contact.",
         "GoToCredentials": "Aller aux attestations d'identité",
-        "ContactRemoved": "Contact supprimé"
+        "ContactRemoved": "Contact supprimé",
+        "GoToCredentialDetail": "Aller au détail de l'attestation",
+        "CredentialName": "Nom du justificatif",
+        "Credentials": "Mes justificatifs avec ce contact",
+        "NoCredentials": "Vous n'avez aucun justificatif de ce contact."
     },
     "WhatAreContacts": {
         "Title": "Que sont les Contacts?",
