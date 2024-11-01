@@ -51,7 +51,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ].filter((credential) => credential.connectionId === connection?.id)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, Assets } = useTheme()
   const [store] = useStore()
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
@@ -74,7 +74,6 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     contactImgContainer: {
       top: contactImageHeight * CONTACT_IMG_PERCENTAGE,
       alignSelf: 'flex-start',
-      backgroundColor: '#ffffff',
       width: contactImageHeight,
       height: contactImageHeight,
       borderRadius: 8,
@@ -82,14 +81,24 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       alignItems: 'center',
     },
     contactImg: {
+      borderRadius: 8,
       width: contactImageHeight,
       height: contactImageHeight,
+    },
+    contactFirstLetterContainer: {
+      flex: 1,
+      maxWidth: contactImageHeight,
     },
     contactLabel: {
       ...TextTheme.headingThree,
       flex: 2,
       flexShrink: 1,
       alignSelf: 'flex-start',
+    },
+    actionContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
     },
   })
 
@@ -147,24 +156,29 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
   const contactImage = () => {
     return (
-      <View style={styles.contactImgContainer}>
+      <>
         {contactImageUrl ? (
-          <Image style={styles.contactImg} source={toImageSource(contactImageUrl)} />
+          <View style={styles.contactImgContainer}>
+            <Image style={styles.contactImg} source={toImageSource(contactImageUrl)} />
+          </View>
         ) : (
-          <Text
-            style={[
-              TextTheme.bold,
-              {
-                fontSize: 0.5 * contactImageHeight,
-                alignSelf: 'center',
-                color: ColorPallet.grayscale.black,
-              },
-            ]}
-          >
-            {contactLabel.charAt(0).toUpperCase()}
-          </Text>
+          <View style={styles.contactFirstLetterContainer}>
+            <Text
+              style={[
+                TextTheme.bold,
+                {
+                  fontSize: contactImageHeight,
+                  lineHeight: contactImageHeight,
+                  alignSelf: 'center',
+                  color: ColorPallet.brand.primary,
+                },
+              ]}
+            >
+              {contactLabel.charAt(0).toUpperCase()}
+            </Text>
+          </View>
         )}
-      </View>
+      </>
     )
   }
 
@@ -212,8 +226,9 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
             accessibilityLabel={t('Screens.RenameContact')}
             accessibilityRole={'button'}
             testID={testIdWithKey('RenameContact')}
-            style={[styles.contentContainer, { marginTop: 10 }]}
+            style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
           >
+            <Assets.svg.iconEdit width={20} height={20} color={ColorPallet.brand.text} />
             <Text style={{ ...TextTheme.normal }}>{t('Screens.RenameContact')}</Text>
           </TouchableOpacity>
         )}
@@ -222,8 +237,9 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           accessibilityLabel={t('ContactDetails.RemoveContact')}
           accessibilityRole={'button'}
           testID={testIdWithKey('RemoveFromWallet')}
-          style={[styles.contentContainer, { marginTop: 10 }]}
+          style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
         >
+          <Assets.svg.iconDelete width={20} height={20} color={ColorPallet.semantic.error} />
           <Text style={{ ...TextTheme.normal, color: ColorPallet.semantic.error }}>
             {t('ContactDetails.RemoveContact')}
           </Text>

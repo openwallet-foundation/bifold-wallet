@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
+import IconDelete from './assets/icons/trash.svg'
+import IconEdit from './assets/icons/pencil.svg'
 import ActivityIndicator from './assets/img/activity-indicator-circle.svg'
 import AppLockout from './assets/img/app-lockout.svg'
 import Biometrics from './assets/img/biometrics.svg'
@@ -83,6 +85,8 @@ export interface ISVGAssets {
   historyInformationSentIcon: React.FC<SvgProps>
   historyPinUpdatedIcon: React.FC<SvgProps>
   iconChevronRight: React.FC<SvgProps>
+  iconDelete: React.FC<SvgProps>
+  iconEdit: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -912,6 +916,8 @@ export const Assets = {
     historyInformationSentIcon: HistoryInformationSentIcon,
     historyPinUpdatedIcon: HistoryPinUpdatedIcon,
     iconChevronRight: IconChevronRight,
+    iconDelete: IconDelete,
+    iconEdit: IconEdit,
   },
   img: {
     logoPrimary: {
