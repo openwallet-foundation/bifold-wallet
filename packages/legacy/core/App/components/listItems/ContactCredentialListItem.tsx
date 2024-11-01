@@ -7,6 +7,7 @@ import { getCredentialIdentifiers } from '../../utils/credential'
 import { useCredentialConnectionLabel } from '../../utils/helpers'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@hyperledger/aries-oca'
+import { useMemo } from 'react'
 
 export type ContactCredentialListItemProps = {
   credential: CredentialExchangeRecord
@@ -17,15 +18,19 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
   const { TextTheme, Assets, ColorPallet } = useTheme()
   const { t, i18n } = useTranslation()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
-  const { overlay } = useBranding<CredentialOverlay<BrandingOverlay | BaseOverlay | LegacyBrandingOverlay>>({
-    identifiers: getCredentialIdentifiers(credential),
-    attributes: credential.credentialAttributes,
-    meta: {
-      credConnectionId: credential.connectionId,
-      alias: credentialConnectionLabel,
-    },
-    language: i18n.language,
-  })
+  const params = useMemo(
+    () => ({
+      identifiers: getCredentialIdentifiers(credential),
+      attributes: credential.credentialAttributes,
+      meta: {
+        credConnectionId: credential.connectionId,
+        alias: credentialConnectionLabel,
+      },
+      language: i18n.language,
+    }),
+    [credential, credentialConnectionLabel, i18n.language]
+  )
+  const { overlay } = useBranding<CredentialOverlay<BrandingOverlay | BaseOverlay | LegacyBrandingOverlay>>(params)
 
   const styles = StyleSheet.create({
     container: {
@@ -35,6 +40,10 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
     },
     credentialContainer: {
       flex: 9,
+    },
+    credentialName: {
+      color: ColorPallet.brand.primary,
+      fontWeight: '600',
     },
     iconContainer: {
       flex: 1,
@@ -57,7 +66,7 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
       accessibilityRole={'button'}
     >
       <View style={styles.credentialContainer}>
-        <Text style={{ ...TextTheme.normal }}>{overlay?.metaOverlay?.name}</Text>
+        <Text style={[{ ...TextTheme.normal }, styles.credentialName]}>{overlay?.metaOverlay?.name}</Text>
       </View>
       <View style={styles.iconContainer}>
         <Assets.svg.iconChevronRight {...icon} />
