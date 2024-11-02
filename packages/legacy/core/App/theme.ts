@@ -41,6 +41,7 @@ import HistoryCardRevokedIcon from './assets/img/HistoryCardRevokedIcon.svg'
 import HistoryInformationSentIcon from './assets/img/HistoryInformationSentIcon.svg'
 import HistoryPinUpdatedIcon from './assets/img/HistoryPinUpdatedIcon.svg'
 import IconChevronRight from './assets/img/IconChevronRight.svg'
+import HomeCenterImg from './assets/img/home-center-img.svg'
 
 export interface ISVGAssets {
   activityIndicator: React.FC<SvgProps>
@@ -83,6 +84,7 @@ export interface ISVGAssets {
   historyInformationSentIcon: React.FC<SvgProps>
   historyPinUpdatedIcon: React.FC<SvgProps>
   iconChevronRight: React.FC<SvgProps>
+  homeCenterImg: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -912,6 +914,7 @@ export const Assets = {
     historyInformationSentIcon: HistoryInformationSentIcon,
     historyPinUpdatedIcon: HistoryPinUpdatedIcon,
     iconChevronRight: IconChevronRight,
+    homeCenterImg: HomeCenterImg
   },
   img: {
     logoPrimary: {

@@ -14,9 +14,20 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
       style={
         Object {
           "alignItems": "center",
+          "marginTop": 100,
+        }
+      }
+    >
+      <
+        width="30%"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
           "justifyContent": "center",
           "marginHorizontal": 25,
-          "marginTop": 35,
         }
       }
     >
@@ -35,7 +46,48 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
           ]
         }
       >
-        Home.NoCredentials
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Home.NoCredentials
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginHorizontal": 25,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 25,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        <Text>
+          Home.ScanOfferAddCard
+        </Text>
       </Text>
     </View>
   </View>
@@ -56,9 +108,20 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
       style={
         Object {
           "alignItems": "center",
+          "marginTop": 100,
+        }
+      }
+    >
+      <
+        width="30%"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
           "justifyContent": "center",
           "marginHorizontal": 25,
-          "marginTop": 35,
         }
       }
     >
@@ -95,6 +158,31 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
           Home.InYourWallet
         </Text>
       </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginHorizontal": 25,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 25,
+              "textAlign": "center",
+            },
+          ]
+        }
+      />
     </View>
   </View>
 </View>
