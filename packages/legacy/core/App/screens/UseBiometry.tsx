@@ -138,7 +138,7 @@ const UseBiometry: React.FC = () => {
       default:
         break
     }
-  }, [onSwitchToggleAllowed])
+  }, [onSwitchToggleAllowed, BIOMETRY_PERMISSION])
 
   const onCheckSystemBiometrics = useCallback(async (): Promise<PermissionStatus> => {
     if (Platform.OS === 'android') {
@@ -150,7 +150,7 @@ const UseBiometry: React.FC = () => {
     }
 
     return RESULTS.UNAVAILABLE
-  }, [biometryAvailable])
+  }, [biometryAvailable, BIOMETRY_PERMISSION])
 
   const toggleSwitch = useCallback(async () => {
     const newValue = !biometryEnabled
@@ -190,7 +190,7 @@ const UseBiometry: React.FC = () => {
       default:
         break
     }
-  }, [onSwitchToggleAllowed, onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled])
+  }, [onSwitchToggleAllowed, onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t])
 
   const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
