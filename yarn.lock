@@ -2549,15 +2549,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/react-native-action-sheet@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@expo/react-native-action-sheet@npm:4.1.0"
+"@expo/react-native-action-sheet@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@expo/react-native-action-sheet@npm:4.0.1"
   dependencies:
     "@types/hoist-non-react-statics": ^3.3.1
     hoist-non-react-statics: ^3.3.0
   peerDependencies:
-    react: ">=18.0.0"
-  checksum: 38ff3f21e5f63da0ffab3cf1800dbbe167283a6bfafaa059156da2fa2e771209a140d49d6261488c0651cf9cb8fbe5a8cf19c9c2718b563e8b1f5df8b9eda015
+    react: ">=16.3.0"
+  checksum: f33b8a3b7c6ca77a6e05e5b2284c0961cf1e27b954e87b76747afc990a9581b852326e1ab739ac84a2c1afce05a133627c85465418cad5292d162fbcb305d86e
   languageName: node
   linkType: hard
 
@@ -2861,7 +2861,7 @@ __metadata:
     react-native-fs: ^2.16.6
     react-native-gesture-handler: ^1.10.3
     react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: "*"
+    react-native-gifted-chat: 2.4.0
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-orientation-locker: ^1.6.0
@@ -2937,7 +2937,7 @@ __metadata:
     react-native-fs: ^2.16.6
     react-native-gesture-handler: ^1.10.3
     react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: "*"
+    react-native-gifted-chat: 2.4.0
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-logs: ^5.1.0
@@ -5879,15 +5879,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.isequal@npm:^4.5.8":
-  version: 4.5.8
-  resolution: "@types/lodash.isequal@npm:4.5.8"
-  dependencies:
-    "@types/lodash": "*"
-  checksum: f3180c2d2925514fff1908a1303c11468c9f39b47fd7b053416aad3f1447f8e4a9894dd0460187ac9ac19387e25aec8dd8214d13a50a0967e0dc9cca8e4c5353
-  languageName: node
-  linkType: hard
-
 "@types/lodash.merge@npm:^4.6.6":
   version: 4.6.9
   resolution: "@types/lodash.merge@npm:4.6.9"
@@ -7009,7 +7000,7 @@ __metadata:
     react-native-fs: ^2.16.6
     react-native-gesture-handler: ^1.10.3
     react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: "*"
+    react-native-gifted-chat: 2.4.0
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
     react-native-logs: ^5.1.0
@@ -9378,7 +9369,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.13, dayjs@npm:^1.8.15":
+"dayjs@npm:1.8.26":
+  version: 1.8.26
+  resolution: "dayjs@npm:1.8.26"
+  checksum: d0f124aca89be97cb7ae00c336bf2e96de05dc541e74ba0e56c746cd6fa8b2eb07edd48ac3b034c63544143374eb3238ecdc8815912d2fbbef2e853d3ccfec4d
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.8.15":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
@@ -14809,13 +14807,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isequal@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "lodash.isequal@npm:4.5.0"
-  checksum: da27515dc5230eb1140ba65ff8de3613649620e8656b19a6270afe4866b7bd461d9ba2ac8a48dcc57f7adac4ee80e1de9f965d89d4d81a0ad52bb3eec2609644
-  languageName: node
-  linkType: hard
-
 "lodash.isfunction@npm:^3.0.9":
   version: 3.0.9
   resolution: "lodash.isfunction@npm:3.0.9"
@@ -18160,6 +18151,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prop-types@npm:15.7.2":
+  version: 15.7.2
+  resolution: "prop-types@npm:15.7.2"
+  dependencies:
+    loose-envify: ^1.4.0
+    object-assign: ^4.1.1
+    react-is: ^16.8.1
+  checksum: 5eef82fdda64252c7e75aa5c8cc28a24bbdece0f540adb60ce67c205cf978a5bd56b83e4f269f91c6e4dcfd80b36f2a2dec24d362e278913db2086ca9c6f9430
+  languageName: node
+  linkType: hard
+
 "proto-list@npm:~1.2.1":
   version: 1.2.4
   resolution: "proto-list@npm:1.2.4"
@@ -18417,7 +18419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.13.0, react-is@npm:^16.13.1, react-is@npm:^16.7.0":
+"react-is@npm:^16.13.0, react-is@npm:^16.13.1, react-is@npm:^16.7.0, react-is@npm:^16.8.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
@@ -18502,7 +18504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-communications@npm:^2.2.1":
+"react-native-communications@npm:2.2.1":
   version: 2.2.1
   resolution: "react-native-communications@npm:2.2.1"
   checksum: 0b1a63a116a34866d06790b0dd1153ff622aba148a8ad7d87e18e0ba6c2cfa545210be0d04f3428341a72fbcbd09ac95ea38b92197856cb0fda67bca2321e07b
@@ -18595,31 +18597,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gifted-chat@npm:*":
-  version: 2.6.4
-  resolution: "react-native-gifted-chat@npm:2.6.4"
+"react-native-gifted-chat@npm:2.4.0":
+  version: 2.4.0
+  resolution: "react-native-gifted-chat@npm:2.4.0"
   dependencies:
-    "@expo/react-native-action-sheet": ^4.1.0
-    "@types/lodash.isequal": ^4.5.8
-    dayjs: ^1.11.13
-    lodash.isequal: ^4.5.0
-    prop-types: ^15.8.1
-    react-native-communications: ^2.2.1
-    react-native-iphone-x-helper: ^1.3.1
-    react-native-lightbox-v2: ^0.9.0
-    react-native-parsed-text: ^0.0.22
-    uuid: ^10.0.0
+    "@expo/react-native-action-sheet": 4.0.1
+    dayjs: 1.8.26
+    prop-types: 15.7.2
+    react-native-communications: 2.2.1
+    react-native-iphone-x-helper: 1.3.1
+    react-native-lightbox-v2: 0.9.0
+    react-native-parsed-text: 0.0.22
+    react-native-typing-animation: 0.1.7
+    use-memo-one: 1.1.3
+    uuid: 3.4.0
   peerDependencies:
     react: "*"
     react-native: "*"
-    react-native-get-random-values: "*"
-    react-native-reanimated: "*"
-    react-native-safe-area-context: "*"
-  checksum: 232b9b28fcdaca562c1a0dd85ade6c41b559c16a6ec11c4165ab65cbe278a2569ad647da5b70c83558fc1995dda9dcc0085bcb5b2e6b2572c52f415d7ac8e6b1
+  checksum: 6573584ac5f010e86b8e4b4253e6fb0a133578eda5856e7d247511642091af123728f76526b11ec5f5f47287f94e653dd9b7582a2e3f8ce5817d52aa7c9d5689
   languageName: node
   linkType: hard
 
-"react-native-iphone-x-helper@npm:^1.3.1":
+"react-native-iphone-x-helper@npm:1.3.1":
   version: 1.3.1
   resolution: "react-native-iphone-x-helper@npm:1.3.1"
   peerDependencies:
@@ -18635,13 +18634,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-lightbox-v2@npm:^0.9.0":
-  version: 0.9.2
-  resolution: "react-native-lightbox-v2@npm:0.9.2"
+"react-native-lightbox-v2@npm:0.9.0":
+  version: 0.9.0
+  resolution: "react-native-lightbox-v2@npm:0.9.0"
   peerDependencies:
     react: ">=16.8.0"
     react-native: ">=0.61.0"
-  checksum: b55783a0c629010dead4f9b9d449207853d31f2c577fc11f5db1527fddbd5fdd8a8e6122abfba79e12c619cf00fd0c4072b72a2b840425fdbf81ae419d4e9580
+  checksum: ffedc7e58348ca28ea3a20baa7fa7d4b6cb493473e5f36a701aca22dc59c47606d64d667bb64ac7a1c2c1af686fcd99cd2883bd713797664517f0ed98ad03929
   languageName: node
   linkType: hard
 
@@ -18683,7 +18682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-parsed-text@npm:^0.0.22":
+"react-native-parsed-text@npm:0.0.22":
   version: 0.0.22
   resolution: "react-native-parsed-text@npm:0.0.22"
   dependencies:
@@ -18847,6 +18846,17 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: c6b5d231b3b617b3d3d893023673534fe2cc0c5f32bb5fc4aecfe239e9de2fb9f0e9a4086d776e53daf3bc2376dce16dcec13e1b5cf1554dbf51808695fc2441
+  languageName: node
+  linkType: hard
+
+"react-native-typing-animation@npm:0.1.7":
+  version: 0.1.7
+  resolution: "react-native-typing-animation@npm:0.1.7"
+  peerDependencies:
+    prop-types: "*"
+    react: "*"
+    react-native: "*"
+  checksum: e3d0d93313dccbee963d2a123f0901ac10c3c0f91258f419eab3c85969bb7872b0d93f43c5e59b7efb79d917259a1828f45389724c17ba9a50a14c29ed4b30d8
   languageName: node
   linkType: hard
 
@@ -21691,6 +21701,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-memo-one@npm:1.1.3":
+  version: 1.1.3
+  resolution: "use-memo-one@npm:1.1.3"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 8f08eba26d69406b61bb4b8dacdd5a92bd6aef5b53d346dfe87954f7330ee10ecabc937cc7854635155d46053828e85c10b5a5aff7a04720e6a97b9f42999bac
+  languageName: node
+  linkType: hard
+
 "use-sync-external-store@npm:^1.0.0":
   version: 1.2.2
   resolution: "use-sync-external-store@npm:1.2.2"
@@ -21733,21 +21752,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uuid@npm:3.4.0":
+  version: 3.4.0
+  resolution: "uuid@npm:3.4.0"
+  bin:
+    uuid: ./bin/uuid
+  checksum: 58de2feed61c59060b40f8203c0e4ed7fd6f99d42534a499f1741218a1dd0c129f4aa1de797bcf822c8ea5da7e4137aa3673431a96dae729047f7aca7b27866f
+  languageName: node
+  linkType: hard
+
 "uuid@npm:8.3.2, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "uuid@npm:10.0.0"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 4b81611ade2885d2313ddd8dc865d93d8dccc13ddf901745edca8f86d99bc46d7a330d678e7532e7ebf93ce616679fb19b2e3568873ac0c14c999032acb25869
   languageName: node
   linkType: hard
 
