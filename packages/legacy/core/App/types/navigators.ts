@@ -1,7 +1,7 @@
 import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
-import { OpenIDCredScreenMode } from 'modules/openid/screens/OpenIDCredentialOffer'
+import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
