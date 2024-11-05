@@ -8,7 +8,6 @@ import authContext from '../contexts/auth'
 import timeTravel from '../helpers/timetravel'
 import { BasicAppContext } from '../helpers/app'
 import { Linking } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { testDefaultState } from '../contexts/store'
 import { StoreProvider } from '../../App/contexts/store'
 import { RESULTS, check, request } from 'react-native-permissions'
@@ -26,8 +25,6 @@ const customStore = {
     useBiometry: false
   },
 }
-
-const { t } = useTranslation()
 
 describe('UseBiometry Screen', () => {
   beforeAll(() => {
@@ -88,20 +85,16 @@ describe('UseBiometry Screen', () => {
       </BasicAppContext>
     )
 
-    await waitFor(() => {
-      timeTravel(1000)
-    })
-
-    const useBiometryToggle = await tree.getByTestId(testIdWithKey('ToggleBiometrics'))
+    const useBiometryToggle = tree.getByTestId(testIdWithKey('ToggleBiometrics'))
 
     await waitFor(async () => {
-      await fireEvent(useBiometryToggle, 'valueChange', true)
+      fireEvent(useBiometryToggle, 'valueChange', true)
     })
 
-    const continueButton = await tree.getByTestId(testIdWithKey('Continue'))
+    const continueButton = tree.getByTestId(testIdWithKey('Continue'))
 
     await waitFor(async () => {
-      await fireEvent(continueButton, 'press')
+      fireEvent(continueButton, 'press')
     })
 
     expect(useBiometryToggle).not.toBeNull()
@@ -122,10 +115,6 @@ describe('UseBiometry Screen', () => {
         </BasicAppContext>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
-
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
       expect(toggleButton.props.accessibilityState.disabled).toBe(false)
     })
@@ -140,10 +129,6 @@ describe('UseBiometry Screen', () => {
           </AuthContext.Provider>
         </BasicAppContext>
       )
-
-      await waitFor(() => {
-        timeTravel(1000)
-      })
 
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
       expect(toggleButton.props.accessibilityState.disabled).toBe(false)
@@ -166,10 +151,6 @@ describe('UseBiometry Screen', () => {
           </BasicAppContext>
         </StoreProvider>
       )
-
-      await waitFor(() => {
-        timeTravel(1000)
-      })
       
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
@@ -193,10 +174,6 @@ describe('UseBiometry Screen', () => {
         </StoreProvider>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
-
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
       await waitFor(() => {
@@ -219,18 +196,14 @@ describe('UseBiometry Screen', () => {
         </StoreProvider>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
-
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
       await waitFor(() => {
         fireEvent(toggleButton, 'press')
       })
 
-      expect(getByText(t('Biometry.SetupBiometricsTitle'))).toBeTruthy()
-      expect(getByText(t('Biometry.SetupBiometricsDesc'))).toBeTruthy()
+      expect(getByText('Biometry.SetupBiometricsTitle')).toBeTruthy()
+      expect(getByText('Biometry.SetupBiometricsDesc')).toBeTruthy()
       // Toggle should remain off
       expect(toggleButton.props.accessibilityState.checked).toBe(false)
     })
@@ -248,18 +221,14 @@ describe('UseBiometry Screen', () => {
         </StoreProvider>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
-
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
       await waitFor(() => {
         fireEvent(toggleButton, 'press')
       })
 
-      expect(getByText(t('Biometry.AllowBiometricsTitle'))).toBeTruthy()
-      expect(getByText(t('Biometry.AllowBiometricsDesc'))).toBeTruthy()
+      expect(getByText('Biometry.AllowBiometricsTitle')).toBeTruthy()
+      expect(getByText('Biometry.AllowBiometricsDesc')).toBeTruthy()
       // Toggle should remain off
       expect(toggleButton.props.accessibilityState.checked).toBe(false)
     })
@@ -277,10 +246,6 @@ describe('UseBiometry Screen', () => {
           </BasicAppContext>
         </StoreProvider>
       )
-
-      await waitFor(() => {
-        timeTravel(1000)
-      })
 
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
@@ -306,10 +271,6 @@ describe('UseBiometry Screen', () => {
         </BasicAppContext>
       </StoreProvider>
     )
-
-    await waitFor(() => {
-      timeTravel(1000)
-    })
 
     const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
@@ -337,10 +298,6 @@ describe('UseBiometry Screen', () => {
         </StoreProvider>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
-
       // Trigger the settings popup
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
@@ -349,7 +306,7 @@ describe('UseBiometry Screen', () => {
       })
 
       // Press the Open Settings button
-      const openSettingsButton = getByText(t('Biometry.OpenSettings'))
+      const openSettingsButton = getByText('Biometry.OpenSettings')
       await waitFor(() => {
         fireEvent(openSettingsButton, 'press')
       })
