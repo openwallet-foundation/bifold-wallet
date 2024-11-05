@@ -107,8 +107,6 @@ const UseBiometry: React.FC = () => {
     }
   }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
 
-  // TODO: Add tests
-
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()
     onOpenSettingsDismissed()
