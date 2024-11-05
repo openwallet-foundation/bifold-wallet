@@ -8,7 +8,7 @@ import { hitSlop, minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
-import { InlineErrorPosition } from '../../container-api'
+import { InlineErrorPosition } from '../../types/error'
 
 interface PINInputProps {
   label?: string

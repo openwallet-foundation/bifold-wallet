@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { SvgProps } from 'react-native-svg'
-import { InlineErrorConfig } from '../../container-api'
+import { InlineErrorConfig } from '../../types/error'
 
 export enum InlineErrorType {
   error,

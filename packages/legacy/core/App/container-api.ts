@@ -22,23 +22,12 @@ import { PINExplainerProps } from './screens/PINExplainer'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { ContactListItemProps } from './components/listItems/ContactListItem'
 import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
-import { ViewStyle } from 'react-native'
+import { InlineErrorConfig } from './types/error'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
   navigation: StackNavigationProp<AuthenticateStackParams>
 ) => GenericFn
-
-export enum InlineErrorPosition {
-  Above,
-  Below,
-}
-
-export type InlineErrorConfig = {
-  enabled: boolean
-  position?: InlineErrorPosition
-  style?: ViewStyle
-}
 
 type LoadStateFn = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 

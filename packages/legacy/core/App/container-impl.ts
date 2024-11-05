@@ -9,7 +9,7 @@ import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import defaultIndyLedgers from './configs/ledgers/indy'
 import { LocalStorageKeys, PINRules } from './constants'
-import { TOKENS, Container, TokenMapping, InlineErrorPosition } from './container-api'
+import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import { defaultState } from './contexts/store'
 import { useNotifications } from './hooks/notifications'
@@ -49,6 +49,7 @@ import { Config } from './types/config'
 import { Locales } from './localization'
 import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
+import { InlineErrorPosition } from './types/error'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
