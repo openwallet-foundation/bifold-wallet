@@ -118,6 +118,8 @@ export type {
 
 export type { InlineMessageProps } from './components/inputs/InlineErrorText'
 
+export type { InlineErrorPosition } from './types/error'
+
 export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
