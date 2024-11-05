@@ -35,6 +35,7 @@ import { InlineErrorType, InlineMessageProps } from '../components/inputs/Inline
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
+  explainedStatus: boolean
 }
 
 interface ModalState {
@@ -44,7 +45,7 @@ interface ModalState {
   onModalDismiss?: () => void
 }
 
-const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
+const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus, route }) => {
   const updatePin = (route.params as any)?.updatePin
   const { setPIN: setWalletPIN, checkPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
@@ -57,6 +58,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     title: '',
     message: '',
   })
+  const [explained, setExplained] = useState(explainedStatus)
   const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
@@ -70,7 +72,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [PINCreateHeader, { PINSecurity }, Button, inlineMessages] = useServices([
+  const [PINExplainer, PINCreateHeader, { PINSecurity }, Button, inlineMessages] = useServices([
+    TOKENS.SCREEN_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
@@ -232,12 +235,16 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
     }
   }, [updatePin, PIN, PINTwo, PINOld])
 
+  const continueCreatePIN = () => {
+    setExplained(true)
+  }
+
   useEffect(() => {
     setInlineMessageField1(undefined)
     setInlineMessageField2(undefined)
   }, [PIN, PINTwo])
 
-  return (
+  return explained ? (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
@@ -342,6 +349,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, route }) => {
         </View>
       </View>
     </KeyboardView>
+  ) : (
+    <PINExplainer continueCreatePIN={continueCreatePIN} />
   )
 }
 

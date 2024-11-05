@@ -138,6 +138,8 @@ const translation = {
     "Message1045": "Ocorreu um erro ao inicializar o agente.",
     "Title1046": "Unable to fetch contacts. (PT-BR)",
     "Message1046": "There was a problem while fetching contacts. (PT-BR)",
+    "Title1047": "Unable to display card. (PT-BR)",
+    "Message1047": "There was a problem parsing credential card. (PT-BR)",
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -181,6 +183,16 @@ const translation = {
     "OpenSettings": "Abrir as configurações",
   },
   "PINCreate": {
+    "Explainer": {
+      "PrimaryHeading": "Secure your Wallet (PT-BR)",
+      "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN). (PT-BR)",
+      "WhyNeedPin": {
+        "Header": "Why you need a PIN (PT-BR)",
+        "Paragraph": "Your PIN is an important security feature: (PT-BR)",
+        "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet (PT-BR)",
+        "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet (PT-BR)"
+      }
+    },
     "Message": {
       "CrossPatternValidation": "Um padrão de X foi detectado no seu PIN. Favor tentar novamente.",
       "OddOrEvenSequenceValidation": "Uma sequencia de números pares ou ímpares foi detectada em seu PIN. Favor tentar novamente.",
@@ -397,6 +409,10 @@ const translation = {
     "RemoveContactsBulletPoint2": "Ter novas credenciais ofertadas por este Contato",
     "RemoveContactsBulletPoint3": "Ser notificado de atualizações de suas credenciais emitidas por esse Contato",
     "RemoveContactsBulletPoint4": "Requisitar informações deste Contato ou este requisitar informações suas",
+    "GoToCredentialDetail": "Ir para os detalhes da credencial",
+    "CredentialName": "Nome da credencial",
+    "Credentials": "Minhas credenciais",
+    "NoCredentials": "Você não tem nenhuma credencial com esse Contato."
   },
   "WhatAreContacts": {
     "Title": "O que são Contatos?",

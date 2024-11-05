@@ -139,6 +139,8 @@ const translation = {
     "Message1045": "There was a problem while initializing agent.",
     "Title1046": "Unable to fetch contacts.",
     "Message1046": "There was a problem while fetching contacts.",
+    "Title1047": "Unable to display card.",
+    "Message1047": "There was a problem parsing credential card.",
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -187,6 +189,16 @@ const translation = {
     "OpenSettings": "Open settings",
   },
   "PINCreate": {
+    "Explainer": {
+      "PrimaryHeading": "Secure your Wallet",
+      "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN).",
+      "WhyNeedPin": {
+        "Header": "Why you need a PIN",
+        "Paragraph": "Your PIN is an important security feature:",
+        "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet",
+        "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet"
+      }
+    },
     "Message": {
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again.",
       "OddOrEvenSequenceValidation": "An odd or even sequence was detected in your PIN. Please try again.",
@@ -415,6 +427,10 @@ const translation = {
     "RemoveContactsBulletPoint2": "Get offered new credentials from this Contact",
     "RemoveContactsBulletPoint3": "Get notified of updates to your credentials issued by this Contact",
     "RemoveContactsBulletPoint4": "Request for information from this Contact or they request information from you",
+    "GoToCredentialDetail": "Go to credential details",
+    "CredentialName": "Credential name",
+    "Credentials": "My credentials from this contact",
+    "NoCredentials": "You don't have any credentials from this contact."
   },
   "WhatAreContacts": {
     "Title": "What are Contacts?",

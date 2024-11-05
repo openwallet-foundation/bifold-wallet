@@ -27,7 +27,9 @@ import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
+import LimitedTextInput from './components/inputs/LimitedTextInput'
 import HomeFooterView from './components/views/HomeFooterView'
+import KeyboardView from './components/views/KeyboardView'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
@@ -96,7 +98,12 @@ export type { PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
-export type { AuthenticateStackParams, OnboardingStackParams, NotificationStackParams } from './types/navigators'
+export type {
+  AuthenticateStackParams,
+  OnboardingStackParams,
+  NotificationStackParams,
+  ContactStackParams,
+} from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
 export type { ReducerAction } from './contexts/reducers/store'
@@ -164,6 +171,8 @@ export {
   Text,
   loadLoginAttempt,
   Button,
+  LimitedTextInput,
+  KeyboardView,
   BulletPoint,
   PINRules,
   walletTimeout,

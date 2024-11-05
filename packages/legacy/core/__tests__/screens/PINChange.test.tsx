@@ -30,7 +30,7 @@ describe('PINChange Screen', () => {
           }}
         >
           <AuthContext.Provider value={authContext}>
-            <PINCreate route={route} navigation={jest.fn() as any} setAuthenticated={jest.fn()} />
+            <PINCreate route={route} navigation={jest.fn() as any} setAuthenticated={jest.fn()} explainedStatus={true} />
           </AuthContext.Provider>
         </StoreProvider>
       </ContainerProvider>

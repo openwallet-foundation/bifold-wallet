@@ -18,7 +18,10 @@ import { Config } from './types/config'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
+import { PINExplainerProps } from './screens/PINExplainer'
 import { CredentialListFooterProps } from './types/credential-list-footer'
+import { ContactListItemProps } from './components/listItems/ContactListItem'
+import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
 import { ViewStyle } from 'react-native'
 
 export type FN_ONBOARDING_DONE = (
@@ -56,6 +59,7 @@ export const SCREEN_TOKENS = {
   SCREEN_SPLASH: 'screen.splash',
   SCREEN_SCAN: 'screen.scan',
   SCREEN_USE_BIOMETRY: 'screen.use-biometry',
+  SCREEN_PIN_EXPLAINER: 'screen.pin-explainer',
 } as const
 
 export const NAV_TOKENS = {
@@ -69,6 +73,8 @@ export const COMPONENT_TOKENS = {
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
   COMPONENT_RECORD: 'component.record',
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
+  COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
+  COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -162,6 +168,7 @@ export type TokenMapping = {
   [TOKENS.SCREEN_SCAN]: React.FC
   [TOKENS.SCREEN_USE_BIOMETRY]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
+  [TOKENS.SCREEN_PIN_EXPLAINER]: React.FC<PINExplainerProps>
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
@@ -190,6 +197,8 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
+  [TOKENS.COMPONENT_CONTACT_LIST_ITEM]: React.FC<ContactListItemProps>
+  [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
   [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
 }
