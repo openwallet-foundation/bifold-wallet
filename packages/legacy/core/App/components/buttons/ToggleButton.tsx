@@ -49,6 +49,9 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       testID={testID}
       accessibilityLabel="Toggle Button"
       accessibilityRole="switch"
+      accessibilityState={{
+        checked: isEnabled
+      }}
       onPress={isAvailable && !disabled ? toggleAction : undefined} // Prevent onPress if not available or disabled
       disabled={!isAvailable || disabled}
     >
