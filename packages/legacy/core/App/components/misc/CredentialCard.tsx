@@ -9,6 +9,7 @@ import { GenericFn } from '../../types/fn'
 
 import CredentialCard10 from './CredentialCard10'
 import CredentialCard11 from './CredentialCard11'
+import CredentialCard12 from './CredentialCard12'
 
 interface CredentialCardProps {
   credential?: CredentialExchangeRecord
@@ -44,41 +45,75 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const { ColorPallet } = useTheme()
   const getCredOverlayType = (type: BrandingOverlayType) => {
     if (proof) {
-      return (
-        <CredentialCard11
-          displayItems={displayItems}
-          style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
-          error={!existsInWallet}
-          predicateError={!satisfiedPredicates}
-          credName={credName}
-          credDefId={credDefId}
-          schemaId={schemaId}
-          credential={credential}
-          handleAltCredChange={handleAltCredChange}
-          hasAltCredentials={hasAltCredentials}
-          proof
-          elevated
-        />
-      )
+      if (type === BrandingOverlayType.Branding11) {
+        return (
+          <CredentialCard12
+            displayItems={displayItems}
+            style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+            error={!existsInWallet}
+            predicateError={!satisfiedPredicates}
+            credName={credName}
+            credDefId={credDefId}
+            schemaId={schemaId}
+            credential={credential}
+            handleAltCredChange={handleAltCredChange}
+            hasAltCredentials={hasAltCredentials}
+            proof
+            elevated
+          />
+        )
+      } else {
+        return (
+          <CredentialCard11
+            displayItems={displayItems}
+            style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
+            error={!existsInWallet}
+            predicateError={!satisfiedPredicates}
+            credName={credName}
+            credDefId={credDefId}
+            schemaId={schemaId}
+            credential={credential}
+            handleAltCredChange={handleAltCredChange}
+            hasAltCredentials={hasAltCredentials}
+            proof
+            elevated
+          />
+        )
+      }
     }
 
     if (credential) {
       if (type === BrandingOverlayType.Branding01) {
         return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
+      } else if (type == BrandingOverlayType.Branding11) {
+        return <CredentialCard12 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
       } else {
         return <CredentialCard11 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
       }
     } else {
-      return (
-        <CredentialCard11
-          credDefId={credDefId}
-          schemaId={schemaId}
-          credName={credName}
-          displayItems={displayItems}
-          style={style}
-          onPress={onPress}
-        />
-      )
+      if (type === BrandingOverlayType.Branding11) {
+        return (
+          <CredentialCard12
+            credDefId={credDefId}
+            schemaId={schemaId}
+            credName={credName}
+            displayItems={displayItems}
+            style={style}
+            onPress={onPress}
+          />
+        )
+      } else {
+        return (
+          <CredentialCard11
+            credDefId={credDefId}
+            schemaId={schemaId}
+            credName={credName}
+            displayItems={displayItems}
+            style={style}
+            onPress={onPress}
+          />
+        )
+      }
     }
   }
 

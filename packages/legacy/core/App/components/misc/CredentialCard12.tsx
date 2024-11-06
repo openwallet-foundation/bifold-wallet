@@ -94,7 +94,7 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
   const { width } = useWindowDimensions()
   const borderRadius = 10
   const padding = 16
-  const logoHeight = width * 0.12
+  const logoWidth = width * 0.12
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
@@ -154,7 +154,7 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
       minHeight: 0.33 * width,
     },
     secondaryBodyContainer: {
-      width: logoHeight,
+      width: logoWidth,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
       backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
@@ -173,14 +173,16 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
       backgroundColor: 'rgba(0, 0, 0, 0)',
       borderTopRightRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      height: logoHeight,
-      width: logoHeight,
+      height: logoWidth,
+      width: logoWidth,
       justifyContent: 'center',
       alignItems: 'center',
     },
     logoContainer: {
-      width: logoHeight,
-      height: logoHeight,
+      width: logoWidth,
+      height: logoWidth,
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -340,8 +342,8 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
             source={toImageSource(overlay.brandingOverlay?.logo)}
             style={{
               resizeMode: 'cover',
-              width: logoHeight,
-              height: logoHeight,
+              width: logoWidth,
+              height: logoWidth,
               borderRadius: 8,
             }}
           />
@@ -350,14 +352,14 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
             style={[
               TextTheme.bold,
               {
-                fontSize: 0.5 * logoHeight,
+                fontSize: 0.5 * logoWidth,
                 alignSelf: 'center',
                 color: overlay.brandingOverlay?.secondaryBackgroundColor ?? '#000',
               },
             ]}
           >
             {!predicateError && !error ? (
-              (overlay.metaOverlay?.issuer ?? 'O')?.charAt(0).toUpperCase()
+              (overlay.metaOverlay?.issuer ?? 'I')?.charAt(0).toUpperCase()
             ) : (
               <Icon name={'error'} size={30} style={styles.errorIcon} />
             )}
@@ -587,7 +589,7 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
               style={[
                 {
                   position: 'absolute',
-                  width: logoHeight,
+                  width: logoWidth,
                   height: '100%',
                   borderTopLeftRadius: borderRadius,
                   borderBottomLeftRadius: borderRadius,
@@ -615,7 +617,7 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
               ]}
             >
               <Icon
-                size={0.7 * logoHeight}
+                size={0.7 * logoWidth}
                 style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
                 name={status === 'error' ? 'error' : 'warning'}
               />
@@ -655,7 +657,6 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
         }
       >
         <CredentialCardSecondaryBody />
-        {/* <CredentialCardLogo /> */}
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>

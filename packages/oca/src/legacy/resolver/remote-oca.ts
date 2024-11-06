@@ -619,7 +619,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       secondary_background_color: generateColor(credentialDefinitionId),
     })
 
-    return [legacyBrandingOverlay, brandingOverlay11, brandingOverlay10]
+    return [legacyBrandingOverlay, brandingOverlay10, brandingOverlay11]
   }
 
   private async verifyCacheIntegrity(fetchMissing: boolean = false): Promise<boolean> {

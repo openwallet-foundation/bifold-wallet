@@ -83,6 +83,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     primaryHeaderContainer: {
       paddingHorizontal,
       paddingVertical,
+      backgroundColor: overlay.brandingOverlay?.secondaryBackgroundColor ?? 'transparent',
     },
     statusContainer: {},
     logoContainer: {
@@ -221,34 +222,40 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         testID={testIdWithKey('CredentialDetailsPrimaryHeader')}
         style={[styles.primaryHeaderContainer, { zIndex: -1 }]}
       >
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View>
           {overlay.metaOverlay?.watermark && (
             <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
           )}
-          {bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding11 && <CredentialCardLogo />}
-          <Text
-            testID={testIdWithKey('CredentialIssuer')}
-            style={[
-              TextTheme.label,
-              styles.textContainer,
-              {
-                flex: 1,
-                flexWrap: 'wrap',
-                marginHorizontal: 8,
-                paddingLeft:
-                  bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding10
-                    ? logoHeight + paddingVertical
-                    : 0,
-                paddingBottom:
-                  bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding11 ? paddingVertical : 0,
-                lineHeight: 19,
-                opacity: 0.8,
-              },
-            ]}
-          >
-            {overlay.metaOverlay?.issuer}
-          </Text>
-          <Assets.svg.iconChevronRight width={48} height={48} />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            {bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding11 && <CredentialCardLogo />}
+            <Text
+              testID={testIdWithKey('CredentialIssuer')}
+              style={[
+                TextTheme.label,
+                styles.textContainer,
+                {
+                  flex: 1,
+                  flexWrap: 'wrap',
+                  marginHorizontal: 8,
+                  paddingLeft:
+                    bundleResolver.getBrandingOverlayType() == BrandingOverlayType.Branding10
+                      ? logoHeight + paddingVertical
+                      : 0,
+
+                  lineHeight: 19,
+                  opacity: 0.8,
+                  color: credentialTextColor(ColorPallet, overlay.brandingOverlay?.secondaryBackgroundColor),
+                },
+              ]}
+            >
+              {overlay.metaOverlay?.issuer}
+            </Text>
+            <Assets.svg.iconChevronRight
+              width={48}
+              height={48}
+              color={credentialTextColor(ColorPallet, overlay.brandingOverlay?.secondaryBackgroundColor)}
+            />
+          </View>
           {/* <Text
             testID={testIdWithKey('CredentialName')}
             style={[
@@ -346,7 +353,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               },
             ]}
           >
-            Issued on ...
+            {t('CredentialDetails.IssuedOn', {
+              date: credential?.createdAt ? formatTime(credential.createdAt, { includeHour: true }) : '',
+            })}
           </Text>
         </View>
         {isRevoked && !isRevokedMessageHidden ? (
@@ -361,7 +370,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const footer = () => {
     return (
       <View style={{ marginBottom: 50 }}>
-        {credentialConnectionLabel ? (
+        {credentialConnectionLabel && bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? (
           <View
             style={{
               backgroundColor: ColorPallet.brand.secondaryBackground,

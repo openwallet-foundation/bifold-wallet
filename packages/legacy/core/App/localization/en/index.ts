@@ -471,6 +471,7 @@ const translation = {
     "HowToGetThisCredentialBackListItem1": "You will have to go to the organization that issued you this credential and request it again.",
     "CredentialRemoved": "Credential removed",
     "IssuedBy": "Issued by:",
+    "IssuedOn": "Issued on {{date}}",
     "RemoveCredential": "Remove Credential",
   },
   "Home": {

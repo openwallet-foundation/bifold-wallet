@@ -102,6 +102,12 @@ export class OCABundle implements OCABundleType {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
       language: options?.language ?? defaultBundleLanguage,
     }
+    // Make bundle overlay type come from options.brandingOverlayType
+    this.bundle.overlays.forEach((o) => {
+      if (o.type === BrandingOverlayType.Branding10 || o.type === BrandingOverlayType.Branding11) {
+        o.type = this.options.brandingOverlayType!
+      }
+    })
   }
 
   public get captureBase(): CaptureBase {
@@ -266,9 +272,9 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     const overlayType =
       this.getBrandingOverlayType() === BrandingOverlayType.Branding01
         ? brandingOverlay01
-        : this.getBrandingOverlayType() === BrandingOverlayType.Branding11
-        ? brandingOverlay11
-        : brandingOverlay10
+        : this.getBrandingOverlayType() === BrandingOverlayType.Branding10
+        ? brandingOverlay10
+        : brandingOverlay11
 
     const bundle: OverlayBundle = new OverlayBundle(params.identifiers?.credentialDefinitionId as string, {
       capture_base: {
