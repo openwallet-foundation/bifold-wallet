@@ -56,7 +56,6 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
     link: {
       ...ListItems.recordAttributeText,
       ...ListItems.recordLink,
-      paddingVertical: 2,
     },
     loadingAnimationContainer: {
       flex: 1,

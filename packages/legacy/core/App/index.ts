@@ -51,6 +51,8 @@ import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
+import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
+import { defaultConfig } from './container-impl'
 
 export * from './navigators'
 export * from './services/storage'
@@ -129,6 +131,7 @@ export {
   useTour,
   AttachTourStep,
   TourBox,
+  defaultConfig,
   homeTourSteps,
   credentialsTourSteps,
   credentialOfferTourSteps,
@@ -150,6 +153,7 @@ export {
   toastConfig,
   NetInfo,
   OnboardingPages,
+  OpenIDCredentialRecordProvider,
   NotificationListItem,
   useDefaultStackOptions,
   Splash,
