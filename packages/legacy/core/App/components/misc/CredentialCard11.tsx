@@ -99,6 +99,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
+  // what are flagged attributes?
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -128,7 +129,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     const secondaryField = overlay?.presentationFields?.find(
       (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
     )
-
     return [...(displayItems ?? []), primaryField, secondaryField]
   }, [displayItems, overlay])
 
@@ -400,6 +400,23 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
+  const AttributeErrorLabel: React.FC<{ error: string }> = ({ error }) => {
+    return (
+      <Text
+        style={[
+          TextTheme.labelSubtitle,
+          styles.textContainer,
+          {
+            lineHeight: 19,
+            opacity: 0.8,
+          },
+        ]}
+      >
+        {error}
+      </Text>
+    )
+  }
+
   const AttributeValue: React.FC<{ value: string | number | null; warn?: boolean }> = ({ value, warn }) => {
     return (
       <>
@@ -427,19 +444,27 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
     const parsedValue = formatIfDate(item?.format, value) ?? ''
+    console.log(`Label: ${label} Value: ${value}`)
+    console.log(parsedValue)
+
     return (
       item && (
         <View style={{ marginTop: 15 }}>
           {!(item?.value || item?.satisfied) ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon
-                style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                name="close"
-                color={ListItems.proofError.color}
-                size={ListItems.recordAttributeText.fontSize}
-              />
+            <>
               <AttributeLabel label={label} />
-            </View>
+              {item.errorMessage && (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon
+                    style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                    name="close"
+                    color={ListItems.proofError.color}
+                    size={ListItems.recordAttributeText.fontSize}
+                  />
+                  <AttributeErrorLabel error={item.errorMessage} />
+                </View>
+              )}
+            </>
           ) : (
             <AttributeLabel label={label} />
           )}

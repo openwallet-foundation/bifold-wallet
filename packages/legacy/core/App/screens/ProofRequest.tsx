@@ -58,6 +58,7 @@ type CredentialListProps = {
 }
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
+  console.log('__ Proof Request __')
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertNetworkConnected } = useNetwork()
@@ -201,7 +202,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     fields: {
       [key: string]: Attribute[] & Predicate[]
     }
-  ) => {
+  ): boolean => {
     const revList = credExRecords.map((cred) => {
       return {
         id: cred.credentials.map((item) => item.credentialRecordId),
@@ -234,11 +235,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     setLoading(true)
     credProofPromise
       ?.then((value: any) => {
+        console.log('**__**__**__**__**__**__**__**__**__**__ THIS IS IT')
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
           setLoading(false)
           setDescriptorMetadata(descriptorMetadata)
 
+          // Credentials that satisfy the proof request
           let credList: string[] = []
           if (selectedCredentials.length > 0) {
             credList = selectedCredentials
@@ -283,9 +286,33 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 >,
               }
             : undefined
+
+          // console.log('Retrieved credentials', JSON.stringify(selectRetrievedCredentials))
           setRetrievedCredentials(selectRetrievedCredentials)
 
-          const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
+          // This is the proof, not the credential
+          let activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
+          // console.log(activeCreds)
+          activeCreds = activeCreds.map((proof: any) => {
+            console.log('WE ARE IN THE LOOP')
+            console.log(JSON.stringify(proof))
+            if (proof.attributes) {
+              proof.attributes = proof.attributes.map((attribute: any) => {
+                const isAttributeValid = fullCredentials.some((credential: any) =>
+                  isAttributeInCredential(attribute.name, credential.credentialAttributes)
+                )
+                console.log(`Is Attribute: ${attribute.name} valid: ${isAttributeValid}`)
+                if (!isAttributeValid) {
+                  attribute.errorMessage = 'missing'
+                }
+
+                return attribute
+              })
+            }
+            return proof
+          })
+
+          // this is why this is so confusing
           setActiveCreds(activeCreds)
 
           const unpackCredToField = (
@@ -295,7 +322,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
             }, {})
           }
+          // console.log('__')
+          // console.log(JSON.stringify(activeCreds))
+          console.log('__))(()))((___')
+          // console.log(JSON.stringify(fullCredentials))
 
+          // Check for revoked credentials
           const records = fullCredentials.filter((record: any) =>
             record.credentials.some((cred: any) => credList.includes(cred.credentialRecordId))
           )
@@ -315,6 +347,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [selectedCredentials, credProofPromise, t])
+
+  // Check if a given attribute name exists AND has a value (non empty string)
+  const isAttributeInCredential = (attributeName: string, credentialAttributes: any[]): boolean => {
+    // filter out for attribute name
+    // also check for non empty values
+    return credentialAttributes.some(
+      (attribute: any) => attribute.name === attributeName && attribute.value.trim().length > 0
+    )
+  }
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
   const toggleCancelModalVisible = useCallback(() => setCancelModalVisible((prev) => !prev), [])
@@ -648,6 +689,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         ListHeaderComponent={header}
         ListFooterComponent={footer}
         renderItem={({ item }) => {
+          console.log('_____________')
+          console.log(item.attributes)
+          console.log('_____________')
           return (
             <View>
               {loading || attestationLoading ? null : (
@@ -661,7 +705,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                       ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                     ]}
                     credName={item.credName}
-                    existsInWallet={item.credExchangeRecord !== undefined}
+                    existsInWallet={item.credExchangeRecord !== undefined} // this also doesn't really make sense, no exchange record means it isn't in the wallet?
                     satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                     hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
                     handleAltCredChange={
