@@ -282,7 +282,12 @@ const translation = {
         "Warning": "\n\nAssurez-vous que vous seul avez accès à votre portefeuille.",
         "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
         "UnlockPromptTitle": "Déverrouillage du portefeuille",
-        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
+        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille",
+        "AllowBiometricsTitle": "Activer la biométrie",
+        "AllowBiometricsDesc": "Pour déverrouiller BC Wallet avec votre biométrie, permettrez la biométrie dans les paramètres de votre appareil.",
+        "SetupBiometricsTitle": "La biométrie n'est pas activée",
+        "SetupBiometricsDesc": "Pour déverrouiller BC Wallet avec votre biométrie, configurez votre biométrie dans les paramètres de votre appareil.",
+        "OpenSettings": "Ouvrir les paramètres"
     },
     "ActivityHistory": {
         "Header": "Activity history(fr)",
