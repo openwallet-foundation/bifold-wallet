@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
+import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 
 const offset = 25
 
@@ -14,11 +15,15 @@ interface HomeFooterViewProps {
 }
 
 const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
+  const { openIdState } = useOpenIDCredentials()
+  const { w3cCredentialRecords } = openIdState
+
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
+    ...w3cCredentialRecords,
   ]
-  const [{useNotifications}] = useServices([TOKENS.NOTIFICATIONS])
+  const [{ useNotifications }] = useServices([TOKENS.NOTIFICATIONS])
   const notifications = useNotifications({})
   const { HomeTheme, TextTheme } = useTheme()
   const { t } = useTranslation()

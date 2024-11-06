@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
+import IconDelete from './assets/icons/trash.svg'
+import IconEdit from './assets/icons/pencil.svg'
 import ActivityIndicator from './assets/img/activity-indicator-circle.svg'
 import AppLockout from './assets/img/app-lockout.svg'
 import Biometrics from './assets/img/biometrics.svg'
@@ -30,6 +32,7 @@ import WalletFront from './assets/img/wallet-front.svg'
 import CredentialInHand from './assets/img/credential-in-hand.svg'
 import CredentialList from './assets/img/credential-list.svg'
 import ScanShare from './assets/img/scan-share.svg'
+import SecureCheck from './assets/img/secure-check.svg'
 import SecureImage from './assets/img/secure-image.svg'
 import InformationReceived from './assets/img/information-received.svg'
 import PushNotificationImg from './assets/img/push-notifications.svg'
@@ -71,6 +74,7 @@ export interface ISVGAssets {
   credentialInHand: React.FC<SvgProps>
   credentialList: React.FC<SvgProps>
   scanShare: React.FC<SvgProps>
+  secureCheck: React.FC<SvgProps>
   secureImage: React.FC<SvgProps>
   informationReceived: React.FC<SvgProps>
   pushNotificationImg: React.FC<SvgProps>
@@ -81,6 +85,8 @@ export interface ISVGAssets {
   historyInformationSentIcon: React.FC<SvgProps>
   historyPinUpdatedIcon: React.FC<SvgProps>
   iconChevronRight: React.FC<SvgProps>
+  iconDelete: React.FC<SvgProps>
+  iconEdit: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -852,6 +858,20 @@ const PINInputTheme = {
   icon: {
     color: ColorPallet.brand.headerIcon,
   },
+  codeFieldRoot: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  labelAndFieldContainer: {
+    flexDirection: 'row',
+    borderRadius: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    alignItems: 'center',
+    backgroundColor: ColorPallet.brand.secondaryBackground,
+    borderColor: ColorPallet.brand.secondary,
+    borderWidth: 1,
+  },
 }
 
 export const Assets = {
@@ -885,6 +905,7 @@ export const Assets = {
     credentialInHand: CredentialInHand,
     credentialList: CredentialList,
     scanShare: ScanShare,
+    secureCheck: SecureCheck,
     secureImage: SecureImage,
     informationReceived: InformationReceived,
     pushNotificationImg: PushNotificationImg,
@@ -895,6 +916,8 @@ export const Assets = {
     historyInformationSentIcon: HistoryInformationSentIcon,
     historyPinUpdatedIcon: HistoryPinUpdatedIcon,
     iconChevronRight: IconChevronRight,
+    iconDelete: IconDelete,
+    iconEdit: IconEdit,
   },
   img: {
     logoPrimary: {

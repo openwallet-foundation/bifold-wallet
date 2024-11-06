@@ -11,6 +11,7 @@ import ContactDetails from '../../App/screens/ContactDetails'
 import { ContactStackParams, Screens } from '../../App/types/navigators'
 import { testIdWithKey } from '../../App/utils/testable'
 import { testDefaultState } from '../contexts/store'
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('react-native-vision-camera', () => {
@@ -36,16 +37,18 @@ describe('ContactDetails Screen', () => {
 
   test('Renders correctly', async () => {
     const tree = render(
-      <StoreContext.Provider
-        value={[
-          testDefaultState,
-          () => {
-            return
-          },
-        ]}
-      >
-        <ContactDetails navigation={useNavigation()} route={{ params: { connectionId: connection.id } } as any} />
-      </StoreContext.Provider>
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            testDefaultState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <ContactDetails navigation={useNavigation()} route={{ params: { connectionId: connection.id } } as any} />
+        </StoreContext.Provider>
+      </BasicAppContext>
     )
     expect(tree).toMatchSnapshot()
   })
@@ -62,16 +65,18 @@ describe('ContactDetails Screen', () => {
     }
 
     const tree = render(
-      <StoreContext.Provider
-        value={[
-          customState,
-          () => {
-            return
-          },
-        ]}
-      >
-        <ContactDetails navigation={useNavigation()} route={{ params: { connectionId: connection.id } } as any} />
-      </StoreContext.Provider>
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <ContactDetails navigation={useNavigation()} route={{ params: { connectionId: connection.id } } as any} />
+        </StoreContext.Provider>
+      </BasicAppContext>
     )
     expect(tree).toMatchSnapshot()
   })
@@ -80,16 +85,18 @@ describe('ContactDetails Screen', () => {
     const navigation = useNavigation<StackNavigationProp<ContactStackParams, Screens.ContactDetails>>()
 
     const { getByTestId } = render(
-      <StoreContext.Provider
-        value={[
-          testDefaultState,
-          () => {
-            return
-          },
-        ]}
-      >
-        <ContactDetails navigation={navigation} route={{ params: { connectionId: connection.id } } as any} />
-      </StoreContext.Provider>
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            testDefaultState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <ContactDetails navigation={navigation} route={{ params: { connectionId: connection.id } } as any} />
+        </StoreContext.Provider>
+      </BasicAppContext>
     )
     const editButton = getByTestId(testIdWithKey('RenameContact'))
     await act(async () => {

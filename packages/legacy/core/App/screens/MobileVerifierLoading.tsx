@@ -18,12 +18,13 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
   const { proofId, connectionId } = route.params
   const goalCode = useOutOfBandByConnectionId(connectionId)?.outOfBandInvitation.goalCode
   const proofRecord = useProofById(proofId)
+  const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
+
   if (!agent) {
     throw new Error('Unable to fetch agent from Credo')
   }
-  const { t } = useTranslation()
 
   const styles = StyleSheet.create({
     container: {
@@ -53,14 +54,17 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
   })
 
   const onDismissModalTouched = useCallback(() => {
-    navigation.pop()
-  }, [navigation])
-
-  useEffect(() => {
     if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {
       if (goalCode?.endsWith('verify.once')) {
         agent.connections.deleteById(connectionId)
       }
+    }
+
+    navigation.pop()
+  }, [navigation, proofRecord, goalCode, agent, connectionId])
+
+  useEffect(() => {
+    if (proofRecord && (isPresentationReceived(proofRecord) || isPresentationFailed(proofRecord))) {
       navigation.replace(Screens.ProofDetails, { recordId: proofRecord.id })
     }
   }, [proofRecord, goalCode, agent, connectionId, navigation])

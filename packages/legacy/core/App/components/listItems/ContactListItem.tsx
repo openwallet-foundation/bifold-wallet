@@ -11,19 +11,21 @@ import { useChatMessagesByConnection } from '../../hooks/chat-messages'
 import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import { formatTime, getConnectionName } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
+import { TOKENS, useServices } from '../../container-api'
 
-interface Props {
+export interface ContactListItemProps {
   contact: ConnectionRecord
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
 }
 
-const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
+const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet, ListItems } = useTheme()
   const messages = useChatMessagesByConnection(contact)
   const message = messages[0]
   const hasOnlyInitialMessage = messages.length < 2
   const [store] = useStore()
+  const [{ enableChat }] = useServices([TOKENS.CONFIG])
 
   const styles = StyleSheet.create({
     container: {
@@ -71,19 +73,17 @@ const ContactListItem: React.FC<Props> = ({ contact, navigation }) => {
   })
 
   const navigateToContact = useCallback(() => {
-    navigation
-      .getParent()
-      ?.navigate(Stacks.ContactStack, { screen: Screens.Chat, params: { connectionId: contact.id } })
-  }, [navigation, contact])
+    navigation.getParent()?.navigate(Stacks.ContactStack, {
+      screen: enableChat ? Screens.Chat : Screens.ContactDetails,
+      params: { connectionId: contact.id },
+    })
+  }, [navigation, contact, enableChat])
 
   const contactLabel = useMemo(
     () => getConnectionName(contact, store.preferences.alternateContactNames),
     [contact, store.preferences.alternateContactNames]
   )
-  const contactLabelAbbr = useMemo(
-    () => contactLabel?.charAt(0).toUpperCase(),
-    [contactLabel]
-  )
+  const contactLabelAbbr = useMemo(() => contactLabel?.charAt(0).toUpperCase(), [contactLabel])
 
   return (
     <TouchableOpacity

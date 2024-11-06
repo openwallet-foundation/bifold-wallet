@@ -1,4 +1,5 @@
 import { Locales } from '../localization'
+import { ContactDetailsOptionsParams } from './contact-details'
 import { PINSecurityParams } from './security'
 import { SettingSection } from './settings'
 import { Agent } from '@credo-ts/core'
@@ -18,6 +19,7 @@ export interface Config {
   supportedLanguages: Locales[]
   connectionTimerDelay?: number
   autoRedirectConnectionToHome?: boolean
+  enableChat?: boolean
   enableTours?: boolean
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
@@ -30,5 +32,6 @@ export interface Config {
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
   contactHideList?: string[]
+  contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
 }

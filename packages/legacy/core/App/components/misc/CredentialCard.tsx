@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { CredentialExchangeRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { Attribute, BrandingOverlayType, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React from 'react'
 import { ViewStyle } from 'react-native'
@@ -10,9 +10,11 @@ import { GenericFn } from '../../types/fn'
 import CredentialCard10 from './CredentialCard10'
 import CredentialCard11 from './CredentialCard11'
 import CredentialCard12 from './CredentialCard12'
+import OpenIDCredentialCard from '../../modules/openid/components/OpenIDCredentialCard'
+import { GenericCredentialExchangeRecord } from '../../types/credentials'
 
 interface CredentialCardProps {
-  credential?: CredentialExchangeRecord
+  credential?: GenericCredentialExchangeRecord
   credDefId?: string
   schemaId?: string
   credName?: string
@@ -55,7 +57,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
             credName={credName}
             credDefId={credDefId}
             schemaId={schemaId}
-            credential={credential}
+            credential={credential as CredentialExchangeRecord}
             handleAltCredChange={handleAltCredChange}
             hasAltCredentials={hasAltCredentials}
             proof
@@ -72,7 +74,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
             credName={credName}
             credDefId={credDefId}
             schemaId={schemaId}
-            credential={credential}
+            credential={credential as CredentialExchangeRecord}
             handleAltCredChange={handleAltCredChange}
             hasAltCredentials={hasAltCredentials}
             proof
@@ -117,7 +119,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
   }
 
-  return getCredOverlayType(bundleResolver.getBrandingOverlayType())
+  if (credential instanceof W3cCredentialRecord) {
+    return <OpenIDCredentialCard credentialRecord={credential as W3cCredentialRecord} onPress={onPress} />
+  } else {
+    return getCredOverlayType(bundleResolver.getBrandingOverlayType())
+  }
 }
 
 export default CredentialCard
