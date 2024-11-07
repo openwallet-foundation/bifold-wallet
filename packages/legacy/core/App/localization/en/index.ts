@@ -495,11 +495,10 @@ const translation = {
     "RemoveCredential": "Remove Credential",
   },
   "Home": {
-    "Welcome": "Welcome",
     "Notification": "Notification",
     "Notifications": "Notifications",
     "NoNewUpdates": "You have no new notifications.",
-    "NoCredentials": "You have no credentials in your wallet.",
+    "NoCredentials": "Your wallet is empty",
     "SeeAll": "See all",
     "YouHave": "You have",
     "Credential": "credential",
@@ -509,6 +508,7 @@ const translation = {
     "SentMessage": "sent a message",
     "ReceivedMessage": "You received a new message",
     "ViewMessage": "View message",
+    "ScanOfferAddCard": "Scan an offer to add a card to your wallet",
   },
   "Scan": {
     "SuccessfullyAcceptedConnection": "Successfully Accepted Connection",
