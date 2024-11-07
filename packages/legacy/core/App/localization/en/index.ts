@@ -283,7 +283,12 @@ const translation = {
     "Warning": "Ensure only you have access to your wallet.",
     "UseToUnlock": "Use biometrics to unlock wallet?",
     "UnlockPromptTitle": "Wallet Unlock",
-    "UnlockPromptDescription": "Use biometrics to unlock your wallet"
+    "UnlockPromptDescription": "Use biometrics to unlock your wallet",
+    "AllowBiometricsTitle": "Enable biometrics",
+    "AllowBiometricsDesc": "To unlock BC Wallet with your biometrics, please allow biometrics use within your device's settings.",
+    "SetupBiometricsTitle": "Biometrics is not enabled",
+    "SetupBiometricsDesc": "To unlock BC Wallet with your biometrics, please set up your biometrics in your device's settings.",
+    "OpenSettings": "Open settings"
   },
   "ActivityHistory": {
     "Header": "Activity history",
