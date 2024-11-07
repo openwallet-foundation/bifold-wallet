@@ -43,6 +43,7 @@ import HistoryCardRevokedIcon from './assets/img/HistoryCardRevokedIcon.svg'
 import HistoryInformationSentIcon from './assets/img/HistoryInformationSentIcon.svg'
 import HistoryPinUpdatedIcon from './assets/img/HistoryPinUpdatedIcon.svg'
 import IconChevronRight from './assets/img/IconChevronRight.svg'
+import HomeCenterImg from './assets/img/home-center-img.svg'
 import IconWarning from './assets/img/exclamation-mark.svg'
 import IconError from './assets/img/error-filled.svg'
 
@@ -87,6 +88,7 @@ export interface ISVGAssets {
   historyInformationSentIcon: React.FC<SvgProps>
   historyPinUpdatedIcon: React.FC<SvgProps>
   iconChevronRight: React.FC<SvgProps>
+  homeCenterImg: React.FC<SvgProps>
   iconDelete: React.FC<SvgProps>
   iconEdit: React.FC<SvgProps>
   iconWarning: React.FC<SvgProps>
@@ -954,6 +956,7 @@ export const Assets = {
     historyInformationSentIcon: HistoryInformationSentIcon,
     historyPinUpdatedIcon: HistoryPinUpdatedIcon,
     iconChevronRight: IconChevronRight,
+    homeCenterImg: HomeCenterImg,
     iconDelete: IconDelete,
     iconEdit: IconEdit,
     iconError: IconError,

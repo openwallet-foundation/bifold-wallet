@@ -494,11 +494,10 @@ const translation = {
         "RemoveCredential": "Supprimer l'attestation d'identité",
     },
     "Home": {
-        "Welcome": "Bienvenue",
         "Notification": "Notification",
         "Notifications": "Notifications",
         "NoNewUpdates": "Vous n'avez pas de nouvelles notifications.",
-        "NoCredentials": "Vous n'avez pas d'attestation(s) dans votre portefeuille.",
+        "NoCredentials": "Your wallet is empty (FR)",
         "SeeAll": "Voir tout",
         "YouHave": "Vous avez",
         "Credential": "attestation",
@@ -508,6 +507,7 @@ const translation = {
         "SentMessage": "Envoyer un message",
         "ReceivedMessage": "Vous avez reçu un nouveau message",
         "ViewMessage": "Voir le message",
+        "ScanOfferAddCard": "Scan an offer to add a card to your wallet (FR)",
     },
     "Scan": {
         "SuccessfullyAcceptedConnection": "Connexion acceptée avec succès",
