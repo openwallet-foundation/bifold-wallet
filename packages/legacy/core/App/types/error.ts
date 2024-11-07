@@ -1,3 +1,5 @@
+import { ViewStyle } from 'react-native'
+
 export class QrCodeScanError extends Error {
   public data?: string
   public details?: string
@@ -23,4 +25,15 @@ export class BifoldError extends Error {
     // Set the prototype explicitly.
     Object.setPrototypeOf(this, BifoldError.prototype)
   }
+}
+
+export type InlineErrorConfig = {
+  enabled: boolean
+  position?: InlineErrorPosition
+  style?: ViewStyle
+}
+
+export enum InlineErrorPosition {
+  Above,
+  Below,
 }

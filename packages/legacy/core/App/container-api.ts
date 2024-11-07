@@ -22,6 +22,7 @@ import { PINExplainerProps } from './screens/PINExplainer'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { ContactListItemProps } from './components/listItems/ContactListItem'
 import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
+import { InlineErrorConfig } from './types/error'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -47,7 +48,7 @@ export const SCREEN_TOKENS = {
   SCREEN_SPLASH: 'screen.splash',
   SCREEN_SCAN: 'screen.scan',
   SCREEN_USE_BIOMETRY: 'screen.use-biometry',
-  SCREEN_PIN_EXPLAINER: 'screen.pin-explainer'
+  SCREEN_PIN_EXPLAINER: 'screen.pin-explainer',
 } as const
 
 export const NAV_TOKENS = {
@@ -117,6 +118,7 @@ export const UTILITY_TOKENS = {
 
 export const CONFIG_TOKENS = {
   CONFIG: 'config',
+  INLINE_ERRORS: 'errors.inline',
 } as const
 
 export const TOKENS = {
@@ -186,6 +188,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_RECORD]: React.FC
   [TOKENS.COMPONENT_CONTACT_LIST_ITEM]: React.FC<ContactListItemProps>
   [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
+  [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
 }
 
