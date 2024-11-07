@@ -243,6 +243,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
           // Credentials that satisfy the proof request
           let credList: string[] = []
+          console.log(selectedCredentials)
           if (selectedCredentials.length > 0) {
             credList = selectedCredentials
           } else {
@@ -293,15 +294,18 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           // This is the proof, not the credential
           let activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
           // console.log(activeCreds)
+          // Map through active credentials
           activeCreds = activeCreds.map((proof: any) => {
             console.log('WE ARE IN THE LOOP')
-            console.log(JSON.stringify(proof))
             if (proof.attributes) {
+              // Loop through each attribute and find any attributes that may not appear in the wallets credentials
               proof.attributes = proof.attributes.map((attribute: any) => {
+                // scan through credential attributes to check if proof request attributes exists
                 const isAttributeValid = fullCredentials.some((credential: any) =>
                   isAttributeInCredential(attribute.name, credential.credentialAttributes)
                 )
                 console.log(`Is Attribute: ${attribute.name} valid: ${isAttributeValid}`)
+                // Attribute in proof request is not present or empty
                 if (!isAttributeValid) {
                   attribute.errorMessage = 'missing'
                 }
@@ -690,7 +694,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         ListFooterComponent={footer}
         renderItem={({ item }) => {
           console.log('_____________')
-          console.log(item.attributes)
+          // console.log(item.attributes)
           console.log('_____________')
           return (
             <View>
