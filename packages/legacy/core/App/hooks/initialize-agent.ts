@@ -26,43 +26,45 @@ const useInitializeAgent = () => {
     TOKENS.UTIL_LEDGERS,
   ])
 
-  const initializeAgent = useCallback(async (): Promise<Agent | undefined> => {
-    if (!walletSecret?.id || !walletSecret.key) {
+  const restartExistingAgent = useCallback(async () => {
+    if (!walletSecret?.id || !walletSecret.key || !agent) {
       return
     }
 
-    if (agent) {
-      logger.info('Agent already initialized, restarting...')
+    logger.info('Agent already initialized, restarting...')
 
-      try {
-        await agent.wallet.open({
-          id: walletSecret.id,
-          key: walletSecret.key,
-        })
+    try {
+      await agent.wallet.open({
+        id: walletSecret.id,
+        key: walletSecret.key,
+      })
 
-        logger.info('Opened agent wallet')
-      } catch (error: unknown) {
-        // Credo does not use error codes but this will be in the
-        // the error message if the wallet is already open.
-        const catchPhrase = 'instance already opened'
+      logger.info('Opened agent wallet')
+    } catch (error: unknown) {
+      // Credo does not use error codes but this will be in the
+      // the error message if the wallet is already open.
+      const catchPhrase = 'instance already opened'
 
-        if (error instanceof WalletError && error.message.includes(catchPhrase)) {
-          logger.warn('Wallet already open, nothing to do')
-        } else {
-          logger.error('Error opening existing wallet:', error as Error)
+      if (error instanceof WalletError && error.message.includes(catchPhrase)) {
+        logger.warn('Wallet already open, nothing to do')
+      } else {
+        logger.error('Error opening existing wallet:', error as Error)
 
-          throw new BifoldError(
-            'Wallet Service',
-            'There was a problem unlocking the wallet.',
-            (error as Error).message,
-            1047
-          )
-        }
+        throw new BifoldError(
+          'Wallet Service',
+          'There was a problem unlocking the wallet.',
+          (error as Error).message,
+          1047
+        )
       }
+    }
 
-      await agent.mediationRecipient.initiateMessagePickup()
+    await agent.mediationRecipient.initiateMessagePickup()
+  }, [agent, walletSecret, logger])
 
-      return agent
+  const createNewAgent = useCallback(async (): Promise<Agent | undefined> => {
+    if (!walletSecret?.id || !walletSecret.key) {
+      return
     }
 
     logger.info('No agent initialized, creating a new one')
@@ -94,6 +96,14 @@ const useInitializeAgent = () => {
     newAgent.registerOutboundTransport(wsTransport)
     newAgent.registerOutboundTransport(httpTransport)
 
+    return newAgent
+  }, [walletSecret, store.preferences.walletName, logger, indyLedgers])
+
+  const migrateIfRequired = useCallback(async (newAgent: Agent) => {
+    if (!walletSecret?.id || !walletSecret.key) {
+      return
+    }
+
     // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
     if (!store.migration.didMigrateToAskar) {
       newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
@@ -106,11 +116,9 @@ const useInitializeAgent = () => {
         type: DispatchAction.DID_MIGRATE_TO_ASKAR,
       })
     }
+  }, [walletSecret, store.migration.didMigrateToAskar, dispatch])
 
-    await newAgent.initialize()
-
-    await createLinkSecretIfRequired(newAgent)
-
+  const warmUpCache = useCallback(async (newAgent: Agent) => {
     const poolService = newAgent.dependencyManager.resolve(IndyVdrPoolService)
     cacheCredDefs.forEach(async ({ did, id }) => {
       const pool = await poolService.getPoolForDid(newAgent.context, did)
@@ -123,6 +131,30 @@ const useInitializeAgent = () => {
       const schemaRequest = new GetSchemaRequest({ schemaId: id })
       await pool.pool.submitRequest(schemaRequest)
     })
+  }, [cacheCredDefs, cacheSchemas])
+
+  const initializeAgent = useCallback(async (): Promise<Agent | undefined> => {
+    if (!walletSecret?.id || !walletSecret.key) {
+      return
+    }
+
+    if (agent) {
+      await restartExistingAgent()
+      return agent
+    }
+
+    const newAgent = await createNewAgent()
+    if (!newAgent) {
+      return
+    }
+
+    await migrateIfRequired(newAgent)
+
+    await newAgent.initialize()
+
+    await createLinkSecretIfRequired(newAgent)
+
+    await warmUpCache(newAgent)
 
     setAgent(newAgent)
 
@@ -130,14 +162,11 @@ const useInitializeAgent = () => {
   }, [
     agent,
     setAgent,
-    store.preferences.walletName,
-    store.migration.didMigrateToAskar,
-    dispatch,
     walletSecret,
-    logger,
-    indyLedgers,
-    cacheSchemas,
-    cacheCredDefs
+    restartExistingAgent,
+    createNewAgent,
+    migrateIfRequired,
+    warmUpCache,
   ])
 
   return { initializeAgent }
