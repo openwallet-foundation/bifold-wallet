@@ -49,7 +49,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                       "flex": 1,
                       "flexGrow": 1,
                       "marginVertical": 35,
-                      "paddingHorizontal": 10,
                     }
                   }
                 >
@@ -101,7 +100,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                         "flex": 1,
                         "flexGrow": 1,
                         "marginVertical": 35,
-                        "paddingHorizontal": 10,
                       }
                     }
                   >
