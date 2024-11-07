@@ -11,12 +11,15 @@ import { DeliveryStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
+import { TOKENS, useServices } from '../container-api'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
+  const [DeliveryHeaderRight] = useServices([TOKENS.COMPONENT_DELIVERY_HEADER_RIGHT])
+  
 
   return (
     <Stack.Navigator
@@ -27,7 +30,7 @@ const DeliveryStack: React.FC = () => {
         headerShown: true,
         presentation: 'modal',
         headerLeft: () => null,
-        headerRight: () => <HeaderRightHome />,
+        headerRight: () => <DeliveryHeaderRight />,
       }}
     >
       <Stack.Screen

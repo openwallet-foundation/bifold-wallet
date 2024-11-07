@@ -49,6 +49,8 @@ import { Config } from './types/config'
 import { Locales } from './localization'
 import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
+import SettingsMenu from './components/buttons/SettingsMenu'
+import HeaderRightHome from './components/buttons/HeaderHome'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -115,13 +117,20 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.NOTIFICATIONS_LIST_ITEM, NotificationListItem)
     this._container.registerInstance(TOKENS.CONFIG, defaultConfig)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_LEFT, SettingsMenu)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_FOOTER, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_DELIVERY_HEADER_RIGHT, HeaderRightHome)
+    this._container.registerInstance(TOKENS.COMPONENT_NOTIFICATION_HEADER_RIGHT, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_PROOF_HEADER_RIGHT, HeaderRightHome)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)
+    this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER_LEFT, SettingsMenu)
+    this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER_RIGHT, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST, NoNewUpdates)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
+    this._container.registerInstance(TOKENS.COMPONENT_CONTACT_LIST_HEADER_RIGHT, HeaderRightHome)
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_LIST_ITEM, ContactListItem)
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM, ContactCredentialListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])

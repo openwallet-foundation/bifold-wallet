@@ -56,11 +56,17 @@ export const NAV_TOKENS = {
 
 export const COMPONENT_TOKENS = {
   COMPONENT_HOME_HEADER: 'component.home.header',
+  COMPONENT_HOME_HEADER_LEFT: 'component.home.header.left',
+  COMPONENT_HOME_HEADER_RIGHT: 'component.home.header.right',
+  COMPONENT_PROOF_HEADER_RIGHT: 'component.proof.header.right',
+  COMPONENT_NOTIFICATION_HEADER_RIGHT: 'component.notification.header.right',
+  COMPONENT_DELIVERY_HEADER_RIGHT: 'component.delivery.header.right',
   COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST: 'component.home.notifications-empty-list',
   COMPONENT_HOME_FOOTER: 'component.home.footer',
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
   COMPONENT_RECORD: 'component.record',
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
+  COMPONENT_CONTACT_LIST_HEADER_RIGHT: 'component.contact-list-header-right',
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
   COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
 } as const
@@ -77,6 +83,7 @@ export const STACK_TOKENS = {
 export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
   COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
+  COMPONENT_CRED_LIST_HEADER_LEFT: 'fn.credListHeaderLeft',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
   COMPONENT_CRED_LIST_FOOTER: 'fn.credListFooter',
 } as const
@@ -145,6 +152,9 @@ export type TokenMapping = {
     schemaIds: string[]
     action: (navigation: any) => void
   }[]
+  [TOKENS.COMPONENT_HOME_HEADER_LEFT]: React.FC
+  [TOKENS.COMPONENT_HOME_HEADER_RIGHT]: React.FC
+  [TOKENS.COMPONENT_NOTIFICATION_HEADER_RIGHT]: React.FC
   [TOKENS.GROUP_BY_REFERENT]: boolean
   [TOKENS.SCREEN_PREFACE]: React.FC
   [TOKENS.STACK_ONBOARDING]: React.FC
@@ -177,13 +187,17 @@ export type TokenMapping = {
   [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
+  [TOKENS.COMPONENT_CRED_LIST_HEADER_LEFT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
+  [TOKENS.COMPONENT_DELIVERY_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
   [TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_RECORD]: React.FC
+  [TOKENS.COMPONENT_PROOF_HEADER_RIGHT]: React.FC
+  [TOKENS.COMPONENT_CONTACT_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CONTACT_LIST_ITEM]: React.FC<ContactListItemProps>
   [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
