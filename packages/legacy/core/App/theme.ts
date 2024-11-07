@@ -43,6 +43,8 @@ import HistoryCardRevokedIcon from './assets/img/HistoryCardRevokedIcon.svg'
 import HistoryInformationSentIcon from './assets/img/HistoryInformationSentIcon.svg'
 import HistoryPinUpdatedIcon from './assets/img/HistoryPinUpdatedIcon.svg'
 import IconChevronRight from './assets/img/IconChevronRight.svg'
+import IconWarning from './assets/img/exclamation-mark.svg'
+import IconError from './assets/img/error-filled.svg'
 
 export interface ISVGAssets {
   activityIndicator: React.FC<SvgProps>
@@ -87,6 +89,8 @@ export interface ISVGAssets {
   iconChevronRight: React.FC<SvgProps>
   iconDelete: React.FC<SvgProps>
   iconEdit: React.FC<SvgProps>
+  iconWarning: React.FC<SvgProps>
+  iconError: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -95,6 +99,7 @@ export interface IFontAttributes {
   fontSize: number
   fontWeight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
   color: string
+  lineHeight?: number
 }
 
 export interface IInputAttributes {
@@ -105,6 +110,13 @@ export interface IInputAttributes {
   color?: string
   borderWidth?: number
   borderColor?: string
+}
+
+export interface IInlineInputMessage {
+  inlineErrorText: IFontAttributes
+  InlineErrorIcon: React.FC<SvgProps>
+  inlineWarningText: IFontAttributes
+  InlineWarningIcon: React.FC<SvgProps>
 }
 
 export interface IInputs {
@@ -138,6 +150,8 @@ export interface ITextTheme {
   modalHeadingOne: IFontAttributes
   modalHeadingThree: IFontAttributes
   settingsText: IFontAttributes
+  inlineErrorText: IFontAttributes
+  inlineWarningText: IFontAttributes
 }
 
 export interface IBrandColors {
@@ -163,6 +177,8 @@ export interface IBrandColors {
   tabBarInactive: string
   unorderedList: string
   unorderedListModal: string
+  inlineError: string
+  inlineWarning: string
 }
 
 export interface ISemanticColors {
@@ -200,6 +216,11 @@ export interface IGrayscaleColors {
   white: string
 }
 
+export interface IErrorColors {
+  error: string
+  warning: string
+}
+
 export interface IColorPallet {
   brand: IBrandColors
   semantic: ISemanticColors
@@ -231,6 +252,11 @@ const GrayscaleColors: IGrayscaleColors = {
   white: '#FFFFFF',
 }
 
+const InlineErrorMessageColors: IErrorColors = {
+  error: '#ff0000',
+  warning: '#ff9000',
+}
+
 const BrandColors: IBrandColors = {
   primary: '#42803E',
   primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
@@ -254,6 +280,8 @@ const BrandColors: IBrandColors = {
   headerText: GrayscaleColors.white,
   buttonText: GrayscaleColors.white,
   tabBarInactive: GrayscaleColors.white,
+  inlineError: InlineErrorMessageColors.error,
+  inlineWarning: InlineErrorMessageColors.warning,
 }
 
 const SemanticColors: ISemanticColors = {
@@ -385,6 +413,16 @@ export const TextTheme: ITextTheme = {
     fontSize: 21,
     fontWeight: 'normal',
     color: ColorPallet.brand.text,
+  },
+  inlineErrorText: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    color: ColorPallet.brand.inlineError,
+  },
+  inlineWarningText: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    color: ColorPallet.brand.inlineWarning,
   },
 }
 
@@ -918,6 +956,8 @@ export const Assets = {
     iconChevronRight: IconChevronRight,
     iconDelete: IconDelete,
     iconEdit: IconEdit,
+    iconError: IconError,
+    iconWarning: IconWarning,
   },
   img: {
     logoPrimary: {
@@ -937,9 +977,17 @@ export const Assets = {
   },
 }
 
+const InputInlineMessage: IInlineInputMessage = {
+  inlineErrorText: { ...TextTheme.inlineErrorText },
+  InlineErrorIcon: Assets.svg.iconError,
+  inlineWarningText: { ...TextTheme.inlineWarningText },
+  InlineWarningIcon: Assets.svg.iconWarning,
+}
+
 export interface ITheme {
   ColorPallet: IColorPallet
   TextTheme: ITextTheme
+  InputInlineMessage: IInlineInputMessage
   Inputs: IInputs
   Buttons: any
   ListItems: any
@@ -962,6 +1010,7 @@ export interface ITheme {
 export const theme: ITheme = {
   ColorPallet,
   TextTheme,
+  InputInlineMessage,
   Inputs,
   Buttons,
   ListItems,
