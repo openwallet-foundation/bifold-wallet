@@ -68,7 +68,7 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep tourID={TourID.HomeTour} index={1}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                  <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
+                  <Icon name={focused ? 'home' : 'home-outline'} color={color} size={30} />
 
                   {showLabels && (
                     <Text
