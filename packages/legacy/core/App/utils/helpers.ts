@@ -22,6 +22,7 @@ import {
   ProofState,
   parseDid,
   OutOfBandRecord,
+  CredentialPreviewAttribute,
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
 import { useConnectionById } from '@credo-ts/react-hooks'
@@ -432,7 +433,26 @@ export const evaluatePredicates =
     })
   }
 
-const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
+// find and tag attribute that cannot be resolved
+const isOffendingAttribute = (
+  attributeName: string,
+  schemaId: string,
+  credentialRecords: CredentialExchangeRecord[]
+): boolean => {
+  // filter records for a given schema id
+  const records = credentialRecords.filter(
+    (record: CredentialExchangeRecord) => getCredentialSchemaIdForRecord(record) === schemaId
+  )
+
+  // then for each record, find if a given attribute exists
+  // if no attributes are found in the record, then the given attributeName is the offending attribute
+  return records.some(
+    (record: CredentialExchangeRecord) =>
+      !record.credentialAttributes?.some((attribute: CredentialPreviewAttribute) => attribute.name === attributeName)
+  )
+}
+
+const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute, records: CredentialExchangeRecord[]) => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
   const credDefId = credDefIdFromRestrictions(restrictions)
@@ -456,6 +476,7 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
         credentialId: credName,
         name: attributeName,
         value: '',
+        errorMessage: isOffendingAttribute(attributeName, schemaId, records) ? 'missing from helpers' : undefined,
       })
     )
   }
@@ -467,29 +488,41 @@ export const processProofAttributes = (
   credentialRecords?: CredentialExchangeRecord[],
   groupByReferent?: boolean
 ): { [key: string]: ProofCredentialAttributes } => {
+  console.log('PROCESS ATTRIBUTES')
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
   const requestedProofAttributes = request?.requested_attributes
   const retrievedCredentialAttributes = credentials?.attributes
   const requestNonRevoked = request?.non_revoked // non_revoked interval can sometimes be top level
 
+  // this has all the stuff I'd need I think
+  // These are what I need
+  // console.log(JSON.stringify(requestedProofAttributes))
+  // console.log(JSON.stringify(credentialRecords))
+  // we getting somewhere now
+
   if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
   for (const key of Object.keys(retrievedCredentialAttributes)) {
+    console.log(`Key: ${key}`)
     const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])]
       .sort(credentialSortFn)
       .map((cred) => cred.credentialId)
 
     const credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
-
+    // console.log(credentialList)
     const { name, names, non_revoked, restrictions } = requestedProofAttributes[key]
 
     const proofCredDefId = credDefIdFromRestrictions(restrictions)
     const proofSchemaId = schemaIdFromRestrictions(restrictions)
-
+    console.log(`Schema: ${proofSchemaId} Cred def: ${proofCredDefId}`)
+    // No credentials satisfy proof request, process attribute errors
     if (credentialList.length <= 0) {
-      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key])
+      console.log('No credentials satisfy proof, mark attribute as missing')
+
+      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [])
+      // console.log(missingAttributes)
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
         processedAttributes[missingCredGroupKey] = missingAttributes
@@ -520,6 +553,7 @@ export const processProofAttributes = (
         continue
       }
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
+        console.log('ARE WE PROCESSING HERE AT ALL?')
         if (!processedAttributes[credential.credentialId]) {
           // init processedAttributes object
           processedAttributes[credential.credentialId] = {
@@ -547,6 +581,8 @@ export const processProofAttributes = (
       }
     }
   }
+  console.log('__--__--__ FINAL ATTRIBUTES')
+  console.log(JSON.stringify(processedAttributes))
   return processedAttributes
 }
 
@@ -1073,6 +1109,16 @@ export const createTempConnectionInvitation = async (agent: Agent | undefined, t
  */
 export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children is ChildFn<T> {
   return typeof children === 'function'
+}
+
+// it would be more helpful to make this fetch a record based on schema or cred def
+const getCredentialDefinitionIdForRecord = (record: CredentialExchangeRecord): string | null => {
+  // assumes record is anonCred
+  return record.metadata.get('_anoncreds/credential')?.credentialDefinitionId ?? null
+}
+const getCredentialSchemaIdForRecord = (record: CredentialExchangeRecord): string | null => {
+  // assumes record is anonCred
+  return record.metadata.get('_anoncreds/credential')?.schemaId ?? null
 }
 
 export function getCredentialEventRole(record: CredentialExchangeRecord) {

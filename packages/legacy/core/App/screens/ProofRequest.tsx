@@ -3,7 +3,12 @@ import {
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, DifPexInputDescriptorToCredentials, ProofState } from '@credo-ts/core'
+import {
+  CredentialExchangeRecord,
+  CredentialIssuancePurpose,
+  DifPexInputDescriptorToCredentials,
+  ProofState,
+} from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
@@ -235,7 +240,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     setLoading(true)
     credProofPromise
       ?.then((value: any) => {
-        console.log('**__**__**__**__**__**__**__**__**__**__ THIS IS IT')
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
           setLoading(false)
@@ -243,7 +247,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
           // Credentials that satisfy the proof request
           let credList: string[] = []
-          console.log(selectedCredentials)
           if (selectedCredentials.length > 0) {
             credList = selectedCredentials
           } else {
@@ -292,29 +295,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           setRetrievedCredentials(selectRetrievedCredentials)
 
           // This is the proof, not the credential
-          let activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
-          // console.log(activeCreds)
-          // Map through active credentials
-          activeCreds = activeCreds.map((proof: any) => {
-            console.log('WE ARE IN THE LOOP')
-            if (proof.attributes) {
-              // Loop through each attribute and find any attributes that may not appear in the wallets credentials
-              proof.attributes = proof.attributes.map((attribute: any) => {
-                // scan through credential attributes to check if proof request attributes exists
-                const isAttributeValid = fullCredentials.some((credential: any) =>
-                  isAttributeInCredential(attribute.name, credential.credentialAttributes)
-                )
-                console.log(`Is Attribute: ${attribute.name} valid: ${isAttributeValid}`)
-                // Attribute in proof request is not present or empty
-                if (!isAttributeValid) {
-                  attribute.errorMessage = 'missing'
-                }
-
-                return attribute
-              })
-            }
-            return proof
-          })
+          const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
 
           // this is why this is so confusing
           setActiveCreds(activeCreds)
@@ -326,11 +307,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
             }, {})
           }
-          // console.log('__')
-          // console.log(JSON.stringify(activeCreds))
-          console.log('__))(()))((___')
-          // console.log(JSON.stringify(fullCredentials))
-
           // Check for revoked credentials
           const records = fullCredentials.filter((record: any) =>
             record.credentials.some((cred: any) => credList.includes(cred.credentialRecordId))
@@ -709,7 +685,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                       ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                     ]}
                     credName={item.credName}
-                    existsInWallet={item.credExchangeRecord !== undefined} // this also doesn't really make sense, no exchange record means it isn't in the wallet?
+                    existsInWallet={item.credExchangeRecord !== undefined} // why is this the error trigger?
                     satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                     hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
                     handleAltCredChange={
