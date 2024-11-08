@@ -6,10 +6,6 @@ import { ariesAskar } from '@hyperledger/aries-askar-react-native'
 import { Platform } from 'react-native'
 import * as RNFS from 'react-native-fs'
 
-import { Migration as MigrationState } from '../types/state'
-
-export const didMigrateToAskar = (state: MigrationState) => state.didMigrateToAskar
-
 export const migrateToAskar = async (walletId: string, key: string, agent?: Agent) => {
   // The backup file is kept in case anything goes wrong. this will allow us to release patches and still update the
   // original indy-sdk database in a future version we could manually add a check to remove the old file from storage.

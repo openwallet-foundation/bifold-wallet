@@ -24,7 +24,7 @@ import {
 } from '../services/keychain'
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
-import { didMigrateToAskar, migrateToAskar } from '../utils/migration'
+import { migrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
   checkPIN: (PIN: string) => Promise<boolean>
@@ -101,7 +101,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
       const hash = await hashPIN(PIN, secret.salt)
 
-      if (!didMigrateToAskar(store.migration)) {
+      if (!store.migration.didMigrateToAskar) {
         await migrateToAskar(secret.id, hash)
         dispatch({
           type: DispatchAction.DID_MIGRATE_TO_ASKAR,
@@ -128,7 +128,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     } catch (e) {
       return false
     }
-  }, [dispatch, store.migration])
+  }, [dispatch, store.migration.didMigrateToAskar])
 
   const removeSavedWalletSecret = useCallback(() => {
     setWalletSecret(undefined)
