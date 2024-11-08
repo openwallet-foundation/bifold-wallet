@@ -36,6 +36,7 @@ import {
 import OnboardingPages from './screens/OnboardingPages'
 import UseBiometry from './screens/UseBiometry'
 import Scan from './screens/Scan'
+import PINExplainer from './screens/PINExplainer'
 import HomeHeaderView from './components/views/HomeHeaderView'
 import HomeFooterView from './components/views/HomeFooterView'
 import EmptyList from './components/misc/EmptyList'
@@ -46,6 +47,9 @@ import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
 import { Config } from './types/config'
 import { Locales } from './localization'
+import ContactListItem from './components/listItems/ContactListItem'
+import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
+import { InlineErrorPosition } from './types/error'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -59,6 +63,11 @@ export const defaultConfig: Config = {
   showScanHelp: true,
   showScanButton: true,
   showDetailsInfo: true,
+  contactDetailsOptions: {
+    showConnectedTime: true,
+    enableEditContactName: true,
+    enableCredentialList: false,
+  },
 }
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
@@ -89,6 +98,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
+    this._container.registerInstance(TOKENS.SCREEN_PIN_EXPLAINER, PINExplainer)
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
@@ -113,8 +123,11 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
+    this._container.registerInstance(TOKENS.COMPONENT_CONTACT_LIST_ITEM, ContactListItem)
+    this._container.registerInstance(TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM, ContactCredentialListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
+    this._container.registerInstance(TOKENS.INLINE_ERRORS, { enabled: true, position: InlineErrorPosition.Above })
     this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {

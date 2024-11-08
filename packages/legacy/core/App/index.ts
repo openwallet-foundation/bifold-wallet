@@ -27,7 +27,9 @@ import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
+import LimitedTextInput from './components/inputs/LimitedTextInput'
 import HomeFooterView from './components/views/HomeFooterView'
+import KeyboardView from './components/views/KeyboardView'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
 import { AuthProvider } from './contexts/auth'
@@ -49,6 +51,8 @@ import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
+import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
+import { defaultConfig } from './container-impl'
 
 export * from './navigators'
 export * from './services/storage'
@@ -96,7 +100,12 @@ export type { PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
-export type { AuthenticateStackParams, OnboardingStackParams, NotificationStackParams } from './types/navigators'
+export type {
+  AuthenticateStackParams,
+  OnboardingStackParams,
+  NotificationStackParams,
+  ContactStackParams,
+} from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
 export type { ReducerAction } from './contexts/reducers/store'
@@ -108,6 +117,11 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+
+export type { InlineMessageProps } from './components/inputs/InlineErrorText'
+
+export type { InlineErrorPosition } from './types/error'
+
 export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
@@ -122,6 +136,7 @@ export {
   useTour,
   AttachTourStep,
   TourBox,
+  defaultConfig,
   homeTourSteps,
   credentialsTourSteps,
   credentialOfferTourSteps,
@@ -143,6 +158,7 @@ export {
   toastConfig,
   NetInfo,
   OnboardingPages,
+  OpenIDCredentialRecordProvider,
   NotificationListItem,
   useDefaultStackOptions,
   Splash,
@@ -161,6 +177,8 @@ export {
   Text,
   loadLoginAttempt,
   Button,
+  LimitedTextInput,
+  KeyboardView,
   BulletPoint,
   PINRules,
   walletTimeout,

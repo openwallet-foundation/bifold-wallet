@@ -139,6 +139,8 @@ const translation = {
         "Message1045": "Il y a eu un problème lors de l'initialisation de l'agent.",
         "Title1046": "Impossible de récupérer les contacts.",
         "Message1046": "Il y a eu un problème lors de la récupération des contacts.",
+        "Title1047": "Unable to display card. (PT-FR)",
+        "Message1047": "There was a problem parsing credential card. (PT-FR)",
     },
     "SelectionAxs": {
         "RadioChecked": "checked(fr)",
@@ -187,6 +189,16 @@ const translation = {
         "OpenSettings": "Ouvrir les paramètres",
     },
     "PINCreate": {
+        "Explainer": {
+          "PrimaryHeading": "Secure your Wallet (FR)",
+          "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN). (FR)",
+          "WhyNeedPin": {
+            "Header": "Why you need a PIN (FR)",
+            "Paragraph": "Your PIN is an important security feature: (FR)",
+            "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet (FR)",
+            "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet (FR)"
+          }
+        },
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
@@ -270,7 +282,12 @@ const translation = {
         "Warning": "\n\nAssurez-vous que vous seul avez accès à votre portefeuille.",
         "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
         "UnlockPromptTitle": "Déverrouillage du portefeuille",
-        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
+        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille",
+        "AllowBiometricsTitle": "Activer la biométrie",
+        "AllowBiometricsDesc": "Pour déverrouiller BC Wallet avec votre biométrie, permettrez la biométrie dans les paramètres de votre appareil.",
+        "SetupBiometricsTitle": "La biométrie n'est pas activée",
+        "SetupBiometricsDesc": "Pour déverrouiller BC Wallet avec votre biométrie, configurez votre biométrie dans les paramètres de votre appareil.",
+        "OpenSettings": "Ouvrir les paramètres"
     },
     "ActivityHistory": {
         "Header": "Activity history(fr)",
@@ -413,7 +430,11 @@ const translation = {
         "UnableToRemoveTitle": "Impossible de supprimer le Contact",
         "UnableToRemoveCaption": "Impossible de supprimer car il y a des attestations d'identité émises par ce Contact dans votre portefeuille. Supprimez d'abord les attestations d'identité, puis supprimez ce Contact.",
         "GoToCredentials": "Aller aux attestations d'identité",
-        "ContactRemoved": "Contact supprimé"
+        "ContactRemoved": "Contact supprimé",
+        "GoToCredentialDetail": "Aller au détail de l'attestation",
+        "CredentialName": "Nom du justificatif",
+        "Credentials": "Mes justificatifs avec ce contact",
+        "NoCredentials": "Vous n'avez aucun justificatif de ce contact."
     },
     "WhatAreContacts": {
         "Title": "Que sont les Contacts?",
@@ -473,11 +494,10 @@ const translation = {
         "RemoveCredential": "Supprimer l'attestation d'identité",
     },
     "Home": {
-        "Welcome": "Bienvenue",
         "Notification": "Notification",
         "Notifications": "Notifications",
         "NoNewUpdates": "Vous n'avez pas de nouvelles notifications.",
-        "NoCredentials": "Vous n'avez pas d'attestation(s) dans votre portefeuille.",
+        "NoCredentials": "Your wallet is empty (FR)",
         "SeeAll": "Voir tout",
         "YouHave": "Vous avez",
         "Credential": "attestation",
@@ -487,6 +507,7 @@ const translation = {
         "SentMessage": "Envoyer un message",
         "ReceivedMessage": "Vous avez reçu un nouveau message",
         "ViewMessage": "Voir le message",
+        "ScanOfferAddCard": "Scan an offer to add a card to your wallet (FR)",
     },
     "Scan": {
         "SuccessfullyAcceptedConnection": "Connexion acceptée avec succès",

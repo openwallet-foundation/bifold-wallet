@@ -146,7 +146,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       flexGrow: 1,
       marginVertical: 35,
       borderRadius: 15,
-      paddingHorizontal: 10,
     },
   })
 
@@ -696,7 +695,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                         : undefined
                     }
                     proof
-                  ></CredentialCard>
+                  />
                 </View>
               )}
             </View>
