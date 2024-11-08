@@ -381,7 +381,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
-
+    // I want this to be different
     return (
       <Text
         style={[
@@ -448,30 +448,28 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       item && (
         <View style={{ marginTop: 15 }}>
           {!(item?.value || item?.satisfied) ? (
-            <>
-              <View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon
+                  style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                  name="close"
+                  color={ListItems.proofError.color}
+                  size={ListItems.recordAttributeText.fontSize}
+                />
+                <AttributeLabel label={label} />
+              </View>
+              {item.errorMessage && (
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginStart: 15 }}>
                   <Icon
                     style={{ paddingTop: 2, paddingHorizontal: 2 }}
                     name="close"
                     color={ListItems.proofError.color}
                     size={ListItems.recordAttributeText.fontSize}
                   />
-                  <AttributeLabel label={label} />
+                  <AttributeErrorLabel error={item.errorMessage} />
                 </View>
-                {item.errorMessage && (
-                  <View style={{ flexDirection: 'row', alignItems: 'center', marginStart: 15 }}>
-                    <Icon
-                      style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                      name="close"
-                      color={ListItems.proofError.color}
-                      size={ListItems.recordAttributeText.fontSize}
-                    />
-                    <AttributeErrorLabel error={item.errorMessage} />
-                  </View>
-                )}
-              </View>
-            </>
+              )}
+            </View>
           ) : (
             <AttributeLabel label={label} />
           )}
