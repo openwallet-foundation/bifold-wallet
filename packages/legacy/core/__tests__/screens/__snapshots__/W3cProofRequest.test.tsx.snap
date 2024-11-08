@@ -126,6 +126,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   Attribute {
                     "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                     "encoding": undefined,
+                    "errorMessage": undefined,
                     "format": undefined,
                     "label": undefined,
                     "mimeType": undefined,
@@ -145,6 +146,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   Attribute {
                     "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                     "encoding": undefined,
+                    "errorMessage": undefined,
                     "format": undefined,
                     "label": undefined,
                     "mimeType": undefined,
@@ -528,6 +530,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     Attribute {
                                       "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                                       "encoding": undefined,
+                                      "errorMessage": undefined,
                                       "format": undefined,
                                       "label": undefined,
                                       "mimeType": undefined,
@@ -547,6 +550,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     Attribute {
                                       "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                                       "encoding": undefined,
+                                      "errorMessage": undefined,
                                       "format": undefined,
                                       "label": undefined,
                                       "mimeType": undefined,
@@ -1222,60 +1226,62 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                       }
                                     }
                                   >
-                                    <View
-                                      style={
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        allowFontScaling={false}
-                                        selectable={false}
+                                    <View>
+                                      <View
                                         style={
-                                          Array [
-                                            Object {
-                                              "color": "#D8292F",
-                                              "fontSize": 18,
-                                            },
-                                            Object {
-                                              "paddingHorizontal": 2,
-                                              "paddingTop": 2,
-                                            },
-                                            Object {
-                                              "fontFamily": "Material Icons",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "normal",
-                                            },
-                                            Object {},
-                                          ]
+                                          Object {
+                                            "alignItems": "center",
+                                            "flexDirection": "row",
+                                          }
                                         }
                                       >
-                                        
-                                      </Text>
-                                      <Text
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "fontSize": 14,
-                                              "fontWeight": "normal",
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "flexShrink": 1,
-                                            },
-                                            Object {
-                                              "lineHeight": 19,
-                                              "opacity": 0.8,
-                                            },
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeName"
-                                      >
-                                        Age
-                                      </Text>
+                                        <Text
+                                          allowFontScaling={false}
+                                          selectable={false}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "#D8292F",
+                                                "fontSize": 18,
+                                              },
+                                              Object {
+                                                "paddingHorizontal": 2,
+                                                "paddingTop": 2,
+                                              },
+                                              Object {
+                                                "fontFamily": "Material Icons",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "normal",
+                                              },
+                                              Object {},
+                                            ]
+                                          }
+                                        >
+                                          
+                                        </Text>
+                                        <Text
+                                          style={
+                                            Array [
+                                              Object {
+                                                "color": "#FFFFFF",
+                                                "fontSize": 14,
+                                                "fontWeight": "normal",
+                                              },
+                                              Object {
+                                                "color": "#FFFFFF",
+                                                "flexShrink": 1,
+                                              },
+                                              Object {
+                                                "lineHeight": 19,
+                                                "opacity": 0.8,
+                                              },
+                                            ]
+                                          }
+                                          testID="com.ariesbifold:id/AttributeName"
+                                        >
+                                          Age
+                                        </Text>
+                                      </View>
                                     </View>
                                     <View
                                       style={

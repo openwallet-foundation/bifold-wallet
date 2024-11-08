@@ -398,7 +398,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const AttributeErrorLabel: React.FC<{ errorString: string }> = ({ errorString }) => {
+  const AttributeErrorLabel: React.FC<{ errorMessage: string }> = ({ errorMessage }) => {
     return (
       <Text
         style={[
@@ -410,7 +410,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {errorString}
+        {errorMessage}
       </Text>
     )
   }
@@ -465,7 +465,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                     color={ListItems.proofError.color}
                     size={ListItems.recordAttributeText.fontSize}
                   />
-                  <AttributeErrorLabel errorString={item.errorMessage} />
+                  <AttributeErrorLabel errorMessage={item.errorMessage} />
                 </View>
               )}
             </View>
