@@ -381,7 +381,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
-    // I want this to be different
     return (
       <Text
         style={[
@@ -399,7 +398,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const AttributeErrorLabel: React.FC<{ error: string }> = ({ error }) => {
+  const AttributeErrorLabel: React.FC<{ errorString: string }> = ({ errorString }) => {
     return (
       <Text
         style={[
@@ -411,7 +410,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {error}
+        {errorString}
       </Text>
     )
   }
@@ -466,7 +465,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                     color={ListItems.proofError.color}
                     size={ListItems.recordAttributeText.fontSize}
                   />
-                  <AttributeErrorLabel error={item.errorMessage} />
+                  <AttributeErrorLabel errorString={item.errorMessage} />
                 </View>
               )}
             </View>

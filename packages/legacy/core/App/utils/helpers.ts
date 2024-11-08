@@ -453,7 +453,11 @@ const isOffendingAttribute = (
   )
 }
 
-const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute, records: CredentialExchangeRecord[]) => {
+const addMissingDisplayAttributes = (
+  attrReq: AnonCredsRequestedAttribute,
+  records: CredentialExchangeRecord[],
+  missingText: string
+) => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
   const credDefId = credDefIdFromRestrictions(restrictions)
@@ -478,13 +482,14 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute, recor
         name: attributeName,
         value: '',
         // This assumes that schema id OR cred definition ids are present in the proof request
-        errorMessage: isOffendingAttribute(attributeName, schemaId || credDefId, records) ? '' : undefined,
+        errorMessage: isOffendingAttribute(attributeName, schemaId || credDefId, records) ? missingText : undefined,
       })
     )
   }
   return processedAttributes
 }
 export const processProofAttributes = (
+  t: TFunction<'translation', undefined>,
   request?: AnonCredsProofRequest,
   credentials?: AnonCredsCredentialsForProofRequest,
   credentialRecords?: CredentialExchangeRecord[],
@@ -515,7 +520,11 @@ export const processProofAttributes = (
 
     // No credentials satisfy proof request, process attribute errors
     if (credentialList.length <= 0) {
-      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [])
+      const missingAttributes = addMissingDisplayAttributes(
+        requestedProofAttributes[key],
+        credentialRecords ?? [],
+        t('ProofRequest.MissingAttribute')
+      )
 
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
@@ -840,6 +849,7 @@ export const retrieveCredentialsForProof = async (
 
       const filtered = filterInvalidProofRequestMatches(anonCredsCredentialsForRequest, descriptorMetadata)
       const processedAttributes = processProofAttributes(
+        t,
         anonCredsProofRequest,
         filtered,
         fullCredentials,
@@ -864,7 +874,7 @@ export const retrieveCredentialsForProof = async (
     const proofRequest = format.request?.anoncreds ?? format.request?.indy
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = processProofAttributes(proofRequest, proofFormat, fullCredentials, groupByReferent)
+    const attributes = processProofAttributes(t, proofRequest, proofFormat, fullCredentials, groupByReferent)
     const predicates = processProofPredicates(proofRequest, proofFormat, fullCredentials, groupByReferent)
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
 
