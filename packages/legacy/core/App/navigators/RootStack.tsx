@@ -151,8 +151,7 @@ const RootStack: React.FC = () => {
     const sub = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'inactive') {
         // on iOS this happens when any OS prompt is shown. We
-        // don't want to lock the user out in this case or preform
-        // background tasks.
+        // don't want do anything in this case.
         return
       }
 
@@ -170,7 +169,6 @@ const RootStack: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    console.log('RootStack: currentState = ', currentState)
     if (!agent || !agent.isInitialized) {
       return
     }
