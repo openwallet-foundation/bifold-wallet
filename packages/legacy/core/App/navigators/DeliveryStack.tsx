@@ -2,7 +2,6 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
@@ -18,7 +17,17 @@ const DeliveryStack: React.FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [DeliveryHeaderRight] = useServices([TOKENS.COMPONENT_DELIVERY_HEADER_RIGHT])
+  const [
+    DeliveryHeaderRight,
+    DeliveryProofHeaderRight,
+    DeliveryCredOfferHeaderRight,
+    DeliveryOpenIdHeaderRight
+  ] = useServices([
+    TOKENS.COMPONENT_DELIVERY_HEADER_RIGHT,
+    TOKENS.COMPONENT_DELIVERY_PROOF_HEADER_RIGHT,
+    TOKENS.COMPONENT_DELIVERY_CRED_OFFER_HEADER_RIGHT,
+    TOKENS.COMPONENT_DELIVERY_OPEN_ID_HEADER_RIGHT
+  ])
   
 
   return (
@@ -41,17 +50,26 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
-        options={{ title: t('Screens.ProofRequest') }}
+        options={{ 
+          title: t('Screens.ProofRequest'),
+          headerRight: () => <DeliveryProofHeaderRight />,
+        }}
       />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ title: t('Screens.CredentialOffer') }}
+        options={{
+          title: t('Screens.CredentialOffer'),
+          headerRight: () => <DeliveryCredOfferHeaderRight />,
+        }}
       />
       <Stack.Screen
         name={Screens.OpenIDCredentialDetails}
         component={OpenIDCredentialDetails}
-        options={{ title: t('Screens.CredentialOffer') }}
+        options={{
+          title: t('Screens.CredentialOffer'),
+          headerRight: () => <DeliveryOpenIdHeaderRight />,
+        }}
       />
     </Stack.Navigator>
   )

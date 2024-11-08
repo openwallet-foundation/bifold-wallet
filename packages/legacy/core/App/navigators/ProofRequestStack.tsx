@@ -3,7 +3,6 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
-import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import ListProofRequests from '../screens/ListProofRequests'
 import MobileVerifierLoading from '../screens/MobileVerifierLoading'
@@ -23,7 +22,21 @@ const ProofRequestStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [ProofHeaderRight] = useServices([TOKENS.COMPONENT_PROOF_HEADER_RIGHT])
+  const [
+    ProofHeaderRight,
+    ProofReqDetailsHeaderRight,
+    ProofChangeCredHeaderRight,
+    ProofRequestingHeaderRight,
+    ProofDetailsHeaderRight,
+    ProofUsageHistoryHeaderRight
+  ] = useServices([
+    TOKENS.COMPONENT_PROOF_HEADER_RIGHT,
+    TOKENS.COMPONENT_PROOF_REQ_DETAILS_HEADER_RIGHT,
+    TOKENS.COMPONENT_PROOF_CHANGE_CRED_HEADER_RIGHT,
+    TOKENS.COMPONENT_PROOF_REQUESTING_HEADER_RIGHT,
+    TOKENS.COMPONENT_PROOF_DETAILS_HEADER_RIGHT,
+    TOKENS.COMPONENT_PROOF_USAGE_HISTORY_HEADER_RIGHT,
+  ])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -40,7 +53,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestDetails}
         options={() => ({
           title: '',
-          headerRight: () => <ProofHeaderRight />,
+          headerRight: () => <ProofReqDetailsHeaderRight />,
         })}
       />
       <Stack.Screen
@@ -53,7 +66,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofChangeCredential}
         options={{
           title: t('Screens.ProofChangeCredential'),
-          headerRight: () => <ProofHeaderRight />,
+          headerRight: () => <ProofChangeCredHeaderRight />,
          }}
       ></Stack.Screen>
       <Stack.Screen
@@ -70,7 +83,7 @@ const ProofRequestStack: React.FC = () => {
               icon="arrow-left"
             />
           ),
-          headerRight: () => <ProofHeaderRight />,
+          headerRight: () => <ProofRequestingHeaderRight />,
         })}
       />
       <Stack.Screen
@@ -93,7 +106,7 @@ const ProofRequestStack: React.FC = () => {
               icon="arrow-left"
             />
           ),
-          headerRight: () => <ProofHeaderRight />,
+          headerRight: () => <ProofDetailsHeaderRight />,
         })}
       />
       <Stack.Screen
@@ -101,7 +114,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestUsageHistory}
         options={() => ({
           title: t('Screens.ProofRequestUsageHistory'),
-          headerRight: () => <ProofHeaderRight />,
+          headerRight: () => <ProofUsageHistoryHeaderRight />,
         })}
       />
     </Stack.Navigator>

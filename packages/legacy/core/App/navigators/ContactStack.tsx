@@ -2,7 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import HeaderRightHome from '../components/buttons/HeaderHome'
 import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
@@ -23,14 +22,36 @@ const ContactStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [ContactListHeaderRignht] = useServices([TOKENS.COMPONENT_CONTACT_LIST_HEADER_RIGHT])
+  const [
+    ContactHeaderRight,
+    ContactDetailsHeaderRight,
+    RenameContactHeaderRight,
+    ContactChatHeaderRight,
+    WhatAreContactHeaderRight,
+    CredentialDetailsHeaderRight,
+    CredentialOfferHeaderRight,
+    DetailsProofHeaderRight,
+    ProofRequestHeaderRight
+  ] = useServices([
+    TOKENS.COMPONENT_CONTACT_LIST_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_DETAILS_LIST_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_RENAME_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_CHAT_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_WHAT_ARE_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_DETAILS_CRED_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_OFFER_CRED_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_DETAILS_PROOF_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONTACT_REQUEST_PROOF_HEADER_RIGHT
+  ])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
-      <Stack.Screen name={Screens.Contacts} component={ListContacts}
+      <Stack.Screen 
+        name={Screens.Contacts}
+        component={ListContacts}
         options={{ 
           title: t('Screens.Contacts'),
-          headerRight: () => <ContactListHeaderRignht />,
+          headerRight: () => <ContactHeaderRight />,
         }}
       />
       <Stack.Screen
@@ -38,7 +59,7 @@ const ContactStack: React.FC = () => {
         component={ContactDetails}
         options={{
           title: t('Screens.ContactDetails'),
-          headerRight: () => <ContactListHeaderRignht />,
+          headerRight: () => <ContactDetailsHeaderRight />,
         }}
       />
       <Stack.Screen
@@ -46,25 +67,25 @@ const ContactStack: React.FC = () => {
         component={RenameContact}
         options={() => ({ 
           title: t('Screens.RenameContact'),
-          headerRight: () => <ContactListHeaderRignht />,
+          headerRight: () => <RenameContactHeaderRight />,
       })}
       />
       <Stack.Screen name={Screens.Chat} component={Chat}
         options={{ 
           title: '',
-          headerRight: () => <ContactListHeaderRignht />,}}
+          headerRight: () => <ContactChatHeaderRight />,}}
       />
       <Stack.Screen name={Screens.WhatAreContacts} component={WhatAreContacts}
         options={{ 
           title: '',
-          headerRight: () => <ContactListHeaderRignht />,}}
+          headerRight: () => <WhatAreContactHeaderRight />,}}
       />
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}
         options={() => ({ 
           title: t('Screens.CredentialDetails'),
-          headerRight: () => <ContactListHeaderRignht />,
+          headerRight: () => <CredentialDetailsHeaderRight />,
       })}
       />
       <Stack.Screen
@@ -72,7 +93,7 @@ const ContactStack: React.FC = () => {
         component={CredentialOffer}
         options={() => ({ 
           title: t('Screens.CredentialOffer'),
-          headerRight: () => <ContactListHeaderRignht />,
+          headerRight: () => <CredentialOfferHeaderRight />,
         })}
       />
       <Stack.Screen
@@ -80,14 +101,14 @@ const ContactStack: React.FC = () => {
         component={ProofDetails}
         options={() => ({
           title: '',
-          headerRight: () => <ContactListHeaderRignht />,
+          headerRight: () => <DetailsProofHeaderRight />,
         })}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={() => ({  title: t('Screens.ProofRequest'),
-        headerRight: () => <ContactListHeaderRignht />,
+        headerRight: () => <ProofRequestHeaderRight />,
       })}
       />
     </Stack.Navigator>

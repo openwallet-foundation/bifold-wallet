@@ -2,7 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import CredentialDetails from '../screens/CredentialDetails'
 import ListCredentials from '../screens/ListCredentials'
@@ -16,8 +15,20 @@ const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const [CredentialListHeaderRight, CredentialListHeaderLeft] = useServices([TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT,TOKENS.COMPONENT_CRED_LIST_HEADER_LEFT])
+  const [
+    CredentialListHeaderRight,
+    CredentialListHeaderLeft,
+    CredentialDetailsHeaderRight,
+    CredOpenIdDetailHeaderRight
+  ] =
+    useServices([
+      TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT,
+      TOKENS.COMPONENT_CRED_LIST_HEADER_LEFT,
+      TOKENS.COMPONENT_CRED_DETAILS_HEADER_RIGHT,
+      TOKENS.COMPONENT_CRED_OPEN_ID_HEADER_RIGHT
+    ])
   const defaultStackOptions = useDefaultStackOptions(theme)
+  
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -35,7 +46,7 @@ const CredentialStack: React.FC = () => {
         component={CredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          headerRight: () => <CredentialListHeaderRight />,
+          headerRight: () => <CredentialDetailsHeaderRight />,
         }}
       />
       <Stack.Screen
@@ -43,7 +54,7 @@ const CredentialStack: React.FC = () => {
         component={OpenIDCredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          headerRight: () => <CredentialListHeaderRight />,
+          headerRight: () => <CredOpenIdDetailHeaderRight />,
         }}
       />
     </Stack.Navigator>

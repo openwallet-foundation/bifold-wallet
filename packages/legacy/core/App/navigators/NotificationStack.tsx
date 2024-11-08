@@ -17,7 +17,18 @@ const NotificationStack: React.FC = () => {
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
   const [{ customNotificationConfig: customNotification }] = useServices([TOKENS.NOTIFICATIONS])
-  const [NotificationHeaderRight] = useServices([TOKENS.COMPONENT_NOTIFICATION_HEADER_RIGHT])
+  const [
+    NotifCredDetailsHeaderRight,
+    NotifCredOfferHeaderRight,
+    NotifProofHeaderRight,
+    NotifCustomHeaderRight
+  ] = useServices(
+    [
+      TOKENS.COMPONENT_NOTIFICATION_CRED_DETAILS_HEADER_RIGHT,
+      TOKENS.COMPONENT_NOTIFICATION_CRED_OFFER_HEADER_RIGHT,
+      TOKENS.COMPONENT_NOTIFICATION_PROOF_REQ_HEADER_RIGHT,
+      TOKENS.COMPONENT_NOTIFICATION_CUSTOM_HEADER_RIGHT,
+    ])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -26,7 +37,7 @@ const NotificationStack: React.FC = () => {
         component={CredentialDetails}
         options={{ 
           title: t('Screens.CredentialDetails'),
-          headerRight: () => <NotificationHeaderRight />,
+          headerRight: () => <NotifCredDetailsHeaderRight />,
         }}
       />
       <Stack.Screen
@@ -34,7 +45,7 @@ const NotificationStack: React.FC = () => {
         component={CredentialOffer}
         options={{
           title: t('Screens.CredentialOffer'),
-          headerRight: () => <NotificationHeaderRight />,
+          headerRight: () => <NotifCredOfferHeaderRight />,
         }}
       />
       <Stack.Screen
@@ -42,7 +53,7 @@ const NotificationStack: React.FC = () => {
         component={ProofRequest}
         options={{
           title: t('Screens.ProofRequest'),
-          headerRight: () => <NotificationHeaderRight />,
+          headerRight: () => <NotifProofHeaderRight />,
         }}
       />
       {customNotification && (
@@ -51,7 +62,7 @@ const NotificationStack: React.FC = () => {
           component={customNotification.component}
           options={{
             title: t(customNotification.pageTitle as any),
-            headerRight: () => <NotificationHeaderRight />,
+            headerRight: () => <NotifCustomHeaderRight />,
            }}
         />
       )}

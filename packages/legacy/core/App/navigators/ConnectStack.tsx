@@ -16,25 +16,49 @@ const ConnectStack: React.FC = () => {
   const Stack = createStackNavigator<ConnectStackParams>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [scan] = useServices([TOKENS.SCREEN_SCAN])
+  const [
+    scan,
+    ScanHeaderRigh,
+    ScanHelpHeaderRight,
+    PasteUrlHeaderRight
+  ] = useServices([
+    TOKENS.SCREEN_SCAN,
+    TOKENS.COMPONENT_CONNECT_SCAN_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONNECT_PASTE_URL_HEADER_RIGHT,
+    TOKENS.COMPONENT_CONNECT_SCAN_HELP_HEADER_RIGHT
+  ])
   const { t } = useTranslation()
-
+  
   return (
     <Stack.Navigator
       screenOptions={{
         ...defaultStackOptions,
       }}
     >
-      <Stack.Screen name={Screens.Scan} component={scan} options={{ headerBackTestID: testIdWithKey('Back') }} />
+      <Stack.Screen
+      name={Screens.Scan}
+      component={scan}
+      options={() => ({
+        headerBackTestID: testIdWithKey('Back'),
+        headerRight: () => <ScanHeaderRigh />,
+        })} />
       <Stack.Screen
         name={Screens.PasteUrl}
         component={PasteUrl}
         options={() => ({
           title: t('PasteUrl.PasteUrl'),
           headerBackTestID: testIdWithKey('Back'),
+          headerRight: () => <PasteUrlHeaderRight />,
         })}
       />
-      <Stack.Screen name={Screens.ScanHelp} component={ScanHelp} />
+      <Stack.Screen
+        name={Screens.ScanHelp}
+        component={ScanHelp}
+        options={() => ({
+          headerRight: () => <ScanHelpHeaderRight />,
+        })}
+         />
+        
       <Stack.Screen
         name={Screens.NameWallet}
         component={NameWallet}
