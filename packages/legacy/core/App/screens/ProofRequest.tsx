@@ -3,12 +3,7 @@ import {
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@credo-ts/anoncreds'
-import {
-  CredentialExchangeRecord,
-  CredentialIssuancePurpose,
-  DifPexInputDescriptorToCredentials,
-  ProofState,
-} from '@credo-ts/core'
+import { CredentialExchangeRecord, DifPexInputDescriptorToCredentials, ProofState } from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
@@ -63,7 +58,6 @@ type CredentialListProps = {
 }
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
-  console.log('__ Proof Request __')
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertNetworkConnected } = useNetwork()
@@ -290,13 +284,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               }
             : undefined
 
-          // console.log('Retrieved credentials', JSON.stringify(selectRetrievedCredentials))
           setRetrievedCredentials(selectRetrievedCredentials)
 
-          // This is the proof, not the credential
           const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
-
-          // this is why this is so confusing
           setActiveCreds(activeCreds)
 
           const unpackCredToField = (
@@ -326,15 +316,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [selectedCredentials, credProofPromise, t])
-
-  // Check if a given attribute name exists AND has a value (non empty string)
-  const isAttributeInCredential = (attributeName: string, credentialAttributes: any[]): boolean => {
-    // filter out for attribute name
-    // also check for non empty values
-    return credentialAttributes.some(
-      (attribute: any) => attribute.name === attributeName && attribute.value.trim().length > 0
-    )
-  }
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
   const toggleCancelModalVisible = useCallback(() => setCancelModalVisible((prev) => !prev), [])
@@ -668,9 +649,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         ListHeaderComponent={header}
         ListFooterComponent={footer}
         renderItem={({ item }) => {
-          console.log('_____________')
-          // console.log(item.attributes)
-          console.log('_____________')
           return (
             <View>
               {loading || attestationLoading ? null : (

@@ -224,7 +224,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       borderRadius: 15,
       borderColor: ColorPallet.semantic.focus,
     },
-    seperator: {
+    seprator: {
       width: '100%',
       height: 2,
       marginVertical: 10,
@@ -452,8 +452,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <View style={{ marginTop: 15 }}>
           {!(item?.value || item?.satisfied) ? (
             <>
-              <AttributeLabel label={label} />
-              {item.errorMessage && (
+              <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ paddingTop: 2, paddingHorizontal: 2 }}
@@ -461,9 +460,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                     color={ListItems.proofError.color}
                     size={ListItems.recordAttributeText.fontSize}
                   />
-                  <AttributeErrorLabel error={item.errorMessage} />
+                  <AttributeLabel label={label} />
                 </View>
-              )}
+                {item.errorMessage && (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginStart: 15 }}>
+                    <Icon
+                      style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                      name="close"
+                      color={ListItems.proofError.color}
+                      size={ListItems.recordAttributeText.fontSize}
+                    />
+                    <AttributeErrorLabel error={item.errorMessage} />
+                  </View>
+                )}
+              </View>
             </>
           ) : (
             <AttributeLabel label={label} />

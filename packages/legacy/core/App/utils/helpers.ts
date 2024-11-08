@@ -433,15 +433,16 @@ export const evaluatePredicates =
     })
   }
 
-// find and tag attribute that cannot be resolved
+// Scans through given credential records and returns true if a given attribute is missing from the records
 const isOffendingAttribute = (
   attributeName: string,
-  schemaId: string,
+  idToFind: string,
   credentialRecords: CredentialExchangeRecord[]
 ): boolean => {
-  // filter records for a given schema id
+  // filter records for a given schema or credential definition id
   const records = credentialRecords.filter(
-    (record: CredentialExchangeRecord) => getCredentialSchemaIdForRecord(record) === schemaId
+    (record: CredentialExchangeRecord) =>
+      getCredentialSchemaIdForRecord(record) === idToFind || getCredentialDefinitionIdForRecord(record) === idToFind
   )
 
   // then for each record, find if a given attribute exists
@@ -476,7 +477,8 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute, recor
         credentialId: credName,
         name: attributeName,
         value: '',
-        errorMessage: isOffendingAttribute(attributeName, schemaId, records) ? 'missing from helpers' : undefined,
+        // This assumes that schema id OR cred definition ids are present in the proof request
+        errorMessage: isOffendingAttribute(attributeName, schemaId || credDefId, records) ? '' : undefined,
       })
     )
   }
@@ -488,41 +490,33 @@ export const processProofAttributes = (
   credentialRecords?: CredentialExchangeRecord[],
   groupByReferent?: boolean
 ): { [key: string]: ProofCredentialAttributes } => {
-  console.log('PROCESS ATTRIBUTES')
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
 
   const requestedProofAttributes = request?.requested_attributes
   const retrievedCredentialAttributes = credentials?.attributes
   const requestNonRevoked = request?.non_revoked // non_revoked interval can sometimes be top level
 
-  // this has all the stuff I'd need I think
-  // These are what I need
-  // console.log(JSON.stringify(requestedProofAttributes))
-  // console.log(JSON.stringify(credentialRecords))
-  // we getting somewhere now
-
+  // no proof or credential attributes, nothing to process, leave early
   if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
+
   for (const key of Object.keys(retrievedCredentialAttributes)) {
-    console.log(`Key: ${key}`)
     const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])]
       .sort(credentialSortFn)
       .map((cred) => cred.credentialId)
 
     const credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
-    // console.log(credentialList)
     const { name, names, non_revoked, restrictions } = requestedProofAttributes[key]
 
+    // system assumes one of these values is present in a proof request
     const proofCredDefId = credDefIdFromRestrictions(restrictions)
     const proofSchemaId = schemaIdFromRestrictions(restrictions)
-    console.log(`Schema: ${proofSchemaId} Cred def: ${proofCredDefId}`)
+
     // No credentials satisfy proof request, process attribute errors
     if (credentialList.length <= 0) {
-      console.log('No credentials satisfy proof, mark attribute as missing')
-
       const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [])
-      // console.log(missingAttributes)
+
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
         processedAttributes[missingCredGroupKey] = missingAttributes
@@ -553,7 +547,6 @@ export const processProofAttributes = (
         continue
       }
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
-        console.log('ARE WE PROCESSING HERE AT ALL?')
         if (!processedAttributes[credential.credentialId]) {
           // init processedAttributes object
           processedAttributes[credential.credentialId] = {
@@ -581,8 +574,7 @@ export const processProofAttributes = (
       }
     }
   }
-  console.log('__--__--__ FINAL ATTRIBUTES')
-  console.log(JSON.stringify(processedAttributes))
+
   return processedAttributes
 }
 
