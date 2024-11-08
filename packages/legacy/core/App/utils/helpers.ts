@@ -1103,11 +1103,13 @@ export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children i
   return typeof children === 'function'
 }
 
-// it would be more helpful to make this fetch a record based on schema or cred def
+// Fetches the credential definition id for a given record, returns null if ID is not set
 const getCredentialDefinitionIdForRecord = (record: CredentialExchangeRecord): string | null => {
   // assumes record is anonCred
   return record.metadata.get('_anoncreds/credential')?.credentialDefinitionId ?? null
 }
+
+// Fetches the schema id for a given record, returns null if ID is not set
 const getCredentialSchemaIdForRecord = (record: CredentialExchangeRecord): string | null => {
   // assumes record is anonCred
   return record.metadata.get('_anoncreds/credential')?.schemaId ?? null

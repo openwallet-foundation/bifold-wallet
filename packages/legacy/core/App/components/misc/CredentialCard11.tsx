@@ -99,7 +99,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
   const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
-  // what are flagged attributes?
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -224,7 +223,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       borderRadius: 15,
       borderColor: ColorPallet.semantic.focus,
     },
-    seprator: {
+    seperator: {
       width: '100%',
       height: 2,
       marginVertical: 10,
@@ -444,8 +443,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
     const parsedValue = formatIfDate(item?.format, value) ?? ''
-    console.log(`Label: ${label} Value: ${value}`)
-    console.log(parsedValue)
 
     return (
       item && (
