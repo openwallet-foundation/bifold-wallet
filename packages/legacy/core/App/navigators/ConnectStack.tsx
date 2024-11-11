@@ -58,7 +58,6 @@ const ConnectStack: React.FC = () => {
           headerRight: () => <ScanHelpHeaderRight />,
         })}
          />
-        
       <Stack.Screen
         name={Screens.NameWallet}
         component={NameWallet}
