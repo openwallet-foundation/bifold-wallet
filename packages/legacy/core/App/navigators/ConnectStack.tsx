@@ -70,5 +70,4 @@ const ConnectStack: React.FC = () => {
     </Stack.Navigator>
   )
 }
-
 export default ConnectStack
