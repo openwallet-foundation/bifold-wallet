@@ -706,7 +706,7 @@ export const retrieveCredentialsForProof = async (
     const hasIndy = format.request?.indy !== undefined
 
     // Will fail if credential not in state 'request-received'
-    const credentials = await agent.proofs.getCredentialsForRequest({
+    const credentialsAsPromise = agent.proofs.getCredentialsForRequest({
       proofRecordId: proof.id,
       proofFormats: {
         // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
@@ -738,7 +738,7 @@ export const retrieveCredentialsForProof = async (
     })
 
     // Will fail if credential not in state 'request-received'
-    const credentialsWithRevoked = await agent.proofs.getCredentialsForRequest({
+    const credentialsWithRevokedAsPromise = agent.proofs.getCredentialsForRequest({
       proofRecordId: proof.id,
       proofFormats: {
         // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
@@ -768,6 +768,11 @@ export const retrieveCredentialsForProof = async (
         ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
       },
     })
+
+    const [credentials, credentialsWithRevoked] = await Promise.all([
+      credentialsAsPromise,
+      credentialsWithRevokedAsPromise,
+    ])
 
     // In the case where there are only revoked credentials to satisfy a proof,
     // include them for errors on the proof screen, otherwise leave them out
