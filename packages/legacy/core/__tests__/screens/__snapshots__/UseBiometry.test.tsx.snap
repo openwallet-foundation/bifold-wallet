@@ -116,7 +116,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
             accessibilityState={
               Object {
                 "busy": undefined,
-                "checked": undefined,
+                "checked": false,
                 "disabled": false,
                 "expanded": undefined,
                 "selected": undefined,
@@ -399,8 +399,8 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
             accessibilityState={
               Object {
                 "busy": undefined,
-                "checked": undefined,
-                "disabled": true,
+                "checked": false,
+                "disabled": false,
                 "expanded": undefined,
                 "selected": undefined,
               }
@@ -435,7 +435,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                   "borderRadius": 25,
                   "height": 30,
                   "justifyContent": "center",
-                  "opacity": 0.5,
+                  "opacity": 1,
                   "padding": 3,
                   "width": 55,
                 }
@@ -694,7 +694,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
             accessibilityState={
               Object {
                 "busy": undefined,
-                "checked": undefined,
+                "checked": false,
                 "disabled": false,
                 "expanded": undefined,
                 "selected": undefined,

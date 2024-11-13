@@ -283,7 +283,12 @@ const translation = {
     "Warning": "Ensure only you have access to your wallet.",
     "UseToUnlock": "Use biometrics to unlock wallet?",
     "UnlockPromptTitle": "Wallet Unlock",
-    "UnlockPromptDescription": "Use biometrics to unlock your wallet"
+    "UnlockPromptDescription": "Use biometrics to unlock your wallet",
+    "AllowBiometricsTitle": "Enable biometrics",
+    "AllowBiometricsDesc": "To unlock BC Wallet with your biometrics, please allow biometrics use within your device's settings.",
+    "SetupBiometricsTitle": "Biometrics is not enabled",
+    "SetupBiometricsDesc": "To unlock BC Wallet with your biometrics, please set up your biometrics in your device's settings.",
+    "OpenSettings": "Open settings"
   },
   "ActivityHistory": {
     "Header": "Activity history",
@@ -490,11 +495,10 @@ const translation = {
     "RemoveCredential": "Remove Credential",
   },
   "Home": {
-    "Welcome": "Welcome",
     "Notification": "Notification",
     "Notifications": "Notifications",
     "NoNewUpdates": "You have no new notifications.",
-    "NoCredentials": "You have no credentials in your wallet.",
+    "NoCredentials": "Your wallet is empty",
     "SeeAll": "See all",
     "YouHave": "You have",
     "Credential": "credential",
@@ -504,6 +508,7 @@ const translation = {
     "SentMessage": "sent a message",
     "ReceivedMessage": "You received a new message",
     "ViewMessage": "View message",
+    "ScanOfferAddCard": "Scan an offer to add a card to your wallet",
   },
   "Scan": {
     "SuccessfullyAcceptedConnection": "Successfully Accepted Connection",

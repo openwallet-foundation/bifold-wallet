@@ -2,7 +2,8 @@ import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, ScrollView, DeviceEventEmitter } from 'react-native'
+import { StyleSheet, Text, View, Modal, ScrollView, DeviceEventEmitter, Linking, Platform } from 'react-native'
+import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -15,6 +16,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
 import { TOKENS, useServices } from '../container-api'
@@ -32,6 +34,7 @@ const UseBiometry: React.FC = () => {
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
+  const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | {title: string, description: string}>(null)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
@@ -39,6 +42,8 @@ const UseBiometry: React.FC = () => {
   const screenUsage = useMemo(() => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
+
+  const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID;
 
   const styles = StyleSheet.create({
     container: {
@@ -102,17 +107,88 @@ const UseBiometry: React.FC = () => {
     }
   }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
 
-  const toggleSwitch = useCallback(() => {
-    // If the user is toggling biometrics on/off they need
-    // to first authenticate before this action is accepted
+  const onOpenSettingsTouched = async () => {
+    await Linking.openSettings()
+    onOpenSettingsDismissed()
+  }
+
+  const onOpenSettingsDismissed = () => {
+    setSettingsPopupConfig(null)
+  }
+
+  const onSwitchToggleAllowed = useCallback((newValue: boolean) => {
     if (screenUsage === UseBiometryUsage.ToggleOnOff) {
       setCanSeeCheckPIN(true)
       DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, true)
+    } else {
+      setBiometryEnabled(newValue)
+    }
+  }, [screenUsage])
+
+  const onRequestSystemBiometrics = useCallback(async (newToggleValue: boolean) => {
+    const permissionResult: PermissionStatus = await request(BIOMETRY_PERMISSION)
+    switch (permissionResult) {
+      case RESULTS.GRANTED:
+      case RESULTS.LIMITED:
+        // Granted
+        onSwitchToggleAllowed(newToggleValue)
+        break
+      default:
+        break
+    }
+  }, [onSwitchToggleAllowed, BIOMETRY_PERMISSION])
+
+  const onCheckSystemBiometrics = useCallback(async (): Promise<PermissionStatus> => {
+    if (Platform.OS === 'android') {
+      // Android doesn't need to prompt biometric permission 
+      // for an app to use it.
+      return biometryAvailable ? RESULTS.GRANTED : RESULTS.UNAVAILABLE
+    } else if (Platform.OS === 'ios') {
+      return await check(BIOMETRY_PERMISSION)
+    }
+
+    return RESULTS.UNAVAILABLE
+  }, [biometryAvailable, BIOMETRY_PERMISSION])
+
+  const toggleSwitch = useCallback(async () => {
+    const newValue = !biometryEnabled
+
+    if (!newValue) {
+      // Turning off doesn't require OS'es biometrics enabled
+      onSwitchToggleAllowed(newValue)
       return
     }
 
-    setBiometryEnabled((previousState) => !previousState)
-  }, [screenUsage])
+    // If the user is turning it on, they need
+    // to first authenticate the OS'es biometrics before this action is accepted
+    const permissionResult: PermissionStatus = await onCheckSystemBiometrics()
+    switch (permissionResult) {
+      case RESULTS.GRANTED:
+      case RESULTS.LIMITED:
+        // Already granted
+        onSwitchToggleAllowed(newValue)
+        break
+      case RESULTS.UNAVAILABLE:
+        setSettingsPopupConfig({
+          title: t('Biometry.SetupBiometricsTitle'),
+          description: t('Biometry.SetupBiometricsDesc')
+        })
+        break
+      case RESULTS.BLOCKED:
+        // Previously denied
+        setSettingsPopupConfig({
+          title: t('Biometry.AllowBiometricsTitle'),
+          description: t('Biometry.AllowBiometricsDesc')
+        })
+        break
+      case RESULTS.DENIED:
+        // Has not been requested
+        await onRequestSystemBiometrics(newValue)
+        break
+      default:
+        break
+    }
+  }, [onSwitchToggleAllowed, onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t])
 
   const onAuthenticationComplete = useCallback((status: boolean) => {
     // If successfully authenticated the toggle may proceed.
@@ -125,6 +201,15 @@ const UseBiometry: React.FC = () => {
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
+      {settingsPopupConfig && (
+        <DismissiblePopupModal
+          title={settingsPopupConfig.title}
+          description={settingsPopupConfig.description}
+          onCallToActionLabel={t('Biometry.OpenSettings')}
+          onCallToActionPressed={onOpenSettingsTouched}
+          onDismissPressed={onOpenSettingsDismissed}
+        />
+      )}
       <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center' }}>
           <Assets.svg.biometrics style={styles.image} />
@@ -153,9 +238,9 @@ const UseBiometry: React.FC = () => {
             <ToggleButton
               testID={testIdWithKey("ToggleBiometrics")}
               isEnabled={biometryEnabled}
-              isAvailable={biometryAvailable}
+              isAvailable={true}
               toggleAction={toggleSwitch}
-              disabled={!biometryAvailable}
+              disabled={false}
               enabledIcon="check"
               disabledIcon="close"
             />

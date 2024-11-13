@@ -7,7 +7,7 @@ exports[`ToggleButton Component renders correctly when disabled 1`] = `
   accessibilityState={
     Object {
       "busy": undefined,
-      "checked": undefined,
+      "checked": false,
       "disabled": false,
       "expanded": undefined,
       "selected": undefined,
@@ -100,7 +100,7 @@ exports[`ToggleButton Component renders correctly when enabled 1`] = `
   accessibilityState={
     Object {
       "busy": undefined,
-      "checked": undefined,
+      "checked": true,
       "disabled": false,
       "expanded": undefined,
       "selected": undefined,
@@ -193,7 +193,7 @@ exports[`ToggleButton Component renders correctly when not available 1`] = `
   accessibilityState={
     Object {
       "busy": undefined,
-      "checked": undefined,
+      "checked": false,
       "disabled": true,
       "expanded": undefined,
       "selected": undefined,

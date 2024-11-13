@@ -51,6 +51,9 @@ import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
+import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
+import { defaultConfig } from './container-impl'
+import useInitializeAgent from './hooks/initialize-agent'
 
 export * from './navigators'
 export * from './services/storage'
@@ -75,7 +78,7 @@ export { createStyles } from './screens/OnboardingPages'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
-export { didMigrateToAskar, migrateToAskar } from './utils/migration'
+export { migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink } from './utils/helpers'
 
@@ -115,6 +118,11 @@ export type {
   Migration as MigrationState,
   Tours as ToursState,
 } from './types/state'
+
+export type { InlineMessageProps } from './components/inputs/InlineErrorText'
+
+export type { InlineErrorPosition } from './types/error'
+
 export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
@@ -129,6 +137,7 @@ export {
   useTour,
   AttachTourStep,
   TourBox,
+  defaultConfig,
   homeTourSteps,
   credentialsTourSteps,
   credentialOfferTourSteps,
@@ -150,8 +159,10 @@ export {
   toastConfig,
   NetInfo,
   OnboardingPages,
+  OpenIDCredentialRecordProvider,
   NotificationListItem,
   useDefaultStackOptions,
+  useInitializeAgent,
   Splash,
   Developer,
   Terms,
