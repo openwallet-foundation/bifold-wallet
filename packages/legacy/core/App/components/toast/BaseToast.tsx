@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
+import Toast from 'react-native-toast-message'
 
 interface BaseToastProps {
   title?: string
@@ -101,10 +102,19 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
           <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
             {title}
           </Text>
-          <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
-            {body}
-          </Text>
+          {body && (
+            <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
+              {body}
+            </Text>
+          )}
         </View>
+        <TouchableOpacity
+          onPress={() => {
+            Toast.hide()
+          }}
+        >
+          <Icon style={styles.icon} name={'close'} color={iconColor} size={iconSize} />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   )

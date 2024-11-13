@@ -29,8 +29,9 @@ const NetInfo: React.FC = () => {
 
     Toast.show({
       type: 'error',
-      autoHide: true,
+      autoHide: false,
       text1: t('NetInfo.NoInternetConnectionTitle'),
+      position: 'bottom',
     })
   }, [isConnected, assertNetworkReachable, t])
 
