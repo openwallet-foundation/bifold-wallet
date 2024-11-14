@@ -46,8 +46,7 @@ export const isOpenIdPresentationRequest = (url: string) => {
   if (
     url.startsWith(InvitationQrTypes.OPENID) ||
     url.startsWith(InvitationQrTypes.OPENID_VC) ||
-    url.startsWith(InvitationQrTypes.OPENID4VP) ||
-    url.startsWith(InvitationQrTypes.OPENID_CREDENTIAL_OFFER)
+    url.startsWith(InvitationQrTypes.OPENID4VP)
   ) {
     return true
   }
