@@ -97,24 +97,28 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
       <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
-        <Icon style={styles.icon} name={iconName} color={iconColor} size={iconSize} />
-        <View style={styles.textContainer}>
-          <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
-            {title}
-          </Text>
-          {body && (
-            <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
-              {body}
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Icon style={styles.icon} name={iconName} color={iconColor} size={iconSize} />
+          <View style={styles.textContainer}>
+            <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
+              {title}
             </Text>
-          )}
+            {body && (
+              <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
+                {body}
+              </Text>
+            )}
+          </View>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            Toast.hide()
-          }}
-        >
-          <Icon style={styles.icon} name={'close'} color={iconColor} size={iconSize} />
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              Toast.hide()
+            }}
+          >
+            <Icon style={styles.icon} name={'close'} color={iconColor} size={iconSize} />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   )
