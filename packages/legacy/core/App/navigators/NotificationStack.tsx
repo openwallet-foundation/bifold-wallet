@@ -17,29 +17,42 @@ const NotificationStack: React.FC = () => {
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
   const [{ customNotificationConfig: customNotification }] = useServices([TOKENS.NOTIFICATIONS])
+  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}
-        options={{ title: t('Screens.CredentialDetails') }}
+        options={{
+          title: t('Screens.CredentialDetails'),
+          ...Options.credentialDetailsStackOptions
+        }}
       />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ title: t('Screens.CredentialOffer') }}
+        options={{
+          title: t('Screens.CredentialOffer'),
+          ...Options.credentialOfferStackOptions
+        }}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
-        options={{ title: t('Screens.ProofRequest') }}
+        options={{
+          title: t('Screens.ProofRequest'),
+        ...Options.proofRequestStackOptions
+        }}
       />
       {customNotification && (
         <Stack.Screen
           name={Screens.CustomNotification}
           component={customNotification.component}
-          options={{ title: t(customNotification.pageTitle as any) }}
+          options={{
+            title: t(customNotification.pageTitle as any),
+          ...Options.customNotifStackOptions
+          }}
         />
       )}
       {customNotification &&

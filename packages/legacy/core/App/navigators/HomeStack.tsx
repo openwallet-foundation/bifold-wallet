@@ -2,14 +2,15 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import HistoryMenu from '../modules/history/ui/components/HistoryMenu'
 import Home from '../screens/Home'
 import { HomeStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
+import { TOKENS, useServices } from '../container-api'
+import HistoryMenu from '../modules/history/ui/components/HistoryMenu'
+import SettingsMenu from '../components/buttons/SettingsMenu'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
@@ -17,6 +18,7 @@ const HomeStack: React.FC = () => {
   const { t } = useTranslation()
   const [store] = useStore()
   const defaultStackOptions = useDefaultStackOptions(theme)
+  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -25,8 +27,9 @@ const HomeStack: React.FC = () => {
         component={Home}
         options={() => ({
           title: t('Screens.Home'),
-          headerRight: () => (store.preferences.useHistoryCapability ? <HistoryMenu /> : null),
-          headerLeft: () => <SettingsMenu />,
+           headerRight: () => (store.preferences.useHistoryCapability ? <HistoryMenu /> : null),
+           headerLeft: () => <SettingsMenu />,
+          ...Options.homeStackOptions
         })}
       />
     </Stack.Navigator>

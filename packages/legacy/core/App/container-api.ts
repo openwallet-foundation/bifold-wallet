@@ -23,6 +23,7 @@ import { CredentialListFooterProps } from './types/credential-list-footer'
 import { ContactListItemProps } from './components/listItems/ContactListItem'
 import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
 import { InlineErrorConfig } from './types/error'
+import { StackOptions } from 'types/StackOptions'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -64,6 +65,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
   COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
+  COMPONENT_OPTIONS: 'component.options'
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -77,7 +79,6 @@ export const STACK_TOKENS = {
 
 export const FN_TOKENS = {
   FN_ONBOARDING_DONE: 'fn.onboardingDone',
-  COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
   COMPONENT_CRED_LIST_FOOTER: 'fn.credListFooter',
 } as const
@@ -178,7 +179,7 @@ export type TokenMapping = {
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.CONFIG]: Config
-  [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
+  [TOKENS.COMPONENT_OPTIONS]: StackOptions
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
