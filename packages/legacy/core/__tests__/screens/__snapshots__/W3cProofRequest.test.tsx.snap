@@ -126,7 +126,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   Attribute {
                     "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                     "encoding": undefined,
-                    "errorMessage": undefined,
                     "format": undefined,
                     "label": undefined,
                     "mimeType": undefined,
@@ -146,7 +145,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   Attribute {
                     "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                     "encoding": undefined,
-                    "errorMessage": undefined,
                     "format": undefined,
                     "label": undefined,
                     "mimeType": undefined,
@@ -530,7 +528,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     Attribute {
                                       "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                                       "encoding": undefined,
-                                      "errorMessage": undefined,
                                       "format": undefined,
                                       "label": undefined,
                                       "mimeType": undefined,
@@ -550,7 +547,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     Attribute {
                                       "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                                       "encoding": undefined,
-                                      "errorMessage": undefined,
                                       "format": undefined,
                                       "label": undefined,
                                       "mimeType": undefined,
