@@ -808,6 +808,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
           Attribute {
             "credentialId": undefined,
             "encoding": undefined,
+            "errorMessage": undefined,
             "format": undefined,
             "label": undefined,
             "mimeType": "text/plain",
@@ -822,6 +823,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
           Attribute {
             "credentialId": undefined,
             "encoding": undefined,
+            "errorMessage": undefined,
             "format": undefined,
             "label": undefined,
             "mimeType": "text/plain",
@@ -836,6 +838,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
           Attribute {
             "credentialId": undefined,
             "encoding": undefined,
+            "errorMessage": undefined,
             "format": undefined,
             "label": undefined,
             "mimeType": "text/plain",
