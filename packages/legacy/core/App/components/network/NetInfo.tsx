@@ -29,7 +29,7 @@ const NetInfo: React.FC = () => {
 
     Toast.show({
       type: 'error',
-      autoHide: false,
+      autoHide: true,
       text1: t('NetInfo.NoInternetConnectionTitle'),
       position: 'bottom',
     })
