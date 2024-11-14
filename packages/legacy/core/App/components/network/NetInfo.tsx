@@ -16,12 +16,13 @@ const NetInfo: React.FC = () => {
     if (isConnected) {
       // Assert that internet is available
       assertNetworkReachable().then((status) => {
-        // device is connected, reset network toast
+        // Connected to a network, reset toast
         setHasShown(false)
         if (status) {
           return
         }
 
+        // User is connected to a network but has no internet, display toast
         Toast.show({
           type: ToastType.Error,
           autoHide: true,
