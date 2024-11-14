@@ -2,6 +2,7 @@ import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
+import { OpenId4VPRequestRecord } from '../modules/openid/types'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -18,6 +19,7 @@ export enum Screens {
   CredentialDetails = 'Credential Details',
   CredentialOffer = 'Credential Offer',
   OpenIDCredentialDetails = 'Open ID Credential details',
+  OpenIDProofPresentation = 'Open ID Proof Presentation',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
   ProofRequestUsageHistory = 'Proof Request Usage History',
@@ -182,7 +184,13 @@ export type NotificationStackParams = {
 }
 
 export type DeliveryStackParams = {
-  [Screens.Connection]: { oobRecordId?: string; proofId?: string; credentialId?: string; openIDUri?: string }
+  [Screens.Connection]: {
+    oobRecordId?: string
+    proofId?: string
+    credentialId?: string
+    openIDUri?: string
+    openIDPresentationUri?: string
+  }
   [Screens.MobileVerifierLoading]: { proofId: string; connectionId: string }
   [Screens.ProofDetails]: { recordId: string }
   [Screens.CredentialOffer]: { credentialId: string }
@@ -194,6 +202,7 @@ export type DeliveryStackParams = {
     credential: SdJwtVcRecord | W3cCredentialRecord
     screenMode: OpenIDCredScreenMode
   }
+  [Screens.OpenIDProofPresentation]: { credential: OpenId4VPRequestRecord }
 }
 
 export type HistoryStackParams = {

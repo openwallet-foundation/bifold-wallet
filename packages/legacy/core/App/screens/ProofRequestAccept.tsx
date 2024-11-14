@@ -15,9 +15,10 @@ import { testIdWithKey } from '../utils/testable'
 export interface ProofRequestAcceptProps {
   visible: boolean
   proofId: string
+  confirmationOnly?: boolean
 }
 
-const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId }) => {
+const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId, confirmationOnly }) => {
   const { t } = useTranslation()
   const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
   const proof = useProofById(proofId)
@@ -52,7 +53,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
     },
   })
 
-  if (!proof) {
+  if (!proof && !confirmationOnly) {
     throw new Error('Unable to fetch proof from Credo')
   }
 
@@ -61,6 +62,13 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   }
 
   useEffect(() => {
+    if(confirmationOnly){
+      setProofDeliveryStatus(ProofState.PresentationSent)
+      return
+    }
+    
+    if(!proof) return;
+
     if (proof.state === proofDeliveryStatus) {
       return
     }
@@ -68,7 +76,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
     if (proof.state === ProofState.Done || proof.state === ProofState.PresentationSent) {
       setProofDeliveryStatus(proof.state)
     }
-  }, [proof, proofDeliveryStatus])
+  }, [proof, proofDeliveryStatus, confirmationOnly])
 
   return (
     <Modal visible={visible} transparent={true} animationType={'none'}>
