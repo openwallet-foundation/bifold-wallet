@@ -39,13 +39,26 @@ const RootStack: React.FC = () => {
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
   const appState = useRef(AppState.currentState)
-  const [inBackground, setInBackground] = useState<boolean>(false)
+  const [currentState, setCurrentState] = useState<string>(appState.current)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [splash, { enableImplicitInvitations, enableReuseConnections }, logger, OnboardingStack, CustomNavStack1, loadState] =
-    useServices([TOKENS.SCREEN_SPLASH, TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.STACK_ONBOARDING, TOKENS.CUSTOM_NAV_STACK_1, TOKENS.LOAD_STATE])
+  const [
+    splash,
+    { enableImplicitInvitations, enableReuseConnections },
+    logger,
+    OnboardingStack,
+    CustomNavStack1,
+    loadState,
+  ] = useServices([
+    TOKENS.SCREEN_SPLASH,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.STACK_ONBOARDING,
+    TOKENS.CUSTOM_NAV_STACK_1,
+    TOKENS.LOAD_STATE,
+  ])
 
   useDeepLinks()
 
@@ -113,7 +126,7 @@ const RootStack: React.FC = () => {
       })
     }
 
-    if (inBackground) {
+    if (currentState === 'background') {
       return
     }
 
@@ -128,18 +141,39 @@ const RootStack: React.FC = () => {
     enableImplicitInvitations,
     enableReuseConnections,
     t,
-    inBackground,
+    currentState,
     agent?.isInitialized,
     store.deepLink,
     store.authentication.didAuthenticate,
   ])
 
   useEffect(() => {
-    if (!agent) {
+    const sub = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'inactive') {
+        // on iOS this happens when any OS prompt is shown. We
+        // don't want do anything in this case.
+        return
+      }
+
+      if (appState.current === nextAppState) {
+        return // no change
+      }
+
+      appState.current = nextAppState
+      setCurrentState(appState.current)
+    })
+
+    return () => {
+      sub.remove()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!agent || !agent.isInitialized) {
       return
     }
 
-    if (inBackground) {
+    if (currentState === 'background') {
       agent.mediationRecipient
         .stopMessagePickup()
         .then(() => {
@@ -152,7 +186,7 @@ const RootStack: React.FC = () => {
       return
     }
 
-    if (!inBackground) {
+    if (currentState === 'active') {
       agent.mediationRecipient
         .initiateMessagePickup()
         .then(() => {
@@ -164,24 +198,7 @@ const RootStack: React.FC = () => {
 
       return
     }
-  }, [agent, inBackground, logger])
-
-  useEffect(() => {
-    AppState.addEventListener('change', (nextAppState) => {
-      if (appState.current === 'active' && ['inactive', 'background'].includes(nextAppState)) {
-        if (nextAppState === 'inactive') {
-          // on iOS this happens when any OS prompt is shown. We
-          // don't want to lock the user out in this case or preform
-          // background tasks.
-          return
-        }
-
-        setInBackground(true)
-      }
-
-      appState.current = nextAppState
-    })
-  }, [])
+  }, [agent, currentState, logger])
 
   const mainStack = () => {
     const Stack = createStackNavigator()
@@ -243,9 +260,7 @@ const RootStack: React.FC = () => {
             cardStyleInterpolator: forFade,
           }}
         />
-        {CustomNavStack1 ? (
-          <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} />
-        ) : null}
+        {CustomNavStack1 ? <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} /> : null}
       </Stack.Navigator>
     )
   }
