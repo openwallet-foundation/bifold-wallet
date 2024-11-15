@@ -456,8 +456,8 @@ const isOffendingAttribute = (
 const addMissingDisplayAttributes = (
   attrReq: AnonCredsRequestedAttribute,
   records: CredentialExchangeRecord[],
-  missingText: string
-) => {
+  t: TFunction<'translation', undefined>
+): ProofCredentialAttributes => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
   const credDefId = credDefIdFromRestrictions(restrictions)
@@ -482,7 +482,9 @@ const addMissingDisplayAttributes = (
         name: attributeName,
         value: '',
         // This assumes that schema id OR cred definition ids are present in the proof request
-        errorMessage: isOffendingAttribute(attributeName, schemaId || credDefId, records) ? missingText : undefined,
+        errorMessage: isOffendingAttribute(attributeName, schemaId || credDefId, records)
+          ? t('ProofRequest.MissingAttribute', { name: attributeName })
+          : undefined,
       })
     )
   }
@@ -519,12 +521,10 @@ export const processProofAttributes = (
     const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
     // No credentials satisfy proof request, process attribute errors
+
     if (credentialList.length <= 0) {
-      const missingAttributes = addMissingDisplayAttributes(
-        requestedProofAttributes[key],
-        credentialRecords ?? [],
-        t('ProofRequest.MissingAttribute')
-      )
+      console.log(JSON.stringify(requestedProofAttributes[key]))
+      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [], t)
 
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {

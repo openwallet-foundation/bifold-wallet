@@ -694,32 +694,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           />
           {!hasAvailableCredentials && (
             <CredentialList
-              header={
-                <View style={styles.pageMargin}>
-                  {!(loading || attestationLoading) && (
-                    <>
-                      {hasMatchingCredDef && (
-                        <View
-                          style={{
-                            width: 'auto',
-                            borderWidth: 1,
-                            borderColor: ColorPallet.grayscale.lightGrey,
-                            marginTop: 20,
-                          }}
-                        />
-                      )}
-                      <Text
-                        style={{
-                          ...TextTheme.title,
-                          marginTop: 10,
-                        }}
-                      >
-                        {t('ProofRequest.MissingCredentials')}
-                      </Text>
-                    </>
-                  )}
-                </View>
-              }
               footer={proofPageFooter()}
               items={activeCreds.filter((cred) => cred.credExchangeRecord === undefined) ?? []}
             />
