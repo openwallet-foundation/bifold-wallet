@@ -15,8 +15,7 @@ const ConnectStack: React.FC = () => {
   const Stack = createStackNavigator<ConnectStackParams>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [scan] = useServices([TOKENS.SCREEN_SCAN])
-  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
+  const [scan, stackOptions] = useServices([TOKENS.SCREEN_SCAN, TOKENS.COMPONENT_STACK_OPTIONS])
   const { t } = useTranslation()
 
   return (
@@ -29,7 +28,7 @@ const ConnectStack: React.FC = () => {
       name={Screens.Scan}
       component={scan}
       options={{ headerBackTestID: testIdWithKey('Back'),
-        ...Options.scanStackOptions
+        ...stackOptions.scanStackOptions
        }} />
       <Stack.Screen
         name={Screens.PasteUrl}
@@ -37,13 +36,13 @@ const ConnectStack: React.FC = () => {
         options={() => ({
           title: t('PasteUrl.PasteUrl'),
           headerBackTestID: testIdWithKey('Back'),
-          ...Options.pasteUrlStackOptions
+          ...stackOptions.pasteUrlStackOptions
         })}
       />
       <Stack.Screen
         name={Screens.ScanHelp}
         component={ScanHelp}
-        options={{...Options.scanHelpStackOptions}}
+        options={{...stackOptions.scanHelpStackOptions}}
       />
       <Stack.Screen
         name={Screens.NameWallet}
@@ -51,7 +50,7 @@ const ConnectStack: React.FC = () => {
         options={{
           title: t('Screens.NameWallet'),
           headerBackTestID: testIdWithKey('Back'),
-          ...Options.nameWalletStackOptions
+          ...stackOptions.nameWalletStackOptions
         }}
       />
     </Stack.Navigator>

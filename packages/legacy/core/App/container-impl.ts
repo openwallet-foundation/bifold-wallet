@@ -79,7 +79,6 @@ const defaultStackOptions: StackOptions = {
   proofDetailsStackOptions: { headerRight: HeaderRightHome },
   proofReqUsageHistoryStackOptions: { headerRight: HeaderRightHome },
   credentialsStackOptions: { headerLeft: SettingsMenu },
-  globalConnectionStackOptions: { headerRight: HeaderRightHome, headerLeft: () => null },
 };
 
 
@@ -130,7 +129,7 @@ export class MainContainer implements Container {
     })
     this._container.registerInstance(TOKENS.NOTIFICATIONS_LIST_ITEM, NotificationListItem)
     this._container.registerInstance(TOKENS.CONFIG, defaultConfig)
-    this._container.registerInstance(TOKENS.COMPONENT_OPTIONS,defaultStackOptions)
+    this._container.registerInstance(TOKENS.COMPONENT_STACK_OPTIONS,defaultStackOptions)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_FOOTER, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)

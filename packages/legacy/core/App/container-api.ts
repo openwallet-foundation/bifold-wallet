@@ -65,7 +65,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
   COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
-  COMPONENT_OPTIONS: 'component.options'
+  COMPONENT_STACK_OPTIONS: 'component.stack-options'
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -179,7 +179,7 @@ export type TokenMapping = {
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.CONFIG]: Config
-  [TOKENS.COMPONENT_OPTIONS]: StackOptions
+  [TOKENS.COMPONENT_STACK_OPTIONS]: StackOptions
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC

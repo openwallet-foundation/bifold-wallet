@@ -22,7 +22,7 @@ const ContactStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -31,14 +31,14 @@ const ContactStack: React.FC = () => {
       component={ListContacts}
       options={{
         title: t('Screens.Contacts'),
-        ...Options.contactStackOptions
+        ...stackOptions.contactStackOptions
         }} />
       <Stack.Screen
         name={Screens.ContactDetails}
         component={ContactDetails}
         options={{
           title: t('Screens.ContactDetails'),
-          ...Options.contactDetailsStackOptions
+          ...stackOptions.contactDetailsStackOptions
         }}
       />
       <Stack.Screen
@@ -46,16 +46,16 @@ const ContactStack: React.FC = () => {
         component={RenameContact}
         options={{
           title: t('Screens.RenameContact'),
-          ...Options.renameContactStackOptions
+          ...stackOptions.renameContactStackOptions
         }}
       />
-      <Stack.Screen name={Screens.Chat} component={Chat} options={{...Options.chatStackOptions}}/>
+      <Stack.Screen name={Screens.Chat} component={Chat} options={{...stackOptions.chatStackOptions}}/>
       <Stack.Screen
         name={Screens.WhatAreContacts}
         component={WhatAreContacts}
         options={{
           title: '',
-          ...Options.whatAreContactStackOptions
+          ...stackOptions.whatAreContactStackOptions
         }}
       />
       <Stack.Screen
@@ -63,14 +63,14 @@ const ContactStack: React.FC = () => {
         component={CredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          ...Options.credentialDetailsStackOptions
+          ...stackOptions.credentialDetailsStackOptions
         }}
       />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
         options={{ title: t('Screens.CredentialOffer'),
-          ...Options.credentialOfferStackOptions
+          ...stackOptions.credentialOfferStackOptions
          }}
       />
       <Stack.Screen
@@ -78,7 +78,7 @@ const ContactStack: React.FC = () => {
         component={ProofDetails}
         options={() => ({
           title: '',
-          ...Options.proofDetailsStackOptions,
+          ...stackOptions.proofDetailsStackOptions,
         })}
       />
       <Stack.Screen
@@ -86,7 +86,7 @@ const ContactStack: React.FC = () => {
         component={ProofRequest}
         options={{
           title: t('Screens.ProofRequest'),
-          ...Options.proofRequestStackOptions
+          ...stackOptions.proofRequestStackOptions
         }}
       />
     </Stack.Navigator>

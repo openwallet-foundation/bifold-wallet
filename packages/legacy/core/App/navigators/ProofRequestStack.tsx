@@ -22,7 +22,7 @@ const ProofRequestStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -31,7 +31,7 @@ const ProofRequestStack: React.FC = () => {
         component={ListProofRequests}
         options={{
           title: t('Screens.ChooseProofRequest'),
-          ...Options.listProofRequestStackOptions
+          ...stackOptions.listProofRequestStackOptions
         }}
       />
       <Stack.Screen
@@ -39,7 +39,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestDetails}
         options={() => ({
           title: '',
-          ...Options.proofReqDetailsStackOptions
+          ...stackOptions.proofReqDetailsStackOptions
         })}
       />
       <Stack.Screen
@@ -52,7 +52,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofChangeCredential}
         options={{
           title: t('Screens.ProofChangeCredential'),
-          ...Options.proofChangeCredentialsStackOptions
+          ...stackOptions.proofChangeCredentialsStackOptions
         }}
       ></Stack.Screen>
       <Stack.Screen
@@ -69,7 +69,7 @@ const ProofRequestStack: React.FC = () => {
               icon="arrow-left"
             />
           ),
-          ...Options.proofRequestingStackOptions
+          ...stackOptions.proofRequestingStackOptions
         })}
       />
       <Stack.Screen
@@ -92,7 +92,7 @@ const ProofRequestStack: React.FC = () => {
               icon="arrow-left"
             />
           ),
-          ...Options.proofDetailsStackOptions
+          ...stackOptions.proofDetailsStackOptions
         })}
       />
       <Stack.Screen
@@ -100,7 +100,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestUsageHistory}
         options={() => ({
           title: t('Screens.ProofRequestUsageHistory'),
-         ...Options.proofReqUsageHistoryStackOptions
+         ...stackOptions.proofReqUsageHistoryStackOptions
         })}
       />
     </Stack.Navigator>

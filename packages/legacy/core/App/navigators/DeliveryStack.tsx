@@ -11,13 +11,14 @@ import { DeliveryStackParams, Screens } from '../types/navigators'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
 import { TOKENS, useServices } from '../container-api'
+import HeaderRightHome from 'components/buttons/HeaderHome'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
 
   return (
     <Stack.Navigator
@@ -27,20 +28,21 @@ const DeliveryStack: React.FC = () => {
         cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
         headerShown: true,
         presentation: 'modal',
-        ...Options.globalConnectionStackOptions
+        headerLeft: () => null,
+        headerRight: () => <HeaderRightHome />
       }}
     >
       <Stack.Screen
         name={Screens.Connection}
         component={Connection}
-        options={{ ...defaultStackOptions, ...Options.connectionStackOptions}}
+        options={{ ...defaultStackOptions, ...stackOptions.connectionStackOptions}}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={{
           title: t('Screens.ProofRequest'),
-        ...Options.proofRequestStackOptions
+        ...stackOptions.proofRequestStackOptions
         }}
       />
       <Stack.Screen
@@ -48,7 +50,7 @@ const DeliveryStack: React.FC = () => {
         component={CredentialOffer}
         options={{
           title: t('Screens.CredentialOffer'),
-          ...Options.credentialOfferStackOptions
+          ...stackOptions.credentialOfferStackOptions
         }}
       />
       <Stack.Screen
@@ -56,7 +58,7 @@ const DeliveryStack: React.FC = () => {
         component={OpenIDCredentialDetails}
         options={{
           title: t('Screens.CredentialOffer'),
-        ...Options.openIdCredDetailStackOptions
+        ...stackOptions.openIdCredDetailStackOptions
         }}
       />
     </Stack.Navigator>

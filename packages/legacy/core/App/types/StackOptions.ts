@@ -23,7 +23,6 @@ export interface StackOptions {
     openIdCredDetailStackOptions?: StackNavigationOptions
     homeStackOptions?: StackNavigationOptions
     customNotifStackOptions?: StackNavigationOptions
-    globalConnectionStackOptions?: StackNavigationOptions
     connectionStackOptions?: StackNavigationOptions
     proofRequestingStackOptions?: StackNavigationOptions
     languageStackOptions?: StackNavigationOptions

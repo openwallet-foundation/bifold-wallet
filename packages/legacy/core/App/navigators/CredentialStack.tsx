@@ -15,7 +15,7 @@ const CredentialStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [Options] = useServices([TOKENS.COMPONENT_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -24,7 +24,7 @@ const CredentialStack: React.FC = () => {
         component={ListCredentials}
         options={() => ({
           title: t('Screens.Credentials'),
-          ...Options.credentialsStackOptions
+          ...stackOptions.credentialsStackOptions
         })}
       />
       <Stack.Screen
@@ -32,7 +32,7 @@ const CredentialStack: React.FC = () => {
         component={CredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          ...Options.credentialDetailsStackOptions
+          ...stackOptions.credentialDetailsStackOptions
         }}
       />
       <Stack.Screen
@@ -40,7 +40,7 @@ const CredentialStack: React.FC = () => {
         component={OpenIDCredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          ...Options.openIdCredDetailStackOptions
+          ...stackOptions.openIdCredDetailStackOptions
         }}
       />
     </Stack.Navigator>
