@@ -21,6 +21,7 @@ export interface StackOptions {
     listProofRequestStackOptions?: StackNavigationOptions
     credentialsStackOptions?: StackNavigationOptions
     openIdCredDetailStackOptions?: StackNavigationOptions
+    openIdProofPresStackOptions?: StackNavigationOptions
     homeStackOptions?: StackNavigationOptions
     customNotifStackOptions?: StackNavigationOptions
     connectionStackOptions?: StackNavigationOptions
