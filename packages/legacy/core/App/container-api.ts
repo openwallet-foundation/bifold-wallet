@@ -25,6 +25,7 @@ import { ContactCredentialListItemProps } from './components/listItems/ContactCr
 import { InlineErrorConfig } from './types/error'
 import { StackOptions } from 'types/StackOptions'
 
+
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
   navigation: StackNavigationProp<AuthenticateStackParams>
