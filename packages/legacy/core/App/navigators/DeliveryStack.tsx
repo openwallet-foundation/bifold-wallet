@@ -11,7 +11,7 @@ import { DeliveryStackParams, Screens } from '../types/navigators'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
 import { TOKENS, useServices } from '../container-api'
-import HeaderRightHome from 'components/buttons/HeaderHome'
+import HeaderRightHome from '../components/buttons/HeaderHome'
 import OpenIDProofPresentation from '../modules/openid/screens/OpenIDProofPresentation'
 
 const DeliveryStack: React.FC = () => {
