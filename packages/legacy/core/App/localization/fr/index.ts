@@ -282,7 +282,12 @@ const translation = {
         "Warning": "\n\nAssurez-vous que vous seul avez accès à votre portefeuille.",
         "UseToUnlock": "Utiliser la biométrie pour déverrouiller le portefeuille ?",
         "UnlockPromptTitle": "Déverrouillage du portefeuille",
-        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille"
+        "UnlockPromptDescription": "Utilisez la biométrie pour déverrouiller votre portefeuille",
+        "AllowBiometricsTitle": "Activer la biométrie",
+        "AllowBiometricsDesc": "Pour déverrouiller BC Wallet avec votre biométrie, permettrez la biométrie dans les paramètres de votre appareil.",
+        "SetupBiometricsTitle": "La biométrie n'est pas activée",
+        "SetupBiometricsDesc": "Pour déverrouiller BC Wallet avec votre biométrie, configurez votre biométrie dans les paramètres de votre appareil.",
+        "OpenSettings": "Ouvrir les paramètres"
     },
     "ActivityHistory": {
         "Header": "Activity history(fr)",
@@ -490,11 +495,10 @@ const translation = {
         "RemoveCredential": "Supprimer l'attestation d'identité",
     },
     "Home": {
-        "Welcome": "Bienvenue",
         "Notification": "Notification",
         "Notifications": "Notifications",
         "NoNewUpdates": "Vous n'avez pas de nouvelles notifications.",
-        "NoCredentials": "Vous n'avez pas d'attestation(s) dans votre portefeuille.",
+        "NoCredentials": "Your wallet is empty (FR)",
         "SeeAll": "Voir tout",
         "YouHave": "Vous avez",
         "Credential": "attestation",
@@ -504,6 +508,7 @@ const translation = {
         "SentMessage": "Envoyer un message",
         "ReceivedMessage": "Vous avez reçu un nouveau message",
         "ViewMessage": "Voir le message",
+        "ScanOfferAddCard": "Scan an offer to add a card to your wallet (FR)",
     },
     "Scan": {
         "SuccessfullyAcceptedConnection": "Connexion acceptée avec succès",

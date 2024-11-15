@@ -49,7 +49,7 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
-import { isOpenIdPresentationRequest } from './parsers'
+import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -693,74 +693,89 @@ export const retrieveCredentialsForProof = async (
   t: TFunction<'translation', undefined>,
   groupByReferent?: boolean
 ) => {
+  // This is the only valid state to retrieve credentials for a proof
+  // `getCredentialsForRequest` will fail otherwise.
+  if (proof.state !== ProofState.RequestReceived) {
+    return
+  }
+
   try {
     const format = await agent.proofs.getFormatData(proof.id)
     const hasPresentationExchange = format.request?.presentationExchange !== undefined
     const hasAnonCreds = format.request?.anoncreds !== undefined
     const hasIndy = format.request?.indy !== undefined
-    const credentialsPromise = agent.proofs.getCredentialsForRequest({
-      proofRecordId: proof.id,
-      proofFormats: {
-        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
-        // We should ignore the key, if the value is undefined. For now this is a workaround.
-        ...(hasIndy
-          ? {
-              indy: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: true,
-              },
-            }
-          : {}),
-        ...(hasAnonCreds
-          ? {
-              anoncreds: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: true,
-              },
-            }
-          : {}),
-        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
-      },
-    })
-    const credentialsWithRevokedPromise = agent.proofs.getCredentialsForRequest({
-      proofRecordId: proof.id,
-      proofFormats: {
-        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
-        // We should ignore the key, if the value is undefined. For now this is a workaround.
-        ...(hasIndy
-          ? {
-              indy: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: false,
-              },
-            }
-          : {}),
-        ...(hasAnonCreds
-          ? {
-              anoncreds: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: false,
-              },
-            }
-          : {}),
-        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
-      },
-    })
-    const [credentials, credentialsWithRevoked] = await Promise.all([credentialsPromise, credentialsWithRevokedPromise])
 
-    // in the case where there are only revoked credentials to satisfy a proof, include them for errors on the proof screen, otherwise leave them out
+    // Will fail if credential not in state 'request-received'
+    const credentialsAsPromise = agent.proofs.getCredentialsForRequest({
+      proofRecordId: proof.id,
+      proofFormats: {
+        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
+        // We should ignore the key, if the value is undefined. For now this is a workaround.
+        ...(hasIndy
+          ? {
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: true,
+              },
+            }
+          : {}),
+        ...(hasAnonCreds
+          ? {
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: true,
+              },
+            }
+          : {}),
+        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
+      },
+    })
+
+    // Will fail if credential not in state 'request-received'
+    const credentialsWithRevokedAsPromise = agent.proofs.getCredentialsForRequest({
+      proofRecordId: proof.id,
+      proofFormats: {
+        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
+        // We should ignore the key, if the value is undefined. For now this is a workaround.
+        ...(hasIndy
+          ? {
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
+          : {}),
+        ...(hasAnonCreds
+          ? {
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
+          : {}),
+        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
+      },
+    })
+
+    const [credentials, credentialsWithRevoked] = await Promise.all([
+      credentialsAsPromise,
+      credentialsWithRevokedAsPromise,
+    ])
+
+    // In the case where there are only revoked credentials to satisfy a proof,
+    // include them for errors on the proof screen, otherwise leave them out
     const addRevokedCredsIfNeeded = (proofFormat: 'indy' | 'anoncreds', proofItem: 'attributes' | 'predicates') => {
       if (credentials.proofFormats[proofFormat] && credentialsWithRevoked.proofFormats[proofFormat]) {
         Object.keys(credentials.proofFormats[proofFormat]?.[proofItem] ?? {}).forEach((key) => {
@@ -1006,11 +1021,19 @@ export const connectFromScanOrDeepLink = async (
   // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
   try {
-    const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
-    if (isOpenIDInvitation) {
+    if (isOpenIdCredentialOffer(uri)) {
       navigation.navigate(Stacks.ConnectionStack as any, {
         screen: Screens.Connection,
         params: { oobRecordId: '', openIDUri: uri },
+      })
+
+      return
+    }
+
+    if (isOpenIdPresentationRequest(uri)) {
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { oobRecordId: '', openIDPresentationUri: uri },
       })
 
       return

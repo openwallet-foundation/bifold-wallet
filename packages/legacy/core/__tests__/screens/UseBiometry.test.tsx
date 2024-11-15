@@ -7,12 +7,38 @@ import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 import timeTravel from '../helpers/timetravel'
 import { BasicAppContext } from '../helpers/app'
+import { Linking } from 'react-native'
+import { testDefaultState } from '../contexts/store'
+import { StoreProvider } from '../../App/contexts/store'
+import { RESULTS, check, request } from 'react-native-permissions'
 
+jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
+const mockedCheck = check as jest.MockedFunction<typeof check>;
+const mockedRequest = request as jest.MockedFunction<typeof request>;
+
+jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
+
+const customStore = {
+  ...testDefaultState,
+  preferences: {
+    ...testDefaultState.preferences,
+    useBiometry: false
+  },
+}
 
 describe('UseBiometry Screen', () => {
   beforeAll(() => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     jest.spyOn(global.console, 'error').mockImplementation(() => { })
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+
+    authContext.isBiometricsActive = jest.fn().mockResolvedValue(true)
+    customStore.preferences.useBiometry = false
+    mockedCheck.mockResolvedValue(RESULTS.UNAVAILABLE)
+    mockedRequest.mockResolvedValue(RESULTS.BLOCKED)
   })
 
   test('Renders correctly when biometry available', async () => {
@@ -59,25 +85,233 @@ describe('UseBiometry Screen', () => {
       </BasicAppContext>
     )
 
-    await waitFor(() => {
-      timeTravel(1000)
-    })
-
-    const useBiometryToggle = await tree.getByTestId(testIdWithKey('ToggleBiometrics'))
+    const useBiometryToggle = tree.getByTestId(testIdWithKey('ToggleBiometrics'))
 
     await waitFor(async () => {
-      await fireEvent(useBiometryToggle, 'valueChange', true)
+      fireEvent(useBiometryToggle, 'valueChange', true)
     })
 
-    const continueButton = await tree.getByTestId(testIdWithKey('Continue'))
+    const continueButton = tree.getByTestId(testIdWithKey('Continue'))
 
     await waitFor(async () => {
-      await fireEvent(continueButton, 'press')
+      fireEvent(continueButton, 'press')
     })
 
     expect(useBiometryToggle).not.toBeNull()
     expect(continueButton).not.toBeNull()
     expect(authContext.commitPIN).toBeCalledTimes(1)
     expect(tree).toMatchSnapshot()
+  })
+
+  describe('ToggleButton Availability', () => {
+    test('ToggleButton is enabled when biometry is available', async () => {
+      authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(true)
+
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <AuthContext.Provider value={authContext}>
+            <UseBiometry/>
+          </AuthContext.Provider>
+        </BasicAppContext>
+      )
+
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+      expect(toggleButton.props.accessibilityState.disabled).toBe(false)
+    })
+
+    test('ToggleButton is enabled even when biometry is not available', async () => {
+      authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(false)
+
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <AuthContext.Provider value={authContext}>
+            <UseBiometry />
+          </AuthContext.Provider>
+        </BasicAppContext>
+      )
+
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+      expect(toggleButton.props.accessibilityState.disabled).toBe(false)
+    })
+  })
+
+  describe('ToggleSwitch Behavior', () => {
+    test('can turn off biometrics regardless of permission status', async () => {
+      // Setup with toggle switch is on,
+      // and biometric is not available
+      customStore.preferences.useBiometry = true
+      authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(false)
+      
+      const { getByTestId } = render(
+        <StoreProvider initialState={customStore}>
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <UseBiometry/>
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
+      )
+      
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+      await waitFor(() => {
+        fireEvent(toggleButton, 'press')
+      })
+
+      expect(toggleButton.props.accessibilityState.checked).toBe(false)
+    })
+
+    test('turns on biometrics when permission is GRANTED', async () => {
+      mockedCheck.mockResolvedValueOnce(RESULTS.GRANTED)
+
+      const { getByTestId } = render(
+        <StoreProvider initialState={customStore}>
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <UseBiometry/>
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
+      )
+
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+      await waitFor(() => {
+        fireEvent(toggleButton, 'press')
+      })
+
+      expect(toggleButton.props.accessibilityState.checked).toBe(true)
+    })
+
+    test('shows settings popup when permission is UNAVAILABLE', async () => {
+      mockedCheck.mockResolvedValueOnce(RESULTS.UNAVAILABLE)
+
+      const { getByTestId, getByText } = render(
+        <StoreProvider initialState={customStore}>
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <UseBiometry/>
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
+      )
+
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+      await waitFor(() => {
+        fireEvent(toggleButton, 'press')
+      })
+
+      expect(getByText('Biometry.SetupBiometricsTitle')).toBeTruthy()
+      expect(getByText('Biometry.SetupBiometricsDesc')).toBeTruthy()
+      // Toggle should remain off
+      expect(toggleButton.props.accessibilityState.checked).toBe(false)
+    })
+
+    test('shows settings popup when permission is BLOCKED', async () => {
+      mockedCheck.mockResolvedValueOnce(RESULTS.BLOCKED)
+
+      const { getByTestId, getByText } = render(
+        <StoreProvider initialState={customStore}>
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <UseBiometry/>
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
+      )
+
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+      await waitFor(() => {
+        fireEvent(toggleButton, 'press')
+      })
+
+      expect(getByText('Biometry.AllowBiometricsTitle')).toBeTruthy()
+      expect(getByText('Biometry.AllowBiometricsDesc')).toBeTruthy()
+      // Toggle should remain off
+      expect(toggleButton.props.accessibilityState.checked).toBe(false)
+    })
+
+    test('requests permission when status is DENIED and enables when request is GRANTED', async () => {
+      mockedCheck.mockResolvedValueOnce(RESULTS.DENIED)
+      mockedRequest.mockResolvedValueOnce(RESULTS.GRANTED)
+
+      const { getByTestId } = render(
+        <StoreProvider initialState={customStore}>
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <UseBiometry/>
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
+      )
+
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+      await waitFor(() => {
+        fireEvent(toggleButton, 'press')
+      })
+
+      expect(request).toHaveBeenCalledTimes(1)
+      expect(toggleButton.props.accessibilityState.checked).toBe(true)
+    })
+  })
+
+  test('requests permission when status is DENIED and switch stays off when request is BLOCKED', async () => {
+    mockedCheck.mockResolvedValueOnce(RESULTS.DENIED)
+    mockedRequest.mockResolvedValueOnce(RESULTS.BLOCKED)
+
+    const { getByTestId } = render(
+      <StoreProvider initialState={customStore}>
+        <BasicAppContext>
+          <AuthContext.Provider value={authContext}>
+            <UseBiometry />
+          </AuthContext.Provider>
+        </BasicAppContext>
+      </StoreProvider>
+    )
+
+    const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+    await waitFor(() => {
+      fireEvent(toggleButton, 'press')
+    })
+
+    expect(request).toHaveBeenCalledTimes(1)
+    // Switch stays off
+    expect(toggleButton.props.accessibilityState.checked).toBe(false)
+  })
+
+  describe('Settings Popup Behavior', () => {
+    test('opens app settings when Open Settings is pressed', async () => {
+      // Mock permission check to return BLOCKED to trigger settings popup
+      mockedCheck.mockResolvedValueOnce(RESULTS.BLOCKED)
+
+      const { getByTestId, getByText } = render(
+        <StoreProvider initialState={customStore}>
+          <BasicAppContext>
+            <AuthContext.Provider value={authContext}>
+              <UseBiometry/>
+            </AuthContext.Provider>
+          </BasicAppContext>
+        </StoreProvider>
+      )
+
+      // Trigger the settings popup
+      const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
+
+      await waitFor(() => {
+        fireEvent(toggleButton, 'press')
+      })
+
+      // Press the Open Settings button
+      const openSettingsButton = getByText('Biometry.OpenSettings')
+      await waitFor(() => {
+        fireEvent(openSettingsButton, 'press')
+      })
+
+      expect(Linking.openSettings).toHaveBeenCalledTimes(1)
+    })
   })
 })
