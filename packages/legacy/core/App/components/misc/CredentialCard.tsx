@@ -51,8 +51,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         return (
           <CredentialCard12
             displayItems={displayItems}
-            style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
             error={!existsInWallet}
+            style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
             predicateError={!satisfiedPredicates}
             credName={credName}
             credDefId={credDefId}

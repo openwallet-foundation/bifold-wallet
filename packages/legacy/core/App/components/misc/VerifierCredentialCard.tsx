@@ -1,5 +1,11 @@
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { Attribute, CredentialOverlay, Predicate, Field } from '@hyperledger/aries-oca/build/legacy'
+import {
+  Attribute,
+  CredentialOverlay,
+  Predicate,
+  Field,
+  BrandingOverlayType,
+} from '@hyperledger/aries-oca/build/legacy'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -69,9 +75,14 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       return { ...prev, [curr.name]: curr.format }
     }, {})
 
+  const isBrandingOverlay10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
+
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor:
+        bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
+          ? overlay.brandingOverlay?.secondaryBackgroundColor
+          : overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
     },
     cardContainer: {
@@ -82,12 +93,16 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: isBrandingOverlay10
+        ? overlay.brandingOverlay?.primaryBackgroundColor
+        : overlay.brandingOverlay?.secondaryBackgroundColor,
     },
     primaryBodyContainer: {
       flex: 1,
       padding,
-      marginLeft: -1 * logoHeight + padding,
+      ...(bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 && {
+        marginLeft: -1 * logoHeight + padding,
+      }),
     },
     imageAttr: {
       height: 150,
@@ -96,10 +111,12 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       borderRadius: 10,
     },
     logoContainer: {
-      top: padding,
-      left: -1 * logoHeight + padding,
-      width: logoHeight,
-      height: logoHeight,
+      ...(bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 && {
+        top: padding,
+        left: -1 * logoHeight + padding,
+        width: logoHeight,
+        height: logoHeight,
+      }),
       backgroundColor: '#ffffff',
       borderRadius: 8,
       justifyContent: 'center',
@@ -139,7 +156,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay(o => ({
+      setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
@@ -185,7 +202,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     const [showImageModal, setShowImageModal] = useState(false)
 
     useEffect(() => {
-      setValue(v => formatIfDate(item.format, v))
+      setValue((v) => formatIfDate(item.format, v))
     }, [item.format])
 
     return (
@@ -315,7 +332,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View>
-          {!(overlay.metaOverlay?.issuer === 'Unknown Contact') && (
+          {overlay.metaOverlay?.issuer !== 'Unknown Contact' && (
             <View style={{ flexDirection: 'row' }}>
               <Text
                 testID={testIdWithKey('CredentialIssuer')}
@@ -361,6 +378,44 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
             return renderCardAttribute(item as Attribute & Predicate)
           }}
         />
+        {!(overlay.metaOverlay?.issuer === 'Unknown Contact') && !isBrandingOverlay10 && (
+          <View
+            style={{
+              flex: 1,
+              marginTop: 16,
+              alignSelf: 'flex-end',
+              justifyContent: 'flex-end',
+              maxWidth: '80%',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignSelf: 'flex-end',
+                alignItems: 'center',
+                gap: 4,
+              }}
+            >
+              <CredentialCardLogo />
+              <Text
+                testID={testIdWithKey('CredentialIssuer')}
+                style={[
+                  TextTheme.normal,
+                  styles.textContainer,
+                  {
+                    fontWeight: '500',
+                    fontSize: 12,
+                    lineHeight: 19,
+                    opacity: 0.8,
+                    flexWrap: 'wrap',
+                  },
+                ]}
+              >
+                {overlay.metaOverlay?.issuer}
+              </Text>
+            </View>
+          </View>
+        )}
       </View>
     )
   }
@@ -402,7 +457,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
         }
       >
         <CredentialCardSecondaryBody />
-        <CredentialCardLogo />
+        {bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 && <CredentialCardLogo />}
         <CredentialCardPrimaryBody />
       </View>
     )

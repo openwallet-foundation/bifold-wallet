@@ -282,12 +282,11 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       secondary_background_color: generateColor(colorHash),
     }
 
-    const overlayType =
-      this.getBrandingOverlayType() === BrandingOverlayType.Branding01
-        ? brandingOverlay01
-        : this.getBrandingOverlayType() === BrandingOverlayType.Branding10
-        ? brandingOverlay10
-        : brandingOverlay11
+    let overlayType = brandingOverlay10
+
+    if (this.getBrandingOverlayType() === BrandingOverlayType.Branding11) overlayType = brandingOverlay11
+
+    if (this.getBrandingOverlayType() === BrandingOverlayType.Branding01) overlayType = brandingOverlay01
 
     const bundle: OverlayBundle = new OverlayBundle(params.identifiers?.credentialDefinitionId as string, {
       capture_base: {

@@ -342,7 +342,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#5f0f7b",
+                        "backgroundColor": undefined,
                         "borderRadius": 10,
                       },
                       Object {
@@ -893,7 +893,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "#5f0f7b",
+                        "backgroundColor": undefined,
                         "borderRadius": 10,
                       },
                       Object {
