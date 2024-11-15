@@ -19,7 +19,7 @@ const DeliveryStack: React.FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
 
   return (
     <Stack.Navigator

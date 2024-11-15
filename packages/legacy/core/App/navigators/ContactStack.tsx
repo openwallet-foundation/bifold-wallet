@@ -22,7 +22,7 @@ const ContactStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>

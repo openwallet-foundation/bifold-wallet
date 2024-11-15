@@ -15,7 +15,7 @@ const ConnectStack: React.FC = () => {
   const Stack = createStackNavigator<ConnectStackParams>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [scan, stackOptions] = useServices([TOKENS.SCREEN_SCAN, TOKENS.COMPONENT_STACK_OPTIONS])
+  const [scan, stackOptions] = useServices([TOKENS.SCREEN_SCAN, TOKENS.STACK_OPTIONS])
   const { t } = useTranslation()
 
   return (

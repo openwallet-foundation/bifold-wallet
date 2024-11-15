@@ -36,7 +36,7 @@ const SettingStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
-  const [stackOptions] = useServices([TOKENS.COMPONENT_STACK_OPTIONS])
+  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
   
 
   useEffect(() => {
