@@ -19,16 +19,27 @@ import {
 } from '../types/metadata'
 import { useOpenID } from '../modules/openid/hooks/openid'
 import { CustomNotification } from '../types/notification'
+import { OpenId4VPRequestRecord } from 'modules/openid/types'
 
 export type NotificationsInputProps = {
   openIDUri?: string
+  openIDPresentationUri?: string
 }
 
 export type NotificationReturnType = Array<
-  BasicMessageRecord | CredentialRecord | ProofExchangeRecord | CustomNotification | SdJwtVcRecord | W3cCredentialRecord
+  | BasicMessageRecord
+  | CredentialRecord
+  | ProofExchangeRecord
+  | CustomNotification
+  | SdJwtVcRecord
+  | W3cCredentialRecord
+  | OpenId4VPRequestRecord
 >
 
-export const useNotifications = ({ openIDUri }: NotificationsInputProps): NotificationReturnType => {
+export const useNotifications = ({
+  openIDUri,
+  openIDPresentationUri,
+}: NotificationsInputProps): NotificationReturnType => {
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
   const { records: basicMessages } = useBasicMessages()
   const offers = useCredentialByState(CredentialState.OfferReceived)
@@ -36,7 +47,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
   const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
-  const openIDCredRecieved = useOpenID({ openIDUri: openIDUri })
+  const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
 
   useEffect(() => {
     // get all unseen messages
@@ -74,7 +85,7 @@ export const useNotifications = ({ openIDUri }: NotificationsInputProps): Notifi
       }
     })
 
-    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord> = []
+    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | OpenId4VPRequestRecord> = []
     if (openIDCredRecieved) {
       openIDCreds.push(openIDCredRecieved)
     }

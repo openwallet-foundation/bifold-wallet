@@ -50,7 +50,7 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
-import { isOpenIdPresentationRequest } from './parsers'
+import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -1059,11 +1059,19 @@ export const connectFromScanOrDeepLink = async (
   // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
   try {
-    const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
-    if (isOpenIDInvitation) {
+    if (isOpenIdCredentialOffer(uri)) {
       navigation.navigate(Stacks.ConnectionStack as any, {
         screen: Screens.Connection,
         params: { oobRecordId: '', openIDUri: uri },
+      })
+
+      return
+    }
+
+    if (isOpenIdPresentationRequest(uri)) {
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { oobRecordId: '', openIDPresentationUri: uri },
       })
 
       return
