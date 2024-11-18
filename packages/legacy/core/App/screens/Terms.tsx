@@ -3,7 +3,6 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { ButtonType } from '../components/buttons/Button-api'
 import CheckBoxRow from '../components/inputs/CheckBoxRow'
@@ -15,6 +14,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import Wrapper from '../layout/wrapper'
 
 export const TermsVersion = true
 
@@ -24,7 +24,7 @@ const Terms: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
-  const [Button] = useServices([TOKENS.COMP_BUTTON])
+  const [Button, ScreenOptionsDictionary] = useServices([TOKENS.COMP_BUTTON, TOKENS.OBJECT_ONBOARDING_CONFIG])
   const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
   const onSubmitPressed = useCallback(() => {
     dispatch({
@@ -72,7 +72,10 @@ const Terms: React.FC = () => {
   }
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']}>
+    <Wrapper
+      customEdges={ScreenOptionsDictionary[Screens.Terms]?.screenEdges || ['left', 'right', 'bottom']}
+      header={ScreenOptionsDictionary[Screens.Terms]?.customHeader}
+    >
       <ScrollView style={style.container}>
         <InfoTextBox>Please agree to the terms and conditions below before using this application.</InfoTextBox>
         <Text style={[style.bodyText, { marginTop: 20, marginBottom: 20 }]}>
@@ -127,7 +130,7 @@ const Terms: React.FC = () => {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Wrapper>
   )
 }
 

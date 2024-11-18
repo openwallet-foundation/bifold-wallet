@@ -25,6 +25,7 @@ import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
 import ScanTab from './ScanTab'
 import { TOKENS, useServices } from '../../container-api'
+import Wrapper from '../../layout/wrapper'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -195,7 +196,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
 
   return (
     <>
-      <SafeAreaView edges={['left', 'right']} style={styles.mainSafeArea}>
+      <Wrapper customEdges={['left', 'right']} style={styles.mainSafeArea}>
         {firstTabActive ? (
           <>
             <Modal visible={showInfoBox} animationType="fade" transparent>
@@ -341,7 +342,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
             active={!firstTabActive}
           />
         </View>
-      </SafeAreaView>
+      </Wrapper>
       <SafeAreaView edges={['bottom']} style={styles.bottomSafeArea} />
     </>
   )

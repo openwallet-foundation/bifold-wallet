@@ -16,6 +16,7 @@ import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
 import { TOKENS, useServices } from '../../container-api'
+import Wrapper from '../../layout/wrapper'
 
 interface Props {
   handleCodeScan: (value: string) => Promise<void>
@@ -72,7 +73,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
 
   return (
-    <View style={styles.container}>
+    <Wrapper>
       <Modal visible={showInfoBox} animationType="fade" transparent>
         <View
           style={{
@@ -162,7 +163,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
         </View>
       </View>
-    </View>
+    </Wrapper>
   )
 }
 
