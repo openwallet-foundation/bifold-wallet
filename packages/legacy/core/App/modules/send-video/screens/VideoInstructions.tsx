@@ -1,25 +1,40 @@
+import axios from 'axios'
 import { useNavigation } from '@react-navigation/core'
 import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, View, StyleSheet } from 'react-native'
+import { Config } from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import Actions from './Actions'
-import Instructions from './Instructions'
-import Button, { ButtonType } from '../../components/buttons/Button'
-import Title from '../../components/texts/Title'
-import { SendVideoStackParams, Screens } from './types/navigators'
-import { testIdWithKey } from '../../utils/testable'
+import Actions from '../components/Actions'
+import Instructions from '../components/Instructions'
+import Button, { ButtonType } from '../../../components/buttons/Button'
+import Title from '../../../components/texts/Title'
+import Text from '../../../components/texts/Text'
+import { SendVideoStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../../../utils/testable'
+import { Session } from '../types/api'
 
 type VideoInstructionsProps = StackScreenProps<SendVideoStackParams, Screens.VideoInstructions>
 
 const VideoInstructions: React.FC<VideoInstructionsProps> = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<SendVideoStackParams>>()
+  const [session, setSession] = useState<Session | null>(null)
+
+  useEffect(() => {
+    axios.post<Session>(`${Config.VIDEO_VERIFIER_HOST}/api/v1/session`).then((response) => {
+      setSession(response.data)
+    })
+  }, [])
+
   const onPress = () => {
-    navigation.navigate(Screens.VerifyVideo)
+    if (session) {
+      navigation.navigate(Screens.CaptureVideo, { session: session })
+    }
   }
+
   const styles = StyleSheet.create({
     container: {
       width: '100%',
@@ -100,6 +115,8 @@ const VideoInstructions: React.FC<VideoInstructionsProps> = () => {
     },
   })
 
+  if (!session) return <Text>Loading...</Text>
+
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.subContainer}>
@@ -107,7 +124,7 @@ const VideoInstructions: React.FC<VideoInstructionsProps> = () => {
 
         <View style={styles.topInfoContainer}>
           <Title style={styles.topInfoHeading}>{t('SendVideo.VideoInstructions.YouWillBeAskedToDo')}</Title>
-          <Actions />
+          <Actions prompts={session.prompts} />
         </View>
 
         <View style={styles.instructionsContainer}>

@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import Text from '../../components/texts/Text'
+import Text from '../../../components/texts/Text'
 
 const Instructions: React.FC = () => {
   const { t } = useTranslation()

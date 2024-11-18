@@ -11,8 +11,11 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
-import { HomeStackParams, Screens } from '../types/navigators'
+import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { TourID } from '../types/tour'
+import Button, { ButtonType } from '../components/buttons/Button'
+import { useNavigation } from '@react-navigation/native'
+import { Screens as SendVideoScreens } from '../modules/send-video/types/navigators'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -39,6 +42,7 @@ const Home: React.FC<HomeProps> = () => {
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
+  const navigation = useNavigation()
 
   const styles = StyleSheet.create({
     flatlist: {
@@ -46,29 +50,32 @@ const Home: React.FC<HomeProps> = () => {
     },
   })
 
-  const DisplayListItemType = useCallback((item: any): React.ReactNode => {
-    let component: React.ReactNode
-    if (item.type === 'BasicMessageRecord') {
-      component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
-    } else if (item.type === 'CredentialRecord') {
-      let notificationType = NotificationType.CredentialOffer
-      if (item.revocationNotification) {
-        notificationType = NotificationType.Revocation
+  const DisplayListItemType = useCallback(
+    (item: any): React.ReactNode => {
+      let component: React.ReactNode
+      if (item.type === 'BasicMessageRecord') {
+        component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
+      } else if (item.type === 'CredentialRecord') {
+        let notificationType = NotificationType.CredentialOffer
+        if (item.revocationNotification) {
+          notificationType = NotificationType.Revocation
+        }
+        component = <NotificationListItem notificationType={notificationType} notification={item} />
+      } else if (item.type === 'CustomNotification' && customNotification) {
+        component = (
+          <NotificationListItem
+            notificationType={NotificationType.Custom}
+            notification={item}
+            customNotification={customNotification}
+          />
+        )
+      } else {
+        component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
       }
-      component = <NotificationListItem notificationType={notificationType} notification={item} />
-    } else if (item.type === 'CustomNotification' && customNotification) {
-      component = (
-        <NotificationListItem
-          notificationType={NotificationType.Custom}
-          notification={item}
-          customNotification={customNotification}
-        />
-      )
-    } else {
-      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-    }
-    return component
-  }, [customNotification, NotificationListItem])
+      return component
+    },
+    [customNotification, NotificationListItem]
+  )
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
@@ -163,6 +170,13 @@ const Home: React.FC<HomeProps> = () => {
           onDismissPressed={onDismissPressed}
         />
       )}
+      <View style={{ marginBottom: 100 }}>
+        <Button
+          title={'Verify by Video (DEMO)'}
+          onPress={() => navigation.getParent()?.navigate(Stacks.SendVideoStack, { screen: SendVideoScreens.VideoInstructions })}
+          buttonType={ButtonType.Primary}
+        />
+      </View>
     </>
   )
 }

@@ -1,12 +1,11 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { prompts } from './prompts'
+import Text from '../../../components/texts/Text'
+import Title from '../../../components/texts/Title'
+import { Prompt } from '../types/api'
 
-import Text from '../../components/texts/Text'
-import Title from '../../components/texts/Title'
-
-const Actions: React.FC = () => {
+const Actions: React.FC<{prompts: Prompt[]}> = ({prompts}) => {
   const styles = StyleSheet.create({
     instruction: {
       textAlign: 'left',
@@ -34,9 +33,9 @@ const Actions: React.FC = () => {
   return (
     <>
       {prompts?.map((instruction, index) => (
-        <View key={index} style={styles.instructionItem}>
+        <View key={instruction.id} style={styles.instructionItem}>
           <Title style={styles.count}>{index + 1}.</Title>
-          <Text style={styles.instruction}>{instruction}</Text>
+          <Text style={styles.instruction}>{instruction.text}</Text>
         </View>
       ))}
     </>

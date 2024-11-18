@@ -1,15 +1,13 @@
-export enum Stacks {
-  SendVideoStack = 'Send Video',
-}
+import { Session } from "./api"
 
 export enum Screens {
-  VideoInstructions = 'Instructions',
-  VerifyVideo = 'Capture Video',
-  SubmitVideo = 'Send Video',
+  VideoInstructions = 'Video Instructions',
+  CaptureVideo = 'Capture Video',
+  SubmitVideo = 'Submit Video',
 }
 
 export type SendVideoStackParams = {
   [Screens.VideoInstructions]: undefined
-  [Screens.VerifyVideo]: undefined
+  [Screens.CaptureVideo]: { session: Session}
   [Screens.SubmitVideo]: undefined
 }

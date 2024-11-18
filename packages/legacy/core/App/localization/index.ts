@@ -3,12 +3,12 @@ import { initReactI18next } from 'react-i18next'
 import * as RNLocalize from 'react-native-localize'
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
-
+import { en as sendVideoEn, fr as sendVideoFr, ptBr as sendVideoPtBr } from '../modules/send-video/localization'
 import en from './en'
 import fr from './fr'
 import ptBr from './pt-br'
 
-export type Translation = typeof en
+export type Translation = typeof en & typeof sendVideoEn
 
 export type TranslationResources = {
   [key: string]: any
@@ -16,13 +16,13 @@ export type TranslationResources = {
 
 export const translationResources: TranslationResources = {
   en: {
-    translation: en,
+    translation: { ...en, ...sendVideoEn },
   },
   fr: {
-    translation: fr,
+    translation: { ...fr, ...sendVideoFr },
   },
   'pt-BR': {
-    translation: ptBr,
+    translation: { ...ptBr, ...sendVideoPtBr },
   },
 }
 

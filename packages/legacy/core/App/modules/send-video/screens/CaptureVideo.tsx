@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
+import axios from 'axios'
 import { useNavigation } from '@react-navigation/core'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View, ActivityIndicator, useWindowDimensions } from 'react-native'
-import RNFS from 'react-native-fs'
+import Config from 'react-native-config'
+// import RNFS from 'react-native-fs'
 import { Camera, useCameraDevice, useCameraFormat } from 'react-native-vision-camera'
-import Button, { ButtonType } from '../../components/buttons/Button'
-import Text from '../../components/texts/Text'
-import Title from '../../components/texts/Title'
-import { prompts } from './prompts'
-import { testIdWithKey } from '../../utils/testable'
 
-const endpoint = `http://localhost:3000`
+import Button, { ButtonType } from '../../../components/buttons/Button'
+import Text from '../../../components/texts/Text'
+import Title from '../../../components/texts/Title'
+import { Screens, SendVideoStackParams } from '../types/navigators'
+import { testIdWithKey } from '../../../utils/testable'
 
-const Scanner = () => {
+const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.CaptureVideo>>  = ({ route }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
   const camera = useRef<Camera | null>(null)
@@ -29,6 +31,9 @@ const Scanner = () => {
     { videoAspectRatio: screenAspectRatio },
     { videoResolution: 'max' },
   ])
+
+  const session = route.params.session
+  const prompts = session.prompts.map(prompt => prompt.text)
 
   const styles = StyleSheet.create({
     container: {
@@ -130,32 +135,23 @@ const Scanner = () => {
         setLoader(false) //@todo will remove when real api will work
       }, 3000)
       const formData = new FormData()
-      formData.append('video', {
+      formData.append('video_file', {
         uri: `file://${path}`,
         type: 'video/mp4',
         name: createFileName(),
       })
-      // Replace 'endpoint' with the actual endpoint where you want to send the video
-      // const response = await axios.post(endpoint, formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // });
+      formData.append('sessionId', session.id)
 
-      // console.log('API Response:', response?.data);
+      const response = await axios.post(`${Config.VIDEO_VERIFIER_HOST}/api/v1/submissions`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('API Response:', response?.data);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error sending video to API:', error)
-    }
-  }
-
-  const saveVideoToFile = async (uri: string) => {
-    try {
-      const destinationPath = RNFS.ExternalDirectoryPath + '/' + createFileName()
-      await RNFS.moveFile(uri, destinationPath)
-      await submitVideo(destinationPath)
-    } catch (error) {
-      console.error('Error saving video:', error)
     }
   }
 
@@ -166,7 +162,7 @@ const Scanner = () => {
       setIsRecording(true)
       camera.current?.startRecording({
         onRecordingFinished: async (video) => {
-          await saveVideoToFile(video.path)
+          await submitVideo(video.path)
         },
         onRecordingError: (error) => {
           console.error('Recording error:', error)
@@ -246,4 +242,4 @@ const Scanner = () => {
   )
 }
 
-export default Scanner
+export default CaptureVideo

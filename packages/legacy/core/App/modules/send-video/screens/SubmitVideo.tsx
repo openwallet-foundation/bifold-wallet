@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ActivityIndicator } from 'react-native'
 
-import Title from '../../components/texts/Title'
+import Title from '../../../components/texts/Title'
 
 const SubmitVideo: React.FC = () => {
   const navigation = useNavigation()

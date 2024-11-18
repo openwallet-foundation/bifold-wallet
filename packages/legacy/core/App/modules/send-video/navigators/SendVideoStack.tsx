@@ -2,13 +2,13 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useTheme } from '../../contexts/theme'
-import { useDefaultStackOptions } from '../../navigators/defaultStackOptions'
-import { SendVideoStackParams, Screens } from './types/navigators'
+import { useTheme } from '../../../contexts/theme'
+import { useDefaultStackOptions } from '../../../navigators/defaultStackOptions'
+import { SendVideoStackParams, Screens } from '../types/navigators'
 // import { testIdWithKey } from '../../utils/testable'
-import SubmitVideo from './SubmitVideo'
-import VerifyVideo from './VerifyVideo'
-import VideoInstructions from './VideoInstructions'
+import SubmitVideo from '../screens/SubmitVideo'
+import CaptureVideo from '../screens/CaptureVideo'
+import VideoInstructions from '../screens/VideoInstructions'
 
 const SendVideoStack: React.FC = () => {
   const Stack = createStackNavigator<SendVideoStackParams>()
@@ -24,12 +24,11 @@ const SendVideoStack: React.FC = () => {
         options={() => ({
           title: t('SendVideo.Screens.VideoInstructions'),
           headerRight: () => null,
-          headerLeft: () => null,
         })}
       />
       <Stack.Screen
-        name={Screens.VerifyVideo}
-        component={VerifyVideo}
+        name={Screens.CaptureVideo}
+        component={CaptureVideo}
         options={() => ({
           title: t('SendVideo.Screens.VerifyVideo'),
           headerRight: () => null,
