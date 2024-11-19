@@ -126,8 +126,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   Attribute {
                     "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                     "encoding": undefined,
-                    "errorMessage": undefined,
                     "format": undefined,
+                    "hasError": undefined,
                     "label": undefined,
                     "mimeType": undefined,
                     "name": "email",
@@ -146,8 +146,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   Attribute {
                     "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                     "encoding": undefined,
-                    "errorMessage": undefined,
                     "format": undefined,
+                    "hasError": undefined,
                     "label": undefined,
                     "mimeType": undefined,
                     "name": "time",
@@ -428,7 +428,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     "width": 90,
                                   },
                                   Object {
-                                    "backgroundColor": "#5f0f7b",
                                     "overflow": "hidden",
                                   },
                                 ]
@@ -530,8 +529,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     Attribute {
                                       "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                                       "encoding": undefined,
-                                      "errorMessage": undefined,
                                       "format": undefined,
+                                      "hasError": undefined,
                                       "label": undefined,
                                       "mimeType": undefined,
                                       "name": "email",
@@ -550,8 +549,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     Attribute {
                                       "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
                                       "encoding": undefined,
-                                      "errorMessage": undefined,
                                       "format": undefined,
+                                      "hasError": undefined,
                                       "label": undefined,
                                       "mimeType": undefined,
                                       "name": "time",
@@ -815,40 +814,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
               </View>
             </View>
           }
-          ListHeaderComponent={
-            <View
-              style={
-                Object {
-                  "marginHorizontal": 20,
-                }
-              }
-            >
-              <React.Fragment>
-                <View
-                  style={
-                    Object {
-                      "borderColor": "#D3D3D3",
-                      "borderWidth": 1,
-                      "marginTop": 20,
-                      "width": "auto",
-                    }
-                  }
-                />
-                <Text
-                  style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 20,
-                      "fontWeight": "bold",
-                      "marginTop": 10,
-                    }
-                  }
-                >
-                  ProofRequest.MissingCredentials
-                </Text>
-              </React.Fragment>
-            </View>
-          }
           data={
             Array [
               Object {
@@ -899,41 +864,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           viewabilityConfigCallbackPairs={Array []}
         >
           <View>
-            <View
-              collapsable={false}
-              onLayout={[Function]}
-            >
-              <View
-                style={
-                  Object {
-                    "marginHorizontal": 20,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "borderColor": "#D3D3D3",
-                      "borderWidth": 1,
-                      "marginTop": 20,
-                      "width": "auto",
-                    }
-                  }
-                />
-                <Text
-                  style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 20,
-                      "fontWeight": "bold",
-                      "marginTop": 10,
-                    }
-                  }
-                >
-                  ProofRequest.MissingCredentials
-                </Text>
-              </View>
-            </View>
             <View
               onFocusCapture={[Function]}
               onLayout={[Function]}
@@ -1010,7 +940,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     "width": 90,
                                   },
                                   Object {
-                                    "backgroundColor": "#D8292F",
                                     "overflow": "hidden",
                                   },
                                 ]
@@ -1128,51 +1057,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 </View>
                               </View>
                               <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                  }
-                                }
-                              >
-                                <Text
-                                  allowFontScaling={false}
-                                  selectable={false}
-                                  style={
-                                    Array [
-                                      Object {
-                                        "color": undefined,
-                                        "fontSize": 30,
-                                      },
-                                      Object {
-                                        "color": "#D8292F",
-                                      },
-                                      Object {
-                                        "fontFamily": "Material Icons",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "normal",
-                                      },
-                                      Object {},
-                                    ]
-                                  }
-                                >
-                                  
-                                </Text>
-                                <Text
-                                  numberOfLines={1}
-                                  style={
-                                    Object {
-                                      "color": "#D8292F",
-                                      "fontSize": 18,
-                                      "fontWeight": "normal",
-                                    }
-                                  }
-                                  testID="com.ariesbifold:id/RevokedOrNotAvailable"
-                                >
-                                  ProofRequest.NotAvailableInYourWallet
-                                </Text>
-                              </View>
-                              <View
                                 ListFooterComponent={null}
                                 data={
                                   Array [
@@ -1236,30 +1120,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
-                                          selectable={false}
-                                          style={
-                                            Array [
-                                              Object {
-                                                "color": "#D8292F",
-                                                "fontSize": 18,
-                                              },
-                                              Object {
-                                                "paddingHorizontal": 2,
-                                                "paddingTop": 2,
-                                              },
-                                              Object {
-                                                "fontFamily": "Material Icons",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "normal",
-                                              },
-                                              Object {},
-                                            ]
-                                          }
-                                        >
-                                          
-                                        </Text>
-                                        <Text
                                           style={
                                             Array [
                                               Object {
@@ -1290,7 +1150,32 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           "flexDirection": "row",
                                         }
                                       }
-                                    />
+                                    >
+                                      <Text
+                                        style={
+                                          Array [
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "fontSize": 18,
+                                              "fontWeight": "bold",
+                                            },
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "flexShrink": 1,
+                                            },
+                                            Object {
+                                              "lineHeight": 24,
+                                            },
+                                            Object {
+                                              "color": "#FFFFFF",
+                                            },
+                                          ]
+                                        }
+                                        testID="com.ariesbifold:id/AttributeValue"
+                                      >
+                                        ProofRequest.PredicateLe 18
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                                 <View

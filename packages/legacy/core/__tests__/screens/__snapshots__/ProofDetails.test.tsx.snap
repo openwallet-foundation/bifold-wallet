@@ -473,8 +473,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               Attribute {
                                 "credentialId": undefined,
                                 "encoding": undefined,
-                                "errorMessage": undefined,
                                 "format": undefined,
+                                "hasError": undefined,
                                 "label": undefined,
                                 "mimeType": undefined,
                                 "name": "first_name",
@@ -488,8 +488,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               Attribute {
                                 "credentialId": undefined,
                                 "encoding": undefined,
-                                "errorMessage": undefined,
                                 "format": undefined,
+                                "hasError": undefined,
                                 "label": undefined,
                                 "mimeType": undefined,
                                 "name": "second_name",
@@ -1026,8 +1026,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               Attribute {
                                 "credentialId": undefined,
                                 "encoding": undefined,
-                                "errorMessage": undefined,
                                 "format": undefined,
+                                "hasError": undefined,
                                 "label": undefined,
                                 "mimeType": undefined,
                                 "name": "first_name",
@@ -1041,8 +1041,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               Attribute {
                                 "credentialId": undefined,
                                 "encoding": undefined,
-                                "errorMessage": undefined,
                                 "format": undefined,
+                                "hasError": undefined,
                                 "label": undefined,
                                 "mimeType": undefined,
                                 "name": "second_name",
