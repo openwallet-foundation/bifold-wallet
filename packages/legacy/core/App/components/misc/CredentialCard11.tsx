@@ -407,6 +407,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           {
             lineHeight: 19,
             opacity: 0.8,
+            color: ListItems.proofError.color,
           },
         ]}
       >
@@ -419,7 +420,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       <>
         {isDataUrl(value) ? (
-          <Image style={styles.imageAttr} source={{ uri: value as string }}></Image>
+          <Image style={styles.imageAttr} source={{ uri: value as string }} />
         ) : (
           <Text
             style={[
@@ -442,36 +443,34 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
     const parsedValue = formatIfDate(item?.format, value) ?? ''
-
     return (
       item && (
         <View style={{ marginTop: 15 }}>
           {!(item?.value || item?.satisfied) ? (
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon
-                  style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                  name="close"
-                  color={ListItems.proofError.color}
-                  size={ListItems.recordAttributeText.fontSize}
-                />
                 <AttributeLabel label={label} />
               </View>
-              {item.errorMessage && (
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginStart: 15 }}>
+              {item.hasError && (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon
                     style={{ paddingTop: 2, paddingHorizontal: 2 }}
                     name="close"
                     color={ListItems.proofError.color}
                     size={ListItems.recordAttributeText.fontSize}
                   />
-                  <AttributeErrorLabel errorMessage={item.errorMessage} />
+                  <AttributeErrorLabel
+                    errorMessage={t('ProofRequest.MissingAttribute', {
+                      name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
+                    })}
+                  />
                 </View>
               )}
             </View>
           ) : (
             <AttributeLabel label={label} />
           )}
+          {/* Rendering attribute values */}
           {!(item?.value || item?.pValue) ? null : (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
@@ -482,12 +481,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   size={ListItems.recordAttributeText.fontSize}
                 />
               )}
-              {!error ? (
-                <AttributeValue
-                  warn={flaggedAttributes?.includes(label) && !item.pValue && proof}
-                  value={parsedValue}
-                />
-              ) : null}
+              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
             </View>
           )}
           {!error && item?.satisfied != undefined && item?.satisfied === false ? (
@@ -541,15 +535,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </Text>
           </View>
         </View>
-        {(error || isProofRevoked) && (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon style={styles.errorIcon} name="close" size={30} />
-
-            <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-              {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
-            </Text>
-          </View>
-        )}
         <FlatList
           data={cardData}
           scrollEnabled={false}
@@ -584,7 +569,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor: backgroundColorIfErrorState(styles.secondaryBodyContainer.backgroundColor),
             overflow: 'hidden',
           },
         ]}
