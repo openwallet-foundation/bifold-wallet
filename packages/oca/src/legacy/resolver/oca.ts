@@ -6,6 +6,7 @@ import {
   ILegacyBrandingOverlayData,
   IMetaOverlayData,
   IOverlayBundleData,
+  IOverlayBundleMetadata,
 } from '../../interfaces'
 import {
   BaseOverlay,
@@ -44,6 +45,7 @@ export interface OCABundleType {
   get formatOverlay(): FormatOverlay | undefined
   get characterEncodingOverlay(): CharacterEncodingOverlay | undefined
   get brandingOverlay(): BrandingOverlay | LegacyBrandingOverlay | undefined
+  get metadata(): IOverlayBundleMetadata
 }
 
 interface LanguageOverlay {
@@ -183,6 +185,10 @@ export class OCABundle implements OCABundleType {
       }
     }
     return this.bundle.overlays.find((item) => item.type === type.toString()) as T
+  }
+
+  public get metadata(): IOverlayBundleMetadata {
+    return this.bundle.metadata
   }
 }
 

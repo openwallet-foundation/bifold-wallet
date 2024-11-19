@@ -29,6 +29,7 @@ import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
+import { CredentialCard11And12Theme } from '../../theme'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -146,48 +147,37 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const styles = StyleSheet.create({
     container: {
+      ...CredentialCard11And12Theme.container,
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
-      borderRadius: borderRadius,
     },
     cardContainer: {
-      flexDirection: 'row',
+      ...CredentialCard11And12Theme.cardContainer,
       minHeight: 0.33 * width,
     },
     secondaryBodyContainer: {
       width: logoHeight,
-      borderTopLeftRadius: borderRadius,
-      borderBottomLeftRadius: borderRadius,
+      ...CredentialCard11And12Theme.secondaryBodyContainer,
       backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
     },
     primaryBodyContainer: {
-      flex: 1,
+      ...CredentialCard11And12Theme.primaryBodyContainer,
       padding,
       marginLeft: -1 * logoHeight + padding,
     },
     imageAttr: {
-      height: 150,
-      aspectRatio: 1,
-      resizeMode: 'contain',
-      borderRadius: borderRadius,
+      ...CredentialCard11And12Theme.imageAttr,
     },
     statusContainer: {
-      backgroundColor: 'rgba(0, 0, 0, 0)',
-      borderTopRightRadius: borderRadius,
-      borderBottomLeftRadius: borderRadius,
+      ...CredentialCard11And12Theme.statusContainer,
       height: logoHeight,
       width: logoHeight,
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     logoContainer: {
       top: padding,
       left: -1 * logoHeight + padding,
       width: logoHeight,
       height: logoHeight,
-      backgroundColor: '#ffffff',
-      borderRadius: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
+      ...CredentialCard11And12Theme.logoContainer,
       shadowColor: '#000',
       shadowOffset: {
         width: 1,
@@ -196,44 +186,31 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       shadowOpacity: 0.3,
     },
     headerText: {
-      ...TextTheme.labelSubtitle,
-      ...ListItems.recordAttributeText,
-      fontSize: 15,
-      flexShrink: 1,
+      ...CredentialCard11And12Theme.headerText,
     },
     valueText: {
-      ...TextTheme.normal,
-      minHeight: ListItems.recordAttributeText.fontSize,
-      paddingVertical: 4,
+      ...CredentialCard11And12Theme.valueText,
     },
     textContainer: {
       color: proof
         ? TextTheme.normal.color
         : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
-      flexShrink: 1,
+      ...CredentialCard11And12Theme.textContainer,
     },
     errorText: {
-      ...TextTheme.normal,
-      color: ListItems.proofError.color,
+      ...CredentialCard11And12Theme.errorText,
     },
     errorIcon: {
-      color: ListItems.proofError.color,
+      ...CredentialCard11And12Theme.errorIcon,
     },
     selectedCred: {
-      borderWidth: 5,
-      borderRadius: 15,
-      borderColor: ColorPallet.semantic.focus,
+      ...CredentialCard11And12Theme.selectedCred,
     },
     seperator: {
-      width: '100%',
-      height: 2,
-      marginVertical: 10,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      ...CredentialCard11And12Theme.seperator,
     },
     credActionText: {
-      fontSize: 20,
-      fontWeight: TextTheme.bold.fontWeight,
-      color: ColorPallet.brand.link,
+      ...CredentialCard11And12Theme.credActionText,
     },
   })
 
