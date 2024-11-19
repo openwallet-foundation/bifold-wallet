@@ -19,7 +19,7 @@ const DeliveryStack: React.FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
+  const [screenOptions] = useServices([TOKENS.SCREEN_OPTIONS])
 
   return (
     <Stack.Navigator
@@ -36,14 +36,14 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Connection}
         component={Connection}
-        options={{ ...defaultStackOptions, ...stackOptions.connectionStackOptions}}
+        options={{ ...defaultStackOptions, ...screenOptions.connectionScreenOptions}}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={{
           title: t('Screens.ProofRequest'),
-        ...stackOptions.proofRequestStackOptions
+        ...screenOptions.proofRequestScreenOptions
         }}
       />
       <Stack.Screen
@@ -51,7 +51,7 @@ const DeliveryStack: React.FC = () => {
         component={CredentialOffer}
         options={{
           title: t('Screens.CredentialOffer'),
-          ...stackOptions.credentialOfferStackOptions
+          ...screenOptions.credentialOfferScreenOptions
         }}
       />
       <Stack.Screen
@@ -59,7 +59,7 @@ const DeliveryStack: React.FC = () => {
         component={OpenIDCredentialDetails}
         options={{
           title: t('Screens.CredentialOffer'),
-        ...stackOptions.openIdCredDetailStackOptions
+        ...screenOptions.openIdCredDetailScreenOptions
         }}
       />
       <Stack.Screen
@@ -67,7 +67,7 @@ const DeliveryStack: React.FC = () => {
         component={OpenIDProofPresentation}
         options={{
           title: t('Screens.ProofRequest'),
-          ...stackOptions.openIdProofPresStackOptions
+          ...screenOptions.openIdProofPresScreenOptions
         }}
       />
     </Stack.Navigator>

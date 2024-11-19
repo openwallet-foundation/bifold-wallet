@@ -18,7 +18,7 @@ const HomeStack: React.FC = () => {
   const { t } = useTranslation()
   const [store] = useStore()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
+  const [screenOptions] = useServices([TOKENS.SCREEN_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -29,7 +29,7 @@ const HomeStack: React.FC = () => {
           title: t('Screens.Home'),
            headerRight: () => (store.preferences.useHistoryCapability ? <HistoryMenu /> : null),
            headerLeft: () => <SettingsMenu />,
-          ...stackOptions.homeStackOptions
+          ...screenOptions.homeScreenOptions
         })}
       />
     </Stack.Navigator>

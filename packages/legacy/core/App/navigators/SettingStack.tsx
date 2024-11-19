@@ -36,7 +36,7 @@ const SettingStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
-  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
+  const [screenOptions] = useServices([TOKENS.SCREEN_OPTIONS])
   
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const SettingStack: React.FC = () => {
         component={Settings}
         options={{title: t('Screens.Settings'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.settingsStackOptions }}
+          ...screenOptions.settingsScreenOptions }}
       />
       <Stack.Screen
         name={Screens.NameWallet}
@@ -64,7 +64,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.NameWallet'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.nameWalletStackOptions }}
+          ...screenOptions.nameWalletScreenOptions }}
       />
       <Stack.Screen
         name={Screens.Language}
@@ -72,7 +72,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Language'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.languageStackOptions }}
+          ...screenOptions.languageScreenOptions }}
       />
       <Stack.Screen
         name={Screens.AutoLock}
@@ -80,7 +80,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: 'Auto lock Options',
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.autoLockStackOptions }}
+          ...screenOptions.autoLockScreenOptions }}
       />
       <Stack.Screen
         name={Screens.DataRetention}
@@ -99,7 +99,7 @@ const SettingStack: React.FC = () => {
           title: t('Screens.Biometry'),
           headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.useBiometryStackOptions,
+          ...screenOptions.useBiometryScreenOptions,
         }}
       />
       <Stack.Screen
@@ -108,7 +108,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.createPINStackOptions }}
+          ...screenOptions.createPINScreenOptions }}
       />
       <Stack.Screen
         name={Screens.UsePushNotifications}
@@ -116,7 +116,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.UsePushNotifications'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.usePushNotifStackOption }}
+          ...screenOptions.usePushNotifScreenOption }}
       />
       <Stack.Screen
         name={Screens.Terms}
@@ -129,7 +129,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Developer'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.developerStackOptions }}
+          ...screenOptions.developerScreenOptions }}
       />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
         {(props) => (
@@ -149,7 +149,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.HistorySettings'),
           headerBackTestID: testIdWithKey('Back'),
-          ...stackOptions.historySettingsStackOptions }}
+          ...screenOptions.historySettingsScreenOptions }}
       />
     </Stack.Navigator>
   )

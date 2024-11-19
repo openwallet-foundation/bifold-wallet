@@ -46,13 +46,11 @@ import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
 import { Config } from './types/config'
-import { StackOptions } from './types/StackOptions'
+import { ScreenOptions } from './types/ScreenOptions'
 import { Locales } from './localization'
 import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
 import { InlineErrorPosition } from './types/error'
-import HeaderRightHome from './components/buttons/HeaderHome'
-import SettingsMenu from './components/buttons/SettingsMenu'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -73,13 +71,7 @@ export const defaultConfig: Config = {
   },
 }
 
-
-
-const defaultStackOptions: StackOptions = {
-  proofDetailsStackOptions: { headerRight: HeaderRightHome },
-  proofReqUsageHistoryStackOptions: { headerRight: HeaderRightHome },
-  credentialsStackOptions: { headerLeft: SettingsMenu },
-};
+const defaultScreenOptions: ScreenOptions = {};
 
 
 export class MainContainer implements Container {
@@ -129,7 +121,7 @@ export class MainContainer implements Container {
     })
     this._container.registerInstance(TOKENS.NOTIFICATIONS_LIST_ITEM, NotificationListItem)
     this._container.registerInstance(TOKENS.CONFIG, defaultConfig)
-    this._container.registerInstance(TOKENS.STACK_OPTIONS,defaultStackOptions)
+    this._container.registerInstance(TOKENS.SCREEN_OPTIONS,defaultScreenOptions)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_FOOTER, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)

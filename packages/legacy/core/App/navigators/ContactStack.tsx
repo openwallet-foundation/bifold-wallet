@@ -15,6 +15,7 @@ import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import HeaderRightHome from '../components/buttons/HeaderHome'
 
 
 const ContactStack: React.FC = () => {
@@ -22,7 +23,7 @@ const ContactStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [stackOptions] = useServices([TOKENS.STACK_OPTIONS])
+  const [screenOptions] = useServices([TOKENS.SCREEN_OPTIONS])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -31,14 +32,14 @@ const ContactStack: React.FC = () => {
       component={ListContacts}
       options={{
         title: t('Screens.Contacts'),
-        ...stackOptions.contactStackOptions
+        ...screenOptions.contactScreenOptions
         }} />
       <Stack.Screen
         name={Screens.ContactDetails}
         component={ContactDetails}
         options={{
           title: t('Screens.ContactDetails'),
-          ...stackOptions.contactDetailsStackOptions
+          ...screenOptions.contactDetailsScreenOptions
         }}
       />
       <Stack.Screen
@@ -46,16 +47,16 @@ const ContactStack: React.FC = () => {
         component={RenameContact}
         options={{
           title: t('Screens.RenameContact'),
-          ...stackOptions.renameContactStackOptions
+          ...screenOptions.renameContactScreenOptions
         }}
       />
-      <Stack.Screen name={Screens.Chat} component={Chat} options={{...stackOptions.chatStackOptions}}/>
+      <Stack.Screen name={Screens.Chat} component={Chat} options={{...screenOptions.chatScreenOptions}}/>
       <Stack.Screen
         name={Screens.WhatAreContacts}
         component={WhatAreContacts}
         options={{
           title: '',
-          ...stackOptions.whatAreContactStackOptions
+          ...screenOptions.whatAreContactScreenOptions
         }}
       />
       <Stack.Screen
@@ -63,14 +64,14 @@ const ContactStack: React.FC = () => {
         component={CredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          ...stackOptions.credentialDetailsStackOptions
+          ...screenOptions.credentialDetailsScreenOptions
         }}
       />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
         options={{ title: t('Screens.CredentialOffer'),
-          ...stackOptions.credentialOfferStackOptions
+          ...screenOptions.credentialOfferScreenOptions
          }}
       />
       <Stack.Screen
@@ -78,7 +79,8 @@ const ContactStack: React.FC = () => {
         component={ProofDetails}
         options={() => ({
           title: '',
-          ...stackOptions.proofDetailsStackOptions,
+          headerRight: () => <HeaderRightHome />,
+          ...screenOptions.proofDetailsScreenOptions,
         })}
       />
       <Stack.Screen
@@ -86,7 +88,7 @@ const ContactStack: React.FC = () => {
         component={ProofRequest}
         options={{
           title: t('Screens.ProofRequest'),
-          ...stackOptions.proofRequestStackOptions
+          ...screenOptions.proofRequestScreenOptions
         }}
       />
     </Stack.Navigator>
