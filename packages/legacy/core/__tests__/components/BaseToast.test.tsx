@@ -51,4 +51,10 @@ describe('BaseToast Component', () => {
 
     expect(tree).toMatchSnapshot()
   })
+
+  test('Toast Renders without body text', () => {
+    const tree = render(<BaseToast title={'Hello World'} toastType={ToastType.Error} />)
+    const bodyText = tree.queryByTestId('ToastBody')
+    expect(bodyText).toBeNull()
+  })
 })
