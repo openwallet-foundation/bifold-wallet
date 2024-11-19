@@ -433,30 +433,9 @@ export const evaluatePredicates =
     })
   }
 
-// Scans through given credential records and returns true if a given attribute is missing from the records
-const isOffendingAttribute = (
-  attributeName: string,
-  idToFind: string,
-  credentialRecords: CredentialExchangeRecord[]
-): boolean => {
-  // filter records for a given schema or credential definition id
-  const records = credentialRecords.filter(
-    (record: CredentialExchangeRecord) =>
-      getCredentialSchemaIdForRecord(record) === idToFind || getCredentialDefinitionIdForRecord(record) === idToFind
-  )
-
-  // then for each record, find if a given attribute exists
-  // if no attributes are found in the record, then the given attributeName is the offending attribute
-  return records.some(
-    (record: CredentialExchangeRecord) =>
-      !record.credentialAttributes?.some((attribute: CredentialPreviewAttribute) => attribute.name === attributeName)
-  )
-}
-
 const addMissingDisplayAttributes = (
   attrReq: AnonCredsRequestedAttribute,
-  records: CredentialExchangeRecord[],
-  t: TFunction<'translation', undefined>
+  records: CredentialExchangeRecord[]
 ): ProofCredentialAttributes => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
@@ -474,31 +453,57 @@ const addMissingDisplayAttributes = (
     attributes: [] as Attribute[],
   }
 
+  // Filter records for requested schema id of credential definition id
+  const filteredCredentialRecords = records.filter(
+    (record: CredentialExchangeRecord) =>
+      getCredentialSchemaIdForRecord(record) === schemaId || getCredentialDefinitionIdForRecord(record) === credDefId
+  )
+
+  // for reach requested attribute
+  // scan through filtered credential attributes
+  // display any that are found
+  // flag any not found attributes with an error
   for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
-    processedAttributes.attributes?.push(
-      new Attribute({
-        revoked: false,
-        credentialId: credName,
-        name: attributeName,
-        value: '',
-        // This assumes that schema id OR cred definition ids are present in the proof request
-        errorMessage: isOffendingAttribute(attributeName, schemaId || credDefId, records)
-          ? t('ProofRequest.MissingAttribute', { name: attributeName })
-          : undefined,
-      })
-    )
+    // filter through credential record attributes for a given name
+    const [attribute] = filteredCredentialRecords.map((item: CredentialExchangeRecord) => {
+      return item.credentialAttributes?.filter(
+        (attribute: CredentialPreviewAttribute) => attribute.name === attributeName
+      )
+    })
+    if (attribute && attribute.length > 0) {
+      // attribute found, display as expected
+      processedAttributes.attributes?.push(
+        new Attribute({
+          revoked: false,
+          credentialId: credName,
+          name: attributeName,
+          value: attribute[0].value,
+          hasError: false,
+        })
+      )
+    } else {
+      // no attribute found, flag this with an error
+      processedAttributes.attributes?.push(
+        new Attribute({
+          revoked: false,
+          credentialId: credName,
+          name: attributeName,
+          value: '',
+          hasError: true,
+        })
+      )
+    }
   }
   return processedAttributes
 }
 export const processProofAttributes = (
   t: TFunction<'translation', undefined>,
   request?: AnonCredsProofRequest,
-  credentials?: AnonCredsCredentialsForProofRequest,
-  credentialRecords?: CredentialExchangeRecord[],
+  credentials?: AnonCredsCredentialsForProofRequest, // credentials that 100% validate the proof request
+  credentialRecords?: CredentialExchangeRecord[], // all the credentials in the wallet
   groupByReferent?: boolean
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
-
   const requestedProofAttributes = request?.requested_attributes
   const retrievedCredentialAttributes = credentials?.attributes
   const requestNonRevoked = request?.non_revoked // non_revoked interval can sometimes be top level
@@ -521,11 +526,8 @@ export const processProofAttributes = (
     const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
     // No credentials satisfy proof request, process attribute errors
-
     if (credentialList.length <= 0) {
-      console.log(JSON.stringify(requestedProofAttributes[key]))
-      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [], t)
-
+      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [])
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
         processedAttributes[missingCredGroupKey] = missingAttributes
@@ -533,7 +535,6 @@ export const processProofAttributes = (
         processedAttributes[missingCredGroupKey].attributes?.push(...(missingAttributes.attributes ?? []))
       }
     }
-
     //iterate over all credentials that satisfy the proof
     for (const credential of credentialList) {
       let credName = key
