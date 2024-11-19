@@ -433,6 +433,9 @@ export const evaluatePredicates =
     })
   }
 
+// scans through requested attributes and records
+// Builds and returns label: value attributes
+// Flagging any attribute not found in wallet credentials
 const addMissingDisplayAttributes = (
   attrReq: AnonCredsRequestedAttribute,
   records: CredentialExchangeRecord[]
