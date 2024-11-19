@@ -223,12 +223,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       borderRadius: 15,
       borderColor: ColorPallet.semantic.focus,
     },
-    seperator: {
-      width: '100%',
-      height: 2,
-      marginVertical: 10,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
-    },
     credActionText: {
       fontSize: 20,
       fontWeight: TextTheme.bold.fontWeight,
@@ -238,6 +232,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const backgroundColorIfErrorState = (backgroundColor?: string) =>
     error || predicateError || isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
+
+  const backgroundColorIfRevoked = (backgroundColor?: string) =>
+    isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
     if (proof) {
@@ -535,6 +532,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </Text>
           </View>
         </View>
+        {isProofRevoked && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon style={styles.errorIcon} name="close" size={30} />
+
+            <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+              {t('CredentialDetails.Revoked')}
+            </Text>
+          </View>
+        )}
         <FlatList
           data={cardData}
           scrollEnabled={false}
@@ -569,6 +575,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
+            backgroundColor: backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor),
             overflow: 'hidden',
           },
         ]}

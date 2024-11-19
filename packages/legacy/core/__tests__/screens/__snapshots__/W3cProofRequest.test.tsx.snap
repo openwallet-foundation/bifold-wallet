@@ -428,6 +428,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     "width": 90,
                                   },
                                   Object {
+                                    "backgroundColor": "#5f0f7b",
                                     "overflow": "hidden",
                                   },
                                 ]
@@ -940,6 +941,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     "width": 90,
                                   },
                                   Object {
+                                    "backgroundColor": "#781e4b",
                                     "overflow": "hidden",
                                   },
                                 ]
