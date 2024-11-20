@@ -10,7 +10,6 @@ type AttributeValueProps = {
 }
 
 const AttributeValue = ({ value, styles }: AttributeValueProps) => {
-  CredentialCard11And12Theme
   const { TextTheme } = useTheme()
   return (
     <>
