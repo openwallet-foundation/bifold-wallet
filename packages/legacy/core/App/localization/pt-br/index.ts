@@ -620,6 +620,7 @@ const translation = {
     "CredentialMetadataNotFound": "Não foi possível encontrar metadados de credenciais",
     "NewProofRequest": "Nova Prova de Credencial",
     "NotAvailableInYourWallet": "Não disponível em sua carteira",
+    "MissingAttribute": "{{ name }} is missing (PT-BR)",
     "PredicateNotSatisfied": "Requisito não atendido",
     "IsRequesting": "está requisitando",
     "IsRequestingSomethingYouDontHaveAvailable": "está requisitando algo que você não tem disponível",

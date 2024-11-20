@@ -564,15 +564,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                 <React.Fragment />
               </View>
             }
-            ListHeaderComponent={
-              <View
-                style={
-                  Object {
-                    "marginHorizontal": 20,
-                  }
-                }
-              />
-            }
             data={Array []}
             getItem={[Function]}
             getItemCount={[Function]}
@@ -592,18 +583,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             viewabilityConfigCallbackPairs={Array []}
           >
             <View>
-              <View
-                collapsable={false}
-                onLayout={[Function]}
-              >
-                <View
-                  style={
-                    Object {
-                      "marginHorizontal": 20,
-                    }
-                  }
-                />
-              </View>
               <View
                 onLayout={[Function]}
               >
@@ -809,6 +788,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
             "credentialId": undefined,
             "encoding": undefined,
             "format": undefined,
+            "hasError": undefined,
             "label": undefined,
             "mimeType": "text/plain",
             "name": "student_first_name",
@@ -823,6 +803,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
             "credentialId": undefined,
             "encoding": undefined,
             "format": undefined,
+            "hasError": undefined,
             "label": undefined,
             "mimeType": "text/plain",
             "name": "student_last_name",
@@ -837,6 +818,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
             "credentialId": undefined,
             "encoding": undefined,
             "format": undefined,
+            "hasError": undefined,
             "label": undefined,
             "mimeType": "text/plain",
             "name": "expiry_date",
