@@ -421,7 +421,6 @@ const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
   const CredentialCard: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
     return (
       <View
-        style={styles.cardContainer}
         accessible={true}
         accessibilityLabel={
           `${overlay.metaOverlay?.issuer ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}` : ''}, ${
@@ -429,11 +428,10 @@ const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
           } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           cardData.map((item) => {
             const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
-            if (label && value) {
-              return ` ${label}, ${value}`
-            }
+            if (label && value) return ` ${label}, ${value}`
           })
         }
+        style={styles.cardContainer}
       >
         <CredentialCardSecondaryBody />
         <CredentialCardPrimaryBody />
@@ -443,19 +441,19 @@ const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
   }
   return overlay.bundle ? (
     <View
+      onLayout={(event) => {
+        setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
+      }}
       style={[
         styles.container,
         style,
         { elevation: elevated ? 5 : 0, overflow: 'hidden' },
         hasAltCredentials ? styles.selectedCred : undefined,
       ]}
-      onLayout={(event) => {
-        setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
-      }}
     >
       <TouchableOpacity
-        accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
+        accessible={false}
         disabled={typeof onPress === 'undefined'}
         onPress={onPress}
         style={[styles.container, style, { backgroundColor: style.backgroundColor }]}
