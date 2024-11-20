@@ -245,23 +245,25 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                     />
                                     <View
                                       style={
-                                        Object {
-                                          "backgroundColor": "#D3D3D3",
-                                          "borderRadius": 10,
-                                          "height": 90,
-                                          "marginLeft": -52.5,
-                                          "marginTop": 37.5,
-                                          "width": 90,
-                                        }
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "#D3D3D3",
+                                            "borderRadius": 10,
+                                            "height": 90,
+                                            "width": 90,
+                                          },
+                                          Object {
+                                            "marginLeft": -52.5,
+                                            "marginTop": 37.5,
+                                          },
+                                        ]
                                       }
                                     />
                                     <View
                                       style={
                                         Object {
                                           "flexGrow": 1,
-                                          "marginBottom": 15,
-                                          "marginLeft": 15,
-                                          "marginTop": 15,
+                                          "margin": 15,
                                         }
                                       }
                                     >
@@ -372,23 +374,25 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                                     />
                                     <View
                                       style={
-                                        Object {
-                                          "backgroundColor": "#D3D3D3",
-                                          "borderRadius": 10,
-                                          "height": 90,
-                                          "marginLeft": -52.5,
-                                          "marginTop": 37.5,
-                                          "width": 90,
-                                        }
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "#D3D3D3",
+                                            "borderRadius": 10,
+                                            "height": 90,
+                                            "width": 90,
+                                          },
+                                          Object {
+                                            "marginLeft": -52.5,
+                                            "marginTop": 37.5,
+                                          },
+                                        ]
                                       }
                                     />
                                     <View
                                       style={
                                         Object {
                                           "flexGrow": 1,
-                                          "marginBottom": 15,
-                                          "marginLeft": 15,
-                                          "marginTop": 15,
+                                          "margin": 15,
                                         }
                                       }
                                     >
