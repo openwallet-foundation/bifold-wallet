@@ -13,7 +13,7 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { TourID } from '../types/tour'
-import Wrapper from '../layout/wrapper'
+import ScreenLayout from '../layout/wrapper'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -127,7 +127,7 @@ const Home: React.FC<HomeProps> = () => {
   }, [dispatch])
 
   return (
-    <Wrapper>
+    <ScreenLayout>
       <FlatList
         style={styles.flatlist}
         showsVerticalScrollIndicator={false}
@@ -162,7 +162,7 @@ const Home: React.FC<HomeProps> = () => {
           onDismissPressed={onDismissPressed}
         />
       )}
-    </Wrapper>
+    </ScreenLayout>
   )
 }
 

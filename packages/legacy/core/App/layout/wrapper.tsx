@@ -16,7 +16,13 @@ const defaultStyles = StyleSheet.create({
   },
 })
 
-const Wrapper: React.FC<PropsWithChildren<WrapperProps>> = ({ children, safeArea, customEdges, style, header }) => {
+const ScreenLayout: React.FC<PropsWithChildren<WrapperProps>> = ({
+  children,
+  safeArea,
+  customEdges,
+  style,
+  header,
+}) => {
   const Container: React.FC<PropsWithChildren> = ({ children }) => {
     return safeArea || customEdges ? (
       <SafeAreaView style={[defaultStyles.container, style]} edges={customEdges || ['top', 'left', 'right', 'bottom']}>
@@ -34,4 +40,4 @@ const Wrapper: React.FC<PropsWithChildren<WrapperProps>> = ({ children, safeArea
     </Container>
   )
 }
-export default Wrapper
+export default ScreenLayout

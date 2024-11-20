@@ -9,6 +9,14 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
       "bottom",
     ]
   }
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
 >
   <RCTScrollView
     style={
@@ -449,6 +457,14 @@ exports[`Terms Screen Renders correctly 1`] = `
       "left",
       "right",
       "bottom",
+    ]
+  }
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
     ]
   }
 >

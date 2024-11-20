@@ -20,7 +20,7 @@ import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
-import Wrapper from '../layout/wrapper'
+import ScreenLayout from '../layout/wrapper'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -92,7 +92,7 @@ const ListCredentials: React.FC = () => {
   }
 
   return (
-    <Wrapper>
+    <ScreenLayout>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
@@ -114,7 +114,7 @@ const ListCredentials: React.FC = () => {
         ListFooterComponent={() => <CredentialListFooter credentialsCount={credentials.length} />}
       />
       <CredentialListOptions />
-    </Wrapper>
+    </ScreenLayout>
   )
 }
 

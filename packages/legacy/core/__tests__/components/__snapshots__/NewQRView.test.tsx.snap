@@ -10,10 +10,15 @@ Array [
       ]
     }
     style={
-      Object {
-        "backgroundColor": "#313132",
-        "flex": 1,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "backgroundColor": "#313132",
+          "flex": 1,
+        },
+      ]
     }
   >
     <Modal
@@ -544,10 +549,15 @@ Array [
       ]
     }
     style={
-      Object {
-        "backgroundColor": "#313132",
-        "flex": 1,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "backgroundColor": "#313132",
+          "flex": 1,
+        },
+      ]
     }
   >
     <RCTScrollView>
@@ -597,7 +607,7 @@ Array [
                     "position": "absolute",
                     "transform": Array [
                       Object {
-                        "rotate": "360deg",
+                        "rotate": "0deg",
                       },
                     ],
                   }

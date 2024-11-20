@@ -14,7 +14,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import Wrapper from '../layout/wrapper'
+import ScreenLayout from '../layout/wrapper'
 
 export const TermsVersion = true
 
@@ -72,7 +72,7 @@ const Terms: React.FC = () => {
   }
 
   return (
-    <Wrapper
+    <ScreenLayout
       customEdges={ScreenOptionsDictionary[Screens.Terms]?.screenEdges || ['left', 'right', 'bottom']}
       header={ScreenOptionsDictionary[Screens.Terms]?.customHeader}
     >
@@ -130,7 +130,7 @@ const Terms: React.FC = () => {
           )}
         </View>
       </ScrollView>
-    </Wrapper>
+    </ScreenLayout>
   )
 }
 
