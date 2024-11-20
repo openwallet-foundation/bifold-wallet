@@ -200,7 +200,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     fields: {
       [key: string]: Attribute[] & Predicate[]
     }
-  ) => {
+  ): boolean => {
     const revList = credExRecords.map((cred) => {
       return {
         id: cred.credentials.map((item) => item.credentialRecordId),
@@ -238,6 +238,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           setLoading(false)
           setDescriptorMetadata(descriptorMetadata)
 
+          // Credentials that satisfy the proof request
           let credList: string[] = []
           if (selectedCredentials.length > 0) {
             credList = selectedCredentials
@@ -282,6 +283,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 >,
               }
             : undefined
+
           setRetrievedCredentials(selectRetrievedCredentials)
 
           const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
@@ -294,7 +296,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
             }, {})
           }
-
+          // Check for revoked credentials
           const records = fullCredentials.filter((record: any) =>
             record.credentials.some((cred: any) => credList.includes(cred.credentialRecordId))
           )
@@ -692,32 +694,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           />
           {!hasAvailableCredentials && (
             <CredentialList
-              header={
-                <View style={styles.pageMargin}>
-                  {!(loading || attestationLoading) && (
-                    <>
-                      {hasMatchingCredDef && (
-                        <View
-                          style={{
-                            width: 'auto',
-                            borderWidth: 1,
-                            borderColor: ColorPallet.grayscale.lightGrey,
-                            marginTop: 20,
-                          }}
-                        />
-                      )}
-                      <Text
-                        style={{
-                          ...TextTheme.title,
-                          marginTop: 10,
-                        }}
-                      >
-                        {t('ProofRequest.MissingCredentials')}
-                      </Text>
-                    </>
-                  )}
-                </View>
-              }
               footer={proofPageFooter()}
               items={activeCreds.filter((cred) => cred.credExchangeRecord === undefined) ?? []}
             />

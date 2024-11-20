@@ -644,6 +644,7 @@ const translation = {
     "CredentialMetadataNotFound": "Could not find credential metadata",
     "NewProofRequest": "New Proof Request",
     "NotAvailableInYourWallet": "Not in your wallet",
+    "MissingAttribute": "{{ name }} is missing",
     "PredicateNotSatisfied": "Requirement not met",
     "IsRequesting": "is requesting",
     "IsRequestingSomethingYouDontHaveAvailable": "is requesting something you don't have available",

@@ -16,6 +16,7 @@ export interface FieldParams {
 export interface AttributeParams extends FieldParams {
   value: string | number | null
   revealed?: boolean
+  hasError?: boolean
 }
 
 export interface PredicateParams extends FieldParams {
@@ -54,11 +55,13 @@ export class Field {
 export class Attribute extends Field {
   public value: string | number | null
   public revealed?: boolean
+  public hasError?: boolean
 
   public constructor(params: AttributeParams) {
     super(params)
     this.value = params.value
     this.revealed = params.revealed
+    this.hasError = params.hasError
   }
 }
 

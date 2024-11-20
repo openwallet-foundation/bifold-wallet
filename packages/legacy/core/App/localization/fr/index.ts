@@ -636,6 +636,7 @@ const translation = {
         "CredentialMetadataNotFound": "Impossible de trouver les métadonnées des attestations",
         "NewProofRequest": "Nouvelle demande de preuve",
         "NotAvailableInYourWallet": "Non disponible dans votre portefeuille",
+        "MissingAttribute": "{{ name }} is missing (FR)",
         "PredicateNotSatisfied": "Requête non satisfaite",
         "IsRequesting": "demande",
         "IsRequestingSomethingYouDontHaveAvailable": "demande quelque chose que vous n'avez pas à votre disposition",
