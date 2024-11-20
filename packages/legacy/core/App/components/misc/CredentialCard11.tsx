@@ -30,6 +30,7 @@ import { testIdWithKey } from '../../utils/testable'
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
 import { CredentialCard11And12Theme } from '../../theme'
+import { useParseAttribute } from '../../hooks/parse-attribute'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -228,23 +229,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
   }
 
-  const parseAttribute = useCallback(
-    (item: (Attribute & Predicate) | undefined) => {
-      let parsedItem = item
-      if (item && item.pValue != null) {
-        parsedItem = pTypeToText(item, t, overlay.bundle?.captureBase.attributes) as Attribute & Predicate
-      }
-      const parsedValue = formatIfDate(
-        attributeFormats?.[item?.name ?? ''],
-        parsedItem?.value ?? parsedItem?.pValue ?? null
-      )
-      return {
-        label: item?.label ?? item?.name ?? '',
-        value: item?.value !== undefined && item?.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
-      }
-    },
-    [t, overlay, attributeFormats]
-  )
+  const parseAttribute = useParseAttribute(credential, schemaId, credDefId, proof, credName)
 
   useEffect(() => {
     setAllPI(
