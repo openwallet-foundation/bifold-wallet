@@ -1,7 +1,6 @@
 import { useTheme } from '../../contexts/theme'
-import { View, useWindowDimensions } from 'react-native'
+import { View, StyleSheet, useWindowDimensions } from 'react-native'
 import { testIdWithKey } from '../../utils/testable'
-import { StyleSheet } from 'react-native'
 import { CredentialCard11And12Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
