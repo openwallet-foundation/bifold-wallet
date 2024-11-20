@@ -129,7 +129,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     const secondaryField = overlay?.presentationFields?.find(
       (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
     )
-
     return [...(displayItems ?? []), primaryField, secondaryField]
   }, [displayItems, overlay])
 
@@ -206,9 +205,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     selectedCred: {
       ...CredentialCard11And12Theme.selectedCred,
     },
-    seperator: {
-      ...CredentialCard11And12Theme.seperator,
-    },
     credActionText: {
       ...CredentialCard11And12Theme.credActionText,
     },
@@ -216,6 +212,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const backgroundColorIfErrorState = (backgroundColor?: string) =>
     error || predicateError || isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
+
+  const backgroundColorIfRevoked = (backgroundColor?: string) =>
+    isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
     if (proof) {
@@ -359,7 +358,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
-
     return (
       <Text
         style={[
@@ -377,11 +375,29 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
+  const AttributeErrorLabel: React.FC<{ errorMessage: string }> = ({ errorMessage }) => {
+    return (
+      <Text
+        style={[
+          TextTheme.labelSubtitle,
+          styles.textContainer,
+          {
+            lineHeight: 19,
+            opacity: 0.8,
+            color: ListItems.proofError.color,
+          },
+        ]}
+      >
+        {errorMessage}
+      </Text>
+    )
+  }
+
   const AttributeValue: React.FC<{ value: string | number | null; warn?: boolean }> = ({ value, warn }) => {
     return (
       <>
         {isDataUrl(value) ? (
-          <Image style={styles.imageAttr} source={{ uri: value as string }}></Image>
+          <Image style={styles.imageAttr} source={{ uri: value as string }} />
         ) : (
           <Text
             style={[
@@ -408,18 +424,30 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       item && (
         <View style={{ marginTop: 15 }}>
           {!(item?.value || item?.satisfied) ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon
-                style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                name="close"
-                color={ListItems.proofError.color}
-                size={ListItems.recordAttributeText.fontSize}
-              />
-              <AttributeLabel label={label} />
+            <View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <AttributeLabel label={label} />
+              </View>
+              {item.hasError && (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon
+                    style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                    name="close"
+                    color={ListItems.proofError.color}
+                    size={ListItems.recordAttributeText.fontSize}
+                  />
+                  <AttributeErrorLabel
+                    errorMessage={t('ProofRequest.MissingAttribute', {
+                      name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
+                    })}
+                  />
+                </View>
+              )}
             </View>
           ) : (
             <AttributeLabel label={label} />
           )}
+          {/* Rendering attribute values */}
           {!(item?.value || item?.pValue) ? null : (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
@@ -430,12 +458,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   size={ListItems.recordAttributeText.fontSize}
                 />
               )}
-              {!error ? (
-                <AttributeValue
-                  warn={flaggedAttributes?.includes(label) && !item.pValue && proof}
-                  value={parsedValue}
-                />
-              ) : null}
+              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
             </View>
           )}
           {!error && item?.satisfied != undefined && item?.satisfied === false ? (
@@ -489,12 +512,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </Text>
           </View>
         </View>
-        {(error || isProofRevoked) && (
+        {isProofRevoked && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon style={styles.errorIcon} name="close" size={30} />
 
             <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-              {error ? t('ProofRequest.NotAvailableInYourWallet') : t('CredentialDetails.Revoked')}
+              {t('CredentialDetails.Revoked')}
             </Text>
           </View>
         )}
@@ -532,7 +555,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor: backgroundColorIfErrorState(styles.secondaryBodyContainer.backgroundColor),
+            backgroundColor: backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor),
             overflow: 'hidden',
           },
         ]}
