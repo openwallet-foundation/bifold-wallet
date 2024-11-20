@@ -31,6 +31,7 @@ import AttributeValue from './AttributeValue'
 import CredentialRevokedOrNotAvailable from './CredentialRevokedOrNotAvailable'
 import { CredentialCardBrandingProps } from './CredentialCard11'
 import CredentialCardLogoBranding from './CredentialCardLogoBranding'
+import CredentialCardStatus from './CredentialCardStatus'
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -417,42 +418,6 @@ const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
     )
   }
 
-  const CredentialCardStatus: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-    const Status: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-      return (
-        <>
-          {status ? (
-            <View
-              style={[
-                styles.statusContainer,
-                {
-                  backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
-                },
-              ]}
-            >
-              <Icon
-                size={0.7 * logoWidth}
-                style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
-                name={status === 'error' ? 'error' : 'warning'}
-              />
-            </View>
-          ) : (
-            <View style={styles.statusContainer} />
-          )}
-        </>
-      )
-    }
-
-    return (
-      <View
-        testID={testIdWithKey('CredentialCardStatus')}
-        style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
-      >
-        <Status status={status} />
-      </View>
-    )
-  }
-
   const CredentialCard: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
     return (
       <View
@@ -491,7 +456,7 @@ const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
       <TouchableOpacity
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
-        disabled={typeof onPress === 'undefined' ? true : false}
+        disabled={typeof onPress === 'undefined'}
         onPress={onPress}
         style={[styles.container, style, { backgroundColor: style.backgroundColor }]}
         testID={testIdWithKey('ShowCredentialDetails')}

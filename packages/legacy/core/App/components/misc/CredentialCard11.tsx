@@ -32,6 +32,7 @@ import CredentialActionFooter from './CredentialCard11ActionFooter'
 import { CredentialCard11And12Theme } from '../../theme'
 import { useParseAttribute } from '../../hooks/parse-attribute'
 import CredentialCardLogoBranding from './CredentialCardLogoBranding'
+import CredentialCardStatus from './CredentialCardStatus'
 
 export interface CredentialCardBrandingProps {
   credential?: CredentialExchangeRecord
@@ -532,42 +533,6 @@ const CredentialCard11: React.FC<CredentialCardBrandingProps> = ({
             />
           )
         )}
-      </View>
-    )
-  }
-
-  const CredentialCardStatus: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-    const Status: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-      return (
-        <>
-          {status ? (
-            <View
-              style={[
-                styles.statusContainer,
-                {
-                  backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
-                },
-              ]}
-            >
-              <Icon
-                size={0.7 * logoHeight}
-                style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
-                name={status === 'error' ? 'error' : 'warning'}
-              />
-            </View>
-          ) : (
-            <View style={styles.statusContainer} />
-          )}
-        </>
-      )
-    }
-
-    return (
-      <View
-        testID={testIdWithKey('CredentialCardStatus')}
-        style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
-      >
-        <Status status={status} />
       </View>
     )
   }
