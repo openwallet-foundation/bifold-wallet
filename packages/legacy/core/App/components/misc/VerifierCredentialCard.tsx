@@ -209,14 +209,14 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     }, [item.format])
 
     return (
-      <View>
+      <View style={{ gap: 4 }}>
         <Text
           style={[
             TextTheme.labelSubtitle,
             styles.textContainer,
             {
-              lineHeight: 19,
-              opacity: 0.8,
+              lineHeight: 18,
+              opacity: 0.7,
             },
           ]}
           testID={testIdWithKey('AttributeName')}
@@ -234,7 +234,16 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
                 <Image style={styles.imageAttr} source={{ uri: value as string }} />
               </TouchableOpacity>
             ) : (
-              <Text style={[TextTheme.bold, styles.textContainer]} testID={testIdWithKey('AttributeValue')}>
+              <Text
+                style={[
+                  TextTheme.bold,
+                  styles.textContainer,
+                  {
+                    ...(!isBrandingOverlay10 && { fontSize: 16 }),
+                  },
+                ]}
+                testID={testIdWithKey('AttributeValue')}
+              >
                 {value}
               </Text>
             )}
@@ -335,7 +344,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View>
-          {overlay.metaOverlay?.issuer !== 'Unknown Contact' && (
+          {overlay.metaOverlay?.issuer !== 'Unknown Contact' && isBrandingOverlay10 && (
             <View style={{ flexDirection: 'row' }}>
               <Text
                 testID={testIdWithKey('CredentialIssuer')}
@@ -361,8 +370,13 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
                 TextTheme.bold,
                 styles.textContainer,
                 {
-                  lineHeight: 24,
+                  ...(!isBrandingOverlay10 && {
+                    fontSize: 14,
+                    fontWeight: '600',
+                    maxWidth: '85%',
+                  }),
                   flex: 1,
+                  lineHeight: isBrandingOverlay10 ? 24 : 16,
                   flexWrap: 'wrap',
                   color: styles.textContainer.color,
                 },

@@ -403,12 +403,12 @@ const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
             <View
               style={[
                 {
+                  backgroundColor: 'rgba(0,0,0,0.24)',
+                  borderTopLeftRadius: borderRadius,
+                  borderBottomLeftRadius: borderRadius,
                   position: 'absolute',
                   width: logoWidth,
                   height: '100%',
-                  borderTopLeftRadius: borderRadius,
-                  borderBottomLeftRadius: borderRadius,
-                  backgroundColor: 'rgba(0,0,0,0.24)',
                 },
               ]}
             />
