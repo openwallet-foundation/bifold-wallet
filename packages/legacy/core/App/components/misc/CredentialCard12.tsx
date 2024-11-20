@@ -1,21 +1,10 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  FlatList,
-  Image,
-  ImageBackground,
-  Linking,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-  useWindowDimensions,
-} from 'react-native'
+import { FlatList, ImageBackground, Linking, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -40,23 +29,8 @@ import { useCredentialCardParams } from '../../hooks/credential-card-params'
 import { useBranding } from '../../hooks/bundle-resolver'
 import AttributeValue from './AttributeValue'
 import CredentialRevokedOrNotAvailable from './CredentialRevokedOrNotAvailable'
-
-interface CredentialCard12Props {
-  credential?: CredentialExchangeRecord
-  onPress?: GenericFn
-  style?: ViewStyle
-  displayItems?: (Attribute | Predicate)[]
-  revoked?: boolean
-  error?: boolean
-  predicateError?: boolean
-  elevated?: boolean
-  credName?: string
-  credDefId?: string
-  schemaId?: string
-  proof?: boolean
-  hasAltCredentials?: boolean
-  handleAltCredChange?: () => void
-}
+import { CredentialCardBrandingProps } from './CredentialCard11'
+import CredentialCardLogoBranding from './CredentialCardLogoBranding'
 
 /*
   A card is defined as a nx8 (height/rows x width/columns) grid.
@@ -88,7 +62,7 @@ interface CredentialCard12Props {
   Note: The small logo MUST be provided as 1x1 (height/width) ratio.
  */
 
-const CredentialCard12: React.FC<CredentialCard12Props> = ({
+const CredentialCard12: React.FC<CredentialCardBrandingProps> = ({
   credential,
   style = {},
   displayItems,
@@ -214,37 +188,6 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
       }
     }
   }, [proof, overlay, schemaId, credDefId, params.language, credHelpActionOverrides, navigation])
-
-  const CredentialCardLogo: React.FC = () => {
-    return (
-      <View style={[styles.logoContainer]}>
-        {overlay.brandingOverlay?.logo ? (
-          <Image
-            source={toImageSource(overlay.brandingOverlay?.logo)}
-            style={{
-              resizeMode: 'cover',
-              width: logoWidth,
-              height: logoWidth,
-              borderRadius: 8,
-            }}
-          />
-        ) : (
-          <Text
-            style={[
-              TextTheme.bold,
-              {
-                fontSize: 0.5 * logoWidth,
-                alignSelf: 'center',
-                color: overlay.brandingOverlay?.secondaryBackgroundColor ?? '#000',
-              },
-            ]}
-          >
-            {(overlay.metaOverlay?.issuer ?? 'I')?.charAt(0).toUpperCase()}
-          </Text>
-        )}
-      </View>
-    )
-  }
 
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
@@ -396,7 +339,14 @@ const CredentialCard12: React.FC<CredentialCard12Props> = ({
                 gap: 4,
               }}
             >
-              <CredentialCardLogo />
+              <CredentialCardLogoBranding
+                credential={credential}
+                credName={credName}
+                credDefId={credDefId}
+                schemaId={schemaId}
+                proof={proof}
+                logoContainerStyles={styles.logoContainer}
+              />
               <Text
                 testID={testIdWithKey('CredentialIssuer')}
                 style={[

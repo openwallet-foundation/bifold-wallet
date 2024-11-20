@@ -3,7 +3,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FlatList,
@@ -23,7 +23,7 @@ import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
-import { formatIfDate, useCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
+import { formatIfDate, useCredentialConnectionLabel, isDataUrl } from '../../utils/helpers'
 import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -31,8 +31,9 @@ import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
 import { CredentialCard11And12Theme } from '../../theme'
 import { useParseAttribute } from '../../hooks/parse-attribute'
+import CredentialCardLogoBranding from './CredentialCardLogoBranding'
 
-interface CredentialCard11Props {
+export interface CredentialCardBrandingProps {
   credential?: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
@@ -78,7 +79,7 @@ interface CredentialCard11Props {
   Note: The small logo MUST be provided as 1x1 (height/width) ratio.
  */
 
-const CredentialCard11: React.FC<CredentialCard11Props> = ({
+const CredentialCard11: React.FC<CredentialCardBrandingProps> = ({
   credential,
   style = {},
   displayItems,
@@ -113,15 +114,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   ])
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
-  const attributeFormats: Record<string, string | undefined> = useMemo(() => {
-    return (overlay.bundle as any)?.bundle.attributes
-      .map((attr: any) => {
-        return { name: attr.name, format: attr.format }
-      })
-      .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
-        return { ...prev, [curr.name]: curr.format }
-      }, {})
-  }, [overlay])
 
   const cardData = useMemo(() => {
     const primaryField = overlay?.presentationFields?.find(
@@ -184,6 +176,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         height: 1,
       },
       shadowOpacity: 0.3,
+      ...(elevated
+        ? {
+            elevation: 5,
+          }
+        : { elevation: 0 }),
     },
     headerText: {
       ...CredentialCard11And12Theme.headerText,
@@ -305,41 +302,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     setIsRevoked(credential?.revocationNotification !== undefined && !proof)
     setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
   }, [credential?.revocationNotification, proof])
-
-  const CredentialCardLogo: React.FC = () => {
-    return (
-      <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
-        {overlay.brandingOverlay?.logo ? (
-          <Image
-            source={toImageSource(overlay.brandingOverlay?.logo)}
-            style={{
-              resizeMode: 'cover',
-              width: logoHeight,
-              height: logoHeight,
-              borderRadius: 8,
-            }}
-          />
-        ) : (
-          <Text
-            style={[
-              TextTheme.bold,
-              {
-                fontSize: 0.5 * logoHeight,
-                alignSelf: 'center',
-                color: '#000',
-              },
-            ]}
-          >
-            {!predicateError && !error ? (
-              (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
-            ) : (
-              <Icon name={'error'} size={30} style={styles.errorIcon} />
-            )}
-          </Text>
-        )}
-      </View>
-    )
-  }
 
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
@@ -628,7 +590,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         }
       >
         <CredentialCardSecondaryBody />
-        <CredentialCardLogo />
+        <CredentialCardLogoBranding
+          credential={credential}
+          credName={credName}
+          credDefId={credDefId}
+          schemaId={schemaId}
+          proof={proof}
+          logoContainerStyles={styles.logoContainer}
+        />
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>

@@ -165,15 +165,18 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   }, [schemaId, credDefId, displayItems, i18n.language, bundleResolver])
 
   const CredentialCardLogo: React.FC = () => {
+    const textContent = isBrandingOverlay10
+      ? (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
+      : (overlay.metaOverlay?.issuer ?? 'I')?.charAt(0).toUpperCase()
     return (
       <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
         {overlay.brandingOverlay?.logo ? (
           <Image
             source={toImageSource(overlay.brandingOverlay?.logo)}
             style={{
-              resizeMode: 'cover',
               width: logoHeight,
               height: logoHeight,
+              resizeMode: 'cover',
               borderRadius: 8,
             }}
           />
@@ -182,13 +185,13 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
             style={[
               TextTheme.bold,
               {
-                fontSize: 0.5 * logoHeight,
-                alignSelf: 'center',
                 color: '#000',
+                alignSelf: 'center',
+                fontSize: 0.5 * logoHeight,
               },
             ]}
           >
-            {(overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()}
+            {textContent}
           </Text>
         )}
       </View>
