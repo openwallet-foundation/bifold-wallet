@@ -1,4 +1,4 @@
-import { Agent, HttpOutboundTransport, WsOutboundTransport, WalletError } from '@credo-ts/core'
+import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
 import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
@@ -11,12 +11,11 @@ import { TOKENS, useServices } from '../container-api'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { BifoldError } from '../types/error'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
 
 const useInitializeAgent = () => {
-  const { agent, setAgent } = useAgent()
+  const { setAgent } = useAgent()
   const [store, dispatch] = useStore()
   const { walletSecret } = useAuth()
   const [cacheSchemas, cacheCredDefs, logger, indyLedgers] = useServices([
@@ -25,42 +24,6 @@ const useInitializeAgent = () => {
     TOKENS.UTIL_LOGGER,
     TOKENS.UTIL_LEDGERS,
   ])
-
-  const restartExistingAgent = useCallback(async () => {
-    if (!walletSecret?.id || !walletSecret.key || !agent) {
-      return
-    }
-
-    logger.info('Agent already initialized, restarting...')
-
-    try {
-      await agent.wallet.open({
-        id: walletSecret.id,
-        key: walletSecret.key,
-      })
-
-      logger.info('Opened agent wallet')
-    } catch (error: unknown) {
-      // Credo does not use error codes but this will be in the
-      // the error message if the wallet is already open.
-      const catchPhrase = 'instance already opened'
-
-      if (error instanceof WalletError && error.message.includes(catchPhrase)) {
-        logger.warn('Wallet already open, nothing to do')
-      } else {
-        logger.error('Error opening existing wallet:', error as Error)
-
-        throw new BifoldError(
-          'Wallet Service',
-          'There was a problem unlocking the wallet.',
-          (error as Error).message,
-          1047
-        )
-      }
-    }
-
-    await agent.mediationRecipient.initiateMessagePickup()
-  }, [agent, walletSecret, logger])
 
   const createNewAgent = useCallback(async (): Promise<Agent | undefined> => {
     if (!walletSecret?.id || !walletSecret.key) {
@@ -138,11 +101,6 @@ const useInitializeAgent = () => {
       return
     }
 
-    if (agent) {
-      await restartExistingAgent()
-      return agent
-    }
-
     const newAgent = await createNewAgent()
     if (!newAgent) {
       return
@@ -160,10 +118,8 @@ const useInitializeAgent = () => {
 
     return newAgent
   }, [
-    agent,
     setAgent,
     walletSecret,
-    restartExistingAgent,
     createNewAgent,
     migrateIfRequired,
     warmUpCache,

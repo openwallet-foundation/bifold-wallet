@@ -171,14 +171,13 @@ export class MainContainer implements Container {
         loadState<StoreOnboardingState>(LocalStorageKeys.Onboarding, (val) => (onboarding = val)),
       ])
 
-      const state: State = {
-        ...defaultState,
+      const state = {
         loginAttempt: { ...defaultState.loginAttempt, ...loginAttempt },
         preferences: { ...defaultState.preferences, ...preferences },
         migration: { ...defaultState.migration, ...migration },
         tours: { ...defaultState.tours, ...tours },
         onboarding: { ...defaultState.onboarding, ...onboarding },
-      }
+      } as State
 
       dispatch({ type: DispatchAction.STATE_DISPATCH, payload: [state] })
     })

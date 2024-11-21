@@ -67,7 +67,6 @@ export const defaultState: State = {
     seenCredentialOfferTour: false,
     seenProofRequestTour: false,
   },
-  loading: false,
   stateLoaded: false,
 }
 

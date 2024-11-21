@@ -1019,7 +1019,7 @@ export const connectFromScanOrDeepLink = async (
   }
 
   // TODO:(jl) Do we care if the connection is a deep link?
-  logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
+  logger.info(`Attempting to connect from ${isDeepLink ? 'deeplink' : 'qr scan'}`)
   try {
     const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
     if (isOpenIDInvitation) {

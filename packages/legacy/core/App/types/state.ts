@@ -68,7 +68,6 @@ export interface State {
   tours: Tours
   deepLink?: string
   migration: Migration
-  loading: boolean
 }
 
 export type PersistentState = {
