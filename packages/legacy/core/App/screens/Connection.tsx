@@ -25,6 +25,7 @@ import { testIdWithKey } from '../utils/testable'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
+import { OpenId4VPRequestRecord } from 'modules/openid/types'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -48,7 +49,7 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { oobRecordId, openIDUri, proofId, credentialId } = route.params
+  const { oobRecordId, openIDUri, openIDPresentationUri, proofId, credentialId } = route.params
   const [
     logger,
     { useNotifications },
@@ -56,7 +57,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     attestationMonitor,
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const notifications = useNotifications({ openIDUri: openIDUri })
+  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
   const { t } = useTranslation()
@@ -246,6 +247,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       })
       return
     }
+
+    if ((state.notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
+      dispatch({ inProgress: false })
+      navigation.replace(Screens.OpenIDProofPresentation, { credential: state.notificationRecord })
+    }
   }, [logger, navigation, state])
 
   useEffect(() => {
@@ -272,12 +278,11 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         break
       }
 
-      if ((notification as W3cCredentialRecord).type === 'W3cCredentialRecord') {
-        dispatch({ notificationRecord: notification })
-        break
-      }
-
-      if ((notification as SdJwtVcRecord).type === 'SdJwtVcRecord') {
+      if (
+        (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+        (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+        (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
+      ) {
         dispatch({ notificationRecord: notification })
         break
       }
