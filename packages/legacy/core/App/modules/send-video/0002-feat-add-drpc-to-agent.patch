@@ -1,0 +1,46 @@
+From de67cce90a65c5d554ade816917914c79d0dea28 Mon Sep 17 00:00:00 2001
+From: "Jason C. Leach" <jason.leach@fullboar.ca>
+Date: Thu, 21 Nov 2024 10:56:25 -0800
+Subject: [PATCH] feat: add drpc to agent
+
+Signed-off-by: Jason C. Leach <jason.leach@fullboar.ca>
+---
+ packages/legacy/core/App/utils/agent.ts | 2 ++
+ packages/legacy/core/package.json       | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/packages/legacy/core/App/utils/agent.ts b/packages/legacy/core/App/utils/agent.ts
+index b81dc97a..37dac62f 100644
+--- a/packages/legacy/core/App/utils/agent.ts
++++ b/packages/legacy/core/App/utils/agent.ts
+@@ -29,6 +29,7 @@ import { useAgent } from '@credo-ts/react-hooks'
+ import { anoncreds } from '@hyperledger/anoncreds-react-native'
+ import { ariesAskar } from '@hyperledger/aries-askar-react-native'
+ import { indyVdr } from '@hyperledger/indy-vdr-react-native'
++import { DrpcModule } from '@credo-ts/drpc'
+ 
+ interface GetAgentModulesOptions {
+   indyNetworks: IndyVdrPoolConfig[]
+@@ -105,6 +106,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache
+     pushNotificationsFcm: new PushNotificationsFcmModule(),
+     pushNotificationsApns: new PushNotificationsApnsModule(),
+     openId4VcHolder: new OpenId4VcHolderModule(),
++    drpc: new DrpcModule(),
+   }
+ }
+ 
+diff --git a/packages/legacy/core/package.json b/packages/legacy/core/package.json
+index 1827b5db..9028f53a 100644
+--- a/packages/legacy/core/package.json
++++ b/packages/legacy/core/package.json
+@@ -42,6 +42,7 @@
+     "@credo-ts/anoncreds": "0.5.11",
+     "@credo-ts/askar": "0.5.11",
+     "@credo-ts/core": "0.5.11",
++    "@credo-ts/drpc": "0.5.11",
+     "@credo-ts/indy-sdk-to-askar-migration": "0.5.11",
+     "@credo-ts/indy-vdr": "0.5.11",
+     "@credo-ts/openid4vc": "0.5.11",
+-- 
+2.47.0
+
