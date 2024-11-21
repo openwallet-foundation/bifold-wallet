@@ -16,7 +16,7 @@ import Title from '../../../components/texts/Title'
 import { Screens, SendVideoStackParams } from '../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 
-const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.CaptureVideo>>  = ({ route }) => {
+const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.CaptureVideo>> = ({ route }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
   const camera = useRef<Camera | null>(null)
@@ -33,7 +33,7 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
   ])
 
   const session = route.params.session
-  const prompts = session.prompts.map(prompt => prompt.text)
+  const prompts = session.prompts.map((prompt) => prompt.text)
 
   const styles = StyleSheet.create({
     container: {
@@ -124,6 +124,7 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
   const createFileName = () => {
     const timestamp = new Date().getTime()
     const videoName = `${timestamp}.mp4`
+
     return videoName
   }
 
@@ -134,6 +135,7 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
       setTimeout(() => {
         setLoader(false) //@todo will remove when real api will work
       }, 3000)
+
       const formData = new FormData()
       formData.append('video_file', {
         uri: `file://${path}`,
@@ -146,9 +148,7 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      });
-
-      console.log('API Response:', response?.data);
+      })
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error sending video to API:', error)
@@ -158,7 +158,6 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
   const startRecording = async () => {
     if (device) {
       Alert.alert('Recording Started')
-      setIsRecording(true)
       setIsRecording(true)
       camera.current?.startRecording({
         onRecordingFinished: async (video) => {

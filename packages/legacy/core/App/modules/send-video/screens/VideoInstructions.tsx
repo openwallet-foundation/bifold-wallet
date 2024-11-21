@@ -15,19 +15,43 @@ import Text from '../../../components/texts/Text'
 import { SendVideoStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 import { Session } from '../types/api'
+import { SentVideoServices } from '../services/workflow'
+import { useAgent } from '@credo-ts/react-hooks'
 
 type VideoInstructionsProps = StackScreenProps<SendVideoStackParams, Screens.VideoInstructions>
+
+const sendVideoSvs = new SentVideoServices({
+  sendVideoAgentInvitation: Config.VIDEO_VERIFIER_AGENT_INVIGATION,
+  sendVideoAPIBaseUrl: Config.VIDEO_VERIFIER_HOST ?? '',
+})
 
 const VideoInstructions: React.FC<VideoInstructionsProps> = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<SendVideoStackParams>>()
   const [session, setSession] = useState<Session | null>(null)
+  const { agent } = useAgent()
+  const [working, setWorking] = useState<boolean>(false)
 
   useEffect(() => {
-    axios.post<Session>(`${Config.VIDEO_VERIFIER_HOST}/api/v1/session`).then((response) => {
-      setSession(response.data)
-    })
-  }, [])
+    // axios.post<Session>(`${Config.VIDEO_VERIFIER_HOST}/api/v1/session`).then((response) => {
+    //   setSession(response.data)
+    // })
+
+    const startSession = async () => {
+      if (!agent || working) {
+        return
+      }
+
+      setWorking(true)
+
+      await sendVideoSvs.start(agent)
+      const result = await sendVideoSvs.startSession()
+
+      setSession(result)
+    }
+
+    startSession()
+  }, [agent, working, session])
 
   const onPress = () => {
     if (session) {
