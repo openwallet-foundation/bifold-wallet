@@ -75,7 +75,7 @@ const ListCredentials: React.FC = () => {
   // stop the tour when the screen unmounts
   useEffect(() => {
     return stop
-  }, [])
+  }, [stop])
 
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
     return (

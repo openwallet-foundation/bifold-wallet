@@ -125,7 +125,7 @@ const Home: React.FC<HomeProps> = () => {
   // stop the tour when the screen unmounts
   useEffect(() => {
     return stop
-  }, [])
+  }, [stop])
 
   return (
     <>
