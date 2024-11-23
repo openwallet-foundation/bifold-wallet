@@ -14,6 +14,7 @@ import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { Container, ContainerProvider } from './container-api'
+import { ActivityProvider } from './contexts/activity'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
@@ -23,7 +24,6 @@ import { TourProvider } from './contexts/tour/tour-provider'
 import { initLanguages, initStoredLanguage, translationResources } from './localization'
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
-import InactivityWrapper from './components/misc/InactivityWrapper'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 
 const App = (system: Container): React.FC => {
@@ -49,7 +49,7 @@ const App = (system: Container): React.FC => {
                 <AnimatedComponentsProvider value={animatedComponents}>
                   <AuthProvider>
                     <NetworkProvider>
-                      <InactivityWrapper>
+                      <ActivityProvider>
                         <StatusBar
                           hidden={false}
                           barStyle="light-content"
@@ -69,7 +69,7 @@ const App = (system: Container): React.FC => {
                           <RootStack />
                         </TourProvider>
                         <Toast topOffset={15} config={toastConfig} />
-                      </InactivityWrapper>
+                      </ActivityProvider>
                     </NetworkProvider>
                   </AuthProvider>
                 </AnimatedComponentsProvider>

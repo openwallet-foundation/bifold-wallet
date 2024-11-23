@@ -252,9 +252,9 @@ const Splash: React.FC = () => {
 
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
-        const newAgent = await initializeAgent()
+        const agent = await initializeAgent()
 
-        if (!newAgent) {
+        if (!agent) {
           initializing.current = false
           return
         }

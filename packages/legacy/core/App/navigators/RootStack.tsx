@@ -1,16 +1,14 @@
 import { ProofState } from '@credo-ts/core'
 import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
-import { useNavigation } from '@react-navigation/native'
 import {
   CardStyleInterpolators,
   StackCardStyleInterpolator,
-  StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, DeviceEventEmitter } from 'react-native'
+import { DeviceEventEmitter } from 'react-native'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { EventTypes } from '../constants'
@@ -22,8 +20,7 @@ import { useDeepLinks } from '../hooks/deep-links'
 import HistoryStack from '../modules/history/navigation/HistoryStack'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
-import { AuthenticateStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
-import { connectFromScanOrDeepLink } from '../utils/helpers'
+import { Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
@@ -38,23 +35,16 @@ import { useDefaultStackOptions } from './defaultStackOptions'
 const RootStack: React.FC = () => {
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
-  const appState = useRef(AppState.currentState)
-  const [currentState, setCurrentState] = useState<string>(appState.current)
   const { t } = useTranslation()
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
   const [
     splash,
-    { enableImplicitInvitations, enableReuseConnections },
-    logger,
     OnboardingStack,
     CustomNavStack1,
     loadState,
   ] = useServices([
     TOKENS.SCREEN_SPLASH,
-    TOKENS.CONFIG,
-    TOKENS.UTIL_LOGGER,
     TOKENS.STACK_ONBOARDING,
     TOKENS.CUSTOM_NAV_STACK_1,
     TOKENS.LOAD_STATE,
@@ -85,120 +75,6 @@ const RootStack: React.FC = () => {
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [dispatch, loadState, t])
-
-  // handle deeplink events
-  useEffect(() => {
-    async function handleDeepLink(deepLink: string) {
-      logger.info(`Handling deeplink: ${deepLink}`)
-      // If it's just the general link with no params, set link inactive and do nothing
-      if (deepLink.search(/oob=|c_i=|d_m=|url=/) < 0) {
-        dispatch({
-          type: DispatchAction.ACTIVE_DEEP_LINK,
-          payload: [undefined],
-        })
-        return
-      }
-
-      try {
-        await connectFromScanOrDeepLink(
-          deepLink,
-          agent,
-          logger,
-          navigation,
-          true, // isDeepLink
-          enableImplicitInvitations,
-          enableReuseConnections
-        )
-      } catch (err: unknown) {
-        const error = new BifoldError(
-          t('Error.Title1039'),
-          t('Error.Message1039'),
-          (err as Error)?.message ?? err,
-          1039
-        )
-        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-      }
-
-      // set deeplink as inactive
-      dispatch({
-        type: DispatchAction.ACTIVE_DEEP_LINK,
-        payload: [undefined],
-      })
-    }
-
-    if (currentState === 'background') {
-      return
-    }
-
-    if (agent?.isInitialized && store.deepLink && store.authentication.didAuthenticate) {
-      handleDeepLink(store.deepLink)
-    }
-  }, [
-    dispatch,
-    agent,
-    logger,
-    navigation,
-    enableImplicitInvitations,
-    enableReuseConnections,
-    t,
-    currentState,
-    agent?.isInitialized,
-    store.deepLink,
-    store.authentication.didAuthenticate,
-  ])
-
-  useEffect(() => {
-    const sub = AppState.addEventListener('change', (nextAppState) => {
-      if (nextAppState === 'inactive') {
-        // on iOS this happens when any OS prompt is shown. We
-        // don't want do anything in this case.
-        return
-      }
-
-      if (appState.current === nextAppState) {
-        return // no change
-      }
-
-      appState.current = nextAppState
-      setCurrentState(appState.current)
-    })
-
-    return () => {
-      sub.remove()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!agent || !agent.isInitialized) {
-      return
-    }
-
-    if (currentState === 'background') {
-      agent.mediationRecipient
-        .stopMessagePickup()
-        .then(() => {
-          logger.info('Stopped agent message pickup')
-        })
-        .catch((err) => {
-          logger.error(`Error stopping agent message pickup, ${err}`)
-        })
-
-      return
-    }
-
-    if (currentState === 'active') {
-      agent.mediationRecipient
-        .initiateMessagePickup()
-        .then(() => {
-          logger.info('Resuming agent message pickup')
-        })
-        .catch((err) => {
-          logger.error(`Error resuming agent message pickup, ${err}`)
-        })
-
-      return
-    }
-  }, [agent, currentState, logger])
 
   const mainStack = () => {
     const Stack = createStackNavigator()

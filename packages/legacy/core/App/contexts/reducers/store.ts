@@ -649,19 +649,20 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     case AuthenticationDispatchAction.DID_AUTHENTICATE: {
-      const value: AuthenticationState = (action?.payload || []).pop()
-      const payload = value ?? { didAuthenticate: true }
-      const newState = {
-        ...state,
-        ...{ authentication: payload },
+      const didAuthenticate: boolean = (action?.payload || []).pop() ?? true
+      const authentication: AuthenticationState = {
+        didAuthenticate
       }
-      return newState
-    }
-    case DeepLinkDispatchAction.ACTIVE_DEEP_LINK: {
-      const value = (action?.payload || []).pop()
       return {
         ...state,
-        ...{ deepLink: value },
+        authentication
+      }
+    }
+    case DeepLinkDispatchAction.ACTIVE_DEEP_LINK: {
+      const value: string = (action?.payload || []).pop()
+      return {
+        ...state,
+        deepLink: value,
       }
     }
     default:

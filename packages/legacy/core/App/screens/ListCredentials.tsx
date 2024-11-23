@@ -37,7 +37,7 @@ const ListCredentials: React.FC = () => {
   ])
   const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
   const { ColorPallet } = useTheme()
-  const { start } = useTour()
+  const { start, stop } = useTour()
   const screenIsFocused = useIsFocused()
   const {
     openIdState: { w3cCredentialRecords },
@@ -71,6 +71,11 @@ const ListCredentials: React.FC = () => {
       })
     }
   }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
+
+  // stop the tour when the screen unmounts
+  useEffect(() => {
+    return stop
+  }, [stop])
 
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
     return (

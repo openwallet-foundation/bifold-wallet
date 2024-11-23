@@ -1,18 +1,26 @@
+import { useAgent } from '@credo-ts/react-hooks'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, useWindowDimensions, View, StyleSheet } from 'react-native'
+import { Text, useWindowDimensions, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { AttachTourStep } from '../components/tour/AttachTourStep'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useNetwork } from '../contexts/network'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { BifoldError } from '../types/error'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { TourID } from '../types/tour'
+import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialStack from './CredentialStack'
@@ -20,13 +28,20 @@ import HomeStack from './HomeStack'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const [{ useNotifications }] = useServices([TOKENS.NOTIFICATIONS])
+  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] = useServices([
+    TOKENS.NOTIFICATIONS,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+  ])
   const notifications = useNotifications({})
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertNetworkConnected } = useNetwork()
   const { ColorPallet, TabTheme, TextTheme } = useTheme()
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
+  const [store, dispatch] = useStore()
+  const { agent } = useAgent()
+  const navigation = useNavigation<StackNavigationProp<TabStackParams>>()
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
   const styles = StyleSheet.create({
     tabBarIcon: {
@@ -45,6 +60,53 @@ const TabStack: React.FC = () => {
 
     return 0
   }
+
+  const handleDeepLink = useCallback(
+    async (deepLink: string) => {
+      logger.info(`Handling deeplink: ${deepLink}`)
+
+      // If it's just the general link with no params, set link inactive and do nothing
+      if (deepLink.search(/oob=|c_i=|d_m=|url=/) < 0) {
+        dispatch({
+          type: DispatchAction.ACTIVE_DEEP_LINK,
+          payload: [undefined],
+        })
+        return
+      }
+
+      try {
+        await connectFromScanOrDeepLink(
+          deepLink,
+          agent,
+          logger,
+          navigation,
+          true, // isDeepLink
+          enableImplicitInvitations,
+          enableReuseConnections
+        )
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1039'),
+          t('Error.Message1039'),
+          (err as Error)?.message ?? err,
+          1039
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+      } finally {
+        dispatch({
+          type: DispatchAction.ACTIVE_DEEP_LINK,
+          payload: [undefined],
+        })
+      }
+    },
+    [agent, enableImplicitInvitations, enableReuseConnections, logger, navigation, t, dispatch]
+  )
+
+  useEffect(() => {
+    if (store.deepLink && agent && store.authentication.didAuthenticate) {
+      handleDeepLink(store.deepLink)
+    }
+  }, [store.deepLink, agent, store.authentication.didAuthenticate, handleDeepLink])
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>

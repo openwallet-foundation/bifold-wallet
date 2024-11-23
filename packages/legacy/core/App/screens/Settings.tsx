@@ -15,6 +15,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
+import { TOKENS, useServices } from '../container-api'
+import { AutoLockTime } from '../contexts/activity'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -23,8 +25,6 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
-import { TOKENS, useServices } from '../container-api'
-import { AutoLockTime } from '../components/misc/InactivityWrapper'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
