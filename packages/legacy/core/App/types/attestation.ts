@@ -11,7 +11,7 @@ export const AttestationEventTypes = {
 export interface AttestationMonitor {
   readonly attestationWorkflowInProgress: boolean
   shouldHandleProofRequestAutomatically: boolean
-  start(agent: Agent): Promise<void>
+  start(agent: Agent): void
   stop(): void
   requestAttestationCredential(): Promise<void>
 }

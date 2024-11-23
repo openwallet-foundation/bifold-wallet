@@ -32,6 +32,7 @@ import HomeFooterView from './components/views/HomeFooterView'
 import KeyboardView from './components/views/KeyboardView'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
+import { AutoLockTime, ActivityProvider, useActivity } from './contexts/activity'
 import { AuthProvider } from './contexts/auth'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
@@ -50,7 +51,6 @@ import Onboarding from './screens/Onboarding'
 import { useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
-import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
@@ -149,7 +149,8 @@ export {
   ContentGradient,
   ErrorModal,
   IconButton,
-  InactivityWrapper,
+  ActivityProvider,
+  useActivity,
   InfoTextBox,
   InfoBox,
   InfoBoxType,
