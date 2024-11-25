@@ -37,7 +37,7 @@ const Home: React.FC<HomeProps> = () => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const [store, dispatch] = useStore()
-  const { start } = useTour()
+  const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
 
@@ -125,6 +125,11 @@ const Home: React.FC<HomeProps> = () => {
       payload: [true],
     })
   }, [dispatch])
+
+  // stop the tour when the screen unmounts
+  useEffect(() => {
+    return stop
+  }, [stop])
 
   return (
     <ScreenLayout>
