@@ -230,9 +230,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     },
   })
 
-  const backgroundColorIfErrorState = (backgroundColor?: string) =>
-    error || predicateError || isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
-
   const backgroundColorIfRevoked = (backgroundColor?: string) =>
     isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
 
@@ -242,7 +239,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
 
     const c =
-      backgroundColorIfErrorState(overlay.brandingOverlay?.primaryBackgroundColor) ?? ColorPallet.grayscale.lightGrey
+      backgroundColorIfRevoked(overlay.brandingOverlay?.primaryBackgroundColor) ?? ColorPallet.grayscale.lightGrey
     const shade = shadeIsLightOrDark(c)
 
     return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey

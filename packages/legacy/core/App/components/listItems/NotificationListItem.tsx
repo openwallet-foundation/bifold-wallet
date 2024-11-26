@@ -7,6 +7,7 @@ import {
   CredoError,
   ProofExchangeRecord,
   ProofState,
+  V2RequestPresentationMessage,
 } from '@credo-ts/core'
 import { useAgent, useConnectionById } from '@credo-ts/react-hooks'
 import { markProofAsViewed } from '@hyperledger/aries-bifold-verifier'
@@ -258,13 +259,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           break
         case NotificationType.ProofRequest: {
           const proofId = (notification as ProofExchangeRecord).id
-          let message
+          let message: V2RequestPresentationMessage | V1RequestPresentationMessage | null | undefined
           try {
             message = await agent?.proofs.findRequestMessage(proofId)
           } catch (error) {
             logger.error('Error finding request message:', error as CredoError)
           }
-
           if (message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
             details = {
               type: InfoBoxType.Info,
@@ -276,7 +276,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
             details = {
               type: InfoBoxType.Info,
               title: t('ProofRequest.NewProofRequest'),
-              body: '',
+              body: message?.comment ?? '',
               buttonTitle: undefined,
             }
           }
