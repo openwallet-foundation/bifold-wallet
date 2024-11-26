@@ -1,49 +1,35 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Linking } from 'react-native'
 
+import { useActivity } from '../contexts/activity'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { TOKENS, useServices } from '../container-api'
-
-const assertDeepLinkSupported = async (deepLink: string) => {
-  try {
-    const supported = await Linking.canOpenURL(deepLink)
-    if (!supported) {
-      return ''
-    }
-
-    return deepLink
-  } catch (error) {
-    return ''
-  }
-}
 
 export const useDeepLinks = () => {
-  const [, dispatch] = useStore()
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  const [store, dispatch] = useStore()
+  const { appStateStatus } = useActivity()
+  const [stashedDeepLink, setStashedDeepLink] = useState('')
+  const ready = useMemo(
+    () => store.authentication.didAuthenticate && ['active', 'inactive'].includes(appStateStatus),
+    [store.authentication.didAuthenticate, appStateStatus]
+  )
 
+  // deeplink cold start
   useEffect(() => {
     const getUrlAsync = async () => {
       const initialUrl = await Linking.getInitialURL()
-      logger.info(`initialUrl from sleep: ${initialUrl}`)
       if (initialUrl) {
-        dispatch({
-          type: DispatchAction.ACTIVE_DEEP_LINK,
-          payload: [await assertDeepLinkSupported(initialUrl)],
-        })
+        setStashedDeepLink(initialUrl)
       }
     }
     getUrlAsync()
-  }, [logger, dispatch])
+  }, [])
 
+  // deeplink while already open
   useEffect(() => {
     Linking.addEventListener('url', async ({ url }) => {
-      logger.info(`initialUrl from background: ${url}`)
       if (url) {
-        dispatch({
-          type: DispatchAction.ACTIVE_DEEP_LINK,
-          payload: [await assertDeepLinkSupported(url)],
-        })
+        setStashedDeepLink(url)
       }
     })
 
@@ -51,4 +37,15 @@ export const useDeepLinks = () => {
       Linking.removeAllListeners('url')
     }
   })
+
+  // activate stashed deeplink when ready
+  useEffect(() => {
+    if (stashedDeepLink && ready) {
+      dispatch({
+        type: DispatchAction.ACTIVE_DEEP_LINK,
+        payload: [stashedDeepLink]
+      })
+      setStashedDeepLink('')
+    }
+  }, [ready, stashedDeepLink, dispatch])
 }
