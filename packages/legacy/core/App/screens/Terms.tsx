@@ -24,7 +24,7 @@ const Terms: React.FC = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
-  const [Button, ScreenOptionsDictionary] = useServices([TOKENS.COMP_BUTTON, TOKENS.OBJECT_ONBOARDING_CONFIG])
+  const [Button] = useServices([TOKENS.COMP_BUTTON])
   const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
   const onSubmitPressed = useCallback(() => {
     dispatch({
@@ -72,10 +72,7 @@ const Terms: React.FC = () => {
   }
 
   return (
-    <ScreenLayout
-      customEdges={ScreenOptionsDictionary[Screens.Terms]?.screenEdges || ['left', 'right', 'bottom']}
-      header={ScreenOptionsDictionary[Screens.Terms]?.customHeader}
-    >
+    <ScreenLayout screen={Screens.Terms}>
       <ScrollView style={style.container}>
         <InfoTextBox>Please agree to the terms and conditions below before using this application.</InfoTextBox>
         <Text style={[style.bodyText, { marginTop: 20, marginBottom: 20 }]}>

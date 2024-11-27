@@ -1,13 +1,15 @@
 import React, { PropsWithChildren } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-
 import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 
-interface WrapperProps {
+import { TOKENS, useServices } from '../container-api'
+import { Screens } from 'types/navigators'
+
+export interface LayoutProps {
   safeArea?: boolean
   customEdges?: Edge[]
   style?: ViewStyle
-  header?: () => React.ReactNode | undefined
+  Header?: React.FC | undefined
 }
 
 const defaultStyles = StyleSheet.create({
@@ -16,15 +18,23 @@ const defaultStyles = StyleSheet.create({
   },
 })
 
-const ScreenLayout: React.FC<PropsWithChildren<WrapperProps>> = ({
-  children,
-  safeArea,
-  customEdges,
-  style,
-  header,
-}) => {
+type Props = {
+  screen: Screens
+}
+
+const ScreenLayout: React.FC<PropsWithChildren<Props>> = ({ children, screen }) => {
+  //safeArea, customEdges, style, header
+  const [screenLayoutOptions] = useServices([TOKENS.OBJECT_LAYOUT_CONFIG])
+  const screenProps = screenLayoutOptions[screen]
+  const { safeArea, customEdges, style, Header } = screenProps || {
+    safeArea: false,
+    customEdges: ['top', 'left', 'right', 'bottom'],
+    style: {},
+    header: undefined,
+  }
+
   const Container: React.FC<PropsWithChildren> = ({ children }) => {
-    return safeArea || customEdges ? (
+    return safeArea ? (
       <SafeAreaView style={[defaultStyles.container, style]} edges={customEdges || ['top', 'left', 'right', 'bottom']}>
         {children}
       </SafeAreaView>
@@ -35,7 +45,7 @@ const ScreenLayout: React.FC<PropsWithChildren<WrapperProps>> = ({
 
   return (
     <Container>
-      {header && header()}
+      {Header && <Header />}
       {children}
     </Container>
   )

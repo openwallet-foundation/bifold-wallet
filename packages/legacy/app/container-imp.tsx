@@ -23,14 +23,28 @@ export class AppContainer implements Container {
     // this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
 
     //Customizing Terms screen custom header
-    // this.container.registerInstance(TOKENS.OBJECT_ONBOARDING_CONFIG, {
-    //   ...DefaultScreenOptionsDictionary,
-    //   [Screens.Terms]: {
-    //     ...DefaultScreenOptionsDictionary[Screens.Terms],
-    //     headerShown: false,
-    //     customHeader: () => <HeaderComponent />,
-    //   },
-    // })
+    /*
+    this.container.registerInstance(TOKENS.OBJECT_ONBOARDING_CONFIG, {
+      ...DefaultScreenOptionsDictionary,
+      [Screens.Terms]: {
+        ...DefaultScreenOptionsDictionary[Screens.Terms],
+        headerShown: false,
+      },
+    })
+    this.container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, {
+      ...DefaultScreenLayoutOptions,
+      [Screens.Terms]: {
+        ...DefaultScreenLayoutOptions[Screens.Terms],
+        customEdges: ['bottom'],
+        safeArea: true,
+        Header: () => (
+          <View style={{ backgroundColor: 'red', height: 129, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: 'white' }}>Custom Header</Text>
+          </View>
+        ),
+      },
+    })
+      */
     return this
   }
 

@@ -54,6 +54,7 @@ import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
+import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
 export * from './navigators'
 export * from './services/storage'
@@ -127,7 +128,7 @@ export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
 
-export type { StackNavigationOptionsExtended } from './types/navigators'
+export type { ScreenLayoutConfig } from './types/navigators'
 
 export {
   App,
@@ -188,5 +189,6 @@ export {
   PINRules,
   walletTimeout,
   DefaultScreenOptionsDictionary,
+  DefaultScreenLayoutOptions,
 }
 export type { IButton }

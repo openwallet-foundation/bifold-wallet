@@ -3,7 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
-import { Edge } from 'react-native-safe-area-context'
+import { LayoutProps } from '../layout/wrapper'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -210,9 +210,5 @@ export type HistoryStackParams = {
   [Screens.HistoryPage]: undefined
 }
 
-export type StackNavigationOptionsExtended = StackNavigationOptions & {
-  screenEdges?: Edge[] | undefined
-  customHeader?: () => React.ReactNode | undefined
-}
-
-export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptionsExtended>>
+export type ScreenLayoutConfig = Partial<Record<Screens, LayoutProps>>
+export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptions>>
