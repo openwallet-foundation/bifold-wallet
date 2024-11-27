@@ -16,25 +16,31 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
+import { TOKENS, useServices } from '../container-api'
 
 const ProofRequestStack: React.FC = () => {
   const Stack = createStackNavigator<ProofRequestsStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
+  const [ScreenOptionsDictionary] = useServices([TOKENS.OBJECT_SCREEN_CONFIG])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
         name={Screens.ProofRequests}
         component={ListProofRequests}
-        options={{ title: t('Screens.ChooseProofRequest') }}
+        options={{
+          title: t('Screens.ChooseProofRequest'),
+          ...ScreenOptionsDictionary[Screens.ProofRequest]
+        }}
       />
       <Stack.Screen
         name={Screens.ProofRequestDetails}
         component={ProofRequestDetails}
         options={() => ({
           title: '',
+          ...ScreenOptionsDictionary[Screens.ProofRequestDetails]
         })}
       />
       <Stack.Screen
@@ -45,7 +51,10 @@ const ProofRequestStack: React.FC = () => {
       <Stack.Screen
         name={Screens.ProofChangeCredential}
         component={ProofChangeCredential}
-        options={{ title: t('Screens.ProofChangeCredential') }}
+        options={{
+          title: t('Screens.ProofChangeCredential'),
+          ...ScreenOptionsDictionary[Screens.ProofChangeCredential]
+        }}
       ></Stack.Screen>
       <Stack.Screen
         name={Screens.ProofRequesting}
@@ -61,6 +70,7 @@ const ProofRequestStack: React.FC = () => {
               icon="arrow-left"
             />
           ),
+          ...ScreenOptionsDictionary[Screens.ProofRequesting]
         })}
       />
       <Stack.Screen
@@ -84,6 +94,7 @@ const ProofRequestStack: React.FC = () => {
             />
           ),
           headerRight: () => <HeaderRightHome />,
+          ...ScreenOptionsDictionary[Screens.ProofDetails]
         })}
       />
       <Stack.Screen
@@ -92,6 +103,7 @@ const ProofRequestStack: React.FC = () => {
         options={() => ({
           title: t('Screens.ProofRequestUsageHistory'),
           headerRight: () => <HeaderRightHome />,
+          ...ScreenOptionsDictionary[Screens.ProofRequestUsageHistory]
         })}
       />
     </Stack.Navigator>
