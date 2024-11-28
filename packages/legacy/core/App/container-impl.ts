@@ -104,7 +104,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
     this._container.registerInstance(TOKENS.HISTORY_ENABLED, false)
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
-    this._container.registerInstance(TOKENS.OBJECT_ONBOARDING_CONFIG, DefaultScreenOptionsDictionary)
+    this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)

@@ -27,11 +27,12 @@ const SettingStack: React.FC = () => {
   const theme = useTheme()
   const [biometryUpdatePending, setBiometryUpdatePending] = useState<boolean>(false)
   const { t } = useTranslation()
-  const [pages, { screen: terms }, UseBiometry, developer] = useServices([
+  const [pages, { screen: terms }, UseBiometry, developer, ScreenOptionsDictionary] = useServices([
     TOKENS.SCREEN_ONBOARDING_PAGES,
     TOKENS.SCREEN_TERMS,
     TOKENS.SCREEN_USE_BIOMETRY,
     TOKENS.SCREEN_DEVELOPER,
+    TOKENS.OBJECT_SCREEN_CONFIG,
   ])
   const defaultStackOptions = useDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
@@ -52,32 +53,55 @@ const SettingStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Settings}
         component={Settings}
-        options={{ title: t('Screens.Settings'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.Settings'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.Settings]
+        }}
       />
       <Stack.Screen
         name={Screens.NameWallet}
         component={NameWallet}
-        options={{ title: t('Screens.NameWallet'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.NameWallet'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.NameWallet]
+        }}
       />
       <Stack.Screen
         name={Screens.Language}
         component={Language}
-        options={{ title: t('Screens.Language'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.Language'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.Language]
+        }}
       />
       <Stack.Screen
         name={Screens.AutoLock}
         component={AutoLock}
-        options={{ title: 'Auto lock Options', headerBackTestID: testIdWithKey('Back') }}
+        options={{title: 'Auto lock Options',
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.AutoLock]
+        }}
       />
       <Stack.Screen
         name={Screens.DataRetention}
         component={DataRetention}
-        options={{ title: t('Screens.DataRetention'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.DataRetention'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.DataRetention]
+        }}
       />
       <Stack.Screen
         name={Screens.Tours}
         component={Tours}
-        options={{ title: t('Screens.Tours'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.Tours'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.Tours]
+        }}
       />
       <Stack.Screen
         name={Screens.UseBiometry}
@@ -86,27 +110,44 @@ const SettingStack: React.FC = () => {
           title: t('Screens.Biometry'),
           headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.UseBiometry]
         }}
       />
       <Stack.Screen
         name={Screens.CreatePIN}
         component={PINCreate}
-        options={{ title: t('Screens.ChangePIN'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.ChangePIN'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.CreatePIN]
+        }}
       />
       <Stack.Screen
         name={Screens.UsePushNotifications}
         component={PushNotification}
-        options={{ title: t('Screens.UsePushNotifications'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.UsePushNotifications'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.UsePushNotifications]
+        }}
       />
       <Stack.Screen
         name={Screens.Terms}
         component={terms}
-        options={{ title: t('Screens.Terms'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.Terms'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.Terms]
+        }}
       />
       <Stack.Screen
         name={Screens.Developer}
         component={developer}
-        options={{ title: t('Screens.Developer'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.Developer'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.Developer]
+        }}
       />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
         {(props) => (
@@ -123,7 +164,11 @@ const SettingStack: React.FC = () => {
       <Stack.Screen
         name={Screens.HistorySettings}
         component={HistorySettings}
-        options={{ title: t('Screens.HistorySettings'), headerBackTestID: testIdWithKey('Back') }}
+        options={{
+          title: t('Screens.HistorySettings'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.HistorySettings]
+        }}
       />
     </Stack.Navigator>
   )

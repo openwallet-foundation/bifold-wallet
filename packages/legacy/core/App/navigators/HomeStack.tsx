@@ -10,6 +10,7 @@ import Home from '../screens/Home'
 import { HomeStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
+import { TOKENS, useServices } from '../container-api'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
@@ -17,6 +18,7 @@ const HomeStack: React.FC = () => {
   const { t } = useTranslation()
   const [store] = useStore()
   const defaultStackOptions = useDefaultStackOptions(theme)
+  const [ScreenOptionsDictionary] = useServices([TOKENS.OBJECT_SCREEN_CONFIG])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -27,6 +29,7 @@ const HomeStack: React.FC = () => {
           title: t('Screens.Home'),
           headerRight: () => (store.preferences.useHistoryCapability ? <HistoryMenu /> : null),
           headerLeft: () => <SettingsMenu />,
+          ...ScreenOptionsDictionary[Screens.Home]
         })}
       />
     </Stack.Navigator>

@@ -100,7 +100,7 @@ export const LOAD_STATE_TOKENS = {
 } as const
 
 export const OBJECT_TOKENS = {
-  OBJECT_ONBOARDING_CONFIG: 'object.onboarding-config',
+  OBJECT_SCREEN_CONFIG: 'object.screen-config',
 } as const
 
 export const CACHE_TOKENS = {
@@ -166,7 +166,7 @@ export type TokenMapping = {
     customNotificationConfig?: CustomNotification
   }
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
-  [TOKENS.OBJECT_ONBOARDING_CONFIG]: ScreenOptionsType
+  [TOKENS.OBJECT_SCREEN_CONFIG]: ScreenOptionsType
   [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
