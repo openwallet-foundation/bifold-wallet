@@ -113,13 +113,23 @@ const PINInputComponent = (
   const inlineMessageView = ({ message, inlineType, config }: InlineMessageProps) => (
     <InlineErrorText message={message} inlineType={inlineType} config={config} />
   )
-  const inlineMessagePlaceholder = (placement: InlineErrorPosition) => (
-    <View style={style.inlineMessageContainer}>
-      {inlineMessage && (inlineMessage.config.position === placement || !inlineMessage.config.position)
-        ? inlineMessageView(inlineMessage)
-        : null}
-    </View>
-  )
+  const inlineMessagePlaceholder = (placement: InlineErrorPosition) => {
+    // Check if inlineMessage exists and if its position matches the placement or falls back to Above
+    if (!inlineMessage) {
+      return <View style={style.inlineMessageContainer} />
+    }
+  
+    const messagePosition = inlineMessage.config.position || InlineErrorPosition.Above // Default to Above
+    if (messagePosition !== placement) {
+      return <View style={style.inlineMessageContainer} />
+    }
+  
+    return (
+      <View style={style.inlineMessageContainer}>
+        {inlineMessageView(inlineMessage)}
+      </View>
+    )
+  }
   return (
     <View style={style.container}>
       {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
