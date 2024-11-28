@@ -296,10 +296,10 @@ const translation = {
     "Description": "Set how long you want to keep your activity history before it is deleted from your device (it is not stored anywhere else).",
     "DeleteActivity": "Delete activity history after:",
     "DeleteActivityAfter": {
-      "1month":"1 month",
-      "6month":"6 month",
-      "1year":"1 year",
-      "Always":"Always",
+      "1month": "1 month",
+      "6month": "6 month",
+      "1year": "1 year",
+      "Always": "Always",
     },
     "WarningDisclaimerAlert": {
       "Title": "Past activity will be deleted",
@@ -344,7 +344,7 @@ const translation = {
     "NoHistory": "No History",
   },
   "History": {
-    "SortFilterButton":"Sort/Filter",
+    "SortFilterButton": "Sort/Filter",
     "SortBy": "Sort by",
     "Sort": {
       "Newest": "Newest to oldest",
@@ -369,7 +369,7 @@ const translation = {
         "Close": "Close"
       }
     },
-    "Initial":{
+    "Initial": {
       "Title": "Do you want to log your wallet activity?",
       "Description": {
         "Header": "This History section can list when:\n",
@@ -388,9 +388,9 @@ const translation = {
         "DoNotLogWalletActivity": "Do not log any wallet activity"
       }
     },
-    "Button":"Sort/Filter",
+    "Button": "Sort/Filter",
     "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.",
-    "CardTitle":{
+    "CardTitle": {
       "CardAccepted": "Card accepted:",
       "CardDeclined": "Card declined:",
       "CardExpired": "Card expired",
@@ -398,7 +398,7 @@ const translation = {
       "InformationSent": "Information sent to:",
       "WalletPinUpdated": "Wallet PIN updated",
     },
-    "CardDescription":{
+    "CardDescription": {
       "CardExpired": "{{cardName}} expired",
       "CardRevoked": "{{cardName}} revoked",
       "WalletPinUpdated": "New PIN set",
@@ -566,7 +566,7 @@ const translation = {
     "CredentialOffer": "Loading credential offer...",
     "YourOffer": "You're being offered a credential",
     "ProofRequest": "Loading proof request...",
-    "YourRequest": "You're being requested for proof",
+    "YourRequest": "You'll be requested to share the following information.",
   },
   "ConnectionAlert": {
     "AddedContacts": "Added to Contacts",
