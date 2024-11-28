@@ -100,7 +100,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     subText: {
       ...TextTheme.bold,
-      marginBottom: 20,
+      marginBottom: 4,
     },
   })
 

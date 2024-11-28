@@ -60,6 +60,9 @@ const PINInputComponent = (
     hideIcon: {
       paddingHorizontal: 10,
     },
+    inlineMessageContainer: {
+      minHeight: 36,
+    },
   })
   const content = () => (
     <View style={PINInputTheme.labelAndFieldContainer}>
@@ -110,15 +113,13 @@ const PINInputComponent = (
   const inlineMessageView = ({ message, inlineType, config }: InlineMessageProps) => (
     <InlineErrorText message={message} inlineType={inlineType} config={config} />
   )
-  const inlineMessagePlaceholder = (placment: InlineErrorPosition) => {
-    if (inlineMessage && inlineMessage.config.position === placment) {
-      return inlineMessageView(inlineMessage)
-    }
-    //This is a fallback in case no position provided
-    if (inlineMessage && placment === InlineErrorPosition.Above && !inlineMessage.config.position) {
-      return inlineMessageView(inlineMessage)
-    }
-  }
+  const inlineMessagePlaceholder = (placement: InlineErrorPosition) => (
+    <View style={style.inlineMessageContainer}>
+      {inlineMessage && (inlineMessage.config.position === placement || !inlineMessage.config.position)
+        ? inlineMessageView(inlineMessage)
+        : null}
+    </View>
+  )
   return (
     <View style={style.container}>
       {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
