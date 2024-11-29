@@ -11,12 +11,15 @@ import { DeliveryStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
+import OpenIDProofPresentation from '../modules/openid/screens/OpenIDProofPresentation'
+import { TOKENS, useServices } from '../container-api'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
+  const [ScreenOptionsDictionary] = useServices([TOKENS.OBJECT_SCREEN_CONFIG])
 
   return (
     <Stack.Navigator
@@ -28,27 +31,44 @@ const DeliveryStack: React.FC = () => {
         presentation: 'modal',
         headerLeft: () => null,
         headerRight: () => <HeaderRightHome />,
+        ...ScreenOptionsDictionary[Screens.Connection]
       }}
     >
       <Stack.Screen
         name={Screens.Connection}
         component={Connection}
-        options={{ ...defaultStackOptions }}
-      />
+        options={{...defaultStackOptions }} />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
-        options={{ title: t('Screens.ProofRequest') }}
+        options={{
+          title: t('Screens.ProofRequest'),
+          ...ScreenOptionsDictionary[Screens.ProofRequest]
+        }}
       />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ title: t('Screens.CredentialOffer') }}
+        options={{
+          title: t('Screens.CredentialOffer'),
+          ...ScreenOptionsDictionary[Screens.CredentialOffer]
+        }}
       />
       <Stack.Screen
         name={Screens.OpenIDCredentialDetails}
         component={OpenIDCredentialDetails}
-        options={{ title: t('Screens.CredentialOffer') }}
+        options={{
+          title: t('Screens.CredentialOffer'),
+          ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails]
+        }}
+      />
+      <Stack.Screen
+        name={Screens.OpenIDProofPresentation}
+        component={OpenIDProofPresentation}
+        options={{
+          title: t('Screens.ProofRequest'),
+          ...ScreenOptionsDictionary[Screens.OpenIDProofPresentation]
+        }}
       />
     </Stack.Navigator>
   )

@@ -22,6 +22,7 @@ import {
   ProofState,
   parseDid,
   OutOfBandRecord,
+  CredentialPreviewAttribute,
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
 import { useConnectionById } from '@credo-ts/react-hooks'
@@ -49,7 +50,7 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
-import { isOpenIdPresentationRequest } from './parsers'
+import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -432,7 +433,13 @@ export const evaluatePredicates =
     })
   }
 
-const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
+// scans through requested attributes and records
+// Builds and returns label: value attributes
+// Flagging any attribute not found in wallet credentials
+const addMissingDisplayAttributes = (
+  attrReq: AnonCredsRequestedAttribute,
+  records: CredentialExchangeRecord[]
+): ProofCredentialAttributes => {
   const { name, names, restrictions } = attrReq
   const credName = credNameFromRestriction(restrictions)
   const credDefId = credDefIdFromRestrictions(restrictions)
@@ -449,47 +456,81 @@ const addMissingDisplayAttributes = (attrReq: AnonCredsRequestedAttribute) => {
     attributes: [] as Attribute[],
   }
 
+  // Filter records for requested schema id of credential definition id
+  const filteredCredentialRecords = records.filter(
+    (record: CredentialExchangeRecord) =>
+      getCredentialSchemaIdForRecord(record) === schemaId || getCredentialDefinitionIdForRecord(record) === credDefId
+  )
+
+  // for reach requested attribute
+  // scan through filtered credential attributes
+  // display any that are found
+  // flag any not found attributes with an error
   for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
-    processedAttributes.attributes?.push(
-      new Attribute({
-        revoked: false,
-        credentialId: credName,
-        name: attributeName,
-        value: '',
-      })
-    )
+    // filter through credential record attributes for a given name
+    const [attribute] = filteredCredentialRecords.map((item: CredentialExchangeRecord) => {
+      return item.credentialAttributes?.filter(
+        (attribute: CredentialPreviewAttribute) => attribute.name === attributeName
+      )
+    })
+    if (attribute && attribute.length > 0) {
+      // attribute found, display as expected
+      processedAttributes.attributes?.push(
+        new Attribute({
+          revoked: false,
+          credentialId: credName,
+          name: attributeName,
+          value: attribute[0].value,
+          hasError: false,
+        })
+      )
+    } else {
+      // no attribute found, flag this with an error
+      processedAttributes.attributes?.push(
+        new Attribute({
+          revoked: false,
+          credentialId: credName,
+          name: attributeName,
+          value: '',
+          hasError: true,
+        })
+      )
+    }
   }
   return processedAttributes
 }
 export const processProofAttributes = (
+  t: TFunction<'translation', undefined>,
   request?: AnonCredsProofRequest,
-  credentials?: AnonCredsCredentialsForProofRequest,
-  credentialRecords?: CredentialExchangeRecord[],
+  credentials?: AnonCredsCredentialsForProofRequest, // credentials that 100% validate the proof request
+  credentialRecords?: CredentialExchangeRecord[], // all the credentials in the wallet
   groupByReferent?: boolean
 ): { [key: string]: ProofCredentialAttributes } => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
-
   const requestedProofAttributes = request?.requested_attributes
   const retrievedCredentialAttributes = credentials?.attributes
   const requestNonRevoked = request?.non_revoked // non_revoked interval can sometimes be top level
 
+  // no proof or credential attributes, nothing to process, leave early
   if (!requestedProofAttributes || !retrievedCredentialAttributes) {
     return {}
   }
+
   for (const key of Object.keys(retrievedCredentialAttributes)) {
     const altCredentials = [...(retrievedCredentialAttributes[key] ?? [])]
       .sort(credentialSortFn)
       .map((cred) => cred.credentialId)
 
     const credentialList = [...(retrievedCredentialAttributes[key] ?? [])].sort(credentialSortFn)
-
     const { name, names, non_revoked, restrictions } = requestedProofAttributes[key]
 
+    // system assumes one of these values is present in a proof request
     const proofCredDefId = credDefIdFromRestrictions(restrictions)
     const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
+    // No credentials satisfy proof request, process attribute errors
     if (credentialList.length <= 0) {
-      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key])
+      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [])
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
         processedAttributes[missingCredGroupKey] = missingAttributes
@@ -497,7 +538,6 @@ export const processProofAttributes = (
         processedAttributes[missingCredGroupKey].attributes?.push(...(missingAttributes.attributes ?? []))
       }
     }
-
     //iterate over all credentials that satisfy the proof
     for (const credential of credentialList) {
       let credName = key
@@ -547,6 +587,7 @@ export const processProofAttributes = (
       }
     }
   }
+
   return processedAttributes
 }
 
@@ -693,74 +734,89 @@ export const retrieveCredentialsForProof = async (
   t: TFunction<'translation', undefined>,
   groupByReferent?: boolean
 ) => {
+  // This is the only valid state to retrieve credentials for a proof
+  // `getCredentialsForRequest` will fail otherwise.
+  if (proof.state !== ProofState.RequestReceived) {
+    return
+  }
+
   try {
     const format = await agent.proofs.getFormatData(proof.id)
     const hasPresentationExchange = format.request?.presentationExchange !== undefined
     const hasAnonCreds = format.request?.anoncreds !== undefined
     const hasIndy = format.request?.indy !== undefined
-    const credentialsPromise = agent.proofs.getCredentialsForRequest({
-      proofRecordId: proof.id,
-      proofFormats: {
-        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
-        // We should ignore the key, if the value is undefined. For now this is a workaround.
-        ...(hasIndy
-          ? {
-              indy: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: true,
-              },
-            }
-          : {}),
-        ...(hasAnonCreds
-          ? {
-              anoncreds: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: true,
-              },
-            }
-          : {}),
-        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
-      },
-    })
-    const credentialsWithRevokedPromise = agent.proofs.getCredentialsForRequest({
-      proofRecordId: proof.id,
-      proofFormats: {
-        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
-        // We should ignore the key, if the value is undefined. For now this is a workaround.
-        ...(hasIndy
-          ? {
-              indy: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: false,
-              },
-            }
-          : {}),
-        ...(hasAnonCreds
-          ? {
-              anoncreds: {
-                // Setting `filterByNonRevocationRequirements` to `false` returns all
-                // credentials even if they are revokable (and revoked). We need this to
-                // be able to show why a proof cannot be satisfied. Otherwise we can only
-                // show failure.
-                filterByNonRevocationRequirements: false,
-              },
-            }
-          : {}),
-        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
-      },
-    })
-    const [credentials, credentialsWithRevoked] = await Promise.all([credentialsPromise, credentialsWithRevokedPromise])
 
-    // in the case where there are only revoked credentials to satisfy a proof, include them for errors on the proof screen, otherwise leave them out
+    // Will fail if credential not in state 'request-received'
+    const credentialsAsPromise = agent.proofs.getCredentialsForRequest({
+      proofRecordId: proof.id,
+      proofFormats: {
+        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
+        // We should ignore the key, if the value is undefined. For now this is a workaround.
+        ...(hasIndy
+          ? {
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: true,
+              },
+            }
+          : {}),
+        ...(hasAnonCreds
+          ? {
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: true,
+              },
+            }
+          : {}),
+        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
+      },
+    })
+
+    // Will fail if credential not in state 'request-received'
+    const credentialsWithRevokedAsPromise = agent.proofs.getCredentialsForRequest({
+      proofRecordId: proof.id,
+      proofFormats: {
+        // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
+        // We should ignore the key, if the value is undefined. For now this is a workaround.
+        ...(hasIndy
+          ? {
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
+          : {}),
+        ...(hasAnonCreds
+          ? {
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
+          : {}),
+        ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
+      },
+    })
+
+    const [credentials, credentialsWithRevoked] = await Promise.all([
+      credentialsAsPromise,
+      credentialsWithRevokedAsPromise,
+    ])
+
+    // In the case where there are only revoked credentials to satisfy a proof,
+    // include them for errors on the proof screen, otherwise leave them out
     const addRevokedCredsIfNeeded = (proofFormat: 'indy' | 'anoncreds', proofItem: 'attributes' | 'predicates') => {
       if (credentials.proofFormats[proofFormat] && credentialsWithRevoked.proofFormats[proofFormat]) {
         Object.keys(credentials.proofFormats[proofFormat]?.[proofItem] ?? {}).forEach((key) => {
@@ -812,6 +868,7 @@ export const retrieveCredentialsForProof = async (
 
       const filtered = filterInvalidProofRequestMatches(anonCredsCredentialsForRequest, descriptorMetadata)
       const processedAttributes = processProofAttributes(
+        t,
         anonCredsProofRequest,
         filtered,
         fullCredentials,
@@ -836,7 +893,7 @@ export const retrieveCredentialsForProof = async (
     const proofRequest = format.request?.anoncreds ?? format.request?.indy
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = processProofAttributes(proofRequest, proofFormat, fullCredentials, groupByReferent)
+    const attributes = processProofAttributes(t, proofRequest, proofFormat, fullCredentials, groupByReferent)
     const predicates = processProofPredicates(proofRequest, proofFormat, fullCredentials, groupByReferent)
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
 
@@ -1004,13 +1061,21 @@ export const connectFromScanOrDeepLink = async (
   }
 
   // TODO:(jl) Do we care if the connection is a deep link?
-  logger.info(`Attempting to connect from scan or ${isDeepLink ? 'deeplink' : 'qr scan'}`)
+  logger.info(`Attempting to connect from ${isDeepLink ? 'deeplink' : 'qr scan'}`)
   try {
-    const isOpenIDInvitation = await isOpenIdPresentationRequest(uri)
-    if (isOpenIDInvitation) {
+    if (isOpenIdCredentialOffer(uri)) {
       navigation.navigate(Stacks.ConnectionStack as any, {
         screen: Screens.Connection,
         params: { oobRecordId: '', openIDUri: uri },
+      })
+
+      return
+    }
+
+    if (isOpenIdPresentationRequest(uri)) {
+      navigation.navigate(Stacks.ConnectionStack as any, {
+        screen: Screens.Connection,
+        params: { oobRecordId: '', openIDPresentationUri: uri },
       })
 
       return
@@ -1073,6 +1138,18 @@ export const createTempConnectionInvitation = async (agent: Agent | undefined, t
  */
 export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children is ChildFn<T> {
   return typeof children === 'function'
+}
+
+// Fetches the credential definition id for a given record, returns null if ID is not set
+const getCredentialDefinitionIdForRecord = (record: CredentialExchangeRecord): string | null => {
+  // assumes record is anonCred
+  return record.metadata.get('_anoncreds/credential')?.credentialDefinitionId ?? null
+}
+
+// Fetches the schema id for a given record, returns null if ID is not set
+const getCredentialSchemaIdForRecord = (record: CredentialExchangeRecord): string | null => {
+  // assumes record is anonCred
+  return record.metadata.get('_anoncreds/credential')?.schemaId ?? null
 }
 
 export function getCredentialEventRole(record: CredentialExchangeRecord) {

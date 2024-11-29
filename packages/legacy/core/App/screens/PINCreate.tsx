@@ -312,24 +312,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             autoFocus={false}
             inlineMessage={inlineMessageField1}
           />
-          {PINSecurity.displayHelper && (
-            <View style={{ marginBottom: 16 }}>
-              {PINOneValidations.map((validation, index) => {
-                return (
-                  <View style={{ flexDirection: 'row' }} key={index}>
-                    {validation.isInvalid ? (
-                      <Icon name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
-                    ) : (
-                      <Icon name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
-                    )}
-                    <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                      {t(`PINCreate.Helper.${validation.errorName}`)}
-                    </Text>
-                  </View>
-                )
-              })}
-            </View>
-          )}
           <PINInput
             label={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
@@ -352,6 +334,24 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
           />
+          {PINSecurity.displayHelper && (
+            <View style={{ marginBottom: 16 }}>
+              {PINOneValidations.map((validation, index) => {
+                return (
+                  <View style={{ flexDirection: 'row' }} key={index}>
+                    {validation.isInvalid ? (
+                      <Icon name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
+                    ) : (
+                      <Icon name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
+                    )}
+                    <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
+                      {t(`PINCreate.Helper.${validation.errorName}`)}
+                    </Text>
+                  </View>
+                )
+              })}
+            </View>
+          )}
           {modalState.visible && (
             <AlertModal
               title={modalState.title}
