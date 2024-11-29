@@ -482,7 +482,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error)?.message ?? err, 1027)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, proof, assertNetworkConnected, retrievedCredentials, activeCreds, descriptorMetadata, goalCode, t, historyEventsLogger.logProofRequestInfoShared, logHistoryRecord])
+  }, [agent, proof, assertNetworkConnected, retrievedCredentials, activeCreds, descriptorMetadata, goalCode, t, historyEventsLogger.logInformationSent, logHistoryRecord])
 
   const handleDeclineTouched = useCallback(async () => {
     try {
@@ -505,7 +505,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       logHistoryRecord(HistoryCardType.InformationNotSent)
     }
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }, [agent, proof, goalCode, t, navigation, toggleDeclineModalVisible, historyEventsLogger.logProofRequestInfoShared, logHistoryRecord])
+  }, [agent, proof, goalCode, t, navigation, toggleDeclineModalVisible, historyEventsLogger.logInformationNotSent, logHistoryRecord])
 
   const handleCancelTouched = useCallback(async () => {
     try {
