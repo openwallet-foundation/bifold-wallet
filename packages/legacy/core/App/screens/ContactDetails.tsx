@@ -29,6 +29,7 @@ import { formatTime, getConnectionName, useConnectionImageUrl } from '../utils/h
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import { toImageSource } from '../utils/credential'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
@@ -56,9 +57,12 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
 
-  const [{ contactDetailsOptions }, ContactCredentialListItem] = useServices([
+  const [{ contactDetailsOptions }, ContactCredentialListItem, logger, historyManagerCurried, historyEventsLogger] = useServices([
     TOKENS.CONFIG,
     TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_EVENTS_LOGGER
   ])
 
   const styles = StyleSheet.create({
@@ -110,10 +114,45 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     }
   }, [connectionCredentials])
 
+  const logHistoryRecord = useCallback(() => {
+    try {
+      if (!(agent && store.preferences.useHistoryCapability)) {
+        logger.trace(
+          `[${ContactDetails.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+        )
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+      
+      if (!connection) {
+        logger.error(`[${ContactDetails.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
+        return
+      }
+
+      const type = HistoryCardType.ConnectionRemoved
+      /** Save history record for contact removed */
+      const recordData: HistoryRecord = {
+        type: type,
+        message: type,
+        createdAt: new Date(),
+        correspondenceId: connection.id,
+        correspondenceName: connection.theirLabel,
+      }
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${ContactDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, connection])
+
+
   const callSubmitRemove = useCallback(async () => {
     try {
       if (!(agent && connection)) {
         return
+      }
+
+      if(historyEventsLogger.logConnectionRemoved){
+        logHistoryRecord()
       }
 
       await agent.connections.deleteById(connection.id)
@@ -131,7 +170,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error)?.message ?? err, 1037)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, connection, navigation, t])
+  }, [agent, connection, navigation, t, historyEventsLogger.logConnectionRemoved, logHistoryRecord])
 
   const callCancelRemove = useCallback(() => {
     setIsRemoveModalDisplayed(false)

@@ -29,7 +29,6 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
   const [Button, logger, loadHistory] = useServices([TOKENS.COMP_BUTTON, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY])
-  const historyManager: IHistoryManager | undefined = agent ? loadHistory(agent) : undefined
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -72,6 +71,8 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
 
   useEffect(() => {
     const getHistory = async () => {
+      const historyManager: IHistoryManager | undefined = agent ? loadHistory(agent) : undefined
+
       if (!historyManager) {
         logger.error(`[${HistoryPage.name}][getAllHistory]: historyManager undefined!`)
         return
@@ -87,7 +88,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
     getHistory().catch(e => {
       logger.error(`[${HistoryPage.name}][getAllHistory]: ${e}`)
     })
-  }, [historyManager, logger])
+  }, [loadHistory, agent, logger])
 
   return (
     <KeyboardView>

@@ -20,6 +20,8 @@ import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
 import { TOKENS, useServices } from '../container-api'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { useAppAgent } from '../utils/agent'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -28,8 +30,19 @@ enum UseBiometryUsage {
 
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
+  const { agent } = useAppAgent()
   const { t } = useTranslation()
-  const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
+  const [
+    { enablePushNotifications },
+    logger,
+    historyManagerCurried,
+    historyEventsLogger
+  ] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_EVENTS_LOGGER
+  ])
   const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
@@ -86,6 +99,28 @@ const UseBiometry: React.FC = () => {
     }
   }, [screenUsage, biometryEnabled, commitPIN, disableBiometrics, dispatch])
 
+  const logHistoryRecord = useCallback((type: HistoryCardType) => {
+    try {
+      if (!(agent && store.preferences.useHistoryCapability)) {
+        logger.trace(
+          `[${UseBiometry.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+        )
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+      
+      /** Save history record for card accepted */
+      const recordData: HistoryRecord = {
+        type: type,
+        message: type,
+        createdAt: new Date(),
+      }
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${UseBiometry.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried])
+
   const continueTouched = useCallback(async () => {
     setContinueEnabled(false)
 
@@ -120,10 +155,14 @@ const UseBiometry: React.FC = () => {
     if (screenUsage === UseBiometryUsage.ToggleOnOff) {
       setCanSeeCheckPIN(true)
       DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, true)
+      if(historyEventsLogger.logToggleBiometry && store.onboarding.didAgreeToTerms && store.onboarding.didConsiderBiometry){
+        const type = HistoryCardType.ActivateBiometry
+        logHistoryRecord(type)
+      }
     } else {
       setBiometryEnabled(newValue)
     }
-  }, [screenUsage])
+  }, [screenUsage, historyEventsLogger.logToggleBiometry, logHistoryRecord, store.onboarding.didAgreeToTerms, store.onboarding.didConsiderBiometry])
 
   const onRequestSystemBiometrics = useCallback(async (newToggleValue: boolean) => {
     const permissionResult: PermissionStatus = await request(BIOMETRY_PERMISSION)
@@ -196,8 +235,12 @@ const UseBiometry: React.FC = () => {
       setBiometryEnabled((previousState) => !previousState)
     }
     DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
+    if(historyEventsLogger.logToggleBiometry && store.onboarding.didAgreeToTerms && store.onboarding.didConsiderBiometry){
+      const type = HistoryCardType.DeactivateBiometry
+      logHistoryRecord(type)
+    }
     setCanSeeCheckPIN(false)
-  }, [])
+  }, [historyEventsLogger.logToggleBiometry, logHistoryRecord, store.onboarding.didAgreeToTerms, store.onboarding.didConsiderBiometry])
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>

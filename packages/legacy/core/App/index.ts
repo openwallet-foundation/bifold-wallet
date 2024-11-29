@@ -52,7 +52,7 @@ import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import InactivityWrapper, { AutoLockTime } from './components/misc/InactivityWrapper'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
-import { defaultConfig } from './container-impl'
+import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
 
 export * from './navigators'
@@ -138,6 +138,7 @@ export {
   AttachTourStep,
   TourBox,
   defaultConfig,
+  defaultHistoryEventsLogger,
   homeTourSteps,
   credentialsTourSteps,
   credentialOfferTourSteps,

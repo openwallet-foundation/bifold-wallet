@@ -49,11 +49,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertNetworkConnected } = useNetwork()
-  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried] = useServices([
+  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried, historyEventsLogger] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CONFIG,
     TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_EVENTS_LOGGER
   ])
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -155,7 +156,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
-  const logHistoryRecord = useCallback(async () => {
+  const logHistoryRecord = useCallback((type: HistoryCardType) => {
     try {
       if (!(agent && store.preferences.useHistoryCapability)) {
         logger.trace(
@@ -164,8 +165,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         return
       }
       const historyManager = historyManagerCurried(agent)
-
-      const type = HistoryCardType.CardAccepted
+      
       if (!credential) {
         logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
         return
@@ -176,16 +176,16 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       /** Save history record for card accepted */
       const recordData: HistoryRecord = {
         type: type,
-        message: type,
+        message: name,
         createdAt: credential?.createdAt,
         correspondenceId: credentialId,
-        correspondenceName: name,
+        correspondenceName: credentialConnectionLabel,
       }
-      await historyManager.saveHistory(recordData)
+      historyManager.saveHistory(recordData)
     } catch (err: unknown) {
       logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, credential, credentialId])
+  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel])
 
   const handleAcceptTouched = useCallback(async () => {
     try {
@@ -196,13 +196,16 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       setAcceptModalVisible(true)
 
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
-      await logHistoryRecord()
+      if(historyEventsLogger.logAttestationAccepted) {
+        const type = HistoryCardType.CardAccepted
+        logHistoryRecord(type)
+      }
     } catch (err: unknown) {
       setButtonsVisible(true)
       const error = new BifoldError(t('Error.Title1024'), t('Error.Message1024'), (err as Error)?.message ?? err, 1024)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, credential, assertNetworkConnected, logHistoryRecord, t])
+  }, [agent, credential, assertNetworkConnected, logHistoryRecord, t, historyEventsLogger.logAttestationAccepted])
 
   const handleDeclineTouched = useCallback(async () => {
     try {
@@ -215,12 +218,16 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       }
 
       toggleDeclineModalVisible()
+      if(historyEventsLogger.logAttestationRefused) {
+        const type = HistoryCardType.CardDeclined
+        logHistoryRecord(type)
+      }
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, credential, t, toggleDeclineModalVisible, navigation])
+  }, [agent, credential, t, toggleDeclineModalVisible, navigation, logHistoryRecord, historyEventsLogger.logAttestationRefused])
 
   const header = () => {
     return (
