@@ -474,8 +474,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         agent.connections.deleteById(proof.connectionId)
       }
 
-      if(historyEventsLogger.logProofRequestInfoShared) {
-        logHistoryRecord(HistoryCardType.ProofAccepted)
+      if(historyEventsLogger.logInformationSent) {
+        logHistoryRecord(HistoryCardType.InformationSent)
       }
     } catch (err: unknown) {
       setPendingModalVisible(false)
@@ -501,8 +501,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
     toggleDeclineModalVisible()
 
-    if(historyEventsLogger.logProofRequestInfoShared) {
-      logHistoryRecord(HistoryCardType.ProofDeclined)
+    if(historyEventsLogger.logInformationNotSent) {
+      logHistoryRecord(HistoryCardType.InformationNotSent)
     }
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }, [agent, proof, goalCode, t, navigation, toggleDeclineModalVisible, historyEventsLogger.logProofRequestInfoShared, logHistoryRecord])

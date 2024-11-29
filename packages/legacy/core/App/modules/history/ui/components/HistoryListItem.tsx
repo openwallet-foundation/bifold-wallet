@@ -121,14 +121,14 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           description: <Text style={TextTheme.normal}>{t('History.CardDescription.WalletPinUpdated')}</Text>
         }
       }
-      case HistoryCardType.ProofAccepted: {
+      case HistoryCardType.InformationSent: {
         return {
           icon: <Assets.svg.historyInformationSentIcon />,
           title: <Text style={[TextTheme.headingThree, { color: styles.successColor.color }]}>{t('History.CardTitle.InformationSent')}</Text>,
           description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
         }
       }
-      case HistoryCardType.ProofDeclined: {
+      case HistoryCardType.InformationNotSent: {
         return {
           icon: <Assets.svg.historyInformationNotSentIcon />,
           title: 

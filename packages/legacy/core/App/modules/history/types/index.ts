@@ -26,8 +26,8 @@ export enum HistoryCardType {
   CardRevoked = 'CardRevoked', // TODO: log this type of event
   CardUpdates = 'CardUpdates', // TODO: log this type of event
   PinChanged = 'PinChanged',
-  ProofAccepted = 'ProofAccepted', 
-  ProofDeclined = 'ProofDeclined',
+  InformationSent = 'InformationSent', 
+  InformationNotSent = 'InformationNotSent',
   Connection = 'Connection',
   ConnectionRemoved = 'ConnectionRemoved',
   ActivateBiometry = 'ActivateBiometry',
