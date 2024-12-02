@@ -8,7 +8,7 @@ import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../utils/pro
 export const useTemplates = (): Array<ProofRequestTemplate> => {
   const [store] = useStore()
   const [proofRequestTemplates, setProofRequestTemplates] = useState<ProofRequestTemplate[]>([])
-  const [{proofTemplateBaseUrl}, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
+  const [{ proofTemplateBaseUrl }, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const resolver = useRemoteProofBundleResolver(proofTemplateBaseUrl, logger)
 
   useEffect(() => {
@@ -25,8 +25,9 @@ export const useTemplates = (): Array<ProofRequestTemplate> => {
 export const useTemplate = (templateId: string): ProofRequestTemplate | undefined => {
   const [store] = useStore()
   const [proofRequestTemplate, setProofRequestTemplate] = useState<ProofRequestTemplate | undefined>(undefined)
-  const [{proofTemplateBaseUrl}] = useServices([TOKENS.CONFIG])
+  const [{ proofTemplateBaseUrl }] = useServices([TOKENS.CONFIG])
   const resolver = useRemoteProofBundleResolver(proofTemplateBaseUrl)
+
   useEffect(() => {
     resolver.resolveById(templateId, store.preferences.acceptDevCredentials).then((template) => {
       if (template) {
@@ -34,5 +35,6 @@ export const useTemplate = (templateId: string): ProofRequestTemplate | undefine
       }
     })
   }, [resolver, templateId, store.preferences.acceptDevCredentials])
+
   return proofRequestTemplate
 }
