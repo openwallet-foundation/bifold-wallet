@@ -12,21 +12,9 @@ import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../../App/ut
 import { BasicAppContext } from '../helpers/app'
 import { container } from 'tsyringe'
 
-jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
-jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native-device-info', () => () => jest.fn())
-jest.mock('../../App/hooks/proof-request-templates', () => ({
-  useTemplates: jest.fn(),
-  useTemplate: jest.fn(),
-}))
-jest.mock('axios', () => ({ create: jest.fn() }))
-
-jest.useFakeTimers({ legacyFakeTimers: true })
-jest.spyOn(global, 'setTimeout')
-
 const templates = [
   {
-    id: 'Aries:5:StudentFullName:0.0.1:indy',
+    id: 'Aries:5:StudentFullName:0.0.1:indy_G',
     name: 'Student full name',
     description: 'Verify the full name of a student',
     version: '0.0.1',
@@ -58,8 +46,79 @@ const templates = [
   },
 ]
 
-// @ts-expect-error axios create will be replaced with a mock which does have this method
-axios.create.mockImplementation(() => ({ get: () => Promise.resolve({ data: templates }) }))
+const getMock = jest.fn().mockImplementation((url) => {
+  const fileName = url.split('/').pop()
+  switch (fileName) {
+    case 'proof-templates.json':
+      return Promise.resolve({
+        status: 200,
+        data: templates,
+        headers: { etag: 'abc123' },
+      })
+    default:
+      return Promise.reject(new Error('Not Found'))
+  }
+})
+
+jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
+jest.mock('react-native-device-info', () => () => jest.fn())
+jest.mock('../../App/hooks/proof-request-templates', () => ({
+  useTemplates: jest.fn(),
+  useTemplate: jest.fn(),
+}))
+jest.mock('react-native-fs', () => ({
+  exists: jest.fn().mockResolvedValue(true),
+  mkdir: jest.fn().mockResolvedValue(true),
+  readFile: jest.fn().mockImplementation((filePath) => {
+    const t = [
+      {
+        id: 'Aries:5:StudentFullName:0.0.1:indy_Z',
+        name: 'Student full name',
+        description: 'Verify the full name of a student',
+        version: '0.0.1',
+        payload: {
+          type: 'anoncreds',
+          data: [
+            {
+              schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
+              requestedAttributes: [
+                {
+                  names: ['student_first_name', 'student_last_name'],
+                  restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
+                  devRestrictions: [{ schema_name: 'student_card' }],
+                  non_revoked: { to: '@{now}' },
+                },
+              ],
+              requestedPredicates: [
+                {
+                  name: 'expiry_date',
+                  predicateType: '>=',
+                  predicateValue: '@{currentDate(0)}',
+                  restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
+                  devRestrictions: [{ schema_name: 'student_card' }],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ]
+
+    return Promise.resolve(JSON.stringify(t))
+  }),
+  writeFile: jest.fn().mockResolvedValue(true),
+  unlink: jest.fn().mockResolvedValue(true),
+}))
+jest.mock('axios', () => ({
+  create: jest.fn().mockReturnValue({
+    get: jest.fn(),
+  }),
+}))
+
+jest.useFakeTimers({ legacyFakeTimers: true })
+jest.spyOn(global, 'setTimeout')
+
 // @ts-expect-error useTemplates will be replaced with a mock which does have this method
 useTemplates.mockImplementation(() => templates)
 // @ts-expect-error useTemplate will be replaced with a mock which does have this method
@@ -71,6 +130,8 @@ const navigation = testUseNavigation()
 describe('ProofRequestDetails Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // @ts-expect-error some weird type
+    axios.create().get.mockImplementation(getMock)
   })
 
   const renderView = (params: { templateId: string; connectionId?: string }) => {
@@ -90,6 +151,7 @@ describe('ProofRequestDetails Screen', () => {
     )
     const { result } = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
     const bundle = await result.current.resolve(true)
+    console.log(result.current)
 
     expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions).toHaveLength(2)
   })
