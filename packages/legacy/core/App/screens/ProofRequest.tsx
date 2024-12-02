@@ -35,12 +35,23 @@ import { useAllCredentialsForProof } from '../hooks/proofs'
 import { AttestationEventTypes } from '../types/attestation'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks, TabStacks } from '../types/navigators'
-import { ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
+import {
+  CredentialDataForProof,
+  ProofCredentialAttributes,
+  ProofCredentialItems,
+  ProofCredentialPredicates,
+} from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
 import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
-import { Fields, evaluatePredicates, getConnectionName } from '../utils/helpers'
+import {
+  Fields,
+  evaluatePredicates,
+  getConnectionName,
+  getCredentialDefinitionIdForRecord,
+  getCredentialSchemaIdForRecord,
+} from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 
@@ -66,6 +77,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
+  // all credentials in the users wallet
+  const [userCredentials, setUserCredentials] = useState<CredentialExchangeRecord[]>([])
   const [descriptorMetadata, setDescriptorMetadata] = useState<DescriptorMetadata | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
@@ -232,7 +245,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   useEffect(() => {
     setLoading(true)
     credProofPromise
-      ?.then((value: any) => {
+      ?.then((value: CredentialDataForProof | undefined) => {
         if (value) {
           const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
           setLoading(false)
@@ -296,6 +309,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
             }, {})
           }
+
+          console.log(`Full credentials: ${fullCredentials.length}`)
+          setUserCredentials(fullCredentials)
+          // fullCredentials.forEach((item: CredentialExchangeRecord) => {
+          //   console.log('__________________')
+          //   console.log('__________________')
+          //   console.log(JSON.stringify(item.credentialAttributes))
+          // })
           // Check for revoked credentials
           const records = fullCredentials.filter((record: any) =>
             record.credentials.some((cred: any) => credList.includes(cred.credentialRecordId))
@@ -690,12 +711,56 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           <CredentialList
             header={proofPageHeader()}
             footer={hasAvailableCredentials ? proofPageFooter() : undefined}
-            items={activeCreds.filter((cred) => cred.credExchangeRecord !== undefined) ?? []}
+            items={
+              activeCreds.filter((cred) => {
+                return userCredentials.some(
+                  (fullCredential: CredentialExchangeRecord) =>
+                    getCredentialSchemaIdForRecord(fullCredential) === cred.schemaId ||
+                    getCredentialDefinitionIdForRecord(fullCredential) === cred.credDefId
+                )
+              }) ?? []
+            }
           />
+
+          {/* This list will render if any credentials in a proof request are not in the users wallet */}
           {!hasAvailableCredentials && (
             <CredentialList
+              header={
+                <View style={styles.pageMargin}>
+                  {!(loading || attestationLoading) && (
+                    <>
+                      {hasMatchingCredDef && (
+                        <View
+                          style={{
+                            width: 'auto',
+                            borderWidth: 1,
+                            borderColor: ColorPallet.grayscale.lightGrey,
+                            marginTop: 20,
+                          }}
+                        />
+                      )}
+                      <Text
+                        style={{
+                          ...TextTheme.title,
+                          marginTop: 10,
+                        }}
+                      >
+                        {t('ProofRequest.MissingCredentials')}
+                      </Text>
+                    </>
+                  )}
+                </View>
+              }
               footer={proofPageFooter()}
-              items={activeCreds.filter((cred) => cred.credExchangeRecord === undefined) ?? []}
+              items={
+                activeCreds.filter((cred) => {
+                  return userCredentials.every(
+                    (fullCredential: CredentialExchangeRecord) =>
+                      getCredentialSchemaIdForRecord(fullCredential) !== cred.schemaId &&
+                      getCredentialDefinitionIdForRecord(fullCredential) !== cred.credDefId
+                  )
+                }) ?? []
+              }
             />
           )}
         </View>
