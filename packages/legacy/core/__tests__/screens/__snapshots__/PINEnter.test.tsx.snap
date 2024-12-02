@@ -80,7 +80,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   "color": "#FFFFFF",
                   "fontSize": 18,
                   "fontWeight": "bold",
-                  "marginBottom": 20,
+                  "marginBottom": 4,
                 }
               }
             >
@@ -94,6 +94,13 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 }
               }
             >
+              <View
+                style={
+                  Object {
+                    "minHeight": 36,
+                  }
+                }
+              />
               <View
                 style={
                   Object {
@@ -372,6 +379,13 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
+              <View
+                style={
+                  Object {
+                    "minHeight": 36,
+                  }
+                }
+              />
             </View>
           </View>
           <View
@@ -545,7 +559,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   "color": "#FFFFFF",
                   "fontSize": 18,
                   "fontWeight": "bold",
-                  "marginBottom": 20,
+                  "marginBottom": 4,
                 }
               }
             >
@@ -559,6 +573,13 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 }
               }
             >
+              <View
+                style={
+                  Object {
+                    "minHeight": 36,
+                  }
+                }
+              />
               <View
                 style={
                   Object {
@@ -837,6 +858,13 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   </Text>
                 </View>
               </View>
+              <View
+                style={
+                  Object {
+                    "minHeight": 36,
+                  }
+                }
+              />
             </View>
           </View>
           <View

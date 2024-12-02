@@ -53,6 +53,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
+  const [alertModalMessage, setAlertModalMessage] = useState('')
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -99,7 +100,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     subText: {
       ...TextTheme.bold,
-      marginBottom: 20,
+      marginBottom: 4,
     },
   })
 
@@ -256,9 +257,37 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
         if (!result) {
           const newAttempt = store.loginAttempt.loginAttempts + 1
-          if (!getLockoutPenalty(newAttempt)) {
+          const attemptsLeft = attemptLockoutThresholdRules.attemptIncrement - newAttempt
+          if (!inlineMessages.enabled && !getLockoutPenalty(newAttempt)) {
             // skip displaying modals if we are going to lockout
             setAlertModalVisible(true)
+          }
+          if (attemptsLeft > 1) {
+            if (inlineMessages.enabled) {
+              setInlineMessageField({
+                message: t('PINEnter.IncorrectPINTries', { tries: attemptsLeft }), // Example: 'Incorrect PIN: 4 tries before timeout'
+                inlineType: InlineErrorType.error,
+                config: inlineMessages,
+              })
+            } else {
+              setAlertModalMessage(t('PINEnter.IncorrectPINTries', { tries: attemptsLeft }))
+            }
+          } else if (attemptsLeft === 1) {
+            if (inlineMessages.enabled) {
+              setInlineMessageField({
+                message: t('PINEnter.LastTryBeforeTimeout'), // Show last try warning
+                inlineType: InlineErrorType.error,
+                config: inlineMessages,
+              })
+            } else {
+              setAlertModalMessage(t('PINEnter.LastTryBeforeTimeout'))
+            }
+          } else {
+            const penalty = getLockoutPenalty(newAttempt)
+            if (penalty !== undefined) {
+              attemptLockout(penalty) // Only call attemptLockout if penalty is defined
+            }
+            return
           }
 
           setContinueEnabled(true)
@@ -305,6 +334,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       setAuthenticated,
       gotoPostAuthScreens,
       t,
+      attemptLockout,
+      inlineMessages,
     ]
   )
 
@@ -485,7 +516,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           title={t('PINEnter.IncorrectPIN')}
           bodyContent={
             <View>
-              <Text style={style.modalText}>{t('PINEnter.RepeatPIN')}</Text>
+              <Text style={style.modalText}>{alertModalMessage}</Text>
               {displayLockoutWarning ? (
                 <Text style={style.modalText}>{t('PINEnter.AttemptLockoutWarning')}</Text>
               ) : null}
