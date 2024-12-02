@@ -60,6 +60,9 @@ const PINInputComponent = (
     hideIcon: {
       paddingHorizontal: 10,
     },
+    inlineMessageContainer: {
+      minHeight: 36,
+    },
   })
   const content = () => (
     <View style={PINInputTheme.labelAndFieldContainer}>
@@ -110,14 +113,22 @@ const PINInputComponent = (
   const inlineMessageView = ({ message, inlineType, config }: InlineMessageProps) => (
     <InlineErrorText message={message} inlineType={inlineType} config={config} />
   )
-  const inlineMessagePlaceholder = (placment: InlineErrorPosition) => {
-    if (inlineMessage && inlineMessage.config.position === placment) {
-      return inlineMessageView(inlineMessage)
+  const inlineMessagePlaceholder = (placement: InlineErrorPosition) => {
+    // Check if inlineMessage exists and if its position matches the placement or falls back to Above
+    if (!inlineMessage) {
+      return <View style={style.inlineMessageContainer} />
     }
-    //This is a fallback in case no position provided
-    if (inlineMessage && placment === InlineErrorPosition.Above && !inlineMessage.config.position) {
-      return inlineMessageView(inlineMessage)
+  
+    const messagePosition = inlineMessage.config.position || InlineErrorPosition.Above // Default to Above
+    if (messagePosition !== placement) {
+      return <View style={style.inlineMessageContainer} />
     }
+  
+    return (
+      <View style={style.inlineMessageContainer}>
+        {inlineMessageView(inlineMessage)}
+      </View>
+    )
   }
   return (
     <View style={style.container}>
