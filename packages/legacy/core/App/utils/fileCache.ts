@@ -1,6 +1,6 @@
 import { BaseLogger } from '@credo-ts/core'
-import axios, { AxiosError, AxiosInstance } from 'axios'
-import { CachesDirectoryPath, readFile, writeFile, exists, mkdir, unlink } from 'react-native-fs'
+import axios, { AxiosInstance } from 'axios'
+import { CachesDirectoryPath, readFile, writeFile, exists, mkdir } from 'react-native-fs'
 
 export type CacheDataFile = {
   fileEtag: string
