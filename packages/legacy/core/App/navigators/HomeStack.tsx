@@ -16,7 +16,7 @@ const HomeStack: React.FC = () => {
   const theme = useTheme()
   const { t } = useTranslation()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [historyEnabled] = useServices([TOKENS.HISTORY_ENABLED])
+  const [ScreenOptionsDictionary, historyEnabled] = useServices([TOKENS.OBJECT_SCREEN_CONFIG, TOKENS.HISTORY_ENABLED])
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -27,6 +27,7 @@ const HomeStack: React.FC = () => {
           title: t('Screens.Home'),
           headerRight: () => (historyEnabled ? <HistoryMenu /> : null),
           headerLeft: () => <SettingsMenu />,
+          ...ScreenOptionsDictionary[Screens.Home],
         })}
       />
     </Stack.Navigator>

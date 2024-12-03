@@ -134,13 +134,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       color: ColorPallet.brand.link,
       textDecorationLine: 'underline',
     },
-    cardLoading: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
-      flex: 1,
-      flexGrow: 1,
-      marginVertical: 35,
-      borderRadius: 15,
-    },
   })
 
   useEffect(() => {
@@ -503,17 +496,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           </View>
         )}
         {loading || attestationLoading ? (
-          <View style={styles.cardLoading}>
-            <LoadingPlaceholder
-              workflowType={LoadingPlaceholderWorkflowType.ProofRequested}
-              timeoutDurationInMs={10000}
-              loadingProgressPercent={30}
-              onCancelTouched={async () => {
-                await handleDeclineTouched()
-              }}
-              testID={testIdWithKey('ProofRequestLoading')}
-            />
-          </View>
+          <LoadingPlaceholder
+            workflowType={LoadingPlaceholderWorkflowType.ProofRequested}
+            timeoutDurationInMs={10000}
+            loadingProgressPercent={30}
+            onCancelTouched={async () => {
+              await handleDeclineTouched()
+            }}
+            testID={testIdWithKey('ProofRequestLoading')}
+          />
         ) : (
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
