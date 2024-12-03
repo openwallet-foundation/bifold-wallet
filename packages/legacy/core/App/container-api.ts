@@ -12,7 +12,7 @@ import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
 import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
-import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
+import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType } from './types/navigators'
 import { CustomNotification } from './types/notification'
 import { Config } from './types/config'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
@@ -101,6 +101,7 @@ export const LOAD_STATE_TOKENS = {
 
 export const OBJECT_TOKENS = {
   OBJECT_SCREEN_CONFIG: 'object.screen-config',
+  OBJECT_LAYOUT_CONFIG: 'object.screenlayout-config',
 } as const
 
 export const CACHE_TOKENS = {
@@ -167,6 +168,7 @@ export type TokenMapping = {
   }
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_SCREEN_CONFIG]: ScreenOptionsType
+  [TOKENS.OBJECT_LAYOUT_CONFIG]: ScreenLayoutConfig
   [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
