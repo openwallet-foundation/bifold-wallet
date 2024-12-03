@@ -48,7 +48,6 @@ export const defaultState: State = {
     usePushNotifications: false,
     useVerifierCapability: false,
     useConnectionInviterCapability: false,
-    useHistoryCapability: false,
     useDevVerifierTemplates: false,
     acceptDevCredentials: false,
     useDataRetention: true,

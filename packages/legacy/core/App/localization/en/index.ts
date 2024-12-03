@@ -256,6 +256,8 @@ const translation = {
     "BiometricsUnlock": "Unlock with biometrics",
     "IncorrectPIN": "Incorrect PIN",
     "RepeatPIN": "Please try your PIN again.",
+    "IncorrectPINTries": "Incorrect PIN: {{tries}} tries before timeout",
+    "LastTryBeforeTimeout": "Incorrect PIN: Last try before timeout",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
     "BiometricsError": "Biometrics were not successful.",
@@ -411,8 +413,6 @@ const translation = {
       "WalletPinUpdated": "New PIN set",
     },
     "Today": "Today",
-    "UseHistoryCapability": "Enable history",
-    "UseHistoryCapabilityToggle": "Toggle Enable history",
   },
   "Contacts": {
     "EmptyList": "Your Contacts is empty!",

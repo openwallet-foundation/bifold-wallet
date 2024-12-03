@@ -34,7 +34,6 @@ import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { useStore } from '../contexts/store'
 import { parseCredDefFromId } from '../utils/cred-def'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
@@ -51,12 +50,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { credentialId } = route.params
   const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
-  const [store] = useStore()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-  const [bundleResolver, logger, historyManagerCurried, historyEventsLogger] = useServices([TOKENS.UTIL_OCA_RESOLVER, TOKENS.UTIL_LOGGER,
+  const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_EVENTS_LOGGER])
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
+  ])
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
@@ -185,7 +187,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const logHistoryRecord = useCallback(() => {
     try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
+      if (!(agent && historyEnabled)) {
         logger.trace(
           `[${CredentialDetails.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
         )
@@ -214,8 +216,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     } catch (err: unknown) {
       logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, credential, credentialConnectionLabel, credentialId])
-
+  }, [agent, historyEnabled, logger, historyManagerCurried, credential, credentialConnectionLabel, credentialId])
 
   const callSubmitRemove = useCallback(async () => {
     try {
@@ -223,7 +224,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         return
       }
 
-      if(historyEventsLogger.logAttestationRemoved) {
+      if (historyEventsLogger.logAttestationRemoved) {
         logHistoryRecord()
       }
 

@@ -49,12 +49,20 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertNetworkConnected } = useNetwork()
-  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried, historyEventsLogger] = useServices([
+  const [
+    bundleResolver,
+    { enableTours: enableToursConfig },
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CONFIG,
     TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_EVENTS_LOGGER
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -156,36 +164,39 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
-  const logHistoryRecord = useCallback((type: HistoryCardType) => {
-    try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
-        logger.trace(
-          `[${CredentialOffer.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
-        )
-        return
-      }
-      const historyManager = historyManagerCurried(agent)
-      
-      if (!credential) {
-        logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
-        return
-      }
-      const ids = getCredentialIdentifiers(credential)
-      const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+  const logHistoryRecord = useCallback(
+    (type: HistoryCardType) => {
+      try {
+        if (!(agent && historyEnabled)) {
+          logger.trace(
+            `[${CredentialOffer.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+          )
+          return
+        }
+        const historyManager = historyManagerCurried(agent)
 
-      /** Save history record for card accepted */
-      const recordData: HistoryRecord = {
-        type: type,
-        message: name,
-        createdAt: credential?.createdAt,
-        correspondenceId: credentialId,
-        correspondenceName: credentialConnectionLabel,
+        if (!credential) {
+          logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
+          return
+        }
+        const ids = getCredentialIdentifiers(credential)
+        const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+
+        /** Save history record for card accepted */
+        const recordData: HistoryRecord = {
+          type: type,
+          message: name,
+          createdAt: credential?.createdAt,
+          correspondenceId: credentialId,
+          correspondenceName: credentialConnectionLabel,
+        }
+        historyManager.saveHistory(recordData)
+      } catch (err: unknown) {
+        logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
       }
-      historyManager.saveHistory(recordData)
-    } catch (err: unknown) {
-      logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
-    }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel])
+    },
+    [agent, historyEnabled, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel]
+  )
 
   const handleAcceptTouched = useCallback(async () => {
     try {
@@ -196,7 +207,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       setAcceptModalVisible(true)
 
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
-      if(historyEventsLogger.logAttestationAccepted) {
+      if (historyEventsLogger.logAttestationAccepted) {
         const type = HistoryCardType.CardAccepted
         logHistoryRecord(type)
       }
@@ -218,7 +229,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       }
 
       toggleDeclineModalVisible()
-      if(historyEventsLogger.logAttestationRefused) {
+      if (historyEventsLogger.logAttestationRefused) {
         const type = HistoryCardType.CardDeclined
         logHistoryRecord(type)
       }
@@ -227,7 +238,15 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, credential, t, toggleDeclineModalVisible, navigation, logHistoryRecord, historyEventsLogger.logAttestationRefused])
+  }, [
+    agent,
+    credential,
+    t,
+    toggleDeclineModalVisible,
+    navigation,
+    logHistoryRecord,
+    historyEventsLogger.logAttestationRefused,
+  ])
 
   const header = () => {
     return (

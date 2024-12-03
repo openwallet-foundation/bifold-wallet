@@ -33,7 +33,7 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType, co
       ? InputInlineMessage.inlineWarningText.color
       : InputInlineMessage.inlineErrorText.color
 
-  const props: SvgProps = { height: 16, width: 16, color: color, style: style.icon }
+  const props: SvgProps = { height: 24, width: 24, color: color, style: style.icon }
 
   return (
     <View style={[style.container, config.style]}>

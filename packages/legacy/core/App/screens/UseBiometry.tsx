@@ -32,22 +32,14 @@ const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { agent } = useAppAgent()
   const { t } = useTranslation()
-  const [
-    { enablePushNotifications },
-    logger,
-    historyManagerCurried,
-    historyEventsLogger
-  ] = useServices([
-    TOKENS.CONFIG,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_EVENTS_LOGGER
-  ])
+  const [{ enablePushNotifications }, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices(
+    [TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY, TOKENS.HISTORY_ENABLED, TOKENS.HISTORY_EVENTS_LOGGER]
+  )
   const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
-  const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | {title: string, description: string}>(null)
+  const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
@@ -56,7 +48,7 @@ const UseBiometry: React.FC = () => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
 
-  const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID;
+  const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
   const styles = StyleSheet.create({
     container: {
@@ -99,27 +91,30 @@ const UseBiometry: React.FC = () => {
     }
   }, [screenUsage, biometryEnabled, commitPIN, disableBiometrics, dispatch])
 
-  const logHistoryRecord = useCallback((type: HistoryCardType) => {
-    try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
-        logger.trace(
-          `[${UseBiometry.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
-        )
-        return
+  const logHistoryRecord = useCallback(
+    (type: HistoryCardType) => {
+      try {
+        if (!(agent && historyEnabled)) {
+          logger.trace(
+            `[${UseBiometry.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+          )
+          return
+        }
+        const historyManager = historyManagerCurried(agent)
+
+        /** Save history record for card accepted */
+        const recordData: HistoryRecord = {
+          type: type,
+          message: type,
+          createdAt: new Date(),
+        }
+        historyManager.saveHistory(recordData)
+      } catch (err: unknown) {
+        logger.error(`[${UseBiometry.name}]:[logHistoryRecord] Error saving history: ${err}`)
       }
-      const historyManager = historyManagerCurried(agent)
-      
-      /** Save history record for card accepted */
-      const recordData: HistoryRecord = {
-        type: type,
-        message: type,
-        createdAt: new Date(),
-      }
-      historyManager.saveHistory(recordData)
-    } catch (err: unknown) {
-      logger.error(`[${UseBiometry.name}]:[logHistoryRecord] Error saving history: ${err}`)
-    }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried])
+    },
+    [agent, historyEnabled, logger, historyManagerCurried]
+  )
 
   const continueTouched = useCallback(async () => {
     setContinueEnabled(false)
@@ -151,35 +146,51 @@ const UseBiometry: React.FC = () => {
     setSettingsPopupConfig(null)
   }
 
-  const onSwitchToggleAllowed = useCallback((newValue: boolean) => {
-    if (screenUsage === UseBiometryUsage.ToggleOnOff) {
-      setCanSeeCheckPIN(true)
-      DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, true)
-      if(historyEventsLogger.logToggleBiometry && store.onboarding.didAgreeToTerms && store.onboarding.didConsiderBiometry){
-        const type = HistoryCardType.ActivateBiometry
-        logHistoryRecord(type)
+  const onSwitchToggleAllowed = useCallback(
+    (newValue: boolean) => {
+      if (screenUsage === UseBiometryUsage.ToggleOnOff) {
+        setCanSeeCheckPIN(true)
+        DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, true)
+        if (
+          historyEventsLogger.logToggleBiometry &&
+          store.onboarding.didAgreeToTerms &&
+          store.onboarding.didConsiderBiometry
+        ) {
+          const type = HistoryCardType.ActivateBiometry
+          logHistoryRecord(type)
+        }
+      } else {
+        setBiometryEnabled(newValue)
       }
-    } else {
-      setBiometryEnabled(newValue)
-    }
-  }, [screenUsage, historyEventsLogger.logToggleBiometry, logHistoryRecord, store.onboarding.didAgreeToTerms, store.onboarding.didConsiderBiometry])
+    },
+    [
+      screenUsage,
+      historyEventsLogger.logToggleBiometry,
+      logHistoryRecord,
+      store.onboarding.didAgreeToTerms,
+      store.onboarding.didConsiderBiometry,
+    ]
+  )
 
-  const onRequestSystemBiometrics = useCallback(async (newToggleValue: boolean) => {
-    const permissionResult: PermissionStatus = await request(BIOMETRY_PERMISSION)
-    switch (permissionResult) {
-      case RESULTS.GRANTED:
-      case RESULTS.LIMITED:
-        // Granted
-        onSwitchToggleAllowed(newToggleValue)
-        break
-      default:
-        break
-    }
-  }, [onSwitchToggleAllowed, BIOMETRY_PERMISSION])
+  const onRequestSystemBiometrics = useCallback(
+    async (newToggleValue: boolean) => {
+      const permissionResult: PermissionStatus = await request(BIOMETRY_PERMISSION)
+      switch (permissionResult) {
+        case RESULTS.GRANTED:
+        case RESULTS.LIMITED:
+          // Granted
+          onSwitchToggleAllowed(newToggleValue)
+          break
+        default:
+          break
+      }
+    },
+    [onSwitchToggleAllowed, BIOMETRY_PERMISSION]
+  )
 
   const onCheckSystemBiometrics = useCallback(async (): Promise<PermissionStatus> => {
     if (Platform.OS === 'android') {
-      // Android doesn't need to prompt biometric permission 
+      // Android doesn't need to prompt biometric permission
       // for an app to use it.
       return biometryAvailable ? RESULTS.GRANTED : RESULTS.UNAVAILABLE
     } else if (Platform.OS === 'ios') {
@@ -210,14 +221,14 @@ const UseBiometry: React.FC = () => {
       case RESULTS.UNAVAILABLE:
         setSettingsPopupConfig({
           title: t('Biometry.SetupBiometricsTitle'),
-          description: t('Biometry.SetupBiometricsDesc')
+          description: t('Biometry.SetupBiometricsDesc'),
         })
         break
       case RESULTS.BLOCKED:
         // Previously denied
         setSettingsPopupConfig({
           title: t('Biometry.AllowBiometricsTitle'),
-          description: t('Biometry.AllowBiometricsDesc')
+          description: t('Biometry.AllowBiometricsDesc'),
         })
         break
       case RESULTS.DENIED:
@@ -229,18 +240,30 @@ const UseBiometry: React.FC = () => {
     }
   }, [onSwitchToggleAllowed, onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t])
 
-  const onAuthenticationComplete = useCallback((status: boolean) => {
-    // If successfully authenticated the toggle may proceed.
-    if (status) {
-      setBiometryEnabled((previousState) => !previousState)
-    }
-    DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
-    if(historyEventsLogger.logToggleBiometry && store.onboarding.didAgreeToTerms && store.onboarding.didConsiderBiometry){
-      const type = HistoryCardType.DeactivateBiometry
-      logHistoryRecord(type)
-    }
-    setCanSeeCheckPIN(false)
-  }, [historyEventsLogger.logToggleBiometry, logHistoryRecord, store.onboarding.didAgreeToTerms, store.onboarding.didConsiderBiometry])
+  const onAuthenticationComplete = useCallback(
+    (status: boolean) => {
+      // If successfully authenticated the toggle may proceed.
+      if (status) {
+        setBiometryEnabled((previousState) => !previousState)
+      }
+      DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
+      if (
+        historyEventsLogger.logToggleBiometry &&
+        store.onboarding.didAgreeToTerms &&
+        store.onboarding.didConsiderBiometry
+      ) {
+        const type = HistoryCardType.DeactivateBiometry
+        logHistoryRecord(type)
+      }
+      setCanSeeCheckPIN(false)
+    },
+    [
+      historyEventsLogger.logToggleBiometry,
+      logHistoryRecord,
+      store.onboarding.didAgreeToTerms,
+      store.onboarding.didConsiderBiometry,
+    ]
+  )
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
@@ -279,7 +302,7 @@ const UseBiometry: React.FC = () => {
           </View>
           <View style={{ justifyContent: 'center' }}>
             <ToggleButton
-              testID={testIdWithKey("ToggleBiometrics")}
+              testID={testIdWithKey('ToggleBiometrics')}
               isEnabled={biometryEnabled}
               isAvailable={true}
               toggleAction={toggleSwitch}

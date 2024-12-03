@@ -255,6 +255,8 @@ const translation = {
         "BiometricsUnlock": "Déverrouiller avec la biométrie",
         "IncorrectPIN": "NIP erroné",
         "RepeatPIN": "Essayez votre NIP à nouveau",
+        "IncorrectPINTries": "PIN incorrect : {{tries}} essaie avant l'expiration du délai",
+        "LastTryBeforeTimeout": "PIN incorrect : dernier essai avant expiration du délai",
         "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
         "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
         "BiometricsError": "La biométrie n'a pas réussi.",
@@ -410,8 +412,6 @@ const translation = {
             "WalletPinUpdated": "New PIN set(fr)",
         },
         "Today": "Today(fr)",
-        "UseHistoryCapability": "Enable history(fr)",
-        "UseHistoryCapabilityToggle": "Toggle Enable history(fr)",
     },
     "Contacts": {
         "EmptyList": "Vos Contacts sont vides!",

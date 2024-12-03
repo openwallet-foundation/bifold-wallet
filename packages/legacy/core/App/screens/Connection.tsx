@@ -27,7 +27,6 @@ import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
 import { OpenId4VPRequestRecord } from 'modules/openid/types'
 import { useAppAgent } from '../utils/agent'
-import { useStore } from '../contexts/store'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
@@ -59,14 +58,22 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     { connectionTimerDelay, autoRedirectConnectionToHome, enableChat },
     attestationMonitor,
     historyManagerCurried,
+    historyEnabled,
     historyEventsLogger,
-  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR, TOKENS.FN_LOAD_HISTORY, TOKENS.HISTORY_EVENTS_LOGGER])
+  ] = useServices([
+    TOKENS.UTIL_LOGGER,
+    TOKENS.NOTIFICATIONS,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_ATTESTATION_MONITOR,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
+  ])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const { agent } = useAppAgent()
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
-  const [store,] = useStore()
 
   const { t } = useTranslation()
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
@@ -86,7 +93,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   const logHistoryRecord = useCallback(() => {
     try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
+      if (!(agent && historyEnabled)) {
         logger.trace(
           `[${CredentialOffer.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
         )
@@ -94,7 +101,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       }
       const historyManager = historyManagerCurried(agent)
 
-      
       if (!connection) {
         logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
         return
@@ -112,8 +118,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     } catch (err: unknown) {
       logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, connection])
-
+  }, [agent, historyEnabled, logger, historyManagerCurried, connection])
 
   const handleNavigation = useCallback(
     (connectionId: string) => {
@@ -191,17 +196,24 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
   }, [proofId, credentialId, navigation, t])
 
-
   useEffect(() => {
     if (state.inProgress) {
       return
     }
     const goalCode = oobRecord?.outOfBandInvitation?.goalCode
 
-    if(historyEventsLogger.logConnection && goalCode != GoalCodes.proofRequestVerifyOnce) {
+    if (historyEventsLogger.logConnection && goalCode != GoalCodes.proofRequestVerifyOnce) {
       logHistoryRecord()
     }
-  }, [state.inProgress, state.percentComplete, connTimerDelay, historyEventsLogger.logConnectionRemoved, logHistoryRecord, historyEventsLogger.logConnection, oobRecord?.outOfBandInvitation?.goalCode])
+  }, [
+    state.inProgress,
+    state.percentComplete,
+    connTimerDelay,
+    historyEventsLogger.logConnectionRemoved,
+    logHistoryRecord,
+    historyEventsLogger.logConnection,
+    oobRecord?.outOfBandInvitation?.goalCode,
+  ])
 
   useEffect(() => {
     if (!oobRecord || !state.inProgress) {
@@ -212,7 +224,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     // to Chat
     if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
-      
+
       handleNavigation(connection.id)
 
       return

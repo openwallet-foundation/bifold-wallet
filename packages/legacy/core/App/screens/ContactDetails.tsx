@@ -57,12 +57,20 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
 
-  const [{ contactDetailsOptions }, ContactCredentialListItem, logger, historyManagerCurried, historyEventsLogger] = useServices([
+  const [
+    { contactDetailsOptions },
+    ContactCredentialListItem,
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
     TOKENS.CONFIG,
     TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM,
     TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_EVENTS_LOGGER
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
 
   const styles = StyleSheet.create({
@@ -116,14 +124,14 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
   const logHistoryRecord = useCallback(() => {
     try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
+      if (!(agent && historyEnabled)) {
         logger.trace(
           `[${ContactDetails.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
         )
         return
       }
       const historyManager = historyManagerCurried(agent)
-      
+
       if (!connection) {
         logger.error(`[${ContactDetails.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
         return
@@ -142,8 +150,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     } catch (err: unknown) {
       logger.error(`[${ContactDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, connection])
-
+  }, [agent, historyEnabled, logger, historyManagerCurried, connection])
 
   const callSubmitRemove = useCallback(async () => {
     try {
@@ -151,7 +158,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         return
       }
 
-      if(historyEventsLogger.logConnectionRemoved){
+      if (historyEventsLogger.logConnectionRemoved) {
         logHistoryRecord()
       }
 

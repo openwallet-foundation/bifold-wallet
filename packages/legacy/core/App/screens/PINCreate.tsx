@@ -75,7 +75,17 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [PINExplainer, PINCreateHeader, { PINSecurity }, Button, inlineMessages, logger, historyManagerCurried, historyEventsLogger] = useServices([
+  const [
+    PINExplainer,
+    PINCreateHeader,
+    { PINSecurity },
+    Button,
+    inlineMessages,
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
     TOKENS.SCREEN_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
@@ -83,7 +93,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     TOKENS.INLINE_ERRORS,
     TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_EVENTS_LOGGER
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
@@ -202,7 +213,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   const logHistoryRecord = useCallback(() => {
     try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
+      if (!(agent && historyEnabled)) {
         logger.trace(
           `[${PINCreate.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
         )
@@ -220,7 +231,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     } catch (err: unknown) {
       logger.error(`[${PINCreate.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried])
+  }, [agent, historyEnabled, logger, historyManagerCurried])
 
   const handleCreatePinTap = async () => {
     setLoading(true)
@@ -232,8 +243,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
         if (oldPinValid) {
           const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
           if (success) {
-            if(historyEventsLogger.logPinChanged) {
-              logHistoryRecord();
+            if (historyEventsLogger.logPinChanged) {
+              logHistoryRecord()
             }
             setModalState({
               visible: true,

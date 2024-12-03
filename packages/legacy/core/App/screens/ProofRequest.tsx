@@ -4,7 +4,13 @@ import {
   AnonCredsRequestedPredicateMatch,
   V1RequestPresentationMessage,
 } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredoError, DifPexInputDescriptorToCredentials, ProofState, V2RequestPresentationMessage } from '@credo-ts/core'
+import {
+  CredentialExchangeRecord,
+  CredoError,
+  DifPexInputDescriptorToCredentials,
+  ProofState,
+  V2RequestPresentationMessage,
+} from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
@@ -87,13 +93,22 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   )
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
-  const [bundleResolver, attestationMonitor, { enableTours: enableToursConfig }, logger, historyManagerCurried, historyEventsLogger] = useServices([
+  const [
+    bundleResolver,
+    attestationMonitor,
+    { enableTours: enableToursConfig },
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.UTIL_ATTESTATION_MONITOR,
     TOKENS.CONFIG,
     TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_EVENTS_LOGGER
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
 
   const hasMatchingCredDef = useMemo(
@@ -356,44 +371,44 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     [activeCreds]
   )
 
-  const logHistoryRecord = useCallback(async (type: HistoryCardType) => {
-    try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
-        logger.trace(
-          `[${ProofRequest.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
-        )
-        return
-      }
-      const historyManager = historyManagerCurried(agent)
-
-      
-      if (!proof) {
-        logger.error(`[${ProofRequest.name}]:[logHistoryRecord] Cannot save history, proof undefined!`)
-        return
-      }
-     
-
-      let message: V2RequestPresentationMessage | V1RequestPresentationMessage | null | undefined
+  const logHistoryRecord = useCallback(
+    async (type: HistoryCardType) => {
       try {
-        message = await agent?.proofs.findRequestMessage(proofId)
-      } catch (error) {
-        logger.error('Error finding request message:', error as CredoError)
-      }
+        if (!(agent && historyEnabled)) {
+          logger.trace(
+            `[${ProofRequest.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+          )
+          return
+        }
+        const historyManager = historyManagerCurried(agent)
 
-      /** Save history record for proof accepted/declined */
-      const recordData: HistoryRecord = {
-        type: type,
-        message: message?.comment ?? '',
-        createdAt: proof.createdAt,
-        correspondenceId: proofId,
-        correspondenceName: proofConnectionLabel,
-      }
-      historyManager.saveHistory(recordData)
-    } catch (err: unknown) {
-      logger.error(`[${ProofRequest.name}]:[logHistoryRecord] Error saving history: ${err}`)
-    }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, proof, proofId, proofConnectionLabel])
+        if (!proof) {
+          logger.error(`[${ProofRequest.name}]:[logHistoryRecord] Cannot save history, proof undefined!`)
+          return
+        }
 
+        let message: V2RequestPresentationMessage | V1RequestPresentationMessage | null | undefined
+        try {
+          message = await agent?.proofs.findRequestMessage(proofId)
+        } catch (error) {
+          logger.error('Error finding request message:', error as CredoError)
+        }
+
+        /** Save history record for proof accepted/declined */
+        const recordData: HistoryRecord = {
+          type: type,
+          message: message?.comment ?? '',
+          createdAt: proof.createdAt,
+          correspondenceId: proofId,
+          correspondenceName: proofConnectionLabel,
+        }
+        historyManager.saveHistory(recordData)
+      } catch (err: unknown) {
+        logger.error(`[${ProofRequest.name}]:[logHistoryRecord] Error saving history: ${err}`)
+      }
+    },
+    [agent, historyEnabled, logger, historyManagerCurried, proof, proofId, proofConnectionLabel]
+  )
 
   const handleAcceptPress = useCallback(async () => {
     try {
@@ -474,7 +489,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         agent.connections.deleteById(proof.connectionId)
       }
 
-      if(historyEventsLogger.logInformationSent) {
+      if (historyEventsLogger.logInformationSent) {
         logHistoryRecord(HistoryCardType.InformationSent)
       }
     } catch (err: unknown) {
@@ -482,7 +497,18 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       const error = new BifoldError(t('Error.Title1027'), t('Error.Message1027'), (err as Error)?.message ?? err, 1027)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, proof, assertNetworkConnected, retrievedCredentials, activeCreds, descriptorMetadata, goalCode, t, historyEventsLogger.logInformationSent, logHistoryRecord])
+  }, [
+    agent,
+    proof,
+    assertNetworkConnected,
+    retrievedCredentials,
+    activeCreds,
+    descriptorMetadata,
+    goalCode,
+    t,
+    historyEventsLogger.logInformationSent,
+    logHistoryRecord,
+  ])
 
   const handleDeclineTouched = useCallback(async () => {
     try {
@@ -501,11 +527,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
     toggleDeclineModalVisible()
 
-    if(historyEventsLogger.logInformationNotSent) {
+    if (historyEventsLogger.logInformationNotSent) {
       logHistoryRecord(HistoryCardType.InformationNotSent)
     }
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-  }, [agent, proof, goalCode, t, navigation, toggleDeclineModalVisible, historyEventsLogger.logInformationNotSent, logHistoryRecord])
+  }, [
+    agent,
+    proof,
+    goalCode,
+    t,
+    navigation,
+    toggleDeclineModalVisible,
+    historyEventsLogger.logInformationNotSent,
+    logHistoryRecord,
+  ])
 
   const handleCancelTouched = useCallback(async () => {
     try {
