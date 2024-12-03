@@ -381,8 +381,6 @@ const translation = {
       "WalletPinUpdated": "New PIN set",
     },
     "Today": "Today",
-    "UseHistoryCapability": "Enable history",
-    "UseHistoryCapabilityToggle": "Toggle Enable history",
   },
   "Contacts": {
     "EmptyList": "Seus Contatos esta vazio!",
