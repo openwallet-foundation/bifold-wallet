@@ -1,3 +1,4 @@
+import { getDomainFromUrl } from '@credo-ts/core'
 import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
 import 'react-native-url-polyfill/auto'
 
@@ -19,8 +20,7 @@ export function sanitizeString(str: string) {
 
 export function getHostNameFromUrl(url: string) {
   try {
-    const parsedUrl = new URL(url)
-    return parsedUrl.hostname
+    return getDomainFromUrl(url)
   } catch (error) {
     return 'undefined!'
   }
