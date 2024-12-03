@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
-<RNCSafeAreaView
-  edges={
+<View
+  style={
     Array [
-      "left",
-      "right",
-      "bottom",
+      Object {
+        "flex": 1,
+      },
+      undefined,
     ]
   }
 >
@@ -439,16 +440,17 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
       </View>
     </View>
   </RCTScrollView>
-</RNCSafeAreaView>
+</View>
 `;
 
 exports[`Terms Screen Renders correctly 1`] = `
-<RNCSafeAreaView
-  edges={
+<View
+  style={
     Array [
-      "left",
-      "right",
-      "bottom",
+      Object {
+        "flex": 1,
+      },
+      undefined,
     ]
   }
 >
@@ -881,5 +883,5 @@ exports[`Terms Screen Renders correctly 1`] = `
       </View>
     </View>
   </RCTScrollView>
-</RNCSafeAreaView>
+</View>
 `;

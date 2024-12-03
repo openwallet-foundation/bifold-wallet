@@ -50,6 +50,7 @@ import { Locales } from './localization'
 import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
 import { InlineErrorPosition } from './types/error'
+import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -119,6 +120,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.HISTORY_EVENTS_LOGGER, defaultHistoryEventsLogger)
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
+    this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
     this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
