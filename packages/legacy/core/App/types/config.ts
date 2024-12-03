@@ -24,6 +24,7 @@ export interface Config {
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
   showPreface?: boolean
+  showPINExplainer?: boolean
   disableOnboardingSkip?: boolean
   enablePushNotifications?: PushNotificationConfiguration
   whereToUseWalletUrl?: string

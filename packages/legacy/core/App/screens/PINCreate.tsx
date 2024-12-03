@@ -58,7 +58,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     title: '',
     message: '',
   })
-  const [explained, setExplained] = useState(explainedStatus)
   const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
@@ -72,13 +71,15 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [PINExplainer, PINCreateHeader, { PINSecurity }, Button, inlineMessages] = useServices([
+  const [PINExplainer, PINCreateHeader, { PINSecurity, showPINExplainer }, Button, inlineMessages] = useServices([
     TOKENS.SCREEN_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
     TOKENS.INLINE_ERRORS,
   ])
+
+  const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)
