@@ -11,6 +11,7 @@ import axios from 'axios'
 import { applyTemplateMarkers, useRemoteProofBundleResolver } from '../../App/utils/proofBundle'
 import { BasicAppContext } from '../helpers/app'
 import { container } from 'tsyringe'
+import { readFile } from 'react-native-fs'
 
 const templates = [
   {
@@ -70,43 +71,7 @@ jest.mock('../../App/hooks/proof-request-templates', () => ({
 jest.mock('react-native-fs', () => ({
   exists: jest.fn().mockResolvedValue(true),
   mkdir: jest.fn().mockResolvedValue(true),
-  readFile: jest.fn().mockImplementation((filePath) => {
-    const t = [
-      {
-        id: 'Aries:5:StudentFullName:0.0.1:indy_Z',
-        name: 'Student full name',
-        description: 'Verify the full name of a student',
-        version: '0.0.1',
-        payload: {
-          type: 'anoncreds',
-          data: [
-            {
-              schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
-              requestedAttributes: [
-                {
-                  names: ['student_first_name', 'student_last_name'],
-                  restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
-                  devRestrictions: [{ schema_name: 'student_card' }],
-                  non_revoked: { to: '@{now}' },
-                },
-              ],
-              requestedPredicates: [
-                {
-                  name: 'expiry_date',
-                  predicateType: '>=',
-                  predicateValue: '@{currentDate(0)}',
-                  restrictions: [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }],
-                  devRestrictions: [{ schema_name: 'student_card' }],
-                },
-              ],
-            },
-          ],
-        },
-      },
-    ]
-
-    return Promise.resolve(JSON.stringify(t))
-  }),
+  readFile: jest.fn(),
   writeFile: jest.fn().mockResolvedValue(true),
   unlink: jest.fn().mockResolvedValue(true),
 }))
@@ -119,6 +84,8 @@ jest.mock('axios', () => ({
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
+// @ts-expect-error some weird type
+readFile.mockResolvedValue(JSON.stringify(templates))
 // @ts-expect-error useTemplates will be replaced with a mock which does have this method
 useTemplates.mockImplementation(() => templates)
 // @ts-expect-error useTemplate will be replaced with a mock which does have this method
@@ -151,7 +118,6 @@ describe('ProofRequestDetails Screen', () => {
     )
     const { result } = renderHook(() => useRemoteProofBundleResolver('http://localhost:3000'), { wrapper })
     const bundle = await result.current.resolve(true)
-    console.log(result.current)
 
     expect((bundle?.[0].payload.data[0] as any).requestedAttributes[0].restrictions).toHaveLength(2)
   })
