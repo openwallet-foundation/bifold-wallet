@@ -49,12 +49,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { TextTheme, ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertNetworkConnected } = useNetwork()
-  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried] = useServices([
-    TOKENS.UTIL_OCA_RESOLVER,
-    TOKENS.CONFIG,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.FN_LOAD_HISTORY,
-  ])
+  const [bundleResolver, { enableTours: enableToursConfig }, logger, historyManagerCurried, historyEnabled] =
+    useServices([
+      TOKENS.UTIL_OCA_RESOLVER,
+      TOKENS.CONFIG,
+      TOKENS.UTIL_LOGGER,
+      TOKENS.FN_LOAD_HISTORY,
+      TOKENS.HISTORY_ENABLED,
+    ])
   const [loading, setLoading] = useState<boolean>(true)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
@@ -157,7 +159,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
 
   const logHistoryRecord = useCallback(async () => {
     try {
-      if (!(agent && store.preferences.useHistoryCapability)) {
+      if (!(agent && historyEnabled)) {
         logger.trace(
           `[${CredentialOffer.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
         )
@@ -185,7 +187,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     } catch (err: unknown) {
       logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, store.preferences.useHistoryCapability, logger, historyManagerCurried, credential, credentialId])
+  }, [agent, historyEnabled, logger, historyManagerCurried, credential, credentialId])
 
   const handleAcceptTouched = useCallback(async () => {
     try {

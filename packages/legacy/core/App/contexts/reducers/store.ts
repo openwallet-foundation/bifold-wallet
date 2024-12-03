@@ -51,7 +51,6 @@ enum PreferencesDispatchAction {
   PREFERENCES_UPDATED = 'preferences/preferencesStateLoaded',
   USE_VERIFIER_CAPABILITY = 'preferences/useVerifierCapability',
   USE_CONNECTION_INVITER_CAPABILITY = 'preferences/useConnectionInviterCapability',
-  HISTORY_CAPABILITY = 'preferences/historyCapability',
   USE_DEV_VERIFIER_TEMPLATES = 'preferences/useDevVerifierTemplates',
   ENABLE_WALLET_NAMING = 'preferences/enableWalletNaming',
   UPDATE_WALLET_NAME = 'preferences/updateWalletName',
@@ -191,21 +190,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const preferences = {
         ...state.preferences,
         useConnectionInviterCapability: choice,
-      }
-      const newState = {
-        ...state,
-        preferences,
-      }
-
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
-
-      return newState
-    }
-    case PreferencesDispatchAction.HISTORY_CAPABILITY: {
-      const choice = (action?.payload ?? []).pop() ?? false
-      const preferences = {
-        ...state.preferences,
-        useHistoryCapability: choice,
       }
       const newState = {
         ...state,
@@ -651,11 +635,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     case AuthenticationDispatchAction.DID_AUTHENTICATE: {
       const didAuthenticate: boolean = (action?.payload || []).pop() ?? true
       const authentication: AuthenticationState = {
-        didAuthenticate
+        didAuthenticate,
       }
       return {
         ...state,
-        authentication
+        authentication,
       }
     }
     case DeepLinkDispatchAction.ACTIVE_DEEP_LINK: {

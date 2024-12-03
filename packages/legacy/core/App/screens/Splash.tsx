@@ -88,18 +88,11 @@ const Splash: React.FC = () => {
   const [mounted, setMounted] = useState(false)
   const initializing = useRef(false)
   const { initializeAgent } = useInitializeAgent()
-  const [
-    { version: TermsVersion },
-    logger,
-    { showPreface, enablePushNotifications },
-    ocaBundleResolver,
-    historyEnabled,
-  ] = useServices([
+  const [{ version: TermsVersion }, logger, { showPreface, enablePushNotifications }, ocaBundleResolver] = useServices([
     TOKENS.SCREEN_TERMS,
     TOKENS.UTIL_LOGGER,
     TOKENS.CONFIG,
     TOKENS.UTIL_OCA_RESOLVER,
-    TOKENS.HISTORY_ENABLED,
   ])
 
   const styles = StyleSheet.create({
@@ -203,12 +196,7 @@ const Splash: React.FC = () => {
         )
       }
     } catch (err: unknown) {
-      const error = new BifoldError(
-        t('Error.Title1044'),
-        t('Error.Message1044'),
-        (err as Error)?.message ?? err,
-        1044
-      )
+      const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error)?.message ?? err, 1044)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       logger.error((err as Error)?.message ?? err)
     }
@@ -289,16 +277,6 @@ const Splash: React.FC = () => {
     navigation,
     t,
   ])
-
-  useEffect(() => {
-    if (!mounted || !historyEnabled) {
-      return
-    }
-    dispatch({
-      type: DispatchAction.HISTORY_CAPABILITY,
-      payload: [true],
-    })
-  }, [mounted, historyEnabled, dispatch])
 
   return (
     <SafeAreaView style={styles.container}>

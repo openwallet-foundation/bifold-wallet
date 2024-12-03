@@ -35,7 +35,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const [{ settings, enableTours, enablePushNotifications }] = useServices([TOKENS.CONFIG])
+  const [{ settings, enableTours, enablePushNotifications }, historyEnabled] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.HISTORY_ENABLED,
+  ])
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
@@ -182,7 +185,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   }
 
   // add optional history menu to settings
-  if (store.preferences.useHistoryCapability) {
+  if (historyEnabled) {
     settingsSections
       .find((item) => item.header.title === t('Settings.AppSettings'))
       ?.data.push({
