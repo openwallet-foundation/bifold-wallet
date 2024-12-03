@@ -25,7 +25,15 @@ const ConnectStack: React.FC = () => {
         ...defaultStackOptions,
       }}
     >
-      <Stack.Screen name={Screens.Scan} component={scan} options={{ headerBackTestID: testIdWithKey('Back') }} />
+      <Stack.Screen
+        name={Screens.Scan}
+        component={scan}
+        options={{ 
+          title: t('Screens.Scan'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.Scan]
+        }}
+      />
       <Stack.Screen
         name={Screens.PasteUrl}
         component={PasteUrl}
