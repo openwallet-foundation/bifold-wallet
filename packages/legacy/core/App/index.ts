@@ -129,6 +129,7 @@ export * from './container-api'
 export { MainContainer } from './container-impl'
 
 export type { ScreenLayoutConfig } from './types/navigators'
+export type { HistoryEventsLoggerConfig } from './types/config'
 
 export {
   App,
