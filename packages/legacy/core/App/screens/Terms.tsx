@@ -14,7 +14,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import ScreenLayout from '../layout/wrapper'
+import ScreenLayout from '../layout/ScreenLayout'
 
 export const TermsVersion = true
 

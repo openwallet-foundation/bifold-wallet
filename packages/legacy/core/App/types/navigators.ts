@@ -3,7 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
-import { LayoutProps } from '../layout/wrapper'
+import { LayoutProps } from '../layout/ScreenLayout'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
