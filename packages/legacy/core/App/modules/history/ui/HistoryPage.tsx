@@ -5,13 +5,12 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { ButtonType } from '../../../components/buttons/Button-api'
-import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useServices } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
 import { HistoryStackParams } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
-import { CustomRecord, IHistoryManager, RecordType } from '../types'
+import { CustomRecord, RecordType } from '../types'
 
 import HistoryListItem from './components/HistoryListItem'
 
@@ -28,8 +27,11 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
 
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
-  const [Button, logger, loadHistory] = useServices([TOKENS.COMP_BUTTON, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY])
-  const historyManager: IHistoryManager | undefined = agent ? loadHistory(agent) : undefined
+  const [Button, logger, historyManagerCurried] = useServices([
+    TOKENS.COMP_BUTTON,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+  ])
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -72,6 +74,11 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
 
   useEffect(() => {
     const getHistory = async () => {
+      if (!agent) {
+        logger.error(`[${HistoryPage.name}][getAllHistory]: agent undefined!`)
+        return
+      }
+      const historyManager = await historyManagerCurried(agent)
       if (!historyManager) {
         logger.error(`[${HistoryPage.name}][getAllHistory]: historyManager undefined!`)
         return
@@ -84,41 +91,39 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
       }
     }
 
-    getHistory().catch(e => {
+    getHistory().catch((e) => {
       logger.error(`[${HistoryPage.name}][getAllHistory]: ${e}`)
     })
-  }, [historyManager, logger])
+  }, [historyManagerCurried, logger, agent])
 
   return (
-    <KeyboardView>
-      <View style={style.screenContainer}>
-        <View style={style.contentContainer}>
-          <View>
-            <Button
-              title={t('History.SortFilterButton')}
-              testID={actionButtonTestId}
-              accessibilityLabel={actionButtonLabel}
-              buttonType={ButtonType.Secondary}
-              onPress={async () => {
-                //TODO: Save settings
-                // console.log('save history')
-              }}
-            >
-              {!continueEnabled && isLoading ? <ButtonLoading /> : null}
-            </Button>
-            <View style={style.gap} />
+    <View style={style.screenContainer}>
+      <View style={style.contentContainer}>
+        <View>
+          <Button
+            title={t('History.SortFilterButton')}
+            testID={actionButtonTestId}
+            accessibilityLabel={actionButtonLabel}
+            buttonType={ButtonType.Secondary}
+            onPress={async () => {
+              //TODO: Save settings
+              // console.log('save history')
+            }}
+          >
+            {!continueEnabled && isLoading ? <ButtonLoading /> : null}
+          </Button>
+          <View style={style.gap} />
 
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              style={{ flexGrow: 0 }}
-              data={historyItems}
-              ListEmptyComponent={renderEmptyListComponent}
-              renderItem={(element) => renderHistoryListItem(element.item)}
-            />
-          </View>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            style={{ flexGrow: 0 }}
+            data={historyItems}
+            ListEmptyComponent={renderEmptyListComponent}
+            renderItem={(element) => renderHistoryListItem(element.item)}
+          />
         </View>
       </View>
-    </KeyboardView>
+    </View>
   )
 }
 
