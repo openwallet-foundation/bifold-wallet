@@ -22,15 +22,18 @@ export class AppContainer implements Container {
     // Example: Replacing button in core with custom button
     // this.container.registerInstance(TOKENS.COMP_BUTTON, Button)
 
-    //Customizing Terms screen custom header
+    //This is an example of how to customize the screen layout and use custom header for wallets who wnat to hide default navigation header
+    //To hide navigation header for a specific page, use headerShown: false in the screen options like this
     /*
-    this.container.registerInstance(TOKENS.OBJECT_ONBOARDING_CONFIG, {
+    this.container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, {
       ...DefaultScreenOptionsDictionary,
       [Screens.Terms]: {
         ...DefaultScreenOptionsDictionary[Screens.Terms],
         headerShown: false,
       },
     })
+
+    //Customizing Terms screen custom header
     this.container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, {
       ...DefaultScreenLayoutOptions,
       [Screens.Terms]: {

@@ -30,7 +30,7 @@ const ScreenLayout: React.FC<PropsWithChildren<Props>> = ({ children, screen }) 
     safeArea: false,
     customEdges: ['top', 'left', 'right', 'bottom'],
     style: {},
-    header: undefined,
+    Header: undefined,
   }
 
   const Container: React.FC<PropsWithChildren> = ({ children }) => {
