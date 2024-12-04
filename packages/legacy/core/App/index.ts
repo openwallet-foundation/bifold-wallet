@@ -52,7 +52,7 @@ import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './naviga
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
-import { defaultConfig } from './container-impl'
+import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
@@ -130,6 +130,7 @@ export * from './container-api'
 export { MainContainer } from './container-impl'
 
 export type { ScreenLayoutConfig } from './types/navigators'
+export type { HistoryEventsLoggerConfig } from './types/config'
 
 export {
   App,
@@ -142,6 +143,7 @@ export {
   AttachTourStep,
   TourBox,
   defaultConfig,
+  defaultHistoryEventsLogger,
   homeTourSteps,
   credentialsTourSteps,
   credentialOfferTourSteps,

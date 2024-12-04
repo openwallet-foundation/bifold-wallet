@@ -396,9 +396,16 @@ const translation = {
       "CardAccepted": "Card accepted:",
       "CardDeclined": "Card declined:",
       "CardExpired": "Card expired",
+      "CardRemoved": "Card removed",
       "CardRevoked": "Card revoked",
-      "InformationSent": "Information sent to:",
+      "CardUpdates": "Card updates",
       "WalletPinUpdated": "Wallet PIN updated",
+      "InformationSent": "Information sent to:",
+      "InformationNotSent": "Information not sent to:",
+      "Connection": "Connection",
+      "ConnectionRemoved": "Connection removed",
+      "ActivateBiometry": "Biometrics activated",
+      "DeactivateBiometry": "Biometrics deactivated"
     },
     "CardDescription": {
       "CardExpired": "{{cardName}} expired",

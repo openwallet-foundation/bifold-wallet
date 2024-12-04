@@ -35,3 +35,16 @@ export interface Config {
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
 }
+
+export interface HistoryEventsLoggerConfig {
+  logAttestationAccepted: boolean
+  logAttestationRefused: boolean
+  logAttestationRemoved: boolean
+  logInformationSent: boolean
+  logInformationNotSent: boolean
+  logConnection: boolean
+  logConnectionRemoved: boolean
+  logAttestationRevoked: boolean
+  logPinChanged: boolean
+  logToggleBiometry: boolean
+}
