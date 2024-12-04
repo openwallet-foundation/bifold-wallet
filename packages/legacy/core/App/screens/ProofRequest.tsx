@@ -3,7 +3,12 @@ import {
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
 } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, DifPexInputDescriptorToCredentials, ProofState } from '@credo-ts/core'
+import {
+  CredentialExchangeRecord,
+  CredentialRecordBinding,
+  DifPexInputDescriptorToCredentials,
+  ProofState,
+} from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
@@ -56,6 +61,7 @@ import { testIdWithKey } from '../utils/testable'
 import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 
 import ProofRequestAccept from './ProofRequestAccept'
+import { CredentialErrors } from '../components/misc/CredentialCard11'
 
 type ProofRequestProps = {
   navigation: any
@@ -66,6 +72,7 @@ type CredentialListProps = {
   header?: JSX.Element
   footer?: JSX.Element
   items: ProofCredentialItems[]
+  missing: boolean
 }
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
@@ -312,14 +319,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
           console.log(`Full credentials: ${fullCredentials.length}`)
           setUserCredentials(fullCredentials)
-          // fullCredentials.forEach((item: CredentialExchangeRecord) => {
-          //   console.log('__________________')
-          //   console.log('__________________')
-          //   console.log(JSON.stringify(item.credentialAttributes))
-          // })
           // Check for revoked credentials
-          const records = fullCredentials.filter((record: any) =>
-            record.credentials.some((cred: any) => credList.includes(cred.credentialRecordId))
+          const records = fullCredentials.filter((record: CredentialExchangeRecord) =>
+            record.credentials.some((cred: CredentialRecordBinding) => credList.includes(cred.credentialRecordId))
           )
           const foundRevocationOffense =
             containsRevokedCreds(records, unpackCredToField(activeCreds)) ||
@@ -662,7 +664,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     )
   }
 
-  const CredentialList: React.FC<CredentialListProps> = ({ header, footer, items }) => {
+  const CredentialList: React.FC<CredentialListProps> = ({ header, footer, items, missing }) => {
     return (
       <FlatList
         data={items}
@@ -670,6 +672,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         ListHeaderComponent={header}
         ListFooterComponent={footer}
         renderItem={({ item }) => {
+          const errors: CredentialErrors[] = []
+          missing && errors.push(CredentialErrors.NotInWallet)
+          item.credExchangeRecord?.revocationNotification?.revocationDate && errors.push(CredentialErrors.Revoked)
           return (
             <View>
               {loading || attestationLoading ? null : (
@@ -694,6 +699,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                         : undefined
                     }
                     proof
+                    credentialErrors={errors}
                   />
                 </View>
               )}
@@ -703,7 +709,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       />
     )
   }
-
+  // filteredToBeInWallet
+  // filteredToBeOutOfWallet?
+  // Less scanning of the array
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <ScrollView>
@@ -720,6 +728,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 )
               }) ?? []
             }
+            missing={false} // don't love this...
           />
 
           {/* This list will render if any credentials in a proof request are not in the users wallet */}
@@ -761,6 +770,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                   )
                 }) ?? []
               }
+              missing={true}
             />
           )}
         </View>

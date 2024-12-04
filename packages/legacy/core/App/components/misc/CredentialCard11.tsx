@@ -30,7 +30,7 @@ import { testIdWithKey } from '../../utils/testable'
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
 
-enum CredentialErrors {
+export enum CredentialErrors {
   Revoked, // Credential has been revoked
   NotInWallet, // Credential requested for proof does not exists in users wallet
 }
@@ -105,15 +105,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
-  // this should be passed in as a prop
-  // const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
-  //     setIsRevoked(credential?.revocationNotification !== undefined && !proof)
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
-  const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
-    credential?.revocationNotification !== undefined && !!proof
-  )
   const [bundleResolver, credHelpActionOverrides] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CRED_HELP_ACTION_OVERRIDES,
@@ -132,20 +126,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const cardData: Field[] = useMemo(() => {
     const fields: Field[] = displayItems ?? []
-
     const primaryField = overlay?.presentationFields?.find(
       (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
     )
-    if (primaryField) {
-      fields.push(primaryField)
-    }
     const secondaryField = overlay?.presentationFields?.find(
       (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
     )
 
-    if (secondaryField) {
-      fields.push(secondaryField)
-    }
+    primaryField && fields.push(primaryField)
+    secondaryField && fields.push(secondaryField)
 
     return fields
   }, [displayItems, overlay])
@@ -250,7 +239,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   const backgroundColorIfRevoked = (backgroundColor?: string) =>
-    isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
+    credentialErrors.includes(CredentialErrors.Revoked) ? ColorPallet.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
     if (proof) {
@@ -265,18 +254,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const parseAttribute = useCallback(
-    (item: (Attribute & Predicate) | undefined) => {
+    (item: Attribute & Predicate) => {
       let parsedItem = item
       if (item && item.pValue != null) {
         parsedItem = pTypeToText(item, t, overlay.bundle?.captureBase.attributes) as Attribute & Predicate
       }
       const parsedValue = formatIfDate(
-        attributeFormats?.[item?.name ?? ''],
+        attributeFormats?.[item.name ?? ''],
         parsedItem?.value ?? parsedItem?.pValue ?? null
       )
       return {
-        label: item?.label ?? item?.name ?? '',
-        value: item?.value !== undefined && item?.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
+        label: item.label ?? item.name ?? '',
+        value: item.value !== undefined && item.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
       }
     },
     [t, overlay, attributeFormats]
@@ -351,10 +340,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     credHelpActionOverrides,
     navigation,
   ])
-
-  useEffect(() => {
-    setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
-  }, [credential?.revocationNotification, proof])
 
   const CredentialCardLogo: React.FC = () => {
     return (
@@ -457,12 +442,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const renderCardAttribute = (item: Attribute & Predicate) => {
-    console.log(JSON.stringify(item))
     const { label, value } = parseAttribute(item)
-    const parsedValue = formatIfDate(item?.format, value) ?? ''
+    const parsedValue = formatIfDate(item.format, value) ?? ''
     return (
       <View style={{ marginTop: 15 }}>
-        {!(item?.value || item?.satisfied) ? (
+        {!(item.value || item.satisfied) ? (
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <AttributeLabel label={label} />
@@ -481,7 +465,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <AttributeLabel label={label} />
         )}
         {/* Rendering attribute values */}
-        {!(item?.value || item?.pValue) ? null : (
+        {!(item.value || item.pValue) ? null : (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
               <Icon
@@ -547,11 +531,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           </View>
         </View>
 
-        {Boolean(credentialErrors.length) && (
+        {Boolean(credentialErrors.length) && Boolean(proof) && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon style={styles.errorIcon} name="close" size={30} />
             <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-              {credentialErrors.includes(CredentialErrors.Revoked) && t('CredentialDetails.Revoked')}
+              {credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof) && t('CredentialDetails.Revoked')}
               {credentialErrors.includes(CredentialErrors.NotInWallet) && t('ProofRequest.NotAvailableInYourWallet')}
             </Text>
           </View>
@@ -653,7 +637,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const CredentialCard: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-    console.log(`Credential Card: ${status}`)
     return (
       <View
         style={styles.cardContainer}
@@ -663,7 +646,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             overlay.metaOverlay?.watermark ?? ''
           } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           cardData.map((item) => {
-            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
+            const { label, value } = parseAttribute(item as Attribute & Predicate)
             if (label && value) {
               return ` ${label}, ${value}`
             }
@@ -697,7 +680,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.container,
           style,
-          { backgroundColor: isProofRevoked ? ColorPallet.notification.error : style.backgroundColor },
+          {
+            backgroundColor:
+              credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof)
+                ? ColorPallet.notification.error
+                : style.backgroundColor,
+          },
         ]}
         testID={testIdWithKey('ShowCredentialDetails')}
       >
@@ -711,7 +699,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             />
           )}
           <CredentialCard
-            status={credentialErrors.includes(CredentialErrors.Revoked) ? 'error' : allPI && proof ? 'warn' : undefined}
+            // if the credential is revoked and we are not in a proof context
+            // display a small error icon in the top right of the credential card
+            status={
+              credentialErrors.includes(CredentialErrors.Revoked) && !Boolean(proof)
+                ? 'error'
+                : allPI && proof
+                ? 'warn'
+                : undefined
+            }
           />
         </View>
       </TouchableOpacity>
