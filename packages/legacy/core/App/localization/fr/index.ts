@@ -405,8 +405,6 @@ const translation = {
             "WalletPinUpdated": "New PIN set(fr)",
         },
         "Today": "Today(fr)",
-        "UseHistoryCapability": "Enable history(fr)",
-        "UseHistoryCapabilityToggle": "Toggle Enable history(fr)",
     },
     "Contacts": {
         "EmptyList": "Vos Contacts sont vides!",

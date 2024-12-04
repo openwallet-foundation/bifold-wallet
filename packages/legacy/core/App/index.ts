@@ -48,12 +48,13 @@ import { loadLoginAttempt } from './services/keychain'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
-import { useDefaultStackOptions } from './navigators/defaultStackOptions'
+import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
 import { PINRules, walletTimeout } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
+import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
 export * from './navigators'
 export * from './services/storage'
@@ -71,6 +72,7 @@ export { ColorPallet } from './theme'
 export { animatedComponents } from './animated-components'
 export { theme } from './theme'
 export { useAuth } from './contexts/auth'
+export { useNetwork } from './contexts/network'
 export { NavigationTheme } from './theme'
 export { testIdWithKey, testIdForAccessabilityLabel } from './utils/testable'
 export { Screens, Stacks, TabStacks } from './types/navigators'
@@ -126,6 +128,8 @@ export type { InlineErrorPosition } from './types/error'
 export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
+
+export type { ScreenLayoutConfig } from './types/navigators'
 
 export {
   App,
@@ -185,5 +189,7 @@ export {
   BulletPoint,
   PINRules,
   walletTimeout,
+  DefaultScreenOptionsDictionary,
+  DefaultScreenLayoutOptions,
 }
 export type { IButton }
