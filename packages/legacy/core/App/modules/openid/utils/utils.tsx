@@ -1,6 +1,5 @@
 import { getDomainFromUrl } from '@credo-ts/core'
 import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
-import 'react-native-url-polyfill/auto'
 
 /**
  * Converts a camelCase string to a sentence format (first letter capitalized, rest in lower case).

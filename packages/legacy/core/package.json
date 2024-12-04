@@ -230,8 +230,5 @@
       "module",
       "typescript"
     ]
-  },
-  "dependencies": {
-    "react-native-url-polyfill": "^2.0.0"
   }
 }
