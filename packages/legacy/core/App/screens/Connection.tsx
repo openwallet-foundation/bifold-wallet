@@ -26,6 +26,8 @@ import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredential
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
 import { OpenId4VPRequestRecord } from 'modules/openid/types'
+import { useAppAgent } from '../utils/agent'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -55,11 +57,24 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     { useNotifications },
     { connectionTimerDelay, autoRedirectConnectionToHome, enableChat },
     attestationMonitor,
-  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_ATTESTATION_MONITOR])
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
+    TOKENS.UTIL_LOGGER,
+    TOKENS.NOTIFICATIONS,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_ATTESTATION_MONITOR,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
+  ])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
+  const { agent } = useAppAgent()
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
+
   const { t } = useTranslation()
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
   const [state, dispatch] = useReducer(merge, {
@@ -75,6 +90,35 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       flex: 1,
     },
   })
+
+  const logHistoryRecord = useCallback(() => {
+    try {
+      if (!(agent && historyEnabled)) {
+        logger.trace(
+          `[${CredentialOffer.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+        )
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+
+      if (!connection) {
+        logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
+        return
+      }
+
+      /** Save history record for connection */
+      const recordData: HistoryRecord = {
+        type: HistoryCardType.Connection,
+        message: HistoryCardType.Connection,
+        createdAt: connection.createdAt,
+        correspondenceId: connection.id,
+        correspondenceName: connection.theirLabel,
+      }
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }, [agent, historyEnabled, logger, historyManagerCurried, connection])
 
   const handleNavigation = useCallback(
     (connectionId: string) => {
@@ -151,6 +195,25 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
   }, [proofId, credentialId, navigation, t])
+
+  useEffect(() => {
+    if (state.inProgress) {
+      return
+    }
+    const goalCode = oobRecord?.outOfBandInvitation?.goalCode
+
+    if (historyEventsLogger.logConnection && goalCode != GoalCodes.proofRequestVerifyOnce) {
+      logHistoryRecord()
+    }
+  }, [
+    state.inProgress,
+    state.percentComplete,
+    connTimerDelay,
+    historyEventsLogger.logConnectionRemoved,
+    logHistoryRecord,
+    historyEventsLogger.logConnection,
+    oobRecord?.outOfBandInvitation?.goalCode,
+  ])
 
   useEffect(() => {
     if (!oobRecord || !state.inProgress) {

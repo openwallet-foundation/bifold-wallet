@@ -83,10 +83,18 @@ export interface ISVGAssets {
   pushNotificationImg: React.FC<SvgProps>
   chatLoading: React.FC<SvgProps>
   historyCardAcceptedIcon: React.FC<SvgProps>
+  historyCardDeclinedIcon: React.FC<SvgProps>
   historyCardExpiredIcon: React.FC<SvgProps>
+  historyCardRemovedIcon: React.FC<SvgProps>
   historyCardRevokedIcon: React.FC<SvgProps>
-  historyInformationSentIcon: React.FC<SvgProps>
+  historyCardUpdatesIcon: React.FC<SvgProps>
   historyPinUpdatedIcon: React.FC<SvgProps>
+  historyInformationSentIcon: React.FC<SvgProps>
+  historyInformationNotSentIcon: React.FC<SvgProps>
+  historyConnectionIcon: React.FC<SvgProps>
+  historyConnectionRemovedIcon: React.FC<SvgProps>
+  historyActivateBiometryIcon: React.FC<SvgProps>
+  historyDeactivateBiometryIcon: React.FC<SvgProps>
   iconChevronRight: React.FC<SvgProps>
   homeCenterImg: React.FC<SvgProps>
   iconDelete: React.FC<SvgProps>
@@ -951,10 +959,18 @@ export const Assets = {
     pushNotificationImg: PushNotificationImg,
     chatLoading: ChatLoading,
     historyCardAcceptedIcon: HistoryCardAcceptedIcon,
+    historyCardDeclinedIcon: HistoryCardRevokedIcon,
     historyCardExpiredIcon: HistoryCardExpiredIcon,
+    historyCardRemovedIcon: HistoryCardRevokedIcon,
     historyCardRevokedIcon: HistoryCardRevokedIcon,
-    historyInformationSentIcon: HistoryInformationSentIcon,
+    historyCardUpdatesIcon: HistoryCardAcceptedIcon,
     historyPinUpdatedIcon: HistoryPinUpdatedIcon,
+    historyInformationSentIcon: HistoryInformationSentIcon,
+    historyInformationNotSentIcon: HistoryCardRevokedIcon,
+    historyConnectionIcon: HistoryCardAcceptedIcon,
+    historyConnectionRemovedIcon: HistoryCardRevokedIcon,
+    historyActivateBiometryIcon: HistoryCardAcceptedIcon,
+    historyDeactivateBiometryIcon: HistoryCardRevokedIcon,
     iconChevronRight: IconChevronRight,
     homeCenterImg: HomeCenterImg,
     iconDelete: IconDelete,

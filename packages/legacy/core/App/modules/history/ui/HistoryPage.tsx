@@ -78,7 +78,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
         logger.error(`[${HistoryPage.name}][getAllHistory]: agent undefined!`)
         return
       }
-      const historyManager = await historyManagerCurried(agent)
+      const historyManager = historyManagerCurried(agent)
       if (!historyManager) {
         logger.error(`[${HistoryPage.name}][getAllHistory]: historyManager undefined!`)
         return

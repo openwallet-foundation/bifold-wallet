@@ -52,104 +52,126 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
   //TODO: navigate to history details
   //   const navigation = useNavigation<StackNavigationProp<RootStackParams, 'HistoryDetails'>>()
 
-  //TODO: render icon
-  const renderCardIcon = (item: CustomRecord) => {
+  const renderCardSections = (item: CustomRecord) => {
     switch (item.content.type) {
       case HistoryCardType.CardAccepted: {
-        return <Assets.svg.historyCardAcceptedIcon />
+        return { 
+          icon: <Assets.svg.historyCardAcceptedIcon />,
+          title: <Text style={TextTheme.headingThree}>{t('History.CardTitle.CardAccepted')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
       }
       case HistoryCardType.CardDeclined: {
-        //TODO: return different icon
-        return <Assets.svg.historyCardRevokedIcon />
+        return {
+          icon: <Assets.svg.historyCardDeclinedIcon />,
+          title:
+            <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
+              {t('History.CardTitle.CardDeclined')}
+            </Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
       }
       case HistoryCardType.CardExpired: {
-        return <Assets.svg.historyCardExpiredIcon />
+        return {
+          icon: <Assets.svg.historyCardExpiredIcon />,
+          title: <Text style={TextTheme.headerTitle}>{t('History.CardTitle.CardExpired')}</Text>,
+          description: 
+            <Text style={TextTheme.normal}>
+              {t('History.CardDescription.CardExpired', { cardName: item.content.correspondenceName })}
+            </Text>
+        }
+      }
+      case HistoryCardType.CardRemoved: {
+        return {
+          icon: <Assets.svg.historyCardRemovedIcon />,
+          title: 
+            <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
+              {t('History.CardTitle.CardRemoved')}
+            </Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
       }
       case HistoryCardType.CardRevoked: {
-        return <Assets.svg.historyCardRevokedIcon />
+        return {
+          icon: <Assets.svg.historyCardRevokedIcon />,
+          title: 
+            <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
+              {t('History.CardTitle.CardRevoked')}
+            </Text>,
+          description: 
+            <Text style={TextTheme.normal}>
+              {t('History.CardDescription.CardRevoked', { cardName: item.content.correspondenceName })}
+            </Text>
+        }
       }
-      case HistoryCardType.InformationSent: {
-        return <Assets.svg.historyInformationSentIcon />
-      }
-      case HistoryCardType.PinChanged: {
-        return <Assets.svg.historyPinUpdatedIcon />
-      }
-      default:
-        return null
-    }
-  }
-
-  const renderCardTitle = (item: CustomRecord) => {
-    switch (item.content.type) {
-      case HistoryCardType.CardAccepted: {
-        return <Text style={TextTheme.headingThree}>{t('History.CardTitle.CardAccepted')}</Text>
-      }
-      case HistoryCardType.CardDeclined: {
-        return (
-          <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
-            {t('History.CardTitle.CardDeclined')}
-          </Text>
-        )
-      }
-      case HistoryCardType.CardExpired: {
-        return <Text style={TextTheme.headerTitle}>{t('History.CardTitle.CardExpired')}</Text>
-      }
-      case HistoryCardType.CardRevoked: {
-        return (
-          <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
-            {t('History.CardTitle.CardRevoked')}
-          </Text>
-        )
-      }
-      case HistoryCardType.InformationSent: {
-        return (
-          <Text style={[TextTheme.headerTitle, { color: styles.successColor.color }]}>
-            {t('History.CardTitle.InformationSent')}
-          </Text>
-        )
+      case HistoryCardType.CardUpdates: {
+        return {
+          icon: <Assets.svg.historyCardUpdatesIcon />,
+          title: <Text style={TextTheme.headingThree}>{t('History.CardTitle.CardUpdates')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
       }
       case HistoryCardType.PinChanged: {
-        return (
-          <Text style={[TextTheme.headerTitle, { color: styles.infoBox.color }]}>
-            {t('History.CardTitle.WalletPinUpdated')}
-          </Text>
-        )
-      }
-      default:
-        return null
-    }
-  }
-
-  const renderCardDescription = (item: CustomRecord) => {
-    switch (item.content.type) {
-      case HistoryCardType.CardAccepted: {
-        return <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
-      }
-      case HistoryCardType.CardDeclined: {
-        return <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
-      }
-      case HistoryCardType.CardExpired: {
-        return (
-          <Text style={TextTheme.normal}>
-            {t('History.CardDescription.CardExpired', { cardName: item.content.correspondenceName })}
-          </Text>
-        )
-      }
-      case HistoryCardType.CardRevoked: {
-        return (
-          <Text style={TextTheme.normal}>
-            {t('History.CardDescription.CardRevoked', { cardName: item.content.correspondenceName })}
-          </Text>
-        )
+        return {
+          icon: <Assets.svg.historyPinUpdatedIcon />,
+          title:
+            <Text style={[TextTheme.headerTitle, { color: styles.infoBox.color }]}>
+              {t('History.CardTitle.WalletPinUpdated')}
+            </Text>,
+          description: <Text style={TextTheme.normal}>{t('History.CardDescription.WalletPinUpdated')}</Text>
+        }
       }
       case HistoryCardType.InformationSent: {
-        return <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        return {
+          icon: <Assets.svg.historyInformationSentIcon />,
+          title: <Text style={[TextTheme.headingThree, { color: styles.successColor.color }]}>{t('History.CardTitle.InformationSent')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
       }
-      case HistoryCardType.PinChanged: {
-        return <Text style={TextTheme.normal}>{t('History.CardDescription.WalletPinUpdated')}</Text>
+      case HistoryCardType.InformationNotSent: {
+        return {
+          icon: <Assets.svg.historyInformationNotSentIcon />,
+          title: 
+            <Text style={[TextTheme.headerTitle, { color: styles.historyCardRevoked.color }]}>
+              {t('History.CardTitle.InformationNotSent')}
+            </Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
+      }
+      case HistoryCardType.Connection: {
+        return {
+          icon: <Assets.svg.historyConnectionIcon />,
+          title: <Text style={TextTheme.headingThree}>{t('History.CardTitle.Connection')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
+      }
+      case HistoryCardType.ConnectionRemoved: {
+        return {
+          icon: <Assets.svg.historyConnectionRemovedIcon />,
+          title: <Text style={[TextTheme.headingThree, { color: styles.historyCardRevoked.color }]}>{t('History.CardTitle.ConnectionRemoved')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
+      }
+      case HistoryCardType.ActivateBiometry: {
+        return {
+          icon: <Assets.svg.historyActivateBiometryIcon />,
+          title: <Text style={TextTheme.headingThree}>{t('History.CardTitle.ActivateBiometry')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
+      }
+      case HistoryCardType.DeactivateBiometry: {
+        return {
+          icon: <Assets.svg.historyDeactivateBiometryIcon />,
+          title: <Text style={[TextTheme.headingThree, { color: styles.historyCardRevoked.color }]}>{t('History.CardTitle.DeactivateBiometry')}</Text>,
+          description: <Text style={TextTheme.normal}>{item.content.correspondenceName}</Text>
+        }
       }
       default:
-        return null
+        return {
+          icon: null,
+          title: null,
+          description: null
+        }
     }
   }
 
@@ -176,13 +198,14 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
   }
 
   const renderCard = (item: CustomRecord) => {
+    const { icon, title, description } = renderCardSections(item)
     return (
       <View>
         <View style={styles.card}>
-          {renderCardIcon(item)}
+          {icon}
           <View style={styles.cardContent}>
-            {renderCardTitle(item)}
-            <View style={styles.cardDescriptionContent}>{renderCardDescription(item)}</View>
+            {title}
+            <View style={styles.cardDescriptionContent}>{description}</View>
             {renderCardDate(item.content.createdAt)}
           </View>
           <View style={styles.arrowContainer}>

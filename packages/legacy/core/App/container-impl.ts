@@ -45,7 +45,7 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
-import { Config } from './types/config'
+import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { Locales } from './localization'
 import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
@@ -70,6 +70,19 @@ export const defaultConfig: Config = {
     enableCredentialList: false,
   },
 }
+export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig  = {
+  logAttestationAccepted: true,
+  logAttestationRefused: true,
+  logAttestationRemoved: true,
+  logInformationSent: true,
+  logInformationNotSent: true,
+  logConnection: true,
+  logConnectionRemoved: true,
+  logAttestationRevoked: true,
+  logPinChanged: true,
+  logToggleBiometry: true,
+}
+
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
@@ -85,7 +98,7 @@ export class MainContainer implements Container {
   public get container(): DependencyContainer {
     return this._container
   }
-
+  
   public init(): Container {
     this.log?.info(`Initializing Bifold container`)
 
@@ -104,6 +117,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
     this._container.registerInstance(TOKENS.HISTORY_ENABLED, false)
+    this._container.registerInstance(TOKENS.HISTORY_EVENTS_LOGGER, defaultHistoryEventsLogger)
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
