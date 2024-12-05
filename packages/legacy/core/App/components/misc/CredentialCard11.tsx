@@ -393,7 +393,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeErrorLabel: React.FC<{ errorMessage: string }> = ({ errorMessage }) => {
     return (
-      <>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Icon
           style={{ paddingTop: 2, paddingHorizontal: 2 }}
           name="close"
@@ -413,7 +413,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         >
           {errorMessage}
         </Text>
-      </>
+      </View>
     )
   }
 
@@ -476,19 +476,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         )}
         {/* Render attribute missing from credential error */}
         {!credentialErrors.includes(CredentialErrors.NotInWallet) && item.hasError && (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <AttributeErrorLabel
-              errorMessage={t('ProofRequest.MissingAttribute', {
-                name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
-              })}
-            />
-          </View>
+          <AttributeErrorLabel
+            errorMessage={t('ProofRequest.MissingAttribute', {
+              name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
+            })}
+          />
         )}
         {/* Render predicate not satisfied error */}
         {item.satisfied != undefined && item.satisfied === false && (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <AttributeErrorLabel errorMessage={t('ProofRequest.PredicateNotSatisfied')} />
-          </View>
+          <AttributeErrorLabel errorMessage={t('ProofRequest.PredicateNotSatisfied')} />
         )}
       </View>
     )
