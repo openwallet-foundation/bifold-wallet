@@ -317,7 +317,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             }, {})
           }
 
-          console.log(`Full credentials: ${fullCredentials.length}`)
           setUserCredentials(fullCredentials)
           // Check for revoked credentials
           const records = fullCredentials.filter((record: CredentialExchangeRecord) =>
@@ -688,7 +687,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                       ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                     ]}
                     credName={item.credName}
-                    existsInWallet={item.credExchangeRecord !== undefined}
                     satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                     hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
                     handleAltCredChange={

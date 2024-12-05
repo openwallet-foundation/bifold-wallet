@@ -21,7 +21,6 @@ interface CredentialCardProps {
   style?: ViewStyle
   proof?: boolean
   displayItems?: (Attribute | Predicate)[]
-  existsInWallet?: boolean
   satisfiedPredicates?: boolean
   hasAltCredentials?: boolean
   credentialErrors?: CredentialErrors[]
@@ -35,7 +34,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   proof,
   displayItems,
   credName,
-  existsInWallet,
   satisfiedPredicates,
   hasAltCredentials,
   handleAltCredChange,
@@ -52,7 +50,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         <CredentialCard11
           displayItems={displayItems}
           style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
-          error={!!existsInWallet}
           predicateError={!!satisfiedPredicates}
           credName={credName}
           credDefId={credDefId}

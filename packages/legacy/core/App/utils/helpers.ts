@@ -46,7 +46,6 @@ import { ChildFn } from '../types/tour'
 import { BifoldAgent } from './agent'
 import {
   createAnonCredsProofRequest,
-  DescriptorMetadata,
   filterInvalidProofRequestMatches,
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'

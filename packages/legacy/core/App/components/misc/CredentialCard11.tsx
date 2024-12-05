@@ -41,7 +41,6 @@ interface CredentialCard11Props {
   style?: ViewStyle
   displayItems?: (Attribute | Predicate)[]
   revoked?: boolean
-  error?: boolean
   predicateError?: boolean
   elevated?: boolean
   credName?: string
@@ -87,7 +86,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   style = {},
   displayItems,
   onPress = undefined,
-  error = false,
   predicateError = false,
   elevated = false,
   credName,
@@ -301,7 +299,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
     bundleResolver.resolveAllBundles(params).then((bundle: any) => {
       if (proof) {
-        setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
+        // setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
+        setFlaggedAttributes(['temp', 'first_name'])
         const credHelpUrl =
           (bundle as any).bundle.bundle.metadata.credentialSupportUrl[params.language] ??
           Object.values((bundle as any).bundle.bundle.metadata.credentialSupportUrl)?.[0]
@@ -445,7 +444,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     const { label, value } = parseAttribute(item)
     const parsedValue = formatIfDate(item.format, value) ?? ''
 
-    item instanceof Attribute
+    console.log('_________________')
+    console.log('_________________')
+    console.log('_________________')
+    console.log(`Attribute label ${label}`)
+    console.log(JSON.stringify(flaggedAttributes))
     return (
       <View style={{ marginTop: 15 }}>
         {/* Render attribute label */}
@@ -555,7 +558,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 text={t('ProofRequest.ChangeCredential')}
                 testID={'ChangeCredential'}
               />
-            ) : error && helpAction ? (
+            ) : Boolean(credentialErrors.length) && helpAction ? (
               <CredentialActionFooter
                 onPress={helpAction}
                 text={t('ProofRequest.GetThisCredential')}
@@ -590,7 +593,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(error || predicateError || proof || getSecondaryBackgroundColor()) && (
+          !(Boolean(credentialErrors.length) || predicateError || proof || getSecondaryBackgroundColor()) && (
             <View
               style={[
                 {
@@ -627,7 +630,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <Icon
               size={0.7 * logoHeight}
               style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
-              name={status}
+              name={status === 'error' ? 'error' : 'warning'}
             />
           </View>
         ) : (
@@ -638,6 +641,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const CredentialCard: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
+    console.log('__--__--')
+    console.log(status)
     return (
       <View
         style={styles.cardContainer}
