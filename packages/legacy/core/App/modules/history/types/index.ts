@@ -2,7 +2,7 @@ import { GenericRecord } from '@credo-ts/core/build/modules/generic-records/repo
 import { Moment } from 'moment'
 
 export interface IHistoryManager {
-  saveHistory: (recordData: HistoryRecord) => void
+  saveHistory: (recordData: HistoryRecord) => Promise<void>
   getHistoryItems: (query: HistoryQuery) => Promise<CustomRecord[]>
   findGenericRecordById: (id: string) => Promise<GenericRecord | null>
   removeGenericRecord: (genericRecord: GenericRecord) => Promise<void>
@@ -21,11 +21,17 @@ export interface HistoryBlockSelection {
 export enum HistoryCardType {
   CardAccepted = 'CardAccepted',
   CardDeclined = 'CardDeclined',
-  CardExpired = 'CardExpired',
-  CardRevoked = 'CardRevoked',
-  InformationSent = 'InformationSent',
+  CardExpired = 'CardExpired', // TODO: log this type of event
+  CardRemoved = 'CardRemoved',
+  CardRevoked = 'CardRevoked', // TODO: log this type of event
+  CardUpdates = 'CardUpdates', // TODO: log this type of event
   PinChanged = 'PinChanged',
-  CardUpdates = 'CardUpdates',
+  InformationSent = 'InformationSent', 
+  InformationNotSent = 'InformationNotSent',
+  Connection = 'Connection',
+  ConnectionRemoved = 'ConnectionRemoved',
+  ActivateBiometry = 'ActivateBiometry',
+  DeactivateBiometry = 'DeactivateBiometry',
 }
 export interface HistoryRecord {
   /** History Record ID */
