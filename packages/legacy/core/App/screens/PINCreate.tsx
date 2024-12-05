@@ -61,7 +61,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     title: '',
     message: '',
   })
-  const [explained, setExplained] = useState(explainedStatus)
   const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
@@ -78,7 +77,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const [
     PINExplainer,
     PINCreateHeader,
-    { PINSecurity },
+    { PINSecurity, showPINExplainer },
     Button,
     inlineMessages,
     logger,
@@ -96,6 +95,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     TOKENS.HISTORY_ENABLED,
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
+
+  const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)

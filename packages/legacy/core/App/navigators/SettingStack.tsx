@@ -56,7 +56,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Settings'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.Settings]
+          ...ScreenOptionsDictionary[Screens.Settings],
         }}
       />
       <Stack.Screen
@@ -65,7 +65,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.NameWallet'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.NameWallet]
+          ...ScreenOptionsDictionary[Screens.NameWallet],
         }}
       />
       <Stack.Screen
@@ -74,15 +74,16 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Language'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.Language]
+          ...ScreenOptionsDictionary[Screens.Language],
         }}
       />
       <Stack.Screen
         name={Screens.AutoLock}
         component={AutoLock}
-        options={{title: 'Auto lock Options',
+        options={{
+          title: 'Auto lock Options',
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.AutoLock]
+          ...ScreenOptionsDictionary[Screens.AutoLock],
         }}
       />
       <Stack.Screen
@@ -91,7 +92,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.DataRetention'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.DataRetention]
+          ...ScreenOptionsDictionary[Screens.DataRetention],
         }}
       />
       <Stack.Screen
@@ -100,7 +101,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Tours'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.Tours]
+          ...ScreenOptionsDictionary[Screens.Tours],
         }}
       />
       <Stack.Screen
@@ -110,16 +111,16 @@ const SettingStack: React.FC = () => {
           title: t('Screens.Biometry'),
           headerLeft: biometryUpdatePending ? () => null : undefined,
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.UseBiometry]
+          ...ScreenOptionsDictionary[Screens.UseBiometry],
         }}
       />
       <Stack.Screen
         name={Screens.CreatePIN}
-        component={PINCreate}
+        component={(props) => <PINCreate explainedStatus {...props} />}
         options={{
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.CreatePIN]
+          ...ScreenOptionsDictionary[Screens.CreatePIN],
         }}
       />
       <Stack.Screen
@@ -128,7 +129,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.UsePushNotifications'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.UsePushNotifications]
+          ...ScreenOptionsDictionary[Screens.UsePushNotifications],
         }}
       />
       <Stack.Screen
@@ -137,7 +138,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Terms'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.Terms]
+          ...ScreenOptionsDictionary[Screens.Terms],
         }}
       />
       <Stack.Screen
@@ -146,7 +147,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Developer'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.Developer]
+          ...ScreenOptionsDictionary[Screens.Developer],
         }}
       />
       <Stack.Screen name={Screens.Onboarding} options={{ title: t('Screens.Onboarding') }}>
@@ -167,7 +168,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.HistorySettings'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.HistorySettings]
+          ...ScreenOptionsDictionary[Screens.HistorySettings],
         }}
       />
     </Stack.Navigator>
