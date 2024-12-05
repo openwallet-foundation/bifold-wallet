@@ -141,7 +141,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const navigation = useNavigation()
 
-  const getSecondaryBackgroundColor = () => {
+  const getSecondaryBackgroundColor = (): string | undefined => {
     if (proof) {
       return overlay.brandingOverlay?.primaryBackgroundColor
     } else {
@@ -444,30 +444,26 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
     const parsedValue = formatIfDate(item.format, value) ?? ''
+
+    item instanceof Attribute
     return (
       <View style={{ marginTop: 15 }}>
-        {!(item.value || item.satisfied) ? (
-          <View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <AttributeLabel label={label} />
-            </View>
-            {item.hasError && (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <AttributeErrorLabel
-                  errorMessage={t('ProofRequest.MissingAttribute', {
-                    name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
-                  })}
-                />
-              </View>
-            )}
-          </View>
-        ) : (
+        {/* Render attribute label */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {credentialErrors.includes(CredentialErrors.NotInWallet) && (
+            <Icon
+              style={{ paddingTop: 2, paddingHorizontal: 2 }}
+              name="close"
+              color={ListItems.proofError.color}
+              size={ListItems.recordAttributeText.fontSize}
+            />
+          )}
           <AttributeLabel label={label} />
-        )}
-        {/* Rendering attribute values */}
-        {!(item.value || item.pValue) ? null : (
+        </View>
+        {/* Render attribute value */}
+        {!credentialErrors.includes(CredentialErrors.NotInWallet) && !item.hasError && (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
+            {flaggedAttributes?.includes(label) && !item.pValue && proof && (
               <Icon
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
                 name="warning"
@@ -478,13 +474,22 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
           </View>
         )}
-
-        {/* Render predicate error text */}
-        {item.satisfied != undefined && item.satisfied === false ? (
-          <Text style={styles.errorText} numberOfLines={1}>
-            {t('ProofRequest.PredicateNotSatisfied')}
-          </Text>
-        ) : null}
+        {/* Render attribute missing from credential error */}
+        {!credentialErrors.includes(CredentialErrors.NotInWallet) && item.hasError && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <AttributeErrorLabel
+              errorMessage={t('ProofRequest.MissingAttribute', {
+                name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
+              })}
+            />
+          </View>
+        )}
+        {/* Render predicate not satisfied error */}
+        {item.satisfied != undefined && item.satisfied === false && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <AttributeErrorLabel errorMessage={t('ProofRequest.PredicateNotSatisfied')} />
+          </View>
+        )}
       </View>
     )
   }
