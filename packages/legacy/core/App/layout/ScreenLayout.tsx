@@ -3,7 +3,7 @@ import { StyleSheet, View, ViewStyle } from 'react-native'
 import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 
 import { TOKENS, useServices } from '../container-api'
-import { Screens } from 'types/navigators'
+import { Screens } from '../types/navigators'
 
 export interface LayoutProps {
   safeArea?: boolean
