@@ -674,6 +674,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           const errors: CredentialErrors[] = []
           missing && errors.push(CredentialErrors.NotInWallet)
           item.credExchangeRecord?.revocationNotification?.revocationDate && errors.push(CredentialErrors.Revoked)
+          !hasSatisfiedPredicates(getCredentialsFields(), item.credId) && errors.push(CredentialErrors.PredicateError)
           return (
             <View>
               {loading || attestationLoading ? null : (
@@ -687,7 +688,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                       ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                     ]}
                     credName={item.credName}
-                    satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                     hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
                     handleAltCredChange={
                       item.altCredentials && item.altCredentials.length > 1
@@ -707,9 +707,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       />
     )
   }
-  // filteredToBeInWallet
-  // filteredToBeOutOfWallet?
-  // Less scanning of the array
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <ScrollView>
@@ -726,7 +723,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 )
               }) ?? []
             }
-            missing={false} // don't love this...
+            missing={false}
           />
 
           {/* This list will render if any credentials in a proof request are not in the users wallet */}
