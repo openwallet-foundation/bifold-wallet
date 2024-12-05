@@ -4,6 +4,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { SvgProps } from 'react-native-svg'
 import { InlineErrorConfig } from '../../types/error'
+import { testIdWithKey } from '../../utils/testable'
 
 export enum InlineErrorType {
   error,
@@ -42,7 +43,9 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType, co
       ) : (
         <InputInlineMessage.InlineErrorIcon {...props} />
       )}
-      <Text style={[InputInlineMessage.inlineErrorText]}>{message}</Text>
+      <Text style={[InputInlineMessage.inlineErrorText]} testID={testIdWithKey('InlineErrorText')}>
+        {message}
+      </Text>
     </View>
   )
 }
