@@ -23,7 +23,6 @@ const PINInputComponent = (
   { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage }: PINInputProps,
   ref: Ref<TextInput>
 ) => {
-  // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
@@ -60,10 +59,8 @@ const PINInputComponent = (
     hideIcon: {
       paddingHorizontal: 10,
     },
-    inlineMessageContainer: {
-      minHeight: 36,
-    },
   })
+
   const content = () => (
     <View style={PINInputTheme.labelAndFieldContainer}>
       <View style={style.codeFieldContainer}>
@@ -110,32 +107,24 @@ const PINInputComponent = (
     </View>
   )
 
-  const inlineMessageView = ({ message, inlineType, config }: InlineMessageProps) => (
-    <InlineErrorText message={message} inlineType={inlineType} config={config} />
-  )
-  const inlineMessagePlaceholder = (placement: InlineErrorPosition) => {
-    // Check if inlineMessage exists and if its position matches the placement or falls back to Above
-    if (!inlineMessage) {
-      return <View style={style.inlineMessageContainer} />
-    }
-  
-    const messagePosition = inlineMessage.config.position || InlineErrorPosition.Above // Default to Above
-    if (messagePosition !== placement) {
-      return <View style={style.inlineMessageContainer} />
-    }
-  
-    return (
-      <View style={style.inlineMessageContainer}>
-        {inlineMessageView(inlineMessage)}
-      </View>
-    )
-  }
   return (
     <View style={style.container}>
       {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
-      {inlineMessagePlaceholder(InlineErrorPosition.Above)}
+      {inlineMessage?.config.position === InlineErrorPosition.Above ? (
+        <InlineErrorText
+          message={inlineMessage.message}
+          inlineType={inlineMessage.inlineType}
+          config={inlineMessage.config}
+        />
+      ) : null}
       {content()}
-      {inlineMessagePlaceholder(InlineErrorPosition.Below)}
+      {inlineMessage?.config.position === InlineErrorPosition.Below ? (
+        <InlineErrorText
+          message={inlineMessage.message}
+          inlineType={inlineMessage.inlineType}
+          config={inlineMessage.config}
+        />
+      ) : null}
     </View>
   )
 }
