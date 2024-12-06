@@ -1,10 +1,12 @@
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+
 import Button, { ButtonType } from '../components/buttons/Button'
 import BulletPoint from '../components/inputs/BulletPoint'
-import { testIdWithKey } from '../utils/testable'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useTheme } from '../contexts/theme'
+import { testIdWithKey } from '../utils/testable'
 
 export interface PINExplainerProps {
   continueCreatePIN: () => void
@@ -15,19 +17,21 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
   const { ColorPallet, TextTheme, Assets } = useTheme()
 
   const style = StyleSheet.create({
-    screenContainer: {
-      height: '100%',
+    safeAreaView: {
+      flex: 1,
       backgroundColor: ColorPallet.brand.primaryBackground,
-      padding: 20,
-      justifyContent: 'space-between',
     },
-    pageContainer: {
-      height: '100%',
-      justifyContent: 'space-between',
+    scrollViewContentContainer: {
+      padding: 20,
+      flexGrow: 1,
     },
     imageContainer: {
       alignItems: 'center',
       marginBottom: 30,
+    },
+    footer: {
+      paddingHorizontal: 20,
+      paddingVertical: 10,
     },
   })
 
@@ -38,8 +42,8 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={style.screenContainer}>
+    <SafeAreaView style={style.safeAreaView} edges={['bottom', 'left', 'right']}>
+      <ScrollView contentContainerStyle={style.scrollViewContentContainer}>
         <View>
           <Text style={TextTheme.headingTwo}>{t('PINCreate.Explainer.PrimaryHeading')}</Text>
           <Text style={[TextTheme.normal, { marginTop: 30, marginBottom: 30 }]}>
@@ -51,31 +55,29 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
               t={t}
             />
           </Text>
-          
         </View>
         <View style={style.imageContainer}>
           <Assets.svg.secureCheck {...imageDisplayOptions} />
         </View>
         <View>
           <Text style={TextTheme.headingFour}>{t('PINCreate.Explainer.WhyNeedPin.Header')}</Text>
-          <Text style={[TextTheme.normal, { marginTop: 20, marginBottom: 20 }]}>{t('PINCreate.Explainer.WhyNeedPin.Paragraph')}</Text>
+          <Text style={[TextTheme.normal, { marginTop: 20, marginBottom: 20 }]}>
+            {t('PINCreate.Explainer.WhyNeedPin.Paragraph')}
+          </Text>
           <BulletPoint text={t('PINCreate.Explainer.WhyNeedPin.ParagraphList1')} textStyle={TextTheme.normal} />
           <BulletPoint text={t('PINCreate.Explainer.WhyNeedPin.ParagraphList2')} textStyle={TextTheme.normal} />
         </View>
-
-        <View>
-          <View style={{ paddingTop: 10 }}>
-            <Button
-              title={t('Global.Continue')}
-              accessibilityLabel={t('Global.Continue')}
-              testID={testIdWithKey('ContinueCreatePIN')}
-              onPress={continueCreatePIN}
-              buttonType={ButtonType.Primary}
-            />
-          </View>
-        </View>
+      </ScrollView>
+      <View style={style.footer}>
+        <Button
+          title={t('Global.Continue')}
+          accessibilityLabel={t('Global.Continue')}
+          testID={testIdWithKey('ContinueCreatePIN')}
+          onPress={continueCreatePIN}
+          buttonType={ButtonType.Primary}
+        />
       </View>
-    </ScrollView>
+    </SafeAreaView>
   )
 }
 
