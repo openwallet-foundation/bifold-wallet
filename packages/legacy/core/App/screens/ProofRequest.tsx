@@ -566,30 +566,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                   <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
                 </Text>
               )}
-              {containsPI ? (
-                <InfoTextBox
-                  type={InfoBoxType.Warn}
-                  style={{ marginTop: 16 }}
-                  textStyle={{ fontSize: TextTheme.title.fontSize }}
-                >
-                  {t('ProofRequest.SensitiveInformation')}
-                </InfoTextBox>
-              ) : null}
-              {isShareDisabled() ? (
+              {isShareDisabled() && (
                 <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
                   {t('ProofRequest.YouCantRespond')}
                 </InfoTextBox>
-              ) : null}
+              )}
             </View>
-            {!hasAvailableCredentials && hasMatchingCredDef && (
-              <Text
-                style={{
-                  ...TextTheme.title,
-                }}
-              >
-                {t('ProofRequest.FromYourWallet')}
-              </Text>
-            )}
           </>
         )}
       </View>
@@ -620,6 +602,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const proofPageFooter = () => {
     return (
       <View style={[styles.pageFooter, styles.pageMargin]}>
+        {containsPI && (
+          <InfoTextBox
+            type={InfoBoxType.Warn}
+            style={{ marginTop: 16 }}
+            textStyle={{ fontSize: TextTheme.title.fontSize }}
+          >
+            {t('ProofRequest.SensitiveInformation')}
+          </InfoTextBox>
+        )}
         {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         ) : null}
@@ -707,13 +698,58 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       />
     )
   }
+
+  const credentialListHeader = (headerText: string) => {
+    return (
+      <View style={styles.pageMargin}>
+        {!(loading || attestationLoading) && (
+          <Text
+            style={{
+              ...TextTheme.title,
+              marginTop: 10,
+            }}
+          >
+            {headerText}
+          </Text>
+        )}
+      </View>
+    )
+  }
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
       <ScrollView>
         <View style={styles.pageContent}>
+          {proofPageHeader()}
+          {/* This list will render if any credentials in a proof request are not in the users wallet */}
+          {!hasAvailableCredentials && (
+            <CredentialList
+              header={credentialListHeader(t('ProofRequest.MissingCredentials'))}
+              items={
+                activeCreds.filter((cred) => {
+                  return userCredentials.every(
+                    (fullCredential: CredentialExchangeRecord) =>
+                      getCredentialSchemaIdForRecord(fullCredential) !== cred.schemaId &&
+                      getCredentialDefinitionIdForRecord(fullCredential) !== cred.credDefId
+                  )
+                }) ?? []
+              }
+              missing={true}
+              footer={
+                hasMatchingCredDef ? (
+                  <View
+                    style={{
+                      width: 'auto',
+                      borderWidth: 1,
+                      borderColor: ColorPallet.grayscale.lightGrey,
+                      marginTop: 20,
+                    }}
+                  />
+                ) : undefined
+              }
+            />
+          )}
           <CredentialList
-            header={proofPageHeader()}
-            footer={hasAvailableCredentials ? proofPageFooter() : undefined}
+            header={credentialListHeader(t('ProofRequest.FromYourWallet'))}
             items={
               activeCreds.filter((cred) => {
                 return userCredentials.some(
@@ -725,49 +761,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             }
             missing={false}
           />
-
-          {/* This list will render if any credentials in a proof request are not in the users wallet */}
-          {!hasAvailableCredentials && (
-            <CredentialList
-              header={
-                <View style={styles.pageMargin}>
-                  {!(loading || attestationLoading) && (
-                    <>
-                      {hasMatchingCredDef && (
-                        <View
-                          style={{
-                            width: 'auto',
-                            borderWidth: 1,
-                            borderColor: ColorPallet.grayscale.lightGrey,
-                            marginTop: 20,
-                          }}
-                        />
-                      )}
-                      <Text
-                        style={{
-                          ...TextTheme.title,
-                          marginTop: 10,
-                        }}
-                      >
-                        {t('ProofRequest.MissingCredentials')}
-                      </Text>
-                    </>
-                  )}
-                </View>
-              }
-              footer={proofPageFooter()}
-              items={
-                activeCreds.filter((cred) => {
-                  return userCredentials.every(
-                    (fullCredential: CredentialExchangeRecord) =>
-                      getCredentialSchemaIdForRecord(fullCredential) !== cred.schemaId &&
-                      getCredentialDefinitionIdForRecord(fullCredential) !== cred.credDefId
-                  )
-                }) ?? []
-              }
-              missing={true}
-            />
-          )}
+          {proofPageFooter()}
         </View>
         <ProofRequestAccept visible={pendingModalVisible} proofId={proofId} />
         <CommonRemoveModal

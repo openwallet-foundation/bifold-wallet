@@ -297,8 +297,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
     bundleResolver.resolveAllBundles(params).then((bundle: any) => {
       if (proof) {
-        // setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
-        setFlaggedAttributes(['temp', 'first_name'])
+        setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
         const credHelpUrl =
           (bundle as any).bundle.bundle.metadata.credentialSupportUrl[params.language] ??
           Object.values((bundle as any).bundle.bundle.metadata.credentialSupportUrl)?.[0]
@@ -478,9 +477,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           />
         )}
         {/* Render predicate not satisfied error */}
-        {item.satisfied != undefined && item.satisfied === false && (
-          <AttributeErrorLabel errorMessage={t('ProofRequest.PredicateNotSatisfied')} />
-        )}
+        {!credentialErrors.includes(CredentialErrors.NotInWallet) &&
+          item.satisfied != undefined &&
+          item.satisfied === false && <AttributeErrorLabel errorMessage={t('ProofRequest.PredicateNotSatisfied')} />}
       </View>
     )
   }
