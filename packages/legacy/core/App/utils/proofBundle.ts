@@ -138,9 +138,7 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
       templateData = applyDevRestrictions(templateData)
     }
 
-    const template = templateData.find((template) => template.id === templateId)
-
-    return template
+    return templateData.find((template) => template.id === templateId)
   }
 
   public async checkForUpdates(): Promise<void> {
