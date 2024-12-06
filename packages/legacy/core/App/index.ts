@@ -123,7 +123,7 @@ export type {
 
 export type { InlineMessageProps } from './components/inputs/InlineErrorText'
 
-export type { InlineErrorPosition } from './types/error'
+export { InlineErrorPosition } from './types/error'
 
 export type { CredentialListFooterProps }
 export * from './container-api'
