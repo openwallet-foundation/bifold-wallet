@@ -391,12 +391,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Icon
+          testID={testIdWithKey('AttributeErrorIcon')}
           style={{ paddingTop: 2, paddingHorizontal: 2 }}
           name="close"
           color={ListItems.proofError.color}
           size={ListItems.recordAttributeText.fontSize}
         />
         <Text
+          testID={testIdWithKey('AttributeErrorText')}
           style={[
             TextTheme.labelSubtitle,
             styles.textContainer,
@@ -446,6 +448,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {credentialErrors.includes(CredentialErrors.NotInWallet) && (
             <Icon
+              testID={testIdWithKey('AttributeNameErrorIcon')}
               style={{ paddingTop: 2, paddingHorizontal: 2 }}
               name="close"
               color={ListItems.proofError.color}
@@ -459,6 +462,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {flaggedAttributes?.includes(label) && !item.pValue && proof && (
               <Icon
+                testID={testIdWithKey('AttributeNameWarningIcon')}
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
                 name="warning"
                 color={ColorPallet.notification.warnIcon}

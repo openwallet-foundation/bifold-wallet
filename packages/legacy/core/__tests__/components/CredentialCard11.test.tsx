@@ -6,7 +6,7 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import CredentialCard11 from '../../App/components/misc/CredentialCard11'
+import CredentialCard11, { CredentialErrors } from '../../App/components/misc/CredentialCard11'
 import { testIdWithKey } from '../../App/utils/testable'
 import { Linking } from 'react-native'
 import { BasicAppContext } from '../helpers/app'
@@ -25,6 +25,7 @@ describe('CredentialCard11 component', () => {
     jest.clearAllMocks()
   })
 
+  //
   describe('In proof form', () => {
     test('With existing credential and alt credentials', async () => {
       const credentialRecord = new CredentialExchangeRecord(credential)
@@ -42,7 +43,7 @@ describe('CredentialCard11 component', () => {
             credential={credentialRecord}
             credDefId={'cred_def_id'}
             proof
-            error={false}
+            credentialErrors={[]}
             handleAltCredChange={handleAltCredChange}
             hasAltCredentials
           />
@@ -54,15 +55,18 @@ describe('CredentialCard11 component', () => {
       expect(changeCredentialButton).toBeTruthy()
 
       fireEvent(changeCredentialButton, 'press')
-      expect(handleAltCredChange).toBeCalled()
+      expect(handleAltCredChange).toHaveBeenCalled()
     })
 
     test('Missing credential with help action (cred def ID)', async () => {
       Linking.openURL = jest.fn()
       const { findByTestId } = render(
-        <BasicAppContext
-        >
-          <CredentialCard11 proof credDefId={'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card'} error={true} />
+        <BasicAppContext>
+          <CredentialCard11
+            proof
+            credDefId={'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card'}
+            credentialErrors={[CredentialErrors.NotInWallet]}
+          />
         </BasicAppContext>
       )
 
@@ -71,16 +75,19 @@ describe('CredentialCard11 component', () => {
       expect(getThisCredentialButton).toBeTruthy()
 
       fireEvent(getThisCredentialButton, 'press')
-      expect(Linking.openURL).toBeCalled()
+      expect(Linking.openURL).toHaveBeenCalled()
     })
 
     test('Missing credential with help action (schema ID)', async () => {
       Linking.openURL = jest.fn()
 
       const { findByTestId } = render(
-        <BasicAppContext
-        >
-          <CredentialCard11 proof schemaId={'XUxBrVSALWHLeycAUhrNr9:2:student_card:1.0'} error={true} />
+        <BasicAppContext>
+          <CredentialCard11
+            proof
+            schemaId={'XUxBrVSALWHLeycAUhrNr9:2:student_card:1.0'}
+            credentialErrors={[CredentialErrors.NotInWallet]}
+          />
         </BasicAppContext>
       )
 
@@ -89,7 +96,22 @@ describe('CredentialCard11 component', () => {
       expect(getThisCredentialButton).toBeTruthy()
 
       fireEvent(getThisCredentialButton, 'press')
-      expect(Linking.openURL).toBeCalled()
+      expect(Linking.openURL).toHaveBeenCalled()
+    })
+
+    test('Credential is Revoked', async () => {
+      const { findByTestId } = render(
+        <BasicAppContext>
+          <CredentialCard11
+            proof={true}
+            schemaId={'XUxBrVSALWHLeycAUhrNr9:2:student_card:1.0'}
+            credentialErrors={[CredentialErrors.Revoked]}
+          />
+        </BasicAppContext>
+      )
+
+      const errorText = await findByTestId(testIdWithKey('RevokedOrNotAvailable'))
+      expect(errorText).not.toBeUndefined()
     })
   })
 })
