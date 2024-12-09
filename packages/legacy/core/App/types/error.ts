@@ -29,6 +29,7 @@ export class BifoldError extends Error {
 
 export type InlineErrorConfig = {
   enabled: boolean
+  hasErrorIcon?: boolean
   position?: InlineErrorPosition
   style?: ViewStyle
 }

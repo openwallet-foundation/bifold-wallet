@@ -70,7 +70,7 @@ export const defaultConfig: Config = {
     enableCredentialList: false,
   },
 }
-export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig  = {
+export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
   logAttestationAccepted: true,
   logAttestationRefused: true,
   logAttestationRemoved: true,
@@ -98,7 +98,7 @@ export class MainContainer implements Container {
   public get container(): DependencyContainer {
     return this._container
   }
-  
+
   public init(): Container {
     this.log?.info(`Initializing Bifold container`)
 
@@ -143,7 +143,11 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM, ContactCredentialListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
-    this._container.registerInstance(TOKENS.INLINE_ERRORS, { enabled: true, position: InlineErrorPosition.Above })
+    this._container.registerInstance(TOKENS.INLINE_ERRORS, {
+      enabled: true,
+      hasErrorIcon: true,
+      position: InlineErrorPosition.Above,
+    })
     this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
