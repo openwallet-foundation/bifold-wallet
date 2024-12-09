@@ -36,13 +36,19 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType, co
 
   const props: SvgProps = { height: 24, width: 24, color: color, style: style.icon }
 
+  const getInlineErrorIcon = () => {
+    if (!config.hasErrorIcon) return null
+
+    if (inlineType === InlineErrorType.warning) {
+      return <InputInlineMessage.InlineWarningIcon {...props} />
+    } else {
+      return <InputInlineMessage.InlineErrorIcon {...props} />
+    }
+  }
+
   return (
     <View style={[style.container, config.style]}>
-      {inlineType === InlineErrorType.warning ? (
-        <InputInlineMessage.InlineWarningIcon {...props} />
-      ) : (
-        <InputInlineMessage.InlineErrorIcon {...props} />
-      )}
+      {getInlineErrorIcon()}
       <Text style={[InputInlineMessage.inlineErrorText]} testID={testIdWithKey('InlineErrorText')}>
         {message}
       </Text>
