@@ -94,6 +94,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
       >
         <Bubble
           {...messageProps}
+          key={messageProps.key}
           renderUsernameOnMessage={false}
           renderMessageText={() => message.renderEvent()}
           containerStyle={{

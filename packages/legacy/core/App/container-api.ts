@@ -12,9 +12,9 @@ import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
 import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
-import { AuthenticateStackParams, ScreenOptionsType } from './types/navigators'
+import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType } from './types/navigators'
 import { CustomNotification } from './types/notification'
-import { Config } from './types/config'
+import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
@@ -85,6 +85,7 @@ export const FN_TOKENS = {
 export const HISTORY_TOKENS = {
   FN_LOAD_HISTORY: 'fn.loadHistory',
   HISTORY_ENABLED: 'history.enabled',
+  HISTORY_EVENTS_LOGGER: 'history.eventsLogger',
 } as const
 
 export const COMP_TOKENS = {
@@ -101,6 +102,7 @@ export const LOAD_STATE_TOKENS = {
 
 export const OBJECT_TOKENS = {
   OBJECT_SCREEN_CONFIG: 'object.screen-config',
+  OBJECT_LAYOUT_CONFIG: 'object.screenlayout-config',
 } as const
 
 export const CACHE_TOKENS = {
@@ -167,6 +169,7 @@ export type TokenMapping = {
   }
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_SCREEN_CONFIG]: ScreenOptionsType
+  [TOKENS.OBJECT_LAYOUT_CONFIG]: ScreenLayoutConfig
   [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
@@ -177,6 +180,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.HISTORY_ENABLED]: boolean
+  [TOKENS.HISTORY_EVENTS_LOGGER]: HistoryEventsLoggerConfig
   [TOKENS.CONFIG]: Config
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC

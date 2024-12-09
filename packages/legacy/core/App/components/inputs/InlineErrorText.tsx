@@ -4,6 +4,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { SvgProps } from 'react-native-svg'
 import { InlineErrorConfig } from '../../types/error'
+import { testIdWithKey } from '../../utils/testable'
 
 export enum InlineErrorType {
   error,
@@ -33,16 +34,24 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType, co
       ? InputInlineMessage.inlineWarningText.color
       : InputInlineMessage.inlineErrorText.color
 
-  const props: SvgProps = { height: 16, width: 16, color: color, style: style.icon }
+  const props: SvgProps = { height: 24, width: 24, color: color, style: style.icon }
+
+  const getInlineErrorIcon = () => {
+    if (!config.hasErrorIcon) return null
+
+    if (inlineType === InlineErrorType.warning) {
+      return <InputInlineMessage.InlineWarningIcon {...props} />
+    } else {
+      return <InputInlineMessage.InlineErrorIcon {...props} />
+    }
+  }
 
   return (
     <View style={[style.container, config.style]}>
-      {inlineType === InlineErrorType.warning ? (
-        <InputInlineMessage.InlineWarningIcon {...props} />
-      ) : (
-        <InputInlineMessage.InlineErrorIcon {...props} />
-      )}
-      <Text style={[InputInlineMessage.inlineErrorText]}>{message}</Text>
+      {getInlineErrorIcon()}
+      <Text style={[InputInlineMessage.inlineErrorText]} testID={testIdWithKey('InlineErrorText')}>
+        {message}
+      </Text>
     </View>
   )
 }

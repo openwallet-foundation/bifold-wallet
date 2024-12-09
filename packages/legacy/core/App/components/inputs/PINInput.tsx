@@ -23,7 +23,6 @@ const PINInputComponent = (
   { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage }: PINInputProps,
   ref: Ref<TextInput>
 ) => {
-  // const accessible = accessibilityLabel && accessibilityLabel !== '' ? true : false
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
@@ -61,6 +60,7 @@ const PINInputComponent = (
       paddingHorizontal: 10,
     },
   })
+
   const content = () => (
     <View style={PINInputTheme.labelAndFieldContainer}>
       <View style={style.codeFieldContainer}>
@@ -107,24 +107,24 @@ const PINInputComponent = (
     </View>
   )
 
-  const inlineMessageView = ({ message, inlineType, config }: InlineMessageProps) => (
-    <InlineErrorText message={message} inlineType={inlineType} config={config} />
-  )
-  const inlineMessagePlaceholder = (placment: InlineErrorPosition) => {
-    if (inlineMessage && inlineMessage.config.position === placment) {
-      return inlineMessageView(inlineMessage)
-    }
-    //This is a fallback in case no position provided
-    if (inlineMessage && placment === InlineErrorPosition.Above && !inlineMessage.config.position) {
-      return inlineMessageView(inlineMessage)
-    }
-  }
   return (
     <View style={style.container}>
       {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
-      {inlineMessagePlaceholder(InlineErrorPosition.Above)}
+      {inlineMessage?.config.position === InlineErrorPosition.Above ? (
+        <InlineErrorText
+          message={inlineMessage.message}
+          inlineType={inlineMessage.inlineType}
+          config={inlineMessage.config}
+        />
+      ) : null}
       {content()}
-      {inlineMessagePlaceholder(InlineErrorPosition.Below)}
+      {inlineMessage?.config.position === InlineErrorPosition.Below ? (
+        <InlineErrorText
+          message={inlineMessage.message}
+          inlineType={inlineMessage.inlineType}
+          config={inlineMessage.config}
+        />
+      ) : null}
     </View>
   )
 }
