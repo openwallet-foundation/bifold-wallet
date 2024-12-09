@@ -26,6 +26,7 @@ export interface FormattedSubmissionEntry {
     metadata?: CredentialMetadata
     backgroundColor?: string
     backgroundImage?: DisplayImage
+    textColor?: string
     claimFormat: ClaimFormat | 'AnonCreds'
   }>
 }
@@ -63,6 +64,7 @@ export function formatDifPexCredentialsForRequest(
             disclosedPayload,
             metadata,
             backgroundColor: display.backgroundColor,
+            textColor: display.textColor,
             backgroundImage: display.backgroundImage,
             claimFormat,
           }
