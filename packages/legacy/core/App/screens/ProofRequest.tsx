@@ -704,6 +704,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       <View style={styles.pageMargin}>
         {!(loading || attestationLoading) && (
           <Text
+            testID={testIdWithKey('ProofRequestHeaderText')}
             style={{
               ...TextTheme.title,
               marginTop: 10,
