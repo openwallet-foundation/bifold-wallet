@@ -4,10 +4,11 @@ import {
   ProofRequestTemplate,
   getProofRequestTemplates,
 } from '@hyperledger/aries-bifold-verifier'
-import axios, { AxiosError } from 'axios'
 import { useState, useEffect } from 'react'
 
 import { TOKENS, useServices } from '../container-api'
+import { templateBundleStorageDirectory, templateCacheDataFileName, templateBundleIndexFileName } from '../constants'
+import { FileCache, CacheDataFile } from './fileCache'
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
@@ -18,19 +19,25 @@ const calculatePreviousYear = (yearOffset: number) => {
 }
 
 export const applyTemplateMarkers = (templates: any): any => {
-  if (!templates) return templates
+  if (!templates) {
+    return templates
+  }
+
   const markerActions: { [key: string]: (param: string) => string } = {
     now: () => Math.floor(new Date().getTime() / 1000).toString(),
     currentDate: (offset: string) => calculatePreviousYear(parseInt(offset)).toString(),
   }
+
   let templateString = JSON.stringify(templates)
-  // regex to find all markers in the template so we can replace them with computed values
+  // regex to find all markers in the template so we can replace
+  // them with computed values
   const markers = [...templateString.matchAll(/"@\{(\w+)(?:\((\S*)\))?\}"/gm)]
 
   markers.forEach((marker) => {
     const markerValue = markerActions[marker[1] as string](marker[2])
     templateString = templateString.replace(marker[0], markerValue)
   })
+
   return JSON.parse(templateString)
 }
 
@@ -64,7 +71,7 @@ export const applyDevRestrictions = (templates: ProofRequestTemplate[]): ProofRe
   })
 }
 
-export interface ProofBundleResolverType {
+export interface IProofBundleResolver {
   resolve: (acceptDevRestrictions: boolean) => Promise<ProofRequestTemplate[] | undefined>
   resolveById: (templateId: string, acceptDevRestrictions: boolean) => Promise<ProofRequestTemplate | undefined>
 }
@@ -72,9 +79,9 @@ export interface ProofBundleResolverType {
 export const useRemoteProofBundleResolver = (
   indexFileBaseUrl: string | undefined,
   log?: BaseLogger
-): ProofBundleResolverType => {
+): IProofBundleResolver => {
   const [proofRequestTemplates] = useServices([TOKENS.UTIL_PROOF_TEMPLATE])
-  const [resolver, setResolver] = useState<ProofBundleResolverType>(new DefaultProofBundleResolver(proofRequestTemplates))
+  const [resolver, setResolver] = useState<IProofBundleResolver>(new DefaultProofBundleResolver(proofRequestTemplates))
 
   useEffect(() => {
     if (indexFileBaseUrl) {
@@ -87,76 +94,124 @@ export const useRemoteProofBundleResolver = (
   return resolver
 }
 
-export class RemoteProofBundleResolver implements ProofBundleResolverType {
-  private remoteServer
+export class RemoteProofBundleResolver extends FileCache implements IProofBundleResolver {
   private templateData: ProofRequestTemplate[] | undefined
-  private log?: BaseLogger
+  private cacheDataFileName = templateCacheDataFileName
 
   public constructor(indexFileBaseUrl: string, log?: BaseLogger) {
-    this.remoteServer = axios.create({
-      baseURL: indexFileBaseUrl,
-    })
-    this.log = log
+    super(indexFileBaseUrl, templateBundleStorageDirectory, templateBundleIndexFileName, log)
   }
 
   public async resolve(acceptDevRestrictions: boolean): Promise<ProofRequestTemplate[] | undefined> {
-    if (this.templateData) {
-      let templateData = this.templateData
+    let templateData
 
-      if (acceptDevRestrictions) {
-        templateData = applyDevRestrictions(templateData)
-      }
-
-      return Promise.resolve(templateData)
+    if (!this.templateData) {
+      await this.checkForUpdates()
     }
 
-    return this.remoteServer
-      .get('proof-templates.json')
-      .then((response) => {
-        this.log?.info('Fetched proof templates')
+    if (!this.templateData) {
+      return []
+    }
 
-        try {
-          let templateData: ProofRequestTemplate[] = response.data
-          this.templateData = templateData
+    templateData = this.templateData
 
-          if (acceptDevRestrictions) {
-            templateData = applyDevRestrictions(templateData)
-          }
+    if (acceptDevRestrictions) {
+      templateData = applyDevRestrictions(this.templateData)
+    }
 
-          return templateData
-        } catch (error: unknown) {
-          this.log?.error('Failed to parse proof templates', error as Error)
-
-          return undefined
-        }
-      })
-      .catch((error: AxiosError) => {
-        this.log?.error('Failed to fetch proof templates', error)
-
-        return undefined
-      })
+    return Promise.resolve(templateData)
   }
 
   public async resolveById(
     templateId: string,
     acceptDevRestrictions: boolean
   ): Promise<ProofRequestTemplate | undefined> {
+    let templateData
+
     if (!this.templateData) {
       return (await this.resolve(acceptDevRestrictions))?.find((template) => template.id === templateId)
     }
 
-    let templateData = this.templateData
+    templateData = this.templateData
 
     if (acceptDevRestrictions) {
       templateData = applyDevRestrictions(templateData)
     }
-    const template = templateData.find((template) => template.id === templateId)
 
-    return template
+    return templateData.find((template) => template.id === templateId)
+  }
+
+  public async checkForUpdates(): Promise<void> {
+    await this.createWorkingDirectoryIfNotExists()
+
+    if (!this.fileEtag) {
+      this.log?.info('Loading cache data')
+
+      const cacheData = await this.loadCacheData()
+      if (cacheData) {
+        this.fileEtag = cacheData.fileEtag
+      }
+    }
+
+    this.log?.info('Loading index now')
+    await this.loadBundleIndex(this.cacheDataFileName)
+  }
+
+  private loadBundleIndex = async (filePath: string) => {
+    try {
+      const response = await this.axiosInstance.get(filePath)
+      const { status } = response
+      const { etag } = response.headers
+
+      if (status !== 200) {
+        this.log?.error(`Failed to fetch remote resource at ${filePath}`)
+        // failed to fetch, use the cached index file
+        // if available
+        const data = await this.loadFileFromLocalStorage(filePath)
+        if (data) {
+          this.log?.info(`Using index file ${filePath} from cache`)
+          this.templateData = JSON.parse(data)
+        }
+
+        return
+      }
+
+      if (etag && etag === this.fileEtag) {
+        this.log?.info(`Index file ${filePath} has not changed, etag ${etag}`)
+        // etag is the same, no need to refresh
+        this.templateData = response.data
+
+        return
+      }
+
+      this.fileEtag = etag
+      this.templateData = response.data
+
+      this.log?.info(`Saving file ${filePath}, etag ${etag}`)
+      await this.saveFileToLocalStorage(filePath, JSON.stringify(this.templateData))
+    } catch (error) {
+      this.log?.error(`Failed to fetch file index ${filePath}`)
+    }
+  }
+
+  private loadCacheData = async (): Promise<CacheDataFile | undefined> => {
+    const cacheFileExists = await this.checkFileExists(this.cacheDataFileName)
+    if (!cacheFileExists) {
+      return
+    }
+
+    const data = await this.loadFileFromLocalStorage(this.cacheDataFileName)
+    if (!data) {
+      return
+    }
+
+    const cacheData: CacheDataFile = JSON.parse(data)
+
+    return cacheData
   }
 }
 
-export class DefaultProofBundleResolver implements ProofBundleResolverType {
+export class DefaultProofBundleResolver implements IProofBundleResolver {
   private proofRequestTemplates
 
   public constructor(proofRequestTemplates: ProofRequestTemplateFn | undefined) {
