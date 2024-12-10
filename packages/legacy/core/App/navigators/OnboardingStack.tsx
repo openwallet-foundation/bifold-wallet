@@ -34,21 +34,44 @@ const OnboardingStack: React.FC = () => {
   const theme = useTheme()
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
-  const [splash, pages, useBiometry, Onboarding, Developer, { screen: Terms }, onTutorialCompletedCurried, ScreenOptionsDictionary, Preface] = useServices([TOKENS.SCREEN_SPLASH, TOKENS.SCREEN_ONBOARDING_PAGES, TOKENS.SCREEN_USE_BIOMETRY, TOKENS.SCREEN_ONBOARDING, TOKENS.SCREEN_DEVELOPER, TOKENS.SCREEN_TERMS, TOKENS.FN_ONBOARDING_DONE, TOKENS.OBJECT_SCREEN_CONFIG, TOKENS.SCREEN_PREFACE])
+  const [
+    splash,
+    pages,
+    useBiometry,
+    Onboarding,
+    Developer,
+    { screen: Terms },
+    onTutorialCompletedCurried,
+    ScreenOptionsDictionary,
+    Preface,
+  ] = useServices([
+    TOKENS.SCREEN_SPLASH,
+    TOKENS.SCREEN_ONBOARDING_PAGES,
+    TOKENS.SCREEN_USE_BIOMETRY,
+    TOKENS.SCREEN_ONBOARDING,
+    TOKENS.SCREEN_DEVELOPER,
+    TOKENS.SCREEN_TERMS,
+    TOKENS.FN_ONBOARDING_DONE,
+    TOKENS.OBJECT_SCREEN_CONFIG,
+    TOKENS.SCREEN_PREFACE,
+  ])
   const defaultStackOptions = useDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
   const [{ disableOnboardingSkip }] = useServices([TOKENS.CONFIG])
 
-  const onAuthenticated = useCallback((status: boolean): void => {
-    if (!status) {
-      return
-    }
+  const onAuthenticated = useCallback(
+    (status: boolean): void => {
+      if (!status) {
+        return
+      }
 
-    dispatch({
-      type: DispatchAction.DID_AUTHENTICATE,
-    })
-  }, [dispatch])
+      dispatch({
+        type: DispatchAction.DID_AUTHENTICATE,
+      })
+    },
+    [dispatch]
+  )
 
   const OnBoardingScreen = () => {
     return (
@@ -164,7 +187,7 @@ const OnboardingStack: React.FC = () => {
     {
       name: Screens.AttemptLockout,
       component: AttemptLockout,
-      options: () => ({ headerShown: true, headerLeft: () => null }),
+      options: () => ({ headerShown: true, headerLeft: () => null, title: t('Screens.AttemptLockout') }),
     },
   ]
 
