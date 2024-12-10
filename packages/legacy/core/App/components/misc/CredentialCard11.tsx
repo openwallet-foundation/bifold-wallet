@@ -552,15 +552,25 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           </View>
         </View>
 
-        {Boolean(credentialErrors.length) && Boolean(proof) && (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon style={styles.errorIcon} name="close" size={30} />
-            <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-              {credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof) && t('CredentialDetails.Revoked')}
-              {credentialErrors.includes(CredentialErrors.NotInWallet) && t('ProofRequest.NotAvailableInYourWallet')}
-            </Text>
-          </View>
-        )}
+        {/* Render Error text at the top of the credential card */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof) && (
+            <>
+              <Icon style={styles.errorIcon} name="close" size={30} />
+              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+                {t('CredentialDetails.Revoked')}
+              </Text>
+            </>
+          )}
+          {credentialErrors.includes(CredentialErrors.NotInWallet) && (
+            <>
+              <Icon style={styles.errorIcon} name="close" size={30} />
+              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+                {t('ProofRequest.NotAvailableInYourWallet')}
+              </Text>
+            </>
+          )}
+        </View>
         <FlatList
           data={cardData}
           scrollEnabled={false}

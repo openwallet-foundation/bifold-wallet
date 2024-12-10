@@ -479,7 +479,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 </Text>
                               </View>
                               <View
-                                ListFooterComponent={null}
+                                ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
                                 data={
                                   Array [
                                     Object {
@@ -588,6 +588,9 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     </View>
                                   </View>
                                 </View>
+                                <View
+                                  onLayout={[Function]}
+                                />
                               </View>
                             </View>
                             <View
@@ -966,7 +969,15 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 </View>
                               </View>
                               <View
-                                ListFooterComponent={null}
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                  }
+                                }
+                              />
+                              <View
+                                ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
                                 data={
                                   Array [
                                     Attribute {
@@ -1185,6 +1196,9 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     </View>
                                   </View>
                                 </View>
+                                <View
+                                  onLayout={[Function]}
+                                />
                               </View>
                             </View>
                             <View

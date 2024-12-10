@@ -1072,7 +1072,15 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                             </View>
                           </View>
                           <View
-                            ListFooterComponent={null}
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                              }
+                            }
+                          />
+                          <View
+                            ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
                             data={Array []}
                             getItem={[Function]}
                             getItemCount={[Function]}
@@ -1091,7 +1099,11 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                             scrollEventThrottle={50}
                             stickyHeaderIndices={Array []}
                             viewabilityConfigCallbackPairs={Array []}
-                          />
+                          >
+                            <View
+                              onLayout={[Function]}
+                            />
+                          </View>
                         </View>
                         <View
                           style={

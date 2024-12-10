@@ -89,7 +89,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [revocationOffense, setRevocationOffense] = useState(false)
   const [retrievedCredentials, setRetrievedCredentials] = useState<AnonCredsCredentialsForProofRequest>()
   // all credentials in the users wallet
-  const [userCredentials, setUserCredentials] = useState<CredentialExchangeRecord[]>([])
+  const [userCredentials, setUserCredentials] = useState<ProofCredentialItems[]>([])
+  const [missingCredentials, setMissingCredentials] = useState<ProofCredentialItems[]>([])
   const [descriptorMetadata, setDescriptorMetadata] = useState<DescriptorMetadata | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
@@ -326,7 +327,34 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             }, {})
           }
 
-          setUserCredentials(fullCredentials)
+          const userCredentials: ProofCredentialItems[] = []
+          const missingCredentials: ProofCredentialItems[] = []
+          const schemaIds = new Set(
+            fullCredentials
+              .map((fullCredential: CredentialExchangeRecord) => getCredentialSchemaIdForRecord(fullCredential))
+              .filter((id) => id !== null)
+          )
+          const credDefIds = new Set(
+            fullCredentials
+              .map((fullCredential: CredentialExchangeRecord) => getCredentialDefinitionIdForRecord(fullCredential))
+              .filter((id) => id !== null)
+          )
+
+          activeCreds.forEach((cred) => {
+            const isMissing = !schemaIds.has(cred.schemaId || '') && !credDefIds.has(cred.credDefId || '')
+            const isUserCredential = schemaIds.has(cred.schemaId || '') || credDefIds.has(cred.credDefId || '')
+
+            if (isMissing) {
+              missingCredentials.push(cred)
+            }
+
+            if (isUserCredential) {
+              userCredentials.push(cred)
+            }
+          })
+          setUserCredentials(userCredentials)
+          setMissingCredentials(missingCredentials)
+
           // Check for revoked credentials
           const records = fullCredentials.filter((record: CredentialExchangeRecord) =>
             record.credentials.some((cred: CredentialRecordBinding) => credList.includes(cred.credentialRecordId))
@@ -798,15 +826,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           {!hasAvailableCredentials && (
             <CredentialList
               header={credentialListHeader(t('ProofRequest.MissingCredentials'))}
-              items={
-                activeCreds.filter((cred) => {
-                  return userCredentials.every(
-                    (fullCredential: CredentialExchangeRecord) =>
-                      getCredentialSchemaIdForRecord(fullCredential) !== cred.schemaId &&
-                      getCredentialDefinitionIdForRecord(fullCredential) !== cred.credDefId
-                  )
-                }) ?? []
-              }
+              items={missingCredentials}
               missing={true}
               footer={
                 hasMatchingCredDef ? (
@@ -824,15 +844,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           )}
           <CredentialList
             header={credentialListHeader(t('ProofRequest.FromYourWallet'))}
-            items={
-              activeCreds.filter((cred) => {
-                return userCredentials.some(
-                  (fullCredential: CredentialExchangeRecord) =>
-                    getCredentialSchemaIdForRecord(fullCredential) === cred.schemaId ||
-                    getCredentialDefinitionIdForRecord(fullCredential) === cred.credDefId
-                )
-              }) ?? []
-            }
+            items={userCredentials}
             missing={false}
           />
           {proofPageFooter()}
