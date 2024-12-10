@@ -488,6 +488,28 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
+  const CredentialCardPrimaryBodyFooter: React.FC = () => {
+    if (hasAltCredentials && handleAltCredChange) {
+      return (
+        <CredentialActionFooter
+          onPress={handleAltCredChange}
+          text={t('ProofRequest.ChangeCredential')}
+          testID={'ChangeCredential'}
+        />
+      )
+    }
+    if (Boolean(credentialErrors.length) && helpAction) {
+      return (
+        <CredentialActionFooter
+          onPress={helpAction}
+          text={t('ProofRequest.GetThisCredential')}
+          testID={'GetThisCredential'}
+        />
+      )
+    }
+    return <></>
+  }
+
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
@@ -546,21 +568,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           renderItem={({ item }) => {
             return renderCardAttribute(item as Attribute & Predicate)
           }}
-          ListFooterComponent={
-            hasAltCredentials && handleAltCredChange ? (
-              <CredentialActionFooter
-                onPress={handleAltCredChange}
-                text={t('ProofRequest.ChangeCredential')}
-                testID={'ChangeCredential'}
-              />
-            ) : Boolean(credentialErrors.length) && helpAction ? (
-              <CredentialActionFooter
-                onPress={helpAction}
-                text={t('ProofRequest.GetThisCredential')}
-                testID={'GetThisCredential'}
-              />
-            ) : null
-          }
+          ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
         />
       </View>
     )
@@ -659,6 +667,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       </View>
     )
   }
+
+  const getCredentialStatus = (): 'error' | 'warning' | undefined => {
+    if (credentialErrors.includes(CredentialErrors.Revoked) && !proof) {
+      return 'error'
+    } else if (allPI && proof) {
+      return 'warning'
+    }
+    return undefined
+  }
   return overlay.bundle ? (
     <View
       style={[
@@ -700,13 +717,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           <CredentialCard
             // if the credential is revoked and we are not in a proof context
             // display a small error icon in the top right of the credential card
-            status={
-              credentialErrors.includes(CredentialErrors.Revoked) && !proof
-                ? 'error'
-                : allPI && proof
-                ? 'warning'
-                : undefined
-            }
+            status={getCredentialStatus()}
           />
         </View>
       </TouchableOpacity>
