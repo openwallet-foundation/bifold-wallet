@@ -628,32 +628,29 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const CredentialCardStatus: React.FC<{
     status?: 'error' | 'warning'
-    style: any
-    height: number
-    color: IColorPallet
-  }> = ({ status, style, height, color }) => {
+  }> = ({ status }) => {
     return (
       <View
         testID={testIdWithKey('CredentialCardStatus')}
-        style={[style.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
+        style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
       >
         {status ? (
           <View
             style={[
-              style.statusContainer,
+              styles.statusContainer,
               {
-                backgroundColor: status === 'error' ? color.notification.error : color.notification.warn,
+                backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
               },
             ]}
           >
             <Icon
-              size={0.7 * height}
-              style={{ color: status === 'error' ? color.semantic.error : color.notification.warnIcon }}
+              size={0.7 * logoHeight}
+              style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
               name={status}
             />
           </View>
         ) : (
-          <View style={style.statusContainer} />
+          <View style={styles.statusContainer} />
         )}
       </View>
     )
@@ -679,7 +676,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <CredentialCardSecondaryBody />
         <CredentialCardLogo />
         <CredentialCardPrimaryBody />
-        <CredentialCardStatus status={status} style={styles} height={logoHeight} color={ColorPallet} />
+        <CredentialCardStatus status={status} />
       </View>
     )
   }

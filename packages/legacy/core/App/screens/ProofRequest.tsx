@@ -261,111 +261,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
   useEffect(() => {
     setLoading(true)
-    credProofPromise
-      ?.then((value: CredentialDataForProof | undefined) => {
-        if (value) {
-          const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
-          setLoading(false)
-          setDescriptorMetadata(descriptorMetadata)
+    const credPromise = async () => {
+      let value: CredentialDataForProof | undefined = undefined
+      try {
+        value = await credProofPromise
 
-          // Credentials that satisfy the proof request
-          let credList: string[] = []
-          if (selectedCredentials.length > 0) {
-            credList = selectedCredentials
-          } else {
-            // we only want one of each satisfying credential
-            groupedProof.forEach((item: any) => {
-              const credId = item.altCredentials?.[0]
-              if (credId && !credList.includes(credId)) {
-                credList.push(credId)
-              }
-            })
-          }
-
-          const formatCredentials = (
-            retrievedItems: Record<string, (AnonCredsRequestedAttributeMatch | AnonCredsRequestedPredicateMatch)[]>,
-            credList: string[]
-          ) => {
-            return Object.keys(retrievedItems)
-              .map((key) => {
-                return {
-                  [key]: retrievedItems[key].filter((attr) => credList.includes(attr.credentialId)),
-                }
-              })
-              .reduce((prev, curr) => {
-                return {
-                  ...prev,
-                  ...curr,
-                }
-              }, {})
-          }
-
-          const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
-            ? {
-                ...retrievedCredentials,
-                attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
-                  string,
-                  AnonCredsRequestedAttributeMatch[]
-                >,
-                predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
-                  string,
-                  AnonCredsRequestedPredicateMatch[]
-                >,
-              }
-            : undefined
-
-          setRetrievedCredentials(selectRetrievedCredentials)
-
-          const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
-          setActiveCreds(activeCreds)
-
-          const unpackCredToField = (
-            credentials: (ProofCredentialAttributes & ProofCredentialPredicates)[]
-          ): { [key: string]: Attribute[] & Predicate[] } => {
-            return credentials.reduce((prev, current) => {
-              return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
-            }, {})
-          }
-
-          const userCredentials: ProofCredentialItems[] = []
-          const missingCredentials: ProofCredentialItems[] = []
-          const schemaIds = new Set(
-            fullCredentials
-              .map((fullCredential: CredentialExchangeRecord) => getCredentialSchemaIdForRecord(fullCredential))
-              .filter((id) => id !== null)
-          )
-          const credDefIds = new Set(
-            fullCredentials
-              .map((fullCredential: CredentialExchangeRecord) => getCredentialDefinitionIdForRecord(fullCredential))
-              .filter((id) => id !== null)
-          )
-
-          activeCreds.forEach((cred) => {
-            const isMissing = !schemaIds.has(cred.schemaId ?? '') && !credDefIds.has(cred.credDefId ?? '')
-            const isUserCredential = schemaIds.has(cred.schemaId ?? '') || credDefIds.has(cred.credDefId ?? '')
-
-            if (isMissing) {
-              missingCredentials.push(cred)
-            }
-
-            if (isUserCredential) {
-              userCredentials.push(cred)
-            }
-          })
-          setUserCredentials(userCredentials)
-          setMissingCredentials(missingCredentials)
-
-          // Check for revoked credentials
-          const records = fullCredentials.filter((record: CredentialExchangeRecord) =>
-            record.credentials.some((cred: CredentialRecordBinding) => credList.includes(cred.credentialRecordId))
-          )
-          const foundRevocationOffense =
-            containsRevokedCreds(records, unpackCredToField(activeCreds)) ||
-            containsRevokedCreds(records, unpackCredToField(activeCreds))
-          setRevocationOffense(foundRevocationOffense)
+        if (!value) {
+          return
         }
-      })
-      .catch((err: unknown) => {
+      } catch (err) {
         const error = new BifoldError(
           t('Error.Title1026'),
           t('Error.Message1026'),
@@ -373,7 +277,111 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           1026
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        return
+      }
+
+      const { groupedProof, retrievedCredentials, fullCredentials, descriptorMetadata } = value
+      setLoading(false)
+      setDescriptorMetadata(descriptorMetadata)
+
+      // Credentials that satisfy the proof request
+      let credList: string[] = []
+      if (selectedCredentials.length > 0) {
+        credList = selectedCredentials
+      } else {
+        // we only want one of each satisfying credential
+        groupedProof.forEach((item: any) => {
+          const credId = item.altCredentials?.[0]
+          if (credId && !credList.includes(credId)) {
+            credList.push(credId)
+          }
+        })
+      }
+
+      const formatCredentials = (
+        retrievedItems: Record<string, (AnonCredsRequestedAttributeMatch | AnonCredsRequestedPredicateMatch)[]>,
+        credList: string[]
+      ) => {
+        return Object.keys(retrievedItems)
+          .map((key) => {
+            return {
+              [key]: retrievedItems[key].filter((attr) => credList.includes(attr.credentialId)),
+            }
+          })
+          .reduce((prev, curr) => {
+            return {
+              ...prev,
+              ...curr,
+            }
+          }, {})
+      }
+
+      const selectRetrievedCredentials: AnonCredsCredentialsForProofRequest | undefined = retrievedCredentials
+        ? {
+            ...retrievedCredentials,
+            attributes: formatCredentials(retrievedCredentials.attributes, credList) as Record<
+              string,
+              AnonCredsRequestedAttributeMatch[]
+            >,
+            predicates: formatCredentials(retrievedCredentials.predicates, credList) as Record<
+              string,
+              AnonCredsRequestedPredicateMatch[]
+            >,
+          }
+        : undefined
+
+      setRetrievedCredentials(selectRetrievedCredentials)
+
+      const activeCreds = groupedProof.filter((item: any) => credList.includes(item.credId))
+      setActiveCreds(activeCreds)
+
+      const unpackCredToField = (
+        credentials: (ProofCredentialAttributes & ProofCredentialPredicates)[]
+      ): { [key: string]: Attribute[] & Predicate[] } => {
+        return credentials.reduce((prev, current) => {
+          return { ...prev, [current.credId]: current.attributes ?? current.predicates ?? [] }
+        }, {})
+      }
+
+      const userCredentials: ProofCredentialItems[] = []
+      const missingCredentials: ProofCredentialItems[] = []
+      const schemaIds = new Set(
+        fullCredentials
+          .map((fullCredential: CredentialExchangeRecord) => getCredentialSchemaIdForRecord(fullCredential))
+          .filter((id) => id !== null)
+      )
+      const credDefIds = new Set(
+        fullCredentials
+          .map((fullCredential: CredentialExchangeRecord) => getCredentialDefinitionIdForRecord(fullCredential))
+          .filter((id) => id !== null)
+      )
+
+      activeCreds.forEach((cred) => {
+        const isMissing = !schemaIds.has(cred.schemaId ?? '') && !credDefIds.has(cred.credDefId ?? '')
+        const isUserCredential = schemaIds.has(cred.schemaId ?? '') || credDefIds.has(cred.credDefId ?? '')
+
+        if (isMissing) {
+          missingCredentials.push(cred)
+        }
+
+        if (isUserCredential) {
+          userCredentials.push(cred)
+        }
       })
+      setUserCredentials(userCredentials)
+      setMissingCredentials(missingCredentials)
+
+      // Check for revoked credentials
+      const records = fullCredentials.filter((record: CredentialExchangeRecord) =>
+        record.credentials.some((cred: CredentialRecordBinding) => credList.includes(cred.credentialRecordId))
+      )
+      const foundRevocationOffense =
+        containsRevokedCreds(records, unpackCredToField(activeCreds)) ||
+        containsRevokedCreds(records, unpackCredToField(activeCreds))
+      setRevocationOffense(foundRevocationOffense)
+    }
+
+    credPromise()
   }, [selectedCredentials, credProofPromise, t])
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
@@ -825,7 +833,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           {/* This list will render if any credentials in a proof request are not in the users wallet */}
           {!hasAvailableCredentials && (
             <CredentialList
-              header={credentialListHeader(t('ProofRequest.MissingCredentials'))}
+              header={
+                missingCredentials.length > 1 && userCredentials.length > 1
+                  ? credentialListHeader(t('ProofRequest.MissingCredentials'))
+                  : undefined
+              }
               items={missingCredentials}
               missing={true}
               footer={
@@ -843,7 +855,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             />
           )}
           <CredentialList
-            header={credentialListHeader(t('ProofRequest.FromYourWallet'))}
+            header={
+              missingCredentials.length > 1 && userCredentials.length > 1
+                ? credentialListHeader(t('ProofRequest.FromYourWallet'))
+                : undefined
+            }
             items={userCredentials}
             missing={false}
           />
