@@ -341,8 +341,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           )
 
           activeCreds.forEach((cred) => {
-            const isMissing = !schemaIds.has(cred.schemaId || '') && !credDefIds.has(cred.credDefId || '')
-            const isUserCredential = schemaIds.has(cred.schemaId || '') || credDefIds.has(cred.credDefId || '')
+            const isMissing = !schemaIds.has(cred.schemaId ?? '') && !credDefIds.has(cred.credDefId ?? '')
+            const isUserCredential = schemaIds.has(cred.schemaId ?? '') || credDefIds.has(cred.credDefId ?? '')
 
             if (isMissing) {
               missingCredentials.push(cred)

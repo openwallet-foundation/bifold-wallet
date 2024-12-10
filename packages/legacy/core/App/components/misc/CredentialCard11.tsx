@@ -625,7 +625,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const CredentialCardStatus: React.FC<{ status?: 'error' | 'warning' }> = ({ status }) => {
+  const CredentialCardStatus: React.FC<{ status?: 'error' | 'warning'; styles: any }> = ({ status, styles }) => {
     return (
       <View
         testID={testIdWithKey('CredentialCardStatus')}
@@ -673,7 +673,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <CredentialCardSecondaryBody />
         <CredentialCardLogo />
         <CredentialCardPrimaryBody />
-        <CredentialCardStatus status={status} />
+        <CredentialCardStatus status={status} styles={styles} />
       </View>
     )
   }
