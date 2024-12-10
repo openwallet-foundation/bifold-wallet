@@ -29,6 +29,7 @@ import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
+import { IColorPallet } from 'theme'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -625,29 +626,34 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const CredentialCardStatus: React.FC<{ status?: 'error' | 'warning'; styles: any }> = ({ status, styles }) => {
+  const CredentialCardStatus: React.FC<{
+    status?: 'error' | 'warning'
+    style: any
+    height: number
+    color: IColorPallet
+  }> = ({ status, style, height, color }) => {
     return (
       <View
         testID={testIdWithKey('CredentialCardStatus')}
-        style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
+        style={[style.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
       >
         {status ? (
           <View
             style={[
-              styles.statusContainer,
+              style.statusContainer,
               {
-                backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
+                backgroundColor: status === 'error' ? color.notification.error : color.notification.warn,
               },
             ]}
           >
             <Icon
-              size={0.7 * logoHeight}
-              style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
+              size={0.7 * height}
+              style={{ color: status === 'error' ? color.semantic.error : color.notification.warnIcon }}
               name={status}
             />
           </View>
         ) : (
-          <View style={styles.statusContainer} />
+          <View style={style.statusContainer} />
         )}
       </View>
     )
@@ -673,7 +679,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <CredentialCardSecondaryBody />
         <CredentialCardLogo />
         <CredentialCardPrimaryBody />
-        <CredentialCardStatus status={status} styles={styles} />
+        <CredentialCardStatus status={status} style={styles} height={logoHeight} color={ColorPallet} />
       </View>
     )
   }
