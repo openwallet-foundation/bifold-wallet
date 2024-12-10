@@ -28,6 +28,7 @@ import {
 } from './fixtures/w3c-proof-request'
 import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
 import { BasicAppContext } from '../helpers/app'
+import * as Helpers from '../../App/utils/helpers'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -41,7 +42,7 @@ jest.mock('@credo-ts/anoncreds', () => {
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-describe('displays a proof request screen', () => {
+describe.only('displays a proof request screen', () => {
   afterEach(() => {
     cleanup()
   })
@@ -115,6 +116,9 @@ describe('displays a proof request screen', () => {
       useCredentials.mockReturnValue({ records: [credExRecord] })
       // @ts-expect-error useProofById will be replaced with a mock which does have this method
       useProofById.mockReturnValue(testProofRequest)
+
+      jest.spyOn(Helpers, 'getCredentialDefinitionIdForRecord').mockReturnValue(attributeBase.credentialDefinitionId)
+      jest.spyOn(Helpers, 'getCredentialSchemaIdForRecord').mockReturnValue(null)
     })
 
     test('loading screen displays', async () => {
