@@ -83,3 +83,9 @@ export const domain = 'didcomm://invite'
 export const tourMargin = 25
 
 export const hitSlop = { top: 44, bottom: 44, left: 44, right: 44 }
+
+export const templateBundleStorageDirectory = 'templates'
+
+export const templateCacheDataFileName = 'proof-templates.json'
+
+export const templateBundleIndexFileName = 'proof-templates.json'
