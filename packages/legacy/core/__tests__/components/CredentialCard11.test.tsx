@@ -116,6 +116,40 @@ describe('CredentialCard11 component', () => {
       expect(errorText).not.toBeUndefined()
     })
 
+    test('Credential in proof is valid', async () => {
+      const credentialRecord = new CredentialExchangeRecord(credential)
+      credentialRecord.credentials.push({
+        credentialRecordType: 'anoncreds',
+        credentialRecordId: '',
+      })
+      const attributes: (Attribute | Predicate)[] = [
+        {
+          name: 'name',
+          value: 'Alice Smith',
+        },
+        {
+          name: 'degree',
+          value: 'Maths',
+        },
+      ]
+      const { findAllByTestId } = render(
+        <BasicAppContext>
+          <CredentialCard11
+            credential={credentialRecord}
+            displayItems={attributes}
+            proof={true}
+            schemaId={'XUxBrVSALWHLeycAUhrNr9:2:student_card:1.0'}
+            credentialErrors={[]}
+          />
+        </BasicAppContext>
+      )
+
+      const values = await findAllByTestId(testIdWithKey('AttributeValue'))
+      const labels = await findAllByTestId(testIdWithKey('AttributeName'))
+      expect(labels).toHaveLength(2)
+      expect(values).toHaveLength(2)
+    })
+
     test('Credential in proof is missing attribute', async () => {
       const credentialRecord = new CredentialExchangeRecord(credential)
       credentialRecord.credentials.push({
@@ -173,7 +207,7 @@ describe('CredentialCard11 component', () => {
           value: 'Maths',
         },
       ]
-      const { findByTestId, queryByText, findAllByTestId, queryByTestId } = render(
+      const { findByTestId, queryByText, findAllByTestId, queryByTestId, queryAllByTestId } = render(
         <BasicAppContext>
           <CredentialCard11
             credential={credentialRecord}
@@ -186,6 +220,7 @@ describe('CredentialCard11 component', () => {
       )
 
       const errorLabelIcon = await findAllByTestId(testIdWithKey('AttributeNameErrorIcon'))
+      const errorValueText = await queryAllByTestId(testIdWithKey('AttributeValue'))
       const errorIcon = await queryByTestId(testIdWithKey('AttributeErrorIcon'))
       const errorText = await queryByTestId(testIdWithKey('AttributeErrorText'))
       const errorHeader = await findByTestId(testIdWithKey('RevokedOrNotAvailable'))
@@ -193,6 +228,7 @@ describe('CredentialCard11 component', () => {
       expect(errorHeader).toBeTruthy()
       expect(errorLabelIcon).toBeTruthy()
       expect(errorLabelIcon).toHaveLength(2)
+      expect(errorValueText).toHaveLength(0)
       expect(errorText).toBeNull()
       expect(errorIcon).toBeNull()
       expect(missingAttribute).toBeNull()
