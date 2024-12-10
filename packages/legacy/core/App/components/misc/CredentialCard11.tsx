@@ -701,7 +701,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             // if the credential is revoked and we are not in a proof context
             // display a small error icon in the top right of the credential card
             status={
-              credentialErrors.includes(CredentialErrors.Revoked) && !Boolean(proof)
+              credentialErrors.includes(CredentialErrors.Revoked) && !proof
                 ? 'error'
                 : allPI && proof
                 ? 'warning'

@@ -42,7 +42,7 @@ jest.mock('@credo-ts/anoncreds', () => {
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
-describe.only('displays a proof request screen', () => {
+describe('displays a proof request screen', () => {
   afterEach(() => {
     cleanup()
   })
