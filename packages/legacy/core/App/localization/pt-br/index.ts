@@ -732,6 +732,7 @@ const translation = {
     "ChooseProofRequest": "Escolha um pedido de prova",
     "ProofRequestUsageHistory": "Histórico de uso",
     "CreateConnectionInvitation": "Criar um convite de conexão",
+    "AttemptLockout": "Temporarily Locked (PT-BR)",
     "NameWallet": "Nomear sua carteira",
     "RenameContact": "Editar nome do contato",
     "HistorySettings": "History Settings",
