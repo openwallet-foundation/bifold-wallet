@@ -480,15 +480,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             </RNCSafeAreaView>
           </View>
           <RCTScrollView
-            ListHeaderComponent={
-              <View
-                style={
-                  Object {
-                    "marginHorizontal": 20,
-                  }
-                }
-              />
-            }
             data={Array []}
             getItem={[Function]}
             getItemCount={[Function]}
@@ -507,31 +498,9 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             stickyHeaderIndices={Array []}
             viewabilityConfigCallbackPairs={Array []}
           >
-            <View>
-              <View
-                collapsable={false}
-                onLayout={[Function]}
-              >
-                <View
-                  style={
-                    Object {
-                      "marginHorizontal": 20,
-                    }
-                  }
-                />
-              </View>
-            </View>
+            <View />
           </RCTScrollView>
           <RCTScrollView
-            ListHeaderComponent={
-              <View
-                style={
-                  Object {
-                    "marginHorizontal": 20,
-                  }
-                }
-              />
-            }
             data={Array []}
             getItem={[Function]}
             getItemCount={[Function]}
@@ -550,20 +519,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             stickyHeaderIndices={Array []}
             viewabilityConfigCallbackPairs={Array []}
           >
-            <View>
-              <View
-                collapsable={false}
-                onLayout={[Function]}
-              >
-                <View
-                  style={
-                    Object {
-                      "marginHorizontal": 20,
-                    }
-                  }
-                />
-              </View>
-            </View>
+            <View />
           </RCTScrollView>
           <View
             style={

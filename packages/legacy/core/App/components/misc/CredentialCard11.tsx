@@ -29,7 +29,6 @@ import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
-import { IColorPallet } from 'theme'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
