@@ -19,6 +19,7 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/proof-items'
 import { Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { CredentialErrors } from '../components/misc/CredentialCard11'
 
 type ProofChangeProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofChangeCredential>
 
@@ -58,10 +59,13 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
     },
   })
 
-  const getCredentialsFields = useCallback((): Fields => ({
-    ...retrievedCredentials?.attributes,
-    ...retrievedCredentials?.predicates,
-  }), [retrievedCredentials])
+  const getCredentialsFields = useCallback(
+    (): Fields => ({
+      ...retrievedCredentials?.attributes,
+      ...retrievedCredentials?.predicates,
+    }),
+    [retrievedCredentials]
+  )
 
   useEffect(() => {
     setLoading(true)
@@ -144,6 +148,8 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
         data={proofItems}
         ListHeaderComponent={listHeader}
         renderItem={({ item }) => {
+          const errors: CredentialErrors[] = []
+          !hasSatisfiedPredicates(getCredentialsFields(), item.credId) && errors.push(CredentialErrors.PredicateError)
           return (
             <View style={styles.pageMargin}>
               <TouchableOpacity
@@ -160,9 +166,8 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                     ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                   ]}
                   credName={item.credName}
-                  existsInWallet={true}
-                  satisfiedPredicates={hasSatisfiedPredicates(getCredentialsFields(), item.credId)}
                   proof={true}
+                  credentialErrors={errors}
                 ></CredentialCard>
               </TouchableOpacity>
             </View>

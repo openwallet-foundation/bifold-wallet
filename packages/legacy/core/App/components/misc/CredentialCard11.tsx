@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, CredentialOverlay, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -30,19 +30,23 @@ import { testIdWithKey } from '../../utils/testable'
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
 
+export enum CredentialErrors {
+  Revoked, // Credential has been revoked
+  NotInWallet, // Credential requested for proof does not exists in users wallet
+  PredicateError, // Credential requested for proof contains a predicate match that is not satisfied
+}
+
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
   displayItems?: (Attribute | Predicate)[]
-  revoked?: boolean
-  error?: boolean
-  predicateError?: boolean
   elevated?: boolean
   credName?: string
   credDefId?: string
   schemaId?: string
   proof?: boolean
+  credentialErrors: CredentialErrors[]
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
 }
@@ -81,14 +85,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   style = {},
   displayItems,
   onPress = undefined,
-  error = false,
-  predicateError = false,
   elevated = false,
   credName,
   credDefId,
   schemaId,
   proof,
   hasAltCredentials,
+  credentialErrors = [],
   handleAltCredChange,
 }) => {
   const { width } = useWindowDimensions()
@@ -98,13 +101,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
   const { ColorPallet, TextTheme, ListItems } = useTheme()
-  const [isRevoked, setIsRevoked] = useState<boolean>(credential?.revocationNotification !== undefined)
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
-  const [isProofRevoked, setIsProofRevoked] = useState<boolean>(
-    credential?.revocationNotification !== undefined && !!proof
-  )
   const [bundleResolver, credHelpActionOverrides] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CRED_HELP_ACTION_OVERRIDES,
@@ -121,19 +120,24 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       }, {})
   }, [overlay])
 
-  const cardData = useMemo(() => {
+  const cardData: Field[] = useMemo(() => {
+    const fields: Field[] = displayItems ?? []
     const primaryField = overlay?.presentationFields?.find(
       (field) => field.name === overlay?.brandingOverlay?.primaryAttribute
     )
     const secondaryField = overlay?.presentationFields?.find(
       (field) => field.name === overlay?.brandingOverlay?.secondaryAttribute
     )
-    return [...(displayItems ?? []), primaryField, secondaryField]
+
+    primaryField && fields.push(primaryField)
+    secondaryField && fields.push(secondaryField)
+
+    return fields
   }, [displayItems, overlay])
 
   const navigation = useNavigation()
 
-  const getSecondaryBackgroundColor = () => {
+  const getSecondaryBackgroundColor = (): string | undefined => {
     if (proof) {
       return overlay.brandingOverlay?.primaryBackgroundColor
     } else {
@@ -231,7 +235,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   })
 
   const backgroundColorIfRevoked = (backgroundColor?: string) =>
-    isProofRevoked ? ColorPallet.notification.errorBorder : backgroundColor
+    credentialErrors.includes(CredentialErrors.Revoked) ? ColorPallet.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
     if (proof) {
@@ -246,18 +250,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const parseAttribute = useCallback(
-    (item: (Attribute & Predicate) | undefined) => {
+    (item: Attribute & Predicate) => {
       let parsedItem = item
       if (item && item.pValue != null) {
         parsedItem = pTypeToText(item, t, overlay.bundle?.captureBase.attributes) as Attribute & Predicate
       }
       const parsedValue = formatIfDate(
-        attributeFormats?.[item?.name ?? ''],
+        attributeFormats?.[item.name ?? ''],
         parsedItem?.value ?? parsedItem?.pValue ?? null
       )
       return {
-        label: item?.label ?? item?.name ?? '',
-        value: item?.value !== undefined && item?.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
+        label: item.label ?? item.name ?? '',
+        value: item.value !== undefined && item.value != null ? parsedValue : `${parsedItem?.pType} ${parsedValue}`,
       }
     },
     [t, overlay, attributeFormats]
@@ -333,11 +337,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     navigation,
   ])
 
-  useEffect(() => {
-    setIsRevoked(credential?.revocationNotification !== undefined && !proof)
-    setIsProofRevoked(credential?.revocationNotification !== undefined && !!proof)
-  }, [credential?.revocationNotification, proof])
-
   const CredentialCardLogo: React.FC = () => {
     return (
       <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
@@ -362,11 +361,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               },
             ]}
           >
-            {!predicateError && !error ? (
-              (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()
-            ) : (
-              <Icon name={'error'} size={30} style={styles.errorIcon} />
-            )}
+            {(overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()}
           </Text>
         )}
       </View>
@@ -394,19 +389,29 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const AttributeErrorLabel: React.FC<{ errorMessage: string }> = ({ errorMessage }) => {
     return (
-      <Text
-        style={[
-          TextTheme.labelSubtitle,
-          styles.textContainer,
-          {
-            lineHeight: 19,
-            opacity: 0.8,
-            color: ListItems.proofError.color,
-          },
-        ]}
-      >
-        {errorMessage}
-      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Icon
+          testID={testIdWithKey('AttributeErrorIcon')}
+          style={{ paddingTop: 2, paddingHorizontal: 2 }}
+          name="close"
+          color={ListItems.proofError.color}
+          size={ListItems.recordAttributeText.fontSize}
+        />
+        <Text
+          testID={testIdWithKey('AttributeErrorText')}
+          style={[
+            TextTheme.labelSubtitle,
+            styles.textContainer,
+            {
+              lineHeight: 19,
+              opacity: 0.8,
+              color: ListItems.proofError.color,
+            },
+          ]}
+        >
+          {errorMessage}
+        </Text>
+      </View>
     )
   }
 
@@ -436,56 +441,73 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const renderCardAttribute = (item: Attribute & Predicate) => {
     const { label, value } = parseAttribute(item)
-    const parsedValue = formatIfDate(item?.format, value) ?? ''
+    const parsedValue = formatIfDate(item.format, value) ?? ''
     return (
-      item && (
-        <View style={{ marginTop: 15 }}>
-          {!(item?.value || item?.satisfied) ? (
-            <View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <AttributeLabel label={label} />
-              </View>
-              {item.hasError && (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icon
-                    style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                    name="close"
-                    color={ListItems.proofError.color}
-                    size={ListItems.recordAttributeText.fontSize}
-                  />
-                  <AttributeErrorLabel
-                    errorMessage={t('ProofRequest.MissingAttribute', {
-                      name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
-                    })}
-                  />
-                </View>
-              )}
-            </View>
-          ) : (
-            <AttributeLabel label={label} />
+      <View style={{ marginTop: 15 }}>
+        {/* Render attribute label */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {credentialErrors.includes(CredentialErrors.NotInWallet) && (
+            <Icon
+              testID={testIdWithKey('AttributeNameErrorIcon')}
+              style={{ paddingTop: 2, paddingHorizontal: 2 }}
+              name="close"
+              color={ListItems.proofError.color}
+              size={ListItems.recordAttributeText.fontSize}
+            />
           )}
-          {/* Rendering attribute values */}
-          {!(item?.value || item?.pValue) ? null : (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {flaggedAttributes?.includes(label) && !item.pValue && !allPI && proof && (
-                <Icon
-                  style={{ paddingTop: 2, paddingHorizontal: 2 }}
-                  name="warning"
-                  color={ColorPallet.notification.warnIcon}
-                  size={ListItems.recordAttributeText.fontSize}
-                />
-              )}
-              <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
-            </View>
-          )}
-          {!error && item?.satisfied != undefined && item?.satisfied === false ? (
-            <Text style={styles.errorText} numberOfLines={1}>
-              {t('ProofRequest.PredicateNotSatisfied')}
-            </Text>
-          ) : null}
+          <AttributeLabel label={label} />
         </View>
-      )
+        {/* Render attribute value */}
+        {!credentialErrors.includes(CredentialErrors.NotInWallet) && !item.hasError && (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {flaggedAttributes?.includes(label) && !item.pValue && proof && (
+              <Icon
+                testID={testIdWithKey('AttributeNameWarningIcon')}
+                style={{ paddingTop: 2, paddingHorizontal: 2 }}
+                name="warning"
+                color={ColorPallet.notification.warnIcon}
+                size={ListItems.recordAttributeText.fontSize}
+              />
+            )}
+            <AttributeValue warn={flaggedAttributes?.includes(label) && !item.pValue && proof} value={parsedValue} />
+          </View>
+        )}
+        {/* Render attribute missing from credential error */}
+        {!credentialErrors.includes(CredentialErrors.NotInWallet) && item.hasError && (
+          <AttributeErrorLabel
+            errorMessage={t('ProofRequest.MissingAttribute', {
+              name: overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label),
+            })}
+          />
+        )}
+        {/* Render predicate not satisfied error */}
+        {!credentialErrors.includes(CredentialErrors.NotInWallet) &&
+          item.satisfied != undefined &&
+          item.satisfied === false && <AttributeErrorLabel errorMessage={t('ProofRequest.PredicateNotSatisfied')} />}
+      </View>
     )
+  }
+
+  const CredentialCardPrimaryBodyFooter: React.FC = () => {
+    if (hasAltCredentials && handleAltCredChange) {
+      return (
+        <CredentialActionFooter
+          onPress={handleAltCredChange}
+          text={t('ProofRequest.ChangeCredential')}
+          testID={'ChangeCredential'}
+        />
+      )
+    }
+    if (Boolean(credentialErrors.length) && helpAction) {
+      return (
+        <CredentialActionFooter
+          onPress={helpAction}
+          text={t('ProofRequest.GetThisCredential')}
+          testID={'GetThisCredential'}
+        />
+      )
+    }
+    return <></>
   }
 
   const CredentialCardPrimaryBody: React.FC = () => {
@@ -529,15 +551,26 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </Text>
           </View>
         </View>
-        {isProofRevoked && (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon style={styles.errorIcon} name="close" size={30} />
 
-            <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
-              {t('CredentialDetails.Revoked')}
-            </Text>
-          </View>
-        )}
+        {/* Render Error text at the top of the credential card */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof) && (
+            <>
+              <Icon style={styles.errorIcon} name="close" size={30} />
+              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+                {t('CredentialDetails.Revoked')}
+              </Text>
+            </>
+          )}
+          {credentialErrors.includes(CredentialErrors.NotInWallet) && (
+            <>
+              <Icon style={styles.errorIcon} name="close" size={30} />
+              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+                {t('ProofRequest.NotAvailableInYourWallet')}
+              </Text>
+            </>
+          )}
+        </View>
         <FlatList
           data={cardData}
           scrollEnabled={false}
@@ -545,21 +578,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           renderItem={({ item }) => {
             return renderCardAttribute(item as Attribute & Predicate)
           }}
-          ListFooterComponent={
-            hasAltCredentials && handleAltCredChange ? (
-              <CredentialActionFooter
-                onPress={handleAltCredChange}
-                text={t('ProofRequest.ChangeCredential')}
-                testID={'ChangeCredential'}
-              />
-            ) : error && helpAction ? (
-              <CredentialActionFooter
-                onPress={helpAction}
-                text={t('ProofRequest.GetThisCredential')}
-                testID={'GetThisCredential'}
-              />
-            ) : null
-          }
+          ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
         />
       </View>
     )
@@ -587,7 +606,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(error || predicateError || proof || getSecondaryBackgroundColor()) && (
+          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor()) && (
             <View
               style={[
                 {
@@ -606,43 +625,37 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  const CredentialCardStatus: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-    const Status: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
-      return (
-        <>
-          {status ? (
-            <View
-              style={[
-                styles.statusContainer,
-                {
-                  backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
-                },
-              ]}
-            >
-              <Icon
-                size={0.7 * logoHeight}
-                style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
-                name={status === 'error' ? 'error' : 'warning'}
-              />
-            </View>
-          ) : (
-            <View style={styles.statusContainer} />
-          )}
-        </>
-      )
-    }
-
+  const CredentialCardStatus: React.FC<{
+    status?: 'error' | 'warning'
+  }> = ({ status }) => {
     return (
       <View
         testID={testIdWithKey('CredentialCardStatus')}
         style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
       >
-        <Status status={status} />
+        {status ? (
+          <View
+            style={[
+              styles.statusContainer,
+              {
+                backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
+              },
+            ]}
+          >
+            <Icon
+              size={0.7 * logoHeight}
+              style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
+              name={status}
+            />
+          </View>
+        ) : (
+          <View style={styles.statusContainer} />
+        )}
       </View>
     )
   }
 
-  const CredentialCard: React.FC<{ status?: 'error' | 'warn' }> = ({ status }) => {
+  const CredentialCard: React.FC<{ status?: 'error' | 'warning' }> = ({ status }) => {
     return (
       <View
         style={styles.cardContainer}
@@ -652,7 +665,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             overlay.metaOverlay?.watermark ?? ''
           } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
           cardData.map((item) => {
-            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
+            const { label, value } = parseAttribute(item as Attribute & Predicate)
             if (label && value) {
               return ` ${label}, ${value}`
             }
@@ -665,6 +678,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <CredentialCardStatus status={status} />
       </View>
     )
+  }
+
+  const getCredentialStatus = (): 'error' | 'warning' | undefined => {
+    if (credentialErrors.includes(CredentialErrors.Revoked) && !proof) {
+      return 'error'
+    } else if (allPI && proof) {
+      return 'warning'
+    }
+    return undefined
   }
   return overlay.bundle ? (
     <View
@@ -686,7 +708,12 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.container,
           style,
-          { backgroundColor: isProofRevoked ? ColorPallet.notification.error : style.backgroundColor },
+          {
+            backgroundColor:
+              credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof)
+                ? ColorPallet.notification.error
+                : style.backgroundColor,
+          },
         ]}
         testID={testIdWithKey('ShowCredentialDetails')}
       >
@@ -699,7 +726,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               watermark={overlay.metaOverlay?.watermark}
             />
           )}
-          <CredentialCard status={isRevoked ? 'error' : allPI && proof ? 'warn' : undefined} />
+          <CredentialCard
+            // if the credential is revoked and we are not in a proof context
+            // display a small error icon in the top right of the credential card
+            status={getCredentialStatus()}
+          />
         </View>
       </TouchableOpacity>
     </View>
