@@ -472,7 +472,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case LockoutDispatchAction.LOCKOUT_UPDATED: {
-      const displayNotification: boolean = (action?.payload ?? []).pop() ?? false
+      const { displayNotification }: LockoutState = (action?.payload ?? []).pop() ?? { displayNotification: false }
       const lockout: LockoutState = {
         ...state.lockout,
         displayNotification,
