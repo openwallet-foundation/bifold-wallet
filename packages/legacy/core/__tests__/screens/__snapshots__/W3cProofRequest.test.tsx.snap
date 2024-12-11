@@ -163,6 +163,29 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
               }
             />
           }
+          ListHeaderComponent={
+            <View
+              style={
+                Object {
+                  "marginHorizontal": 20,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 20,
+                    "fontWeight": "bold",
+                    "marginTop": 10,
+                  }
+                }
+                testID="com.ariesbifold:id/ProofRequestHeaderText"
+              >
+                ProofRequest.MissingCredentials
+              </Text>
+            </View>
+          }
           data={
             Array [
               Object {
@@ -213,6 +236,32 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           viewabilityConfigCallbackPairs={Array []}
         >
           <View>
+            <View
+              collapsable={false}
+              onLayout={[Function]}
+            >
+              <View
+                style={
+                  Object {
+                    "marginHorizontal": 20,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "marginTop": 10,
+                    }
+                  }
+                  testID="com.ariesbifold:id/ProofRequestHeaderText"
+                >
+                  ProofRequest.MissingCredentials
+                </Text>
+              </View>
+            </View>
             <View
               onFocusCapture={[Function]}
               onLayout={[Function]}
@@ -604,6 +653,29 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           </View>
         </RCTScrollView>
         <RCTScrollView
+          ListHeaderComponent={
+            <View
+              style={
+                Object {
+                  "marginHorizontal": 20,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 20,
+                    "fontWeight": "bold",
+                    "marginTop": 10,
+                  }
+                }
+                testID="com.ariesbifold:id/ProofRequestHeaderText"
+              >
+                ProofRequest.FromYourWallet
+              </Text>
+            </View>
+          }
           data={
             Array [
               Object {
@@ -699,6 +771,32 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           viewabilityConfigCallbackPairs={Array []}
         >
           <View>
+            <View
+              collapsable={false}
+              onLayout={[Function]}
+            >
+              <View
+                style={
+                  Object {
+                    "marginHorizontal": 20,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "marginTop": 10,
+                    }
+                  }
+                  testID="com.ariesbifold:id/ProofRequestHeaderText"
+                >
+                  ProofRequest.FromYourWallet
+                </Text>
+              </View>
+            </View>
             <View
               onFocusCapture={[Function]}
               onLayout={[Function]}
