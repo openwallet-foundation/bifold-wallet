@@ -27,6 +27,7 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
   [Screens.CreatePIN]: {
     headerLeft: () => false,
+    gestureEnabled: false,
   },
   [Screens.NameWallet]: {
     headerTintColor: OnboardingTheme.headerTintColor,

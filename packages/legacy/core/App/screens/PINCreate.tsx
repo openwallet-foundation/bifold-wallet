@@ -1,4 +1,4 @@
-import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
+import { CommonActions, ParamListBase, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   findNodeHandle,
   DeviceEventEmitter,
+  BackHandler,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -95,6 +96,16 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     TOKENS.HISTORY_ENABLED,
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => true
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+    }, [])
+  )
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
