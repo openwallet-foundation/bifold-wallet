@@ -834,7 +834,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           {!hasAvailableCredentials && (
             <CredentialList
               header={
-                missingCredentials.length > 1 && userCredentials.length > 1
+                missingCredentials.length > 0 && userCredentials.length > 0
                   ? credentialListHeader(t('ProofRequest.MissingCredentials'))
                   : undefined
               }
@@ -856,7 +856,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           )}
           <CredentialList
             header={
-              missingCredentials.length > 1 && userCredentials.length > 1
+              missingCredentials.length > 0 && userCredentials.length > 0
                 ? credentialListHeader(t('ProofRequest.FromYourWallet'))
                 : undefined
             }
