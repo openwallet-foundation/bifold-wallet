@@ -20,27 +20,35 @@ export enum InfoBoxType {
   Error,
 }
 
-interface BifoldErrorProps {
+interface InfoBoxProps {
   notificationType: InfoBoxType
   title: string
   description?: string
   bodyContent?: Element
   message?: string
+  callToActionDisabled?: boolean
+  callToActionIcon?: JSX.Element
   secondaryCallToActionTitle?: string
   secondaryCallToActionPressed?: GenericFn
+  secondaryCallToActionDisabled?: boolean
+  secondaryCallToActionIcon?: JSX.Element
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
   onClosePressed?: GenericFn
 }
 
-const InfoBox: React.FC<BifoldErrorProps> = ({
+const InfoBox: React.FC<InfoBoxProps> = ({
   notificationType,
   title,
   description,
   bodyContent,
   message,
+  callToActionDisabled,
+  callToActionIcon,
   secondaryCallToActionTitle,
   secondaryCallToActionPressed,
+  secondaryCallToActionDisabled,
+  secondaryCallToActionIcon,
   onCallToActionPressed,
   onCallToActionLabel,
   onClosePressed,
@@ -231,7 +239,10 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
                 testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
                 buttonType={ButtonType.Primary}
                 onPress={onCallToActionPressed}
-              />
+                disabled={callToActionDisabled}
+              >
+                {callToActionIcon ? callToActionIcon : null}
+              </Button>
             </View>
           )}
           {secondaryCallToActionTitle && secondaryCallToActionPressed && (
@@ -242,7 +253,10 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
                 testID={testIdWithKey(secondaryCallToActionTitle)}
                 buttonType={ButtonType.Secondary}
                 onPress={secondaryCallToActionPressed}
-              />
+                disabled={secondaryCallToActionDisabled}
+              >
+                {secondaryCallToActionIcon ? secondaryCallToActionIcon : null}
+              </Button>
             </View>
           )}
         </>
