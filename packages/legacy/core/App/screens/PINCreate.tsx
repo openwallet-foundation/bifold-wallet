@@ -35,7 +35,6 @@ import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
-import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
@@ -109,21 +108,12 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   )
 
   useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () =>
-        updatePin ? (
-          <IconButton
-            icon={'arrow-left'}
-            accessibilityLabel={t('Global.Back')}
-            testID={testIdWithKey('BackButton')}
-            buttonLocation={ButtonLocation.Left}
-            onPress={() => navigation.goBack()}
-          />
-        ) : (
-          false
-        ),
-    })
-  }, [updatePin, navigation, t])
+    if (!updatePin) {
+      navigation.setOptions({
+        headerLeft: () => false,
+      })
+    }
+  }, [updatePin, navigation])
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 

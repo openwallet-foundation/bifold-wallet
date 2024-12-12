@@ -26,7 +26,7 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
     headerLeft: () => false,
   },
   [Screens.CreatePIN]: {
-    headerLeft: () => false,
+    //headerLeft: () => false,
     gestureEnabled: false,
   },
   [Screens.NameWallet]: {
