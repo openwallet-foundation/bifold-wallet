@@ -35,6 +35,7 @@ import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
@@ -99,13 +100,31 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   useFocusEffect(
     useCallback(() => {
-      const onBackPress = () => true
+      const onBackPress = () => !updatePin
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
       return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
-    }, [])
+    }, [updatePin])
   )
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: (props) =>
+        updatePin ? (
+          <IconButton
+            icon={'arrow-left'}
+            accessibilityLabel={t('Global.Back')}
+            testID={testIdWithKey('Back')}
+            buttonLocation={ButtonLocation.Left}
+            {...props}
+            onPress={() => navigation.goBack()}
+          />
+        ) : (
+          false
+        ),
+    })
+  }, [updatePin, navigation, t])
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
