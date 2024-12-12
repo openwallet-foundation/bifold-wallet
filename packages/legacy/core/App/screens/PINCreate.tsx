@@ -110,14 +110,13 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   useEffect(() => {
     navigation.setOptions({
-      headerLeft: (props) =>
+      headerLeft: () =>
         updatePin ? (
           <IconButton
             icon={'arrow-left'}
             accessibilityLabel={t('Global.Back')}
-            testID={testIdWithKey('Back')}
+            testID={testIdWithKey('BackButton')}
             buttonLocation={ButtonLocation.Left}
-            {...props}
             onPress={() => navigation.goBack()}
           />
         ) : (
