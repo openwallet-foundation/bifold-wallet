@@ -1,6 +1,7 @@
-import { BaseLogger } from '@credo-ts/core'
 import axios, { AxiosInstance } from 'axios'
 import { CachesDirectoryPath, readFile, writeFile, exists, mkdir } from 'react-native-fs'
+
+import { BifoldLogger } from '../services/logger'
 
 export type CacheDataFile = {
   fileEtag: string
@@ -10,11 +11,11 @@ export type CacheDataFile = {
 export class FileCache {
   protected axiosInstance: AxiosInstance
   protected _fileEtag?: string
-  protected log?: BaseLogger
+  protected log?: BifoldLogger
   private workspace: string
   private cacheFileName
 
-  public constructor(indexFileBaseUrl: string, workspace: string, cacheDataFileName: string, log?: BaseLogger) {
+  public constructor(indexFileBaseUrl: string, workspace: string, cacheDataFileName: string, log?: BifoldLogger) {
     this.axiosInstance = axios.create({
       baseURL: indexFileBaseUrl,
     })

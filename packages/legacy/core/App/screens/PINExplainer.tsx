@@ -50,7 +50,7 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
             <Trans
               i18nKey="PINCreate.Explainer.PINReminder"
               components={{
-                b: <Text style={TextTheme.labelTitle} />,
+                b: <Text style={TextTheme.bold} />,
               }}
               t={t}
             />

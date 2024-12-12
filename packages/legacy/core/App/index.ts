@@ -45,6 +45,7 @@ import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
+import { BifoldLogger } from './services/logger'
 import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
@@ -186,6 +187,7 @@ export {
   Text,
   loadLoginAttempt,
   Button,
+  BifoldLogger,
   LimitedTextInput,
   KeyboardView,
   BulletPoint,

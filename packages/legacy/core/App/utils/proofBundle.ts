@@ -1,4 +1,3 @@
-import { BaseLogger } from '@credo-ts/core'
 import {
   AnonCredsProofRequestTemplatePayload,
   ProofRequestTemplate,
@@ -8,6 +7,7 @@ import { useState, useEffect } from 'react'
 
 import { TOKENS, useServices } from '../container-api'
 import { templateBundleStorageDirectory, templateCacheDataFileName, templateBundleIndexFileName } from '../constants'
+import { BifoldLogger } from '../services/logger'
 import { FileCache, CacheDataFile } from './fileCache'
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
@@ -78,7 +78,7 @@ export interface IProofBundleResolver {
 
 export const useRemoteProofBundleResolver = (
   indexFileBaseUrl: string | undefined,
-  log?: BaseLogger
+  log?: BifoldLogger
 ): IProofBundleResolver => {
   const [proofRequestTemplates] = useServices([TOKENS.UTIL_PROOF_TEMPLATE])
   const [resolver, setResolver] = useState<IProofBundleResolver>(new DefaultProofBundleResolver(proofRequestTemplates))
@@ -98,7 +98,7 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
   private templateData: ProofRequestTemplate[] | undefined
   private cacheDataFileName = templateCacheDataFileName
 
-  public constructor(indexFileBaseUrl: string, log?: BaseLogger) {
+  public constructor(indexFileBaseUrl: string, log?: BifoldLogger) {
     super(indexFileBaseUrl, templateBundleStorageDirectory, templateBundleIndexFileName, log)
   }
 

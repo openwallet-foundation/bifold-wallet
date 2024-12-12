@@ -7,6 +7,7 @@ export interface RemoteLoggerOptions {
   lokiUrl?: string
   lokiLabels?: Record<string, string>
   autoDisableRemoteLoggingIntervalInMinutes?: number
+  job?: string
 }
 
 export type LokiTransportProps = {
@@ -38,17 +39,13 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
     throw Error('props.options.labels is required')
   }
 
-  if (!props.options.lokiUrl) {
-    throw new Error('Loki URL is missing')
-  }
-
   const { lokiUrl, lokiLabels } = props.options
   const { message, data } = props.rawMsg.pop()
   const payload = {
     streams: [
       {
         stream: {
-          job: 'react-native-logs',
+          job: props.options.job ?? 'react-native-logs',
           level: props.level.text,
           ...lokiLabels,
         },
