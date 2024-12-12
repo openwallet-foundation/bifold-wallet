@@ -63,6 +63,6 @@ export class BifoldLogger extends BaseLogger {
   }
 
   public report(bifoldError: BifoldError): void {
-    this._log?.info('Report not sent, no remote logging configured')
+    this._log?.info('No remote logging configured, report not sent for error:', bifoldError)
   }
 }

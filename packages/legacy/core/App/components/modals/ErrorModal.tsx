@@ -63,13 +63,13 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
     }
   }, [])
 
-  const formattedMessageForError = (err: BifoldError | null): string | undefined => {
+  const formattedMessageForError = useCallback((err: BifoldError | null): string | undefined => {
     if (!err) {
       return undefined
     }
 
     return `${t('Error.ErrorCode')} ${err.code} - ${err.message}`
-  }
+  }, [t])
 
   return (
     <Modal visible={modalVisible} transparent={true}>
@@ -83,8 +83,9 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
           onCallToActionPressed={onDismissModalTouched}
           secondaryCallToActionTitle={reported ? t('Error.Reported') : t('Error.ReportThisProblem')}
           secondaryCallToActionDisabled={reported}
-          secondaryCallToActionIcon={reported ? <Icon name={'check-circle'} size={18} color={ColorPallet.semantic.success} /> : undefined}
+          secondaryCallToActionIcon={reported ? <Icon style={{ marginRight: 8 }} name={'check-circle'} size={18} color={ColorPallet.semantic.success} /> : undefined}
           secondaryCallToActionPressed={enableReport && error ? report : undefined}
+          showVersionFooter
         />
       </SafeAreaView>
     </Modal>

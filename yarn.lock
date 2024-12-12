@@ -2782,7 +2782,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-bifold-core@1.0.0, @hyperledger/aries-bifold-core@^1.0.0, @hyperledger/aries-bifold-core@workspace:packages/legacy/core":
+"@hyperledger/aries-bifold-core@^1.0.0, @hyperledger/aries-bifold-core@workspace:packages/legacy/core":
   version: 0.0.0-use.local
   resolution: "@hyperledger/aries-bifold-core@workspace:packages/legacy/core"
   dependencies:
@@ -2875,7 +2875,7 @@ __metadata:
     react-native-gifted-chat: 2.4.0
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
-    react-native-logs: 5.1.0
+    react-native-logs: ^5.1.0
     react-native-orientation-locker: ^1.6.0
     react-native-permissions: ^4.0.1
     react-native-qrcode-svg: 6.2.0
@@ -2979,7 +2979,7 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.20.0
     "@credo-ts/core": 0.5.11
-    "@hyperledger/aries-bifold-core": 1.0.0
+    "@hyperledger/aries-bifold-core": ^1.0.0
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
     buffer: ^6.0.3
@@ -18671,13 +18671,6 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: aa03c37a254e4bec71dcd8b9844ece091e9b14ff38b6e1db6307674d33f62477c8d42b5a022da8ec892586004985846e08b79822f05989382ef07ba696438917
-  languageName: node
-  linkType: hard
-
-"react-native-logs@npm:5.1.0":
-  version: 5.1.0
-  resolution: "react-native-logs@npm:5.1.0"
-  checksum: 21a26b0b2d60facbc0207c0e402cb351e3d4ffb41c44297c0a1af6968130e06556ae302153ae6bd8707d79046efc85a277b93cff26dbdfebd67a63a0323e76ed
   languageName: node
   linkType: hard
 

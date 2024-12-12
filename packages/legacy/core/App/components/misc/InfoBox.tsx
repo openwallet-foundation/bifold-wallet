@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -35,6 +36,7 @@ interface InfoBoxProps {
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
   onClosePressed?: GenericFn
+  showVersionFooter?: boolean
 }
 
 const InfoBox: React.FC<InfoBoxProps> = ({
@@ -52,6 +54,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   onCallToActionPressed,
   onCallToActionLabel,
   onClosePressed,
+  showVersionFooter,
 }) => {
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
@@ -241,7 +244,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
                 onPress={onCallToActionPressed}
                 disabled={callToActionDisabled}
               >
-                {callToActionIcon ? callToActionIcon : null}
+                {callToActionIcon}
               </Button>
             </View>
           )}
@@ -255,10 +258,15 @@ const InfoBox: React.FC<InfoBoxProps> = ({
                 onPress={secondaryCallToActionPressed}
                 disabled={secondaryCallToActionDisabled}
               >
-                {secondaryCallToActionIcon ? secondaryCallToActionIcon : null}
+                {secondaryCallToActionIcon}
               </Button>
             </View>
           )}
+          {showVersionFooter ? (
+            <Text style={[TextTheme.caption, { flex: 1, marginTop: 8, textAlign: 'center' }]} testID={testIdWithKey('VersionNumber')}>
+              {`${getVersion()} (${getBuildNumber()})`}
+            </Text>
+          ) : null}
         </>
       </ScrollView>
     </View>
