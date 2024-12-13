@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, StyleSheet, StatusBar, DeviceEventEmitter, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -63,13 +63,24 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
     }
   }, [])
 
-  const formattedMessageForError = useCallback((err: BifoldError | null): string | undefined => {
-    if (!err) {
-      return undefined
-    }
+  const formattedMessageForError = useCallback(
+    (err: BifoldError | null): string | undefined => {
+      if (!err) {
+        return undefined
+      }
 
-    return `${t('Error.ErrorCode')} ${err.code} - ${err.message}`
-  }, [t])
+      return `${t('Error.ErrorCode')} ${err.code} - ${err.message}`
+    },
+    [t]
+  )
+
+  const secondaryCallToActionIcon = useMemo(
+    () =>
+      reported ? (
+        <Icon style={{ marginRight: 8 }} name={'check-circle'} size={18} color={ColorPallet.semantic.success} />
+      ) : undefined,
+    [reported, ColorPallet.semantic.success]
+  )
 
   return (
     <Modal visible={modalVisible} transparent={true}>
@@ -83,7 +94,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
           onCallToActionPressed={onDismissModalTouched}
           secondaryCallToActionTitle={reported ? t('Error.Reported') : t('Error.ReportThisProblem')}
           secondaryCallToActionDisabled={reported}
-          secondaryCallToActionIcon={reported ? <Icon style={{ marginRight: 8 }} name={'check-circle'} size={18} color={ColorPallet.semantic.success} /> : undefined}
+          secondaryCallToActionIcon={secondaryCallToActionIcon}
           secondaryCallToActionPressed={enableReport && error ? report : undefined}
           showVersionFooter
         />
