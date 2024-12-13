@@ -21,7 +21,7 @@ export function getHostNameFromUrl(url: string) {
   try {
     return getDomainFromUrl(url)
   } catch (error) {
-    return 'undefined!'
+    throw error
   }
 }
 
