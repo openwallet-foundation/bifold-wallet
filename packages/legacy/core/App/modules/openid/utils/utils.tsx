@@ -1,3 +1,4 @@
+import { getDomainFromUrl } from '@credo-ts/core'
 import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
 
 /**
@@ -17,11 +18,11 @@ export function sanitizeString(str: string) {
 }
 
 export function getHostNameFromUrl(url: string) {
-  //TODO: Find more elegant way to extract host name
-  // const urlRegex = /^(.*:)\/\/([A-Za-z0-9-.]+)(:[0-9]+)?(.*)$/
-  // const parts = urlRegex.exec(url)
-  // return parts ? parts[2] : undefined
-  return url.split("https://")[1]
+  try {
+    return getDomainFromUrl(url)
+  } catch (error) {
+    throw new Error(`Error getting hostname from url: ${error}`)
+  }
 }
 
 export const buildFieldsFromOpenIDTemplate = (data: { [key: string]: unknown }): Array<Field> => {
