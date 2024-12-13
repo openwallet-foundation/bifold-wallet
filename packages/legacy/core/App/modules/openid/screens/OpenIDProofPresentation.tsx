@@ -173,7 +173,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                     </View>
                   </View>
                 ) : (
-                  <Text style={TextTheme.normal}>{t('ProofRequest.CredentailNotInWallet')}</Text>
+                  <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
                 )}
               </View>
             </View>
