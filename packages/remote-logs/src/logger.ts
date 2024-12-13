@@ -17,8 +17,8 @@ export class RemoteLogger extends BifoldLogger {
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _log: any
-  _config = {
+  protected _log: any
+  protected _config = {
     levels: {
       test: 0,
       trace: 0,

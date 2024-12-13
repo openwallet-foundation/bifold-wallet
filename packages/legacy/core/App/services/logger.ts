@@ -5,8 +5,8 @@ import { BifoldError } from '../types/error'
 
 export class BifoldLogger extends BaseLogger {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _log: any
-  _config = {
+  protected _log: any
+  protected _config = {
     levels: {
       test: 0,
       trace: 0,
