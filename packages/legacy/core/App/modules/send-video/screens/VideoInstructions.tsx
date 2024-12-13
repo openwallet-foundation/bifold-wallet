@@ -21,7 +21,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 type VideoInstructionsProps = StackScreenProps<SendVideoStackParams, Screens.VideoInstructions>
 
 const sendVideoSvs = new SentVideoServices({
-  sendVideoAgentInvitation: Config.VIDEO_VERIFIER_AGENT_INVIGATION,
+  sendVideoAgentInvitation: Config.VIDEO_VERIFIER_AGENT_INVITATION,
   sendVideoAPIBaseUrl: Config.VIDEO_VERIFIER_HOST ?? '',
 })
 
