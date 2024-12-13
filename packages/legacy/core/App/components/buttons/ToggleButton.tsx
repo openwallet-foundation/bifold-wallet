@@ -28,7 +28,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   useEffect(() => {
     Animated.timing(toggleAnim, {
       toValue: isEnabled ? 1 : 0,
-      duration: 200,
+      duration: 150,
       useNativeDriver: false,
     }).start()
   }, [isEnabled, toggleAnim])
@@ -88,4 +88,4 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   )
 }
 
-export default ToggleButton
+export default React.memo(ToggleButton);
