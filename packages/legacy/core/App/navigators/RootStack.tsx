@@ -17,7 +17,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
-import HistoryStack from '../modules/history/navigators/HistoryStack'
+import HistoryStack from '../modules/history/navigation/HistoryStack'
 import Chat from '../screens/Chat'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks, TabStacks } from '../types/navigators'
@@ -29,7 +29,6 @@ import DeliveryStack from './DeliveryStack'
 import NotificationStack from './NotificationStack'
 import ProofRequestStack from './ProofRequestStack'
 import SettingStack from './SettingStack'
-import SendVideoStack from '../modules/send-video/navigators/SendVideoStack'
 import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 
@@ -137,13 +136,7 @@ const RootStack: React.FC = () => {
             cardStyleInterpolator: forFade,
           }}
         />
-        <Stack.Screen
-          name={Stacks.SendVideoStack}
-          component={SendVideoStack}
-          options={{
-            cardStyleInterpolator: forFade,
-          }}
-        />
+        {CustomNavStack1 ? <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} /> : null}
       </Stack.Navigator>
     )
   }
