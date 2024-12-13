@@ -8,7 +8,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 
 import CredentialCard10 from './CredentialCard10'
-import CredentialCard11 from './CredentialCard11'
+import CredentialCard11, { CredentialErrors } from './CredentialCard11'
 import OpenIDCredentialCard from '../../modules/openid/components/OpenIDCredentialCard'
 import { GenericCredentialExchangeRecord } from '../../types/credentials'
 
@@ -21,9 +21,8 @@ interface CredentialCardProps {
   style?: ViewStyle
   proof?: boolean
   displayItems?: (Attribute | Predicate)[]
-  existsInWallet?: boolean
-  satisfiedPredicates?: boolean
   hasAltCredentials?: boolean
+  credentialErrors?: CredentialErrors[]
   handleAltCredChange?: () => void
 }
 
@@ -34,12 +33,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   proof,
   displayItems,
   credName,
-  existsInWallet,
-  satisfiedPredicates,
   hasAltCredentials,
   handleAltCredChange,
   style = {},
   onPress = undefined,
+  credentialErrors,
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
@@ -50,8 +48,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         <CredentialCard11
           displayItems={displayItems}
           style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
-          error={!existsInWallet}
-          predicateError={!satisfiedPredicates}
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
@@ -60,6 +56,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           hasAltCredentials={hasAltCredentials}
           proof
           elevated
+          credentialErrors={credentialErrors ?? []}
         />
       )
     }
@@ -68,7 +65,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       if (type === BrandingOverlayType.Branding01) {
         return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
       } else {
-        return <CredentialCard11 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
+        return (
+          <CredentialCard11
+            credential={credential as CredentialExchangeRecord}
+            style={style}
+            onPress={onPress}
+            credentialErrors={credentialErrors ?? []}
+          />
+        )
       }
     } else {
       return (
@@ -79,6 +83,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           displayItems={displayItems}
           style={style}
           onPress={onPress}
+          credentialErrors={credentialErrors ?? []}
         />
       )
     }

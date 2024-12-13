@@ -33,6 +33,8 @@ import {
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { parseCredDefFromId } from '../utils/cred-def'
 
 type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
 
@@ -50,7 +52,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
+  const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
+    TOKENS.UTIL_OCA_RESOLVER,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
+  ])
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
@@ -177,10 +185,47 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsRemoveModalDisplayed(true)
   }, [])
 
+  const logHistoryRecord = useCallback(() => {
+    try {
+      if (!(agent && historyEnabled)) {
+        logger.trace(
+          `[${CredentialDetails.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+        )
+        return
+      }
+
+      if (!credential) {
+        logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+
+      const ids = getCredentialIdentifiers(credential)
+      const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+
+      /** Save history record for credential removed */
+      const recordData: HistoryRecord = {
+        type: HistoryCardType.CardRemoved,
+        message: name,
+        createdAt: new Date(),
+        correspondenceId: credentialId,
+        correspondenceName: credentialConnectionLabel,
+      }
+
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }, [agent, historyEnabled, logger, historyManagerCurried, credential, credentialConnectionLabel, credentialId])
+
   const callSubmitRemove = useCallback(async () => {
     try {
       if (!(agent && credential)) {
         return
+      }
+
+      if (historyEventsLogger.logAttestationRemoved) {
+        logHistoryRecord()
       }
 
       await agent.credentials.deleteById(credential.id)
@@ -198,7 +243,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       const error = new BifoldError(t('Error.Title1032'), t('Error.Message1032'), (err as Error)?.message ?? err, 1032)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, credential, navigation, t])
+  }, [agent, credential, navigation, t, historyEventsLogger.logAttestationRemoved, logHistoryRecord])
 
   const callCancelRemove = useCallback(() => {
     setIsRemoveModalDisplayed(false)

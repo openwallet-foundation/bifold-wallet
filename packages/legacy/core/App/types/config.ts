@@ -24,6 +24,7 @@ export interface Config {
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
   showPreface?: boolean
+  showPINExplainer?: boolean
   disableOnboardingSkip?: boolean
   enablePushNotifications?: PushNotificationConfiguration
   whereToUseWalletUrl?: string
@@ -34,4 +35,17 @@ export interface Config {
   contactHideList?: string[]
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
+}
+
+export interface HistoryEventsLoggerConfig {
+  logAttestationAccepted: boolean
+  logAttestationRefused: boolean
+  logAttestationRemoved: boolean
+  logInformationSent: boolean
+  logInformationNotSent: boolean
+  logConnection: boolean
+  logConnectionRemoved: boolean
+  logAttestationRevoked: boolean
+  logPinChanged: boolean
+  logToggleBiometry: boolean
 }

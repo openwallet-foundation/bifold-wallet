@@ -97,13 +97,6 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
               <View
                 style={
                   Object {
-                    "minHeight": 36,
-                  }
-                }
-              />
-              <View
-                style={
-                  Object {
                     "alignItems": "center",
                     "backgroundColor": "#313132",
                     "borderColor": "#FFFFFFFF",
@@ -379,13 +372,6 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   </Text>
                 </View>
               </View>
-              <View
-                style={
-                  Object {
-                    "minHeight": 36,
-                  }
-                }
-              />
             </View>
           </View>
           <View
@@ -576,13 +562,6 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
               <View
                 style={
                   Object {
-                    "minHeight": 36,
-                  }
-                }
-              />
-              <View
-                style={
-                  Object {
                     "alignItems": "center",
                     "backgroundColor": "#313132",
                     "borderColor": "#FFFFFFFF",
@@ -858,13 +837,6 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   </Text>
                 </View>
               </View>
-              <View
-                style={
-                  Object {
-                    "minHeight": 36,
-                  }
-                }
-              />
             </View>
           </View>
           <View

@@ -32,6 +32,8 @@ import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { PINCreationValidations, PINValidationsType } from '../utils/PINCreationValidation'
 import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { useAppAgent } from '../utils/agent'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
@@ -47,6 +49,7 @@ interface ModalState {
 
 const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus, route }) => {
   const updatePin = (route.params as any)?.updatePin
+  const { agent } = useAppAgent()
   const { setPIN: setWalletPIN, checkPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
@@ -58,7 +61,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     title: '',
     message: '',
   })
-  const [explained, setExplained] = useState(explainedStatus)
   const iconSize = 24
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const [store, dispatch] = useStore()
@@ -72,13 +74,29 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
   const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [PINExplainer, PINCreateHeader, { PINSecurity }, Button, inlineMessages] = useServices([
+  const [
+    PINExplainer,
+    PINCreateHeader,
+    { PINSecurity, showPINExplainer },
+    Button,
+    inlineMessages,
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
     TOKENS.SCREEN_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_CREATE_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
     TOKENS.INLINE_ERRORS,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
+
+  const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     PINCreationValidations(PIN, PINSecurity.rules)
@@ -194,6 +212,28 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     [validatePINEntry, passcodeCreate]
   )
 
+  const logHistoryRecord = useCallback(() => {
+    try {
+      if (!(agent && historyEnabled)) {
+        logger.trace(
+          `[${PINCreate.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
+        )
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+      /** Save history record for pin edited */
+      const recordData: HistoryRecord = {
+        type: HistoryCardType.PinChanged,
+        message: HistoryCardType.PinChanged,
+        createdAt: new Date(),
+      }
+
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${PINCreate.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }, [agent, historyEnabled, logger, historyManagerCurried])
+
   const handleCreatePinTap = async () => {
     setLoading(true)
     if (updatePin) {
@@ -204,6 +244,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
         if (oldPinValid) {
           const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
           if (success) {
+            if (historyEventsLogger.logPinChanged) {
+              logHistoryRecord()
+            }
             setModalState({
               visible: true,
               title: t('PINCreate.PinChangeSuccessTitle'),

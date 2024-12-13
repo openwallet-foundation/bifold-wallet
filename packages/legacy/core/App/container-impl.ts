@@ -45,7 +45,7 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINCreateHeader from './components/misc/PINCreateHeader'
 import { PersistentStorage } from './services/storage'
-import { Config } from './types/config'
+import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { Locales } from './localization'
 import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
@@ -70,6 +70,19 @@ export const defaultConfig: Config = {
     enableCredentialList: false,
   },
 }
+export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
+  logAttestationAccepted: true,
+  logAttestationRefused: true,
+  logAttestationRemoved: true,
+  logInformationSent: true,
+  logInformationNotSent: true,
+  logConnection: true,
+  logConnectionRemoved: true,
+  logAttestationRevoked: true,
+  logPinChanged: true,
+  logToggleBiometry: true,
+}
+
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
@@ -104,6 +117,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)
     this._container.registerInstance(TOKENS.HISTORY_ENABLED, false)
+    this._container.registerInstance(TOKENS.HISTORY_EVENTS_LOGGER, defaultHistoryEventsLogger)
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
@@ -129,7 +143,11 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM, ContactCredentialListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
-    this._container.registerInstance(TOKENS.INLINE_ERRORS, { enabled: true, position: InlineErrorPosition.Above })
+    this._container.registerInstance(TOKENS.INLINE_ERRORS, {
+      enabled: true,
+      hasErrorIcon: true,
+      position: InlineErrorPosition.Above,
+    })
     this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
