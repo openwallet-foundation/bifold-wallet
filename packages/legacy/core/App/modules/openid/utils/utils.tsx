@@ -21,7 +21,7 @@ export function getHostNameFromUrl(url: string) {
   try {
     return getDomainFromUrl(url)
   } catch (error) {
-    throw error
+    throw new Error(`Error getting hostname from url: ${error}`)
   }
 }
 
