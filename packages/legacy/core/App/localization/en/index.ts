@@ -622,6 +622,7 @@ const translation = {
   },
   "ProofRequest": {
     "RequestForProof": "Request for proof",
+    "ReceiveProofTitle": "Received an information request from",
     "JustAMoment": "Just a moment while we prepare things for you...",
     "FromYourWallet": "From your wallet",
     "MissingCredentials": "Missing credentials",
@@ -683,6 +684,7 @@ const translation = {
     "NoInfoShared": "No information was shared",
     "YourInfo": "Your information was not shared",
     "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing.",
+    "CredentialNotInWallet": "This credential is not present in your wallet.",
   },
   "Settings": {
     "Version": "Version",
