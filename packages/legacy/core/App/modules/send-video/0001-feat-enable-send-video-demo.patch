@@ -1,29 +1,36 @@
-From 4d1d904385a26f2092de348fe64eda4ee6c68307 Mon Sep 17 00:00:00 2001
+From 43db5bf9b9c10bc3193daca17ca67fd44d038dd8 Mon Sep 17 00:00:00 2001
 From: "Jason C. Leach" <jason.leach@fullboar.ca>
-Date: Fri, 11 Oct 2024 12:10:46 -0700
+Date: Fri, 13 Dec 2024 13:38:59 -0800
 Subject: [PATCH] feat: enable send video demo
 
 Signed-off-by: Jason C. Leach <jason.leach@fullboar.ca>
 ---
- .../legacy/core/App/localization/index.ts     |  8 +--
- .../legacy/core/App/navigators/RootStack.tsx  |  8 +++
- packages/legacy/core/App/screens/Home.tsx     | 57 ++++++++++++-------
- 3 files changed, 47 insertions(+), 26 deletions(-)
+ .../legacy/core/App/localization/index.ts     |  9 +--
+ .../legacy/core/App/navigators/RootStack.tsx  | 21 ++++---
+ packages/legacy/core/App/screens/Home.tsx     | 59 ++++++++++++-------
+ packages/legacy/core/App/types/navigators.ts  |  1 +
+ 4 files changed, 53 insertions(+), 37 deletions(-)
 
 diff --git a/packages/legacy/core/App/localization/index.ts b/packages/legacy/core/App/localization/index.ts
-index 7b557c35..f46dd332 100644
+index 7b557c35..0de6feb4 100644
 --- a/packages/legacy/core/App/localization/index.ts
 +++ b/packages/legacy/core/App/localization/index.ts
-@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next'
+@@ -3,12 +3,13 @@ import { initReactI18next } from 'react-i18next'
  import * as RNLocalize from 'react-native-localize'
  import { PersistentStorage } from '../services/storage'
  import { LocalStorageKeys } from '../constants'
--
 +import { en as sendVideoEn, fr as sendVideoFr, ptBr as sendVideoPtBr } from '../modules/send-video/localization'
+ 
  import en from './en'
  import fr from './fr'
  import ptBr from './pt-br'
-@@ -16,13 +16,13 @@ export type TranslationResources = {
+ 
+-export type Translation = typeof en
++export type Translation = typeof en & typeof sendVideoEn
+ 
+ export type TranslationResources = {
+   [key: string]: any
+@@ -16,13 +17,13 @@ export type TranslationResources = {
  
  export const translationResources: TranslationResources = {
    en: {
@@ -41,33 +48,60 @@ index 7b557c35..f46dd332 100644
  }
  
 diff --git a/packages/legacy/core/App/navigators/RootStack.tsx b/packages/legacy/core/App/navigators/RootStack.tsx
-index d11472aa..8294279e 100644
+index 2aaee95a..880099bf 100644
 --- a/packages/legacy/core/App/navigators/RootStack.tsx
 +++ b/packages/legacy/core/App/navigators/RootStack.tsx
-@@ -33,6 +33,7 @@ import DeliveryStack from './DeliveryStack'
- import NotificationStack from './NotificationStack'
- import ProofRequestStack from './ProofRequestStack'
- import SettingStack from './SettingStack'
-+import SendVideoStack from '../modules/send-video/SendVideoStack'
- import TabStack from './TabStack'
- import { useDefaultStackOptions } from './defaultStackOptions'
- 
-@@ -311,6 +312,13 @@ const RootStack: React.FC = () => {
+@@ -1,11 +1,7 @@
+ import { ProofState } from '@credo-ts/core'
+ import { useAgent, useProofByState } from '@credo-ts/react-hooks'
+ import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
+-import {
+-  CardStyleInterpolators,
+-  StackCardStyleInterpolator,
+-  createStackNavigator,
+-} from '@react-navigation/stack'
++import { CardStyleInterpolators, StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack'
+ import React, { useEffect } from 'react'
+ import { useTranslation } from 'react-i18next'
+ import { DeviceEventEmitter } from 'react-native'
+@@ -18,6 +14,7 @@ import { useStore } from '../contexts/store'
+ import { useTheme } from '../contexts/theme'
+ import { useDeepLinks } from '../hooks/deep-links'
+ import HistoryStack from '../modules/history/navigation/HistoryStack'
++import SendVideoStack from '../modules/send-video/navigators/SendVideoStack'
+ import Chat from '../screens/Chat'
+ import { BifoldError } from '../types/error'
+ import { Screens, Stacks, TabStacks } from '../types/navigators'
+@@ -38,12 +35,7 @@ const RootStack: React.FC = () => {
+   const { t } = useTranslation()
+   const theme = useTheme()
+   const defaultStackOptions = useDefaultStackOptions(theme)
+-  const [
+-    splash,
+-    OnboardingStack,
+-    CustomNavStack1,
+-    loadState,
+-  ] = useServices([
++  const [splash, OnboardingStack, CustomNavStack1, loadState] = useServices([
+     TOKENS.SCREEN_SPLASH,
+     TOKENS.STACK_ONBOARDING,
+     TOKENS.CUSTOM_NAV_STACK_1,
+@@ -136,6 +128,13 @@ const RootStack: React.FC = () => {
              cardStyleInterpolator: forFade,
            }}
          />
 +        <Stack.Screen
-+          name={'Send Video'}
++          name={Stacks.SendVideoStack}
 +          component={SendVideoStack}
 +          options={{
 +            cardStyleInterpolator: forFade,
 +          }}
 +        />
+         {CustomNavStack1 ? <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} /> : null}
        </Stack.Navigator>
      )
-   }
 diff --git a/packages/legacy/core/App/screens/Home.tsx b/packages/legacy/core/App/screens/Home.tsx
-index 09e11c19..4f01e1c8 100644
+index ad946ed3..11ba0c6c 100644
 --- a/packages/legacy/core/App/screens/Home.tsx
 +++ b/packages/legacy/core/App/screens/Home.tsx
 @@ -13,6 +13,8 @@ import { useTheme } from '../contexts/theme'
@@ -80,7 +114,7 @@ index 09e11c19..4f01e1c8 100644
  type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
  
 @@ -39,6 +41,7 @@ const Home: React.FC<HomeProps> = () => {
-   const { start } = useTour()
+   const { start, stop } = useTour()
    const [showTourPopup, setShowTourPopup] = useState(false)
    const screenIsFocused = useIsFocused()
 +  const navigation = useNavigation()
@@ -142,20 +176,34 @@ index 09e11c19..4f01e1c8 100644
  
    useEffect(() => {
      const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
-@@ -158,6 +164,13 @@ const Home: React.FC<HomeProps> = () => {
+@@ -163,6 +169,15 @@ const Home: React.FC<HomeProps> = () => {
            onDismissPressed={onDismissPressed}
          />
        )}
 +      <View style={{ marginBottom: 100 }}>
 +        <Button
 +          title={'Verify by Video (DEMO)'}
-+          onPress={() => navigation.getParent()?.navigate('Send Video', { screen: 'Instructions' })}
++          onPress={() =>
++            navigation.getParent()?.navigate(Stacks.SendVideoStack, { screen: SendVideoScreens.VideoInstructions })
++          }
 +          buttonType={ButtonType.Primary}
 +        />
 +      </View>
      </>
    )
  }
+diff --git a/packages/legacy/core/App/types/navigators.ts b/packages/legacy/core/App/types/navigators.ts
+index e8874f4d..f436d62a 100644
+--- a/packages/legacy/core/App/types/navigators.ts
++++ b/packages/legacy/core/App/types/navigators.ts
+@@ -65,6 +65,7 @@ export enum Stacks {
+   ConnectionStack = 'Connection Stack',
+   HistoryStack = 'History Stack',
+   CustomNavStack1 = 'Custom Nav Stack 1',
++  SendVideoStack = 'Send Video Stack',
+ }
+ 
+ export enum TabStacks {
 -- 
-2.46.0
+2.47.0
 
