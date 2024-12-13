@@ -290,7 +290,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
             }
             testID="com.ariesbifold:id/VersionNumber"
           >
-            1 (1)
+            Settings.Version 1 (1)
           </Text>
         </View>
       </RCTScrollView>

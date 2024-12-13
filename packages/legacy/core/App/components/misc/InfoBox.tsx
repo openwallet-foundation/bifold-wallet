@@ -264,7 +264,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           )}
           {showVersionFooter ? (
             <Text style={[TextTheme.caption, { flex: 1, marginTop: 8, textAlign: 'center' }]} testID={testIdWithKey('VersionNumber')}>
-              {`${getVersion()} (${getBuildNumber()})`}
+              {`${t('Settings.Version')} ${getVersion()} (${getBuildNumber()})`}
             </Text>
           ) : null}
         </>
