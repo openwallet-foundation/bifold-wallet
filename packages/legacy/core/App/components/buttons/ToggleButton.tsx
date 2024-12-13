@@ -28,7 +28,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   useEffect(() => {
     Animated.timing(toggleAnim, {
       toValue: isEnabled ? 1 : 0,
-      duration: 150,
+      duration: 200,
       useNativeDriver: false,
     }).start()
   }, [isEnabled, toggleAnim])
@@ -50,7 +50,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       accessibilityLabel="Toggle Button"
       accessibilityRole="switch"
       accessibilityState={{
-        checked: isEnabled
+        checked: isEnabled,
       }}
       onPress={isAvailable && !disabled ? toggleAction : undefined} // Prevent onPress if not available or disabled
       disabled={!isAvailable || disabled}
@@ -88,4 +88,4 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   )
 }
 
-export default React.memo(ToggleButton);
+export default ToggleButton
