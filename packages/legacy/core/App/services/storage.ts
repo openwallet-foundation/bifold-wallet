@@ -1,16 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { BaseLogger } from '@credo-ts/core'
+import { BifoldLogger } from './logger'
 
 export class PersistentStorage<T> {
   private _state?: T
-  private log?: BaseLogger
+  private log?: BifoldLogger
 
   constructor(logger: any) {
     // this._state = state
     this.log = logger
   }
 
-  public static fetchValueForKey = async <T>(key: string, log?: BaseLogger): Promise<T | undefined> => {
+  public static fetchValueForKey = async <T>(key: string, log?: BifoldLogger): Promise<T | undefined> => {
     try {
       const value = await AsyncStorage.getItem(key)
       if (!value) {
@@ -23,7 +23,7 @@ export class PersistentStorage<T> {
     }
   }
 
-  public static storeValueForKey = async <T>(key: string, value: T, log?: BaseLogger): Promise<void> => {
+  public static storeValueForKey = async <T>(key: string, value: T, log?: BifoldLogger): Promise<void> => {
     try {
       const serializedState = JSON.stringify(value)
       return AsyncStorage.setItem(key, serializedState)
@@ -34,7 +34,7 @@ export class PersistentStorage<T> {
     }
   }
 
-  public static removeValueForKey = async (key: string, log?: BaseLogger): Promise<void> => {
+  public static removeValueForKey = async (key: string, log?: BifoldLogger): Promise<void> => {
     try {
       return AsyncStorage.removeItem(key)
     } catch (error) {

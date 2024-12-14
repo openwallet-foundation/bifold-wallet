@@ -90,6 +90,7 @@ const translation = {
   },
   "Error": {
     "ReportThisProblem": "Report this problem",
+    "Reported": "Reported",
     "Unknown": "Unknown Error",
     "Problem": "A problem has occurred",
     "ErrorCode": "Error code",

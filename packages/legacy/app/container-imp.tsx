@@ -1,12 +1,11 @@
-import { BaseLogger } from '@credo-ts/core'
-import { Container, TokenMapping } from '@hyperledger/aries-bifold-core'
+import { BifoldLogger, Container, TokenMapping } from '@hyperledger/aries-bifold-core'
 import { DependencyContainer } from 'tsyringe'
 
 export class AppContainer implements Container {
   private _container: DependencyContainer
-  private log?: BaseLogger
+  private log?: BifoldLogger
 
-  public constructor(bifoldContainer: Container, log?: BaseLogger) {
+  public constructor(bifoldContainer: Container, log?: BifoldLogger) {
     this._container = bifoldContainer.container.createChildContainer()
     this.log = log
   }

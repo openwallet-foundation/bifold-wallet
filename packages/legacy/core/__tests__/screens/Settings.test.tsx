@@ -8,13 +8,6 @@ import { testIdWithKey } from '../../App/utils/testable'
 import { testDefaultState } from '../contexts/store'
 import { BasicAppContext } from '../helpers/app'
 
-jest.mock('react-native-device-info', () => {
-  return {
-    getVersion: () => 1,
-    getBuildNumber: () => 1,
-  }
-})
-
 describe('Settings Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks()
