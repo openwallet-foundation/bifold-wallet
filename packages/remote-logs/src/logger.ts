@@ -1,4 +1,4 @@
-import { BaseLogger } from '@credo-ts/core'
+import { BifoldError, BifoldLogger } from '@hyperledger/aries-bifold-core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
 import { consoleTransport, logger } from 'react-native-logs'
 
@@ -8,7 +8,7 @@ export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
 }
 
-export class RemoteLogger extends BaseLogger {
+export class RemoteLogger extends BifoldLogger {
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
   private _autoDisableRemoteLoggingIntervalInMinutes = 0
@@ -17,8 +17,8 @@ export class RemoteLogger extends BaseLogger {
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private log: any
-  private config = {
+  protected _log: any
+  protected _config = {
     levels: {
       test: 0,
       trace: 0,
@@ -80,7 +80,7 @@ export class RemoteLogger extends BaseLogger {
     const transportOptions = {}
     const transport = [consoleTransport]
     const config = {
-      ...this.config,
+      ...this._config,
       transport,
       transportOptions,
     }
@@ -102,7 +102,7 @@ export class RemoteLogger extends BaseLogger {
       }
     }
 
-    this.log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
+    this._log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
   }
 
   public startEventListeners() {
@@ -130,30 +130,45 @@ export class RemoteLogger extends BaseLogger {
   }
 
   public test(message: string, data?: object | undefined): void {
-    this.log?.test({ message, data })
+    this._log?.test({ message, data })
   }
 
   public trace(message: string, data?: object | undefined): void {
-    this.log?.trace({ message, data })
+    this._log?.trace({ message, data })
   }
 
   public debug(message: string, data?: object | undefined): void {
-    this.log?.debug({ message, data })
+    this._log?.debug({ message, data })
   }
 
   public info(message: string, data?: object | undefined): void {
-    this.log?.info({ message, data })
+    this._log?.info({ message, data })
   }
 
   public warn(message: string, data?: object | undefined): void {
-    this.log?.warn({ message, data })
+    this._log?.warn({ message, data })
   }
 
   public error(message: string, data?: object | undefined): void {
-    this.log?.error({ message, data })
+    this._log?.error({ message, data })
   }
 
   public fatal(message: string, data?: object | undefined): void {
-    this.log?.fatal({ message, data })
+    this._log?.fatal({ message, data })
+  }
+
+  public report(bifoldError: BifoldError): void {
+    this._log?.info({ message: 'Sending Loki report' })
+    const { title, description, code, message } = bifoldError
+    lokiTransport({
+      msg: title,
+      rawMsg: [{ message: title, data: { title, description, code, message } }],
+      level: { severity: 3, text: 'error' },
+      options: {
+        lokiUrl: this.lokiUrl,
+        lokiLabels: this.lokiLabels,
+        job: 'incident-report',
+      },
+    })
   }
 }

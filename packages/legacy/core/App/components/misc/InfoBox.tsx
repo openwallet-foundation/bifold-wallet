@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -20,30 +21,40 @@ export enum InfoBoxType {
   Error,
 }
 
-interface BifoldErrorProps {
+interface InfoBoxProps {
   notificationType: InfoBoxType
   title: string
   description?: string
   bodyContent?: Element
   message?: string
+  callToActionDisabled?: boolean
+  callToActionIcon?: JSX.Element
   secondaryCallToActionTitle?: string
   secondaryCallToActionPressed?: GenericFn
+  secondaryCallToActionDisabled?: boolean
+  secondaryCallToActionIcon?: JSX.Element
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
   onClosePressed?: GenericFn
+  showVersionFooter?: boolean
 }
 
-const InfoBox: React.FC<BifoldErrorProps> = ({
+const InfoBox: React.FC<InfoBoxProps> = ({
   notificationType,
   title,
   description,
   bodyContent,
   message,
+  callToActionDisabled,
+  callToActionIcon,
   secondaryCallToActionTitle,
   secondaryCallToActionPressed,
+  secondaryCallToActionDisabled,
+  secondaryCallToActionIcon,
   onCallToActionPressed,
   onCallToActionLabel,
   onClosePressed,
+  showVersionFooter,
 }) => {
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
@@ -231,7 +242,10 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
                 testID={onCallToActionLabel ? testIdWithKey(onCallToActionLabel) : testIdWithKey('Okay')}
                 buttonType={ButtonType.Primary}
                 onPress={onCallToActionPressed}
-              />
+                disabled={callToActionDisabled}
+              >
+                {callToActionIcon}
+              </Button>
             </View>
           )}
           {secondaryCallToActionTitle && secondaryCallToActionPressed && (
@@ -242,9 +256,17 @@ const InfoBox: React.FC<BifoldErrorProps> = ({
                 testID={testIdWithKey(secondaryCallToActionTitle)}
                 buttonType={ButtonType.Secondary}
                 onPress={secondaryCallToActionPressed}
-              />
+                disabled={secondaryCallToActionDisabled}
+              >
+                {secondaryCallToActionIcon}
+              </Button>
             </View>
           )}
+          {showVersionFooter ? (
+            <Text style={[TextTheme.caption, { flex: 1, marginTop: 8, textAlign: 'center' }]} testID={testIdWithKey('VersionNumber')}>
+              {`${t('Settings.Version')} ${getVersion()} (${getBuildNumber()})`}
+            </Text>
+          ) : null}
         </>
       </ScrollView>
     </View>

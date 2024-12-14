@@ -2875,6 +2875,7 @@ __metadata:
     react-native-gifted-chat: 2.4.0
     react-native-keychain: ^8.1.1
     react-native-localize: ^2.2.4
+    react-native-logs: ^5.1.0
     react-native-orientation-locker: ^1.6.0
     react-native-permissions: ^4.0.1
     react-native-qrcode-svg: 6.2.0
@@ -2978,6 +2979,7 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.20.0
     "@credo-ts/core": 0.5.11
+    "@hyperledger/aries-bifold-core": ^1.0.0
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
     buffer: ^6.0.3

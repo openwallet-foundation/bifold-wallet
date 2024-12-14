@@ -89,6 +89,7 @@ const translation = {
   },
   "Error": {
     "ReportThisProblem": "Reportar este problema",
+    "Reported": "Reported (PT-BR)",
     "Unknown": "Erro Desconhecido",
     "Problem": "Ocorreu um problema",
     "ErrorCode": "Código de Erro",

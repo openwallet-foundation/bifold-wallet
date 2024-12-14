@@ -32,15 +32,9 @@
   "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
   "devDependencies": {
     "@babel/runtime": "^7.20.0",
-    "@credo-ts/core": "0.5.11",
     "@typescript-eslint/parser": "^6.6.0",
-    "axios": "^1.4.0",
-    "buffer": "^6.0.3",
     "eslint": "^8.48.0",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "react": "18.2.0",
-    "react-native": "0.72.5",
-    "react-native-logs": "^5.1.0",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
   },
@@ -50,6 +44,18 @@
     "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-native": "^0.72.5",
+    "react-native-logs": "^5.1.0"
+  },
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
+  "dependencies": {
+    "@credo-ts/core": "0.5.11",
+    "@hyperledger/aries-bifold-core": "^1.0.0",
+    "axios": "^1.4.0",
+    "buffer": "^6.0.3",
+    "react": "18.2.0",
+    "react-native": "0.72.5",
     "react-native-logs": "^5.1.0"
   }
 }

@@ -24,7 +24,7 @@ import { GenericRecord, GenericRecordTags } from '@credo-ts/core/build/modules/g
 import moment from 'moment'
 
 import { i18n } from '../../../localization/index'
-import { ConsoleLogger } from '../../../services/logger'
+import { BifoldLogger } from '../../../services/logger'
 import QueeManager from '../services/queue.service'
 import {
   AppNotificationRecord,
@@ -40,7 +40,7 @@ import { LocalStorageKeys } from '../../../constants'
 import { PersistentStorage } from '../../../services/storage'
 export default class HistoryManager implements IHistoryManager {
   private agent: Agent<any> | null
-  private logger = new ConsoleLogger()
+  private logger = new BifoldLogger()
   public constructor(agent: Agent<any> | null) {
     this.agent = agent
     if (!agent) {

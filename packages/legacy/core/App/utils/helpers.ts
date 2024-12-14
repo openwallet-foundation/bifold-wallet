@@ -13,7 +13,6 @@ import {
 import {
   Agent,
   BasicMessageRecord,
-  BaseLogger,
   ConnectionRecord,
   CredentialExchangeRecord,
   CredentialState,
@@ -37,6 +36,7 @@ import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
 import { i18n } from '../localization/index'
+import { BifoldLogger } from '../services/logger'
 import { Role } from '../types/chat'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
@@ -1050,7 +1050,7 @@ const processBetaUrlIfRequired = (uri: string): string => {
 export const connectFromScanOrDeepLink = async (
   uri: string,
   agent: Agent | undefined,
-  logger: BaseLogger,
+  logger: BifoldLogger,
   navigation: any,
   isDeepLink: boolean,
   implicitInvitations: boolean = false,
