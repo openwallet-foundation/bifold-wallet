@@ -90,6 +90,7 @@ const translation = {
     },
     "Error": {
         "ReportThisProblem": "Signaler ce problème",
+        "Reported": "Reported (FR)",
         "Unknown": "Erreur inconnue",
         "Problem": "Un problème est survenu",
         "ErrorCode": "Code d'erreur",
@@ -616,6 +617,7 @@ const translation = {
     },
     "ProofRequest": {
         "RequestForProof": "Demande de preuve",
+        "ReceiveProofTitle": "Received an information request from(fr)",
         "JustAMoment": "Juste un moment pendant que nous préparons les choses pour vous...",
         "FromYourWallet": "Depuis votre portefeuille",
         "MissingCredentials": "Il manque des attestations",
@@ -668,6 +670,7 @@ const translation = {
         "NoInfoShared": "Aucune information n'a été partagée",
         "YourInfo": "Votre information n'a pas été partagée",
         "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (FR)",
+        "CredentailNotInWallet": "This credential is not present in your wallet.(FR)",
     },
     "Settings": {
         "Version": "Version",
