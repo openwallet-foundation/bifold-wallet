@@ -11,7 +11,7 @@ export const en = {
     "VideoInstructions": {
       "RecordAShortVideo": "Record a short video",
       "YouWillBeAskedToDo": "You'll be asked to do",
-      "PersonAtServiceBC": "A person at service BC will watch the video. They need to hear and see you clearly.",
+      "PersonAtServiceBC": "A person at Service Nova Scotia will watch the video. They need to hear and see you clearly.",
       "YouShould": "You should",
       "VideosWithInappropriateOffensive" : "Videos with inappropriate, offensive, or harrsing behavior will not be accepted.",
       "StartRecordingVideo" : "Start Recording Video"
