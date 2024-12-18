@@ -45,6 +45,7 @@ interface CredentialCard11Props {
   proof?: boolean
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
+  brandingOverlay?: CredentialOverlay<BrandingOverlay>
 }
 
 /*
@@ -90,6 +91,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   proof,
   hasAltCredentials,
   handleAltCredChange,
+  brandingOverlay,
 }) => {
   const { width } = useWindowDimensions()
   const borderRadius = 10
@@ -281,6 +283,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }, [credential, cardData, parseAttribute, flaggedAttributes])
 
   useEffect(() => {
+    if (brandingOverlay) {
+      setOverlay(brandingOverlay as unknown as CredentialOverlay<BrandingOverlay>)
+      return
+    }
+
     const params = {
       identifiers: credential ? getCredentialIdentifiers(credential) : { schemaId, credentialDefinitionId: credDefId },
       attributes: proof ? [] : credential?.credentialAttributes,
@@ -331,6 +338,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     proof,
     credHelpActionOverrides,
     navigation,
+    brandingOverlay,
   ])
 
   useEffect(() => {

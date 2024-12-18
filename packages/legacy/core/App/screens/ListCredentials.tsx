@@ -18,7 +18,6 @@ import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
-import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 
 const ListCredentials: React.FC = () => {
@@ -83,10 +82,7 @@ const ListCredentials: React.FC = () => {
         credential={cred as CredentialExchangeRecord}
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {
-            navigation.navigate(Screens.OpenIDCredentialDetails, {
-              credential: cred,
-              screenMode: OpenIDCredScreenMode.details,
-            })
+            navigation.navigate(Screens.OpenIDCredentialDetails, { credentialId: cred.id })
           } else {
             navigation.navigate(Screens.CredentialDetails, { credentialId: cred.id })
           }
