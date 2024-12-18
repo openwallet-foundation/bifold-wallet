@@ -273,6 +273,25 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               </View>
             </View>
           </View>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "flex": 1,
+                  "marginTop": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/VersionNumber"
+          >
+            Settings.Version 1 (1)
+          </Text>
         </View>
       </RCTScrollView>
     </View>

@@ -1,4 +1,4 @@
-import { Agent, BaseLogger } from '@credo-ts/core'
+import { Agent } from '@credo-ts/core'
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
 import { OCABundleResolverType } from '@hyperledger/aries-oca/build/legacy'
@@ -23,6 +23,7 @@ import { CredentialListFooterProps } from './types/credential-list-footer'
 import { ContactListItemProps } from './components/listItems/ContactListItem'
 import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
 import { InlineErrorConfig } from './types/error'
+import { BifoldLogger } from './services/logger'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -173,7 +174,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
-  [TOKENS.UTIL_LOGGER]: BaseLogger
+  [TOKENS.UTIL_LOGGER]: BifoldLogger
   [TOKENS.UTIL_OCA_RESOLVER]: OCABundleResolverType
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined

@@ -1,4 +1,4 @@
-import { BaseLogger, Agent } from '@credo-ts/core'
+import { Agent } from '@credo-ts/core'
 import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -23,7 +23,7 @@ import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
-import { ConsoleLogger } from './services/logger'
+import { BifoldLogger } from './services/logger'
 import { AuthenticateStackParams, Screens } from './types/navigators'
 import {
   Migration as MigrationState,
@@ -70,7 +70,7 @@ export const defaultConfig: Config = {
     enableCredentialList: false,
   },
 }
-export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig  = {
+export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
   logAttestationAccepted: true,
   logAttestationRefused: true,
   logAttestationRemoved: true,
@@ -86,10 +86,10 @@ export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig  = {
 export class MainContainer implements Container {
   public static readonly TOKENS = TOKENS
   private _container: DependencyContainer
-  private log?: BaseLogger
+  private log?: BifoldLogger
   private storage: PersistentStorage<PersistentState>
 
-  public constructor(container: DependencyContainer, log?: BaseLogger) {
+  public constructor(container: DependencyContainer, log?: BifoldLogger) {
     this._container = container
     this.log = log
     this.storage = new PersistentStorage(log)
@@ -98,7 +98,7 @@ export class MainContainer implements Container {
   public get container(): DependencyContainer {
     return this._container
   }
-  
+
   public init(): Container {
     this.log?.info(`Initializing Bifold container`)
 
@@ -121,7 +121,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
-    this._container.registerInstance(TOKENS.UTIL_LOGGER, new ConsoleLogger())
+    this._container.registerInstance(TOKENS.UTIL_LOGGER, new BifoldLogger())
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
@@ -143,7 +143,11 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM, ContactCredentialListItem)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
-    this._container.registerInstance(TOKENS.INLINE_ERRORS, { enabled: true, position: InlineErrorPosition.Above })
+    this._container.registerInstance(TOKENS.INLINE_ERRORS, {
+      enabled: true,
+      hasErrorIcon: true,
+      position: InlineErrorPosition.Above,
+    })
     this._container.registerInstance(
       TOKENS.FN_ONBOARDING_DONE,
       (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {

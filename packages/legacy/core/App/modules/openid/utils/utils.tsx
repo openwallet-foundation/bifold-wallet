@@ -1,3 +1,6 @@
+import { getDomainFromUrl } from '@credo-ts/core'
+import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
+
 /**
  * Converts a camelCase string to a sentence format (first letter capitalized, rest in lower case).
  * i.e. sanitizeString("helloWorld")  // returns: 'Hello world'
@@ -15,11 +18,26 @@ export function sanitizeString(str: string) {
 }
 
 export function getHostNameFromUrl(url: string) {
-  //TODO: Find more elegant way to extract host name
-  // const urlRegex = /^(.*:)\/\/([A-Za-z0-9-.]+)(:[0-9]+)?(.*)$/
-  // const parts = urlRegex.exec(url)
-  // return parts ? parts[2] : undefined
-  return url.split('https://')[1]
+  try {
+    return getDomainFromUrl(url)
+  } catch (error) {
+    throw new Error(`Error getting hostname from url: ${error}`)
+  }
+}
+
+export const buildFieldsFromOpenIDTemplate = (data: { [key: string]: unknown }): Array<Field> => {
+  const fields = []
+  for (const key of Object.keys(data)) {
+    // omit id and type
+    if (key === 'id' || key === 'type') continue
+
+    let pushedVal: string | number | null = null
+    if (typeof data[key] === 'string' || typeof data[key] === 'number') {
+      pushedVal = data[key] as string | number | null
+    }
+    fields.push(new Attribute({ name: key, value: pushedVal }))
+  }
+  return fields
 }
 
 export function formatDate(input: string | Date): string {

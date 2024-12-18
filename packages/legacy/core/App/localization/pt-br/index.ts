@@ -89,6 +89,7 @@ const translation = {
   },
   "Error": {
     "ReportThisProblem": "Reportar este problema",
+    "Reported": "Reported (PT-BR)",
     "Unknown": "Erro Desconhecido",
     "Problem": "Ocorreu um problema",
     "ErrorCode": "Código de Erro",
@@ -596,6 +597,7 @@ const translation = {
   },
   "ProofRequest": {
     "RequestForProof": "Request for proof (PT-BR)",
+    "ReceiveProofTitle": "Received an information request from(pt-br)",
     "JustAMoment": "Aguarde enquanto preparamos as coisas para você...",
     "FromYourWallet": "De sua carteira",
     "MissingCredentials": "Credenciais não encontradas",
@@ -651,6 +653,7 @@ const translation = {
     "NoInfoShared": "No information was shared (PT-BR)",
     "YourInfo": "Your information was not shared (PT-BR)",
     "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (PT-BR)",
+    "CredentailNotInWallet": "This credential is not present in your wallet. (PT-BR)",
   },
   "Settings": {
     "Version": "Versão",
@@ -732,6 +735,7 @@ const translation = {
     "ChooseProofRequest": "Escolha um pedido de prova",
     "ProofRequestUsageHistory": "Histórico de uso",
     "CreateConnectionInvitation": "Criar um convite de conexão",
+    "AttemptLockout": "Temporarily Locked (PT-BR)",
     "NameWallet": "Nomear sua carteira",
     "RenameContact": "Editar nome do contato",
     "HistorySettings": "History Settings",

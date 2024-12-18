@@ -7,7 +7,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { ListItems, TextTheme } from '../../../theme'
 import { formatDifPexCredentialsForRequest } from '../displayProof'
 import { testIdWithKey } from '../../../utils/testable'
 import { sanitizeString } from '../utils/utils'
@@ -23,28 +22,6 @@ import ProofRequestAccept from '../../../screens/ProofRequestAccept'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
-const styles = StyleSheet.create({
-  pageContent: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-  credentialsList: {
-    marginTop: 20,
-    justifyContent: 'space-between',
-  },
-  headerTextContainer: {
-    paddingVertical: 16,
-  },
-  headerText: {
-    ...ListItems.recordAttributeText,
-    flexShrink: 1,
-  },
-  footerButton: {
-    paddingTop: 10,
-  },
-})
-
 const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   navigation,
   route: {
@@ -57,11 +34,47 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
 
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
   const { agent } = useAgent()
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
+
+  const styles = StyleSheet.create({
+    pageContent: {
+      flexGrow: 1,
+      justifyContent: 'space-between',
+      padding: 10,
+    },
+    credentialsList: {
+      marginTop: 20,
+      justifyContent: 'space-between',
+    },
+    headerTextContainer: {
+      paddingVertical: 16,
+    },
+    headerText: {
+      ...ListItems.recordAttributeText,
+      flexShrink: 1,
+    },
+    footerButton: {
+      paddingTop: 10,
+    },
+    cardContainer: {
+      paddingHorizontal: 25,
+      paddingVertical: 16,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+      marginBottom: 20,
+    },
+    cardAttributes: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      borderColor: ColorPallet.grayscale.lightGrey,
+      borderWidth: 1,
+      borderRadius: 8,
+      padding: 8,
+    },
+  })
 
   const submission = useMemo(
     () =>
@@ -120,10 +133,9 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     return (
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-          <Text style={TextTheme.title}>
-            You have received an information request
-            {verifierName ? ` from ${verifierName}` : ''}.
-          </Text>
+          <Text style={TextTheme.normal}>{t('ProofRequest.ReceiveProofTitle')}</Text>
+          {'\n'}
+          <Text style={TextTheme.title}>{verifierName ? verifierName : ''}</Text>
         </Text>
       </View>
     )
@@ -140,21 +152,30 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
           return (
             <View key={i}>
-              <OpenIDCredentialRowCard name={s.name} issuer={verifierName} onPress={() => {}} />
-              {s.isSatisfied && selectedCredential?.requestedAttributes ? (
-                <View style={{ marginTop: 16, gap: 8 }}>
-                  {s.description && <Text style={TextTheme.labelSubtitle}>{s.description}</Text>}
-                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                    {selectedCredential.requestedAttributes.map((a) => (
-                      <View key={a} style={{ flexBasis: '50%' }}>
-                        <Text style={TextTheme.normal}>• {sanitizeString(a)}</Text>
-                      </View>
-                    ))}
+              <OpenIDCredentialRowCard
+                name={s.name}
+                bgColor={selectedCredential.backgroundColor}
+                txtColor={selectedCredential.textColor}
+                bgImage={selectedCredential.backgroundImage?.url}
+                issuer={verifierName}
+                onPress={() => {}}
+              />
+              <View style={styles.cardContainer}>
+                {s.isSatisfied && selectedCredential?.requestedAttributes ? (
+                  <View style={{ marginTop: 16, gap: 8 }}>
+                    {s.description && <Text style={TextTheme.labelSubtitle}>{s.description}</Text>}
+                    <View style={styles.cardAttributes}>
+                      {selectedCredential.requestedAttributes.map((a) => (
+                        <View key={a} style={{ flexBasis: '50%' }}>
+                          <Text style={TextTheme.normal}>• {sanitizeString(a)}</Text>
+                        </View>
+                      ))}
+                    </View>
                   </View>
-                </View>
-              ) : (
-                <Text style={TextTheme.title}>This credential is not present in your wallet.</Text>
-              )}
+                ) : (
+                  <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
+                )}
+              </View>
             </View>
           )
         })}
@@ -222,7 +243,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       </ScrollView>
       {footer()}
 
-      <ProofRequestAccept visible={acceptModalVisible} proofId={''} confirmationOnly = {true} />
+      <ProofRequestAccept visible={acceptModalVisible} proofId={''} confirmationOnly={true} />
       <CommonRemoveModal
         usage={ModalUsage.ProofRequestDecline}
         visible={declineModalVisible}

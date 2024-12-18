@@ -19,6 +19,7 @@ import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
+import { CredentialErrors } from '../components/misc/CredentialCard11'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -80,6 +81,9 @@ const ListCredentials: React.FC = () => {
     return (
       <CredentialCard
         credential={cred as CredentialExchangeRecord}
+        credentialErrors={
+          (cred as CredentialExchangeRecord).revocationNotification?.revocationDate && [CredentialErrors.Revoked]
+        }
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {
             navigation.navigate(Screens.OpenIDCredentialDetails, { credentialId: cred.id })
