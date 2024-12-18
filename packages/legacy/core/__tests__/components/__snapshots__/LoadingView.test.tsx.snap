@@ -30,6 +30,7 @@ exports[`LoadingView Component renders correctly 1`] = `
       style={
         Object {
           "height": "33%",
+          "objectFit": "contain",
           "width": "33%",
         }
       }
