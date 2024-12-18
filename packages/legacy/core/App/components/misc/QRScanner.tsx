@@ -100,7 +100,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           onDismissPressed={() => setShowErrorDetailsModal(false)}
         />
       )}
-      <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError}></ScanCamera>
+      <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError} torchActive={torchActive}></ScanCamera>
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
           {error ? (
