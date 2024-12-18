@@ -187,175 +187,183 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
         <View
           style={
             Object {
-              "alignItems": "center",
-              "flex": 1,
-              "flexDirection": "row",
-              "margin": 10,
+              "marginBottom": 0,
             }
           }
         >
           <View
-            accessibilityLabel="Terms.IAgree"
-            accessibilityState={
-              Object {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 44,
-                "left": 44,
-                "right": 44,
-                "top": 44,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "opacity": 1,
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "margin": 10,
               }
             }
-            testID="com.ariesbifold:id/IAgree"
           >
+            <View
+              accessibilityLabel="Terms.IAgree"
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 44,
+                  "left": 44,
+                  "right": 44,
+                  "top": 44,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="com.ariesbifold:id/IAgree"
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 36,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
             <Text
-              allowFontScaling={false}
-              selectable={false}
               style={
                 Array [
                   Object {
-                    "color": "#42803E",
-                    "fontSize": 36,
-                  },
-                  undefined,
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontSize": 18,
                     "fontWeight": "normal",
+                    "marginLeft": 10,
+                    "marginRight": 0,
                   },
                   Object {},
                 ]
               }
             >
-              
+              Terms.Attestation
             </Text>
           </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "flexShrink": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginLeft": 10,
-                  "marginRight": 0,
-                },
-                Object {},
-              ]
-            }
-          >
-            Terms.Attestation
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "paddingTop": 10,
-            }
-          }
-        >
           <View
-            accessibilityLabel="Global.Continue"
-            accessibilityRole="button"
-            accessibilityState={
-              Object {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": true,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "rgba(53, 130, 63, 0.35)",
-                "borderRadius": 4,
-                "opacity": 1,
-                "padding": 16,
+                "paddingTop": 10,
               }
             }
-            testID="com.ariesbifold:id/Continue"
           >
             <View
-              style={
+              accessibilityLabel="Global.Continue"
+              accessibilityRole="button"
+              accessibilityState={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": true,
+                  "expanded": undefined,
+                  "selected": undefined,
                 }
               }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "rgba(53, 130, 63, 0.35)",
+                  "borderRadius": 4,
+                  "opacity": 1,
+                  "padding": 16,
+                }
+              }
+              testID="com.ariesbifold:id/Continue"
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                    false,
-                    false,
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
                 }
               >
-                Global.Continue
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                    ]
+                  }
+                >
+                  Global.Continue
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -630,175 +638,183 @@ exports[`Terms Screen Renders correctly 1`] = `
         <View
           style={
             Object {
-              "alignItems": "center",
-              "flex": 1,
-              "flexDirection": "row",
-              "margin": 10,
+              "marginBottom": 0,
             }
           }
         >
           <View
-            accessibilityLabel="Terms.IAgree"
-            accessibilityState={
-              Object {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            hitSlop={
-              Object {
-                "bottom": 44,
-                "left": 44,
-                "right": 44,
-                "top": 44,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "opacity": 1,
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "margin": 10,
               }
             }
-            testID="com.ariesbifold:id/IAgree"
           >
+            <View
+              accessibilityLabel="Terms.IAgree"
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 44,
+                  "left": 44,
+                  "right": 44,
+                  "top": 44,
+                }
+              }
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="com.ariesbifold:id/IAgree"
+            >
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 36,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
             <Text
-              allowFontScaling={false}
-              selectable={false}
               style={
                 Array [
                   Object {
-                    "color": "#42803E",
-                    "fontSize": 36,
-                  },
-                  undefined,
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontSize": 18,
                     "fontWeight": "normal",
+                    "marginLeft": 10,
+                    "marginRight": 0,
                   },
                   Object {},
                 ]
               }
             >
-              
+              Terms.Attestation
             </Text>
           </View>
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "flexShrink": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginLeft": 10,
-                  "marginRight": 0,
-                },
-                Object {},
-              ]
-            }
-          >
-            Terms.Attestation
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "paddingTop": 10,
-            }
-          }
-        >
           <View
-            accessibilityLabel="Global.Continue"
-            accessibilityRole="button"
-            accessibilityState={
-              Object {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": true,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "backgroundColor": "rgba(53, 130, 63, 0.35)",
-                "borderRadius": 4,
-                "opacity": 1,
-                "padding": 16,
+                "paddingTop": 10,
               }
             }
-            testID="com.ariesbifold:id/Continue"
           >
             <View
-              style={
+              accessibilityLabel="Global.Continue"
+              accessibilityRole="button"
+              accessibilityState={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": true,
+                  "expanded": undefined,
+                  "selected": undefined,
                 }
               }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "rgba(53, 130, 63, 0.35)",
+                  "borderRadius": 4,
+                  "opacity": 1,
+                  "padding": 16,
+                }
+              }
+              testID="com.ariesbifold:id/Continue"
             >
-              <Text
+              <View
                 style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                    false,
-                    false,
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
                 }
               >
-                Global.Continue
-              </Text>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                    ]
+                  }
+                >
+                  Global.Continue
+                </Text>
+              </View>
             </View>
           </View>
         </View>
