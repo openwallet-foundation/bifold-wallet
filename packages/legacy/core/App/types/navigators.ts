@@ -1,7 +1,6 @@
 import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
-import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { LayoutProps } from '../layout/ScreenLayout'
 
@@ -20,6 +19,7 @@ export enum Screens {
   CredentialDetails = 'Credential Details',
   CredentialOffer = 'Credential Offer',
   OpenIDCredentialDetails = 'Open ID Credential details',
+  OpenIDCredentialOffer = 'Open ID Credential offer',
   OpenIDProofPresentation = 'Open ID Proof Presentation',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
@@ -139,10 +139,7 @@ export type ProofRequestsStackParams = {
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
   [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.OpenIDCredentialDetails]: {
-    credential: SdJwtVcRecord | W3cCredentialRecord
-    screenMode: OpenIDCredScreenMode
-  }
+  [Screens.OpenIDCredentialDetails]: { credentialId: string }
 }
 
 export type HomeStackParams = {
@@ -176,7 +173,6 @@ export type NotificationStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.OpenIDCredentialDetails]: {
     credential: SdJwtVcRecord | W3cCredentialRecord
-    screenMode: OpenIDCredScreenMode
   }
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofRequest]: { proofId: string }
@@ -199,9 +195,8 @@ export type DeliveryStackParams = {
   [Screens.OnTheWay]: { credentialId: string }
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
-  [Screens.OpenIDCredentialDetails]: {
+  [Screens.OpenIDCredentialOffer]: {
     credential: SdJwtVcRecord | W3cCredentialRecord
-    screenMode: OpenIDCredScreenMode
   }
   [Screens.OpenIDProofPresentation]: { credential: OpenId4VPRequestRecord }
 }
