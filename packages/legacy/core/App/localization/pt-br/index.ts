@@ -505,6 +505,8 @@ const translation = {
     "UnableToHandleRedirection": "Não foi possível tratar redirecionamento",
     "Close": "Fechar",
     "Torch": "Flash",
+    "TorchOn": "Flash ligado",
+    "TorchOff": "Flash desligado",
     "ScanHelp": "Ajuda do Scan",
     "ScanNow": "Scaneie Agora",
     "ScanOnySpecial": "Apenas QR codes especiais podem ser escaneados pela Bifold Wallet.",

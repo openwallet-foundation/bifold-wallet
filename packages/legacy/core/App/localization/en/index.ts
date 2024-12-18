@@ -531,6 +531,8 @@ const translation = {
     "UnableToHandleRedirection": "Unable to handle redirection",
     "Close": "Close",
     "Torch": "Flash",
+    "TorchOn": "Flash On",
+    "TorchOff": "Flash Off",
     "ScanHelp": "Scan Help",
     "ScanNow": "Scan Now",
     "WhatToScan": "What QR Codes can be scanned?",

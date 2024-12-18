@@ -530,6 +530,8 @@ const translation = {
         "UnableToHandleRedirection": "Impossible de traiter la redirection",
         "Close": "Fermer",
         "Torch": "Flash",
+        "TorchOn": "Flash activé",
+        "TorchOff": "Flash désactivé",
         "ScanHelp": "Aide à la numérisation",
         "ScanNow": "Numériser maintenant",
         "ScanOnySpecial": "Seuls les codes QR spéciaux peuvent être scannés par Bifold Wallet.",
