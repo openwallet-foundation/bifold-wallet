@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { CredentialStackParams, Screens } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
 import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
-import { useState } from 'react'
-import { DeviceEventEmitter, Image, ImageBackground, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import { TextTheme } from '../../../theme'
 import { useTranslation } from 'react-i18next'
 import { testIdWithKey } from '../../../utils/testable'
@@ -22,9 +21,10 @@ import { TOKENS, useServices } from '../../../container-api'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
 import { W3cCredentialRecord } from '@credo-ts/core'
-import { credentialTextColor, toImageSource } from '../../../utils/credential'
-import CardWatermark from '../../../components/misc/CardWatermark'
 import { buildOverlayFromW3cCredential } from '../../../utils/oca'
+import CredentialDetailSecondaryHeader from '../../../components/views/CredentialDetailSecondaryHeader'
+import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
+import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -35,7 +35,6 @@ type OpenIDCredentialDetailsProps = StackScreenProps<CredentialStackParams, Scre
 
 const paddingHorizontal = 24
 const paddingVertical = 16
-const logoHeight = 80
 
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
   const { credentialId } = route.params
@@ -49,7 +48,6 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
-  const { width, height } = useWindowDimensions()
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -62,38 +60,6 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     container: {
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       display: 'flex',
-    },
-    secondaryHeaderContainer: {
-      height: 1.5 * logoHeight,
-      backgroundColor:
-        (overlay.brandingOverlay?.backgroundImage
-          ? 'rgba(0, 0, 0, 0)'
-          : overlay.brandingOverlay?.secondaryBackgroundColor) ?? 'rgba(0, 0, 0, 0.24)',
-    },
-    primaryHeaderContainer: {
-      paddingHorizontal,
-      paddingVertical,
-    },
-    statusContainer: {},
-    logoContainer: {
-      top: -0.5 * logoHeight,
-      left: paddingHorizontal,
-      marginBottom: -1 * logoHeight,
-      width: logoHeight,
-      height: logoHeight,
-      backgroundColor: '#ffffff',
-      borderRadius: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 1,
-        height: 1,
-      },
-      shadowOpacity: 0.3,
-    },
-    textContainer: {
-      color: credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
     },
   })
 
@@ -162,106 +128,20 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     }
   }
 
-  const CredentialCardLogo: React.FC = () => {
-    return (
-      <View style={styles.logoContainer}>
-        {overlay.brandingOverlay?.logo ? (
-          <Image
-            source={toImageSource(overlay.brandingOverlay?.logo)}
-            style={{
-              resizeMode: 'cover',
-              width: logoHeight,
-              height: logoHeight,
-              borderRadius: 8,
-            }}
-          />
-        ) : (
-          <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>
-            {(overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()}
-          </Text>
-        )}
-      </View>
-    )
-  }
-
-  const CredentialDetailPrimaryHeader: React.FC = () => {
-    return (
-      <View
-        testID={testIdWithKey('CredentialDetailsPrimaryHeader')}
-        style={[styles.primaryHeaderContainer, { zIndex: -1 }]}
-      >
-        <View>
-          {overlay.metaOverlay?.watermark && (
-            <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
-          )}
-          <Text
-            testID={testIdWithKey('CredentialIssuer')}
-            style={[
-              TextTheme.label,
-              styles.textContainer,
-              {
-                paddingLeft: logoHeight + paddingVertical,
-                paddingBottom: paddingVertical,
-                lineHeight: 19,
-                opacity: 0.8,
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {overlay.metaOverlay?.issuer}
-          </Text>
-          <Text
-            testID={testIdWithKey('CredentialName')}
-            style={[
-              TextTheme.normal,
-              styles.textContainer,
-              {
-                lineHeight: 24,
-              },
-            ]}
-          >
-            {overlay.metaOverlay?.name}
-          </Text>
-        </View>
-      </View>
-    )
-  }
-
-  const CredentialDetailSecondaryHeader: React.FC = () => {
-    return (
-      <>
-        {overlay.brandingOverlay?.backgroundImage ? (
-          <ImageBackground
-            source={toImageSource(overlay.brandingOverlay?.backgroundImage)}
-            imageStyle={{
-              resizeMode: 'cover',
-            }}
-          >
-            <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer} />
-          </ImageBackground>
-        ) : (
-          <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer} />
-        )}
-      </>
-    )
-  }
-
   const header = () => {
     if (!credentialDisplay) return null
 
     return (
       <View style={styles.container}>
-        <CredentialDetailSecondaryHeader />
-        <CredentialCardLogo />
-        <CredentialDetailPrimaryHeader />
+        <CredentialDetailSecondaryHeader overlay={overlay} />
+        <CredentialCardLogo overlay={overlay} />
+        <CredentialDetailPrimaryHeader overlay={overlay} />
       </View>
     )
   }
 
   const footer = () => {
     if (!credentialDisplay) return null
-    const paddingHorizontal = 24
-    const paddingVertical = 16
     return (
       <View style={{ marginBottom: 50 }}>
         <View
