@@ -297,7 +297,7 @@ Array [
           }
         />
         <View
-          accessibilityLabel="Scan.Torch"
+          accessibilityLabel="Scan.TorchOff"
           accessibilityRole="button"
           accessibilityState={
             Object {
