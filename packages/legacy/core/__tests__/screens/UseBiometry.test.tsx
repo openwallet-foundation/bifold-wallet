@@ -13,8 +13,8 @@ import { StoreProvider } from '../../App/contexts/store'
 import { RESULTS, check, request } from 'react-native-permissions'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
-const mockedCheck = check as jest.MockedFunction<typeof check>;
-const mockedRequest = request as jest.MockedFunction<typeof request>;
+const mockedCheck = check as jest.MockedFunction<typeof check>
+const mockedRequest = request as jest.MockedFunction<typeof request>
 
 jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
 
@@ -22,14 +22,14 @@ const customStore = {
   ...testDefaultState,
   preferences: {
     ...testDefaultState.preferences,
-    useBiometry: false
+    useBiometry: false,
   },
 }
 
 describe('UseBiometry Screen', () => {
   beforeAll(() => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(global.console, 'error').mockImplementation(() => { })
+    jest.spyOn(global.console, 'error').mockImplementation(() => {})
   })
 
   beforeEach(() => {
@@ -110,7 +110,7 @@ describe('UseBiometry Screen', () => {
       const { getByTestId } = render(
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry/>
+            <UseBiometry />
           </AuthContext.Provider>
         </BasicAppContext>
       )
@@ -141,17 +141,17 @@ describe('UseBiometry Screen', () => {
       // and biometric is not available
       customStore.preferences.useBiometry = true
       authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(false)
-      
+
       const { getByTestId } = render(
         <StoreProvider initialState={customStore}>
           <BasicAppContext>
             <AuthContext.Provider value={authContext}>
-              <UseBiometry/>
+              <UseBiometry />
             </AuthContext.Provider>
           </BasicAppContext>
         </StoreProvider>
       )
-      
+
       const toggleButton = getByTestId(testIdWithKey('ToggleBiometrics'))
 
       await waitFor(() => {
@@ -168,7 +168,7 @@ describe('UseBiometry Screen', () => {
         <StoreProvider initialState={customStore}>
           <BasicAppContext>
             <AuthContext.Provider value={authContext}>
-              <UseBiometry/>
+              <UseBiometry />
             </AuthContext.Provider>
           </BasicAppContext>
         </StoreProvider>
@@ -190,7 +190,7 @@ describe('UseBiometry Screen', () => {
         <StoreProvider initialState={customStore}>
           <BasicAppContext>
             <AuthContext.Provider value={authContext}>
-              <UseBiometry/>
+              <UseBiometry />
             </AuthContext.Provider>
           </BasicAppContext>
         </StoreProvider>
@@ -215,7 +215,7 @@ describe('UseBiometry Screen', () => {
         <StoreProvider initialState={customStore}>
           <BasicAppContext>
             <AuthContext.Provider value={authContext}>
-              <UseBiometry/>
+              <UseBiometry />
             </AuthContext.Provider>
           </BasicAppContext>
         </StoreProvider>
@@ -241,7 +241,7 @@ describe('UseBiometry Screen', () => {
         <StoreProvider initialState={customStore}>
           <BasicAppContext>
             <AuthContext.Provider value={authContext}>
-              <UseBiometry/>
+              <UseBiometry />
             </AuthContext.Provider>
           </BasicAppContext>
         </StoreProvider>
@@ -292,7 +292,7 @@ describe('UseBiometry Screen', () => {
         <StoreProvider initialState={customStore}>
           <BasicAppContext>
             <AuthContext.Provider value={authContext}>
-              <UseBiometry/>
+              <UseBiometry />
             </AuthContext.Provider>
           </BasicAppContext>
         </StoreProvider>

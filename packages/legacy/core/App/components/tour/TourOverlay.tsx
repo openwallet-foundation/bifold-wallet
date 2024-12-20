@@ -85,7 +85,11 @@ export const TourOverlay = (props: TourOverlayProps) => {
   }, [windowWidth, windowHeight])
 
   return currentStep !== undefined ? (
-    <View style={{ position: 'absolute', top: 0, left: 0, height: windowHeight + 1, width: windowWidth + 1 }} testID={testIdWithKey('SpotlightOverlay')}>
+    <View
+      accessibilityViewIsModal
+      style={{ position: 'absolute', top: 0, left: 0, height: windowHeight + 1, width: windowWidth + 1 }}
+      testID={testIdWithKey('SpotlightOverlay')}
+    >
       <Svg
         testID={testIdWithKey('SpotOverlay')}
         height={windowHeight + 1}

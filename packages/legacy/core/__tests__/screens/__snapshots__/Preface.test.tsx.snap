@@ -89,10 +89,11 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
           >
             <View
               accessibilityLabel="Terms.IAgree"
+              accessibilityRole="checkbox"
               accessibilityState={
                 Object {
                   "busy": undefined,
-                  "checked": undefined,
+                  "checked": true,
                   "disabled": undefined,
                   "expanded": undefined,
                   "selected": undefined,
@@ -345,10 +346,11 @@ exports[`Preface Screen Renders correctly 1`] = `
           >
             <View
               accessibilityLabel="Terms.IAgree"
+              accessibilityRole="checkbox"
               accessibilityState={
                 Object {
                   "busy": undefined,
-                  "checked": undefined,
+                  "checked": false,
                   "disabled": undefined,
                   "expanded": undefined,
                   "selected": undefined,

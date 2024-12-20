@@ -223,6 +223,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           {message && !showDetails && (showDetailsInfo ?? true) && (
             <TouchableOpacity
               accessibilityLabel={t('Global.ShowDetails')}
+              accessibilityRole="button"
               testID={testIdWithKey('ShowDetails')}
               style={{ marginVertical: 14 }}
               onPress={onShowDetailsTouched}
@@ -263,7 +264,10 @@ const InfoBox: React.FC<InfoBoxProps> = ({
             </View>
           )}
           {showVersionFooter ? (
-            <Text style={[TextTheme.caption, { flex: 1, marginTop: 8, textAlign: 'center' }]} testID={testIdWithKey('VersionNumber')}>
+            <Text
+              style={[TextTheme.caption, { flex: 1, marginTop: 8, textAlign: 'center' }]}
+              testID={testIdWithKey('VersionNumber')}
+            >
               {`${t('Settings.Version')} ${getVersion()} (${getBuildNumber()})`}
             </Text>
           ) : null}

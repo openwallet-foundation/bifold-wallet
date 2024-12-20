@@ -377,6 +377,8 @@ Array [
       </View>
     </View>
     <View
+      accessibilityRole="tablist"
+      accessible={true}
       style={
         Object {
           "backgroundColor": "#313132",
@@ -396,6 +398,7 @@ Array [
     >
       <View
         accessibilityLabel="Scan.ScanQRCode"
+        accessibilityRole="tab"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -457,6 +460,7 @@ Array [
       </View>
       <View
         accessibilityLabel="Scan.MyQRCode"
+        accessibilityRole="tab"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -744,6 +748,8 @@ Array [
       </View>
     </RCTScrollView>
     <View
+      accessibilityRole="tablist"
+      accessible={true}
       style={
         Object {
           "backgroundColor": "#313132",
@@ -763,6 +769,7 @@ Array [
     >
       <View
         accessibilityLabel="Scan.ScanQRCode"
+        accessibilityRole="tab"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -824,6 +831,7 @@ Array [
       </View>
       <View
         accessibilityLabel="Scan.MyQRCode"
+        accessibilityRole="tab"
         accessibilityState={
           Object {
             "busy": undefined,

@@ -153,6 +153,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
           return (
             <View style={styles.pageMargin}>
               <TouchableOpacity
+                accessibilityRole="button"
                 testID={testIdWithKey(`select:${item.credId}`)}
                 onPress={() => changeCred(item.credId ?? '')}
                 style={[item.credId === selectedCred ? styles.selectedCred : undefined, { marginBottom: 10 }]}

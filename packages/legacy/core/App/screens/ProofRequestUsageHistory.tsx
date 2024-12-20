@@ -98,6 +98,7 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
       onPress={onDetails}
       disabled={!presentationReceived}
       accessibilityLabel={t('Screens.ProofDetails')}
+      accessibilityRole="button"
       testID={testIdWithKey('ProofDetails')}
     >
       <View style={style.leftContainer}>
