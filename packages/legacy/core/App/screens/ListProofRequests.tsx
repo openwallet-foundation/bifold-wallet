@@ -83,6 +83,7 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
       style={style.card}
       onPress={() => navigation.navigate(Screens.ProofRequestDetails, { templateId: template.id, connectionId })}
       accessibilityLabel={t('Screens.ProofRequestDetails')}
+      accessibilityRole="button"
       testID={testIdWithKey('ProofRequestsCard')}
     >
       <View style={style.textContainer}>

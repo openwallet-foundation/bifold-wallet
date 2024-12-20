@@ -108,6 +108,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="ContactDetails.AContact"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -244,6 +245,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="ContactDetails.AContact"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -380,6 +382,7 @@ exports[`ListContacts Screen Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="ContactDetails.AContact"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "busy": undefined,

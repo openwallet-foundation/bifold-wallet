@@ -46,6 +46,8 @@ const CheckBoxRow: React.FC<Props> = ({
       <TouchableOpacity
         accessible={accessible}
         accessibilityLabel={accessibilityLabel}
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked }}
         testID={testID}
         onPress={onPress}
         hitSlop={hitSlop}
