@@ -185,20 +185,20 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
       await this.saveFileToLocalStorage(filePath, JSON.stringify(this.templateData))
     } catch (error) {
       this.log?.error(`Failed to fetch remote file index ${filePath}`)
-    } finally {
-      if (remoteFetchSucceeded) {
-        return
-      }
-
-      const data = await this.loadFileFromLocalStorage(filePath)
-      if (!data) {
-        this.log?.error(`Failed to load index file ${filePath} from cache`)
-        return
-      }
-
-      this.log?.info(`Using index file ${filePath} from cache`)
-      this.templateData = JSON.parse(data)
     }
+
+    if (remoteFetchSucceeded) {
+      return
+    }
+
+    const data = await this.loadFileFromLocalStorage(filePath)
+    if (!data) {
+      this.log?.error(`Failed to load index file ${filePath} from cache`)
+      return
+    }
+
+    this.log?.info(`Using index file ${filePath} from cache`)
+    this.templateData = JSON.parse(data)
   }
 }
 
