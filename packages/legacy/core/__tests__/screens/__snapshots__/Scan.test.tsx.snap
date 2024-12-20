@@ -30,6 +30,7 @@ exports[`Scan Screen Renders correctly 1`] = `
       style={
         Object {
           "height": "33%",
+          "objectFit": "contain",
           "width": "33%",
         }
       }

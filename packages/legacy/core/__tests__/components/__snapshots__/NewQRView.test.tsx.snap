@@ -585,6 +585,7 @@ Array [
                 style={
                   Object {
                     "height": "33%",
+                    "objectFit": "contain",
                     "width": "33%",
                   }
                 }
