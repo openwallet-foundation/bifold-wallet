@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { TOKENS, useServices } from '../container-api'
 import { templateBundleStorageDirectory, templateCacheDataFileName, templateBundleIndexFileName } from '../constants'
 import { BifoldLogger } from '../services/logger'
-import { FileCache, CacheDataFile } from './fileCache'
+import { FileCache } from './fileCache'
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
