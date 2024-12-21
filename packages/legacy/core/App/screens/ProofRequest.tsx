@@ -128,11 +128,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
 
-  const hasMatchingCredDef = useMemo(
-    () => activeCreds.some((cred) => cred.credExchangeRecord !== undefined),
-    [activeCreds]
-  )
-
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -355,16 +350,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           .map((fullCredential: CredentialExchangeRecord) => getCredentialDefinitionIdForRecord(fullCredential))
           .filter((id) => id !== null)
       )
-
       activeCreds.forEach((cred) => {
         const isMissing = !schemaIds.has(cred.schemaId ?? '') && !credDefIds.has(cred.credDefId ?? '')
         const isUserCredential = schemaIds.has(cred.schemaId ?? '') || credDefIds.has(cred.credDefId ?? '')
 
-        if (isMissing) {
+        if (isMissing && !cred.credExchangeRecord) {
           missingCredentials.push(cred)
         }
 
-        if (isUserCredential) {
+        if (isUserCredential || cred.credExchangeRecord) {
           userCredentials.push(cred)
         }
       })
@@ -831,29 +825,27 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         <View style={styles.pageContent}>
           {proofPageHeader()}
           {/* This list will render if any credentials in a proof request are not in the users wallet */}
-          {!hasAvailableCredentials && (
-            <CredentialList
-              header={
-                missingCredentials.length > 0 && userCredentials.length > 0
-                  ? credentialListHeader(t('ProofRequest.MissingCredentials'))
-                  : undefined
-              }
-              items={missingCredentials}
-              missing={true}
-              footer={
-                hasMatchingCredDef ? (
-                  <View
-                    style={{
-                      width: 'auto',
-                      borderWidth: 1,
-                      borderColor: ColorPallet.grayscale.lightGrey,
-                      marginTop: 20,
-                    }}
-                  />
-                ) : undefined
-              }
-            />
-          )}
+          <CredentialList
+            header={
+              missingCredentials.length > 0 && userCredentials.length > 0
+                ? credentialListHeader(t('ProofRequest.MissingCredentials'))
+                : undefined
+            }
+            items={missingCredentials}
+            missing={true}
+            footer={
+              missingCredentials.length > 0 && userCredentials.length > 0 ? (
+                <View
+                  style={{
+                    width: 'auto',
+                    borderWidth: 1,
+                    borderColor: ColorPallet.grayscale.lightGrey,
+                    marginTop: 20,
+                  }}
+                />
+              ) : undefined
+            }
+          />
           <CredentialList
             header={
               missingCredentials.length > 0 && userCredentials.length > 0
