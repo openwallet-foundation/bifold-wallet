@@ -10,13 +10,16 @@ import { CredentialStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
-import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
+import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
 
 const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const [CredentialListHeaderRight, ScreenOptionsDictionary] = useServices([TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, TOKENS.OBJECT_SCREEN_CONFIG])
+  const [CredentialListHeaderRight, ScreenOptionsDictionary] = useServices([
+    TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT,
+    TOKENS.OBJECT_SCREEN_CONFIG,
+  ])
   const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
@@ -28,7 +31,7 @@ const CredentialStack: React.FC = () => {
           title: t('Screens.Credentials'),
           headerRight: () => <CredentialListHeaderRight />,
           headerLeft: () => <SettingsMenu />,
-          ...ScreenOptionsDictionary[Screens.Credentials]
+          ...ScreenOptionsDictionary[Screens.Credentials],
         })}
       />
       <Stack.Screen
@@ -36,7 +39,7 @@ const CredentialStack: React.FC = () => {
         component={CredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          ...ScreenOptionsDictionary[Screens.CredentialDetails]
+          ...ScreenOptionsDictionary[Screens.CredentialDetails],
         }}
       />
       <Stack.Screen
@@ -44,7 +47,7 @@ const CredentialStack: React.FC = () => {
         component={OpenIDCredentialDetails}
         options={{
           title: t('Screens.CredentialDetails'),
-          ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails]
+          ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails],
         }}
       />
     </Stack.Navigator>
