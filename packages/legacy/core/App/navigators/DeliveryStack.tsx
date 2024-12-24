@@ -10,9 +10,9 @@ import ProofRequest from '../screens/ProofRequest'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
-import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialOffer'
 import OpenIDProofPresentation from '../modules/openid/screens/OpenIDProofPresentation'
 import { TOKENS, useServices } from '../container-api'
+import OpenIDCredentialOffer from '../modules/openid/screens/OpenIDCredentialOffer'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
@@ -31,19 +31,16 @@ const DeliveryStack: React.FC = () => {
         presentation: 'modal',
         headerLeft: () => null,
         headerRight: () => <HeaderRightHome />,
-        ...ScreenOptionsDictionary[Screens.Connection]
+        ...ScreenOptionsDictionary[Screens.Connection],
       }}
     >
-      <Stack.Screen
-        name={Screens.Connection}
-        component={Connection}
-        options={{...defaultStackOptions }} />
+      <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={{
           title: t('Screens.ProofRequest'),
-          ...ScreenOptionsDictionary[Screens.ProofRequest]
+          ...ScreenOptionsDictionary[Screens.ProofRequest],
         }}
       />
       <Stack.Screen
@@ -51,15 +48,15 @@ const DeliveryStack: React.FC = () => {
         component={CredentialOffer}
         options={{
           title: t('Screens.CredentialOffer'),
-          ...ScreenOptionsDictionary[Screens.CredentialOffer]
+          ...ScreenOptionsDictionary[Screens.CredentialOffer],
         }}
       />
       <Stack.Screen
-        name={Screens.OpenIDCredentialDetails}
-        component={OpenIDCredentialDetails}
+        name={Screens.OpenIDCredentialOffer}
+        component={OpenIDCredentialOffer}
         options={{
           title: t('Screens.CredentialOffer'),
-          ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails]
+          ...ScreenOptionsDictionary[Screens.OpenIDCredentialOffer],
         }}
       />
       <Stack.Screen
@@ -67,7 +64,7 @@ const DeliveryStack: React.FC = () => {
         component={OpenIDProofPresentation}
         options={{
           title: t('Screens.ProofRequest'),
-          ...ScreenOptionsDictionary[Screens.OpenIDProofPresentation]
+          ...ScreenOptionsDictionary[Screens.OpenIDProofPresentation],
         }}
       />
     </Stack.Navigator>
