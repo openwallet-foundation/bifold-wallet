@@ -86,6 +86,6 @@ export const hitSlop = { top: 44, bottom: 44, left: 44, right: 44 }
 
 export const templateBundleStorageDirectory = 'templates'
 
-export const templateCacheDataFileName = 'proof-templates.json'
+export const templateCacheDataFileName = 'index.json'
 
 export const templateBundleIndexFileName = 'proof-templates.json'

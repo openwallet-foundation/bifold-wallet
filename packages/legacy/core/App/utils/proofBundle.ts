@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { TOKENS, useServices } from '../container-api'
 import { templateBundleStorageDirectory, templateCacheDataFileName, templateBundleIndexFileName } from '../constants'
 import { BifoldLogger } from '../services/logger'
-import { FileCache, CacheDataFile } from './fileCache'
+import { FileCache } from './fileCache'
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
@@ -99,7 +99,7 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
   private cacheDataFileName = templateCacheDataFileName
 
   public constructor(indexFileBaseUrl: string, log?: BifoldLogger) {
-    super(indexFileBaseUrl, templateBundleStorageDirectory, templateBundleIndexFileName, log)
+    super(indexFileBaseUrl, templateBundleStorageDirectory, templateCacheDataFileName, log)
   }
 
   public async resolve(acceptDevRestrictions: boolean): Promise<ProofRequestTemplate[] | undefined> {
@@ -154,10 +154,11 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
     }
 
     this.log?.info('Loading index now')
-    await this.loadBundleIndex(this.cacheDataFileName)
+    await this.loadBundleIndex(templateBundleIndexFileName)
   }
 
   private loadBundleIndex = async (filePath: string) => {
+    let remoteFetchSucceeded = false
     try {
       const response = await this.axiosInstance.get(filePath)
       const { status } = response
@@ -165,18 +166,11 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
 
       if (status !== 200) {
         this.log?.error(`Failed to fetch remote resource at ${filePath}`)
-        // failed to fetch, use the cached index file
-        // if available
-        const data = await this.loadFileFromLocalStorage(filePath)
-        if (data) {
-          this.log?.info(`Using index file ${filePath} from cache`)
-          this.templateData = JSON.parse(data)
-        }
 
-        return
+        throw new Error('Failed to fetch remote resource')
       }
 
-      if (etag && etag === this.fileEtag) {
+      if (etag && this.compareWeakEtags(this.fileEtag, etag)) {
         this.log?.info(`Index file ${filePath} has not changed, etag ${etag}`)
         // etag is the same, no need to refresh
         this.templateData = response.data
@@ -186,28 +180,25 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
 
       this.fileEtag = etag
       this.templateData = response.data
+      remoteFetchSucceeded = true
 
-      this.log?.info(`Saving file ${filePath}, etag ${etag}`)
       await this.saveFileToLocalStorage(filePath, JSON.stringify(this.templateData))
     } catch (error) {
-      this.log?.error(`Failed to fetch file index ${filePath}`)
+      this.log?.error(`Failed to fetch remote file index ${filePath}`)
     }
-  }
 
-  private loadCacheData = async (): Promise<CacheDataFile | undefined> => {
-    const cacheFileExists = await this.checkFileExists(this.cacheDataFileName)
-    if (!cacheFileExists) {
+    if (remoteFetchSucceeded) {
       return
     }
 
-    const data = await this.loadFileFromLocalStorage(this.cacheDataFileName)
+    const data = await this.loadFileFromLocalStorage(filePath)
     if (!data) {
+      this.log?.error(`Failed to load index file ${filePath} from cache`)
       return
     }
 
-    const cacheData: CacheDataFile = JSON.parse(data)
-
-    return cacheData
+    this.log?.info(`Using index file ${filePath} from cache`)
+    this.templateData = JSON.parse(data)
   }
 }
 

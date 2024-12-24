@@ -43,6 +43,21 @@ export class FileCache {
     return this._fileEtag || ''
   }
 
+  protected loadCacheData = async (): Promise<CacheDataFile | undefined> => {
+    const cacheFileExists = await this.checkFileExists(this.cacheFileName)
+    if (!cacheFileExists) {
+      return
+    }
+
+    const data = await this.loadFileFromLocalStorage(this.cacheFileName)
+    if (!data) {
+      return
+    }
+
+    const cacheData: CacheDataFile = JSON.parse(data)
+    return cacheData
+  }
+
   protected saveCacheData = async (cacheData: CacheDataFile): Promise<boolean> => {
     const cacheDataAsString = JSON.stringify(cacheData)
 
@@ -118,5 +133,20 @@ export class FileCache {
     }
 
     return false
+  }
+
+  protected stripWeakEtag = (etag: string): string => {
+    if (etag.startsWith('W/')) {
+      return etag.slice(2).replace(/"/g, '')
+    }
+
+    return etag.replace(/"/g, '')
+  }
+
+  protected compareWeakEtags = (etag1: string, etag2: string): boolean => {
+    const cleanEtag1 = this.stripWeakEtag(etag1)
+    const cleanEtag2 = this.stripWeakEtag(etag2)
+
+    return cleanEtag1 === cleanEtag2
   }
 }
