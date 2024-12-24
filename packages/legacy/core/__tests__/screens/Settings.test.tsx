@@ -1,12 +1,16 @@
 import { useNavigation } from '@react-navigation/native'
 import { render } from '@testing-library/react-native'
 import React from 'react'
+import { container } from 'tsyringe'
 
 import { StoreContext } from '../../App'
 import Settings from '../../App/screens/Settings'
 import { testIdWithKey } from '../../App/utils/testable'
 import { testDefaultState } from '../contexts/store'
 import { BasicAppContext } from '../helpers/app'
+import { CustomBasicAppContext } from '../helpers/app'
+import { TOKENS } from '../../App/container-api'
+import { MainContainer } from '../../App/container-impl'
 
 describe('Settings Screen', () => {
   beforeEach(() => {
@@ -126,5 +130,37 @@ describe('Settings Screen', () => {
     )
     const proofButton = tree.getByTestId(testIdWithKey('ProofRequests'))
     expect(proofButton).not.toBeNull()
+  })
+
+  test('If disableContactsInSettings is true, the Contacts section is not shown', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+        walletName: 'My Wallet',
+      },
+    }
+
+    const context = new MainContainer(container.createChildContainer()).init()
+    const config = context.resolve(TOKENS.CONFIG)
+    context.container.registerInstance(TOKENS.CONFIG, { ...config, disableContactsInSettings: true})
+
+    const tree = render(
+      <StoreContext.Provider
+        value={[
+          customState,
+          () => {
+            return
+          },
+        ]}
+      >
+        <CustomBasicAppContext container={context}>
+          <Settings navigation={useNavigation()} route={{} as any} />
+        </CustomBasicAppContext>
+      </StoreContext.Provider>
+    )
+    const contactsSection = tree.queryByTestId(testIdWithKey('Contacts'))
+    expect(contactsSection).toBeNull()
   })
 })
