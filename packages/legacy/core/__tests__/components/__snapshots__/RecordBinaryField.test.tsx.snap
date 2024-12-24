@@ -4,6 +4,7 @@ exports[`RecordBinaryField Component Base64 render field value as image 1`] = `
 <View>
   <View
     accessibilityLabel="Record.Zoom"
+    accessibilityRole="imagebutton"
     accessibilityState={
       Object {
         "busy": undefined,

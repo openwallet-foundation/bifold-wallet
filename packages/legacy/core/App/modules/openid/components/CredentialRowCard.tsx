@@ -46,7 +46,12 @@ export function OpenIDCredentialRowCard({ name, issuer, bgColor, bgImage, txtCol
   //
   return (
     <View style={style.container}>
-      <TouchableOpacity onPress={onPress} style={style.rowContainer}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={style.rowContainer}
+        accessibilityLabel={name}
+        accessibilityRole="button"
+      >
         <View style={[style.issuerBadge, bgColor ? { backgroundColor: bgColor } : {}]}>
           {bgImage ? <Image style={style.imageStyle} source={{ uri: bgImage }} resizeMode="cover" /> : null}
         </View>

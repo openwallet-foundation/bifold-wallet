@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Pressable, Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '../../contexts/theme'
+import { useTranslation } from 'react-i18next'
 
 interface ToggleButtonProps {
   isEnabled: boolean
@@ -24,6 +25,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
 }) => {
   const { ColorPallet } = useTheme()
   const [toggleAnim] = useState(new Animated.Value(isEnabled ? 1 : 0))
+  const { t } = useTranslation()
 
   useEffect(() => {
     Animated.timing(toggleAnim, {
@@ -47,7 +49,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     <Pressable
       accessible
       testID={testID}
-      accessibilityLabel="Toggle Button"
+      accessibilityLabel={isEnabled ? t('Biometry.On') : t('Biometry.Off')}
       accessibilityRole="switch"
       accessibilityState={{
         checked: isEnabled,

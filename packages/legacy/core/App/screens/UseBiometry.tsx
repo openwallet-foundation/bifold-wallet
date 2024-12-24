@@ -283,7 +283,7 @@ const UseBiometry: React.FC = () => {
         {biometryAvailable ? (
           <View>
             <Text style={TextTheme.normal}>{t('Biometry.EnabledText1')}</Text>
-            <Text></Text>
+            <Text accessible={false}></Text>
             <Text style={TextTheme.normal}>
               {t('Biometry.EnabledText2')}
               <Text style={TextTheme.bold}> {t('Biometry.Warning')}</Text>
@@ -292,7 +292,7 @@ const UseBiometry: React.FC = () => {
         ) : (
           <View>
             <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText1')}</Text>
-            <Text></Text>
+            <Text accessible={false}></Text>
             <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
           </View>
         )}
