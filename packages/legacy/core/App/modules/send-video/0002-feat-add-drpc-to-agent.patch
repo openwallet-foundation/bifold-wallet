@@ -1,14 +1,27 @@
-From de67cce90a65c5d554ade816917914c79d0dea28 Mon Sep 17 00:00:00 2001
+From 6ca35449fa3ce7dee50c38a84810d6357f176149 Mon Sep 17 00:00:00 2001
 From: "Jason C. Leach" <jason.leach@fullboar.ca>
 Date: Thu, 21 Nov 2024 10:56:25 -0800
 Subject: [PATCH] feat: add drpc to agent
 
 Signed-off-by: Jason C. Leach <jason.leach@fullboar.ca>
 ---
+ packages/legacy/app/package.json        | 1 +
  packages/legacy/core/App/utils/agent.ts | 2 ++
  packages/legacy/core/package.json       | 1 +
- 2 files changed, 3 insertions(+)
+ 3 files changed, 4 insertions(+)
 
+diff --git a/packages/legacy/app/package.json b/packages/legacy/app/package.json
+index cf0f9ab1..f45b2b09 100644
+--- a/packages/legacy/app/package.json
++++ b/packages/legacy/app/package.json
+@@ -17,6 +17,7 @@
+     "@credo-ts/anoncreds": "0.5.11",
+     "@credo-ts/askar": "0.5.11",
+     "@credo-ts/core": "0.5.11",
++    "@credo-ts/drpc": "^0.5.11",
+     "@credo-ts/indy-sdk-to-askar-migration": "0.5.11",
+     "@credo-ts/indy-vdr": "0.5.11",
+     "@credo-ts/openid4vc": "0.5.11",
 diff --git a/packages/legacy/core/App/utils/agent.ts b/packages/legacy/core/App/utils/agent.ts
 index b81dc97a..37dac62f 100644
 --- a/packages/legacy/core/App/utils/agent.ts
@@ -30,7 +43,7 @@ index b81dc97a..37dac62f 100644
  }
  
 diff --git a/packages/legacy/core/package.json b/packages/legacy/core/package.json
-index 1827b5db..9028f53a 100644
+index dedee02c..ea8484c7 100644
 --- a/packages/legacy/core/package.json
 +++ b/packages/legacy/core/package.json
 @@ -42,6 +42,7 @@
