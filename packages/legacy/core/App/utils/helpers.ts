@@ -1200,7 +1200,7 @@ export function getProofEventRole(record: ProofExchangeRecord) {
     case ProofState.PresentationReceived:
       return Role.them
     case ProofState.RequestReceived:
-      return Role.me
+      return Role.them
     case ProofState.ProposalSent:
     case ProofState.PresentationSent:
       return Role.me
