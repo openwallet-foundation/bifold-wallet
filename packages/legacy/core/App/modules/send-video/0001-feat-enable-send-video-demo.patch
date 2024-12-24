@@ -1,4 +1,4 @@
-From 43db5bf9b9c10bc3193daca17ca67fd44d038dd8 Mon Sep 17 00:00:00 2001
+From 136f3da3639c89528d96ad1c9863b08ea535514a Mon Sep 17 00:00:00 2001
 From: "Jason C. Leach" <jason.leach@fullboar.ca>
 Date: Fri, 13 Dec 2024 13:38:59 -0800
 Subject: [PATCH] feat: enable send video demo
@@ -6,10 +6,11 @@ Subject: [PATCH] feat: enable send video demo
 Signed-off-by: Jason C. Leach <jason.leach@fullboar.ca>
 ---
  .../legacy/core/App/localization/index.ts     |  9 +--
- .../legacy/core/App/navigators/RootStack.tsx  | 21 ++++---
- packages/legacy/core/App/screens/Home.tsx     | 59 ++++++++++++-------
+ .../send-video/screens/VideoInstructions.tsx  |  2 +-
+ .../legacy/core/App/navigators/RootStack.tsx  | 23 ++++----
+ packages/legacy/core/App/screens/Home.tsx     | 59 +++++++++++--------
  packages/legacy/core/App/types/navigators.ts  |  1 +
- 4 files changed, 53 insertions(+), 37 deletions(-)
+ 5 files changed, 54 insertions(+), 40 deletions(-)
 
 diff --git a/packages/legacy/core/App/localization/index.ts b/packages/legacy/core/App/localization/index.ts
 index 7b557c35..0de6feb4 100644
@@ -47,8 +48,21 @@ index 7b557c35..0de6feb4 100644
    },
  }
  
+diff --git a/packages/legacy/core/App/modules/send-video/screens/VideoInstructions.tsx b/packages/legacy/core/App/modules/send-video/screens/VideoInstructions.tsx
+index cdbc10a7..308a7fe8 100644
+--- a/packages/legacy/core/App/modules/send-video/screens/VideoInstructions.tsx
++++ b/packages/legacy/core/App/modules/send-video/screens/VideoInstructions.tsx
+@@ -21,7 +21,7 @@ import { useAgent } from '@credo-ts/react-hooks'
+ type VideoInstructionsProps = StackScreenProps<SendVideoStackParams, Screens.VideoInstructions>
+ 
+ const sendVideoSvs = new SentVideoServices({
+-  sendVideoAgentInvitation: Config.VIDEO_VERIFIER_AGENT_INVITATION,
++  sendVideoAgentInvitation: Config.VIDEO_VERIFIER_AGENT_INVITATION ?? '',
+   sendVideoAPIBaseUrl: Config.VIDEO_VERIFIER_HOST ?? '',
+ })
+ 
 diff --git a/packages/legacy/core/App/navigators/RootStack.tsx b/packages/legacy/core/App/navigators/RootStack.tsx
-index 2aaee95a..880099bf 100644
+index 2aaee95a..c9fd90c4 100644
 --- a/packages/legacy/core/App/navigators/RootStack.tsx
 +++ b/packages/legacy/core/App/navigators/RootStack.tsx
 @@ -1,11 +1,7 @@
@@ -64,10 +78,12 @@ index 2aaee95a..880099bf 100644
  import React, { useEffect } from 'react'
  import { useTranslation } from 'react-i18next'
  import { DeviceEventEmitter } from 'react-native'
-@@ -18,6 +14,7 @@ import { useStore } from '../contexts/store'
+@@ -17,7 +13,8 @@ import { DispatchAction } from '../contexts/reducers/store'
+ import { useStore } from '../contexts/store'
  import { useTheme } from '../contexts/theme'
  import { useDeepLinks } from '../hooks/deep-links'
- import HistoryStack from '../modules/history/navigation/HistoryStack'
+-import HistoryStack from '../modules/history/navigation/HistoryStack'
++import HistoryStack from '../modules/history/navigators/HistoryStack'
 +import SendVideoStack from '../modules/send-video/navigators/SendVideoStack'
  import Chat from '../screens/Chat'
  import { BifoldError } from '../types/error'
@@ -101,12 +117,15 @@ index 2aaee95a..880099bf 100644
        </Stack.Navigator>
      )
 diff --git a/packages/legacy/core/App/screens/Home.tsx b/packages/legacy/core/App/screens/Home.tsx
-index ad946ed3..11ba0c6c 100644
+index ad946ed3..e90650e8 100644
 --- a/packages/legacy/core/App/screens/Home.tsx
 +++ b/packages/legacy/core/App/screens/Home.tsx
-@@ -13,6 +13,8 @@ import { useTheme } from '../contexts/theme'
+@@ -11,8 +11,10 @@ import { DispatchAction } from '../contexts/reducers/store'
+ import { useStore } from '../contexts/store'
+ import { useTheme } from '../contexts/theme'
  import { useTour } from '../contexts/tour/tour-context'
- import { HomeStackParams, Screens } from '../types/navigators'
+-import { HomeStackParams, Screens } from '../types/navigators'
++import { HomeStackParams, Screens, Stacks } from '../types/navigators'
  import { TourID } from '../types/tour'
 +import Button, { ButtonType } from '../components/buttons/Button'
 +import { useNavigation } from '@react-navigation/native'
@@ -176,16 +195,14 @@ index ad946ed3..11ba0c6c 100644
  
    useEffect(() => {
      const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
-@@ -163,6 +169,15 @@ const Home: React.FC<HomeProps> = () => {
+@@ -163,6 +169,13 @@ const Home: React.FC<HomeProps> = () => {
            onDismissPressed={onDismissPressed}
          />
        )}
 +      <View style={{ marginBottom: 100 }}>
 +        <Button
 +          title={'Verify by Video (DEMO)'}
-+          onPress={() =>
-+            navigation.getParent()?.navigate(Stacks.SendVideoStack, { screen: SendVideoScreens.VideoInstructions })
-+          }
++          onPress={() => navigation.getParent()?.navigate('Send Video', { screen: 'Instructions' })}
 +          buttonType={ButtonType.Primary}
 +        />
 +      </View>
