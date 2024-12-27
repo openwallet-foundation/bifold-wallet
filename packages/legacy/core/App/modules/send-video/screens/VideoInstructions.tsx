@@ -55,7 +55,7 @@ const VideoInstructions: React.FC<VideoInstructionsProps> = () => {
 
   const onPress = () => {
     if (session) {
-      navigation.navigate(Screens.CaptureVideo, { session: session })
+      navigation.navigate(Screens.Identification, { session: session })
     }
   }
 
@@ -167,8 +167,8 @@ const VideoInstructions: React.FC<VideoInstructionsProps> = () => {
           </View>
         </View>
         <Button
-          title={t('SendVideo.VideoInstructions.StartRecordingVideo')}
-          accessibilityLabel={t('SendVideo.VideoInstructions.StartRecordingVideo')}
+          title={t('SendVideo.VideoInstructions.Begin')}
+          accessibilityLabel={t('SendVideo.VideoInstructions.Begin')}
           testID={testIdWithKey('StartVideoRecording')}
           buttonType={ButtonType.Secondary}
           onPress={onPress}

@@ -14,12 +14,21 @@ export const ptBr = {
       "PersonAtServiceBC": "A person at Service Nova Scotia will watch the video. They need to hear and see you clearly.",
       "YouShould": "You should",
       "VideosWithInappropriateOffensive" : "Videos with inappropriate, offensive, or harrsing behavior will not be accepted.",
-      "StartRecordingVideo" : "Start Recording Video"
+      "StartRecordingVideo" : "Start Recording Video",
+      "Begin" : "Begin"
+    },
+    "Identification": {
+      "EnterIdentificationNumber": "Enter Identification Number",
+      "ClickImage": "Click Image",
+      "FrontOfCard": "Front of Card",
+      "BackOfCard": "Back of Card"
     },
     "Screens": {
       "ThankYou": "Thank You",
       "PleaseWaitWhileWeSubmitYourVideoVerification": "Please wait while we submit your video verification",
       "VideoInstructions": "Video Instructions",
+      "Identification" : "Identification",
+      "CaptureCard" : "Capture Card",
       "VerifyVideo": "Verify Video",
       "Next": "Next",
       "Done": "Done",

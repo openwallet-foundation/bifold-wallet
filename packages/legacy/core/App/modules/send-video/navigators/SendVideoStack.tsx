@@ -9,6 +9,8 @@ import { SendVideoStackParams, Screens } from '../types/navigators'
 import SubmitVideo from '../screens/SubmitVideo'
 import CaptureVideo from '../screens/CaptureVideo'
 import VideoInstructions from '../screens/VideoInstructions'
+import CaptureCard from '../screens/CaptureCard'
+import Identification from '../screens/Identification'
 
 const SendVideoStack: React.FC = () => {
   const Stack = createStackNavigator<SendVideoStackParams>()
@@ -42,6 +44,24 @@ const SendVideoStack: React.FC = () => {
         component={SubmitVideo}
         options={() => ({
           title: t('SendVideo.Screens.VerifyVideo'),
+          headerRight: () => null,
+          headerLeft: () => null,
+          header: () => null,
+        })}
+      />
+      <Stack.Screen
+        name={Screens.Identification}
+        component={Identification}
+        options={() => ({
+          title: t('SendVideo.Screens.Identification'),
+          headerRight: () => null,
+        })}
+      />
+      <Stack.Screen
+        name={Screens.CaptureCard}
+        component={CaptureCard}
+        options={() => ({
+          title: t('SendVideo.Screens.CaptureCard'),
           headerRight: () => null,
           headerLeft: () => null,
           header: () => null,

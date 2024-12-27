@@ -33,6 +33,10 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
   ])
 
   const session = route.params.session
+  const idNumber = route.params.idNumber
+  const cardFrontImage = route.params.cardFrontImage
+  const cardBackImage = route.params.cardBackImage
+
   const prompts = session.prompts.map((prompt) => prompt.text)
 
   const styles = StyleSheet.create({
@@ -119,6 +123,7 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
         startRecording()
       }, 3000)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [device])
 
   const createFileName = () => {
@@ -126,6 +131,12 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
     const videoName = `${timestamp}.mp4`
 
     return videoName
+  }
+  const createImageName = () => {
+    const timestamp = new Date().getTime()
+    const imageName = `${timestamp}.png`
+
+    return imageName
   }
 
   const submitVideo = async (path: string) => {
@@ -143,6 +154,17 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
         name: createFileName(),
       })
       formData.append('sessionId', session.id)
+      formData.append('idNumber', idNumber)
+      formData.append('front_image', {
+        uri: cardFrontImage,
+        type: 'image/png',
+        name: createImageName(),
+      })
+      formData.append('back_image', {
+        uri: cardBackImage,
+        type: 'image/png',
+        name: createImageName(),
+      })
 
       const response = await axios.post(`${Config.VIDEO_VERIFIER_HOST}/api/v1/submissions`, formData, {
         headers: {
@@ -164,6 +186,7 @@ const CaptureVideo: React.FC<StackScreenProps<SendVideoStackParams, Screens.Capt
           await submitVideo(video.path)
         },
         onRecordingError: (error) => {
+          // eslint-disable-next-line no-console
           console.error('Recording error:', error)
         },
       })

@@ -2165,6 +2165,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/drpc@npm:0.5.11":
+  version: 0.5.11
+  resolution: "@credo-ts/drpc@npm:0.5.11"
+  dependencies:
+    "@credo-ts/core": 0.5.11
+    class-transformer: ^0.5.1
+    class-validator: 0.14.1
+  checksum: 498198582aa9db5cffbd6ebf5806c5e154139a7dcf13e517d4982d6652e717c56963456cf2579a47794b802dba75eae5ae92e1cb1b2771e449c15574ea99d870
+  languageName: node
+  linkType: hard
+
 "@credo-ts/indy-sdk-to-askar-migration@npm:0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/indy-sdk-to-askar-migration@npm:0.5.11"
@@ -2219,6 +2230,19 @@ __metadata:
     class-transformer: ^0.5.1
     rxjs: ^7.8.0
   checksum: 2fc5f05890fc0d282b74d31faa9d72fd76ff951b941f1fd2e9dc819829c8859edeb8e3b1126cc086c6a8b8a24d5454f031a4a392dbdaf2e2db46556f56cd8269
+  languageName: node
+  linkType: hard
+
+"@credo-ts/push-notifications@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@credo-ts/push-notifications@npm:0.7.0"
+  dependencies:
+    class-transformer: 0.5.1
+    class-validator: 0.14.1
+    tsyringe: ^4.6.0
+  peerDependencies:
+    "@credo-ts/core": ^0.5.0
+  checksum: b4b06e2f3758a5d168d953cbddcbeddfd7473813214c42abe38d76fc52c32e76c17da54a16bb6eda9b00f472653b304d8782a5ea47c864a367d4a04599fd8d28
   languageName: node
   linkType: hard
 
@@ -2792,6 +2816,7 @@ __metadata:
     "@credo-ts/anoncreds": 0.5.11
     "@credo-ts/askar": 0.5.11
     "@credo-ts/core": 0.5.11
+    "@credo-ts/drpc": 0.5.11
     "@credo-ts/indy-sdk-to-askar-migration": 0.5.11
     "@credo-ts/indy-vdr": 0.5.11
     "@credo-ts/openid4vc": 0.5.11
@@ -6947,12 +6972,13 @@ __metadata:
     "@credo-ts/anoncreds": 0.5.11
     "@credo-ts/askar": 0.5.11
     "@credo-ts/core": 0.5.11
+    "@credo-ts/drpc": 0.5.11
     "@credo-ts/indy-sdk-to-askar-migration": 0.5.11
     "@credo-ts/indy-vdr": 0.5.11
     "@credo-ts/openid4vc": 0.5.11
-    "@credo-ts/push-notifications": ^0.7.0
+    "@credo-ts/push-notifications": 0.7.0
     "@credo-ts/question-answer": 0.5.11
-    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-hooks": 0.5.11
     "@credo-ts/react-native": 0.5.11
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
