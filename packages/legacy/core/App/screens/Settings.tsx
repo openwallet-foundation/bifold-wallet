@@ -169,7 +169,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   ]
   
   // Remove the Contact section from Setting per TOKENS.CONFIG
-  if ("true" === `${disableContactsInSettings}`) {
+  if (disableContactsInSettings) {
     settingsSections.shift();
   }
 
