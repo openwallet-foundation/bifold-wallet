@@ -37,7 +37,13 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
           }
         />
       </View>
-      <View>
+      <View
+        style={
+          Object {
+            "rowGap": 20,
+          }
+        }
+      >
         <Text
           style={
             Object {
@@ -49,9 +55,6 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
         >
           Biometry.EnabledText1
         </Text>
-        <Text
-          accessible={false}
-        />
         <Text
           style={
             Object {
@@ -334,7 +337,13 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
           }
         />
       </View>
-      <View>
+      <View
+        style={
+          Object {
+            "rowGap": 20,
+          }
+        }
+      >
         <Text
           style={
             Object {
@@ -346,9 +355,6 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
         >
           Biometry.NotEnabledText1
         </Text>
-        <Text
-          accessible={false}
-        />
         <Text
           style={
             Object {
@@ -619,7 +625,13 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
           }
         />
       </View>
-      <View>
+      <View
+        style={
+          Object {
+            "rowGap": 20,
+          }
+        }
+      >
         <Text
           style={
             Object {
@@ -631,9 +643,6 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
         >
           Biometry.EnabledText1
         </Text>
-        <Text
-          accessible={false}
-        />
         <Text
           style={
             Object {
