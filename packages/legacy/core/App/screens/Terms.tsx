@@ -20,19 +20,19 @@ export const TermsVersion = true
 
 const Terms: React.FC = () => {
   const [store, dispatch] = useStore()
-  const [checked, setChecked] = useState(false)
+  const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
+  const [checked, setChecked] = useState(agreedToPreviousTerms)
   const { t } = useTranslation()
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
   const [Button] = useServices([TOKENS.COMP_BUTTON])
-  const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
   const onSubmitPressed = useCallback(() => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,
       payload: [{ DidAgreeToTerms: TermsVersion }],
     })
 
-    if (!agreedToPreviousTerms) {
+    if (!(agreedToPreviousTerms && store.onboarding.didCreatePIN)) {
       navigation.navigate(Screens.CreatePIN)
     } else if (store.onboarding.postAuthScreens.length) {
       const screens: string[] = store.onboarding.postAuthScreens
@@ -44,7 +44,7 @@ const Terms: React.FC = () => {
         dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
       }
     }
-  }, [dispatch, agreedToPreviousTerms, navigation, store.onboarding.postAuthScreens])
+  }, [dispatch, agreedToPreviousTerms, navigation, store.onboarding.postAuthScreens, store.onboarding.didCreatePIN])
   const style = StyleSheet.create({
     container: {
       ...OnboardingTheme.container,
@@ -95,25 +95,27 @@ const Terms: React.FC = () => {
           est laborum.
         </Text>
         <View style={style.controlsContainer}>
-          {!agreedToPreviousTerms && (
-            <CheckBoxRow
-              title={t('Terms.Attestation')}
-              accessibilityLabel={t('Terms.IAgree')}
-              testID={testIdWithKey('IAgree')}
-              checked={checked}
-              onPress={() => setChecked(!checked)}
-            />
+          {!(agreedToPreviousTerms && store.authentication.didAuthenticate) && (
+            <View style={{ marginBottom: agreedToPreviousTerms ? 20 : 0 }}>
+              <CheckBoxRow
+                title={t('Terms.Attestation')}
+                accessibilityLabel={t('Terms.IAgree')}
+                testID={testIdWithKey('IAgree')}
+                checked={!!checked}
+                onPress={() => setChecked(!checked)}
+              />
+              <View style={{ paddingTop: 10 }}>
+                <Button
+                  title={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
+                  accessibilityLabel={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
+                  testID={agreedToPreviousTerms ? testIdWithKey('Accept') : testIdWithKey('Continue')}
+                  disabled={!checked}
+                  onPress={onSubmitPressed}
+                  buttonType={ButtonType.Primary}
+                />
+              </View>
+            </View>
           )}
-          <View style={{ paddingTop: 10 }}>
-            <Button
-              title={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
-              accessibilityLabel={agreedToPreviousTerms ? t('Global.Accept') : t('Global.Continue')}
-              testID={agreedToPreviousTerms ? testIdWithKey('Accept') : testIdWithKey('Continue')}
-              disabled={!checked && !agreedToPreviousTerms}
-              onPress={onSubmitPressed}
-              buttonType={ButtonType.Primary}
-            />
-          </View>
           {!agreedToPreviousTerms && (
             <View style={{ paddingTop: 10, marginBottom: 20 }}>
               <Button
