@@ -15,8 +15,7 @@ import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
 
 enum StateDispatchAction {
-  STATE_DISPATCH = 'state/stateDispatch',
-  STATE_LOADED = 'state/stateLoaded',
+  STATE_DISPATCH = 'state/stateDispatch'
 }
 
 enum OnboardingDispatchAction {
@@ -110,12 +109,9 @@ export interface ReducerAction<R> {
 
 export const reducer = <S extends State>(state: S, action: ReducerAction<DispatchAction>): S => {
   switch (action.type) {
-    case StateDispatchAction.STATE_LOADED: {
-      return { ...state, stateLoaded: true }
-    }
     case StateDispatchAction.STATE_DISPATCH: {
       const newState: State = (action?.payload || []).pop()
-      return { ...state, ...newState }
+      return { ...state, ...newState, stateLoaded: true }
     }
     case PreferencesDispatchAction.ENABLE_DEVELOPER_MODE: {
       const choice = (action?.payload ?? []).pop() ?? false

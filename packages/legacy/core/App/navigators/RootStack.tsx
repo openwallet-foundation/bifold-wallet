@@ -67,9 +67,6 @@ const RootStack: React.FC = () => {
 
   useEffect(() => {
     loadState(dispatch)
-      .then(() => {
-        dispatch({ type: DispatchAction.STATE_LOADED })
-      })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
