@@ -297,7 +297,7 @@ Array [
           }
         />
         <View
-          accessibilityLabel="Scan.Torch"
+          accessibilityLabel="Scan.TorchOff"
           accessibilityRole="button"
           accessibilityState={
             Object {
@@ -585,6 +585,7 @@ Array [
                 style={
                   Object {
                     "height": "33%",
+                    "objectFit": "contain",
                     "width": "33%",
                   }
                 }
