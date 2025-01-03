@@ -139,7 +139,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay(o => ({
+      setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
@@ -185,7 +185,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     const [showImageModal, setShowImageModal] = useState(false)
 
     useEffect(() => {
-      setValue(v => formatIfDate(item.format, v))
+      setValue((v) => formatIfDate(item.format, v))
     }, [item.format])
 
     return (
@@ -208,6 +208,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
             {isDataUrl(value) ? (
               <TouchableOpacity
                 accessibilityLabel={t('Record.Zoom')}
+                accessibilityRole="imagebutton"
                 testID={testIdWithKey('zoom')}
                 onPress={() => setShowImageModal(true)}
               >

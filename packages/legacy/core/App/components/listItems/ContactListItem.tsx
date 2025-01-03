@@ -90,6 +90,7 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
       onPress={navigateToContact}
       testID={testIdWithKey('Contact')}
       accessibilityLabel={t('ContactDetails.AContact')}
+      accessibilityRole="button"
     >
       <View style={styles.container}>
         <View style={styles.avatarContainer}>

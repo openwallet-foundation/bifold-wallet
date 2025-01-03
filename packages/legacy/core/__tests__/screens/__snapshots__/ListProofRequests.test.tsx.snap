@@ -122,6 +122,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="Screens.ProofRequestDetails"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -236,6 +237,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
       >
         <View
           accessibilityLabel="Screens.ProofRequestDetails"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "busy": undefined,

@@ -54,6 +54,7 @@ exports[`RecordField Component Shown binary field should render a binary field 1
       <View>
         <View
           accessibilityLabel="Record.Zoom"
+          accessibilityRole="imagebutton"
           accessibilityState={
             Object {
               "busy": undefined,

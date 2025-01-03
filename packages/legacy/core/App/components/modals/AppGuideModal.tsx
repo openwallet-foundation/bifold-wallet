@@ -79,7 +79,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
   })
 
   return (
-    <Modal transparent>
+    <Modal transparent accessibilityViewIsModal>
       <View style={styles.modalCenter}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
