@@ -121,6 +121,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
         {message.messageOpensCallbackType && (
           <TouchableOpacity
             accessibilityLabel={textForCallbackType(message.messageOpensCallbackType)}
+            accessibilityRole="button"
             testID={testIdForCallbackType(message.messageOpensCallbackType)}
             onPress={() => {
               if (message.onDetails) message.onDetails()

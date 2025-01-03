@@ -67,7 +67,9 @@ const Language = () => {
             <View style={[styles.section, styles.sectionRow]}>
               <Text style={TextTheme.title}>{value}</Text>
               <BouncyCheckbox
-                accessibilityLabel={value}
+                accessibilityLabel={''} // To avoid Voice Over reading the value twice (one time from the text component and another time from the BouncyCheckbox component)
+                accessibilityRole="radio"
+                accessibilityState={{ checked: id === i18n.language }}
                 disableText
                 fillColor={ColorPallet.brand.secondaryBackground}
                 unfillColor={ColorPallet.brand.secondaryBackground}
