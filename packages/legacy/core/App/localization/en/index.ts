@@ -839,7 +839,7 @@ const translation = {
     "CredentialReceived": "received a credential",
     "ProofRequestSent": "sent a proof request",
     "ProofPresentationReceived": "has sent you information",
-    "ProofRequestReceived": "received a proof request",
+    "ProofRequestReceived": "has sent you a proof request",
     "ProofRequestRejected": "rejected a proof request",
     "ProofRequestRejectReceived": "rejected a proof request",
     "ProofRequestSatisfied": "shared information",
