@@ -2,7 +2,7 @@
 
 exports[`ToggleButton Component renders correctly when disabled 1`] = `
 <View
-  accessibilityLabel="Toggle Button"
+  accessibilityLabel="Biometry.Off"
   accessibilityRole="switch"
   accessibilityState={
     Object {
@@ -95,7 +95,7 @@ exports[`ToggleButton Component renders correctly when disabled 1`] = `
 
 exports[`ToggleButton Component renders correctly when enabled 1`] = `
 <View
-  accessibilityLabel="Toggle Button"
+  accessibilityLabel="Biometry.On"
   accessibilityRole="switch"
   accessibilityState={
     Object {
@@ -188,7 +188,7 @@ exports[`ToggleButton Component renders correctly when enabled 1`] = `
 
 exports[`ToggleButton Component renders correctly when not available 1`] = `
 <View
-  accessibilityLabel="Toggle Button"
+  accessibilityLabel="Biometry.Off"
   accessibilityRole="switch"
   accessibilityState={
     Object {
