@@ -791,7 +791,7 @@ const translation = {
     "CredentialReceived": "recebeu uma credencial",
     "ProofRequestSent": "enviou uma solicitação de prova",
     "ProofPresentationReceived": "te enviou informações",
-    "ProofRequestReceived": "recebeu uma solicitação de prova",
+    "ProofRequestReceived": "has sent you a proof request (PT-BR)",
     "ProofRequestRejected": "rejeitou uma solicitação de prova",
     "ProofRequestRejectReceived": "rejeitou um pedido de prova",
     "ProofRequestSatisfied": "informações compartilhadas",

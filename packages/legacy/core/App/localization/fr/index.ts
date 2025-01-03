@@ -816,7 +816,7 @@ const translation = {
         "CredentialReceived": "reçu une attestation",
         "ProofRequestSent": "envoyé une demande d'attestation",
         "ProofPresentationReceived": "vous a envoyé des informations",
-        "ProofRequestReceived": "reçu une demande d'attestation",
+        "ProofRequestReceived": "has sent you a proof request (FR)",
         "ProofRequestRejected": "rejeté une demande d'attestation",
         "ProofRequestRejectReceived": "a rejeté une demande d'attestation",
         "ProofRequestSatisfied": "informations partagées",
