@@ -112,6 +112,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
         <View>
           <View
             accessibilityLabel="Global.ShowDetails"
+            accessibilityRole="button"
             accessibilityState={
               Object {
                 "busy": undefined,

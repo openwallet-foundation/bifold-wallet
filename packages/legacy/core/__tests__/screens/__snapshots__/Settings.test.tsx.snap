@@ -214,6 +214,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Screens.Contacts"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,
@@ -329,6 +330,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Settings.WhatAreContacts"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,
@@ -514,6 +516,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Global.Biometrics"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,
@@ -631,6 +634,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Settings.ChangePin"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,
@@ -746,6 +750,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Settings.Language"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,
@@ -863,6 +868,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Settings.AutoLockTime"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,
@@ -980,6 +986,7 @@ exports[`Settings Screen Renders correctly 1`] = `
             <View>
               <View
                 accessibilityLabel="Settings.Developer"
+                accessibilityRole="button"
                 accessibilityState={
                   Object {
                     "busy": undefined,

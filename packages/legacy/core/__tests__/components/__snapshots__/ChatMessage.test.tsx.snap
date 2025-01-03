@@ -123,7 +123,7 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
                 ]
               }
             >
-              Jan 1, 12:00 am
+              Jan 1, 2024, 12:00 am
             </Text>
           </View>
         </View>
@@ -131,6 +131,7 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.ViewOffer"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "busy": undefined,
@@ -324,7 +325,7 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
                 ]
               }
             >
-              Jan 1, 12:00 am
+              Jan 1, 2024, 12:00 am
             </Text>
           </View>
         </View>
@@ -332,6 +333,7 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.ViewRequest"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "busy": undefined,
@@ -525,7 +527,7 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
                 ]
               }
             >
-              Jan 1, 12:00 am
+              Jan 1, 2024, 12:00 am
             </Text>
           </View>
         </View>
@@ -533,6 +535,7 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.OpenPresentation"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "busy": undefined,

@@ -32,6 +32,7 @@ const ScanTab: React.FC<ScanTabProps> = ({ onPress, active, iconName, title }) =
       style={styles.container}
       onPress={onPress}
       accessibilityLabel={title}
+      accessibilityRole="tab"
       testID={testIdWithKey(title)}
     >
       <Icon name={iconName} size={30} color={styles.text.color}></Icon>

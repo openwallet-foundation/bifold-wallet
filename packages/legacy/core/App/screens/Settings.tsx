@@ -339,6 +339,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       <TouchableOpacity
         accessible={true}
         accessibilityLabel={accessibilityLabel}
+        accessibilityRole="button"
         testID={testID}
         style={styles.sectionRow}
         onPress={onPress}
