@@ -278,6 +278,8 @@ const translation = {
     },
     "Biometry": {
         "Toggle": "Basculer la biométrie",
+        "On": "Biométrie Activée",
+        "Off": "Biométrie Desactivée",
         "EnabledText1": "Déverrouiller votre portefeuille avec la biométrie de votre appareil au lieu d’utiliser le NIP du portefeuille.",
         "EnabledText2": "Toute personne qui a des données biométriques enregistrées sur cet appareil pourra déverrouiller votre portefeuille et avoir accès à vos attestations.",
         "NotEnabledText1": "La biométrie n'est pas actuellement configurée sur cet appareil et ne peut donc pas être activée.",

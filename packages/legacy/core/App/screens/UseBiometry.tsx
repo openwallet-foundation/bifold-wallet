@@ -61,6 +61,9 @@ const UseBiometry: React.FC = () => {
       minHeight: 200,
       marginBottom: 66,
     },
+    biometryAvailableRowGap: {
+      rowGap: 20,
+    },
   })
 
   useEffect(() => {
@@ -281,18 +284,16 @@ const UseBiometry: React.FC = () => {
           <Assets.svg.biometrics style={styles.image} />
         </View>
         {biometryAvailable ? (
-          <View>
+          <View style={styles.biometryAvailableRowGap}>
             <Text style={TextTheme.normal}>{t('Biometry.EnabledText1')}</Text>
-            <Text></Text>
             <Text style={TextTheme.normal}>
               {t('Biometry.EnabledText2')}
               <Text style={TextTheme.bold}> {t('Biometry.Warning')}</Text>
             </Text>
           </View>
         ) : (
-          <View>
+          <View style={styles.biometryAvailableRowGap}>
             <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText1')}</Text>
-            <Text></Text>
             <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
           </View>
         )}

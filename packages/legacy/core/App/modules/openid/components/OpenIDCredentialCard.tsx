@@ -227,6 +227,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       accessibilityLabel={`${display?.issuer.name ? `${t('Credentials.IssuedBy')} ${display?.issuer.name}` : ''}, ${t(
         'Credentials.Credential'
       )}.`}
+      accessibilityRole="button"
       disabled={typeof onPress === 'undefined' ? true : false}
       onPress={onPress}
       style={[styles.container, style]}

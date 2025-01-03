@@ -19,7 +19,7 @@ const HeaderTitle: React.FC<Props> = ({ children }) => {
   })
 
   return (
-    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
+    <Text accessibilityRole="header" numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
       {children}
     </Text>
   )

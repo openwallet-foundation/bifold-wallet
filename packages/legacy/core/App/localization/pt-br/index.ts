@@ -256,6 +256,8 @@ const translation = {
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
+    "On": "Biometria ativada",
+    "Off": "Biometria desativada",
     "EnabledText1": "Destravar a carteira utilizando a biometria de seu telefone ao invés do seu PIN.",
     "EnabledText2": "Usar a biometria significa que todas impressões digitais ou face ID adicionadas neste telefone terão acesso à sua carteira.",
     "NotEnabledText1": "Biometria não está configurada nesse dispositivo e portanto não pode ser habilitada.",

@@ -85,6 +85,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
                   key={action.text}
                   testID={testIdWithKey(action.text)}
                   accessibilityLabel={testIdWithKey(action.text)}
+                  accessibilityRole="button"
                   style={styles.drawerRow}
                   onPress={action.onPress}
                 >

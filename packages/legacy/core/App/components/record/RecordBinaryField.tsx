@@ -37,6 +37,7 @@ const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, s
           accessibilityLabel={t('Record.Zoom')}
           testID={testIdWithKey('zoom')}
           onPress={() => setShowImageModal(true)}
+          accessibilityRole="imagebutton"
         >
           <Image style={styles.image} source={{ uri: attributeValue }} />
         </TouchableOpacity>

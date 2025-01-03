@@ -327,7 +327,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
           </ScrollView>
         )}
 
-        <View style={styles.tabContainer}>
+        <View accessible={true} style={styles.tabContainer} accessibilityRole="tablist">
           <ScanTab
             title={t('Scan.ScanQRCode')}
             iconName={'crop-free'}
