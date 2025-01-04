@@ -60,6 +60,7 @@ export const defaultConfig: Config = {
   supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   showPreface: false,
   disableOnboardingSkip: false,
+  disableContactsInSettings: false,
   whereToUseWalletUrl: 'https://example.com',
   showScanHelp: true,
   showScanButton: true,
