@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { CredentialStackParams, Screens } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
-import { Edge, SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
@@ -65,6 +65,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
 
   useEffect(() => {
     if (!agent) return
+
     const fetchCredential = async () => {
       try {
         const credentialExchangeRecord = await agent.w3cCredentials.getCredentialRecordById(credentialId)
@@ -82,6 +83,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
 
   useEffect(() => {
     if (!credential) return
+
     try {
       const credDisplay = getCredentialForDisplay(credential)
       setCredentialDisplay(credDisplay)
@@ -94,11 +96,11 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   }, [credential, t])
 
   useEffect(() => {
-    const resolveOverlay = async () => {
-      if (!credentialDisplay || !bundleResolver || !i18n || !credentialDisplay.display) {
-        return
-      }
+    if (!credentialDisplay || !bundleResolver || !i18n || !credentialDisplay.display) {
+      return
+    }
 
+    const resolveOverlay = async () => {
       const resolvedOverlay = await buildOverlayFromW3cCredential({
         credentialDisplay,
         language: i18n.language,
@@ -164,10 +166,8 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     )
   }
 
-  const screenEdges: Edge[] = ['left', 'right']
-
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={screenEdges}>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
       <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         usage={ModalUsage.CredentialRemove}

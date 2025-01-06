@@ -5,13 +5,13 @@ import { ImageBackground, StyleSheet, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
-type Props = {
+type CredentialDetailSecondaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
 }
 
 const logoHeight = 80
 
-const CredentialDetailSecondaryHeader: React.FC<Props> = ({ overlay }: Props) => {
+const CredentialDetailSecondaryHeader: React.FC<CredentialDetailSecondaryHeaderProps> = ({ overlay }: CredentialDetailSecondaryHeaderProps) => {
   const styles = StyleSheet.create({
     secondaryHeaderContainer: {
       height: 1.5 * logoHeight,

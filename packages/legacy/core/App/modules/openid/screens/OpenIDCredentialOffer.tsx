@@ -50,10 +50,11 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   })
 
   useEffect(() => {
+    if (!credentialDisplay || !bundleResolver || !i18n || !credentialDisplay.display) {
+      return
+    }
+
     const resolveOverlay = async () => {
-      if (!credentialDisplay || !bundleResolver || !i18n || !credentialDisplay.display) {
-        return
-      }
       const params: OCABundleResolveAllParams = {
         identifiers: {
           schemaId: '',
@@ -102,10 +103,10 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   }
 
   const handleAcceptTouched = async () => {
+    if (!agent) {
+      return
+    }
     try {
-      if (!agent) {
-        return
-      }
       await storeCredential(credential)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
@@ -147,7 +148,6 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
         </View>
         {credential && (
           <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-            {/* <OpenIDCredentialCard credentialDisplay={display} /> */}
             <CredentialCard credential={credential} />
           </View>
         )}

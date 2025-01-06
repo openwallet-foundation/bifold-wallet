@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme'
 import { credentialTextColor } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
-type Props = {
+type CredentialDetailPrimaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
 }
 
@@ -14,7 +14,7 @@ const paddingHorizontal = 24
 const paddingVertical = 16
 const logoHeight = 80
 
-const CredentialDetailPrimaryHeader: React.FC<Props> = ({ overlay }: Props) => {
+const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps> = ({ overlay }: CredentialDetailPrimaryHeaderProps) => {
   const { TextTheme, ColorPallet } = useTheme()
   const { width, height } = useWindowDimensions()
   const styles = StyleSheet.create({
