@@ -8,9 +8,10 @@
     "packages/legacy/app"
   ],
   "repository": {
-    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native",
+    "url": "https://github.com/openwallet-foundation/bifold-wallet/",
     "type": "git"
   },
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "scripts": {
     "clean": "lerna run clean",
     "build": "lerna run build",
