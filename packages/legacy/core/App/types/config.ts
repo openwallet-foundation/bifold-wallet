@@ -35,6 +35,7 @@ export interface Config {
   contactHideList?: string[]
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
+  disableContactsInSettings?: boolean
 }
 
 export interface HistoryEventsLoggerConfig {

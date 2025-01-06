@@ -35,7 +35,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const [{ settings, enableTours, enablePushNotifications }, historyEnabled] = useServices([
+  const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
     TOKENS.CONFIG,
     TOKENS.HISTORY_ENABLED,
   ])
@@ -167,6 +167,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     ...(settings || []),
   ]
+  
+  // Remove the Contact section from Setting per TOKENS.CONFIG
+  if (disableContactsInSettings) {
+    settingsSections.shift();
+  }
 
   // add optional push notifications menu to settings
   if (enablePushNotifications) {
