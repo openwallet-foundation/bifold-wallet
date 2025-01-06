@@ -13,7 +13,6 @@ import { DeviceEventEmitter } from 'react-native'
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeepLinks } from '../hooks/deep-links'
@@ -67,9 +66,6 @@ const RootStack: React.FC = () => {
 
   useEffect(() => {
     loadState(dispatch)
-      .then(() => {
-        dispatch({ type: DispatchAction.STATE_LOADED })
-      })
       .catch((err: unknown) => {
         const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)

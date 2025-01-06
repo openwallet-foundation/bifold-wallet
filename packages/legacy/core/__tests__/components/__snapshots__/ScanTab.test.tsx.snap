@@ -3,6 +3,7 @@
 exports[`ScanTab Component Renders correctly 1`] = `
 <View
   accessibilityLabel="title"
+  accessibilityRole="tab"
   accessibilityState={
     Object {
       "busy": undefined,

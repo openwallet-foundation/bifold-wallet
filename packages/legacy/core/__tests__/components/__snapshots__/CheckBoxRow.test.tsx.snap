@@ -13,10 +13,11 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
 >
   <View
     accessibilityLabel="Hey"
+    accessibilityRole="checkbox"
     accessibilityState={
       Object {
         "busy": undefined,
-        "checked": undefined,
+        "checked": true,
         "disabled": undefined,
         "expanded": undefined,
         "selected": undefined,
