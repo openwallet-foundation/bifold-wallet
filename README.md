@@ -49,7 +49,8 @@ To better understand the technical aspects of the Bifold project including how t
 The organizations or jurisdictions listed below have either deployed a project based on Bifold, are currently assessing the technology, or are actively developing a solution. If you want your organization to be included in this list, please submit a Pull Request against this README.md.
 
 - [BC Wallet](https://apps.apple.com/us/app/bc-wallet/id1587380443)
-  The BC Wallet is a digital wallet app developed by the Government of British Columbia.
+
+The BC Wallet is a digital wallet app developed by the Government of British Columbia.
 
 [contributor-guide]: ./CONTRIBUTING
 [developers-guide]: ./DEVELOPER.md
