@@ -23,6 +23,7 @@ export interface Config {
   enableTours?: boolean
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
+  enableHiddenDevModeTrigger?: boolean
   showPreface?: boolean
   showPINExplainer?: boolean
   disableOnboardingSkip?: boolean
