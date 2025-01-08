@@ -23,6 +23,7 @@ export interface Config {
   enableTours?: boolean
   enableImplicitInvitations?: boolean
   enableReuseConnections?: boolean
+  enableHiddenDevModeTrigger?: boolean
   showPreface?: boolean
   showPINExplainer?: boolean
   disableOnboardingSkip?: boolean
@@ -35,6 +36,7 @@ export interface Config {
   contactHideList?: string[]
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
+  disableContactsInSettings?: boolean
 }
 
 export interface HistoryEventsLoggerConfig {
