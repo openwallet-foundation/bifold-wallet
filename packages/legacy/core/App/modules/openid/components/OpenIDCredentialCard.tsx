@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { CredentialDisplay, DisplayImage } from '../types'
 import { useTranslation } from 'react-i18next'
 import { GenericFn } from '../../../types/fn'
@@ -12,6 +11,7 @@ import {
   useWindowDimensions,
   View,
   ViewStyle,
+  TouchableOpacity
 } from 'react-native'
 import { testIdWithKey } from '../../../utils/testable'
 import { credentialTextColor, toImageSource } from '../../../utils/credential'
