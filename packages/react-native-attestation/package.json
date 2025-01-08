@@ -33,13 +33,17 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/hyperledger/aries-mobile-agent-react-native",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "directory": "packages/react-native-attestation"
+  },
   "author": "Jason C. Leach <jason.leach@fullboar.ca> (https://github.com/fullboar)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
+    "url": "https://github.com/openwallet-foundation/bifold-wallet/issues"
   },
-  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
