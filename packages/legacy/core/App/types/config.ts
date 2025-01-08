@@ -37,6 +37,7 @@ export interface Config {
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
   disableContactsInSettings?: boolean
+  disableFirewallCheck?: boolean
 }
 
 export interface HistoryEventsLoggerConfig {

@@ -61,6 +61,7 @@ export const defaultConfig: Config = {
   showPreface: false,
   disableOnboardingSkip: false,
   disableContactsInSettings: false,
+  disableFirewallCheck: false,
   whereToUseWalletUrl: 'https://example.com',
   showScanHelp: true,
   showScanButton: true,
