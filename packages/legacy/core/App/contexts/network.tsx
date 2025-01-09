@@ -5,6 +5,7 @@ import { createContext, useContext, useState } from 'react'
 import NetInfoModal from '../components/modals/NetInfoModal'
 import { hostnameFromURL, canConnectToHost } from '../utils/network'
 import { Config } from 'react-native-config'
+
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean
   assertNetworkConnected: () => boolean
@@ -17,7 +18,7 @@ export interface NetworkContext {
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
 
 export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const netInfo = useNetInfo({ reachabilityUrl: 'https://clients3.google.com' })
+  const netInfo = useNetInfo()
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
 
   const displayNetInfoModal = () => {
