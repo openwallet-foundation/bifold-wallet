@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "Aries Bifold Wallet App",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "directory": "packages/legacy/app"
+  },
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "scripts": {
     "android": "react-native run-android",
     "gradle": "./android/gradlew --project-dir=./android --no-daemon",

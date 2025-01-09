@@ -6,6 +6,12 @@
   "react-native": "App/index.ts",
   "source": "App/index",
   "types": "lib/typescript/App/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "directory": "packages/legacy/core"
+  },
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "bin": {
     "bifold": "bin/bifold"
   },

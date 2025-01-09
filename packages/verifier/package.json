@@ -10,6 +10,12 @@
     "src",
     "build"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "directory": "packages/verifier"
+  },
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
   "packageManager": "yarn@3.3.1",
   "scripts": {
     "build": "yarn run clean && yarn run bob build",

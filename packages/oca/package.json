@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hyperledger/aries-mobile-agent-react-native.git",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
     "directory": "packages/oca"
   },
   "publishConfig": {
@@ -28,9 +28,9 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/hyperledger/aries-mobile-agent-react-native/issues"
+    "url": "https://github.com/openwallet-foundation/bifold-wallet/issues"
   },
-  "homepage": "https://github.com/hyperledger/aries-mobile-agent-react-native#readme",
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "devDependencies": {
     "@testing-library/jest-native": "5.4.3",
     "@types/jest": "29.5.5",
