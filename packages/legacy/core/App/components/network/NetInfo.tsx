@@ -7,21 +7,21 @@ import { ToastType } from '../../components/toast/BaseToast'
 import { TOKENS, useServices } from '../../container-api'
 
 const NetInfo: React.FC = () => {
-  const { silentAssertConnectedNetwork, assertNetworkReachable } = useNetwork()
+  const { assertInternetReachable, assertMediatorReachable } = useNetwork()
   const [{ disableFirewallCheck }] = useServices([TOKENS.CONFIG])
   const { t } = useTranslation()
   const [hasShown, setHasShown] = useState(false)
 
-  const isConnected = silentAssertConnectedNetwork()
+  const isInternetReachable = true
   
   useEffect(() => {
     // Network is available, do further testing according to CFG.disableFirewallCheck
-    if (isConnected) {
+    if (isInternetReachable) {
       if (disableFirewallCheck) {
         return
       } else {
         // Assert that internet is available by try connecting the socket of configured mediator
-        assertNetworkReachable().then((status) => {
+        assertMediatorReachable().then((status) => {
           // Connected to a network, reset toast
           setHasShown(false)
           if (status) {
@@ -46,7 +46,7 @@ const NetInfo: React.FC = () => {
         text1: t('NetInfo.NoInternetConnectionTitle'),
       })
     }
-  }, [isConnected, disableFirewallCheck, assertNetworkReachable, t, hasShown])
+  }, [isInternetReachable, disableFirewallCheck, assertInternetReachable, assertMediatorReachable, t, hasShown])
 
   return null
 }

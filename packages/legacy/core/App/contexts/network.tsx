@@ -10,13 +10,14 @@ export interface NetworkContext {
   assertNetworkConnected: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertNetworkReachable: () => Promise<boolean>
+  assertInternetReachable: () => boolean
+  assertMediatorReachable: () => Promise<boolean>
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
 
 export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const netInfo = useNetInfo()
+  const netInfo = useNetInfo({ reachabilityUrl: 'https://clients3.google.com' })
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
 
   const displayNetInfoModal = () => {
@@ -28,7 +29,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
   }
 
   const silentAssertConnectedNetwork = () => {
-    return netInfo.isConnected || netInfo.type !== NetInfoStateType.none
+    return netInfo.isConnected || [NetInfoStateType.wifi, NetInfoStateType.cellular].includes(netInfo.type)
   }
 
   const assertNetworkConnected = () => {
@@ -36,11 +37,16 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     if (!isConnected) {
       displayNetInfoModal()
     }
-
     return isConnected
   }
 
-  const assertNetworkReachable = async (): Promise<boolean> => {
+  const assertInternetReachable = () => {
+    const isConnected = silentAssertConnectedNetwork();
+    // Network status should be 'isConnected' when it 'isInternetReachable' techinically.
+    return isConnected && netInfo.isInternetReachable as boolean;
+  }
+
+  const assertMediatorReachable = async (): Promise<boolean> => {
     const hostname = hostnameFromURL(Config.MEDIATOR_URL!)
 
     if (hostname === null || hostname.length === 0) {
@@ -60,7 +66,8 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
         assertNetworkConnected,
         displayNetInfoModal,
         hideNetInfoModal,
-        assertNetworkReachable,
+        assertInternetReachable,
+        assertMediatorReachable
       }}
     >
       {children}
