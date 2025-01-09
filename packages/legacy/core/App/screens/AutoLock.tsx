@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -7,16 +7,19 @@ import { testIdWithKey } from '../utils/testable'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import React from 'react'
-import { FlatList } from 'react-native-gesture-handler'
+
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../contexts/theme'
 
 type AutoLockListItem = {
   title: string
-  selected: boolean
   value: (typeof AutoLockTime)[keyof typeof AutoLockTime]
   testID: string
   onPress: (val: (typeof AutoLockTime)[keyof typeof AutoLockTime]) => void
+}
+
+type LockoutRowProps = AutoLockListItem & {
+  selected: boolean
 }
 
 const AutoLock: React.FC = () => {
@@ -56,7 +59,7 @@ const AutoLock: React.FC = () => {
     })
   }
 
-  const LockoutRow: React.FC<AutoLockListItem> = ({ title, value, selected, testID, onPress }) => (
+  const LockoutRow: React.FC<LockoutRowProps> = ({ title, value, selected, testID, onPress }) => (
     <View style={[styles.section, styles.sectionRow]}>
       <Text style={TextTheme.title}>{title}</Text>
       <Pressable
@@ -89,25 +92,25 @@ const AutoLock: React.FC = () => {
           {
             title: t('AutoLockTimes.FiveMinutes'),
             value: AutoLockTime.FiveMinutes,
-            testId: `auto-lock-time-${AutoLockTime.FiveMinutes}`,
+            testID: `auto-lock-time-${AutoLockTime.FiveMinutes}`,
             onPress: handleTimeoutChange,
           },
           {
             title: t('AutoLockTimes.ThreeMinutes'),
             value: AutoLockTime.ThreeMinutes,
-            testId: `auto-lock-time-${AutoLockTime.ThreeMinutes}`,
+            testID: `auto-lock-time-${AutoLockTime.ThreeMinutes}`,
             onPress: handleTimeoutChange,
           },
           {
             title: t('AutoLockTimes.OneMinute'),
             value: AutoLockTime.OneMinute,
-            testId: `auto-lock-time-${AutoLockTime.OneMinute}`,
+            testID: `auto-lock-time-${AutoLockTime.OneMinute}`,
             onPress: handleTimeoutChange,
           },
           {
             title: t('AutoLockTimes.Never'),
             value: AutoLockTime.Never,
-            testId: `auto-lock-time-${AutoLockTime.Never}`,
+            testID: `auto-lock-time-${AutoLockTime.Never}`,
             onPress: handleTimeoutChange,
           },
         ]}

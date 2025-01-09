@@ -295,343 +295,359 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                       ]
                     }
                   >
-                    <RNGestureHandlerButton
+                    <View
+                      accessibilityState={
+                        Object {
+                          "busy": undefined,
+                          "checked": undefined,
+                          "disabled": true,
+                          "expanded": undefined,
+                          "selected": undefined,
+                        }
+                      }
+                      accessibilityValue={
+                        Object {
+                          "max": undefined,
+                          "min": undefined,
+                          "now": undefined,
+                          "text": undefined,
+                        }
+                      }
+                      accessible={false}
                       collapsable={false}
-                      onGestureEvent={[Function]}
-                      onGestureHandlerEvent={[Function]}
-                      onGestureHandlerStateChange={[Function]}
-                      onHandlerStateChange={[Function]}
-                      rippleColor={0}
+                      focusable={false}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderRadius": 10,
+                          "opacity": 1,
+                        }
+                      }
                       testID="com.ariesbifold:id/ShowCredentialDetails"
                     >
                       <View
-                        accessible={false}
-                        collapsable={false}
-                        style={
-                          Object {
-                            "backgroundColor": "#313132",
-                            "borderRadius": 10,
-                            "opacity": 1,
-                          }
-                        }
+                        testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View
-                          testID="com.ariesbifold:id/CredentialCard"
+                          accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Credential Credentials.Credential. age, ProofRequest.PredicateLe 18"
+                          accessible={true}
+                          style={
+                            Object {
+                              "flexDirection": "row",
+                              "minHeight": 247.5,
+                            }
+                          }
                         >
                           <View
-                            accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Credential Credentials.Credential. age, ProofRequest.PredicateLe 18"
-                            accessible={true}
                             style={
-                              Object {
-                                "flexDirection": "row",
-                                "minHeight": 247.5,
-                              }
+                              Array [
+                                Object {
+                                  "backgroundColor": "#781e4b",
+                                  "borderBottomLeftRadius": 10,
+                                  "borderTopLeftRadius": 10,
+                                  "width": 90,
+                                },
+                                Object {
+                                  "backgroundColor": "#781e4b",
+                                  "overflow": "hidden",
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "#ffffff",
+                                  "borderRadius": 8,
+                                  "height": 90,
+                                  "justifyContent": "center",
+                                  "left": -52.5,
+                                  "shadowColor": "#000",
+                                  "shadowOffset": Object {
+                                    "height": 1,
+                                    "width": 1,
+                                  },
+                                  "shadowOpacity": 0.3,
+                                  "top": 37.5,
+                                  "width": 90,
+                                },
+                                Object {
+                                  "elevation": 5,
+                                },
+                              ]
                             }
                           >
-                            <View
+                            <Text
                               style={
                                 Array [
                                   Object {
-                                    "backgroundColor": "#781e4b",
-                                    "borderBottomLeftRadius": 10,
-                                    "borderTopLeftRadius": 10,
-                                    "width": 90,
+                                    "color": "#FFFFFF",
+                                    "fontSize": 18,
+                                    "fontWeight": "bold",
                                   },
                                   Object {
-                                    "backgroundColor": "#781e4b",
-                                    "overflow": "hidden",
-                                  },
-                                ]
-                              }
-                              testID="com.ariesbifold:id/CredentialCardSecondaryBody"
-                            />
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#ffffff",
-                                    "borderRadius": 8,
-                                    "height": 90,
-                                    "justifyContent": "center",
-                                    "left": -52.5,
-                                    "shadowColor": "#000",
-                                    "shadowOffset": Object {
-                                      "height": 1,
-                                      "width": 1,
-                                    },
-                                    "shadowOpacity": 0.3,
-                                    "top": 37.5,
-                                    "width": 90,
-                                  },
-                                  Object {
-                                    "elevation": 5,
+                                    "alignSelf": "center",
+                                    "color": "#000",
+                                    "fontSize": 45,
                                   },
                                 ]
                               }
                             >
-                              <Text
-                                style={
-                                  Array [
-                                    Object {
-                                      "color": "#FFFFFF",
-                                      "fontSize": 18,
-                                      "fontWeight": "bold",
-                                    },
-                                    Object {
-                                      "alignSelf": "center",
-                                      "color": "#000",
-                                      "fontSize": 45,
-                                    },
-                                  ]
-                                }
-                              >
-                                C
-                              </Text>
-                            </View>
-                            <View
-                              style={
-                                Object {
-                                  "flex": 1,
-                                  "marginLeft": -52.5,
-                                  "padding": 37.5,
-                                }
+                              C
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "flex": 1,
+                                "marginLeft": -52.5,
+                                "padding": 37.5,
                               }
-                              testID="com.ariesbifold:id/CredentialCardPrimaryBody"
-                            >
-                              <View>
-                                <View
-                                  style={
-                                    Object {
-                                      "flexDirection": "row",
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    style={
-                                      Array [
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "fontSize": 18,
-                                          "fontWeight": "bold",
-                                        },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flexShrink": 1,
-                                        },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flex": 1,
-                                          "flexWrap": "wrap",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                    testID="com.ariesbifold:id/CredentialName"
-                                  >
-                                    Credential
-                                  </Text>
-                                </View>
-                              </View>
+                            }
+                            testID="com.ariesbifold:id/CredentialCardPrimaryBody"
+                          >
+                            <View>
                               <View
                                 style={
                                   Object {
-                                    "alignItems": "center",
                                     "flexDirection": "row",
                                   }
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
-                                  selectable={false}
                                   style={
                                     Array [
                                       Object {
-                                        "color": undefined,
-                                        "fontSize": 30,
+                                        "color": "#FFFFFF",
+                                        "fontSize": 18,
+                                        "fontWeight": "bold",
                                       },
                                       Object {
-                                        "color": "#D8292F",
+                                        "color": "#FFFFFF",
+                                        "flexShrink": 1,
                                       },
                                       Object {
-                                        "fontFamily": "Material Icons",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "normal",
+                                        "color": "#FFFFFF",
+                                        "flex": 1,
+                                        "flexWrap": "wrap",
+                                        "lineHeight": 24,
                                       },
-                                      Object {},
                                     ]
                                   }
+                                  testID="com.ariesbifold:id/CredentialName"
                                 >
-                                  
+                                  Credential
                                 </Text>
-                                <Text
-                                  numberOfLines={1}
-                                  style={
-                                    Object {
-                                      "color": "#D8292F",
-                                      "fontSize": 18,
-                                      "fontWeight": "normal",
-                                    }
-                                  }
-                                  testID="com.ariesbifold:id/RevokedOrNotAvailable"
-                                >
-                                  ProofRequest.NotAvailableInYourWallet
-                                </Text>
-                              </View>
-                              <View
-                                ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
-                                data={
-                                  Array [
-                                    Object {
-                                      "credentialId": "Credential",
-                                      "encoding": undefined,
-                                      "format": undefined,
-                                      "label": undefined,
-                                      "mimeType": undefined,
-                                      "name": "age",
-                                      "nonRevoked": undefined,
-                                      "pType": "<=",
-                                      "pValue": 18,
-                                      "parameterizable": undefined,
-                                      "restrictions": undefined,
-                                      "revoked": false,
-                                      "satisfied": false,
-                                      "type": undefined,
-                                    },
-                                  ]
-                                }
-                                getItem={[Function]}
-                                getItemCount={[Function]}
-                                initialNumToRender={1}
-                                keyExtractor={[Function]}
-                                onContentSizeChange={[Function]}
-                                onLayout={[Function]}
-                                onMomentumScrollBegin={[Function]}
-                                onMomentumScrollEnd={[Function]}
-                                onScroll={[Function]}
-                                onScrollBeginDrag={[Function]}
-                                onScrollEndDrag={[Function]}
-                                removeClippedSubviews={false}
-                                renderItem={[Function]}
-                                scrollEnabled={false}
-                                scrollEventThrottle={50}
-                                stickyHeaderIndices={Array []}
-                                viewabilityConfigCallbackPairs={Array []}
-                              >
-                                <View
-                                  onFocusCapture={[Function]}
-                                  onLayout={[Function]}
-                                  style={null}
-                                >
-                                  <View
-                                    style={
-                                      Object {
-                                        "marginTop": 15,
-                                      }
-                                    }
-                                  >
-                                    <View
-                                      style={
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        allowFontScaling={false}
-                                        selectable={false}
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#D8292F",
-                                              "fontSize": 18,
-                                            },
-                                            Object {
-                                              "paddingHorizontal": 2,
-                                              "paddingTop": 2,
-                                            },
-                                            Object {
-                                              "fontFamily": "Material Icons",
-                                              "fontStyle": "normal",
-                                              "fontWeight": "normal",
-                                            },
-                                            Object {},
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeNameErrorIcon"
-                                      >
-                                        
-                                      </Text>
-                                      <Text
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "fontSize": 14,
-                                              "fontWeight": "normal",
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "flexShrink": 1,
-                                            },
-                                            Object {
-                                              "lineHeight": 19,
-                                              "opacity": 0.8,
-                                            },
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeName"
-                                      >
-                                        Age
-                                      </Text>
-                                    </View>
-                                  </View>
-                                </View>
-                                <View
-                                  onLayout={[Function]}
-                                />
                               </View>
                             </View>
                             <View
                               style={
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                }
+                              }
+                            >
+                              <Text
+                                allowFontScaling={false}
+                                selectable={false}
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": undefined,
+                                      "fontSize": 30,
+                                    },
+                                    Object {
+                                      "color": "#D8292F",
+                                    },
+                                    Object {
+                                      "fontFamily": "Material Icons",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "normal",
+                                    },
+                                    Object {},
+                                  ]
+                                }
+                              >
+                                
+                              </Text>
+                              <Text
+                                numberOfLines={1}
+                                style={
+                                  Object {
+                                    "color": "#D8292F",
+                                    "fontSize": 18,
+                                    "fontWeight": "normal",
+                                  }
+                                }
+                                testID="com.ariesbifold:id/RevokedOrNotAvailable"
+                              >
+                                ProofRequest.NotAvailableInYourWallet
+                              </Text>
+                            </View>
+                            <View
+                              ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                              data={
                                 Array [
                                   Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "rgba(0, 0, 0, 0)",
-                                    "borderBottomLeftRadius": 10,
-                                    "borderTopRightRadius": 10,
-                                    "height": 90,
-                                    "justifyContent": "center",
-                                    "width": 90,
-                                  },
-                                  Object {
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
+                                    "credentialId": "Credential",
+                                    "encoding": undefined,
+                                    "format": undefined,
+                                    "label": undefined,
+                                    "mimeType": undefined,
+                                    "name": "age",
+                                    "nonRevoked": undefined,
+                                    "pType": "<=",
+                                    "pValue": 18,
+                                    "parameterizable": undefined,
+                                    "restrictions": undefined,
+                                    "revoked": false,
+                                    "satisfied": false,
+                                    "type": undefined,
                                   },
                                 ]
                               }
-                              testID="com.ariesbifold:id/CredentialCardStatus"
+                              getItem={[Function]}
+                              getItemCount={[Function]}
+                              initialNumToRender={1}
+                              keyExtractor={[Function]}
+                              onContentSizeChange={[Function]}
+                              onLayout={[Function]}
+                              onMomentumScrollBegin={[Function]}
+                              onMomentumScrollEnd={[Function]}
+                              onScroll={[Function]}
+                              onScrollBeginDrag={[Function]}
+                              onScrollEndDrag={[Function]}
+                              removeClippedSubviews={false}
+                              renderItem={[Function]}
+                              scrollEnabled={false}
+                              scrollEventThrottle={50}
+                              stickyHeaderIndices={Array []}
+                              viewabilityConfigCallbackPairs={Array []}
                             >
                               <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "rgba(0, 0, 0, 0)",
-                                    "borderBottomLeftRadius": 10,
-                                    "borderTopRightRadius": 10,
-                                    "height": 90,
-                                    "justifyContent": "center",
-                                    "width": 90,
+                                onFocusCapture={[Function]}
+                                onLayout={[Function]}
+                                style={null}
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "marginTop": 15,
+                                    }
                                   }
-                                }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      allowFontScaling={false}
+                                      selectable={false}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#D8292F",
+                                            "fontSize": 18,
+                                          },
+                                          Object {
+                                            "paddingHorizontal": 2,
+                                            "paddingTop": 2,
+                                          },
+                                          Object {
+                                            "fontFamily": "Material Icons",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "normal",
+                                          },
+                                          Object {},
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeNameErrorIcon"
+                                    >
+                                      
+                                    </Text>
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 14,
+                                            "fontWeight": "normal",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeName"
+                                    >
+                                      Age
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View
+                                onLayout={[Function]}
                               />
                             </View>
                           </View>
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "rgba(0, 0, 0, 0)",
+                                  "borderBottomLeftRadius": 10,
+                                  "borderTopRightRadius": 10,
+                                  "height": 90,
+                                  "justifyContent": "center",
+                                  "width": 90,
+                                },
+                                Object {
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialCardStatus"
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "rgba(0, 0, 0, 0)",
+                                  "borderBottomLeftRadius": 10,
+                                  "borderTopRightRadius": 10,
+                                  "height": 90,
+                                  "justifyContent": "center",
+                                  "width": 90,
+                                }
+                              }
+                            />
+                          </View>
                         </View>
                       </View>
-                    </RNGestureHandlerButton>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -830,416 +846,432 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                       ]
                     }
                   >
-                    <RNGestureHandlerButton
+                    <View
+                      accessibilityState={
+                        Object {
+                          "busy": undefined,
+                          "checked": undefined,
+                          "disabled": true,
+                          "expanded": undefined,
+                          "selected": undefined,
+                        }
+                      }
+                      accessibilityValue={
+                        Object {
+                          "max": undefined,
+                          "min": undefined,
+                          "now": undefined,
+                          "text": undefined,
+                        }
+                      }
+                      accessible={false}
                       collapsable={false}
-                      onGestureEvent={[Function]}
-                      onGestureHandlerEvent={[Function]}
-                      onGestureHandlerStateChange={[Function]}
-                      onHandlerStateChange={[Function]}
-                      rippleColor={0}
+                      focusable={false}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderRadius": 10,
+                          "opacity": 1,
+                        }
+                      }
                       testID="com.ariesbifold:id/ShowCredentialDetails"
                     >
                       <View
-                        accessible={false}
-                        collapsable={false}
-                        style={
-                          Object {
-                            "backgroundColor": "#313132",
-                            "borderRadius": 10,
-                            "opacity": 1,
-                          }
-                        }
+                        testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View
-                          testID="com.ariesbifold:id/CredentialCard"
+                          accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Latest Credentials.Credential. email, test@email.com, time, 2022-02-11 20:00:18.180718"
+                          accessible={true}
+                          style={
+                            Object {
+                              "flexDirection": "row",
+                              "minHeight": 247.5,
+                            }
+                          }
                         >
                           <View
-                            accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Latest Credentials.Credential. email, test@email.com, time, 2022-02-11 20:00:18.180718"
-                            accessible={true}
                             style={
-                              Object {
-                                "flexDirection": "row",
-                                "minHeight": 247.5,
-                              }
+                              Array [
+                                Object {
+                                  "backgroundColor": "#5f0f7b",
+                                  "borderBottomLeftRadius": 10,
+                                  "borderTopLeftRadius": 10,
+                                  "width": 90,
+                                },
+                                Object {
+                                  "backgroundColor": "#5f0f7b",
+                                  "overflow": "hidden",
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+                          />
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "#ffffff",
+                                  "borderRadius": 8,
+                                  "height": 90,
+                                  "justifyContent": "center",
+                                  "left": -52.5,
+                                  "shadowColor": "#000",
+                                  "shadowOffset": Object {
+                                    "height": 1,
+                                    "width": 1,
+                                  },
+                                  "shadowOpacity": 0.3,
+                                  "top": 37.5,
+                                  "width": 90,
+                                },
+                                Object {
+                                  "elevation": 5,
+                                },
+                              ]
                             }
                           >
-                            <View
+                            <Text
                               style={
                                 Array [
                                   Object {
-                                    "backgroundColor": "#5f0f7b",
-                                    "borderBottomLeftRadius": 10,
-                                    "borderTopLeftRadius": 10,
-                                    "width": 90,
+                                    "color": "#FFFFFF",
+                                    "fontSize": 18,
+                                    "fontWeight": "bold",
                                   },
                                   Object {
-                                    "backgroundColor": "#5f0f7b",
-                                    "overflow": "hidden",
-                                  },
-                                ]
-                              }
-                              testID="com.ariesbifold:id/CredentialCardSecondaryBody"
-                            />
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "#ffffff",
-                                    "borderRadius": 8,
-                                    "height": 90,
-                                    "justifyContent": "center",
-                                    "left": -52.5,
-                                    "shadowColor": "#000",
-                                    "shadowOffset": Object {
-                                      "height": 1,
-                                      "width": 1,
-                                    },
-                                    "shadowOpacity": 0.3,
-                                    "top": 37.5,
-                                    "width": 90,
-                                  },
-                                  Object {
-                                    "elevation": 5,
+                                    "alignSelf": "center",
+                                    "color": "#000",
+                                    "fontSize": 45,
                                   },
                                 ]
                               }
                             >
-                              <Text
+                              L
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "flex": 1,
+                                "marginLeft": -52.5,
+                                "padding": 37.5,
+                              }
+                            }
+                            testID="com.ariesbifold:id/CredentialCardPrimaryBody"
+                          >
+                            <View>
+                              <View
                                 style={
-                                  Array [
-                                    Object {
-                                      "color": "#FFFFFF",
-                                      "fontSize": 18,
-                                      "fontWeight": "bold",
-                                    },
-                                    Object {
-                                      "alignSelf": "center",
-                                      "color": "#000",
-                                      "fontSize": 45,
-                                    },
-                                  ]
+                                  Object {
+                                    "flexDirection": "row",
+                                  }
                                 }
                               >
-                                L
-                              </Text>
+                                <Text
+                                  style={
+                                    Array [
+                                      Object {
+                                        "color": "#FFFFFF",
+                                        "fontSize": 18,
+                                        "fontWeight": "bold",
+                                      },
+                                      Object {
+                                        "color": "#FFFFFF",
+                                        "flexShrink": 1,
+                                      },
+                                      Object {
+                                        "color": "#FFFFFF",
+                                        "flex": 1,
+                                        "flexWrap": "wrap",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                  testID="com.ariesbifold:id/CredentialName"
+                                >
+                                  Latest
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
                                 Object {
-                                  "flex": 1,
-                                  "marginLeft": -52.5,
-                                  "padding": 37.5,
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
                                 }
                               }
-                              testID="com.ariesbifold:id/CredentialCardPrimaryBody"
-                            >
-                              <View>
-                                <View
-                                  style={
-                                    Object {
-                                      "flexDirection": "row",
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    style={
-                                      Array [
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "fontSize": 18,
-                                          "fontWeight": "bold",
-                                        },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flexShrink": 1,
-                                        },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flex": 1,
-                                          "flexWrap": "wrap",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                    testID="com.ariesbifold:id/CredentialName"
-                                  >
-                                    Latest
-                                  </Text>
-                                </View>
-                              </View>
-                              <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                  }
-                                }
-                              />
-                              <View
-                                ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
-                                data={
-                                  Array [
-                                    Attribute {
-                                      "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
-                                      "encoding": undefined,
-                                      "format": undefined,
-                                      "hasError": undefined,
-                                      "label": undefined,
-                                      "mimeType": undefined,
-                                      "name": "email",
-                                      "nonRevoked": undefined,
-                                      "restrictions": Array [
-                                        Object {
-                                          "cred_def_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/CLAIM_DEF/462230/latest",
-                                          "schema_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/SCHEMA/Identity Schemaaf92af92-524d-41b6-bee8-00fb45e8eb6c/1.0.0",
-                                        },
-                                      ],
-                                      "revealed": undefined,
-                                      "revoked": false,
-                                      "type": undefined,
-                                      "value": "test@email.com",
-                                    },
-                                    Attribute {
-                                      "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
-                                      "encoding": undefined,
-                                      "format": undefined,
-                                      "hasError": undefined,
-                                      "label": undefined,
-                                      "mimeType": undefined,
-                                      "name": "time",
-                                      "nonRevoked": undefined,
-                                      "restrictions": Array [
-                                        Object {
-                                          "cred_def_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/CLAIM_DEF/462230/latest",
-                                          "schema_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/SCHEMA/Identity Schemaaf92af92-524d-41b6-bee8-00fb45e8eb6c/1.0.0",
-                                        },
-                                      ],
-                                      "revealed": undefined,
-                                      "revoked": false,
-                                      "type": undefined,
-                                      "value": "2022-02-11 20:00:18.180718",
-                                    },
-                                  ]
-                                }
-                                getItem={[Function]}
-                                getItemCount={[Function]}
-                                initialNumToRender={2}
-                                keyExtractor={[Function]}
-                                onContentSizeChange={[Function]}
-                                onLayout={[Function]}
-                                onMomentumScrollBegin={[Function]}
-                                onMomentumScrollEnd={[Function]}
-                                onScroll={[Function]}
-                                onScrollBeginDrag={[Function]}
-                                onScrollEndDrag={[Function]}
-                                removeClippedSubviews={false}
-                                renderItem={[Function]}
-                                scrollEnabled={false}
-                                scrollEventThrottle={50}
-                                stickyHeaderIndices={Array []}
-                                viewabilityConfigCallbackPairs={Array []}
-                              >
-                                <View
-                                  onFocusCapture={[Function]}
-                                  onLayout={[Function]}
-                                  style={null}
-                                >
-                                  <View
-                                    style={
-                                      Object {
-                                        "marginTop": 15,
-                                      }
-                                    }
-                                  >
-                                    <View
-                                      style={
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "fontSize": 14,
-                                              "fontWeight": "normal",
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "flexShrink": 1,
-                                            },
-                                            Object {
-                                              "lineHeight": 19,
-                                              "opacity": 0.8,
-                                            },
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeName"
-                                      >
-                                        Email
-                                      </Text>
-                                    </View>
-                                    <View
-                                      style={
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "fontSize": 18,
-                                              "fontWeight": "bold",
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "flexShrink": 1,
-                                            },
-                                            Object {
-                                              "lineHeight": 24,
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                            },
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeValue"
-                                      >
-                                        test@email.com
-                                      </Text>
-                                    </View>
-                                  </View>
-                                </View>
-                                <View
-                                  onFocusCapture={[Function]}
-                                  onLayout={[Function]}
-                                  style={null}
-                                >
-                                  <View
-                                    style={
-                                      Object {
-                                        "marginTop": 15,
-                                      }
-                                    }
-                                  >
-                                    <View
-                                      style={
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "fontSize": 14,
-                                              "fontWeight": "normal",
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "flexShrink": 1,
-                                            },
-                                            Object {
-                                              "lineHeight": 19,
-                                              "opacity": 0.8,
-                                            },
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeName"
-                                      >
-                                        Time
-                                      </Text>
-                                    </View>
-                                    <View
-                                      style={
-                                        Object {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        style={
-                                          Array [
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "fontSize": 18,
-                                              "fontWeight": "bold",
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                              "flexShrink": 1,
-                                            },
-                                            Object {
-                                              "lineHeight": 24,
-                                            },
-                                            Object {
-                                              "color": "#FFFFFF",
-                                            },
-                                          ]
-                                        }
-                                        testID="com.ariesbifold:id/AttributeValue"
-                                      >
-                                        2022-02-11 20:00:18.180718
-                                      </Text>
-                                    </View>
-                                  </View>
-                                </View>
-                                <View
-                                  onLayout={[Function]}
-                                />
-                              </View>
-                            </View>
+                            />
                             <View
-                              style={
+                              ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                              data={
                                 Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "rgba(0, 0, 0, 0)",
-                                    "borderBottomLeftRadius": 10,
-                                    "borderTopRightRadius": 10,
-                                    "height": 90,
-                                    "justifyContent": "center",
-                                    "width": 90,
+                                  Attribute {
+                                    "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
+                                    "encoding": undefined,
+                                    "format": undefined,
+                                    "hasError": undefined,
+                                    "label": undefined,
+                                    "mimeType": undefined,
+                                    "name": "email",
+                                    "nonRevoked": undefined,
+                                    "restrictions": Array [
+                                      Object {
+                                        "cred_def_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/CLAIM_DEF/462230/latest",
+                                        "schema_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/SCHEMA/Identity Schemaaf92af92-524d-41b6-bee8-00fb45e8eb6c/1.0.0",
+                                      },
+                                    ],
+                                    "revealed": undefined,
+                                    "revoked": false,
+                                    "type": undefined,
+                                    "value": "test@email.com",
                                   },
-                                  Object {
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
+                                  Attribute {
+                                    "credentialId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
+                                    "encoding": undefined,
+                                    "format": undefined,
+                                    "hasError": undefined,
+                                    "label": undefined,
+                                    "mimeType": undefined,
+                                    "name": "time",
+                                    "nonRevoked": undefined,
+                                    "restrictions": Array [
+                                      Object {
+                                        "cred_def_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/CLAIM_DEF/462230/latest",
+                                        "schema_id": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/SCHEMA/Identity Schemaaf92af92-524d-41b6-bee8-00fb45e8eb6c/1.0.0",
+                                      },
+                                    ],
+                                    "revealed": undefined,
+                                    "revoked": false,
+                                    "type": undefined,
+                                    "value": "2022-02-11 20:00:18.180718",
                                   },
                                 ]
                               }
-                              testID="com.ariesbifold:id/CredentialCardStatus"
+                              getItem={[Function]}
+                              getItemCount={[Function]}
+                              initialNumToRender={2}
+                              keyExtractor={[Function]}
+                              onContentSizeChange={[Function]}
+                              onLayout={[Function]}
+                              onMomentumScrollBegin={[Function]}
+                              onMomentumScrollEnd={[Function]}
+                              onScroll={[Function]}
+                              onScrollBeginDrag={[Function]}
+                              onScrollEndDrag={[Function]}
+                              removeClippedSubviews={false}
+                              renderItem={[Function]}
+                              scrollEnabled={false}
+                              scrollEventThrottle={50}
+                              stickyHeaderIndices={Array []}
+                              viewabilityConfigCallbackPairs={Array []}
                             >
                               <View
-                                style={
-                                  Object {
-                                    "alignItems": "center",
-                                    "backgroundColor": "rgba(0, 0, 0, 0)",
-                                    "borderBottomLeftRadius": 10,
-                                    "borderTopRightRadius": 10,
-                                    "height": 90,
-                                    "justifyContent": "center",
-                                    "width": 90,
+                                onFocusCapture={[Function]}
+                                onLayout={[Function]}
+                                style={null}
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "marginTop": 15,
+                                    }
                                   }
-                                }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 14,
+                                            "fontWeight": "normal",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeName"
+                                    >
+                                      Email
+                                    </Text>
+                                  </View>
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 18,
+                                            "fontWeight": "bold",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                          },
+                                          Object {
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeValue"
+                                    >
+                                      test@email.com
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View
+                                onFocusCapture={[Function]}
+                                onLayout={[Function]}
+                                style={null}
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "marginTop": 15,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 14,
+                                            "fontWeight": "normal",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeName"
+                                    >
+                                      Time
+                                    </Text>
+                                  </View>
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 18,
+                                            "fontWeight": "bold",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                          },
+                                          Object {
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeValue"
+                                    >
+                                      2022-02-11 20:00:18.180718
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View
+                                onLayout={[Function]}
                               />
                             </View>
                           </View>
+                          <View
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "rgba(0, 0, 0, 0)",
+                                  "borderBottomLeftRadius": 10,
+                                  "borderTopRightRadius": 10,
+                                  "height": 90,
+                                  "justifyContent": "center",
+                                  "width": 90,
+                                },
+                                Object {
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialCardStatus"
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "backgroundColor": "rgba(0, 0, 0, 0)",
+                                  "borderBottomLeftRadius": 10,
+                                  "borderTopRightRadius": 10,
+                                  "height": 90,
+                                  "justifyContent": "center",
+                                  "width": 90,
+                                }
+                              }
+                            />
+                          </View>
                         </View>
                       </View>
-                    </RNGestureHandlerButton>
+                    </View>
                   </View>
                 </View>
               </View>

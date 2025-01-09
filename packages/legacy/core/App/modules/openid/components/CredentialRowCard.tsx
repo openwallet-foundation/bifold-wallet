@@ -1,5 +1,4 @@
-import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Image, StyleSheet, Text, useWindowDimensions, View, TouchableOpacity } from 'react-native'
 import { useTheme } from '../../../contexts/theme'
 
 interface CredentialRowCardProps {
