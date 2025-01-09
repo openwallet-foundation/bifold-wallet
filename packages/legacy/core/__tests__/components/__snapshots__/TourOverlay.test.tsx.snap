@@ -2,6 +2,7 @@
 
 exports[`TourOverlay Component Renders properly with defaults 1`] = `
 <View
+  accessibilityViewIsModal={true}
   style={
     Object {
       "height": 1335,

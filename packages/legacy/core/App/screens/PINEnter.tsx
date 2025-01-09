@@ -1,7 +1,7 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager } from 'react-native'
+import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager, Pressable } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -50,7 +50,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  const [logger, { enableHiddenDevModeTrigger }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const developerOptionCount = useRef(0)
+  const touchCountToEnableBiometrics = 9
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
@@ -103,6 +105,20 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       marginBottom: 4,
     },
   })
+
+  const incrementDeveloperMenuCounter = useCallback(() => {
+    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
+      developerOptionCount.current = 0
+      dispatch({
+        type: DispatchAction.ENABLE_DEVELOPER_MODE,
+        payload: [true],
+      })
+      navigation.navigate(Screens.Developer as never)
+      return
+    }
+
+    developerOptionCount.current = developerOptionCount.current + 1
+  }, [dispatch, navigation])
 
   const gotoPostAuthScreens = useCallback(() => {
     if (store.onboarding.postAuthScreens.length) {
@@ -461,7 +477,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          {displayHelpText()}
+          {usage === PINEntryUsage.WalletUnlock && enableHiddenDevModeTrigger ? (
+            <Pressable onPress={incrementDeveloperMenuCounter} testID={testIdWithKey('DeveloperCounter')}>
+              {displayHelpText()}
+            </Pressable>
+          ) : (
+            displayHelpText()
+          )}
           <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
           <PINInput
             onPINChanged={(p: string) => {

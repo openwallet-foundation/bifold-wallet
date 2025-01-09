@@ -88,6 +88,7 @@ exports[`InfoBox Component Renders correctly as Error 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -342,6 +343,7 @@ exports[`InfoBox Component Renders correctly as Info 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -596,6 +598,7 @@ exports[`InfoBox Component Renders correctly as Success 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -850,6 +853,7 @@ exports[`InfoBox Component Renders correctly as Warning 1`] = `
     <View>
       <View
         accessibilityLabel="Global.ShowDetails"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,

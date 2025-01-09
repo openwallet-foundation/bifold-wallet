@@ -279,6 +279,8 @@ const translation = {
   },
   "Biometry": {
     "Toggle": "Toggle Biometrics",
+    "On": "Biomtrics On",
+    "Off": "Biometrics Off",
     "EnabledText1": "Unlock the wallet with your phone's biometrics instead of your wallet PIN.",
     "EnabledText2": "Using biometrics means that all fingerprints or face ID added on this phone will have access to your wallet.",
     "NotEnabledText1": "Biometrics is not currently setup on this device and therefore cannot be enabled.",
@@ -837,7 +839,7 @@ const translation = {
     "CredentialReceived": "received a credential",
     "ProofRequestSent": "sent a proof request",
     "ProofPresentationReceived": "has sent you information",
-    "ProofRequestReceived": "received a proof request",
+    "ProofRequestReceived": "has sent you a proof request",
     "ProofRequestRejected": "rejected a proof request",
     "ProofRequestRejectReceived": "rejected a proof request",
     "ProofRequestSatisfied": "shared information",

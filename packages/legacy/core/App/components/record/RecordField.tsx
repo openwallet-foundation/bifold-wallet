@@ -107,6 +107,7 @@ const RecordField: React.FC<RecordFieldProps> = ({
           <TouchableOpacity
             accessible={true}
             accessibilityLabel={shown ? t('Record.Hide') : t('Record.Show')}
+            accessibilityRole="button"
             testID={testIdWithKey('ShowHide')}
             activeOpacity={1}
             onPress={onToggleViewPressed}

@@ -256,6 +256,8 @@ const translation = {
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
+    "On": "Biometria ativada",
+    "Off": "Biometria desativada",
     "EnabledText1": "Destravar a carteira utilizando a biometria de seu telefone ao invés do seu PIN.",
     "EnabledText2": "Usar a biometria significa que todas impressões digitais ou face ID adicionadas neste telefone terão acesso à sua carteira.",
     "NotEnabledText1": "Biometria não está configurada nesse dispositivo e portanto não pode ser habilitada.",
@@ -789,7 +791,7 @@ const translation = {
     "CredentialReceived": "recebeu uma credencial",
     "ProofRequestSent": "enviou uma solicitação de prova",
     "ProofPresentationReceived": "te enviou informações",
-    "ProofRequestReceived": "recebeu uma solicitação de prova",
+    "ProofRequestReceived": "has sent you a proof request (PT-BR)",
     "ProofRequestRejected": "rejeitou uma solicitação de prova",
     "ProofRequestRejectReceived": "rejeitou um pedido de prova",
     "ProofRequestSatisfied": "informações compartilhadas",

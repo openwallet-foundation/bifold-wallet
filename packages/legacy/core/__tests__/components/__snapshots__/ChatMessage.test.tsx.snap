@@ -131,6 +131,7 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.ViewOffer"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "busy": undefined,
@@ -332,6 +333,7 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.ViewRequest"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "busy": undefined,
@@ -533,6 +535,7 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
     </View>
     <View
       accessibilityLabel="Chat.OpenPresentation"
+      accessibilityRole="button"
       accessibilityState={
         Object {
           "busy": undefined,
