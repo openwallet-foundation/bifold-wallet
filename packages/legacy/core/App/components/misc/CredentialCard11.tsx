@@ -15,8 +15,8 @@ import {
   View,
   ViewStyle,
   useWindowDimensions,
+  TouchableOpacity
 } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
