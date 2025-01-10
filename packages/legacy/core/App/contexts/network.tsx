@@ -43,7 +43,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
 
   const assertInternetReachable = () => {
     const isConnected = silentAssertConnectedNetwork();
-    // Network status should be 'isConnected' when it 'isInternetReachable' techinically.
+    // Network status should be 'isConnected' when it is 'isInternetReachable' techinically.
     return isConnected && netInfo.isInternetReachable as boolean;
   }
 
