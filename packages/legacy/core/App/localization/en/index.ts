@@ -87,6 +87,8 @@ const translation = {
     "code_en": "English",
     "code_fr": "French",
     "code_pt-BR": "Portuguese",
+    "Checked": "checked",
+    "NotChecked": "not checked",
   },
   "Error": {
     "ReportThisProblem": "Report this problem",
