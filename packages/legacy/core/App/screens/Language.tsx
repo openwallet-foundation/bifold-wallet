@@ -15,7 +15,7 @@ interface Language {
 }
 
 const Language = () => {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
   const [{ supportedLanguages }] = useServices([TOKENS.CONFIG])
 
@@ -67,9 +67,8 @@ const Language = () => {
             <View style={[styles.section, styles.sectionRow]}>
               <Text style={TextTheme.title}>{value}</Text>
               <BouncyCheckbox
-                accessibilityLabel={''} // To avoid Voice Over reading the value twice (one time from the text component and another time from the BouncyCheckbox component)
+                accessibilityLabel={`${id === i18n.language ? t('Language.Checked') : t('Language.NotChecked')}`} // add on voice over the text checked / not checked after the text from value above
                 accessibilityRole="radio"
-                accessibilityState={{ checked: id === i18n.language }}
                 disableText
                 fillColor={ColorPallet.brand.secondaryBackground}
                 unfillColor={ColorPallet.brand.secondaryBackground}
