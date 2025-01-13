@@ -1,26 +1,38 @@
 source 'https://cdn.cocoapods.org'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/react-native-permissions/scripts/setup'
+
+# From RNP docs here: https://www.npmjs.com/package/react-native-permissions/v/4.0.1
+def node_require(script)
+  # Resolve script with node to allow for hoisting
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
+  
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-# ⬇️ uncomment wanted permissions
+# uncomment wanted permissions (also from RNP docs linked above)
 setup_permissions([
   # 'AppTrackingTransparency',
   # 'Bluetooth',
   # 'Calendars',
   # 'CalendarsWriteOnly',
-   'Camera',
+  'Camera',
   # 'Contacts',
-   'FaceID',
+  'FaceID',
   # 'LocationAccuracy',
-   'LocationAlways',
-   'LocationWhenInUse',
+  # 'LocationAlways',
+  # 'LocationWhenInUse',
   # 'MediaLibrary',
   # 'Microphone',
   # 'Motion',
-  # 'Notifications',
+  # 'Notifications'
   # 'PhotoLibrary',
   # 'PhotoLibraryAddOnly',
   # 'Reminders',
@@ -48,6 +60,11 @@ end
 
 target 'AriesBifold' do
   config = use_native_modules!
+
+  #permissions_path = '../node_modules/react-native-permissions/ios'
+  #pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  #pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+  # use reactNativePermissionsIOS.json for permissions instead!!!
 
   # Flags change depending on the env values.
   flags = get_default_flags()
