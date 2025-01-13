@@ -254,7 +254,13 @@ const translation = {
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
     "BiometricsNotProvided": "Biometria não informada, você deve usar o PIN para carregar a carteira.",
     "BiometricsError": "Biometrics were not successful.",
-    "BiometricsErrorEnterPIN": "Please enter your wallet PIN."
+    "BiometricsErrorEnterPIN": "Please enter your wallet PIN.",
+    "AppSettingsChanged": "A configuração do aplicativo foi alterada.",
+    "AppSettingsChangedEnterPIN": "Por favor, confirme sua alteração digitando o seu PIN.",
+    "AppSettingSave": "Salvar",
+    "AppSettingCancel": "Cancelar",
+
+
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
