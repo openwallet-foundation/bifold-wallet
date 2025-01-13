@@ -1143,18 +1143,35 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               }
             >
-              <Text
+              <View
                 style={
                   Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
+                    "flex": 3,
                   }
                 }
-                testID="com.ariesbifold:id/AttributeName"
               >
-                Student First Name
-              </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                    }
+                  }
+                  testID="com.ariesbifold:id/AttributeName"
+                >
+                  Student First Name
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                  }
+                }
+              />
             </View>
             <View
               style={
@@ -1226,18 +1243,35 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               }
             >
-              <Text
+              <View
                 style={
                   Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
+                    "flex": 3,
                   }
                 }
-                testID="com.ariesbifold:id/AttributeName"
               >
-                Student Last Name
-              </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                    }
+                  }
+                  testID="com.ariesbifold:id/AttributeName"
+                >
+                  Student Last Name
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                  }
+                }
+              />
             </View>
             <View
               style={
@@ -1309,18 +1343,35 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               }
             >
-              <Text
+              <View
                 style={
                   Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
+                    "flex": 3,
                   }
                 }
-                testID="com.ariesbifold:id/AttributeName"
               >
-                Expiry Date
-              </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                    }
+                  }
+                  testID="com.ariesbifold:id/AttributeName"
+                >
+                  Expiry Date
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                  }
+                }
+              />
             </View>
             <View
               style={
