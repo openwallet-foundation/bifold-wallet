@@ -61,7 +61,9 @@ const Tours: React.FC = () => {
           const { value, bool }: Option = option
           return (
             <View style={[styles.section, styles.sectionRow]}>
-              <Text style={TextTheme.title}>{value}</Text>
+              <Text style={TextTheme.title} accessibilityRole="header">
+                {value}
+              </Text>
               <BouncyCheckbox
                 accessibilityLabel={value}
                 disableText
