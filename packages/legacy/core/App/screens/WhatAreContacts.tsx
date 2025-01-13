@@ -32,9 +32,7 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
   })
 
   const goToContactList = () => {
-    navigation
-      .getParent()
-      ?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })
+    navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts })
   }
 
   const bulletPoints = [
@@ -59,7 +57,9 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
         automaticallyAdjustContentInsets={false}
         showsHorizontalScrollIndicator={false}
       >
-        <Text style={styles.title}>{t('WhatAreContacts.Title')}</Text>
+        <Text style={styles.title} accessibilityRole="header">
+          {t('WhatAreContacts.Title')}
+        </Text>
         <Text style={TextTheme.normal}>{t('WhatAreContacts.Preamble')}</Text>
         {bulletPoints}
         <Text style={TextTheme.normal}>
