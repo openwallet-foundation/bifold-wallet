@@ -84,7 +84,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <View style={styles.headerTextContainer}>
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')} accessibilityRole="header">
                 {title}
               </Text>
             </View>
