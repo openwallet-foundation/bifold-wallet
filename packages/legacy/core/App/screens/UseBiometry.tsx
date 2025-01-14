@@ -330,8 +330,13 @@ const UseBiometry: React.FC = () => {
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
+        presentationStyle="pageSheet"
       >
-        <PINEnter usage={PINEntryUsage.PINCheck} setAuthenticated={onAuthenticationComplete} />
+        <PINEnter
+          usage={PINEntryUsage.PINCheck}
+          setAuthenticated={onAuthenticationComplete}
+          onCancelAuth={setCanSeeCheckPIN}
+        />
       </Modal>
     </SafeAreaView>
   )

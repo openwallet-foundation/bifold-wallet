@@ -30,6 +30,7 @@ import { InlineErrorType, InlineMessageProps } from '../components/inputs/Inline
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
   usage?: PINEntryUsage
+  onCancelAuth?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export enum PINEntryUsage {
@@ -37,7 +38,7 @@ export enum PINEntryUsage {
   WalletUnlock,
 }
 
-const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock }) => {
+const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock, onCancelAuth }) => {
   const { t } = useTranslation()
   const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
   const [store, dispatch] = useStore()
@@ -456,6 +457,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       )
     }
 
+    if (usage === PINEntryUsage.PINCheck) {
+      return <Text style={style.helpText}>{t('PINEnter.AppSettingChanged')}</Text>
+    }
+
     return (
       <>
         <Text style={style.title}>{t('PINEnter.Title')}</Text>
@@ -471,6 +476,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     style.subTitle,
     style.title,
     store.preferences.autoLockTime,
+    usage,
   ])
 
   return (
@@ -484,7 +490,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           ) : (
             displayHelpText()
           )}
-          <Text style={style.subText}>{t('PINEnter.EnterPIN')}</Text>
+          <Text style={style.subText}>{`${
+            usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingChangedEnterPIN') : t('PINEnter.EnterPIN')
+          }`}</Text>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
@@ -492,8 +500,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
                 Keyboard.dismiss()
               }
             }}
-            testID={testIdWithKey('EnterPIN')}
-            accessibilityLabel={t('PINEnter.EnterPIN')}
+            testID={testIdWithKey(usage === PINEntryUsage.PINCheck ? 'AppSettingChangedEnterPIN' : 'EnterPIN')}
+            accessibilityLabel={
+              usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingChangedEnterPIN') : t('PINEnter.EnterPIN')
+            }
             autoFocus={true}
             inlineMessage={inlineMessageField}
           />
@@ -501,11 +511,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         <View style={style.controlsContainer}>
           <View style={style.buttonContainer}>
             <Button
-              title={t('PINEnter.Unlock')}
+              title={usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingSave') : t('PINEnter.Unlock')}
               buttonType={ButtonType.Primary}
-              testID={testIdWithKey('Enter')}
+              testID={testIdWithKey(usage === PINEntryUsage.PINCheck ? 'AppSettingSave' : 'Enter')}
               disabled={isContinueDisabled()}
-              accessibilityLabel={t('PINEnter.Unlock')}
+              accessibilityLabel={
+                usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingSave') : t('PINEnter.Unlock')
+              }
               onPress={() => {
                 Keyboard.dismiss()
                 onPINInputCompleted(PIN)
@@ -522,13 +534,25 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
                 <Button
                   title={t('PINEnter.BiometricsUnlock')}
                   buttonType={ButtonType.Secondary}
-                  testID={testIdWithKey('Enter')}
+                  testID={testIdWithKey('BiometricsUnlock')}
                   disabled={!continueEnabled}
                   accessibilityLabel={t('PINEnter.BiometricsUnlock')}
                   onPress={loadWalletCredentials}
                 />
               </View>
             </>
+          )}
+
+          {usage === PINEntryUsage.PINCheck && (
+            <View style={[style.buttonContainer, { marginTop: 10 }]}>
+              <Button
+                title={t('PINEnter.AppSettingCancel')}
+                buttonType={ButtonType.Secondary}
+                testID={testIdWithKey('AppSettingCancel')}
+                accessibilityLabel={t('PINEnter.AppSettingCancel')}
+                onPress={() => onCancelAuth?.(false)}
+              />
+            </View>
           )}
         </View>
       </View>
