@@ -31,7 +31,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
     Animated.timing(toggleAnim, {
       toValue: isEnabled ? 1 : 0,
       duration: 200,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start()
   }, [isEnabled, toggleAnim])
 
