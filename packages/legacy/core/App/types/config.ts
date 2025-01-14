@@ -38,6 +38,7 @@ export interface Config {
   credentialHideList?: string[]
   disableContactsInSettings?: boolean
   disableFirewallCheck?: boolean
+  internetReachabilityUrls: string[]
 }
 
 export interface HistoryEventsLoggerConfig {

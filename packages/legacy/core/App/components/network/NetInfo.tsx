@@ -8,50 +8,58 @@ import { TOKENS, useServices } from '../../container-api'
 
 const NetInfo: React.FC = () => {
   const { silentAssertConnectedNetwork, assertInternetReachable, assertMediatorReachable } = useNetwork()
-  const [{ disableFirewallCheck }] = useServices([TOKENS.CONFIG])
+  const [{ disableFirewallCheck, internetReachabilityUrls }] = useServices([TOKENS.CONFIG])
   const { t } = useTranslation()
   const [hasShown, setHasShown] = useState(false)
 
-  const isInternetReachable = assertInternetReachable();
   const isConnected = silentAssertConnectedNetwork()
-  
-  useEffect(() => {
-    // Network is available, do further testing according to CFG.disableFirewallCheck
-    if (!disableFirewallCheck) {
-      // Network is connected
-      if (isConnected) {
-        // Assert that internet is available
-        assertMediatorReachable().then((status) => {
-          // Connected to a network, reset toast
-          setHasShown(false)
-          if (status) {
-            return
-          }
-  
-          // User is connected to a network but has no internet, display toast
-          Toast.show({
-            type: ToastType.Error,
-            autoHide: true,
-            text1: t('NetInfo.NoInternetConnectionMessage'),
-          })
-        })
-        return
-      }
-    } else if (isInternetReachable) {
-      return
-    }
 
-    // Only show the toast if the user hasn't seen it already
-    if (!hasShown) {
+  useEffect(() => {
+    const _showNetworkWarning = () => {
       setHasShown(true)
       Toast.show({
         type: ToastType.Error,
         autoHide: true,
-        text1: t('NetInfo.NoInternetConnectionMessage'),
+        text1: t('NetInfo.NoInternetConnectionTitle'),
       })
     }
-
-  }, [isConnected, isInternetReachable, disableFirewallCheck, assertInternetReachable, assertMediatorReachable, t, hasShown])
+    // Network is available, do further testing according to CFG.disableFirewallCheck
+    if (!disableFirewallCheck) {
+      // Network is available
+      if (isConnected) {
+        // Check mediator socket, also assert internet reachable
+        assertMediatorReachable().then((status) => {
+          if (status) {
+            return
+          } else {
+            // Network is available but cannot access nediator, display toast
+            _showNetworkWarning()
+          }
+        })
+        return
+      } else if (!hasShown) {
+        _showNetworkWarning()
+      }
+      return
+    } else {
+      // Check internetReachable by connecting test beacon urls
+      assertInternetReachable(internetReachabilityUrls).then((status) => {
+        if (hasShown || status) {
+          return
+        } else {
+          _showNetworkWarning()
+        }
+      })
+    }
+  }, [
+    isConnected,
+    disableFirewallCheck,
+    internetReachabilityUrls,
+    assertInternetReachable,
+    assertMediatorReachable,
+    t,
+    hasShown
+  ])
 
   return null
 }
