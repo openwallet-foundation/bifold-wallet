@@ -1,5 +1,5 @@
 import { ConnectionRecord, ConnectionType, DidExchangeState } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent, useConnections } from '@credo-ts/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +26,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [connections, setConnections] = useState<ConnectionRecord[]>([])
+  const {records: connectionRecords} = useConnections()
   const [store] = useStore()
   const [{ contactHideList }, ContactListItem] = useServices([TOKENS.CONFIG, TOKENS.COMPONENT_CONTACT_LIST_ITEM])
   const style = StyleSheet.create({
@@ -42,7 +43,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   useEffect(() => {
     const fetchAndSetConnections = async () => {
       if (!agent) return
-      let orderedContacts = await fetchContactsByLatestMessage(agent as BifoldAgent)
+      let orderedContacts = await fetchContactsByLatestMessage(agent as BifoldAgent, connectionRecords)
 
       // if developer mode is disabled, filter out mediator connections and connections in the hide list
       if (!store.preferences.developerModeEnabled) {
@@ -63,7 +64,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       const error = new BifoldError(t('Error.Title1046'), t('Error.Message1046'), (err as Error)?.message ?? err, 1046)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     })
-  }, [agent, store.preferences.developerModeEnabled, contactHideList, t])
+  }, [agent, connectionRecords, store.preferences.developerModeEnabled, contactHideList, t])
 
   const onPressAddContact = useCallback(() => {
     navigation.getParent()?.navigate(Stacks.ConnectStack, { screen: Screens.Scan, params: { defaultToConnect: true } })
