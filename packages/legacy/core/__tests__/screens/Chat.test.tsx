@@ -83,7 +83,7 @@ describe('Chat Screen', () => {
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({
       silentAssertConnectedNetwork: () => true,
       assertNetworkConnected: () => true,
-      assertInternetReachable: () => true,
+      assertInternetReachable: jest.fn(),
       assertMediatorReachable: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
@@ -109,7 +109,7 @@ describe('Chat screen with messages', () => {
     jest.spyOn(network, 'useNetwork').mockImplementation(() => ({
       silentAssertConnectedNetwork: () => true,
       assertNetworkConnected: () => true,
-      assertInternetReachable: () => true,
+      assertInternetReachable: jest.fn(),
       assertMediatorReachable: jest.fn(),
       displayNetInfoModal: jest.fn(),
       hideNetInfoModal: jest.fn(),
