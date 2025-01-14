@@ -23,7 +23,7 @@ export class AppContainer implements Container {
 
     //This is an example of how to customize the screen layout and use custom header for wallets who wnat to hide default navigation header
     //To hide navigation header for a specific page, use headerShown: false in the screen options like this
-    /*
+    /**
     this.container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, {
       ...DefaultScreenOptionsDictionary,
       [Screens.Terms]: {
@@ -51,7 +51,7 @@ export class AppContainer implements Container {
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
-    return this._container.resolve(token) as TokenMapping[K]
+    return this._container.resolve(token)
   }
   public resolveAll<K extends keyof TokenMapping, T extends K[]>(
     tokens: [...T]

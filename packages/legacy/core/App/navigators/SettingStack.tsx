@@ -98,7 +98,6 @@ const SettingStack: React.FC = () => {
           title: t('Screens.Biometry'),
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.UseBiometry],
-          headerLeft: undefined,
         }}
       />
       <Stack.Screen
@@ -108,7 +107,6 @@ const SettingStack: React.FC = () => {
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.CreatePIN],
-          headerLeft: undefined,
         }}
       />
       <Stack.Screen
@@ -118,7 +116,6 @@ const SettingStack: React.FC = () => {
           title: t('Screens.UsePushNotifications'),
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.UsePushNotifications],
-          headerLeft: undefined,
         }}
       />
       <Stack.Screen
@@ -128,7 +125,6 @@ const SettingStack: React.FC = () => {
           title: t('Screens.Terms'),
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.Terms],
-          headerLeft: undefined,
         }}
       />
       <Stack.Screen
