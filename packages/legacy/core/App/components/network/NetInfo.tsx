@@ -8,7 +8,7 @@ import { TOKENS, useServices } from '../../container-api'
 
 const NetInfo: React.FC = () => {
   const { silentAssertConnectedNetwork, assertInternetReachable, assertMediatorReachable } = useNetwork()
-  const [{ disableFirewallCheck, internetReachabilityUrls }] = useServices([TOKENS.CONFIG])
+  const [{ disableMediatorCheck }] = useServices([TOKENS.CONFIG])
   const { t } = useTranslation()
   const [hasShown, setHasShown] = useState(false)
 
@@ -23,8 +23,8 @@ const NetInfo: React.FC = () => {
         text1: t('NetInfo.NoInternetConnectionTitle'),
       })
     }
-    // Network is available, do further testing according to CFG.disableFirewallCheck
-    if (!disableFirewallCheck) {
+    // Network is available, do further testing according to CFG.disableMediatorCheck
+    if (!disableMediatorCheck) {
       // Network is available
       if (isConnected) {
         // Check mediator socket, also assert internet reachable
@@ -43,7 +43,7 @@ const NetInfo: React.FC = () => {
       return
     } else {
       // Check internetReachable by connecting test beacon urls
-      assertInternetReachable(internetReachabilityUrls).then((status) => {
+      assertInternetReachable().then((status) => {
         if (hasShown || status) {
           return
         } else {
@@ -53,8 +53,7 @@ const NetInfo: React.FC = () => {
     }
   }, [
     isConnected,
-    disableFirewallCheck,
-    internetReachabilityUrls,
+    disableMediatorCheck,
     assertInternetReachable,
     assertMediatorReachable,
     t,
