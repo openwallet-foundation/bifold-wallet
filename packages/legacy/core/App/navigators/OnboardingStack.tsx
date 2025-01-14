@@ -117,6 +117,7 @@ const OnboardingStack: React.FC = () => {
         return {
           ...ScreenOptionsDictionary[Screens.Onboarding],
           title: t('Screens.Onboarding'),
+          headerLeft: () => false,
         }
       },
     },
@@ -125,6 +126,7 @@ const OnboardingStack: React.FC = () => {
       options: () => ({
         ...ScreenOptionsDictionary[Screens.Terms],
         title: t('Screens.Terms'),
+        headerLeft: () => false,
       }),
       component: Terms,
     },
@@ -135,6 +137,7 @@ const OnboardingStack: React.FC = () => {
       options: () => ({
         ...ScreenOptionsDictionary[Screens.CreatePIN],
         title: t('Screens.CreatePIN'),
+        headerLeft: () => false,
       }),
     },
     {
@@ -142,6 +145,7 @@ const OnboardingStack: React.FC = () => {
       options: () => ({
         ...ScreenOptionsDictionary[Screens.NameWallet],
         title: t('Screens.NameWallet'),
+        headerLeft: () => false,
       }),
       component: NameWallet,
     },
@@ -150,6 +154,7 @@ const OnboardingStack: React.FC = () => {
       options: () => ({
         ...ScreenOptionsDictionary[Screens.UseBiometry],
         title: t('Screens.Biometry'),
+        headerLeft: () => false,
       }),
       component: useBiometry,
     },
@@ -158,6 +163,7 @@ const OnboardingStack: React.FC = () => {
       options: () => ({
         ...ScreenOptionsDictionary[Screens.UsePushNotifications],
         title: t('Screens.UsePushNotifications'),
+        headerLeft: () => false,
       }),
       children: PushNotification as any,
     },
