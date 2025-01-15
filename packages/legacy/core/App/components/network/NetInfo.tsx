@@ -30,6 +30,7 @@ const NetInfo: React.FC = () => {
         // Check mediator socket, also assert internet reachable
         assertMediatorReachable().then((status) => {
           if (status) {
+            Toast.hide()
             return
           } else {
             // Network is available but cannot access nediator, display toast
@@ -44,9 +45,20 @@ const NetInfo: React.FC = () => {
     } else {
       // Check internetReachable by connecting test beacon urls
       assertInternetReachable().then((status) => {
-        if (hasShown || status) {
+        if (status) {
+          Toast.hide()
           return
-        } else {
+        } else if (null === status) {
+          // keep silent when the internet status not yet assert
+          return
+          /*
+          Toast.show({
+            type: ToastType.Info,
+            autoHide: false,
+            text1: "Checking internet reachable",
+          })
+          */
+        } else if (!hasShown) {
           _showNetworkWarning()
         }
       })
