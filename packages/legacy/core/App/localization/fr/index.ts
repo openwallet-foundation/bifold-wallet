@@ -270,7 +270,7 @@ const translation = {
         "BiometricsChangedEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
         "AttemptLockoutWarning": "Note: pour votre sécurité, la saisie d'un autre NIP incorrect verrouillera temporairement le portefeuille.",
         "AppSettingChanged": "Le paramètre de l'application a changé.",
-        "AppSettingsChangedEnterPIN": "Veuillez confirmer la modification en saisissant votre NIP.",
+        "AppSettingChangedEnterPIN": "Veuillez confirmer la modification en saisissant votre NIP.",
         "AppSettingSave": "Enregistrer",
         "AppSettingCancel": "Annuler",
 
