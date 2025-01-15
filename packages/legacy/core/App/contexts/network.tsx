@@ -43,23 +43,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const assertInternetReachable = async (_urls?: string[]): Promise<boolean> => {
-
      return netInfo.isInternetReachable as boolean
-    /*
-    // Ping internet check beacon endponits, set internetReachable to be true positive response from anyone
-    try {
-      let isReached = false;
-      await Promise.all(urls.map(async (url) => {
-        const response = await fetch(url)
-        if ("204" === `${response.status}` || "200" === `${response.status}`) {
-          isReached = true
-        }
-      }));
-      return isReached
-    } catch (error) {
-      return false
-    }
-    */
   }
 
   const assertMediatorReachable = async (): Promise<boolean> => {
