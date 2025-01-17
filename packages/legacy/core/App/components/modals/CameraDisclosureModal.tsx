@@ -80,7 +80,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
       )}
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
-          <Text style={TextTheme.modalHeadingOne} testID={testIdWithKey('AllowCameraUse')}>
+          <Text style={TextTheme.modalHeadingOne} testID={testIdWithKey('AllowCameraUse')} accessibilityRole="header">
             {t('CameraDisclosure.AllowCameraUse')}
           </Text>
           <Text style={[TextTheme.modalNormal, styles.messageText]}>{t('CameraDisclosure.CameraDisclosure')}</Text>

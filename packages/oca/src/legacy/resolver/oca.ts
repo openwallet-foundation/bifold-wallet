@@ -102,6 +102,7 @@ export interface Meta {
   alias?: string
   credName?: string
   credConnectionId?: string
+  logo?: string
 }
 
 export class OCABundle implements OCABundleType {
@@ -347,7 +348,9 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     const overlayBundle = bundle ?? defaultBundle
     const metaOverlay = overlayBundle?.metaOverlay
     const brandingOverlay = overlayBundle?.brandingOverlay
-
+    if (brandingOverlay && 'logo' in brandingOverlay) {
+      (brandingOverlay as BrandingOverlay).logo = params.meta?.logo;
+    }
     return { bundle: overlayBundle, presentationFields: fields, metaOverlay, brandingOverlay }
   }
 }

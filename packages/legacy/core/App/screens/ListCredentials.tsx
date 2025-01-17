@@ -18,7 +18,6 @@ import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
-import { OpenIDCredScreenMode } from '../modules/openid/screens/OpenIDCredentialOffer'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 
@@ -87,10 +86,7 @@ const ListCredentials: React.FC = () => {
         }
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {
-            navigation.navigate(Screens.OpenIDCredentialDetails, {
-              credential: cred,
-              screenMode: OpenIDCredScreenMode.details,
-            })
+            navigation.navigate(Screens.OpenIDCredentialDetails, { credentialId: cred.id })
           } else {
             navigation.navigate(Screens.CredentialDetails, { credentialId: cred.id })
           }

@@ -1,9 +1,31 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
 import { AnonCredsProofRequestTemplatePayloadData, CredentialSharedProofData } from '@hyperledger/aries-bifold-verifier'
-import { Attribute, Field, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import {
+  Attribute,
+  CredentialOverlay,
+  Field,
+  OCABundleResolveAllParams,
+  OCABundleResolverType,
+  Predicate,
+} from '@hyperledger/aries-oca/build/legacy'
+import { W3cCredentialDisplay } from '../modules/openid/types'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
 
 export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
+}
+
+export const buildFieldsFromW3cCredsCredential = (value: W3cCredentialDisplay): Array<Field> => {
+  return (
+    Object.entries(value.attributes).map(
+      ([key, value]) =>
+        new Attribute({
+          name: key,
+          value: value as string | number | null,
+          mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
+        })
+    ) || []
+  )
 }
 
 export const buildFieldsFromAnonCredsProofRequestTemplate = (
@@ -67,4 +89,35 @@ export const buildFieldsFromSharedAnonCredsProof = (data: CredentialSharedProofD
     )
   }
   return fields
+}
+
+export const buildOverlayFromW3cCredential = async ({
+  credentialDisplay,
+  language,
+  resolver,
+}: {
+  credentialDisplay: W3cCredentialDisplay
+  language: string
+  resolver: OCABundleResolverType
+}): Promise<CredentialOverlay<BrandingOverlay>> => {
+  const params: OCABundleResolveAllParams = {
+    identifiers: {
+      schemaId: '',
+      credentialDefinitionId: credentialDisplay.id,
+    },
+    meta: {
+      alias: credentialDisplay.display.issuer.name,
+      credConnectionId: undefined,
+      credName: credentialDisplay.display.name,
+    },
+    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
+    language,
+  }
+
+  const bundle = await resolver.resolveAllBundles(params)
+
+  return {
+    ...(bundle as CredentialOverlay<BrandingOverlay>),
+    presentationFields: buildFieldsFromW3cCredsCredential(credentialDisplay),
+  }
 }

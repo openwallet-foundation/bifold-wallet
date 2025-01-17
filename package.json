@@ -54,7 +54,7 @@
   "resolutions": {
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",
-    "react-native": "0.72.5",
+    "react-native": "0.72.17",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.24",
     "@react-navigation/core": "6.1.0",

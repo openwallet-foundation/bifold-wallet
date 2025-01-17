@@ -15,6 +15,7 @@ type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | undefined
 
 export type OpenIDCredentialContext = {
   openIdState: OpenIDCredentialRecordState
+  getCredentialById: (id: string) => Promise<W3cCredentialRecord | SdJwtVcRecord | undefined>
   storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord) => Promise<void>
   removeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord) => Promise<void>
 }
@@ -87,6 +88,11 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     }
   }
 
+  async function getCredentialById(id: string): Promise<W3cCredentialRecord | SdJwtVcRecord | undefined> {
+    checkAgent()
+    return await agent?.w3cCredentials.getCredentialRecordById(id)
+  }
+
   async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord): Promise<void> {
     checkAgent()
     if (cred instanceof W3cCredentialRecord) {
@@ -146,6 +152,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         openIdState: state,
         storeCredential: storeCredential,
         removeCredential: deleteCredential,
+        getCredentialById: getCredentialById,
       }}
     >
       {children}

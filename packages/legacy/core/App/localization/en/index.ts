@@ -87,6 +87,8 @@ const translation = {
     "code_en": "English",
     "code_fr": "French",
     "code_pt-BR": "Portuguese",
+    "Checked": "checked",
+    "NotChecked": "not checked",
   },
   "Error": {
     "ReportThisProblem": "Report this problem",
@@ -267,7 +269,11 @@ const translation = {
     "ReEnterPIN": "Re-enter your wallet PIN",
     "BiometricsChanged": "Biometrics unlock has been disabled because your device biometrics changed.",
     "BiometricsChangedEnterPIN": "Please enter your wallet PIN.",
-    "AttemptLockoutWarning": "Note: for your security, entering another incorrect PIN will temporarily lock the wallet."
+    "AttemptLockoutWarning": "Note: for your security, entering another incorrect PIN will temporarily lock the wallet.",
+    "AppSettingChanged": "The application setting has changed.",
+    "AppSettingChangedEnterPIN": "Please confirm your change by entering your wallet PIN.",
+    "AppSettingSave": "Save",
+    "AppSettingCancel": "Cancel",
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",

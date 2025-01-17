@@ -87,6 +87,8 @@ const translation = {
         "code_en": "Anglais",
         "code_fr": "Français",
         "code_pt-BR": "Portugais",
+        "Checked": "coché",
+        "NotChecked": "non coché",
     },
     "Error": {
         "ReportThisProblem": "Signaler ce problème",
@@ -266,7 +268,12 @@ const translation = {
         "ReEnterPIN": "Re-enter your wallet PIN (FR)",
         "BiometricsChanged": "Le déverrouillage avec la biométrie a été désactivé, car les données biométriques de votre appareil ont changé.",
         "BiometricsChangedEnterPIN": "Veuillez saisir le code NIP de votre portefeuille.",
-        "AttemptLockoutWarning": "Note: pour votre sécurité, la saisie d'un autre NIP incorrect verrouillera temporairement le portefeuille."
+        "AttemptLockoutWarning": "Note: pour votre sécurité, la saisie d'un autre NIP incorrect verrouillera temporairement le portefeuille.",
+        "AppSettingChanged": "Le paramètre de l'application a changé.",
+        "AppSettingChangedEnterPIN": "Veuillez confirmer la modification en saisissant votre NIP.",
+        "AppSettingSave": "Enregistrer",
+        "AppSettingCancel": "Annuler",
+
     },
     "AttemptLockout": {
         "Title": "Votre portefeuille est temporairement verrouillé",
