@@ -179,7 +179,12 @@ export function TourBox(props: TourBoxProps): ReactElement {
     >
       <View style={styles.headerContainer}>
         <View style={styles.headerTextContainer}>
-          <Text allowFontScaling={false} style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          <Text
+            allowFontScaling={false}
+            style={styles.headerText}
+            testID={testIdWithKey('HeaderText')}
+            accessibilityRole="header"
+          >
             {title}
           </Text>
         </View>

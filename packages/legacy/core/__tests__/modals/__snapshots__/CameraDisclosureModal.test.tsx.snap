@@ -31,6 +31,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
     >
       <View>
         <Text
+          accessibilityRole="header"
           style={
             Object {
               "color": "#FFFFFF",

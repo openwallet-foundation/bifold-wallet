@@ -289,6 +289,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
+    presentationStyle="pageSheet"
     style={
       Object {
         "backgroundColor": "#000000",
@@ -577,6 +578,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
+    presentationStyle="pageSheet"
     style={
       Object {
         "backgroundColor": "#000000",
@@ -918,6 +920,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
+    presentationStyle="pageSheet"
     style={
       Object {
         "backgroundColor": "#000000",

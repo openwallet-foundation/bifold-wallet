@@ -17,8 +17,7 @@ interface ConnectionWithLatestMessage {
  * @param agent - Credo agent
  * @returns ConnectionRecord[] sorted by most recent message
  */
-export const fetchContactsByLatestMessage = async (agent: BifoldAgent): Promise<ConnectionRecord[]> => {
-  const connections = await agent.connections.getAll()
+export const fetchContactsByLatestMessage = async (agent: BifoldAgent, connections: ConnectionRecord[]): Promise<ConnectionRecord[]> => {
   const connectionsWithMessages = await Promise.all<ConnectionWithMessages>(
     connections.map(
       async (conn: ConnectionRecord): Promise<ConnectionWithMessages> => ({

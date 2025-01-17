@@ -19,18 +19,35 @@ exports[`RecordField Component Shown binary field should render a binary field 1
       }
     }
   >
-    <Text
+    <View
       style={
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "bold",
+          "flex": 3,
         }
       }
-      testID="com.ariesbifold:id/AttributeName"
     >
-      Test
-    </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "bold",
+          }
+        }
+        testID="com.ariesbifold:id/AttributeName"
+      >
+        Test
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    />
   </View>
   <View
     style={
@@ -142,18 +159,35 @@ exports[`RecordField Component Shown date field should render a date field 1`] =
       }
     }
   >
-    <Text
+    <View
       style={
         Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "bold",
+          "flex": 3,
         }
       }
-      testID="com.ariesbifold:id/AttributeName"
     >
-      Test
-    </Text>
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "bold",
+          }
+        }
+        testID="com.ariesbifold:id/AttributeName"
+      >
+        Test
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        }
+      }
+    />
   </View>
   <View
     style={
