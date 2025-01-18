@@ -1,4 +1,4 @@
-import { PINValidationRules } from '../types/security'
+import { PINValidationRules, PINNumberRepeatingTimes } from '../types/security'
 
 const consecutiveSeriesOfThree = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/)
 const evenNumberSeries = new RegExp('(13579)')
@@ -10,7 +10,9 @@ export enum PINError {
   CrossPatternValidation = 'CrossPatternValidation',
   OddOrEvenSequenceValidation = 'OddOrEvenSequenceValidation',
   NoRepetitionOfTheSameNumbersValidation = 'NoRepetitionOfTheSameNumbersValidation',
-  NoRepetitionOfTheTwoSameNumbersValidation = 'NoRepetitionOfTheTwoSameNumbersValidation',
+  NoRepetitionMoreThanTwoTimesValidation = 'NoRepetitionMoreThanTwoTimesValidation',
+  NoRepetitionMoreThanThreeTimesValidation = 'NoRepetitionMoreThanThreeTimesValidation',
+  NoRepetitionMoreThanFourTimesValidation = 'NoRepetitionMoreThanFourTimesValidation',
   NoSeriesOfNumbersValidation = 'NoSeriesOfNumbersValidation',
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
   PINTooShortValidation = 'PINTooShortValidation',
@@ -37,27 +39,26 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
     } as PINValidationsType)
   }
   if (PINRules.no_repeated_numbers) {
-    let noRepeatedNumbers = new RegExp(/(\d)\1{1,}/)
-    if (typeof PINRules.no_repeated_numbers === 'number') {
-      noRepeatedNumbers = new RegExp(`(\\d)\\1{${PINRules.no_repeated_numbers - 1},}`)
-    }
+    const noRepeatedNumbers =
+      PINNumberRepeatingTimes.TwoTimes === PINRules.no_repeated_numbers
+      ? new RegExp(/(\d)\1{2,}/)
+      : PINNumberRepeatingTimes.ThreeTimes === PINRules.no_repeated_numbers
+      ? new RegExp(/(\d)\1{3,}/)
+      : PINNumberRepeatingTimes.FourTimes === PINRules.no_repeated_numbers
+      ? new RegExp(/(\d)\1{4,}/)
+      : new RegExp(/(\d)\1{1,}/)
     PINValidations.push({
       isInvalid: noRepeatedNumbers.test(PIN),
-      errorName: PINError.NoRepetitionOfTheSameNumbersValidation,
+      errorName: PINNumberRepeatingTimes.TwoTimes === PINRules.no_repeated_numbers
+                ? PINError.NoRepetitionMoreThanTwoTimesValidation
+                : PINNumberRepeatingTimes.ThreeTimes === PINRules.no_repeated_numbers
+                ? PINError.NoRepetitionMoreThanThreeTimesValidation
+                : PINNumberRepeatingTimes.FourTimes === PINRules.no_repeated_numbers
+                ? PINError.NoRepetitionMoreThanFourTimesValidation
+                : PINError.NoRepetitionOfTheSameNumbersValidation
     } as PINValidationsType)
   }
-  if (PINRules.no_repetition_of_the_two_same_numbers) {
-    let noRepetitionOfTheTwoSameNumbers = new RegExp(/([0-9][0-9])\1{1,}/)
-    if (typeof PINRules.no_repetition_of_the_two_same_numbers === 'number') {
-      noRepetitionOfTheTwoSameNumbers = new RegExp(
-        `([0-9][0-9])\\1{${PINRules.no_repetition_of_the_two_same_numbers - 1},}`
-      )
-    }
-    PINValidations.push({
-      isInvalid: noRepetitionOfTheTwoSameNumbers.test(PIN),
-      errorName: PINError.NoRepetitionOfTheTwoSameNumbersValidation,
-    } as PINValidationsType)
-  }
+ 
   if (PINRules.no_series_of_numbers) {
     PINValidations.push({
       isInvalid: consecutiveSeriesOfThree.test(PIN),

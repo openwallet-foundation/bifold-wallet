@@ -205,7 +205,9 @@ const translation = {
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
-            "NoRepetitionOfTheTwoSameNumbersValidation": "Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
+            "NoRepetitionMoreThanTwoTimesValidation": "More than 2 adjacent numbers are repeated in your PIN. Please try again. (FR)",
+            "NoRepetitionMoreThanThreeTimesValidation": "More than 3 adjacent numbers are repeated in your PIN. Please try again. (FR)",
+            "NoRepetitionMoreThanFourTimesValidation": "More than 4 adjacent numbers are repeated in your PIN. Please try again. (FR)",
             "NoRepetitionOfTheSameNumbersValidation": "Votre NIP contient une répétition. Choisissez un NIP différent.",
             "NoSeriesOfNumbersValidation": "Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
             "PINOnlyContainDigitsValidation": "Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.",
@@ -215,7 +217,9 @@ const translation = {
         "Helper": {
             "CrossPatternValidation": "Ne doit pas contenir un patron de croix.",
             "OddOrEvenSequenceValidation": "Ne doit pas contenir une suite paire ou impaire.",
-            "NoRepetitionOfTheTwoSameNumbersValidation": "Ne doit pas contenir deux chiffres qui se répètent.",
+            "NoRepetitionMoreThanTwoTimesValidation": "Maximum 2 adjacent numbers repeating are allowed in your PIN. (FR)",
+            "NoRepetitionMoreThanThreeTimesValidation": "Maximum 3 adjacent numbers repeating are allowed in your PIN. (FR)",
+            "NoRepetitionMoreThanFourTimesValidation": "Maximum 4 adjacent numbers repeating are allowed in your PIN. (FR)",
             "NoRepetitionOfTheSameNumbersValidation": "Ne doit pas contenir de répétition.",
             "NoSeriesOfNumbersValidation": "Ne doit pas contenir de suite (123).",
             "PINOnlyContainDigitsValidation": "Doit contenir que des chiffres.",
