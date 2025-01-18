@@ -23,8 +23,8 @@ export enum PINNumberRepeatingTimes {
 }
 
 /*
-  no_repeated_numbers: false, // no repeatition check;
-  no_repeated_numbers: true, // no repeatition allowed;
+  no_repeated_numbers: false,                   // no repetition check;
+  no_repeated_numbers: true,                    // no repetition allowed;
   no_repeated_numbers: PINNumberRepeatingTimes, // check the max repeating times;
 */
 export interface PINValidationRules {
