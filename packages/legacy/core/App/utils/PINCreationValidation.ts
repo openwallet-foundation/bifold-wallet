@@ -11,8 +11,6 @@ const maxRepetition = (select: PINNumberRepeatingTimes | boolean) => {
     return new RegExp(/(\d)\1{2,}/)
   } else if (PINNumberRepeatingTimes.ThreeTimes === select) {
     return new RegExp(/(\d)\1{3,}/)
-  } else if (PINNumberRepeatingTimes.FourTimes === select) {
-    return new RegExp(/(\d)\1{4,}/)
   } else {
     return new RegExp(/(\d)\1{1,}/)
   }
@@ -22,8 +20,6 @@ const repetitionErrorMessage = (select: PINNumberRepeatingTimes | boolean) => {
     return PINError.NoRepetitionMoreThanTwoTimesValidation
   } else if (PINNumberRepeatingTimes.ThreeTimes === select) {
     return PINError.NoRepetitionMoreThanThreeTimesValidation
-  } else if (PINNumberRepeatingTimes.FourTimes === select) {
-    return PINError.NoRepetitionMoreThanFourTimesValidation
   } else {
     return PINError.NoRepetitionOfTheSameNumbersValidation
   }
@@ -35,7 +31,7 @@ export enum PINError {
   NoRepetitionOfTheSameNumbersValidation = 'NoRepetitionOfTheSameNumbersValidation',
   NoRepetitionMoreThanTwoTimesValidation = 'NoRepetitionMoreThanTwoTimesValidation',
   NoRepetitionMoreThanThreeTimesValidation = 'NoRepetitionMoreThanThreeTimesValidation',
-  NoRepetitionMoreThanFourTimesValidation = 'NoRepetitionMoreThanFourTimesValidation',
+  NoRepetitionOfTheTwoSameNumbersValidation = 'NoRepetitionOfTheTwoSameNumbersValidation',
   NoSeriesOfNumbersValidation = 'NoSeriesOfNumbersValidation',
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
   PINTooShortValidation = 'PINTooShortValidation',
@@ -66,6 +62,19 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
     PINValidations.push({
       isInvalid: noRepeatedNumbers.test(PIN),
       errorName: repetitionErrorMessage(PINRules.no_repeated_numbers)
+    } as PINValidationsType)
+  }
+
+  if (PINRules.no_repetition_of_the_two_same_numbers) {
+    let noRepetitionOfTheTwoSameNumbers = new RegExp(/([0-9][0-9])\1{1,}/)
+    if (typeof PINRules.no_repetition_of_the_two_same_numbers === 'number') {
+      noRepetitionOfTheTwoSameNumbers = new RegExp(
+        `([0-9][0-9])\\1{${PINRules.no_repetition_of_the_two_same_numbers - 1},}`
+      )
+    }
+    PINValidations.push({
+      isInvalid: noRepetitionOfTheTwoSameNumbers.test(PIN),
+      errorName: PINError.NoRepetitionOfTheTwoSameNumbersValidation,
     } as PINValidationsType)
   }
  

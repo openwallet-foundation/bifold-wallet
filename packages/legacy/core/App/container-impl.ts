@@ -53,7 +53,10 @@ import { InlineErrorPosition } from './types/error'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
 export const defaultConfig: Config = {
-  PINSecurity: { rules: PINRules, displayHelper: false },
+  PINSecurity: {
+    rules: PINRules,
+    displayHelper: false,
+  },
   settings: [],
   enableChat: true,
   enableTours: false,
