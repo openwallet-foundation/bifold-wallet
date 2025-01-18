@@ -6,6 +6,29 @@ const oddNumberSeries = new RegExp('(02468)')
 const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
+const maxRepetition = (select: PINNumberRepeatingTimes | boolean) => {
+  if (PINNumberRepeatingTimes.TwoTimes === select) {
+    return new RegExp(/(\d)\1{2,}/)
+  } else if (PINNumberRepeatingTimes.ThreeTimes === select) {
+    return new RegExp(/(\d)\1{3,}/)
+  } else if (PINNumberRepeatingTimes.FourTimes === select) {
+    return new RegExp(/(\d)\1{4,}/)
+  } else {
+    return new RegExp(/(\d)\1{1,}/)
+  }
+}
+const repetitionErrorMessage = (select: PINNumberRepeatingTimes | boolean) => {
+  if (PINNumberRepeatingTimes.TwoTimes === select) {
+    return PINError.NoRepetitionMoreThanTwoTimesValidation
+  } else if (PINNumberRepeatingTimes.ThreeTimes === select) {
+    return PINError.NoRepetitionMoreThanThreeTimesValidation
+  } else if (PINNumberRepeatingTimes.FourTimes === select) {
+    return PINError.NoRepetitionMoreThanFourTimesValidation
+  } else {
+    return PINError.NoRepetitionOfTheSameNumbersValidation
+  }
+}
+
 export enum PINError {
   CrossPatternValidation = 'CrossPatternValidation',
   OddOrEvenSequenceValidation = 'OddOrEvenSequenceValidation',
@@ -39,23 +62,10 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
     } as PINValidationsType)
   }
   if (PINRules.no_repeated_numbers) {
-    const noRepeatedNumbers =
-      PINNumberRepeatingTimes.TwoTimes === PINRules.no_repeated_numbers
-      ? new RegExp(/(\d)\1{2,}/)
-      : PINNumberRepeatingTimes.ThreeTimes === PINRules.no_repeated_numbers
-      ? new RegExp(/(\d)\1{3,}/)
-      : PINNumberRepeatingTimes.FourTimes === PINRules.no_repeated_numbers
-      ? new RegExp(/(\d)\1{4,}/)
-      : new RegExp(/(\d)\1{1,}/)
+    const noRepeatedNumbers = maxRepetition(PINRules.no_repeated_numbers)
     PINValidations.push({
       isInvalid: noRepeatedNumbers.test(PIN),
-      errorName: PINNumberRepeatingTimes.TwoTimes === PINRules.no_repeated_numbers
-                ? PINError.NoRepetitionMoreThanTwoTimesValidation
-                : PINNumberRepeatingTimes.ThreeTimes === PINRules.no_repeated_numbers
-                ? PINError.NoRepetitionMoreThanThreeTimesValidation
-                : PINNumberRepeatingTimes.FourTimes === PINRules.no_repeated_numbers
-                ? PINError.NoRepetitionMoreThanFourTimesValidation
-                : PINError.NoRepetitionOfTheSameNumbersValidation
+      errorName: repetitionErrorMessage(PINRules.no_repeated_numbers)
     } as PINValidationsType)
   }
  
