@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState, useEffect } from 'react'
-import { ColorValue, LayoutRectangle, View, ViewStyle, useWindowDimensions } from 'react-native'
+import { ColorValue, LayoutRectangle, View, ViewStyle, useWindowDimensions, Modal } from 'react-native'
 import { Defs, Mask, Rect, Svg } from 'react-native-svg'
 
 import { tourMargin } from '../../constants'
@@ -85,7 +85,8 @@ export const TourOverlay = (props: TourOverlayProps) => {
   }, [windowWidth, windowHeight])
 
   return currentStep !== undefined ? (
-    <View
+    <Modal
+      transparent
       accessibilityViewIsModal
       style={{ position: 'absolute', top: 0, left: 0, height: windowHeight + 1, width: windowWidth + 1 }}
       testID={testIdWithKey('SpotlightOverlay')}
@@ -129,6 +130,6 @@ export const TourOverlay = (props: TourOverlayProps) => {
           stop={stop}
         />
       </View>
-    </View>
+    </Modal>
   ) : null
 }
