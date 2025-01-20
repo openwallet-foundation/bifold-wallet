@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react-native'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Modal } from 'react-native'
 
 import { credentialOfferTourSteps } from '../../App/components/tour/CredentialOfferTourSteps'
 import { credentialsTourSteps } from '../../App/components/tour/CredentialsTourSteps'
@@ -13,9 +13,11 @@ import { TourID } from '../../App/types/tour'
 const tourStep = {
   Render: () => {
     return (
-      <View>
-        <Text>Test</Text>
-      </View>
+      <Modal>
+        <View>
+          <Text>Test</Text>
+        </View>
+      </Modal>
     )
   },
 }
