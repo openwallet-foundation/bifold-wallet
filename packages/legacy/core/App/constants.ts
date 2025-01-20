@@ -1,4 +1,4 @@
-import { PINValidationRules } from './types/security'
+import { PINValidationRules, PINNumberRepeatingTimes } from './types/security'
 
 const lengthOfHiddenAttributes = 10
 const unicodeForBulletCharacter = '\u2022'
@@ -71,7 +71,7 @@ export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
   max_length: 6,
-  no_repeated_numbers: false,
+  no_repeated_numbers: PINNumberRepeatingTimes.TwoTimes,
   no_repetition_of_the_two_same_numbers: false,
   no_series_of_numbers: false,
   no_even_or_odd_series_of_numbers: false,
