@@ -437,10 +437,12 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                         "flexShrink": 1,
                                       },
                                       Object {
-                                        "color": "#FFFFFF",
                                         "flex": 1,
                                         "flexWrap": "wrap",
                                         "lineHeight": 24,
+                                      },
+                                      Object {
+                                        "color": "#FFFFFF",
                                       },
                                     ]
                                   }
@@ -543,7 +545,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <View
                                   style={
                                     Object {
-                                      "marginTop": 15,
+                                      "gap": 4,
+                                      "marginVertical": 16,
                                     }
                                   }
                                 >
@@ -988,10 +991,12 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                         "flexShrink": 1,
                                       },
                                       Object {
-                                        "color": "#FFFFFF",
                                         "flex": 1,
                                         "flexWrap": "wrap",
                                         "lineHeight": 24,
+                                      },
+                                      Object {
+                                        "color": "#FFFFFF",
                                       },
                                     ]
                                   }
@@ -1081,7 +1086,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <View
                                   style={
                                     Object {
-                                      "marginTop": 15,
+                                      "gap": 4,
+                                      "marginVertical": 16,
                                     }
                                   }
                                 >
@@ -1159,7 +1165,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <View
                                   style={
                                     Object {
-                                      "marginTop": 15,
+                                      "gap": 4,
+                                      "marginVertical": 16,
                                     }
                                   }
                                 >
