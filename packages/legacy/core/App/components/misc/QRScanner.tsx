@@ -25,7 +25,7 @@ interface Props {
 
 const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError }) => {
   const navigation = useNavigation<StackNavigationProp<ConnectStackParams>>()
-  const [{ showScanHelp, showScanButton }] = useServices([TOKENS.CONFIG])
+  const [{ showScanHelp, showScanButton, showScanErrorButton = true }] = useServices([TOKENS.CONFIG])
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
   const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)
@@ -109,15 +109,17 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
                 {error.message}
               </Text>
-              <Pressable
-                onPress={() => setShowErrorDetailsModal(true)}
-                accessibilityLabel={t('Scan.ShowDetails')}
-                accessibilityRole={'button'}
-                testID={testIdWithKey('ShowDetails')}
-                hitSlop={hitSlop}
-              >
-                <Icon name="information-outline" size={40} style={styles.icon} />
-              </Pressable>
+              {showScanErrorButton && (
+                <Pressable
+                  onPress={() => setShowErrorDetailsModal(true)}
+                  accessibilityLabel={t('Scan.ShowDetails')}
+                  accessibilityRole={'button'}
+                  testID={testIdWithKey('ShowDetails')}
+                  hitSlop={hitSlop}
+                >
+                  <Icon name="information-outline" size={40} style={styles.icon} />
+                </Pressable>
+              )}
             </>
           ) : (
             <>
