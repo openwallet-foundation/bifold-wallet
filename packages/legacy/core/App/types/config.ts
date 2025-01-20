@@ -31,6 +31,7 @@ export interface Config {
   whereToUseWalletUrl?: string
   showScanHelp?: boolean
   showScanButton?: boolean
+  showScanErrorButton?: boolean
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
   contactHideList?: string[]
