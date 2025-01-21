@@ -98,6 +98,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
             onPress={onPress}
             credentialErrors={credentialErrors ?? []}
             brandingOverlayType={bundleResolver.getBrandingOverlayType()}
+            elevated={bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11}
           />
         )
       }

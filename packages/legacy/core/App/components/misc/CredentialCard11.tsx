@@ -161,6 +161,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     container: {
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
+      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 1,
+          height: 1,
+        },
+        shadowOpacity: 0.3,
+      }),
     },
     cardContainer: {
       flexDirection: 'row',
@@ -670,9 +678,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           renderItem={({ item }) => {
             return renderCardAttribute(item as Attribute & Predicate)
           }}
-          ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+          ListFooterComponent={
+            brandingOverlayType === BrandingOverlayType.Branding11 ? (
+              <>
+                <CredentialIssuerBody />
+                <CredentialCardPrimaryBodyFooter />
+              </>
+            ) : (
+              <CredentialCardPrimaryBodyFooter />
+            )
+          }
         />
-        {brandingOverlayType === BrandingOverlayType.Branding11 && <CredentialIssuerBody />}
+        {/* {brandingOverlayType === BrandingOverlayType.Branding11 && <CredentialIssuerBody />} */}
       </View>
     )
   }
@@ -801,7 +818,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       style={[
         styles.container,
         style,
-        { elevation: elevated ? 5 : 0, overflow: 'hidden' },
+        { elevation: elevated ? 5 : 0, overflow: elevated ? 'visible' : 'hidden' },
         hasAltCredentials ? styles.selectedCred : undefined,
       ]}
       onLayout={(event) => {

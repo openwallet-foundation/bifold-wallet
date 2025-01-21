@@ -283,7 +283,7 @@ const BrandColors: IBrandColors = {
   modalIcon: GrayscaleColors.white,
   unorderedList: GrayscaleColors.white,
   unorderedListModal: GrayscaleColors.white,
-  link: GrayscaleColors.white,
+  link: '#42803E',
   text: GrayscaleColors.white,
   icon: GrayscaleColors.white,
   headerIcon: GrayscaleColors.white,

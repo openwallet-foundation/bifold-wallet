@@ -91,6 +91,14 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     container: {
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
+      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 1,
+          height: 1,
+        },
+        shadowOpacity: 0.3,
+      }),
     },
     cardContainer: {
       flexDirection: 'row',
@@ -505,7 +513,14 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
 
   return overlay.bundle ? (
     <View
-      style={[styles.container, style, { elevation: elevated ? 5 : 0, overflow: 'hidden' }]}
+      style={[
+        styles.container,
+        style,
+        {
+          elevation: elevated ? 5 : 0,
+          overflow: elevated ? 'visible' : 'hidden',
+        },
+      ]}
       onLayout={(event) => {
         setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
       }}
