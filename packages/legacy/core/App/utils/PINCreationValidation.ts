@@ -1,4 +1,4 @@
-import { PINValidationRules, PINNumberRepeatingTimes } from '../types/security'
+import { PINValidationRules } from '../types/security'
 
 const consecutiveSeriesOfThree = new RegExp(/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/)
 const evenNumberSeries = new RegExp('(13579)')
@@ -6,22 +6,18 @@ const oddNumberSeries = new RegExp('(02468)')
 const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
-const maxRepetition = (select: PINNumberRepeatingTimes | boolean) => {
-  if (PINNumberRepeatingTimes.TwoTimes === select) {
-    return new RegExp(/(\d)\1{2,}/)
-  } else if (PINNumberRepeatingTimes.ThreeTimes === select) {
-    return new RegExp(/(\d)\1{3,}/)
-  } else {
+const maxRepetition = (select: number) => {
+  if (2 < select) {
     return new RegExp(/(\d)\1{1,}/)
+  } else {
+    return new RegExp(String.raw`/(\d)\\${select}{${select},}/`)
   }
 }
-const repetitionErrorMessage = (select: PINNumberRepeatingTimes | boolean) => {
-  if (PINNumberRepeatingTimes.TwoTimes === select) {
-    return PINError.NoRepetitionMoreThanTwoTimesValidation
-  } else if (PINNumberRepeatingTimes.ThreeTimes === select) {
-    return PINError.NoRepetitionMoreThanThreeTimesValidation
-  } else {
+const repetitionErrorMessage = (select: number) => {
+  if (2 > select) {
     return PINError.NoRepetitionOfTheSameNumbersValidation
+  } else {
+    return PINError.MaxAdjacentBumberRepetitionValidation
   }
 }
 
@@ -29,8 +25,7 @@ export enum PINError {
   CrossPatternValidation = 'CrossPatternValidation',
   OddOrEvenSequenceValidation = 'OddOrEvenSequenceValidation',
   NoRepetitionOfTheSameNumbersValidation = 'NoRepetitionOfTheSameNumbersValidation',
-  NoRepetitionMoreThanTwoTimesValidation = 'NoRepetitionMoreThanTwoTimesValidation',
-  NoRepetitionMoreThanThreeTimesValidation = 'NoRepetitionMoreThanThreeTimesValidation',
+  MaxAdjacentBumberRepetitionValidation = 'MaxAdjacentBumberRepetitionValidation',
   NoRepetitionOfTheTwoSameNumbersValidation = 'NoRepetitionOfTheTwoSameNumbersValidation',
   NoSeriesOfNumbersValidation = 'NoSeriesOfNumbersValidation',
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
@@ -45,6 +40,7 @@ export interface PINValidationsType {
 
 export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules) => {
   const PINValidations: PINValidationsType[] = []
+  
   if (PINRules.no_cross_pattern) {
     PINValidations.push({
       isInvalid: crossNumberPattern.includes(PIN),
@@ -57,11 +53,12 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
       errorName: PINError.OddOrEvenSequenceValidation,
     } as PINValidationsType)
   }
-  if (PINRules.no_repeated_numbers) {
-    const noRepeatedNumbers = maxRepetition(PINRules.no_repeated_numbers)
+
+  if (PINRules.max_repeated_numbers || 0 === PINRules.max_repeated_numbers) {
+    const noRepeatedNumbers = maxRepetition(PINRules.max_repeated_numbers)
     PINValidations.push({
       isInvalid: noRepeatedNumbers.test(PIN),
-      errorName: repetitionErrorMessage(PINRules.no_repeated_numbers)
+      errorName: repetitionErrorMessage(PINRules.max_repeated_numbers)
     } as PINValidationsType)
   }
 
