@@ -47,6 +47,7 @@ const ConnectStack: React.FC = () => {
         name={Screens.ScanHelp}
         component={ScanHelp}
         options={{
+          title: t('Screens.ScanHelp'),
           ...ScreenOptionsDictionary[Screens.ScanHelp]
         }}
         />

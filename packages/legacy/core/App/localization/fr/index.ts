@@ -741,6 +741,7 @@ const translation = {
         "EnterPIN": "Saisir le NIP",
         "Home": "Notifications",
         "Scan": "Numériser",
+        "ScanHelp": "Aide à la numérisation",
         "Credentials": "Justificatifs",
         "CredentialDetails": "Détails des attestations",
         "Notifications": "Notifications",
