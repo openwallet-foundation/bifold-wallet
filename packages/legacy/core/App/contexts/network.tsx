@@ -11,7 +11,7 @@ export interface NetworkContext {
   assertNetworkConnected: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertInternetReachable: (_urls?: string[]) => Promise<boolean>
+  assertInternetReachable: () => Promise<boolean>
   assertMediatorReachable: () => Promise<boolean>
 }
 
@@ -41,8 +41,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
     return isConnected
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const assertInternetReachable = async (_urls?: string[]): Promise<boolean> => {
+  const assertInternetReachable = async (): Promise<boolean> => {
      return netInfo.isInternetReachable as boolean
   }
 
