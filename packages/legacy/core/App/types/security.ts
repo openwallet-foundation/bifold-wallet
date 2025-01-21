@@ -13,7 +13,7 @@ export enum AuthLevel {
 /*
   max_repeated_numbers - max repeating times in adjacent PIN numbers
   0 (including undefined or NaN): Repetition is not allowed
-  i > 0: adjacent max repeating number times, e.g. '1' repeating 2 times in '011123'
+  i > 0: adjacent max repeating number times, e.g. number '5' repeating 2 times in '055234'
 */
 export interface PINValidationRules {
   only_numbers: boolean

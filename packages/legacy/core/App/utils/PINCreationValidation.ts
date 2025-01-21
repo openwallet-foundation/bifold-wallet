@@ -7,10 +7,10 @@ const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
 const maxRepetition = (select: number) => {
-  if (2 < select) {
+  if (2 > select) {
     return new RegExp(/(\d)\1{1,}/)
   } else {
-    return new RegExp(String.raw`/(\d)\\${select}{${select},}/`)
+    return new RegExp(String.raw`(\d)\1{${select},}`, "g")
   }
 }
 const repetitionErrorMessage = (select: number) => {
