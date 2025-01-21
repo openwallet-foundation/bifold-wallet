@@ -676,30 +676,18 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                     "createdAt": "2024-09-04T18:50:29.771Z",
                     "credentialAttributes": Array [
                       Object {
-                        "encoding": "utf-8",
-                        "format": undefined,
-                        "label": "Student First Name",
                         "mime-type": "text/plain",
                         "name": "student_first_name",
-                        "type": "Text",
                         "value": "Alice",
                       },
                       Object {
-                        "encoding": "utf-8",
-                        "format": undefined,
-                        "label": "Student Last Name",
                         "mime-type": "text/plain",
                         "name": "student_last_name",
-                        "type": "Text",
                         "value": "Smith",
                       },
                       Object {
-                        "encoding": "utf-8",
-                        "format": "YYYYMMDD",
-                        "label": "ID Expiry Date",
                         "mime-type": "text/plain",
                         "name": "expiry_date",
-                        "type": "DateTime",
                         "value": "20280820",
                       },
                     ],
@@ -730,47 +718,47 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
         Array [
           Attribute {
             "credentialId": undefined,
-            "encoding": "utf-8",
+            "encoding": undefined,
             "format": undefined,
             "hasError": undefined,
-            "label": "Student First Name",
+            "label": undefined,
             "mimeType": "text/plain",
             "name": "student_first_name",
             "nonRevoked": undefined,
             "restrictions": undefined,
             "revealed": undefined,
             "revoked": undefined,
-            "type": "Text",
+            "type": undefined,
             "value": "Alice",
           },
           Attribute {
             "credentialId": undefined,
-            "encoding": "utf-8",
+            "encoding": undefined,
             "format": undefined,
             "hasError": undefined,
-            "label": "Student Last Name",
+            "label": undefined,
             "mimeType": "text/plain",
             "name": "student_last_name",
             "nonRevoked": undefined,
             "restrictions": undefined,
             "revealed": undefined,
             "revoked": undefined,
-            "type": "Text",
+            "type": undefined,
             "value": "Smith",
           },
           Attribute {
             "credentialId": undefined,
-            "encoding": "utf-8",
-            "format": "YYYYMMDD",
+            "encoding": undefined,
+            "format": undefined,
             "hasError": undefined,
-            "label": "ID Expiry Date",
+            "label": undefined,
             "mimeType": "text/plain",
             "name": "expiry_date",
             "nonRevoked": undefined,
             "restrictions": undefined,
             "revealed": undefined,
             "revoked": undefined,
-            "type": "DateTime",
+            "type": undefined,
             "value": "20280820",
           },
         ]
@@ -842,7 +830,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 style={
                   Array [
                     Object {
-                      "backgroundColor": "#32674e",
+                      "backgroundColor": "#602809",
                       "borderRadius": 10,
                     },
                     Object {},
@@ -884,7 +872,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "backgroundColor": "#32674e",
+                      "backgroundColor": "#602809",
                       "borderRadius": 10,
                       "opacity": 1,
                     }
@@ -895,40 +883,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                     testID="com.ariesbifold:id/CredentialCard"
                   >
                     <View
-                      style={
-                        Object {
-                          "height": "200%",
-                          "marginTop": -220,
-                          "position": "absolute",
-                          "width": "200%",
-                        }
-                      }
-                    >
-                      <Text
-                        accessible={false}
-                        numberOfLines={1}
-                        style={
-                          Array [
-                            Object {
-                              "fontSize": 21,
-                              "marginLeft": -80,
-                              "opacity": 0.16,
-                              "overflow": "hidden",
-                              "transform": Array [
-                                Object {
-                                  "rotate": "-30deg",
-                                },
-                              ],
-                            },
-                            Object {
-                              "color": "#D3D3D3",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      accessibilityLabel="Credentials.IssuedBy Best BC College, NON-PRODUCTION DEMO - Student Card Credentials.Credential."
+                      accessibilityLabel="Credentials.IssuedBy b4b1b9cd-a445-4bb3-9645-a2377471965a,  Student Card Credentials.Credential."
                       accessible={true}
                       style={
                         Object {
@@ -941,13 +896,13 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                         style={
                           Array [
                             Object {
-                              "backgroundColor": "rgba(0, 0, 0, 0)",
+                              "backgroundColor": "#602809",
                               "borderBottomLeftRadius": 10,
                               "borderTopLeftRadius": 10,
                               "width": 90,
                             },
                             Object {
-                              "backgroundColor": "rgba(0, 0, 0, 0)",
+                              "backgroundColor": "#602809",
                               "overflow": "hidden",
                             },
                           ]
@@ -955,40 +910,19 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                         testID="com.ariesbifold:id/CredentialCardSecondaryBody"
                       >
                         <View
-                          accessibilityIgnoresInvertColors={true}
                           style={
-                            Object {
-                              "flexGrow": 1,
-                            }
-                          }
-                        >
-                          <Image
-                            source={
+                            Array [
                               Object {
-                                "uri": "https://raw.githubusercontent.com/bcgov/aries-oca-bundles/main/OCABundles/schema/bcgov-digital-trust/student-card/best-bc-background-image-slice.jpg",
-                              }
-                            }
-                            style={
-                              Array [
-                                Object {
-                                  "bottom": 0,
-                                  "left": 0,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "top": 0,
-                                },
-                                Object {
-                                  "height": undefined,
-                                  "width": undefined,
-                                },
-                                Object {
-                                  "borderBottomLeftRadius": 10,
-                                  "borderTopLeftRadius": 10,
-                                },
-                              ]
-                            }
-                          />
-                        </View>
+                                "backgroundColor": "rgba(0,0,0,0.24)",
+                                "borderBottomLeftRadius": 10,
+                                "borderTopLeftRadius": 10,
+                                "height": "100%",
+                                "position": "absolute",
+                                "width": 90,
+                              },
+                            ]
+                          }
+                        />
                       </View>
                       <View
                         style={
@@ -1015,21 +949,24 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                           ]
                         }
                       >
-                        <Image
-                          source={
-                            Object {
-                              "uri": "https://raw.githubusercontent.com/bcgov/aries-oca-bundles/main/OCABundles/schema/bcgov-digital-trust/student-card/best-bc-logo.png",
-                            }
-                          }
+                        <Text
                           style={
-                            Object {
-                              "borderRadius": 8,
-                              "height": 90,
-                              "resizeMode": "cover",
-                              "width": 90,
-                            }
+                            Array [
+                              Object {
+                                "color": "#FFFFFF",
+                                "fontSize": 18,
+                                "fontWeight": "bold",
+                              },
+                              Object {
+                                "alignSelf": "center",
+                                "color": "#000",
+                                "fontSize": 45,
+                              },
+                            ]
                           }
-                        />
+                        >
+                          S
+                        </Text>
                       </View>
                       <View
                         style={
@@ -1071,7 +1008,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                               }
                               testID="com.ariesbifold:id/CredentialIssuer"
                             >
-                              Best BC College
+                              b4b1b9cd-a445-4bb3-9645-a2377471965a
                             </Text>
                           </View>
                           <View
@@ -1105,7 +1042,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                               }
                               testID="com.ariesbifold:id/CredentialName"
                             >
-                              DEMO - Student Card
+                              Student Card
                             </Text>
                           </View>
                         </View>
@@ -1425,7 +1362,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   }
                   testID="com.ariesbifold:id/AttributeName"
                 >
-                  ID Expiry Date
+                  Expiry Date
                 </Text>
               </View>
               <View
@@ -1467,7 +1404,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   }
                   testID="com.ariesbifold:id/AttributeValue"
                 >
-                  Aug 20, 2028
+                  20280820
                 </Text>
               </View>
             </View>

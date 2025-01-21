@@ -484,7 +484,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 
                               </Text>
                               <Text
-                                numberOfLines={1}
                                 style={
                                   Object {
                                     "color": "#D8292F",

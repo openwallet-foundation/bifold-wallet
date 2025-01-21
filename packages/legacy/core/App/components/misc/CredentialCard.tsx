@@ -71,7 +71,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     if (proof) {
       return (
         <CredentialCard11
-          displayItems={isBranding10 ? displayItems : undefined}
+          displayItems={displayItems}
           style={isBranding10 ? { backgroundColor: ColorPallet.brand.secondaryBackground } : undefined}
           credName={credName}
           credDefId={credDefId}

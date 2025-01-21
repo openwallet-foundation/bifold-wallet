@@ -209,10 +209,12 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                             "flexShrink": 1,
                           },
                           Object {
-                            "color": "#FFFFFF",
                             "flex": 1,
                             "flexWrap": "wrap",
                             "lineHeight": 24,
+                          },
+                          Object {
+                            "color": "#FFFFFF",
                           },
                         ]
                       }
@@ -292,7 +294,8 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       <View
                         style={
                           Object {
-                            "marginTop": 15,
+                            "gap": 4,
+                            "marginVertical": 16,
                           }
                         }
                       >
@@ -330,7 +333,8 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       <View
                         style={
                           Object {
-                            "marginTop": 15,
+                            "gap": 4,
+                            "marginVertical": 16,
                           }
                         }
                       >

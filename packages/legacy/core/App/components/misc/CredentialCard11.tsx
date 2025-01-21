@@ -582,7 +582,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   gap: 4,
                 }}
               >
-                <CredentialCardLogo noLogoText={overlay.metaOverlay?.issuer ?? 'I'} />
+                <CredentialCardLogo
+                  noLogoText={
+                    overlay.metaOverlay?.issuer && overlay.metaOverlay?.issuer !== 'Unknown Contact'
+                      ? overlay.metaOverlay?.issuer
+                      : t('Contacts.UnknownContact')
+                  }
+                />
                 <Text
                   testID={testIdWithKey('CredentialIssuer')}
                   style={[
@@ -597,7 +603,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                     },
                   ]}
                 >
-                  {overlay.metaOverlay?.issuer}
+                  {overlay.metaOverlay?.issuer !== 'Unknown Contact'
+                    ? overlay.metaOverlay?.issuer
+                    : t('Contacts.UnknownContact')}
                 </Text>
               </View>
             </View>
@@ -649,7 +657,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           {credentialErrors.includes(CredentialErrors.NotInWallet) && (
             <>
               <Icon style={styles.errorIcon} name="close" size={30} />
-              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')}>
                 {t('ProofRequest.NotAvailableInYourWallet')}
               </Text>
             </>
@@ -684,7 +692,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {overlay.brandingOverlay?.backgroundImageSlice && !displayItems ? (
+        {overlay.brandingOverlay?.backgroundImageSlice &&
+        (!displayItems || brandingOverlayType === BrandingOverlayType.Branding11) ? (
           <ImageBackground
             source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
             style={{ flexGrow: 1 }}
