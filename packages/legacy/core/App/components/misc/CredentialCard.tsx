@@ -27,6 +27,7 @@ interface CredentialCardProps {
   hasAltCredentials?: boolean
   credentialErrors?: CredentialErrors[]
   handleAltCredChange?: () => void
+  brandingOverlay?: CredentialOverlay<BrandingOverlay>
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({
@@ -41,6 +42,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   style = {},
   onPress = undefined,
   credentialErrors,
+  brandingOverlay,
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
@@ -49,6 +51,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const { i18n } = useTranslation()
 
   useEffect(() => {
+    if (brandingOverlay) {
+      setOverlay(brandingOverlay as unknown as CredentialOverlay<BrandingOverlay>)
+      return
+    }
+
     const resolveOverlay = async (w3cCred: W3cCredentialRecord) => {
       const credentialDisplay = getCredentialForDisplay(w3cCred)
 
@@ -64,7 +71,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     if (credential instanceof W3cCredentialRecord) {
       resolveOverlay(credential)
     }
-  }, [credential, bundleResolver, i18n.language])
+  }, [credential, bundleResolver, i18n.language, brandingOverlay])
 
   const getCredOverlayType = (type: BrandingOverlayType) => {
     if (proof) {
