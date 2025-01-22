@@ -31,12 +31,15 @@ export interface Config {
   whereToUseWalletUrl?: string
   showScanHelp?: boolean
   showScanButton?: boolean
+  showScanErrorButton?: boolean
   globalScreenOptions?: StackNavigationOptions
   showDetailsInfo?: boolean
   contactHideList?: string[]
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
   disableContactsInSettings?: boolean
+  disableMediatorCheck?: boolean
+  internetReachabilityUrls: string[]
 }
 
 export interface HistoryEventsLoggerConfig {
