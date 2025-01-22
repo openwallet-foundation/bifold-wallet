@@ -1,4 +1,4 @@
-import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,8 +34,9 @@ import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
+import { SettingStackParams } from '../types/navigators'
 
-interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
+interface PINCreateProps extends StackScreenProps<SettingStackParams, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
   explainedStatus: boolean
 }
@@ -48,12 +49,12 @@ interface ModalState {
 }
 
 const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus, route }) => {
-  const updatePin = (route.params as any)?.updatePin
+  const updatePin = route?.params?.updatePin
+  const PINOld = route?.params?.PINOld 
   const { agent } = useAppAgent()
   const { setPIN: setWalletPIN, checkPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
-  const [PINOld, setPINOld] = useState('')
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [isLoading, setLoading] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
@@ -109,7 +110,10 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
       padding: 20,
       justifyContent: 'space-between',
     },
-
+    descriptionContainer: {
+      paddingTop: 20,
+      paddingBottom: 40,
+    },
     // below used as helpful labels for views, no properties needed atp
     contentContainer: {},
     controlsContainer: {},
@@ -238,24 +242,14 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     setLoading(true)
     if (updatePin) {
       const valid = validatePINEntry(PIN, PINTwo)
-      if (valid) {
+      if (valid && PINOld) {
         setContinueEnabled(false)
-        const oldPinValid = await checkOldPIN(PINOld)
-        if (oldPinValid) {
           const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
           if (success) {
             if (historyEventsLogger.logPinChanged) {
               logHistoryRecord()
             }
-            setModalState({
-              visible: true,
-              title: t('PINCreate.PinChangeSuccessTitle'),
-              message: t('PINCreate.PinChangeSuccessMessage'),
-              onModalDismiss: () => {
-                navigation.navigate(Screens.Settings as never)
-              },
-            })
-          }
+          navigation.navigate(Screens.PINChangeConfirmation as never)
         }
         setContinueEnabled(true)
       }
@@ -291,15 +285,12 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <PINCreateHeader updatePin={updatePin} />
           {updatePin && (
-            <PINInput
-              label={t('PINCreate.EnterOldPINTitle')}
-              testID={testIdWithKey('EnterOldPIN')}
-              onPINChanged={(p: string) => {
-                setPINOld(p)
-              }}
-            />
+            <View style={style.descriptionContainer}>
+              <Text style={[TextTheme.normal]}>
+                {t('PINCreate.UpdatePinDescription')}
+              </Text>
+            </View>
           )}
           <PINInput
             label={t('PINCreate.EnterPINTitle', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}

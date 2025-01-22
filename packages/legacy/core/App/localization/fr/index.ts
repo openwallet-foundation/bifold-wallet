@@ -275,6 +275,11 @@ const translation = {
         "AppSettingCancel": "Annuler",
 
     },
+    "PINChangeConfirmation": {
+        "AlertTitle": "Your PIN has been changed",
+        "AlertSubText": "You can now log in with your new PIN",
+        "PrimaryCta": "Back To Home",
+    },
     "AttemptLockout": {
         "Title": "Votre portefeuille est temporairement verrouillé",
         "Description": "Vous avez eu trop de tentatives infructueuses.",

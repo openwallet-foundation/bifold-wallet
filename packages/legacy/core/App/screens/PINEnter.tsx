@@ -28,13 +28,14 @@ import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 
 interface PINEnterProps {
-  setAuthenticated: (status: boolean) => void
+  setAuthenticated?: (status: boolean) => void
   usage?: PINEntryUsage
   onCancelAuth?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export enum PINEntryUsage {
   PINCheck,
+  PINChange,
   WalletUnlock,
 }
 
@@ -105,7 +106,17 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       ...TextTheme.bold,
       marginBottom: 4,
     },
+    PINChangeSubtext: {
+      ...TextTheme.bold,
+      marginBottom: 20,
+    }
   })
+
+  const primaryCtaText = {
+    [PINEntryUsage.PINChange]: t('Global.Continue'),
+    [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
+    [PINEntryUsage.WalletUnlock]: t('PINEnter.Unlock'),
+  }
 
   const incrementDeveloperMenuCounter = useCallback(() => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {
@@ -212,7 +223,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         payload: [{ loginAttempts: 0 }],
       })
 
-      setAuthenticated(true)
+      setAuthenticated && setAuthenticated(true)
       gotoPostAuthScreens()
     }
   }, [usage, getWalletCredentials, dispatch, setAuthenticated, gotoPostAuthScreens])
@@ -330,7 +341,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           payload: [{ displayNotification: false }],
         })
 
-        setAuthenticated(true)
+        setAuthenticated && setAuthenticated(true)
         gotoPostAuthScreens()
       } catch (err: unknown) {
         const error = new BifoldError(
@@ -360,7 +371,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     switch (usage) {
       case PINEntryUsage.PINCheck:
         setAlertModalVisible(false)
-        setAuthenticated(false)
+        setAuthenticated && setAuthenticated(false)
         break
 
       default:
@@ -388,7 +399,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           return
         }
 
-        setAuthenticated(true)
+        setAuthenticated && setAuthenticated(true)
+
+        if (usage === PINEntryUsage.PINChange) {
+          navigation.navigate(Screens.CreatePIN as never, { updatePin: true, PINOld: PIN } as never )
+        }
+
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1042'),
@@ -416,7 +432,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
       setContinueEnabled(false)
 
-      if (usage === PINEntryUsage.PINCheck) {
+      if (usage === PINEntryUsage.PINCheck || usage === PINEntryUsage.PINChange) {
         await verifyPIN(PIN)
       }
 
@@ -461,6 +477,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       return <Text style={style.helpText}>{t('PINEnter.AppSettingChanged')}</Text>
     }
 
+    if (usage === PINEntryUsage.PINChange) {
+      return <></>
+    }
+
     return (
       <>
         <Text style={style.title}>{t('PINEnter.Title')}</Text>
@@ -490,9 +510,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           ) : (
             displayHelpText()
           )}
-          <Text style={style.subText}>{`${
+          <Text style={usage === PINEntryUsage.PINChange ? style.PINChangeSubtext : style.subText}>{
             usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingChangedEnterPIN') : t('PINEnter.EnterPIN')
-          }`}</Text>
+          }</Text>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
@@ -511,7 +531,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         <View style={style.controlsContainer}>
           <View style={style.buttonContainer}>
             <Button
-              title={usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingSave') : t('PINEnter.Unlock')}
+              title={primaryCtaText[usage]}
               buttonType={ButtonType.Primary}
               testID={testIdWithKey(usage === PINEntryUsage.PINCheck ? 'AppSettingSave' : 'Enter')}
               disabled={isContinueDisabled()}

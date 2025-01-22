@@ -25,6 +25,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
+import { PINEntryUsage } from './PINEnter'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -144,9 +145,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           accessibilityLabel: t('Settings.ChangePin'),
           testID: testIdWithKey('Change Pin'),
           onPress: () =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.SettingStack, { screen: Screens.CreatePIN, params: { updatePin: true } }),
+            navigation?.navigate(Screens.EnterPIN),
         },
         {
           title: t('Settings.Language'),

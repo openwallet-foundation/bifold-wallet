@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { CommonActions } from '@react-navigation/core'
 
 import { useTheme } from '../contexts/theme'
 import HistorySettings from '../modules/history/ui/HistorySettings'
@@ -13,12 +14,15 @@ import PINCreate from '../screens/PINCreate'
 import PushNotification from '../screens/PushNotification'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
+import AutoLock from '../screens/AutoLock'
+import PINEnter, { PINEntryUsage } from '../screens/PINEnter'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
-import AutoLock from '../screens/AutoLock'
+import PINChangeConfirmation from '../screens/PINChangeConfirmation'
+import { useNavigation } from '@react-navigation/core'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -34,6 +38,7 @@ const SettingStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
+  const navigation = useNavigation()
 
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
@@ -105,11 +110,61 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
+          headerLeft: () => (
+            <IconButton
+              buttonLocation={ButtonLocation.Left}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => {
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: Screens.Settings }],
+                  })
+                )
+              }}
+              icon="arrow-left"
+            />
+          ),
           ...ScreenOptionsDictionary[Screens.CreatePIN],
         }}
       >
         {(props: any) => <PINCreate explainedStatus {...props} />}
       </Stack.Screen>
+      <Stack.Screen
+        name={Screens.EnterPIN}
+        component={(props) => <PINEnter usage={PINEntryUsage.PINChange} {...props} />}
+        options={{
+          title: t('Screens.ChangePIN'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.EnterPIN],
+        }}
+      />
+      <Stack.Screen
+        name={Screens.PINChangeConfirmation}
+        component={PINChangeConfirmation}
+        options={{
+          title: t('Screens.PINChangeConfirmation'),
+          headerBackTestID: testIdWithKey('Back'),
+          headerLeft: () => (
+            <IconButton
+              buttonLocation={ButtonLocation.Left}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => {
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: Screens.Settings }],
+                  })
+                )
+              }}
+              icon="arrow-left"
+            />
+          ),
+          ...ScreenOptionsDictionary[Screens.PINChangeConfirmation],
+        }}
+      />
       <Stack.Screen
         name={Screens.UsePushNotifications}
         component={PushNotification}

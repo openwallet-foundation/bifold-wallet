@@ -260,6 +260,11 @@ const translation = {
     "AppSettingSave": "Salvar",
     "AppSettingCancel": "Cancelar",
   },
+  "PINChangeConfirmation": {
+    "AlertTitle": "Your PIN has been changed",
+    "AlertSubText": "You can now log in with your new PIN",
+    "PrimaryCta": "Back To Home",
+  },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
     "On": "Biometria ativada",

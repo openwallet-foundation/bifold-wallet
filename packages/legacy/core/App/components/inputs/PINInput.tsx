@@ -109,7 +109,7 @@ const PINInputComponent = (
 
   return (
     <View style={style.container}>
-      {label && <Text style={[TextTheme.label, { marginBottom: 8 }]}>{label}</Text>}
+      {label && <Text style={[TextTheme.bold, { marginBottom: 20 }]}>{label}</Text>}
       {inlineMessage?.config.position === InlineErrorPosition.Above ? (
         <InlineErrorText
           message={inlineMessage.message}

@@ -248,7 +248,8 @@ const translation = {
     "Hide": "Hide PIN",
     "ChangePIN": "Change PIN",
     "Continue": "Continue",
-    "EnterYourCurrentPIN": "Enter your current PIN"
+    "EnterYourCurrentPIN": "Enter your current PIN",
+    "UpdatePinDescription": "Change your PIN to secure your wallet. If you forget it you will need to set up your wallet again and re-add your cards."
   },
   "PINEnter": {
     "Title": "Welcome back",
@@ -274,6 +275,11 @@ const translation = {
     "AppSettingChangedEnterPIN": "Please confirm your change by entering your wallet PIN.",
     "AppSettingSave": "Save",
     "AppSettingCancel": "Cancel",
+  },
+  "PINChangeConfirmation": {
+    "AlertTitle": "Your PIN has been changed",
+    "AlertSubText": "You can now log in with your new PIN",
+    "PrimaryCta": "Back To Home",
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",
@@ -756,6 +762,7 @@ const translation = {
     "Terms": "Terms & Conditions",
     "CreatePIN": "Create a PIN",
     "EnterPIN": "Enter PIN",
+    "PINChangeConfirmation": "Change PIN",
     "Home": "Notifications",
     "Scan": "Scan",
     "ScanHelp": "Scan Help",

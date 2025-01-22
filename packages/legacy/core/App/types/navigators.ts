@@ -3,6 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { LayoutProps } from '../layout/ScreenLayout'
+import { PINEntryUsage } from 'screens/PINEnter'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -12,6 +13,7 @@ export enum Screens {
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
   EnterPIN = 'Enter PIN',
+  PINChangeConfirmation = 'PIN Change Confirmation',
   Home = 'Home',
   Scan = 'Scan',
   PasteUrl = 'Paste URL',
@@ -98,7 +100,7 @@ export type AuthenticateStackParams = {
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
   [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
-  [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
+  [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void | undefined } | undefined
   [Screens.UseBiometry]: undefined
   [Screens.NameWallet]: undefined
   [Screens.UsePushNotifications]: undefined
@@ -160,7 +162,12 @@ export type SettingStackParams = {
   [Screens.DataRetention]: undefined
   [Screens.Tours]: undefined
   [Screens.UseBiometry]: undefined
-  [Screens.CreatePIN]: undefined
+  [Screens.CreatePIN]: {
+    PINOld?: string,
+    updatePin: boolean
+  }
+  [Screens.EnterPIN]: { setAuthenticated?: (status: boolean) => void; usage: PINEntryUsage } | undefined
+  [Screens.PINChangeConfirmation]: undefined
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
