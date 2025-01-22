@@ -419,6 +419,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               },
                             ]
                           }
+                          testID="com.ariesbifold:id/NoLogoText"
                         >
                           L
                         </Text>
@@ -976,6 +977,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               },
                             ]
                           }
+                          testID="com.ariesbifold:id/NoLogoText"
                         >
                           L
                         </Text>

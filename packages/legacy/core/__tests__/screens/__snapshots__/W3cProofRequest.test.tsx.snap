@@ -402,6 +402,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                   },
                                 ]
                               }
+                              testID="com.ariesbifold:id/NoLogoText"
                             >
                               C
                             </Text>
@@ -497,7 +498,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               </Text>
                             </View>
                             <View
-                              ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                              ListFooterComponent={
+                                <React.Fragment>
+                                  <CredentialCardPrimaryBodyFooter />
+                                </React.Fragment>
+                              }
                               data={
                                 Array [
                                   Object {
@@ -955,6 +960,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                   },
                                 ]
                               }
+                              testID="com.ariesbifold:id/NoLogoText"
                             >
                               L
                             </Text>
@@ -1014,7 +1020,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               }
                             />
                             <View
-                              ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                              ListFooterComponent={
+                                <React.Fragment>
+                                  <CredentialCardPrimaryBodyFooter />
+                                </React.Fragment>
+                              }
                               data={
                                 Array [
                                   Attribute {

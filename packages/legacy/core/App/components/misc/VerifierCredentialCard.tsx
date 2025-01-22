@@ -31,6 +31,7 @@ import { formatIfDate, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
+import CredentialCard11Logo from './CredentialCard11Logo'
 
 interface VerifierCredentialCardProps {
   style?: ViewStyle
@@ -64,7 +65,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   const logoHeight = width * 0.12
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, CredentialCardShadowTheme } = useTheme()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
 
@@ -92,12 +93,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
       ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 1,
-          height: 1,
-        },
-        shadowOpacity: 0.3,
+        ...CredentialCardShadowTheme,
       }),
     },
     cardContainer: {
@@ -147,12 +143,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
         top: padding,
         left: -1 * logoHeight + padding,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 1,
-          height: 1,
-        },
-        shadowOpacity: 0.3,
+        ...CredentialCardShadowTheme,
       }),
     },
     textContainer: {
@@ -193,37 +184,6 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       }))
     })
   }, [schemaId, credDefId, displayItems, i18n.language, bundleResolver])
-
-  const CredentialCardLogo: React.FC<{ noLogoText: string }> = ({ noLogoText }: { noLogoText: string }) => {
-    return (
-      <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
-        {overlay.brandingOverlay?.logo ? (
-          <Image
-            source={toImageSource(overlay.brandingOverlay?.logo)}
-            style={{
-              resizeMode: 'cover',
-              width: logoHeight,
-              height: logoHeight,
-              borderRadius: 8,
-            }}
-          />
-        ) : (
-          <Text
-            style={[
-              TextTheme.bold,
-              {
-                fontSize: 0.5 * logoHeight,
-                alignSelf: 'center',
-                color: '#000',
-              },
-            ]}
-          >
-            {noLogoText.charAt(0).toUpperCase()}
-          </Text>
-        )}
-      </View>
-    )
-  }
 
   const AttributeItem: React.FC<{ item: Attribute }> = ({ item }) => {
     const label = (item.name || item.label)!
@@ -391,12 +351,15 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
                   gap: 4,
                 }}
               >
-                <CredentialCardLogo
+                <CredentialCard11Logo
                   noLogoText={
                     overlay.metaOverlay?.issuer && overlay.metaOverlay?.issuer !== 'Unknown Contact'
                       ? overlay.metaOverlay?.issuer
                       : t('Contacts.UnknownContact')
                   }
+                  overlay={overlay}
+                  overlayType={brandingOverlayType}
+                  elevated={elevated}
                 />
                 <Text
                   testID={testIdWithKey('CredentialIssuer')}
@@ -504,7 +467,12 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       >
         <CredentialCardSecondaryBody />
         {brandingOverlayType === BrandingOverlayType.Branding10 && (
-          <CredentialCardLogo noLogoText={overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'} />
+          <CredentialCard11Logo
+            noLogoText={overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'}
+            overlay={overlay}
+            overlayType={brandingOverlayType}
+            elevated={elevated}
+          />
         )}
         <CredentialCardPrimaryBody />
       </View>
