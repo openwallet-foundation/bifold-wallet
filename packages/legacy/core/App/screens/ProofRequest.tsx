@@ -104,6 +104,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
+  const [connectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
   const proofConnectionLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
@@ -715,7 +716,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           </InfoTextBox>
         )}
         {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
-          <ConnectionAlert connectionID={proofConnectionLabel} />
+          connectionAlert({ connectionID: proofConnectionLabel })
         ) : null}
         {!loading && isShareDisabled() ? (
           <View style={styles.footerButton}>
