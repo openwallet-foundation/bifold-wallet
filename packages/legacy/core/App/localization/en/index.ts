@@ -758,6 +758,7 @@ const translation = {
     "EnterPIN": "Enter PIN",
     "Home": "Notifications",
     "Scan": "Scan",
+    "ScanHelp": "Scan Help",
     "Credentials": "Credentials",
     "CredentialDetails": "Credential Details",
     "Notifications": "Notifications",
