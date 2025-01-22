@@ -102,13 +102,14 @@ const SettingStack: React.FC = () => {
       />
       <Stack.Screen
         name={Screens.CreatePIN}
-        component={(props) => <PINCreate explainedStatus {...props} />}
         options={{
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.CreatePIN],
         }}
-      />
+      >
+        {(props: any) => <PINCreate explainedStatus {...props} />}
+      </Stack.Screen>
       <Stack.Screen
         name={Screens.UsePushNotifications}
         component={PushNotification}
