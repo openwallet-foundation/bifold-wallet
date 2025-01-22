@@ -6,26 +6,11 @@ const oddNumberSeries = new RegExp('(02468)')
 const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
 
-const maxRepetition = (select: number) => {
-  if (2 > select) {
-    return new RegExp(/(\d)\1{1,}/)
-  } else {
-    return new RegExp(String.raw`(\d)\1{${select},}`, "g")
-  }
-}
-const repetitionErrorMessage = (select: number) => {
-  if (2 > select) {
-    return PINError.NoRepetitionOfTheSameNumbersValidation
-  } else {
-    return PINError.MaxAdjacentBumberRepetitionValidation
-  }
-}
-
 export enum PINError {
   CrossPatternValidation = 'CrossPatternValidation',
   OddOrEvenSequenceValidation = 'OddOrEvenSequenceValidation',
   NoRepetitionOfTheSameNumbersValidation = 'NoRepetitionOfTheSameNumbersValidation',
-  MaxAdjacentBumberRepetitionValidation = 'MaxAdjacentBumberRepetitionValidation',
+  MaxAdjacentNumberRepetitionValidation = 'MaxAdjacentNumberRepetitionValidation',
   NoRepetitionOfTheTwoSameNumbersValidation = 'NoRepetitionOfTheTwoSameNumbersValidation',
   NoSeriesOfNumbersValidation = 'NoSeriesOfNumbersValidation',
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
@@ -54,11 +39,17 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
     } as PINValidationsType)
   }
 
-  if (PINRules.max_repeated_numbers || 0 === PINRules.max_repeated_numbers) {
-    const noRepeatedNumbers = maxRepetition(PINRules.max_repeated_numbers)
+  if ('number' === typeof(PINRules.no_repeated_numbers) && PINRules.no_repeated_numbers > 2 ) {
+    const repetitionPattern = new RegExp(String.raw`(\d)\1{${PINRules.no_repeated_numbers - 1},}`, "g")
     PINValidations.push({
-      isInvalid: noRepeatedNumbers.test(PIN),
-      errorName: repetitionErrorMessage(PINRules.max_repeated_numbers)
+      isInvalid: repetitionPattern.test(PIN),
+      errorName: PINError.MaxAdjacentNumberRepetitionValidation
+    } as PINValidationsType)
+  } else if (PINRules.no_repeated_numbers || 0 === PINRules.no_repeated_numbers) {
+    const repetitionPattern = new RegExp(/(\d)\1{1,}/)
+    PINValidations.push({
+      isInvalid: repetitionPattern.test(PIN),
+      errorName: PINError.NoRepetitionOfTheSameNumbersValidation
     } as PINValidationsType)
   }
 
