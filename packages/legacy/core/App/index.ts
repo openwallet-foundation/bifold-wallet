@@ -83,7 +83,9 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
-export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink } from './utils/helpers'
+export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink, formatTime, useCredentialConnectionLabel, getConnectionName } from './utils/helpers'
+export { isValidAnonCredsCredential, getCredentialIdentifiers } from './utils/credential'
+export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 
 export type { AnimatedComponents } from './animated-components'
 export type {
