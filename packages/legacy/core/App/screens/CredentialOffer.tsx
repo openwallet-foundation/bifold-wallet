@@ -278,7 +278,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {(credentialConnectionLabel && goalCode === 'aries.vc.verify') && (
+        {(credentialConnectionLabel && goalCode === 'aries.vc.issue') && (
           <ConnectionAlert connectionID={credentialConnectionLabel} />
         )}
         <View style={styles.footerButton}>
