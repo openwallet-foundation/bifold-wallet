@@ -29,7 +29,7 @@ const PINChangeConfirmation: React.FC = () => {
     return (
         <KeyboardView>
             <View style={style.screenContainer}>
-                <InfoBox 
+                <InfoBox
                     notificationType={InfoBoxType.Success}
                     description={t('PINChangeConfirmation.AlertSubText')}
                     title={t('PINChangeConfirmation.AlertTitle')}
@@ -38,7 +38,7 @@ const PINChangeConfirmation: React.FC = () => {
                     <Button
                         title={t('PINChangeConfirmation.PrimaryCta')}
                         buttonType={ButtonType.Primary}
-                        testID={testIdWithKey('PINChangeConfirmation.PrimaryCta')}
+                        testID={testIdWithKey('GoToHomeButton')}
                         accessibilityLabel={t('PINChangeConfirmation.PrimaryCta')}
                         onPress={() => {
                             navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
