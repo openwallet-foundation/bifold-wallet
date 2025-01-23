@@ -714,7 +714,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {(!loading && proofConnectionLabel && goalCode === 'aries.vc.verify') ?? (
+        {(!loading && proofConnectionLabel && goalCode === 'aries.vc.verify') && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         )}
         {!loading && isShareDisabled() ? (
