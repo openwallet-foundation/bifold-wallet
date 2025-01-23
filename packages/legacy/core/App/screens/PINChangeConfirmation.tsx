@@ -8,11 +8,7 @@ import InfoBox, { InfoBoxType } from "../components/misc/InfoBox"
 import KeyboardView from "../components/views/KeyboardView"
 import { Screens, TabStacks } from "../types/navigators"
 
-interface PINChangeConfirmationProps {
-    
-}
-
-const PINChangeConfirmation: React.FC<PINChangeConfirmationProps> = () => {
+const PINChangeConfirmation: React.FC = () => {
     const { t } = useTranslation()
     const { ColorPallet } = useTheme()
     const navigation = useNavigation()

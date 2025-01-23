@@ -414,7 +414,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     },
-    [getWalletCredentials, setAuthenticated, t]
+    [getWalletCredentials, setAuthenticated, t, navigation, usage]
   )
 
   // both of the async functions called in this function are completely wrapped in trycatch

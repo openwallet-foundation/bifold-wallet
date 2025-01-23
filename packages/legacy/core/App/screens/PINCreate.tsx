@@ -194,17 +194,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     [PINOneValidations, t, attentionMessage]
   )
 
-  const checkOldPIN = useCallback(
-    async (PIN: string): Promise<boolean> => {
-      const valid = await checkPIN(PIN)
-      if (!valid) {
-        displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
-      }
-      return valid
-    },
-    [checkPIN, t]
-  )
-
   const confirmEntry = useCallback(
     async (PINOne: string, PINTwo: string) => {
       if (!validatePINEntry(PINOne, PINTwo)) {

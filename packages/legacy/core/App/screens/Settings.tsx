@@ -25,7 +25,6 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
-import { PINEntryUsage } from './PINEnter'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 

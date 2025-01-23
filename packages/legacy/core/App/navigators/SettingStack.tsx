@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { CommonActions } from '@react-navigation/core'
+import { CommonActions, useNavigation } from '@react-navigation/core'
 
 import { useTheme } from '../contexts/theme'
 import HistorySettings from '../modules/history/ui/HistorySettings'
@@ -22,7 +22,6 @@ import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
 import PINChangeConfirmation from '../screens/PINChangeConfirmation'
-import { useNavigation } from '@react-navigation/core'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
