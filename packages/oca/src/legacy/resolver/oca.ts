@@ -348,9 +348,11 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
     const overlayBundle = bundle ?? defaultBundle
     const metaOverlay = overlayBundle?.metaOverlay
     const brandingOverlay = overlayBundle?.brandingOverlay
-    if (brandingOverlay && 'logo' in brandingOverlay) {
-      (brandingOverlay as BrandingOverlay).logo = params.meta?.logo;
+
+    if (brandingOverlay && 'logo' in brandingOverlay && params.meta?.logo) {
+      brandingOverlay.logo = params.meta.logo
     }
+
     return { bundle: overlayBundle, presentationFields: fields, metaOverlay, brandingOverlay }
   }
 }
