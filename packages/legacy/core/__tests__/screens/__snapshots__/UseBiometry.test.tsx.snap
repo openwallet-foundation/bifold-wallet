@@ -174,7 +174,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
                     "justifyContent": "center",
                     "transform": Array [
                       Object {
-                        "translateX": 2,
+                        "translateX": 1,
                       },
                     ],
                     "width": 25,
@@ -463,7 +463,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
                     "justifyContent": "center",
                     "transform": Array [
                       Object {
-                        "translateX": 2,
+                        "translateX": 1,
                       },
                     ],
                     "width": 25,
@@ -764,7 +764,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
                     "justifyContent": "center",
                     "transform": Array [
                       Object {
-                        "translateX": 2,
+                        "translateX": 1,
                       },
                     ],
                     "width": 25,

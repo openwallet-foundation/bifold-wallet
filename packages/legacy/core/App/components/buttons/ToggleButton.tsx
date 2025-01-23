@@ -42,7 +42,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
 
   const translateX = toggleAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [2, 25],
+    outputRange: [1, 24],
   })
 
   return (
