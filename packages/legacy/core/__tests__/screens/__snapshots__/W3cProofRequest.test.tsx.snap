@@ -333,6 +333,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                       testID="com.ariesbifold:id/ShowCredentialDetails"
                     >
                       <View
+                        style={
+                          Object {
+                            "overflow": "hidden",
+                          }
+                        }
                         testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View
@@ -891,6 +896,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                       testID="com.ariesbifold:id/ShowCredentialDetails"
                     >
                       <View
+                        style={
+                          Object {
+                            "overflow": "hidden",
+                          }
+                        }
                         testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View

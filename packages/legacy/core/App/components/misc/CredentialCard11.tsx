@@ -11,31 +11,27 @@ import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  FlatList,
-  Image,
-  ImageBackground,
-  Linking,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-  useWindowDimensions,
-  TouchableOpacity,
-} from 'react-native'
+import { FlatList, Image, ImageBackground, Linking, Text, View, ViewStyle, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
-import { formatIfDate, useCredentialConnectionLabel, isDataUrl, pTypeToText } from '../../utils/helpers'
+import { getCredentialIdentifiers, toImageSource } from '../../utils/credential'
+import {
+  formatIfDate,
+  useCredentialConnectionLabel,
+  isDataUrl,
+  pTypeToText,
+  getSecondaryBackgroundColor,
+} from '../../utils/helpers'
 import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
 import CredentialCard11Logo from './CredentialCard11Logo'
+import useCredentialCardStyles from '../../hooks/credential-card-styles'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -105,13 +101,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   brandingOverlay,
   brandingOverlayType = BrandingOverlayType.Branding10,
 }) => {
-  const { width } = useWindowDimensions()
-  const borderRadius = 10
-  const padding = width * 0.05
-  const logoHeight = width * 0.12
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPallet, TextTheme, ListItems, CredentialCardShadowTheme } = useTheme()
+  const { ColorPallet, TextTheme, ListItems } = useTheme()
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -121,6 +113,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   ])
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
+  const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType)
   const attributeFormats: Record<string, string | undefined> = useMemo(() => {
     return (overlay.bundle as any)?.bundle.attributes
       .map((attr: any) => {
@@ -147,122 +140,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }, [displayItems, overlay])
 
   const navigation = useNavigation()
-
-  const getSecondaryBackgroundColor = (): string | undefined => {
-    if (proof) {
-      return overlay.brandingOverlay?.primaryBackgroundColor
-    } else {
-      return overlay.brandingOverlay?.backgroundImageSlice
-        ? 'rgba(0, 0, 0, 0)'
-        : overlay.brandingOverlay?.secondaryBackgroundColor
-    }
-  }
-
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
-      borderRadius: borderRadius,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        ...CredentialCardShadowTheme,
-      }),
-    },
-    cardContainer: {
-      flexDirection: 'row',
-      minHeight: 0.33 * width,
-    },
-    secondaryBodyContainer: {
-      width: logoHeight,
-      borderTopLeftRadius: borderRadius,
-      borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor() ?? overlay.brandingOverlay?.primaryBackgroundColor,
-    },
-    primaryBodyContainer: {
-      flex: 1,
-      padding,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        justifyContent: 'space-between',
-      }),
-      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
-        marginLeft: -1 * logoHeight + padding,
-      }),
-    },
-    primaryBodyNameContainer: {
-      flexDirection: 'row',
-    },
-    imageAttr: {
-      height: 150,
-      aspectRatio: 1,
-      resizeMode: 'contain',
-      borderRadius: borderRadius,
-    },
-    statusContainer: {
-      backgroundColor: 'rgba(0, 0, 0, 0)',
-      borderTopRightRadius: borderRadius,
-      borderBottomLeftRadius: borderRadius,
-      height: logoHeight,
-      width: logoHeight,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    logoContainer: {
-      width: logoHeight,
-      height: logoHeight,
-      backgroundColor: '#ffffff',
-      borderRadius: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
-        top: padding,
-        left: -1 * logoHeight + padding,
-        ...CredentialCardShadowTheme,
-      }),
-    },
-    headerText: {
-      ...TextTheme.labelSubtitle,
-      ...ListItems.recordAttributeText,
-      fontSize: 15,
-      flexShrink: 1,
-    },
-    valueText: {
-      ...TextTheme.normal,
-      minHeight: ListItems.recordAttributeText.fontSize,
-      paddingVertical: 4,
-    },
-    textContainer: {
-      color: proof
-        ? TextTheme.normal.color
-        : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
-      flexShrink: 1,
-    },
-    credentialName: {
-      lineHeight: 24,
-      flex: 1,
-      flexWrap: 'wrap',
-    },
-    credentialIssuerContainer: {
-      flex: 1,
-      alignSelf: 'flex-end',
-      justifyContent: 'flex-end',
-      maxWidth: '80%',
-    },
-    errorText: {
-      ...TextTheme.normal,
-      color: ListItems.proofError.color,
-    },
-    errorIcon: {
-      color: ListItems.proofError.color,
-    },
-    selectedCred: {
-      borderWidth: 5,
-      borderRadius: 15,
-      borderColor: ColorPallet.semantic.focus,
-    },
-    credActionText: {
-      fontSize: 20,
-      fontWeight: TextTheme.bold.fontWeight,
-      color: ColorPallet.brand.link,
-    },
-  })
 
   const backgroundColorIfRevoked = (backgroundColor?: string) =>
     credentialErrors.includes(CredentialErrors.Revoked) ? ColorPallet.notification.errorBorder : backgroundColor
@@ -678,7 +555,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor()) && (
+          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor(overlay, proof)) && (
             <View
               style={[
                 {
@@ -796,7 +673,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[styles.container, style]}
         testID={testIdWithKey('ShowCredentialDetails')}
       >
-        <View testID={testIdWithKey('CredentialCard')}>
+        <View testID={testIdWithKey('CredentialCard')} style={{ overflow: 'hidden' }}>
           {overlay.metaOverlay?.watermark && (
             <CardWatermark
               width={dimensions.cardWidth}

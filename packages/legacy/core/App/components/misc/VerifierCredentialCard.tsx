@@ -10,7 +10,6 @@ import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  useWindowDimensions,
   FlatList,
   Image,
   ImageBackground,
@@ -26,12 +25,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import ImageModal from '../../components/modals/ImageModal'
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
-import { credentialTextColor, toImageSource } from '../../utils/credential'
+import { toImageSource } from '../../utils/credential'
 import { formatIfDate, isDataUrl, pTypeToText } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 
 import CardWatermark from './CardWatermark'
 import CredentialCard11Logo from './CredentialCard11Logo'
+import useCredentialCardStyles from '../../hooks/credential-card-styles'
+import { Shade, shadeIsLightOrDark } from '../../utils/luminance'
 
 interface VerifierCredentialCardProps {
   style?: ViewStyle
@@ -59,15 +60,13 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   onChangeValue,
   brandingOverlayType = BrandingOverlayType.Branding10,
 }) => {
-  const { width } = useWindowDimensions()
-  const borderRadius = 10
-  const padding = width * 0.05
-  const logoHeight = width * 0.12
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPallet, TextTheme, CredentialCardShadowTheme } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
+  const isBranding10 = brandingOverlayType === BrandingOverlayType.Branding10
+  const { styles, borderRadius } = useCredentialCardStyles(overlay, brandingOverlayType, isBranding10)
 
   const attributeTypes = overlay.bundle?.captureBase.attributes
   const attributeFormats: Record<string, string | undefined> = (overlay.bundle as any)?.bundle.attributes
@@ -78,82 +77,11 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       return { ...prev, [curr.name]: curr.format }
     }, {})
 
-  const getSecondaryBackgroundColor = (): string | undefined => {
-    if (brandingOverlayType === BrandingOverlayType.Branding10) {
-      return overlay.brandingOverlay?.primaryBackgroundColor
-    } else {
-      return overlay.brandingOverlay?.backgroundImageSlice
-        ? 'rgba(0, 0, 0, 0)'
-        : overlay.brandingOverlay?.secondaryBackgroundColor
-    }
+  const getCardWatermarkTextColor = (background?: string) => {
+    if (isBranding10) return ColorPallet.grayscale.mediumGrey
+    const shade = shadeIsLightOrDark(background ?? ColorPallet.grayscale.lightGrey)
+    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
   }
-
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
-      borderRadius: borderRadius,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        ...CredentialCardShadowTheme,
-      }),
-    },
-    cardContainer: {
-      flexDirection: 'row',
-      minHeight: 0.33 * width,
-    },
-    secondaryBodyContainer: {
-      width: logoHeight,
-      borderTopLeftRadius: borderRadius,
-      borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor(),
-    },
-    primaryBodyContainer: {
-      flex: 1,
-      padding,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        justifyContent: 'space-between',
-      }),
-      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
-        marginLeft: -1 * logoHeight + padding,
-      }),
-    },
-    credentialIssuerContainer: {
-      flex: 1,
-      alignSelf: 'flex-end',
-      justifyContent: 'flex-end',
-      maxWidth: '80%',
-    },
-    credentialName: {
-      lineHeight: 24,
-      flex: 1,
-      flexWrap: 'wrap',
-    },
-    imageAttr: {
-      height: 150,
-      aspectRatio: 1,
-      resizeMode: 'contain',
-      borderRadius: 10,
-    },
-    logoContainer: {
-      width: logoHeight,
-      height: logoHeight,
-      backgroundColor: '#ffffff',
-      borderRadius: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
-        top: padding,
-        left: -1 * logoHeight + padding,
-        ...CredentialCardShadowTheme,
-      }),
-    },
-    textContainer: {
-      color:
-        brandingOverlayType === BrandingOverlayType.Branding10
-          ? TextTheme.normal.color
-          : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
-      flexShrink: 1,
-    },
-  })
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
     let parsedItem = item
@@ -323,7 +251,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     return (
       !(overlay.metaOverlay?.issuer === 'Unknown Contact') && (
         <>
-          {brandingOverlayType === BrandingOverlayType.Branding10 ? (
+          {isBranding10 ? (
             <View style={{ flexDirection: 'row' }}>
               <Text
                 testID={testIdWithKey('CredentialIssuer')}
@@ -391,7 +319,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View>
-          {brandingOverlayType === BrandingOverlayType.Branding10 && <CredentialIssuerBody />}
+          {isBranding10 && <CredentialIssuerBody />}
           <View style={{ flexDirection: 'row' }}>
             <Text
               testID={testIdWithKey('CredentialName')}
@@ -466,7 +394,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
         }
       >
         <CredentialCardSecondaryBody />
-        {brandingOverlayType === BrandingOverlayType.Branding10 && (
+        {isBranding10 && (
           <CredentialCard11Logo
             noLogoText={overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'}
             overlay={overlay}
@@ -486,7 +414,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
         style,
         {
           elevation: elevated ? 5 : 0,
-          overflow: elevated ? 'visible' : 'hidden',
+          overflow: 'hidden',
         },
       ]}
       onLayout={(event) => {
@@ -498,7 +426,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
           <CardWatermark
             width={dimensions.cardWidth}
             height={dimensions.cardHeight}
-            style={{ color: ColorPallet.grayscale.mediumGrey }}
+            style={{ color: getCardWatermarkTextColor(overlay.brandingOverlay?.primaryBackgroundColor) }}
             watermark={overlay.metaOverlay?.watermark}
           />
         )}
