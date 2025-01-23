@@ -245,6 +245,7 @@ const translation = {
   },
   "PINEnter": {
     "EnterPIN": "Digitar PIN",
+    "EnterOldPIN": "Insira o PIN antigo",
     "Unlock": "Destravar",
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
@@ -261,9 +262,9 @@ const translation = {
     "AppSettingCancel": "Cancelar",
   },
   "PINChangeConfirmation": {
-    "AlertTitle": "Your PIN has been changed",
-    "AlertSubText": "You can now log in with your new PIN",
-    "PrimaryCta": "Back To Home",
+    "AlertTitle": "Seu PIN foi alterado",
+    "AlertSubText": "Agora você pode fazer login com seu novo PIN",
+    "PrimaryCta": "De volta para casa",
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",

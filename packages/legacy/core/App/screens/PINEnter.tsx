@@ -395,14 +395,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
         if (credentials.key !== key) {
           setAlertModalVisible(true)
-
           return
         }
 
         setAuthenticated && setAuthenticated(true)
 
         if (usage === PINEntryUsage.PINChange) {
-          navigation.navigate(Screens.CreatePIN as never, { updatePin: true, PINOld: PIN } as never )
+          navigation.navigate(Screens.CreatePIN as never, { updatePin: true, PINOld: PIN } as never)
         }
 
       } catch (err: unknown) {
