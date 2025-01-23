@@ -65,6 +65,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
   COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
+  COMPONENT_CONNECTION_ALERT: 'component.connection-alert',
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -195,6 +196,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
   [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
+  [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionID?: string }>
 }
 
 export interface Container {

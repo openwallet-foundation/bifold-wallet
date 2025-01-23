@@ -51,6 +51,7 @@ import ContactListItem from './components/listItems/ContactListItem'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
 import { InlineErrorPosition } from './types/error'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
+import ConnectionAlert from './components/misc/ConnectionAlert'
 
 export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
@@ -144,6 +145,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_RECORD, Record)
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_LIST_ITEM, ContactListItem)
     this._container.registerInstance(TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM, ContactCredentialListItem)
+    this._container.registerInstance(TOKENS.COMPONENT_CONNECTION_ALERT, ConnectionAlert)
     this._container.registerInstance(TOKENS.CACHE_CRED_DEFS, [])
     this._container.registerInstance(TOKENS.CACHE_SCHEMAS, [])
     this._container.registerInstance(TOKENS.INLINE_ERRORS, {

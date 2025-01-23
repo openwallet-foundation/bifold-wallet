@@ -10,7 +10,6 @@ import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
@@ -75,6 +74,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
+  const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -278,9 +278,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (
+        {(credentialConnectionLabel && goalCode === 'aries.vc.issue') && (
           <ConnectionAlert connectionID={credentialConnectionLabel} />
-        ) : null}
+        )}
         <View style={styles.footerButton}>
           <Button
             title={t('Global.Accept')}
