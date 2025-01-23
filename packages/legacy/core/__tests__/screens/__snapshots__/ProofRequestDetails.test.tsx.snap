@@ -178,6 +178,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                           Object {
                             "color": "#FFFFFF",
                             "flexShrink": 1,
+                            "lineHeight": 24,
                           },
                           Object {
                             "flex": 1,
@@ -208,14 +209,11 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                           Object {
                             "color": "#FFFFFF",
                             "flexShrink": 1,
+                            "lineHeight": 24,
                           },
                           Object {
                             "flex": 1,
                             "flexWrap": "wrap",
-                            "lineHeight": 24,
-                          },
-                          Object {
-                            "color": "#FFFFFF",
                           },
                         ]
                       }
@@ -312,6 +310,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                                 Object {
                                   "color": "#FFFFFF",
                                   "flexShrink": 1,
+                                  "lineHeight": 24,
                                 },
                                 Object {
                                   "lineHeight": 19,
@@ -351,6 +350,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                                 Object {
                                   "color": "#FFFFFF",
                                   "flexShrink": 1,
+                                  "lineHeight": 24,
                                 },
                                 Object {
                                   "lineHeight": 19,

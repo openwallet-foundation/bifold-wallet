@@ -91,11 +91,20 @@ const useCredentialCardStyles = (
         ? TextTheme.normal.color
         : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
+      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+        fontSize: 16,
+      }),
+      lineHeight: 24,
     },
     credentialName: {
-      lineHeight: 24,
       flex: 1,
       flexWrap: 'wrap',
+      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+        lineHeight: 16,
+        maxWidth: '85%',
+        fontSize: 14,
+        fontWeight: '600',
+      }),
     },
     credentialIssuerContainer: {
       flex: 1,
@@ -119,6 +128,10 @@ const useCredentialCardStyles = (
       fontSize: 20,
       fontWeight: TextTheme.bold.fontWeight,
       color: ColorPallet.brand.link,
+    },
+    cardAttributeContainer: {
+      marginVertical: 16,
+      gap: 4,
     },
   })
 

@@ -32,6 +32,7 @@ import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
 import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
+import CredentialIssuerBody from './CredentialCard11Issuer'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -307,12 +308,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             style={[
               TextTheme.bold,
               styles.textContainer,
-              {
-                ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-                  fontSize: 16,
-                }),
-                lineHeight: 24,
-              },
               { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
             ]}
             testID={testIdWithKey('AttributeValue')}
@@ -328,7 +323,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     const { label, value } = parseAttribute(item)
     const parsedValue = formatIfDate(item.format, value) ?? ''
     return (
-      <View style={{ marginVertical: 16, gap: 4 }}>
+      <View style={styles.cardAttributeContainer}>
         {/* Render attribute label */}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {credentialErrors.includes(CredentialErrors.NotInWallet) && (
@@ -395,79 +390,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     return <></>
   }
 
-  const CredentialIssuerBody: React.FC = () => {
-    return (
-      !(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof) && (
-        <>
-          {brandingOverlayType === BrandingOverlayType.Branding10 ? (
-            <View style={{ flexDirection: 'row' }}>
-              <Text
-                testID={testIdWithKey('CredentialIssuer')}
-                style={[
-                  TextTheme.label,
-                  styles.textContainer,
-                  {
-                    lineHeight: 19,
-                    opacity: 0.8,
-                    flex: 1,
-                    flexWrap: 'wrap',
-                  },
-                ]}
-              >
-                {overlay.metaOverlay?.issuer}
-              </Text>
-            </View>
-          ) : (
-            <View style={styles.credentialIssuerContainer}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  gap: 4,
-                }}
-              >
-                <CredentialCard11Logo
-                  noLogoText={
-                    overlay.metaOverlay?.issuer && overlay.metaOverlay?.issuer !== 'Unknown Contact'
-                      ? overlay.metaOverlay?.issuer
-                      : t('Contacts.UnknownContact')
-                  }
-                  overlay={overlay}
-                  overlayType={brandingOverlayType}
-                  elevated={elevated}
-                />
-                <Text
-                  testID={testIdWithKey('CredentialIssuer')}
-                  style={[
-                    TextTheme.normal,
-                    styles.textContainer,
-                    {
-                      fontWeight: '500',
-                      fontSize: 12,
-                      lineHeight: 19,
-                      opacity: 0.8,
-                      flexWrap: 'wrap',
-                    },
-                  ]}
-                >
-                  {overlay.metaOverlay?.issuer !== 'Unknown Contact'
-                    ? overlay.metaOverlay?.issuer
-                    : t('Contacts.UnknownContact')}
-                </Text>
-              </View>
-            </View>
-          )}
-        </>
-      )
-    )
-  }
-
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
         <View>
-          {brandingOverlayType === BrandingOverlayType.Branding10 && <CredentialIssuerBody />}
+          {brandingOverlayType === BrandingOverlayType.Branding10 && (
+            <CredentialIssuerBody
+              overlay={overlay}
+              overlayType={brandingOverlayType}
+              elevated={elevated}
+              hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
+            />
+          )}
 
           <View style={styles.primaryBodyNameContainer}>
             <Text
@@ -477,12 +411,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 styles.textContainer,
                 styles.credentialName,
                 {
-                  ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-                    lineHeight: 16,
-                    maxWidth: '85%',
-                    fontSize: 14,
-                    fontWeight: '600',
-                  }),
                   color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
                 },
               ]}
@@ -520,7 +448,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           }}
           ListFooterComponent={
             <>
-              {brandingOverlayType === BrandingOverlayType.Branding11 && <CredentialIssuerBody />}
+              {brandingOverlayType === BrandingOverlayType.Branding11 && (
+                <CredentialIssuerBody
+                  overlay={overlay}
+                  overlayType={brandingOverlayType}
+                  elevated={elevated}
+                  hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
+                />
+              )}
               <CredentialCardPrimaryBodyFooter />
             </>
           }

@@ -1003,6 +1003,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                                   Object {
                                     "color": "#FFFFFF",
                                     "flexShrink": 1,
+                                    "lineHeight": 24,
                                   },
                                   Object {
                                     "flex": 1,
@@ -1035,11 +1036,11 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                                   Object {
                                     "color": "#FFFFFF",
                                     "flexShrink": 1,
+                                    "lineHeight": 24,
                                   },
                                   Object {
                                     "flex": 1,
                                     "flexWrap": "wrap",
-                                    "lineHeight": 24,
                                   },
                                   Object {
                                     "color": "#FFFFFF",

@@ -441,11 +441,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                       Object {
                                         "color": "#FFFFFF",
                                         "flexShrink": 1,
+                                        "lineHeight": 24,
                                       },
                                       Object {
                                         "flex": 1,
                                         "flexWrap": "wrap",
-                                        "lineHeight": 24,
                                       },
                                       Object {
                                         "color": "#FFFFFF",
@@ -603,6 +603,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "lineHeight": 19,
@@ -1004,11 +1005,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                       Object {
                                         "color": "#FFFFFF",
                                         "flexShrink": 1,
+                                        "lineHeight": 24,
                                       },
                                       Object {
                                         "flex": 1,
                                         "flexWrap": "wrap",
-                                        "lineHeight": 24,
                                       },
                                       Object {
                                         "color": "#FFFFFF",
@@ -1129,6 +1130,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "lineHeight": 19,
@@ -1160,8 +1162,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
-                                          },
-                                          Object {
                                             "lineHeight": 24,
                                           },
                                           Object {
@@ -1208,6 +1208,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "lineHeight": 19,
@@ -1239,8 +1240,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
-                                          },
-                                          Object {
                                             "lineHeight": 24,
                                           },
                                           Object {
