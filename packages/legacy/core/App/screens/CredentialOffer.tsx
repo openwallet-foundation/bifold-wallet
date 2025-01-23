@@ -74,7 +74,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
-  const [connectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
+  const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -278,9 +278,9 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {credentialConnectionLabel && goalCode === 'aries.vc.issue' ? (
-          connectionAlert({ connectionID: credentialConnectionLabel })
-        ) : null}
+        {(credentialConnectionLabel && goalCode === 'aries.vc.verify') ?? (
+          <ConnectionAlert connectionID={credentialConnectionLabel} />
+        )}
         <View style={styles.footerButton}>
           <Button
             title={t('Global.Accept')}
