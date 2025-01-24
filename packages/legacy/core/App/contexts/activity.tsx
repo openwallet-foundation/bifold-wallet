@@ -52,8 +52,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     try {
       removeSavedWalletSecret()
-      await agent?.wallet.close() // this will make agent.isInitialized false in case agent.shutdown fails
-      await agent?.shutdown() // currently fails partway through due to socket.once not being defined in react native
+      await agent?.shutdown()
       logger.info('Agent shutdown successfully')
     } catch (error) {
       logger.error(`Error during agent shutdown: ${error}`)

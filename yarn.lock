@@ -2165,6 +2165,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.11#./.yarn/patches/@credo-ts-core-npm-0.5.11-9122d8c9b8.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.5.11
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.11#./.yarn/patches/@credo-ts-core-npm-0.5.11-9122d8c9b8.patch::version=0.5.11&hash=7857ed&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@digitalcredentials/jsonld": ^6.0.0
+    "@digitalcredentials/jsonld-signatures": ^9.4.0
+    "@digitalcredentials/vc": ^6.0.1
+    "@multiformats/base-x": ^4.0.1
+    "@noble/hashes": ^1.4.0
+    "@peculiar/asn1-ecc": ^2.3.8
+    "@peculiar/asn1-schema": ^2.3.8
+    "@peculiar/asn1-x509": ^2.3.8
+    "@peculiar/x509": ^1.11.0
+    "@sd-jwt/core": ^0.7.0
+    "@sd-jwt/decode": ^0.7.0
+    "@sd-jwt/jwt-status-list": ^0.7.0
+    "@sd-jwt/sd-jwt-vc": ^0.7.0
+    "@sd-jwt/types": ^0.7.0
+    "@sd-jwt/utils": ^0.7.0
+    "@sphereon/pex": ^3.3.2
+    "@sphereon/pex-models": ^2.2.4
+    "@sphereon/ssi-types": ^0.28.0
+    "@stablelib/ed25519": ^1.0.2
+    "@types/ws": ^8.5.4
+    abort-controller: ^3.0.0
+    big-integer: ^1.6.51
+    borc: ^3.0.0
+    buffer: ^6.0.3
+    class-transformer: 0.5.1
+    class-validator: 0.14.1
+    did-resolver: ^4.1.0
+    jsonpath: ^1.1.1
+    lru_map: ^0.4.1
+    luxon: ^3.3.0
+    make-error: ^1.3.6
+    object-inspect: ^1.10.3
+    query-string: ^7.0.1
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.8.0
+    tsyringe: ^4.8.0
+    uuid: ^9.0.0
+    varint: ^6.0.0
+    web-did-resolver: ^2.0.21
+    webcrypto-core: ^1.8.0
+  checksum: bdd075662b97198fe0102913c0df1746c86cee2bd8f64904fab40769e79f82fa961d34ee01376b21ce0338f7f5ff69df2f26b2afaa4a11fa3d1847312e2d790a
+  languageName: node
+  linkType: hard
+
 "@credo-ts/indy-sdk-to-askar-migration@npm:0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/indy-sdk-to-askar-migration@npm:0.5.11"
@@ -2188,6 +2236,18 @@ __metadata:
   peerDependencies:
     "@hyperledger/indy-vdr-shared": ^0.2.2
   checksum: 346e6b65138f9c4572bef349127c63674ca56619ba04c2ff0953aa497eeb148dacc203819d7d16fac8497e854347ae1bc57cd6f21b5a1ab96237d56bc7944381
+  languageName: node
+  linkType: hard
+
+"@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.11#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.11-ced84362c9.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.5.11
+  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.11#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.11-ced84362c9.patch::version=0.5.11&hash=c42b94&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@credo-ts/anoncreds": 0.5.11
+    "@credo-ts/core": 0.5.11
+  peerDependencies:
+    "@hyperledger/indy-vdr-shared": ^0.2.2
+  checksum: 6994408dafb0294f7f7508dca835b2c08dc499775a2ad3b97da143b20d94cbba56def60440c163dd1848a42dcd92f7a9f87bc0e05b8829c5c9abdbb0c059d35b
   languageName: node
   linkType: hard
 
