@@ -133,6 +133,7 @@ const useInitializeAgent = () => {
 
     const newAgent = await createNewAgent()
     if (!newAgent) {
+      logger.error('Failed to create a new agent')
       return
     }
 
@@ -149,6 +150,7 @@ const useInitializeAgent = () => {
     return newAgent
   }, [
     walletSecret,
+    logger,
     restartExistingAgent,
     setAgent,
     createNewAgent,
