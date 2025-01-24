@@ -114,7 +114,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   ])
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
-  const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType)
+  const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType, proof)
   const attributeFormats: Record<string, string | undefined> = useMemo(() => {
     return (overlay.bundle as any)?.bundle.attributes
       .map((attr: any) => {
@@ -399,6 +399,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               overlay={overlay}
               overlayType={brandingOverlayType}
               elevated={elevated}
+              proof={proof}
               hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
             />
           )}
@@ -453,6 +454,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                   overlay={overlay}
                   overlayType={brandingOverlayType}
                   elevated={elevated}
+                  proof={proof}
                   hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
                 />
               )}
