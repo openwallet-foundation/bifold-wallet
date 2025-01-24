@@ -2239,6 +2239,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.11#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.11-ced84362c9.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.5.11
+  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.11#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.11-ced84362c9.patch::version=0.5.11&hash=c42b94&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@credo-ts/anoncreds": 0.5.11
+    "@credo-ts/core": 0.5.11
+  peerDependencies:
+    "@hyperledger/indy-vdr-shared": ^0.2.2
+  checksum: 6994408dafb0294f7f7508dca835b2c08dc499775a2ad3b97da143b20d94cbba56def60440c163dd1848a42dcd92f7a9f87bc0e05b8829c5c9abdbb0c059d35b
+  languageName: node
+  linkType: hard
+
 "@credo-ts/node@npm:0.5.11":
   version: 0.5.11
   resolution: "@credo-ts/node@npm:0.5.11"
