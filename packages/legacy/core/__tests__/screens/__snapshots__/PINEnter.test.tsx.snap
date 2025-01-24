@@ -521,7 +521,7 @@ exports[`PINEnter Screen PIN Enter renders correctly for change PIN flow 1`] = `
                 }
               }
             >
-              PINEnter.EnterOldPIN
+              PINEnter.EnterPIN
             </Text>
             <View
               style={

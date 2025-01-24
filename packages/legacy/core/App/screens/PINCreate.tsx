@@ -111,8 +111,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
       justifyContent: 'space-between',
     },
     descriptionContainer: {
-      paddingTop: 20,
-      paddingBottom: 40,
+      paddingTop: 16,
+      paddingBottom: 16,
     },
     // below used as helpful labels for views, no properties needed atp
     contentContainer: {},
@@ -177,6 +177,18 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     [inlineMessages]
   )
 
+  const checkOldPIN = useCallback(
+    async (PIN: string): Promise<boolean> => {
+      const valid = await checkPIN(PIN)
+      if (!valid) {
+        displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
+      }
+      return valid
+    },
+    [checkPIN, t]
+  )
+
+
   const validatePINEntry = useCallback(
     (PINOne: string, PINTwo: string): boolean => {
       for (const validation of PINOneValidations) {
@@ -229,9 +241,10 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   const handleCreatePinTap = async () => {
     setLoading(true)
-    if (updatePin) {
+    if (updatePin && PINOld) {
       const valid = validatePINEntry(PIN, PINTwo)
-      if (valid && PINOld) {
+      const oldPinValid = await checkOldPIN(PINOld)
+      if (valid && oldPinValid) {
         setContinueEnabled(false)
           const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
           if (success) {
@@ -274,13 +287,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          {updatePin && (
-            <View style={style.descriptionContainer}>
-              <Text style={[TextTheme.normal]}>
-                {t('PINCreate.UpdatePinDescription')}
-              </Text>
-            </View>
-          )}
+        <View style={style.descriptionContainer}>
+          <PINCreateHeader updatePin={updatePin} />
+        </View>
           <PINInput
             label={t('PINCreate.EnterPINTitle', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
