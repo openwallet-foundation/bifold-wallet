@@ -61,6 +61,8 @@
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
     "@types/node": "16.9.6",
+    "@credo-ts/core": "patch:@credo-ts/core@npm%3A0.5.11#./.yarn/patches/@credo-ts-core-npm-0.5.11-9122d8c9b8.patch",
+    "@credo-ts/indy-vdr": "patch:@credo-ts/indy-vdr@npm%3A0.5.11#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.11-ced84362c9.patch",
     "@credo-ts/react-hooks": "patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch",
     "@sphereon/pex": "patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch",
     "@hyperledger/indy-vdr-react-native@0.2.2": "patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch",
