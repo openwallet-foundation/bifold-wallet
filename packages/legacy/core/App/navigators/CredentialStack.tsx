@@ -4,13 +4,11 @@ import { useTranslation } from 'react-i18next'
 
 import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
-import CredentialDetails from '../screens/CredentialDetails'
 import ListCredentials from '../screens/ListCredentials'
 import { CredentialStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
-import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
 
 const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
@@ -33,22 +31,6 @@ const CredentialStack: React.FC = () => {
           headerLeft: () => <SettingsMenu />,
           ...ScreenOptionsDictionary[Screens.Credentials],
         })}
-      />
-      <Stack.Screen
-        name={Screens.CredentialDetails}
-        component={CredentialDetails}
-        options={{
-          title: t('Screens.CredentialDetails'),
-          ...ScreenOptionsDictionary[Screens.CredentialDetails],
-        }}
-      />
-      <Stack.Screen
-        name={Screens.OpenIDCredentialDetails}
-        component={OpenIDCredentialDetails}
-        options={{
-          title: t('Screens.CredentialDetails'),
-          ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails],
-        }}
       />
     </Stack.Navigator>
   )

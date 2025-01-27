@@ -21,7 +21,7 @@ import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
-import { CredentialStackParams, Screens } from '../types/navigators'
+import { RootStackParams, Screens } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
@@ -33,7 +33,7 @@ import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
 
-type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
+type CredentialDetailsProps = StackScreenProps<RootStackParams, Screens.CredentialDetails>
 
 const paddingHorizontal = 24
 const paddingVertical = 16

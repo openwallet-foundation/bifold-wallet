@@ -83,6 +83,8 @@ export type RootStackParams = {
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
   [Stacks.HistoryStack]: NavigatorScreenParams<HistoryStackParams>
+  [Screens.CredentialDetails]: { credentialId: string }
+  [Screens.OpenIDCredentialDetails]: { credentialId: string }
   [Stacks.CustomNavStack1]: undefined
 }
 
@@ -138,8 +140,6 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
-  [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.OpenIDCredentialDetails]: { credentialId: string }
 }
 
 export type HomeStackParams = {

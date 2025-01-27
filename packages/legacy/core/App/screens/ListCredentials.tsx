@@ -12,7 +12,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
-import { CredentialStackParams, Screens } from '../types/navigators'
+import { RootStackParams, Screens } from '../types/navigators'
 import { TourID } from '../types/tour'
 import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
@@ -35,7 +35,7 @@ const ListCredentials: React.FC = () => {
     TOKENS.COMPONENT_CRED_LIST_FOOTER,
     TOKENS.CONFIG,
   ])
-  const navigation = useNavigation<StackNavigationProp<CredentialStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { ColorPallet } = useTheme()
   const { start, stop } = useTour()
   const screenIsFocused = useIsFocused()
