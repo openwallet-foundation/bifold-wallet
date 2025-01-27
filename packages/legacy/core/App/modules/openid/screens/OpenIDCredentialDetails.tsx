@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
-import { CredentialStackParams, Screens } from '../../../types/navigators'
+import { RootStackParams, Screens } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
@@ -31,7 +31,7 @@ export enum OpenIDCredScreenMode {
   details,
 }
 
-type OpenIDCredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.OpenIDCredentialDetails>
+type OpenIDCredentialDetailsProps = StackScreenProps<RootStackParams, Screens.OpenIDCredentialDetails>
 
 const paddingHorizontal = 24
 const paddingVertical = 16
