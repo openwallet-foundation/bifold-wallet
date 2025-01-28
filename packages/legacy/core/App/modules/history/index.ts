@@ -1,2 +1,2 @@
-import { IHistoryManager } from './types'
-export type { IHistoryManager }
+import { IHistoryManager, HistoryRecord} from './types'
+export type { IHistoryManager, HistoryRecord }

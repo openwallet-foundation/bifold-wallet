@@ -23,7 +23,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import ConnectionAlert from '../components/misc/ConnectionAlert'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
@@ -96,6 +95,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
+  const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
   const proofConnectionLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
@@ -706,9 +706,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' ? (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
-        ) : null}
+        )}
         {!loading && isShareDisabled() ? (
           <View style={styles.footerButton}>
             <Button
