@@ -13,7 +13,6 @@ import {
   FormattedSubmissionEntry,
 } from '../displayProof'
 import { testIdWithKey } from '../../../utils/testable'
-import { sanitizeString } from '../utils/utils'
 import { OpenIDCredentialRowCard } from '../components/CredentialRowCard'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
@@ -119,7 +118,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       const creds: W3cCredentialRecord[] = []
       for (const [inputDescriptorID, credentialId] of Object.entries(selectedCredentials)) {
         const credential = await getCredentialById(credentialId)
-        if (credential) {
+        if (credential && inputDescriptorID) {
           creds.push(credential as W3cCredentialRecord)
         }
       }
@@ -165,21 +164,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           {'\n'}
           <Text style={TextTheme.title}>{verifierName ? verifierName : ''}</Text>
         </Text>
-      </View>
-    )
-  }
-
-  const renderLegacyCard = (sub: FormattedSubmissionEntry, selectedCredential: FormattedSelectedCredentialEntry) => {
-    return (
-      <View style={{ marginTop: 16, gap: 8 }}>
-        {sub.description && <Text style={TextTheme.labelSubtitle}>{sub.description}</Text>}
-        <View style={styles.cardAttributes}>
-          {selectedCredential.requestedAttributes?.map((a) => (
-            <View key={a} style={{ flexBasis: '50%' }}>
-              <Text style={TextTheme.normal}>• {sanitizeString(a)}</Text>
-            </View>
-          ))}
-        </View>
       </View>
     )
   }

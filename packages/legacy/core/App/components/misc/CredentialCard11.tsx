@@ -15,7 +15,7 @@ import {
   View,
   ViewStyle,
   useWindowDimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -50,6 +50,7 @@ interface CredentialCard11Props {
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
   brandingOverlay?: CredentialOverlay<BrandingOverlay>
+  hideSlice?: boolean
 }
 
 /*
@@ -95,6 +96,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credentialErrors = [],
   handleAltCredChange,
   brandingOverlay,
+  hideSlice = false,
 }) => {
   const { width } = useWindowDimensions()
   const borderRadius = 10
@@ -236,8 +238,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     },
   })
 
-  const backgroundColorIfRevoked = (backgroundColor?: string) =>
-    credentialErrors.includes(CredentialErrors.Revoked) ? ColorPallet.notification.errorBorder : backgroundColor
+  const backgroundColorIfRevoked = (backgroundColor?: string) => {
+    const defaultBackground =
+      hideSlice && overlay.brandingOverlay?.backgroundImage ? 'rgba(0, 0, 0, 0.24)' : backgroundColor
+    return credentialErrors.includes(CredentialErrors.Revoked)
+      ? ColorPallet.notification.errorBorder
+      : defaultBackground
+  }
 
   const fontColorWithHighContrast = () => {
     if (proof) {
@@ -604,7 +611,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           },
         ]}
       >
-        {overlay.brandingOverlay?.backgroundImageSlice && !displayItems ? (
+        {overlay.brandingOverlay?.backgroundImageSlice && !displayItems && !hideSlice ? (
           <ImageBackground
             source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
             style={{ flexGrow: 1 }}
@@ -614,7 +621,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor()) && (
+          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor()) &&
+          !hideSlice && (
             <View
               style={[
                 {
@@ -664,7 +672,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const CredentialCard: React.FC<{ status?: 'error' | 'warning' }> = ({ status }) => {
-    return (
+    const mainCredentialBody = () => (
       <View
         style={styles.cardContainer}
         accessible={true}
@@ -685,6 +693,17 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>
+    )
+    return (
+      <>
+        {overlay.brandingOverlay?.backgroundImage && hideSlice ? (
+          <ImageBackground source={toImageSource(overlay.brandingOverlay?.backgroundImage)}>
+            {mainCredentialBody()}
+          </ImageBackground>
+        ) : (
+          mainCredentialBody()
+        )}
+      </>
     )
   }
 

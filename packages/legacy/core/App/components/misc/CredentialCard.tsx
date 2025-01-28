@@ -11,9 +11,7 @@ import CredentialCard10 from './CredentialCard10'
 import CredentialCard11, { CredentialErrors } from './CredentialCard11'
 import { GenericCredentialExchangeRecord } from '../../types/credentials'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { getCredentialForDisplay } from '../../modules/openid/display'
-import { buildOverlayFromW3cCredential } from '../../utils/oca'
-import { useTranslation } from 'react-i18next'
+import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -48,7 +46,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const { ColorPallet } = useTheme()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
-  const { i18n } = useTranslation()
+  const { resolveBundleForCredential } = useOpenIDCredentials()
 
   useEffect(() => {
     if (brandingOverlay) {
@@ -57,21 +55,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
 
     const resolveOverlay = async (w3cCred: W3cCredentialRecord) => {
-      const credentialDisplay = getCredentialForDisplay(w3cCred)
-
-      const resolvedOverlay = await buildOverlayFromW3cCredential({
-        credentialDisplay,
-        language: i18n.language,
-        resolver: bundleResolver,
-      })
-
-      setOverlay(resolvedOverlay)
+      const brandingOverlay = await resolveBundleForCredential(w3cCred)
+      setOverlay(brandingOverlay)
     }
 
     if (credential instanceof W3cCredentialRecord) {
       resolveOverlay(credential)
     }
-  }, [credential, bundleResolver, i18n.language, brandingOverlay])
+  }, [credential, brandingOverlay, resolveBundleForCredential])
 
   const getCredOverlayType = (type: BrandingOverlayType) => {
     if (proof) {
@@ -131,6 +122,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         proof={proof}
         elevated={proof}
         displayItems={displayItems}
+        hideSlice={true}
       />
     )
   } else {

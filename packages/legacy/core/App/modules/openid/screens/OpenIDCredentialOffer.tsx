@@ -17,12 +17,10 @@ import { EventTypes } from '../../../constants'
 import { useAgent } from '@credo-ts/react-hooks'
 import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { CredentialOverlay, OCABundleResolveAllParams } from '@hyperledger/aries-oca/build/legacy'
-import { TOKENS, useServices } from '../../../container-api'
+import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
 import { CredentialCard } from '../../../components/misc'
-import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -31,16 +29,14 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { credential } = route.params
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const { agent } = useAgent()
-  const { storeCredential } = useOpenIDCredentials()
+  const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-
-  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -50,36 +46,18 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   })
 
   useEffect(() => {
-    if (!credentialDisplay || !bundleResolver || !i18n || !credentialDisplay.display) {
+    if (!credential) {
       return
     }
 
     const resolveOverlay = async () => {
-      const params: OCABundleResolveAllParams = {
-        identifiers: {
-          schemaId: '',
-          credentialDefinitionId: credentialDisplay.id,
-        },
-        meta: {
-          alias: credentialDisplay.display.issuer.name,
-          credConnectionId: undefined,
-          credName: credentialDisplay.display.name,
-        },
-        attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
-        language: i18n.language,
-      }
-
-      const bundle = await bundleResolver.resolveAllBundles(params)
-
-      setOverlay({
-        ...(bundle as CredentialOverlay<BrandingOverlay>),
-        presentationFields: bundle.presentationFields,
-      })
+      const brandingOverlay = await resolveBundleForCredential(credential)
+      setOverlay(brandingOverlay)
     }
 
     resolveOverlay()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bundleResolver, i18n.language])
+  }, [credential])
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -148,7 +126,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
         </View>
         {credential && (
           <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-            <CredentialCard credential={credential} />
+            <CredentialCard credential={credential} brandingOverlay={overlay} />
           </View>
         )}
       </>
