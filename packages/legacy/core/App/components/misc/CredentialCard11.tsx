@@ -146,7 +146,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     credentialErrors.includes(CredentialErrors.Revoked) ? ColorPallet.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
-    if (proof) {
+    if (proof && brandingOverlayType === BrandingOverlayType.Branding10) {
       return ColorPallet.grayscale.mediumGrey
     }
 

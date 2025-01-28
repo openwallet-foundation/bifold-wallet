@@ -162,7 +162,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                     ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                   ]}
                   credName={item.credName}
-                  proof={true}
+                  proof
                   credentialErrors={errors}
                 ></CredentialCard>
               </TouchableOpacity>
