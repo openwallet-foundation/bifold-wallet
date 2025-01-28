@@ -40,7 +40,12 @@ import { BifoldLogger } from '../services/logger'
 import { Role } from '../types/chat'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
-import { CredentialDataForProof, ProofCredentialAttributes, ProofCredentialItems, ProofCredentialPredicates } from '../types/proof-items'
+import {
+  CredentialDataForProof,
+  ProofCredentialAttributes,
+  ProofCredentialItems,
+  ProofCredentialPredicates,
+} from '../types/proof-items'
 import { ChildFn } from '../types/tour'
 
 import { BifoldAgent } from './agent'
@@ -133,7 +138,7 @@ export function formatTime(
   const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
   const isPortuguese = i18n.resolvedLanguage === 'pt-BR'
   const isNonEnglish = i18n.resolvedLanguage === 'fr' || isPortuguese
-  const hoursFormat = isPortuguese ? 'HH:mm' : 'h:mm a'
+  const hoursFormat = isNonEnglish ? 'HH:mm' : 'h:mm a'
   // for the shortened approach eg. in chat bubbles
   if (chatFormat) {
     if (lessThanAMinuteAgo) {
@@ -174,8 +179,8 @@ export function formatTime(
         ? momentTime.format(formatString)
         : // if non-english, don't include comma between year and month
         isNonEnglish
-          ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
-          : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
+        ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
+        : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
     if (includeHour) {
       formattedTime = `${formattedTime}, ${momentTime.format(hoursFormat)}`
     }
@@ -347,7 +352,7 @@ export const schemaIdFromRestrictions = (queries?: AnonCredsProofRequestRestrict
   // the '2' here is the enum of the transaction type which, for schemas, is always 2
   const schemaId = rstrWithSchemaId
     ? rstrWithSchemaId.schema_id ||
-    `${rstrWithSchemaId.issuer_did}:2:${rstrWithSchemaId.schema_name}:${rstrWithSchemaId.schema_version}`
+      `${rstrWithSchemaId.issuer_did}:2:${rstrWithSchemaId.schema_name}:${rstrWithSchemaId.schema_version}`
     : ''
   return schemaId
 }
@@ -405,33 +410,33 @@ const evaluateOperation = (attribute: number, pValue: number, pType: AnonCredsPr
  */
 export const evaluatePredicates =
   (fields: Fields, credId?: string) =>
-    (proofCredentialItems: ProofCredentialItems): Predicate[] => {
-      const predicates = proofCredentialItems.predicates
-      if (!predicates || predicates.length == 0) {
-        return []
-      }
-
-      if ((credId && credId != proofCredentialItems.credId) || !proofCredentialItems.credId) {
-        return []
-      }
-
-      const credentialAttributes = getCredentialInfo(proofCredentialItems.credId, fields).map((ci) => ci.attributes)
-
-      return predicates.map((predicate: Predicate) => {
-        const { pType: pType, pValue: pValue, name: field } = predicate
-        let satisfied = false
-
-        if (field) {
-          const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
-
-          if (attribute && pValue) {
-            satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
-          }
-        }
-
-        return { ...predicate, satisfied }
-      })
+  (proofCredentialItems: ProofCredentialItems): Predicate[] => {
+    const predicates = proofCredentialItems.predicates
+    if (!predicates || predicates.length == 0) {
+      return []
     }
+
+    if ((credId && credId != proofCredentialItems.credId) || !proofCredentialItems.credId) {
+      return []
+    }
+
+    const credentialAttributes = getCredentialInfo(proofCredentialItems.credId, fields).map((ci) => ci.attributes)
+
+    return predicates.map((predicate: Predicate) => {
+      const { pType: pType, pValue: pValue, name: field } = predicate
+      let satisfied = false
+
+      if (field) {
+        const attribute = (credentialAttributes.find((attr) => attr[field] != undefined) ?? {})[field]
+
+        if (attribute && pValue) {
+          satisfied = evaluateOperation(Number(attribute), Number(pValue), pType as AnonCredsPredicateType)
+        }
+      }
+
+      return { ...predicate, satisfied }
+    })
+  }
 
 // scans through requested attributes and records
 // Builds and returns label: value attributes
@@ -754,25 +759,25 @@ export const retrieveCredentialsForProof = async (
         // We should ignore the key, if the value is undefined. For now this is a workaround.
         ...(hasIndy
           ? {
-            indy: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: true,
-            },
-          }
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: true,
+              },
+            }
           : {}),
         ...(hasAnonCreds
           ? {
-            anoncreds: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: true,
-            },
-          }
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: true,
+              },
+            }
           : {}),
         ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
       },
@@ -786,25 +791,25 @@ export const retrieveCredentialsForProof = async (
         // We should ignore the key, if the value is undefined. For now this is a workaround.
         ...(hasIndy
           ? {
-            indy: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: false,
-            },
-          }
+              indy: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
           : {}),
         ...(hasAnonCreds
           ? {
-            anoncreds: {
-              // Setting `filterByNonRevocationRequirements` to `false` returns all
-              // credentials even if they are revokable (and revoked). We need this to
-              // be able to show why a proof cannot be satisfied. Otherwise we can only
-              // show failure.
-              filterByNonRevocationRequirements: false,
-            },
-          }
+              anoncreds: {
+                // Setting `filterByNonRevocationRequirements` to `false` returns all
+                // credentials even if they are revokable (and revoked). We need this to
+                // be able to show why a proof cannot be satisfied. Otherwise we can only
+                // show failure.
+                filterByNonRevocationRequirements: false,
+              },
+            }
           : {}),
         ...(hasPresentationExchange ? { presentationExchange: {} } : {}),
       },
