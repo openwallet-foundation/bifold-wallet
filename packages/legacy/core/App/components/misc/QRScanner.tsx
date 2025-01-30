@@ -31,14 +31,19 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
-
   const styles = StyleSheet.create({
     viewFinder: {
       marginTop: -90,
       borderWidth: 320,
       borderColor: 'rgba(0, 0, 0, 0.4)',
-      alignItems: 'center',
       alignSelf: 'center',
+    },
+    innerFinder: {
+      borderRadius: 6,
+      borderWidth: 2,
+      borderColor: 'rgba(255, 255, 255, 0.6)',
+      width: 250,
+      height: 250,
     },
     messageContainer: {
       zIndex: 999,
@@ -65,9 +70,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       textAlign: 'center',
     },
   });
-
   const styleForState = ({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.2 : 1 }]
-
   const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
 
   return (
@@ -127,11 +130,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             </>
           )}
         </View>
-
         <View style={styles.viewFinder}>
-          <View style={{ borderRadius: 6, borderWidth: 2, borderColor: 'rgba(255, 255, 255, 0.6)', width: 250, height: 250 }} />
+          <View style={styles.innerFinder} />
         </View>
-        
         <View style={styles.bottomContainer}>
         {showScanButton && (
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -168,5 +169,4 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
     </View>
   )
 }
-
 export default QRScanner
