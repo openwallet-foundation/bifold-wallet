@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Pressable, StyleSheet, Text } from 'react-native'
+import { View, Modal, Pressable, StyleSheet, Text, ImageBackground } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
@@ -36,25 +36,44 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
     container: {
       flex: 1,
     },
+    
     viewFinder: {
+      top: -40,
+      marginTop: -30,
+      borderWidth: 320,
+      borderColor: 'rgba(0, 0, 0, 0.3)',
+    },
+
+    innerFinder: {
+      borderRadius: 6,
+      borderWidth: 2,
+      borderColor: 'rgba(255, 255, 255, 0.6)',
       width: 250,
       height: 250,
-      borderRadius: 24,
-      borderWidth: 2,
-      borderColor: ColorPallet.grayscale.white,
     },
+
     viewFinderContainer: {
       flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },
+
     messageContainer: {
+      zIndex: 999,
+      position: 'absolute',
       marginHorizontal: 40,
       flexDirection: 'row',
       alignItems: 'center',
       alignSelf: 'center',
       paddingTop: 30,
     },
+
+    bottomContainer: {
+      position: 'absolute',
+      width: '100%',
+      bottom: 60,
+    },
+
     icon: {
       color: ColorPallet.grayscale.white,
       padding: 4,
@@ -64,6 +83,10 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       color: 'white',
       marginHorizontal: 10,
       textAlign: 'center',
+    },
+    image: {
+      flex: 1,
+      justifyContent: 'center',
     },
   })
 
@@ -101,6 +124,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
         />
       )}
       <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError} torchActive={torchActive}></ScanCamera>
+      <ImageBackground source={require('../../assets/img/living-room.jpg')} resizeMode="cover" style={styles.image}>
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
           {error ? (
@@ -129,8 +153,12 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           )}
         </View>
         <View style={styles.viewFinderContainer}>
-          <View style={styles.viewFinder} />
+          <View style={styles.viewFinder}>
+              <View style={styles.innerFinder} />
+            </View>
         </View>
+
+        <View style={styles.bottomContainer}>
         {showScanButton && (
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Pressable
@@ -146,24 +174,26 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           </View>
         )}
 
-        <View style={{ marginHorizontal: 24, height: 24, marginBottom: 60, flexDirection: 'row' }}>
-          {showScanHelp && (
-            <Pressable
-              accessibilityLabel={t('Scan.ScanHelp')}
-              accessibilityRole={'button'}
-              testID={testIdWithKey('ScanHelp')}
-              onPress={() => navigation.navigate(Screens.ScanHelp)}
-              style={styleForState}
-              hitSlop={hitSlop}
-            >
-              <Icon name="help-circle" size={24} style={{ color: 'white' }} />
-            </Pressable>
-          )}
+          <View style={{ marginHorizontal: 24, height: 24, flexDirection: 'row' }}>
+            {showScanHelp && (
+              <Pressable
+                accessibilityLabel={t('Scan.ScanHelp')}
+                accessibilityRole={'button'}
+                testID={testIdWithKey('ScanHelp')}
+                onPress={() => navigation.navigate(Screens.ScanHelp)}
+                style={styleForState}
+                hitSlop={hitSlop}
+              >
+                <Icon name="help-circle" size={24} style={{ color: 'white' }} />
+              </Pressable>
+            )}
 
-          <View style={{ width: 10, marginLeft: 'auto' }} />
-          <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+            <View style={{ width: 10, marginLeft: 'auto' }} />
+            <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
+          </View>
         </View>
       </View>
+      </ImageBackground>
     </View>
   )
 }
