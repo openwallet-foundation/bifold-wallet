@@ -33,9 +33,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const { ColorPallet, TextTheme } = useTheme()
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
     viewFinder: {
       marginTop: -90,
       borderWidth: 320,
@@ -48,11 +45,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       borderColor: 'rgba(255, 255, 255, 0.6)',
       width: 250,
       height: 250,
-    },
-
-    viewFinderContainer: {
-      flexGrow: 1,
-      alignItems: 'center',
     },
     messageContainer: {
       zIndex: 999,
@@ -85,7 +77,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <Modal visible={showInfoBox} animationType="fade" transparent>
         <View
           style={{
@@ -141,7 +133,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             </>
           )}
         </View>
-        <View style={styles.viewFinderContainer}>
+        <View style={{ alignItems: 'center' }}>
           <View style={styles.viewFinder}>
               <View style={styles.innerFinder} />
             </View>
