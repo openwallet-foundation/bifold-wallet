@@ -6,7 +6,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -21,7 +21,7 @@ import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
-import { CredentialStackParams, Screens } from '../types/navigators'
+import { CredentialStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
@@ -47,7 +47,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPallet, Assets } = useTheme()
   const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.UTIL_LOGGER,
@@ -88,13 +88,30 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     brandingOverlay: undefined,
   })
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
+  const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor:
+        overlay.brandingOverlay?.secondaryBackgroundColor ?? overlay.brandingOverlay?.primaryBackgroundColor,
       display: 'flex',
     },
   })
+
+  const icon = {
+    color: ColorPallet.grayscale.white,
+    width: 48,
+    height: 48,
+  }
+
+  const navigateToContactDetails = () => {
+    if (credential?.connectionId) {
+      navigation.getParent()?.navigate(Stacks.ContactStack, {
+        screen: Screens.ContactDetails,
+        params: { connectionId: credential.connectionId },
+      })
+    }
+  }
 
   useEffect(() => {
     if (!agent) {
@@ -237,6 +254,50 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     )
   }
 
+  const getCredentialTop = () => {
+    if (isBranding10) {
+      return (
+        <>
+          <CredentialDetailSecondaryHeader overlay={overlay} />
+          <CredentialCardLogo overlay={overlay} />
+          <CredentialDetailPrimaryHeader overlay={overlay} />
+        </>
+      )
+    }
+    return (
+      <>
+        <CredentialDetailSecondaryHeader
+          overlay={overlay}
+          brandingOverlayType={bundleResolver.getBrandingOverlayType()}
+        />
+        <TouchableOpacity accessibilityRole="button" onPress={navigateToContactDetails} style={{ padding: 16 }}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 3 }}>
+              <CredentialCardLogo overlay={overlay} brandingOverlayType={bundleResolver.getBrandingOverlayType()} />
+              <Text style={[TextTheme.normal, { flexWrap: 'wrap' }]}>{overlay.metaOverlay?.issuer}</Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Assets.svg.iconChevronRight {...icon} />
+            </View>
+          </View>
+        </TouchableOpacity>
+        <View style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}>
+          <CredentialDetailPrimaryHeader
+            overlay={overlay}
+            brandingOverlayType={bundleResolver.getBrandingOverlayType()}
+            credential={credential}
+          />
+        </View>
+      </>
+    )
+  }
+
   const header = () => {
     return bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? (
       <View>
@@ -249,10 +310,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       </View>
     ) : (
       <View style={styles.container}>
-        <CredentialDetailSecondaryHeader overlay={overlay} />
-        <CredentialCardLogo overlay={overlay} />
-        <CredentialDetailPrimaryHeader overlay={overlay} />
-
+        {getCredentialTop()}
         {isRevoked && !isRevokedMessageHidden ? (
           <View style={{ padding: paddingVertical, paddingTop: 0 }}>
             {credential && <CredentialRevocationMessage credential={credential} />}
@@ -265,7 +323,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const footer = () => {
     return (
       <View style={{ marginBottom: 50 }}>
-        {credentialConnectionLabel ? (
+        {credentialConnectionLabel && isBranding10 ? (
           <View
             style={{
               backgroundColor: ColorPallet.brand.secondaryBackground,
