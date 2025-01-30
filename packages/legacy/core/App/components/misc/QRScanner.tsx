@@ -130,9 +130,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             </>
           )}
         </View>
-        <View style={styles.viewFinder}>
-          <View style={styles.innerFinder} />
-        </View>
+
+        <View style={styles.viewFinder}><View style={styles.innerFinder} /></View>
+        
         <View style={styles.bottomContainer}>
         {showScanButton && (
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
