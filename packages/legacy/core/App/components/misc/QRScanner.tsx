@@ -36,14 +36,12 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
     container: {
       flex: 1,
     },
-    
     viewFinder: {
       top: -40,
       marginTop: -30,
       borderWidth: 320,
       borderColor: 'rgba(0, 0, 0, 0.4)',
     },
-
     innerFinder: {
       borderRadius: 6,
       borderWidth: 2,
@@ -51,13 +49,11 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       width: 250,
       height: 250,
     },
-
     viewFinderContainer: {
       flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },
-
     messageContainer: {
       zIndex: 999,
       position: 'absolute',
@@ -67,25 +63,22 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       alignSelf: 'center',
       paddingTop: 30,
     },
-
     bottomContainer: {
       position: 'absolute',
       width: '100%',
       bottom: 60,
     },
-
     icon: {
       color: ColorPallet.grayscale.white,
       padding: 4,
     },
-
     textStyle: {
       ...TextTheme.title,
       color: 'white',
       marginHorizontal: 10,
       textAlign: 'center',
     },
-  })
+  });
 
   const styleForState = ({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.2 : 1 }]
 
@@ -121,7 +114,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
         />
       )}
       <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError} torchActive={torchActive}></ScanCamera>
-
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
           {error ? (
@@ -154,7 +146,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
               <View style={styles.innerFinder} />
             </View>
         </View>
-
         <View style={styles.bottomContainer}>
         {showScanButton && (
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -170,7 +161,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
             </Pressable>
           </View>
         )}
-
           <View style={{ marginHorizontal: 24, height: 24, flexDirection: 'row' }}>
             {showScanHelp && (
               <Pressable
@@ -184,13 +174,11 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
                 <Icon name="help-circle" size={24} style={{ color: 'white' }} />
               </Pressable>
             )}
-
             <View style={{ width: 10, marginLeft: 'auto' }} />
             <QRScannerTorch active={torchActive} onPress={() => setTorchActive(!torchActive)} />
           </View>
         </View>
       </View>
-
     </View>
   )
 }
