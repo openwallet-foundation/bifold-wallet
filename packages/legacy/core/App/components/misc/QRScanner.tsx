@@ -40,14 +40,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       alignItems: 'center',
       alignSelf: 'center',
     },
-
-    innerFinder: {
-      borderRadius: 6,
-      borderWidth: 2,
-      borderColor: 'rgba(255, 255, 255, 0.6)',
-      width: 250,
-      height: 250,
-    },
     messageContainer: {
       zIndex: 999,
       position: 'absolute',
@@ -137,7 +129,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
         </View>
 
         <View style={styles.viewFinder}>
-          <View style={styles.innerFinder} />
+          <View style={{ borderRadius: 6, borderWidth: 2, borderColor: 'rgba(255, 255, 255, 0.6)', width: 250, height: 250 }} />
         </View>
         
         <View style={styles.bottomContainer}>
