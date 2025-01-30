@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme'
 import { Button, ButtonType, ButtonProps } from './Button-api'
 
 const ButtonImplComponent = (
-  { title, buttonType, accessibilityLabel, testID, onPress, disabled = false, children }: ButtonProps,
+  { title, buttonType, accessibilityLabel, accessibilityHint, testID, onPress, disabled = false, children }: ButtonProps,
   ref: React.LegacyRef<TouchableOpacity>
 ) => {
   const { Buttons, heavyOpacity } = useTheme()
@@ -25,6 +25,7 @@ const ButtonImplComponent = (
       onPress={onPress}
       accessible
       accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
       accessibilityRole={'button'}
       onPressIn={() => setIsActive(!disabled && true)}
       onPressOut={() => setIsActive(false)}
