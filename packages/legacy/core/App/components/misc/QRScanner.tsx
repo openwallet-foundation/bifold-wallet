@@ -37,11 +37,11 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       flex: 1,
     },
     viewFinder: {
-      top: -40,
-      marginTop: -30,
+      marginTop: -90,
       borderWidth: 320,
       borderColor: 'rgba(0, 0, 0, 0.4)',
     },
+
     innerFinder: {
       borderRadius: 6,
       borderWidth: 2,
@@ -49,9 +49,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       width: 250,
       height: 250,
     },
+
     viewFinderContainer: {
       flexGrow: 1,
-      justifyContent: 'center',
       alignItems: 'center',
     },
     messageContainer: {
