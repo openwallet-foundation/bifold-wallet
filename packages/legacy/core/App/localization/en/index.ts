@@ -252,7 +252,7 @@ const translation = {
   },
   "PINEnter": {
     "Title": "Welcome back",
-    "SubText": "Enter your wallet PIN to sign-in",
+    "SubText": "Sign-in to access your wallet.",
     "EnterPIN": "Enter your wallet PIN",
     "Unlock": "Unlock",
     "Or": "Or",

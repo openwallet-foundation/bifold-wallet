@@ -245,6 +245,7 @@ const translation = {
   },
   "PINEnter": {
     "EnterPIN": "Digitar PIN",
+    "SubText": "Faça login para acessar sua carteira.",
     "Unlock": "Destravar",
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
