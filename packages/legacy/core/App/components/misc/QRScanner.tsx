@@ -41,7 +41,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       top: -40,
       marginTop: -30,
       borderWidth: 320,
-      borderColor: 'rgba(0, 0, 0, 0.3)',
+      borderColor: 'rgba(0, 0, 0, 0.4)',
     },
 
     innerFinder: {
@@ -78,15 +78,12 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       color: ColorPallet.grayscale.white,
       padding: 4,
     },
+
     textStyle: {
       ...TextTheme.title,
       color: 'white',
       marginHorizontal: 10,
       textAlign: 'center',
-    },
-    image: {
-      flex: 1,
-      justifyContent: 'center',
     },
   })
 
@@ -124,7 +121,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
         />
       )}
       <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError} torchActive={torchActive}></ScanCamera>
-      <ImageBackground source={require('../../assets/img/living-room.jpg')} resizeMode="cover" style={styles.image}>
+
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
           {error ? (
@@ -193,7 +190,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           </View>
         </View>
       </View>
-      </ImageBackground>
+
     </View>
   )
 }
