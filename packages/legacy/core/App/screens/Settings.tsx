@@ -144,9 +144,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           accessibilityLabel: t('Settings.ChangePin'),
           testID: testIdWithKey('Change Pin'),
           onPress: () =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.SettingStack, { screen: Screens.CreatePIN, params: { updatePin: true } }),
+            navigation?.navigate(Screens.EnterPIN),
         },
         {
           title: t('Settings.Language'),

@@ -253,6 +253,7 @@ const translation = {
         "Title": "Content de te revoir",
         "SubText": "Entrez le code PIN de votre portefeuille pour vous connecter",
         "EnterPIN": "Veuillez saisir votre NIP",
+        "EnterOldPIN": "Entrez le code PIN précédent",
         "Unlock": "Déverrouiller",
         "Or": "Ou",
         "BiometricsUnlock": "Déverrouiller avec la biométrie",
@@ -274,6 +275,11 @@ const translation = {
         "AppSettingSave": "Enregistrer",
         "AppSettingCancel": "Annuler",
 
+    },
+    "PINChangeConfirmation": {
+        "AlertTitle": "Votre code PIN a été modifié",
+        "AlertSubText": "Vous pouvez maintenant vous connecter avec votre nouveau code PIN",
+        "PrimaryCta": "Retour à la maison",
     },
     "AttemptLockout": {
         "Title": "Votre portefeuille est temporairement verrouillé",

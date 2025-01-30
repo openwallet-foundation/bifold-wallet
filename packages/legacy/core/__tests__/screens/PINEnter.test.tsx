@@ -8,6 +8,7 @@ import { AuthContext } from '../../App/contexts/auth'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import PINEnter from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
+import { PINEntryUsage } from '../../App/screens/PINEnter'
 import authContext from '../contexts/auth'
 
 describe('PINEnter Screen', () => {
@@ -22,6 +23,24 @@ describe('PINEnter Screen', () => {
         >
           <AuthContext.Provider value={authContext}>
             <PINEnter setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('PIN Enter renders correctly for change PIN flow', () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINEnter usage={PINEntryUsage.PINChange} />
           </AuthContext.Provider>
         </StoreProvider>
       </ContainerProvider>
