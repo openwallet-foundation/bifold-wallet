@@ -149,6 +149,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
         ListHeaderComponent={listHeader}
         renderItem={({ item }) => {
           const errors: CredentialErrors[] = []
+          item.credExchangeRecord?.revocationNotification?.revocationDate && errors.push(CredentialErrors.Revoked)
           !hasSatisfiedPredicates(getCredentialsFields(), item.credId) && errors.push(CredentialErrors.PredicateError)
           return (
             <View style={styles.pageMargin}>
