@@ -138,7 +138,7 @@ export function formatTime(
   const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
   const isPortuguese = i18n.resolvedLanguage === 'pt-BR'
   const isNonEnglish = i18n.resolvedLanguage === 'fr' || isPortuguese
-  const hoursFormat = isPortuguese ? 'HH:mm' : 'h:mm a'
+  const hoursFormat = isNonEnglish ? 'HH:mm' : 'h:mm a'
   // for the shortened approach eg. in chat bubbles
   if (chatFormat) {
     if (lessThanAMinuteAgo) {
