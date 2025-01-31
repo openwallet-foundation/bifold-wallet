@@ -8,7 +8,7 @@ Some mediators, such as [DIDComm-mediator-credo](https://github.com/openwallet-f
 
 Bifold's legacy method of providing a mediator URL through agent configuration options does not support Out-of-Band (OOB) invitations. To use OOB invitations, you need to set up the agent to accept mediation differently.
 
-Start by, comment out the current mediator URL from the agent initialization options:
+First, comment out the current mediator URL from the agent initialization options:
 
 ```json
    // mediatorInvitationUrl: Config.MEDIATOR_URL,
@@ -63,11 +63,41 @@ Next, add a function to `initialize-agent.ts` to set up mediation using the OOB 
 
 ```typescript
 const startMediation = useCallback(async (agent: Agent) => {
-  const invitationId = '2c6dcc2e-b44d-53fe-a135-7decc90a85af';
-  const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitationId);
+  const invitationId = '2c6dcc2e-b44d-53fe-a135-7decc90a85af'
+  const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitationId)
 
-  let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : [];
+  let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : []
 
   if (!connection) {
-    agent.config.logger.debug('Mediation connection does not e
+    agent.config.logger.debug('Mediation connection does not exist, creating connection')
+
+    const invite = await agent.oob.parseInvitation(Config.MEDIATOR_URL!)
+    const { connectionRecord: newConnection } = await agent.oob.receiveInvitation(invite)
+
+    if (!newConnection) {
+      console.log('No connection record to provision mediation.')
+      return
+    }
+
+    connection = newConnection
+  }
+
+  const readyConnection = connection.isReady ? connection : await agent.connections.returnWhenIsConnected(connection.id)
+
+  return agent.mediationRecipient.provision(readyConnection)
+}, [])
 ```
+
+### 4. Call the Mediation Function
+
+Finally, call the `startMediation` function **after** initializing the mediator in `Splash.tsx`:
+
+```typescript
+await newAgent.initialize()
+await startMediation(newAgent)
+newAgent.mediationRecipient.initiateMessagePickup()
+```
+
+### Summary
+
+By following these steps, you ensure that your agent properly accepts mediation using an Out-of-Band invitation, bypassing the legacy mediator URL configuration. Let us know if you run into any issues! 😊
