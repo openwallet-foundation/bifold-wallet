@@ -24,12 +24,13 @@ import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
 
-export enum BrandingOverlayType {
-  Branding01 = OverlayType.Branding01,
-  Branding10 = OverlayType.Branding10,
-  Branding11 = OverlayType.Branding11,
-}
+export const BrandingOverlayType = {
+  Branding01: OverlayType.Branding01,
+  Branding10: OverlayType.Branding10,
+  Branding11: OverlayType.Branding11,
+} as const
 
+export type BrandingOverlayType = (typeof BrandingOverlayType)[keyof typeof BrandingOverlayType]
 export interface CredentialOverlay<T> {
   bundle?: OCABundle
   presentationFields?: Field[]
