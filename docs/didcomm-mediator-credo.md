@@ -14,7 +14,7 @@ First, comment out the current mediator URL from the agent initialization option
 // mediatorInvitationUrl: Config.MEDIATOR_URL,
 ```
 
-Pro-tip 🤓: You still need to add your new invitation to your `.env` file.
+Pro-tip 🤓: You still need to add your new invitation to your `.env` file. It will be used in the sample code below.
 
 ### 2. Find Your Mediator's `invitationId`
 
