@@ -273,6 +273,10 @@ const translation = {
         "AppSettingChangedEnterPIN": "Veuillez confirmer la modification en saisissant votre NIP.",
         "AppSettingSave": "Enregistrer",
         "AppSettingCancel": "Annuler",
+        "ChangeBiometricsHeader": "Change in biometrics (FR)",
+        "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (FR)",
+        "ChangeBiometricsInputLabel": "Enter your wallet PIN (FR)",
+        "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)",
 
     },
     "AttemptLockout": {
