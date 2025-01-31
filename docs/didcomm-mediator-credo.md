@@ -10,8 +10,8 @@ Bifold's legacy method of providing a mediator URL through agent configuration o
 
 First, comment out the current mediator URL from the agent initialization options:
 
-```json
-   // mediatorInvitationUrl: Config.MEDIATOR_URL,
+```typescript
+// mediatorInvitationUrl: Config.MEDIATOR_URL,
 ```
 
 Pro-tip 🤓: You still need to add your new invitation to your `.env` file.
