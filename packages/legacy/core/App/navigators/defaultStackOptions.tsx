@@ -19,21 +19,22 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.Onboarding]: {
     headerTintColor: OnboardingTheme.headerTintColor,
     gestureEnabled: false,
+    headerLeft: () => false,
   },
   [Screens.Terms]: {
     headerTintColor: OnboardingTheme.headerTintColor,
-    headerBackTestID: testIdWithKey('Back'),
+    headerLeft: () => false,
   },
   [Screens.CreatePIN]: {
-    headerBackTestID: testIdWithKey('Back'),
+    headerLeft: () => false,
   },
   [Screens.NameWallet]: {
     headerTintColor: OnboardingTheme.headerTintColor,
-    headerBackTestID: testIdWithKey('Back'),
+    headerLeft: () => false,
   },
   [Screens.UseBiometry]: {
     headerTintColor: OnboardingTheme.headerTintColor,
-    headerBackTestID: testIdWithKey('Back'),
+    headerLeft: () => false,
   },
   [Screens.Developer]: {
     headerTintColor: OnboardingTheme.headerTintColor,
@@ -41,7 +42,7 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
   [Screens.UsePushNotifications]: {
     headerTintColor: OnboardingTheme.headerTintColor,
-    headerBackTestID: testIdWithKey('Back'),
+    headerLeft: () => false,
   },
 }
 

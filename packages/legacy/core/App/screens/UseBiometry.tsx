@@ -2,12 +2,13 @@ import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform } from 'react-native'
+import { StyleSheet, Text, View, Modal, ScrollView, DeviceEventEmitter, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import ToggleButton from '../components/buttons/ToggleButton'
+import { EventTypes } from '../constants'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -152,6 +153,7 @@ const UseBiometry: React.FC = () => {
     (newValue: boolean) => {
       if (screenUsage === UseBiometryUsage.ToggleOnOff) {
         setCanSeeCheckPIN(true)
+        DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, true)
         if (
           historyEventsLogger.logToggleBiometry &&
           store.onboarding.didAgreeToTerms &&
@@ -247,6 +249,7 @@ const UseBiometry: React.FC = () => {
       if (status) {
         setBiometryEnabled((previousState) => !previousState)
       }
+      DeviceEventEmitter.emit(EventTypes.BIOMETRY_UPDATE, false)
       if (
         historyEventsLogger.logToggleBiometry &&
         store.onboarding.didAgreeToTerms &&
