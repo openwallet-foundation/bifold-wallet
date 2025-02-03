@@ -1,7 +1,7 @@
 import { ProofState } from '@credo-ts/core'
 import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
@@ -9,11 +9,6 @@ import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useStore } from '../contexts/store'
 import { useDeepLinks } from '../hooks/deep-links'
-<<<<<<< Updated upstream
-import HistoryStack from '../modules/history/navigation/HistoryStack'
-import Chat from '../screens/Chat'
-=======
->>>>>>> Stashed changes
 import { BifoldError } from '../types/error'
 import MainStack from './MainStack'
 
@@ -28,12 +23,12 @@ const RootStack: React.FC = () => {
 
   useDeepLinks()
 
-  const isAuthenticated = useCallback(
+  const isAuthenticated = useMemo(
     () => store.authentication.didAuthenticate && store.onboarding.postAuthScreens.length === 0,
     [store.authentication.didAuthenticate, store.onboarding.postAuthScreens]
   )
 
-  const isOnboardingComplete = useCallback(
+  const isOnboardingComplete = useMemo(
     () =>
       (store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
       (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry),
@@ -58,7 +53,7 @@ const RootStack: React.FC = () => {
     })
   }, [dispatch, loadState, t])
 
-  if (isOnboardingComplete() && isAuthenticated()) {
+  if (isOnboardingComplete && isAuthenticated) {
     return <MainStack />
   }
 
