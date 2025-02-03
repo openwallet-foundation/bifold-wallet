@@ -39,17 +39,17 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
     } as PINValidationsType)
   }
 
-  if ('number' === typeof(PINRules.no_repeated_numbers) && PINRules.no_repeated_numbers > 2 ) {
-    const repetitionPattern = new RegExp(String.raw`(\d)\1{${PINRules.no_repeated_numbers - 1},}`, "g")
-    PINValidations.push({
-      isInvalid: repetitionPattern.test(PIN),
-      errorName: PINError.MaxAdjacentNumberRepetitionValidation
-    } as PINValidationsType)
-  } else if (PINRules.no_repeated_numbers || 0 === PINRules.no_repeated_numbers) {
+  if (0 === PINRules.max_repeated_numbers) {
     const repetitionPattern = new RegExp(/(\d)\1{1,}/)
     PINValidations.push({
       isInvalid: repetitionPattern.test(PIN),
       errorName: PINError.NoRepetitionOfTheSameNumbersValidation
+    } as PINValidationsType)
+  } else {
+    const repetitionPattern = new RegExp(String.raw`(\d)\1{${PINRules.max_repeated_numbers + 1},}`, "g")
+    PINValidations.push({
+      isInvalid: repetitionPattern.test(PIN),
+      errorName: PINError.MaxAdjacentNumberRepetitionValidation
     } as PINValidationsType)
   }
 

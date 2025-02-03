@@ -4,7 +4,7 @@ const defaultPINRules = {
   only_numbers: false,
   min_length: 6,
   max_length: 6,
-  no_repeated_numbers: false,
+  max_repeated_numbers: 5,
   no_series_of_numbers: false,
   no_repetition_of_the_two_same_numbers: false,
   no_even_or_odd_series_of_numbers: false,
@@ -74,10 +74,10 @@ describe('PIN creation validations', () => {
     }
   })
 
-  test('PIN with repeated numbers and repeated numbers validation to true, so the validation use the default of two repeated numbers, should return NoRepetitionOfTheSameNumbersValidation as invalid', async () => {
+  test('PIN with repeated numbers and max repeated numbers is 0, should return NoRepetitionOfTheSameNumbersValidation as invalid', async () => {
     const PINRulesWithRepeatedNumbers = {
       ...defaultPINRules,
-      no_repeated_numbers: 0,
+      max_repeated_numbers: 0,
     }
 
     const PINWithRepeatedNumbers = '113456'
@@ -90,10 +90,10 @@ describe('PIN creation validations', () => {
     }
   })
 
-  test('PIN with repeated numbers and repeated numbers validation to a number, so the validation use that number as validation limit, should return NoRepetitionOfTheSameNumbersValidation as invalid', async () => {
+  test('PIN with adhacent numbers repeating 2 times and max repeated numbers is 1, so the validation use that number as validation max limit, should return NoRepetitionOfTheSameNumbersValidation as invalid', async () => {
     const PINRulesWithRepeatedNumbers = {
       ...defaultPINRules,
-      no_repeated_numbers: 3,
+      max_repeated_numbers: 1,
     }
 
     const PINWithRepeatedNumbers = '111456'
@@ -106,13 +106,13 @@ describe('PIN creation validations', () => {
     }
   })
 
-  test('PIN with a numbers repeated two times and repeated numbers validation set to 3 should return NoRepetitionOfTheSameNumbersValidation as valid', async () => {
+  test('PIN with adhacent numbers repeating 2 times and max repeated numbers is 2, so the validation use that number as validation max limit, should return NoRepetitionOfTheSameNumbersValidation as valid', async () => {
     const PINRulesWithRepeatedNumbers = {
       ...defaultPINRules,
-      no_repeated_numbers: 3,
+      max_repeated_numbers: 2,
     }
 
-    const PINWithRepeatedNumbers = '112456'
+    const PINWithRepeatedNumbers = '111456'
     const PINValidations = PINCreationValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
 
     for (const PINValidation of PINValidations) {
