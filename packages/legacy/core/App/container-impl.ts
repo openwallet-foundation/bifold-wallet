@@ -57,7 +57,7 @@ export const defaultConfig: Config = {
   PINSecurity: { rules: PINRules, displayHelper: false },
   settings: [],
   enableChat: true,
-  enableTours: false,
+  enableTours: true,
   supportedLanguages: [Locales.en, Locales.fr, Locales.ptBr],
   showPreface: false,
   disableOnboardingSkip: false,

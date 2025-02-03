@@ -49,7 +49,6 @@ import {
   ProofCredentialPredicates,
 } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import {
@@ -203,7 +202,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(TourID.ProofRequestTour)
+      start('proofRequestTourSteps')
       dispatch({
         type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
         payload: [true],
@@ -714,7 +713,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {(!loading && proofConnectionLabel && goalCode === 'aries.vc.verify') && (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         )}
         {!loading && isShareDisabled() ? (

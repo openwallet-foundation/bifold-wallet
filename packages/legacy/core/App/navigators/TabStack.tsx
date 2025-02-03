@@ -19,7 +19,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
-import { TourID } from '../types/tour'
 import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
@@ -128,7 +127,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourID.HomeTour} index={1}>
+              <AttachTourStep tourID={'homeTourSteps'} index={1}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
 
@@ -168,7 +167,7 @@ const TabStack: React.FC = () => {
                   width: 90,
                 }}
               >
-                <AttachTourStep tourID={TourID.HomeTour} index={0} fill>
+                <AttachTourStep tourID={'homeTourSteps'} index={0} fill>
                   <View
                     style={{
                       position: 'absolute',
@@ -179,7 +178,7 @@ const TabStack: React.FC = () => {
                       margin: 'auto',
                     }}
                   >
-                    <AttachTourStep tourID={TourID.CredentialsTour} index={0} fill>
+                    <AttachTourStep tourID={'homeTourSteps'} index={0} fill>
                       <View
                         style={{
                           flexGrow: 1,
@@ -238,7 +237,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourID.HomeTour} index={2}>
+              <AttachTourStep tourID={'homeTourSteps'} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
                   {showLabels && (
