@@ -7,7 +7,7 @@ import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 import timeTravel from '../helpers/timetravel'
 import { BasicAppContext } from '../helpers/app'
-import { Linking } from 'react-native'
+import { Linking, View } from 'react-native'
 import { testDefaultState } from '../contexts/store'
 import { StoreProvider } from '../../App/contexts/store'
 import { RESULTS, check, request } from 'react-native-permissions'
@@ -17,6 +17,22 @@ const mockedCheck = check as jest.MockedFunction<typeof check>
 const mockedRequest = request as jest.MockedFunction<typeof request>
 
 jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
+
+jest.mock('@react-navigation/elements', () => {
+  return {
+    __esModule: true,
+    Header: jest.fn().mockImplementation(() => null),
+    HeaderBackButton: jest.fn().mockImplementation(() => {
+      return jest.fn(() => null);
+    }),
+    useHeaderHeight: jest.fn().mockReturnValue(150)
+  };
+});
+
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: jest.fn().mockImplementation(() => ({ top: 25, left: 0, bottom: 25, right: 0 }))
+}))
+
 
 const customStore = {
   ...testDefaultState,

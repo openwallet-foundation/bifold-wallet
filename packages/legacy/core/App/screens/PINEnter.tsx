@@ -121,6 +121,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     [PINEntryUsage.WalletUnlock]: t('PINEnter.Unlock'),
   }
 
+  const primaryButtonTestId = {
+    [PINEntryUsage.ChangeBiometrics]: 'Continue',
+    [PINEntryUsage.PINCheck]: 'AppSettingSave',
+    [PINEntryUsage.WalletUnlock]: 'PINEnter.Unlock',
+  }
+
   const incrementDeveloperMenuCounter = useCallback(() => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {
       developerOptionCount.current = 0
@@ -540,7 +546,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
             <Button
               title={primaryButtonText[usage]}
               buttonType={ButtonType.Primary}
-              testID={testIdWithKey(primaryButtonText[usage])}
+              testID={testIdWithKey(primaryButtonTestId[usage])}
               disabled={isContinueDisabled()}
               accessibilityLabel={primaryButtonText[usage]}
               onPress={() => {
