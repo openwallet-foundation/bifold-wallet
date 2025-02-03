@@ -214,7 +214,7 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
             Array [
               Object {
                 "alignSelf": "flex-start",
-                "color": "#FFFFFF",
+                "color": "#42803E",
                 "fontSize": 18,
                 "fontWeight": "normal",
                 "textDecorationLine": "underline",

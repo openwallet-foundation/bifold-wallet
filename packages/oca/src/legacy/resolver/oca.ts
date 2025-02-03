@@ -24,11 +24,13 @@ import { parseCredDefFromId } from '../../utils/credential-definition'
 
 import { Field } from './record'
 
-export enum BrandingOverlayType {
-  Branding01 = OverlayType.Branding01,
-  Branding10 = OverlayType.Branding10,
-}
+export const BrandingOverlayType = {
+  Branding01: OverlayType.Branding01,
+  Branding10: OverlayType.Branding10,
+  Branding11: OverlayType.Branding11,
+} as const
 
+export type BrandingOverlayType = (typeof BrandingOverlayType)[keyof typeof BrandingOverlayType]
 export interface CredentialOverlay<T> {
   bundle?: OCABundle
   presentationFields?: Field[]
@@ -115,6 +117,12 @@ export class OCABundle implements OCABundleType {
       brandingOverlayType: options?.brandingOverlayType ?? BrandingOverlayType.Branding10,
       language: options?.language ?? defaultBundleLanguage,
     }
+    // Make bundle overlay type come from options.brandingOverlayType
+    this.bundle.overlays.forEach((o) => {
+      if (o.type === BrandingOverlayType.Branding10 || o.type === BrandingOverlayType.Branding11) {
+        o.type = this.options.brandingOverlayType!
+      }
+    })
   }
 
   public get captureBase(): CaptureBase {
@@ -257,16 +265,30 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
       colorHash = metaOverlay.issuer
     }
 
-    const brandingoOverlay01: ILegacyBrandingOverlayData = {
+    const brandingOverlay01: ILegacyBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding01,
       background_color: generateColor(colorHash),
     }
 
-    const brandingoOverlay10: IBrandingOverlayData = {
+    const brandingOverlay10: IBrandingOverlayData = {
       capture_base: '',
       type: OverlayType.Branding10,
       primary_background_color: generateColor(colorHash),
+    }
+
+    const brandingOverlay11: IBrandingOverlayData = {
+      capture_base: '',
+      type: OverlayType.Branding11,
+      primary_background_color: '#FFFFFF',
+      secondary_background_color: generateColor(colorHash),
+    }
+
+    let brandingOverlay =
+      this.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? brandingOverlay01 : brandingOverlay10
+
+    if (this.getBrandingOverlayType() === BrandingOverlayType.Branding11) {
+      brandingOverlay = brandingOverlay11
     }
 
     const bundle: OverlayBundle = new OverlayBundle(params.identifiers?.credentialDefinitionId as string, {
@@ -276,10 +298,7 @@ export class DefaultOCABundleResolver implements OCABundleResolverType {
         type: OverlayType.CaptureBase10,
         flagged_attributes: [],
       },
-      overlays: [
-        metaOverlay,
-        this.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? brandingoOverlay01 : brandingoOverlay10,
-      ],
+      overlays: [metaOverlay, brandingOverlay],
     })
 
     return Promise.resolve(

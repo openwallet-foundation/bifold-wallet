@@ -429,6 +429,7 @@ const translation = {
         "PeopleAndOrganizations": "Les personnes et les organisations avec lesquelles vous avez interagi sont répertoriées ici.",
         "WhatAreContacts": "Qu'est-ce que les Contacts?",
         "AddContact": "Ajouter un Contact",
+        "UnknownContact": "Contact Inconnu",
     },
     "ContactDetails": {
         "Created": "Créé",

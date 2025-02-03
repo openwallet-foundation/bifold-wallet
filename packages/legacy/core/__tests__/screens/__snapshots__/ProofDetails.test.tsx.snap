@@ -419,6 +419,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               },
                             ]
                           }
+                          testID="com.ariesbifold:id/NoLogoText"
                         >
                           L
                         </Text>
@@ -452,12 +453,11 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                   Object {
                                     "color": "#FFFFFF",
                                     "flexShrink": 1,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#FFFFFF",
                                     "flex": 1,
                                     "flexWrap": "wrap",
-                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -529,7 +529,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               <View
                                 style={
                                   Object {
-                                    "marginTop": 15,
+                                    "gap": 4,
+                                    "marginVertical": 16,
                                   }
                                 }
                               >
@@ -545,6 +546,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                         Object {
                                           "color": "#FFFFFF",
                                           "flexShrink": 1,
+                                          "lineHeight": 24,
                                         },
                                         Object {
                                           "lineHeight": 19,
@@ -568,6 +570,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -587,7 +590,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               <View
                                 style={
                                   Object {
-                                    "marginTop": 15,
+                                    "gap": 4,
+                                    "marginVertical": 16,
                                   }
                                 }
                               >
@@ -603,6 +607,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                         Object {
                                           "color": "#FFFFFF",
                                           "flexShrink": 1,
+                                          "lineHeight": 24,
                                         },
                                         Object {
                                           "lineHeight": 19,
@@ -626,6 +631,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -972,6 +978,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               },
                             ]
                           }
+                          testID="com.ariesbifold:id/NoLogoText"
                         >
                           L
                         </Text>
@@ -1005,12 +1012,11 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                   Object {
                                     "color": "#FFFFFF",
                                     "flexShrink": 1,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#FFFFFF",
                                     "flex": 1,
                                     "flexWrap": "wrap",
-                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -1082,7 +1088,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               <View
                                 style={
                                   Object {
-                                    "marginTop": 15,
+                                    "gap": 4,
+                                    "marginVertical": 16,
                                   }
                                 }
                               >
@@ -1098,6 +1105,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                         Object {
                                           "color": "#FFFFFF",
                                           "flexShrink": 1,
+                                          "lineHeight": 24,
                                         },
                                         Object {
                                           "lineHeight": 19,
@@ -1121,6 +1129,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -1140,7 +1149,8 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               <View
                                 style={
                                   Object {
-                                    "marginTop": 15,
+                                    "gap": 4,
+                                    "marginVertical": 16,
                                   }
                                 }
                               >
@@ -1156,6 +1166,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                         Object {
                                           "color": "#FFFFFF",
                                           "flexShrink": 1,
+                                          "lineHeight": 24,
                                         },
                                         Object {
                                           "lineHeight": 19,
@@ -1179,6 +1190,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }

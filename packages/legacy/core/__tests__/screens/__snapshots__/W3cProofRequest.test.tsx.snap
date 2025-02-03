@@ -289,7 +289,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                         },
                         Object {
                           "elevation": 5,
-                          "overflow": "hidden",
+                          "overflow": "visible",
                         },
                         undefined,
                       ]
@@ -333,6 +333,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                       testID="com.ariesbifold:id/ShowCredentialDetails"
                     >
                       <View
+                        style={
+                          Object {
+                            "overflow": "hidden",
+                          }
+                        }
                         testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View
@@ -402,6 +407,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                   },
                                 ]
                               }
+                              testID="com.ariesbifold:id/NoLogoText"
                             >
                               C
                             </Text>
@@ -435,12 +441,14 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                       Object {
                                         "color": "#FFFFFF",
                                         "flexShrink": 1,
+                                        "lineHeight": 24,
+                                      },
+                                      Object {
+                                        "flex": 1,
+                                        "flexWrap": "wrap",
                                       },
                                       Object {
                                         "color": "#FFFFFF",
-                                        "flex": 1,
-                                        "flexWrap": "wrap",
-                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -482,7 +490,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 
                               </Text>
                               <Text
-                                numberOfLines={1}
                                 style={
                                   Object {
                                     "color": "#D8292F",
@@ -496,7 +503,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               </Text>
                             </View>
                             <View
-                              ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                              ListFooterComponent={
+                                <React.Fragment>
+                                  <CredentialCardPrimaryBodyFooter />
+                                </React.Fragment>
+                              }
                               data={
                                 Array [
                                   Object {
@@ -543,7 +554,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <View
                                   style={
                                     Object {
-                                      "marginTop": 15,
+                                      "gap": 4,
+                                      "marginVertical": 16,
                                     }
                                   }
                                 >
@@ -591,6 +603,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "lineHeight": 19,
@@ -840,7 +853,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                         },
                         Object {
                           "elevation": 5,
-                          "overflow": "hidden",
+                          "overflow": "visible",
                         },
                         undefined,
                       ]
@@ -884,6 +897,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                       testID="com.ariesbifold:id/ShowCredentialDetails"
                     >
                       <View
+                        style={
+                          Object {
+                            "overflow": "hidden",
+                          }
+                        }
                         testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View
@@ -953,6 +971,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                   },
                                 ]
                               }
+                              testID="com.ariesbifold:id/NoLogoText"
                             >
                               L
                             </Text>
@@ -986,12 +1005,14 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                       Object {
                                         "color": "#FFFFFF",
                                         "flexShrink": 1,
+                                        "lineHeight": 24,
+                                      },
+                                      Object {
+                                        "flex": 1,
+                                        "flexWrap": "wrap",
                                       },
                                       Object {
                                         "color": "#FFFFFF",
-                                        "flex": 1,
-                                        "flexWrap": "wrap",
-                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1010,7 +1031,11 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               }
                             />
                             <View
-                              ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                              ListFooterComponent={
+                                <React.Fragment>
+                                  <CredentialCardPrimaryBodyFooter />
+                                </React.Fragment>
+                              }
                               data={
                                 Array [
                                   Attribute {
@@ -1081,7 +1106,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <View
                                   style={
                                     Object {
-                                      "marginTop": 15,
+                                      "gap": 4,
+                                      "marginVertical": 16,
                                     }
                                   }
                                 >
@@ -1104,6 +1130,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "lineHeight": 19,
@@ -1135,8 +1162,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
-                                          },
-                                          Object {
                                             "lineHeight": 24,
                                           },
                                           Object {
@@ -1159,7 +1184,8 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 <View
                                   style={
                                     Object {
-                                      "marginTop": 15,
+                                      "gap": 4,
+                                      "marginVertical": 16,
                                     }
                                   }
                                 >
@@ -1182,6 +1208,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "lineHeight": 19,
@@ -1213,8 +1240,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                           Object {
                                             "color": "#FFFFFF",
                                             "flexShrink": 1,
-                                          },
-                                          Object {
                                             "lineHeight": 24,
                                           },
                                           Object {
