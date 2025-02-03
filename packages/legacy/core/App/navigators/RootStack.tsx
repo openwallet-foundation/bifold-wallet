@@ -32,7 +32,7 @@ const RootStack: React.FC = () => {
     () =>
       (store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
       (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry),
-    [store.onboarding]
+    [store.onboarding.onboardingVersion, store.onboarding.didCompleteOnboarding, store.onboarding.didConsiderBiometry]
   )
 
   useEffect(() => {
