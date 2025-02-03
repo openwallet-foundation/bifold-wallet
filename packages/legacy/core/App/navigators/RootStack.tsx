@@ -1,11 +1,7 @@
 import { ProofState } from '@credo-ts/core'
 import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
-import {
-  CardStyleInterpolators,
-  StackCardStyleInterpolator,
-  createStackNavigator,
-} from '@react-navigation/stack'
+import { CardStyleInterpolators, StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -30,6 +26,8 @@ import ProofRequestStack from './ProofRequestStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
+import CredentialDetails from '../screens/CredentialDetails'
+import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
 
 const RootStack: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -37,15 +35,11 @@ const RootStack: React.FC = () => {
   const { t } = useTranslation()
   const theme = useTheme()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [
-    splash,
-    OnboardingStack,
-    CustomNavStack1,
-    loadState,
-  ] = useServices([
+  const [splash, OnboardingStack, CustomNavStack1, ScreenOptionsDictionary, loadState] = useServices([
     TOKENS.SCREEN_SPLASH,
     TOKENS.STACK_ONBOARDING,
     TOKENS.CUSTOM_NAV_STACK_1,
+    TOKENS.OBJECT_SCREEN_CONFIG,
     TOKENS.LOAD_STATE,
   ])
 
@@ -65,11 +59,10 @@ const RootStack: React.FC = () => {
   }, [declinedProofs, agent, store.preferences.useDataRetention])
 
   useEffect(() => {
-    loadState(dispatch)
-      .catch((err: unknown) => {
-        const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
-        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-      })
+    loadState(dispatch).catch((err: unknown) => {
+      const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    })
   }, [dispatch, loadState, t])
 
   const mainStack = () => {
@@ -86,6 +79,24 @@ const RootStack: React.FC = () => {
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
+        <Stack.Screen
+          name={Screens.CredentialDetails}
+          component={CredentialDetails}
+          options={{
+            title: t('Screens.CredentialDetails'),
+            headerShown: true,
+            ...ScreenOptionsDictionary[Screens.CredentialDetails],
+          }}
+        />
+        <Stack.Screen
+          name={Screens.OpenIDCredentialDetails}
+          component={OpenIDCredentialDetails}
+          options={{
+            title: t('Screens.CredentialDetails'),
+            ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails],
+          }}
+        />
+
         <Stack.Screen
           name={Screens.Chat}
           component={Chat}

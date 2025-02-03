@@ -33,12 +33,12 @@ const ScanHelp: React.FC = () => {
         <Text style={TextTheme.headingThree}>{t('Scan.WhatToScan')}</Text>
         <Text style={[style.text, { marginTop: 20 }]}>{t('Scan.ScanOnySpecial')}</Text>
         <Text style={style.text}>{t('Scan.ScanOnlySpecial2')}</Text>
-        <Link
+        {whereToUseWalletUrl && (<Link
           linkText={t('Scan.WhereToUseLink')}
           style={style.text}
-          onPress={() => whereToUseWalletUrl && Linking.openURL(whereToUseWalletUrl)}
+          onPress={() => Linking.openURL(whereToUseWalletUrl)}
           testID={testIdWithKey('WhereToUseLink')}
-        />
+        /> )}
         <Text style={style.text}>{t('Scan.ScanOnlySpecial3')}</Text>
       </ScrollView>
     </SafeAreaView>

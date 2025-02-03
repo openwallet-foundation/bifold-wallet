@@ -247,6 +247,7 @@ const translation = {
   },
   "PINEnter": {
     "EnterPIN": "Digitar PIN",
+    "SubText": "Faça login para acessar sua carteira.",
     "Unlock": "Destravar",
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
@@ -406,6 +407,7 @@ const translation = {
     "PeopleAndOrganizations": "Pessoas e organizações com as quais você interagiu estão listadas aqui.",
     "WhatAreContacts": "O que são Contatos?",
     "AddContact": "Adicionar um Contato",
+    "UnknownContact": "Contact Desconhecido",
   },
   "ContactDetails": {
     "Created": "Criado",

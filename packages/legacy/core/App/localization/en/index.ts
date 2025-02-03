@@ -254,7 +254,7 @@ const translation = {
   },
   "PINEnter": {
     "Title": "Welcome back",
-    "SubText": "Enter your wallet PIN to sign-in",
+    "SubText": "Sign-in to access your wallet.",
     "EnterPIN": "Enter your wallet PIN",
     "Unlock": "Unlock",
     "Or": "Or",
@@ -431,6 +431,7 @@ const translation = {
     "PeopleAndOrganizations": "People and organizations you've interacted with are listed here.",
     "WhatAreContacts": "What are Contacts?",
     "AddContact": "Add Contact",
+    "UnknownContact": "Unknown Contact",
   },
   "ContactDetails": {
     "Created": "Created",
@@ -760,6 +761,7 @@ const translation = {
     "EnterPIN": "Enter PIN",
     "Home": "Notifications",
     "Scan": "Scan",
+    "ScanHelp": "Scan Help",
     "Credentials": "Credentials",
     "CredentialDetails": "Credential Details",
     "Notifications": "Notifications",

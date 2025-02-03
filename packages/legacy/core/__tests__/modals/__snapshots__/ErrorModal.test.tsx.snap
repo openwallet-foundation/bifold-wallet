@@ -166,7 +166,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
               <Text
                 style={
                   Object {
-                    "color": "#FFFFFF",
+                    "color": "#42803E",
                     "fontSize": 20,
                     "fontWeight": "normal",
                   }
@@ -181,7 +181,7 @@ exports[`ErrorModal Component Renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#FFFFFF",
+                      "color": "#42803E",
                       "fontSize": 30,
                     },
                     undefined,
