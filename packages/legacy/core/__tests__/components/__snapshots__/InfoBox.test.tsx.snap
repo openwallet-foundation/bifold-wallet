@@ -142,7 +142,7 @@ exports[`InfoBox Component Renders correctly as Error 1`] = `
           <Text
             style={
               Object {
-                "color": "#FFFFFF",
+                "color": "#42803E",
                 "fontSize": 20,
                 "fontWeight": "normal",
               }
@@ -157,7 +157,7 @@ exports[`InfoBox Component Renders correctly as Error 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#42803E",
                   "fontSize": 30,
                 },
                 undefined,
@@ -397,7 +397,7 @@ exports[`InfoBox Component Renders correctly as Info 1`] = `
           <Text
             style={
               Object {
-                "color": "#FFFFFF",
+                "color": "#42803E",
                 "fontSize": 20,
                 "fontWeight": "normal",
               }
@@ -412,7 +412,7 @@ exports[`InfoBox Component Renders correctly as Info 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#42803E",
                   "fontSize": 30,
                 },
                 undefined,
@@ -652,7 +652,7 @@ exports[`InfoBox Component Renders correctly as Success 1`] = `
           <Text
             style={
               Object {
-                "color": "#FFFFFF",
+                "color": "#42803E",
                 "fontSize": 20,
                 "fontWeight": "normal",
               }
@@ -667,7 +667,7 @@ exports[`InfoBox Component Renders correctly as Success 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#42803E",
                   "fontSize": 30,
                 },
                 undefined,
@@ -907,7 +907,7 @@ exports[`InfoBox Component Renders correctly as Warning 1`] = `
           <Text
             style={
               Object {
-                "color": "#FFFFFF",
+                "color": "#42803E",
                 "fontSize": 20,
                 "fontWeight": "normal",
               }
@@ -922,7 +922,7 @@ exports[`InfoBox Component Renders correctly as Warning 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#42803E",
                   "fontSize": 30,
                 },
                 undefined,

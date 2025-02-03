@@ -22,7 +22,7 @@ exports[`Link Component Renders correctly, testID exists, and is pressable 1`] =
     Array [
       Object {
         "alignSelf": "flex-start",
-        "color": "#FFFFFF",
+        "color": "#42803E",
         "fontSize": 18,
         "fontWeight": "normal",
         "textDecorationLine": "underline",

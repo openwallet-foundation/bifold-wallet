@@ -31,7 +31,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
   const selectedCred = route.params.selectedCred
   const altCredentials = route.params.altCredentials
   const onCredChange = route.params.onCredChange
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet, TextTheme, SelectedCredTheme } = useTheme()
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
@@ -51,11 +51,6 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
       marginVertical: 35,
       borderRadius: 15,
       paddingHorizontal: 10,
-    },
-    selectedCred: {
-      borderWidth: 5,
-      borderRadius: 15,
-      borderColor: ColorPallet.semantic.focus,
     },
   })
 
@@ -157,7 +152,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                 accessibilityRole="button"
                 testID={testIdWithKey(`select:${item.credId}`)}
                 onPress={() => changeCred(item.credId ?? '')}
-                style={[item.credId === selectedCred ? styles.selectedCred : undefined, { marginBottom: 10 }]}
+                style={[item.credId === selectedCred ? SelectedCredTheme : undefined, { marginBottom: 10 }]}
               >
                 <CredentialCard
                   credential={item.credExchangeRecord}
@@ -168,7 +163,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                     ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
                   ]}
                   credName={item.credName}
-                  proof={true}
+                  proof
                   credentialErrors={errors}
                 ></CredentialCard>
               </TouchableOpacity>

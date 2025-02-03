@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
@@ -283,7 +283,7 @@ const BrandColors: IBrandColors = {
   modalIcon: GrayscaleColors.white,
   unorderedList: GrayscaleColors.white,
   unorderedListModal: GrayscaleColors.white,
-  link: GrayscaleColors.white,
+  link: '#42803E',
   text: GrayscaleColors.white,
   icon: GrayscaleColors.white,
   headerIcon: GrayscaleColors.white,
@@ -922,6 +922,21 @@ const PINInputTheme = {
   },
 }
 
+const CredentialCardShadowTheme = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 1,
+    height: 1,
+  },
+  shadowOpacity: 0.3,
+} satisfies ViewStyle
+
+const SelectedCredTheme = {
+  borderWidth: 5,
+  borderRadius: 15,
+  borderColor: ColorPallet.semantic.focus,
+} satisfies ViewStyle
+
 export const Assets = {
   svg: {
     activityIndicator: ActivityIndicator,
@@ -1020,6 +1035,8 @@ export interface ITheme {
   LoadingTheme: any
   PINEnterTheme: any
   PINInputTheme: any
+  CredentialCardShadowTheme: ViewStyle
+  SelectedCredTheme: ViewStyle
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
@@ -1043,6 +1060,8 @@ export const theme: ITheme = {
   LoadingTheme,
   PINEnterTheme,
   PINInputTheme,
+  CredentialCardShadowTheme,
+  SelectedCredTheme,
   heavyOpacity,
   borderRadius,
   borderWidth,
