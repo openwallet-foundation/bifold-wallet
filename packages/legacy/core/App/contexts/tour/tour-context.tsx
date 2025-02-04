@@ -1,9 +1,6 @@
 import { createContext, ReactElement, useContext } from 'react'
 import { LayoutRectangle } from 'react-native'
 
-/* 
-export type TourID = `${string}TourSteps`
-*/
 import { TourID } from '../../types/tour'
 
 export type Tours = {

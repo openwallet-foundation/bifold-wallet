@@ -69,10 +69,10 @@ export const attemptLockoutThresholdRules = {
 export const defaultAutoLockTime = 5
 
 export const tours: Tours = {
-  homeTourSteps: homeTourSteps,
-  credentialsTourSteps: credentialsTourSteps,
-  credentialOfferTourSteps: credentialOfferTourSteps,
-  proofRequestTourSteps: proofRequestTourSteps,
+  homeTourSteps,
+  credentialsTourSteps,
+  credentialOfferTourSteps,
+  proofRequestTourSteps,
 }
 
 export const walletId = 'walletId'
