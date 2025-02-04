@@ -349,14 +349,14 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
         style,
         {
           elevation: elevated ? 5 : 0,
-          overflow: 'hidden',
+          overflow: elevated ? 'visible' : 'hidden',
         },
       ]}
       onLayout={(event) => {
         setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
       }}
     >
-      <View testID={testIdWithKey('CredentialCard')}>
+      <View testID={testIdWithKey('CredentialCard')} style={{ overflow: 'hidden' }}>
         {overlay.metaOverlay?.watermark && (
           <CardWatermark
             width={dimensions.cardWidth}
