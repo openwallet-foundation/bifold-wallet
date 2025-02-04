@@ -3,7 +3,7 @@ import React from 'react'
 
 import { SpotCutout } from '../../App/components/tour/SpotCutout'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
-import { toursMock } from '../fixtures/tours'
+import { tours } from '../../App/constants'
 
 describe('SpotCutout Component', () => {
   beforeAll(() => {
@@ -14,7 +14,7 @@ describe('SpotCutout Component', () => {
   })
   test('Renders properly with defaults', async () => {
     const tree = render(
-      <TourProvider tours={toursMock} overlayColor={'gray'} overlayOpacity={0.7}>
+      <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
         <SpotCutout />
       </TourProvider>
     )

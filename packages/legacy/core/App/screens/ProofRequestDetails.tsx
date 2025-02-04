@@ -71,6 +71,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({
         schemaId={data.schema}
         preview
         elevated
+        brandingOverlayType={bundleResolver.getBrandingOverlayType()}
       />
     </View>
   )

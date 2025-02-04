@@ -4,7 +4,7 @@ import React from 'react'
 import { TourBox } from '../../App/components/tour/TourBox'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
 import { testIdWithKey } from '../../App/utils/testable'
-import { toursMock } from '../fixtures/tours'
+import { tours } from '../../App/constants'
 
 describe('TourBox Component', () => {
   test('Renders properly with defaults', () => {
@@ -12,7 +12,7 @@ describe('TourBox Component', () => {
     const next = jest.fn()
     const stop = jest.fn()
     const tree = render(
-      <TourProvider tours={toursMock} overlayColor={'gray'} overlayOpacity={0.7}>
+      <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
         <TourBox
           title={'Title'}
           leftText={'Left'}

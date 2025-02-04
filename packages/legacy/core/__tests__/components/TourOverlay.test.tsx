@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 
 import { TourOverlay } from '../../App/components/tour/TourOverlay'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
-import { toursMock } from '../fixtures/tours'
+import { tours } from '../../App/constants'
 
 const tourStep = {
   Render: () => {
@@ -27,7 +27,7 @@ describe('TourOverlay Component', () => {
     const changeSpot = jest.fn()
     const onBackdropPress = jest.fn()
     const tree = render(
-      <TourProvider tours={toursMock} overlayColor={'gray'} overlayOpacity={0.7}>
+      <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
         <TourOverlay
           color={'grey'}
           currentStep={0}

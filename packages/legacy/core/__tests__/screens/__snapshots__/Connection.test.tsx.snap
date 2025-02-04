@@ -872,7 +872,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "backgroundColor": undefined,
+                      "backgroundColor": "#602809",
                       "borderRadius": 10,
                       "opacity": 1,
                     }
@@ -880,6 +880,11 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   testID="com.ariesbifold:id/ShowCredentialDetails"
                 >
                   <View
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                      }
+                    }
                     testID="com.ariesbifold:id/CredentialCard"
                   >
                     <View
@@ -964,6 +969,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                               },
                             ]
                           }
+                          testID="com.ariesbifold:id/NoLogoText"
                         >
                           S
                         </Text>
@@ -997,6 +1003,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                                   Object {
                                     "color": "#FFFFFF",
                                     "flexShrink": 1,
+                                    "lineHeight": 24,
                                   },
                                   Object {
                                     "flex": 1,
@@ -1029,12 +1036,14 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                                   Object {
                                     "color": "#FFFFFF",
                                     "flexShrink": 1,
+                                    "lineHeight": 24,
+                                  },
+                                  Object {
+                                    "flex": 1,
+                                    "flexWrap": "wrap",
                                   },
                                   Object {
                                     "color": "#FFFFFF",
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -1053,7 +1062,11 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                           }
                         />
                         <View
-                          ListFooterComponent={<CredentialCardPrimaryBodyFooter />}
+                          ListFooterComponent={
+                            <React.Fragment>
+                              <CredentialCardPrimaryBodyFooter />
+                            </React.Fragment>
+                          }
                           data={Array []}
                           getItem={[Function]}
                           getItemCount={[Function]}
