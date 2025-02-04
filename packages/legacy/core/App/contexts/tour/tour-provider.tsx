@@ -15,6 +15,7 @@ import {
   ORIGIN_SPOT,
   Tours,
 } from './tour-context'
+import { TourIDKeys } from '../../constants'
 
 export interface TourProviderProps {
   children: React.ReactNode | ChildFn<Tour>
@@ -67,7 +68,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
     nativeDriver = false,
   } = props
 
-  const [currentTour, setCurrentTour] = useState<TourID>('homeTourSteps')
+  const [currentTour, setCurrentTour] = useState<TourID>(TourIDKeys.homeTourSteps)
   const [currentStep, setCurrentStep] = useState<number>()
   const [spot, setSpot] = useState(ORIGIN_SPOT)
 
@@ -110,10 +111,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
   }, [renderStep, currentStep])
 
   const tourStep = useMemo((): TourStep => {
-    if (currentTour && currentStep !== undefined && tours[currentTour]) {
-      return tours[currentTour][currentStep] ?? { Render: () => <></> }
-    }
-    return { Render: () => <></> }
+    return tours[currentTour]?.[currentStep ?? 0] ?? { Render: () => <></> }
   }, [currentTour, currentStep, tours])
 
   const tour = useMemo(

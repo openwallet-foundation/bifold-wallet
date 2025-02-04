@@ -75,6 +75,13 @@ export const tours: Tours = {
   proofRequestTourSteps,
 }
 
+export const TourIDKeys = {
+  homeTourSteps: 'homeTourSteps',
+  credentialsTourSteps: 'credentialsTourSteps',
+  credentialOfferTourSteps: 'credentialOfferTourSteps',
+  proofRequestTourSteps: 'proofRequestTourSteps',
+} as const
+
 export const walletId = 'walletId'
 
 export const minPINLength = 6

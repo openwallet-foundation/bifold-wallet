@@ -19,6 +19,7 @@ import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
+import { TourIDKeys } from '../constants'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -63,7 +64,7 @@ const ListCredentials: React.FC = () => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
     if (shouldShowTour && screenIsFocused) {
-      start('credentialsTourSteps')
+      start(TourIDKeys.credentialsTourSteps)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR,
         payload: [true],
