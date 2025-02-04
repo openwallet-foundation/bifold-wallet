@@ -65,8 +65,8 @@ Next, add a function to `initialize-agent.ts` to set up mediation using the OOB 
 
 ```typescript
 const startMediation = useCallback(async (agent: Agent) => {
-  const invitationId = '2c6dcc2e-b44d-53fe-a135-7decc90a85af'
-  const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitationId)
+  const invite = await agent.oob.parseInvitation(Config.MEDIATOR_URL!)
+  const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invite.id)
 
   let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : []
 
