@@ -124,7 +124,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const primaryButtonTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'Continue',
     [PINEntryUsage.PINCheck]: 'AppSettingSave',
-    [PINEntryUsage.WalletUnlock]: 'PINEnter.Unlock',
+    [PINEntryUsage.WalletUnlock]: 'Enter',
   }
 
   const incrementDeveloperMenuCounter = useCallback(() => {

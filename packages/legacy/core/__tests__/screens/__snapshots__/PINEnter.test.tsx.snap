@@ -424,7 +424,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     "padding": 16,
                   }
                 }
-                testID="com.ariesbifold:id/PINEnter.Unlock"
+                testID="com.ariesbifold:id/Enter"
               >
                 <View
                   style={
@@ -1367,7 +1367,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     "padding": 16,
                   }
                 }
-                testID="com.ariesbifold:id/PINEnter.Unlock"
+                testID="com.ariesbifold:id/Enter"
               >
                 <View
                   style={

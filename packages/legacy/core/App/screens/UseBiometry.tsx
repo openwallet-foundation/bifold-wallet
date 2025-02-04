@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements';
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
