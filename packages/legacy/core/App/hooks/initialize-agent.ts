@@ -15,7 +15,7 @@ import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
 
 const useInitializeAgent = () => {
-  const { setAgent } = useAgent()
+  const { agent, setAgent } = useAgent()
   const [store, dispatch] = useStore()
   const { walletSecret } = useAuth()
   const [cacheSchemas, cacheCredDefs, logger, indyLedgers] = useServices([
@@ -24,6 +24,30 @@ const useInitializeAgent = () => {
     TOKENS.UTIL_LOGGER,
     TOKENS.UTIL_LEDGERS,
   ])
+
+  const restartExistingAgent = useCallback(async () => {
+    // if the agent is initialized, it was not a clean shutdown and should be replaced, not restarted
+    if (!walletSecret?.id || !walletSecret.key || !agent || agent.isInitialized) {
+      return
+    }
+
+    logger.info('Agent already created, restarting...')
+    try {
+      await agent.wallet.open({
+        id: walletSecret.id,
+        key: walletSecret.key,
+      })
+      await agent.initialize()
+    } catch {
+      // if the existing agents wallet cannot be opened or initialize() fails it was
+      // again not a clean shutdown and the agent should be replaced, not restarted
+      logger.warn('Failed to restart existing agent, skipping agent restart')
+      return 
+    }
+
+    logger.info('Successfully restarted existing agent')
+    return agent
+  }, [walletSecret, agent, logger])
 
   const createNewAgent = useCallback(async (): Promise<Agent | undefined> => {
     if (!walletSecret?.id || !walletSecret.key) {
@@ -101,8 +125,15 @@ const useInitializeAgent = () => {
       return
     }
 
+    const existingAgent = await restartExistingAgent()
+    if (existingAgent) {
+      setAgent(existingAgent)
+      return existingAgent
+    }
+
     const newAgent = await createNewAgent()
     if (!newAgent) {
+      logger.error('Failed to create a new agent')
       return
     }
 
@@ -118,8 +149,10 @@ const useInitializeAgent = () => {
 
     return newAgent
   }, [
-    setAgent,
     walletSecret,
+    logger,
+    restartExistingAgent,
+    setAgent,
     createNewAgent,
     migrateIfRequired,
     warmUpCache,

@@ -257,7 +257,8 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
               overlay={overlay}
               overlayType={brandingOverlayType}
               elevated={elevated}
-              hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact')}
+              hasBody={overlay.metaOverlay?.issuer !== 'Unknown Contact'}
+              proof
             />
           )}
           <View style={{ flexDirection: 'row' }}>
@@ -283,7 +284,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
             overlay={overlay}
             overlayType={brandingOverlayType}
             elevated={elevated}
-            hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact')}
+            hasBody={overlay.metaOverlay?.issuer !== 'Unknown Contact'}
           />
         )}
       </View>

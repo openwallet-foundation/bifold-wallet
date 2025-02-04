@@ -13,12 +13,13 @@ interface Props {
   overlayType: BrandingOverlayType
   hasBody: boolean
   elevated?: boolean
+  proof?: boolean
 }
 
-const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated, hasBody }: Props) => {
+const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated, hasBody, proof }: Props) => {
   const isBranding10 = overlayType === BrandingOverlayType.Branding10
   const { TextTheme } = useTheme()
-  const { styles } = useCredentialCardStyles(overlay, overlayType)
+  const { styles } = useCredentialCardStyles(overlay, overlayType, proof)
   const { t } = useTranslation()
   if (!hasBody) return
   return (

@@ -138,7 +138,7 @@ export function formatTime(
   const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
   const isPortuguese = i18n.resolvedLanguage === 'pt-BR'
   const isNonEnglish = i18n.resolvedLanguage === 'fr' || isPortuguese
-  const hoursFormat = isPortuguese ? 'HH:mm' : 'h:mm a'
+  const hoursFormat = isNonEnglish ? 'HH:mm' : 'h:mm a'
   // for the shortened approach eg. in chat bubbles
   if (chatFormat) {
     if (lessThanAMinuteAgo) {
@@ -1256,6 +1256,13 @@ export function generateRandomWalletName() {
   return name
 }
 
+/**
+ * Returns the secondary background color for a credential card.
+ *
+ * @param {CredentialOverlay<BrandingOverlay>} overlay - The credential card containing branding information.
+ * @param {boolean} [proof] - Optional flag indicating if the context of the credential card is a proof.
+ * @returns {string | undefined} - The secondary background color of the branding or undefined if not applicable.
+ */
 export function getSecondaryBackgroundColor(
   overlay: CredentialOverlay<BrandingOverlay>,
   proof?: boolean

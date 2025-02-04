@@ -6,7 +6,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -21,7 +21,7 @@ import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
-import { CredentialStackParams, Screens, Stacks } from '../types/navigators'
+import { RootStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
@@ -32,8 +32,9 @@ import { parseCredDefFromId } from '../utils/cred-def'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
+import CardWatermark from '../components/misc/CardWatermark'
 
-type CredentialDetailsProps = StackScreenProps<CredentialStackParams, Screens.CredentialDetails>
+type CredentialDetailsProps = StackScreenProps<RootStackParams, Screens.CredentialDetails>
 
 const paddingHorizontal = 24
 const paddingVertical = 16
@@ -44,6 +45,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }
 
   const { credentialId } = route.params
+  const { width, height } = useWindowDimensions()
   const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
@@ -89,6 +91,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
+  const isBranding11 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11
 
   const styles = StyleSheet.create({
     container: {
@@ -106,7 +109,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const navigateToContactDetails = () => {
     if (credential?.connectionId) {
-      navigation.getParent()?.navigate(Stacks.ContactStack, {
+      navigation.navigate(Stacks.ContactStack, {
         screen: Screens.ContactDetails,
         params: { connectionId: credential.connectionId },
       })
@@ -265,7 +268,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       )
     }
     return (
-      <>
+      <View>
+        {overlay.metaOverlay?.watermark && isBranding11 && (
+          <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
+        )}
         <CredentialDetailSecondaryHeader
           overlay={overlay}
           brandingOverlayType={bundleResolver.getBrandingOverlayType()}
@@ -294,7 +300,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             credential={credential}
           />
         </View>
-      </>
+      </View>
     )
   }
 
