@@ -73,7 +73,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
 
   const renderStep = useCallback(
     (index: number): void | Promise<void> => {
-      if (currentTour && tours[currentTour] && tours[currentTour][index] !== undefined) {
+      if (tours[currentTour]?.[index] !== undefined) {
         setCurrentStep(index)
       }
     },
