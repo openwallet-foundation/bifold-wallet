@@ -79,7 +79,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           credential={credential as CredentialExchangeRecord}
           handleAltCredChange={handleAltCredChange}
           hasAltCredentials={hasAltCredentials}
-          proof={isBranding10}
+          proof
           elevated
           credentialErrors={credentialErrors ?? []}
           brandingOverlayType={bundleResolver.getBrandingOverlayType()}
