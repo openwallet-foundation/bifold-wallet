@@ -2167,7 +2167,7 @@ __metadata:
 
 "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.11#./.yarn/patches/@credo-ts-core-npm-0.5.11-9122d8c9b8.patch::locator=aries-bifold-root%40workspace%3A.":
   version: 0.5.11
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.11#./.yarn/patches/@credo-ts-core-npm-0.5.11-9122d8c9b8.patch::version=0.5.11&hash=7857ed&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.11#./.yarn/patches/@credo-ts-core-npm-0.5.11-9122d8c9b8.patch::version=0.5.11&hash=391f79&locator=aries-bifold-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2209,7 +2209,7 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
     webcrypto-core: ^1.8.0
-  checksum: bdd075662b97198fe0102913c0df1746c86cee2bd8f64904fab40769e79f82fa961d34ee01376b21ce0338f7f5ff69df2f26b2afaa4a11fa3d1847312e2d790a
+  checksum: 7b7baa51190469258c75489a8cd1b9cad1633e18d08ebd624158f4e270181f0ccc91cc2d003301cf2a2fd776e452e95f7d0f6283e9f4abf7175dc5e0859ff08d
   languageName: node
   linkType: hard
 
@@ -2322,14 +2322,14 @@ __metadata:
 
 "@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::locator=aries-bifold-root%40workspace%3A.":
   version: 0.6.0
-  resolution: "@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::version=0.6.0&hash=6057a5&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::version=0.6.0&hash=fb715c&locator=aries-bifold-root%40workspace%3A."
   dependencies:
     rxjs: ^7.2.0
   peerDependencies:
     "@credo-ts/core": ^0.5.0
     "@credo-ts/question-answer": ^0.5.0
     react: ">=17.0.0 <19.0.0"
-  checksum: cf8377935760b17c6c050ed8a1996ce633c4a08af8599bdbf016d6bffd2f213823aaec120af52e2fc25ffd1878bc25cfb854fd14ad6f0b570ca586fe3beb926f
+  checksum: 73c0dc8af916eeeaf21ded565b0ecdba7d6e0b679e40dcc8db949ac06a2557984ad5640f23ff4c3c6dab4ab8a743b2f26dae973041b51e1330ff7952c4a4fa42
   languageName: node
   linkType: hard
 
