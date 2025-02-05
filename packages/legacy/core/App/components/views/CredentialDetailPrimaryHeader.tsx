@@ -94,7 +94,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
               },
             ]}
           >
-            {t('CredentialDetails.Issued')}: {formatTime(credential.createdAt, { chatFormat: true, includeHour: true })}
+            {t('CredentialDetails.IssuedOn')} {formatTime(credential.createdAt, { includeHour: true })}
           </Text>
         )}
       </View>
