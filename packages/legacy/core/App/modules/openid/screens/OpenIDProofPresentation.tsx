@@ -176,7 +176,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const credentialDisplay = getCredentialForDisplay(credential)
     const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
     const requestedAttributes = selectedCredential.requestedAttributes
-    const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name) && field.name !== 'id')
+    const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
 
     return <CredentialCard credential={credential} displayItems={fieldsMapped as Attribute[]} />
   }

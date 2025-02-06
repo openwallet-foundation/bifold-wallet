@@ -147,7 +147,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       type: BrandingOverlayType.Branding10,
       primary_background_color: credentialDisplay.display.backgroundColor,
       background_image: credentialDisplay.display.backgroundImage?.url,
-      logo: credentialDisplay.display.issuer.logo?.url,
+      logo: credentialDisplay.display.logo?.url,
     })
     const ocaBundle: CredentialOverlay<BrandingOverlay> = {
       ..._bundle,

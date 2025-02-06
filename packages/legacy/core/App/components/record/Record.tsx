@@ -49,6 +49,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
     <FlatList
       data={fields}
       keyExtractor={({ name }, index) => name || index.toString()}
+      showsVerticalScrollIndicator={false}
       renderItem={({ item: attr, index }) =>
         field ? (
           field(attr, index, fields)

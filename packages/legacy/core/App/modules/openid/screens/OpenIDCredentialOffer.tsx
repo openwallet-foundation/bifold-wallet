@@ -20,7 +20,8 @@ import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
-import { CredentialCard } from '../../../components/misc'
+import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import { W3cCredentialRecord } from '@credo-ts/core'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -115,6 +116,16 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     )
   }
 
+  const renderOpenIdCard = () => {
+    if (!credentialDisplay || !credential) return null
+    return (
+      <OpenIDCredentialCard
+        credentialDisplay={credentialDisplay}
+        credentialRecord={credential as W3cCredentialRecord}
+      />
+    )
+  }
+
   const header = () => {
     return (
       <>
@@ -124,11 +135,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
             {t('CredentialOffer.IsOfferingYouACredential')}
           </Text>
         </View>
-        {credential && (
-          <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-            <CredentialCard credential={credential} brandingOverlay={overlay} />
-          </View>
-        )}
+        {credential && <View style={{ marginHorizontal: 15, marginBottom: 16 }}>{renderOpenIdCard()}</View>}
       </>
     )
   }
