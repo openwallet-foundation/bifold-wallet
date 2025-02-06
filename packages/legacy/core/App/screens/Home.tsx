@@ -38,6 +38,7 @@ const Home: React.FC<HomeProps> = () => {
   const [store, dispatch] = useStore()
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
+  const [homeTourActive, setHomeTourActive] = useState(store.tours.seenHomeTour)
   const screenIsFocused = useIsFocused()
 
   const styles = StyleSheet.create({
@@ -46,38 +47,43 @@ const Home: React.FC<HomeProps> = () => {
     },
   })
 
-  const DisplayListItemType = useCallback((item: any): React.ReactNode => {
-    let component: React.ReactNode
-    if (item.type === 'BasicMessageRecord') {
-      component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
-    } else if (item.type === 'CredentialRecord') {
-      let notificationType = NotificationType.CredentialOffer
-      if (item.revocationNotification) {
-        notificationType = NotificationType.Revocation
+  const DisplayListItemType = useCallback(
+    (item: any): React.ReactNode => {
+      let component: React.ReactNode
+      if (item.type === 'BasicMessageRecord') {
+        component = <NotificationListItem notificationType={NotificationType.BasicMessage} notification={item} />
+      } else if (item.type === 'CredentialRecord') {
+        let notificationType = NotificationType.CredentialOffer
+        if (item.revocationNotification) {
+          notificationType = NotificationType.Revocation
+        }
+        component = <NotificationListItem notificationType={notificationType} notification={item} />
+      } else if (item.type === 'CustomNotification' && customNotification) {
+        component = (
+          <NotificationListItem
+            notificationType={NotificationType.Custom}
+            notification={item}
+            customNotification={customNotification}
+          />
+        )
+      } else {
+        component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
       }
-      component = <NotificationListItem notificationType={notificationType} notification={item} />
-    } else if (item.type === 'CustomNotification' && customNotification) {
-      component = (
-        <NotificationListItem
-          notificationType={NotificationType.Custom}
-          notification={item}
-          customNotification={customNotification}
-        />
-      )
-    } else {
-      component = <NotificationListItem notificationType={NotificationType.ProofRequest} notification={item} />
-    }
-    return component
-  }, [customNotification, NotificationListItem])
+      return component
+    },
+    [customNotification, NotificationListItem]
+  )
+
+  useEffect(() => {
+    setHomeTourActive(store.tours.seenHomeTour)
+  }, [store.tours.seenHomeTour])
+
+  const tourActive = homeTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
     if (shouldShowTour && screenIsFocused) {
       if (store.tours.seenToursPrompt) {
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
-          payload: [true],
-        })
         start(TourID.HomeTour)
       } else {
         setShowTourPopup(true)
@@ -131,6 +137,7 @@ const Home: React.FC<HomeProps> = () => {
     <>
       <FlatList
         style={styles.flatlist}
+        importantForAccessibility={tourActive}
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"

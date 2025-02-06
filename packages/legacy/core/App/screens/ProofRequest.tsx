@@ -102,6 +102,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
   const [store, dispatch] = useStore()
+  const [proofRequestTourActive, setProofRequestTourActive] = useState(store.tours.seenProofRequestTour)
   const credProofPromise = useAllCredentialsForProof(proofId)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
   const proofConnectionLabel = useMemo(
@@ -167,6 +168,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       textDecorationLine: 'underline',
     },
   })
+  useEffect(() => {
+    setProofRequestTourActive(store.tours.seenProofRequestTour)
+  }, [store.tours.seenProofRequestTour])
+
+  const tourActive = proofRequestTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
 
   useEffect(() => {
     if (!attestationMonitor) {
@@ -714,7 +720,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {(!loading && proofConnectionLabel && goalCode === 'aries.vc.verify') && (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         )}
         {!loading && isShareDisabled() ? (
@@ -820,7 +826,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     )
   }
   return (
-    <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView
+      style={styles.pageContainer}
+      edges={['bottom', 'left', 'right']}
+      importantForAccessibility={tourActive}
+    >
       <ScrollView>
         <View style={styles.pageContent}>
           {proofPageHeader()}

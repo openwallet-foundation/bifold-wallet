@@ -3,7 +3,7 @@ import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
@@ -51,7 +51,7 @@ const ListCredentials: React.FC = () => {
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
   const CredentialListFooter = credentialListFooter as React.FC<CredentialListFooterProps>
-
+  const [credentialTourActive, setCredentialTourActive] = useState(store.tours.seenCredentialsTour)
   // Filter out hidden credentials when not in dev mode
   if (!store.preferences.developerModeEnabled) {
     credentials = credentials.filter((r) => {
@@ -59,7 +59,11 @@ const ListCredentials: React.FC = () => {
       return !credentialHideList?.includes(credDefId)
     })
   }
+  useEffect(() => {
+    setCredentialTourActive(store.tours.seenCredentialsTour)
+  }, [store.tours.seenCredentialsTour])
 
+  const tourActive = credentialTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
@@ -99,6 +103,7 @@ const ListCredentials: React.FC = () => {
     <View>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        importantForAccessibility={tourActive}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
         keyExtractor={(credential) => credential.id}
         renderItem={({ item: credential, index }) => {

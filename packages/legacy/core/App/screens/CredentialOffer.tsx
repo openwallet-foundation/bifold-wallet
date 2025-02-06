@@ -18,7 +18,6 @@ import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
@@ -67,6 +66,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
+
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -74,6 +74,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
+  const [credentialOfferTourActive, setCredentialOfferTourActive] = useState(store.tours.seenCredentialOfferTour)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
 
   const styles = StyleSheet.create({
@@ -89,15 +90,15 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       paddingTop: 10,
     },
   })
+  useEffect(() => {
+    setCredentialOfferTourActive(store.tours.seenCredentialOfferTour)
+  }, [store.tours.seenCredentialOfferTour])
 
+  const tourActive = credentialOfferTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
       start(TourID.CredentialOfferTour)
-      dispatch({
-        type: DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR,
-        payload: [true],
-      })
     }
   }, [
     enableToursConfig,
@@ -278,7 +279,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {(credentialConnectionLabel && goalCode === 'aries.vc.issue') && (
+        {credentialConnectionLabel && goalCode === 'aries.vc.issue' && (
           <ConnectionAlert connectionID={credentialConnectionLabel} />
         )}
         <View style={styles.footerButton}>
@@ -306,7 +307,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']} importantForAccessibility={tourActive}>
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
       <CommonRemoveModal
