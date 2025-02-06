@@ -66,6 +66,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
+  const [hideElements, setHideElements] = useState('auto')
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
@@ -74,7 +75,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
-  const [credentialOfferTourActive, setCredentialOfferTourActive] = useState(store.tours.seenCredentialOfferTour)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
 
   const styles = StyleSheet.create({
@@ -90,15 +90,14 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       paddingTop: 10,
     },
   })
-  useEffect(() => {
-    setCredentialOfferTourActive(store.tours.seenCredentialOfferTour)
-  }, [store.tours.seenCredentialOfferTour])
 
-  const tourActive = credentialOfferTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
+      setHideElements('no-hide-descendants')
       start(TourID.CredentialOfferTour)
+    } else {
+      setHideElements('auto')
     }
   }, [
     enableToursConfig,
@@ -307,7 +306,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']} importantForAccessibility={tourActive}>
+    <SafeAreaView
+      style={{ flexGrow: 1 }}
+      edges={['bottom', 'left', 'right']}
+      importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
+    >
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
       <CommonRemoveModal

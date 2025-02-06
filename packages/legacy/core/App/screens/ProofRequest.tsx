@@ -32,7 +32,6 @@ import InfoTextBox from '../components/texts/InfoTextBox'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useNetwork } from '../contexts/network'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
@@ -101,8 +100,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
+  const [hideElements, setHideElements] = useState('auto')
   const [store, dispatch] = useStore()
-  const [proofRequestTourActive, setProofRequestTourActive] = useState(store.tours.seenProofRequestTour)
   const credProofPromise = useAllCredentialsForProof(proofId)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
   const proofConnectionLabel = useMemo(
@@ -169,12 +168,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     },
   })
   useEffect(() => {
-    setProofRequestTourActive(store.tours.seenProofRequestTour)
-  }, [store.tours.seenProofRequestTour])
-
-  const tourActive = proofRequestTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
-
-  useEffect(() => {
     if (!attestationMonitor) {
       return
     }
@@ -209,11 +202,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
+      setHideElements('no-hide-descendants')
       start(TourID.ProofRequestTour)
-      dispatch({
-        type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
-        payload: [true],
-      })
+    } else {
+      setHideElements('auto')
     }
   }, [enableToursConfig, store.tours.enableTours, store.tours.seenProofRequestTour, screenIsFocused, start, dispatch])
 
@@ -829,7 +821,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     <SafeAreaView
       style={styles.pageContainer}
       edges={['bottom', 'left', 'right']}
-      importantForAccessibility={tourActive}
+      importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
     >
       <ScrollView>
         <View style={styles.pageContent}>

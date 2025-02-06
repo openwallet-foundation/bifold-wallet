@@ -38,7 +38,7 @@ const Home: React.FC<HomeProps> = () => {
   const [store, dispatch] = useStore()
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
-  const [homeTourActive, setHomeTourActive] = useState(store.tours.seenHomeTour)
+  const [hideElements, setHideElements] = useState('auto')
   const screenIsFocused = useIsFocused()
 
   const styles = StyleSheet.create({
@@ -73,21 +73,17 @@ const Home: React.FC<HomeProps> = () => {
     },
     [customNotification, NotificationListItem]
   )
-
-  useEffect(() => {
-    setHomeTourActive(store.tours.seenHomeTour)
-  }, [store.tours.seenHomeTour])
-
-  const tourActive = homeTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
-
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
     if (shouldShowTour && screenIsFocused) {
+      setHideElements('no-hide-descendants')
       if (store.tours.seenToursPrompt) {
         start(TourID.HomeTour)
       } else {
         setShowTourPopup(true)
       }
+    } else {
+      setHideElements('auto')
     }
   }, [
     enableToursConfig,
@@ -137,7 +133,7 @@ const Home: React.FC<HomeProps> = () => {
     <>
       <FlatList
         style={styles.flatlist}
-        importantForAccessibility={tourActive}
+        importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"

@@ -9,6 +9,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
       "right",
     ]
   }
+  importantForAccessibility="no-hide-descendants"
   style={
     Object {
       "flex": 1,

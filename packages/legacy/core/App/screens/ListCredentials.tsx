@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
 import CredentialCard from '../components/misc/CredentialCard'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
@@ -51,7 +50,7 @@ const ListCredentials: React.FC = () => {
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
   const CredentialListFooter = credentialListFooter as React.FC<CredentialListFooterProps>
-  const [credentialTourActive, setCredentialTourActive] = useState(store.tours.seenCredentialsTour)
+  const [hideElements, setHideElements] = useState('auto')
   // Filter out hidden credentials when not in dev mode
   if (!store.preferences.developerModeEnabled) {
     credentials = credentials.filter((r) => {
@@ -59,20 +58,15 @@ const ListCredentials: React.FC = () => {
       return !credentialHideList?.includes(credDefId)
     })
   }
-  useEffect(() => {
-    setCredentialTourActive(store.tours.seenCredentialsTour)
-  }, [store.tours.seenCredentialsTour])
 
-  const tourActive = credentialTourActive || !store.tours.enableTours ? 'auto' : 'no-hide-descendants'
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
     if (shouldShowTour && screenIsFocused) {
+      setHideElements('no-hide-descendants')
       start(TourID.CredentialsTour)
-      dispatch({
-        type: DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR,
-        payload: [true],
-      })
+    } else {
+      setHideElements('auto')
     }
   }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
 
@@ -103,7 +97,7 @@ const ListCredentials: React.FC = () => {
     <View>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-        importantForAccessibility={tourActive}
+        importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
         keyExtractor={(credential) => credential.id}
         renderItem={({ item: credential, index }) => {
