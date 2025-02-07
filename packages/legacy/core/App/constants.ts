@@ -44,7 +44,8 @@ export const walletTimeout = minute * 5
 
 /* lockout attempt rules: The base rules apply the lockout at a specified number of incorrect attempts,
  and the threshold rules apply the lockout penalty to each attempt after the threshold that falls on the attemptIncrement.
- (In this case the threshold rule applies to every 5th incorrect login after 20)
+ (In this case the threshold rule applies to every 5th incorrect login after 20).
+ Keys need to be multiples of the attemptIncrement in the attemptLockoutThresholdRules.
 5 incorrect => 1 minute lockout
 10 incorrect => 10 minute lockout
 15 incorrect => 1 hour lockout
@@ -58,7 +59,7 @@ export const attemptLockoutBaseRules: Record<number, number | undefined> = {
 export const attemptLockoutThresholdRules = {
   attemptThreshold: 20,
   attemptIncrement: 5,
-  attemptPenalty: 24 * hour,
+  attemptThresholdPenalty: 24 * hour,
 }
 
 export const defaultAutoLockTime = 5

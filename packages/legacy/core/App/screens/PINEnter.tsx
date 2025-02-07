@@ -10,10 +10,10 @@ import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
 import {
   minPINLength,
-  attemptLockoutBaseRules,
-  attemptLockoutThresholdRules,
   EventTypes,
   defaultAutoLockTime,
+  attemptLockoutBaseRules as defaultAttemptLockoutBaseRules,
+  attemptLockoutThresholdRules as defaultAttemptLockoutThresholdRules,
 } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -51,7 +51,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets, PINEnterTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const [logger, { enableHiddenDevModeTrigger }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const [
+    logger,
+    {
+      enableHiddenDevModeTrigger,
+      attemptLockoutConfig: { attemptLockoutBaseRules, attemptLockoutThresholdRules } = {
+        attemptLockoutBaseRules: defaultAttemptLockoutBaseRules,
+        attemptLockoutThresholdRules: defaultAttemptLockoutThresholdRules,
+      },
+    },
+  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const developerOptionCount = useRef(0)
   const touchCountToEnableBiometrics = 9
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
@@ -168,7 +177,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       dispatch({
         type: DispatchAction.ATTEMPT_UPDATED,
         payload: [
-          { loginAttempts: store.loginAttempt.loginAttempts, lockoutDate: Date.now() + penalty, servedPenalty: false },
+          {
+            loginAttempts: store.loginAttempt.loginAttempts + 1,
+            lockoutDate: Date.now() + penalty,
+            servedPenalty: false,
+          },
         ],
       })
       navigation.dispatch(
@@ -178,20 +191,23 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         })
       )
     },
-    [dispatch, store.loginAttempt.loginAttempts, navigation]
+    [dispatch, navigation, store.loginAttempt.loginAttempts]
   )
 
-  const getLockoutPenalty = useCallback((attempts: number): number | undefined => {
-    let penalty = attemptLockoutBaseRules[attempts]
-    if (
-      !penalty &&
-      attempts >= attemptLockoutThresholdRules.attemptThreshold &&
-      !(attempts % attemptLockoutThresholdRules.attemptIncrement)
-    ) {
-      penalty = attemptLockoutThresholdRules.attemptPenalty
-    }
-    return penalty
-  }, [])
+  const getLockoutPenalty = useCallback(
+    (attempts: number): number | undefined => {
+      let penalty = attemptLockoutBaseRules[attempts]
+      if (
+        !penalty &&
+        attempts >= attemptLockoutThresholdRules.attemptThreshold &&
+        !(attempts % attemptLockoutThresholdRules.attemptIncrement)
+      ) {
+        penalty = attemptLockoutThresholdRules.attemptThresholdPenalty
+      }
+      return penalty
+    },
+    [attemptLockoutBaseRules, attemptLockoutThresholdRules]
+  )
 
   const loadWalletCredentials = useCallback(async () => {
     if (usage === PINEntryUsage.PINCheck) {
@@ -246,16 +262,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   useEffect(() => {
     // check number of login attempts and determine if app should apply lockout
     const attempts = store.loginAttempt.loginAttempts
-    const penalty = getLockoutPenalty(attempts)
-    if (penalty && !store.loginAttempt.servedPenalty) {
-      // only apply lockout if user has not served their penalty
-      attemptLockout(penalty)
-    }
-
     // display warning if we are one away from a lockout
     const displayWarning = !!getLockoutPenalty(attempts + 1)
     setDisplayLockoutWarning(displayWarning)
-  }, [store.loginAttempt.loginAttempts, getLockoutPenalty, store.loginAttempt.servedPenalty, attemptLockout])
+  }, [store.loginAttempt.loginAttempts, getLockoutPenalty])
 
   useEffect(() => {
     setInlineMessageField(undefined)
@@ -274,7 +284,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
         if (!result) {
           const newAttempt = store.loginAttempt.loginAttempts + 1
-          const attemptsLeft = attemptLockoutThresholdRules.attemptIncrement - newAttempt
+
+          const attemptsLeft =
+            (attemptLockoutThresholdRules.attemptIncrement -
+              (newAttempt % attemptLockoutThresholdRules.attemptIncrement)) %
+            attemptLockoutThresholdRules.attemptIncrement
+
           if (!inlineMessages.enabled && !getLockoutPenalty(newAttempt)) {
             // skip displaying modals if we are going to lockout
             setAlertModalVisible(true)
@@ -353,6 +368,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       t,
       attemptLockout,
       inlineMessages,
+      attemptLockoutThresholdRules.attemptIncrement,
     ]
   )
 

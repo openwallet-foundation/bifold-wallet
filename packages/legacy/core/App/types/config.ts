@@ -40,6 +40,14 @@ export interface Config {
   disableContactsInSettings?: boolean
   disableMediatorCheck?: boolean
   internetReachabilityUrls: string[]
+  attemptLockoutConfig?: {
+    attemptLockoutBaseRules: Record<number, number | undefined>
+    attemptLockoutThresholdRules: {
+      attemptThreshold: number
+      attemptIncrement: number
+      attemptThresholdPenalty: number
+    }
+  }
 }
 
 export interface HistoryEventsLoggerConfig {
