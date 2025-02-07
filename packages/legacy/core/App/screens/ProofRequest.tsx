@@ -64,6 +64,7 @@ import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../component
 import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { ImportantForAccessibility } from '../types/accessibility'
 
 type ProofRequestProps = {
   navigation: any
@@ -100,7 +101,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
-  const [hideElements, setHideElements] = useState('auto')
+  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
@@ -821,7 +822,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     <SafeAreaView
       style={styles.pageContainer}
       edges={['bottom', 'left', 'right']}
-      importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
+      importantForAccessibility={hideElements}
     >
       <ScrollView>
         <View style={styles.pageContent}>

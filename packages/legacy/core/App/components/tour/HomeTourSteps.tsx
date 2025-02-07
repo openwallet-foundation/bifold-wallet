@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme'
 import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 
 import { TourBox } from './TourBox'
-import { useStore } from '../../contexts/store'
+import useHandleStop from '../../hooks/close-modal-tour'
 import { DispatchAction } from '../../contexts/reducers/store'
 
 export const homeTourSteps: TourStep[] = [
@@ -15,25 +15,19 @@ export const homeTourSteps: TourStep[] = [
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
-      const [, dispatch] = useStore()
-      const handleStop = (): void => {
-        stop()
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
-          payload: [true],
-        })
-      }
+      const handleStop = useHandleStop()
+
       return (
         <TourBox
           title={t('Tour.AddAndShare')}
           leftText={t('Tour.Skip')}
           rightText={t('Tour.Next')}
-          onLeft={handleStop}
+          onLeft={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           onRight={next}
           currentTour={currentTour}
           currentStep={currentStep}
           previous={previous}
-          stop={handleStop}
+          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           next={next}
         >
           <Text
@@ -54,14 +48,8 @@ export const homeTourSteps: TourStep[] = [
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
-      const [, dispatch] = useStore()
-      const handleStop = (): void => {
-        stop()
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
-          payload: [true],
-        })
-      }
+      const handleStop = useHandleStop()
+
       return (
         <TourBox
           title={t('Tour.Notifications')}
@@ -72,7 +60,7 @@ export const homeTourSteps: TourStep[] = [
           currentTour={currentTour}
           currentStep={currentStep}
           next={next}
-          stop={handleStop}
+          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           previous={previous}
         >
           <Text
@@ -93,25 +81,19 @@ export const homeTourSteps: TourStep[] = [
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
-      const [, dispatch] = useStore()
-      const handleStop = (): void => {
-        stop()
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
-          payload: [true],
-        })
-      }
+      const handleStop = useHandleStop()
+
       return (
         <TourBox
           title={t('Tour.YourCredentials')}
           leftText={t('Tour.Back')}
           rightText={t('Tour.Done')}
           onLeft={previous}
-          onRight={handleStop}
+          onRight={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           currentTour={currentTour}
           currentStep={currentStep}
           next={next}
-          stop={handleStop}
+          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           previous={previous}
         >
           <Text

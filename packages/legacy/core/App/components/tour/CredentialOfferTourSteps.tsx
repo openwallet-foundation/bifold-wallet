@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme'
 import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 
 import { TourBox } from './TourBox'
-import { useStore } from '../../contexts/store'
+import useHandleStop from '../../hooks/close-modal-tour'
 import { DispatchAction } from '../../contexts/reducers/store'
 
 export const credentialOfferTourSteps: TourStep[] = [
@@ -15,25 +15,18 @@ export const credentialOfferTourSteps: TourStep[] = [
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
       const { ColorPallet, TextTheme } = useTheme()
-      const [, dispatch] = useStore()
+      const handleStop = useHandleStop()
 
-      const handleStop = (): void => {
-        stop()
-        dispatch({
-          type: DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR,
-          payload: [true],
-        })
-      }
       return (
         <TourBox
           title={t('Tour.CredentialOffers')}
           hideLeft
           rightText={t('Tour.Done')}
-          onRight={handleStop}
+          onRight={() => handleStop(stop, DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR)}
           currentTour={currentTour}
           currentStep={currentStep}
           previous={previous}
-          stop={handleStop}
+          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR)}
           next={next}
         >
           <Text

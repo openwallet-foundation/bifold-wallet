@@ -19,6 +19,7 @@ import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
+import { ImportantForAccessibility } from '../types/accessibility'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -50,7 +51,7 @@ const ListCredentials: React.FC = () => {
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
   const CredentialListFooter = credentialListFooter as React.FC<CredentialListFooterProps>
-  const [hideElements, setHideElements] = useState('auto')
+  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   // Filter out hidden credentials when not in dev mode
   if (!store.preferences.developerModeEnabled) {
     credentials = credentials.filter((r) => {
@@ -97,7 +98,7 @@ const ListCredentials: React.FC = () => {
     <View>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-        importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
+        importantForAccessibility={hideElements}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
         keyExtractor={(credential) => credential.id}
         renderItem={({ item: credential, index }) => {

@@ -33,6 +33,7 @@ import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/c
 import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
+import { ImportantForAccessibility } from '../types/accessibility'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
 
@@ -66,7 +67,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
-  const [hideElements, setHideElements] = useState('auto')
+  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
@@ -306,11 +307,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   }
 
   return (
-    <SafeAreaView
-      style={{ flexGrow: 1 }}
-      edges={['bottom', 'left', 'right']}
-      importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
-    >
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']} importantForAccessibility={hideElements}>
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
       <CommonRemoveModal

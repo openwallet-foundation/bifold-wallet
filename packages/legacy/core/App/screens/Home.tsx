@@ -13,6 +13,7 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { TourID } from '../types/tour'
+import { ImportantForAccessibility } from '../types/accessibility'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -38,7 +39,7 @@ const Home: React.FC<HomeProps> = () => {
   const [store, dispatch] = useStore()
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
-  const [hideElements, setHideElements] = useState('auto')
+  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const screenIsFocused = useIsFocused()
 
   const styles = StyleSheet.create({
@@ -133,7 +134,7 @@ const Home: React.FC<HomeProps> = () => {
     <>
       <FlatList
         style={styles.flatlist}
-        importantForAccessibility={hideElements as 'auto' | 'no-hide-descendants'}
+        importantForAccessibility={hideElements}
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"
