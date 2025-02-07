@@ -218,6 +218,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   }, [])
 
   const callDismissRevokedMessage = useCallback(() => {
+    setIsRevokedMessageHidden(true)
     if (credential) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
