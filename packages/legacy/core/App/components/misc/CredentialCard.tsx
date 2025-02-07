@@ -12,6 +12,8 @@ import CredentialCard11, { CredentialErrors } from './CredentialCard11'
 import { GenericCredentialExchangeRecord } from '../../types/credentials'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
+import { getCredentialForDisplay } from '../../modules/openid/display'
+import { getAttributeField } from '../../modules/openid/utils/utils'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -47,6 +49,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const { ColorPallet } = useTheme()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { resolveBundleForCredential } = useOpenIDCredentials()
+  const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<string | number | null | undefined>()
 
   useEffect(() => {
     if (brandingOverlay) {
@@ -61,6 +64,14 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
 
     if (credential instanceof W3cCredentialRecord) {
       resolveOverlay(credential)
+      const credentialDisplay = getCredentialForDisplay(credential)
+      if (credentialDisplay.display.primary_overlay_attribute) {
+        const attributeValue = getAttributeField(
+          credentialDisplay,
+          credentialDisplay.display.primary_overlay_attribute
+        )?.value
+        setExtraOverlayAttribute(attributeValue)
+      }
     }
   }, [credential, brandingOverlay, resolveBundleForCredential])
 
@@ -123,6 +134,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         elevated={proof}
         displayItems={displayItems}
         hideSlice={true}
+        extraOverlayParameter={extraOverlayAttribute}
       />
     )
   } else {

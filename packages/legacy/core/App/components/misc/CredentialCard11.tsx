@@ -51,6 +51,7 @@ interface CredentialCard11Props {
   handleAltCredChange?: () => void
   brandingOverlay?: CredentialOverlay<BrandingOverlay>
   hideSlice?: boolean
+  extraOverlayParameter?: string | number | null | undefined
 }
 
 /*
@@ -97,6 +98,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   handleAltCredChange,
   brandingOverlay,
   hideSlice = false,
+  extraOverlayParameter,
 }) => {
   const { width } = useWindowDimensions()
   const borderRadius = 10
@@ -566,6 +568,11 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </Text>
           </View>
         </View>
+        {extraOverlayParameter && (
+          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+            <Text style={TextTheme.caption}>{extraOverlayParameter}</Text>
+          </View>
+        )}
 
         {/* Render Error text at the top of the credential card */}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

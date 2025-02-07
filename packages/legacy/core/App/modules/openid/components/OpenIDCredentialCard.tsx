@@ -163,7 +163,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
 
     return (
       <Image
-        source={toImageSource(logo)}
+        source={toImageSource(src)}
         style={{
           flex: 4,
           resizeMode: 'contain',
@@ -257,7 +257,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
         <View style={[styles.flexGrow, { overflow: 'hidden' }]} testID={testIdWithKey('CredentialCard')}>
           {display?.backgroundImage ? (
             <ImageBackground
-              source={toImageSource(display.backgroundImage)}
+              source={toImageSource(display.backgroundImage.url)}
               style={styles.flexGrow}
               imageStyle={{ borderRadius }}
             >
