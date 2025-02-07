@@ -569,7 +569,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
         if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
-          console.log('******* REM C3', proofId, proof.id)
           agent.connections.deleteById(proof.connectionId)
         }
       }
