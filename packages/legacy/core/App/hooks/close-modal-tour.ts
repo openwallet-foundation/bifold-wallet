@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-const useHandleStop = () => {
+const useCloseModalTour = () => {
   const [, dispatch] = useStore()
 
   const handleStop = useCallback(
@@ -18,4 +18,4 @@ const useHandleStop = () => {
   return handleStop
 }
 
-export default useHandleStop
+export default useCloseModalTour

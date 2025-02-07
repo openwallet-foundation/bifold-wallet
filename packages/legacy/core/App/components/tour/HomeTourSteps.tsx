@@ -1,42 +1,47 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native'
+import { Text, TextStyle } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 
 import { TourBox } from './TourBox'
-import useHandleStop from '../../hooks/close-modal-tour'
+import useCloseModalTour from '../../hooks/close-modal-tour'
 import { DispatchAction } from '../../contexts/reducers/store'
+
+const useCommonStyles = () => {
+  const { ColorPallet, TextTheme } = useTheme()
+
+  const textStyle: TextStyle = {
+    ...TextTheme.normal,
+    color: ColorPallet.notification.infoText,
+  }
+
+  return { textStyle }
+}
 
 export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
-      const { ColorPallet, TextTheme } = useTheme()
-      const handleStop = useHandleStop()
+      const { textStyle } = useCommonStyles()
+      const closeModalTour = useCloseModalTour()
 
       return (
         <TourBox
           title={t('Tour.AddAndShare')}
           leftText={t('Tour.Skip')}
           rightText={t('Tour.Next')}
-          onLeft={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          onLeft={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           onRight={next}
           currentTour={currentTour}
           currentStep={currentStep}
           previous={previous}
-          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          stop={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           next={next}
         >
-          <Text
-            style={{
-              ...TextTheme.normal,
-              color: ColorPallet.notification.infoText,
-            }}
-            allowFontScaling={false}
-          >
+          <Text style={textStyle} allowFontScaling={false}>
             {t('Tour.AddAndShareDescription')}
           </Text>
         </TourBox>
@@ -47,8 +52,8 @@ export const homeTourSteps: TourStep[] = [
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
-      const { ColorPallet, TextTheme } = useTheme()
-      const handleStop = useHandleStop()
+      const { textStyle } = useCommonStyles()
+      const closeModalTour = useCloseModalTour()
 
       return (
         <TourBox
@@ -60,16 +65,10 @@ export const homeTourSteps: TourStep[] = [
           currentTour={currentTour}
           currentStep={currentStep}
           next={next}
-          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          stop={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           previous={previous}
         >
-          <Text
-            style={{
-              ...TextTheme.normal,
-              color: ColorPallet.notification.infoText,
-            }}
-            allowFontScaling={false}
-          >
+          <Text style={textStyle} allowFontScaling={false}>
             {t('Tour.NotificationsDescription')}
           </Text>
         </TourBox>
@@ -80,8 +79,8 @@ export const homeTourSteps: TourStep[] = [
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
       const { t } = useTranslation()
-      const { ColorPallet, TextTheme } = useTheme()
-      const handleStop = useHandleStop()
+      const { textStyle } = useCommonStyles()
+      const closeModalTour = useCloseModalTour()
 
       return (
         <TourBox
@@ -89,20 +88,14 @@ export const homeTourSteps: TourStep[] = [
           leftText={t('Tour.Back')}
           rightText={t('Tour.Done')}
           onLeft={previous}
-          onRight={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          onRight={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           currentTour={currentTour}
           currentStep={currentStep}
           next={next}
-          stop={() => handleStop(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          stop={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           previous={previous}
         >
-          <Text
-            style={{
-              ...TextTheme.normal,
-              color: ColorPallet.notification.infoText,
-            }}
-            allowFontScaling={false}
-          >
+          <Text style={textStyle} allowFontScaling={false}>
             {t('Tour.YourCredentialsDescription')}
           </Text>
         </TourBox>

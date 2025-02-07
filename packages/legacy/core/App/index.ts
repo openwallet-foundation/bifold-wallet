@@ -55,6 +55,7 @@ import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
+import useCloseModalTour from './hooks/close-modal-tour'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
 export * from './navigators'
@@ -83,7 +84,13 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
-export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink, formatTime, useCredentialConnectionLabel, getConnectionName } from './utils/helpers'
+export {
+  removeExistingInvitationIfRequired,
+  connectFromScanOrDeepLink,
+  formatTime,
+  useCredentialConnectionLabel,
+  getConnectionName,
+} from './utils/helpers'
 export { isValidAnonCredsCredential, getCredentialIdentifiers } from './utils/credential'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 
@@ -173,6 +180,7 @@ export {
   NotificationListItem,
   useDefaultStackOptions,
   useInitializeAgent,
+  useCloseModalTour,
   Splash,
   Developer,
   Terms,
