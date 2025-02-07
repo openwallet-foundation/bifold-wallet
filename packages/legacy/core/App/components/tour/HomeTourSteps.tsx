@@ -1,32 +1,15 @@
 import * as React from 'react'
-import { useTranslation } from 'react-i18next'
-import { Text, TextStyle } from 'react-native'
-
-import { useTheme } from '../../contexts/theme'
+import { Text } from 'react-native'
 import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
-
 import { TourBox } from './TourBox'
-import useCloseModalTour from '../../hooks/close-modal-tour'
+import useCommonTourHooks from '../../hooks/modal-tour-props'
 import { DispatchAction } from '../../contexts/reducers/store'
-
-const useCommonStyles = () => {
-  const { ColorPallet, TextTheme } = useTheme()
-
-  const textStyle: TextStyle = {
-    ...TextTheme.normal,
-    color: ColorPallet.notification.infoText,
-  }
-
-  return { textStyle }
-}
 
 export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t } = useTranslation()
-      const { textStyle } = useCommonStyles()
-      const closeModalTour = useCloseModalTour()
+      const { t, ColorPallet, TextTheme, closeModalTour } = useCommonTourHooks()
 
       return (
         <TourBox
@@ -41,7 +24,13 @@ export const homeTourSteps: TourStep[] = [
           stop={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           next={next}
         >
-          <Text style={textStyle} allowFontScaling={false}>
+          <Text
+            style={{
+              ...TextTheme.normal,
+              color: ColorPallet.notification.infoText,
+            }}
+            allowFontScaling={false}
+          >
             {t('Tour.AddAndShareDescription')}
           </Text>
         </TourBox>
@@ -51,9 +40,7 @@ export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t } = useTranslation()
-      const { textStyle } = useCommonStyles()
-      const closeModalTour = useCloseModalTour()
+      const { t, ColorPallet, TextTheme, closeModalTour } = useCommonTourHooks()
 
       return (
         <TourBox
@@ -68,7 +55,13 @@ export const homeTourSteps: TourStep[] = [
           stop={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           previous={previous}
         >
-          <Text style={textStyle} allowFontScaling={false}>
+          <Text
+            style={{
+              ...TextTheme.normal,
+              color: ColorPallet.notification.infoText,
+            }}
+            allowFontScaling={false}
+          >
             {t('Tour.NotificationsDescription')}
           </Text>
         </TourBox>
@@ -78,9 +71,7 @@ export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t } = useTranslation()
-      const { textStyle } = useCommonStyles()
-      const closeModalTour = useCloseModalTour()
+      const { t, ColorPallet, TextTheme, closeModalTour } = useCommonTourHooks()
 
       return (
         <TourBox
@@ -95,7 +86,13 @@ export const homeTourSteps: TourStep[] = [
           stop={() => closeModalTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
           previous={previous}
         >
-          <Text style={textStyle} allowFontScaling={false}>
+          <Text
+            style={{
+              ...TextTheme.normal,
+              color: ColorPallet.notification.infoText,
+            }}
+            allowFontScaling={false}
+          >
             {t('Tour.YourCredentialsDescription')}
           </Text>
         </TourBox>
