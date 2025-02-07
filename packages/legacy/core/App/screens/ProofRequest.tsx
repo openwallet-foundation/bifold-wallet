@@ -561,10 +561,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const handleDeclineTouched = useCallback(async () => {
     try {
       if (agent && proof) {
-        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        const connection = await agent.connections.findById(proof.id)
+        if (connection) {
+          await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        }
+
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
         if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          console.log('******* REM C3', proofId, proof.id)
           agent.connections.deleteById(proof.connectionId)
         }
       }
@@ -714,7 +719,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {(!loading && proofConnectionLabel && goalCode === 'aries.vc.verify') && (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         )}
         {!loading && isShareDisabled() ? (
