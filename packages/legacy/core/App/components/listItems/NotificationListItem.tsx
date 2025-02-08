@@ -161,9 +161,20 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
   const declineProofRequest = useCallback(async () => {
     try {
-      const proofId = (notification as ProofExchangeRecord).id
-      if (agent) {
-        await agent.proofs.declineRequest({ proofRecordId: proofId })
+      const proofRecord = notification as ProofExchangeRecord
+
+      if (agent && proofRecord) {
+        const connectionId = proofRecord.connectionId ?? ''
+        const connection = await agent.connections.findById(connectionId)
+
+        if (connection) {
+          await agent.proofs.sendProblemReport({
+            proofRecordId: proofRecord.id,
+            description: t('ProofRequest.Declined'),
+          })
+        }
+
+        await agent.proofs.declineRequest({ proofRecordId: proofRecord.id })
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
@@ -268,11 +279,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
           // message.comment is the common fallback title for both v1 and v2 proof requests
           let body: string = message?.comment ?? ''
-          
+
           if (message instanceof V1RequestPresentationMessage) {
             body = message.indyProofRequest?.name ?? body
           }
-          
+
           if (message instanceof V2RequestPresentationMessage) {
             // workaround for getting proof request name in v2 proof request
             // https://github.com/openwallet-foundation/credo-ts/blob/5f08bc67e3d1cc0ab98e7cce7747fedd2bf71ec1/packages/core/src/modules/proofs/protocol/v2/messages/V2RequestPresentationMessage.ts#L78
