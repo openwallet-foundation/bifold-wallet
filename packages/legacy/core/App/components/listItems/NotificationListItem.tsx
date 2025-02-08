@@ -161,14 +161,20 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
   const declineProofRequest = useCallback(async () => {
     try {
-      const proofId = (notification as ProofExchangeRecord).id
-      if (agent) {
-        const connection = await agent.connections.findById(proofId)
+      const proofRecord = notification as ProofExchangeRecord
+
+      if (agent && proofRecord) {
+        const connectionId = proofRecord.connectionId ?? ''
+        const connection = await agent.connections.findById(connectionId)
+
         if (connection) {
-          await agent.proofs.sendProblemReport({ proofRecordId: proofId, description: t('ProofRequest.Declined') })
+          await agent.proofs.sendProblemReport({
+            proofRecordId: proofRecord.id,
+            description: t('ProofRequest.Declined'),
+          })
         }
 
-        await agent.proofs.declineRequest({ proofRecordId: proofId })
+        await agent.proofs.declineRequest({ proofRecordId: proofRecord.id })
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)

@@ -561,15 +561,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const handleDeclineTouched = useCallback(async () => {
     try {
       if (agent && proof) {
-        const connection = await agent.connections.findById(proof.id)
+        const connectionId = proof.connectionId ?? ''
+        const connection = await agent.connections.findById(connectionId)
+
         if (connection) {
           await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
         }
 
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
-        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
-          agent.connections.deleteById(proof.connectionId)
+        if (connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          agent.connections.deleteById(connectionId)
         }
       }
     } catch (err: unknown) {
