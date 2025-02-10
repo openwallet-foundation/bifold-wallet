@@ -26,7 +26,6 @@ import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { parseCredDefFromId } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
@@ -36,6 +35,7 @@ import { testIdWithKey } from '../utils/testable'
 import { ImportantForAccessibility } from '../types/accessibility'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
+import { BaseTourID } from '../types/tour'
 
 type CredentialOfferProps = {
   navigation: any
@@ -72,7 +72,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
-  const [store, dispatch] = useStore()
+  const [store] = useStore()
   const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
@@ -96,18 +96,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
       setHideElements('no-hide-descendants')
-      start(TourID.CredentialOfferTour)
+      start(BaseTourID.CredentialOfferTour)
     } else {
       setHideElements('auto')
     }
-  }, [
-    enableToursConfig,
-    store.tours.enableTours,
-    store.tours.seenCredentialOfferTour,
-    screenIsFocused,
-    start,
-    dispatch,
-  ])
+  }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialOfferTour, screenIsFocused, start])
 
   useEffect(() => {
     if (!agent || !credential) {

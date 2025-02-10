@@ -48,7 +48,6 @@ import {
   ProofCredentialPredicates,
 } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import {
@@ -65,6 +64,7 @@ import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { ImportantForAccessibility } from '../types/accessibility'
+import { BaseTourID } from '../types/tour'
 
 type ProofRequestProps = {
   navigation: any
@@ -204,7 +204,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
     if (shouldShowTour && screenIsFocused) {
       setHideElements('no-hide-descendants')
-      start(TourID.ProofRequestTour)
+      start(BaseTourID.ProofRequestTour)
     } else {
       setHideElements('auto')
     }

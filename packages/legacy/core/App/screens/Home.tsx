@@ -12,7 +12,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
-import { TourID } from '../types/tour'
+import { BaseTourID } from '../types/tour'
 import { ImportantForAccessibility } from '../types/accessibility'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
@@ -74,12 +74,13 @@ const Home: React.FC<HomeProps> = () => {
     },
     [customNotification, NotificationListItem]
   )
+
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
     if (shouldShowTour && screenIsFocused) {
       setHideElements('no-hide-descendants')
       if (store.tours.seenToursPrompt) {
-        start(TourID.HomeTour)
+        start(BaseTourID.HomeTour)
       } else {
         setShowTourPopup(true)
       }
@@ -110,7 +111,7 @@ const Home: React.FC<HomeProps> = () => {
       type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
       payload: [true],
     })
-    start(TourID.HomeTour)
+    start(BaseTourID.HomeTour)
   }, [dispatch, start])
 
   const onDismissPressed = useCallback(() => {

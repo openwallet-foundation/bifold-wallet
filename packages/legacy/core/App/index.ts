@@ -50,12 +50,12 @@ import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
-import { PINRules, walletTimeout } from './constants'
+import { PINRules, walletTimeout, tours } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useInitializeAgent from './hooks/initialize-agent'
-import useCloseModalTour from './hooks/close-modal-tour'
+import useCommonTourHooks from './hooks/common-tour'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
 export * from './navigators'
@@ -142,6 +142,8 @@ export { MainContainer } from './container-impl'
 export type { ScreenLayoutConfig } from './types/navigators'
 export type { HistoryEventsLoggerConfig } from './types/config'
 
+export { BaseTourID } from './types/tour'
+
 export {
   App,
   Agent,
@@ -180,7 +182,7 @@ export {
   NotificationListItem,
   useDefaultStackOptions,
   useInitializeAgent,
-  useCloseModalTour,
+  useCommonTourHooks,
   Splash,
   Developer,
   Terms,
@@ -203,6 +205,7 @@ export {
   BulletPoint,
   PINRules,
   walletTimeout,
+  tours,
   DefaultScreenOptionsDictionary,
   DefaultScreenLayoutOptions,
 }

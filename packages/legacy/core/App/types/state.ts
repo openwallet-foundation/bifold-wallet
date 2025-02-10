@@ -41,6 +41,7 @@ export interface Tours {
   seenCredentialsTour: boolean
   seenCredentialOfferTour: boolean
   seenProofRequestTour: boolean
+  [key: `seen${string}Tour`]: boolean
 }
 
 export interface Lockout {

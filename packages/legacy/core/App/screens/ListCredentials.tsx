@@ -12,7 +12,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { RootStackParams, Screens } from '../types/navigators'
-import { TourID } from '../types/tour'
 import { TOKENS, useServices } from '../container-api'
 import { EmptyListProps } from '../components/misc/EmptyList'
 import { CredentialListFooterProps } from '../types/credential-list-footer'
@@ -20,6 +19,7 @@ import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredential
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { ImportantForAccessibility } from '../types/accessibility'
+import { BaseTourID } from '../types/tour'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -65,7 +65,7 @@ const ListCredentials: React.FC = () => {
 
     if (shouldShowTour && screenIsFocused) {
       setHideElements('no-hide-descendants')
-      start(TourID.CredentialsTour)
+      start(BaseTourID.CredentialsTour)
     } else {
       setHideElements('auto')
     }
