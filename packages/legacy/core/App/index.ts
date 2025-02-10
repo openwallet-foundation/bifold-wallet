@@ -203,7 +203,7 @@ export {
   BulletPoint,
   PINRules,
   walletTimeout,
-  attemptLockoutConfig as attemptLockoutConfig,
+  attemptLockoutConfig,
   tours,
   DefaultScreenOptionsDictionary,
   DefaultScreenLayoutOptions,

@@ -1,6 +1,8 @@
 export type AttemptLockoutConfig = {
   baseRules: Record<number, number | undefined>
-  baseRulesIncrement: number
-  threshold: number
-  thresholdPenaltyDuration: number
+  thresholdRules: {
+    threshold: number
+    increment: number
+    thresholdPenaltyDuration: number
+  }
 }

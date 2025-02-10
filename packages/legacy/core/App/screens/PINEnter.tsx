@@ -47,15 +47,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const { ButtonLoading } = useAnimatedComponents()
   const [
     logger,
-    {
-      enableHiddenDevModeTrigger,
-      attemptLockoutConfig: {
-        baseRules,
-        baseRulesIncrement,
-        threshold,
-        thresholdPenaltyDuration,
-      } = attemptLockoutConfig,
-    },
+    { enableHiddenDevModeTrigger, attemptLockoutConfig: { baseRules, thresholdRules } = attemptLockoutConfig },
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const developerOptionCount = useRef(0)
   const touchCountToEnableBiometrics = 9
@@ -193,12 +185,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const getLockoutPenalty = useCallback(
     (attempts: number): number | undefined => {
       let penalty = baseRules[attempts]
-      if (!penalty && attempts >= threshold && !(attempts % baseRulesIncrement)) {
-        penalty = thresholdPenaltyDuration
+      if (!penalty && attempts >= thresholdRules.threshold && !(attempts % thresholdRules.increment)) {
+        penalty = thresholdRules.thresholdPenaltyDuration
       }
       return penalty
     },
-    [baseRules, baseRulesIncrement, threshold, thresholdPenaltyDuration]
+    [baseRules, thresholdRules]
   )
 
   const loadWalletCredentials = useCallback(async () => {
@@ -277,7 +269,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         if (!result) {
           const newAttempt = store.loginAttempt.loginAttempts + 1
 
-          const attemptsLeft = (baseRulesIncrement - (newAttempt % baseRulesIncrement)) % baseRulesIncrement
+          const attemptsLeft =
+            (thresholdRules.increment - (newAttempt % thresholdRules.increment)) % thresholdRules.increment
 
           if (!inlineMessages.enabled && !getLockoutPenalty(newAttempt)) {
             // skip displaying modals if we are going to lockout
@@ -357,7 +350,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       t,
       attemptLockout,
       inlineMessages,
-      baseRulesIncrement,
+      thresholdRules.increment,
     ]
   )
 

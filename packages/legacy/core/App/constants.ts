@@ -63,9 +63,11 @@ export const attemptLockoutConfig: AttemptLockoutConfig = {
     10: 10 * minute,
     15: hour,
   },
-  baseRulesIncrement: 5,
-  threshold: 20,
-  thresholdPenaltyDuration: 24 * hour,
+  thresholdRules: {
+    threshold: 20,
+    increment: 5,
+    thresholdPenaltyDuration: 24 * hour,
+  },
 }
 
 export const defaultAutoLockTime = 5
