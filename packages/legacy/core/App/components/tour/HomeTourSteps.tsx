@@ -4,8 +4,9 @@ import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 import { TourBox } from './TourBox'
 import useCommonTourHooks from '../../hooks/modal-tour-props'
 import { DispatchAction } from '../../contexts/reducers/store'
+import { IColorPallet, ITextTheme } from '../../theme'
 
-const renderTextContent = (content: any, TextTheme: any, ColorPallet: any) => (
+const renderTextContent = (content: string, TextTheme: ITextTheme, ColorPallet: IColorPallet) => (
   <Text
     style={{
       ...TextTheme.normal,
