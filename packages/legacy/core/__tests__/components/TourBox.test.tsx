@@ -5,6 +5,7 @@ import { TourBox } from '../../App/components/tour/TourBox'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
 import { testIdWithKey } from '../../App/utils/testable'
 import { tours } from '../../App/constants'
+import { BaseTourID } from '../../App/types/tour'
 
 describe('TourBox Component', () => {
   test('Renders properly with defaults', () => {
@@ -19,7 +20,7 @@ describe('TourBox Component', () => {
           rightText={'Right'}
           onLeft={previous}
           onRight={next}
-          currentTour={'homeTourSteps'}
+          currentTour={BaseTourID.HomeTour}
           currentStep={0}
           previous={previous}
           stop={stop}

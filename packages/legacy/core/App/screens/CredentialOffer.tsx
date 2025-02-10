@@ -14,7 +14,7 @@ import ConnectionImage from '../components/misc/ConnectionImage'
 import CredentialCard from '../components/misc/CredentialCard'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
-import { EventTypes, TourIDKeys } from '../constants'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useNetwork } from '../contexts/network'
@@ -35,6 +35,7 @@ import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
+import { BaseTourID } from '../types/tour'
 
 type CredentialOfferProps = {
   navigation: any
@@ -92,7 +93,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
-      start(TourIDKeys.credentialOfferTourSteps)
+      start(BaseTourID.CredentialOfferTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR,
         payload: [true],

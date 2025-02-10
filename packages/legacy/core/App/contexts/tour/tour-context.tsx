@@ -1,8 +1,7 @@
 import { createContext, ReactElement, useContext } from 'react'
 import { LayoutRectangle } from 'react-native'
 
-import { TourID } from '../../types/tour'
-import { TourIDKeys } from '../../constants'
+import { BaseTourID, TourID } from '../../types/tour'
 
 export type Tours = {
   [key: TourID]: TourStep[]
@@ -130,7 +129,7 @@ export const ORIGIN_SPOT: LayoutRectangle = {
 }
 
 export const TourContext = createContext<TourCtx>({
-  currentTour: TourIDKeys.homeTourSteps,
+  currentTour: BaseTourID.HomeTour,
   currentStep: undefined,
   changeSpot: () => undefined,
   next: () => undefined,

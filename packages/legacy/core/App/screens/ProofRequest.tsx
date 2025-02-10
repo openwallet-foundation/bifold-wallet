@@ -29,7 +29,7 @@ import { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
-import { EventTypes, TourIDKeys } from '../constants'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -64,6 +64,7 @@ import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../component
 import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { BaseTourID } from '../types/tour'
 
 type ProofRequestProps = {
   navigation: any
@@ -202,7 +203,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(TourIDKeys.proofRequestTourSteps)
+      start(BaseTourID.ProofRequestTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
         payload: [true],

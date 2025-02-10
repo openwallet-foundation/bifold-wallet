@@ -50,7 +50,7 @@ import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
-import { PINRules, walletTimeout, tours, TourIDKeys } from './constants'
+import { PINRules, walletTimeout, tours } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
@@ -141,6 +141,8 @@ export { MainContainer } from './container-impl'
 export type { ScreenLayoutConfig } from './types/navigators'
 export type { HistoryEventsLoggerConfig } from './types/config'
 
+export { BaseTourID } from './types/tour'
+
 export {
   App,
   Agent,
@@ -202,7 +204,6 @@ export {
   PINRules,
   walletTimeout,
   tours,
-  TourIDKeys,
   DefaultScreenOptionsDictionary,
   DefaultScreenLayoutOptions,
 }

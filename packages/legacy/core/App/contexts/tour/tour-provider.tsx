@@ -2,7 +2,7 @@ import React, { forwardRef, Ref, useCallback, useImperativeHandle, useMemo, useS
 import { ColorValue, LayoutRectangle } from 'react-native'
 
 import { TourOverlay } from '../../components/tour/TourOverlay'
-import { ChildFn, TourID } from '../../types/tour'
+import { BaseTourID, ChildFn, TourID } from '../../types/tour'
 import { isChildFunction } from '../../utils/helpers'
 
 import {
@@ -15,7 +15,6 @@ import {
   ORIGIN_SPOT,
   Tours,
 } from './tour-context'
-import { TourIDKeys } from '../../constants'
 
 export interface TourProviderProps {
   children: React.ReactNode | ChildFn<Tour>
@@ -68,7 +67,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
     nativeDriver = false,
   } = props
 
-  const [currentTour, setCurrentTour] = useState<TourID>(TourIDKeys.homeTourSteps)
+  const [currentTour, setCurrentTour] = useState<TourID>(BaseTourID.HomeTour)
   const [currentStep, setCurrentStep] = useState<number>()
   const [spot, setSpot] = useState(ORIGIN_SPOT)
 

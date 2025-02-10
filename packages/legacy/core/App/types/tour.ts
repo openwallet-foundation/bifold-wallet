@@ -10,4 +10,11 @@ export type Optional<T> = T | undefined
  */
 export type ChildFn<T> = (value: T) => ReactNode
 
+export enum BaseTourID {
+  HomeTour = 'homeTourSteps',
+  CredentialsTour = 'credentialsTourSteps',
+  CredentialOfferTour = 'credentialOfferTourSteps',
+  ProofRequestTour = 'proofRequestTourSteps',
+}
+
 export type TourID = `${string}TourSteps`

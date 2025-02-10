@@ -12,7 +12,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
-import { TourIDKeys } from '../constants'
+import { BaseTourID } from '../types/tour'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -81,7 +81,7 @@ const Home: React.FC<HomeProps> = () => {
           type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
           payload: [true],
         })
-        start(TourIDKeys.homeTourSteps)
+        start(BaseTourID.HomeTour)
       } else {
         setShowTourPopup(true)
       }
@@ -110,7 +110,7 @@ const Home: React.FC<HomeProps> = () => {
       type: DispatchAction.UPDATE_SEEN_TOUR_PROMPT,
       payload: [true],
     })
-    start(TourIDKeys.homeTourSteps)
+    start(BaseTourID.HomeTour)
   }, [dispatch, start])
 
   const onDismissPressed = useCallback(() => {

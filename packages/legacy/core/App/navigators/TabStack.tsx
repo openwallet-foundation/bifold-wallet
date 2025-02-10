@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { AttachTourStep } from '../components/tour/AttachTourStep'
-import { EventTypes, TourIDKeys } from '../constants'
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useNetwork } from '../contexts/network'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -24,6 +24,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
+import { BaseTourID } from '../types/tour'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
@@ -127,7 +128,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourIDKeys.homeTourSteps} index={1}>
+              <AttachTourStep tourID={BaseTourID.HomeTour} index={1}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
 
@@ -167,7 +168,7 @@ const TabStack: React.FC = () => {
                   width: 90,
                 }}
               >
-                <AttachTourStep tourID={TourIDKeys.homeTourSteps} index={0} fill>
+                <AttachTourStep tourID={BaseTourID.HomeTour} index={0} fill>
                   <View
                     style={{
                       position: 'absolute',
@@ -178,7 +179,7 @@ const TabStack: React.FC = () => {
                       margin: 'auto',
                     }}
                   >
-                    <AttachTourStep tourID={TourIDKeys.homeTourSteps} index={0} fill>
+                    <AttachTourStep tourID={BaseTourID.HomeTour} index={0} fill>
                       <View
                         style={{
                           flexGrow: 1,
@@ -237,7 +238,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourIDKeys.homeTourSteps} index={2}>
+              <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
                   {showLabels && (

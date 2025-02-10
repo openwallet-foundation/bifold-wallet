@@ -5,6 +5,7 @@ import { View, Text } from 'react-native'
 import { TourOverlay } from '../../App/components/tour/TourOverlay'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
 import { tours } from '../../App/constants'
+import { BaseTourID } from '../../App/types/tour'
 
 const tourStep = {
   Render: () => {
@@ -31,7 +32,7 @@ describe('TourOverlay Component', () => {
         <TourOverlay
           color={'grey'}
           currentStep={0}
-          currentTour={'homeTourSteps'}
+          currentTour={BaseTourID.HomeTour}
           changeSpot={changeSpot}
           backdropOpacity={0.7}
           onBackdropPress={onBackdropPress}
