@@ -1,7 +1,11 @@
 import { createContext, ReactElement, useContext } from 'react'
 import { LayoutRectangle } from 'react-native'
 
-import { TourID } from '../../types/tour'
+import { BaseTourID, TourID } from '../../types/tour'
+
+export type Tours = {
+  [key: TourID]: TourStep[]
+}
 
 export interface RenderProps {
   /**
@@ -112,21 +116,9 @@ export interface TourCtx extends Tour {
    */
   spot: LayoutRectangle
   /**
-   * The list of steps for the home tour.
+   * A dictionnary where the key is...
    */
-  homeTourSteps: TourStep[]
-  /**
-   * Same as above for the credential list screen
-   */
-  credentialsTourSteps: TourStep[]
-  /**
-   * Same as above for the credential offer screen
-   */
-  credentialOfferTourSteps: TourStep[]
-  /**
-   * Same as above for the proof request screen
-   */
-  proofRequestTourSteps: TourStep[]
+  tours: Tours
 }
 
 export const ORIGIN_SPOT: LayoutRectangle = {
@@ -137,17 +129,14 @@ export const ORIGIN_SPOT: LayoutRectangle = {
 }
 
 export const TourContext = createContext<TourCtx>({
-  currentTour: TourID.HomeTour,
+  currentTour: BaseTourID.HomeTour,
   currentStep: undefined,
   changeSpot: () => undefined,
   next: () => undefined,
   previous: () => undefined,
   spot: ORIGIN_SPOT,
   start: () => undefined,
-  homeTourSteps: [],
-  credentialsTourSteps: [],
-  credentialOfferTourSteps: [],
-  proofRequestTourSteps: [],
+  tours: {},
   stop: () => undefined,
 })
 

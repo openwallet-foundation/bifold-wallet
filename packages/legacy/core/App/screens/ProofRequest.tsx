@@ -49,7 +49,6 @@ import {
   ProofCredentialPredicates,
 } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import {
@@ -65,6 +64,7 @@ import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../component
 import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { BaseTourID } from '../types/tour'
 
 type ProofRequestProps = {
   navigation: any
@@ -203,7 +203,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(TourID.ProofRequestTour)
+      start(BaseTourID.ProofRequestTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
         payload: [true],

@@ -1,14 +1,11 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import { credentialOfferTourSteps } from '../../App/components/tour/CredentialOfferTourSteps'
-import { credentialsTourSteps } from '../../App/components/tour/CredentialsTourSteps'
-import { homeTourSteps } from '../../App/components/tour/HomeTourSteps'
-import { proofRequestTourSteps } from '../../App/components/tour/ProofRequestTourSteps'
 import { TourBox } from '../../App/components/tour/TourBox'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
-import { TourID } from '../../App/types/tour'
 import { testIdWithKey } from '../../App/utils/testable'
+import { tours } from '../../App/constants'
+import { BaseTourID } from '../../App/types/tour'
 
 describe('TourBox Component', () => {
   test('Renders properly with defaults', () => {
@@ -16,21 +13,14 @@ describe('TourBox Component', () => {
     const next = jest.fn()
     const stop = jest.fn()
     const tree = render(
-      <TourProvider
-        homeTourSteps={homeTourSteps}
-        credentialsTourSteps={credentialsTourSteps}
-        credentialOfferTourSteps={credentialOfferTourSteps}
-        proofRequestTourSteps={proofRequestTourSteps}
-        overlayColor={'gray'}
-        overlayOpacity={0.7}
-      >
+      <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
         <TourBox
           title={'Title'}
           leftText={'Left'}
           rightText={'Right'}
           onLeft={previous}
           onRight={next}
-          currentTour={TourID.HomeTour}
+          currentTour={BaseTourID.HomeTour}
           currentStep={0}
           previous={previous}
           stop={stop}
