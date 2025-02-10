@@ -1,4 +1,9 @@
+import { Tours } from 'contexts/tour/tour-context'
 import { PINValidationRules } from './types/security'
+import { homeTourSteps } from './components/tour/HomeTourSteps'
+import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
+import { credentialOfferTourSteps } from './components/tour/CredentialOfferTourSteps'
+import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 
 const lengthOfHiddenAttributes = 10
 const unicodeForBulletCharacter = '\u2022'
@@ -62,6 +67,13 @@ export const attemptLockoutThresholdRules = {
 }
 
 export const defaultAutoLockTime = 5
+
+export const tours: Tours = {
+  homeTourSteps,
+  credentialsTourSteps,
+  credentialOfferTourSteps,
+  proofRequestTourSteps,
+}
 
 export const walletId = 'walletId'
 
