@@ -8,13 +8,7 @@ import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import KeyboardView from '../components/views/KeyboardView'
-import {
-  minPINLength,
-  EventTypes,
-  defaultAutoLockTime,
-  attemptLockoutBaseRules as defaultAttemptLockoutBaseRules,
-  attemptLockoutThresholdRules as defaultAttemptLockoutThresholdRules,
-} from '../constants'
+import { minPINLength, EventTypes, defaultAutoLockTime, attemptLockoutConfig } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
@@ -55,10 +49,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     logger,
     {
       enableHiddenDevModeTrigger,
-      attemptLockoutConfig: { attemptLockoutBaseRules, attemptLockoutThresholdRules } = {
-        attemptLockoutBaseRules: defaultAttemptLockoutBaseRules,
-        attemptLockoutThresholdRules: defaultAttemptLockoutThresholdRules,
-      },
+      attemptLockoutConfig: {
+        baseRules,
+        baseRulesIncrement,
+        threshold,
+        thresholdPenaltyDuration,
+      } = attemptLockoutConfig,
     },
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const developerOptionCount = useRef(0)
@@ -196,17 +192,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
   const getLockoutPenalty = useCallback(
     (attempts: number): number | undefined => {
-      let penalty = attemptLockoutBaseRules[attempts]
-      if (
-        !penalty &&
-        attempts >= attemptLockoutThresholdRules.attemptThreshold &&
-        !(attempts % attemptLockoutThresholdRules.attemptIncrement)
-      ) {
-        penalty = attemptLockoutThresholdRules.attemptThresholdPenalty
+      let penalty = baseRules[attempts]
+      if (!penalty && attempts >= threshold && !(attempts % baseRulesIncrement)) {
+        penalty = thresholdPenaltyDuration
       }
       return penalty
     },
-    [attemptLockoutBaseRules, attemptLockoutThresholdRules]
+    [baseRules, baseRulesIncrement, threshold, thresholdPenaltyDuration]
   )
 
   const loadWalletCredentials = useCallback(async () => {
@@ -285,10 +277,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         if (!result) {
           const newAttempt = store.loginAttempt.loginAttempts + 1
 
-          const attemptsLeft =
-            (attemptLockoutThresholdRules.attemptIncrement -
-              (newAttempt % attemptLockoutThresholdRules.attemptIncrement)) %
-            attemptLockoutThresholdRules.attemptIncrement
+          const attemptsLeft = (baseRulesIncrement - (newAttempt % baseRulesIncrement)) % baseRulesIncrement
 
           if (!inlineMessages.enabled && !getLockoutPenalty(newAttempt)) {
             // skip displaying modals if we are going to lockout
@@ -368,7 +357,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       t,
       attemptLockout,
       inlineMessages,
-      attemptLockoutThresholdRules.attemptIncrement,
+      baseRulesIncrement,
     ]
   )
 

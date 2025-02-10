@@ -1,4 +1,5 @@
 import { Locales } from '../localization'
+import { AttemptLockoutConfig } from './attempt-lockout-config'
 import { ContactDetailsOptionsParams } from './contact-details'
 import { PINSecurityParams } from './security'
 import { SettingSection } from './settings'
@@ -40,14 +41,7 @@ export interface Config {
   disableContactsInSettings?: boolean
   disableMediatorCheck?: boolean
   internetReachabilityUrls: string[]
-  attemptLockoutConfig?: {
-    attemptLockoutBaseRules: Record<number, number | undefined>
-    attemptLockoutThresholdRules: {
-      attemptThreshold: number
-      attemptIncrement: number
-      attemptThresholdPenalty: number
-    }
-  }
+  attemptLockoutConfig?: AttemptLockoutConfig
 }
 
 export interface HistoryEventsLoggerConfig {
