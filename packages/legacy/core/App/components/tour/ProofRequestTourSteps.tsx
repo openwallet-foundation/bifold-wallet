@@ -1,22 +1,17 @@
 import * as React from 'react'
-import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 
-import { useTheme } from '../../contexts/theme'
 import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 
 import { TourBox } from './TourBox'
-import useCloseModalTour from '../../hooks/close-modal-tour'
+import useCommonTourHooks from '../../hooks/modal-tour-props'
 import { DispatchAction } from '../../contexts/reducers/store'
 
 export const proofRequestTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t } = useTranslation()
-      const { ColorPallet, TextTheme } = useTheme()
-      const closeModalTour = useCloseModalTour()
-
+      const { t, ColorPallet, TextTheme, closeModalTour } = useCommonTourHooks()
       return (
         <TourBox
           title={t('Tour.ProofRequests')}
