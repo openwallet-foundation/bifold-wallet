@@ -50,7 +50,7 @@ import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
-import { PINRules, walletTimeout } from './constants'
+import { PINRules, walletTimeout, tours } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
@@ -83,7 +83,13 @@ export { BifoldError } from './types/error'
 export { EventTypes } from './constants'
 export { migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
-export { removeExistingInvitationIfRequired, connectFromScanOrDeepLink, formatTime, useCredentialConnectionLabel, getConnectionName } from './utils/helpers'
+export {
+  removeExistingInvitationIfRequired,
+  connectFromScanOrDeepLink,
+  formatTime,
+  useCredentialConnectionLabel,
+  getConnectionName,
+} from './utils/helpers'
 export { isValidAnonCredsCredential, getCredentialIdentifiers } from './utils/credential'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 
@@ -134,6 +140,8 @@ export { MainContainer } from './container-impl'
 
 export type { ScreenLayoutConfig } from './types/navigators'
 export type { HistoryEventsLoggerConfig } from './types/config'
+
+export { BaseTourID } from './types/tour'
 
 export {
   App,
@@ -195,6 +203,7 @@ export {
   BulletPoint,
   PINRules,
   walletTimeout,
+  tours,
   DefaultScreenOptionsDictionary,
   DefaultScreenLayoutOptions,
 }
