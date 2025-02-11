@@ -5,7 +5,6 @@ import { getCredentialForDisplay } from '../display'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
-import { TextTheme } from '../../../theme'
 import { useTranslation } from 'react-i18next'
 import { testIdWithKey } from '../../../utils/testable'
 import { useTheme } from '../../../contexts/theme'
@@ -43,7 +42,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const [credential, setCredential] = useState<W3cCredentialRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { removeCredential } = useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])

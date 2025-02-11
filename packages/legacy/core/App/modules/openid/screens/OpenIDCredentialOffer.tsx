@@ -7,7 +7,6 @@ import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { useState } from 'react'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
-import { TextTheme } from '../../../theme'
 import { useTranslation } from 'react-i18next'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import { testIdWithKey } from '../../../utils/testable'
@@ -31,7 +30,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
 
