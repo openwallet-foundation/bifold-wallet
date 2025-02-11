@@ -3,7 +3,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 
 type Props = {
   overlay: CredentialOverlay<BrandingOverlay>
@@ -15,14 +15,14 @@ const CredentialCardLogo: React.FC<Props> = ({
   brandingOverlayType = BrandingOverlayType.Branding10,
 }: Props) => {
   const { TextTheme, CredentialCardShadowTheme } = useTheme()
-  const [logoText, setLogoText] = useState(overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')
   const logoHeight = brandingOverlayType === BrandingOverlayType.Branding10 ? 80 : 48
   const paddingHorizontal = 24
 
-  useEffect(() => {
+  const logoText = useMemo(() => {
     if (brandingOverlayType === BrandingOverlayType.Branding11) {
-      setLogoText(overlay.metaOverlay?.issuer ?? 'I')
+      return (overlay.metaOverlay?.issuer ?? 'I').charAt(0).toUpperCase()
     }
+    return (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C').charAt(0).toUpperCase()
   }, [brandingOverlayType, overlay])
 
   const styles = StyleSheet.create({
@@ -55,9 +55,7 @@ const CredentialCardLogo: React.FC<Props> = ({
           }}
         />
       ) : (
-        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>
-          {logoText.charAt(0).toUpperCase()}
-        </Text>
+        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>{logoText}</Text>
       )}
     </View>
   )
