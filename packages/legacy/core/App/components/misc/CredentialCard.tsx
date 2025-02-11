@@ -76,11 +76,12 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   }, [credential, brandingOverlay, resolveBundleForCredential])
 
   const getCredOverlayType = (type: BrandingOverlayType) => {
+    const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
     if (proof) {
       return (
         <CredentialCard11
           displayItems={displayItems}
-          style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
+          style={isBranding10 ? { backgroundColor: ColorPallet.brand.secondaryBackground } : undefined}
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
@@ -90,6 +91,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           proof
           elevated
           credentialErrors={credentialErrors ?? []}
+          brandingOverlayType={bundleResolver.getBrandingOverlayType()}
         />
       )
     }
@@ -104,6 +106,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
             style={style}
             onPress={onPress}
             credentialErrors={credentialErrors ?? []}
+            brandingOverlayType={bundleResolver.getBrandingOverlayType()}
+            elevated={bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11}
           />
         )
       }
@@ -117,6 +121,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           style={style}
           onPress={onPress}
           credentialErrors={credentialErrors ?? []}
+          brandingOverlayType={bundleResolver.getBrandingOverlayType()}
         />
       )
     }
@@ -135,6 +140,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         displayItems={displayItems}
         hideSlice={true}
         extraOverlayParameter={extraOverlayAttribute}
+        brandingOverlayType={bundleResolver.getBrandingOverlayType()}
       />
     )
   } else {

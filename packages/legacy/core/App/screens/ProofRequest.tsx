@@ -18,11 +18,12 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, EmitterSubscription, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import { CredentialCard } from '../components/misc'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
@@ -48,7 +49,6 @@ import {
   ProofCredentialPredicates,
 } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import {
@@ -62,12 +62,20 @@ import { testIdWithKey } from '../utils/testable'
 import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 
 import ProofRequestAccept from './ProofRequestAccept'
+import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import ProofRequestCredentialList from '../components/views/ProofRequestCredentialList'
+import { BaseTourID } from '../types/tour'
 
 type ProofRequestProps = {
   navigation: any
   proofId: string
+}
+
+type CredentialListProps = {
+  header?: JSX.Element
+  footer?: JSX.Element
+  items: ProofCredentialItems[]
+  missing: boolean
 }
 
 const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
@@ -195,7 +203,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(TourID.ProofRequestTour)
+      start(BaseTourID.ProofRequestTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
         payload: [true],
@@ -553,11 +561,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const handleDeclineTouched = useCallback(async () => {
     try {
       if (agent && proof) {
-        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        const connectionId = proof.connectionId ?? ''
+        const connection = await agent.connections.findById(connectionId)
+
+        if (connection) {
+          await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        }
+
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
-        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
-          agent.connections.deleteById(proof.connectionId)
+        if (connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          agent.connections.deleteById(connectionId)
         }
       }
     } catch (err: unknown) {
@@ -749,6 +763,51 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     )
   }
 
+  const CredentialList: React.FC<CredentialListProps> = ({ header, footer, items, missing }) => {
+    return (
+      <FlatList
+        data={items}
+        scrollEnabled={false}
+        ListHeaderComponent={header}
+        ListFooterComponent={footer}
+        renderItem={({ item }) => {
+          const errors: CredentialErrors[] = []
+          missing && errors.push(CredentialErrors.NotInWallet)
+          item.credExchangeRecord?.revocationNotification?.revocationDate && errors.push(CredentialErrors.Revoked)
+          !hasSatisfiedPredicates(getCredentialsFields(), item.credId) && errors.push(CredentialErrors.PredicateError)
+          return (
+            <View>
+              {loading || attestationLoading ? null : (
+                <View style={{ marginTop: 10, marginHorizontal: 20 }}>
+                  <CredentialCard
+                    credential={item.credExchangeRecord}
+                    credDefId={item.credDefId}
+                    schemaId={item.schemaId}
+                    displayItems={[
+                      ...(item.attributes ?? []),
+                      ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
+                    ]}
+                    credName={item.credName}
+                    hasAltCredentials={item.altCredentials && item.altCredentials.length > 1}
+                    handleAltCredChange={
+                      item.altCredentials && item.altCredentials.length > 1
+                        ? () => {
+                            handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
+                          }
+                        : undefined
+                    }
+                    proof
+                    credentialErrors={errors}
+                  />
+                </View>
+              )}
+            </View>
+          )
+        }}
+      />
+    )
+  }
+
   const credentialListHeader = (headerText: string) => {
     return (
       <View style={styles.pageMargin}>
@@ -772,7 +831,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         <View style={styles.pageContent}>
           {proofPageHeader()}
           {/* This list will render if any credentials in a proof request are not in the users wallet */}
-          <ProofRequestCredentialList
+          <CredentialList
             header={
               missingCredentials.length > 0 && userCredentials.length > 0
                 ? credentialListHeader(t('ProofRequest.MissingCredentials'))
@@ -793,7 +852,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               ) : undefined
             }
           />
-          <ProofRequestCredentialList
+          <CredentialList
             header={
               missingCredentials.length > 0 && userCredentials.length > 0
                 ? credentialListHeader(t('ProofRequest.FromYourWallet'))
@@ -801,21 +860,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             }
             items={userCredentials}
             missing={false}
-            loading={loading}
-            attestationLoading={attestationLoading}
-            hasSatisfiedPredicates={hasSatisfiedPredicates}
-            getCredentialsFields={getCredentialsFields}
-            displayItems={(item) => [
-              ...(item.attributes ?? []),
-              ...evaluatePredicates(getCredentialsFields(), item.credId)(item),
-            ]}
-            handleAltCredChange={(item) => {
-              item.altCredentials && item.altCredentials.length > 1
-                ? () => {
-                    handleAltCredChange(item.credId, item.altCredentials ?? [item.credId])
-                  }
-                : undefined
-            }}
           />
           {proofPageFooter()}
         </View>

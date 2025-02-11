@@ -25,8 +25,8 @@ import {
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
 import { useConnectionById } from '@credo-ts/react-hooks'
-import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
-import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay, CaptureBaseAttributeType } from '@hyperledger/aries-oca'
+import { Attribute, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import { Buffer } from 'buffer'
 import moment from 'moment'
 import { parseUrl } from 'query-string'
@@ -138,7 +138,7 @@ export function formatTime(
   const sameDay = time.getDate() === now.getDate() && time.getMonth() === now.getMonth() && sameYear
   const isPortuguese = i18n.resolvedLanguage === 'pt-BR'
   const isNonEnglish = i18n.resolvedLanguage === 'fr' || isPortuguese
-  const hoursFormat = isPortuguese ? 'HH:mm' : 'h:mm a'
+  const hoursFormat = isNonEnglish ? 'HH:mm' : 'h:mm a'
   // for the shortened approach eg. in chat bubbles
   if (chatFormat) {
     if (lessThanAMinuteAgo) {
@@ -1254,4 +1254,24 @@ export function generateRandomWalletName() {
   }
 
   return name
+}
+
+/**
+ * Returns the secondary background color for a credential card.
+ *
+ * @param {CredentialOverlay<BrandingOverlay>} overlay - The credential card containing branding information.
+ * @param {boolean} [proof] - Optional flag indicating if the context of the credential card is a proof.
+ * @returns {string | undefined} - The secondary background color of the branding or undefined if not applicable.
+ */
+export function getSecondaryBackgroundColor(
+  overlay: CredentialOverlay<BrandingOverlay>,
+  proof?: boolean
+): string | undefined {
+  if (proof) {
+    return overlay.brandingOverlay?.primaryBackgroundColor
+  } else {
+    return overlay.brandingOverlay?.backgroundImageSlice
+      ? 'rgba(0, 0, 0, 0)'
+      : overlay.brandingOverlay?.secondaryBackgroundColor
+  }
 }

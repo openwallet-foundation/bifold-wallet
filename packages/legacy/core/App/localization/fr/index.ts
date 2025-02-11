@@ -251,7 +251,7 @@ const translation = {
     },
     "PINEnter": {
         "Title": "Content de te revoir",
-        "SubText": "Entrez le code PIN de votre portefeuille pour vous connecter",
+        "SubText": "Connectez-vous pour accéder à votre portefeuille.",
         "EnterPIN": "Veuillez saisir votre NIP",
         "Unlock": "Déverrouiller",
         "Or": "Ou",
@@ -429,6 +429,7 @@ const translation = {
         "PeopleAndOrganizations": "Les personnes et les organisations avec lesquelles vous avez interagi sont répertoriées ici.",
         "WhatAreContacts": "Qu'est-ce que les Contacts?",
         "AddContact": "Ajouter un Contact",
+        "UnknownContact": "Contact Inconnu",
     },
     "ContactDetails": {
         "Created": "Créé",

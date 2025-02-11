@@ -4,7 +4,7 @@ import {
   getProofData,
   groupSharedProofDataByCredential,
 } from '@hyperledger/aries-bifold-verifier'
-import { Field } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 
@@ -12,6 +12,7 @@ import VerifierCredentialCard from '../../components/misc/VerifierCredentialCard
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useTheme } from '../../contexts/theme'
 import { buildFieldsFromSharedAnonCredsProof } from '../../utils/oca'
+import { TOKENS, useServices } from '../../container-api'
 
 interface SharedProofDataProps {
   recordId: string
@@ -25,15 +26,21 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
     const attributes = buildFieldsFromSharedAnonCredsProof(sharedData.data)
     setAttributes(attributes)
   }, [sharedData])
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   return (
     <View style={{ marginBottom: 15 }}>
       <VerifierCredentialCard
         displayItems={attributes}
-        style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
+        style={
+          bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
+            ? { backgroundColor: ColorPallet.brand.secondaryBackground }
+            : undefined
+        }
         credDefId={sharedData.identifiers.cred_def_id}
         schemaId={sharedData.identifiers.schema_id}
         elevated
+        brandingOverlayType={bundleResolver.getBrandingOverlayType()}
       />
     </View>
   )

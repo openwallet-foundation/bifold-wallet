@@ -27,7 +27,6 @@ import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { parseCredDefFromId } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
@@ -36,6 +35,7 @@ import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
+import { BaseTourID } from '../types/tour'
 
 type CredentialOfferProps = {
   navigation: any
@@ -93,7 +93,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
-      start(TourID.CredentialOfferTour)
+      start(BaseTourID.CredentialOfferTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR,
         payload: [true],
@@ -278,7 +278,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {(credentialConnectionLabel && goalCode === 'aries.vc.issue') && (
+        {credentialConnectionLabel && goalCode === 'aries.vc.issue' && (
           <ConnectionAlert connectionID={credentialConnectionLabel} />
         )}
         <View style={styles.footerButton}>

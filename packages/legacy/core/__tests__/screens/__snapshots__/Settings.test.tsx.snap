@@ -279,7 +279,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }
@@ -395,7 +395,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }
@@ -581,7 +581,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }
@@ -699,7 +699,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }
@@ -815,7 +815,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }
@@ -933,7 +933,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }
@@ -1051,7 +1051,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                         "fontWeight": "normal",
                       },
                       Object {
-                        "color": "#FFFFFF",
+                        "color": "#42803E",
                       },
                     ]
                   }

@@ -1,5 +1,17 @@
+diff --git a/build/agent/Agent.js b/build/agent/Agent.js
+index c80ba74c75de6418b7c874364d2c6a3552e322e9..1727fa4c08c80c95f9c154c3f678de2f1c2c362e 100644
+--- a/build/agent/Agent.js
++++ b/build/agent/Agent.js
+@@ -104,6 +104,7 @@ class Agent extends BaseAgent_1.BaseAgent {
+     }
+     async initialize() {
+         const stop$ = this.dependencyManager.resolve(constants_1.InjectionSymbols.Stop$);
++        stop$.next(false);
+         // Listen for new messages (either from transports or somewhere else in the framework / extensions)
+         // We create this before doing any other initialization, so the initialization could already receive messages
+         this.messageSubscription = this.eventEmitter
 diff --git a/build/transport/WsOutboundTransport.js b/build/transport/WsOutboundTransport.js
-index ab9df20f9fedc4def4f486b9431ac669e899e609..72404426d64caed8f0392484ff76ea8716a991c2 100644
+index ab9df20f9fedc4def4f486b9431ac669e899e609..2e9e43a528fab6a01e52d54506891060adb917cc 100644
 --- a/build/transport/WsOutboundTransport.js
 +++ b/build/transport/WsOutboundTransport.js
 @@ -43,7 +43,16 @@ class WsOutboundTransport {
@@ -9,14 +21,14 @@ index ab9df20f9fedc4def4f486b9431ac669e899e609..72404426d64caed8f0392484ff76ea87
 -                stillOpenSocketClosingPromises.push(new Promise((resolve) => socket.once('close', resolve)));
 +                stillOpenSocketClosingPromises.push(
 +                    new Promise((resolve) => {
-+                      const closeHandler = () => {
-+                        socket.removeEventListener('close', closeHandler)
-+                        resolve()
-+                      }
-+          
-+                      socket.addEventListener('close', closeHandler)
++                        const closeHandler = () => {
++                            socket.removeEventListener('close', closeHandler)
++                            resolve()
++                        }
++
++                        socket.addEventListener('close', closeHandler)
 +                    })
-+                  );
++                );
                  socket.close();
              }
          });
