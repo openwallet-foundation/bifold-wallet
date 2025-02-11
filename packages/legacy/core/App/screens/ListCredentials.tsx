@@ -18,6 +18,7 @@ import { CredentialListFooterProps } from '../types/credential-list-footer'
 import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredentialRecordProvider'
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
+
 import { ImportantForAccessibility } from '../types/accessibility'
 import { BaseTourID } from '../types/tour'
 
