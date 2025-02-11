@@ -11,17 +11,20 @@ export const proofRequestTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks()
+      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks(
+        stop,
+        DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR
+      )
       return (
         <TourBox
           title={t('Tour.ProofRequests')}
           hideLeft
           rightText={t('Tour.Done')}
-          onRight={() => endTour(stop, DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR)}
+          onRight={endTour}
           currentTour={currentTour}
           currentStep={currentStep}
           previous={previous}
-          stop={() => endTour(stop, DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR)}
+          stop={endTour}
           next={next}
         >
           <Text

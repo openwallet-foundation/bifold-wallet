@@ -22,19 +22,19 @@ export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks()
+      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)
 
       return (
         <TourBox
           title={t('Tour.AddAndShare')}
           leftText={t('Tour.Skip')}
           rightText={t('Tour.Next')}
-          onLeft={() => endTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          onLeft={endTour}
           onRight={next}
           currentTour={currentTour}
           currentStep={currentStep}
           previous={previous}
-          stop={() => endTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          stop={endTour}
           next={next}
         >
           {renderTextContent(t('Tour.AddAndShareDescription'), TextTheme, ColorPallet)}
@@ -45,7 +45,7 @@ export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks()
+      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)
 
       return (
         <TourBox
@@ -57,7 +57,7 @@ export const homeTourSteps: TourStep[] = [
           currentTour={currentTour}
           currentStep={currentStep}
           next={next}
-          stop={() => endTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          stop={endTour}
           previous={previous}
         >
           {renderTextContent(t('Tour.NotificationsDescription'), TextTheme, ColorPallet)}
@@ -68,7 +68,7 @@ export const homeTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks()
+      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)
 
       return (
         <TourBox
@@ -76,11 +76,11 @@ export const homeTourSteps: TourStep[] = [
           leftText={t('Tour.Back')}
           rightText={t('Tour.Done')}
           onLeft={previous}
-          onRight={() => endTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          onRight={endTour}
           currentTour={currentTour}
           currentStep={currentStep}
           next={next}
-          stop={() => endTour(stop, DispatchAction.UPDATE_SEEN_HOME_TOUR)}
+          stop={endTour}
           previous={previous}
         >
           {renderTextContent(t('Tour.YourCredentialsDescription'), TextTheme, ColorPallet)}

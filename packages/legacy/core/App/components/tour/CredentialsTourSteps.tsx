@@ -11,18 +11,21 @@ export const credentialsTourSteps: TourStep[] = [
   {
     Render: (props: RenderProps) => {
       const { currentTour, currentStep, next, stop, previous } = props
-      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks()
+      const { t, ColorPallet, TextTheme, endTour } = useCommonTourHooks(
+        stop,
+        DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR
+      )
 
       return (
         <TourBox
           title={t('Tour.AddCredentials')}
           hideLeft
           rightText={t('Tour.Done')}
-          onRight={() => endTour(stop, DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR)}
+          onRight={endTour}
           currentTour={currentTour}
           currentStep={currentStep}
           previous={previous}
-          stop={() => endTour(stop, DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR)}
+          stop={endTour}
           next={next}
         >
           <Text
