@@ -71,7 +71,7 @@ export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
   max_length: 6,
-  max_repeated_numbers: 5,
+  no_repeated_numbers: 0,
   no_repetition_of_the_two_same_numbers: false,
   no_series_of_numbers: false,
   no_even_or_odd_series_of_numbers: false,
