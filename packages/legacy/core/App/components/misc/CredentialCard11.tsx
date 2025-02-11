@@ -33,6 +33,7 @@ import CredentialActionFooter from './CredentialCard11ActionFooter'
 import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialIssuerBody from './CredentialCard11Issuer'
+import { ColorValue } from 'react-native'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -475,6 +476,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
+  function getSliceBackgroundColor(): ColorValue | undefined {
+    if (hideSlice) return 'transparent'
+    return brandingOverlayType === BrandingOverlayType.Branding10
+      ? backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor)
+      : overlay.brandingOverlay?.secondaryBackgroundColor
+  }
+
   const CredentialCardSecondaryBody: React.FC = () => {
     return (
       <View
@@ -482,10 +490,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor:
-              brandingOverlayType === BrandingOverlayType.Branding10
-                ? backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor)
-                : overlay.brandingOverlay?.secondaryBackgroundColor,
+            backgroundColor: getSliceBackgroundColor() ?? ColorPallet.brand.secondaryBackground,
             overflow: 'hidden',
           },
         ]}
