@@ -6,6 +6,19 @@ import { RenderProps, TourStep } from '../../contexts/tour/tour-context'
 import { TourBox } from './TourBox'
 import useCommonTourHooks from '../../hooks/common-tour'
 import { DispatchAction } from '../../contexts/reducers/store'
+import { IColorPallet, ITextTheme } from '../../theme'
+
+const renderTextContent = (content: string, TextTheme: ITextTheme, ColorPallet: IColorPallet) => (
+  <Text
+    style={{
+      ...TextTheme.normal,
+      color: ColorPallet.notification.infoText,
+    }}
+    allowFontScaling={false}
+  >
+    {content}
+  </Text>
+)
 
 export const credentialsTourSteps: TourStep[] = [
   {
@@ -28,15 +41,7 @@ export const credentialsTourSteps: TourStep[] = [
           stop={endTour}
           next={next}
         >
-          <Text
-            style={{
-              ...TextTheme.normal,
-              color: ColorPallet.notification.infoText,
-            }}
-            allowFontScaling={false}
-          >
-            {t('Tour.AddCredentialsDescription')}
-          </Text>
+          {renderTextContent(t('Tour.AddCredentialsDescription'), TextTheme, ColorPallet)}
         </TourBox>
       )
     },
