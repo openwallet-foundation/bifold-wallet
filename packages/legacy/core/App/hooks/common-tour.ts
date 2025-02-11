@@ -15,7 +15,7 @@ const useCommonTourHooks = (stop: () => void, type: DispatchAction) => {
       type: type,
       payload: [true],
     })
-  }, [dispatch, stop, type]) // Ajout des dépendances
+  }, [dispatch, stop, type])
 
   return { t, ColorPallet, TextTheme, endTour }
 }
