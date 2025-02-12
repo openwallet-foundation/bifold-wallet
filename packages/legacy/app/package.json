@@ -99,25 +99,25 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native/eslint-config": "^0.72.2",
-    "@react-native/metro-config": "^0.72.11",
-    "@tsconfig/react-native": "^3.0.0",
+    "@react-native/babel-preset": "0.73.21",
+    "@react-native/eslint-config": "^0.73.2",
+    "@react-native/metro-config": "^0.73.5",
+    "@react-native/typescript-config": "0.73.1",
     "@types/lodash.flatten": "^4.4.6",
     "@types/lodash.merge": "^4.6.6",
     "@types/lodash.startcase": "^4.4.7",
-    "@types/react": "^18.0.24",
+    "@types/react": "^18.2.6",
     "@types/react-native": "0.71.5",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.48.0",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "metro-react-native-babel-preset": "^0.77.0",
     "pod-install": "0.1.38",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.8",
     "react-native-svg-transformer": "^0.14.3",
     "typescript": "^5.0.4"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"
