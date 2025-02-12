@@ -591,10 +591,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       <>
         {overlay.brandingOverlay?.backgroundImage && hideSlice ? (
           <ImageBackground source={toImageSource(overlay.brandingOverlay?.backgroundImage)}>
-            {mainCredentialBody()}
+            <MainCredentialBody />
           </ImageBackground>
         ) : (
-          mainCredentialBody()
+          <MainCredentialBody />
         )}
       </>
     )
