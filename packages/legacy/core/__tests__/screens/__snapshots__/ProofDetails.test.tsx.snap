@@ -350,12 +350,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                       },
                       Object {
                         "elevation": 5,
-                        "overflow": "hidden",
+                        "overflow": "visible",
                       },
                     ]
                   }
                 >
                   <View
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                      }
+                    }
                     testID="com.ariesbifold:id/CredentialCard"
                   >
                     <View
@@ -909,12 +914,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                       },
                       Object {
                         "elevation": 5,
-                        "overflow": "hidden",
+                        "overflow": "visible",
                       },
                     ]
                   }
                 >
                   <View
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                      }
+                    }
                     testID="com.ariesbifold:id/CredentialCard"
                   >
                     <View

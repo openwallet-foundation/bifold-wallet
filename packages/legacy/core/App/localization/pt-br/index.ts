@@ -468,6 +468,7 @@ const translation = {
     "CreatedAt": "Criada em:",
     "Version": "Versão",
     "Issued": "Emitida",
+    "IssuedOn": "Emitida em",
     "PrivacyPolicy": "Política de privacidade",
     "TermsAndConditions": "Termos e condições",
     "RemoveFromWallet": "Remover da carteira",

@@ -1,17 +1,21 @@
 import React from 'react'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { ImageBackground, StyleSheet, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
 
 type CredentialDetailSecondaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
+  brandingOverlayType?: BrandingOverlayType
 }
 
 const logoHeight = 80
 
-const CredentialDetailSecondaryHeader: React.FC<CredentialDetailSecondaryHeaderProps> = ({ overlay }: CredentialDetailSecondaryHeaderProps) => {
+const CredentialDetailSecondaryHeader: React.FC<CredentialDetailSecondaryHeaderProps> = ({
+  overlay,
+  brandingOverlayType = BrandingOverlayType.Branding10,
+}: CredentialDetailSecondaryHeaderProps) => {
   const styles = StyleSheet.create({
     secondaryHeaderContainer: {
       height: 1.5 * logoHeight,
@@ -34,7 +38,20 @@ const CredentialDetailSecondaryHeader: React.FC<CredentialDetailSecondaryHeaderP
           <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer} />
         </ImageBackground>
       ) : (
-        <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer} />
+        <View testID={testIdWithKey('CredentialDetailsSecondaryHeader')} style={styles.secondaryHeaderContainer}>
+          {brandingOverlayType === BrandingOverlayType.Branding11 && (
+            <View
+              style={[
+                {
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0,0,0,0.24)',
+                },
+              ]}
+            />
+          )}
+        </View>
       )}
     </>
   )

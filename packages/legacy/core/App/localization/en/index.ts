@@ -492,6 +492,7 @@ const translation = {
     "CreatedAt": "Created At:",
     "Version": "Version",
     "Issued": "Issued",
+    "IssuedOn": "Issued on",
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",

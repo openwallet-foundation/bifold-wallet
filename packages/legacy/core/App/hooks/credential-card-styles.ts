@@ -87,10 +87,9 @@ const useCredentialCardStyles = (
       paddingVertical: 4,
     },
     textContainer: {
-      color:
-        proof && brandingOverlayType === BrandingOverlayType.Branding10
-          ? TextTheme.normal.color
-          : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
+      color: proof
+        ? TextTheme.normal.color
+        : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
       ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
         fontSize: 16,
