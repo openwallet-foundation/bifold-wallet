@@ -115,6 +115,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     [PINEntryUsage.WalletUnlock]: t('PINEnter.EnterPIN'),
   }
 
+  const inputTestId = {
+    [PINEntryUsage.ChangeBiometrics]: 'BiometricChangedEnterPIN',
+    [PINEntryUsage.PINCheck]: 'AppSettingChangedEnterPIN',
+    [PINEntryUsage.WalletUnlock]: 'EnterPIN',
+  }
+
   const primaryButtonText = {
     [PINEntryUsage.ChangeBiometrics]: t('Global.Continue'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
@@ -535,7 +541,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
                 Keyboard.dismiss()
               }
             }}
-            testID={testIdWithKey(inputLabelText[usage])}
+            testID={testIdWithKey(inputTestId[usage])}
             accessibilityLabel={inputLabelText[usage]}
             autoFocus={true}
             inlineMessage={inlineMessageField}

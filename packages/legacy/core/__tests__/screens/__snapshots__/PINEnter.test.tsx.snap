@@ -298,7 +298,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                           "top": 0,
                         }
                       }
-                      testID="com.ariesbifold:id/PINEnter.EnterPIN"
+                      testID="com.ariesbifold:id/EnterPIN"
                       textContentType="password"
                       underlineColorAndroid="transparent"
                       value=""
@@ -775,7 +775,7 @@ exports[`PINEnter Screen PIN Enter renders correctly for biometrics change 1`] =
                           "top": 0,
                         }
                       }
-                      testID="com.ariesbifold:id/PINEnter.ChangeBiometricsInputLabel"
+                      testID="com.ariesbifold:id/BiometricChangedEnterPIN"
                       textContentType="password"
                       underlineColorAndroid="transparent"
                       value=""
@@ -1241,7 +1241,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                           "top": 0,
                         }
                       }
-                      testID="com.ariesbifold:id/PINEnter.EnterPIN"
+                      testID="com.ariesbifold:id/EnterPIN"
                       textContentType="password"
                       underlineColorAndroid="transparent"
                       value=""

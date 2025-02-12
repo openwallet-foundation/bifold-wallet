@@ -1,9 +1,10 @@
 import React from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ColorPallet } from '../../theme'
+import { useTheme } from '../../contexts/theme'
 
 const KeyboardView: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { ColorPallet } = useTheme()
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primaryBackground }} edges={['bottom', 'left', 'right']}>
       <KeyboardAvoidingView
