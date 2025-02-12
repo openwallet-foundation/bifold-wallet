@@ -558,7 +558,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const CredentialCard: React.FC<{ status?: 'error' | 'warning' }> = ({ status }) => {
-    const mainCredentialBody = () => (
+    const MainCredentialBody = () => (
       <View
         style={styles.cardContainer}
         accessible={true}
