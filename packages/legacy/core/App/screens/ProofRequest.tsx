@@ -65,6 +65,7 @@ import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
+import { ImportantForAccessibility } from '../types/accessibility'
 
 type ProofRequestProps = {
   navigation: any
@@ -101,6 +102,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
+  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
@@ -108,7 +110,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
   )
-  const { start } = useTour()
+  const { start, currentStep } = useTour()
   const screenIsFocused = useIsFocused()
   const [
     bundleResolver,
@@ -203,13 +205,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
+      setHideElements('no-hide-descendants')
       start(BaseTourID.ProofRequestTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
         payload: [true],
       })
+    } else if (currentStep === undefined) {
+      setHideElements('auto')
     }
-  }, [enableToursConfig, store.tours.enableTours, store.tours.seenProofRequestTour, screenIsFocused, start, dispatch])
+  }, [
+    enableToursConfig,
+    store.tours.enableTours,
+    store.tours.seenProofRequestTour,
+    screenIsFocused,
+    start,
+    dispatch,
+    currentStep,
+  ])
 
   useEffect(() => {
     if (!agent || !proof) {
@@ -766,6 +779,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const CredentialList: React.FC<CredentialListProps> = ({ header, footer, items, missing }) => {
     return (
       <FlatList
+        importantForAccessibility={hideElements}
         data={items}
         scrollEnabled={false}
         ListHeaderComponent={header}
@@ -826,7 +840,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     )
   }
   return (
-    <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView
+      style={styles.pageContainer}
+      edges={['bottom', 'left', 'right']}
+      importantForAccessibility={hideElements}
+    >
       <ScrollView>
         <View style={styles.pageContent}>
           {proofPageHeader()}
