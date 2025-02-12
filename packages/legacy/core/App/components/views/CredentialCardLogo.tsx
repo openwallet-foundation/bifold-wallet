@@ -1,36 +1,44 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
+import { useMemo } from 'react'
 
 type Props = {
   overlay: CredentialOverlay<BrandingOverlay>
+  brandingOverlayType?: BrandingOverlayType
 }
 
-const logoHeight = 80
-const paddingHorizontal = 24
+const CredentialCardLogo: React.FC<Props> = ({
+  overlay,
+  brandingOverlayType = BrandingOverlayType.Branding10,
+}: Props) => {
+  const { TextTheme, CredentialCardShadowTheme } = useTheme()
+  const logoHeight = brandingOverlayType === BrandingOverlayType.Branding10 ? 80 : 48
+  const paddingHorizontal = 24
 
-const CredentialCardLogo: React.FC<Props> = ({ overlay }: Props) => {
-  const { TextTheme } = useTheme()
+  const logoText = useMemo(() => {
+    if (brandingOverlayType === BrandingOverlayType.Branding11) {
+      return (overlay.metaOverlay?.issuer ?? 'I').charAt(0).toUpperCase()
+    }
+    return (overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C').charAt(0).toUpperCase()
+  }, [brandingOverlayType, overlay])
 
   const styles = StyleSheet.create({
     logoContainer: {
-      top: -0.5 * logoHeight,
-      left: paddingHorizontal,
-      marginBottom: -1 * logoHeight,
       width: logoHeight,
       height: logoHeight,
       backgroundColor: '#ffffff',
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 1,
-        height: 1,
-      },
-      shadowOpacity: 0.3,
+      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
+        top: -0.5 * logoHeight,
+        left: paddingHorizontal,
+        marginBottom: -1 * logoHeight,
+        ...CredentialCardShadowTheme,
+      }),
     },
   })
 
@@ -47,9 +55,7 @@ const CredentialCardLogo: React.FC<Props> = ({ overlay }: Props) => {
           }}
         />
       ) : (
-        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>
-          {(overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C')?.charAt(0).toUpperCase()}
-        </Text>
+        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>{logoText}</Text>
       )}
     </View>
   )
