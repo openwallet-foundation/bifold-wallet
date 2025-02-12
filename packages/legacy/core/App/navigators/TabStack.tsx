@@ -179,7 +179,7 @@ const TabStack: React.FC = () => {
                       margin: 'auto',
                     }}
                   >
-                    <AttachTourStep tourID={BaseTourID.HomeTour} index={0} fill>
+                    <AttachTourStep tourID={BaseTourID.CredentialsTour} index={0} fill>
                       <View
                         style={{
                           flexGrow: 1,
