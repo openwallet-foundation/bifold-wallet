@@ -837,6 +837,12 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                     Object {
                       "backgroundColor": "#602809",
                       "borderRadius": 10,
+                      "shadowColor": "#000",
+                      "shadowOffset": Object {
+                        "height": 1,
+                        "width": 1,
+                      },
+                      "shadowOpacity": 0.3,
                     },
                     Object {},
                     Object {
@@ -880,6 +886,12 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                       "backgroundColor": "#602809",
                       "borderRadius": 10,
                       "opacity": 1,
+                      "shadowColor": "#000",
+                      "shadowOffset": Object {
+                        "height": 1,
+                        "width": 1,
+                      },
+                      "shadowOpacity": 0.3,
                     }
                   }
                   testID="com.ariesbifold:id/ShowCredentialDetails"
