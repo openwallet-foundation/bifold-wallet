@@ -7,9 +7,11 @@ import { useConnectionImageUrl } from '../../utils/helpers'
 
 interface ConnectionImageProps {
   connectionId?: string
+  imageUri?: string
+  marginTop?: number
 }
 
-const ConnectionImage: React.FC<ConnectionImageProps> = ({ connectionId }) => {
+const ConnectionImage: React.FC<ConnectionImageProps> = ({ connectionId, imageUri, marginTop }) => {
   const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     connectionImageContainer: {
@@ -19,7 +21,7 @@ const ConnectionImage: React.FC<ConnectionImageProps> = ({ connectionId }) => {
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 45,
-      marginTop: 15,
+      marginTop: marginTop ?? 15,
       borderColor: ColorPallet.grayscale.lightGrey,
       borderWidth: 3,
       alignSelf: 'center',
@@ -30,7 +32,8 @@ const ConnectionImage: React.FC<ConnectionImageProps> = ({ connectionId }) => {
     },
   })
 
-  const connectionImage = useConnectionImageUrl(connectionId ?? '')
+  const anonCredsImageUri = useConnectionImageUrl(connectionId ?? '')
+  const connectionImage = imageUri ? imageUri : anonCredsImageUri
 
   return connectionImage ? (
     <View style={styles.connectionImageContainer}>

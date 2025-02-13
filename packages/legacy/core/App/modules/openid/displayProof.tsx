@@ -9,6 +9,19 @@ export interface FormattedSubmission {
   entries: FormattedSubmissionEntry[]
 }
 
+export type FormattedSelectedCredentialEntry = {
+  id: string
+  credentialName: string
+  issuerName?: string
+  requestedAttributes?: string[]
+  disclosedPayload?: Record<string, unknown>
+  metadata?: CredentialMetadata
+  backgroundColor?: string
+  backgroundImage?: DisplayImage
+  textColor?: string
+  claimFormat: ClaimFormat | 'AnonCreds'
+}
+
 export interface FormattedSubmissionEntry {
   /** can be either AnonCreds groupName or PEX inputDescriptorId */
   inputDescriptorId: string
@@ -17,18 +30,7 @@ export interface FormattedSubmissionEntry {
   name: string
   description?: string
 
-  credentials: Array<{
-    id: string
-    credentialName: string
-    issuerName?: string
-    requestedAttributes?: string[]
-    disclosedPayload?: Record<string, unknown>
-    metadata?: CredentialMetadata
-    backgroundColor?: string
-    backgroundImage?: DisplayImage
-    textColor?: string
-    claimFormat: ClaimFormat | 'AnonCreds'
-  }>
+  credentials: Array<FormattedSelectedCredentialEntry>
 }
 
 export function formatDifPexCredentialsForRequest(
