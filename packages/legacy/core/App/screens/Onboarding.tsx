@@ -104,6 +104,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
           <IconButton
             buttonLocation={ButtonLocation.Right}
             accessibilityLabel={t('Onboarding.SkipA11y')}
+            importantForAccessibility="auto"
             testID={testIdWithKey('Skip')}
             onPress={onSkipTouched}
             icon="chevron-right"

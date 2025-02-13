@@ -20,6 +20,7 @@ const InfoIcon: React.FC<InfoIconProps> = ({ connectionId }) => {
     <IconButton
       buttonLocation={ButtonLocation.Right}
       accessibilityLabel={t('Screens.Settings')}
+      importantForAccessibility="auto"
       testID={testIdWithKey('Settings')}
       onPress={() =>
         navigation.navigate(Stacks.ContactStack, {

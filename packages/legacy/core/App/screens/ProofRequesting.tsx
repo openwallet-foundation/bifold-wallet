@@ -164,6 +164,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         <IconButton
           buttonLocation={ButtonLocation.Right}
           accessibilityLabel={t('Global.Share')}
+          importantForAccessibility="auto"
           testID={testIdWithKey('ShareButton')}
           onPress={() => {
             Share.share({ message })

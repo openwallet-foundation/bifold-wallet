@@ -72,6 +72,7 @@ const MainStack: React.FC = () => {
             <IconButton
               buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
+              importantForAccessibility="auto"
               testID={testIdWithKey('BackButton')}
               onPress={() => {
                 navigation.navigate(TabStacks.HomeStack, { screen: Screens.Home })

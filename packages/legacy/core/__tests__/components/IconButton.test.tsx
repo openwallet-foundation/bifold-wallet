@@ -10,6 +10,7 @@ describe('IconButton Component', () => {
       <IconButton
         buttonLocation={ButtonLocation.Left}
         accessibilityLabel={'LeftButton'}
+        importantForAccessibility="auto"
         testID={testIdWithKey('LeftButton')}
         onPress={jest.fn()}
         icon="information"
@@ -24,6 +25,7 @@ describe('IconButton Component', () => {
       <IconButton
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={'RightButton'}
+        importantForAccessibility="auto"
         testID={testIdWithKey('RightButton')}
         onPress={jest.fn()}
         icon="information"
@@ -38,6 +40,7 @@ describe('IconButton Component', () => {
       <IconButton
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={'RightButton'}
+        importantForAccessibility="auto"
         testID={testIdWithKey('RightButton')}
         onPress={jest.fn()}
         text="RightButton"
@@ -54,6 +57,7 @@ describe('IconButton Component', () => {
       <IconButton
         buttonLocation={ButtonLocation.Left}
         accessibilityLabel={'LeftButton'}
+        importantForAccessibility="auto"
         testID={testIdWithKey('LeftButton')}
         onPress={callback}
         icon="information"

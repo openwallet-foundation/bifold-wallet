@@ -21,10 +21,12 @@ import { BifoldError } from '../types/error'
 import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { ImportantForAccessibility } from '../types/accessibility'
 
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 import { BaseTourID } from '../types/tour'
+import { useTour } from '../contexts/tour/tour-context'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
@@ -40,7 +42,9 @@ const TabStack: React.FC = () => {
   const { ColorPallet, TabTheme, TextTheme } = useTheme()
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [store, dispatch] = useStore()
+  const { currentStep } = useTour()
   const { agent } = useAgent()
+  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const navigation = useNavigation<StackNavigationProp<TabStackParams>>()
   const showLabels = fontScale * TabTheme.tabBarTextStyle.fontSize < 18
   const styles = StyleSheet.create({
@@ -103,13 +107,20 @@ const TabStack: React.FC = () => {
   )
 
   useEffect(() => {
+    setHideElements(currentStep === undefined ? 'auto' : 'no-hide-descendants')
+  }, [currentStep])
+
+  useEffect(() => {
     if (store.deepLink && agent && store.authentication.didAuthenticate) {
       handleDeepLink(store.deepLink)
     }
   }, [store.deepLink, agent, store.authentication.didAuthenticate, handleDeepLink])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}
+      importantForAccessibility={hideElements}
+    >
       <Tab.Navigator
         initialRouteName={TabStacks.HomeStack}
         screenOptions={{

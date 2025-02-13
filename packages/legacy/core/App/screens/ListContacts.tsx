@@ -26,7 +26,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [connections, setConnections] = useState<ConnectionRecord[]>([])
-  const {records: connectionRecords} = useConnections()
+  const { records: connectionRecords } = useConnections()
   const [store] = useStore()
   const [{ contactHideList }, ContactListItem] = useServices([TOKENS.CONFIG, TOKENS.COMPONENT_CONTACT_LIST_ITEM])
   const style = StyleSheet.create({
@@ -77,6 +77,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
           <IconButton
             buttonLocation={ButtonLocation.Right}
             accessibilityLabel={t('Contacts.AddContact')}
+            importantForAccessibility="auto"
             testID={testIdWithKey('AddContact')}
             onPress={onPressAddContact}
             icon="plus-circle-outline"

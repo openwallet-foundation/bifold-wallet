@@ -167,10 +167,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     ...(settings || []),
   ]
-  
+
   // Remove the Contact section from Setting per TOKENS.CONFIG
   if (disableContactsInSettings) {
-    settingsSections.shift();
+    settingsSections.shift()
   }
 
   // add optional push notifications menu to settings
@@ -311,6 +311,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           <IconButton
             buttonLocation={ButtonLocation.Right}
             accessibilityLabel={iconRight.accessibilityLabel!}
+            importantForAccessibility="auto"
             testID={iconRight.testID!}
             onPress={iconRight.action!}
             icon={'pencil'}

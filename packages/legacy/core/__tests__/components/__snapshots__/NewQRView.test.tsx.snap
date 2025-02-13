@@ -683,6 +683,7 @@ Array [
                     "top": 44,
                   }
                 }
+                importantForAccessibility="auto"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}

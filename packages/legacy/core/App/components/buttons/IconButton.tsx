@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
+import { ImportantForAccessibility } from '../../types/accessibility'
 
 const defaultIconSize = 26
 
@@ -15,6 +16,7 @@ export enum ButtonLocation {
 interface IconButtonProps {
   buttonLocation: ButtonLocation
   accessibilityLabel: string
+  importantForAccessibility: ImportantForAccessibility
   testID: string
   onPress: () => void
   icon: string
@@ -27,6 +29,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   icon,
   text,
   accessibilityLabel,
+  importantForAccessibility,
   testID,
   onPress,
   iconTintColor,
@@ -74,6 +77,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={'button'}
+      importantForAccessibility={importantForAccessibility}
       testID={testID}
       onPress={onPress}
       hitSlop={hitSlop}

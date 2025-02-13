@@ -141,6 +141,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
       <IconButton
         buttonLocation={ButtonLocation.Right}
         accessibilityLabel={t('Global.Share')}
+        importantForAccessibility="auto"
         testID={testIdWithKey('ShareButton')}
         onPress={() => {
           Share.share({ message: invitation ?? '' })
@@ -155,6 +156,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
         <IconButton
           buttonLocation={ButtonLocation.Right}
           accessibilityLabel={t('Global.Share')}
+          importantForAccessibility="auto"
           testID={testIdWithKey('ShareButton')}
           onPress={() => {
             navigation.navigate(Screens.PasteUrl)
@@ -315,6 +317,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                   <IconButton
                     buttonLocation={ButtonLocation.Right}
                     accessibilityLabel={t('NameWallet.EditWalletName')}
+                    importantForAccessibility="auto"
                     testID={testIdWithKey('EditWalletName')}
                     onPress={handleEdit}
                     icon={'pencil'}

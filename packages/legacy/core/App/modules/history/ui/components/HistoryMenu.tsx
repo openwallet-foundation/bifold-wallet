@@ -15,6 +15,7 @@ const HistoryMenu: React.FC = () => {
     <IconButton
       buttonLocation={ButtonLocation.Right}
       accessibilityLabel={t('Screens.Settings')}
+      importantForAccessibility="auto"
       testID={testIdWithKey('Settings')}
       onPress={() => navigation.navigate(Stacks.HistoryStack, { screen: Screens.HistoryPage })}
       icon="history"

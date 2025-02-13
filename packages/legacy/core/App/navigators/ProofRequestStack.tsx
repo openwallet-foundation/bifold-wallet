@@ -32,7 +32,7 @@ const ProofRequestStack: React.FC = () => {
         component={ListProofRequests}
         options={{
           title: t('Screens.ChooseProofRequest'),
-          ...ScreenOptionsDictionary[Screens.ProofRequest]
+          ...ScreenOptionsDictionary[Screens.ProofRequest],
         }}
       />
       <Stack.Screen
@@ -40,7 +40,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestDetails}
         options={() => ({
           title: '',
-          ...ScreenOptionsDictionary[Screens.ProofRequestDetails]
+          ...ScreenOptionsDictionary[Screens.ProofRequestDetails],
         })}
       />
       <Stack.Screen
@@ -53,7 +53,7 @@ const ProofRequestStack: React.FC = () => {
         component={ProofChangeCredential}
         options={{
           title: t('Screens.ProofChangeCredential'),
-          ...ScreenOptionsDictionary[Screens.ProofChangeCredential]
+          ...ScreenOptionsDictionary[Screens.ProofChangeCredential],
         }}
       ></Stack.Screen>
       <Stack.Screen
@@ -65,12 +65,13 @@ const ProofRequestStack: React.FC = () => {
             <IconButton
               buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
+              importantForAccessibility="auto"
               testID={testIdWithKey('BackButton')}
               onPress={() => navigation.navigate(Screens.ProofRequests, {})}
               icon="arrow-left"
             />
           ),
-          ...ScreenOptionsDictionary[Screens.ProofRequesting]
+          ...ScreenOptionsDictionary[Screens.ProofRequesting],
         })}
       />
       <Stack.Screen
@@ -82,6 +83,7 @@ const ProofRequestStack: React.FC = () => {
             <IconButton
               buttonLocation={ButtonLocation.Left}
               accessibilityLabel={t('Global.Back')}
+              importantForAccessibility="auto"
               testID={testIdWithKey('BackButton')}
               onPress={() => {
                 if (route.params.isHistory) {
@@ -94,7 +96,7 @@ const ProofRequestStack: React.FC = () => {
             />
           ),
           headerRight: () => <HeaderRightHome />,
-          ...ScreenOptionsDictionary[Screens.ProofDetails]
+          ...ScreenOptionsDictionary[Screens.ProofDetails],
         })}
       />
       <Stack.Screen
@@ -103,7 +105,7 @@ const ProofRequestStack: React.FC = () => {
         options={() => ({
           title: t('Screens.ProofRequestUsageHistory'),
           headerRight: () => <HeaderRightHome />,
-          ...ScreenOptionsDictionary[Screens.ProofRequestUsageHistory]
+          ...ScreenOptionsDictionary[Screens.ProofRequestUsageHistory],
         })}
       />
     </Stack.Navigator>

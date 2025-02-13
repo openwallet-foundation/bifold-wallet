@@ -32,6 +32,7 @@ exports[`IconButton Component Left alignment renders correctly 1`] = `
       "top": 44,
     }
   }
+  importantForAccessibility="auto"
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -112,6 +113,7 @@ exports[`IconButton Component Right alignment renders correctly 1`] = `
       "top": 44,
     }
   }
+  importantForAccessibility="auto"
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -192,6 +194,7 @@ exports[`IconButton Component Right alignment with text renders correctly 1`] = 
       "top": 44,
     }
   }
+  importantForAccessibility="auto"
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
