@@ -11,7 +11,17 @@ import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, Linking, Text, View, ViewStyle, TouchableOpacity } from 'react-native'
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  Linking,
+  Text,
+  View,
+  ViewStyle,
+  TouchableOpacity,
+  ColorValue,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
@@ -33,7 +43,6 @@ import CredentialActionFooter from './CredentialCard11ActionFooter'
 import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialIssuerBody from './CredentialCard11Issuer'
-import { ColorValue } from 'react-native'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
