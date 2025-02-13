@@ -7,6 +7,7 @@ const plugins = [
       extensions: ['.tsx', 'ts'],
     },
   ],
+  'react-native-reanimated/plugin',
 ]
 
 if (process.env['ENV'] === 'prod') {
