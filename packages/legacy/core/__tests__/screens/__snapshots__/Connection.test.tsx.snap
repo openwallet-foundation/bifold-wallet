@@ -780,6 +780,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
       removeClippedSubviews={false}
       renderItem={[Function]}
       scrollEventThrottle={50}
+      showsVerticalScrollIndicator={false}
       stickyHeaderIndices={Array []}
       viewabilityConfigCallbackPairs={Array []}
     >

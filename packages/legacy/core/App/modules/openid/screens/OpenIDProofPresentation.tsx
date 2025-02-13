@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DeviceEventEmitter } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
@@ -7,9 +7,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { formatDifPexCredentialsForRequest } from '../displayProof'
+import {
+  formatDifPexCredentialsForRequest,
+  FormattedSelectedCredentialEntry,
+  FormattedSubmissionEntry,
+} from '../displayProof'
 import { testIdWithKey } from '../../../utils/testable'
-import { sanitizeString } from '../utils/utils'
 import { OpenIDCredentialRowCard } from '../components/CredentialRowCard'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
@@ -19,6 +22,12 @@ import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { shareProof } from '../resolverProof'
 import ProofRequestAccept from '../../../screens/ProofRequestAccept'
+import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
+import { W3cCredentialRecord } from '@credo-ts/core'
+import { CredentialCard } from '../../../components/misc'
+import { getCredentialForDisplay } from '../display'
+import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
+import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -33,6 +42,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+  const [credentialsRequested, setCredentialsRequested] = useState<W3cCredentialRecord[]>([])
+  const { getCredentialById } = useOpenIDCredentials()
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -100,6 +111,22 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     [submission]
   )
 
+  useEffect(() => {
+    async function fetchCreds() {
+      if (!selectedCredentials) return
+
+      const creds: W3cCredentialRecord[] = []
+      for (const [inputDescriptorID, credentialId] of Object.entries(selectedCredentials)) {
+        const credential = await getCredentialById(credentialId)
+        if (credential && inputDescriptorID) {
+          creds.push(credential as W3cCredentialRecord)
+        }
+      }
+      setCredentialsRequested(creds)
+    }
+    fetchCreds()
+  }, [selectedCredentials, getCredentialById])
+
   const { verifierName } = useMemo(() => {
     return { verifierName: credential?.verifierHostName }
   }, [credential])
@@ -141,6 +168,19 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     )
   }
 
+  const renderCard = (sub: FormattedSubmissionEntry, selectedCredential: FormattedSelectedCredentialEntry) => {
+    const credential = credentialsRequested.find((c) => c.id === selectedCredential.id)
+    if (!credential) {
+      return null
+    }
+    const credentialDisplay = getCredentialForDisplay(credential)
+    const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
+    const requestedAttributes = selectedCredential.requestedAttributes
+    const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
+
+    return <CredentialCard credential={credential} displayItems={fieldsMapped as Attribute[]} />
+  }
+
   const renderBody = () => {
     if (!submission) return null
 
@@ -162,16 +202,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
               />
               <View style={styles.cardContainer}>
                 {s.isSatisfied && selectedCredential?.requestedAttributes ? (
-                  <View style={{ marginTop: 16, gap: 8 }}>
-                    {s.description && <Text style={TextTheme.labelSubtitle}>{s.description}</Text>}
-                    <View style={styles.cardAttributes}>
-                      {selectedCredential.requestedAttributes.map((a) => (
-                        <View key={a} style={{ flexBasis: '50%' }}>
-                          <Text style={TextTheme.normal}>• {sanitizeString(a)}</Text>
-                        </View>
-                      ))}
-                    </View>
-                  </View>
+                  renderCard(s, selectedCredential)
                 ) : (
                   <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
                 )}
