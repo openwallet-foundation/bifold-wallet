@@ -37,7 +37,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
       color:
         brandingOverlayType === BrandingOverlayType.Branding10
           ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor)
-          : ColorPallet.grayscale.white,
+          : ColorPallet.brand.primary,
     },
   })
 

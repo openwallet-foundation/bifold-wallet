@@ -20,9 +20,7 @@ const useCredentialCardStyles = (
     container: {
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        ...CredentialCardShadowTheme,
-      }),
+      ...CredentialCardShadowTheme,
     },
     cardContainer: {
       flexDirection: 'row',
