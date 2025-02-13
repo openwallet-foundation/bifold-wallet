@@ -2,7 +2,7 @@ import { useAgent, useConnections } from '@credo-ts/react-hooks'
 import { act, render } from '@testing-library/react-native'
 import React from 'react'
 
-import NewQRView from '../../App/components/misc/NewQRView'
+import QRScanner from '../../App/components/misc/QRScanner'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
 import { testIdWithKey } from '../../App/utils/testable'
 import { useNavigation } from '@react-navigation/native'
@@ -13,7 +13,7 @@ jest.mock('react-native-orientation-locker', () => {
 })
 
 
-describe('NewQRView Component', () => {
+describe('QRScanner Component', () => {
   beforeAll(() => {
     jest.useFakeTimers()
   })
@@ -30,10 +30,31 @@ describe('NewQRView Component', () => {
 
   const navigation = useNavigation()
 
+  test('Scanner with no tabs renders correctly', async () => {
+    const tree = render(
+      <BasicAppContext>
+        <QRScanner
+          showTabs={false}
+          defaultToConnect={false}
+          handleCodeScan={() => Promise.resolve()}
+          navigation={navigation as any}
+          route={{} as any}
+        />
+      </BasicAppContext>
+    )
+
+    await act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(tree).toMatchSnapshot()
+  })
+
   test('Renders correctly on first tab', async () => {
     const tree = render(
       <BasicAppContext>
-        <NewQRView
+        <QRScanner
+          showTabs={true}
           defaultToConnect={false}
           handleCodeScan={() => Promise.resolve()}
           navigation={navigation as any}
@@ -69,7 +90,8 @@ describe('NewQRView Component', () => {
         }}
       >
         <BasicAppContext>
-          <NewQRView
+          <QRScanner
+            showTabs={true}
             defaultToConnect={true}
             handleCodeScan={() => Promise.resolve()}
             navigation={navigation as any}
@@ -106,7 +128,8 @@ describe('NewQRView Component', () => {
         }}
       >
         <BasicAppContext>
-          <NewQRView
+          <QRScanner
+            showTabs={true}
             defaultToConnect={true}
             handleCodeScan={() => Promise.resolve()}
             navigation={navigation as any}

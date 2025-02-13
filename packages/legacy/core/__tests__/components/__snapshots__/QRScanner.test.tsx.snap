@@ -1,0 +1,1394 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QRScanner Component Renders correctly on first tab 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "left",
+        "right",
+      ]
+    }
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "transform": Array [
+              Object {
+                "rotate": "0deg",
+              },
+            ],
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0.4)",
+              "flex": 2,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "height": 710,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "flex": 1,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "borderColor": "rgba(255, 255, 255, 0.6)",
+                "borderWidth": 1,
+                "width": 710,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "flex": 1,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0.4)",
+              "flex": 3,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "alignSelf": "center",
+            "flexDirection": "row",
+            "marginHorizontal": 40,
+            "paddingTop": 30,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": undefined,
+                "fontSize": 40,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "padding": 4,
+              },
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          󰐳
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          Scan.WillScanAutomatically
+        </Text>
+      </View>
+      <View
+        style={Object {}}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Scan.ScanNow"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/ScanNow"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 60,
+                  },
+                  Object {
+                    "color": "white",
+                    "marginBottom": -15,
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              󰝦
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "height": 24,
+              "marginBottom": 60,
+              "marginHorizontal": 24,
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Scan.ScanHelp"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/ScanHelp"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "color": "white",
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              󰋗
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginLeft": "auto",
+                "width": 10,
+              }
+            }
+          />
+          <View
+            accessibilityLabel="Scan.TorchOff"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": undefined,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 24,
+                "borderWidth": 1,
+                "height": 24,
+                "justifyContent": "center",
+                "marginBottom": 50,
+                "opacity": 1,
+                "width": 24,
+              }
+            }
+            testID="com.ariesbifold:id/ScanTorch"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <Modal
+      animationType="fade"
+      hardwareAccelerated={false}
+      transparent={true}
+      visible={false}
+    />
+    <View
+      accessibilityRole="tablist"
+      accessible={true}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "borderTopWidth": 0,
+          "flexDirection": "row",
+          "height": 60,
+          "paddingBottom": 0,
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": -3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 6,
+        }
+      }
+    >
+      <View
+        accessibilityLabel="Scan.ScanQRCode"
+        accessibilityRole="tab"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/Scan.ScanQRCode"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#42803E",
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="Scan.MyQRCode"
+        accessibilityRole="tab"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/Scan.MyQRCode"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "bottom",
+      ]
+    }
+    style={
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 0,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`QRScanner Component Renders correctly on second tab 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "left",
+        "right",
+      ]
+    }
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "flex": 1,
+      }
+    }
+  >
+    <RCTScrollView>
+      <View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "marginTop": 10,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                }
+              }
+              testID="com.ariesbifold:id/LoadingActivityIndicator"
+            >
+              <Image
+                source={
+                  Object {
+                    "default": "",
+                  }
+                }
+                style={
+                  Object {
+                    "height": "33%",
+                    "objectFit": "contain",
+                    "width": "33%",
+                  }
+                }
+                testID="com.ariesbifold:id/LoadingActivityIndicatorImage"
+              />
+              <View
+                collapsable={false}
+                style={
+                  Object {
+                    "position": "absolute",
+                    "transform": Array [
+                      Object {
+                        "rotate": "360deg",
+                      },
+                    ],
+                  }
+                }
+              >
+                <
+                  fill="#FFFFFF"
+                  height={200}
+                  width={200}
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "paddingHorizontal": 20,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 32,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "paddingHorizontal": 20,
+                    },
+                  ]
+                }
+                testID="com.ariesbifold:id/WalletName"
+              >
+                My Wallet - 1234
+              </Text>
+              <View
+                accessibilityLabel="NameWallet.EditWalletName"
+                accessibilityRole="button"
+                accessibilityState={
+                  Object {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  Object {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                hitSlop={
+                  Object {
+                    "bottom": 44,
+                    "left": 44,
+                    "right": 44,
+                    "top": 44,
+                  }
+                }
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                testID="com.ariesbifold:id/EditWalletName"
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "marginLeft": 0,
+                      "marginRight": 15,
+                      "minHeight": 26,
+                      "minWidth": 26,
+                    }
+                  }
+                >
+                  <Text
+                    allowFontScaling={false}
+                    selectable={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 26,
+                        },
+                        undefined,
+                        Object {
+                          "fontFamily": "Material Design Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    󰏫
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "marginTop": 20,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Connection.ShareQR
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      accessibilityRole="tablist"
+      accessible={true}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "borderTopWidth": 0,
+          "flexDirection": "row",
+          "height": 60,
+          "paddingBottom": 0,
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": -3,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 6,
+        }
+      }
+    >
+      <View
+        accessibilityLabel="Scan.ScanQRCode"
+        accessibilityRole="tab"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/Scan.ScanQRCode"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="Scan.MyQRCode"
+        accessibilityRole="tab"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+            "opacity": 1,
+          }
+        }
+        testID="com.ariesbifold:id/Scan.MyQRCode"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#42803E",
+                "fontSize": 30,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "bottom",
+      ]
+    }
+    style={
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 0,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "left",
+        "right",
+      ]
+    }
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "transform": Array [
+              Object {
+                "rotate": "0deg",
+              },
+            ],
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0.4)",
+              "flex": 2,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "height": 710,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "flex": 1,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "borderColor": "rgba(255, 255, 255, 0.6)",
+                "borderWidth": 1,
+                "width": 710,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "rgba(0, 0, 0, 0.4)",
+                "flex": 1,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0.4)",
+              "flex": 3,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "alignSelf": "center",
+            "flexDirection": "row",
+            "marginHorizontal": 40,
+            "paddingTop": 30,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": undefined,
+                "fontSize": 40,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "padding": 4,
+              },
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          󰐳
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          Scan.WillScanAutomatically
+        </Text>
+      </View>
+      <View
+        style={Object {}}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Scan.ScanNow"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/ScanNow"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 60,
+                  },
+                  Object {
+                    "color": "white",
+                    "marginBottom": -15,
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              󰝦
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "height": 24,
+              "marginBottom": 60,
+              "marginHorizontal": 24,
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Scan.ScanHelp"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/ScanHelp"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "color": "white",
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              󰋗
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginLeft": "auto",
+                "width": 10,
+              }
+            }
+          />
+          <View
+            accessibilityLabel="Scan.TorchOff"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": undefined,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 24,
+                "borderWidth": 1,
+                "height": 24,
+                "justifyContent": "center",
+                "marginBottom": 50,
+                "opacity": 1,
+                "width": 24,
+              }
+            }
+            testID="com.ariesbifold:id/ScanTorch"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <Modal
+      animationType="fade"
+      hardwareAccelerated={false}
+      transparent={true}
+      visible={false}
+    />
+  </RNCSafeAreaView>
+</View>
+`;
