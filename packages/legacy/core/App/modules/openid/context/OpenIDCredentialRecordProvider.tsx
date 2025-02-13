@@ -10,6 +10,11 @@ import {
 import { useAgent } from '@credo-ts/react-hooks'
 import { recordsAddedByType, recordsRemovedByType } from '@credo-ts/react-hooks/build/recordUtils'
 import { TOKENS, useServices } from '../../../container-api'
+import { getCredentialForDisplay } from '../display'
+import { BrandingOverlayType, CredentialOverlay, OCABundleResolveAllParams } from '@hyperledger/aries-oca/build/legacy'
+import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
+import { useTranslation } from 'react-i18next'
+import { BrandingOverlay } from '@hyperledger/aries-oca'
 
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | undefined
 
@@ -18,6 +23,9 @@ export type OpenIDCredentialContext = {
   getCredentialById: (id: string) => Promise<W3cCredentialRecord | SdJwtVcRecord | undefined>
   storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord) => Promise<void>
   removeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord) => Promise<void>
+  resolveBundleForCredential: (
+    credential: SdJwtVcRecord | W3cCredentialRecord
+  ) => Promise<CredentialOverlay<BrandingOverlay>>
 }
 
 export type OpenIDCredentialRecordState = {
@@ -78,7 +86,8 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   const [state, setState] = useState<OpenIDCredentialRecordState>(defaultState)
 
   const { agent } = useAgent()
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  const [logger, bundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
+  const { i18n } = useTranslation()
 
   function checkAgent() {
     if (!agent) {
@@ -109,6 +118,44 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     } else if (cred instanceof SdJwtVcRecord) {
       await agent?.sdJwtVc.deleteById(cred.id)
     }
+  }
+
+  const resolveBundleForCredential = async (
+    credential: SdJwtVcRecord | W3cCredentialRecord
+  ): Promise<CredentialOverlay<BrandingOverlay>> => {
+    const credentialDisplay = getCredentialForDisplay(credential)
+
+    const params: OCABundleResolveAllParams = {
+      identifiers: {
+        schemaId: '',
+        credentialDefinitionId: credentialDisplay.id,
+      },
+      meta: {
+        alias: credentialDisplay.display.issuer.name,
+        credConnectionId: undefined,
+        credName: credentialDisplay.display.name,
+      },
+      attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
+      language: i18n.language,
+    }
+
+    const bundle = await bundleResolver.resolveAllBundles(params)
+    const _bundle = bundle as CredentialOverlay<BrandingOverlay>
+
+    const brandingOverlay: BrandingOverlay = new BrandingOverlay('none', {
+      capture_base: 'none',
+      type: BrandingOverlayType.Branding10,
+      primary_background_color: credentialDisplay.display.backgroundColor,
+      background_image: credentialDisplay.display.backgroundImage?.url,
+      logo: credentialDisplay.display.logo?.url,
+    })
+    const ocaBundle: CredentialOverlay<BrandingOverlay> = {
+      ..._bundle,
+      presentationFields: bundle.presentationFields,
+      brandingOverlay: brandingOverlay,
+    }
+
+    return ocaBundle
   }
 
   useEffect(() => {
@@ -153,6 +200,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         storeCredential: storeCredential,
         removeCredential: deleteCredential,
         getCredentialById: getCredentialById,
+        resolveBundleForCredential: resolveBundleForCredential,
       }}
     >
       {children}

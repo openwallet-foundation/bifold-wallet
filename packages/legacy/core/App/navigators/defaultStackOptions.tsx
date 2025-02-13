@@ -43,6 +43,9 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerBackTestID: testIdWithKey('Back'),
   },
+  [Screens.OpenIDCredentialDetails]: {
+    headerShown: true,
+  },
 }
 
 export function useDefaultStackOptions({ ColorPallet }: ITheme): StackNavigationOptions {

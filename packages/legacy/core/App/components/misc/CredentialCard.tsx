@@ -11,9 +11,9 @@ import CredentialCard10 from './CredentialCard10'
 import CredentialCard11, { CredentialErrors } from './CredentialCard11'
 import { GenericCredentialExchangeRecord } from '../../types/credentials'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../../modules/openid/display'
-import { buildOverlayFromW3cCredential } from '../../utils/oca'
-import { useTranslation } from 'react-i18next'
+import { getAttributeField } from '../../modules/openid/utils/utils'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -27,6 +27,7 @@ interface CredentialCardProps {
   hasAltCredentials?: boolean
   credentialErrors?: CredentialErrors[]
   handleAltCredChange?: () => void
+  brandingOverlay?: CredentialOverlay<BrandingOverlay>
 }
 
 const CredentialCard: React.FC<CredentialCardProps> = ({
@@ -41,30 +42,38 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   style = {},
   onPress = undefined,
   credentialErrors,
+  brandingOverlay,
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const { ColorPallet } = useTheme()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
-  const { i18n } = useTranslation()
+  const { resolveBundleForCredential } = useOpenIDCredentials()
+  const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<string | number | null | undefined>()
 
   useEffect(() => {
+    if (brandingOverlay) {
+      setOverlay(brandingOverlay as unknown as CredentialOverlay<BrandingOverlay>)
+      return
+    }
+
     const resolveOverlay = async (w3cCred: W3cCredentialRecord) => {
-      const credentialDisplay = getCredentialForDisplay(w3cCred)
-
-      const resolvedOverlay = await buildOverlayFromW3cCredential({
-        credentialDisplay,
-        language: i18n.language,
-        resolver: bundleResolver,
-      })
-
-      setOverlay(resolvedOverlay)
+      const brandingOverlay = await resolveBundleForCredential(w3cCred)
+      setOverlay(brandingOverlay)
     }
 
     if (credential instanceof W3cCredentialRecord) {
       resolveOverlay(credential)
+      const credentialDisplay = getCredentialForDisplay(credential)
+      if (credentialDisplay.display.primary_overlay_attribute) {
+        const attributeValue = getAttributeField(
+          credentialDisplay,
+          credentialDisplay.display.primary_overlay_attribute
+        )?.value
+        setExtraOverlayAttribute(attributeValue)
+      }
     }
-  }, [credential, bundleResolver, i18n.language])
+  }, [credential, brandingOverlay, resolveBundleForCredential])
 
   const getCredOverlayType = (type: BrandingOverlayType) => {
     const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
@@ -126,6 +135,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         onPress={onPress}
         brandingOverlay={overlay}
         credentialErrors={credentialErrors ?? []}
+        proof={proof}
+        elevated={proof}
+        displayItems={displayItems}
+        hideSlice={true}
+        extraOverlayParameter={extraOverlayAttribute}
         brandingOverlayType={bundleResolver.getBrandingOverlayType()}
       />
     )

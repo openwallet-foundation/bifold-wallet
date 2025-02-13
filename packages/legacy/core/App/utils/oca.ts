@@ -17,14 +17,16 @@ export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchang
 
 export const buildFieldsFromW3cCredsCredential = (value: W3cCredentialDisplay): Array<Field> => {
   return (
-    Object.entries(value.attributes).map(
-      ([key, value]) =>
-        new Attribute({
-          name: key,
-          value: value as string | number | null,
-          mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
-        })
-    ) || []
+    Object.entries(value.attributes)
+      .filter(([key]) => key !== 'id')
+      .map(
+        ([key, value]) =>
+          new Attribute({
+            name: key,
+            value: value as string | number | null,
+            mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
+          })
+      ) || []
   )
 }
 

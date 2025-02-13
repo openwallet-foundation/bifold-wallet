@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { CredentialDisplay, DisplayImage } from '../types'
+import { CredentialDisplay, DisplayImage, W3cCredentialDisplay } from '../types'
 import { useTranslation } from 'react-i18next'
 import { GenericFn } from '../../../types/fn'
 import {
@@ -11,20 +11,20 @@ import {
   useWindowDimensions,
   View,
   ViewStyle,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 import { testIdWithKey } from '../../../utils/testable'
 import { credentialTextColor, toImageSource } from '../../../utils/credential'
 import { useTheme } from '../../../contexts/theme'
-import { formatTime } from '../../../utils/helpers'
 import { SvgUri } from 'react-native-svg'
 import { W3cCredentialRecord } from '@credo-ts/core'
 import { getCredentialForDisplay } from '../display'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
+import { getAttributeField } from '../utils/utils'
 
 interface CredentialCardProps {
-  credentialDisplay?: CredentialDisplay
+  credentialDisplay?: W3cCredentialDisplay
   credentialRecord?: W3cCredentialRecord
   onPress?: GenericFn
   style?: ViewStyle
@@ -46,7 +46,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   const { ColorPallet, TextTheme } = useTheme()
 
   const display = useMemo((): CredentialDisplay | undefined => {
-    if (credentialDisplay) return credentialDisplay
+    if (credentialDisplay) return credentialDisplay.display
 
     if (!credentialRecord) {
       const error = new BifoldError(
@@ -62,12 +62,21 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
     return result.display
   }, [credentialDisplay, credentialRecord, t])
 
+  const overlayAttribute = useMemo((): string | number | null | undefined => {
+    if (!display?.primary_overlay_attribute || !credentialDisplay) return undefined
+    return getAttributeField(credentialDisplay, display.primary_overlay_attribute)?.value
+  }, [display, credentialDisplay])
+
   const { width } = useWindowDimensions()
-  const cardHeight = width / 2 // a card height is half of the screen width
+  const cardHeight = width * 0.55 // a card height is half of the screen width
   const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
 
   const styles = StyleSheet.create({
-    container: {
+    container: {},
+    issuerLogoContainer: {
+      marginBottom: 30,
+    },
+    cardContainer: {
       backgroundColor: display?.backgroundColor ? display.backgroundColor : transparent,
       height: cardHeight,
       borderRadius: borderRadius,
@@ -84,18 +93,27 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       height: cardHeaderHeight,
       marginLeft: borderPadding,
       marginRight: borderPadding,
-      marginTop: borderPadding,
+      marginTop: 20,
       marginBottom: borderPadding,
       backgroundColor: transparent,
+    },
+    innerHeaderContainerCredLogo: {
+      flex: 1,
+    },
+    innerHeaderCredInfoContainer: {
+      flex: 3,
+      alignItems: 'flex-end',
+      marginRight: paddingHorizontal,
     },
     bodyContainer: {
       flexGrow: 1,
     },
     footerContainer: {
       flexDirection: 'row',
-      backgroundColor: transparent,
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
       paddingHorizontal,
       paddingVertical,
+      paddingLeft: paddingHorizontal + 10,
       borderBottomLeftRadius: borderRadius,
       borderBottomRightRadius: borderRadius,
     },
@@ -117,8 +135,22 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       fontSize: 22,
       transform: [{ rotate: '-30deg' }],
     },
+    credentialInfoContainer: {},
+    titleFontCredentialName: {
+      ...TextTheme.labelTitle,
+      color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
+      textAlignVertical: 'center',
+      marginBottom: 8,
+    },
+    titleFontCredentialDescription: {
+      ...TextTheme.label,
+      color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
+      textAlignVertical: 'center',
+    },
   })
 
+  //This should be implimented for credential log
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const logoContaineter = (logo: DisplayImage | undefined) => {
     const width = 64
     const height = 48
@@ -131,7 +163,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
 
     return (
       <Image
-        source={toImageSource(display?.issuer.logo)}
+        source={toImageSource(src)}
         style={{
           flex: 4,
           resizeMode: 'contain',
@@ -146,19 +178,13 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
     return (
       <View style={[styles.outerHeaderContainer]}>
         <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
-          {logoContaineter(display?.issuer.logo)}
-          <View>
+          <View style={styles.innerHeaderContainerCredLogo}>{logoContaineter(display?.logo)}</View>
+          <View style={styles.innerHeaderCredInfoContainer}>
             <View>
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
-                style={[
-                  TextTheme.label,
-                  {
-                    color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
-                    textAlignVertical: 'center',
-                  },
-                ]}
+                style={styles.titleFontCredentialName}
                 testID={testIdWithKey('CredentialIssuer')}
                 maxFontSizeMultiplier={1}
               >
@@ -169,14 +195,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
-                style={[
-                  TextTheme.label,
-                  {
-                    color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
-                    textAlign: 'right',
-                    textAlignVertical: 'center',
-                  },
-                ]}
+                style={styles.titleFontCredentialDescription}
                 testID={testIdWithKey('CredentialName')}
                 maxFontSizeMultiplier={1}
               >
@@ -194,6 +213,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   }
 
   const CardFooter: React.FC = () => {
+    if (!overlayAttribute) return null
     return (
       <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
         <Text
@@ -206,7 +226,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
           testID={testIdWithKey('CredentialIssued')}
           maxFontSizeMultiplier={1}
         >
-          {t('CredentialDetails.Issued')}: {formatTime(new Date(), { shortMonth: true })}
+          {overlayAttribute}
         </Text>
       </View>
     )
@@ -222,31 +242,33 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   }
 
   return (
-    <TouchableOpacity
-      accessible={true}
-      accessibilityLabel={`${display?.issuer.name ? `${t('Credentials.IssuedBy')} ${display?.issuer.name}` : ''}, ${t(
-        'Credentials.Credential'
-      )}.`}
-      accessibilityRole="button"
-      disabled={typeof onPress === 'undefined' ? true : false}
-      onPress={onPress}
-      style={[styles.container, style]}
-      testID={testIdWithKey('ShowCredentialDetails')}
-    >
-      <View style={[styles.flexGrow, { overflow: 'hidden' }]} testID={testIdWithKey('CredentialCard')}>
-        {display?.backgroundImage ? (
-          <ImageBackground
-            source={toImageSource(display.backgroundImage)}
-            style={styles.flexGrow}
-            imageStyle={{ borderRadius }}
-          >
+    <View>
+      <TouchableOpacity
+        accessible={true}
+        accessibilityLabel={`${display?.issuer.name ? `${t('Credentials.IssuedBy')} ${display?.issuer.name}` : ''}, ${t(
+          'Credentials.Credential'
+        )}.`}
+        accessibilityRole="button"
+        disabled={typeof onPress === 'undefined' ? true : false}
+        onPress={onPress}
+        style={[styles.cardContainer, style]}
+        testID={testIdWithKey('ShowCredentialDetails')}
+      >
+        <View style={[styles.flexGrow, { overflow: 'hidden' }]} testID={testIdWithKey('CredentialCard')}>
+          {display?.backgroundImage ? (
+            <ImageBackground
+              source={toImageSource(display.backgroundImage.url)}
+              style={styles.flexGrow}
+              imageStyle={{ borderRadius }}
+            >
+              <CredentialCard />
+            </ImageBackground>
+          ) : (
             <CredentialCard />
-          </ImageBackground>
-        ) : (
-          <CredentialCard />
-        )}
-      </View>
-    </TouchableOpacity>
+          )}
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 }
 

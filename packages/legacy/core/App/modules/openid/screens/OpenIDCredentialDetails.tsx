@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParams, Screens } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
-import { TextTheme } from '../../../theme'
 import { useTranslation } from 'react-i18next'
 import { testIdWithKey } from '../../../utils/testable'
 import { useTheme } from '../../../contexts/theme'
@@ -25,6 +23,8 @@ import { buildOverlayFromW3cCredential } from '../../../utils/oca'
 import CredentialDetailSecondaryHeader from '../../../components/views/CredentialDetailSecondaryHeader'
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
+import ScreenLayout from '../../../layout/ScreenLayout'
+import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -42,7 +42,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const [credential, setCredential] = useState<W3cCredentialRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { removeCredential } = useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
@@ -60,6 +60,10 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     container: {
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       display: 'flex',
+    },
+    cardContainer: {
+      paddingHorizontal: 10,
+      paddingVertical: 30,
     },
   })
 
@@ -130,7 +134,9 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     }
   }
 
-  const header = () => {
+  //To be used only in specific cases where consistency with anoncreds needed
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const legacyHeader = () => {
     if (!credentialDisplay) return null
 
     return (
@@ -140,6 +146,15 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         <CredentialDetailPrimaryHeader overlay={overlay} />
       </View>
     )
+  }
+
+  const renderOpenIdCard = () => {
+    if (!credentialDisplay) return null
+    return <OpenIDCredentialCard credentialDisplay={credentialDisplay} credentialRecord={credential} />
+  }
+
+  const header = () => {
+    return <View style={styles.cardContainer}>{renderOpenIdCard()}</View>
   }
 
   const footer = () => {
@@ -167,7 +182,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
+    <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
       <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         usage={ModalUsage.CredentialRemove}
@@ -175,7 +190,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   )
 }
 

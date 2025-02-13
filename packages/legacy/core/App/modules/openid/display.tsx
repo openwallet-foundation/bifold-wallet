@@ -114,6 +114,10 @@ function getCredentialDisplay(
           altText: openidCredentialDisplay.background_image.alt_text,
         }
       : undefined
+    credentialDisplay.logo = openidCredentialDisplay?.logo
+    credentialDisplay.primary_overlay_attribute = openidCredentialDisplay?.primary_overlay_attribute as
+      | string
+      | undefined
   }
 
   return credentialDisplay
