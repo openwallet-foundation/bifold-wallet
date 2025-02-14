@@ -16,7 +16,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
         "right",
       ]
     }
-    importantForAccessibility="auto"
     style={
       Object {
         "flex": 1,
@@ -484,7 +483,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             data={Array []}
             getItem={[Function]}
             getItemCount={[Function]}
-            importantForAccessibility="auto"
             keyExtractor={[Function]}
             onContentSizeChange={[Function]}
             onLayout={[Function]}
@@ -506,7 +504,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             data={Array []}
             getItem={[Function]}
             getItemCount={[Function]}
-            importantForAccessibility="auto"
             keyExtractor={[Function]}
             onContentSizeChange={[Function]}
             onLayout={[Function]}
@@ -576,7 +573,6 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
         "right",
       ]
     }
-    importantForAccessibility="auto"
     style={
       Object {
         "flexGrow": 1,
