@@ -390,7 +390,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           onPress={handleAltCredChange}
           text={t('ProofRequest.ChangeCredential')}
           testID={'ChangeCredential'}
-          textColor={isBranding11 && credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor)}
+          textColor={
+            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+          }
         />
       )
     }
@@ -400,7 +402,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           onPress={helpAction}
           text={t('ProofRequest.GetThisCredential')}
           testID={'GetThisCredential'}
-          textColor={isBranding11 && credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor)}
+          textColor={
+            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+          }
         />
       )
     }

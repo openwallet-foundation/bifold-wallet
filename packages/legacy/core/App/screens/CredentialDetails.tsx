@@ -284,7 +284,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           brandingOverlayType={bundleResolver.getBrandingOverlayType()}
         />
         <TouchableOpacity
+          accessibilityLabel={`${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`}
           accessibilityRole="button"
+          accessibilityHint={t('CredentialDetails.NavigateToIssuerDetailsHint')}
           onPress={navigateToContactDetails}
           style={{ padding: 16, overflow: 'hidden' }}
         >

@@ -511,6 +511,7 @@ const translation = {
         "CredentialRemoved": "Justificatif retiré",
         "IssuedBy": "Émis par:",
         "RemoveCredential": "Supprimer l'attestation d'identité",
+        "NavigateToIssuerDetailsHint": "Cliquez pour naviguer vers les détails de l'émetteur",
     },
     "Home": {
         "Notification": "Notification",

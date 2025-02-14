@@ -511,6 +511,7 @@ const translation = {
     "CredentialRemoved": "Credential removed",
     "IssuedBy": "Issued by:",
     "RemoveCredential": "Remove Credential",
+    "NavigateToIssuerDetailsHint": "Tap to navigate to issuer details",
   },
   "Home": {
     "Notification": "Notification",
