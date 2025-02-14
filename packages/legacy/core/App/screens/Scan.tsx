@@ -6,7 +6,6 @@ import { Platform } from 'react-native'
 import { PERMISSIONS, Permission, RESULTS, Rationale, check, request } from 'react-native-permissions'
 import Toast from 'react-native-toast-message'
 
-import NewQRView from '../components/misc/NewQRView'
 import QRScanner from '../components/misc/QRScanner'
 import CameraDisclosureModal from '../components/modals/CameraDisclosureModal'
 import { ToastType } from '../components/toast/BaseToast'
@@ -117,20 +116,17 @@ const Scan: React.FC<ScanProps> = ({ navigation, route }) => {
     return <CameraDisclosureModal requestCameraUse={requestCameraUse} />
   }
 
-  if (store.preferences.useConnectionInviterCapability) {
-    return (
-      <NewQRView
-        defaultToConnect={defaultToConnect}
-        handleCodeScan={handleCodeScan}
-        error={qrCodeScanError}
-        enableCameraOnError={true}
-        navigation={navigation}
-        route={route}
-      />
-    )
-  } else {
-    return <QRScanner handleCodeScan={handleCodeScan} error={qrCodeScanError} enableCameraOnError={true} />
-  }
+  return (
+    <QRScanner
+      showTabs={store.preferences.useConnectionInviterCapability}
+      defaultToConnect={defaultToConnect}
+      handleCodeScan={handleCodeScan}
+      error={qrCodeScanError}
+      enableCameraOnError={true}
+      navigation={navigation}
+      route={route}
+    />
+  )
 }
 
 export default Scan
