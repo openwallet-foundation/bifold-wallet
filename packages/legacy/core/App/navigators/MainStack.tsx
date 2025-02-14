@@ -21,9 +21,9 @@ import { useDefaultStackOptions } from './defaultStackOptions'
 import CredentialDetails from '../screens/CredentialDetails'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
 import { ImportantForAccessibility } from '../types/accessibility'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTour } from '../contexts/tour/tour-context'
-import { ColorPallet } from '../theme'
+
+import { View } from 'react-native'
 
 const MainStack: React.FC = () => {
   const { t } = useTranslation()
@@ -51,10 +51,7 @@ const MainStack: React.FC = () => {
   }, [currentStep])
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}
-      importantForAccessibility={hideElements}
-    >
+    <View style={{ flex: 1 }} importantForAccessibility={hideElements}>
       <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions, headerShown: false }}>
         <Stack.Screen name={Screens.Splash} component={splash} />
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
@@ -123,7 +120,7 @@ const MainStack: React.FC = () => {
         />
         {CustomNavStack1 ? <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} /> : null}
       </Stack.Navigator>
-    </SafeAreaView>
+    </View>
   )
 }
 
