@@ -66,10 +66,16 @@ jobs:
         run: |
           yarn lerna run build
 
+      - name: Configure Bundler
+        working-directory: ./packages/legacy/app
+        run: |
+          bundle config set frozen 'true'
+
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./packages/legacy/app
         run: |
+          bundle install && \
           yarn run ios:setup && \
           git status && \
           git diff ios/Podfile.lock
