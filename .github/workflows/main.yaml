@@ -76,6 +76,7 @@ jobs:
         working-directory: ./packages/legacy/app
         run: |
           bundle install && \
+          pod update hermes-engine --no-repo-update && \
           yarn run ios:setup && \
           git status && \
           git diff ios/Podfile.lock
@@ -121,7 +122,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: 11
+          java-version: 17
           cache: 'gradle'
 
       - name: Setup Android SDK
