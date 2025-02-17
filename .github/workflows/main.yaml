@@ -76,7 +76,11 @@ jobs:
         working-directory: ./packages/legacy/app
         run: |
           bundle install && \
-          pod update hermes-engine --no-repo-update && \
+          cd ios && \
+          rm -rf Pods && \
+          rm -f Podfile.lock && \
+          pod install && \
+          cd .. && \
           yarn run ios:setup && \
           git status && \
           git diff ios/Podfile.lock
