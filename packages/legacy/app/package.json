@@ -15,8 +15,8 @@
     "gradle:write-locks": "cd android && ./gradlew app:dependencies --write-locks",
     "prepare": "patch-package",
     "ios:setup": "bundle install --frozen && cd ios && bundle exec pod install",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "ios": "react-native run-ios --scheme AriesBifold",
+    "start": "react-native start --experimental-debugger",
     "test": "echo 'nothing to do'"
   },
   "dependencies": {

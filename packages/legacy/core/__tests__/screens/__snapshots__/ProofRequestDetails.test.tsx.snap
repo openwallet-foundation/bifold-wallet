@@ -533,3 +533,5 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
   </RCTScrollView>
 </RNCSafeAreaView>
 `;
+
+exports[`ProofRequestDetails Screen Schema and attributes are human readable 1`] = `null`;
