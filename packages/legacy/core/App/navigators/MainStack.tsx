@@ -1,5 +1,5 @@
 import { CardStyleInterpolators, StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
@@ -20,7 +20,6 @@ import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import CredentialDetails from '../screens/CredentialDetails'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
-import { ImportantForAccessibility } from '../types/accessibility'
 import { useTour } from '../contexts/tour/tour-context'
 
 import { View } from 'react-native'
@@ -30,7 +29,6 @@ const MainStack: React.FC = () => {
   const theme = useTheme()
   const { currentStep } = useTour()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const [splash, CustomNavStack1, ScreenOptionsDictionary] = useServices([
     TOKENS.SCREEN_SPLASH,
     TOKENS.CUSTOM_NAV_STACK_1,
@@ -46,9 +44,7 @@ const MainStack: React.FC = () => {
       opacity: current.progress,
     },
   })
-  useMemo(() => {
-    setHideElements(currentStep === undefined ? 'auto' : 'no-hide-descendants')
-  }, [currentStep])
+  const hideElements = useMemo(() => (currentStep === undefined ? 'auto' : 'no-hide-descendants'), [currentStep])
 
   return (
     <View style={{ flex: 1 }} importantForAccessibility={hideElements}>
