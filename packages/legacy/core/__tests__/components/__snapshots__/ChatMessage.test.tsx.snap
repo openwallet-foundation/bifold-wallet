@@ -123,7 +123,7 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
                 ]
               }
             >
-              Jan 1, 2024, 12:00 am
+              Dec 31, 2023, 7:00 pm
             </Text>
           </View>
         </View>
@@ -325,7 +325,7 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
                 ]
               }
             >
-              Jan 1, 2024, 12:00 am
+              Dec 31, 2023, 7:00 pm
             </Text>
           </View>
         </View>
@@ -527,7 +527,7 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
                 ]
               }
             >
-              Jan 1, 2024, 12:00 am
+              Dec 31, 2023, 7:00 pm
             </Text>
           </View>
         </View>

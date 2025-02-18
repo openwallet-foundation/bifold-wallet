@@ -419,12 +419,6 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         </View>
       </View>
     </View>
-    <Modal
-      animationType="fade"
-      hardwareAccelerated={false}
-      transparent={true}
-      visible={false}
-    />
     <View
       accessibilityRole="tablist"
       accessible={true}
@@ -1383,12 +1377,6 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         </View>
       </View>
     </View>
-    <Modal
-      animationType="fade"
-      hardwareAccelerated={false}
-      transparent={true}
-      visible={false}
-    />
   </RNCSafeAreaView>
 </View>
 `;

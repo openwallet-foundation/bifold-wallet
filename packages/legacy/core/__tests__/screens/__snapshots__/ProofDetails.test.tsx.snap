@@ -521,7 +521,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                           removeClippedSubviews={false}
                           renderItem={[Function]}
                           scrollEnabled={false}
-                          scrollEventThrottle={50}
+                          scrollEventThrottle={0.0001}
                           stickyHeaderIndices={Array []}
                           viewabilityConfigCallbackPairs={Array []}
                         >
@@ -1085,7 +1085,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                           removeClippedSubviews={false}
                           renderItem={[Function]}
                           scrollEnabled={false}
-                          scrollEventThrottle={50}
+                          scrollEventThrottle={0.0001}
                           stickyHeaderIndices={Array []}
                           viewabilityConfigCallbackPairs={Array []}
                         >

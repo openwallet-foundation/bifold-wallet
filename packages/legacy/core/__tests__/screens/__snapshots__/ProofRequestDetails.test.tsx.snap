@@ -285,7 +285,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                   removeClippedSubviews={false}
                   renderItem={[Function]}
                   scrollEnabled={false}
-                  scrollEventThrottle={50}
+                  scrollEventThrottle={0.0001}
                   stickyHeaderIndices={Array []}
                   viewabilityConfigCallbackPairs={Array []}
                 >
@@ -538,5 +538,3 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
   </RCTScrollView>
 </RNCSafeAreaView>
 `;
-
-exports[`ProofRequestDetails Screen Schema and attributes are human readable 1`] = `null`;

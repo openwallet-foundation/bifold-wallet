@@ -286,18 +286,6 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
       </View>
     </View>
   </View>
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    presentationStyle="pageSheet"
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    transparent={false}
-    visible={false}
-  />
 </RNCSafeAreaView>
 `;
 
@@ -575,18 +563,6 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
       </View>
     </View>
   </View>
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    presentationStyle="pageSheet"
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    transparent={false}
-    visible={false}
-  />
 </RNCSafeAreaView>
 `;
 
@@ -917,17 +893,5 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
       </View>
     </View>
   </View>
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    presentationStyle="pageSheet"
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    transparent={false}
-    visible={false}
-  />
 </RNCSafeAreaView>
 `;
