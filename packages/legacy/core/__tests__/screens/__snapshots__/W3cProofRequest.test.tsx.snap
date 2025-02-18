@@ -772,7 +772,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   "_tags": Object {},
                   "autoAcceptCredential": undefined,
                   "connectionId": undefined,
-                  "createdAt": "2024-02-12T01:00:18.180Z",
+                  "createdAt": "2024-02-11T20:00:18.180Z",
                   "credentialAttributes": Array [
                     undefined,
                     undefined,
