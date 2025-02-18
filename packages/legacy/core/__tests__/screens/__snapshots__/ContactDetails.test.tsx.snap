@@ -44,6 +44,7 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         }
       >
         <Text
+          accessible={false}
           style={
             Array [
               Object {
@@ -272,6 +273,7 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         }
       >
         <Text
+          accessible={false}
           style={
             Array [
               Object {

@@ -487,6 +487,7 @@ const translation = {
     "CredentialRemoved": "Credencial removida",
     "IssuedBy": "Emitida por:",
     "RemoveCredential": "Remover Credencial",
+    "NavigateToIssuerDetailsHint": "Tap to navigate to issuer details (PT-BR)",
   },
   "Home": {
     "Notifications": "Notificações",
