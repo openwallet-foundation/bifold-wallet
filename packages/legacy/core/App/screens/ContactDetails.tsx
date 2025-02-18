@@ -210,6 +210,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         ) : (
           <View style={styles.contactFirstLetterContainer}>
             <Text
+              accessible={false}
               style={[
                 TextTheme.bold,
                 {

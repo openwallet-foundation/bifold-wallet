@@ -20,9 +20,7 @@ const useCredentialCardStyles = (
     container: {
       backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
       borderRadius: borderRadius,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
-        ...CredentialCardShadowTheme,
-      }),
+      ...CredentialCardShadowTheme,
     },
     cardContainer: {
       flexDirection: 'row',
@@ -87,9 +85,10 @@ const useCredentialCardStyles = (
       paddingVertical: 4,
     },
     textContainer: {
-      color: proof
-        ? TextTheme.normal.color
-        : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
+      color:
+        proof && brandingOverlayType === BrandingOverlayType.Branding10
+          ? TextTheme.normal.color
+          : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
       ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
         fontSize: 16,

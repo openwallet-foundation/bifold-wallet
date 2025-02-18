@@ -37,7 +37,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
       color:
         brandingOverlayType === BrandingOverlayType.Branding10
           ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor)
-          : ColorPallet.grayscale.white,
+          : ColorPallet.brand.primary,
     },
   })
 
@@ -52,6 +52,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
         )}
         {brandingOverlayType === BrandingOverlayType.Branding10 && (
           <Text
+            accessibilityLabel={`${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`}
             testID={testIdWithKey('CredentialIssuer')}
             style={[
               TextTheme.label,
@@ -69,6 +70,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
           </Text>
         )}
         <Text
+          accessibilityLabel={`${overlay.metaOverlay?.name} ${t('Credentials.Credential')}`}
           testID={testIdWithKey('CredentialName')}
           style={[
             TextTheme.normal,

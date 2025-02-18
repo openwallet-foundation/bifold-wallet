@@ -792,7 +792,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           return (
             <View>
               {loading || attestationLoading ? null : (
-                <View style={{ marginTop: 10, marginHorizontal: 20 }}>
+                <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
                   <CredentialCard
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}

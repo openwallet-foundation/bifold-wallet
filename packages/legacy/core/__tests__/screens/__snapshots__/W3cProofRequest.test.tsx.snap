@@ -274,7 +274,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   style={
                     Object {
                       "marginHorizontal": 20,
-                      "marginTop": 10,
+                      "marginVertical": 10,
                     }
                   }
                 >
@@ -285,6 +285,12 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                         Object {
                           "backgroundColor": "#781e4b",
                           "borderRadius": 10,
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 1,
+                            "width": 1,
+                          },
+                          "shadowOpacity": 0.3,
                         },
                         Object {
                           "backgroundColor": "#313132",
@@ -330,6 +336,12 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                           "backgroundColor": "#313132",
                           "borderRadius": 10,
                           "opacity": 1,
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 1,
+                            "width": 1,
+                          },
+                          "shadowOpacity": 0.3,
                         }
                       }
                       testID="com.ariesbifold:id/ShowCredentialDetails"
@@ -839,7 +851,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   style={
                     Object {
                       "marginHorizontal": 20,
-                      "marginTop": 10,
+                      "marginVertical": 10,
                     }
                   }
                 >
@@ -850,6 +862,12 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                         Object {
                           "backgroundColor": "#5f0f7b",
                           "borderRadius": 10,
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 1,
+                            "width": 1,
+                          },
+                          "shadowOpacity": 0.3,
                         },
                         Object {
                           "backgroundColor": "#313132",
@@ -895,6 +913,12 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                           "backgroundColor": "#313132",
                           "borderRadius": 10,
                           "opacity": 1,
+                          "shadowColor": "#000",
+                          "shadowOffset": Object {
+                            "height": 1,
+                            "width": 1,
+                          },
+                          "shadowOpacity": 0.3,
                         }
                       }
                       testID="com.ariesbifold:id/ShowCredentialDetails"
