@@ -69,6 +69,12 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
               Object {
                 "backgroundColor": undefined,
                 "borderRadius": 10,
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 1,
+                  "width": 1,
+                },
+                "shadowOpacity": 0.3,
               },
               Object {
                 "backgroundColor": "#313132",

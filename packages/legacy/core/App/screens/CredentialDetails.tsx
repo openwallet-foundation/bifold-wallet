@@ -23,7 +23,7 @@ import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
 import { RootStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
+import { credentialTextColor, getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
@@ -67,8 +67,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   )
 
   useEffect(() => {
-    setIsRevokedMessageHidden((credential?.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
-    ?.revoked_detail_dismissed ?? false)
+    setIsRevokedMessageHidden(
+      (credential?.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
+        ?.revoked_detail_dismissed ?? false
+    )
   }, [credential?.metadata])
 
   useEffect(() => {
@@ -96,18 +98,21 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
-  const isBranding11 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11
+
+  const containerBackgroundColor =
+    overlay.brandingOverlay?.secondaryBackgroundColor && overlay.brandingOverlay.secondaryBackgroundColor !== ''
+      ? overlay.brandingOverlay.secondaryBackgroundColor
+      : overlay.brandingOverlay?.primaryBackgroundColor
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor:
-        overlay.brandingOverlay?.secondaryBackgroundColor ?? overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: isBranding10 ? overlay.brandingOverlay?.primaryBackgroundColor : containerBackgroundColor,
       display: 'flex',
     },
   })
 
   const icon = {
-    color: ColorPallet.grayscale.white,
+    color: credentialTextColor(ColorPallet, containerBackgroundColor),
     width: 48,
     height: 48,
   }
@@ -274,18 +279,31 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
     return (
       <View>
-        {overlay.metaOverlay?.watermark && isBranding11 && (
-          <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
-        )}
         <CredentialDetailSecondaryHeader
           overlay={overlay}
           brandingOverlayType={bundleResolver.getBrandingOverlayType()}
         />
-        <TouchableOpacity accessibilityRole="button" onPress={navigateToContactDetails} style={{ padding: 16 }}>
+        <TouchableOpacity
+          accessibilityLabel={`${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`}
+          accessibilityRole="button"
+          accessibilityHint={t('CredentialDetails.NavigateToIssuerDetailsHint')}
+          onPress={navigateToContactDetails}
+          style={{ padding: 16, overflow: 'hidden' }}
+        >
+          {overlay.metaOverlay?.watermark && (
+            <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
+          )}
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 3 }}>
               <CredentialCardLogo overlay={overlay} brandingOverlayType={bundleResolver.getBrandingOverlayType()} />
-              <Text style={[TextTheme.normal, { flexWrap: 'wrap' }]}>{overlay.metaOverlay?.issuer}</Text>
+              <Text
+                style={[
+                  TextTheme.normal,
+                  { color: credentialTextColor(ColorPallet, containerBackgroundColor), flexWrap: 'wrap' },
+                ]}
+              >
+                {overlay.metaOverlay?.issuer}
+              </Text>
             </View>
             <View
               style={{

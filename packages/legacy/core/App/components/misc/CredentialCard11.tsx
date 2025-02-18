@@ -11,13 +11,23 @@ import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, Linking, Text, View, ViewStyle, TouchableOpacity } from 'react-native'
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  Linking,
+  Text,
+  View,
+  ViewStyle,
+  TouchableOpacity,
+  ColorValue,
+} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { getCredentialIdentifiers, toImageSource } from '../../utils/credential'
+import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import {
   formatIfDate,
   useCredentialConnectionLabel,
@@ -33,7 +43,6 @@ import CredentialActionFooter from './CredentialCard11ActionFooter'
 import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialIssuerBody from './CredentialCard11Issuer'
-import { ColorValue } from 'react-native'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -117,6 +126,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CRED_HELP_ACTION_OVERRIDES,
   ])
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType, proof)
@@ -380,6 +390,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           onPress={handleAltCredChange}
           text={t('ProofRequest.ChangeCredential')}
           testID={'ChangeCredential'}
+          textColor={
+            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+          }
         />
       )
     }
@@ -389,6 +402,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           onPress={helpAction}
           text={t('ProofRequest.GetThisCredential')}
           testID={'GetThisCredential'}
+          textColor={
+            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+          }
         />
       )
     }
