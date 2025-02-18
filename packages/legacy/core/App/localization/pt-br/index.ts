@@ -260,6 +260,10 @@ const translation = {
     "AppSettingChangedEnterPIN": "Por favor, confirme sua alteração digitando o seu PIN.",
     "AppSettingSave": "Salvar",
     "AppSettingCancel": "Cancelar",
+    "ChangeBiometricsHeader": "Change in biometrics (PT-BR)",
+    "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (PT-BR)",
+    "ChangeBiometricsInputLabel": "Enter your wallet PIN (PT-BR)",
+    "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
   },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
