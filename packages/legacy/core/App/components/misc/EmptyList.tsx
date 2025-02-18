@@ -1,9 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../../components/texts/ThemedText'
 
 export interface EmptyListProps {
   message?: string
@@ -16,9 +17,9 @@ const EmptyList: React.FC<EmptyListProps> = ({ message }) => {
   return (
     <View style={{ paddingTop: 100, height: '100%', backgroundColor: ColorPallet.brand.primaryBackground }}>
       <Assets.svg.emptyWallet fill={ListItems.emptyList.color} height={100} />
-      <Text style={[ListItems.emptyList, { textAlign: 'center' }]} testID={testIdWithKey('NoneYet')}>
+      <ThemedText style={[ListItems.emptyList, { textAlign: 'center' }]} testID={testIdWithKey('NoneYet')}>
         {message || t('Global.NoneYet!')}
-      </Text>
+      </ThemedText>
     </View>
   )
 }

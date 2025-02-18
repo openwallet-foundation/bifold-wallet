@@ -44,6 +44,7 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={1.2}
           style={
             Array [
               Object {
@@ -64,28 +65,38 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         </Text>
       </View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "color": "#FFFFFF",
-            "flex": 2,
-            "flexShrink": 1,
-            "fontSize": 26,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 2,
+              "flexShrink": 1,
+            },
+          ]
         }
       >
         BestBC College
       </Text>
     </View>
     <Text
+      maxFontSizeMultiplier={2}
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginTop": 20,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "marginTop": 20,
+          },
+        ]
       }
     >
       ContactDetails.DateOfConnection
@@ -141,12 +152,16 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         width={20}
       />
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            undefined,
+          ]
         }
       >
         Screens.RenameContact
@@ -201,12 +216,18 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         width={20}
       />
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#D8292F",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#D8292F",
+            },
+          ]
         }
       >
         ContactDetails.RemoveContact
@@ -272,6 +293,7 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={1.2}
           style={
             Array [
               Object {
@@ -292,28 +314,38 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         </Text>
       </View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "alignSelf": "flex-start",
-            "color": "#FFFFFF",
-            "flex": 2,
-            "flexShrink": 1,
-            "fontSize": 26,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
+              "alignSelf": "flex-start",
+              "flex": 2,
+              "flexShrink": 1,
+            },
+          ]
         }
       >
         Alt Name
       </Text>
     </View>
     <Text
+      maxFontSizeMultiplier={2}
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 18,
-          "fontWeight": "normal",
-          "marginTop": 20,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "marginTop": 20,
+          },
+        ]
       }
     >
       ContactDetails.DateOfConnection
@@ -369,12 +401,16 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         width={20}
       />
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            undefined,
+          ]
         }
       >
         Screens.RenameContact
@@ -429,12 +465,18 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         width={20}
       />
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#D8292F",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#D8292F",
+            },
+          ]
         }
       >
         ContactDetails.RemoveContact

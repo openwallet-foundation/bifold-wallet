@@ -51,37 +51,52 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
             style={Object {}}
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 32,
-                  "fontWeight": "bold",
-                  "marginBottom": 20,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 32,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "marginBottom": 20,
+                  },
+                ]
               }
             >
               PINEnter.Title
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 14,
-                  "fontWeight": "normal",
-                  "marginBottom": 20,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 14,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginBottom": 20,
+                  },
+                ]
               }
             >
               PINEnter.SubText
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "marginBottom": 4,
+                  },
+                ]
               }
             >
               PINEnter.EnterPIN
@@ -142,13 +157,18 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -165,13 +185,18 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -188,13 +213,18 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -211,13 +241,18 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -234,13 +269,18 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -257,13 +297,18 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -434,17 +479,25 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   }
                 >
                   <Text
+                    maxFontSizeMultiplier={2}
                     style={
                       Array [
                         Object {
                           "color": "#FFFFFF",
                           "fontSize": 18,
-                          "fontWeight": "bold",
-                          "textAlign": "center",
+                          "fontWeight": "normal",
                         },
-                        false,
-                        false,
-                        false,
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "bold",
+                            "textAlign": "center",
+                          },
+                          false,
+                          false,
+                          false,
+                        ],
                       ]
                     }
                   >
@@ -512,41 +565,56 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
             style={Object {}}
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "alignSelf": "auto",
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginBottom": 16,
-                  "textAlign": "left",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "alignSelf": "auto",
+                    "marginBottom": 16,
+                    "textAlign": "left",
+                  },
+                ]
               }
             >
               PINEnter.LockedOut
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "alignSelf": "auto",
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginBottom": 16,
-                  "textAlign": "left",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "alignSelf": "auto",
+                    "marginBottom": 16,
+                    "textAlign": "left",
+                  },
+                ]
               }
             >
               PINEnter.ReEnterPIN
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "marginBottom": 4,
+                  },
+                ]
               }
             >
               PINEnter.EnterPIN
@@ -607,13 +675,18 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -630,13 +703,18 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -653,13 +731,18 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -676,13 +759,18 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -699,13 +787,18 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -722,13 +815,18 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       <Text
                         maxFontSizeMultiplier={1}
                         style={
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          }
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
                         }
                       />
                     </View>
@@ -899,17 +997,25 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   }
                 >
                   <Text
+                    maxFontSizeMultiplier={2}
                     style={
                       Array [
                         Object {
                           "color": "#FFFFFF",
                           "fontSize": 18,
-                          "fontWeight": "bold",
-                          "textAlign": "center",
+                          "fontWeight": "normal",
                         },
-                        false,
-                        false,
-                        false,
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "bold",
+                            "textAlign": "center",
+                          },
+                          false,
+                          false,
+                          false,
+                        ],
                       ]
                     }
                   >

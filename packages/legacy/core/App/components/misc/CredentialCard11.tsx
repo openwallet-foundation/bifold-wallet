@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, Linking, Text, View, ViewStyle, TouchableOpacity } from 'react-native'
+import { FlatList, Image, ImageBackground, Linking, View, ViewStyle, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
@@ -33,6 +33,7 @@ import CredentialActionFooter from './CredentialCard11ActionFooter'
 import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialIssuerBody from './CredentialCard11Issuer'
+import { ThemedText } from '../texts/ThemedText'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -104,7 +105,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPallet, TextTheme, ListItems } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -254,9 +255,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const AttributeLabel: React.FC<{ label: string }> = ({ label }) => {
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
     return (
-      <Text
+      <ThemedText
+        variant="labelSubtitle"
         style={[
-          TextTheme.labelSubtitle,
           styles.textContainer,
           {
             lineHeight: 19,
@@ -266,7 +267,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         testID={testIdWithKey('AttributeName')}
       >
         {ylabel}
-      </Text>
+      </ThemedText>
     )
   }
 
@@ -280,10 +281,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           color={ListItems.proofError.color}
           size={ListItems.recordAttributeText.fontSize}
         />
-        <Text
+        <ThemedText
+          variant="labelSubtitle"
           testID={testIdWithKey('AttributeErrorText')}
           style={[
-            TextTheme.labelSubtitle,
             styles.textContainer,
             {
               lineHeight: 19,
@@ -293,7 +294,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           ]}
         >
           {errorMessage}
-        </Text>
+        </ThemedText>
       </View>
     )
   }
@@ -304,16 +305,16 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         {isDataUrl(value) ? (
           <Image style={styles.imageAttr} source={{ uri: value as string }} />
         ) : (
-          <Text
+          <ThemedText
+            variant="bold"
             style={[
-              TextTheme.bold,
               styles.textContainer,
               { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
             ]}
             testID={testIdWithKey('AttributeValue')}
           >
             {value}
-          </Text>
+          </ThemedText>
         )}
       </>
     )
@@ -405,10 +406,10 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           )}
 
           <View style={styles.primaryBodyNameContainer}>
-            <Text
+            <ThemedText
+              variant="bold"
               testID={testIdWithKey('CredentialName')}
               style={[
-                TextTheme.bold,
                 styles.textContainer,
                 styles.credentialName,
                 {
@@ -417,7 +418,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               ]}
             >
               {overlay.metaOverlay?.name}
-            </Text>
+            </ThemedText>
           </View>
         </View>
 
@@ -426,17 +427,17 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           {credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof) && (
             <>
               <Icon style={styles.errorIcon} name="close" size={30} />
-              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
+              <ThemedText style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
                 {t('CredentialDetails.Revoked')}
-              </Text>
+              </ThemedText>
             </>
           )}
           {credentialErrors.includes(CredentialErrors.NotInWallet) && (
             <>
               <Icon style={styles.errorIcon} name="close" size={30} />
-              <Text style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')}>
+              <ThemedText style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')}>
                 {t('ProofRequest.NotAvailableInYourWallet')}
-              </Text>
+              </ThemedText>
             </>
           )}
         </View>

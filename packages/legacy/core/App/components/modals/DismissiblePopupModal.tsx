@@ -4,7 +4,6 @@ import {
   Modal,
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   useWindowDimensions,
@@ -17,6 +16,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import { ThemedText } from '../texts/ThemedText'
 
 interface DismissiblePopupModalProps {
   title: string
@@ -35,7 +35,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
 }) => {
   const { height, width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { ColorPallet } = useTheme()
   const iconSize = 30
 
   const styles = StyleSheet.create({
@@ -75,7 +75,6 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       flexGrow: 1,
     },
     headerText: {
-      ...TextTheme.bold,
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
     },
@@ -86,7 +85,6 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       flex: 1,
     },
     bodyText: {
-      ...TextTheme.normal,
       paddingVertical: 16,
       color: ColorPallet.notification.infoText,
     },
@@ -117,9 +115,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                   <Icon name={infoIconName} size={iconSize} color={iconColor} />
                 </View>
                 <View style={styles.headerTextContainer}>
-                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                  <ThemedText variant="bold" style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {title}
-                  </Text>
+                  </ThemedText>
                 </View>
                 <View style={styles.dismissIcon}>
                   <TouchableOpacity
@@ -140,9 +138,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                   style={styles.scrollViewStyle}
                 >
                   <View onStartShouldSetResponder={() => true}>
-                    <Text selectable={true} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+                    <ThemedText selectable={true} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
                       {description}
-                    </Text>
+                    </ThemedText>
                   </View>
                 </ScrollView>
                 {onCallToActionPressed && (

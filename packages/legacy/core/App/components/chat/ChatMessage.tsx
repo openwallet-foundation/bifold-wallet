@@ -8,7 +8,7 @@ import { useTheme } from '../../contexts/theme'
 import { Role } from '../../types/chat'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import Text from '../texts/Text'
+import { ThemedText } from '../texts/ThemedText'
 
 export enum CallbackType {
   CredentialOffer = 'CredentialOffer',
@@ -31,9 +31,9 @@ const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) =>
   const { ChatTheme: theme } = useTheme()
 
   return (
-    <Text style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
+    <ThemedText style={message.user._id === Role.me ? theme.timeStyleRight : theme.timeStyleLeft}>
       {formatTime(message.createdAt, { includeHour: true, chatFormat: true, trim: true })}
-    </Text>
+    </ThemedText>
   )
 }
 
@@ -131,9 +131,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
             }}
             hitSlop={hitSlop}
           >
-            <Text style={{ ...theme.openButtonTextStyle }}>
+            <ThemedText style={{ ...theme.openButtonTextStyle }}>
               {textForCallbackType(message.messageOpensCallbackType)}
-            </Text>
+            </ThemedText>
           </TouchableOpacity>
         )}
       </View>

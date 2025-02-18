@@ -133,13 +133,19 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "alignSelf": "flex-start",
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "alignSelf": "flex-start",
+                    "color": "#FFFFFF",
+                  },
+                ]
               }
               testID="com.ariesbifold:id/HeaderText"
             >
@@ -251,14 +257,20 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                 onStartShouldSetResponder={[Function]}
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   selectable={true}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                      "paddingVertical": 16,
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "paddingVertical": 16,
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/BodyText"
                 >
@@ -324,17 +336,25 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      false,
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >
@@ -483,13 +503,19 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "alignSelf": "flex-start",
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "alignSelf": "flex-start",
+                    "color": "#FFFFFF",
+                  },
+                ]
               }
               testID="com.ariesbifold:id/HeaderText"
             >
@@ -601,14 +627,20 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                 onStartShouldSetResponder={[Function]}
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   selectable={true}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                      "paddingVertical": 16,
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "paddingVertical": 16,
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/BodyText"
                 >

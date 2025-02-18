@@ -1,10 +1,11 @@
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import CardWatermark from '../../components/misc/CardWatermark'
 import { useTheme } from '../../contexts/theme'
 import { credentialTextColor } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 type CredentialDetailPrimaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
@@ -14,8 +15,10 @@ const paddingHorizontal = 24
 const paddingVertical = 16
 const logoHeight = 80
 
-const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps> = ({ overlay }: CredentialDetailPrimaryHeaderProps) => {
-  const { TextTheme, ColorPallet } = useTheme()
+const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps> = ({
+  overlay,
+}: CredentialDetailPrimaryHeaderProps) => {
+  const { ColorPallet } = useTheme()
   const { width, height } = useWindowDimensions()
   const styles = StyleSheet.create({
     primaryHeaderContainer: {
@@ -36,10 +39,10 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
         {overlay.metaOverlay?.watermark && (
           <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
         )}
-        <Text
+        <ThemedText
+          variant="label"
           testID={testIdWithKey('CredentialIssuer')}
           style={[
-            TextTheme.label,
             styles.textContainer,
             {
               paddingLeft: logoHeight + paddingVertical,
@@ -51,11 +54,10 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
           numberOfLines={1}
         >
           {overlay.metaOverlay?.issuer}
-        </Text>
-        <Text
+        </ThemedText>
+        <ThemedText
           testID={testIdWithKey('CredentialName')}
           style={[
-            TextTheme.normal,
             styles.textContainer,
             {
               lineHeight: 24,
@@ -63,7 +65,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
           ]}
         >
           {overlay.metaOverlay?.name}
-        </Text>
+        </ThemedText>
       </View>
     </View>
   )

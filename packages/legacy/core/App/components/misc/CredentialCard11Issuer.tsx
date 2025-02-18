@@ -1,12 +1,12 @@
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { testIdWithKey } from '../../utils/testable'
-import { useTheme } from '../../contexts/theme'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialCard11Logo from './CredentialCard11Logo'
 import { useTranslation } from 'react-i18next'
 import React from 'react'
+import { ThemedText } from '../texts/ThemedText'
 
 interface Props {
   overlay: CredentialOverlay<BrandingOverlay>
@@ -18,7 +18,6 @@ interface Props {
 
 const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated, hasBody, proof }: Props) => {
   const isBranding10 = overlayType === BrandingOverlayType.Branding10
-  const { TextTheme } = useTheme()
   const { styles } = useCredentialCardStyles(overlay, overlayType, proof)
   const { t } = useTranslation()
   if (!hasBody) return
@@ -26,10 +25,10 @@ const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated,
     <>
       {isBranding10 ? (
         <View style={{ flexDirection: 'row' }}>
-          <Text
+          <ThemedText
+            variant="label"
             testID={testIdWithKey('CredentialIssuer')}
             style={[
-              TextTheme.label,
               styles.textContainer,
               {
                 lineHeight: 19,
@@ -40,7 +39,7 @@ const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated,
             ]}
           >
             {overlay.metaOverlay?.issuer}
-          </Text>
+          </ThemedText>
         </View>
       ) : (
         <View style={styles.credentialIssuerContainer}>
@@ -62,10 +61,9 @@ const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated,
               overlayType={overlayType}
               elevated={elevated}
             />
-            <Text
+            <ThemedText
               testID={testIdWithKey('CredentialIssuer')}
               style={[
-                TextTheme.normal,
                 styles.textContainer,
                 {
                   fontWeight: '500',
@@ -79,7 +77,7 @@ const CredentialIssuerBody: React.FC<Props> = ({ overlay, overlayType, elevated,
               {overlay.metaOverlay?.issuer !== 'Unknown Contact'
                 ? overlay.metaOverlay?.issuer
                 : t('Contacts.UnknownContact')}
-            </Text>
+            </ThemedText>
           </View>
         </View>
       )}

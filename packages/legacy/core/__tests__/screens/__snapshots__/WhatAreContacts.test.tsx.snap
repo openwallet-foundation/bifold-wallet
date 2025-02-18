@@ -25,24 +25,33 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
     <View>
       <Text
         accessibilityRole="header"
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 32,
-            "fontWeight": "bold",
-            "marginBottom": 15,
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 32,
+              "fontWeight": "bold",
+            },
+            Object {
+              "marginBottom": 15,
+            },
+          ]
         }
       >
         WhatAreContacts.Title
       </Text>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            undefined,
+          ]
         }
       >
         WhatAreContacts.Preamble
@@ -56,18 +65,24 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "paddingRight": 5,
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "paddingRight": 5,
+              },
+            ]
           }
         >
           •
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -93,18 +108,24 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "paddingRight": 5,
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "paddingRight": 5,
+              },
+            ]
           }
         >
           •
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -130,18 +151,24 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "paddingRight": 5,
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "paddingRight": 5,
+              },
+            ]
           }
         >
           •
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -167,18 +194,24 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "paddingRight": 5,
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "paddingRight": 5,
+              },
+            ]
           }
         >
           •
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -196,12 +229,16 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
         </Text>
       </View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            undefined,
+          ]
         }
       >
         WhatAreContacts.RemoveContacts 
@@ -209,17 +246,23 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
           accessibilityLabel="WhatAreContacts.ContactsLink"
           accessibilityRole="link"
           accessible={true}
+          maxFontSizeMultiplier={2}
           onPress={[Function]}
           style={
             Array [
               Object {
-                "alignSelf": "flex-start",
-                "color": "#42803E",
+                "color": "#FFFFFF",
                 "fontSize": 18,
                 "fontWeight": "normal",
-                "textDecorationLine": "underline",
               },
-              Object {},
+              Array [
+                Object {
+                  "alignSelf": "flex-start",
+                  "color": "#42803E",
+                  "textDecorationLine": "underline",
+                },
+                Object {},
+              ],
             ]
           }
           testID="com.ariesbifold:id/WhatAreContacts.ContactsLink"

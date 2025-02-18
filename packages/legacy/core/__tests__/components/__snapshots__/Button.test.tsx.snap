@@ -50,17 +50,25 @@ exports[`Button Component Primary renders correctly 1`] = `
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "fontWeight": "bold",
-            "textAlign": "center",
+            "fontWeight": "normal",
           },
-          false,
-          false,
-          false,
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+            false,
+            false,
+            false,
+          ],
         ]
       }
     >
@@ -121,17 +129,25 @@ exports[`Button Component Secondary renders correctly 1`] = `
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
-            "color": "#42803E",
+            "color": "#FFFFFF",
             "fontSize": 18,
-            "fontWeight": "bold",
-            "textAlign": "center",
+            "fontWeight": "normal",
           },
-          false,
-          false,
-          false,
+          Array [
+            Object {
+              "color": "#42803E",
+              "fontSize": 18,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            },
+            false,
+            false,
+            false,
+          ],
         ]
       }
     >

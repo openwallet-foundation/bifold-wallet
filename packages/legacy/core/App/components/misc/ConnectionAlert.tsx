@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
@@ -13,6 +13,7 @@ import Link from '../texts/Link'
 
 import { InfoBoxType } from './InfoBox'
 import UnorderedList from './UnorderedList'
+import { ThemedText } from '../texts/ThemedText'
 
 interface ConnectionAlertProps {
   connectionID?: string
@@ -20,7 +21,7 @@ interface ConnectionAlertProps {
 
 const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const [infoCardVisible, setInfoCardVisible] = useState(false)
 
   const settingsNavigation = useNavigation<StackNavigationProp<RootStackParams>>()
@@ -46,15 +47,10 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
       flexDirection: 'row',
     },
     notifyTitle: {
-      ...TextTheme.title,
       marginBottom: 5,
     },
     notifyText: {
-      ...TextTheme.normal,
       marginVertical: 5,
-    },
-    modalText: {
-      ...TextTheme.popupModalText,
     },
     notifyTextList: {
       marginVertical: 6,
@@ -75,7 +71,9 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
   return (
     <View style={styles.notifyTextContainer}>
       <View style={styles.row}>
-        <Text style={styles.notifyTitle}>{t('ConnectionAlert.AddedContacts')}</Text>
+        <ThemedText variant="title" style={styles.notifyTitle}>
+          {t('ConnectionAlert.AddedContacts')}
+        </ThemedText>
         <TouchableOpacity
           testID={t('Global.Info')}
           accessibilityLabel={t('ConnectionAlert.WhatAreContacts')}
@@ -92,7 +90,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
           title={t('ConnectionAlert.WhatAreContacts')}
           bodyContent={
             <View>
-              <Text style={styles.modalText}>{t('ConnectionAlert.PopupIntro')}</Text>
+              <ThemedText variant="popupModalText">{t('ConnectionAlert.PopupIntro')}</ThemedText>
               <UnorderedList
                 unorderedListItems={[
                   t('ConnectionAlert.PopupPoint1'),
@@ -100,24 +98,24 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
                   t('ConnectionAlert.PopupPoint3'),
                 ]}
               />
-              <Text style={styles.modalText}>{t('ConnectionAlert.SettingsInstruction')}</Text>
+              <ThemedText variant="popupModalText">{t('ConnectionAlert.SettingsInstruction')}</ThemedText>
               <Link
                 style={{ marginBottom: 8 }}
                 onPress={navigateToSettings}
                 linkText={t('ConnectionAlert.SettingsLink')}
               />
-              <Text style={styles.modalText}>{t('ConnectionAlert.PrivacyMessage')}</Text>
+              <ThemedText variant="popupModalText">{t('ConnectionAlert.PrivacyMessage')}</ThemedText>
             </View>
           }
           onCallToActionLabel={t('ConnectionAlert.PopupExit')}
           onCallToActionPressed={toggleInfoCard}
         />
       )}
-      <Text style={styles.notifyText}>
+      <ThemedText style={styles.notifyText}>
         {t('ConnectionAlert.NotificationBodyUpper') +
           (connectionID || t('ContactDetails.AContact').toLowerCase()) +
           t('ConnectionAlert.NotificationBodyLower')}
-      </Text>
+      </ThemedText>
     </View>
   )
 }

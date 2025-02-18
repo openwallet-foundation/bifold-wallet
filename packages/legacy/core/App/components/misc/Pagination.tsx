@@ -1,10 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Animated, Text, TouchableOpacity, View } from 'react-native'
+import { Animated, TouchableOpacity, View } from 'react-native'
 import { ScalingDot } from 'react-native-animated-pagination-dots'
 
 import { hitSlop } from '../../constants'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface IPaginationStyleSheet {
   pagerContainer: Record<string, any>
@@ -69,14 +70,14 @@ export const Pagination: React.FC<IPaginationProps> = ({
         importantForAccessibility={shouldHideBack() ? 'no-hide-descendants' : 'auto'}
         hitSlop={hitSlop}
       >
-        <Text
+        <ThemedText
           style={[
             style.pagerNavigationButton,
             { paddingRight: 20, color: shouldHideBack() ? 'transparent' : style.pagerNavigationButton.color },
           ]}
         >
           {previousButtonText}
-        </Text>
+        </ThemedText>
       </TouchableOpacity>
       <ScalingDot
         data={pages}
@@ -99,14 +100,14 @@ export const Pagination: React.FC<IPaginationProps> = ({
         importantForAccessibility={shouldHideNext() ? 'no-hide-descendants' : 'auto'}
         hitSlop={hitSlop}
       >
-        <Text
+        <ThemedText
           style={[
             style.pagerNavigationButton,
             { paddingLeft: 20, color: shouldHideNext() ? 'transparent' : style.pagerNavigationButton.color },
           ]}
         >
           {nextButtonText}
-        </Text>
+        </ThemedText>
       </TouchableOpacity>
     </View>
   )

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -9,11 +9,12 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 const DataRetention: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
-  const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
+  const { ColorPallet, SettingsTheme } = useTheme()
   const [useDataRetention, setUseDataRetention] = useState<boolean>(!!store.preferences.useDataRetention)
 
   const styles = StyleSheet.create({
@@ -49,7 +50,7 @@ const DataRetention: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.section, styles.sectionRow]}>
-        <Text style={TextTheme.title}>{t('Global.On')}</Text>
+        <ThemedText variant="title">{t('Global.On')}</ThemedText>
         <BouncyCheckbox
           accessibilityLabel={t('Global.On')}
           disableText
@@ -68,7 +69,7 @@ const DataRetention: React.FC = () => {
         <View style={styles.itemSeparator}></View>
       </View>
       <View style={[styles.section, styles.sectionRow]}>
-        <Text style={TextTheme.title}>{t('Global.Off')}</Text>
+        <ThemedText variant="title">{t('Global.Off')}</ThemedText>
         <BouncyCheckbox
           accessibilityLabel={t('Global.Off')}
           disableText

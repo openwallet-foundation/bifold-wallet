@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { SvgProps } from 'react-native-svg'
 import { InlineErrorConfig } from '../../types/error'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 export enum InlineErrorType {
   error,
@@ -49,9 +50,9 @@ const InlineErrorText: React.FC<InlineMessageProps> = ({ message, inlineType, co
   return (
     <View style={[style.container, config.style]}>
       {getInlineErrorIcon()}
-      <Text style={[InputInlineMessage.inlineErrorText]} testID={testIdWithKey('InlineErrorText')}>
+      <ThemedText style={[InputInlineMessage.inlineErrorText]} testID={testIdWithKey('InlineErrorText')}>
         {message}
-      </Text>
+      </ThemedText>
     </View>
   )
 }

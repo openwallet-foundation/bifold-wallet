@@ -1,11 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface Action {
   text: string
@@ -90,7 +91,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
                   onPress={action.onPress}
                 >
                   <action.icon />
-                  <Text style={{ ...styles.drawerRowItem, marginLeft: 5 }}>{action.text}</Text>
+                  <ThemedText style={{ ...styles.drawerRowItem, marginLeft: 5 }}>{action.text}</ThemedText>
                 </TouchableOpacity>
               )
             })}

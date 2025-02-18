@@ -3,7 +3,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, Share } from 'react-native'
+import { Modal, Pressable, ScrollView, StyleSheet, View, useWindowDimensions, Share } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -25,6 +25,7 @@ import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
 import ScanTab from './ScanTab'
 import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 
@@ -105,12 +106,10 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
       textAlign: 'center',
     },
     secondaryText: {
-      ...TextTheme.normal,
       marginTop: 20,
       textAlign: 'center',
     },
     textStyle: {
-      ...TextTheme.title,
       color: 'white',
       marginHorizontal: 10,
       textAlign: 'center',
@@ -236,9 +235,9 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                 {error ? (
                   <>
                     <Icon style={styles.icon} name="cancel" size={40} />
-                    <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
+                    <ThemedText variant="title" style={styles.textStyle} testID={testIdWithKey('ErrorMessage')}>
                       {error.message}
-                    </Text>
+                    </ThemedText>
                     <Pressable
                       onPress={() => setShowErrorDetailsModal(true)}
                       accessibilityLabel={t('Scan.ShowDetails')}
@@ -252,7 +251,9 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                 ) : (
                   <>
                     <Icon name="qrcode-scan" size={40} style={styles.icon} />
-                    <Text style={styles.textStyle}>{t('Scan.WillScanAutomatically')}</Text>
+                    <ThemedText variant="title" style={styles.textStyle}>
+                      {t('Scan.WillScanAutomatically')}
+                    </ThemedText>
                   </>
                 )}
               </View>
@@ -309,9 +310,13 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                     justifyContent: 'center',
                   }}
                 >
-                  <Text testID={testIdWithKey('WalletName')} style={[styles.walletName, { paddingHorizontal: 20 }]}>
+                  <ThemedText
+                    variant="headingTwo"
+                    testID={testIdWithKey('WalletName')}
+                    style={[styles.walletName, { paddingHorizontal: 20 }]}
+                  >
                     {store.preferences.walletName}
-                  </Text>
+                  </ThemedText>
                   <IconButton
                     buttonLocation={ButtonLocation.Right}
                     accessibilityLabel={t('NameWallet.EditWalletName')}
@@ -321,7 +326,7 @@ const NewQRView: React.FC<Props> = ({ defaultToConnect, handleCodeScan, error, e
                     iconTintColor={styles.walletName.color}
                   />
                 </View>
-                <Text style={styles.secondaryText}>{t('Connection.ShareQR')}</Text>
+                <ThemedText style={styles.secondaryText}>{t('Connection.ShareQR')}</ThemedText>
               </View>
             </View>
           </ScrollView>

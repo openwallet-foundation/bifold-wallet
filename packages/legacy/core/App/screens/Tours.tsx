@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface Option {
   value: string
@@ -17,7 +18,7 @@ interface Option {
 const Tours: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
+  const { ColorPallet, SettingsTheme } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -61,9 +62,9 @@ const Tours: React.FC = () => {
           const { value, bool }: Option = option
           return (
             <View style={[styles.section, styles.sectionRow]}>
-              <Text style={TextTheme.title} accessibilityRole="header">
+              <ThemedText variant="title" accessibilityRole="header">
                 {value}
-              </Text>
+              </ThemedText>
               <BouncyCheckbox
                 accessibilityLabel={value}
                 disableText

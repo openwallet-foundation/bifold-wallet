@@ -19,18 +19,26 @@ exports[`HighlightTextBox Component Renders correctly 1`] = `
     }
   />
   <Text
+    maxFontSizeMultiplier={2}
     style={
       Array [
         Object {
           "color": "#FFFFFF",
-          "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",
         },
-        Object {
-          "paddingBottom": 10,
-          "paddingTop": 10,
-        },
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "paddingBottom": 10,
+            "paddingTop": 10,
+          },
+        ],
       ]
     }
   >

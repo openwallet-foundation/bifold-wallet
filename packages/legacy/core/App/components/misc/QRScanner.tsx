@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Pressable, StyleSheet, Text } from 'react-native'
+import { View, Modal, Pressable, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
@@ -16,6 +16,7 @@ import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
 import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 
 interface Props {
   handleCodeScan: (value: string) => Promise<void>
@@ -30,7 +31,7 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
   const [showInfoBox, setShowInfoBox] = useState(false)
   const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -60,7 +61,6 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
       padding: 4,
     },
     textStyle: {
-      ...TextTheme.title,
       color: 'white',
       marginHorizontal: 10,
       textAlign: 'center',
@@ -100,15 +100,20 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           onDismissPressed={() => setShowErrorDetailsModal(false)}
         />
       )}
-      <ScanCamera handleCodeScan={handleCodeScan} error={error} enableCameraOnError={enableCameraOnError} torchActive={torchActive}></ScanCamera>
+      <ScanCamera
+        handleCodeScan={handleCodeScan}
+        error={error}
+        enableCameraOnError={enableCameraOnError}
+        torchActive={torchActive}
+      ></ScanCamera>
       <View style={{ flex: 1 }}>
         <View style={styles.messageContainer}>
           {error ? (
             <>
               <Icon style={styles.icon} name="cancel" size={40} />
-              <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
+              <ThemedText testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
                 {error.message}
-              </Text>
+              </ThemedText>
               {showScanErrorButton && (
                 <Pressable
                   onPress={() => setShowErrorDetailsModal(true)}
@@ -124,7 +129,9 @@ const QRScanner: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError
           ) : (
             <>
               <Icon name="qrcode-scan" size={40} style={styles.icon} />
-              <Text style={styles.textStyle}>{t('Scan.WillScanAutomatically')}</Text>
+              <ThemedText variant="title" style={styles.textStyle}>
+                {t('Scan.WillScanAutomatically')}
+              </ThemedText>
             </>
           )}
         </View>

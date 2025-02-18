@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface CredentialActionFooterProps {
   onPress: GenericFn
@@ -39,7 +40,7 @@ const CredentialActionFooter = ({ onPress, text, testID }: CredentialActionFoote
       <View style={styles.seperator}></View>
       <View>
         <TouchableOpacity onPress={onPress} testID={testIdWithKey(testID)} style={styles.touchable}>
-          <Text style={styles.credActionText}>{text}</Text>
+          <ThemedText style={styles.credActionText}>{text}</ThemedText>
           <Icon
             style={[styles.credActionText, { fontSize: styles.credActionText.fontSize + 5 }]}
             name="chevron-right"

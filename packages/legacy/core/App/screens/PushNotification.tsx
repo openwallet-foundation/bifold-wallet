@@ -3,7 +3,7 @@ import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/n
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppState, Linking, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
+import { AppState, Linking, ScrollView, StyleSheet, Switch, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -13,6 +13,7 @@ import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import { ThemedText } from '../components/texts/ThemedText'
 
 const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePushNotifications>> = ({ route }) => {
   const { t } = useTranslation()
@@ -35,7 +36,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
 
     updateNotificationState()
     const subscription = AppState.addEventListener('change', updateNotificationState)
-    
+
     return () => subscription.remove()
   }, [enablePushNotifications])
 
@@ -119,18 +120,20 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
               <Assets.svg.pushNotificationImg />
             </View>
           )}
-          <Text style={[TextTheme.headingThree, style.heading]}>{t('PushNotifications.EnableNotifiactions')}</Text>
+          <ThemedText variant="headingThree" style={style.heading}>
+            {t('PushNotifications.EnableNotifiactions')}
+          </ThemedText>
           {hasNotificationsDisabled ? (
             <View>
-              <Text style={TextTheme.normal}>{t('PushNotifications.NotificationsOffMessage')}</Text>
+              <ThemedText>{t('PushNotifications.NotificationsOffMessage')}</ThemedText>
             </View>
           ) : (
             <>
-              <Text style={TextTheme.normal}>{t('PushNotifications.BeNotified')}</Text>
+              <ThemedText>{t('PushNotifications.BeNotified')}</ThemedText>
               {list.map((item, index) => (
                 <View style={{ flexDirection: 'row', marginTop: 20 }} key={index}>
-                  <Text style={TextTheme.normal}>{'\u2022'}</Text>
-                  <Text style={style.listItem}>{item}</Text>
+                  <ThemedText>{'\u2022'}</ThemedText>
+                  <ThemedText style={style.listItem}>{item}</ThemedText>
                 </View>
               ))}
             </>
@@ -140,18 +143,18 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
               <View style={{ marginTop: 25 }}>
                 {hasNotificationsDisabled ? (
                   <View>
-                    <Text style={TextTheme.bold}>{t('PushNotifications.NotificationsOffTitle')}</Text>
-                    <Text style={TextTheme.normal}>{t('PushNotifications.NotificationsInstructionTitle')}</Text>
+                    <ThemedText variant="bold">{t('PushNotifications.NotificationsOffTitle')}</ThemedText>
+                    <ThemedText>{t('PushNotifications.NotificationsInstructionTitle')}</ThemedText>
                     {settingsInstructions.map((item, index) => (
                       <View style={{ flexDirection: 'row', marginTop: 20 }} key={index}>
-                        <Text style={TextTheme.normal}>{`${index + 1}. `}</Text>
-                        <Text style={style.listItem}>{item}</Text>
+                        <ThemedText>{`${index + 1}. `}</ThemedText>
+                        <ThemedText style={style.listItem}>{item}</ThemedText>
                       </View>
                     ))}
                   </View>
                 ) : (
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={TextTheme.normal}>{t('PushNotifications.ReceiveNotifications')}</Text>
+                    <ThemedText>{t('PushNotifications.ReceiveNotifications')}</ThemedText>
                     <Switch
                       trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
                       thumbColor={notificationState ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}

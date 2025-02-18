@@ -18,7 +18,6 @@ import {
   ScrollView,
   Share,
   StyleSheet,
-  Text,
   Vibration,
   View,
   useWindowDimensions,
@@ -39,6 +38,7 @@ import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { createTempConnectionInvitation } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
@@ -87,12 +87,10 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
       textAlign: 'center',
     },
     primaryHeaderText: {
-      ...TextTheme.headingThree,
       textAlign: 'center',
       marginTop: 20,
     },
     secondaryHeaderText: {
-      ...TextTheme.normal,
       textAlign: 'center',
       marginTop: 8,
       color: ColorPallet.grayscale.black,
@@ -229,8 +227,10 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           {message && <QRRenderer value={message} size={qrSize} />}
         </View>
         <View style={styles.headerContainer}>
-          <Text style={styles.secondaryHeaderText}>{t('Verifier.ScanQR')}</Text>
-          <Text style={styles.primaryHeaderText}>{template?.name}</Text>
+          <ThemedText style={styles.secondaryHeaderText}>{t('Verifier.ScanQR')}</ThemedText>
+          <ThemedText variant="headingThree" style={styles.primaryHeaderText}>
+            {template?.name}
+          </ThemedText>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>

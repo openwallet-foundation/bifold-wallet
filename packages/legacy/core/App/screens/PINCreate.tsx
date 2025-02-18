@@ -6,7 +6,6 @@ import {
   AccessibilityInfo,
   Keyboard,
   StyleSheet,
-  Text,
   View,
   TextInput,
   TouchableOpacity,
@@ -34,6 +33,7 @@ import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
@@ -68,7 +68,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const [inlineMessageField1, setInlineMessageField1] = useState<InlineMessageProps>()
   const [inlineMessageField2, setInlineMessageField2] = useState<InlineMessageProps>()
 
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
@@ -356,9 +356,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                     ) : (
                       <Icon name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
                     )}
-                    <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                      {t(`PINCreate.Helper.${validation.errorName}`)}
-                    </Text>
+                    <ThemedText style={{ paddingLeft: 4 }}>{t(`PINCreate.Helper.${validation.errorName}`)}</ThemedText>
                   </View>
                 )
               })}

@@ -19,6 +19,7 @@ import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import Link from './components/texts/Link'
 import Text from './components/texts/Text'
+import { ThemedText } from './components/texts/ThemedText'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
@@ -195,6 +196,7 @@ export {
   components,
   contexts,
   Text,
+  ThemedText,
   loadLoginAttempt,
   Button,
   BifoldLogger,

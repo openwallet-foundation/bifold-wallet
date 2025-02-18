@@ -87,14 +87,20 @@ Array [
           󰐳
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "white",
-              "fontSize": 20,
-              "fontWeight": "bold",
-              "marginHorizontal": 10,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "white",
+                "marginHorizontal": 10,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Scan.WillScanAutomatically
@@ -635,17 +641,25 @@ Array [
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 32,
                       "fontWeight": "bold",
-                      "textAlign": "center",
                     },
-                    Object {
-                      "paddingHorizontal": 20,
-                    },
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 32,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      Object {
+                        "paddingHorizontal": 20,
+                      },
+                    ],
                   ]
                 }
                 testID="com.ariesbifold:id/WalletName"
@@ -731,14 +745,19 @@ Array [
               </View>
             </View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginTop": 20,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginTop": 20,
+                    "textAlign": "center",
+                  },
+                ]
               }
             >
               Connection.ShareQR

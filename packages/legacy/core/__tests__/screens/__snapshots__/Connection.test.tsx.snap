@@ -102,6 +102,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                     }
                   >
                     <Text
+                      maxFontSizeMultiplier={2}
                       style={
                         Array [
                           Object {
@@ -119,6 +120,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                       LoadingPlaceholder.ProofRequest
                     </Text>
                     <Text
+                      maxFontSizeMultiplier={2}
                       style={
                         Array [
                           Object {
@@ -455,17 +457,25 @@ exports[`Connection Screen No connection, show to proof 1`] = `
                           }
                         >
                           <Text
+                            maxFontSizeMultiplier={2}
                             style={
                               Array [
                                 Object {
                                   "color": "#FFFFFF",
                                   "fontSize": 18,
-                                  "fontWeight": "bold",
-                                  "textAlign": "center",
+                                  "fontWeight": "normal",
                                 },
-                                false,
-                                false,
-                                false,
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "fontSize": 18,
+                                    "fontWeight": "bold",
+                                    "textAlign": "center",
+                                  },
+                                  false,
+                                  false,
+                                  false,
+                                ],
                               ]
                             }
                           >
@@ -641,23 +651,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               }
             >
-              <Text
+              <ThemedText
                 style={
                   Object {
-                    "color": "#FFFFFF",
                     "flexShrink": 1,
-                    "fontSize": 18,
-                    "fontWeight": "normal",
                   }
                 }
                 testID="com.ariesbifold:id/HeaderText"
               >
-                <Text>
+                <ThemedText>
                   b4b1b9cd-a445-4bb3-9645-a2377471965a
-                </Text>
+                </ThemedText>
                  
                 CredentialOffer.IsOfferingYouACredential
-              </Text>
+              </ThemedText>
             </View>
             <View
               style={
@@ -800,17 +807,34 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "flexShrink": 1,
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "flexShrink": 1,
+                    },
+                  ]
                 }
                 testID="com.ariesbifold:id/HeaderText"
               >
-                <Text>
+                <Text
+                  maxFontSizeMultiplier={2}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
                   b4b1b9cd-a445-4bb3-9645-a2377471965a
                 </Text>
                  
@@ -955,6 +979,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                         }
                       >
                         <Text
+                          maxFontSizeMultiplier={2}
                           style={
                             Array [
                               Object {
@@ -993,6 +1018,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                             }
                           >
                             <Text
+                              maxFontSizeMultiplier={2}
                               style={
                                 Array [
                                   Object {
@@ -1000,17 +1026,19 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                                     "fontSize": 14,
                                     "fontWeight": "bold",
                                   },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "flexShrink": 1,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                    "lineHeight": 19,
-                                    "opacity": 0.8,
-                                  },
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                      "lineHeight": 19,
+                                      "opacity": 0.8,
+                                    },
+                                  ],
                                 ]
                               }
                               testID="com.ariesbifold:id/CredentialIssuer"
@@ -1026,6 +1054,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                             }
                           >
                             <Text
+                              maxFontSizeMultiplier={2}
                               style={
                                 Array [
                                   Object {
@@ -1033,18 +1062,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                                     "fontSize": 18,
                                     "fontWeight": "bold",
                                   },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "flexShrink": 1,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                  },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                  },
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                    },
+                                    Object {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ],
                                 ]
                               }
                               testID="com.ariesbifold:id/CredentialName"
@@ -1164,12 +1195,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/AttributeName"
                 >
@@ -1206,12 +1245,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/AttributeValue"
                 >
@@ -1264,12 +1311,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/AttributeName"
                 >
@@ -1306,12 +1361,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/AttributeValue"
                 >
@@ -1364,12 +1427,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/AttributeName"
                 >
@@ -1406,12 +1477,20 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/AttributeValue"
                 >
@@ -1513,17 +1592,25 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                     }
                   >
                     <Text
+                      maxFontSizeMultiplier={2}
                       style={
                         Array [
                           Object {
                             "color": "#FFFFFF",
                             "fontSize": 18,
-                            "fontWeight": "bold",
-                            "textAlign": "center",
+                            "fontWeight": "normal",
                           },
-                          false,
-                          false,
-                          false,
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
+                              "textAlign": "center",
+                            },
+                            false,
+                            false,
+                            false,
+                          ],
                         ]
                       }
                     >
@@ -1590,17 +1677,25 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                     }
                   >
                     <Text
+                      maxFontSizeMultiplier={2}
                       style={
                         Array [
                           Object {
-                            "color": "#42803E",
+                            "color": "#FFFFFF",
                             "fontSize": 18,
-                            "fontWeight": "bold",
-                            "textAlign": "center",
+                            "fontWeight": "normal",
                           },
-                          false,
-                          false,
-                          false,
+                          Array [
+                            Object {
+                              "color": "#42803E",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
+                              "textAlign": "center",
+                            },
+                            false,
+                            false,
+                            false,
+                          ],
                         ]
                       }
                     >

@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Text, Pressable, Switch, StyleSheet, ScrollView } from 'react-native'
+import { View, Pressable, Switch, StyleSheet, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 const Developer: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const [useVerifierCapability, setUseVerifierCapability] = useState(!!store.preferences.useVerifierCapability)
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
@@ -36,7 +37,6 @@ const Developer: React.FC = () => {
       alignItems: 'center',
     },
     settingLabelText: {
-      ...TextTheme.bold,
       marginRight: 10,
       textAlign: 'left',
     },
@@ -120,14 +120,14 @@ const Developer: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
       <ScrollView style={styles.container}>
-        <Text style={[TextTheme.normal, { margin: 10 }]}>
+        <ThemedText style={{ margin: 10 }}>
           Place content here you would like to make available to developers when developer mode is enabled.
-        </Text>
+        </ThemedText>
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text accessible={false} style={styles.settingLabelText}>
+            <ThemedText variant="bold" accessible={false} style={styles.settingLabelText}>
               {t('Verifier.UseVerifierCapability')}
-            </Text>
+            </ThemedText>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}
@@ -147,9 +147,9 @@ const Developer: React.FC = () => {
         </View>
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text accessible={false} style={styles.settingLabelText}>
+            <ThemedText variant="bold" accessible={false} style={styles.settingLabelText}>
               {t('Verifier.AcceptDevCredentials')}
-            </Text>
+            </ThemedText>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}
@@ -169,7 +169,9 @@ const Developer: React.FC = () => {
         </View>
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.settingLabelText}>{t('Connection.UseConnectionInviterCapability')}</Text>
+            <ThemedText variant="bold" style={styles.settingLabelText}>
+              {t('Connection.UseConnectionInviterCapability')}
+            </ThemedText>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}
@@ -189,7 +191,9 @@ const Developer: React.FC = () => {
         </View>
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.settingLabelText}>{t('Verifier.UseDevVerifierTemplates')}</Text>
+            <ThemedText variant="bold" style={styles.settingLabelText}>
+              {t('Verifier.UseDevVerifierTemplates')}
+            </ThemedText>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}
@@ -210,7 +214,9 @@ const Developer: React.FC = () => {
         {!store.onboarding.didCreatePIN && (
           <View style={styles.settingContainer}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.settingLabelText}>{t('NameWallet.EnableWalletNaming')}</Text>
+              <ThemedText variant="bold" style={styles.settingLabelText}>
+                {t('NameWallet.EnableWalletNaming')}
+              </ThemedText>
             </View>
             <Pressable
               style={styles.settingSwitchContainer}
@@ -231,7 +237,9 @@ const Developer: React.FC = () => {
         )}
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.settingLabelText}>{t('Settings.PreventAutoLock')}</Text>
+            <ThemedText variant="bold" style={styles.settingLabelText}>
+              {t('Settings.PreventAutoLock')}
+            </ThemedText>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}
@@ -251,7 +259,9 @@ const Developer: React.FC = () => {
         </View>
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.settingLabelText}>{t('PasteUrl.UseShareableLink')}</Text>
+            <ThemedText variant="bold" style={styles.settingLabelText}>
+              {t('PasteUrl.UseShareableLink')}
+            </ThemedText>
           </View>
           <Pressable
             style={styles.settingSwitchContainer}

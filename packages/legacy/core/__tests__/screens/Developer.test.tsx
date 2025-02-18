@@ -3,6 +3,7 @@ import React from 'react'
 
 import Developer from '../../App/screens/Developer'
 import { testIdWithKey } from '../../App/utils/testable'
+import { BasicAppContext } from '../helpers/app'
 
 describe('Developer Screen', () => {
   beforeEach(() => {
@@ -18,13 +19,21 @@ describe('Developer Screen', () => {
   })
 
   test('screen renders correctly', () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     expect(tree).toMatchSnapshot()
   })
 
   test('pressables exist', async () => {
-    const { findByTestId } = render(<Developer />)
+    const { findByTestId } = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const VerifierToggle = await findByTestId(testIdWithKey('ToggleVerifierCapability'))
     const DevCredentialsToggle = await findByTestId(testIdWithKey('ToggleAcceptDevCredentials'))
@@ -42,7 +51,11 @@ describe('Developer Screen', () => {
   })
 
   test('useVerifierCapability can be toggled', async () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const VerifierSwitch = await tree.findByTestId(testIdWithKey('VerifierCapabilitySwitchElement'))
     await act(async () => {
@@ -52,7 +65,11 @@ describe('Developer Screen', () => {
   })
 
   test('acceptDevCredentials can be toggled', async () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const AcceptDevCredentialsSwitch = await tree.findByTestId(testIdWithKey('AcceptDevCredentialsSwitchElement'))
     await act(async () => {
@@ -62,7 +79,11 @@ describe('Developer Screen', () => {
   })
 
   test('useConnectionInviterCapability can be toggled', async () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const ConnectionInviterCapabilitySwitch = await tree.findByTestId(
       testIdWithKey('ConnectionInviterCapabilitySwitchElement')
@@ -74,7 +95,11 @@ describe('Developer Screen', () => {
   })
 
   test('useDevVerifierTemplates can be toggled', async () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const DevVerifierTemplatesSwitch = await tree.findByTestId(testIdWithKey('DevVerifierTemplatesSwitchElement'))
     await act(async () => {
@@ -84,7 +109,11 @@ describe('Developer Screen', () => {
   })
 
   test('enableWalletNaming can be toggled', async () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const EnableWalletNamingSwitch = await tree.findByTestId(testIdWithKey('EnableWalletNamingSwitchElement'))
     await act(async () => {
@@ -94,7 +123,11 @@ describe('Developer Screen', () => {
   })
 
   test('preventAutoLock can be toggled', async () => {
-    const tree = render(<Developer />)
+    const tree = render(
+      <BasicAppContext>
+        <Developer />
+      </BasicAppContext>
+    )
 
     const PreventAutoLockSwitch = await tree.findByTestId(testIdWithKey('PreventAutoLockSwitchElement'))
     await act(async () => {

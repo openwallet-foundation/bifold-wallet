@@ -141,24 +141,28 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 24,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  },
+                  undefined,
+                ]
               }
             >
               CredentialOffer.DeclineTitle
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginTop": 25,
                   },
                   Object {
                     "marginTop": 30,
@@ -169,13 +173,16 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               CredentialOffer.DeclineParagraph1
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginTop": 25,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  undefined,
+                ]
               }
             >
               CredentialOffer.DeclineParagraph2
@@ -327,17 +334,25 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -404,17 +419,25 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -575,24 +598,28 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 24,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  },
+                  undefined,
+                ]
               }
             >
               CredentialOffer.CustomOfferTitle
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginTop": 25,
                   },
                   Object {
                     "marginTop": 30,
@@ -603,13 +630,16 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               CredentialOffer.CustomOfferParagraph1
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginTop": 25,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  undefined,
+                ]
               }
             >
               CredentialOffer.CustomOfferParagraph2
@@ -761,17 +791,25 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -838,17 +876,25 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1004,24 +1050,28 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 24,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                    "fontWeight": "bold",
+                  },
+                  undefined,
+                ]
               }
             >
               ProofRequest.DeclineTitle
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginTop": 25,
                   },
                   Object {
                     "marginTop": 30,
@@ -1032,25 +1082,31 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               ProofRequest.DeclineBulletPoint1
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginTop": 25,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  undefined,
+                ]
               }
             >
               ProofRequest.DeclineBulletPoint2
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginTop": 25,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  undefined,
+                ]
               }
             >
               ProofRequest.DeclineBulletPoint3
@@ -1202,17 +1258,25 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1279,17 +1343,25 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1447,12 +1519,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.RemoveTitle
@@ -1460,12 +1536,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
             </View>
             <View>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.RemoveContactMessageTop
@@ -1510,6 +1590,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -1517,9 +1598,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -1566,6 +1654,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -1573,9 +1662,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -1622,6 +1718,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -1629,9 +1726,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -1678,6 +1782,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -1685,9 +1790,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -1695,6 +1807,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                 </Text>
               </View>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
@@ -1858,17 +1971,25 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1935,17 +2056,25 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -2103,12 +2232,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.UnableToRemoveTitle
@@ -2116,12 +2249,16 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
             </View>
             <View>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.UnableToRemoveCaption
@@ -2274,17 +2411,25 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -2351,17 +2496,25 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -2519,12 +2672,16 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 CredentialDetails.RemoveTitle
@@ -2532,12 +2689,16 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             </View>
             <View>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 CredentialDetails.RemoveCaption
@@ -2592,6 +2753,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                 testID="com.ariesbifold:id/CredentialDetails.YouWillNotLose"
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -2663,6 +2825,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                       }
                     >
                       <Text
+                        maxFontSizeMultiplier={2}
                         style={
                           Array [
                             Object {
@@ -2680,6 +2843,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                         •
                       </Text>
                       <Text
+                        maxFontSizeMultiplier={2}
                         style={
                           Array [
                             Object {
@@ -2708,6 +2872,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                       }
                     >
                       <Text
+                        maxFontSizeMultiplier={2}
                         style={
                           Array [
                             Object {
@@ -2725,6 +2890,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                         •
                       </Text>
                       <Text
+                        maxFontSizeMultiplier={2}
                         style={
                           Array [
                             Object {
@@ -2796,6 +2962,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                 testID="com.ariesbifold:id/CredentialDetails.HowToGetThisCredentialBack"
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -2867,6 +3034,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                       }
                     >
                       <Text
+                        maxFontSizeMultiplier={2}
                         style={
                           Array [
                             Object {
@@ -2884,6 +3052,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                         •
                       </Text>
                       <Text
+                        maxFontSizeMultiplier={2}
                         style={
                           Array [
                             Object {
@@ -3053,17 +3222,25 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -3130,17 +3307,25 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -3298,12 +3483,16 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 24,
-                    "fontWeight": "bold",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 24,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.RemoveTitle
@@ -3311,12 +3500,16 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
             </View>
             <View>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.RemoveContactMessageTop
@@ -3361,6 +3554,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -3368,9 +3562,16 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -3417,6 +3618,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -3424,9 +3626,16 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -3473,6 +3682,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -3480,9 +3690,16 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -3529,6 +3746,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -3536,9 +3754,16 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                         "fontSize": 18,
                         "fontWeight": "normal",
                       },
-                      Object {
-                        "flexShrink": 1,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "flexShrink": 1,
+                        },
+                      ],
                     ]
                   }
                 >
@@ -3546,6 +3771,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                 </Text>
               </View>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
@@ -3709,17 +3935,25 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -3786,17 +4020,25 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >

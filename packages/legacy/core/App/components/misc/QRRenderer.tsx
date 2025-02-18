@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle, Text, useWindowDimensions } from 'react-native'
+import { StyleSheet, View, ViewStyle, useWindowDimensions } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface QRRendererProps {
   value: string
@@ -44,7 +45,7 @@ const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
   return (
     <View style={styles.container} testID={testIdWithKey('QRRenderer')}>
       {<QRCode ecl="L" value={value} size={qrSize} onError={handleQRCodeGenerationError} />}
-      {isInvalidQR && <Text style={styles.errorMessage}>{t('QRRender.GenerationError')}</Text>}
+      {isInvalidQR && <ThemedText style={styles.errorMessage}>{t('QRRender.GenerationError')}</ThemedText>}
     </View>
   )
 }

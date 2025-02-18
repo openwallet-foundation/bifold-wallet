@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
+import { Modal, ScrollView, StyleSheet, View, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
@@ -11,6 +11,7 @@ import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
 import DismissiblePopupModal from './DismissiblePopupModal'
+import { ThemedText } from '../texts/ThemedText'
 
 interface CameraDisclosureModalProps {
   requestCameraUse: () => Promise<boolean>
@@ -22,7 +23,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
   const [modalVisible, setModalVisible] = useState(true)
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [requestInProgress, setRequestInProgress] = useState(false)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -80,11 +81,15 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
       )}
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
-          <Text style={TextTheme.modalHeadingOne} testID={testIdWithKey('AllowCameraUse')} accessibilityRole="header">
+          <ThemedText variant="modalHeadingOne" testID={testIdWithKey('AllowCameraUse')} accessibilityRole="header">
             {t('CameraDisclosure.AllowCameraUse')}
-          </Text>
-          <Text style={[TextTheme.modalNormal, styles.messageText]}>{t('CameraDisclosure.CameraDisclosure')}</Text>
-          <Text style={[TextTheme.modalNormal, styles.messageText]}>{t('CameraDisclosure.ToContinueUsing')}</Text>
+          </ThemedText>
+          <ThemedText variant="modalNormal" style={styles.messageText}>
+            {t('CameraDisclosure.CameraDisclosure')}
+          </ThemedText>
+          <ThemedText variant="modalNormal" style={styles.messageText}>
+            {t('CameraDisclosure.ToContinueUsing')}
+          </ThemedText>
         </ScrollView>
         <View style={styles.controlsContainer}>
           <View style={styles.buttonContainer}>

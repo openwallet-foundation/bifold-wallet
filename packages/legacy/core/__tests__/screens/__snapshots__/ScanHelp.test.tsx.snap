@@ -26,41 +26,55 @@ exports[`ScanHelp Screen Renders correctly 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 26,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            undefined,
+          ]
         }
       >
         Scan.WhatToScan
       </Text>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
               "color": "#FFFFFF",
               "fontSize": 18,
               "fontWeight": "normal",
-              "marginTop": 15,
             },
-            Object {
-              "marginTop": 20,
-            },
+            Array [
+              Object {
+                "marginTop": 15,
+              },
+              Object {
+                "marginTop": 20,
+              },
+            ],
           ]
         }
       >
         Scan.ScanOnySpecial
       </Text>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-            "marginTop": 15,
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 15,
+            },
+          ]
         }
       >
         Scan.ScanOnlySpecial2
@@ -69,22 +83,25 @@ exports[`ScanHelp Screen Renders correctly 1`] = `
         accessibilityLabel="Scan.WhereToUseLink"
         accessibilityRole="link"
         accessible={true}
+        maxFontSizeMultiplier={2}
         onPress={[Function]}
         style={
           Array [
             Object {
-              "alignSelf": "flex-start",
-              "color": "#42803E",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "textDecorationLine": "underline",
-            },
-            Object {
               "color": "#FFFFFF",
               "fontSize": 18,
               "fontWeight": "normal",
-              "marginTop": 15,
             },
+            Array [
+              Object {
+                "alignSelf": "flex-start",
+                "color": "#42803E",
+                "textDecorationLine": "underline",
+              },
+              Object {
+                "marginTop": 15,
+              },
+            ],
           ]
         }
         testID="com.ariesbifold:id/WhereToUseLink"
@@ -92,13 +109,18 @@ exports[`ScanHelp Screen Renders correctly 1`] = `
         Scan.WhereToUseLink
       </Text>
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-            "marginTop": 15,
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "marginTop": 15,
+            },
+          ]
         }
       >
         Scan.ScanOnlySpecial3

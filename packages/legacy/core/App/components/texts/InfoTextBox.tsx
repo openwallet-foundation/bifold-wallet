@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native'
+import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { InfoBoxType } from '../misc/InfoBox'
+import { ThemedText } from './ThemedText'
 
 export interface TextBoxProps {
   children: React.ReactElement | string
@@ -25,7 +26,7 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
   style = {},
   textStyle = {},
 }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const styles = StyleSheet.create({
     container: {
       padding: 10,
@@ -41,7 +42,6 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
       justifyContent: 'space-between',
     },
     text: {
-      ...TextTheme.bold,
       alignSelf: 'center',
       flex: 1,
       flexWrap: 'wrap',
@@ -114,7 +114,13 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
         <View style={styles.iconContainer}>
           <Icon name={iconName} size={iconSize} color={iconColor} />
         </View>
-        {typeof children === 'string' ? <Text style={styles.text}>{children}</Text> : <>{children}</>}
+        {typeof children === 'string' ? (
+          <ThemedText variant="bold" style={styles.text}>
+            {children}
+          </ThemedText>
+        ) : (
+          <>{children}</>
+        )}
       </View>
     </View>
   )

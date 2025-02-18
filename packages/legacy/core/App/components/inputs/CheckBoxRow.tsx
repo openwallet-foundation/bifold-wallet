@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, TextStyle } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, TextStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
+import { ThemedText } from '../texts/ThemedText'
 
 interface Props {
   title: string
@@ -58,7 +59,7 @@ const CheckBoxRow: React.FC<Props> = ({
           <Icon name={'check-box-outline-blank'} size={36} color={Inputs.checkBoxColor.color} />
         )}
       </TouchableOpacity>
-      <Text style={[style.text, titleStyle]}>{title}</Text>
+      <ThemedText style={[style.text, titleStyle]}>{title}</ThemedText>
     </View>
   )
 }

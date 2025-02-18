@@ -42,6 +42,7 @@ export interface Config {
   disableMediatorCheck?: boolean
   internetReachabilityUrls: string[]
   attemptLockoutConfig?: AttemptLockoutConfig
+  accessibilityMaxFontSizeMultiplier?: number
 }
 
 export interface HistoryEventsLoggerConfig {

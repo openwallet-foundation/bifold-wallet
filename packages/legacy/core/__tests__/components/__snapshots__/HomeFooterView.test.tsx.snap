@@ -14,7 +14,7 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
       style={
         Object {
           "alignItems": "center",
-          "marginTop": 100,
+          "marginTop": 50,
         }
       }
     >
@@ -32,6 +32,7 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -39,14 +40,22 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
               "fontSize": 18,
               "fontWeight": "normal",
             },
-            Object {
-              "marginTop": 25,
-              "textAlign": "center",
-            },
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginTop": 25,
+                "textAlign": "center",
+              },
+            ],
           ]
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -54,6 +63,7 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
                 "fontSize": 18,
                 "fontWeight": "bold",
               },
+              undefined,
             ]
           }
         >
@@ -71,6 +81,7 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -78,14 +89,33 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
               "fontSize": 18,
               "fontWeight": "normal",
             },
-            Object {
-              "marginTop": 25,
-              "textAlign": "center",
-            },
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginTop": 25,
+                "textAlign": "center",
+              },
+            ],
           ]
         }
       >
-        <Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
           Home.ScanOfferAddCard
         </Text>
       </Text>
@@ -108,7 +138,7 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "marginTop": 100,
+          "marginTop": 50,
         }
       }
     >
@@ -126,6 +156,7 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -133,21 +164,48 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
               "fontSize": 18,
               "fontWeight": "normal",
             },
-            Object {
-              "marginTop": 25,
-              "textAlign": "center",
-            },
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginTop": 25,
+                "textAlign": "center",
+              },
+            ],
           ]
         }
       >
-        <Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
           Home.YouHave
            
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+              ]
             }
           >
             2
@@ -169,6 +227,7 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -176,10 +235,17 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
               "fontSize": 18,
               "fontWeight": "normal",
             },
-            Object {
-              "marginTop": 25,
-              "textAlign": "center",
-            },
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginTop": 25,
+                "textAlign": "center",
+              },
+            ],
           ]
         }
       />

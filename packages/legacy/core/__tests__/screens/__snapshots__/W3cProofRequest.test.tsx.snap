@@ -40,43 +40,83 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "flexShrink": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                ]
               }
               testID="com.ariesbifold:id/HeaderText"
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 20,
-                    "fontWeight": "bold",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
                 }
               >
                 ContactDetails.AContact
               </Text>
                
-              <Text>
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    undefined,
+                  ]
+                }
+              >
                 ProofRequest.IsRequestingYouToShare
               </Text>
               <Text
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 20,
-                    "fontWeight": "bold",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                    },
+                    undefined,
+                  ]
                 }
               >
                  2 
               </Text>
-              <Text>
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    undefined,
+                  ]
+                }
+              >
                 ProofRequest.Credentials
               </Text>
             </Text>
@@ -133,15 +173,22 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   </Text>
                 </View>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "color": "#FFFFFF",
-                      "flex": 1,
-                      "flexWrap": "wrap",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "alignSelf": "center",
+                        "color": "#FFFFFF",
+                        "flex": 1,
+                        "flexWrap": "wrap",
+                        "fontWeight": "normal",
+                      },
+                    ]
                   }
                 >
                   ProofRequest.YouCantRespond
@@ -171,19 +218,17 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                 }
               }
             >
-              <Text
+              <ThemedText
                 style={
                   Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 20,
-                    "fontWeight": "bold",
                     "marginTop": 10,
                   }
                 }
                 testID="com.ariesbifold:id/ProofRequestHeaderText"
+                variant="title"
               >
                 ProofRequest.MissingCredentials
-              </Text>
+              </ThemedText>
             </View>
           }
           data={
@@ -248,13 +293,18 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 20,
-                      "fontWeight": "bold",
-                      "marginTop": 10,
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 20,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "marginTop": 10,
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/ProofRequestHeaderText"
                 >
@@ -393,6 +443,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             }
                           >
                             <Text
+                              maxFontSizeMultiplier={2}
                               style={
                                 Array [
                                   Object {
@@ -431,6 +482,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 }
                               >
                                 <Text
+                                  maxFontSizeMultiplier={2}
                                   style={
                                     Array [
                                       Object {
@@ -438,18 +490,20 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                         "fontSize": 18,
                                         "fontWeight": "bold",
                                       },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "flexShrink": 1,
-                                        "lineHeight": 24,
-                                      },
-                                      Object {
-                                        "flex": 1,
-                                        "flexWrap": "wrap",
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                      },
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "flexShrink": 1,
+                                          "lineHeight": 24,
+                                        },
+                                        Object {
+                                          "flex": 1,
+                                          "flexWrap": "wrap",
+                                        },
+                                        Object {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ],
                                     ]
                                   }
                                   testID="com.ariesbifold:id/CredentialName"
@@ -490,12 +544,20 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 
                               </Text>
                               <Text
+                                maxFontSizeMultiplier={2}
                                 style={
-                                  Object {
-                                    "color": "#D8292F",
-                                    "fontSize": 18,
-                                    "fontWeight": "normal",
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal",
+                                    },
+                                    Object {
+                                      "color": "#D8292F",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal",
+                                    },
+                                  ]
                                 }
                                 testID="com.ariesbifold:id/RevokedOrNotAvailable"
                               >
@@ -593,6 +655,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                       
                                     </Text>
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -600,15 +663,17 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                             "fontSize": 14,
                                             "fontWeight": "normal",
                                           },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                            "flexShrink": 1,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "lineHeight": 19,
-                                            "opacity": 0.8,
-                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "flexShrink": 1,
+                                              "lineHeight": 24,
+                                            },
+                                            Object {
+                                              "lineHeight": 19,
+                                              "opacity": 0.8,
+                                            },
+                                          ],
                                         ]
                                       }
                                       testID="com.ariesbifold:id/AttributeName"
@@ -690,19 +755,17 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                 }
               }
             >
-              <Text
+              <ThemedText
                 style={
                   Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 20,
-                    "fontWeight": "bold",
                     "marginTop": 10,
                   }
                 }
                 testID="com.ariesbifold:id/ProofRequestHeaderText"
+                variant="title"
               >
                 ProofRequest.FromYourWallet
-              </Text>
+              </ThemedText>
             </View>
           }
           data={
@@ -812,13 +875,18 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 20,
-                      "fontWeight": "bold",
-                      "marginTop": 10,
-                    }
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 20,
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "marginTop": 10,
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/ProofRequestHeaderText"
                 >
@@ -957,6 +1025,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             }
                           >
                             <Text
+                              maxFontSizeMultiplier={2}
                               style={
                                 Array [
                                   Object {
@@ -995,6 +1064,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 }
                               >
                                 <Text
+                                  maxFontSizeMultiplier={2}
                                   style={
                                     Array [
                                       Object {
@@ -1002,18 +1072,20 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                         "fontSize": 18,
                                         "fontWeight": "bold",
                                       },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "flexShrink": 1,
-                                        "lineHeight": 24,
-                                      },
-                                      Object {
-                                        "flex": 1,
-                                        "flexWrap": "wrap",
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                      },
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "flexShrink": 1,
+                                          "lineHeight": 24,
+                                        },
+                                        Object {
+                                          "flex": 1,
+                                          "flexWrap": "wrap",
+                                        },
+                                        Object {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ],
                                     ]
                                   }
                                   testID="com.ariesbifold:id/CredentialName"
@@ -1120,6 +1192,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     }
                                   >
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -1127,15 +1200,17 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                             "fontSize": 14,
                                             "fontWeight": "normal",
                                           },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                            "flexShrink": 1,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "lineHeight": 19,
-                                            "opacity": 0.8,
-                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "flexShrink": 1,
+                                              "lineHeight": 24,
+                                            },
+                                            Object {
+                                              "lineHeight": 19,
+                                              "opacity": 0.8,
+                                            },
+                                          ],
                                         ]
                                       }
                                       testID="com.ariesbifold:id/AttributeName"
@@ -1152,6 +1227,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     }
                                   >
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -1159,14 +1235,16 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                             "fontSize": 18,
                                             "fontWeight": "bold",
                                           },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                            "flexShrink": 1,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "flexShrink": 1,
+                                              "lineHeight": 24,
+                                            },
+                                            Object {
+                                              "color": "#FFFFFF",
+                                            },
+                                          ],
                                         ]
                                       }
                                       testID="com.ariesbifold:id/AttributeValue"
@@ -1198,6 +1276,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     }
                                   >
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -1205,15 +1284,17 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                             "fontSize": 14,
                                             "fontWeight": "normal",
                                           },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                            "flexShrink": 1,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "lineHeight": 19,
-                                            "opacity": 0.8,
-                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "flexShrink": 1,
+                                              "lineHeight": 24,
+                                            },
+                                            Object {
+                                              "lineHeight": 19,
+                                              "opacity": 0.8,
+                                            },
+                                          ],
                                         ]
                                       }
                                       testID="com.ariesbifold:id/AttributeName"
@@ -1230,6 +1311,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                     }
                                   >
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -1237,14 +1319,16 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                             "fontSize": 18,
                                             "fontWeight": "bold",
                                           },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                            "flexShrink": 1,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#FFFFFF",
-                                          },
+                                          Array [
+                                            Object {
+                                              "color": "#FFFFFF",
+                                              "flexShrink": 1,
+                                              "lineHeight": 24,
+                                            },
+                                            Object {
+                                              "color": "#FFFFFF",
+                                            },
+                                          ],
                                         ]
                                       }
                                       testID="com.ariesbifold:id/AttributeValue"
@@ -1372,17 +1456,25 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      false,
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >

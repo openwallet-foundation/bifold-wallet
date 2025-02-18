@@ -72,15 +72,21 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
             </Text>
           </View>
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "alignSelf": "center",
-                "color": "#FFFFFF",
-                "flex": 1,
-                "flexWrap": "wrap",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "flexWrap": "wrap",
+                },
+              ]
             }
           >
             Please agree to the terms and conditions below before using this application.
@@ -88,23 +94,14 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
         </View>
       </View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
               "color": "#FFFFFF",
-              "flexShrink": 1,
               "fontSize": 18,
               "fontWeight": "normal",
             },
-            Object {
-              "marginBottom": 20,
-              "marginTop": 20,
-            },
-          ]
-        }
-      >
-        <Text
-          style={
             Array [
               Object {
                 "color": "#FFFFFF",
@@ -113,8 +110,33 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
                 "fontWeight": "normal",
               },
               Object {
-                "fontWeight": "bold",
+                "marginBottom": 20,
+                "marginTop": 20,
               },
+            ],
+          ]
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
         >
@@ -141,7 +163,41 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
           }
         />
         <Text
+          maxFontSizeMultiplier={2}
           style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "paddingBottom": 10,
+                  "paddingTop": 10,
+                },
+              ],
+            ]
+          }
+        >
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+        </Text>
+      </View>
+      <Text
+        maxFontSizeMultiplier={2}
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
             Array [
               Object {
                 "color": "#FFFFFF",
@@ -150,27 +206,9 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
                 "fontWeight": "normal",
               },
               Object {
-                "paddingBottom": 10,
-                "paddingTop": 10,
+                "marginTop": 20,
               },
-            ]
-          }
-        >
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-        </Text>
-      </View>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "flexShrink": 1,
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Object {
-              "marginTop": 20,
-            },
+            ],
           ]
         }
       >
@@ -269,17 +307,25 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
               </Text>
             </View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "flexShrink": 1,
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginLeft": 10,
-                    "marginRight": 0,
                   },
-                  Object {},
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flexShrink": 1,
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                      "marginLeft": 10,
+                      "marginRight": 0,
+                    },
+                    Object {},
+                  ],
                 ]
               }
             >
@@ -343,22 +389,30 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >
@@ -427,17 +481,25 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -524,15 +586,21 @@ exports[`Terms Screen Renders correctly 1`] = `
             </Text>
           </View>
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "alignSelf": "center",
-                "color": "#FFFFFF",
-                "flex": 1,
-                "flexWrap": "wrap",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "flexWrap": "wrap",
+                },
+              ]
             }
           >
             Please agree to the terms and conditions below before using this application.
@@ -540,23 +608,14 @@ exports[`Terms Screen Renders correctly 1`] = `
         </View>
       </View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
               "color": "#FFFFFF",
-              "flexShrink": 1,
               "fontSize": 18,
               "fontWeight": "normal",
             },
-            Object {
-              "marginBottom": 20,
-              "marginTop": 20,
-            },
-          ]
-        }
-      >
-        <Text
-          style={
             Array [
               Object {
                 "color": "#FFFFFF",
@@ -565,8 +624,33 @@ exports[`Terms Screen Renders correctly 1`] = `
                 "fontWeight": "normal",
               },
               Object {
-                "fontWeight": "bold",
+                "marginBottom": 20,
+                "marginTop": 20,
               },
+            ],
+          ]
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+              ],
             ]
           }
         >
@@ -593,7 +677,41 @@ exports[`Terms Screen Renders correctly 1`] = `
           }
         />
         <Text
+          maxFontSizeMultiplier={2}
           style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "paddingBottom": 10,
+                  "paddingTop": 10,
+                },
+              ],
+            ]
+          }
+        >
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+        </Text>
+      </View>
+      <Text
+        maxFontSizeMultiplier={2}
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
             Array [
               Object {
                 "color": "#FFFFFF",
@@ -602,27 +720,9 @@ exports[`Terms Screen Renders correctly 1`] = `
                 "fontWeight": "normal",
               },
               Object {
-                "paddingBottom": 10,
-                "paddingTop": 10,
+                "marginTop": 20,
               },
-            ]
-          }
-        >
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-        </Text>
-      </View>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "flexShrink": 1,
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Object {
-              "marginTop": 20,
-            },
+            ],
           ]
         }
       >
@@ -721,17 +821,25 @@ exports[`Terms Screen Renders correctly 1`] = `
               </Text>
             </View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "flexShrink": 1,
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginLeft": 10,
-                    "marginRight": 0,
                   },
-                  Object {},
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flexShrink": 1,
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                      "marginLeft": 10,
+                      "marginRight": 0,
+                    },
+                    Object {},
+                  ],
                 ]
               }
             >
@@ -795,22 +903,30 @@ exports[`Terms Screen Renders correctly 1`] = `
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >
@@ -879,17 +995,25 @@ exports[`Terms Screen Renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
