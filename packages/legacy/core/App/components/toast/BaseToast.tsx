@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Toast from 'react-native-toast-message'
-import { ThemedText } from '../../components/texts/ThemedText'
+import { ThemedText } from '../texts/ThemedText'
 
 interface BaseToastProps {
   title?: string

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
-import { ThemedText } from '../../components/texts/ThemedText'
+import { ThemedText } from '../texts/ThemedText'
 
 const offset = 25
 

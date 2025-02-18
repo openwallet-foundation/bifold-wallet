@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import InfoTextBox from '../texts/InfoTextBox'
-import { ThemedText } from '../../components/texts/ThemedText'
+import { ThemedText } from '../texts/ThemedText'
 
 const NoNewUpdates: React.FC = () => {
   const { t } = useTranslation()
