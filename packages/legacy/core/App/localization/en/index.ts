@@ -274,6 +274,10 @@ const translation = {
     "AppSettingChangedEnterPIN": "Please confirm your change by entering your wallet PIN.",
     "AppSettingSave": "Save",
     "AppSettingCancel": "Cancel",
+    "ChangeBiometricsHeader": "Change in biometrics",
+    "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics",
+    "ChangeBiometricsInputLabel": "Enter your wallet PIN",
+    "ChangeBiometricsInputLabelParenthesis": "(Required)",
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",

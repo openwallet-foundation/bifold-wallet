@@ -6,7 +6,7 @@ import { ContainerProvider } from '../../App/container-api'
 import { MainContainer } from '../../App/container-impl'
 import { AuthContext } from '../../App/contexts/auth'
 import { StoreProvider, defaultState } from '../../App/contexts/store'
-import PINEnter from '../../App/screens/PINEnter'
+import PINEnter, { PINEntryUsage } from '../../App/screens/PINEnter'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
 
@@ -22,6 +22,24 @@ describe('PINEnter Screen', () => {
         >
           <AuthContext.Provider value={authContext}>
             <PINEnter setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    expect(tree).toMatchSnapshot()
+  })
+
+  test('PIN Enter renders correctly for biometrics change', () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINEnter setAuthenticated={jest.fn()} usage={PINEntryUsage.ChangeBiometrics} />
           </AuthContext.Provider>
         </StoreProvider>
       </ContainerProvider>
