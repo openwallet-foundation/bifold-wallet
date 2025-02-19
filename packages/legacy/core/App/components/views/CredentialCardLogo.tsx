@@ -55,7 +55,9 @@ const CredentialCardLogo: React.FC<Props> = ({
           }}
         />
       ) : (
-        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]}>{logoText}</Text>
+        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]} accessible={false}>
+          {logoText}
+        </Text>
       )}
     </View>
   )

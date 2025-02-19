@@ -30,6 +30,7 @@ interface PINEnterProps {
 export enum PINEntryUsage {
   PINCheck,
   WalletUnlock,
+  ChangeBiometrics,
 }
 
 const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock, onCancelAuth }) => {
@@ -54,19 +55,19 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
+  // Temporary until all use cases are built with the new design
+  const isNewDesign = usage === PINEntryUsage.ChangeBiometrics
 
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
       padding: 20,
-      justifyContent: 'space-between',
+      justifyContent: isNewDesign ? 'flex-start' : 'space-between',
     },
-
     // below used as helpful labels for views, no properties needed atp
     contentContainer: {},
     controlsContainer: {},
-
     buttonContainer: {
       width: '100%',
     },
@@ -78,7 +79,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       ...TextTheme.normal,
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: 16,
+      marginBottom: isNewDesign ? 40 : 16,
+    },
+    parenthesisText: {
+      ...TextTheme.caption,
     },
     modalText: {
       ...TextTheme.popupModalText,
@@ -92,7 +96,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     title: {
       ...TextTheme.headingTwo,
-      marginBottom: 20,
+      marginTop: isNewDesign ? 20 : 0,
+      marginBottom: isNewDesign ? 40 : 20,
     },
     subTitle: {
       ...TextTheme.labelSubtitle,
@@ -100,9 +105,33 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     },
     subText: {
       ...TextTheme.bold,
-      marginBottom: 4,
+      marginBottom: isNewDesign ? 20 : 4,
     },
   })
+
+  const inputLabelText = {
+    [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsInputLabel'),
+    [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChangedEnterPIN'),
+    [PINEntryUsage.WalletUnlock]: t('PINEnter.EnterPIN'),
+  }
+
+  const inputTestId = {
+    [PINEntryUsage.ChangeBiometrics]: 'BiometricChangedEnterPIN',
+    [PINEntryUsage.PINCheck]: 'AppSettingChangedEnterPIN',
+    [PINEntryUsage.WalletUnlock]: 'EnterPIN',
+  }
+
+  const primaryButtonText = {
+    [PINEntryUsage.ChangeBiometrics]: t('Global.Continue'),
+    [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
+    [PINEntryUsage.WalletUnlock]: t('PINEnter.Unlock'),
+  }
+
+  const primaryButtonTestId = {
+    [PINEntryUsage.ChangeBiometrics]: 'Continue',
+    [PINEntryUsage.PINCheck]: 'AppSettingSave',
+    [PINEntryUsage.WalletUnlock]: 'Enter',
+  }
 
   const incrementDeveloperMenuCounter = useCallback(() => {
     if (developerOptionCount.current >= touchCountToEnableBiometrics) {
@@ -194,7 +223,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   )
 
   const loadWalletCredentials = useCallback(async () => {
-    if (usage === PINEntryUsage.PINCheck) {
+    if (usage === PINEntryUsage.PINCheck || PINEntryUsage.ChangeBiometrics) {
       return
     }
 
@@ -360,6 +389,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         setAlertModalVisible(false)
         setAuthenticated(false)
         break
+      case PINEntryUsage.ChangeBiometrics:
+        setAlertModalVisible(false)
+        setAuthenticated(false)
+        break
 
       default:
         setAlertModalVisible(false)
@@ -414,7 +447,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
       setContinueEnabled(false)
 
-      if (usage === PINEntryUsage.PINCheck) {
+      if (usage === PINEntryUsage.PINCheck || PINEntryUsage.ChangeBiometrics) {
         await verifyPIN(PIN)
       }
 
@@ -459,6 +492,15 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       return <Text style={style.helpText}>{t('PINEnter.AppSettingChanged')}</Text>
     }
 
+    if (usage === PINEntryUsage.ChangeBiometrics) {
+      return (
+        <>
+          <Text style={style.title}>{t('PINEnter.ChangeBiometricsHeader')}</Text>
+          <Text style={style.helpText}>{t('PINEnter.ChangeBiometricsSubtext')}</Text>
+        </>
+      )
+    }
+
     return (
       <>
         <Text style={style.title}>{t('PINEnter.Title')}</Text>
@@ -488,9 +530,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           ) : (
             displayHelpText()
           )}
-          <Text style={style.subText}>{`${
-            usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingChangedEnterPIN') : t('PINEnter.EnterPIN')
-          }`}</Text>
+          <Text style={style.subText}>
+            {inputLabelText[usage]}
+            {usage === PINEntryUsage.ChangeBiometrics && <Text style={style.parenthesisText}>{` `}{t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</Text>}
+          </Text>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
@@ -498,10 +541,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
                 Keyboard.dismiss()
               }
             }}
-            testID={testIdWithKey(usage === PINEntryUsage.PINCheck ? 'AppSettingChangedEnterPIN' : 'EnterPIN')}
-            accessibilityLabel={
-              usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingChangedEnterPIN') : t('PINEnter.EnterPIN')
-            }
+            testID={testIdWithKey(inputTestId[usage])}
+            accessibilityLabel={inputLabelText[usage]}
             autoFocus={true}
             inlineMessage={inlineMessageField}
           />
@@ -509,13 +550,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         <View style={style.controlsContainer}>
           <View style={style.buttonContainer}>
             <Button
-              title={usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingSave') : t('PINEnter.Unlock')}
+              title={primaryButtonText[usage]}
               buttonType={ButtonType.Primary}
-              testID={testIdWithKey(usage === PINEntryUsage.PINCheck ? 'AppSettingSave' : 'Enter')}
+              testID={testIdWithKey(primaryButtonTestId[usage])}
               disabled={isContinueDisabled()}
-              accessibilityLabel={
-                usage === PINEntryUsage.PINCheck ? t('PINEnter.AppSettingSave') : t('PINEnter.Unlock')
-              }
+              accessibilityLabel={primaryButtonText[usage]}
               onPress={() => {
                 Keyboard.dismiss()
                 onPINInputCompleted(PIN)
