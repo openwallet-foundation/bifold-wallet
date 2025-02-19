@@ -1,4 +1,4 @@
-import { Tours } from 'contexts/tour/tour-context'
+import { Tours } from './contexts/tour/tour-context'
 import { PINValidationRules } from './types/security'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
