@@ -194,7 +194,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       const historyManager = historyManagerCurried(agent)
 
       const ids = getCredentialIdentifiers(credential)
-      const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+      const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
 
       /** Save history record for credential removed */
       const recordData: HistoryRecord = {
@@ -209,7 +209,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     } catch (err: unknown) {
       logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, historyEnabled, logger, historyManagerCurried, credential, credentialConnectionLabel, credentialId])
+  }, [agent, historyEnabled, logger, historyManagerCurried, credential, credentialConnectionLabel, credentialId, overlay])
 
   const callSubmitRemove = useCallback(async () => {
     try {

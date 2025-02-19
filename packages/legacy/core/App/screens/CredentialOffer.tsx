@@ -1,7 +1,7 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialPreviewAttribute } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'
-import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { BrandingOverlay, MetaOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -148,9 +148,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     const resolvePresentationFields = async () => {
       const identifiers = getCredentialIdentifiers(credential)
       const attributes = buildFieldsFromAnonCredsCredential(credential)
-      const fields = await bundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
+      const bundle = await bundleResolver.resolveAllBundles({ identifiers, attributes, language: i18n.language })
+      const fields = bundle?.presentationFields ?? []
+      const metaOverlay = bundle?.metaOverlay ?? {}
 
-      return { fields }
+      return { fields, metaOverlay }
     }
 
     /**
@@ -162,8 +164,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     setLoading(true)
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
-      .then(({ fields }) => {
-        setOverlay((o) => ({ ...o, presentationFields: (fields as Attribute[]).filter((field) => field.value) }))
+      .then(({ fields, metaOverlay }) => {
+        setOverlay({metaOverlay: (metaOverlay as MetaOverlay), presentationFields: (fields as Attribute[]).filter((field) => field.value) })
         setLoading(false)
       })
   }, [credential, agent, bundleResolver, i18n.language])
@@ -186,7 +188,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           return
         }
         const ids = getCredentialIdentifiers(credential)
-        const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+        const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {
@@ -201,7 +203,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
       }
     },
-    [agent, historyEnabled, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel]
+    [agent, historyEnabled, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel, overlay]
   )
 
   const handleAcceptTouched = useCallback(async () => {
