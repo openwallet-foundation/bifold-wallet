@@ -165,7 +165,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields, metaOverlay }) => {
-        setOverlay((o) => ({ ...o, metaOverlay: (metaOverlay as MetaOverlay), presentationFields: (fields as Attribute[]).filter((field) => field.value) }))
+        setOverlay({metaOverlay: (metaOverlay as MetaOverlay), presentationFields: (fields as Attribute[]).filter((field) => field.value) })
         setLoading(false)
       })
   }, [credential, agent, bundleResolver, i18n.language])
