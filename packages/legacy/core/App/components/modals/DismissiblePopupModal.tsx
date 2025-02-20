@@ -17,6 +17,7 @@ import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { ThemedText } from '../texts/ThemedText'
+import useFontScale from '../../hooks/font-scale'
 
 interface DismissiblePopupModalProps {
   title: string
@@ -37,6 +38,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const iconSize = 30
+  const fontScale = useFontScale()
 
   const styles = StyleSheet.create({
     modalCenter: {
@@ -55,8 +57,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       borderWidth: 1,
       padding: 10,
       minWidth: width - 2 * 25,
+      maxWidth: width,
       flex: 1,
-      maxHeight: '50%',
+      maxHeight: fontScale < 1.7 ? '50%' : '70%',
     },
     headerContainer: {
       flexDirection: 'row',
@@ -75,6 +78,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       flexGrow: 1,
     },
     headerText: {
+      maxWidth: width - 2 * 25 - 2 * 10 - iconSize - 10,
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
     },
@@ -96,7 +100,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       alignSelf: 'center',
     },
     dismissIcon: {
-      alignSelf: 'flex-end',
+      alignSelf: 'flex-start',
     },
   })
 

@@ -79,7 +79,8 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
             "borderRadius": 5,
             "borderWidth": 1,
             "flex": 1,
-            "maxHeight": "50%",
+            "maxHeight": "70%",
+            "maxWidth": 750,
             "minWidth": 700,
             "padding": 10,
           }
@@ -144,6 +145,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                   Object {
                     "alignSelf": "flex-start",
                     "color": "#FFFFFF",
+                    "maxWidth": 640,
                   },
                 ]
               }
@@ -155,7 +157,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
           <View
             style={
               Object {
-                "alignSelf": "flex-end",
+                "alignSelf": "flex-start",
               }
             }
           >
@@ -449,7 +451,8 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
             "borderRadius": 5,
             "borderWidth": 1,
             "flex": 1,
-            "maxHeight": "50%",
+            "maxHeight": "70%",
+            "maxWidth": 750,
             "minWidth": 700,
             "padding": 10,
           }
@@ -514,6 +517,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                   Object {
                     "alignSelf": "flex-start",
                     "color": "#FFFFFF",
+                    "maxWidth": 640,
                   },
                 ]
               }
@@ -525,7 +529,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
           <View
             style={
               Object {
-                "alignSelf": "flex-end",
+                "alignSelf": "flex-start",
               }
             }
           >

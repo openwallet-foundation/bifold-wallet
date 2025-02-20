@@ -59,12 +59,14 @@ export interface DisplayImage {
 
 export interface CredentialDisplay {
   name: string
+  issuer: CredentialIssuerDisplay
   locale?: string
   description?: string
   textColor?: string
   backgroundColor?: string
   backgroundImage?: DisplayImage
-  issuer: CredentialIssuerDisplay
+  logo?: DisplayImage
+  primary_overlay_attribute?: string
 }
 
 export interface CredentialIssuerDisplay {
@@ -73,7 +75,7 @@ export interface CredentialIssuerDisplay {
   logo?: DisplayImage
 }
 
-export type W3cCredentialDisplay = {
+export interface W3cCredentialDisplay {
   id: string
   createdAt: Date
   display: CredentialDisplay

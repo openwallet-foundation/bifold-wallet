@@ -1,15 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
-<RNCSafeAreaView
-  edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
-  }
->
+Array [
   <RCTScrollView
     style={
       Object {
@@ -224,7 +216,7 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
         </View>
       </View>
     </View>
-  </RCTScrollView>
+  </RCTScrollView>,
   <View
     style={
       Object {
@@ -305,15 +297,15 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
             ]
           }
         >
-          Continue
+          Global.Continue
         </Text>
       </View>
     </View>
-  </View>
+  </View>,
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
-    presentationStyle="pageSheet"
+    presentationStyle="fullScreen"
     style={
       Object {
         "backgroundColor": "#000000",
@@ -321,20 +313,12 @@ exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
     }
     transparent={false}
     visible={false}
-  />
-</RNCSafeAreaView>
+  />,
+]
 `;
 
 exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = `
-<RNCSafeAreaView
-  edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
-  }
->
+Array [
   <RCTScrollView
     style={
       Object {
@@ -533,7 +517,7 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
         </View>
       </View>
     </View>
-  </RCTScrollView>
+  </RCTScrollView>,
   <View
     style={
       Object {
@@ -614,15 +598,15 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
             ]
           }
         >
-          Continue
+          Global.Continue
         </Text>
       </View>
     </View>
-  </View>
+  </View>,
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
-    presentationStyle="pageSheet"
+    presentationStyle="fullScreen"
     style={
       Object {
         "backgroundColor": "#000000",
@@ -630,20 +614,12 @@ exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = 
     }
     transparent={false}
     visible={false}
-  />
-</RNCSafeAreaView>
+  />,
+]
 `;
 
 exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
-<RNCSafeAreaView
-  edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
-  }
->
+Array [
   <RCTScrollView
     style={
       Object {
@@ -858,7 +834,7 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
         </View>
       </View>
     </View>
-  </RCTScrollView>
+  </RCTScrollView>,
   <View
     style={
       Object {
@@ -980,15 +956,15 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
             ]
           }
         >
-          Continue
+          Global.Continue
         </Text>
       </View>
     </View>
-  </View>
+  </View>,
   <Modal
     animationType="slide"
     hardwareAccelerated={false}
-    presentationStyle="pageSheet"
+    presentationStyle="fullScreen"
     style={
       Object {
         "backgroundColor": "#000000",
@@ -996,6 +972,6 @@ exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
     }
     transparent={false}
     visible={false}
-  />
-</RNCSafeAreaView>
+  />,
+]
 `;

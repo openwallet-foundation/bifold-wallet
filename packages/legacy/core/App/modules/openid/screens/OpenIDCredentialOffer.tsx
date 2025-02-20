@@ -7,7 +7,6 @@ import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { useState } from 'react'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
-import { TextTheme } from '../../../theme'
 import { useTranslation } from 'react-i18next'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import { testIdWithKey } from '../../../utils/testable'
@@ -17,12 +16,11 @@ import { EventTypes } from '../../../constants'
 import { useAgent } from '@credo-ts/react-hooks'
 import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { CredentialOverlay, OCABundleResolveAllParams } from '@hyperledger/aries-oca/build/legacy'
-import { TOKENS, useServices } from '../../../container-api'
+import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
-import { CredentialCard } from '../../../components/misc'
-import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
+import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import { W3cCredentialRecord } from '@credo-ts/core'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -31,16 +29,14 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { credential } = route.params
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
-  const { t, i18n } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { t } = useTranslation()
+  const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { storeCredential } = useOpenIDCredentials()
+  const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-
-  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -50,36 +46,18 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   })
 
   useEffect(() => {
-    if (!credentialDisplay || !bundleResolver || !i18n || !credentialDisplay.display) {
+    if (!credential) {
       return
     }
 
     const resolveOverlay = async () => {
-      const params: OCABundleResolveAllParams = {
-        identifiers: {
-          schemaId: '',
-          credentialDefinitionId: credentialDisplay.id,
-        },
-        meta: {
-          alias: credentialDisplay.display.issuer.name,
-          credConnectionId: undefined,
-          credName: credentialDisplay.display.name,
-        },
-        attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
-        language: i18n.language,
-      }
-
-      const bundle = await bundleResolver.resolveAllBundles(params)
-
-      setOverlay({
-        ...(bundle as CredentialOverlay<BrandingOverlay>),
-        presentationFields: bundle.presentationFields,
-      })
+      const brandingOverlay = await resolveBundleForCredential(credential)
+      setOverlay(brandingOverlay)
     }
 
     resolveOverlay()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bundleResolver, i18n.language])
+  }, [credential])
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -137,6 +115,16 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     )
   }
 
+  const renderOpenIdCard = () => {
+    if (!credentialDisplay || !credential) return null
+    return (
+      <OpenIDCredentialCard
+        credentialDisplay={credentialDisplay}
+        credentialRecord={credential as W3cCredentialRecord}
+      />
+    )
+  }
+
   const header = () => {
     return (
       <>
@@ -146,11 +134,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
             {t('CredentialOffer.IsOfferingYouACredential')}
           </Text>
         </View>
-        {credential && (
-          <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-            <CredentialCard credential={credential} />
-          </View>
-        )}
+        {credential && <View style={{ marginHorizontal: 15, marginBottom: 16 }}>{renderOpenIdCard()}</View>}
       </>
     )
   }

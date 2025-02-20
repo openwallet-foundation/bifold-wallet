@@ -11,9 +11,10 @@ interface CredentialActionFooterProps {
   onPress: GenericFn
   text: string
   testID: string
+  textColor?: string
 }
 
-const CredentialActionFooter = ({ onPress, text, testID }: CredentialActionFooterProps) => {
+const CredentialActionFooter = ({ onPress, text, testID, textColor }: CredentialActionFooterProps) => {
   const { ColorPallet, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     seperator: {
@@ -31,7 +32,7 @@ const CredentialActionFooter = ({ onPress, text, testID }: CredentialActionFoote
     credActionText: {
       fontSize: 20,
       fontWeight: TextTheme.bold.fontWeight,
-      color: ColorPallet.brand.link,
+      color: textColor ?? ColorPallet.brand.link,
     },
   })
 

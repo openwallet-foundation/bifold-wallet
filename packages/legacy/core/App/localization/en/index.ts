@@ -274,6 +274,10 @@ const translation = {
     "AppSettingChangedEnterPIN": "Please confirm your change by entering your wallet PIN.",
     "AppSettingSave": "Save",
     "AppSettingCancel": "Cancel",
+    "ChangeBiometricsHeader": "Change in biometrics",
+    "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics",
+    "ChangeBiometricsInputLabel": "Enter your wallet PIN",
+    "ChangeBiometricsInputLabelParenthesis": "(Required)",
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",
@@ -492,6 +496,7 @@ const translation = {
     "CreatedAt": "Created At:",
     "Version": "Version",
     "Issued": "Issued",
+    "IssuedOn": "Issued on",
     "PrivacyPolicy": "Privacy policy",
     "TermsAndConditions": "Terms and conditions",
     "RemoveFromWallet": "Remove from wallet",
@@ -510,6 +515,7 @@ const translation = {
     "CredentialRemoved": "Credential removed",
     "IssuedBy": "Issued by:",
     "RemoveCredential": "Remove Credential",
+    "NavigateToIssuerDetailsHint": "Tap to navigate to issuer details",
   },
   "Home": {
     "Notification": "Notification",

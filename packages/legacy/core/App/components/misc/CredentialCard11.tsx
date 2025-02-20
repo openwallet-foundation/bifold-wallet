@@ -11,13 +11,13 @@ import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, Linking, View, ViewStyle, TouchableOpacity } from 'react-native'
+import { FlatList, Image, ImageBackground, Linking, View, ViewStyle, TouchableOpacity, ColorValue } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { getCredentialIdentifiers, toImageSource } from '../../utils/credential'
+import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
 import {
   formatIfDate,
   useCredentialConnectionLabel,
@@ -55,6 +55,8 @@ interface CredentialCard11Props {
   hasAltCredentials?: boolean
   handleAltCredChange?: () => void
   brandingOverlay?: CredentialOverlay<BrandingOverlay>
+  hideSlice?: boolean
+  extraOverlayParameter?: string | number | null | undefined
   brandingOverlayType?: BrandingOverlayType
 }
 
@@ -101,6 +103,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   credentialErrors = [],
   handleAltCredChange,
   brandingOverlay,
+  hideSlice = false,
+  extraOverlayParameter,
   brandingOverlayType = BrandingOverlayType.Branding10,
 }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
@@ -113,6 +117,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.CRED_HELP_ACTION_OVERRIDES,
   ])
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType, proof)
@@ -376,6 +381,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           onPress={handleAltCredChange}
           text={t('ProofRequest.ChangeCredential')}
           testID={'ChangeCredential'}
+          textColor={
+            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+          }
         />
       )
     }
@@ -385,6 +393,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           onPress={helpAction}
           text={t('ProofRequest.GetThisCredential')}
           testID={'GetThisCredential'}
+          textColor={
+            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+          }
         />
       )
     }
@@ -421,6 +432,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </ThemedText>
           </View>
         </View>
+        {extraOverlayParameter && !displayItems && (
+          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+            <ThemedText
+              variant="caption"
+              style={{
+                color: styles.textContainer.color,
+              }}
+            >
+              {extraOverlayParameter}
+            </ThemedText>
+          </View>
+        )}
 
         {/* Render Error text at the top of the credential card */}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -467,6 +490,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
+  function getSliceBackgroundColor(): ColorValue | undefined {
+    if (hideSlice) return 'transparent'
+    return brandingOverlayType === BrandingOverlayType.Branding10
+      ? backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor)
+      : overlay.brandingOverlay?.secondaryBackgroundColor
+  }
+
   const CredentialCardSecondaryBody: React.FC = () => {
     return (
       <View
@@ -474,16 +504,14 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor:
-              brandingOverlayType === BrandingOverlayType.Branding10
-                ? backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor)
-                : overlay.brandingOverlay?.secondaryBackgroundColor,
+            backgroundColor: getSliceBackgroundColor() ?? ColorPallet.brand.secondaryBackground,
             overflow: 'hidden',
           },
         ]}
       >
         {overlay.brandingOverlay?.backgroundImageSlice &&
-        (!displayItems || brandingOverlayType === BrandingOverlayType.Branding11) ? (
+        (!displayItems || brandingOverlayType === BrandingOverlayType.Branding11) &&
+        !hideSlice ? (
           <ImageBackground
             source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
             style={{ flexGrow: 1 }}
@@ -493,7 +521,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor(overlay, proof)) && (
+          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor(overlay, proof)) &&
+          !hideSlice && (
             <View
               style={[
                 {
@@ -543,7 +572,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const CredentialCard: React.FC<{ status?: 'error' | 'warning' }> = ({ status }) => {
-    return (
+    const MainCredentialBody = () => (
       <View
         style={styles.cardContainer}
         accessible={true}
@@ -571,6 +600,17 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>
+    )
+    return (
+      <>
+        {overlay.brandingOverlay?.backgroundImage && hideSlice ? (
+          <ImageBackground source={toImageSource(overlay.brandingOverlay?.backgroundImage)}>
+            <MainCredentialBody />
+          </ImageBackground>
+        ) : (
+          <MainCredentialBody />
+        )}
+      </>
     )
   }
 

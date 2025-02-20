@@ -1,10 +1,11 @@
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, Modal, ScrollView, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import ToggleButton from '../components/buttons/ToggleButton'
@@ -41,12 +42,14 @@ const UseBiometry: React.FC = () => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
-  const { ColorPallet, Assets } = useTheme()
+  const { TextTheme, ColorPallet, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = useMemo(() => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
+  const headerHeight = useHeaderHeight()
+  const insets = useSafeAreaInsets()
 
   const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -315,7 +318,7 @@ const UseBiometry: React.FC = () => {
       <View style={{ marginTop: 'auto', margin: 20 }}>
         {store.onboarding.didCompleteOnboarding || (
           <Button
-            title={'Continue'}
+            title={t('Global.Continue')}
             accessibilityLabel={'Continue'}
             testID={testIdWithKey('Continue')}
             onPress={continueTouched}
@@ -331,10 +334,23 @@ const UseBiometry: React.FC = () => {
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
-        presentationStyle="pageSheet"
+        presentationStyle="fullScreen"
       >
+        <Header
+          title={t('Screens.EnterPIN')}
+          headerTitleStyle={{ marginTop: insets.top, ...TextTheme.headerTitle }}
+          headerStyle={{ height: headerHeight }}
+          headerLeft={() => (
+            <HeaderBackButton
+              onPress={() => setCanSeeCheckPIN(false)}
+              tintColor="white"
+              style={{ marginTop: insets.top }}
+              labelVisible={false}
+            />
+          )}
+        />
         <PINEnter
-          usage={PINEntryUsage.PINCheck}
+          usage={PINEntryUsage.ChangeBiometrics}
           setAuthenticated={onAuthenticationComplete}
           onCancelAuth={setCanSeeCheckPIN}
         />

@@ -44,6 +44,7 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         }
       >
         <Text
+          accessible={false}
           allowFontScaling={false}
           maxFontSizeMultiplier={2}
           style={
@@ -294,6 +295,7 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         }
       >
         <Text
+          accessible={false}
           allowFontScaling={false}
           maxFontSizeMultiplier={2}
           style={

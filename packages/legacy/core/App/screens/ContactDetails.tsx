@@ -211,6 +211,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
             <ThemedText
               allowFontScaling={false}
               variant="bold"
+              accessible={false}
               style={{
                 fontSize: contactImageHeight,
                 lineHeight: contactImageHeight,
