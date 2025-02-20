@@ -11,7 +11,7 @@ import {
   formatIfDate,
   formatTime,
   getConnectionName,
-  removeExistingInvitationIfRequired,
+  removeExistingInvitationsById,
   schemaIdFromRestrictions,
   b64decode,
   b64encode,
@@ -136,30 +136,38 @@ describe('createConnectionInvitation', () => {
   })
 })
 
-describe('removeExistingInvitationIfRequired', () => {
-  test('without an existing oobRecord', async () => {
-    const { agent } = useAgent()
-    const invitationId = '1'
-    agent!.oob.findByReceivedInvitationId = jest
-      .fn()
-      .mockReturnValueOnce(Promise.reject('No received invitation with this id exists'))
-    const deleteById = jest.fn()
-    agent!.oob.deleteById = deleteById
+describe('removeExistingInvitationsById', () => {
+  const invitationId = '1'
+  const { agent } = useAgent()
+  const findAllByQueryMock = jest.fn()
+  agent!.oob.findAllByQuery = findAllByQueryMock
+  const deleteByIdMock = jest.fn()
+  agent!.oob.deleteById = deleteByIdMock
 
-    await removeExistingInvitationIfRequired(agent, invitationId)
+  test('without an existing invitation', async () => {
+    await removeExistingInvitationsById(agent, invitationId)
 
-    expect(deleteById).not.toBeCalled()
+    expect(deleteByIdMock).not.toHaveBeenCalled()
   })
-  test('with an existing oobRecord', async () => {
-    const { agent } = useAgent()
-    const invitationId = '1'
-    agent!.oob.findByReceivedInvitationId = jest.fn().mockReturnValueOnce(Promise.resolve({ id: '123' }))
-    const deleteById = jest.fn()
-    agent!.oob.deleteById = deleteById
 
-    await removeExistingInvitationIfRequired(agent, invitationId)
+  test('with a single existing invitation', async () => {
+    findAllByQueryMock.mockReturnValueOnce(Promise.resolve([{ id: '2' }]))
 
-    expect(deleteById).toBeCalledWith('123')
+    await removeExistingInvitationsById(agent, invitationId)
+
+    expect(deleteByIdMock).toHaveBeenCalledTimes(1)
+    expect(deleteByIdMock).toHaveBeenCalledWith('2')
+  })
+  
+  test('with multiple existing invitations', async () => {
+    deleteByIdMock.mockReset()
+    findAllByQueryMock.mockReturnValueOnce(Promise.resolve([{ id: '2' }, { id: '3' }]))
+
+    await removeExistingInvitationsById(agent, invitationId)
+
+    expect(deleteByIdMock).toHaveBeenCalledTimes(2)
+    expect(deleteByIdMock).toHaveBeenCalledWith('2')
+    expect(deleteByIdMock).toHaveBeenCalledWith('3')
   })
 })
 
