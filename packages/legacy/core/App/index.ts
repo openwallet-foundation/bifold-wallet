@@ -84,7 +84,7 @@ export { EventTypes } from './constants'
 export { migrateToAskar } from './utils/migration'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export {
-  removeExistingInvitationIfRequired,
+  removeExistingInvitationsById,
   connectFromScanOrDeepLink,
   formatTime,
   useCredentialConnectionLabel,
