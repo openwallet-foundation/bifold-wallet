@@ -39,7 +39,6 @@ export interface Config {
   contactDetailsOptions?: ContactDetailsOptionsParams
   credentialHideList?: string[]
   disableContactsInSettings?: boolean
-  disableMediatorCheck?: boolean
   internetReachabilityUrls: string[]
   attemptLockoutConfig?: AttemptLockoutConfig
 }
