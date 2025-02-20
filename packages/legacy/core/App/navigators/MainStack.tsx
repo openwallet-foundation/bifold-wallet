@@ -1,5 +1,6 @@
 import { CardStyleInterpolators, StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack'
 import React, { useMemo } from 'react'
+import { View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
@@ -12,6 +13,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
+import { useTour } from '../contexts/tour/tour-context'
 import DeliveryStack from './DeliveryStack'
 import NotificationStack from './NotificationStack'
 import ProofRequestStack from './ProofRequestStack'
@@ -20,9 +22,6 @@ import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import CredentialDetails from '../screens/CredentialDetails'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
-import { useTour } from '../contexts/tour/tour-context'
-
-import { View } from 'react-native'
 
 const MainStack: React.FC = () => {
   const { t } = useTranslation()
