@@ -53,27 +53,3 @@ export const fetchLedgerNodes = (indyNamespace = 'sovrin'): Array<{ host: string
 
   return nodes
 }
-
-export const hostnameFromURL = (fullUrl: string): string | null => {
-  try {
-    // Start of the hostname after "//"
-    const startIndex = fullUrl.indexOf('//') + 2
-
-    // End of the hostname (before the next '/' or '?')
-    let endIndex = fullUrl.indexOf('/', startIndex)
-
-    // If no '/', look for '?'
-    if (endIndex === -1) {
-      endIndex = fullUrl.indexOf('?', startIndex)
-    }
-
-    // If no '/' or '?', hostname is till the end
-    if (endIndex === -1) {
-      endIndex = fullUrl.length
-    }
-
-    return fullUrl.substring(startIndex, endIndex)
-  } catch (error) {
-    return null
-  }
-}

@@ -1,62 +1,67 @@
 import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
-import * as React from 'react'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useCallback, PropsWithChildren } from 'react'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
-import { hostnameFromURL, canConnectToHost } from '../utils/network'
-import { Config } from 'react-native-config'
 
 export interface NetworkContext {
-  silentAssertConnectedNetwork: () => boolean
+  silentAssertConnectedNetwork: () => boolean | null
   assertNetworkConnected: () => boolean
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
-  assertInternetReachable: () => Promise<boolean>
-  assertMediatorReachable: () => Promise<boolean>
+  assertInternetReachable: () => boolean | null
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
 
-export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const netInfo = useNetInfo()
+
+// NOTE: @react-native-community/netinfo can be configured to use whichever reachability check desired
+// eg. isInternetReachable can be set to check a specific URL (like your mediator). See the docs here for more info:
+// https://github.com/react-native-netinfo/react-native-netinfo?tab=readme-ov-file#configure
+export const NetworkProvider = ({ children }: PropsWithChildren) => {
+  const { isConnected, type, isInternetReachable } = useNetInfo()
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
 
-  const displayNetInfoModal = () => {
+  const displayNetInfoModal = useCallback(() => {
     setIsNetInfoModalDisplayed(true)
-  }
+  }, [])
 
-  const hideNetInfoModal = () => {
+  const hideNetInfoModal = useCallback(() => {
     setIsNetInfoModalDisplayed(false)
-  }
+  }, [])
 
-  const silentAssertConnectedNetwork = () => {
-    return netInfo.isConnected || [NetInfoStateType.wifi, NetInfoStateType.cellular].includes(netInfo.type)
-  }
+  /**
+   * Returns null until the network state is known, then returns boolean
+   * Useful for cases where we do not want to take action until the network state is known
+   *
+   * @returns {boolean | null} - `true` if the network is connected, `false` if not connected,
+   *                             and `null` if the network status not yet known
+   */
+  const silentAssertConnectedNetwork = useCallback((): boolean | null => {
+    return type === NetInfoStateType.unknown ? null : isConnected || [NetInfoStateType.wifi, NetInfoStateType.cellular].includes(type)
+  }, [isConnected, type])
 
-  const assertNetworkConnected = () => {
-    const isConnected = silentAssertConnectedNetwork()
-    if (!isConnected) {
+
+  /**
+   * Strictly asserts that the network is connected. Will return false even if
+   * the network state is not yet known - in this case it will also display the
+   * NetInfoModal
+   * Useful for cases where we must be sure of connectivity before proceeding
+   *
+   * @returns {boolean} - `true` if the network is checked and connected, otherwise `false`
+   */
+  const assertNetworkConnected = useCallback(() => {
+    const connectionConfirmed = silentAssertConnectedNetwork() === true
+    if (!connectionConfirmed) {
       displayNetInfoModal()
     }
-    return isConnected
-  }
 
-  const assertInternetReachable = async (): Promise<boolean> => {
-     return netInfo.isInternetReachable as boolean
-  }
+    return connectionConfirmed
+  }, [silentAssertConnectedNetwork, displayNetInfoModal])
 
-  const assertMediatorReachable = async (): Promise<boolean> => {
-    const hostname = hostnameFromURL(Config.MEDIATOR_URL!)
+  const assertInternetReachable = useCallback((): boolean | null => {
+     return isInternetReachable
+  }, [isInternetReachable])
 
-    if (hostname === null || hostname.length === 0) {
-      return false
-    }
-
-    const nodes = [{ host: hostname, port: 443 }]
-    const connections = await Promise.all(nodes.map((n: { host: string; port: number }) => canConnectToHost(n)))
-
-    return connections.includes(true)
-  }
 
   return (
     <NetworkContext.Provider
@@ -65,8 +70,7 @@ export const NetworkProvider: React.FC<React.PropsWithChildren> = ({ children })
         assertNetworkConnected,
         displayNetInfoModal,
         hideNetInfoModal,
-        assertInternetReachable,
-        assertMediatorReachable
+        assertInternetReachable
       }}
     >
       {children}
