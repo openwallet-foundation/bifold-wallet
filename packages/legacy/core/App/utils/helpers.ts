@@ -22,6 +22,7 @@ import {
   parseDid,
   OutOfBandRecord,
   CredentialPreviewAttribute,
+  OutOfBandRole,
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
 import { useConnectionById } from '@credo-ts/react-hooks'
@@ -965,22 +966,27 @@ export const sortCredentialsForAutoSelect = (
 }
 
 /**
- * Useful for multi use invitations
+ * This cleanup function prevents any errors associated with
+ * receiving the same invitation twice if a previous
+ * invitation was not completed. Does nothing if no previously
+ * received invitations exist
  * @param agent an Agent instance
- * @param invitationId id of invitation
+ * @param invitationId specifically a *received* invitation id
  */
-export const removeExistingInvitationIfRequired = async (
+export const removeExistingInvitationsById = async (
   agent: Agent | undefined,
   invitationId: string
 ): Promise<void> => {
-  try {
-    const oobRecord = await agent?.oob.findByReceivedInvitationId(invitationId)
-    if (oobRecord) {
-      await agent?.oob.deleteById(oobRecord.id)
-    }
-  } catch (error) {
-    // findByReceivedInvitationId will throw if unsuccessful but that's not a problem
-    // it just means there is nothing to delete
+  // This is implemented just as findByReceivedInvitationId is 
+  // in Credo only this is able to return multiple if they exist
+  const oobRecords = await agent?.oob.findAllByQuery({ 
+    invitationId,
+    role: OutOfBandRole.Receiver
+  }) || []
+  
+  for (const r of oobRecords) {
+    await agent?.oob.deleteById(r.id)
+    agent?.config.logger.info('Successfully removed an existing oob invitation')
   }
 }
 
