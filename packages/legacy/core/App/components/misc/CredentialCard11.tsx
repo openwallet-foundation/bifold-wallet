@@ -441,9 +441,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             </Text>
           </View>
         </View>
-        {extraOverlayParameter && (
+        {extraOverlayParameter && !displayItems && (
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-            <Text style={TextTheme.caption}>{extraOverlayParameter}</Text>
+            <Text
+              style={[
+                TextTheme.caption,
+                {
+                  color: styles.textContainer.color,
+                },
+              ]}
+            >
+              {extraOverlayParameter}
+            </Text>
           </View>
         )}
 
