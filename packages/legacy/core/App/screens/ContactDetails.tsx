@@ -209,7 +209,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         ) : (
           <View style={styles.contactFirstLetterContainer}>
             <ThemedText
-              maxFontSizeMultiplier={1.2}
+              allowFontScaling={false}
               variant="bold"
               style={{
                 fontSize: contactImageHeight,

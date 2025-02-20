@@ -1,7 +1,7 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -12,6 +12,7 @@ import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import useFontScale from '../hooks/font-scale'
 
 interface Timer {
   hours: number
@@ -26,6 +27,7 @@ const AttemptLockout: React.FC = () => {
   const [time, setTime] = useState<Timer>()
   const [timeoutDone, setTimeoutDone] = useState<boolean>(false)
   const navigation = useNavigation()
+  const fontScale = useFontScale()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -53,6 +55,7 @@ const AttemptLockout: React.FC = () => {
       height: 150,
       marginBottom: 20,
       marginTop: 25,
+      alignSelf: 'center',
     },
   })
 
@@ -115,14 +118,12 @@ const AttemptLockout: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Assets.svg.appLockout style={styles.image} />
-      <View>
-        <ThemedText variant="headingThree" style={styles.title} maxFontSizeMultiplier={1.1}>
+      <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={fontScale >= 1.7}>
+        <Assets.svg.appLockout style={styles.image} />
+        <ThemedText variant="headingThree" style={styles.title}>
           {t('AttemptLockout.Title')}
         </ThemedText>
-        <ThemedText maxFontSizeMultiplier={1.5} style={styles.description}>
-          {t('AttemptLockout.Description')}
-        </ThemedText>
+        <ThemedText style={styles.description}>{t('AttemptLockout.Description')}</ThemedText>
         {timeoutDone ? (
           <Button
             title={t('Global.TryAgain')}
@@ -135,14 +136,14 @@ const AttemptLockout: React.FC = () => {
           <View>
             <ThemedText style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</ThemedText>
             {time && (
-              <ThemedText variant="bold" style={styles.countDown} maxFontSizeMultiplier={1.1}>
+              <ThemedText variant="bold" style={styles.countDown}>
                 {time?.hours} {t('AttemptLockout.Hours')} {time?.minutes} {t('AttemptLockout.Minutes')} {time?.seconds}{' '}
                 {t('AttemptLockout.Seconds')}
               </ThemedText>
             )}
           </View>
         )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

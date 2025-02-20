@@ -2,108 +2,90 @@
 
 exports[`HomeFooterView Component Renders correctly with no notifications 1`] = `
 <View>
-  <View
+  <RCTScrollView
+    showsVerticalScrollIndicator={false}
     style={
       Object {
+        "maxHeight": "80%",
         "paddingBottom": 75,
         "paddingHorizontal": 25,
       }
     }
   >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "marginTop": 50,
-        }
-      }
-    >
-      <
-        width="30%"
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "justifyContent": "center",
-          "marginHorizontal": 25,
-        }
-      }
-    >
-      <Text
-        maxFontSizeMultiplier={2}
+    <View>
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
-                "marginTop": 25,
-                "textAlign": "center",
-              },
-            ],
-          ]
+          Object {
+            "alignItems": "center",
+            "marginTop": 100,
+          }
+        }
+      >
+        <
+          width="30%"
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginHorizontal": 25,
+          }
         }
       >
         <Text
+          adjustsFontSizeToFit={true}
           maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
+                "fontWeight": "normal",
               },
-              undefined,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "marginTop": 25,
+                  "textAlign": "center",
+                },
+              ],
             ]
           }
         >
-          Home.NoCredentials
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                undefined,
+              ]
+            }
+          >
+            Home.NoCredentials
+          </Text>
         </Text>
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "justifyContent": "center",
-          "marginHorizontal": 25,
-        }
-      }
-    >
-      <Text
-        maxFontSizeMultiplier={2}
+      </View>
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
-                "marginTop": 25,
-                "textAlign": "center",
-              },
-            ],
-          ]
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginHorizontal": 25,
+          }
         }
       >
         <Text
+          adjustsFontSizeToFit={true}
           maxFontSizeMultiplier={2}
           style={
             Array [
@@ -112,87 +94,20 @@ exports[`HomeFooterView Component Renders correctly with no notifications 1`] = 
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              undefined,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "marginTop": 25,
+                  "textAlign": "center",
+                },
+              ],
             ]
           }
         >
-          Home.ScanOfferAddCard
-        </Text>
-      </Text>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
-<View>
-  <View
-    style={
-      Object {
-        "paddingBottom": 75,
-        "paddingHorizontal": 25,
-      }
-    }
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "marginTop": 50,
-        }
-      }
-    >
-      <
-        width="30%"
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "justifyContent": "center",
-          "marginHorizontal": 25,
-        }
-      }
-    >
-      <Text
-        maxFontSizeMultiplier={2}
-        style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              Object {
-                "marginTop": 25,
-                "textAlign": "center",
-              },
-            ],
-          ]
-        }
-      >
-        <Text
-          maxFontSizeMultiplier={2}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              },
-              undefined,
-            ]
-          }
-        >
-          Home.YouHave
-           
           <Text
             maxFontSizeMultiplier={2}
             style={
@@ -202,54 +117,151 @@ exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
                   "fontSize": 18,
                   "fontWeight": "normal",
                 },
-                Object {
-                  "fontWeight": "bold",
-                },
+                undefined,
               ]
             }
           >
-            2
+            Home.ScanOfferAddCard
           </Text>
-           
-          Home.Credentials
-           
-          Home.InYourWallet
         </Text>
-      </Text>
+      </View>
     </View>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "justifyContent": "center",
-          "marginHorizontal": 25,
-        }
+  </RCTScrollView>
+</View>
+`;
+
+exports[`HomeFooterView Component Renders correctly with notifications 1`] = `
+<View>
+  <RCTScrollView
+    showsVerticalScrollIndicator={false}
+    style={
+      Object {
+        "maxHeight": "80%",
+        "paddingBottom": 75,
+        "paddingHorizontal": 25,
       }
-    >
-      <Text
-        maxFontSizeMultiplier={2}
+    }
+  >
+    <View>
+      <View
         style={
-          Array [
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            },
+          Object {
+            "alignItems": "center",
+            "marginTop": 100,
+          }
+        }
+      >
+        <
+          width="30%"
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginHorizontal": 25,
+          }
+        }
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          maxFontSizeMultiplier={2}
+          style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 25,
-                "textAlign": "center",
-              },
-            ],
-          ]
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "marginTop": 25,
+                  "textAlign": "center",
+                },
+              ],
+            ]
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
+            }
+          >
+            Home.YouHave
+             
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              2
+            </Text>
+             
+            Home.Credentials
+             
+            Home.InYourWallet
+          </Text>
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginHorizontal": 25,
+          }
         }
-      />
+      >
+        <Text
+          adjustsFontSizeToFit={true}
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "marginTop": 25,
+                  "textAlign": "center",
+                },
+              ],
+            ]
+          }
+        />
+      </View>
     </View>
-  </View>
+  </RCTScrollView>
 </View>
 `;

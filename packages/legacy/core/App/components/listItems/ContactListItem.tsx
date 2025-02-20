@@ -93,7 +93,7 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
               <Image style={styles.avatarImage} source={{ uri: contact.imageUrl }} />
             </View>
           ) : (
-            <ThemedText maxFontSizeMultiplier={1.2} variant="headingFour" style={styles.avatarPlaceholder}>
+            <ThemedText allowFontScaling={false} variant="headingFour" style={styles.avatarPlaceholder}>
               {contactLabelAbbr}
             </ThemedText>
           )}

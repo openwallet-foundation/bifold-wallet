@@ -44,7 +44,8 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
         }
       >
         <Text
-          maxFontSizeMultiplier={1.2}
+          allowFontScaling={false}
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -293,7 +294,8 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
         }
       >
         <Text
-          maxFontSizeMultiplier={1.2}
+          allowFontScaling={false}
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {

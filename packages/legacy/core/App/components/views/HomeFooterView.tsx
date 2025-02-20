@@ -2,10 +2,11 @@ import { CredentialState } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 import { ThemedText } from '../texts/ThemedText'
+import useFontScale from '../../hooks/font-scale'
 
 const offset = 25
 
@@ -23,11 +24,13 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
   ]
   const { HomeTheme, TextTheme, Assets } = useTheme()
   const { t } = useTranslation()
+  const fontScale = useFontScale()
 
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
       paddingBottom: offset * 3,
+      maxHeight: fontScale >= 1.7 ? '80%' : '100%',
     },
 
     messageContainer: {
@@ -38,7 +41,7 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
 
     imageContainer: {
       alignItems: 'center',
-      marginTop: 50,
+      marginTop: 100,
     },
   })
 
@@ -78,13 +81,19 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
         </View>
 
         <View style={styles.messageContainer}>
-          <ThemedText style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>
+          <ThemedText
+            adjustsFontSizeToFit
+            style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}
+          >
             {credentialMsg}
           </ThemedText>
         </View>
 
         <View style={styles.messageContainer}>
-          <ThemedText style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>
+          <ThemedText
+            adjustsFontSizeToFit
+            style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}
+          >
             {scanReminder}
           </ThemedText>
         </View>
@@ -94,7 +103,9 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
 
   return (
     <View>
-      <View style={styles.container}>{displayMessage(credentials.length)}</View>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        {displayMessage(credentials.length)}
+      </ScrollView>
       {children}
     </View>
   )

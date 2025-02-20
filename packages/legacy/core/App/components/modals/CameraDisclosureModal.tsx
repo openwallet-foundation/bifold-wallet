@@ -87,7 +87,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           <ThemedText variant="modalNormal" style={styles.messageText}>
             {t('CameraDisclosure.CameraDisclosure')}
           </ThemedText>
-          <ThemedText variant="modalNormal" style={styles.messageText}>
+          <ThemedText variant="modalNormal" style={[styles.messageText, { marginBottom: 20 }]}>
             {t('CameraDisclosure.ToContinueUsing')}
           </ThemedText>
         </ScrollView>

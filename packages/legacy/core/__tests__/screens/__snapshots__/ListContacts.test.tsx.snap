@@ -167,7 +167,8 @@ exports[`ListContacts Screen Renders correctly 1`] = `
               }
             >
               <Text
-                maxFontSizeMultiplier={1.2}
+                allowFontScaling={false}
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
@@ -313,7 +314,8 @@ exports[`ListContacts Screen Renders correctly 1`] = `
               }
             >
               <Text
-                maxFontSizeMultiplier={1.2}
+                allowFontScaling={false}
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
@@ -459,7 +461,8 @@ exports[`ListContacts Screen Renders correctly 1`] = `
               }
             >
               <Text
-                maxFontSizeMultiplier={1.2}
+                allowFontScaling={false}
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {

@@ -73,9 +73,14 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 30,
-              },
+              Array [
+                Object {
+                  "marginTop": 30,
+                },
+                Object {
+                  "marginBottom": 20,
+                },
+              ],
             ]
           }
         >
