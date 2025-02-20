@@ -452,6 +452,7 @@ const mockOobModule = {
   createInvitation: jest.fn(),
   toUrl: jest.fn(),
   findByReceivedInvitationId: jest.fn().mockReturnValue(Promise.resolve(null)),
+  findAllByQuery: jest.fn().mockReturnValue(Promise.resolve([])),
   parseInvitation: jest.fn().mockReturnValue(Promise.resolve(null)),
 }
 const mockBasicMessageRepository = {
@@ -472,7 +473,7 @@ const agent = {
     oob: mockOobModule,
     context: mockAgentContext,
     receiveMessage: jest.fn(),
-    config: { logger: { error: jest.fn() } },
+    config: { logger: { debug: jest.fn(), info: jest.fn(), warn: jest.fn(), error: jest.fn() } },
   },
 }
 
