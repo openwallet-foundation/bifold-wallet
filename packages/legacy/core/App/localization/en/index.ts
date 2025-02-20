@@ -222,6 +222,8 @@ const translation = {
       "PINOnlyContainDigitsValidation": "Must contain only digits.",
       "PINTooShortValidation": "The PIN is not long enough.",
       "PINTooLongValidation": "The PIN is too long enough.",
+      "CheckIcon": "Criteria met",
+      "ClearIcon": "Criteria not met",
     },
     "UserAuthenticationPIN": "User authentication PIN",
     "PINTooShort": "PIN is too short",
