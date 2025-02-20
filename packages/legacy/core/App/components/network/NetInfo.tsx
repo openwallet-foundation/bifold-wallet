@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message'
 import { useNetwork } from '../../contexts/network'
@@ -12,63 +11,57 @@ const NetInfo: React.FC = () => {
   const { t } = useTranslation()
   const [hasShown, setHasShown] = useState(false)
 
+  const showNetworkWarning = useCallback(() => {
+    setHasShown(true)
+    Toast.show({
+      type: ToastType.Error,
+      autoHide: true,
+      text1: t('NetInfo.NoInternetConnectionTitle'),
+    })
+  }, [t])
+
+  // will be null until network state is known
   const isConnected = silentAssertConnectedNetwork()
 
   useEffect(() => {
-    const _showNetworkWarning = () => {
-      setHasShown(true)
-      Toast.show({
-        type: ToastType.Error,
-        autoHide: true,
-        text1: t('NetInfo.NoInternetConnectionTitle'),
-      })
-    }
-    // Network is available, do further testing according to CFG.disableMediatorCheck
-    if (!disableMediatorCheck) {
-      // Network is available
-      if (isConnected) {
-        // Check mediator socket, also assert internet reachable
-        assertMediatorReachable().then((status) => {
-          if (status) {
-            Toast.hide()
-            return
-          } else {
-            // Network is available but cannot access nediator, display toast
-            _showNetworkWarning()
-          }
-        })
-        return
-      } else if (!hasShown) {
-        _showNetworkWarning()
+    // Only check general internet connection if mediator check is disabled
+    if (disableMediatorCheck) {
+      const internetReachable = assertInternetReachable()
+      if (internetReachable) {
+        Toast.hide()
+      }
+      
+      // Strict check for false, null means the network state is not yet known
+      if (internetReachable === false) {
+        showNetworkWarning()
       }
       return
-    } else {
-      // Check internetReachable by connecting test beacon urls
-      assertInternetReachable().then((status) => {
-        if (status) {
+    }
+
+    // Network is checked and available
+    if (isConnected) {
+      assertMediatorReachable().then((mediatorReachable) => {
+        if (mediatorReachable) {
           Toast.hide()
           return
-        } else if (null === status) {
-          // keep silent when the internet status not yet assert
-          return
-          /*
-          Toast.show({
-            type: ToastType.Info,
-            autoHide: false,
-            text1: "Checking internet reachable",
-          })
-          */
-        } else if (!hasShown) {
-          _showNetworkWarning()
         }
+        
+        // Network is available but cannot access mediator, display toast
+        showNetworkWarning()
       })
+      return
+    }
+    
+    // Network is checked and not connected, so display toast if not already shown
+    if (isConnected === false && !hasShown) {
+      showNetworkWarning()
     }
   }, [
+    showNetworkWarning,
     isConnected,
     disableMediatorCheck,
     assertInternetReachable,
     assertMediatorReachable,
-    t,
     hasShown
   ])
 
