@@ -221,6 +221,8 @@ const translation = {
             "PINOnlyContainDigitsValidation": "Doit contenir que des chiffres.",
             "PINTooShortValidation": "Le NIP est trop court. Veuillez saisir le NIP à nouveau.",
             "PINTooLongValidation": "Le NIP est trop long. Veuillez saisir le NIP à nouveau.",
+            "CheckIcon": "Critère respecté",
+            "ClearIcon": "Critère non-respecté",
         },
         "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
         "PINTooShort": "NIP trop court",
