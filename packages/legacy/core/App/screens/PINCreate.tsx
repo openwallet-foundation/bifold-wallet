@@ -352,9 +352,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                 return (
                   <View style={{ flexDirection: 'row' }} key={index}>
                     {validation.isInvalid ? (
-                      <Icon name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
+                      <Icon accessibilityLabel={t("PINCreate.Helper.ClearIcon")} name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
                     ) : (
-                      <Icon name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
+                      <Icon accessibilityLabel={t("PINCreate.Helper.CheckIcon")} name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
                       {t(`PINCreate.Helper.${validation.errorName}`)}
