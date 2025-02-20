@@ -110,11 +110,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
   }, [renderStep, currentStep])
 
   const tourStep = useMemo((): TourStep => {
-    if (!tours) {
-      return { Render: () => <></> }
-    }
-
-    return tours[currentTour]?.[currentStep ?? 0] ?? { Render: () => <></> }
+    return tours?.[currentTour]?.[currentStep ?? 0] ?? { Render: () => <></> }
   }, [currentTour, currentStep, tours])
 
   const tour = useMemo(
