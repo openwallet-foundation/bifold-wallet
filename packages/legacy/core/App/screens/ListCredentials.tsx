@@ -3,7 +3,7 @@ import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
 
@@ -20,7 +20,6 @@ import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredential
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { BaseTourID } from '../types/tour'
-import { ImportantForAccessibility } from '../types/accessibility'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -38,9 +37,8 @@ const ListCredentials: React.FC = () => {
   ])
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
   const { ColorPallet } = useTheme()
-  const { start, stop, currentStep } = useTour()
+  const { start, stop } = useTour()
   const screenIsFocused = useIsFocused()
-  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const {
     openIdState: { w3cCredentialRecords },
   } = useOpenIDCredentials()
@@ -66,24 +64,13 @@ const ListCredentials: React.FC = () => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
     if (shouldShowTour && screenIsFocused) {
-      setHideElements('no-hide-descendants')
       start(BaseTourID.CredentialsTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR,
         payload: [true],
       })
-    } else if (currentStep === undefined) {
-      setHideElements('auto')
     }
-  }, [
-    enableToursConfig,
-    store.tours.enableTours,
-    store.tours.seenCredentialsTour,
-    screenIsFocused,
-    start,
-    dispatch,
-    currentStep,
-  ])
+  }, [enableToursConfig, store.tours.enableTours, store.tours.seenCredentialsTour, screenIsFocused, start, dispatch])
 
   // stop the tour when the screen unmounts
   useEffect(() => {
@@ -112,7 +99,6 @@ const ListCredentials: React.FC = () => {
     <View>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
-        importantForAccessibility={hideElements}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
         keyExtractor={(credential) => credential.id}
         renderItem={({ item: credential, index }) => {
