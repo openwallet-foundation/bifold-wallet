@@ -4,7 +4,6 @@ const networkContext = {
   displayNetInfoModal: jest.fn(),
   hideNetInfoModal: jest.fn(),
   assertInternetReachable: jest.fn(),
-  assertMediatorReachable: jest.fn(),
 }
 
 export default networkContext

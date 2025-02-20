@@ -3,11 +3,9 @@ import { useTranslation } from 'react-i18next'
 import Toast from 'react-native-toast-message'
 import { useNetwork } from '../../contexts/network'
 import { ToastType } from '../../components/toast/BaseToast'
-import { TOKENS, useServices } from '../../container-api'
 
 const NetInfo: React.FC = () => {
-  const { silentAssertConnectedNetwork, assertInternetReachable, assertMediatorReachable } = useNetwork()
-  const [{ disableMediatorCheck }] = useServices([TOKENS.CONFIG])
+  const { assertInternetReachable } = useNetwork()
   const { t } = useTranslation()
   const [hasShown, setHasShown] = useState(false)
 
@@ -20,48 +18,19 @@ const NetInfo: React.FC = () => {
     })
   }, [t])
 
-  // will be null until network state is known
-  const isConnected = silentAssertConnectedNetwork()
-
   useEffect(() => {
-    // Only check general internet connection if mediator check is disabled
-    if (disableMediatorCheck) {
-      const internetReachable = assertInternetReachable()
-      if (internetReachable) {
-        Toast.hide()
-      }
-      
-      // Strict check for false, null means the network state is not yet known
-      if (internetReachable === false) {
-        showNetworkWarning()
-      }
-      return
-    }
-
-    // Network is checked and available
-    if (isConnected) {
-      assertMediatorReachable().then((mediatorReachable) => {
-        if (mediatorReachable) {
-          Toast.hide()
-          return
-        }
-        
-        // Network is available but cannot access mediator, display toast
-        showNetworkWarning()
-      })
-      return
+    const internetReachable = assertInternetReachable()
+    if (internetReachable) {
+      Toast.hide()
     }
     
-    // Network is checked and not connected, so display toast if not already shown
-    if (isConnected === false && !hasShown) {
+    // Strict check for false, null means the network state is not yet known
+    if (internetReachable === false && !hasShown) {
       showNetworkWarning()
     }
   }, [
     showNetworkWarning,
-    isConnected,
-    disableMediatorCheck,
     assertInternetReachable,
-    assertMediatorReachable,
     hasShown
   ])
 

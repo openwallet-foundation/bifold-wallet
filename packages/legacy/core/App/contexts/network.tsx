@@ -2,8 +2,6 @@ import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
 import { createContext, useContext, useState, useCallback, PropsWithChildren } from 'react'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
-import { hostnameFromURL, canConnectToHost } from '../utils/network'
-import { Config } from 'react-native-config'
 
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean | null
@@ -11,11 +9,14 @@ export interface NetworkContext {
   displayNetInfoModal: () => void
   hideNetInfoModal: () => void
   assertInternetReachable: () => boolean | null
-  assertMediatorReachable: () => Promise<boolean>
 }
 
 export const NetworkContext = createContext<NetworkContext>(null as unknown as NetworkContext)
 
+
+// NOTE: @react-native-community/netinfo can be configured to use whichever reachability check desired
+// eg. isInternetReachable can be set to check a specific URL (like your mediator). See the docs here for more info:
+// https://github.com/react-native-netinfo/react-native-netinfo?tab=readme-ov-file#configure
 export const NetworkProvider = ({ children }: PropsWithChildren) => {
   const { isConnected, type, isInternetReachable } = useNetInfo()
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
@@ -61,18 +62,6 @@ export const NetworkProvider = ({ children }: PropsWithChildren) => {
      return isInternetReachable
   }, [isInternetReachable])
 
-  const assertMediatorReachable = useCallback(async (): Promise<boolean> => {
-    const hostname = hostnameFromURL(Config.MEDIATOR_URL!)
-
-    if (hostname === null || hostname.length === 0) {
-      return false
-    }
-
-    const nodes = [{ host: hostname, port: 443 }]
-    const connections = await Promise.all(nodes.map((n: { host: string; port: number }) => canConnectToHost(n)))
-
-    return connections.includes(true)
-  }, [])
 
   return (
     <NetworkContext.Provider
@@ -81,8 +70,7 @@ export const NetworkProvider = ({ children }: PropsWithChildren) => {
         assertNetworkConnected,
         displayNetInfoModal,
         hideNetInfoModal,
-        assertInternetReachable,
-        assertMediatorReachable
+        assertInternetReachable
       }}
     >
       {children}
