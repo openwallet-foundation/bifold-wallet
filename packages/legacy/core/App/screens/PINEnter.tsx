@@ -35,7 +35,7 @@ export enum PINEntryUsage {
 
 const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock, onCancelAuth }) => {
   const { t } = useTranslation()
-  const { checkWalletPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
+  const { checkWalletPIN, getWalletSecret, isBiometricsActive, disableBiometrics } = useAuth()
   const [store, dispatch] = useStore()
   const [PIN, setPIN] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
@@ -227,7 +227,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       return
     }
 
-    const walletSecret = await getWalletCredentials()
+    const walletSecret = await getWalletSecret()
     if (walletSecret) {
       // remove lockout notification
       dispatch({
@@ -244,7 +244,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       setAuthenticated(true)
       gotoPostAuthScreens()
     }
-  }, [usage, getWalletCredentials, dispatch, setAuthenticated, gotoPostAuthScreens])
+  }, [usage, getWalletSecret, dispatch, setAuthenticated, gotoPostAuthScreens])
 
   useEffect(() => {
     const handle = InteractionManager.runAfterInteractions(async () => {
@@ -406,14 +406,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   const verifyPIN = useCallback(
     async (PIN: string) => {
       try {
-        const credentials = await getWalletCredentials()
-        if (!credentials) {
-          throw new Error('Problem')
+        const walletSecret = await getWalletSecret()
+        if (!walletSecret) {
+          throw new Error('Wallet secret not found')
         }
 
-        const key = await hashPIN(PIN, credentials.salt)
+        const key = await hashPIN(PIN, walletSecret.salt)
 
-        if (credentials.key !== key) {
+        if (walletSecret.key !== key) {
           setAlertModalVisible(true)
 
           return
@@ -430,7 +430,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     },
-    [getWalletCredentials, setAuthenticated, t]
+    [getWalletSecret, setAuthenticated, t]
   )
 
   // both of the async functions called in this function are completely wrapped in trycatch

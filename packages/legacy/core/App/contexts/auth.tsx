@@ -26,7 +26,7 @@ import { migrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
   checkWalletPIN: (PIN: string) => Promise<boolean>
-  getWalletCredentials: () => Promise<WalletSecret | undefined>
+  getWalletSecret: () => Promise<WalletSecret | undefined>
   walletSecret?: WalletSecret
   removeSavedWalletSecret: () => void
   disableBiometrics: () => Promise<void>
@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     await storeWalletSecret(secret)
   }, [])
 
-  const getWalletCredentials = useCallback(async (): Promise<WalletSecret | undefined> => {
+  const getWalletSecret = useCallback(async (): Promise<WalletSecret | undefined> => {
     if (walletSecret) {
       return walletSecret
     }
@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
   const commitWalletToKeychain = useCallback(
     async (useBiometry: boolean): Promise<boolean> => {
-      const secret = await getWalletCredentials()
+      const secret = await getWalletSecret()
       if (!secret) {
         return false
       }
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
       return true
     },
-    [dispatch, getWalletCredentials]
+    [dispatch, getWalletSecret]
   )
 
   const checkWalletPIN = useCallback(
@@ -173,7 +173,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     <AuthContext.Provider
       value={{
         checkWalletPIN,
-        getWalletCredentials,
+        getWalletSecret,
         removeSavedWalletSecret,
         disableBiometrics,
         commitWalletToKeychain,

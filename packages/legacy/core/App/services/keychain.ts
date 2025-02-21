@@ -165,16 +165,15 @@ export const loadWalletSecret = async (
     throw new Error(e?.message ?? e)
   }
 
-  if (salt?.id && salt?.salt && key) {
-    secret = {
-      id: salt.id,
-      key: key.key,
-      salt: salt.salt
-    }
-  } else {
-    // throw another error?
+  if (!salt?.id || !salt?.salt || !key) {
+    throw new Error('Wallet secret is missing key property')
   }
 
+  secret = {
+    id: salt.id,
+    key: key.key,
+    salt: salt.salt
+  }
   return secret
 }
 
