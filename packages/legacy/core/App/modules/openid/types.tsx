@@ -6,7 +6,7 @@ import {
 import { CredentialMetadata } from './display'
 import { ClaimFormat, DifPexCredentialsForRequest } from '@credo-ts/core'
 
-export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}`
+export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}` | `mdoc-${string}`
 export interface OpenId4VcCredentialMetadata {
   credential: {
     display?: OpenId4VciCredentialSupported['display']
@@ -73,6 +73,7 @@ export interface CredentialIssuerDisplay {
   name: string
   locale?: string
   logo?: DisplayImage
+  domain?: string
 }
 
 export interface W3cCredentialDisplay {
@@ -83,6 +84,8 @@ export interface W3cCredentialDisplay {
   attributes: W3cCredentialSubjectJson
   metadata: CredentialMetadata
   claimFormat: ClaimFormat
+  validUntil: Date | undefined
+  validFrom: Date | undefined
 }
 
 export interface OpenId4VPRequestRecord extends OpenId4VcSiopResolvedAuthorizationRequest {
@@ -90,4 +93,10 @@ export interface OpenId4VPRequestRecord extends OpenId4VcSiopResolvedAuthorizati
   createdAt: string | Date
   credentialsForRequest: DifPexCredentialsForRequest | undefined
   type: string
+}
+
+export enum OpenIDCredentialType {
+  W3cCredential,
+  SdJwtVc,
+  Mdoc,
 }

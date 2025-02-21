@@ -17,7 +17,7 @@ import { testIdWithKey } from '../../../utils/testable'
 import { credentialTextColor, toImageSource } from '../../../utils/credential'
 import { useTheme } from '../../../contexts/theme'
 import { SvgUri } from 'react-native-svg'
-import { W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { getCredentialForDisplay } from '../display'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
@@ -25,7 +25,7 @@ import { getAttributeField } from '../utils/utils'
 
 interface CredentialCardProps {
   credentialDisplay?: W3cCredentialDisplay
-  credentialRecord?: W3cCredentialRecord
+  credentialRecord?: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
   onPress?: GenericFn
   style?: ViewStyle
 }

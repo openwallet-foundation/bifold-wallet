@@ -14,11 +14,11 @@ import { useAgent } from '@credo-ts/react-hooks'
 import RecordRemove from '../../../components/record/RecordRemove'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { W3cCredentialDisplay } from '../types'
+import { OpenIDCredentialType, W3cCredentialDisplay } from '../types'
 import { TOKENS, useServices } from '../../../container-api'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
-import { W3cCredentialRecord } from '@credo-ts/core'
+import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { buildOverlayFromW3cCredential } from '../../../utils/oca'
 import CredentialDetailSecondaryHeader from '../../../components/views/CredentialDetailSecondaryHeader'
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
@@ -37,14 +37,14 @@ const paddingHorizontal = 24
 const paddingVertical = 16
 
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
-  const { credentialId } = route.params
+  const { credentialId, type } = route.params
 
-  const [credential, setCredential] = useState<W3cCredentialRecord | undefined>(undefined)
+  const [credential, setCredential] = useState<W3cCredentialRecord | SdJwtVcRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { removeCredential } = useOpenIDCredentials()
+  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
@@ -72,8 +72,15 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
 
     const fetchCredential = async () => {
       try {
-        const credentialExchangeRecord = await agent.w3cCredentials.getCredentialRecordById(credentialId)
-        setCredential(credentialExchangeRecord)
+        let record: SdJwtVcRecord | W3cCredentialRecord | undefined
+
+        if (type === OpenIDCredentialType.SdJwtVc) {
+          record = await getSdJwtCredentialById(credentialId)
+        } else {
+          record = await getW3CCredentialById(credentialId)
+        }
+
+        setCredential(record)
       } catch (error) {
         // credential not found for id, display an error
         DeviceEventEmitter.emit(
@@ -83,7 +90,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       }
     }
     fetchCredential()
-  }, [credentialId, agent, t])
+  }, [credentialId, type, getSdJwtCredentialById, getW3CCredentialById, agent, t])
 
   useEffect(() => {
     if (!credential) return
