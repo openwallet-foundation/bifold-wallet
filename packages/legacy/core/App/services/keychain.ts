@@ -63,21 +63,21 @@ export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): 
   const secretAsString = JSON.stringify(secret)
   await wipeWalletKey(useBiometrics)
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
-  return typeof result === 'boolean' ? false : true
+  return Boolean(result)
 }
 
 export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Salt, false)
   const secretAsString = JSON.stringify(secret)
   const result = await Keychain.setGenericPassword(saltFauxUserName, secretAsString, opts)
-  return typeof result === 'boolean' ? false : true
+  return Boolean(result)
 }
 
 export const storeLoginAttempt = async (loginAttempt: LoginAttempt): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.LoginAttempt, false)
   const loginAttemptAsString = JSON.stringify(loginAttempt)
   const result = await Keychain.setGenericPassword(loginAttemptFauxUserName, loginAttemptAsString, opts)
-  return typeof result !== 'boolean'
+  return Boolean(result)
 }
 
 export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
@@ -100,6 +100,7 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
     return
   }
 
+  // wallet salt needs to be parsed from string value
   return JSON.parse(result.password) as WalletSalt
 }
 
@@ -158,6 +159,5 @@ export const loadWalletSecret = async (
 
 export const isBiometricsActive = async (): Promise<boolean> => {
   const result = await getSupportedBiometryType()
-
-  return result !== null ? true : false
+  return Boolean(result)
 }

@@ -227,8 +227,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       return
     }
 
-    const creds = await getWalletCredentials()
-    if (creds && creds.key) {
+    const credentials = await getWalletCredentials()
+    if (credentials?.key) {
       // remove lockout notification
       dispatch({
         type: DispatchAction.LOCKOUT_UPDATED,
@@ -532,7 +532,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           )}
           <Text style={style.subText}>
             {inputLabelText[usage]}
-            {usage === PINEntryUsage.ChangeBiometrics && <Text style={style.parenthesisText}>{` `}{t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</Text>}
+            {usage === PINEntryUsage.ChangeBiometrics && (
+              <Text style={style.parenthesisText}>
+                {` `}
+                {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
+              </Text>
+            )}
           </Text>
           <PINInput
             onPINChanged={(p: string) => {
