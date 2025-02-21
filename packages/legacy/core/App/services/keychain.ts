@@ -92,7 +92,7 @@ export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = fa
 }
 
 export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
-  let salt: WalletSalt | undefined
+  let salt: WalletSalt | undefined = undefined
   const opts: Keychain.Options = {
     service: KeychainServices.Salt,
   }
@@ -157,7 +157,7 @@ export const loadWalletSecret = async (
 ): Promise<WalletSecret | undefined> => {
   let salt: WalletSalt | undefined
   let key: WalletKey | undefined
-  let secret: WalletSecret | undefined
+  let secret: WalletSecret | undefined = undefined
   try {
     salt = await loadWalletSalt()
     key = await loadWalletKey(title, description)
