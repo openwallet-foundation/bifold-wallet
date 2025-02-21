@@ -17,6 +17,7 @@ import { BrandingOverlayType, CredentialOverlay, OCABundleResolveAllParams } fro
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { useTranslation } from 'react-i18next'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { OpenIDCredentialType } from '../types'
 
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
 
@@ -26,7 +27,10 @@ export type OpenIDCredentialContext = {
   getSdJwtCredentialById: (id: string) => Promise<SdJwtVcRecord | undefined>
   getMdocCredentialById: (id: string) => Promise<MdocRecord | undefined>
   storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) => Promise<void>
-  removeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) => Promise<void>
+  removeCredential: (
+    cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord,
+    type: OpenIDCredentialType
+  ) => Promise<void>
   resolveBundleForCredential: (
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   ) => Promise<CredentialOverlay<BrandingOverlay>>
@@ -163,13 +167,13 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     }
   }
 
-  async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) {
+  async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord, type: OpenIDCredentialType) {
     checkAgent()
-    if (cred instanceof W3cCredentialRecord) {
+    if (type === OpenIDCredentialType.W3cCredential) {
       await agent?.w3cCredentials.removeCredentialRecord(cred.id)
-    } else if (cred instanceof SdJwtVcRecord) {
+    } else if (type === OpenIDCredentialType.SdJwtVc) {
       await agent?.sdJwtVc.deleteById(cred.id)
-    } else if (cred instanceof MdocRecord) {
+    } else if (type === OpenIDCredentialType.Mdoc) {
       await agent?.mdoc.deleteById(cred.id)
     }
   }
