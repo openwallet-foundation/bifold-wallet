@@ -9,9 +9,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter } from 'react-native'
 
-import { EventTypes } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import {
@@ -52,21 +50,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   }, [])
 
   const getWalletCredentials = useCallback(async (): Promise<WalletSecret | undefined> => {
-    if (walletSecret?.key) {
+    if (walletSecret) {
       return walletSecret
     }
 
-    const { secret, err } = await loadWalletSecret(
-      t('Biometry.UnlockPromptTitle'),
-      t('Biometry.UnlockPromptDescription')
-    )
-
-    DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, err !== undefined)
-
-    if (!secret?.key) {
-      setWalletSecret(undefined)
-      return
-    }
+    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
 
     setWalletSecret(secret)
 

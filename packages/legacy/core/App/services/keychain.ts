@@ -1,8 +1,8 @@
-import { Platform } from 'react-native'
+import { DeviceEventEmitter, Platform } from 'react-native'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { walletId, KeychainServices } from '../constants'
+import { walletId, KeychainServices, EventTypes } from '../constants'
 import { WalletSecret } from '../types/security'
 import { LoginAttempt } from '../types/state'
 import { hashPIN } from '../utils/crypto'
@@ -143,18 +143,27 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
 export const loadWalletSecret = async (
   title?: string,
   description?: string
-): Promise<{ secret: WalletSecret | undefined; err: string }> => {
+): Promise<WalletSecret | undefined> => {
   let salt: WalletSalt | undefined
   let key: WalletKey | undefined
-  let err = ''
+  let secret: WalletSecret | undefined
   try {
     salt = await loadWalletSalt()
     key = await loadWalletKey(title, description)
   } catch (e: any) {
-    err = e?.message ?? e
+    // should this throw instead?
+    DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, e?.message ?? e)
   }
 
-  return { secret: { ...salt, ...key } as WalletSecret, err }
+  if (salt && key) {
+    secret = {
+      id: salt.id,
+      key: key.key,
+      salt: salt.salt
+    }
+  }
+
+  return secret
 }
 
 export const isBiometricsActive = async (): Promise<boolean> => {

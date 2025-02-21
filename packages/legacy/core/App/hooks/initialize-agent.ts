@@ -26,7 +26,7 @@ const useInitializeAgent = () => {
 
   const restartExistingAgent = useCallback(async (walletSecret: WalletSecret) => {
     // if the agent is initialized, it was not a clean shutdown and should be replaced, not restarted
-    if (!walletSecret?.id || !walletSecret.key || !agent || agent.isInitialized) {
+    if (!agent || agent.isInitialized) {
       return
     }
 
@@ -49,9 +49,6 @@ const useInitializeAgent = () => {
   }, [agent, logger])
 
   const createNewAgent = useCallback(async (walletSecret: WalletSecret): Promise<Agent | undefined> => {
-    if (!walletSecret.key) {
-      throw new Error('Wallet key missing')
-    }
     logger.info('No agent initialized, creating a new one')
 
     const newAgent = new Agent({
@@ -85,10 +82,6 @@ const useInitializeAgent = () => {
   }, [store.preferences.walletName, logger, indyLedgers])
 
   const migrateIfRequired = useCallback(async (newAgent: Agent, walletSecret: WalletSecret) => {
-    if (!walletSecret.key) {
-      throw new Error('Wallet key missing')
-    }
-
     // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
     if (!store.migration.didMigrateToAskar) {
       newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
