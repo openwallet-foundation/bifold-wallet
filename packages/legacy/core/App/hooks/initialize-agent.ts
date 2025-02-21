@@ -112,7 +112,6 @@ const useInitializeAgent = () => {
   }, [cacheCredDefs, cacheSchemas])
 
   const initializeAgent = useCallback(async (walletSecret: WalletSecret): Promise<Agent | undefined> => {
-
     const existingAgent = await restartExistingAgent(walletSecret)
     if (existingAgent) {
       setAgent(existingAgent)

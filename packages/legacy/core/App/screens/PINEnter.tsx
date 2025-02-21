@@ -227,8 +227,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       return
     }
 
-    const credentials = await getWalletCredentials()
-    if (credentials?.key) {
+    const walletSecret = await getWalletCredentials()
+    if (walletSecret) {
       // remove lockout notification
       dispatch({
         type: DispatchAction.LOCKOUT_UPDATED,

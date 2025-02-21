@@ -243,9 +243,10 @@ const Splash: React.FC = () => {
 
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
-        if (!walletSecret?.id && !walletSecret?.key) {
-          return
+        if (!walletSecret) {
+          throw new Error('Wallet secret is missing')
         }
+
         const agent = await initializeAgent(walletSecret)
 
         if (!agent) {
