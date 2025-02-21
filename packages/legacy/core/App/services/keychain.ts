@@ -1,8 +1,8 @@
-import { DeviceEventEmitter, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
-import { walletId, KeychainServices, EventTypes } from '../constants'
+import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
 import { LoginAttempt } from '../types/state'
 import { hashPIN } from '../utils/crypto'
