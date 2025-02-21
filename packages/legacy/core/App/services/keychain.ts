@@ -92,6 +92,7 @@ export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = fa
 }
 
 export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
+  let salt: WalletSalt | undefined
   const opts: Keychain.Options = {
     service: KeychainServices.Salt,
   }
@@ -100,8 +101,18 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
     return
   }
 
-  // wallet salt needs to be parsed from string value
-  return JSON.parse(result.password) as WalletSalt
+  // salt data is stored and returned as a string and needs to be parsed
+  const parsedSalt = JSON.parse(result.password)
+  if (!parsedSalt.id || !parsedSalt.salt) {
+    throw new Error('Wallet salt failed to load')
+  }
+
+  salt = {
+    id: parsedSalt.id,
+    salt: parsedSalt.salt
+  }
+
+  return salt
 }
 
 export const loadLoginAttempt = async (): Promise<LoginAttempt | undefined> => {
@@ -151,16 +162,17 @@ export const loadWalletSecret = async (
     salt = await loadWalletSalt()
     key = await loadWalletKey(title, description)
   } catch (e: any) {
-    // should this throw instead?
-    DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, e?.message ?? e)
+    throw new Error(e?.message ?? e)
   }
 
-  if (salt && key) {
+  if (salt?.id && salt?.salt && key) {
     secret = {
       id: salt.id,
       key: key.key,
       salt: salt.salt
     }
+  } else {
+    // throw another error?
   }
 
   return secret

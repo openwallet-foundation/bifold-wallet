@@ -19,27 +19,27 @@ jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
 
 jest.mock('@react-navigation/elements', () => ({
   Header: jest.fn().mockImplementation(() => {
-    const Component = () => null;
-    Component.displayName = 'Header';
-    return Component;
+    const Component = () => null
+    Component.displayName = 'Header'
+    return Component
   }),
   HeaderBackButton: jest.fn().mockImplementation(() => {
-    const Component = () => null;
-    Component.displayName = 'HeaderBackButton';
-    return Component;
+    const Component = () => null
+    Component.displayName = 'HeaderBackButton'
+    return Component
   }),
-  useHeaderHeight: jest.fn().mockReturnValue(150)
-}));
+  useHeaderHeight: jest.fn().mockReturnValue(150),
+}))
 
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: jest.fn().mockReturnValue({
     top: 25,
     bottom: 25,
     left: 0,
-    right: 0
+    right: 0,
   }),
-  SafeAreaView: jest.fn().mockImplementation(({children}) => children)
-}));
+  SafeAreaView: jest.fn().mockImplementation(({ children }) => children),
+}))
 
 const customStore = {
   ...testDefaultState,
@@ -69,7 +69,7 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+          <UseBiometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -86,7 +86,7 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+          <UseBiometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -122,7 +122,7 @@ describe('UseBiometry Screen', () => {
 
     expect(useBiometryToggle).not.toBeNull()
     expect(continueButton).not.toBeNull()
-    expect(authContext.commitPIN).toBeCalledTimes(1)
+    expect(authContext.commitWalletToKeychain).toHaveBeenCalledTimes(1)
     expect(tree).toMatchSnapshot()
   })
 

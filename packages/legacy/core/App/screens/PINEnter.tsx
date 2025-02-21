@@ -35,7 +35,7 @@ export enum PINEntryUsage {
 
 const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryUsage.WalletUnlock, onCancelAuth }) => {
   const { t } = useTranslation()
-  const { checkPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
+  const { checkWalletPIN, getWalletCredentials, isBiometricsActive, disableBiometrics } = useAuth()
   const [store, dispatch] = useStore()
   const [PIN, setPIN] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
@@ -288,7 +288,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     async (PIN: string) => {
       try {
         setContinueEnabled(false)
-        const result = await checkPIN(PIN)
+        const result = await checkWalletPIN(PIN)
 
         if (store.loginAttempt.servedPenalty) {
           // once the user starts entering their PIN, unMark them as having served their lockout penalty
@@ -369,7 +369,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       }
     },
     [
-      checkPIN,
+      checkWalletPIN,
       store.loginAttempt,
       unMarkServedPenalty,
       getLockoutPenalty,
