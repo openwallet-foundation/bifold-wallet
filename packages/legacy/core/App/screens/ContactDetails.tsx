@@ -168,7 +168,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
 
       // FIXME: This delay is a hack so that the toast doesn't
       // appear until the modal is dismissed
-      // await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       Toast.show({
         type: ToastType.Success,
