@@ -1,6 +1,6 @@
 import type { W3cCredentialRecord, SdJwtVcRecord, MdocRecord } from '@credo-ts/core'
 import type { OpenId4VciCredentialSupported, OpenId4VciIssuerMetadataDisplay } from '@credo-ts/openid4vc'
-import type { EndpointMetadataResult, MetadataDisplay } from '@sphereon/oid4vci-common'
+import type { MetadataDisplay } from '@sphereon/oid4vci-common'
 
 export interface OpenId4VcCredentialMetadata {
   credential: {
