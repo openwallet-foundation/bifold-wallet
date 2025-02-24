@@ -18,8 +18,8 @@ import { useTheme } from '../contexts/theme'
 
 import { OnboardingStyleSheet } from './Onboarding'
 
-export const createCarouselStyle = (OnboardingTheme: any): OnboardingStyleSheet => {
-  return StyleSheet.create({
+export const createCarouselStyle = (OnboardingTheme: any) => {
+  return StyleSheet.create<OnboardingStyleSheet>({
     container: {
       ...OnboardingTheme.container,
       flex: 1,
