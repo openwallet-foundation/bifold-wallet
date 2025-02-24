@@ -62,12 +62,12 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   }
 
   useEffect(() => {
-    if(confirmationOnly){
+    if (confirmationOnly) {
       setProofDeliveryStatus(ProofState.PresentationSent)
       return
     }
-    
-    if(!proof) return;
+
+    if (!proof) return
 
     if (proof.state === proofDeliveryStatus) {
       return

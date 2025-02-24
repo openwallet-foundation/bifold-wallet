@@ -3,7 +3,6 @@ import { DeviceEventEmitter } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { StackScreenProps } from '@react-navigation/stack'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -28,6 +27,7 @@ import { CredentialCard } from '../../../components/misc'
 import { getCredentialForDisplay } from '../display'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { Attribute } from '@hyperledger/aries-oca/build/legacy'
+import ScreenLayout from '../../../layout/ScreenLayout'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -43,7 +43,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [credentialsRequested, setCredentialsRequested] = useState<W3cCredentialRecord[]>([])
-  const { getCredentialById } = useOpenIDCredentials()
+  const { getW3CCredentialById } = useOpenIDCredentials()
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -117,7 +117,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
       const creds: W3cCredentialRecord[] = []
       for (const [inputDescriptorID, credentialId] of Object.entries(selectedCredentials)) {
-        const credential = await getCredentialById(credentialId)
+        const credential = await getW3CCredentialById(credentialId)
         if (credential && inputDescriptorID) {
           creds.push(credential as W3cCredentialRecord)
         }
@@ -125,7 +125,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       setCredentialsRequested(creds)
     }
     fetchCreds()
-  }, [selectedCredentials, getCredentialById])
+  }, [selectedCredentials, getW3CCredentialById])
 
   const { verifierName } = useMemo(() => {
     return { verifierName: credential?.verifierHostName }
@@ -156,6 +156,10 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
+  const handleDismiss = async () => {
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
   const renderHeader = () => {
     return (
       <View style={styles.headerTextContainer}>
@@ -183,7 +187,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const renderBody = () => {
     if (!submission) return null
-
     return (
       <View style={styles.credentialsList}>
         {submission.entries.map((s, i) => {
@@ -194,9 +197,9 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
             <View key={i}>
               <OpenIDCredentialRowCard
                 name={s.name}
-                bgColor={selectedCredential.backgroundColor}
-                txtColor={selectedCredential.textColor}
-                bgImage={selectedCredential.backgroundImage?.url}
+                bgColor={selectedCredential?.backgroundColor}
+                txtColor={selectedCredential?.textColor}
+                bgImage={selectedCredential?.backgroundImage?.url}
                 issuer={verifierName}
                 onPress={() => {}}
               />
@@ -245,26 +248,40 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           backgroundColor: ColorPallet.brand.secondaryBackground,
         }}
       >
-        {footerButton(
-          t('Global.Accept'),
-          handleAcceptTouched,
-          ButtonType.Primary,
-          testIdWithKey('AcceptCredentialOffer'),
-          t('Global.Accept')
-        )}
-        {footerButton(
-          t('Global.Decline'),
-          toggleDeclineModalVisible,
-          ButtonType.Secondary,
-          testIdWithKey('DeclineCredentialOffer'),
-          t('Global.Decline')
+        {selectedCredentials && Object.keys(selectedCredentials).length > 0 ? (
+          <>
+            {footerButton(
+              t('Global.Accept'),
+              handleAcceptTouched,
+              ButtonType.Primary,
+              testIdWithKey('AcceptCredentialOffer'),
+              t('Global.Accept')
+            )}
+            {footerButton(
+              t('Global.Decline'),
+              toggleDeclineModalVisible,
+              ButtonType.Secondary,
+              testIdWithKey('DeclineCredentialOffer'),
+              t('Global.Decline')
+            )}
+          </>
+        ) : (
+          <>
+            {footerButton(
+              t('Global.Dismiss'),
+              handleDismiss,
+              ButtonType.Primary,
+              testIdWithKey('DismissCredentialOffer'),
+              t('Global.Dismiss')
+            )}
+          </>
         )}
       </View>
     )
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+    <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
       <ScrollView>
         <View style={styles.pageContent}>
           {renderHeader()}
@@ -281,7 +298,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   )
 }
 
