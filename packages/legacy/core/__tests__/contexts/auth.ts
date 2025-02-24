@@ -1,8 +1,8 @@
 const authContext = {
-  getWalletCredentials: jest.fn(),
+  getWalletSecret: jest.fn(),
   removeSavedWalletSecret: jest.fn(),
-  checkPIN: jest.fn(),
-  commitPIN: jest.fn(),
+  checkWalletPIN: jest.fn(),
+  commitWalletToKeychain: jest.fn(),
   setPIN: jest.fn(),
   isBiometricsActive: jest.fn(),
   disableBiometrics: jest.fn(),
