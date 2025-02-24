@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
-import { Edge, SafeAreaView } from 'react-native-safe-area-context'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import { useState } from 'react'
@@ -21,6 +20,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { W3cCredentialRecord } from '@credo-ts/core'
+import ScreenLayout from '../../../layout/ScreenLayout'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -29,6 +29,8 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { credential } = route.params
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
+
+  // console.log('$$ ====> Credential Display', JSON.stringify(credentialDisplay))
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
@@ -172,10 +174,8 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     )
   }
 
-  const screenEdges: Edge[] = ['bottom', 'left', 'right']
-
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={screenEdges}>
+    <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
       <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={''} confirmationOnly={true} />
       <CommonRemoveModal
@@ -184,7 +184,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   )
 }
 

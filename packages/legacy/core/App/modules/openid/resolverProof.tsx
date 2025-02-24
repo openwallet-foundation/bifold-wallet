@@ -1,5 +1,4 @@
 import { Agent, DifPexCredentialsForRequest, Jwt, X509ModuleConfig } from '@credo-ts/core'
-import { OpenID4VCIParam } from './resolver'
 import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
@@ -171,7 +170,14 @@ export const getCredentialsForProofRequest = async ({
   agent,
   data,
   uri,
-}: OpenID4VCIParam): Promise<OpenId4VPRequestRecord | undefined> => {
+}: {
+  agent: Agent
+  // Either data itself (the offer) or uri can be passed
+  data?: string
+  uri?: string
+  fetchAuthorization?: boolean
+  authorization?: { clientId: string; redirectUri: string }
+}): Promise<OpenId4VPRequestRecord | undefined> => {
   let requestUri = uri
 
   try {
