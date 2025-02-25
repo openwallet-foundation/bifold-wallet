@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { StyleSheet, Text, View, StyleProp, TextStyle } from 'react-native'
+import { StyleSheet, View, StyleProp, TextStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
+import { ThemedText } from '../texts/ThemedText'
 
 interface BulletPointProps {
   text: string
@@ -23,7 +24,7 @@ const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
       <View style={styles.iconContainer}>
         <Icon name={'circle'} size={9} color={ColorPallet.brand.modalIcon} />
       </View>
-      <Text style={[textStyle, { flexShrink: 1 }]}>{text}</Text>
+      <ThemedText style={[textStyle, { flexShrink: 1 }]}>{text}</ThemedText>
     </View>
   )
 }

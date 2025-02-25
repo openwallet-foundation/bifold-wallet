@@ -4,7 +4,7 @@ import { isPresentationReceived, useProofsByTemplateId } from '@hyperledger/arie
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -14,6 +14,7 @@ import { useTheme } from '../contexts/theme'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { formatTime, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ProofRequestUsageHistoryProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestUsageHistory>
 
@@ -103,17 +104,17 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
     >
       <View style={style.leftContainer}>
         <View style={style.cardRow}>
-          <Text style={style.valueLabel}>{t('Verifier.PresentationFrom')}:</Text>
-          <Text style={style.valueText}>{theirLabel || t('Verifier.ConnectionlessPresentation')}</Text>
+          <ThemedText style={style.valueLabel}>{t('Verifier.PresentationFrom')}:</ThemedText>
+          <ThemedText style={style.valueText}>{theirLabel || t('Verifier.ConnectionlessPresentation')}</ThemedText>
         </View>
         <View style={style.cardRow}>
-          <Text style={style.valueLabel}>{t('Verifier.PresentationState')}:</Text>
-          <Text style={style.valueText}>{t(getPresentationStateLabel(record) as any)}</Text>
+          <ThemedText style={style.valueLabel}>{t('Verifier.PresentationState')}:</ThemedText>
+          <ThemedText style={style.valueText}>{t(getPresentationStateLabel(record) as any)}</ThemedText>
         </View>
       </View>
       <View style={style.rightContainer}>
         {presentationReceived && <Icon style={style.icon} name={'chevron-right'} />}
-        <Text style={style.date}>{formatTime(record.createdAt, { shortMonth: true })}</Text>
+        <ThemedText style={style.date}>{formatTime(record.createdAt, { shortMonth: true })}</ThemedText>
       </View>
     </TouchableOpacity>
   )

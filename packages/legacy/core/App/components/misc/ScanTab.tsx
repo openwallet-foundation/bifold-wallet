@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface ScanTabProps {
   onPress: () => void
@@ -36,7 +37,7 @@ const ScanTab: React.FC<ScanTabProps> = ({ onPress, active, iconName, title }) =
       testID={testIdWithKey(title)}
     >
       <Icon name={iconName} size={30} color={styles.text.color}></Icon>
-      {showLabels ? <Text style={styles.text}>{title}</Text> : null}
+      {showLabels ? <ThemedText style={styles.text}>{title}</ThemedText> : null}
     </TouchableOpacity>
   )
 }

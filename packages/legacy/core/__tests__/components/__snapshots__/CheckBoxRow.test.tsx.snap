@@ -78,17 +78,25 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
     </Text>
   </View>
   <Text
+    maxFontSizeMultiplier={2}
     style={
       Array [
         Object {
           "color": "#FFFFFF",
-          "flexShrink": 1,
           "fontSize": 18,
           "fontWeight": "normal",
-          "marginLeft": 10,
-          "marginRight": 0,
         },
-        Object {},
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "flexShrink": 1,
+            "fontSize": 18,
+            "fontWeight": "normal",
+            "marginLeft": 10,
+            "marginRight": 0,
+          },
+          Object {},
+        ],
       ]
     }
   >

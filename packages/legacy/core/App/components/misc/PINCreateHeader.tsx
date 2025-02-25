@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../../contexts/theme'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import { ThemedText } from '../texts/ThemedText'
 
 export interface PINCreateHeaderProps {
   updatePin?: boolean
@@ -11,12 +12,12 @@ const PINCreateHeader = ({ updatePin }: PINCreateHeaderProps) => {
   const { t } = useTranslation()
   return (
     <View>
-      <Text style={[TextTheme.normal, { marginBottom: 16 }]}>
-        <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>
+      <ThemedText style={{ marginBottom: 16 }}>
+        <ThemedText style={{ fontWeight: TextTheme.bold.fontWeight }}>
           {updatePin ? t('PINCreate.RememberChangePIN') : t('PINCreate.RememberPIN')}
-        </Text>{' '}
+        </ThemedText>{' '}
         {t('PINCreate.PINDisclaimer')}
-      </Text>
+      </ThemedText>
     </View>
   )
 }

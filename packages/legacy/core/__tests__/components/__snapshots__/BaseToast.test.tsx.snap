@@ -96,6 +96,7 @@ exports[`BaseToast Component Error renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -103,12 +104,14 @@ exports[`BaseToast Component Error renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "fontWeight": "bold",
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastTitle"
@@ -116,6 +119,7 @@ exports[`BaseToast Component Error renders correctly 1`] = `
           Hello World
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -123,12 +127,14 @@ exports[`BaseToast Component Error renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 10,
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "marginTop": 10,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastBody"
@@ -298,6 +304,7 @@ exports[`BaseToast Component Info renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -305,12 +312,14 @@ exports[`BaseToast Component Info renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "fontWeight": "bold",
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastTitle"
@@ -318,6 +327,7 @@ exports[`BaseToast Component Info renders correctly 1`] = `
           Hello World
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -325,12 +335,14 @@ exports[`BaseToast Component Info renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 10,
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "marginTop": 10,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastBody"
@@ -500,6 +512,7 @@ exports[`BaseToast Component Success renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -507,12 +520,14 @@ exports[`BaseToast Component Success renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "fontWeight": "bold",
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastTitle"
@@ -520,6 +535,7 @@ exports[`BaseToast Component Success renders correctly 1`] = `
           Hello World
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -527,12 +543,14 @@ exports[`BaseToast Component Success renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 10,
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "marginTop": 10,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastBody"
@@ -702,6 +720,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -709,12 +728,14 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "fontWeight": "bold",
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastTitle"
@@ -722,6 +743,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
           Hello World
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -729,12 +751,14 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 10,
-              },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Array [
+                Object {
+                  "marginTop": 10,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+              ],
             ]
           }
           testID="com.ariesbifold:id/ToastBody"
