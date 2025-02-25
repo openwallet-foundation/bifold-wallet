@@ -154,7 +154,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
   const isContinueDisabled = (): boolean => {
     if (inlineMessages.enabled) {
-      return false
+      return !continueEnabled
     }
     return !continueEnabled || PIN.length < minPINLength
   }
