@@ -18,7 +18,7 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -65,6 +65,7 @@ import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ProofRequestProps = {
   navigation: any
@@ -659,22 +660,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                     size={ListItems.proofIcon.fontSize}
                   />
 
-                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                  <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
-                    <Text style={TextTheme.title}>
+                    <ThemedText variant="title">
                       {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
-                    </Text>
-                  </Text>
+                    </ThemedText>
+                  </ThemedText>
                 </View>
               ) : (
-                <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <Text style={TextTheme.title}>
+                <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                  <ThemedText variant="title">
                     {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
-                  </Text>{' '}
-                  <Text>{t('ProofRequest.IsRequestingYouToShare')}</Text>
-                  <Text style={TextTheme.title}>{` ${activeCreds?.length} `}</Text>
-                  <Text>{activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}</Text>
-                </Text>
+                  </ThemedText>{' '}
+                  <ThemedText>{t('ProofRequest.IsRequestingYouToShare')}</ThemedText>
+                  <ThemedText variant="title">{` ${activeCreds?.length} `}</ThemedText>
+                  <ThemedText>
+                    {activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}
+                  </ThemedText>
+                </ThemedText>
               )}
               {isShareDisabled() && (
                 <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
@@ -813,15 +816,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     return (
       <View style={styles.pageMargin}>
         {!(loading || attestationLoading) && (
-          <Text
+          <ThemedText
+            variant="title"
             testID={testIdWithKey('ProofRequestHeaderText')}
             style={{
-              ...TextTheme.title,
               marginTop: 10,
             }}
           >
             {headerText}
-          </Text>
+          </ThemedText>
         )}
       </View>
     )

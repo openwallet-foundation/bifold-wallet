@@ -1,8 +1,9 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { Role } from '../../types/chat'
+import { ThemedText } from '../texts/ThemedText'
 
 interface ChatEventProps {
   userLabel?: string
@@ -16,14 +17,14 @@ export const ChatEvent: React.FC<ChatEventProps> = ({ userLabel, actionLabel, ro
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {userLabel && (
-        <Text style={[role === Role.me ? ChatTheme.rightText : ChatTheme.leftText, { marginRight: 4 }]}>
+        <ThemedText style={[role === Role.me ? ChatTheme.rightText : ChatTheme.leftText, { marginRight: 4 }]}>
           {userLabel}
-        </Text>
+        </ThemedText>
       )}
       {actionLabel && (
-        <Text style={role === Role.me ? ChatTheme.rightTextHighlighted : ChatTheme.leftTextHighlighted}>
+        <ThemedText style={role === Role.me ? ChatTheme.rightTextHighlighted : ChatTheme.leftTextHighlighted}>
           {actionLabel}
-        </Text>
+        </ThemedText>
       )}
     </View>
   )

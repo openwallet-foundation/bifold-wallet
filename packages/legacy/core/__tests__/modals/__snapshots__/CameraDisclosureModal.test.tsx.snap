@@ -32,18 +32,23 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
       <View>
         <Text
           accessibilityRole="header"
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 38,
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 38,
+                "fontWeight": "bold",
+              },
+              undefined,
+            ]
           }
           testID="com.ariesbifold:id/AllowCameraUse"
         >
           CameraDisclosure.AllowCameraUse
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -60,6 +65,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
           CameraDisclosure.CameraDisclosure
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -67,9 +73,14 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
                 "fontSize": 18,
                 "fontWeight": "normal",
               },
-              Object {
-                "marginTop": 30,
-              },
+              Array [
+                Object {
+                  "marginTop": 30,
+                },
+                Object {
+                  "marginBottom": 20,
+                },
+              ],
             ]
           }
         >
@@ -143,17 +154,25 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
+                    "fontWeight": "normal",
                   },
-                  false,
-                  false,
-                  false,
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ],
                 ]
               }
             >
@@ -220,17 +239,25 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
-                    "color": "#42803E",
+                    "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
+                    "fontWeight": "normal",
                   },
-                  false,
-                  false,
-                  false,
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ],
                 ]
               }
             >

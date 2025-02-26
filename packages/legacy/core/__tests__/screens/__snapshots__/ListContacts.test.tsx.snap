@@ -167,13 +167,19 @@ exports[`ListContacts Screen Renders correctly 1`] = `
               }
             >
               <Text
+                allowFontScaling={false}
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 21,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 21,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 B
@@ -204,12 +210,16 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                   }
                 >
                   <Text
+                    maxFontSizeMultiplier={2}
                     style={
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 16,
-                        "fontWeight": "bold",
-                      }
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 16,
+                          "fontWeight": "bold",
+                        },
+                        undefined,
+                      ]
                     }
                   >
                     BestBC College
@@ -304,13 +314,19 @@ exports[`ListContacts Screen Renders correctly 1`] = `
               }
             >
               <Text
+                allowFontScaling={false}
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 21,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 21,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 B
@@ -341,12 +357,16 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                   }
                 >
                   <Text
+                    maxFontSizeMultiplier={2}
                     style={
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 16,
-                        "fontWeight": "bold",
-                      }
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 16,
+                          "fontWeight": "bold",
+                        },
+                        undefined,
+                      ]
                     }
                   >
                     BestBC College
@@ -441,13 +461,19 @@ exports[`ListContacts Screen Renders correctly 1`] = `
               }
             >
               <Text
+                allowFontScaling={false}
+                maxFontSizeMultiplier={2}
                 style={
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 21,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 21,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 B
@@ -478,12 +504,16 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                   }
                 >
                   <Text
+                    maxFontSizeMultiplier={2}
                     style={
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 16,
-                        "fontWeight": "bold",
-                      }
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 16,
+                          "fontWeight": "bold",
+                        },
+                        undefined,
+                      ]
                     }
                   >
                     BestBC Tea
