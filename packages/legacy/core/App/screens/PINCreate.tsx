@@ -98,8 +98,19 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
+  const PINValidationRules = {
+    only_numbers: true,
+    min_length: 6,
+    max_length: 7,
+    no_repeated_numbers: true,
+    no_repetition_of_the_two_same_numbers: true,
+    no_series_of_numbers: true,
+    no_even_or_odd_series_of_numbers: true,
+    no_cross_pattern: true
+  }
+
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
-    PINCreationValidations(PIN, PINSecurity.rules)
+    PINCreationValidations(PIN, PINValidationRules)
   )
 
   const style = StyleSheet.create({
@@ -306,7 +317,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             label={t('PINCreate.EnterPINTitle', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
             onPINChanged={(p: string) => {
               setPIN(p)
-              setPINOneValidations(PINCreationValidations(p, PINSecurity.rules))
+              setPINOneValidations(PINCreationValidations(p, PINValidationRules))
 
               if (p.length === minPINLength) {
                 if (PINTwoInputRef && PINTwoInputRef.current) {
@@ -347,7 +358,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
           />
-          {PINSecurity.displayHelper && (
+          {true && (
             <View style={{ marginBottom: 16 }}>
               {PINOneValidations.map((validation, index) => {
                 return (
@@ -368,7 +379,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                       />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                      {t(`PINCreate.Helper.${validation.errorName}`)}
+                      {t(`PINCreate.Helper.${validation.errorName}`, { ...validation.errorTextAddition })}
                     </Text>
                   </View>
                 )
