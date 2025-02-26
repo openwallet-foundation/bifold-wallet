@@ -20,6 +20,7 @@ export enum PINError {
 export interface PINValidationsType {
   isInvalid: boolean
   errorName: PINError
+  errorTextAddition?: Record<string, string>
 }
 
 export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules) => {
@@ -74,6 +75,7 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
   PINValidations.push({
     isInvalid: PIN.length < PINRules.min_length || PIN.length > PINRules.max_length,
     errorName: PIN.length <= PINRules.max_length ? PINError.PINTooShortValidation : PINError.PINTooLongValidation,
+    errorTextAddition: { num: PIN.length <= PINRules.max_length ? `${PINRules.min_length}` : `${PINRules.max_length}` }
   } as PINValidationsType)
 
   return PINValidations
