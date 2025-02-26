@@ -89,7 +89,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       })
     } else {
       navigation.setOptions({
-        ...(defaultScreenOptionsDict[Screens.Contacts]?.headerRight ?? false),
+        headerRight: defaultScreenOptionsDict[Screens.Contacts]?.headerRight,
       })
     }
   }, [store.preferences.useConnectionInviterCapability, navigation, t, onPressAddContact, defaultScreenOptionsDict])
