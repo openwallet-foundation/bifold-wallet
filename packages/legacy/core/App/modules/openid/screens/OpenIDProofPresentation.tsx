@@ -3,7 +3,6 @@ import { DeviceEventEmitter } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { StackScreenProps } from '@react-navigation/stack'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -23,11 +22,13 @@ import { EventTypes } from '../../../constants'
 import { shareProof } from '../resolverProof'
 import ProofRequestAccept from '../../../screens/ProofRequestAccept'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { CredentialCard } from '../../../components/misc'
 import { getCredentialForDisplay } from '../display'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { Attribute } from '@hyperledger/aries-oca/build/legacy'
+import ScreenLayout from '../../../layout/ScreenLayout'
+import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -37,13 +38,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     params: { credential },
   },
 }: OpenIDProofPresentationProps) => {
-  //   console.log('DUMp Record:', JSON.stringify(credential))
-
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const [credentialsRequested, setCredentialsRequested] = useState<W3cCredentialRecord[]>([])
-  const { getCredentialById } = useOpenIDCredentials()
+  const [credentialsRequested, setCredentialsRequested] = useState<
+    Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord>
+  >([])
+  const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -97,14 +98,23 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const selectedCredentials:
     | {
-        [inputDescriptorId: string]: string
+        [inputDescriptorId: string]: {
+          id: string
+          claimFormat: string
+        }
       }
     | undefined = useMemo(
     () =>
       submission?.entries.reduce((acc, entry) => {
         if (entry.isSatisfied) {
           //TODO: Support multiplae credentials
-          return { ...acc, [entry.inputDescriptorId]: entry.credentials[0].id }
+          return {
+            ...acc,
+            [entry.inputDescriptorId]: {
+              id: entry.credentials[0].id,
+              claimFormat: entry.credentials[0].claimFormat,
+            },
+          }
         }
         return acc
       }, {}),
@@ -115,17 +125,24 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     async function fetchCreds() {
       if (!selectedCredentials) return
 
-      const creds: W3cCredentialRecord[] = []
-      for (const [inputDescriptorID, credentialId] of Object.entries(selectedCredentials)) {
-        const credential = await getCredentialById(credentialId)
+      const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
+
+      for (const [inputDescriptorID, { id, claimFormat }] of Object.entries(selectedCredentials)) {
+        let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
+        if (isW3CProofRequest(claimFormat)) {
+          credential = await getW3CCredentialById(id)
+        } else if (isSdJwtProofRequest(claimFormat)) {
+          credential = await getSdJwtCredentialById(id)
+        }
+
         if (credential && inputDescriptorID) {
-          creds.push(credential as W3cCredentialRecord)
+          creds.push(credential)
         }
       }
       setCredentialsRequested(creds)
     }
     fetchCreds()
-  }, [selectedCredentials, getCredentialById])
+  }, [selectedCredentials, getW3CCredentialById, getSdJwtCredentialById])
 
   const { verifierName } = useMemo(() => {
     return { verifierName: credential?.verifierHostName }
@@ -156,6 +173,10 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
+  const handleDismiss = async () => {
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
   const renderHeader = () => {
     return (
       <View style={styles.headerTextContainer}>
@@ -177,7 +198,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
     const requestedAttributes = selectedCredential.requestedAttributes
     const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
-
     return <CredentialCard credential={credential} displayItems={fieldsMapped as Attribute[]} />
   }
 
@@ -194,9 +214,9 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
             <View key={i}>
               <OpenIDCredentialRowCard
                 name={s.name}
-                bgColor={selectedCredential.backgroundColor}
-                txtColor={selectedCredential.textColor}
-                bgImage={selectedCredential.backgroundImage?.url}
+                bgColor={selectedCredential?.backgroundColor}
+                txtColor={selectedCredential?.textColor}
+                bgImage={selectedCredential?.backgroundImage?.url}
                 issuer={verifierName}
                 onPress={() => {}}
               />
@@ -245,26 +265,40 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           backgroundColor: ColorPallet.brand.secondaryBackground,
         }}
       >
-        {footerButton(
-          t('Global.Accept'),
-          handleAcceptTouched,
-          ButtonType.Primary,
-          testIdWithKey('AcceptCredentialOffer'),
-          t('Global.Accept')
-        )}
-        {footerButton(
-          t('Global.Decline'),
-          toggleDeclineModalVisible,
-          ButtonType.Secondary,
-          testIdWithKey('DeclineCredentialOffer'),
-          t('Global.Decline')
+        {selectedCredentials && Object.keys(selectedCredentials).length > 0 ? (
+          <>
+            {footerButton(
+              t('Global.Accept'),
+              handleAcceptTouched,
+              ButtonType.Primary,
+              testIdWithKey('AcceptCredentialOffer'),
+              t('Global.Accept')
+            )}
+            {footerButton(
+              t('Global.Decline'),
+              toggleDeclineModalVisible,
+              ButtonType.Secondary,
+              testIdWithKey('DeclineCredentialOffer'),
+              t('Global.Decline')
+            )}
+          </>
+        ) : (
+          <>
+            {footerButton(
+              t('Global.Dismiss'),
+              handleDismiss,
+              ButtonType.Primary,
+              testIdWithKey('DismissCredentialOffer'),
+              t('Global.Dismiss')
+            )}
+          </>
         )}
       </View>
     )
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
+    <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
       <ScrollView>
         <View style={styles.pageContent}>
           {renderHeader()}
@@ -281,7 +315,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   )
 }
 

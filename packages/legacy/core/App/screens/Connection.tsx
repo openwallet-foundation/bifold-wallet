@@ -1,6 +1,7 @@
 import {
   BasicMessageRecord,
   CredentialExchangeRecord,
+  MdocRecord,
   ProofExchangeRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
@@ -299,7 +300,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     if (
       (state.notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-      (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord'
+      (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+      (state.notificationRecord as MdocRecord).type === 'MdocRecord'
     ) {
       logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
       dispatch({ inProgress: false })
@@ -342,6 +344,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       if (
         (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
         (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+        (notification as MdocRecord).type === 'MdocRecord' ||
         (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
       ) {
         dispatch({ notificationRecord: notification })
