@@ -205,6 +205,7 @@ export const getCredentialsForProofRequest = async ({
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
     }
+
     return {
       ...resolved.presentationExchange,
       authorizationRequest: resolved.authorizationRequest,
@@ -230,7 +231,7 @@ export const shareProof = async ({
   agent: Agent
   authorizationRequest: OpenId4VcSiopVerifiedAuthorizationRequest
   credentialsForRequest: DifPexCredentialsForRequest
-  selectedCredentials: { [inputDescriptorId: string]: string }
+  selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
   allowUntrustedCertificate?: boolean
 }) => {
   if (!credentialsForRequest.areRequirementsSatisfied) {
@@ -243,7 +244,7 @@ export const shareProof = async ({
   const credentials = Object.fromEntries(
     credentialsForRequest.requirements.flatMap((requirement) =>
       requirement.submissionEntry.map((entry) => {
-        const credentialId = selectedCredentials[entry.inputDescriptorId]
+        const credentialId = selectedCredentials[entry.inputDescriptorId].id
         const credential =
           entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
           entry.verifiableCredentials[0]

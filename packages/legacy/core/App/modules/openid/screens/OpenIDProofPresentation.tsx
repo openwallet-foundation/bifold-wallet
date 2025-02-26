@@ -22,12 +22,13 @@ import { EventTypes } from '../../../constants'
 import { shareProof } from '../resolverProof'
 import ProofRequestAccept from '../../../screens/ProofRequestAccept'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { CredentialCard } from '../../../components/misc'
 import { getCredentialForDisplay } from '../display'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 import ScreenLayout from '../../../layout/ScreenLayout'
+import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -37,13 +38,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     params: { credential },
   },
 }: OpenIDProofPresentationProps) => {
-  //   console.log('DUMp Record:', JSON.stringify(credential))
-
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const [credentialsRequested, setCredentialsRequested] = useState<W3cCredentialRecord[]>([])
-  const { getW3CCredentialById } = useOpenIDCredentials()
+  const [credentialsRequested, setCredentialsRequested] = useState<
+    Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord>
+  >([])
+  const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -97,14 +98,23 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const selectedCredentials:
     | {
-        [inputDescriptorId: string]: string
+        [inputDescriptorId: string]: {
+          id: string
+          claimFormat: string
+        }
       }
     | undefined = useMemo(
     () =>
       submission?.entries.reduce((acc, entry) => {
         if (entry.isSatisfied) {
           //TODO: Support multiplae credentials
-          return { ...acc, [entry.inputDescriptorId]: entry.credentials[0].id }
+          return {
+            ...acc,
+            [entry.inputDescriptorId]: {
+              id: entry.credentials[0].id,
+              claimFormat: entry.credentials[0].claimFormat,
+            },
+          }
         }
         return acc
       }, {}),
@@ -115,17 +125,24 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     async function fetchCreds() {
       if (!selectedCredentials) return
 
-      const creds: W3cCredentialRecord[] = []
-      for (const [inputDescriptorID, credentialId] of Object.entries(selectedCredentials)) {
-        const credential = await getW3CCredentialById(credentialId)
+      const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
+
+      for (const [inputDescriptorID, { id, claimFormat }] of Object.entries(selectedCredentials)) {
+        let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
+        if (isW3CProofRequest(claimFormat)) {
+          credential = await getW3CCredentialById(id)
+        } else if (isSdJwtProofRequest(claimFormat)) {
+          credential = await getSdJwtCredentialById(id)
+        }
+
         if (credential && inputDescriptorID) {
-          creds.push(credential as W3cCredentialRecord)
+          creds.push(credential)
         }
       }
       setCredentialsRequested(creds)
     }
     fetchCreds()
-  }, [selectedCredentials, getW3CCredentialById])
+  }, [selectedCredentials, getW3CCredentialById, getSdJwtCredentialById])
 
   const { verifierName } = useMemo(() => {
     return { verifierName: credential?.verifierHostName }
@@ -181,12 +198,12 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
     const requestedAttributes = selectedCredential.requestedAttributes
     const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
-
     return <CredentialCard credential={credential} displayItems={fieldsMapped as Attribute[]} />
   }
 
   const renderBody = () => {
     if (!submission) return null
+
     return (
       <View style={styles.credentialsList}>
         {submission.entries.map((s, i) => {

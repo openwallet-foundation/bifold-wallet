@@ -117,3 +117,17 @@ export function isDateString(value: string) {
   // We do the length check first to avoid unnecesary regex
   return value.length === 'yyyy-mm-dd'.length && value.match(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
 }
+
+export function isW3CProofRequest(type: string): boolean {
+  if (type === 'jwt_vc') {
+    return true
+  }
+  return false
+}
+
+export function isSdJwtProofRequest(type: string): boolean {
+  if (type === 'vc+sd-jwt') {
+    return true
+  }
+  return false
+}
