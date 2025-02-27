@@ -1,6 +1,6 @@
 export interface WalletSecret {
   id: string
-  key?: string
+  key: string
   salt: string
 }
 

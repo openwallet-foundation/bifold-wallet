@@ -50,12 +50,12 @@ interface ModalState {
 const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus, route }) => {
   const updatePin = (route.params as any)?.updatePin
   const { agent } = useAppAgent()
-  const { setPIN: setWalletPIN, checkPIN, rekeyWallet } = useAuth()
+  const { setPIN: setWalletPIN, checkWalletPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
   const [PINOld, setPINOld] = useState('')
   const [continueEnabled, setContinueEnabled] = useState(true)
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
     title: '',
@@ -192,13 +192,13 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   const checkOldPIN = useCallback(
     async (PIN: string): Promise<boolean> => {
-      const valid = await checkPIN(PIN)
+      const valid = await checkWalletPIN(PIN)
       if (!valid) {
         displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
       }
       return valid
     },
-    [checkPIN, t]
+    [checkWalletPIN, t]
   )
 
   const confirmEntry = useCallback(
@@ -235,7 +235,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   }, [agent, historyEnabled, logger, historyManagerCurried])
 
   const handleCreatePinTap = async () => {
-    setLoading(true)
+    setIsLoading(true)
     if (updatePin) {
       const valid = validatePINEntry(PIN, PINTwo)
       if (valid) {
@@ -262,7 +262,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     } else {
       await confirmEntry(PIN, PINTwo)
     }
-    setLoading(false)
+    setIsLoading(false)
   }
 
   const isContinueDisabled = (): boolean => {
@@ -308,7 +308,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
               setPINOneValidations(PINCreationValidations(p, PINSecurity.rules))
 
               if (p.length === minPINLength) {
-                if (PINTwoInputRef && PINTwoInputRef.current) {
+                if (PINTwoInputRef?.current) {
                   PINTwoInputRef.current.focus()
                   // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
                   // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
@@ -330,7 +330,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
               setPINTwo(p)
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
-                if (createPINButtonRef && createPINButtonRef.current) {
+                if (createPINButtonRef?.current) {
                   // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
                   // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
                   const reactTag = findNodeHandle(createPINButtonRef.current)
@@ -352,9 +352,19 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                 return (
                   <View style={{ flexDirection: 'row' }} key={index}>
                     {validation.isInvalid ? (
-                      <Icon accessibilityLabel={t("PINCreate.Helper.ClearIcon")} name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
+                      <Icon
+                        accessibilityLabel={t('PINCreate.Helper.ClearIcon')}
+                        name="clear"
+                        size={iconSize}
+                        color={ColorPallet.notification.errorIcon}
+                      />
                     ) : (
-                      <Icon accessibilityLabel={t("PINCreate.Helper.CheckIcon")} name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
+                      <Icon
+                        accessibilityLabel={t('PINCreate.Helper.CheckIcon')}
+                        name="check"
+                        size={iconSize}
+                        color={ColorPallet.notification.successIcon}
+                      />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
                       {t(`PINCreate.Helper.${validation.errorName}`)}
