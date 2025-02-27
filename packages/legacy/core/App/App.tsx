@@ -22,6 +22,7 @@ import RootStack from './navigators/RootStack'
 import { theme } from './theme'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { tours } from './constants'
+import './DebugCode'
 
 const App = (system: Container): React.FC => {
   initLanguages(translationResources)
