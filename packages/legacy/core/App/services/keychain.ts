@@ -10,6 +10,7 @@ import { hashPIN } from '../utils/crypto'
 const keyFauxUserName = 'WalletFauxPINUserName'
 const saltFauxUserName = 'WalletFauxSaltUserName'
 const loginAttemptFauxUserName = 'WalletFauxLoginAttemptUserName'
+// TODO: consider combing WalletSalt, WalletKey all into Wallet Secret, then using partials when required
 export interface WalletSalt {
   id: string
   salt: string

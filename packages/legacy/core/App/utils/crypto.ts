@@ -7,6 +7,6 @@ export const hashPIN = async (PIN: string, salt: string): Promise<string> => {
 
     return rawHash
   } catch (error) {
-    throw new Error('Error generating hash for PIN' + String(error))
+    throw new Error(`Error generating hash for PIN ${String((error as Error)?.message ?? error)}`)
   }
 }
