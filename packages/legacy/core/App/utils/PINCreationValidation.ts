@@ -16,6 +16,7 @@ export enum PINError {
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
   PINTooShortValidation = 'PINTooShortValidation',
   PINTooLongValidation = 'PINTooLongValidation',
+  PINIsExpectedLength = 'PINExpectedLengthValidation',
 }
 
 export interface PINValidationsType {
@@ -79,12 +80,19 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
       errorName: PINError.PINOnlyContainDigitsValidation,
     } as PINValidationsType)
   }
-
-  PINValidations.push({
-    isInvalid: PIN.length < PINRules.min_length || PIN.length > PINRules.max_length,
-    errorName: PIN.length <= PINRules.max_length ? PINError.PINTooShortValidation : PINError.PINTooLongValidation,
-    errorTextAddition: { num: PIN.length <= PINRules.max_length ? `${PINRules.min_length}` : `${PINRules.max_length}` }
-  } as PINValidationsType)
+  if (PINRules.min_length === PINRules.max_length) {
+    PINValidations.push({
+      isInvalid: PIN.length < PINRules.min_length || PIN.length > PINRules.max_length,
+      errorName: PINError.PINIsExpectedLength,
+      errorTextAddition: { num: `${PINRules.min_length}` }
+    } as PINValidationsType)
+  } else {
+    PINValidations.push({
+      isInvalid: PIN.length < PINRules.min_length || PIN.length > PINRules.max_length,
+      errorName: PIN.length <= PINRules.max_length ? PINError.PINTooShortValidation : PINError.PINTooLongValidation,
+      errorTextAddition: { num: PIN.length <= PINRules.max_length ? `${PINRules.min_length - 1}` : `${PINRules.max_length + 1}` }
+    } as PINValidationsType)
+  }
 
   return PINValidations
 }
