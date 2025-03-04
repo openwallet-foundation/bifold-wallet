@@ -147,6 +147,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         elevated={proof}
         displayItems={displayItems}
         hideSlice={true}
+        hasAltCredentials={hasAltCredentials}
+        handleAltCredChange={handleAltCredChange}
         extraOverlayParameter={extraOverlayAttribute}
         brandingOverlayType={bundleResolver.getBrandingOverlayType()}
       />

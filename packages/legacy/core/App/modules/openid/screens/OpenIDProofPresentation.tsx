@@ -12,7 +12,6 @@ import {
   FormattedSubmissionEntry,
 } from '../displayProof'
 import { testIdWithKey } from '../../../utils/testable'
-import { OpenIDCredentialRowCard } from '../components/CredentialRowCard'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../../types/remove'
 import Button, { ButtonType } from '../../../components/buttons/Button'
@@ -85,6 +84,15 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       borderWidth: 1,
       borderRadius: 8,
       padding: 8,
+    },
+    cardGroupContainer: {
+      borderRadius: 8,
+      borderWidth: 2,
+      borderColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    cardGroupHeader: {
+      padding: 8,
+      marginVertical: 8,
     },
   })
 
@@ -189,7 +197,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     )
   }
 
-  const renderCard = (sub: FormattedSubmissionEntry, selectedCredential: FormattedSelectedCredentialEntry) => {
+  const selectAltCredentail = () => {}
+
+  const renderCard = (
+    sub: FormattedSubmissionEntry,
+    selectedCredential: FormattedSelectedCredentialEntry,
+    hasMultipleCreds: boolean
+  ) => {
     const credential = credentialsRequested.find((c) => c.id === selectedCredential.id)
     if (!credential) {
       return null
@@ -198,7 +212,14 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
     const requestedAttributes = selectedCredential.requestedAttributes
     const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
-    return <CredentialCard credential={credential} displayItems={fieldsMapped as Attribute[]} />
+    return (
+      <CredentialCard
+        credential={credential}
+        displayItems={fieldsMapped as Attribute[]}
+        hasAltCredentials={hasMultipleCreds}
+        handleAltCredChange={selectAltCredentail}
+      />
+    )
   }
 
   const renderBody = () => {
@@ -210,22 +231,30 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           //TODO: Support multiplae credentials
           const selectedCredential = s.credentials[0]
 
+          const globalSubmissionName = submission.name
+          const globalSubmissionPurpose = submission.purpose
+          const submissionName = s.name
+          const submissionPurpose = s.purpose
+
+          const name = submissionName || globalSubmissionName || undefined
+          const purpose = submissionPurpose || globalSubmissionPurpose || undefined
+
           return (
             <View key={i}>
-              <OpenIDCredentialRowCard
-                name={s.name}
-                bgColor={selectedCredential?.backgroundColor}
-                txtColor={selectedCredential?.textColor}
-                bgImage={selectedCredential?.backgroundImage?.url}
-                issuer={verifierName}
-                onPress={() => {}}
-              />
               <View style={styles.cardContainer}>
-                {s.isSatisfied && selectedCredential?.requestedAttributes ? (
-                  renderCard(s, selectedCredential)
-                ) : (
-                  <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
-                )}
+                <View style={styles.cardGroupContainer}>
+                  {name && purpose && (
+                    <View style={styles.cardGroupHeader}>
+                      <Text style={TextTheme.labelSubtitle}>{name}</Text>
+                      <Text style={TextTheme.labelSubtitle}>{purpose}</Text>
+                    </View>
+                  )}
+                  {s.isSatisfied && selectedCredential?.requestedAttributes ? (
+                    renderCard(s, selectedCredential, s.credentials.length > 1)
+                  ) : (
+                    <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
+                  )}
+                </View>
               </View>
             </View>
           )
@@ -302,7 +331,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       <ScrollView>
         <View style={styles.pageContent}>
           {renderHeader()}
-          {submission?.purpose && <Text style={TextTheme.labelSubtitle}>{submission.purpose}</Text>}
           {renderBody()}
         </View>
       </ScrollView>
