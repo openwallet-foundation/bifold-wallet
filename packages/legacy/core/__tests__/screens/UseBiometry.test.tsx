@@ -1,6 +1,5 @@
 import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
-
 import { AuthContext } from '../../App/contexts/auth'
 import UseBiometry from '../../App/screens/UseBiometry'
 import { testIdWithKey } from '../../App/utils/testable'
@@ -17,6 +16,30 @@ const mockedCheck = check as jest.MockedFunction<typeof check>
 const mockedRequest = request as jest.MockedFunction<typeof request>
 
 jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
+
+jest.mock('@react-navigation/elements', () => ({
+  Header: jest.fn().mockImplementation(() => {
+    const Component = () => null;
+    Component.displayName = 'Header';
+    return Component;
+  }),
+  HeaderBackButton: jest.fn().mockImplementation(() => {
+    const Component = () => null;
+    Component.displayName = 'HeaderBackButton';
+    return Component;
+  }),
+  useHeaderHeight: jest.fn().mockReturnValue(150)
+}));
+
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: jest.fn().mockReturnValue({
+    top: 25,
+    bottom: 25,
+    left: 0,
+    right: 0
+  }),
+  SafeAreaView: jest.fn().mockImplementation(({children}) => children)
+}));
 
 const customStore = {
   ...testDefaultState,
@@ -46,7 +69,7 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+            <UseBiometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -63,7 +86,7 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+            <UseBiometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )

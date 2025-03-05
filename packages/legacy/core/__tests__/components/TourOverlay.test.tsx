@@ -2,13 +2,10 @@ import { act, render } from '@testing-library/react-native'
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { credentialOfferTourSteps } from '../../App/components/tour/CredentialOfferTourSteps'
-import { credentialsTourSteps } from '../../App/components/tour/CredentialsTourSteps'
-import { homeTourSteps } from '../../App/components/tour/HomeTourSteps'
-import { proofRequestTourSteps } from '../../App/components/tour/ProofRequestTourSteps'
 import { TourOverlay } from '../../App/components/tour/TourOverlay'
 import { TourProvider } from '../../App/contexts/tour/tour-provider'
-import { TourID } from '../../App/types/tour'
+import { tours } from '../../App/constants'
+import { BaseTourID } from '../../App/types/tour'
 
 const tourStep = {
   Render: () => {
@@ -21,28 +18,21 @@ const tourStep = {
 }
 
 describe('TourOverlay Component', () => {
-  beforeAll(()=>{
+  beforeAll(() => {
     jest.useFakeTimers()
   })
-  afterAll(()=>{
+  afterAll(() => {
     jest.useRealTimers()
   })
   test('Renders properly with defaults', async () => {
     const changeSpot = jest.fn()
     const onBackdropPress = jest.fn()
     const tree = render(
-      <TourProvider
-        homeTourSteps={homeTourSteps}
-        credentialsTourSteps={credentialsTourSteps}
-        credentialOfferTourSteps={credentialOfferTourSteps}
-        proofRequestTourSteps={proofRequestTourSteps}
-        overlayColor={'gray'}
-        overlayOpacity={0.7}
-      >
+      <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
         <TourOverlay
           color={'grey'}
           currentStep={0}
-          currentTour={TourID.HomeTour}
+          currentTour={BaseTourID.HomeTour}
           changeSpot={changeSpot}
           backdropOpacity={0.7}
           onBackdropPress={onBackdropPress}
@@ -52,7 +42,9 @@ describe('TourOverlay Component', () => {
         />
       </TourProvider>
     )
-    await act(()=>{ jest.runAllTimers() })
+    await act(() => {
+      jest.runAllTimers()
+    })
     expect(tree).toMatchSnapshot()
   })
 })

@@ -223,6 +223,8 @@ const translation = {
             "PINOnlyContainDigitsValidation": "Doit contenir que des chiffres.",
             "PINTooShortValidation": "Le NIP est trop court. Veuillez saisir le NIP à nouveau.",
             "PINTooLongValidation": "Le NIP est trop long. Veuillez saisir le NIP à nouveau.",
+            "CheckIcon": "Critère respecté",
+            "ClearIcon": "Critère non-respecté",
         },
         "UserAuthenticationPIN": "NIP d'authentification de l'utilisateur",
         "PINTooShort": "NIP trop court",
@@ -275,6 +277,10 @@ const translation = {
         "AppSettingChangedEnterPIN": "Veuillez confirmer la modification en saisissant votre NIP.",
         "AppSettingSave": "Enregistrer",
         "AppSettingCancel": "Annuler",
+        "ChangeBiometricsHeader": "Change in biometrics (FR)",
+        "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (FR)",
+        "ChangeBiometricsInputLabel": "Enter your wallet PIN (FR)",
+        "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)",
 
     },
     "AttemptLockout": {
@@ -494,6 +500,7 @@ const translation = {
         "CreatedAt": "Créé à :",
         "Version": "Version",
         "Issued": "Délivré",
+        "IssuedOn": "Émis le",
         "PrivacyPolicy": "Politique de confidentialité",
         "TermsAndConditions": "Conditions d'utilisation",
         "RemoveFromWallet": "Retirer du portefeuille",
@@ -512,6 +519,7 @@ const translation = {
         "CredentialRemoved": "Justificatif retiré",
         "IssuedBy": "Émis par:",
         "RemoveCredential": "Supprimer l'attestation d'identité",
+        "NavigateToIssuerDetailsHint": "Cliquez pour naviguer vers les détails de l'émetteur",
     },
     "Home": {
         "Notification": "Notification",

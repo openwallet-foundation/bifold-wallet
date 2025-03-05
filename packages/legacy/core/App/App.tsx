@@ -9,10 +9,6 @@ import { animatedComponents } from './animated-components'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import toastConfig from './components/toast/ToastConfig'
-import { credentialOfferTourSteps } from './components/tour/CredentialOfferTourSteps'
-import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
-import { homeTourSteps } from './components/tour/HomeTourSteps'
-import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { Container, ContainerProvider } from './container-api'
 import { ActivityProvider } from './contexts/activity'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
@@ -25,6 +21,7 @@ import { initLanguages, initStoredLanguage, translationResources } from './local
 import RootStack from './navigators/RootStack'
 import { theme } from './theme'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
+import { tours } from './constants'
 
 const App = (system: Container): React.FC => {
   initLanguages(translationResources)
@@ -58,14 +55,7 @@ const App = (system: Container): React.FC => {
                         />
                         <NetInfo />
                         <ErrorModal />
-                        <TourProvider
-                          homeTourSteps={homeTourSteps}
-                          credentialsTourSteps={credentialsTourSteps}
-                          credentialOfferTourSteps={credentialOfferTourSteps}
-                          proofRequestTourSteps={proofRequestTourSteps}
-                          overlayColor={'gray'}
-                          overlayOpacity={0.7}
-                        >
+                        <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
                           <RootStack />
                         </TourProvider>
                         <Toast topOffset={15} config={toastConfig} />

@@ -49,7 +49,6 @@ import {
   ProofCredentialPredicates,
 } from '../types/proof-items'
 import { ModalUsage } from '../types/remove'
-import { TourID } from '../types/tour'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import {
@@ -65,6 +64,7 @@ import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../component
 import ProofRequestAccept from './ProofRequestAccept'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { BaseTourID } from '../types/tour'
 
 type ProofRequestProps = {
   navigation: any
@@ -101,6 +101,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
+
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
@@ -203,7 +204,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(TourID.ProofRequestTour)
+      start(BaseTourID.ProofRequestTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_PROOF_REQUEST_TOUR,
         payload: [true],
@@ -561,11 +562,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const handleDeclineTouched = useCallback(async () => {
     try {
       if (agent && proof) {
-        await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        const connectionId = proof.connectionId ?? ''
+        const connection = await agent.connections.findById(connectionId)
+
+        if (connection) {
+          await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
+        }
+
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
-        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
-          agent.connections.deleteById(proof.connectionId)
+        if (connectionId && goalCode && goalCode.endsWith('verify.once')) {
+          agent.connections.deleteById(connectionId)
         }
       }
     } catch (err: unknown) {
@@ -714,7 +721,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {(!loading && proofConnectionLabel && goalCode === 'aries.vc.verify') && (
+        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         )}
         {!loading && isShareDisabled() ? (
@@ -772,7 +779,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           return (
             <View>
               {loading || attestationLoading ? null : (
-                <View style={{ marginTop: 10, marginHorizontal: 20 }}>
+                <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
                   <CredentialCard
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
