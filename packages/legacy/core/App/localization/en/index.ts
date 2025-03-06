@@ -237,6 +237,7 @@ const translation = {
     "PinChangeSuccessTitle": "Successfully changed your PIN",
     "PinChangeSuccessMessage": "Your PIN was successsfully changed. You can now log in with your new PIN.",
     "EnterOldPINTitle": "Enter your old PIN",
+    "EnterOldPIN": "Enter your old PIN",
     "NewPIN": "new",
     "EnterPINTitle": "Enter a {{ new }}6 digit PIN",
     "EnterPIN": "Enter PIN",
