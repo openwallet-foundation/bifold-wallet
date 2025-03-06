@@ -236,6 +236,7 @@ const translation = {
         "PinChangeSuccessTitle": "Votre NIP a été modifié avec succès",
         "PinChangeSuccessMessage": "Votre NIP a été modifié avec succès. Vous pouvez maintenant vous connecter avec votre nouveau NIP.",
         "EnterOldPINTitle": "Veuillez entrer votre ancien NIP",
+        "EnterOldPIN": "Saisir ancien NIP",
         "NewPIN": "nouveau",
         "EnterPINTitle": "Entrer un {{ new }}NIP à 6 chiffres",
         "EnterPIN": "Saisir un NIP",
