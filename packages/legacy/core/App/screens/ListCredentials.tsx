@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '@credo-ts/core'
+import { CredentialExchangeRecord, CredentialState, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -20,6 +20,7 @@ import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredential
 import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { BaseTourID } from '../types/tour'
+import { OpenIDCredentialType } from '../modules/openid/types'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -40,13 +41,14 @@ const ListCredentials: React.FC = () => {
   const { start, stop } = useTour()
   const screenIsFocused = useIsFocused()
   const {
-    openIdState: { w3cCredentialRecords },
+    openIdState: { w3cCredentialRecords, sdJwtVcRecords },
   } = useOpenIDCredentials()
 
   let credentials: GenericCredentialExchangeRecord[] = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
     ...w3cCredentialRecords,
+    ...sdJwtVcRecords,
   ]
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
@@ -86,7 +88,15 @@ const ListCredentials: React.FC = () => {
         }
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {
-            navigation.navigate(Screens.OpenIDCredentialDetails, { credentialId: cred.id })
+            navigation.navigate(Screens.OpenIDCredentialDetails, {
+              credentialId: cred.id,
+              type: OpenIDCredentialType.W3cCredential,
+            })
+          } else if (cred instanceof SdJwtVcRecord) {
+            navigation.navigate(Screens.OpenIDCredentialDetails, {
+              credentialId: cred.id,
+              type: OpenIDCredentialType.SdJwtVc,
+            })
           } else {
             navigation.navigate(Screens.CredentialDetails, { credentialId: cred.id })
           }

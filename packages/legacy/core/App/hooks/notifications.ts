@@ -2,6 +2,7 @@ import {
   BasicMessageRecord,
   CredentialExchangeRecord as CredentialRecord,
   CredentialState,
+  MdocRecord,
   ProofExchangeRecord,
   ProofState,
   SdJwtVcRecord,
@@ -33,6 +34,7 @@ export type NotificationReturnType = Array<
   | CustomNotification
   | SdJwtVcRecord
   | W3cCredentialRecord
+  | MdocRecord
   | OpenId4VPRequestRecord
 >
 
@@ -85,7 +87,7 @@ export const useNotifications = ({
       }
     })
 
-    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | OpenId4VPRequestRecord> = []
+    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord> = []
     if (openIDCredRecieved) {
       openIDCreds.push(openIDCredRecieved)
     }

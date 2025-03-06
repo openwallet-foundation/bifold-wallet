@@ -28,6 +28,7 @@ export interface FormattedSubmissionEntry {
   isSatisfied: boolean
 
   name: string
+  purpose?: string
   description?: string
 
   credentials: Array<FormattedSelectedCredentialEntry>
@@ -41,6 +42,7 @@ export function formatDifPexCredentialsForRequest(
       return {
         inputDescriptorId: submission.inputDescriptorId,
         name: submission.name ?? 'Unknown',
+        purpose: submission.purpose,
         description: submission.purpose,
         isSatisfied: submission.verifiableCredentials.length >= 1,
 
@@ -52,11 +54,11 @@ export function formatDifPexCredentialsForRequest(
           let disclosedPayload = attributes
           if (verifiableCredential.type === ClaimFormat.SdJwtVc) {
             disclosedPayload = filterAndMapSdJwtKeys(verifiableCredential.disclosedPayload).visibleProperties
-          } /* else if (verifiableCredential.type === ClaimFormat.MsoMdoc) {
+          } else if (verifiableCredential.type === ClaimFormat.MsoMdoc) {
             disclosedPayload = Object.fromEntries(
               Object.values(verifiableCredential.disclosedPayload).flatMap((entry) => Object.entries(entry))
             )
-          } */
+          }
 
           return {
             id: verifiableCredential.credentialRecord.id,
