@@ -231,6 +231,7 @@ const translation = {
     "PinChangeSuccessTitle": "Seu PIN foi alterado com sucesso",
     "PinChangeSuccessMessage": "Seu PIN foi alterado com sucesso. Agora você pode entrar no app com seu novo PIN.",
     "EnterOldPINTitle": "Digite seu PIN antigo",
+    "EnterOldPIN": "Digite seu PIN antigo",
     "NewPIN": "novo",
     "EnterPINTitle": "Digite um {{ new }}PIN de 6 digitos",
     "EnterPIN": "Digitar PIN",
