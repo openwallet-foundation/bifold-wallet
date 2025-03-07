@@ -184,6 +184,7 @@ const translation = {
     "Next": "Next",
     "Back": "Back",
     "Done": "Done",
+    "AccessibilitySteps": "Step {{ stepOn }} of {{ stepsOutOf }} - {{ title }}",
   },
   "CameraDisclosure": {
     "AllowCameraUse": "Allow camera use",
