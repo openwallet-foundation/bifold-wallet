@@ -1,4 +1,4 @@
-const presets = ['module:metro-react-native-babel-preset']
+const presets = ['module:@react-native/babel-preset']
 const plugins = [
   [
     'module-resolver',
@@ -7,6 +7,7 @@ const plugins = [
       extensions: ['.tsx', 'ts'],
     },
   ],
+  'react-native-reanimated/plugin',
 ]
 
 if (process.env['ENV'] === 'prod') {
