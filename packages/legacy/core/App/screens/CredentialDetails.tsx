@@ -6,7 +6,7 @@ import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
@@ -32,6 +32,7 @@ import { parseCredDefFromId } from '../utils/cred-def'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
+import { ThemedText } from '../components/texts/ThemedText'
 import CardWatermark from '../components/misc/CardWatermark'
 
 type CredentialDetailsProps = StackScreenProps<RootStackParams, Screens.CredentialDetails>
@@ -49,7 +50,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const { TextTheme, ColorPallet, Assets } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
   const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.UTIL_LOGGER,
@@ -209,7 +210,16 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     } catch (err: unknown) {
       logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, historyEnabled, logger, historyManagerCurried, credential, credentialConnectionLabel, credentialId, overlay])
+  }, [
+    agent,
+    historyEnabled,
+    logger,
+    historyManagerCurried,
+    credential,
+    credentialConnectionLabel,
+    credentialId,
+    overlay,
+  ])
 
   const callSubmitRemove = useCallback(async () => {
     try {
@@ -296,14 +306,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 3 }}>
               <CredentialCardLogo overlay={overlay} brandingOverlayType={bundleResolver.getBrandingOverlayType()} />
-              <Text
-                style={[
-                  TextTheme.normal,
-                  { color: credentialTextColor(ColorPallet, containerBackgroundColor), flexWrap: 'wrap' },
-                ]}
+              <ThemedText
+                style={{ color: credentialTextColor(ColorPallet, containerBackgroundColor), flexWrap: 'wrap' }}
               >
                 {overlay.metaOverlay?.issuer}
-              </Text>
+              </ThemedText>
             </View>
             <View
               style={{
@@ -361,14 +368,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               paddingVertical,
             }}
           >
-            <Text testID={testIdWithKey('IssuerName')}>
-              <Text style={[TextTheme.title, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+            <ThemedText testID={testIdWithKey('IssuerName')}>
+              <ThemedText variant="title" style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
                 {t('CredentialDetails.IssuedBy') + ' '}
-              </Text>
-              <Text style={[TextTheme.normal, isRevoked && { color: ColorPallet.grayscale.mediumGrey }]}>
+              </ThemedText>
+              <ThemedText style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
                 {credentialConnectionLabel}
-              </Text>
-            </Text>
+              </ThemedText>
+            </ThemedText>
           </View>
         ) : null}
         {isRevoked ? (
@@ -380,22 +387,20 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               paddingVertical,
             }}
           >
-            <Text testID={testIdWithKey('RevokedDate')}>
-              <Text style={[TextTheme.title, { color: ColorPallet.notification.errorText }]}>
+            <ThemedText testID={testIdWithKey('RevokedDate')}>
+              <ThemedText variant="title" style={{ color: ColorPallet.notification.errorText }}>
                 {t('CredentialDetails.Revoked') + ': '}
-              </Text>
-              <Text style={[TextTheme.normal, { color: ColorPallet.notification.errorText }]}>
-                {preciseRevocationDate}
-              </Text>
-            </Text>
-            <Text
-              style={[TextTheme.normal, { color: ColorPallet.notification.errorText, marginTop: paddingVertical }]}
+              </ThemedText>
+              <ThemedText style={{ color: ColorPallet.notification.errorText }}>{preciseRevocationDate}</ThemedText>
+            </ThemedText>
+            <ThemedText
+              style={{ color: ColorPallet.notification.errorText, marginTop: paddingVertical }}
               testID={testIdWithKey('RevocationMessage')}
             >
               {credential?.revocationNotification?.comment
                 ? credential.revocationNotification.comment
                 : t('CredentialDetails.CredentialRevokedMessageBody')}
-            </Text>
+            </ThemedText>
           </View>
         ) : null}
         <RecordRemove onRemove={callOnRemove} />

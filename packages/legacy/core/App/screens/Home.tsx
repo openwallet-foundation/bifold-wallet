@@ -13,6 +13,7 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { BaseTourID } from '../types/tour'
+import useFontScale from '../hooks/font-scale'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -39,10 +40,11 @@ const Home: React.FC<HomeProps> = () => {
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
+  const fontScale = useFontScale()
 
   const styles = StyleSheet.create({
     flatlist: {
-      marginBottom: 35,
+      marginBottom: fontScale >= 1.7 ? 0 : 35,
     },
   })
 

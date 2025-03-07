@@ -6,7 +6,7 @@ import {
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { DeviceEventEmitter, FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
@@ -20,6 +20,7 @@ import { ProofCredentialItems } from '../types/proof-items'
 import { Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ProofChangeProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofChangeCredential>
 
@@ -31,7 +32,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
   const selectedCred = route.params.selectedCred
   const altCredentials = route.params.altCredentials
   const onCredChange = route.params.onCredChange
-  const { ColorPallet, TextTheme, SelectedCredTheme } = useTheme()
+  const { ColorPallet, SelectedCredTheme } = useTheme()
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
@@ -124,7 +125,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
             <RecordLoading />
           </View>
         ) : (
-          <Text style={TextTheme.normal}>{t('ProofRequest.MultipleCredentials')}</Text>
+          <ThemedText>{t('ProofRequest.MultipleCredentials')}</ThemedText>
         )}
       </View>
     )

@@ -3,7 +3,7 @@ import { MetaOverlay, OverlayType } from '@hyperledger/aries-oca'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -14,6 +14,7 @@ import { useTheme } from '../contexts/theme'
 import { useTemplates } from '../hooks/proof-request-templates'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface ProofRequestsCardProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
@@ -87,14 +88,18 @@ const ProofRequestsCard: React.FC<ProofRequestsCardProps> = ({ navigation, templ
       testID={testIdWithKey('ProofRequestsCard')}
     >
       <View style={style.textContainer}>
-        <Text style={style.templateTitle} numberOfLines={1}>
+        <ThemedText style={style.templateTitle} numberOfLines={1}>
           {meta.name}
-        </Text>
-        <Text style={style.templateDetails} numberOfLines={2}>
+        </ThemedText>
+        <ThemedText style={style.templateDetails} numberOfLines={2}>
           {meta.description}
-        </Text>
-        {hasPredicates(template) && <Text style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</Text>}
-        {isParameterizable(template) && <Text style={style.templateZkpLabel}>{t('Verifier.Parameterizable')}</Text>}
+        </ThemedText>
+        {hasPredicates(template) && (
+          <ThemedText style={style.templateZkpLabel}>{t('Verifier.ZeroKnowledgeProof')}</ThemedText>
+        )}
+        {isParameterizable(template) && (
+          <ThemedText style={style.templateZkpLabel}>{t('Verifier.Parameterizable')}</ThemedText>
+        )}
       </View>
       <View style={style.iconContainer}>
         <Icon style={style.icon} name={'chevron-right'} />

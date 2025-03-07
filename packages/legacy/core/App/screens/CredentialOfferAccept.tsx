@@ -3,7 +3,7 @@ import { useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, Modal, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -12,6 +12,7 @@ import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import { ThemedText } from '../components/texts/ThemedText'
 
 enum DeliveryStatus {
   Pending,
@@ -121,21 +122,21 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
             {credentialDeliveryStatus === DeliveryStatus.Pending && (
-              <Text
+              <ThemedText
                 style={[ListItems.credentialOfferTitle, styles.messageText]}
                 testID={testIdWithKey('CredentialOnTheWay')}
               >
                 {t('CredentialOffer.CredentialOnTheWay')}
-              </Text>
+              </ThemedText>
             )}
 
             {credentialDeliveryStatus === DeliveryStatus.Completed && (
-              <Text
+              <ThemedText
                 style={[ListItems.credentialOfferTitle, styles.messageText]}
                 testID={testIdWithKey('CredentialAddedToYourWallet')}
               >
                 {t('CredentialOffer.CredentialAddedToYourWallet')}
-              </Text>
+              </ThemedText>
             )}
           </View>
 
@@ -145,12 +146,12 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           </View>
 
           {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
-            <Text
+            <ThemedText
               style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
               testID={testIdWithKey('TakingTooLong')}
             >
               {t('Connection.TakingTooLong')}
-            </Text>
+            </ThemedText>
           )}
         </ScrollView>
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { View, StyleSheet, Text, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 
 import Button, { ButtonType } from '../../components/buttons/Button'
 import { testIdWithKey } from '../../utils/testable'
@@ -10,6 +10,7 @@ import { InfoBoxType } from '.././misc/InfoBox'
 import ProgressBar from './ProgressBar'
 import RecordLoading from '../animated/RecordLoading'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { ThemedText } from '../texts/ThemedText'
 
 export const LoadingPlaceholderWorkflowType = {
   Connection: 'Connection',
@@ -37,7 +38,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   onTimeoutTriggered,
   testID,
 }) => {
-  const { ListItems, TextTheme } = useTheme()
+  const { ListItems } = useTheme()
   const { t } = useTranslation()
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const [overtime, setOvertime] = useState(false)
@@ -61,12 +62,6 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
       flex: 1,
       flexGrow: 1,
       borderRadius: 15,
-    },
-    slowLoadTitle: {
-      ...TextTheme.title,
-    },
-    slowLoadBody: {
-      ...TextTheme.normal,
     },
     infoTextBoxContainer: {
       flexShrink: 1,
@@ -127,28 +122,27 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
       <ScrollView>
         {loadingProgressPercent > 0 && <ProgressBar progressPercent={loadingProgressPercent} />}
         <View style={styles.container}>
-          <Text style={[TextTheme.label, { textAlign: 'center', fontWeight: 'normal' }]}>
+          <ThemedText variant="label" style={{ textAlign: 'center', fontWeight: 'normal' }}>
             {textForProgressIndication()}
-          </Text>
+          </ThemedText>
           {overtime && (
-            <>
-              <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
-                <View style={styles.infoTextBoxContainer}>
-                  <Text
-                    style={[styles.slowLoadTitle, { fontWeight: 'bold', marginBottom: 10 }]}
-                    testID={testIdWithKey('SlowLoadTitle')}
-                  >
-                    {t('LoadingPlaceholder.SlowLoadingTitle')}
-                  </Text>
-                  <Text style={[styles.slowLoadBody]} testID={testIdWithKey('SlowLoadBody')}>
-                    {t('LoadingPlaceholder.SlowLoadingBody')}
-                  </Text>
-                </View>
-              </InfoTextBox>
-            </>
+            <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
+              <View style={styles.infoTextBoxContainer}>
+                <ThemedText
+                  variant="title"
+                  style={{ fontWeight: 'bold', marginBottom: 10 }}
+                  testID={testIdWithKey('SlowLoadTitle')}
+                >
+                  {t('LoadingPlaceholder.SlowLoadingTitle')}
+                </ThemedText>
+                <ThemedText testID={testIdWithKey('SlowLoadBody')}>
+                  {t('LoadingPlaceholder.SlowLoadingBody')}
+                </ThemedText>
+              </View>
+            </InfoTextBox>
           )}
 
-          <Text style={[TextTheme.normal, { marginTop: 25, marginBottom: 10 }]}>{textForWorkflowType()}</Text>
+          <ThemedText style={{ marginTop: 25, marginBottom: 10 }}>{textForWorkflowType()}</ThemedText>
 
           <View style={styles.loadingAnimationContainer}>
             <RecordLoading />

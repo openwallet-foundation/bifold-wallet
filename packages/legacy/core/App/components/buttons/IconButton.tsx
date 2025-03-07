@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, Pressable, View, Text } from 'react-native'
+import { StyleSheet, Pressable, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
+import { ThemedText } from '../texts/ThemedText'
 
 const defaultIconSize = 26
 
@@ -31,7 +32,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   onPress,
   iconTintColor,
 }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const style = StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -42,7 +43,6 @@ const IconButton: React.FC<IconButtonProps> = ({
       minHeight: defaultIconSize,
     },
     title: {
-      ...TextTheme.label,
       color: ColorPallet.brand.headerText,
       marginRight: 4,
     },
@@ -50,7 +50,12 @@ const IconButton: React.FC<IconButtonProps> = ({
 
   const myIcon = () => <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPallet.brand.headerIcon} />
 
-  const myText = () => (text ? <Text style={style.title}>{text}</Text> : null)
+  const myText = () =>
+    text ? (
+      <ThemedText maxFontSizeMultiplier={1} variant="label" style={style.title}>
+        {text}
+      </ThemedText>
+    ) : null
 
   const layoutForButtonLocation = (buttonLocation: ButtonLocation) => {
     switch (buttonLocation) {

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TextTheme } from '../../../../theme'
 import { HistoryBlockSelection } from '../../types'
+import { ThemedText } from '../../../../components/texts/ThemedText'
 
 const styles = StyleSheet.create({
   flexView: {
@@ -61,7 +62,7 @@ const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect
             size={36}
             color={color}
           />
-          <Text style={[styles.languageText, TextTheme.normal]}>{item.value}</Text>
+          <ThemedText style={styles.languageText}>{item.value}</ThemedText>
         </TouchableOpacity>
       ))}
     </>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,6 +11,7 @@ import { testIdWithKey } from '../../utils/testable'
 // eslint-disable-next-line import/no-named-as-default
 import Button, { ButtonType } from '../buttons/Button'
 import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 
 const iconSize = 30
 
@@ -83,14 +84,12 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       flexGrow: 0,
     },
     headerText: {
-      ...TextTheme.bold,
       marginLeft: 7,
       flexShrink: 1,
       alignSelf: 'center',
       color: ColorPallet.notification.infoText,
     },
     bodyText: {
-      ...TextTheme.normal,
       flexShrink: 1,
       marginVertical: 16,
       color: ColorPallet.notification.infoText,
@@ -100,7 +99,6 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       alignSelf: 'center',
     },
     showDetailsText: {
-      ...TextTheme.title,
       fontWeight: TextTheme.normal.fontWeight,
       color: ColorPallet.brand.link,
     },
@@ -194,9 +192,9 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       <View style={styles.headerContainer}>
         <View style={[styles.icon, { flexDirection: 'row' }]}>
           <Icon accessible={false} name={iconName} size={iconSize} color={iconColor} />
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          <ThemedText variant="bold" style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             {title}
-          </Text>
+          </ThemedText>
         </View>
         {onClosePressed && (
           <View>
@@ -216,9 +214,9 @@ const InfoBox: React.FC<InfoBoxProps> = ({
         <>
           {!showDetails ? bodyContent : null}
           {(description || (message && showDetails)) && (
-            <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+            <ThemedText style={styles.bodyText} testID={testIdWithKey('BodyText')}>
               {showDetails ? message : description}
-            </Text>
+            </ThemedText>
           )}
           {message && !showDetails && (showDetailsInfo ?? true) && (
             <TouchableOpacity
@@ -230,7 +228,9 @@ const InfoBox: React.FC<InfoBoxProps> = ({
               hitSlop={hitSlop}
             >
               <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.showDetailsText}>{t('Global.ShowDetails')} </Text>
+                <ThemedText variant="title" style={styles.showDetailsText}>
+                  {t('Global.ShowDetails')}{' '}
+                </ThemedText>
                 <Icon name="chevron-right" size={iconSize} color={ColorPallet.brand.link} />
               </View>
             </TouchableOpacity>
@@ -264,12 +264,13 @@ const InfoBox: React.FC<InfoBoxProps> = ({
             </View>
           )}
           {showVersionFooter ? (
-            <Text
-              style={[TextTheme.caption, { flex: 1, marginTop: 8, textAlign: 'center' }]}
+            <ThemedText
+              variant="caption"
+              style={{ flex: 1, marginTop: 8, textAlign: 'center' }}
               testID={testIdWithKey('VersionNumber')}
             >
               {`${t('Settings.Version')} ${getVersion()} (${getBuildNumber()})`}
-            </Text>
+            </ThemedText>
           ) : null}
         </>
       </ScrollView>
