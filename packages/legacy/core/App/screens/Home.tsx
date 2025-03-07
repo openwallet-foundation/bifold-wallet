@@ -13,7 +13,6 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { BaseTourID } from '../types/tour'
-import { ImportantForAccessibility } from '../types/accessibility'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -37,9 +36,8 @@ const Home: React.FC<HomeProps> = () => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const [store, dispatch] = useStore()
-  const { start, stop, currentStep } = useTour()
+  const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
-  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const screenIsFocused = useIsFocused()
 
   const styles = StyleSheet.create({
@@ -78,7 +76,6 @@ const Home: React.FC<HomeProps> = () => {
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenHomeTour
     if (shouldShowTour && screenIsFocused) {
-      setHideElements('no-hide-descendants')
       if (store.tours.seenToursPrompt) {
         dispatch({
           type: DispatchAction.UPDATE_SEEN_HOME_TOUR,
@@ -88,8 +85,6 @@ const Home: React.FC<HomeProps> = () => {
       } else {
         setShowTourPopup(true)
       }
-    } else if (currentStep === undefined) {
-      setHideElements('auto')
     }
   }, [
     enableToursConfig,
@@ -99,7 +94,6 @@ const Home: React.FC<HomeProps> = () => {
     store.tours.seenToursPrompt,
     dispatch,
     start,
-    currentStep,
   ])
 
   const onCTAPressed = useCallback(() => {
@@ -140,7 +134,6 @@ const Home: React.FC<HomeProps> = () => {
     <>
       <FlatList
         style={styles.flatlist}
-        importantForAccessibility={hideElements}
         showsVerticalScrollIndicator={false}
         scrollEnabled={notifications?.length > 0 ? true : false}
         decelerationRate="fast"

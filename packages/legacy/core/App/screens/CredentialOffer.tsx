@@ -1,7 +1,7 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialPreviewAttribute } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'
-import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { BrandingOverlay, MetaOverlay } from '@hyperledger/aries-oca'
 import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -36,7 +36,6 @@ import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
 import { BaseTourID } from '../types/tour'
-import { ImportantForAccessibility } from '../types/accessibility'
 
 type CredentialOfferProps = {
   navigation: any
@@ -68,12 +67,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
-  const [hideElements, setHideElements] = useState<ImportantForAccessibility>('auto')
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({ presentationFields: [] })
   const credential = useCredentialById(credentialId)
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const [store, dispatch] = useStore()
-  const { start, currentStep } = useTour()
+  const { start } = useTour()
   const screenIsFocused = useIsFocused()
   const goalCode = useOutOfBandByConnectionId(credential?.connectionId ?? '')?.outOfBandInvitation?.goalCode
   const [ConnectionAlert] = useServices([TOKENS.COMPONENT_CONNECTION_ALERT])
@@ -95,14 +93,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialOfferTour
     if (shouldShowTour && screenIsFocused) {
-      setHideElements('no-hide-descendants')
       start(BaseTourID.CredentialOfferTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIAL_OFFER_TOUR,
         payload: [true],
       })
-    } else if (currentStep === undefined) {
-      setHideElements('auto')
     }
   }, [
     enableToursConfig,
@@ -111,7 +106,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     screenIsFocused,
     start,
     dispatch,
-    currentStep,
   ])
 
   useEffect(() => {
@@ -148,9 +142,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     const resolvePresentationFields = async () => {
       const identifiers = getCredentialIdentifiers(credential)
       const attributes = buildFieldsFromAnonCredsCredential(credential)
-      const fields = await bundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
+      const bundle = await bundleResolver.resolveAllBundles({ identifiers, attributes, language: i18n.language })
+      const fields = bundle?.presentationFields ?? []
+      const metaOverlay = bundle?.metaOverlay ?? {}
 
-      return { fields }
+      return { fields, metaOverlay }
     }
 
     /**
@@ -162,8 +158,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     setLoading(true)
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
-      .then(({ fields }) => {
-        setOverlay((o) => ({ ...o, presentationFields: (fields as Attribute[]).filter((field) => field.value) }))
+      .then(({ fields, metaOverlay }) => {
+        setOverlay({metaOverlay: (metaOverlay as MetaOverlay), presentationFields: (fields as Attribute[]).filter((field) => field.value) })
         setLoading(false)
       })
   }, [credential, agent, bundleResolver, i18n.language])
@@ -186,7 +182,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           return
         }
         const ids = getCredentialIdentifiers(credential)
-        const name = parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+        const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {
@@ -201,7 +197,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Error saving history: ${err}`)
       }
     },
-    [agent, historyEnabled, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel]
+    [agent, historyEnabled, logger, historyManagerCurried, credential, credentialId, credentialConnectionLabel, overlay]
   )
 
   const handleAcceptTouched = useCallback(async () => {
@@ -312,7 +308,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   }
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']} importantForAccessibility={hideElements}>
+    <SafeAreaView style={{ flexGrow: 1 }} edges={['bottom', 'left', 'right']}>
       <Record fields={overlay.presentationFields || []} header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={credentialId} />
       <CommonRemoveModal

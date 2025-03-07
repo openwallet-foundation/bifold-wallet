@@ -158,7 +158,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
   const isContinueDisabled = (): boolean => {
     if (inlineMessages.enabled) {
-      return false
+      return !continueEnabled
     }
     return !continueEnabled || PIN.length < minPINLength
   }
@@ -223,7 +223,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
   )
 
   const loadWalletCredentials = useCallback(async () => {
-    if (usage === PINEntryUsage.PINCheck || PINEntryUsage.ChangeBiometrics) {
+    if (usage === PINEntryUsage.PINCheck || usage === PINEntryUsage.ChangeBiometrics) {
       return
     }
 
@@ -447,7 +447,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
       setContinueEnabled(false)
 
-      if (usage === PINEntryUsage.PINCheck || PINEntryUsage.ChangeBiometrics) {
+      if (usage === PINEntryUsage.PINCheck || usage === PINEntryUsage.ChangeBiometrics) {
         await verifyPIN(PIN)
       }
 

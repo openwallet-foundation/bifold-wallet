@@ -9,7 +9,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
       "right",
     ]
   }
-  importantForAccessibility="auto"
   style={
     Object {
       "flex": 1,
@@ -221,7 +220,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           }
           getItem={[Function]}
           getItemCount={[Function]}
-          importantForAccessibility="auto"
           keyExtractor={[Function]}
           onContentSizeChange={[Function]}
           onLayout={[Function]}
@@ -798,7 +796,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           }
           getItem={[Function]}
           getItemCount={[Function]}
-          importantForAccessibility="auto"
           keyExtractor={[Function]}
           onContentSizeChange={[Function]}
           onLayout={[Function]}
