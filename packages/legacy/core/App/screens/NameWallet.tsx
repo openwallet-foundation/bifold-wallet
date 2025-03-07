@@ -83,19 +83,17 @@ const NameWallet: React.FC = () => {
       })
     } else {
       setLoading(true)
+
       dispatch({
         type: DispatchAction.UPDATE_WALLET_NAME,
         payload: [walletName],
       })
+
       if (agent) {
         agent.config.label = walletName
       }
+
       dispatch({ type: DispatchAction.DID_NAME_WALLET })
-      if (store.onboarding.didCompleteOnboarding) {
-        navigation.goBack()
-      } else {
-        dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-      }
     }
   }
 
