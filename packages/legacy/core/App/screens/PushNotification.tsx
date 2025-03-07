@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
+import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +35,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
 
     updateNotificationState()
     const subscription = AppState.addEventListener('change', updateNotificationState)
-    
+
     return () => subscription.remove()
   }, [enablePushNotifications])
 
@@ -75,25 +75,6 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const activatePushNotifications = async () => {
     const state = await enablePushNotifications.setup()
     dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [state === 'granted'] })
-    if (store.onboarding.postAuthScreens.length) {
-      const screens: string[] = store.onboarding.postAuthScreens
-      screens.shift()
-      dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [screens] })
-      if (screens.length) {
-        navigation.navigate(screens[0] as never)
-      } else {
-        navigation.navigate(Screens.Splash as never)
-      }
-    } else if (store.preferences.enableWalletNaming) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.NameWallet }],
-        })
-      )
-    } else {
-      dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    }
   }
 
   const toggleSwitch = async () => {
@@ -104,8 +85,11 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
           return
         }
       }
+
       dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [!notificationState] })
+
       enablePushNotifications.toggle(!notificationState, agent)
+
       setNotificationState(!notificationState)
     }
   }

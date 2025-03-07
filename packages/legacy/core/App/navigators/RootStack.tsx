@@ -1,7 +1,7 @@
 import { ProofState } from '@credo-ts/core'
 import { useAgent, useProofByState } from '@credo-ts/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
-import React, { useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
@@ -20,6 +20,7 @@ const RootStack: React.FC = () => {
   // remove connection on mobile verifier proofs if proof is rejected
   // regardless of if it has been opened
   const declinedProofs = useProofByState([ProofState.Declined, ProofState.Abandoned])
+  const [onboardingComplete, setOnboardingComplete] = useState(false)
 
   useDeepLinks()
 
@@ -28,12 +29,17 @@ const RootStack: React.FC = () => {
     [store.authentication.didAuthenticate, store.onboarding.postAuthScreens]
   )
 
-  const isOnboardingComplete = useMemo(
-    () =>
-      (store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
-      (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry),
-    [store.onboarding.onboardingVersion, store.onboarding.didCompleteOnboarding, store.onboarding.didConsiderBiometry]
-  )
+  const isOnboardingComplete = useMemo(() => onboardingComplete, [onboardingComplete])
+
+  useEffect(() => {
+    const sub = DeviceEventEmitter.addListener('OnBoardingComplete', () => {
+      setOnboardingComplete(true)
+    })
+
+    return () => {
+      sub.remove()
+    }
+  }, [setOnboardingComplete])
 
   useEffect(() => {
     declinedProofs.forEach((proof) => {
@@ -49,11 +55,12 @@ const RootStack: React.FC = () => {
   useEffect(() => {
     loadState(dispatch).catch((err: unknown) => {
       const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
+
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     })
   }, [dispatch, loadState, t])
 
-  if (isOnboardingComplete && isAuthenticated) {
+  if (isOnboardingComplete) {
     return <MainStack />
   }
 

@@ -8,7 +8,7 @@ import { DependencyContainer } from 'tsyringe'
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import defaultIndyLedgers from './configs/ledgers/indy'
-import { LocalStorageKeys, PINRules } from './constants'
+import { EventTypes as BifoldEventTypes, LocalStorageKeys, PINRules } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import { defaultState } from './contexts/store'
@@ -52,6 +52,7 @@ import ContactCredentialListItem from './components/listItems/ContactCredentialL
 import { InlineErrorPosition } from './types/error'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import ConnectionAlert from './components/misc/ConnectionAlert'
+import { DeviceEventEmitter } from 'react-native'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -162,8 +163,6 @@ export class MainContainer implements Container {
           dispatch({
             type: DispatchAction.DID_COMPLETE_TUTORIAL,
           })
-
-          navigation.navigate(Screens.Terms)
         }
       }
     )
@@ -173,6 +172,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.CUSTOM_NAV_STACK_1, false)
     this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
+        console.log('loadState', key)
         const data = await this.storage.getValueForKey(key)
         if (data) {
           // @ts-expect-error Fix complicated type error

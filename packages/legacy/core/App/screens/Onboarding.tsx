@@ -2,7 +2,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Animated, BackHandler, FlatList, View, ViewStyle, useWindowDimensions } from 'react-native'
+import { DeviceEventEmitter, Animated, BackHandler, FlatList, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
@@ -11,7 +11,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
+import { EventTypes as BifoldEventTypes } from '../constants'
 export interface OnboardingStyleSheet {
   container: ViewStyle
   carouselContainer: ViewStyle
@@ -93,8 +93,6 @@ const Onboarding: React.FC<OnboardingProps> = ({
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-
-    navigation.navigate(Screens.Terms)
   }, [dispatch, navigation])
 
   useEffect(() => {

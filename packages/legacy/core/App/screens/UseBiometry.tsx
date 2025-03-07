@@ -1,9 +1,9 @@
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements';
+import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, ScrollView, Linking, Platform } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, View, ScrollView, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -23,6 +23,8 @@ import { testIdWithKey } from '../utils/testable'
 import PINEnter, { PINEntryUsage } from './PINEnter'
 import { TOKENS, useServices } from '../container-api'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { useAppAgent } from '../utils/agent'
+import { EventTypes } from '../constants'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -130,16 +132,6 @@ const UseBiometry: React.FC = () => {
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
-    if (enablePushNotifications) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.UsePushNotifications }],
-        })
-      )
-    } else {
-      dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    }
   }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
 
   const onOpenSettingsTouched = async () => {
@@ -333,13 +325,15 @@ const UseBiometry: React.FC = () => {
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
-        presentationStyle='fullScreen'
+        presentationStyle="fullScreen"
       >
-        <Header 
+        <Header
           title={t('Screens.EnterPIN')}
           headerTitleStyle={TextTheme.headerTitle}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor='white' labelVisible={false} />}
+          headerLeft={() => (
+            <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor="white" labelVisible={false} />
+          )}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}
