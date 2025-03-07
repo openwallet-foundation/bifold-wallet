@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
+import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -139,6 +139,10 @@ export function TourBox(props: TourBoxProps): ReactElement {
     },
   })
 
+  const accessibilityLabel = useMemo(() => {
+    return stepOn && stepsOutOf ? t('Tour.AccessibilitySteps', { stepOn, stepsOutOf, title }) : title
+  }, [stepOn, stepsOutOf, title, t])
+
   const handleLeft = useCallback((): void => {
     onLeft?.()
   }, [onLeft])
@@ -184,6 +188,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
             style={styles.headerText}
             testID={testIdWithKey('HeaderText')}
             accessibilityRole="header"
+            accessibilityLabel={accessibilityLabel}
           >
             {title}
           </Text>
