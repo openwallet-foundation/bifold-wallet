@@ -3,11 +3,12 @@
 exports[`displays a proof request screen ProofRequest Screen, W3C displays a proof request with one or more predicates not satisfied 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {

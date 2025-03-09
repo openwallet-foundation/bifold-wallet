@@ -3,10 +3,12 @@
 exports[`ListProofRequests Component Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {

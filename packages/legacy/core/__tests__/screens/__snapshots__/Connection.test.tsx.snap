@@ -10,11 +10,12 @@ exports[`Connection Screen No connection, show to proof 1`] = `
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "bottom",
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -41,11 +42,12 @@ exports[`Connection Screen No connection, show to proof 1`] = `
           >
             <RNCSafeAreaView
               edges={
-                Array [
-                  "bottom",
-                  "left",
-                  "right",
-                ]
+                Object {
+                  "bottom": "additive",
+                  "left": "additive",
+                  "right": "additive",
+                  "top": "off",
+                }
               }
               style={
                 Object {
@@ -550,11 +552,12 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "bottom",
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {

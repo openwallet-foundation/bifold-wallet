@@ -3,11 +3,12 @@
 exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -723,11 +724,12 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
 exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -1443,11 +1445,12 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
 exports[`Developer Screen preventAutoLock can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -2163,11 +2166,12 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
 exports[`Developer Screen screen renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -2883,11 +2887,12 @@ exports[`Developer Screen screen renders correctly 1`] = `
 exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -3603,11 +3608,12 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
 exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -4323,11 +4329,12 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
 exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
