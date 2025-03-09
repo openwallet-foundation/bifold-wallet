@@ -51,21 +51,25 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
     vbWidth={751}
     width={751}
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        Object {
+          "payload": 4278190080,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGDefs>
         <RNSVGMask
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
           height={1335}
           maskContentUnits={1}
-          maskTransform={
-            Array [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
-          }
+          maskType={0}
           maskUnits={0}
           name="mask"
           width={751}
@@ -73,7 +77,12 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
           y={0}
         >
           <RNSVGRect
-            fill={4294967295}
+            fill={
+              Object {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
             height={1335}
             propList={
               Array [
@@ -87,7 +96,12 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
         </RNSVGMask>
       </RNSVGDefs>
       <RNSVGRect
-        fill={4286611584}
+        fill={
+          Object {
+            "payload": 4286611584,
+            "type": 0,
+          }
+        }
         height={1335}
         mask="mask"
         opacity={0.7}

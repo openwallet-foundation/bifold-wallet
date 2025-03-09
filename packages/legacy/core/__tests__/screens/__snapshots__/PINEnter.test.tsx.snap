@@ -3,11 +3,12 @@
 exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -466,11 +467,12 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
 exports[`PINEnter Screen PIN Enter renders correctly for biometrics change 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -943,11 +945,12 @@ exports[`PINEnter Screen PIN Enter renders correctly for biometrics change 1`] =
 exports[`PINEnter Screen PIN Enter renders correctly when logged out message is present 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {

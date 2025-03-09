@@ -1,13 +1,13 @@
 import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'
-import { render, waitFor } from '@testing-library/react-native'
+import { act, render } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
 import CredentialOfferAccept from '../../App/screens/CredentialOfferAccept'
 import { testIdWithKey } from '../../App/utils/testable'
-import timeTravel from '../helpers/timetravel'
+// import timeTravel from '../helpers/timetravel'
 import { BasicAppContext } from '../helpers/app'
 
 const credentialId = '123'
@@ -36,14 +36,15 @@ describe('CredentialOfferAccept Screen', () => {
   })
 
   test('transitions to taking too delay message', async () => {
+    jest.useFakeTimers()
     const tree = render(
       <BasicAppContext>
         <CredentialOfferAccept visible={true} credentialId={credentialId} />
       </BasicAppContext>
     )
 
-    await waitFor(() => {
-      timeTravel(11000)
+    await act(async () => {
+      await jest.advanceTimersByTimeAsync(11000)
     })
 
     const backToHomeButton = tree.getByTestId(testIdWithKey('BackToHome'))

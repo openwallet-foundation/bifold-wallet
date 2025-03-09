@@ -89,6 +89,8 @@ describe('CredentialOffer Screen', () => {
 
     const acceptButton = tree.getByTestId(testIdWithKey('AcceptCredentialOffer'))
 
+    // const user = userEvent.setup()
+    // await user.press(acceptButton)
     fireEvent(acceptButton, 'press')
 
     expect(tree).toMatchSnapshot()
