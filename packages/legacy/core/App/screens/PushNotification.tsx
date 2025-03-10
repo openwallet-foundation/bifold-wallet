@@ -22,29 +22,17 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const [notificationState, setNotificationState] = useState<boolean>(store.preferences.usePushNotifications)
   const [notificationStatus, setNotificationStatus] = useState<'denied' | 'granted' | 'unknown'>('unknown')
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const isMenu = (route.params as any)?.isMenu
+
   if (!enablePushNotifications) {
     throw new Error('Push notification configuration not found')
   }
-  const isMenu = (route.params as any)?.isMenu
-  useEffect(() => {
-    const updateNotificationState = async () => {
-      const status = await enablePushNotifications.status()
-      setNotificationStatus(status)
-    }
-
-    updateNotificationState()
-    const subscription = AppState.addEventListener('change', updateNotificationState)
-
-    return () => subscription.remove()
-  }, [enablePushNotifications])
 
   const style = StyleSheet.create({
     screenContainer: {
       flex: 1,
       padding: 30,
     },
-
     image: {
       height: 200,
       marginBottom: 20,
@@ -58,6 +46,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
       paddingLeft: 5,
     },
   })
+
   const list = [
     t('PushNotifications.BulletOne'),
     t('PushNotifications.BulletTwo'),
@@ -70,10 +59,23 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
     t('PushNotifications.InstructionsThree'),
   ]
 
+  useEffect(() => {
+    const updateNotificationState = async () => {
+      const status = await enablePushNotifications.status()
+      setNotificationStatus(status)
+    }
+
+    updateNotificationState()
+    const subscription = AppState.addEventListener('change', updateNotificationState)
+
+    return () => subscription.remove()
+  }, [enablePushNotifications])
+
   const hasNotificationsDisabled = notificationStatus === 'denied' && store.onboarding.didConsiderPushNotifications
 
   const activatePushNotifications = async () => {
     const state = await enablePushNotifications.setup()
+
     dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [state === 'granted'] })
   }
 

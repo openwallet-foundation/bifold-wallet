@@ -24,11 +24,6 @@ const RootStack: React.FC = () => {
 
   useDeepLinks()
 
-  const isAuthenticated = useMemo(
-    () => store.authentication.didAuthenticate && store.onboarding.postAuthScreens.length === 0,
-    [store.authentication.didAuthenticate, store.onboarding.postAuthScreens]
-  )
-
   const isOnboardingComplete = useMemo(() => onboardingComplete, [onboardingComplete])
 
   useEffect(() => {
