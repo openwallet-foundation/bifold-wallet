@@ -13,7 +13,7 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack'
-import { EventTypes as BifoldEventTypes } from '@hyperledger/aries-bifold-core'
+import { EventTypes } from '../constants'
 import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
 import React, { useMemo, useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -136,28 +136,33 @@ const OnboardingStack: React.FC = () => {
   }, [store.stateLoaded, store.onboarding, store.authentication, setLocalState, generateOnboardingWorkflowSteps])
 
   useEffect(() => {
+    // If their are no completed screens, then we don't need to do anything.
     const completed = localState.find((s) => s.completed)
     if (!completed) {
       return
     }
 
+    // If the active screen is the same as the current route, then we don't
+    // need to do anything.
     if (activeScreen && activeScreen === currentRoute?.name) {
       return
     }
 
+    // If the active screen is different from the current route, then we need
+    // to navigate to the active screen.
     if (activeScreen) {
       navigation.dispatch(StackActions.replace(activeScreen))
       return
     }
 
-    // TODO:(jl) Do we need to:
+    // TODO:(jl) Should we remove onboarding complete form state?
     //    dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    // TODO:(jl) Do we want this event to emit only once?
     // TODO:(jl) We can remove this from permanent state as it is now
     // more of a transient state (think of it like an update).
     // TODO:(jl) Do we need to remove store.onboarding.postAuthScreens?
-    console.log('***** Emitting OnBoardingComplete')
-    DeviceEventEmitter.emit('OnBoardingComplete')
+
+    // Nothing to do here, we are done with onboarding.
+    DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
   }, [store, localState, navigation])
 
   const screens: ScreenOptions[] = [
