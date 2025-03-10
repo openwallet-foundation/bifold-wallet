@@ -1,6 +1,4 @@
-import { CommonActions, useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements';
+import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform } from 'react-native'
@@ -14,7 +12,6 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 
@@ -43,7 +40,6 @@ const UseBiometry: React.FC = () => {
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = useMemo(() => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
@@ -130,17 +126,7 @@ const UseBiometry: React.FC = () => {
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
-    if (enablePushNotifications) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.UsePushNotifications }],
-        })
-      )
-    } else {
-      dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    }
-  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
+  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()
@@ -333,13 +319,20 @@ const UseBiometry: React.FC = () => {
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
-        presentationStyle='fullScreen'
+        presentationStyle="fullScreen"
       >
-        <Header 
+        <Header
           title={t('Screens.EnterPIN')}
           headerTitleStyle={{ marginTop: insets.top, ...TextTheme.headerTitle }}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor='white' style={{ marginTop: insets.top }} labelVisible={false} />}
+          headerLeft={() => (
+            <HeaderBackButton
+              onPress={() => setCanSeeCheckPIN(false)}
+              tintColor="white"
+              style={{ marginTop: insets.top }}
+              labelVisible={false}
+            />
+          )}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}

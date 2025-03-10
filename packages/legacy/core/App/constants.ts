@@ -39,6 +39,7 @@ export enum EventTypes {
   ERROR_REMOVED = 'ErrorRemoved',
   BIOMETRY_UPDATE = 'BiometryUpdate',
   BIOMETRY_ERROR = 'BiometryError',
+  DID_COMPLETE_ONBOARDING = 'DidCompleteOnboarding',
 }
 
 export const second = 1000

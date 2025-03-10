@@ -123,6 +123,7 @@ export const UTILITY_TOKENS = {
 export const CONFIG_TOKENS = {
   CONFIG: 'config',
   INLINE_ERRORS: 'errors.inline',
+  ONBOARDING: 'utility.onboarding',
 } as const
 
 export const TOKENS = {
