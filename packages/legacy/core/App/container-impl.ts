@@ -172,7 +172,6 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.CUSTOM_NAV_STACK_1, false)
     this._container.registerInstance(TOKENS.LOAD_STATE, async (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
-        console.log('loadState', key)
         const data = await this.storage.getValueForKey(key)
         if (data) {
           // @ts-expect-error Fix complicated type error
@@ -215,6 +214,7 @@ export class MainContainer implements Container {
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
     return this._container.resolve(token)
   }
+
   public resolveAll<K extends keyof TokenMapping, T extends K[]>(
     tokens: [...T]
   ): { [I in keyof T]: TokenMapping[T[I]] } {

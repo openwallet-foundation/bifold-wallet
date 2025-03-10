@@ -29,7 +29,7 @@ import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
 // import UpdateAvailable from '../screens/UpdateAvailable'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { AuthenticateStackParams, Screens, OnboardingTask } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { DeviceEventEmitter } from 'react-native'
@@ -42,11 +42,6 @@ type ScreenOptions = RouteConfig<
   StackNavigationEventMap
 >
 
-type OnboardingTask = {
-  name: Screens
-  completed: boolean
-}
-
 const OnboardingStack: React.FC = () => {
   const [store, dispatch] = useStore<BCState>()
   const { t } = useTranslation()
@@ -55,13 +50,13 @@ const OnboardingStack: React.FC = () => {
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
   const [
-    { disableOnboardingSkip },
+    config,
     splash,
     pages,
     useBiometry,
     Onboarding,
     Developer,
-    { screen: Terms },
+    { screen: Terms, version: termsVersion },
     onTutorialCompletedCurried,
     ScreenOptionsDictionary,
     Preface,
@@ -84,6 +79,7 @@ const OnboardingStack: React.FC = () => {
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
   const [localState, setLocalState] = useState<Array<OnboardingTask>>([])
   const currentRoute = useNavigationState((state) => state?.routes[state?.index])
+  const { disableOnboardingSkip } = config
 
   const onAuthenticated = useCallback(
     (status: boolean): void => {
@@ -130,13 +126,13 @@ const OnboardingStack: React.FC = () => {
       return
     }
 
-    const screens = generateOnboardingWorkflowSteps(store.onboarding, store.authentication, 2)
-    console.log('***** Setting local state:', screens)
+    const screens = generateOnboardingWorkflowSteps(store, config, termsVersion)
     setLocalState(screens)
   }, [store.stateLoaded, store.onboarding, store.authentication, setLocalState, generateOnboardingWorkflowSteps])
 
   useEffect(() => {
     // If their are no completed screens, then we don't need to do anything.
+    // TODO:(jl) Should this check for state.loaded?
     const completed = localState.find((s) => s.completed)
     if (!completed) {
       return
@@ -163,7 +159,7 @@ const OnboardingStack: React.FC = () => {
 
     // Nothing to do here, we are done with onboarding.
     DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
-  }, [store, localState, navigation])
+  }, [localState, navigation])
 
   const screens: ScreenOptions[] = [
     // {
