@@ -27,7 +27,7 @@ const RootStack: React.FC = () => {
   const isOnboardingComplete = useMemo(() => onboardingComplete, [onboardingComplete])
 
   useEffect(() => {
-    const sub = DeviceEventEmitter.addListener('OnBoardingComplete', () => {
+    const sub = DeviceEventEmitter.addListener(EventTypes.DID_COMPLETE_ONBOARDING, () => {
       setOnboardingComplete(true)
     })
 
