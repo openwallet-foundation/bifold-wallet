@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { StackActions, ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/native'
+import {
+  StackActions,
+  ParamListBase,
+  RouteConfig,
+  StackNavigationState,
+  useNavigation,
+  useNavigationState,
+} from '@react-navigation/native'
 import {
   TransitionPresets,
   StackNavigationOptions,
@@ -8,7 +15,7 @@ import {
 } from '@react-navigation/stack'
 import { EventTypes as BifoldEventTypes } from '@hyperledger/aries-bifold-core'
 import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
-import React, { useMemo, useState, useCallback, useEffect, useReducer } from 'react'
+import React, { useMemo, useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TOKENS, useServices } from '../container-api'
@@ -21,7 +28,7 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
-import UpdateAvailable from '../screens/UpdateAvailable'
+// import UpdateAvailable from '../screens/UpdateAvailable'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
@@ -76,6 +83,7 @@ const OnboardingStack: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
   const [localState, setLocalState] = useState<Array<OnboardingTask>>([])
+  const currentRoute = useNavigationState((state) => state?.routes[state?.index])
 
   const onAuthenticated = useCallback(
     (status: boolean): void => {
@@ -102,12 +110,7 @@ const OnboardingStack: React.FC = () => {
     )
   }
 
-  const isAuthenticated = useMemo(
-    () => store.authentication.didAuthenticate && store.onboarding.postAuthScreens.length === 0,
-    [store.authentication.didAuthenticate, store.onboarding.postAuthScreens]
-  )
-
-  // these need to be in the children of the stack screen otherwise they
+  // These need to be in the children of the stack screen otherwise they
   // will unmount/remount which resets the component state in memory and causes
   // issues
   const CreatePINScreen = (props: any) => {
@@ -118,12 +121,18 @@ const OnboardingStack: React.FC = () => {
     return <PINEnter setAuthenticated={onAuthenticated} {...props} />
   }
 
+  const activeScreen = useMemo(() => {
+    return localState.find((s) => !s.completed)?.name
+  }, [localState])
+
   useEffect(() => {
-    if (store.stateLoaded) {
-      const screens = generateOnboardingWorkflowSteps(store.onboarding, isAuthenticated, 2)
-      console.log('***** screens = ', screens)
-      setLocalState(screens)
+    if (!store.stateLoaded) {
+      return
     }
+
+    const screens = generateOnboardingWorkflowSteps(store.onboarding, store.authentication, 2)
+    console.log('***** Setting local state:', screens)
+    setLocalState(screens)
   }, [store.stateLoaded, store.onboarding, store.authentication, setLocalState, generateOnboardingWorkflowSteps])
 
   useEffect(() => {
@@ -132,25 +141,24 @@ const OnboardingStack: React.FC = () => {
       return
     }
 
-    if (getNextOnboardingStep()) {
-      navigation.dispatch(
-        StackActions.push(getNextOnboardingStep(), {
-          animation: 'slide_from_right', // TODO:(jl) this should be a constant
-        })
-      )
-    } else {
-      // TODO:(jl) Do we need to:
-      //    dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-      // TODO:(jl) Do we want this event to emit only once?
-      // TODO:(jl) We can remove this from permanent state as it is now
-      // more of a transient state (think of it like an update).
-
-      console.log('***** Emitting OnBoardingComplete')
-      DeviceEventEmitter.emit('OnBoardingComplete')
+    if (activeScreen && activeScreen === currentRoute?.name) {
+      return
     }
-  }, [store, localState, navigation])
 
-  const getNextOnboardingStep = useCallback(() => localState.find((s) => !s.completed)?.name, [localState])
+    if (activeScreen) {
+      navigation.dispatch(StackActions.replace(activeScreen))
+      return
+    }
+
+    // TODO:(jl) Do we need to:
+    //    dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
+    // TODO:(jl) Do we want this event to emit only once?
+    // TODO:(jl) We can remove this from permanent state as it is now
+    // more of a transient state (think of it like an update).
+    // TODO:(jl) Do we need to remove store.onboarding.postAuthScreens?
+    console.log('***** Emitting OnBoardingComplete')
+    DeviceEventEmitter.emit('OnBoardingComplete')
+  }, [store, localState, navigation])
 
   const screens: ScreenOptions[] = [
     // {
@@ -217,17 +225,19 @@ const OnboardingStack: React.FC = () => {
         title: t('Screens.Biometry'),
         headerLeft: () => false,
       }),
+      // TODO:(jl) This should be capitalized - no?
       component: useBiometry,
     },
     {
       name: Screens.UsePushNotifications,
+      component: PushNotification,
       options: () => ({
         ...ScreenOptionsDictionary[Screens.UsePushNotifications],
         ...TransitionPresets.SlideFromRightIOS,
         title: t('Screens.UsePushNotifications'),
         headerLeft: () => false,
       }),
-      children: PushNotification as any,
+      // children: PushNotification as any,
     },
     {
       name: Screens.Developer,
@@ -240,18 +250,18 @@ const OnboardingStack: React.FC = () => {
         }
       },
     },
-    {
-      name: Screens.UpdateAvailable,
-      component: UpdateAvailable,
-      options: () => {
-        return {
-          title: t('Screens.EnterPIN'),
-          headerShown: true,
-          headerLeft: () => false,
-          rightLeft: () => false,
-        }
-      },
-    },
+    // {
+    //   name: Screens.UpdateAvailable,
+    //   component: UpdateAvailable,
+    //   options: () => {
+    //     return {
+    //       title: t('Screens.EnterPIN'),
+    //       headerShown: true,
+    //       headerLeft: () => false,
+    //       rightLeft: () => false,
+    //     }
+    //   },
+    // },
     {
       name: Screens.EnterPIN,
       children: EnterPINScreen,
@@ -273,7 +283,7 @@ const OnboardingStack: React.FC = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={getNextOnboardingStep()}
+      initialRouteName={Screens.Preface}
       screenOptions={{
         ...defaultStackOptions,
       }}

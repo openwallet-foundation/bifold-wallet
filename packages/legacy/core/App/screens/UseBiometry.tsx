@@ -1,9 +1,7 @@
-import { CommonActions, useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, View, ScrollView, Linking, Platform } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -16,15 +14,12 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { OnboardingStackParams, Screens } from '../types/navigators'
 import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
 import { TOKENS, useServices } from '../container-api'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { useAppAgent } from '../utils/agent'
-import { EventTypes } from '../constants'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -46,7 +41,6 @@ const UseBiometry: React.FC = () => {
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = useMemo(() => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
@@ -132,7 +126,7 @@ const UseBiometry: React.FC = () => {
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
-  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
+  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()
