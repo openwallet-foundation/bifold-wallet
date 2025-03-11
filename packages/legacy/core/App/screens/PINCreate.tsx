@@ -132,10 +132,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
           (err as Error)?.message ?? err,
           1040
         )
+
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     },
-    [setWalletPIN, setAuthenticated, dispatch, navigation, t]
+    [setWalletPIN, setAuthenticated, dispatch, t]
   )
 
   const displayModalMessage = (title: string, message: string) => {

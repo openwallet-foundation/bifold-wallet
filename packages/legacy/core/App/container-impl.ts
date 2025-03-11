@@ -1,14 +1,13 @@
 import { Agent } from '@credo-ts/core'
 import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import defaultIndyLedgers from './configs/ledgers/indy'
-import { EventTypes as BifoldEventTypes, LocalStorageKeys, PINRules } from './constants'
+import { LocalStorageKeys, PINRules } from './constants'
 import { TOKENS, Container, TokenMapping } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import { defaultState } from './contexts/store'
@@ -24,7 +23,6 @@ import Splash from './screens/Splash'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
-import { AuthenticateStackParams, Screens } from './types/navigators'
 import {
   Migration as MigrationState,
   Preferences as PreferencesState,
@@ -156,16 +154,13 @@ export class MainContainer implements Container {
       hasErrorIcon: true,
       position: InlineErrorPosition.Above,
     })
-    this._container.registerInstance(
-      TOKENS.FN_ONBOARDING_DONE,
-      (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
-        return () => {
-          dispatch({
-            type: DispatchAction.DID_COMPLETE_TUTORIAL,
-          })
-        }
+    this._container.registerInstance(TOKENS.FN_ONBOARDING_DONE, (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
+      return () => {
+        dispatch({
+          type: DispatchAction.DID_COMPLETE_TUTORIAL,
+        })
       }
-    )
+    })
     this._container.registerInstance(TOKENS.FN_LOAD_HISTORY, (agent: Agent<any>): IHistoryManager => {
       return new HistoryManager(agent)
     })

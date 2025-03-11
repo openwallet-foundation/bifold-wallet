@@ -1,21 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {
-  StackActions,
-  ParamListBase,
-  RouteConfig,
-  StackNavigationState,
-  useNavigation,
-  useNavigationState,
-} from '@react-navigation/native'
-import {
-  TransitionPresets,
-  StackNavigationOptions,
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack'
+import { StackActions, useNavigation, useNavigationState } from '@react-navigation/native'
+import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
 import { EventTypes } from '../constants'
-import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
-import React, { useMemo, useState, useCallback, useEffect } from 'react'
+import React, { useMemo, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TOKENS, useServices } from '../container-api'
@@ -29,7 +16,7 @@ import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
 // import UpdateAvailable from '../screens/UpdateAvailable'
-import { AuthenticateStackParams, Screens, OnboardingTask } from '../types/navigators'
+import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { State } from '../types/state'
 import { Config } from '../types/config'
 
@@ -38,13 +25,13 @@ import { DeviceEventEmitter } from 'react-native'
 import { getOnboardingScreens } from './OnboardingScreens'
 import { useOnboardingState } from '../hooks/useOnboardingState'
 
-type ScreenOptions = RouteConfig<
-  ParamListBase,
-  Screens,
-  StackNavigationState<ParamListBase>,
-  StackNavigationOptions,
-  StackNavigationEventMap
->
+// type ScreenOptions = RouteConfig<
+//   ParamListBase,
+//   Screens,
+//   StackNavigationState<ParamListBase>,
+//   StackNavigationOptions,
+//   StackNavigationEventMap
+// >
 
 const OnboardingStack: React.FC = () => {
   const [store, dispatch] = useStore<State>()
@@ -136,7 +123,6 @@ const OnboardingStack: React.FC = () => {
     // If the active screen is different from the current route, then we need
     // to navigate to the active screen.
     if (activeScreen) {
-      console.log('Navigating to active screen:', activeScreen)
       navigation.dispatch(StackActions.replace(activeScreen))
       return
     }
@@ -149,7 +135,7 @@ const OnboardingStack: React.FC = () => {
 
     // Nothing to do here, we are done with onboarding.
     DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
-  }, [localState, navigation])
+  }, [activeScreen, currentRoute, localState, navigation])
 
   const screens = useMemo(
     () =>

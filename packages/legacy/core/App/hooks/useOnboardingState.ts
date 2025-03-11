@@ -24,7 +24,7 @@ export const useOnboardingState = (
 
     const screens = generateOnboardingWorkflowSteps(store, config, termsVersion)
     setLocalState(screens)
-  }, [store.stateLoaded, store.onboarding, store.authentication, config, termsVersion, generateOnboardingWorkflowSteps])
+  }, [store, config, termsVersion, generateOnboardingWorkflowSteps])
 
   return {
     localState,

@@ -2,16 +2,15 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, Animated, BackHandler, FlatList, View, ViewStyle, useWindowDimensions } from 'react-native'
+import { Animated, BackHandler, FlatList, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { AuthenticateStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { EventTypes as BifoldEventTypes } from '../constants'
 export interface OnboardingStyleSheet {
   container: ViewStyle
   carouselContainer: ViewStyle
@@ -93,7 +92,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-  }, [dispatch, navigation])
+  }, [dispatch])
 
   useEffect(() => {
     !disableSkip &&
