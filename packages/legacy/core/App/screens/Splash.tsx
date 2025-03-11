@@ -8,13 +8,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
-import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import useInitializeAgent from '../hooks/initialize-agent'
 import { BifoldError } from '../types/error'
 import { Stacks } from '../types/navigators'
-
-const OnboardingVersion = 1
 
 /**
  * To customize this splash screen set the background color of the
@@ -28,12 +25,7 @@ const Splash: React.FC = () => {
   const { LoadingIndicator } = useAnimatedComponents()
   const initializing = useRef(false)
   const { initializeAgent } = useInitializeAgent()
-  const [logger, ocaBundleResolver] = useServices([
-    TOKENS.SCREEN_TERMS,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.CONFIG,
-    TOKENS.UTIL_OCA_RESOLVER,
-  ])
+  const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
     container: {
