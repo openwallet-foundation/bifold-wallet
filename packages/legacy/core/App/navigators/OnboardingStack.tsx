@@ -30,9 +30,12 @@ import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
 // import UpdateAvailable from '../screens/UpdateAvailable'
 import { AuthenticateStackParams, Screens, OnboardingTask } from '../types/navigators'
+import { State } from '../types/state'
+import { Config } from '../types/config'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { DeviceEventEmitter } from 'react-native'
+import { getOnboardingScreens } from './OnboardingScreens'
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
@@ -43,7 +46,7 @@ type ScreenOptions = RouteConfig<
 >
 
 const OnboardingStack: React.FC = () => {
-  const [store, dispatch] = useStore<BCState>()
+  const [store, dispatch] = useStore<State>()
   const { t } = useTranslation()
   const Stack = createStackNavigator()
   const theme = useTheme()
@@ -79,7 +82,7 @@ const OnboardingStack: React.FC = () => {
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
   const [localState, setLocalState] = useState<Array<OnboardingTask>>([])
   const currentRoute = useNavigationState((state) => state?.routes[state?.index])
-  const { disableOnboardingSkip } = config
+  const { disableOnboardingSkip } = config as Config
 
   const onAuthenticated = useCallback(
     (status: boolean): void => {
@@ -131,10 +134,7 @@ const OnboardingStack: React.FC = () => {
   }, [store.stateLoaded, store.onboarding, store.authentication, setLocalState, generateOnboardingWorkflowSteps])
 
   useEffect(() => {
-    // If their are no completed screens, then we don't need to do anything.
-    // TODO:(jl) Should this check for state.loaded?
-    const completed = localState.find((s) => s.completed)
-    if (!completed) {
+    if (!store.stateLoaded) {
       return
     }
 
@@ -159,129 +159,24 @@ const OnboardingStack: React.FC = () => {
 
     // Nothing to do here, we are done with onboarding.
     DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
-  }, [localState, navigation])
+  }, [store.loaded, localState, navigation])
 
-  const screens: ScreenOptions[] = [
-    // {
-    //   name: Screens.Splash,
-    //   component: splash,
-    //   options: { ...ScreenOptionsDictionary[Screens.Splash], ...TransitionPresets.SlideFromRightIOS },
-    // },
-    {
-      name: Screens.Preface,
-      component: Preface,
-      options: {
-        ...ScreenOptionsDictionary[Screens.Preface],
-        ...TransitionPresets.SlideFromRightIOS,
-        title: t('Screens.Preface'),
-      },
-    },
-    {
-      name: Screens.Onboarding,
-      children: OnBoardingScreen,
-      options: () => {
-        return {
-          ...ScreenOptionsDictionary[Screens.Onboarding],
-          ...TransitionPresets.SlideFromRightIOS,
-          title: t('Screens.Onboarding'),
-          headerLeft: () => false,
-        }
-      },
-    },
-    {
-      name: Screens.Terms,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.Terms],
-        ...TransitionPresets.SlideFromRightIOS,
-        title: t('Screens.Terms'),
-        headerLeft: () => false,
+  const screens = useMemo(
+    () =>
+      getOnboardingScreens(t, ScreenOptionsDictionary, {
+        Preface,
+        Terms,
+        NameWallet,
+        useBiometry,
+        PushNotification,
+        Developer,
+        AttemptLockout,
+        OnBoardingScreen,
+        CreatePINScreen,
+        EnterPINScreen,
       }),
-      component: Terms,
-    },
-    {
-      name: Screens.CreatePIN,
-      children: CreatePINScreen,
-      initialParams: {},
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.CreatePIN],
-        ...TransitionPresets.SlideFromRightIOS,
-        title: t('Screens.CreatePIN'),
-        headerLeft: () => false,
-      }),
-    },
-    {
-      name: Screens.NameWallet,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.NameWallet],
-        title: t('Screens.NameWallet'),
-        headerLeft: () => false,
-      }),
-      component: NameWallet,
-    },
-    {
-      name: Screens.UseBiometry,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.UseBiometry],
-        ...TransitionPresets.SlideFromRightIOS,
-        title: t('Screens.Biometry'),
-        headerLeft: () => false,
-      }),
-      // TODO:(jl) This should be capitalized - no?
-      component: useBiometry,
-    },
-    {
-      name: Screens.UsePushNotifications,
-      component: PushNotification,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.UsePushNotifications],
-        ...TransitionPresets.SlideFromRightIOS,
-        title: t('Screens.UsePushNotifications'),
-        headerLeft: () => false,
-      }),
-      // children: PushNotification as any,
-    },
-    {
-      name: Screens.Developer,
-      component: Developer,
-      options: () => {
-        return {
-          ...ScreenOptionsDictionary[Screens.Developer],
-          title: t('Screens.Developer'),
-          headerBackAccessibilityLabel: t('Global.Back'),
-        }
-      },
-    },
-    // {
-    //   name: Screens.UpdateAvailable,
-    //   component: UpdateAvailable,
-    //   options: () => {
-    //     return {
-    //       title: t('Screens.EnterPIN'),
-    //       headerShown: true,
-    //       headerLeft: () => false,
-    //       rightLeft: () => false,
-    //     }
-    //   },
-    // },
-    {
-      name: Screens.EnterPIN,
-      children: EnterPINScreen,
-      options: () => {
-        return {
-          title: t('Screens.EnterPIN'),
-          headerShown: true,
-          headerLeft: () => false,
-          rightLeft: () => false,
-        }
-      },
-    },
-    {
-      name: Screens.AttemptLockout,
-      component: AttemptLockout,
-      options: () => ({ headerShown: true, headerLeft: () => null, title: t('Screens.AttemptLockout') }),
-    },
-  ]
-
+    [t, ScreenOptionsDictionary]
+  )
   return (
     <Stack.Navigator
       initialRouteName={Screens.Preface}
