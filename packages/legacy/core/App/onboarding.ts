@@ -11,7 +11,7 @@ export const isOnboardingTutorialComplete = (didCompleteTutorial: boolean): Onbo
   return { name: Screens.Onboarding, completed: didCompleteTutorial }
 }
 
-export const isTermsComplete = (didAgreeToTerms: Number, termsVersion: number): OnboardingTask => {
+export const isTermsComplete = (didAgreeToTerms: number, termsVersion: number): OnboardingTask => {
   return { name: Screens.Terms, completed: didAgreeToTerms === termsVersion }
 }
 
