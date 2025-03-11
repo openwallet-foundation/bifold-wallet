@@ -1,0 +1,28 @@
+diff --git a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
+index 96360da2b3a1128dce53763b4932dbbd82ff3628..bd76be5d311c6a7ba76d9656bc7d26a49ba21012 100644
+--- a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
++++ b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
+@@ -171,10 +171,21 @@ let DifPresentationExchangeService = class DifPresentationExchangeService {
+             presentationSubmission.descriptor_map.push(...descriptorMap);
+         });
+         return {
+-            verifiablePresentations: verifiablePresentationResultsWithFormat.flatMap((resultWithFormat) => resultWithFormat.verifiablePresentationResult.verifiablePresentations.map((vp) => (0, utils_2.getVerifiablePresentationFromEncoded)(agentContext, vp))),
++            verifiablePresentations: verifiablePresentationResultsWithFormat.flatMap((resultWithFormat) => {
++              if (resultWithFormat.verifiablePresentationResult.verifiablePresentations) {
++                return resultWithFormat.verifiablePresentationResult.verifiablePresentations.map((vp) =>
++                  (0, utils_2.getVerifiablePresentationFromEncoded)(agentContext, vp)
++                )
++              } else {
++                return (0, utils_2.getVerifiablePresentationFromEncoded)(
++                  agentContext,
++                  resultWithFormat.verifiablePresentationResult.verifiablePresentation
++                )
++              }
++            }),
+             presentationSubmission,
+             presentationSubmissionLocation: verifiablePresentationResultsWithFormat[0].verifiablePresentationResult.presentationSubmissionLocation,
+-        };
++        }
+     }
+     getSigningAlgorithmFromVerificationMethod(verificationMethod, suitableAlgorithms) {
+         const key = (0, dids_1.getKeyFromVerificationMethod)(verificationMethod);
