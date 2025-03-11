@@ -42,7 +42,7 @@ const OnboardingStack: React.FC = () => {
   const carousel = createCarouselStyle(OnboardingTheme)
   const [
     config,
-    splash,
+    Splash,
     pages,
     useBiometry,
     Onboarding,
@@ -140,6 +140,7 @@ const OnboardingStack: React.FC = () => {
   const screens = useMemo(
     () =>
       getOnboardingScreens(t, ScreenOptionsDictionary, {
+        Splash,
         Preface,
         Terms,
         NameWallet,
