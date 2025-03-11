@@ -52,7 +52,7 @@ import ContactCredentialListItem from './components/listItems/ContactCredentialL
 import { InlineErrorPosition } from './types/error'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import ConnectionAlert from './components/misc/ConnectionAlert'
-import { DeviceEventEmitter } from 'react-native'
+import { generateOnboardingWorkflowSteps } from './onboarding'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -207,6 +207,8 @@ export class MainContainer implements Container {
 
       dispatch({ type: DispatchAction.STATE_DISPATCH, payload: [state] })
     })
+
+    this._container.registerInstance(TOKENS.ONBOARDING, generateOnboardingWorkflowSteps)
 
     return this
   }
