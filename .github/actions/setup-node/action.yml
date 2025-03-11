@@ -18,7 +18,9 @@ runs:
         registry-url: 'https://registry.npmjs.org/'
         cache: 'yarn'
 
-    - name: Node Version
+    - name: Make Node.js available
       shell: bash
       run: |
+        echo "NODE_BINARY=$(which node)" >> $GITHUB_ENV
+        echo "Node location: $(which node)"
         node -v && yarn -v

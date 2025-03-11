@@ -77,7 +77,10 @@ jobs:
       - name: Run release build
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./packages/legacy/app/ios
+        env:
+          NODE_BINARY: $(which node)
         run: |
+          echo "Using Node from: $NODE_BINARY"
           xcodebuild \
           -workspace AriesBifold.xcworkspace \
           -scheme AriesBifold \
