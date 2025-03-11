@@ -36,6 +36,7 @@ import { Config } from '../types/config'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { DeviceEventEmitter } from 'react-native'
 import { getOnboardingScreens } from './OnboardingScreens'
+import { useOnboardingState } from '../hooks/useOnboardingState'
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
@@ -80,9 +81,14 @@ const OnboardingStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
-  const [localState, setLocalState] = useState<Array<OnboardingTask>>([])
   const currentRoute = useNavigationState((state) => state?.routes[state?.index])
   const { disableOnboardingSkip } = config as Config
+  const { localState, activeScreen } = useOnboardingState(
+    store,
+    config,
+    Number(termsVersion),
+    generateOnboardingWorkflowSteps
+  )
 
   const onAuthenticated = useCallback(
     (status: boolean): void => {
@@ -120,24 +126,7 @@ const OnboardingStack: React.FC = () => {
     return <PINEnter setAuthenticated={onAuthenticated} {...props} />
   }
 
-  const activeScreen = useMemo(() => {
-    return localState.find((s) => !s.completed)?.name
-  }, [localState])
-
   useEffect(() => {
-    if (!store.stateLoaded) {
-      return
-    }
-
-    const screens = generateOnboardingWorkflowSteps(store, config, termsVersion)
-    setLocalState(screens)
-  }, [store.stateLoaded, store.onboarding, store.authentication, setLocalState, generateOnboardingWorkflowSteps])
-
-  useEffect(() => {
-    if (!store.stateLoaded) {
-      return
-    }
-
     // If the active screen is the same as the current route, then we don't
     // need to do anything.
     if (activeScreen && activeScreen === currentRoute?.name) {
@@ -147,6 +136,7 @@ const OnboardingStack: React.FC = () => {
     // If the active screen is different from the current route, then we need
     // to navigate to the active screen.
     if (activeScreen) {
+      console.log('Navigating to active screen:', activeScreen)
       navigation.dispatch(StackActions.replace(activeScreen))
       return
     }
@@ -159,7 +149,7 @@ const OnboardingStack: React.FC = () => {
 
     // Nothing to do here, we are done with onboarding.
     DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
-  }, [store.loaded, localState, navigation])
+  }, [localState, navigation])
 
   const screens = useMemo(
     () =>

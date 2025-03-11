@@ -1,8 +1,10 @@
 import { TFunction } from 'i18next'
 import { TransitionPresets } from '@react-navigation/stack'
 import { ParamListBase, RouteConfig, StackNavigationState } from '@react-navigation/native'
-import { StackNavigationOptions, StackNavigationEventMap } from '@react-navigation/stack'
-import { Screens } from '../types/navigators'
+import { StackNavigationOptions } from '@react-navigation/stack'
+import { Screens, ScreenOptionsType } from '../types/navigators'
+import type { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
+import { StackScreenProps } from '@react-navigation/stack'
 
 type ScreenOptions = RouteConfig<
   ParamListBase,
@@ -13,13 +15,13 @@ type ScreenOptions = RouteConfig<
 >
 
 interface ScreenComponents {
-  Preface: React.FC
-  Terms: React.FC
-  NameWallet: React.FC
-  useBiometry: React.FC
-  PushNotification: React.FC
-  Developer: React.FC
-  AttemptLockout: React.FC
+  Preface: React.FC<StackScreenProps<ParamListBase>>
+  Terms: React.FC<StackScreenProps<ParamListBase>>
+  NameWallet: React.FC<StackScreenProps<ParamListBase>>
+  useBiometry: React.FC<StackScreenProps<ParamListBase>>
+  PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePushNotifications>>
+  Developer: React.FC<StackScreenProps<ParamListBase>>
+  AttemptLockout: React.FC<StackScreenProps<ParamListBase>>
   OnBoardingScreen: React.FC
   CreatePINScreen: React.FC
   EnterPINScreen: React.FC
@@ -27,7 +29,7 @@ interface ScreenComponents {
 
 export const getOnboardingScreens = (
   t: TFunction,
-  ScreenOptionsDictionary: Record<Screens, any>,
+  ScreenOptionsDictionary: ScreenOptionsType, //Record<Screens, any>,
   components: ScreenComponents
 ): ScreenOptions[] => [
   {

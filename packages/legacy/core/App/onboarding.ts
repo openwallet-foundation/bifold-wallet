@@ -1,16 +1,9 @@
-import { Screens, OnboardingTask } from '@hyperledger/aries-bifold-core'
+import { Screens, OnboardingTask } from './types/navigators'
 
-import { BCState } from '../store'
+import { State } from './types/state'
+import { Config } from './types/config'
 
-import { TermsVersion } from './Terms'
-
-export type OnboardingConfig = {
-  showPreface: boolean
-  enableWalletNaming: boolean
-  enablePushNotifications: boolean
-}
-
-export const isPrefaceComplete = (didSeePreface: boolean, showPreface = true): OnboardingTask => {
+export const isPrefaceComplete = (didSeePreface: boolean, showPreface: boolean): OnboardingTask => {
   return { name: Screens.Preface, completed: (didSeePreface && showPreface) || !showPreface }
 }
 
@@ -18,7 +11,7 @@ export const isOnboardingTutorialComplete = (didCompleteTutorial: boolean): Onbo
   return { name: Screens.Onboarding, completed: didCompleteTutorial }
 }
 
-export const isTermsComplete = (didAgreeToTerms: Number, termsVersion: TermsVersion): OnboardingTask => {
+export const isTermsComplete = (didAgreeToTerms: Number, termsVersion: number): OnboardingTask => {
   return { name: Screens.Terms, completed: didAgreeToTerms === termsVersion }
 }
 
@@ -49,9 +42,9 @@ export const isAuthenticationComplete = (didCreatePIN: boolean, didAuthenticate:
 }
 
 export const generateOnboardingWorkflowSteps = (
-  state: BCState,
-  config: OnboardingConfig,
-  termsVersion: TermsVersion
+  state: State,
+  config: Config,
+  termsVersion: number
 ): Array<OnboardingTask> => {
   const {
     didSeePreface,
@@ -67,9 +60,9 @@ export const generateOnboardingWorkflowSteps = (
   const { showPreface, enablePushNotifications } = config
 
   return [
-    isPrefaceComplete(didSeePreface, showPreface),
+    isPrefaceComplete(didSeePreface, showPreface ?? false),
     isOnboardingTutorialComplete(didCompleteTutorial),
-    isTermsComplete(didAgreeToTerms, termsVersion),
+    isTermsComplete(Number(didAgreeToTerms), termsVersion),
     isPINCreationComplete(didCreatePIN),
     isBiometryComplete(didConsiderBiometry),
     isPushNotificationComplete(didConsiderPushNotifications, enablePushNotifications),
