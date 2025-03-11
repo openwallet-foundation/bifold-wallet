@@ -15,6 +15,7 @@ type ScreenOptions = RouteConfig<
 >
 
 interface ScreenComponents {
+  Splash: React.FC<StackScreenProps<ParamListBase>>
   Preface: React.FC<StackScreenProps<ParamListBase>>
   Terms: React.FC<StackScreenProps<ParamListBase>>
   NameWallet: React.FC<StackScreenProps<ParamListBase>>
@@ -29,9 +30,18 @@ interface ScreenComponents {
 
 export const getOnboardingScreens = (
   t: TFunction,
-  ScreenOptionsDictionary: ScreenOptionsType, //Record<Screens, any>,
+  ScreenOptionsDictionary: ScreenOptionsType,
   components: ScreenComponents
 ): ScreenOptions[] => [
+  {
+    name: Screens.Splash,
+    component: components.Splash,
+    options: {
+      ...ScreenOptionsDictionary[Screens.Splash],
+      ...TransitionPresets.ModalFadeTransition,
+      title: t('Screens.Preface'),
+    },
+  },
   {
     name: Screens.Preface,
     component: components.Preface,
