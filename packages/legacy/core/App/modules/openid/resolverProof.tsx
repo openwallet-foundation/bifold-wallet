@@ -1,5 +1,4 @@
 import { Agent, DifPexCredentialsForRequest, Jwt, X509ModuleConfig } from '@credo-ts/core'
-import { OpenID4VCIParam } from './resolver'
 import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
@@ -171,7 +170,14 @@ export const getCredentialsForProofRequest = async ({
   agent,
   data,
   uri,
-}: OpenID4VCIParam): Promise<OpenId4VPRequestRecord | undefined> => {
+}: {
+  agent: Agent
+  // Either data itself (the offer) or uri can be passed
+  data?: string
+  uri?: string
+  fetchAuthorization?: boolean
+  authorization?: { clientId: string; redirectUri: string }
+}): Promise<OpenId4VPRequestRecord | undefined> => {
   let requestUri = uri
 
   try {
@@ -199,6 +205,7 @@ export const getCredentialsForProofRequest = async ({
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
     }
+
     return {
       ...resolved.presentationExchange,
       authorizationRequest: resolved.authorizationRequest,
@@ -224,7 +231,7 @@ export const shareProof = async ({
   agent: Agent
   authorizationRequest: OpenId4VcSiopVerifiedAuthorizationRequest
   credentialsForRequest: DifPexCredentialsForRequest
-  selectedCredentials: { [inputDescriptorId: string]: string }
+  selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
   allowUntrustedCertificate?: boolean
 }) => {
   if (!credentialsForRequest.areRequirementsSatisfied) {
@@ -237,7 +244,7 @@ export const shareProof = async ({
   const credentials = Object.fromEntries(
     credentialsForRequest.requirements.flatMap((requirement) =>
       requirement.submissionEntry.map((entry) => {
-        const credentialId = selectedCredentials[entry.inputDescriptorId]
+        const credentialId = selectedCredentials[entry.inputDescriptorId].id
         const credential =
           entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
           entry.verifiableCredentials[0]

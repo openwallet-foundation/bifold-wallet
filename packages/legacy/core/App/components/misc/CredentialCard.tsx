@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { CredentialExchangeRecord, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { Attribute, BrandingOverlayType, CredentialOverlay, Predicate } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { ViewStyle } from 'react-native'
@@ -57,12 +57,16 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       return
     }
 
-    const resolveOverlay = async (w3cCred: W3cCredentialRecord) => {
+    const resolveOverlay = async (w3cCred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) => {
       const brandingOverlay = await resolveBundleForCredential(w3cCred)
       setOverlay(brandingOverlay)
     }
 
-    if (credential instanceof W3cCredentialRecord) {
+    if (
+      credential instanceof W3cCredentialRecord ||
+      credential instanceof SdJwtVcRecord ||
+      credential instanceof MdocRecord
+    ) {
       resolveOverlay(credential)
       const credentialDisplay = getCredentialForDisplay(credential)
       if (credentialDisplay.display.primary_overlay_attribute) {
@@ -127,7 +131,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
   }
 
-  if (credential instanceof W3cCredentialRecord) {
+  if (
+    credential instanceof W3cCredentialRecord ||
+    credential instanceof SdJwtVcRecord ||
+    credential instanceof MdocRecord
+  ) {
     return (
       <CredentialCard11
         credential={undefined}
@@ -139,6 +147,8 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         elevated={proof}
         displayItems={displayItems}
         hideSlice={true}
+        hasAltCredentials={hasAltCredentials}
+        handleAltCredChange={handleAltCredChange}
         extraOverlayParameter={extraOverlayAttribute}
         brandingOverlayType={bundleResolver.getBrandingOverlayType()}
       />

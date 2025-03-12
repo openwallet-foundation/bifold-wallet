@@ -14,15 +14,16 @@ interface HomeFooterViewProps {
 
 const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
   const { openIdState } = useOpenIDCredentials()
-  const { w3cCredentialRecords } = openIdState
+  const { w3cCredentialRecords, sdJwtVcRecords } = openIdState
   const credentials = [
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
     ...w3cCredentialRecords,
+    ...sdJwtVcRecords,
   ]
   const { HomeTheme, TextTheme, Assets } = useTheme()
   const { t } = useTranslation()
-  
+
   const styles = StyleSheet.create({
     container: {
       paddingHorizontal: offset,
@@ -64,22 +65,14 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
         </Text>
       )
     } else {
-      credentialMsg = (
-        <Text style={[TextTheme.bold]}>
-          {t('Home.NoCredentials')}
-        </Text>
-      )
-      scanReminder = (
-        <Text>
-          {t('Home.ScanOfferAddCard')}
-        </Text>
-      )
+      credentialMsg = <Text style={[TextTheme.bold]}>{t('Home.NoCredentials')}</Text>
+      scanReminder = <Text>{t('Home.ScanOfferAddCard')}</Text>
     }
 
     return (
       <>
         <View style={styles.imageContainer}>
-          <Assets.svg.homeCenterImg {...{ width: '30%',  }} />
+          <Assets.svg.homeCenterImg {...{ width: '30%' }} />
         </View>
 
         <View style={styles.messageContainer}>
