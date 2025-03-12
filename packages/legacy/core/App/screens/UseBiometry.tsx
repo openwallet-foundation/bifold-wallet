@@ -266,6 +266,11 @@ const UseBiometry: React.FC = () => {
     ]
   )
 
+  const renderHeaderLeft = useCallback(
+    () => <BackButton onPress={() => setCanSeeCheckPIN(false)} insets={insets} />,
+    [insets]
+  )
+
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       {settingsPopupConfig && (
