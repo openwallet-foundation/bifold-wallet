@@ -37,7 +37,7 @@ export const getOnboardingScreens = (
     options: {
       ...ScreenOptionsDictionary[Screens.Splash],
       ...TransitionPresets.ModalFadeTransition,
-      title: t('Screens.Preface'),
+      title: t('Screens.Splash'),
     },
   },
   {
