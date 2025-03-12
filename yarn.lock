@@ -2169,7 +2169,7 @@ __metadata:
 
 "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=aries-bifold-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=f52574&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=62d904&locator=aries-bifold-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2213,7 +2213,7 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
     webcrypto-core: ^1.8.0
-  checksum: 6ccd39956263fd9ece5bbd7e7e85d5baab8b8fb229865135957ebdb725ae9fad5b0e356d25edc0bfecadf8a0315f1d8a9d814634611715af54bb4063b7fe1db7
+  checksum: c2818a9150cbbc038dab4c9290484fb3e80948603e3c101ad37be9b2b45fc00f38168f01050e74d9719aa502235f54f4a41c23618b6696fa03e51c086874c8d5
   languageName: node
   linkType: hard
 
@@ -2240,6 +2240,18 @@ __metadata:
   peerDependencies:
     "@hyperledger/indy-vdr-shared": ^0.2.2
   checksum: d9db524381212ee9451ce53d951a857b0daccbb845c25f425aa82f0ea8384fcc930f3e60a717a4080b5a2311bb489fdd60b43933e5ef1f88193298947f206bcd
+  languageName: node
+  linkType: hard
+
+"@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.5.13
+  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=c42b94&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@credo-ts/anoncreds": 0.5.13
+    "@credo-ts/core": 0.5.13
+  peerDependencies:
+    "@hyperledger/indy-vdr-shared": ^0.2.2
+  checksum: ff4bc71ff42c36ffd27b7d4959730b4bf1acacf108a37dce2e8946b17e99380ecfe9c955e35f1289d730b839111b3d89ed8eb52092a62f2255b4707a79931f8a
   languageName: node
   linkType: hard
 
