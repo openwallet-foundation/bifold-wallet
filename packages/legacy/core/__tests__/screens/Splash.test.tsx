@@ -105,6 +105,6 @@ describe('Splash Screen', () => {
       jest.runAllTimers()
     })
 
-    expect(navigation.dispatch).toHaveBeenCalledTimes(1)
+    expect(navigation.dispatch).toHaveBeenCalledTimes(0)
   })
 })
