@@ -6,7 +6,7 @@ index 2db29e12010690b4bf98c96edebee79402e83795..028065c512313fbd249dc9f35eb69fa4
      }
      async initialize() {
          const stop$ = this.dependencyManager.resolve(constants_1.InjectionSymbols.Stop$);
-+        $stop.next(false);
++        stop$.next(false);
          // Listen for new messages (either from transports or somewhere else in the framework / extensions)
          // We create this before doing any other initialization, so the initialization could already receive messages
          this.messageSubscription = this.eventEmitter
