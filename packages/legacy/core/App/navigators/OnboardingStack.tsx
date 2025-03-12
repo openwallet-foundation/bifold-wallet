@@ -90,7 +90,7 @@ const OnboardingStack: React.FC = () => {
     [dispatch]
   )
 
-  const OnBoardingScreen = () => {
+  const OnBoardingScreen = useCallback(() => {
     return (
       <Onboarding
         nextButtonText={t('Global.Next')}
@@ -100,18 +100,24 @@ const OnboardingStack: React.FC = () => {
         style={carousel}
       />
     )
-  }
+  }, [Onboarding, OnboardingTheme, carousel, disableOnboardingSkip, onTutorialCompleted, pages, t])
 
   // These need to be in the children of the stack screen otherwise they
   // will unmount/remount which resets the component state in memory and causes
   // issues
-  const CreatePINScreen = (props: any) => {
-    return <PINCreate setAuthenticated={onAuthenticated} {...props} />
-  }
+  const CreatePINScreen = useCallback(
+    (props: any) => {
+      return <PINCreate setAuthenticated={onAuthenticated} {...props} />
+    },
+    [onAuthenticated]
+  )
 
-  const EnterPINScreen = (props: any) => {
-    return <PINEnter setAuthenticated={onAuthenticated} {...props} />
-  }
+  const EnterPINScreen = useCallback(
+    (props: any) => {
+      return <PINEnter setAuthenticated={onAuthenticated} {...props} />
+    },
+    [onAuthenticated]
+  )
 
   useEffect(() => {
     // If the active screen is the same as the current route, then we don't
@@ -152,7 +158,18 @@ const OnboardingStack: React.FC = () => {
         CreatePINScreen,
         EnterPINScreen,
       }),
-    [t, ScreenOptionsDictionary]
+    [
+      Splash,
+      CreatePINScreen,
+      Developer,
+      EnterPINScreen,
+      OnBoardingScreen,
+      Preface,
+      Terms,
+      useBiometry,
+      t,
+      ScreenOptionsDictionary,
+    ]
   )
   return (
     <Stack.Navigator
