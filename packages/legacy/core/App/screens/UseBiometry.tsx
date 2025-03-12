@@ -26,6 +26,15 @@ enum UseBiometryUsage {
   ToggleOnOff,
 }
 
+interface BackButtonProps {
+  onPress: () => void
+  insets: any
+}
+
+const BackButton: React.FC<BackButtonProps> = ({ onPress, insets }) => (
+  <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
+)
+
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { agent } = useAppAgent()
@@ -255,10 +264,6 @@ const UseBiometry: React.FC = () => {
       store.onboarding.didAgreeToTerms,
       store.onboarding.didConsiderBiometry,
     ]
-  )
-
-  const BackButton: React.FC<{ onPress: () => void; insets: any }> = ({ onPress, insets }) => (
-    <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
   )
 
   return (
