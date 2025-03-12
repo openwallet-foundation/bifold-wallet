@@ -1,43 +1,29 @@
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import useCredentialCardStyles from '../../hooks/credential-card-styles'
+import { TOKENS, useServices } from '../../container-api'
 
 interface CredentialCardLogo {
   noLogoText: string
   overlay: CredentialOverlay<BrandingOverlay>
-  overlayType: BrandingOverlayType
   elevated?: boolean
 }
 
-const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({
-  noLogoText,
-  overlay,
-  overlayType,
-  elevated,
-}: CredentialCardLogo) => {
-  const { TextTheme, CredentialCardShadowTheme } = useTheme()
-  const { width } = useWindowDimensions()
-  const padding = width * 0.05
-  const logoHeight = width * 0.12
+const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({ noLogoText, overlay, elevated }: CredentialCardLogo) => {
+  const { TextTheme } = useTheme()
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
+  const isBranding11 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11
+  const textColor =
+    overlay.brandingOverlay?.secondaryBackgroundColor && overlay.brandingOverlay.secondaryBackgroundColor !== ''
+      ? overlay.brandingOverlay.secondaryBackgroundColor
+      : overlay.brandingOverlay?.primaryBackgroundColor
 
-  const styles = StyleSheet.create({
-    logoContainer: {
-      width: logoHeight,
-      height: logoHeight,
-      backgroundColor: '#ffffff',
-      borderRadius: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...(overlayType === BrandingOverlayType.Branding10 && {
-        top: padding,
-        left: -1 * logoHeight + padding,
-        ...CredentialCardShadowTheme,
-      }),
-    },
-  })
+  const { styles, logoHeight } = useCredentialCardStyles(overlay, bundleResolver.getBrandingOverlayType())
+
   return (
     <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
       {overlay.brandingOverlay?.logo ? (
@@ -58,7 +44,7 @@ const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({
             {
               fontSize: 0.5 * logoHeight,
               alignSelf: 'center',
-              color: '#000',
+              color: isBranding11 ? textColor : '#000',
             },
           ]}
           testID={testIdWithKey('NoLogoText')}

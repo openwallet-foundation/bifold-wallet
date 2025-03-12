@@ -38,12 +38,17 @@ const useCredentialCardStyles = (
       ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
         justifyContent: 'space-between',
       }),
-      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
-        marginLeft: -1 * logoHeight + padding,
-      }),
+      marginLeft:
+        brandingOverlayType === BrandingOverlayType.Branding10
+          ? -1 * logoHeight + padding
+          : -1.3 * logoHeight + padding,
     },
     primaryBodyNameContainer: {
       flexDirection: 'row',
+      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+        minHeight: logoHeight,
+        alignItems: 'center',
+      }),
     },
     imageAttr: {
       height: 150,
@@ -67,11 +72,9 @@ const useCredentialCardStyles = (
       borderRadius: 8,
       justifyContent: 'center',
       alignItems: 'center',
-      ...(brandingOverlayType === BrandingOverlayType.Branding10 && {
-        top: padding,
-        left: -1 * logoHeight + padding,
-        ...CredentialCardShadowTheme,
-      }),
+      top: padding,
+      left: -1 * logoHeight + padding,
+      ...CredentialCardShadowTheme,
     },
     headerText: {
       ...TextTheme.labelSubtitle,
@@ -109,7 +112,8 @@ const useCredentialCardStyles = (
       flex: 1,
       alignSelf: 'flex-end',
       justifyContent: 'flex-end',
-      maxWidth: '80%',
+      maxWidth: 225,
+      paddingTop: 5,
     },
     errorText: {
       ...TextTheme.normal,

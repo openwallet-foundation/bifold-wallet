@@ -434,41 +434,39 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             }
                             testID="com.ariesbifold:id/CredentialCardPrimaryBody"
                           >
-                            <View>
-                              <View
-                                style={
-                                  Object {
-                                    "flexDirection": "row",
-                                  }
+                            <View
+                              style={
+                                Object {
+                                  "flexDirection": "row",
                                 }
+                              }
+                            >
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontSize": 18,
+                                      "fontWeight": "bold",
+                                    },
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                    },
+                                    Object {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
+                                testID="com.ariesbifold:id/CredentialName"
                               >
-                                <Text
-                                  style={
-                                    Array [
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "fontSize": 18,
-                                        "fontWeight": "bold",
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "flexShrink": 1,
-                                        "lineHeight": 24,
-                                      },
-                                      Object {
-                                        "flex": 1,
-                                        "flexWrap": "wrap",
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                      },
-                                    ]
-                                  }
-                                  testID="com.ariesbifold:id/CredentialName"
-                                >
-                                  Credential
-                                </Text>
-                              </View>
+                                Credential
+                              </Text>
                             </View>
                             <View
                               style={
@@ -1010,41 +1008,39 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             }
                             testID="com.ariesbifold:id/CredentialCardPrimaryBody"
                           >
-                            <View>
-                              <View
-                                style={
-                                  Object {
-                                    "flexDirection": "row",
-                                  }
+                            <View
+                              style={
+                                Object {
+                                  "flexDirection": "row",
                                 }
+                              }
+                            >
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "fontSize": 18,
+                                      "fontWeight": "bold",
+                                    },
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                    },
+                                    Object {
+                                      "color": "#FFFFFF",
+                                    },
+                                  ]
+                                }
+                                testID="com.ariesbifold:id/CredentialName"
                               >
-                                <Text
-                                  style={
-                                    Array [
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "fontSize": 18,
-                                        "fontWeight": "bold",
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "flexShrink": 1,
-                                        "lineHeight": 24,
-                                      },
-                                      Object {
-                                        "flex": 1,
-                                        "flexWrap": "wrap",
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                      },
-                                    ]
-                                  }
-                                  testID="com.ariesbifold:id/CredentialName"
-                                >
-                                  Latest
-                                </Text>
-                              </View>
+                                Latest
+                              </Text>
                             </View>
                             <View
                               style={

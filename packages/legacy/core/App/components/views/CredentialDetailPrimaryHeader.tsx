@@ -27,9 +27,10 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
   const { width, height } = useWindowDimensions()
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
   const styles = StyleSheet.create({
     primaryHeaderContainer: {
-      paddingHorizontal,
+      paddingHorizontal: isBranding11 ? 16 : paddingHorizontal,
       paddingVertical,
       overflow: 'hidden',
     },

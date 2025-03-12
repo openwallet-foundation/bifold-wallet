@@ -17,6 +17,11 @@ const CredentialCardLogo: React.FC<Props> = ({
   const { TextTheme, CredentialCardShadowTheme } = useTheme()
   const logoHeight = brandingOverlayType === BrandingOverlayType.Branding10 ? 80 : 48
   const paddingHorizontal = 24
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
+  const textColor =
+    overlay.brandingOverlay?.secondaryBackgroundColor && overlay.brandingOverlay.secondaryBackgroundColor !== ''
+      ? overlay.brandingOverlay.secondaryBackgroundColor
+      : overlay.brandingOverlay?.primaryBackgroundColor
 
   const logoText = useMemo(() => {
     if (brandingOverlayType === BrandingOverlayType.Branding11) {
@@ -55,7 +60,10 @@ const CredentialCardLogo: React.FC<Props> = ({
           }}
         />
       ) : (
-        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]} accessible={false}>
+        <Text
+          style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: isBranding11 ? textColor : '#000' }]}
+          accessible={false}
+        >
           {logoText}
         </Text>
       )}

@@ -997,74 +997,72 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                         }
                         testID="com.ariesbifold:id/CredentialCardPrimaryBody"
                       >
-                        <View>
-                          <View
-                            style={
-                              Object {
-                                "flexDirection": "row",
-                              }
+                        <View
+                          style={
+                            Object {
+                              "flexDirection": "row",
                             }
-                          >
-                            <Text
-                              style={
-                                Array [
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "fontSize": 14,
-                                    "fontWeight": "bold",
-                                  },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "flexShrink": 1,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                    "lineHeight": 19,
-                                    "opacity": 0.8,
-                                  },
-                                ]
-                              }
-                              testID="com.ariesbifold:id/CredentialIssuer"
-                            >
-                              b4b1b9cd-a445-4bb3-9645-a2377471965a
-                            </Text>
-                          </View>
-                          <View
+                          }
+                        >
+                          <Text
                             style={
-                              Object {
-                                "flexDirection": "row",
-                              }
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 14,
+                                  "fontWeight": "bold",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "flexShrink": 1,
+                                  "lineHeight": 24,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "flexWrap": "wrap",
+                                  "lineHeight": 19,
+                                  "opacity": 0.8,
+                                },
+                              ]
                             }
+                            testID="com.ariesbifold:id/CredentialIssuer"
                           >
-                            <Text
-                              style={
-                                Array [
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "fontSize": 18,
-                                    "fontWeight": "bold",
-                                  },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "flexShrink": 1,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                  },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                  },
-                                ]
-                              }
-                              testID="com.ariesbifold:id/CredentialName"
-                            >
-                              Student Card
-                            </Text>
-                          </View>
+                            b4b1b9cd-a445-4bb3-9645-a2377471965a
+                          </Text>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "flexDirection": "row",
+                            }
+                          }
+                        >
+                          <Text
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 18,
+                                  "fontWeight": "bold",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "flexShrink": 1,
+                                  "lineHeight": 24,
+                                },
+                                Object {
+                                  "flex": 1,
+                                  "flexWrap": "wrap",
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                },
+                              ]
+                            }
+                            testID="com.ariesbifold:id/CredentialName"
+                          >
+                            Student Card
+                          </Text>
                         </View>
                         <View
                           style={
