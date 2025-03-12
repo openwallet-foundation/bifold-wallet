@@ -257,6 +257,10 @@ const UseBiometry: React.FC = () => {
     ]
   )
 
+  const BackButton: React.FC<{ onPress: () => void; insets: any }> = ({ onPress, insets }) => (
+    <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
+  )
+
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       {settingsPopupConfig && (
