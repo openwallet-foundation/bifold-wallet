@@ -2169,7 +2169,7 @@ __metadata:
 
 "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=aries-bifold-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=62d904&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=7eff54&locator=aries-bifold-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2213,7 +2213,7 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
     webcrypto-core: ^1.8.0
-  checksum: c2818a9150cbbc038dab4c9290484fb3e80948603e3c101ad37be9b2b45fc00f38168f01050e74d9719aa502235f54f4a41c23618b6696fa03e51c086874c8d5
+  checksum: 2593029c121f9bcfbd80b28cb3ba57abb68240a32ea5764611415b9646fec78632e7b0ec20fea8a7ba233172ce8ec537dab59a3da66e7ded0cc536d36b4625fe
   languageName: node
   linkType: hard
 
