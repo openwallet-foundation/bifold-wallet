@@ -25,14 +25,6 @@ import { DeviceEventEmitter } from 'react-native'
 import { getOnboardingScreens } from './OnboardingScreens'
 import { useOnboardingState } from '../hooks/useOnboardingState'
 
-// type ScreenOptions = RouteConfig<
-//   ParamListBase,
-//   Screens,
-//   StackNavigationState<ParamListBase>,
-//   StackNavigationOptions,
-//   StackNavigationEventMap
-// >
-
 const OnboardingStack: React.FC = () => {
   const [store, dispatch] = useStore<State>()
   const { t } = useTranslation()
