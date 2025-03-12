@@ -133,12 +133,6 @@ const OnboardingStack: React.FC = () => {
       return
     }
 
-    // TODO:(jl) Should we remove onboarding complete form state?
-    //    dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    // TODO:(jl) We can remove this from permanent state as it is now
-    // more of a transient state (think of it like an update).
-    // TODO:(jl) Do we need to remove store.onboarding.postAuthScreens?
-
     // Nothing to do here, we are done with onboarding.
     DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
   }, [activeScreen, currentRoute, localState, navigation])
