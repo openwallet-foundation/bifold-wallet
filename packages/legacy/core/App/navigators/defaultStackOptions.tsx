@@ -46,6 +46,12 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.OpenIDCredentialDetails]: {
     headerShown: true,
   },
+  [Screens.OpenIDCredentialOffer]: {
+    headerShown: true,
+  },
+  [Screens.OpenIDProofPresentation]: {
+    headerShown: true,
+  },
 }
 
 export function useDefaultStackOptions({ ColorPallet }: ITheme): StackNavigationOptions {
