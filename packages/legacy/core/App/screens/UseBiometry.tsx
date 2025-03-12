@@ -257,6 +257,10 @@ const UseBiometry: React.FC = () => {
     ]
   )
 
+  const BackButton: React.FC<{ onPress: () => void; insets: any }> = ({ onPress, insets }) => (
+    <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
+  )
+
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       {settingsPopupConfig && (
@@ -328,14 +332,7 @@ const UseBiometry: React.FC = () => {
           title={t('Screens.EnterPIN')}
           headerTitleStyle={{ marginTop: insets.top, ...TextTheme.headerTitle }}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => (
-            <HeaderBackButton
-              onPress={() => setCanSeeCheckPIN(false)}
-              tintColor="white"
-              style={{ marginTop: insets.top }}
-              labelVisible={false}
-            />
-          )}
+          headerLeft={() => <BackButton onPress={() => setCanSeeCheckPIN(false)} insets={insets} />}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}
