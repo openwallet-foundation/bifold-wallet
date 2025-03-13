@@ -1,19 +1,3 @@
-// NOTE: We need to import these to be able to use the AskarWallet in this file.
-if (!__DEV__) {
-  import('@hyperledger/aries-askar-react-native')
-    .then(() => {
-      // console.log('Askar native module loaded successfully')
-    })
-    .catch(() => {
-      // console.error('Failed to load Askar native module:', error)
-    })
-} else {
-  // console.log('Askar native module not loaded in debug mode')
-}
-
-//NOTE: This line is throwing an error in debugging due to native modules is it still needed? maybe the above is a workaround
-// to be able to use RNDebugger in debug mode
-// eslint-disable-next-line import/no-extraneous-dependencies
 import 'reflect-metadata'
 
 import { AskarWallet } from '@credo-ts/askar' // is this enough instead of line number 2
