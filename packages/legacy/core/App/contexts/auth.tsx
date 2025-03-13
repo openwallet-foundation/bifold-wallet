@@ -1,3 +1,6 @@
+// Dont remove the following import line or the pin check will fail when opening askar waller
+import '@hyperledger/aries-askar-react-native'
+
 import 'reflect-metadata'
 
 import { AskarWallet } from '@credo-ts/askar' // is this enough instead of line number 2
