@@ -1,7 +1,7 @@
 name: Native Build & Test
 
 env:
-cacheId: '8' # increment to expire the cache
+  cacheId: '8' # increment to expire the cache
 
 on:
   pull_request:
@@ -20,7 +20,7 @@ jobs:
     runs-on: macos-latest
     env:
       # Explicitly tell React Native where to find Node
-      REACT_NATIVE_NODE_BINARY: /Users/runner/hostedtoolcache/node/18.18.2/arm64/bin/node
+      REACT_NATIVE_NODE_BINARY: $(which node)
     steps:
       - uses: actions/checkout@v4
 

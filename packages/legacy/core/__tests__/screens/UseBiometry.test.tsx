@@ -4,7 +4,6 @@ import { AuthContext } from '../../App/contexts/auth'
 import UseBiometry from '../../App/screens/UseBiometry'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
-// import timeTravel from '../helpers/timetravel'
 import { BasicAppContext } from '../helpers/app'
 import { Linking } from 'react-native'
 import { testDefaultState } from '../contexts/store'
@@ -65,9 +64,6 @@ describe('UseBiometry Screen', () => {
   })
 
   test('Renders correctly when biometry available', async () => {
-    // authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(true)
-    // why to mention it again if you put it with same value in beforeEach?
-
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
@@ -75,11 +71,6 @@ describe('UseBiometry Screen', () => {
         </AuthContext.Provider>
       </BasicAppContext>
     )
-
-    // no need for the waitFor  it might cause infinte loop and cause the test to fail
-    // await waitFor(() => {
-    //   timeTravel(1000)
-    // })
 
     // use this instead since anyway u r waiting the promise to resolve to set setBiometryAvailable in the useEffect
     // this is cleaner approach than advanceTimersByTime
@@ -98,20 +89,12 @@ describe('UseBiometry Screen', () => {
       </BasicAppContext>
     )
 
-    // await waitFor(() => {
-    //   timeTravel(1000)
-    // })
-    // await act(async () => {
-    //   await new Promise((resolve) => setTimeout(resolve, 0))
-    // })
-
     await tree.findByText('Biometry.NotEnabledText1')
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Toggles use biometrics ok', async () => {
-    // authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(true)
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
