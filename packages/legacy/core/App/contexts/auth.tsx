@@ -3,7 +3,7 @@ import '@hyperledger/aries-askar-react-native'
 
 import 'reflect-metadata'
 
-import { AskarWallet } from '@credo-ts/askar' // is this enough instead of line number 2
+import { AskarWallet } from '@credo-ts/askar'
 import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
