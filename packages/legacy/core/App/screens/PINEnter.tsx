@@ -63,7 +63,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       height: '100%',
       backgroundColor: ColorPallet.brand.primaryBackground,
       padding: 20,
-      justifyContent: isNewDesign ? 'flex-start' : 'space-between',
+      justifyContent: 'space-between',
     },
     // below used as helpful labels for views, no properties needed atp
     contentContainer: {},
