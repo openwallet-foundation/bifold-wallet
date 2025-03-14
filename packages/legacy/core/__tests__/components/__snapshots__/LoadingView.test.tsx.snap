@@ -2,6 +2,14 @@
 
 exports[`LoadingView Component renders correctly 1`] = `
 <RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   style={
     Object {
       "alignItems": "center",

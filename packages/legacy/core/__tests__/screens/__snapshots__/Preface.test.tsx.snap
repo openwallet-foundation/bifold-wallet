@@ -3,11 +3,12 @@
 exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -260,11 +261,12 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
 exports[`Preface Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
