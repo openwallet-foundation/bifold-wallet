@@ -205,6 +205,7 @@ const translation = {
         "Message": {
             "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
             "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
+            "MaxAdjacentNumberRepetitionValidation": "Adjacent numbers repeating times are more than allowed. Please try again. (FR)",
             "NoRepetitionOfTheTwoSameNumbersValidation": "Une séquence de deux chiffres répétée a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
             "NoRepetitionOfTheSameNumbersValidation": "Votre NIP contient une répétition. Choisissez un NIP différent.",
             "NoSeriesOfNumbersValidation": "Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
@@ -215,6 +216,7 @@ const translation = {
         "Helper": {
             "CrossPatternValidation": "Ne doit pas contenir un patron de croix.",
             "OddOrEvenSequenceValidation": "Ne doit pas contenir une suite paire ou impaire.",
+            "MaxAdjacentNumberRepetitionValidation": "Adjacent numbers repeating times are limited. (FR)",
             "NoRepetitionOfTheTwoSameNumbersValidation": "Ne doit pas contenir deux chiffres qui se répètent.",
             "NoRepetitionOfTheSameNumbersValidation": "Ne doit pas contenir de répétition.",
             "NoSeriesOfNumbersValidation": "Ne doit pas contenir de suite (123).",
@@ -236,6 +238,7 @@ const translation = {
         "PinChangeSuccessTitle": "Votre NIP a été modifié avec succès",
         "PinChangeSuccessMessage": "Votre NIP a été modifié avec succès. Vous pouvez maintenant vous connecter avec votre nouveau NIP.",
         "EnterOldPINTitle": "Veuillez entrer votre ancien NIP",
+        "EnterOldPIN": "Saisir ancien NIP",
         "NewPIN": "nouveau",
         "EnterPINTitle": "Entrer un {{ new }}NIP à 6 chiffres",
         "EnterPIN": "Saisir un NIP",
