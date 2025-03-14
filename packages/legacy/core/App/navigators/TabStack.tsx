@@ -8,7 +8,6 @@ import { Text, useWindowDimensions, View, StyleSheet, DeviceEventEmitter } from 
 import { isTablet } from 'react-native-device-info'
 import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { AttachTourStep } from '../components/tour/AttachTourStep'
 import { EventTypes } from '../constants'
@@ -28,7 +27,7 @@ import { BaseTourID } from '../types/tour'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections, useCustomTabBarIcons }, logger] =
+  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] =
     useServices([TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const notifications = useNotifications({})
   const { t } = useTranslation()
@@ -127,16 +126,11 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep tourID={BaseTourID.HomeTour} index={1}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                  {useCustomTabBarIcons ? (
-                    focused ? (
-                      <Assets.svg.tabOneFocusedIcon height={30} width={30} fill={color} stroke={color} />
-                    ) : (
-                      <Assets.svg.tabOneIcon height={30} width={30} fill={color} stroke={color} />
-                    )
+                  {focused ? (
+                    <Assets.svg.tabOneFocusedIcon height={30} width={30} fill={color} stroke={color} />
                   ) : (
-                    <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
+                    <Assets.svg.tabOneIcon height={30} width={30} fill={color} stroke={color} />
                   )}
-
                   {showLabels && (
                     <Text
                       style={{
@@ -198,22 +192,12 @@ const TabStack: React.FC = () => {
                           accessibilityLabel={t('TabStack.Scan')}
                           style={{ ...TabTheme.focusTabIconStyle }}
                         >
-                          {useCustomTabBarIcons ? (
-                            <Assets.svg.tabTwoIcon
-                              height={30}
-                              width={30}
-                              fill={TabTheme.tabBarButtonIconStyle.color}
-                              style={{ paddingLeft: 0.5, paddingRight: 0.5 }}
-                            />
-                          ) : (
-                            <Icon
-                              accessible={false}
-                              name="qrcode-scan"
-                              color={TabTheme.tabBarButtonIconStyle.color}
-                              size={32}
-                              style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
-                            />
-                          )}
+                          <Assets.svg.tabTwoIcon
+                            height={30}
+                            width={30}
+                            fill={TabTheme.tabBarButtonIconStyle.color}
+                            style={{ paddingLeft: 0.5, paddingRight: 0.5 }}
+                          />
                         </View>
                         <Text
                           style={{
@@ -254,14 +238,10 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                  {useCustomTabBarIcons ? (
-                    focused ? (
-                      <Assets.svg.tabThreeFocusedIcon height={30} width={30} fill={color} stroke={color} />
-                    ) : (
-                      <Assets.svg.tabThreeIcon height={30} width={30} fill={color} stroke={color} />
-                    )
+                  {focused ? (
+                    <Assets.svg.tabThreeFocusedIcon height={30} width={30} fill={color} stroke={color} />
                   ) : (
-                    <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+                    <Assets.svg.tabThreeIcon height={30} width={30} fill={color} stroke={color} />
                   )}
                   {showLabels && (
                     <Text

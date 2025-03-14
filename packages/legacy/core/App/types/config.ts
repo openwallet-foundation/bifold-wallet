@@ -23,7 +23,6 @@ export interface Config {
   enableChat?: boolean
   enableTours?: boolean
   enableImplicitInvitations?: boolean
-  enableCustomTabBarIcons?: boolean
   enableReuseConnections?: boolean
   enableHiddenDevModeTrigger?: boolean
   showPreface?: boolean
@@ -42,7 +41,6 @@ export interface Config {
   disableContactsInSettings?: boolean
   internetReachabilityUrls: string[]
   attemptLockoutConfig?: AttemptLockoutConfig
-  useCustomTabBarIcons?: boolean
 }
 
 export interface HistoryEventsLoggerConfig {
