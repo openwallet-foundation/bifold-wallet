@@ -46,6 +46,11 @@ import IconChevronRight from './assets/img/IconChevronRight.svg'
 import HomeCenterImg from './assets/img/home-center-img.svg'
 import IconWarning from './assets/img/exclamation-mark.svg'
 import IconError from './assets/img/error-filled.svg'
+import TabOneFocusedIcon from './assets/img/message-text-icon.svg'
+import TabOneIcon from './assets/img/message-text-icon-outline.svg'
+import TabTwoIcon from './assets/img/qrcode-scan-icon.svg'
+import TabThreeFocusedIcon from './assets/img/wallet-icon.svg'
+import TabThreeIcon from './assets/img/wallet-icon-outline.svg'
 
 export interface ISVGAssets {
   activityIndicator: React.FC<SvgProps>
@@ -101,6 +106,11 @@ export interface ISVGAssets {
   iconEdit: React.FC<SvgProps>
   iconWarning: React.FC<SvgProps>
   iconError: React.FC<SvgProps>
+  tabOneIcon: React.FC<SvgProps>
+  tabOneFocusedIcon: React.FC<SvgProps>
+  tabTwoIcon: React.FC<SvgProps>
+  tabThreeIcon: React.FC<SvgProps>
+  tabThreeFocusedIcon: React.FC<SvgProps>
 }
 
 export interface IFontAttributes {
@@ -992,6 +1002,11 @@ export const Assets = {
     iconEdit: IconEdit,
     iconError: IconError,
     iconWarning: IconWarning,
+    tabOneIcon: TabOneIcon,
+    tabOneFocusedIcon: TabOneFocusedIcon,
+    tabTwoIcon: TabTwoIcon,
+    tabThreeIcon: TabThreeIcon,
+    tabThreeFocusedIcon: TabThreeFocusedIcon,
   },
   img: {
     logoPrimary: {
