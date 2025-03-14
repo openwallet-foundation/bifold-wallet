@@ -206,4 +206,10 @@ export type HistoryStackParams = {
 }
 
 export type ScreenLayoutConfig = Partial<Record<Screens, LayoutProps>>
+
 export type ScreenOptionsType = Partial<Record<Screens, StackNavigationOptions>>
+
+export type OnboardingTask = {
+  name: Screens
+  completed: boolean
+}

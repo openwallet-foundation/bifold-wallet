@@ -1,6 +1,4 @@
-import { CommonActions, useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements';
+import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform } from 'react-native'
@@ -14,7 +12,6 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 
@@ -28,13 +25,25 @@ enum UseBiometryUsage {
   ToggleOnOff,
 }
 
+interface BackButtonProps {
+  onPress: () => void
+  insets: any
+}
+
+const BackButton: React.FC<BackButtonProps> = ({ onPress, insets }) => (
+  <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
+)
+
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { agent } = useAppAgent()
   const { t } = useTranslation()
-  const [{ enablePushNotifications }, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices(
-    [TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY, TOKENS.HISTORY_ENABLED, TOKENS.HISTORY_EVENTS_LOGGER]
-  )
+  const [logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
+  ])
   const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
@@ -43,7 +52,6 @@ const UseBiometry: React.FC = () => {
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
   const { ColorPallet, TextTheme, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const screenUsage = useMemo(() => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
@@ -130,17 +138,7 @@ const UseBiometry: React.FC = () => {
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
-    if (enablePushNotifications) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.UsePushNotifications }],
-        })
-      )
-    } else {
-      dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    }
-  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
+  }, [biometryEnabled, commitPIN, dispatch])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()
@@ -268,6 +266,11 @@ const UseBiometry: React.FC = () => {
     ]
   )
 
+  const renderHeaderLeft = useCallback(
+    () => <BackButton onPress={() => setCanSeeCheckPIN(false)} insets={insets} />,
+    [insets]
+  )
+
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
       {settingsPopupConfig && (
@@ -333,13 +336,13 @@ const UseBiometry: React.FC = () => {
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
-        presentationStyle='fullScreen'
+        presentationStyle="fullScreen"
       >
-        <Header 
+        <Header
           title={t('Screens.EnterPIN')}
           headerTitleStyle={{ marginTop: insets.top, ...TextTheme.headerTitle }}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor='white' style={{ marginTop: insets.top }} labelVisible={false} />}
+          headerLeft={renderHeaderLeft}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}
