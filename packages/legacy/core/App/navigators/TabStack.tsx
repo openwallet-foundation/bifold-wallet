@@ -8,7 +8,6 @@ import { Text, useWindowDimensions, View, StyleSheet, DeviceEventEmitter } from 
 import { isTablet } from 'react-native-device-info'
 import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { AttachTourStep } from '../components/tour/AttachTourStep'
 import { EventTypes } from '../constants'
@@ -28,16 +27,13 @@ import { BaseTourID } from '../types/tour'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] = useServices([
-    TOKENS.NOTIFICATIONS,
-    TOKENS.CONFIG,
-    TOKENS.UTIL_LOGGER,
-  ])
+  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] =
+    useServices([TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const notifications = useNotifications({})
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertNetworkConnected } = useNetwork()
-  const { ColorPallet, TabTheme, TextTheme } = useTheme()
+  const { ColorPallet, TabTheme, TextTheme, Assets } = useTheme()
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
@@ -130,8 +126,11 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep tourID={BaseTourID.HomeTour} index={1}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                  <Icon name={focused ? 'message-text' : 'message-text-outline'} color={color} size={30} />
-
+                  {focused ? (
+                    <Assets.svg.tabOneFocusedIcon height={30} width={30} fill={color} stroke={color} />
+                  ) : (
+                    <Assets.svg.tabOneIcon height={30} width={30} fill={color} stroke={color} />
+                  )}
                   {showLabels && (
                     <Text
                       style={{
@@ -193,12 +192,11 @@ const TabStack: React.FC = () => {
                           accessibilityLabel={t('TabStack.Scan')}
                           style={{ ...TabTheme.focusTabIconStyle }}
                         >
-                          <Icon
-                            accessible={false}
-                            name="qrcode-scan"
-                            color={TabTheme.tabBarButtonIconStyle.color}
-                            size={32}
-                            style={{ paddingLeft: 0.5, paddingTop: 0.5 }}
+                          <Assets.svg.tabTwoIcon
+                            height={30}
+                            width={30}
+                            fill={TabTheme.tabBarButtonIconStyle.color}
+                            style={{ paddingLeft: 0.5, paddingRight: 0.5 }}
                           />
                         </View>
                         <Text
@@ -240,7 +238,11 @@ const TabStack: React.FC = () => {
             tabBarIcon: ({ color, focused }) => (
               <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
-                  <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
+                  {focused ? (
+                    <Assets.svg.tabThreeFocusedIcon height={30} width={30} fill={color} stroke={color} />
+                  ) : (
+                    <Assets.svg.tabThreeIcon height={30} width={30} fill={color} stroke={color} />
+                  )}
                   {showLabels && (
                     <Text
                       style={{
