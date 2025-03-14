@@ -19,14 +19,21 @@ export const buildFieldsFromW3cCredsCredential = (value: W3cCredentialDisplay): 
   return (
     Object.entries(value.attributes)
       .filter(([key]) => key !== 'id')
-      .map(
-        ([key, value]) =>
-          new Attribute({
-            name: key,
-            value: value as string | number | null,
-            mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
-          })
-      ) || []
+      .map(([key, value]) => {
+        let formattedValue: string | number | null
+
+        if (typeof value === 'object' && value !== null) {
+          formattedValue = JSON.stringify(value) // Convert object to string
+        } else {
+          formattedValue = value as string | number | null
+        }
+
+        return new Attribute({
+          name: key,
+          value: formattedValue,
+          mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
+        })
+      }) || []
   )
 }
 

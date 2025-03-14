@@ -1,7 +1,7 @@
-import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
-import { OpenId4VPRequestRecord } from '../modules/openid/types'
+import { OpenId4VPRequestRecord, OpenIDCredentialType } from '../modules/openid/types'
 import { LayoutProps } from '../layout/ScreenLayout'
 
 export enum Screens {
@@ -84,7 +84,7 @@ export type RootStackParams = {
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
   [Stacks.HistoryStack]: NavigatorScreenParams<HistoryStackParams>
   [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.OpenIDCredentialDetails]: { credentialId: string }
+  [Screens.OpenIDCredentialDetails]: { credentialId: string; type: OpenIDCredentialType }
   [Stacks.CustomNavStack1]: undefined
 }
 
@@ -196,7 +196,7 @@ export type DeliveryStackParams = {
   [Screens.Declined]: { credentialId: string }
   [Screens.Chat]: { connectionId: string }
   [Screens.OpenIDCredentialOffer]: {
-    credential: SdJwtVcRecord | W3cCredentialRecord
+    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   }
   [Screens.OpenIDProofPresentation]: { credential: OpenId4VPRequestRecord }
 }

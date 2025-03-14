@@ -10,6 +10,7 @@ export enum PINError {
   CrossPatternValidation = 'CrossPatternValidation',
   OddOrEvenSequenceValidation = 'OddOrEvenSequenceValidation',
   NoRepetitionOfTheSameNumbersValidation = 'NoRepetitionOfTheSameNumbersValidation',
+  MaxAdjacentNumberRepetitionValidation = 'MaxAdjacentNumberRepetitionValidation',
   NoRepetitionOfTheTwoSameNumbersValidation = 'NoRepetitionOfTheTwoSameNumbersValidation',
   NoSeriesOfNumbersValidation = 'NoSeriesOfNumbersValidation',
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
@@ -26,6 +27,7 @@ export interface PINValidationsType {
 
 export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules) => {
   const PINValidations: PINValidationsType[] = []
+  
   if (PINRules.no_cross_pattern) {
     PINValidations.push({
       isInvalid: crossNumberPattern.includes(PIN),
@@ -38,16 +40,21 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
       errorName: PINError.OddOrEvenSequenceValidation,
     } as PINValidationsType)
   }
-  if (PINRules.no_repeated_numbers) {
-    let noRepeatedNumbers = new RegExp(/(\d)\1{1,}/)
-    if (typeof PINRules.no_repeated_numbers === 'number') {
-      noRepeatedNumbers = new RegExp(`(\\d)\\1{${PINRules.no_repeated_numbers - 1},}`)
-    }
+
+  if (1 == PINRules.no_repeated_numbers) {
+    const repetitionPattern = new RegExp(/(\d)\1{1,}/)
     PINValidations.push({
-      isInvalid: noRepeatedNumbers.test(PIN),
-      errorName: PINError.NoRepetitionOfTheSameNumbersValidation,
+      isInvalid: repetitionPattern.test(PIN),
+      errorName: PINError.NoRepetitionOfTheSameNumbersValidation
+    } as PINValidationsType)
+  } else if (1 < PINRules.no_repeated_numbers){
+    const repetitionPattern = new RegExp(String.raw`(\d)\1{${PINRules.no_repeated_numbers},}`, "g")
+    PINValidations.push({
+      isInvalid: repetitionPattern.test(PIN),
+      errorName: PINError.MaxAdjacentNumberRepetitionValidation
     } as PINValidationsType)
   }
+
   if (PINRules.no_repetition_of_the_two_same_numbers) {
     let noRepetitionOfTheTwoSameNumbers = new RegExp(/([0-9][0-9])\1{1,}/)
     if (typeof PINRules.no_repetition_of_the_two_same_numbers === 'number') {
@@ -60,6 +67,7 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
       errorName: PINError.NoRepetitionOfTheTwoSameNumbersValidation,
     } as PINValidationsType)
   }
+ 
   if (PINRules.no_series_of_numbers) {
     PINValidations.push({
       isInvalid: consecutiveSeriesOfThree.test(PIN),
