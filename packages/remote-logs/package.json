@@ -39,7 +39,7 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.5.11",
+    "@credo-ts/core": "0.5.13",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "react": "^18.2.0",
@@ -50,7 +50,7 @@
     "hoistingLimits": "workspaces"
   },
   "dependencies": {
-    "@credo-ts/core": "0.5.11",
+    "@credo-ts/core": "0.5.13",
     "@hyperledger/aries-bifold-core": "^1.0.0",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
