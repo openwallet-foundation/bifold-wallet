@@ -216,8 +216,9 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       <CredentialCard
         credential={credential}
         displayItems={fieldsMapped as Attribute[]}
-        hasAltCredentials={hasMultipleCreds}
-        handleAltCredChange={selectAltCredentail}
+        //TODO: Support multiplae credentials
+        // hasAltCredentials={hasMultipleCreds}
+        // handleAltCredChange={selectAltCredentail}
       />
     )
   }
