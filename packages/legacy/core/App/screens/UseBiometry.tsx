@@ -1,6 +1,6 @@
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements';
+import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform } from 'react-native'
@@ -35,7 +35,7 @@ const UseBiometry: React.FC = () => {
   const [{ enablePushNotifications }, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices(
     [TOKENS.CONFIG, TOKENS.UTIL_LOGGER, TOKENS.FN_LOAD_HISTORY, TOKENS.HISTORY_ENABLED, TOKENS.HISTORY_EVENTS_LOGGER]
   )
-  const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
+  const { isBiometricsActive, commitWalletToKeychain, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
@@ -80,7 +80,7 @@ const UseBiometry: React.FC = () => {
     }
 
     if (biometryEnabled) {
-      commitPIN(biometryEnabled).then(() => {
+      commitWalletToKeychain(biometryEnabled).then(() => {
         dispatch({
           type: DispatchAction.USE_BIOMETRY,
           payload: [biometryEnabled],
@@ -94,7 +94,7 @@ const UseBiometry: React.FC = () => {
         })
       })
     }
-  }, [screenUsage, biometryEnabled, commitPIN, disableBiometrics, dispatch])
+  }, [screenUsage, biometryEnabled, commitWalletToKeychain, disableBiometrics, dispatch])
 
   const logHistoryRecord = useCallback(
     (type: HistoryCardType) => {
@@ -124,7 +124,7 @@ const UseBiometry: React.FC = () => {
   const continueTouched = useCallback(async () => {
     setContinueEnabled(false)
 
-    await commitPIN(biometryEnabled)
+    await commitWalletToKeychain(biometryEnabled)
 
     dispatch({
       type: DispatchAction.USE_BIOMETRY,
@@ -140,7 +140,7 @@ const UseBiometry: React.FC = () => {
     } else {
       dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
     }
-  }, [biometryEnabled, commitPIN, dispatch, enablePushNotifications, navigation])
+  }, [biometryEnabled, commitWalletToKeychain, dispatch, enablePushNotifications, navigation])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()
@@ -333,13 +333,20 @@ const UseBiometry: React.FC = () => {
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
-        presentationStyle='fullScreen'
+        presentationStyle="fullScreen"
       >
-        <Header 
+        <Header
           title={t('Screens.EnterPIN')}
           headerTitleStyle={{ marginTop: insets.top, ...TextTheme.headerTitle }}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor='white' style={{ marginTop: insets.top }} labelVisible={false} />}
+          headerLeft={() => (
+            <HeaderBackButton
+              onPress={() => setCanSeeCheckPIN(false)}
+              tintColor="white"
+              style={{ marginTop: insets.top }}
+              labelVisible={false}
+            />
+          )}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}
