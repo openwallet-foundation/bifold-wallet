@@ -184,6 +184,7 @@ const translation = {
         "Next": "Suivant",
         "Back": "Précédent",
         "Done": "Terminer",
+        "AccessibilitySteps": "Étape {{ stepOn }} de {{ stepsOutOf }} - {{ title }}",
     },
     "CameraDisclosure": {
         "AllowCameraUse": "Autoriser l'utilisation de la caméra",
