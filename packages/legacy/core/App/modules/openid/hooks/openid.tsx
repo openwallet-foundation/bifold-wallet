@@ -50,8 +50,8 @@ export const useOpenID = ({
       } catch (err: unknown) {
         //TODO: Sppecify different error
         const error = new BifoldError(
-          t('Error.Title1043'),
-          t('Error.Message1043'),
+          t('Error.Title1024'),
+          t('Error.Message1024'),
           (err as Error)?.message ?? err,
           1043
         )

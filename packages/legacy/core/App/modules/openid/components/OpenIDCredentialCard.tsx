@@ -22,6 +22,8 @@ import { getCredentialForDisplay } from '../display'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { getAttributeField } from '../utils/utils'
+import { Attribute } from '@hyperledger/aries-oca/build/legacy'
+import startCase from 'lodash.startcase'
 
 interface CredentialCardProps {
   credentialDisplay?: W3cCredentialDisplay
@@ -62,9 +64,9 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
     return result.display
   }, [credentialDisplay, credentialRecord, t])
 
-  const overlayAttribute = useMemo((): string | number | null | undefined => {
+  const overlayAttributeField = useMemo((): Attribute | undefined => {
     if (!display?.primary_overlay_attribute || !credentialDisplay) return undefined
-    return getAttributeField(credentialDisplay, display.primary_overlay_attribute)?.value
+    return getAttributeField(credentialDisplay, display.primary_overlay_attribute)
   }, [display, credentialDisplay])
 
   const { width } = useWindowDimensions()
@@ -213,7 +215,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   }
 
   const CardFooter: React.FC = () => {
-    if (!overlayAttribute) return null
+    if (!overlayAttributeField) return null
     return (
       <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
         <Text
@@ -226,7 +228,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
           testID={testIdWithKey('CredentialIssued')}
           maxFontSizeMultiplier={1}
         >
-          {overlayAttribute}
+          {overlayAttributeField.label ?? startCase(overlayAttributeField.name || '')}: {overlayAttributeField.value}
         </Text>
       </View>
     )

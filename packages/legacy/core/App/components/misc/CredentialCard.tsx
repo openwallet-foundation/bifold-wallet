@@ -49,7 +49,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const { ColorPallet } = useTheme()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { resolveBundleForCredential } = useOpenIDCredentials()
-  const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<string | number | null | undefined>()
+  const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<Attribute | undefined>()
 
   useEffect(() => {
     if (brandingOverlay) {
@@ -70,10 +70,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       resolveOverlay(credential)
       const credentialDisplay = getCredentialForDisplay(credential)
       if (credentialDisplay.display.primary_overlay_attribute) {
-        const attributeValue = getAttributeField(
-          credentialDisplay,
-          credentialDisplay.display.primary_overlay_attribute
-        )?.value
+        const attributeValue = getAttributeField(credentialDisplay, credentialDisplay.display.primary_overlay_attribute)
         setExtraOverlayAttribute(attributeValue)
       }
     }
