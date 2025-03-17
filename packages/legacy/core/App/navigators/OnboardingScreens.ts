@@ -21,7 +21,7 @@ interface ScreenComponents {
   PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePushNotifications>>
   Developer: React.FC<StackScreenProps<ParamListBase>>
   AttemptLockout: React.FC<StackScreenProps<ParamListBase>>
-  OnBoardingScreen: React.FC
+  OnboardingScreen: React.FC
   CreatePINScreen: React.FC
   EnterPINScreen: React.FC
 }
@@ -51,7 +51,7 @@ export const getOnboardingScreens = (
   },
   {
     name: Screens.Onboarding,
-    children: components.OnBoardingScreen,
+    children: components.OnboardingScreen,
     options: () => ({
       ...ScreenOptionsDictionary[Screens.Onboarding],
       ...TransitionPresets.SlideFromRightIOS,
