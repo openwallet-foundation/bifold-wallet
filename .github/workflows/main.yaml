@@ -76,7 +76,6 @@ jobs:
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./packages/legacy/app
         run: |
-          export USE_HERMES=true
           yarn run ios:setup && \
           git status && \
           git diff ios/Podfile.lock
