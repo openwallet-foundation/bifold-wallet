@@ -213,6 +213,7 @@ const translation = {
       "PINOnlyContainDigitsValidation": "Your PIN needs to only contain digits. Please try again.",
       "PINTooShortValidation": "Your PIN is too short. Please try again.",
       "PINTooLongValidation": "Your PIN is too long. Please try again.",
+      "PINExpectedLengthValidation": "Your PIN must be {{num}} digits. Please try again.",
       "OldPINIncorrect": "Your old pin is incorrect. Please try again."
     },
     "Helper": {
@@ -223,8 +224,9 @@ const translation = {
       "NoRepetitionOfTheTwoSameNumbersValidation": "Does not contain repeating two-digit sequence.",
       "NoSeriesOfNumbersValidation": "Does not contain a series of numbers (123).",
       "PINOnlyContainDigitsValidation": "Must contain only digits.",
-      "PINTooShortValidation": "The PIN is not long enough.",
-      "PINTooLongValidation": "The PIN is too long enough.",
+      "PINTooShortValidation": "Your PIN must be more than {{num}} digits.",
+      "PINTooLongValidation": "Your PIN must be less than {{num}} digits.",
+      "PINExpectedLengthValidation": "Your PIN must be {{num}} digits.",
       "CheckIcon": "Criteria met",
       "ClearIcon": "Criteria not met",
     },

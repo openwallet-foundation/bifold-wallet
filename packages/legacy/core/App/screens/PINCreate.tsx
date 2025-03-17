@@ -368,7 +368,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                       />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                      {t(`PINCreate.Helper.${validation.errorName}`)}
+                      {t(`PINCreate.Helper.${validation.errorName}`, validation?.errorTextAddition)}
                     </Text>
                   </View>
                 )
