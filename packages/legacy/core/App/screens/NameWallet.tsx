@@ -30,9 +30,8 @@ const NameWallet: React.FC = () => {
   const { agent } = useAgent()
   const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
   const [loading, setLoading] = useState(false)
-  const onBoardingComplete =
-    (store.onboarding.onboardingVersion !== 0 && store.onboarding.didCompleteOnboarding) ||
-    (store.onboarding.onboardingVersion === 0 && store.onboarding.didConsiderBiometry)
+  const didCompleteOnboarding = store.onboarding.didCompleteOnboarding
+
   const [errorState, setErrorState] = useState<ErrorState>({
     visible: false,
     title: '',
@@ -121,16 +120,16 @@ const NameWallet: React.FC = () => {
         <View style={styles.controlsContainer}>
           <View style={styles.buttonContainer}>
             <Button
-              title={onBoardingComplete ? t('Global.Save') : t('Global.Continue')}
+              title={didCompleteOnboarding ? t('Global.Save') : t('Global.Continue')}
               buttonType={ButtonType.Primary}
-              testID={onBoardingComplete ? testIdWithKey('Save') : testIdWithKey('Continue')}
-              accessibilityLabel={onBoardingComplete ? t('Global.Save') : t('Global.Continue')}
+              testID={didCompleteOnboarding ? testIdWithKey('Save') : testIdWithKey('Continue')}
+              accessibilityLabel={didCompleteOnboarding ? t('Global.Save') : t('Global.Continue')}
               onPress={handleContinuePressed}
               disabled={loading}
             >
               {loading && <ButtonLoading />}
             </Button>
-            {onBoardingComplete && (
+            {didCompleteOnboarding && (
               <View style={{ marginTop: 15 }}>
                 <Button
                   title={t('Global.Cancel')}
