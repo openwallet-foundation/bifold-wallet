@@ -81,7 +81,7 @@ const OnboardingStack: React.FC = () => {
     [dispatch]
   )
 
-  const OnBoardingScreen = useCallback(() => {
+  const OnboardingScreen = useCallback(() => {
     return (
       <Onboarding
         nextButtonText={t('Global.Next')}
@@ -139,7 +139,7 @@ const OnboardingStack: React.FC = () => {
         PushNotification,
         Developer,
         AttemptLockout,
-        OnBoardingScreen,
+        OnboardingScreen,
         CreatePINScreen,
         EnterPINScreen,
       }),
@@ -148,7 +148,7 @@ const OnboardingStack: React.FC = () => {
       CreatePINScreen,
       Developer,
       EnterPINScreen,
-      OnBoardingScreen,
+      OnboardingScreen,
       Preface,
       Terms,
       useBiometry,
