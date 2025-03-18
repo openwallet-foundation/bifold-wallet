@@ -7,6 +7,14 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
   visible={true}
 >
   <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "additive",
+      }
+    }
     style={
       Object {
         "backgroundColor": "#000000",

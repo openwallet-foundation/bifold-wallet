@@ -3,10 +3,12 @@
 exports[`ListProofRequests Component Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -105,7 +107,7 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={Array []}
     style={
       Object {

@@ -66,6 +66,12 @@ jobs:
         run: |
           yarn lerna run build
 
+      - name: Create .xcode.env.local file
+        working-directory: ./packages/legacy/app/ios
+        run: |
+          echo "export NODE_BINARY=$(which node)" > .xcode.env.local
+          cat .xcode.env.local
+
       - name: Install iOS dependencies
         # if: steps.pod-cache.outputs.cache-hit != 'true' || steps.npm-cache.outputs.cache-hit != 'true'
         working-directory: ./packages/legacy/app
@@ -115,7 +121,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: 11
+          java-version: 17
           cache: 'gradle'
 
       - name: Setup Android SDK

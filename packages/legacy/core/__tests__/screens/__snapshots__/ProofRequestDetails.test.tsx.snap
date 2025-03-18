@@ -3,10 +3,12 @@
 exports[`ProofRequestDetails Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -291,7 +293,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                   removeClippedSubviews={false}
                   renderItem={[Function]}
                   scrollEnabled={false}
-                  scrollEventThrottle={50}
+                  scrollEventThrottle={0.0001}
                   stickyHeaderIndices={Array []}
                   viewabilityConfigCallbackPairs={Array []}
                 >
