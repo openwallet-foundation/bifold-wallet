@@ -296,6 +296,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             <PINInput
               label={t('PINCreate.EnterOldPINTitle')}
               testID={testIdWithKey('EnterOldPIN')}
+              accessibilityLabel={t('PINCreate.EnterOldPIN')}
               onPINChanged={(p: string) => {
                 setPINOld(p)
               }}
@@ -352,12 +353,22 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                 return (
                   <View style={{ flexDirection: 'row' }} key={index}>
                     {validation.isInvalid ? (
-                      <Icon accessibilityLabel={t("PINCreate.Helper.ClearIcon")} name="clear" size={iconSize} color={ColorPallet.notification.errorIcon} />
+                      <Icon
+                        accessibilityLabel={t('PINCreate.Helper.ClearIcon')}
+                        name="clear"
+                        size={iconSize}
+                        color={ColorPallet.notification.errorIcon}
+                      />
                     ) : (
-                      <Icon accessibilityLabel={t("PINCreate.Helper.CheckIcon")} name="check" size={iconSize} color={ColorPallet.notification.successIcon} />
+                      <Icon
+                        accessibilityLabel={t('PINCreate.Helper.CheckIcon')}
+                        name="check"
+                        size={iconSize}
+                        color={ColorPallet.notification.successIcon}
+                      />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                      {t(`PINCreate.Helper.${validation.errorName}`)}
+                      {t(`PINCreate.Helper.${validation.errorName}`, validation?.errorTextAddition)}
                     </Text>
                   </View>
                 )

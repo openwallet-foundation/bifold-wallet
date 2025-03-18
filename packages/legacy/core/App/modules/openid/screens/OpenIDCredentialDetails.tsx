@@ -14,11 +14,11 @@ import { useAgent } from '@credo-ts/react-hooks'
 import RecordRemove from '../../../components/record/RecordRemove'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { W3cCredentialDisplay } from '../types'
+import { OpenIDCredentialType, W3cCredentialDisplay } from '../types'
 import { TOKENS, useServices } from '../../../container-api'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import Record from '../../../components/record/Record'
-import { W3cCredentialRecord } from '@credo-ts/core'
+import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { buildOverlayFromW3cCredential } from '../../../utils/oca'
 import CredentialDetailSecondaryHeader from '../../../components/views/CredentialDetailSecondaryHeader'
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
@@ -37,17 +37,18 @@ const paddingHorizontal = 24
 const paddingVertical = 16
 
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
-  const { credentialId } = route.params
+  const { credentialId, type } = route.params
 
-  const [credential, setCredential] = useState<W3cCredentialRecord | undefined>(undefined)
+  const [credential, setCredential] = useState<W3cCredentialRecord | SdJwtVcRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { removeCredential } = useOpenIDCredentials()
+  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
+  const [credentialRemoved, setCredentialRemoved] = useState(false)
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -71,19 +72,27 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     if (!agent) return
 
     const fetchCredential = async () => {
+      if (credentialRemoved) return
       try {
-        const credentialExchangeRecord = await agent.w3cCredentials.getCredentialRecordById(credentialId)
-        setCredential(credentialExchangeRecord)
+        let record: SdJwtVcRecord | W3cCredentialRecord | undefined
+
+        if (type === OpenIDCredentialType.SdJwtVc) {
+          record = await getSdJwtCredentialById(credentialId)
+        } else {
+          record = await getW3CCredentialById(credentialId)
+        }
+
+        setCredential(record)
       } catch (error) {
         // credential not found for id, display an error
         DeviceEventEmitter.emit(
           EventTypes.ERROR_ADDED,
-          new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+          new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1035)
         )
       }
     }
     fetchCredential()
-  }, [credentialId, agent, t])
+  }, [credentialId, type, getSdJwtCredentialById, getW3CCredentialById, agent, t, credentialRemoved])
 
   useEffect(() => {
     if (!credential) return
@@ -94,7 +103,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     } catch (error) {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,
-        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1033)
+        new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1034)
       )
     }
   }, [credential, t])
@@ -117,16 +126,24 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     resolveOverlay()
   }, [credentialDisplay, bundleResolver, i18n])
 
-  const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
+  const toggleDeclineModalVisible = () => {
+    if (credentialRemoved) {
+      return
+    }
+    setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
+  }
 
   const handleDeclineTouched = async () => {
+    setCredentialRemoved(true)
+    setIsRemoveModalDisplayed(false)
+    await new Promise((resolve) => setTimeout(resolve, 500))
     handleRemove()
   }
 
   const handleRemove = async () => {
     if (!credential) return
     try {
-      await removeCredential(credential)
+      await removeCredential(credential, type)
       navigation.pop()
     } catch (err) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)

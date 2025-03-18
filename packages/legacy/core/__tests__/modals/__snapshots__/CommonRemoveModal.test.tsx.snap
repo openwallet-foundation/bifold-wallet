@@ -18,11 +18,12 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -230,7 +231,14 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -252,10 +260,10 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={
@@ -447,11 +455,12 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -664,7 +673,14 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -686,10 +702,10 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={
@@ -881,11 +897,12 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -1105,7 +1122,14 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -1127,10 +1151,10 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={
@@ -1322,11 +1346,12 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -1761,7 +1786,14 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -1783,10 +1815,10 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={
@@ -1978,11 +2010,12 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -2177,7 +2210,14 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -2199,10 +2239,10 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={
@@ -2394,11 +2434,12 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -2956,7 +2997,14 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -2978,10 +3026,10 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={
@@ -3173,11 +3221,12 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
   >
     <RNCSafeAreaView
       edges={
-        Array [
-          "left",
-          "right",
-          "bottom",
-        ]
+        Object {
+          "bottom": "additive",
+          "left": "additive",
+          "right": "additive",
+          "top": "off",
+        }
       }
       style={
         Object {
@@ -3612,7 +3661,14 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
             }
             width="100%"
           >
-            <RNSVGGroup>
+            <RNSVGGroup
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
               <RNSVGDefs>
                 <RNSVGLinearGradient
                   gradient={
@@ -3634,10 +3690,10 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
               </RNSVGDefs>
               <RNSVGRect
                 fill={
-                  Array [
-                    1,
-                    "gradient",
-                  ]
+                  Object {
+                    "brushRef": "gradient",
+                    "type": 1,
+                  }
                 }
                 height="30"
                 propList={

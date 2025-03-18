@@ -26,9 +26,13 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [connections, setConnections] = useState<ConnectionRecord[]>([])
-  const {records: connectionRecords} = useConnections()
+  const { records: connectionRecords } = useConnections()
   const [store] = useStore()
-  const [{ contactHideList }, ContactListItem] = useServices([TOKENS.CONFIG, TOKENS.COMPONENT_CONTACT_LIST_ITEM])
+  const [{ contactHideList }, ContactListItem, defaultScreenOptionsDict] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.COMPONENT_CONTACT_LIST_ITEM,
+    TOKENS.OBJECT_SCREEN_CONFIG,
+  ])
   const style = StyleSheet.create({
     list: {
       backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -85,10 +89,10 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       })
     } else {
       navigation.setOptions({
-        headerRight: () => false,
+        headerRight: defaultScreenOptionsDict[Screens.Contacts]?.headerRight,
       })
     }
-  }, [store.preferences.useConnectionInviterCapability, navigation, t, onPressAddContact])
+  }, [store.preferences.useConnectionInviterCapability, navigation, t, onPressAddContact, defaultScreenOptionsDict])
 
   return (
     <View>
