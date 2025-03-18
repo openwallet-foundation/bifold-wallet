@@ -216,13 +216,19 @@ exports[`IconButton Component Right alignment with text renders correctly 1`] = 
     }
   >
     <Text
+      maxFontSizeMultiplier={1}
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 14,
-          "fontWeight": "bold",
-          "marginRight": 4,
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 14,
+            "fontWeight": "bold",
+          },
+          Object {
+            "color": "#FFFFFF",
+            "marginRight": 4,
+          },
+        ]
       }
     >
       RightButton

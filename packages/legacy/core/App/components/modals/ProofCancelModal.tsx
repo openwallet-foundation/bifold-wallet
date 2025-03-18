@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, View, Text } from 'react-native'
+import { Modal, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import { ThemedText } from '../texts/ThemedText'
 
 interface ProofCancelModalProps {
   visible?: boolean
@@ -15,7 +16,7 @@ interface ProofCancelModalProps {
 
 const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
 
   const styles = StyleSheet.create({
     safeAreaView: {
@@ -34,7 +35,6 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
       justifyContent: 'space-around',
     },
     heading: {
-      ...TextTheme.modalTitle,
       marginTop: 60,
       marginBottom: 30,
       textAlign: 'center',
@@ -43,10 +43,6 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
       alignSelf: 'center',
       marginBottom: 50,
     },
-    subtext: {
-      ...TextTheme.modalNormal,
-      textAlign: 'center',
-    },
   })
 
   return (
@@ -54,9 +50,13 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
       <SafeAreaView style={styles.safeAreaView}>
         <ScrollView style={styles.container}>
           <View style={styles.content}>
-            <Text style={styles.heading}>{t('ProofRequest.NoInfoShared')}</Text>
+            <ThemedText variant="modalTitle" style={styles.heading}>
+              {t('ProofRequest.NoInfoShared')}
+            </ThemedText>
             <Assets.svg.noInfoShared style={styles.image} height={200} />
-            <Text style={styles.subtext}>{t('ProofRequest.YourInfo')}</Text>
+            <ThemedText variant="modalNormal" style={{ textAlign: 'center' }}>
+              {t('ProofRequest.YourInfo')}
+            </ThemedText>
           </View>
         </ScrollView>
         <View style={styles.controlsContainer}>

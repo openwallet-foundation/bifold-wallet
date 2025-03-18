@@ -34,12 +34,16 @@ exports[`DataRetention Screen screen renders correctly 1`] = `
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 20,
-          "fontWeight": "bold",
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 20,
+            "fontWeight": "bold",
+          },
+          undefined,
+        ]
       }
     >
       Global.On
@@ -195,12 +199,16 @@ exports[`DataRetention Screen screen renders correctly 1`] = `
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontSize": 20,
-          "fontWeight": "bold",
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 20,
+            "fontWeight": "bold",
+          },
+          undefined,
+        ]
       }
     >
       Global.Off

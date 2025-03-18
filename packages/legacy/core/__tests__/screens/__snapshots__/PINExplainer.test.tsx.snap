@@ -28,17 +28,22 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
     <View>
       <View>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 32,
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 32,
+                "fontWeight": "bold",
+              },
+              undefined,
+            ]
           }
         >
           PINCreate.Explainer.PrimaryHeading
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -72,17 +77,22 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
       </View>
       <View>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 21,
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 21,
+                "fontWeight": "bold",
+              },
+              undefined,
+            ]
           }
         >
           PINCreate.Explainer.WhyNeedPin.Header
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -139,6 +149,7 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
             </Text>
           </View>
           <Text
+            maxFontSizeMultiplier={2}
             style={
               Array [
                 Object {
@@ -146,9 +157,16 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
                   "fontSize": 18,
                   "fontWeight": "normal",
                 },
-                Object {
-                  "flexShrink": 1,
-                },
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "flexShrink": 1,
+                  },
+                ],
               ]
             }
           >
@@ -195,6 +213,7 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
             </Text>
           </View>
           <Text
+            maxFontSizeMultiplier={2}
             style={
               Array [
                 Object {
@@ -202,9 +221,16 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
                   "fontSize": 18,
                   "fontWeight": "normal",
                 },
-                Object {
-                  "flexShrink": 1,
-                },
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "flexShrink": 1,
+                  },
+                ],
               ]
             }
           >
@@ -272,17 +298,25 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+                "fontWeight": "normal",
               },
-              false,
-              false,
-              false,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+                false,
+              ],
             ]
           }
         >

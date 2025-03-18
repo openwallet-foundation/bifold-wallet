@@ -27,12 +27,20 @@ exports[`RecordField Component Shown binary field should render a binary field 1
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+          ]
         }
         testID="com.ariesbifold:id/AttributeName"
       >
@@ -167,12 +175,20 @@ exports[`RecordField Component Shown date field should render a date field 1`] =
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+          ]
         }
         testID="com.ariesbifold:id/AttributeName"
       >
@@ -209,12 +225,20 @@ exports[`RecordField Component Shown date field should render a date field 1`] =
       }
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "fontWeight": "normal",
-          }
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+          ]
         }
         testID="com.ariesbifold:id/AttributeValue"
       >

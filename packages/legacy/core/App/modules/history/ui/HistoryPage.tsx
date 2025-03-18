@@ -2,7 +2,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 import { ButtonType } from '../../../components/buttons/Button-api'
 import { TOKENS, useServices } from '../../../container-api'
@@ -13,6 +13,7 @@ import { testIdWithKey } from '../../../utils/testable'
 import { CustomRecord, RecordType } from '../types'
 
 import HistoryListItem from './components/HistoryListItem'
+import { ThemedText } from '../../../components/texts/ThemedText'
 
 type HistoryPageProps = StackScreenProps<HistoryStackParams>
 
@@ -22,7 +23,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
   const { t } = useTranslation()
   const { agent } = useAgent()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
 
   const actionButtonLabel = t('Global.SaveSettings')
@@ -63,7 +64,9 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const renderEmptyListComponent = () => {
     return (
       <View>
-        <Text style={[style.title, TextTheme.headerTitle]}>{t('ActivityHistory.NoHistory')}</Text>
+        <ThemedText variant="headerTitle" style={style.title}>
+          {t('ActivityHistory.NoHistory')}
+        </ThemedText>
       </View>
     )
   }

@@ -2,12 +2,20 @@
 
 exports[`RecordDateIntField Component Invalid dateInt render field value as is 1`] = `
 <Text
+  maxFontSizeMultiplier={2}
   style={
-    Object {
-      "color": "#FFFFFF",
-      "fontSize": 18,
-      "fontWeight": "normal",
-    }
+    Array [
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 18,
+        "fontWeight": "normal",
+      },
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 18,
+        "fontWeight": "normal",
+      },
+    ]
   }
   testID="com.ariesbifold:id/AttributeValue"
 >
@@ -17,12 +25,20 @@ exports[`RecordDateIntField Component Invalid dateInt render field value as is 1
 
 exports[`Valid dateInt render field value in format 1`] = `
 <Text
+  maxFontSizeMultiplier={2}
   style={
-    Object {
-      "color": "#FFFFFF",
-      "fontSize": 18,
-      "fontWeight": "normal",
-    }
+    Array [
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 18,
+        "fontWeight": "normal",
+      },
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 18,
+        "fontWeight": "normal",
+      },
+    ]
   }
   testID="com.ariesbifold:id/AttributeValue"
 >

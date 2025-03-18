@@ -39,15 +39,20 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 24,
-                "fontWeight": "bold",
-                "marginBottom": 30,
-                "marginTop": 60,
-                "textAlign": "center",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 24,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginBottom": 30,
+                  "marginTop": 60,
+                  "textAlign": "center",
+                },
+              ]
             }
           >
             ProofRequest.NoInfoShared
@@ -62,13 +67,18 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
             }
           />
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "textAlign": "center",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "textAlign": "center",
+                },
+              ]
             }
           >
             ProofRequest.YourInfo
@@ -141,17 +151,25 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
                     "fontSize": 18,
-                    "fontWeight": "bold",
-                    "textAlign": "center",
+                    "fontWeight": "normal",
                   },
-                  false,
-                  false,
-                  false,
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "textAlign": "center",
+                    },
+                    false,
+                    false,
+                    false,
+                  ],
                 ]
               }
             >

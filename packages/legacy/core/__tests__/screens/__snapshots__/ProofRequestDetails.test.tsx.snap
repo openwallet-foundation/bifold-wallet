@@ -35,23 +35,35 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26,
+                "fontWeight": "bold",
+              },
+              undefined,
+            ]
           }
         >
           Student full name
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 20,
-              "marginTop": 10,
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "marginTop": 10,
+              },
+            ]
           }
         >
           Verify the full name of a student
@@ -143,6 +155,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
@@ -181,6 +194,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                     }
                   >
                     <Text
+                      maxFontSizeMultiplier={2}
                       style={
                         Array [
                           Object {
@@ -188,17 +202,19 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                             "fontSize": 14,
                             "fontWeight": "bold",
                           },
-                          Object {
-                            "color": "#FFFFFF",
-                            "flexShrink": 1,
-                            "lineHeight": 24,
-                          },
-                          Object {
-                            "flex": 1,
-                            "flexWrap": "wrap",
-                            "lineHeight": 19,
-                            "opacity": 0.8,
-                          },
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "flexShrink": 1,
+                              "lineHeight": 24,
+                            },
+                            Object {
+                              "flex": 1,
+                              "flexWrap": "wrap",
+                              "lineHeight": 19,
+                              "opacity": 0.8,
+                            },
+                          ],
                         ]
                       }
                       testID="com.ariesbifold:id/CredentialIssuer"
@@ -212,6 +228,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                     }
                   >
                     <Text
+                      maxFontSizeMultiplier={2}
                       style={
                         Array [
                           Object {
@@ -219,15 +236,17 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                             "fontSize": 18,
                             "fontWeight": "bold",
                           },
-                          Object {
-                            "color": "#FFFFFF",
-                            "flexShrink": 1,
-                            "lineHeight": 24,
-                          },
-                          Object {
-                            "flex": 1,
-                            "flexWrap": "wrap",
-                          },
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "flexShrink": 1,
+                              "lineHeight": 24,
+                            },
+                            Object {
+                              "flex": 1,
+                              "flexWrap": "wrap",
+                            },
+                          ],
                         ]
                       }
                       testID="com.ariesbifold:id/CredentialName"
@@ -313,6 +332,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       >
                         <View>
                           <Text
+                            maxFontSizeMultiplier={2}
                             style={
                               Array [
                                 Object {
@@ -320,15 +340,17 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                                   "fontSize": 14,
                                   "fontWeight": "normal",
                                 },
-                                Object {
-                                  "color": "#FFFFFF",
-                                  "flexShrink": 1,
-                                  "lineHeight": 24,
-                                },
-                                Object {
-                                  "lineHeight": 19,
-                                  "opacity": 0.8,
-                                },
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "flexShrink": 1,
+                                    "lineHeight": 24,
+                                  },
+                                  Object {
+                                    "lineHeight": 19,
+                                    "opacity": 0.8,
+                                  },
+                                ],
                               ]
                             }
                             testID="com.ariesbifold:id/AttributeName"
@@ -353,6 +375,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       >
                         <View>
                           <Text
+                            maxFontSizeMultiplier={2}
                             style={
                               Array [
                                 Object {
@@ -360,15 +383,17 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                                   "fontSize": 14,
                                   "fontWeight": "normal",
                                 },
-                                Object {
-                                  "color": "#FFFFFF",
-                                  "flexShrink": 1,
-                                  "lineHeight": 24,
-                                },
-                                Object {
-                                  "lineHeight": 19,
-                                  "opacity": 0.8,
-                                },
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "flexShrink": 1,
+                                    "lineHeight": 24,
+                                  },
+                                  Object {
+                                    "lineHeight": 19,
+                                    "opacity": 0.8,
+                                  },
+                                ],
                               ]
                             }
                             testID="com.ariesbifold:id/AttributeName"
@@ -444,17 +469,25 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -522,17 +555,25 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
