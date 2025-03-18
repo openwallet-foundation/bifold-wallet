@@ -15,7 +15,7 @@ import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
 
 enum StateDispatchAction {
-  STATE_DISPATCH = 'state/stateDispatch'
+  STATE_DISPATCH = 'state/stateDispatch',
 }
 
 enum OnboardingDispatchAction {
@@ -574,11 +574,22 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         ...state.migration,
         didMigrateToAskar: true,
       }
+
+      // Reset any login attempts and penalty in keychain
+      // Since the app is being reinstalled, we can erase the login attempts from keychain
+      // in the previous installation
+      const loginAttempt: LoginAttemptState = {
+        loginAttempts: 0,
+        servedPenalty: true,
+      }
+
       const newState = {
         ...state,
         onboarding,
         migration,
+        loginAttempt,
       }
+      storeLoginAttempt(loginAttempt)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, newState.migration)
       return newState
