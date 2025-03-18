@@ -51,6 +51,7 @@ export enum Screens {
   HistoryPage = 'History',
   HistoryDetails = 'History details',
   AutoLock = 'AutoLock',
+  UpdateAvailable = 'Update Available',
 }
 
 export enum Stacks {
