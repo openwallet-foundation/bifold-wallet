@@ -197,11 +197,11 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     )
   }
 
-  const selectAltCredentail = () => {}
-
   const renderCard = (
     sub: FormattedSubmissionEntry,
     selectedCredential: FormattedSelectedCredentialEntry,
+    //TODO: Support multiplae credentials
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     hasMultipleCreds: boolean
   ) => {
     const credential = credentialsRequested.find((c) => c.id === selectedCredential.id)
@@ -216,8 +216,9 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       <CredentialCard
         credential={credential}
         displayItems={fieldsMapped as Attribute[]}
-        hasAltCredentials={hasMultipleCreds}
-        handleAltCredChange={selectAltCredentail}
+        //TODO: Support multiplae credentials
+        // hasAltCredentials={hasMultipleCreds}
+        // handleAltCredChange={selectAltCredentail}
       />
     )
   }
