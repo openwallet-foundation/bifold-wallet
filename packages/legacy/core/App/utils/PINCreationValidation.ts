@@ -16,16 +16,18 @@ export enum PINError {
   PINOnlyContainDigitsValidation = 'PINOnlyContainDigitsValidation',
   PINTooShortValidation = 'PINTooShortValidation',
   PINTooLongValidation = 'PINTooLongValidation',
+  PINIsExpectedLength = 'PINExpectedLengthValidation',
 }
 
 export interface PINValidationsType {
   isInvalid: boolean
   errorName: PINError
+  errorTextAddition?: Record<string, string>
 }
 
 export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules) => {
   const PINValidations: PINValidationsType[] = []
-  
+
   if (PINRules.no_cross_pattern) {
     PINValidations.push({
       isInvalid: crossNumberPattern.includes(PIN),
@@ -43,13 +45,13 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
     const repetitionPattern = new RegExp(/(\d)\1{1,}/)
     PINValidations.push({
       isInvalid: repetitionPattern.test(PIN),
-      errorName: PINError.NoRepetitionOfTheSameNumbersValidation
+      errorName: PINError.NoRepetitionOfTheSameNumbersValidation,
     } as PINValidationsType)
-  } else if (1 < PINRules.no_repeated_numbers){
-    const repetitionPattern = new RegExp(String.raw`(\d)\1{${PINRules.no_repeated_numbers},}`, "g")
+  } else if (1 < PINRules.no_repeated_numbers) {
+    const repetitionPattern = new RegExp(String.raw`(\d)\1{${PINRules.no_repeated_numbers},}`, 'g')
     PINValidations.push({
       isInvalid: repetitionPattern.test(PIN),
-      errorName: PINError.MaxAdjacentNumberRepetitionValidation
+      errorName: PINError.MaxAdjacentNumberRepetitionValidation,
     } as PINValidationsType)
   }
 
@@ -65,7 +67,7 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
       errorName: PINError.NoRepetitionOfTheTwoSameNumbersValidation,
     } as PINValidationsType)
   }
- 
+
   if (PINRules.no_series_of_numbers) {
     PINValidations.push({
       isInvalid: consecutiveSeriesOfThree.test(PIN),
@@ -78,10 +80,18 @@ export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules
       errorName: PINError.PINOnlyContainDigitsValidation,
     } as PINValidationsType)
   }
-
   PINValidations.push({
     isInvalid: PIN.length < PINRules.min_length || PIN.length > PINRules.max_length,
-    errorName: PIN.length <= PINRules.max_length ? PINError.PINTooShortValidation : PINError.PINTooLongValidation,
+    errorName:
+      PINRules.min_length === PINRules.max_length
+        ? PINError.PINIsExpectedLength
+        : PIN.length <= PINRules.max_length
+        ? PINError.PINTooShortValidation
+        : PINError.PINTooLongValidation,
+    errorTextAddition:
+      PINRules.min_length === PINRules.max_length
+        ? { num: `${PINRules.min_length}` }
+        : { num: PIN.length <= PINRules.max_length ? `${PINRules.min_length - 1}` : `${PINRules.max_length + 1}` },
   } as PINValidationsType)
 
   return PINValidations
