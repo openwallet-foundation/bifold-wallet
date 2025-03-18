@@ -10,10 +10,12 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "off",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -425,12 +427,6 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         </View>
       </View>
     </View>
-    <Modal
-      animationType="fade"
-      hardwareAccelerated={false}
-      transparent={true}
-      visible={false}
-    />
     <View
       accessibilityRole="tablist"
       accessible={true}
@@ -579,9 +575,12 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
   </RNCSafeAreaView>
   <RNCSafeAreaView
     edges={
-      Array [
-        "bottom",
-      ]
+      Object {
+        "bottom": "additive",
+        "left": "off",
+        "right": "off",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -603,10 +602,12 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "off",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -966,9 +967,12 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
   </RNCSafeAreaView>
   <RNCSafeAreaView
     edges={
-      Array [
-        "bottom",
-      ]
+      Object {
+        "bottom": "additive",
+        "left": "off",
+        "right": "off",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -990,10 +994,12 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "off",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -1405,12 +1411,6 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         </View>
       </View>
     </View>
-    <Modal
-      animationType="fade"
-      hardwareAccelerated={false}
-      transparent={true}
-      visible={false}
-    />
   </RNCSafeAreaView>
 </View>
 `;

@@ -3,11 +3,12 @@
 exports[`ProofRequesting Component generate new qr works correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -221,11 +222,12 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
 exports[`ProofRequesting Component renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -439,11 +441,12 @@ exports[`ProofRequesting Component renders correctly 1`] = `
 exports[`ProofRequesting Component renders correctly 2`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {

@@ -10,11 +10,12 @@ exports[`Connection Screen No connection, show to proof 1`] = `
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "bottom",
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -41,11 +42,12 @@ exports[`Connection Screen No connection, show to proof 1`] = `
           >
             <RNCSafeAreaView
               edges={
-                Array [
-                  "bottom",
-                  "left",
-                  "right",
-                ]
+                Object {
+                  "bottom": "additive",
+                  "left": "additive",
+                  "right": "additive",
+                  "top": "off",
+                }
               }
               style={
                 Object {
@@ -504,7 +506,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             removeClippedSubviews={false}
             renderItem={[Function]}
             scrollEnabled={false}
-            scrollEventThrottle={50}
+            scrollEventThrottle={0.0001}
             stickyHeaderIndices={Array []}
             viewabilityConfigCallbackPairs={Array []}
           >
@@ -525,7 +527,7 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             removeClippedSubviews={false}
             renderItem={[Function]}
             scrollEnabled={false}
-            scrollEventThrottle={50}
+            scrollEventThrottle={0.0001}
             stickyHeaderIndices={Array []}
             viewabilityConfigCallbackPairs={Array []}
           >
@@ -544,23 +546,6 @@ exports[`Connection Screen No connection, show to proof 1`] = `
             }
           />
         </View>
-        <Modal
-          animationType="none"
-          hardwareAccelerated={false}
-          transparent={true}
-          visible={false}
-        />
-        <Modal
-          animationType="slide"
-          hardwareAccelerated={false}
-          transparent={true}
-          visible={false}
-        />
-        <Modal
-          animationType="slide"
-          hardwareAccelerated={false}
-          visible={false}
-        />
       </View>
     </RCTScrollView>
   </RNCSafeAreaView>
@@ -577,11 +562,12 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
 >
   <RNCSafeAreaView
     edges={
-      Array [
-        "bottom",
-        "left",
-        "right",
-      ]
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
     }
     style={
       Object {
@@ -782,7 +768,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       showsVerticalScrollIndicator={false}
       stickyHeaderIndices={Array []}
       viewabilityConfigCallbackPairs={Array []}
@@ -1126,7 +1112,7 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                           removeClippedSubviews={false}
                           renderItem={[Function]}
                           scrollEnabled={false}
-                          scrollEventThrottle={50}
+                          scrollEventThrottle={0.0001}
                           stickyHeaderIndices={Array []}
                           viewabilityConfigCallbackPairs={Array []}
                         >
@@ -1722,18 +1708,6 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
         </View>
       </View>
     </RCTScrollView>
-    <Modal
-      animationType="none"
-      hardwareAccelerated={false}
-      transparent={true}
-      visible={false}
-    />
-    <Modal
-      animationType="slide"
-      hardwareAccelerated={false}
-      transparent={true}
-      visible={false}
-    />
   </RNCSafeAreaView>
 </View>
 `;

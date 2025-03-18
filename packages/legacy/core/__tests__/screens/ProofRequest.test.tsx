@@ -222,12 +222,12 @@ describe('displays a proof request screen', () => {
         </BasicAppContext>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
+      // await waitFor(() => {
+      //   timeTravel(1000)
+      // })
 
-      const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
-      const recordLoading = tree.getByTestId(testIdWithKey('ProofRequestLoading'))
+      const cancelButton = await tree.findByTestId(testIdWithKey('Cancel'))
+      const recordLoading = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
 
       expect(recordLoading).not.toBeNull()
       expect(cancelButton).not.toBeNull()

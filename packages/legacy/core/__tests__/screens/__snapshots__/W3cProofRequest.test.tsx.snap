@@ -3,11 +3,12 @@
 exports[`displays a proof request screen ProofRequest Screen, W3C displays a proof request with one or more predicates not satisfied 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -276,7 +277,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           removeClippedSubviews={false}
           renderItem={[Function]}
           scrollEnabled={false}
-          scrollEventThrottle={50}
+          scrollEventThrottle={0.0001}
           stickyHeaderIndices={Array []}
           viewabilityConfigCallbackPairs={Array []}
         >
@@ -616,7 +617,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               removeClippedSubviews={false}
                               renderItem={[Function]}
                               scrollEnabled={false}
-                              scrollEventThrottle={50}
+                              scrollEventThrottle={0.0001}
                               stickyHeaderIndices={Array []}
                               viewabilityConfigCallbackPairs={Array []}
                             >
@@ -870,7 +871,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           removeClippedSubviews={false}
           renderItem={[Function]}
           scrollEnabled={false}
-          scrollEventThrottle={50}
+          scrollEventThrottle={0.0001}
           stickyHeaderIndices={Array []}
           viewabilityConfigCallbackPairs={Array []}
         >
@@ -1190,7 +1191,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               removeClippedSubviews={false}
                               renderItem={[Function]}
                               scrollEnabled={false}
-                              scrollEventThrottle={50}
+                              scrollEventThrottle={0.0001}
                               stickyHeaderIndices={Array []}
                               viewabilityConfigCallbackPairs={Array []}
                             >
@@ -1509,23 +1510,6 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
           </View>
         </View>
       </View>
-      <Modal
-        animationType="none"
-        hardwareAccelerated={false}
-        transparent={true}
-        visible={false}
-      />
-      <Modal
-        animationType="slide"
-        hardwareAccelerated={false}
-        transparent={true}
-        visible={false}
-      />
-      <Modal
-        animationType="slide"
-        hardwareAccelerated={false}
-        visible={false}
-      />
     </View>
   </RCTScrollView>
 </RNCSafeAreaView>

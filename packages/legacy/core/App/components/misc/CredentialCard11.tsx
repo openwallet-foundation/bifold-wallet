@@ -56,7 +56,7 @@ interface CredentialCard11Props {
   handleAltCredChange?: () => void
   brandingOverlay?: CredentialOverlay<BrandingOverlay>
   hideSlice?: boolean
-  extraOverlayParameter?: string | number | null | undefined
+  extraOverlayParameter?: Attribute | undefined
   brandingOverlayType?: BrandingOverlayType
 }
 
@@ -440,7 +440,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 color: styles.textContainer.color,
               }}
             >
-              {extraOverlayParameter}
+              {extraOverlayParameter.label ?? startCase(extraOverlayParameter.name || '')}:{' '}
+              {extraOverlayParameter.value}
             </ThemedText>
           </View>
         )}

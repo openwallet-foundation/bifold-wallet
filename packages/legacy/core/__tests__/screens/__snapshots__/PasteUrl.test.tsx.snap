@@ -2,6 +2,14 @@
 
 exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
 <RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   style={
     Object {
       "backgroundColor": "#000000",
@@ -11,13 +19,6 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
 >
   <RCTScrollView>
     <View>
-      <Modal
-        animationType="fade"
-        hardwareAccelerated={false}
-        testID="com.ariesbifold:id/ErrorModal"
-        transparent={true}
-        visible={false}
-      />
       <View
         style={
           Object {

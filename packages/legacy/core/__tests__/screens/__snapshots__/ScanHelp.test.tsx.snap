@@ -3,12 +3,12 @@
 exports[`ScanHelp Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "top",
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
   }
   style={
     Object {

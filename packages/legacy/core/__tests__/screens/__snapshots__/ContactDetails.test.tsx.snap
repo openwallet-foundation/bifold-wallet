@@ -3,11 +3,12 @@
 exports[`ContactDetails Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -236,29 +237,18 @@ exports[`ContactDetails Screen Renders correctly 1`] = `
       </Text>
     </View>
   </View>
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    transparent={true}
-    visible={false}
-  />
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    transparent={true}
-    visible={false}
-  />
 </RNCSafeAreaView>
 `;
 
 exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "bottom",
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -487,17 +477,5 @@ exports[`ContactDetails Screen Renders correctly with alt contact name 1`] = `
       </Text>
     </View>
   </View>
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    transparent={true}
-    visible={false}
-  />
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    transparent={true}
-    visible={false}
-  />
 </RNCSafeAreaView>
 `;

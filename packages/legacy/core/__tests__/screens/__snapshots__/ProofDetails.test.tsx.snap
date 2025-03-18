@@ -3,10 +3,12 @@
 exports[`ProofDetails Screen renders correctly with an unverified proof Unverified proof view should be rendered correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -258,10 +260,12 @@ exports[`ProofDetails Screen renders correctly with an unverified proof Unverifi
 exports[`ProofDetails Screen with a verified proof record renders correctly when history is false 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -575,7 +579,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                           removeClippedSubviews={false}
                           renderItem={[Function]}
                           scrollEnabled={false}
-                          scrollEventThrottle={50}
+                          scrollEventThrottle={0.0001}
                           stickyHeaderIndices={Array []}
                           viewabilityConfigCallbackPairs={Array []}
                         >
@@ -898,10 +902,12 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
 exports[`ProofDetails Screen with a verified proof record renders correctly when history is true 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-    ]
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -1185,7 +1191,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                           removeClippedSubviews={false}
                           renderItem={[Function]}
                           scrollEnabled={false}
-                          scrollEventThrottle={50}
+                          scrollEventThrottle={0.0001}
                           stickyHeaderIndices={Array []}
                           viewabilityConfigCallbackPairs={Array []}
                         >

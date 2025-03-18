@@ -4,7 +4,6 @@ import { AuthContext } from '../../App/contexts/auth'
 import UseBiometry from '../../App/screens/UseBiometry'
 import { testIdWithKey } from '../../App/utils/testable'
 import authContext from '../contexts/auth'
-import timeTravel from '../helpers/timetravel'
 import { BasicAppContext } from '../helpers/app'
 import { Linking } from 'react-native'
 import { testDefaultState } from '../contexts/store'
@@ -19,27 +18,27 @@ jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
 
 jest.mock('@react-navigation/elements', () => ({
   Header: jest.fn().mockImplementation(() => {
-    const Component = () => null;
-    Component.displayName = 'Header';
-    return Component;
+    const Component = () => null
+    Component.displayName = 'Header'
+    return Component
   }),
   HeaderBackButton: jest.fn().mockImplementation(() => {
-    const Component = () => null;
-    Component.displayName = 'HeaderBackButton';
-    return Component;
+    const Component = () => null
+    Component.displayName = 'HeaderBackButton'
+    return Component
   }),
-  useHeaderHeight: jest.fn().mockReturnValue(150)
-}));
+  useHeaderHeight: jest.fn().mockReturnValue(150),
+}))
 
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: jest.fn().mockReturnValue({
     top: 25,
     bottom: 25,
     left: 0,
-    right: 0
+    right: 0,
   }),
-  SafeAreaView: jest.fn().mockImplementation(({children}) => children)
-}));
+  SafeAreaView: jest.fn().mockImplementation(({ children }) => children),
+}))
 
 const customStore = {
   ...testDefaultState,
@@ -65,18 +64,17 @@ describe('UseBiometry Screen', () => {
   })
 
   test('Renders correctly when biometry available', async () => {
-    authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(true)
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+          <UseBiometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
 
-    await waitFor(() => {
-      timeTravel(1000)
-    })
+    // use this instead since anyway u r waiting the promise to resolve to set setBiometryAvailable in the useEffect
+    // this is cleaner approach than advanceTimersByTime
+    await tree.findByText('Biometry.EnabledText1')
 
     expect(tree).toMatchSnapshot()
   })
@@ -86,20 +84,17 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+          <UseBiometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
 
-    await waitFor(() => {
-      timeTravel(1000)
-    })
+    await tree.findByText('Biometry.NotEnabledText1')
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Toggles use biometrics ok', async () => {
-    authContext.isBiometricsActive = jest.fn().mockResolvedValueOnce(true)
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
@@ -108,6 +103,7 @@ describe('UseBiometry Screen', () => {
       </BasicAppContext>
     )
 
+    await tree.findByText('Biometry.EnabledText1')
     const useBiometryToggle = tree.getByTestId(testIdWithKey('ToggleBiometrics'))
 
     await waitFor(async () => {
