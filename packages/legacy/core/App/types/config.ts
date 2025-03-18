@@ -13,6 +13,11 @@ interface PushNotificationConfiguration {
   //function to call when the user changes the push notification setting
   toggle: (state: boolean, agent: Agent<any>) => Promise<void>
 }
+
+interface AppUpdateConfig {
+  appleAppStoreUrl: string
+  googlePlayStoreUrl: string
+}
 export interface Config {
   PINSecurity: PINSecurityParams
   proofTemplateBaseUrl?: string
@@ -41,6 +46,7 @@ export interface Config {
   disableContactsInSettings?: boolean
   internetReachabilityUrls: string[]
   attemptLockoutConfig?: AttemptLockoutConfig
+  appUpdateConfig?: AppUpdateConfig
 }
 
 export interface HistoryEventsLoggerConfig {
