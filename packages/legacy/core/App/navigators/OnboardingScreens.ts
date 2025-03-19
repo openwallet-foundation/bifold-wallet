@@ -35,37 +35,37 @@ export const getOnboardingScreens = (
     name: Screens.Splash,
     component: components.Splash,
     options: {
-      ...ScreenOptionsDictionary[Screens.Splash],
       ...TransitionPresets.ModalFadeTransition,
       title: t('Screens.Splash'),
+      ...ScreenOptionsDictionary[Screens.Splash],
     },
   },
   {
     name: Screens.Preface,
     component: components.Preface,
     options: {
-      ...ScreenOptionsDictionary[Screens.Preface],
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Preface'),
+      ...ScreenOptionsDictionary[Screens.Preface],
     },
   },
   {
     name: Screens.Onboarding,
     children: components.OnboardingScreen,
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.Onboarding],
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Onboarding'),
       headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.Onboarding],
     }),
   },
   {
     name: Screens.Terms,
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.Terms],
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Terms'),
       headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.Terms],
     }),
     component: components.Terms,
   },
@@ -74,28 +74,28 @@ export const getOnboardingScreens = (
     children: components.CreatePINScreen,
     initialParams: {},
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.CreatePIN],
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.CreatePIN'),
       headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.CreatePIN],
     }),
   },
   {
     name: Screens.NameWallet,
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.NameWallet],
       title: t('Screens.NameWallet'),
       headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.NameWallet],
     }),
     component: components.NameWallet,
   },
   {
     name: Screens.UseBiometry,
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.UseBiometry],
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Biometry'),
       headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.UseBiometry],
     }),
     component: components.useBiometry,
   },
@@ -103,19 +103,19 @@ export const getOnboardingScreens = (
     name: Screens.UsePushNotifications,
     component: components.PushNotification,
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.UsePushNotifications],
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.UsePushNotifications'),
       headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.UsePushNotifications],
     }),
   },
   {
     name: Screens.Developer,
     component: components.Developer,
     options: () => ({
-      ...ScreenOptionsDictionary[Screens.Developer],
       title: t('Screens.Developer'),
       headerBackAccessibilityLabel: t('Global.Back'),
+      ...ScreenOptionsDictionary[Screens.Developer],
     }),
   },
   {
@@ -126,6 +126,7 @@ export const getOnboardingScreens = (
       headerShown: true,
       headerLeft: () => false,
       rightLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.EnterPIN],
     }),
   },
   {
@@ -135,6 +136,7 @@ export const getOnboardingScreens = (
       headerShown: true,
       headerLeft: () => null,
       title: t('Screens.AttemptLockout'),
+      ...ScreenOptionsDictionary[Screens.AttemptLockout],
     }),
   },
 ]
