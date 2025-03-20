@@ -3,10 +3,11 @@ import { isPresentationFailed, isPresentationReceived } from '@hyperledger/aries
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import PresentationLoading from '../components/animated/PresentationLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
+import SafeAreaModal from '../components/modals/SafeAreaModal'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { DeliveryStackParams, Screens } from '../types/navigators'
@@ -70,7 +71,7 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
   }, [proofRecord, goalCode, agent, connectionId, navigation])
 
   return (
-    <Modal transparent animationType={'slide'}>
+    <SafeAreaModal transparent animationType={'slide'}>
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
@@ -93,7 +94,7 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
           />
         </View>
       </SafeAreaView>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

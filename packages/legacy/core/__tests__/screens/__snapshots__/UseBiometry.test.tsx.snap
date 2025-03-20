@@ -1,7 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UseBiometry Screen Renders correctly when biometry available 1`] = `
-Array [
+exports[`UseBiometry Screen renders correctly when biometry available 1`] = `
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
+  }
+>
   <RCTScrollView
     style={
       Object {
@@ -200,7 +209,7 @@ Array [
         </View>
       </View>
     </View>
-  </RCTScrollView>,
+  </RCTScrollView>
   <View
     style={
       Object {
@@ -277,12 +286,21 @@ Array [
         </Text>
       </View>
     </View>
-  </View>,
-]
+  </View>
+</RNCSafeAreaView>
 `;
 
-exports[`UseBiometry Screen Renders correctly when biometry not available 1`] = `
-Array [
+exports[`UseBiometry Screen renders correctly when biometry unavailable 1`] = `
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
+  }
+>
   <RCTScrollView
     style={
       Object {
@@ -469,7 +487,7 @@ Array [
         </View>
       </View>
     </View>
-  </RCTScrollView>,
+  </RCTScrollView>
   <View
     style={
       Object {
@@ -546,328 +564,6 @@ Array [
         </Text>
       </View>
     </View>
-  </View>,
-]
-`;
-
-exports[`UseBiometry Screen Toggles use biometrics ok 1`] = `
-Array [
-  <RCTScrollView
-    style={
-      Object {
-        "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
-      }
-    }
-  >
-    <View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-          }
-        }
-      >
-        <
-          style={
-            Object {
-              "marginBottom": 66,
-              "minHeight": 200,
-              "minWidth": 200,
-            }
-          }
-        />
-      </View>
-      <View
-        style={
-          Object {
-            "rowGap": 20,
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
-          }
-        >
-          Biometry.EnabledText1
-        </Text>
-        <Text
-          style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
-          }
-        >
-          Biometry.EnabledText2
-          <Text
-            style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
-            }
-          >
-             
-            Biometry.Warning
-          </Text>
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "flexDirection": "row",
-            "marginVertical": 20,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "flexShrink": 1,
-              "justifyContent": "center",
-              "marginRight": 10,
-            }
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
-            }
-          >
-            Biometry.UseToUnlock
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "justifyContent": "center",
-            }
-          }
-        >
-          <View
-            accessibilityLabel="Biometry.Off"
-            accessibilityRole="switch"
-            accessibilityState={
-              Object {
-                "busy": undefined,
-                "checked": false,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            testID="com.ariesbifold:id/ToggleBiometrics"
-          >
-            <View
-              collapsable={false}
-              style={
-                Object {
-                  "backgroundColor": "rgba(211, 211, 211, 1)",
-                  "borderRadius": 25,
-                  "height": 30,
-                  "justifyContent": "center",
-                  "opacity": 1,
-                  "padding": 3,
-                  "width": 55,
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#FFFFFF",
-                    "borderRadius": 20,
-                    "height": 25,
-                    "justifyContent": "center",
-                    "transform": Array [
-                      Object {
-                        "translateX": 1,
-                      },
-                    ],
-                    "width": 25,
-                  }
-                }
-              >
-                <Text
-                  allowFontScaling={false}
-                  selectable={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#606060",
-                        "fontSize": 15,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  </RCTScrollView>,
-  <View
-    style={
-      Object {
-        "margin": 20,
-        "marginTop": "auto",
-      }
-    }
-  >
-    <View
-      accessibilityLabel="Continue"
-      accessibilityRole="button"
-      accessibilityState={
-        Object {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": true,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "backgroundColor": "rgba(53, 130, 63, 0.35)",
-          "borderRadius": 4,
-          "opacity": 1,
-          "padding": 16,
-        }
-      }
-      testID="com.ariesbifold:id/Continue"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <View
-          collapsable={false}
-          style={
-            Object {
-              "transform": Array [
-                Object {
-                  "rotate": "0deg",
-                },
-              ],
-            }
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              Array [
-                Object {
-                  "color": undefined,
-                  "fontSize": 25,
-                },
-                Object {
-                  "color": "#FFFFFF",
-                },
-                Object {
-                  "fontFamily": "Material Icons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
-            ]
-          }
-        >
-          Global.Continue
-        </Text>
-      </View>
-    </View>
-  </View>,
-]
+  </View>
+</RNCSafeAreaView>
 `;

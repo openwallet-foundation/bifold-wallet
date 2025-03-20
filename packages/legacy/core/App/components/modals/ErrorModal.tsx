@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, StatusBar, DeviceEventEmitter, useWindowDimensions } from 'react-native'
+import { StyleSheet, StatusBar, DeviceEventEmitter, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -9,6 +9,7 @@ import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
+import SafeAreaModal from './SafeAreaModal'
 
 interface ErrorModalProps {
   enableReport?: boolean
@@ -83,7 +84,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   )
 
   return (
-    <Modal visible={modalVisible} transparent={true}>
+    <SafeAreaModal visible={modalVisible} transparent={true}>
       <StatusBar hidden={true} />
       <SafeAreaView style={styles.container}>
         <InfoBox
@@ -99,7 +100,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
           showVersionFooter
         />
       </SafeAreaView>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 
