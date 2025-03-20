@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, View, Text } from 'react-native'
+import { ScrollView, StyleSheet, View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import SafeAreaModal from './SafeAreaModal'
 
 interface ProofCancelModalProps {
   visible?: boolean
@@ -50,7 +51,7 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
   })
 
   return (
-    <Modal visible={visible} animationType="slide">
+    <SafeAreaModal visible={visible} animationType="slide">
       <SafeAreaView style={styles.safeAreaView}>
         <ScrollView style={styles.container}>
           <View style={styles.content}>
@@ -71,7 +72,7 @@ const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) 
           </View>
         </View>
       </SafeAreaView>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

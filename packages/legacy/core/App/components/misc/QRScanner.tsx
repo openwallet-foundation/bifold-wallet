@@ -3,7 +3,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Modal, Pressable, StyleSheet, Text, useWindowDimensions, Share, ScrollView, ColorValue } from 'react-native'
+import { View, Pressable, StyleSheet, Text, useWindowDimensions, Share, ScrollView, ColorValue } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -20,6 +20,7 @@ import LoadingIndicator from '../animated/LoadingIndicator'
 import IconButton, { ButtonLocation } from '../buttons/IconButton'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
+import SafeAreaModal from '../modals/SafeAreaModal'
 
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
@@ -303,7 +304,7 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
                 </View>
               </View>
             </View>
-            <Modal visible={showInfoBox} animationType="fade" transparent>
+            <SafeAreaModal visible={showInfoBox} animationType="fade" transparent>
               <View
                 style={{
                   flex: 1,
@@ -320,7 +321,7 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
                   onCallToActionPressed={toggleShowInfoBox}
                 />
               </View>
-            </Modal>
+            </SafeAreaModal>
             {showErrorDetailsModal && (
               <DismissiblePopupModal
                 title={t('Scan.ErrorDetails')}

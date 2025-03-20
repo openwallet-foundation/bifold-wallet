@@ -3,10 +3,11 @@ import { useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { AccessibilityInfo, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import SafeAreaModal from '../components/modals/SafeAreaModal'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
@@ -116,7 +117,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }, [shouldShowDelayMessage, credentialDeliveryStatus, t])
 
   return (
-    <Modal visible={visible} transparent={true} animationType={'none'}>
+    <SafeAreaModal visible={visible} transparent={true} animationType={'none'}>
       <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
@@ -180,7 +181,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
           )}
         </View>
       </SafeAreaView>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

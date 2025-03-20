@@ -3,25 +3,26 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements';
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, Modal, ScrollView, Linking, Platform } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import ToggleButton from '../components/buttons/ToggleButton'
+import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
+import SafeAreaModal from '../components/modals/SafeAreaModal'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { OnboardingStackParams, Screens } from '../types/navigators'
+import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
-import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 
 import PINEnter, { PINEntryUsage } from './PINEnter'
 import { TOKENS, useServices } from '../container-api'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { useAppAgent } from '../utils/agent'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -48,7 +49,6 @@ const UseBiometry: React.FC = () => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
   }, [store.onboarding.didCompleteOnboarding])
   const headerHeight = useHeaderHeight()
-  const insets = useSafeAreaInsets()
 
   const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -328,7 +328,7 @@ const UseBiometry: React.FC = () => {
           </Button>
         )}
       </View>
-      <Modal
+      <SafeAreaModal
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
         visible={canSeeCheckPIN}
         transparent={false}
@@ -337,16 +337,16 @@ const UseBiometry: React.FC = () => {
       >
         <Header 
           title={t('Screens.EnterPIN')}
-          headerTitleStyle={{ marginTop: insets.top, ...TextTheme.headerTitle }}
+          headerTitleStyle={TextTheme.headerTitle}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor='white' style={{ marginTop: insets.top }} labelVisible={false} />}
+          headerLeft={() => <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor='white' labelVisible={false} />}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}
           setAuthenticated={onAuthenticationComplete}
           onCancelAuth={setCanSeeCheckPIN}
         />
-      </Modal>
+      </SafeAreaModal>
     </SafeAreaView>
   )
 }

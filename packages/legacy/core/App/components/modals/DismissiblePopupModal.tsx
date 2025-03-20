@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Modal,
   StyleSheet,
   View,
   Text,
@@ -17,6 +16,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import SafeAreaModal from './SafeAreaModal'
 
 interface DismissiblePopupModalProps {
   title: string
@@ -107,7 +107,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
   const iconColor = ColorPallet.notification.infoIcon
 
   return (
-    <Modal transparent>
+    <SafeAreaModal transparent>
       <TouchableOpacity onPress={onDismissPressed} accessible={false}>
         <View style={styles.modalCenter}>
           <TouchableWithoutFeedback accessible={false}>
@@ -161,7 +161,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
           </TouchableWithoutFeedback>
         </View>
       </TouchableOpacity>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

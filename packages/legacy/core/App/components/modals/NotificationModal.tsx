@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,6 +11,7 @@ import { useTheme } from '../../contexts/theme'
 import { HomeStackParams, Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import SafeAreaModal from './SafeAreaModal'
 
 interface NotificationModalProps extends React.PropsWithChildren {
   title: string
@@ -83,7 +84,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   }
 
   return (
-    <Modal testID={testID} visible={modalVisible} transparent={true}>
+    <SafeAreaModal testID={testID} visible={modalVisible} transparent={true}>
       <SafeAreaView style={styles.container}>
         {homeVisible ? (
           <View style={styles.iconContainer}>
@@ -118,7 +119,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           </View>
         ) : null}
       </SafeAreaView>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 
