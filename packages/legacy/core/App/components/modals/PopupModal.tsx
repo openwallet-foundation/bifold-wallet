@@ -1,9 +1,10 @@
 import React from 'react'
-import { Modal, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
+import SafeAreaModal from './SafeAreaModal'
 
 interface PopupModalProps {
   notificationType: InfoBoxType
@@ -36,7 +37,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
   })
 
   return (
-    <Modal transparent>
+    <SafeAreaModal transparent>
       <View style={styles.modalCenter}>
         <InfoBox
           notificationType={notificationType}
@@ -48,7 +49,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
           onCallToActionPressed={onCallToActionPressed}
         />
       </View>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

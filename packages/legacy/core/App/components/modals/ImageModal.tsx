@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Modal,
   StyleSheet,
   View,
   useWindowDimensions,
@@ -15,6 +14,7 @@ import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
+import SafeAreaModal from './SafeAreaModal'
 
 interface ImageModalProps {
   uri: string
@@ -59,7 +59,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ uri, onDismissPressed }) => {
   const iconColor = ColorPallet.brand.primary
 
   return (
-    <Modal transparent>
+    <SafeAreaModal transparent>
       <TouchableOpacity onPress={onDismissPressed} accessible={false}>
         <View style={styles.modalCenter}>
           <TouchableWithoutFeedback accessible={false}>
@@ -80,7 +80,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ uri, onDismissPressed }) => {
           </TouchableWithoutFeedback>
         </View>
       </TouchableOpacity>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

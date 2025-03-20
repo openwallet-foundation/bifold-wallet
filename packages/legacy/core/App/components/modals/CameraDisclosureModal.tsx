@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useTheme } from '../../contexts/theme'
@@ -11,6 +11,7 @@ import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 
 import DismissiblePopupModal from './DismissiblePopupModal'
+import SafeAreaModal from './SafeAreaModal'
 
 interface CameraDisclosureModalProps {
   requestCameraUse: () => Promise<boolean>
@@ -68,7 +69,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
   }
 
   return (
-    <Modal visible={modalVisible} animationType={'slide'} supportedOrientations={['portrait', 'landscape']} transparent>
+    <SafeAreaModal visible={modalVisible} animationType={'slide'} supportedOrientations={['portrait', 'landscape']} transparent>
       {showSettingsPopup && (
         <DismissiblePopupModal
           title={t('CameraDisclosure.AllowCameraUse')}
@@ -108,7 +109,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           </View>
         </View>
       </SafeAreaView>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 
