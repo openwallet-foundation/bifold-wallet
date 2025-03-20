@@ -54,7 +54,10 @@ import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import ConnectionAlert from './components/misc/ConnectionAlert'
 
 export const defaultConfig: Config = {
-  PINSecurity: { rules: PINRules, displayHelper: false },
+  PINSecurity: {
+    rules: PINRules,
+    displayHelper: false,
+  },
   settings: [],
   enableChat: true,
   enableTours: false,

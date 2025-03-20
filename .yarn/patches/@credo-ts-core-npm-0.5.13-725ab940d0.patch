@@ -1,0 +1,58 @@
+diff --git a/build/agent/Agent.js b/build/agent/Agent.js
+index 2db29e12010690b4bf98c96edebee79402e83795..028065c512313fbd249dc9f35eb69fa432a376bb 100644
+--- a/build/agent/Agent.js
++++ b/build/agent/Agent.js
+@@ -104,6 +104,7 @@ class Agent extends BaseAgent_1.BaseAgent {
+     }
+     async initialize() {
+         const stop$ = this.dependencyManager.resolve(constants_1.InjectionSymbols.Stop$);
++        stop$.next(false);
+         // Listen for new messages (either from transports or somewhere else in the framework / extensions)
+         // We create this before doing any other initialization, so the initialization could already receive messages
+         this.messageSubscription = this.eventEmitter
+diff --git a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
+index 96360da2b3a1128dce53763b4932dbbd82ff3628..ce06aa1bd97b2a0b5d52bfbaf843a9f5a1ea93e7 100644
+--- a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
++++ b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
+@@ -171,7 +171,18 @@ let DifPresentationExchangeService = class DifPresentationExchangeService {
+             presentationSubmission.descriptor_map.push(...descriptorMap);
+         });
+         return {
+-            verifiablePresentations: verifiablePresentationResultsWithFormat.flatMap((resultWithFormat) => resultWithFormat.verifiablePresentationResult.verifiablePresentations.map((vp) => (0, utils_2.getVerifiablePresentationFromEncoded)(agentContext, vp))),
++            verifiablePresentations: verifiablePresentationResultsWithFormat.flatMap((resultWithFormat) => {
++                if (resultWithFormat.verifiablePresentationResult.verifiablePresentations) {
++                return resultWithFormat.verifiablePresentationResult.verifiablePresentations.map((vp) =>
++                    (0, utils_2.getVerifiablePresentationFromEncoded)(agentContext, vp)
++                )
++                } else {
++                return (0, utils_2.getVerifiablePresentationFromEncoded)(
++                    agentContext,
++                    resultWithFormat.verifiablePresentationResult.verifiablePresentation
++                )
++                }
++            }),
+             presentationSubmission,
+             presentationSubmissionLocation: verifiablePresentationResultsWithFormat[0].verifiablePresentationResult.presentationSubmissionLocation,
+         };
+diff --git a/build/transport/WsOutboundTransport.js b/build/transport/WsOutboundTransport.js
+index ab9df20f9fedc4def4f486b9431ac669e899e609..2e9e43a528fab6a01e52d54506891060adb917cc 100644
+--- a/build/transport/WsOutboundTransport.js
++++ b/build/transport/WsOutboundTransport.js
+@@ -43,7 +43,16 @@ class WsOutboundTransport {
+         this.transportTable.forEach((socket) => {
+             socket.removeEventListener('message', this.handleMessageEvent);
+             if (socket.readyState !== this.WebSocketClass.CLOSED) {
+-                stillOpenSocketClosingPromises.push(new Promise((resolve) => socket.once('close', resolve)));
++                stillOpenSocketClosingPromises.push(
++                    new Promise((resolve) => {
++                        const closeHandler = () => {
++                            socket.removeEventListener('close', closeHandler)
++                            resolve()
++                        }
++
++                        socket.addEventListener('close', closeHandler)
++                    })
++                );
+                 socket.close();
+             }
+         });

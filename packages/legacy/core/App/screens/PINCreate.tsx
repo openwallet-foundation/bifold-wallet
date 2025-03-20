@@ -296,6 +296,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             <PINInput
               label={t('PINCreate.EnterOldPINTitle')}
               testID={testIdWithKey('EnterOldPIN')}
+              accessibilityLabel={t('PINCreate.EnterOldPIN')}
               onPINChanged={(p: string) => {
                 setPINOld(p)
               }}
@@ -367,7 +368,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
                       />
                     )}
                     <Text style={[TextTheme.normal, { paddingLeft: 4 }]}>
-                      {t(`PINCreate.Helper.${validation.errorName}`)}
+                      {t(`PINCreate.Helper.${validation.errorName}`, validation?.errorTextAddition)}
                     </Text>
                   </View>
                 )

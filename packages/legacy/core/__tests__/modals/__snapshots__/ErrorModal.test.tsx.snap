@@ -1,12 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ErrorModal Component Dismiss on demand 1`] = `
-<Modal
-  hardwareAccelerated={false}
-  transparent={true}
-  visible={false}
-/>
-`;
+exports[`ErrorModal Component Dismiss on demand 1`] = `null`;
 
 exports[`ErrorModal Component Renders correctly 1`] = `
 <Modal
@@ -15,6 +9,14 @@ exports[`ErrorModal Component Renders correctly 1`] = `
   visible={true}
 >
   <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "additive",
+      }
+    }
     style={
       Object {
         "alignItems": "center",

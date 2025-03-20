@@ -1,6 +1,6 @@
-// NOTE: We need to import these to be able to use the AskarWallet in this file.
+// Dont remove the following import line or the pin check will fail when opening askar waller
 import '@hyperledger/aries-askar-react-native'
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 import 'reflect-metadata'
 
 import { AskarWallet } from '@credo-ts/askar'
@@ -72,7 +72,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
       })
-
       if (useBiometry) {
         await storeWalletSecret(secret, useBiometry)
       } else {

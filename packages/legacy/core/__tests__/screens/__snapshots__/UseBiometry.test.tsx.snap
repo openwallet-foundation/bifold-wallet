@@ -278,18 +278,6 @@ Array [
       </View>
     </View>
   </View>,
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    presentationStyle="fullScreen"
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    transparent={false}
-    visible={false}
-  />,
 ]
 `;
 
@@ -559,18 +547,6 @@ Array [
       </View>
     </View>
   </View>,
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    presentationStyle="fullScreen"
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    transparent={false}
-    visible={false}
-  />,
 ]
 `;
 
@@ -893,17 +869,5 @@ Array [
       </View>
     </View>
   </View>,
-  <Modal
-    animationType="slide"
-    hardwareAccelerated={false}
-    presentationStyle="fullScreen"
-    style={
-      Object {
-        "backgroundColor": "#000000",
-      }
-    }
-    transparent={false}
-    visible={false}
-  />,
 ]
 `;

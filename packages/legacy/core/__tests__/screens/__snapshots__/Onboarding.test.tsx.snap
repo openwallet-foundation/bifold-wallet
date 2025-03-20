@@ -3,11 +3,12 @@
 exports[`Onboarding Screen Onboarding Developer mode 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
@@ -407,11 +408,12 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
 exports[`Onboarding Screen Renders correctly 1`] = `
 <RNCSafeAreaView
   edges={
-    Array [
-      "left",
-      "right",
-      "bottom",
-    ]
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
   }
   style={
     Object {
