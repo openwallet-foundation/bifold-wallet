@@ -1,6 +1,6 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
+import { ParamListBase } from '@react-navigation/native'
+import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, Linking, ScrollView, StyleSheet, Switch, Text, View } from 'react-native'
@@ -10,7 +10,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 
@@ -22,29 +22,17 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
   const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const [notificationState, setNotificationState] = useState<boolean>(store.preferences.usePushNotifications)
   const [notificationStatus, setNotificationStatus] = useState<'denied' | 'granted' | 'unknown'>('unknown')
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const isMenu = (route.params as any)?.isMenu
+
   if (!enablePushNotifications) {
     throw new Error('Push notification configuration not found')
   }
-  const isMenu = (route.params as any)?.isMenu
-  useEffect(() => {
-    const updateNotificationState = async () => {
-      const status = await enablePushNotifications.status()
-      setNotificationStatus(status)
-    }
-
-    updateNotificationState()
-    const subscription = AppState.addEventListener('change', updateNotificationState)
-    
-    return () => subscription.remove()
-  }, [enablePushNotifications])
 
   const style = StyleSheet.create({
     screenContainer: {
       flex: 1,
       padding: 30,
     },
-
     image: {
       height: 200,
       marginBottom: 20,
@@ -58,6 +46,7 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
       paddingLeft: 5,
     },
   })
+
   const list = [
     t('PushNotifications.BulletOne'),
     t('PushNotifications.BulletTwo'),
@@ -70,30 +59,24 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
     t('PushNotifications.InstructionsThree'),
   ]
 
+  useEffect(() => {
+    const updateNotificationState = async () => {
+      const status = await enablePushNotifications.status()
+      setNotificationStatus(status)
+    }
+
+    updateNotificationState()
+    const subscription = AppState.addEventListener('change', updateNotificationState)
+
+    return () => subscription.remove()
+  }, [enablePushNotifications])
+
   const hasNotificationsDisabled = notificationStatus === 'denied' && store.onboarding.didConsiderPushNotifications
 
   const activatePushNotifications = async () => {
     const state = await enablePushNotifications.setup()
+
     dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [state === 'granted'] })
-    if (store.onboarding.postAuthScreens.length) {
-      const screens: string[] = store.onboarding.postAuthScreens
-      screens.shift()
-      dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [screens] })
-      if (screens.length) {
-        navigation.navigate(screens[0] as never)
-      } else {
-        navigation.navigate(Screens.Splash as never)
-      }
-    } else if (store.preferences.enableWalletNaming) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.NameWallet }],
-        })
-      )
-    } else {
-      dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-    }
   }
 
   const toggleSwitch = async () => {
@@ -104,8 +87,11 @@ const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePush
           return
         }
       }
+
       dispatch({ type: DispatchAction.USE_PUSH_NOTIFICATIONS, payload: [!notificationState] })
+
       enablePushNotifications.toggle(!notificationState, agent)
+
       setNotificationState(!notificationState)
     }
   }

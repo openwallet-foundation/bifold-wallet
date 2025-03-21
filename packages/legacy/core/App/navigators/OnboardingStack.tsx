@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ParamListBase, RouteConfig, StackNavigationState, useNavigation } from '@react-navigation/native'
-import { StackNavigationOptions, StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
-import { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'
-import React, { useCallback } from 'react'
+import { StackActions, useNavigation, useNavigationState } from '@react-navigation/native'
+import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
+import { EventTypes } from '../constants'
+import React, { useMemo, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TOKENS, useServices } from '../container-api'
@@ -16,35 +16,35 @@ import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { State } from '../types/state'
+import { Config } from '../types/config'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
-
-type ScreenOptions = RouteConfig<
-  ParamListBase,
-  Screens,
-  StackNavigationState<ParamListBase>,
-  StackNavigationOptions,
-  StackNavigationEventMap
->
+import { DeviceEventEmitter } from 'react-native'
+import { getOnboardingScreens } from './OnboardingScreens'
+import { useOnboardingState } from '../hooks/useOnboardingState'
 
 const OnboardingStack: React.FC = () => {
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore<State>()
   const { t } = useTranslation()
   const Stack = createStackNavigator()
   const theme = useTheme()
   const OnboardingTheme = theme.OnboardingTheme
   const carousel = createCarouselStyle(OnboardingTheme)
   const [
-    splash,
+    config,
+    Splash,
     pages,
     useBiometry,
     Onboarding,
     Developer,
-    { screen: Terms },
+    { screen: Terms, version: termsVersion },
     onTutorialCompletedCurried,
     ScreenOptionsDictionary,
     Preface,
+    generateOnboardingWorkflowSteps,
   ] = useServices([
+    TOKENS.CONFIG,
     TOKENS.SCREEN_SPLASH,
     TOKENS.SCREEN_ONBOARDING_PAGES,
     TOKENS.SCREEN_USE_BIOMETRY,
@@ -54,11 +54,19 @@ const OnboardingStack: React.FC = () => {
     TOKENS.FN_ONBOARDING_DONE,
     TOKENS.OBJECT_SCREEN_CONFIG,
     TOKENS.SCREEN_PREFACE,
+    TOKENS.ONBOARDING,
   ])
   const defaultStackOptions = useDefaultStackOptions(theme)
   const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
-  const [{ disableOnboardingSkip }] = useServices([TOKENS.CONFIG])
+  const currentRoute = useNavigationState((state) => state?.routes[state?.index])
+  const { disableOnboardingSkip } = config as Config
+  const { onboardingState, activeScreen } = useOnboardingState(
+    store,
+    config,
+    Number(termsVersion),
+    generateOnboardingWorkflowSteps
+  )
 
   const onAuthenticated = useCallback(
     (status: boolean): void => {
@@ -73,7 +81,7 @@ const OnboardingStack: React.FC = () => {
     [dispatch]
   )
 
-  const OnBoardingScreen = () => {
+  const OnboardingScreen = useCallback(() => {
     return (
       <Onboarding
         nextButtonText={t('Global.Next')}
@@ -83,122 +91,78 @@ const OnboardingStack: React.FC = () => {
         style={carousel}
       />
     )
-  }
+  }, [Onboarding, OnboardingTheme, carousel, disableOnboardingSkip, onTutorialCompleted, pages, t])
 
-  // these need to be in the children of the stack screen otherwise they will unmount/remount which resets the component state in memory and causes issues
-  const CreatePINScreen = (props: any) => {
-    return <PINCreate setAuthenticated={onAuthenticated} {...props} />
-  }
+  // These need to be in the children of the stack screen otherwise they
+  // will unmount/remount which resets the component state in memory and causes
+  // issues
+  const CreatePINScreen = useCallback(
+    (props: any) => {
+      return <PINCreate setAuthenticated={onAuthenticated} {...props} />
+    },
+    [onAuthenticated]
+  )
 
-  const EnterPINScreen = (props: any) => {
-    return <PINEnter setAuthenticated={onAuthenticated} {...props} />
-  }
+  const EnterPINScreen = useCallback(
+    (props: any) => {
+      return <PINEnter setAuthenticated={onAuthenticated} {...props} />
+    },
+    [onAuthenticated]
+  )
 
-  const screens: ScreenOptions[] = [
-    {
-      name: Screens.Preface,
-      component: Preface,
-      options: () => {
-        return {
-          ...ScreenOptionsDictionary[Screens.Preface],
-          title: t('Screens.Preface'),
-        }
-      },
-    },
-    {
-      name: Screens.Splash,
-      component: splash,
-      options: ScreenOptionsDictionary[Screens.Splash],
-    },
-    {
-      name: Screens.Onboarding,
-      children: OnBoardingScreen,
-      options: () => {
-        return {
-          ...ScreenOptionsDictionary[Screens.Onboarding],
-          title: t('Screens.Onboarding'),
-          headerLeft: () => false,
-        }
-      },
-    },
-    {
-      name: Screens.Terms,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.Terms],
-        title: t('Screens.Terms'),
-        headerLeft: () => false,
-      }),
-      component: Terms,
-    },
-    {
-      name: Screens.CreatePIN,
-      children: CreatePINScreen,
-      initialParams: {},
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.CreatePIN],
-        title: t('Screens.CreatePIN'),
-        headerLeft: () => false,
-      }),
-    },
-    {
-      name: Screens.NameWallet,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.NameWallet],
-        title: t('Screens.NameWallet'),
-        headerLeft: () => false,
-      }),
-      component: NameWallet,
-    },
-    {
-      name: Screens.UseBiometry,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.UseBiometry],
-        title: t('Screens.Biometry'),
-        headerLeft: () => false,
-      }),
-      component: useBiometry,
-    },
-    {
-      name: Screens.UsePushNotifications,
-      options: () => ({
-        ...ScreenOptionsDictionary[Screens.UsePushNotifications],
-        title: t('Screens.UsePushNotifications'),
-        headerLeft: () => false,
-      }),
-      children: PushNotification as any,
-    },
-    {
-      name: Screens.Developer,
-      component: Developer,
-      options: () => {
-        return {
-          ...ScreenOptionsDictionary[Screens.Developer],
-          title: t('Screens.Developer'),
-          headerBackAccessibilityLabel: t('Global.Back'),
-        }
-      },
-    },
-    {
-      name: Screens.EnterPIN,
-      children: EnterPINScreen,
-      options: () => {
-        return {
-          title: t('Screens.EnterPIN'),
-          headerShown: true,
-          headerLeft: () => false,
-          rightLeft: () => false,
-        }
-      },
-    },
-    {
-      name: Screens.AttemptLockout,
-      component: AttemptLockout,
-      options: () => ({ headerShown: true, headerLeft: () => null, title: t('Screens.AttemptLockout') }),
-    },
-  ]
+  useEffect(() => {
+    // If the active screen is the same as the current route, then we don't
+    // need to do anything.
+    if (activeScreen && activeScreen === currentRoute?.name) {
+      return
+    }
 
+    // If the active screen is different from the current route, then we need
+    // to navigate to the active screen.
+    if (activeScreen) {
+      navigation.dispatch(StackActions.replace(activeScreen))
+      return
+    }
+
+    // Nothing to do here, we are done with onboarding.
+    DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
+  }, [activeScreen, currentRoute, onboardingState, navigation])
+
+  const screens = useMemo(
+    () =>
+      getOnboardingScreens(t, ScreenOptionsDictionary, {
+        Splash,
+        Preface,
+        Terms,
+        NameWallet,
+        useBiometry,
+        PushNotification,
+        Developer,
+        AttemptLockout,
+        OnboardingScreen,
+        CreatePINScreen,
+        EnterPINScreen,
+      }),
+    [
+      Splash,
+      CreatePINScreen,
+      Developer,
+      EnterPINScreen,
+      OnboardingScreen,
+      Preface,
+      Terms,
+      useBiometry,
+      t,
+      ScreenOptionsDictionary,
+    ]
+  )
   return (
-    <Stack.Navigator initialRouteName={Screens.Splash} screenOptions={{ ...defaultStackOptions }}>
+    <Stack.Navigator
+      initialRouteName={Screens.Preface}
+      screenOptions={{
+        ...defaultStackOptions,
+      }}
+    >
       {screens.map((item) => {
         return <Stack.Screen key={item.name} {...item} />
       })}
