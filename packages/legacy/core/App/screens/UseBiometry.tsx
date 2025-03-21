@@ -26,14 +26,14 @@ enum UseBiometryUsage {
   ToggleOnOff,
 }
 
-interface BackButtonProps {
-  onPress: () => void
-  insets: any
-}
+// interface BackButtonProps {
+//   onPress: () => void
+//   insets: any
+// }
 
-const BackButton: React.FC<BackButtonProps> = ({ onPress, insets }) => (
-  <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
-)
+// const BackButton: React.FC<BackButtonProps> = ({ onPress, insets }) => (
+//   <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
+// )
 
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -266,10 +266,10 @@ const UseBiometry: React.FC = () => {
     ]
   )
 
-  const renderHeaderLeft = useCallback(
-    () => <BackButton onPress={() => setCanSeeCheckPIN(false)} insets={insets} />,
-    [insets]
-  )
+  // const renderHeaderLeft = useCallback(
+  //   () => <BackButton onPress={() => setCanSeeCheckPIN(false)} insets={insets} />,
+  //   [insets]
+  // )
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
