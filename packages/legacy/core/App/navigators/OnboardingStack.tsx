@@ -79,7 +79,7 @@ const OnboardingStack: React.FC = () => {
         payload: [versionInfo],
       })
     })
-  }, [versionMonitor])
+  }, [versionMonitor, dispatch])
 
   const onAuthenticated = useCallback(
     (status: boolean): void => {
@@ -101,7 +101,7 @@ const OnboardingStack: React.FC = () => {
         googlePlayStoreUrl={config.appUpdateConfig?.googlePlayStoreUrl}
       />
     )
-  }, [])
+  }, [UpdateAvailable, config.appUpdateConfig])
 
   const OnboardingScreen = useCallback(() => {
     return (
@@ -177,6 +177,7 @@ const OnboardingStack: React.FC = () => {
       useBiometry,
       t,
       ScreenOptionsDictionary,
+      UpdateAvailableScreen,
     ]
   )
   return (

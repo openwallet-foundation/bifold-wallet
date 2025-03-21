@@ -30,7 +30,7 @@ const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, goo
     if (url) {
       Linking.openURL(url).catch((err) => logger.error('Failed to open app store link', err))
     }
-  }, [appleAppStoreUrl, googlePlayStoreUrl])
+  }, [appleAppStoreUrl, googlePlayStoreUrl, logger])
 
   const onPressLater = useCallback(() => {
     dispatch({
