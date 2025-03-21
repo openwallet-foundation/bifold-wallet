@@ -61,7 +61,7 @@ const OnboardingStack: React.FC = () => {
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
   const currentRoute = useNavigationState((state) => state?.routes[state?.index])
   const { disableOnboardingSkip } = config as Config
-  const { localState, activeScreen } = useOnboardingState(
+  const { onboardingState, activeScreen } = useOnboardingState(
     store,
     config,
     Number(termsVersion),
@@ -126,7 +126,7 @@ const OnboardingStack: React.FC = () => {
 
     // Nothing to do here, we are done with onboarding.
     DeviceEventEmitter.emit(EventTypes.DID_COMPLETE_ONBOARDING)
-  }, [activeScreen, currentRoute, localState, navigation])
+  }, [activeScreen, currentRoute, onboardingState, navigation])
 
   const screens = useMemo(
     () =>
