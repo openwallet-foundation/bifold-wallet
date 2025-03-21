@@ -4,6 +4,7 @@ export enum ButtonType {
   Critical,
   Primary,
   Secondary,
+  Tertiary,
   ModalCritical,
   ModalPrimary,
   ModalSecondary,

@@ -528,6 +528,22 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  tertiary: {
+    padding: 16,
+  },
+  tertiaryDisabled: {
+    padding: 16,
+  },
+  tertiaryText: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.primary,
+    textAlign: 'center',
+  },
+  tertiaryTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.secondaryDisabled,
+    textAlign: 'center',
+  },
   modalCritical: {
     padding: 16,
     borderRadius: 4,
