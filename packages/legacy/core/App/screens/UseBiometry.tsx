@@ -26,14 +26,13 @@ enum UseBiometryUsage {
   ToggleOnOff,
 }
 
-// interface BackButtonProps {
-//   onPress: () => void
-//   insets: any
-// }
+interface BackButtonProps {
+  setCanSeeCheckPIN: (value: boolean) => void
+}
 
-// const BackButton: React.FC<BackButtonProps> = ({ onPress, insets }) => (
-//   <HeaderBackButton onPress={onPress} tintColor="white" style={{ marginTop: insets.top }} labelVisible={false} />
-// )
+const BackButton: React.FC<BackButtonProps> = ({ setCanSeeCheckPIN }) => (
+  <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor="white" labelVisible={false} />
+)
 
 const UseBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -266,10 +265,10 @@ const UseBiometry: React.FC = () => {
     ]
   )
 
-  // const renderHeaderLeft = useCallback(
-  //   () => <BackButton onPress={() => setCanSeeCheckPIN(false)} insets={insets} />,
-  //   [insets]
-  // )
+  const renderHeaderLeft = useCallback(
+    () => <BackButton setCanSeeCheckPIN={() => setCanSeeCheckPIN(false)} />,
+    [setCanSeeCheckPIN]
+  )
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']}>
@@ -342,9 +341,7 @@ const UseBiometry: React.FC = () => {
           title={t('Screens.EnterPIN')}
           headerTitleStyle={TextTheme.headerTitle}
           headerStyle={{ height: headerHeight }}
-          headerLeft={() => (
-            <HeaderBackButton onPress={() => setCanSeeCheckPIN(false)} tintColor="white" labelVisible={false} />
-          )}
+          headerLeft={renderHeaderLeft}
         />
         <PINEnter
           usage={PINEntryUsage.ChangeBiometrics}
