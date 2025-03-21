@@ -10,7 +10,6 @@ import {
   Migration as MigrationState,
   State,
   Preferences,
-  VersionInfo as VersionInfoState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
@@ -118,13 +117,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
   switch (action.type) {
     case AppStatusDispatchAction.SET_VERSION_INFO: {
       const info = (action.payload || []).pop()
-      // needsUpdate, lastChecked, version,
-      // const { dismissed } = state.versionInfo
-      // TODO: Remove local storage key.
-      // LocalStorageKeys.VersionInfo
-      // console.log('****** reducer = ', info, dismissed)
       const versionInfo = { ...state.versionInfo, ...info }
-      console.log('****** reducer = ', versionInfo)
 
       return { ...state, versionInfo }
     }
