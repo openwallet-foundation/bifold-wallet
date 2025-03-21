@@ -16,7 +16,7 @@ import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import ScreenLayout from '../layout/ScreenLayout'
 
-export const TermsVersion = true
+export const TermsVersion = '1'
 
 const Terms: React.FC = () => {
   const [store, dispatch] = useStore()

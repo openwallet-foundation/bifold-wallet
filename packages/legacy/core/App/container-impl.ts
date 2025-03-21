@@ -1,7 +1,6 @@
 import { Agent } from '@credo-ts/core'
 import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
 import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
@@ -24,7 +23,6 @@ import Splash from './screens/Splash'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
-import { AuthenticateStackParams, Screens } from './types/navigators'
 import {
   Migration as MigrationState,
   Preferences as PreferencesState,
@@ -52,6 +50,7 @@ import ContactCredentialListItem from './components/listItems/ContactCredentialL
 import { InlineErrorPosition } from './types/error'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import ConnectionAlert from './components/misc/ConnectionAlert'
+import { generateOnboardingWorkflowSteps } from './onboarding'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -155,18 +154,13 @@ export class MainContainer implements Container {
       hasErrorIcon: true,
       position: InlineErrorPosition.Above,
     })
-    this._container.registerInstance(
-      TOKENS.FN_ONBOARDING_DONE,
-      (dispatch: React.Dispatch<ReducerAction<unknown>>, navigation: StackNavigationProp<AuthenticateStackParams>) => {
-        return () => {
-          dispatch({
-            type: DispatchAction.DID_COMPLETE_TUTORIAL,
-          })
-
-          navigation.navigate(Screens.Terms)
-        }
+    this._container.registerInstance(TOKENS.FN_ONBOARDING_DONE, (dispatch: React.Dispatch<ReducerAction<unknown>>) => {
+      return () => {
+        dispatch({
+          type: DispatchAction.DID_COMPLETE_TUTORIAL,
+        })
       }
-    )
+    })
     this._container.registerInstance(TOKENS.FN_LOAD_HISTORY, (agent: Agent<any>): IHistoryManager => {
       return new HistoryManager(agent)
     })
@@ -209,12 +203,15 @@ export class MainContainer implements Container {
       dispatch({ type: DispatchAction.STATE_DISPATCH, payload: [state] })
     })
 
+    this._container.registerInstance(TOKENS.ONBOARDING, generateOnboardingWorkflowSteps)
+
     return this
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
     return this._container.resolve(token)
   }
+
   public resolveAll<K extends keyof TokenMapping, T extends K[]>(
     tokens: [...T]
   ): { [I in keyof T]: TokenMapping[T[I]] } {

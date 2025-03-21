@@ -139,8 +139,8 @@ export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
 
-export type { ScreenLayoutConfig } from './types/navigators'
-export type { HistoryEventsLoggerConfig } from './types/config'
+export type { ScreenLayoutConfig, OnboardingTask } from './types/navigators'
+export type { Config, HistoryEventsLoggerConfig } from './types/config'
 
 export { BaseTourID } from './types/tour'
 
