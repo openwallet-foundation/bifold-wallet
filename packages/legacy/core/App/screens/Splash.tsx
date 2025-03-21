@@ -14,6 +14,7 @@ import { useTheme } from '../contexts/theme'
 import useInitializeAgent from '../hooks/initialize-agent'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks } from '../types/navigators'
+import { useAuth } from '../contexts/auth'
 
 const OnboardingVersion = 1
 
@@ -88,6 +89,8 @@ const Splash: React.FC = () => {
   const [mounted, setMounted] = useState(false)
   const initializing = useRef(false)
   const { initializeAgent } = useInitializeAgent()
+  const { walletSecret } = useAuth()
+
   const [{ version: TermsVersion }, logger, { showPreface, enablePushNotifications }, ocaBundleResolver] = useServices([
     TOKENS.SCREEN_TERMS,
     TOKENS.UTIL_LOGGER,
@@ -105,7 +108,7 @@ const Splash: React.FC = () => {
   })
 
   // navigation calls that occur before the screen is fully mounted will fail
-  // this useeffect prevents that race condition
+  // this useEffect prevents that race condition
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -240,7 +243,11 @@ const Splash: React.FC = () => {
 
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
-        const agent = await initializeAgent()
+        if (!walletSecret) {
+          throw new Error('Wallet secret is missing')
+        }
+
+        const agent = await initializeAgent(walletSecret)
 
         if (!agent) {
           initializing.current = false
@@ -268,6 +275,7 @@ const Splash: React.FC = () => {
     initAgentAsyncEffect()
   }, [
     initializeAgent,
+    walletSecret,
     mounted,
     store.authentication.didAuthenticate,
     store.onboarding.didConsiderBiometry,
