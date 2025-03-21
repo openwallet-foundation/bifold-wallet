@@ -1,11 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import SafeAreaModal from '../modals/SafeAreaModal'
 
 interface Action {
   text: string
@@ -64,7 +65,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
   })
 
   return (
-    <Modal animationType="slide" transparent={true} onRequestClose={onDismiss}>
+    <SafeAreaModal animationType="slide" transparent={true} onRequestClose={onDismiss}>
       <TouchableOpacity style={styles.outsideListener} onPress={onDismiss} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -96,7 +97,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
             })}
         </View>
       </View>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 
