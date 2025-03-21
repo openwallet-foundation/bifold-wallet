@@ -296,6 +296,6 @@ describe('UseBiometry Screen', () => {
       fireEvent(continueButton, 'press')
     })
 
-    expect(authContext.commitPIN).toHaveBeenCalledTimes(1)
+    expect(authContext.commitWalletToKeychain).toHaveBeenCalledTimes(1)
   })
 })
