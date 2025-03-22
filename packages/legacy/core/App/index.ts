@@ -44,6 +44,7 @@ import OnboardingPages from './screens/OnboardingPages'
 import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
+import UpdateAvailable from './screens/UpdateAvailable'
 import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
@@ -61,6 +62,7 @@ import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 export * from './navigators'
 export * from './services/storage'
 export * from './types/attestation'
+export * from './types/version-check'
 export { LocalStorageKeys } from './constants'
 export * from './services/storage'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
@@ -187,6 +189,7 @@ export {
   Developer,
   Terms,
   Preface,
+  UpdateAvailable,
   HomeFooterView as HomeContentView,
   UseBiometry,
   AttemptLockout,

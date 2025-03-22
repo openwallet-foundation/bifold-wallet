@@ -10,7 +10,9 @@ import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
+import UpdateAvailable from './screens/UpdateAvailable'
 import { AttestationMonitor } from './types/attestation'
+import { IVersionCheckService } from './types/version-check'
 import { GenericFn } from './types/fn'
 import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType, OnboardingTask } from './types/navigators'
 import { CustomNotification } from './types/notification'
@@ -44,6 +46,7 @@ export const PROOF_TOKENS = {
 
 export const SCREEN_TOKENS = {
   SCREEN_PREFACE: 'screen.preface',
+  SCREEN_UPDATE_AVAILABLE: 'screen.update-available',
   SCREEN_TERMS: 'screen.terms',
   SCREEN_ONBOARDING: 'screen.onboarding',
   SCREEN_DEVELOPER: 'screen.developer',
@@ -121,6 +124,7 @@ export const UTILITY_TOKENS = {
   UTIL_LEDGERS: 'utility.ledgers',
   UTIL_PROOF_TEMPLATE: 'utility.proof-template',
   UTIL_ATTESTATION_MONITOR: 'utility.attestation-monitor',
+  UTIL_APP_VERSION_MONITOR: 'utility.app-version-monitor',
 } as const
 
 export const CONFIG_TOKENS = {
@@ -157,6 +161,7 @@ export type TokenMapping = {
   }[]
   [TOKENS.GROUP_BY_REFERENT]: boolean
   [TOKENS.SCREEN_PREFACE]: React.FC
+  [TOKENS.SCREEN_UPDATE_AVAILABLE]: typeof UpdateAvailable
   [TOKENS.STACK_ONBOARDING]: React.FC
   [TOKENS.SCREEN_TERMS]: { screen: React.FC; version: boolean | string }
   [TOKENS.SCREEN_DEVELOPER]: React.FC
@@ -184,6 +189,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
+  [TOKENS.UTIL_APP_VERSION_MONITOR]: IVersionCheckService
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.HISTORY_EVENTS_LOGGER]: HistoryEventsLoggerConfig
