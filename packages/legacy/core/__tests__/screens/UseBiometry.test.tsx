@@ -223,7 +223,7 @@ describe('UseBiometry Screen', () => {
       fireEvent(toggleButton, 'press')
     })
     const openSettingsButton = await findByText('Biometry.OpenSettings')
-    
+
     fireEvent(openSettingsButton, 'press')
     expect(Linking.openSettings).toHaveBeenCalledTimes(1)
   })
@@ -296,6 +296,6 @@ describe('UseBiometry Screen', () => {
       fireEvent(continueButton, 'press')
     })
 
-    expect(authContext.commitPIN).toHaveBeenCalledTimes(1)
+    expect(authContext.commitWalletToKeychain).toHaveBeenCalledTimes(1)
   })
 })
