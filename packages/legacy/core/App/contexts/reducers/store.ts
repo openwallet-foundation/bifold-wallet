@@ -79,6 +79,10 @@ enum DeepLinkDispatchAction {
   ACTIVE_DEEP_LINK = 'deepLink/activeDeepLink',
 }
 
+enum AppStatusDispatchAction {
+  SET_VERSION_INFO = 'appStatus/checkVersionUpdate',
+}
+
 export type DispatchAction =
   | StateDispatchAction
   | OnboardingDispatchAction
@@ -89,6 +93,7 @@ export type DispatchAction =
   | AuthenticationDispatchAction
   | DeepLinkDispatchAction
   | MigrationDispatchAction
+  | AppStatusDispatchAction
 
 export const DispatchAction = {
   ...StateDispatchAction,
@@ -100,6 +105,7 @@ export const DispatchAction = {
   ...AuthenticationDispatchAction,
   ...DeepLinkDispatchAction,
   ...MigrationDispatchAction,
+  ...AppStatusDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -109,6 +115,12 @@ export interface ReducerAction<R> {
 
 export const reducer = <S extends State>(state: S, action: ReducerAction<DispatchAction>): S => {
   switch (action.type) {
+    case AppStatusDispatchAction.SET_VERSION_INFO: {
+      const info = (action.payload || []).pop()
+      const versionInfo = { ...state.versionInfo, ...info }
+
+      return { ...state, versionInfo }
+    }
     case StateDispatchAction.STATE_DISPATCH: {
       const newState: State = (action?.payload || []).pop()
       return { ...state, ...newState, stateLoaded: true }

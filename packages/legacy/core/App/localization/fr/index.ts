@@ -789,9 +789,10 @@ const translation = {
         "ProofRequesting": 'Demande de preuve',
         "NameWallet": "Nommer le portefeuille",
         "RenameContact": "Modifier le nom du contact",
-        "HistorySettings": "History Settings(fr)",
-        "History": "History(fr)",
-        "HistoryDetails": "History Details(fr)",
+        "HistorySettings": "History Settings FR)",
+        "History": "History (FR)",
+        "HistoryDetails": "History Details (FR)",
+        "UpdateAvailable": "Update Available (FR)",
     },
     "Loading": {
         "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
@@ -881,6 +882,13 @@ const translation = {
         "InvalidPredicateValueDetails": "Doit être un nombre",
         "ConnectionLessLabel": "Anonyme",
         "WaitingForResponse": "Waiting for response... (FR)"
-    }
+    },
+    "AppUpdate": {
+        "Heading": "Update Bifold to the latest version (FR)",
+        "Body": "Bifold was updated with new improvements. Update your app now to enjoy the latest features and enhancements. (FR)",
+        "LearnMore": "Learn what's New (FR)",
+        "UpdateNow": "Update the app (FR)",
+        "UpdateLater": "Do this later (FR)",
+      },
 }
 export default translation
