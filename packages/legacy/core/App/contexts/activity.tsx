@@ -1,5 +1,5 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import React, { createContext, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { createContext, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { AppState, AppStateStatus, PanResponder, View } from 'react-native'
 import { useAuth } from './auth'
 import { useStore } from './store'
@@ -33,17 +33,6 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const prevAppStateStatusRef = useRef(AppState.currentState)
   const [appStateStatus, setAppStateStatus] = useState<AppStateStatus>(AppState.currentState)
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponderCapture: () => {
-        // some user interaction detected, reset timeout
-        resetInactivityTimeout(timeoutInMilliseconds.current)
-
-        // returns false so the PanResponder doesn't consume the touch event
-        return false
-      },
-    })
-  ).current
 
   const lockOutUser = useCallback(async () => {
     if (!store.authentication.didAuthenticate) {
@@ -83,9 +72,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
       // do not set timeout if timeout duration is set to 0
       if (milliseconds > 0) {
         // create new timeout
-        inactivityTimeoutRef.current = setTimeout(async () => {
-          await lockOutUser()
-        }, milliseconds)
+        inactivityTimeoutRef.current = setTimeout(lockOutUser, milliseconds)
       }
     },
     [clearInactivityTimeoutIfExists, lockOutUser]
@@ -144,12 +131,25 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
       clearInactivityTimeoutIfExists()
       eventSubscription.remove()
     }
-  }, [clearInactivityTimeoutIfExists, lockOutUser, resetInactivityTimeout, timeoutInMilliseconds, agent, logger])
+  }, [clearInactivityTimeoutIfExists, lockOutUser, resetInactivityTimeout, agent, logger])
 
   useEffect(() => {
     // user has updated settings for auto lock time
     timeoutInMilliseconds.current = store.preferences.autoLockTime * 60000
   }, [store.preferences.autoLockTime])
+
+  const panResponder = useMemo(() => {
+    return PanResponder.create({
+      onStartShouldSetPanResponderCapture: () => {
+        // some user interaction detected, reset timeout
+        resetInactivityTimeout(timeoutInMilliseconds.current)
+
+        // returns false so the PanResponder doesn't consume the touch event
+        return false
+      },
+    })
+
+  }, [resetInactivityTimeout])
 
   return (
     <ActivityContext.Provider value={{ appStateStatus }}>
