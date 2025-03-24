@@ -44,7 +44,7 @@ const UseBiometry: React.FC = () => {
     TOKENS.HISTORY_ENABLED,
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
-  const { isBiometricsActive, commitPIN, disableBiometrics } = useAuth()
+  const { isBiometricsActive, commitWalletToKeychain, disableBiometrics } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [continueEnabled, setContinueEnabled] = useState(true)
@@ -87,7 +87,7 @@ const UseBiometry: React.FC = () => {
     }
 
     if (biometryEnabled) {
-      commitPIN(biometryEnabled).then(() => {
+      commitWalletToKeychain(biometryEnabled).then(() => {
         dispatch({
           type: DispatchAction.USE_BIOMETRY,
           payload: [biometryEnabled],
@@ -101,7 +101,7 @@ const UseBiometry: React.FC = () => {
         })
       })
     }
-  }, [screenUsage, biometryEnabled, commitPIN, disableBiometrics, dispatch])
+  }, [screenUsage, biometryEnabled, commitWalletToKeychain, disableBiometrics, dispatch])
 
   const logHistoryRecord = useCallback(
     (type: HistoryCardType) => {
@@ -131,13 +131,13 @@ const UseBiometry: React.FC = () => {
   const continueTouched = useCallback(async () => {
     setContinueEnabled(false)
 
-    await commitPIN(biometryEnabled)
+    await commitWalletToKeychain(biometryEnabled)
 
     dispatch({
       type: DispatchAction.USE_BIOMETRY,
       payload: [biometryEnabled],
     })
-  }, [biometryEnabled, commitPIN, dispatch])
+  }, [biometryEnabled, commitWalletToKeychain, dispatch])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()

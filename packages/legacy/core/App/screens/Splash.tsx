@@ -12,6 +12,7 @@ import { useTheme } from '../contexts/theme'
 import useInitializeAgent from '../hooks/initialize-agent'
 import { BifoldError } from '../types/error'
 import { Stacks } from '../types/navigators'
+import { useAuth } from '../contexts/auth'
 
 /**
  * To customize this splash screen set the background color of the
@@ -19,6 +20,7 @@ import { Stacks } from '../types/navigators'
  * of this view.
  */
 const Splash: React.FC = () => {
+  const { walletSecret } = useAuth()
   const { t } = useTranslation()
   const navigation = useNavigation()
   const { ColorPallet } = useTheme()
@@ -40,7 +42,11 @@ const Splash: React.FC = () => {
       try {
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
 
-        const agent = await initializeAgent()
+        if (!walletSecret) {
+          throw new Error('Wallet secret is missing')
+        }
+
+        const agent = await initializeAgent(walletSecret)
 
         if (!agent) {
           return
@@ -66,7 +72,7 @@ const Splash: React.FC = () => {
     }
 
     initAgentAsyncEffect()
-  }, [initializeAgent, ocaBundleResolver, logger, navigation, t])
+  }, [initializeAgent, ocaBundleResolver, logger, navigation, walletSecret, t])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -10,6 +10,7 @@ import { hashPIN } from '../utils/crypto'
 const keyFauxUserName = 'WalletFauxPINUserName'
 const saltFauxUserName = 'WalletFauxSaltUserName'
 const loginAttemptFauxUserName = 'WalletFauxLoginAttemptUserName'
+// TODO: consider combing WalletSalt, WalletKey all into Wallet Secret, then using partials when required
 export interface WalletSalt {
   id: string
   salt: string
@@ -63,21 +64,21 @@ export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): 
   const secretAsString = JSON.stringify(secret)
   await wipeWalletKey(useBiometrics)
   const result = await Keychain.setGenericPassword(keyFauxUserName, secretAsString, opts)
-  return typeof result === 'boolean' ? false : true
+  return Boolean(result)
 }
 
 export const storeWalletSalt = async (secret: WalletSalt): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Salt, false)
   const secretAsString = JSON.stringify(secret)
   const result = await Keychain.setGenericPassword(saltFauxUserName, secretAsString, opts)
-  return typeof result === 'boolean' ? false : true
+  return Boolean(result)
 }
 
 export const storeLoginAttempt = async (loginAttempt: LoginAttempt): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.LoginAttempt, false)
   const loginAttemptAsString = JSON.stringify(loginAttempt)
   const result = await Keychain.setGenericPassword(loginAttemptFauxUserName, loginAttemptAsString, opts)
-  return typeof result !== 'boolean'
+  return Boolean(result)
 }
 
 export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = false): Promise<boolean> => {
@@ -92,6 +93,7 @@ export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = fa
 }
 
 export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
+  let salt: WalletSalt | undefined = undefined
   const opts: Keychain.Options = {
     service: KeychainServices.Salt,
   }
@@ -100,7 +102,18 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
     return
   }
 
-  return JSON.parse(result.password) as WalletSalt
+  // salt data is stored and returned as a string and needs to be parsed
+  const parsedSalt = JSON.parse(result.password)
+  if (!parsedSalt.id || !parsedSalt.salt) {
+    throw new Error('Wallet salt failed to load')
+  }
+
+  salt = {
+    id: parsedSalt.id,
+    salt: parsedSalt.salt
+  }
+
+  return salt
 }
 
 export const loadLoginAttempt = async (): Promise<LoginAttempt | undefined> => {
@@ -142,22 +155,30 @@ export const loadWalletKey = async (title?: string, description?: string): Promi
 export const loadWalletSecret = async (
   title?: string,
   description?: string
-): Promise<{ secret: WalletSecret | undefined; err: string }> => {
+): Promise<WalletSecret | undefined> => {
   let salt: WalletSalt | undefined
   let key: WalletKey | undefined
-  let err = ''
+  let secret: WalletSecret | undefined = undefined
   try {
     salt = await loadWalletSalt()
     key = await loadWalletKey(title, description)
   } catch (e: any) {
-    err = e?.message ?? e
+    throw new Error(e?.message ?? e)
   }
 
-  return { secret: { ...salt, ...key } as WalletSecret, err }
+  if (!salt?.id || !salt?.salt || !key) {
+    throw new Error('Wallet secret is missing key property')
+  }
+
+  secret = {
+    id: salt.id,
+    key: key.key,
+    salt: salt.salt
+  }
+  return secret
 }
 
 export const isBiometricsActive = async (): Promise<boolean> => {
   const result = await getSupportedBiometryType()
-
-  return result !== null ? true : false
+  return Boolean(result)
 }
