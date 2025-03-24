@@ -46,7 +46,7 @@ export const isAuthenticationComplete = (didCreatePIN: boolean, didAuthenticate:
 }
 
 export const isAttemptLockoutComplete = (servedPenalty: boolean | undefined): OnboardingTask => {
-  return { name: Screens.AttemptLockout, completed: servedPenalty === true || servedPenalty === undefined }
+  return { name: Screens.AttemptLockout, completed: servedPenalty !== false }
 }
 
 export const generateOnboardingWorkflowSteps = (
