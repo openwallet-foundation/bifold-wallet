@@ -1,6 +1,6 @@
 import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { useNavigation, CommonActions } from '@react-navigation/native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -23,7 +23,6 @@ const Splash: React.FC = () => {
   const navigation = useNavigation()
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
-  const initializing = useRef(false)
   const { initializeAgent } = useInitializeAgent()
   const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
 
@@ -44,7 +43,6 @@ const Splash: React.FC = () => {
         const agent = await initializeAgent()
 
         if (!agent) {
-          initializing.current = false
           return
         }
 
