@@ -73,11 +73,11 @@ export const generateOnboardingWorkflowSteps = (
     isUpdateCheckComplete(),
     isOnboardingTutorialComplete(didCompleteTutorial),
     isTermsComplete(Number(didAgreeToTerms), termsVersion),
-    isAttemptLockoutComplete(servedPenalty),
     isPINCreationComplete(didCreatePIN),
     isBiometryComplete(didConsiderBiometry),
     isPushNotificationComplete(didConsiderPushNotifications, enablePushNotifications),
     isNameWalletComplete(didNameWallet, enableWalletNaming),
+    isAttemptLockoutComplete(servedPenalty),
     isAuthenticationComplete(didCreatePIN, didAuthenticate),
   ]
 }
