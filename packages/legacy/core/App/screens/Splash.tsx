@@ -23,7 +23,6 @@ const Splash: React.FC = () => {
   const navigation = useNavigation()
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
-  const initializing = useRef(false)
   const { initializeAgent } = useInitializeAgent()
   const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
 
@@ -44,7 +43,6 @@ const Splash: React.FC = () => {
         const agent = await initializeAgent()
 
         if (!agent) {
-          initializing.current = false
           return
         }
 
