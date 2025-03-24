@@ -158,7 +158,7 @@ const OnboardingStack: React.FC = () => {
   )
   return (
     <Stack.Navigator
-      initialRouteName={Screens.Preface}
+      initialRouteName={activeScreen}
       screenOptions={{
         ...defaultStackOptions,
       }}
