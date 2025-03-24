@@ -12,9 +12,10 @@ import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
 import { AttestationMonitor } from './types/attestation'
 import { GenericFn } from './types/fn'
-import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType } from './types/navigators'
+import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType, OnboardingTask } from './types/navigators'
 import { CustomNotification } from './types/notification'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
+import { State } from './types/state'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
@@ -31,6 +32,8 @@ export type FN_ONBOARDING_DONE = (
 ) => GenericFn
 
 type LoadStateFn = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
+
+type GenerateOnboardingWorkflowStepsFn = (state: State, config: Config, termsVersion: number) => Array<OnboardingTask>
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
@@ -123,6 +126,7 @@ export const UTILITY_TOKENS = {
 export const CONFIG_TOKENS = {
   CONFIG: 'config',
   INLINE_ERRORS: 'errors.inline',
+  ONBOARDING: 'utility.onboarding',
 } as const
 
 export const TOKENS = {
@@ -184,6 +188,7 @@ export type TokenMapping = {
   [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.HISTORY_EVENTS_LOGGER]: HistoryEventsLoggerConfig
   [TOKENS.CONFIG]: Config
+  [TOKENS.ONBOARDING]: GenerateOnboardingWorkflowStepsFn
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>

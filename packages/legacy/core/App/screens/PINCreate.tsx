@@ -1,4 +1,4 @@
-import { CommonActions, ParamListBase, useNavigation } from '@react-navigation/native'
+import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -67,7 +67,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const { t } = useTranslation()
   const [inlineMessageField1, setInlineMessageField1] = useState<InlineMessageProps>()
   const [inlineMessageField2, setInlineMessageField2] = useState<InlineMessageProps>()
-
   const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
@@ -126,12 +125,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
         dispatch({
           type: DispatchAction.DID_CREATE_PIN,
         })
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: Screens.UseBiometry }],
-          })
-        )
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1040'),
@@ -139,10 +132,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
           (err as Error)?.message ?? err,
           1040
         )
+
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     },
-    [setWalletPIN, setAuthenticated, dispatch, navigation, t]
+    [setWalletPIN, setAuthenticated, dispatch, t]
   )
 
   const displayModalMessage = (title: string, message: string) => {
@@ -247,6 +241,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             if (historyEventsLogger.logPinChanged) {
               logHistoryRecord()
             }
+
             setModalState({
               visible: true,
               title: t('PINCreate.PinChangeSuccessTitle'),
@@ -257,6 +252,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             })
           }
         }
+
         setContinueEnabled(true)
       }
     } else {
