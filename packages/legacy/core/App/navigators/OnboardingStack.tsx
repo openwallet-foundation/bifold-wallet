@@ -15,7 +15,7 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotification from '../screens/PushNotification'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { AuthenticateStackParams } from '../types/navigators'
 import { State } from '../types/state'
 import { Config } from '../types/config'
 
