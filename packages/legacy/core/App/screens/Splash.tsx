@@ -74,7 +74,7 @@ const Splash: React.FC = () => {
     }
 
     initAgentAsyncEffect()
-  }, [initializeAgent, ocaBundleResolver, logger, navigation, t])
+  }, [initializeAgent, ocaBundleResolver, logger, navigation, walletSecret, t])
 
   return (
     <SafeAreaView style={styles.container}>
