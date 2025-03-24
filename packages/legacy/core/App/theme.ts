@@ -22,6 +22,7 @@ import IconProofRequestLight from './assets/img/icon-proof-request-light.svg'
 import Logo from './assets/img/logo.svg'
 import NoInfoShared from './assets/img/no_information_shared.svg'
 import Preface from './assets/img/preface.svg'
+import UpdateAvailable from './assets/img/update-available.svg'
 import ProofRequestDeclined from './assets/img/proof-declined.svg'
 import VerifierRequestDeclined from './assets/img/verifier-request-declined.svg'
 import Wallet from './assets/img/wallet.svg'
@@ -72,6 +73,7 @@ export interface ISVGAssets {
   iconProofRequestDark: React.FC<SvgProps>
   iconProofRequestLight: React.FC<SvgProps>
   preface: React.FC<SvgProps>
+  updateAvailable: React.FC<SvgProps>
   verifierRequestDeclined: React.FC<SvgProps>
   noInfoShared: React.FC<SvgProps>
   wallet: React.FC<SvgProps>
@@ -968,6 +970,7 @@ export const Assets = {
     iconProofRequestDark: IconProofRequestDark,
     iconProofRequestLight: IconProofRequestLight,
     preface: Preface,
+    updateAvailable: UpdateAvailable,
     verifierRequestDeclined: VerifierRequestDeclined,
     noInfoShared: NoInfoShared,
     wallet: Wallet,

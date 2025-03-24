@@ -67,6 +67,7 @@ export const defaultState: State = {
     seenProofRequestTour: false,
   },
   stateLoaded: false,
+  versionInfo: { needsUpdate: false, lastChecked: undefined, version: undefined },
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([

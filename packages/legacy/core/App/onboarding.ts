@@ -7,6 +7,10 @@ export const isPrefaceComplete = (didSeePreface: boolean, showPreface: boolean):
   return { name: Screens.Preface, completed: (didSeePreface && showPreface) || !showPreface }
 }
 
+export const isUpdateCheckComplete = (): OnboardingTask => {
+  return { name: Screens.UpdateAvailable, completed: true }
+}
+
 export const isOnboardingTutorialComplete = (didCompleteTutorial: boolean): OnboardingTask => {
   return { name: Screens.Onboarding, completed: didCompleteTutorial }
 }
@@ -61,6 +65,7 @@ export const generateOnboardingWorkflowSteps = (
 
   return [
     isPrefaceComplete(didSeePreface, showPreface ?? false),
+    isUpdateCheckComplete(),
     isOnboardingTutorialComplete(didCompleteTutorial),
     isTermsComplete(Number(didAgreeToTerms), termsVersion),
     isPINCreationComplete(didCreatePIN),
