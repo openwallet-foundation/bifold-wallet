@@ -534,7 +534,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           <Text style={style.subText}>
             {inputLabelText[usage]}
             {usage === PINEntryUsage.ChangeBiometrics && (
-              <Text style={style.parenthesisText}> {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</Text>
+              <Text style={style.parenthesisText}>{t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</Text>
             )}
           </Text>
           <PINInput
