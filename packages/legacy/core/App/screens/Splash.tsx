@@ -12,7 +12,7 @@ import { useTheme } from '../contexts/theme'
 import useInitializeAgent from '../hooks/initialize-agent'
 import { BifoldError } from '../types/error'
 import { Stacks } from '../types/navigators'
-import { useAuth } from 'contexts/auth'
+import { useAuth } from '../contexts/auth'
 
 /**
  * To customize this splash screen set the background color of the
