@@ -73,7 +73,7 @@ const OnboardingStack: React.FC = () => {
   )
 
   useEffect(() => {
-    if (!versionMonitor?.hasOwnProperty('checkForUpdate')) {
+    if (!Object.prototype.hasOwnProperty.call(versionMonitor, 'checkForUpdate')) {
       return
     }
 
