@@ -200,7 +200,13 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
 
   return (
     <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
-      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
+      <Record
+        fields={overlay.presentationFields || []}
+        hideFieldValues
+        disableHideAll
+        header={header}
+        footer={footer}
+      />
       <CommonRemoveModal
         usage={ModalUsage.CredentialRemove}
         visible={isRemoveModalDisplayed}

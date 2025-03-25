@@ -15,10 +15,18 @@ export interface RecordProps {
   footer?: () => React.ReactElement | null
   fields: Field[]
   hideFieldValues?: boolean
+  disableHideAll?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
 }
 
-const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
+const Record: React.FC<RecordProps> = ({
+  header,
+  footer,
+  fields,
+  hideFieldValues = false,
+  disableHideAll,
+  field = null,
+}) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
   const { ListItems, TextTheme } = useTheme()
@@ -71,7 +79,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
         header ? (
           <RecordHeader>
             {header()}
-            {hideFieldValues ? (
+            {hideFieldValues && !disableHideAll ? (
               <View style={styles.linkContainer}>
                 <TouchableOpacity
                   style={styles.link}

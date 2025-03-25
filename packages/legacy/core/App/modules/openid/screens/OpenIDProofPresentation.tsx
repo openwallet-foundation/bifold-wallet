@@ -246,8 +246,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                 <View style={styles.cardGroupContainer}>
                   {name && purpose && (
                     <View style={styles.cardGroupHeader}>
-                      <Text style={TextTheme.labelSubtitle}>{name}</Text>
-                      <Text style={TextTheme.labelSubtitle}>{purpose}</Text>
+                      <Text style={TextTheme.bold}>{name}</Text>
+                      <Text style={TextTheme.labelTitle}>{purpose}</Text>
                     </View>
                   )}
                   {s.isSatisfied && selectedCredential?.requestedAttributes ? (
@@ -298,11 +298,11 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         {selectedCredentials && Object.keys(selectedCredentials).length > 0 ? (
           <>
             {footerButton(
-              t('Global.Accept'),
+              'Send',
               handleAcceptTouched,
               ButtonType.Primary,
               testIdWithKey('AcceptCredentialOffer'),
-              t('Global.Accept')
+              'Send'
             )}
             {footerButton(
               t('Global.Decline'),

@@ -176,7 +176,13 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
 
   return (
     <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
-      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
+      <Record
+        fields={overlay.presentationFields || []}
+        hideFieldValues
+        disableHideAll
+        header={header}
+        footer={footer}
+      />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={''} confirmationOnly={true} />
       <CommonRemoveModal
         usage={ModalUsage.CredentialOfferDecline}
