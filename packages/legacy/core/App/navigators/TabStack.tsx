@@ -127,9 +127,9 @@ const TabStack: React.FC = () => {
               <AttachTourStep tourID={BaseTourID.HomeTour} index={1}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   {focused ? (
-                    <Assets.svg.tabOneFocusedIcon height={30} width={30} fill={color} stroke={color} />
+                    <Assets.svg.tabOneFocusedIcon height={30} width={30} fill={color} />
                   ) : (
-                    <Assets.svg.tabOneIcon height={30} width={30} fill={color} stroke={color} />
+                    <Assets.svg.tabOneIcon height={30} width={30} fill={color} />
                   )}
                   {showLabels && (
                     <Text
@@ -239,9 +239,9 @@ const TabStack: React.FC = () => {
               <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   {focused ? (
-                    <Assets.svg.tabThreeFocusedIcon height={30} width={30} fill={color} stroke={color} />
+                    <Assets.svg.tabThreeFocusedIcon height={30} width={30} fill={color} />
                   ) : (
-                    <Assets.svg.tabThreeIcon height={30} width={30} fill={color} stroke={color} />
+                    <Assets.svg.tabThreeIcon height={30} width={30} fill={color} />
                   )}
                   {showLabels && (
                     <Text
