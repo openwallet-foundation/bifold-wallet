@@ -10,11 +10,14 @@ import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
+import UpdateAvailable from './screens/UpdateAvailable'
 import { AttestationMonitor } from './types/attestation'
+import { IVersionCheckService } from './types/version-check'
 import { GenericFn } from './types/fn'
-import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType } from './types/navigators'
+import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType, OnboardingTask } from './types/navigators'
 import { CustomNotification } from './types/notification'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
+import { State } from './types/state'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
 import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
@@ -32,6 +35,8 @@ export type FN_ONBOARDING_DONE = (
 
 type LoadStateFn = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 
+type GenerateOnboardingWorkflowStepsFn = (state: State, config: Config, termsVersion: number) => Array<OnboardingTask>
+
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
 export const PROOF_TOKENS = {
@@ -41,6 +46,7 @@ export const PROOF_TOKENS = {
 
 export const SCREEN_TOKENS = {
   SCREEN_PREFACE: 'screen.preface',
+  SCREEN_UPDATE_AVAILABLE: 'screen.update-available',
   SCREEN_TERMS: 'screen.terms',
   SCREEN_ONBOARDING: 'screen.onboarding',
   SCREEN_DEVELOPER: 'screen.developer',
@@ -118,11 +124,13 @@ export const UTILITY_TOKENS = {
   UTIL_LEDGERS: 'utility.ledgers',
   UTIL_PROOF_TEMPLATE: 'utility.proof-template',
   UTIL_ATTESTATION_MONITOR: 'utility.attestation-monitor',
+  UTIL_APP_VERSION_MONITOR: 'utility.app-version-monitor',
 } as const
 
 export const CONFIG_TOKENS = {
   CONFIG: 'config',
   INLINE_ERRORS: 'errors.inline',
+  ONBOARDING: 'utility.onboarding',
 } as const
 
 export const TOKENS = {
@@ -153,6 +161,7 @@ export type TokenMapping = {
   }[]
   [TOKENS.GROUP_BY_REFERENT]: boolean
   [TOKENS.SCREEN_PREFACE]: React.FC
+  [TOKENS.SCREEN_UPDATE_AVAILABLE]: typeof UpdateAvailable
   [TOKENS.STACK_ONBOARDING]: React.FC
   [TOKENS.SCREEN_TERMS]: { screen: React.FC; version: boolean | string }
   [TOKENS.SCREEN_DEVELOPER]: React.FC
@@ -180,10 +189,12 @@ export type TokenMapping = {
   [TOKENS.UTIL_LEDGERS]: IndyVdrPoolConfig[]
   [TOKENS.UTIL_PROOF_TEMPLATE]: ProofRequestTemplateFn | undefined
   [TOKENS.UTIL_ATTESTATION_MONITOR]: AttestationMonitor
+  [TOKENS.UTIL_APP_VERSION_MONITOR]: IVersionCheckService
   [TOKENS.FN_LOAD_HISTORY]: FN_HISTORY_MANAGER
   [TOKENS.HISTORY_ENABLED]: boolean
   [TOKENS.HISTORY_EVENTS_LOGGER]: HistoryEventsLoggerConfig
   [TOKENS.CONFIG]: Config
+  [TOKENS.ONBOARDING]: GenerateOnboardingWorkflowStepsFn
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>

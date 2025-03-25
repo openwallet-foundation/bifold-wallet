@@ -17,7 +17,7 @@ import { testIdWithKey } from '../utils/testable'
 import ScreenLayout from '../layout/ScreenLayout'
 import { ThemedText } from '../components/texts/ThemedText'
 
-export const TermsVersion = true
+export const TermsVersion = '1'
 
 const Terms: React.FC = () => {
   const [store, dispatch] = useStore()

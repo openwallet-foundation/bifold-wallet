@@ -1,7 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, SectionList, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import {
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -18,7 +26,6 @@ import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
-import useFontScale from '../hooks/font-scale'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -39,7 +46,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     historyEnabled,
   ] = useServices([TOKENS.CONFIG, TOKENS.HISTORY_ENABLED])
-  const fontScale = useFontScale()
+  const { fontScale } = useWindowDimensions()
   const fontIsGreaterThanCap = fontScale >= accessibilityMaxFontSizeMultiplier
   const defaultIconSize = 24
   const styles = StyleSheet.create({

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -16,6 +16,7 @@ import BulletPoint from '../inputs/BulletPoint'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedList from '../misc/UnorderedList'
 import { ThemedText } from '../texts/ThemedText'
+import SafeAreaModal from './SafeAreaModal'
 
 interface CommonRemoveModalProps {
   usage: ModalUsage
@@ -276,7 +277,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   }
 
   return (
-    <Modal transparent={true} visible={visible} animationType="slide">
+    <SafeAreaModal transparent={true} visible={visible} animationType="slide">
       <View style={styles.overlay}>
         <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeAreaView}>
           <View style={styles.headerView}>
@@ -321,7 +322,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
           </View>
         </SafeAreaView>
       </View>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

@@ -1,7 +1,7 @@
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -12,7 +12,6 @@ import { useTheme } from '../contexts/theme'
 import { Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
-import useFontScale from '../hooks/font-scale'
 
 interface Timer {
   hours: number
@@ -27,7 +26,7 @@ const AttemptLockout: React.FC = () => {
   const [time, setTime] = useState<Timer>()
   const [timeoutDone, setTimeoutDone] = useState<boolean>(false)
   const navigation = useNavigation()
-  const fontScale = useFontScale()
+  const { fontScale } = useWindowDimensions()
   const styles = StyleSheet.create({
     container: {
       flex: 1,

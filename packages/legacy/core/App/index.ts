@@ -14,6 +14,7 @@ import ContentGradient from './components/misc/ContentGradient'
 import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
+import SafeAreaModal from './components/modals/SafeAreaModal'
 import NetInfo from './components/network/NetInfo'
 import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
@@ -44,6 +45,7 @@ import OnboardingPages from './screens/OnboardingPages'
 import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
+import UpdateAvailable from './screens/UpdateAvailable'
 import UseBiometry from './screens/UseBiometry'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
@@ -61,6 +63,7 @@ import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 export * from './navigators'
 export * from './services/storage'
 export * from './types/attestation'
+export * from './types/version-check'
 export { LocalStorageKeys } from './constants'
 export * from './services/storage'
 export { initLanguages, initStoredLanguage, translationResources, Locales } from './localization'
@@ -139,8 +142,8 @@ export type { CredentialListFooterProps }
 export * from './container-api'
 export { MainContainer } from './container-impl'
 
-export type { ScreenLayoutConfig } from './types/navigators'
-export type { HistoryEventsLoggerConfig } from './types/config'
+export type { ScreenLayoutConfig, OnboardingTask } from './types/navigators'
+export type { Config, HistoryEventsLoggerConfig } from './types/config'
 
 export { BaseTourID } from './types/tour'
 
@@ -166,6 +169,7 @@ export {
   CredentialCard,
   ContentGradient,
   ErrorModal,
+  SafeAreaModal,
   IconButton,
   ActivityProvider,
   useActivity,
@@ -186,6 +190,7 @@ export {
   Developer,
   Terms,
   Preface,
+  UpdateAvailable,
   HomeFooterView as HomeContentView,
   UseBiometry,
   AttemptLockout,

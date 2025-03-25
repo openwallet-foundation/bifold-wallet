@@ -25,35 +25,33 @@ import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
-import useFontScale from '../hooks/font-scale'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const fontChange = useFontScale()
   const badgeFontSize = useMemo(() => {
-    if (fontChange >= 1.2 && fontChange < 1.5) {
+    if (fontScale >= 1.2 && fontScale < 1.5) {
       return {
         fontSize: 15,
         lineHeight: 15,
       }
-    } else if (fontChange >= 1.5 && fontChange < 1.7) {
+    } else if (fontScale >= 1.5 && fontScale < 1.7) {
       return {
         fontSize: 10,
         lineHeight: 10,
       }
-    } else if (fontChange >= 1.7 && fontChange < 3) {
+    } else if (fontScale >= 1.7 && fontScale < 3) {
       return {
         fontSize: 8,
         lineHeight: 8,
       }
-    } else if (fontChange >= 3 && fontChange < 4) {
+    } else if (fontScale >= 3 && fontScale < 4) {
       return {
         fontSize: 6,
         lineHeight: 6,
       }
     }
     return null
-  }, [fontChange])
+  }, [fontScale])
   const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] = useServices([
     TOKENS.NOTIFICATIONS,
     TOKENS.CONFIG,

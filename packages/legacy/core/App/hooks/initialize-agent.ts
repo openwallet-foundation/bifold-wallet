@@ -8,16 +8,15 @@ import { Config } from 'react-native-config'
 import { CachesDirectoryPath } from 'react-native-fs'
 
 import { TOKENS, useServices } from '../container-api'
-import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
+import { WalletSecret } from 'types/security'
 
 const useInitializeAgent = () => {
   const { agent, setAgent } = useAgent()
   const [store, dispatch] = useStore()
-  const { walletSecret } = useAuth()
   const [cacheSchemas, cacheCredDefs, logger, indyLedgers] = useServices([
     TOKENS.CACHE_SCHEMAS,
     TOKENS.CACHE_CRED_DEFS,
@@ -25,9 +24,9 @@ const useInitializeAgent = () => {
     TOKENS.UTIL_LEDGERS,
   ])
 
-  const restartExistingAgent = useCallback(async () => {
+  const restartExistingAgent = useCallback(async (walletSecret: WalletSecret) => {
     // if the agent is initialized, it was not a clean shutdown and should be replaced, not restarted
-    if (!walletSecret?.id || !walletSecret.key || !agent || agent.isInitialized) {
+    if (!agent || agent.isInitialized) {
       return
     }
 
@@ -42,18 +41,14 @@ const useInitializeAgent = () => {
       // if the existing agents wallet cannot be opened or initialize() fails it was
       // again not a clean shutdown and the agent should be replaced, not restarted
       logger.warn('Failed to restart existing agent, skipping agent restart')
-      return 
+      return
     }
 
     logger.info('Successfully restarted existing agent')
     return agent
-  }, [walletSecret, agent, logger])
+  }, [agent, logger])
 
-  const createNewAgent = useCallback(async (): Promise<Agent | undefined> => {
-    if (!walletSecret?.id || !walletSecret.key) {
-      return
-    }
-
+  const createNewAgent = useCallback(async (walletSecret: WalletSecret): Promise<Agent | undefined> => {
     logger.info('No agent initialized, creating a new one')
 
     const newAgent = new Agent({
@@ -84,13 +79,9 @@ const useInitializeAgent = () => {
     newAgent.registerOutboundTransport(httpTransport)
 
     return newAgent
-  }, [walletSecret, store.preferences.walletName, logger, indyLedgers])
+  }, [store.preferences.walletName, logger, indyLedgers])
 
-  const migrateIfRequired = useCallback(async (newAgent: Agent) => {
-    if (!walletSecret?.id || !walletSecret.key) {
-      return
-    }
-
+  const migrateIfRequired = useCallback(async (newAgent: Agent, walletSecret: WalletSecret) => {
     // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
     if (!store.migration.didMigrateToAskar) {
       newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
@@ -103,7 +94,7 @@ const useInitializeAgent = () => {
         type: DispatchAction.DID_MIGRATE_TO_ASKAR,
       })
     }
-  }, [walletSecret, store.migration.didMigrateToAskar, dispatch])
+  }, [store.migration.didMigrateToAskar, dispatch])
 
   const warmUpCache = useCallback(async (newAgent: Agent) => {
     const poolService = newAgent.dependencyManager.resolve(IndyVdrPoolService)
@@ -120,24 +111,20 @@ const useInitializeAgent = () => {
     })
   }, [cacheCredDefs, cacheSchemas])
 
-  const initializeAgent = useCallback(async (): Promise<Agent | undefined> => {
-    if (!walletSecret?.id || !walletSecret.key) {
-      return
-    }
-
-    const existingAgent = await restartExistingAgent()
+  const initializeAgent = useCallback(async (walletSecret: WalletSecret): Promise<Agent | undefined> => {
+    const existingAgent = await restartExistingAgent(walletSecret)
     if (existingAgent) {
       setAgent(existingAgent)
       return existingAgent
     }
 
-    const newAgent = await createNewAgent()
+    const newAgent = await createNewAgent(walletSecret)
     if (!newAgent) {
       logger.error('Failed to create a new agent')
       return
     }
 
-    await migrateIfRequired(newAgent)
+    await migrateIfRequired(newAgent, walletSecret)
 
     await newAgent.initialize()
 
@@ -149,7 +136,6 @@ const useInitializeAgent = () => {
 
     return newAgent
   }, [
-    walletSecret,
     logger,
     restartExistingAgent,
     setAgent,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, StyleSheet, View, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -9,6 +9,7 @@ import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { ThemedText } from '../texts/ThemedText'
+import SafeAreaModal from './SafeAreaModal'
 
 interface AppGuideModalProps {
   title: string
@@ -78,7 +79,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
   })
 
   return (
-    <Modal transparent accessibilityViewIsModal>
+    <SafeAreaModal transparent accessibilityViewIsModal>
       <View style={styles.modalCenter}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
@@ -131,7 +132,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
           </View>
         </View>
       </View>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

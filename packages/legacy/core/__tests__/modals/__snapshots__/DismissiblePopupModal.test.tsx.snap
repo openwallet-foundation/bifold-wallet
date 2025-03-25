@@ -129,7 +129,7 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
           <View
             style={
               Object {
-                "flexGrow": 1,
+                "flexShrink": 1,
               }
             }
           >
@@ -145,7 +145,8 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                   Object {
                     "alignSelf": "flex-start",
                     "color": "#FFFFFF",
-                    "maxWidth": 640,
+                    "fontSize": 18,
+                    "fontWeight": "bold",
                   },
                 ]
               }
@@ -270,6 +271,8 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                       },
                       Object {
                         "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
                         "paddingVertical": 16,
                       },
                     ]
@@ -501,7 +504,7 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
           <View
             style={
               Object {
-                "flexGrow": 1,
+                "flexShrink": 1,
               }
             }
           >
@@ -517,7 +520,8 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                   Object {
                     "alignSelf": "flex-start",
                     "color": "#FFFFFF",
-                    "maxWidth": 640,
+                    "fontSize": 18,
+                    "fontWeight": "bold",
                   },
                 ]
               }
@@ -642,6 +646,8 @@ exports[`DismissiblePopupModal Component Renders correctly without call to actio
                       },
                       Object {
                         "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
                         "paddingVertical": 16,
                       },
                     ]

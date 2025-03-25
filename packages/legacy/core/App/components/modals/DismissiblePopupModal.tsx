@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Modal,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -17,7 +16,7 @@ import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { ThemedText } from '../texts/ThemedText'
-import useFontScale from '../../hooks/font-scale'
+import SafeAreaModal from './SafeAreaModal'
 
 interface DismissiblePopupModalProps {
   title: string
@@ -34,11 +33,10 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
   onCallToActionLabel,
   onDismissPressed,
 }) => {
-  const { height, width } = useWindowDimensions()
+  const { height, width, fontScale } = useWindowDimensions()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const iconSize = 30
-  const fontScale = useFontScale()
 
   const styles = StyleSheet.create({
     modalCenter: {
@@ -75,10 +73,10 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       justifyContent: 'space-between',
     },
     headerTextContainer: {
-      flexGrow: 1,
+      ...(fontScale < 1.7 ? { flexGrow: 1 } : { flexShrink: 1 }),
     },
     headerText: {
-      maxWidth: width - 2 * 25 - 2 * 10 - iconSize - 10,
+      ...TextTheme.bold,
       alignSelf: 'flex-start',
       color: ColorPallet.notification.infoText,
     },
@@ -89,6 +87,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       flex: 1,
     },
     bodyText: {
+      ...TextTheme.normal,
       paddingVertical: 16,
       color: ColorPallet.notification.infoText,
     },
@@ -100,7 +99,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       alignSelf: 'center',
     },
     dismissIcon: {
-      alignSelf: 'flex-start',
+      alignSelf: fontScale < 1.7 ? 'flex-end' : 'flex-start',
     },
   })
 
@@ -109,7 +108,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
   const iconColor = ColorPallet.notification.infoIcon
 
   return (
-    <Modal transparent>
+    <SafeAreaModal transparent>
       <TouchableOpacity onPress={onDismissPressed} accessible={false}>
         <View style={styles.modalCenter}>
           <TouchableWithoutFeedback accessible={false}>
@@ -163,7 +162,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
           </TouchableWithoutFeedback>
         </View>
       </TouchableOpacity>
-    </Modal>
+    </SafeAreaModal>
   )
 }
 

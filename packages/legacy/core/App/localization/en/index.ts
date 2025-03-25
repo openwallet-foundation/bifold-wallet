@@ -811,6 +811,7 @@ const translation = {
     "HistorySettings": "History Settings",
     "History": "History",
     "HistoryDetails": "History Details",
+    "UpdateAvailable": "Update Available",
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
@@ -904,7 +905,14 @@ const translation = {
     "InvalidPredicateValueDetails": "Must be a number",
     "ConnectionLessLabel": "Anonymous",
     "WaitingForResponse": "Waiting for response..."
-  }
+  },
+  "AppUpdate": {
+    "Heading": "Update Bifold to the latest version",
+    "Body": "Bifold was updated with new improvements. Update your app now to enjoy the latest features and enhancements.",
+    "LearnMore": "Learn what's New",
+    "UpdateNow": "Update the app",
+    "UpdateLater": "Do this later",
+  },
 }
 
 export default translation

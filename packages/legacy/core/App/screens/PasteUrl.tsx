@@ -2,11 +2,12 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, TextInput, ScrollView, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
+import SafeAreaModal from '../components/modals/SafeAreaModal'
 import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { ConnectStackParams } from '../types/navigators'
@@ -69,7 +70,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Modal visible={!!errorMessage} testID={testIdWithKey('ErrorModal')} animationType="fade" transparent>
+        <SafeAreaModal visible={!!errorMessage} testID={testIdWithKey('ErrorModal')} animationType="fade" transparent>
           <View
             style={{
               flex: 1,
@@ -87,7 +88,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
               onCallToActionLabel={t('Global.TryAgain')}
             />
           </View>
-        </Modal>
+        </SafeAreaModal>
         <View style={styles.content}>
           <ThemedText style={styles.description}>{t('PasteUrl.PasteUrlDescription')}</ThemedText>
           <TextInput
