@@ -45,6 +45,10 @@ export const isAuthenticationComplete = (didCreatePIN: boolean, didAuthenticate:
   return { name: Screens.EnterPIN, completed: didAuthenticate || !didCreatePIN }
 }
 
+export const isAttemptLockoutComplete = (servedPenalty: boolean | undefined): OnboardingTask => {
+  return { name: Screens.AttemptLockout, completed: servedPenalty !== false }
+}
+
 export const generateOnboardingWorkflowSteps = (
   state: State,
   config: Config,
@@ -59,6 +63,7 @@ export const generateOnboardingWorkflowSteps = (
     didConsiderPushNotifications,
     didNameWallet,
   } = state.onboarding
+  const { servedPenalty } = state.loginAttempt
   const { didAuthenticate } = state.authentication
   const { enableWalletNaming } = state.preferences
   const { showPreface, enablePushNotifications } = config
@@ -72,6 +77,7 @@ export const generateOnboardingWorkflowSteps = (
     isBiometryComplete(didConsiderBiometry),
     isPushNotificationComplete(didConsiderPushNotifications, enablePushNotifications),
     isNameWalletComplete(didNameWallet, enableWalletNaming),
+    isAttemptLockoutComplete(servedPenalty),
     isAuthenticationComplete(didCreatePIN, didAuthenticate),
   ]
 }
