@@ -15,6 +15,7 @@ type ScreenOptions = RouteConfig<
 interface ScreenComponents {
   Splash: React.FC<StackScreenProps<ParamListBase>>
   Preface: React.FC<StackScreenProps<ParamListBase>>
+  UpdateAvailableScreen: React.FC
   Terms: React.FC<StackScreenProps<ParamListBase>>
   NameWallet: React.FC<StackScreenProps<ParamListBase>>
   useBiometry: React.FC<StackScreenProps<ParamListBase>>
@@ -47,6 +48,15 @@ export const getOnboardingScreens = (
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Preface'),
       ...ScreenOptionsDictionary[Screens.Preface],
+    },
+  },
+  {
+    name: Screens.UpdateAvailable,
+    component: components.UpdateAvailableScreen,
+    options: {
+      ...ScreenOptionsDictionary[Screens.UpdateAvailable],
+      ...TransitionPresets.SlideFromRightIOS,
+      title: t('Screens.UpdateAvailable'),
     },
   },
   {

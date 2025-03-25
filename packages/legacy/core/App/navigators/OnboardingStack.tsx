@@ -42,6 +42,8 @@ const OnboardingStack: React.FC = () => {
     onTutorialCompletedCurried,
     ScreenOptionsDictionary,
     Preface,
+    UpdateAvailable,
+    versionMonitor,
     generateOnboardingWorkflowSteps,
   ] = useServices([
     TOKENS.CONFIG,
@@ -54,6 +56,8 @@ const OnboardingStack: React.FC = () => {
     TOKENS.FN_ONBOARDING_DONE,
     TOKENS.OBJECT_SCREEN_CONFIG,
     TOKENS.SCREEN_PREFACE,
+    TOKENS.SCREEN_UPDATE_AVAILABLE,
+    TOKENS.UTIL_APP_VERSION_MONITOR,
     TOKENS.ONBOARDING,
   ])
   const defaultStackOptions = useDefaultStackOptions(theme)
@@ -68,6 +72,15 @@ const OnboardingStack: React.FC = () => {
     generateOnboardingWorkflowSteps
   )
 
+  useEffect(() => {
+    versionMonitor?.checkForUpdate?.().then((versionInfo) => {
+      dispatch({
+        type: DispatchAction.SET_VERSION_INFO,
+        payload: [versionInfo],
+      })
+    })
+  }, [versionMonitor, dispatch])
+
   const onAuthenticated = useCallback(
     (status: boolean): void => {
       if (!status) {
@@ -80,6 +93,15 @@ const OnboardingStack: React.FC = () => {
     },
     [dispatch]
   )
+
+  const UpdateAvailableScreen = useCallback(() => {
+    return (
+      <UpdateAvailable
+        appleAppStoreUrl={config.appUpdateConfig?.appleAppStoreUrl}
+        googlePlayStoreUrl={config.appUpdateConfig?.googlePlayStoreUrl}
+      />
+    )
+  }, [UpdateAvailable, config.appUpdateConfig])
 
   const OnboardingScreen = useCallback(() => {
     return (
@@ -133,6 +155,7 @@ const OnboardingStack: React.FC = () => {
       getOnboardingScreens(t, ScreenOptionsDictionary, {
         Splash,
         Preface,
+        UpdateAvailableScreen,
         Terms,
         NameWallet,
         useBiometry,
@@ -154,6 +177,7 @@ const OnboardingStack: React.FC = () => {
       useBiometry,
       t,
       ScreenOptionsDictionary,
+      UpdateAvailableScreen,
     ]
   )
   return (

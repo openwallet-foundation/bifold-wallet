@@ -20,6 +20,7 @@ import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
 import Preface from './screens/Preface'
 import Splash from './screens/Splash'
+import UpdateAvailable from './screens/UpdateAvailable'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
@@ -74,7 +75,12 @@ export const defaultConfig: Config = {
     enableEditContactName: true,
     enableCredentialList: false,
   },
+  appUpdateConfig: {
+    appleAppStoreUrl: 'https://example.com',
+    googlePlayStoreUrl: 'https://example.com',
+  },
 }
+
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
   logAttestationAccepted: true,
   logAttestationRefused: true,
@@ -111,6 +117,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_DEVELOPER, Developer)
     this._container.registerInstance(TOKENS.SCREEN_TERMS, { screen: ScreenTerms, version: TermsVersion })
     this._container.registerInstance(TOKENS.SCREEN_SPLASH, Splash)
+    this._container.registerInstance(TOKENS.SCREEN_UPDATE_AVAILABLE, UpdateAvailable)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_PAGES, OnboardingPages)
     this._container.registerInstance(TOKENS.COMPONENT_PIN_CREATE_HEADER, PINCreateHeader)
     this._container.registerInstance(TOKENS.SCREEN_USE_BIOMETRY, UseBiometry)
@@ -131,6 +138,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
+    this._container.registerInstance(TOKENS.UTIL_APP_VERSION_MONITOR, { useValue: undefined })
     this._container.registerInstance(TOKENS.NOTIFICATIONS, {
       useNotifications,
     })
