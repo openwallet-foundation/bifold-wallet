@@ -111,7 +111,7 @@ export type {
   IAssets,
   ITheme,
 } from './theme'
-export type { PersistentState } from './types/state'
+export type { VersionInfo, PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
