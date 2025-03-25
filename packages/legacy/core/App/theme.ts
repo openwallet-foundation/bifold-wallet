@@ -581,6 +581,14 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.modalPrimary,
     textAlign: 'center',
   },
+  modalTertiary: {
+    padding: 16,
+  },
+  modalTertiaryText: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.modalPrimary,
+    textAlign: 'center',
+  },
 })
 
 export const ListItems = StyleSheet.create({
