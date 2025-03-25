@@ -763,9 +763,10 @@ const translation = {
     "AttemptLockout": "Temporarily Locked (PT-BR)",
     "NameWallet": "Nomear sua carteira",
     "RenameContact": "Editar nome do contato",
-    "HistorySettings": "History Settings",
-    "History": "History",
-    "HistoryDetails": "History Details",
+    "HistorySettings": "History Settings (PT-BR)",
+    "History": "History (PT-BR)",
+    "HistoryDetails": "History Details (PT-BR)",
+    "UpdateAvailable": "Update Available (PT-BR)",
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -855,7 +856,14 @@ const translation = {
     "InvalidPredicateValueDetails": "Deve ser um número",
     "ConnectionLessLabel": "Anônimo",
     "WaitingForResponse": "Waiting for response... (PT-BR)"
-  }
+  },
+  "AppUpdate": {
+    "Heading": "Update Bifold to the latest version (PT-BR)",
+    "Body": "Bifold was updated with new improvements. Update your app now to enjoy the latest features and enhancements. (PT-BR)",
+    "LearnMore": "Learn what's New (PT-BR)",
+    "UpdateNow": "Update the app (PT-BR)",
+    "UpdateLater": "Do this later (PT-BR)",
+  },
 }
 
 export default translation
