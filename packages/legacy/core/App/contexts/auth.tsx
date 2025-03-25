@@ -9,9 +9,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter } from 'react-native'
 
-import { EventTypes } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import {
@@ -27,13 +25,13 @@ import { hashPIN } from '../utils/crypto'
 import { migrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
-  checkPIN: (PIN: string) => Promise<boolean>
-  getWalletCredentials: () => Promise<WalletSecret | undefined>
+  checkWalletPIN: (PIN: string) => Promise<boolean>
+  getWalletSecret: () => Promise<WalletSecret | undefined>
   walletSecret?: WalletSecret
   removeSavedWalletSecret: () => void
   disableBiometrics: () => Promise<void>
   setPIN: (PIN: string) => Promise<void>
-  commitPIN: (useBiometry: boolean) => Promise<boolean>
+  commitWalletToKeychain: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
   rekeyWallet: (oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
 }
@@ -51,34 +49,25 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     await storeWalletSecret(secret)
   }, [])
 
-  const getWalletCredentials = useCallback(async (): Promise<WalletSecret | undefined> => {
-    if (walletSecret && walletSecret.key) {
+  const getWalletSecret = useCallback(async (): Promise<WalletSecret | undefined> => {
+    if (walletSecret) {
       return walletSecret
     }
 
-    const { secret, err } = await loadWalletSecret(
-      t('Biometry.UnlockPromptTitle'),
-      t('Biometry.UnlockPromptDescription')
-    )
-
-    DeviceEventEmitter.emit(EventTypes.BIOMETRY_ERROR, err !== undefined)
-
-    if (!secret?.key) {
-      setWalletSecret(undefined)
-      return
-    }
+    const secret = await loadWalletSecret(t('Biometry.UnlockPromptTitle'), t('Biometry.UnlockPromptDescription'))
 
     setWalletSecret(secret)
 
     return secret
   }, [t, walletSecret])
 
-  const commitPIN = useCallback(
+  const commitWalletToKeychain = useCallback(
     async (useBiometry: boolean): Promise<boolean> => {
-      const secret = await getWalletCredentials()
+      const secret = await getWalletSecret()
       if (!secret) {
         return false
       }
+
       // set did authenticate to true if we can get wallet credentials
       dispatch({
         type: DispatchAction.DID_AUTHENTICATE,
@@ -89,17 +78,18 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         // erase wallet key if biometrics is disabled
         await wipeWalletKey(useBiometry)
       }
+
       return true
     },
-    [dispatch, getWalletCredentials]
+    [dispatch, getWalletSecret]
   )
 
-  const checkPIN = useCallback(
+  const checkWalletPIN = useCallback(
     async (PIN: string): Promise<boolean> => {
       try {
         const secret = await loadWalletSalt()
 
-        if (!secret || !secret.salt) {
+        if (!secret?.salt) {
           return false
         }
 
@@ -112,8 +102,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           })
         }
 
-        // NOTE: a custom wallet is used to check if the wallet key is correct. This is different from the wallet used in the rest of the app.
-        // We create an AskarWallet instance and open the wallet with the given secret.
+        // NOTE: We create an instance of AskarWallet, which is the underlying wallet that powers the app
+        // we then open that instance with the provided id and key to verify their integrity
         const askarWallet = new AskarWallet(
           new ConsoleLogger(LogLevel.off),
           new agentDependencies.FileSystem(),
@@ -147,11 +137,16 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const rekeyWallet = useCallback(
     async (oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
       try {
+        if (!agent) {
+          // no agent set, cannot rekey the wallet
+          return false
+        }
         // argon2.hash can sometimes generate an error
         const secret = await loadWalletSalt()
         if (!secret) {
           return false
         }
+
         const oldHash = await hashPIN(oldPin, secret.salt)
         const newSecret = await secretForPIN(newPin)
         const newHash = await hashPIN(newPin, newSecret.salt)
@@ -159,8 +154,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           return false
         }
 
-        await agent?.wallet.close()
-        await agent?.wallet.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
+        await agent.wallet.close()
+        await agent.wallet.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
+        await agent.wallet.open({ ...newSecret })
+
         await storeWalletSecret(newSecret, useBiometry)
         setWalletSecret(newSecret)
       } catch {
@@ -174,11 +171,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   return (
     <AuthContext.Provider
       value={{
-        checkPIN,
-        getWalletCredentials,
+        checkWalletPIN,
+        getWalletSecret,
         removeSavedWalletSecret,
         disableBiometrics,
-        commitPIN,
+        commitWalletToKeychain,
         setPIN,
         isBiometricsActive,
         rekeyWallet,

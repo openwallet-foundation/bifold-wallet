@@ -9,9 +9,8 @@ import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { AuthenticateStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-
 export interface OnboardingStyleSheet {
   container: ViewStyle
   carouselContainer: ViewStyle
@@ -93,9 +92,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
     dispatch({
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
     })
-
-    navigation.navigate(Screens.Terms)
-  }, [dispatch, navigation])
+  }, [dispatch])
 
   useEffect(() => {
     !disableSkip &&

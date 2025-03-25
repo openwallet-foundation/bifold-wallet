@@ -58,6 +58,17 @@ export interface Authentication {
   didAuthenticate: boolean
 }
 
+/**
+ * Represents information about latest the
+ * available version of the application.
+ */
+export type VersionInfo = {
+  needsUpdate: boolean
+  lastChecked?: Date
+  version?: string
+  dismissed?: boolean
+}
+
 export interface State {
   stateLoaded: boolean
   onboarding: Onboarding
@@ -68,6 +79,7 @@ export interface State {
   tours: Tours
   deepLink?: string
   migration: Migration
+  versionInfo: VersionInfo
 }
 
 export type PersistentState = {
