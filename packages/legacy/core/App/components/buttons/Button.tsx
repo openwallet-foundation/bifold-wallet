@@ -27,6 +27,7 @@ const ButtonImplComponent = (
     [ButtonType.ModalCritical]: { color: Buttons.modalCritical, text: Buttons.primaryText },
     [ButtonType.ModalPrimary]: { color: Buttons.modalPrimary, text: Buttons.modalPrimaryText },
     [ButtonType.ModalSecondary]: { color: Buttons.modalSecondary, text: Buttons.modalSecondaryText },
+    [ButtonType.ModalTertiary]: { color: Buttons.modalTertiary, text: Buttons.modalTertiaryText },
   }
   const [isActive, setIsActive] = useState<boolean>(false)
 

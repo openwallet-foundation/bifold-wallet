@@ -8,6 +8,7 @@ export enum ButtonType {
   ModalCritical,
   ModalPrimary,
   ModalSecondary,
+  ModalTertiary,
 }
 
 export interface ButtonProps extends React.PropsWithChildren {
