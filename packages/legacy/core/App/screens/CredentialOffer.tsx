@@ -159,7 +159,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields, metaOverlay }) => {
-        setOverlay({metaOverlay: (metaOverlay as MetaOverlay), presentationFields: (fields as Attribute[]).filter((field) => field.value) })
+        setOverlay({
+          metaOverlay: metaOverlay as MetaOverlay,
+          presentationFields: (fields as Attribute[]).filter((field) => field.value),
+        })
         setLoading(false)
       })
   }, [credential, agent, bundleResolver, i18n.language])
@@ -223,11 +226,17 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const handleDeclineTouched = useCallback(async () => {
     try {
       if (agent && credential) {
-        await agent.credentials.declineOffer(credential.id)
-        await agent.credentials.sendProblemReport({
-          credentialRecordId: credential.id,
-          description: t('CredentialOffer.Declined'),
-        })
+        const connectionId = credential.connectionId ?? ''
+        const connection = await agent.connections.findById(connectionId)
+
+        await agent.credentials.declineOffer(credential.id) // xx
+
+        if (connection) {
+          await agent.credentials.sendProblemReport({
+            credentialRecordId: credential.id,
+            description: t('CredentialOffer.Declined'),
+          })
+        }
       }
 
       toggleDeclineModalVisible()
