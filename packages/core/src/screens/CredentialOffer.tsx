@@ -229,7 +229,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         const connectionId = credential.connectionId ?? ''
         const connection = await agent.connections.findById(connectionId)
 
-        await agent.credentials.declineOffer(credential.id) // xx
+        await agent.credentials.declineOffer(credential.id)
 
         if (connection) {
           await agent.credentials.sendProblemReport({
