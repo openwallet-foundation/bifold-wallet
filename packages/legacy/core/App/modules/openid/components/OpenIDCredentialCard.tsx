@@ -21,9 +21,9 @@ import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { getCredentialForDisplay } from '../display'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
-import { getAttributeField } from '../utils/utils'
 import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 import startCase from 'lodash.startcase'
+import { getAttributeField } from '../../../utils/oca'
 
 interface CredentialCardProps {
   credentialDisplay?: W3cCredentialDisplay
@@ -66,7 +66,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
 
   const overlayAttributeField = useMemo((): Attribute | undefined => {
     if (!display?.primary_overlay_attribute || !credentialDisplay) return undefined
-    return getAttributeField(credentialDisplay, display.primary_overlay_attribute)
+    return getAttributeField(credentialDisplay, display.primary_overlay_attribute)?.field
   }, [display, credentialDisplay])
 
   const { width } = useWindowDimensions()

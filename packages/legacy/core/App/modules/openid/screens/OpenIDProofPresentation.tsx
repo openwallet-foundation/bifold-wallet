@@ -209,13 +209,12 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       return null
     }
     const credentialDisplay = getCredentialForDisplay(credential)
-    const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
     const requestedAttributes = selectedCredential.requestedAttributes
-    const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
+    const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
     return (
       <CredentialCard
         credential={credential}
-        displayItems={fieldsMapped as Attribute[]}
+        displayItems={fields as Attribute[]}
         //TODO: Support multiplae credentials
         // hasAltCredentials={hasMultipleCreds}
         // handleAltCredChange={selectAltCredentail}

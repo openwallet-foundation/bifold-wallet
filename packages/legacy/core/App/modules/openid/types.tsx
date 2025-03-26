@@ -86,7 +86,15 @@ export interface W3cCredentialDisplay {
   claimFormat: ClaimFormat
   validUntil: Date | undefined
   validFrom: Date | undefined
+  credentialSubject: CredentialSubjectRecord | undefined
 }
+
+interface DisplayInfo {
+  name: string
+  locale?: string
+}
+
+export type CredentialSubjectRecord = Record<string, { display: DisplayInfo[] }>
 
 export interface OpenId4VPRequestRecord extends OpenId4VcSiopResolvedAuthorizationRequest {
   definition: DifPresentationExchangeDefinition

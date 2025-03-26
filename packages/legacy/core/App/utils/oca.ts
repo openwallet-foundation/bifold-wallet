@@ -15,25 +15,66 @@ export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchang
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
 }
 
-export const buildFieldsFromW3cCredsCredential = (value: W3cCredentialDisplay): Array<Field> => {
+export type FiledExt = {
+  field: Attribute
+  attribute_name: string
+}
+
+export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FiledExt | undefined => {
+  let attributeName: string = 'Unknown'
+  let attributeValue: string | number | null = 'Unknown'
+
+  for (const [key, value] of Object.entries(display.attributes)) {
+    let formattedValue: string | number | null
+
+    if (searchKey === key) {
+      if (typeof value === 'object' && value !== null) {
+        formattedValue = JSON.stringify(value) // Convert object to string
+      } else {
+        formattedValue = value as string | number | null
+      }
+
+      attributeName = key
+      attributeValue = formattedValue
+    }
+  }
+
+  //Now check credentialSubject for attributeName mapping
+  const credentialSubject = display.credentialSubject
+
+  if (credentialSubject) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [key, value] of Object.entries(credentialSubject)) {
+      if (key !== searchKey) continue
+      if (!value) continue
+      const { display } = value
+      const { name } = display[0]
+      attributeName = name
+    }
+  }
+
+  return {
+    field: new Attribute({
+      name: attributeName,
+      value: attributeValue as string | number | null,
+      mimeType: typeof attributeValue === 'number' ? 'text/number' : 'text/plain',
+    }),
+    attribute_name: searchKey,
+  }
+}
+
+export const buildFieldsFromW3cCredsCredential = (
+  display: W3cCredentialDisplay,
+  filterByAttributes?: string[]
+): Array<Field> => {
   return (
-    Object.entries(value.attributes)
+    Object.entries(display.attributes)
       .filter(([key]) => key !== 'id')
-      .map(([key, value]) => {
-        let formattedValue: string | number | null
-
-        if (typeof value === 'object' && value !== null) {
-          formattedValue = JSON.stringify(value) // Convert object to string
-        } else {
-          formattedValue = value as string | number | null
-        }
-
-        return new Attribute({
-          name: key,
-          value: formattedValue,
-          mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
-        })
-      }) || []
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .map(([key, value]) => getAttributeField(display, key))
+      .filter((field) => field !== undefined)
+      .filter((field: FiledExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
+      .map((fld) => fld.field) || []
   )
 }
 
