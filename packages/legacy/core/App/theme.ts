@@ -181,14 +181,19 @@ export interface IBrandColors {
   primaryDisabled: string
   secondary: string
   secondaryDisabled: string
+  tertiary: string
+  tertiaryDisabled: string
   primaryLight: string
   highlight: string
   primaryBackground: string
   secondaryBackground: string
+  tertiaryBackground: string
   modalPrimary: string
   modalSecondary: string
+  modalTertiary: string
   modalPrimaryBackground: string
   modalSecondaryBackground: string
+  modalTertiaryBackground: string
   modalIcon: string
   link: string
   text: string
@@ -284,14 +289,19 @@ const BrandColors: IBrandColors = {
   primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
   secondary: '#FFFFFFFF',
   secondaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
+  tertiary: '#FFFFFFFF',
+  tertiaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
   primaryLight: `rgba(53, 130, 63, ${lightOpacity})`,
   highlight: '#FCBA19',
   primaryBackground: '#000000',
   secondaryBackground: '#313132',
+  tertiaryBackground: '#313132',
   modalPrimary: '#42803E',
   modalSecondary: '#FFFFFFFF',
+  modalTertiary: '#FFFFFFFF',
   modalPrimaryBackground: '#000000',
   modalSecondaryBackground: '#313132',
+  modalTertiaryBackground: '#313132',
   modalIcon: GrayscaleColors.white,
   unorderedList: GrayscaleColors.white,
   unorderedListModal: GrayscaleColors.white,
@@ -530,6 +540,22 @@ export const Buttons = StyleSheet.create({
     color: ColorPallet.brand.secondaryDisabled,
     textAlign: 'center',
   },
+  tertiary: {
+    padding: 16,
+  },
+  tertiaryDisabled: {
+    padding: 16,
+  },
+  tertiaryText: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.primary,
+    textAlign: 'center',
+  },
+  tertiaryTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.tertiaryDisabled,
+    textAlign: 'center',
+  },
   modalCritical: {
     padding: 16,
     borderRadius: 4,
@@ -551,6 +577,14 @@ export const Buttons = StyleSheet.create({
     borderColor: ColorPallet.brand.modalPrimary,
   },
   modalSecondaryText: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.modalPrimary,
+    textAlign: 'center',
+  },
+  modalTertiary: {
+    padding: 16,
+  },
+  modalTertiaryText: {
     ...TextTheme.bold,
     color: ColorPallet.brand.modalPrimary,
     textAlign: 'center',
