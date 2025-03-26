@@ -244,6 +244,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         const type = HistoryCardType.CardDeclined
         logHistoryRecord(type)
       }
+
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1025'), t('Error.Message1025'), (err as Error)?.message ?? err, 1025)
