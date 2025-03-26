@@ -6,7 +6,16 @@ import { useTheme } from '../../contexts/theme'
 import { Button, ButtonType, ButtonProps } from './Button-api'
 
 const ButtonImplComponent = (
-  { title, buttonType, accessibilityLabel, accessibilityHint, testID, onPress, disabled = false, children }: ButtonProps,
+  {
+    title,
+    buttonType,
+    accessibilityLabel,
+    accessibilityHint,
+    testID,
+    onPress,
+    disabled = false,
+    children,
+  }: ButtonProps,
   ref: React.LegacyRef<TouchableOpacity>
 ) => {
   const { Buttons, heavyOpacity } = useTheme()
@@ -14,9 +23,11 @@ const ButtonImplComponent = (
     [ButtonType.Critical]: { color: Buttons.critical, text: Buttons.primaryText },
     [ButtonType.Primary]: { color: Buttons.primary, text: Buttons.primaryText },
     [ButtonType.Secondary]: { color: Buttons.secondary, text: Buttons.secondaryText },
+    [ButtonType.Tertiary]: { color: Buttons.tertiary, text: Buttons.tertiaryText },
     [ButtonType.ModalCritical]: { color: Buttons.modalCritical, text: Buttons.primaryText },
     [ButtonType.ModalPrimary]: { color: Buttons.modalPrimary, text: Buttons.modalPrimaryText },
     [ButtonType.ModalSecondary]: { color: Buttons.modalSecondary, text: Buttons.modalSecondaryText },
+    [ButtonType.ModalTertiary]: { color: Buttons.modalTertiary, text: Buttons.modalTertiaryText },
   }
   const [isActive, setIsActive] = useState<boolean>(false)
 
@@ -32,8 +43,16 @@ const ButtonImplComponent = (
       testID={testID}
       style={[
         buttonStyles[buttonType].color,
-        disabled && (buttonType === ButtonType.Primary ? Buttons.primaryDisabled : Buttons.secondaryDisabled),
-        isActive && buttonType === ButtonType.Secondary && { backgroundColor: Buttons.primary.backgroundColor },
+        disabled &&
+          (buttonType === ButtonType.Primary
+            ? Buttons.primaryDisabled
+            : buttonType === ButtonType.Secondary
+            ? Buttons.secondaryDisabled
+            : Buttons.tertiaryDisabled),
+        isActive &&
+          (buttonType === ButtonType.Secondary || buttonType === ButtonType.Tertiary) && {
+            backgroundColor: Buttons.primary.backgroundColor,
+          },
       ]}
       disabled={disabled}
       activeOpacity={heavyOpacity}
