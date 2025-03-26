@@ -1,6 +1,6 @@
 {
   "name": "@hyperledger/aries-bifold-core",
-  "version": "11.11.0",
+  "version": "1.0.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "App/index.ts",
