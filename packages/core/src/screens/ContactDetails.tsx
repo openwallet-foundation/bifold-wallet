@@ -194,7 +194,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       const error = new BifoldError(t('Error.Title1037'), t('Error.Message1037'), (err as Error)?.message ?? err, 1037)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-  }, [agent, connection, navigation, t, historyEventsLogger.logConnectionRemoved, logHistoryRecord])
+  }, [agent, connection, navigation, t, historyEventsLogger.logConnectionRemoved, logHistoryRecord, logger])
 
   const callCancelRemove = useCallback(() => {
     setIsRemoveModalDisplayed(false)
