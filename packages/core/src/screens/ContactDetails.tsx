@@ -161,7 +161,24 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         logHistoryRecord()
       }
 
-      await agent.connections.deleteById(connection.id)
+      const proofs = await agent.proofs.findAllByQuery({ connectionId: connection.id })
+      const offers = await agent.credentials.findAllByQuery({
+        connectionId: connection.id,
+        state: CredentialState.OfferReceived,
+      })
+
+      logger.info(`Removing connection ${connection.id}, and ${proofs.length} proofs, ${offers.length} offers`)
+
+      const results = await Promise.allSettled([
+        ...proofs.map((proof) => agent.proofs.deleteById(proof.id)),
+        ...offers.map((offer) => agent.credentials.deleteById(offer.id)),
+        agent.connections.deleteById(connection.id),
+      ])
+
+      const failed = results.filter((result) => result.status === 'rejected')
+      if (failed.length) {
+        logger.error(`Cleanup failed: ${failed.length} operation(s) were rejected.`)
+      }
 
       navigation.popToTop()
 
