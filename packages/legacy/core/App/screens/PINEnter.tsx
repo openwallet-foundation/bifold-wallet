@@ -1,4 +1,4 @@
-import { useNavigation, CommonActions } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View, DeviceEventEmitter, InteractionManager, Pressable } from 'react-native'
@@ -136,7 +136,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         type: DispatchAction.ENABLE_DEVELOPER_MODE,
         payload: [true],
       })
+
       navigation.navigate(Screens.Developer as never)
+
       return
     }
 
@@ -156,6 +158,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     if (inlineMessages.enabled) {
       return !continueEnabled
     }
+
     return !continueEnabled || PIN.length < minPINLength
   }
 
@@ -170,19 +173,20 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     }
   }, [])
 
-  // This method is used to notify the app that the user is able to receive another lockout penalty
+  // This method is used to notify the app that the user is able to receive
+  // another lockout penalty
   const unMarkServedPenalty = useCallback(() => {
     dispatch({
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [
         {
           loginAttempts: store.loginAttempt.loginAttempts,
-          lockoutDate: store.loginAttempt.lockoutDate,
-          servedPenalty: false,
+          lockoutDate: undefined,
+          servedPenalty: undefined,
         },
       ],
     })
-  }, [dispatch, store.loginAttempt.loginAttempts, store.loginAttempt.lockoutDate])
+  }, [dispatch, store.loginAttempt.loginAttempts])
 
   const attemptLockout = useCallback(
     async (penalty: number) => {
@@ -197,14 +201,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           },
         ],
       })
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: Screens.AttemptLockout }],
-        })
-      )
     },
-    [dispatch, navigation, store.loginAttempt.loginAttempts]
+    [dispatch, store.loginAttempt.loginAttempts]
   )
 
   const getLockoutPenalty = useCallback(
@@ -213,6 +211,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       if (!penalty && attempts >= thresholdRules.threshold && !(attempts % thresholdRules.increment)) {
         penalty = thresholdRules.thresholdPenaltyDuration
       }
+
       return penalty
     },
     [baseRules, thresholdRules]
@@ -287,7 +286,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
         const result = await checkWalletPIN(PIN)
 
         if (store.loginAttempt.servedPenalty) {
-          // once the user starts entering their PIN, unMark them as having served their lockout penalty
+          // once the user starts entering their PIN, unMark them as having served their
+          // lockout penalty
           unMarkServedPenalty()
         }
 
@@ -429,7 +429,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     [getWalletSecret, setAuthenticated, t]
   )
 
-  // both of the async functions called in this function are completely wrapped in trycatch
+  // both of the async functions called in this function are completely wrapped in try catch
   const onPINInputCompleted = useCallback(
     async (PIN: string) => {
       if (inlineMessages.enabled && PIN.length < minPINLength) {
@@ -438,6 +438,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           inlineType: InlineErrorType.error,
           config: inlineMessages,
         })
+
         return
       }
 
@@ -535,10 +536,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           <ThemedText variant="bold" style={style.subText}>
             {inputLabelText[usage]}
             {usage === PINEntryUsage.ChangeBiometrics && (
-              <ThemedText style={style.parenthesisText}>
-                {` `}
-                {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
-              </ThemedText>
+              <ThemedText style={style.parenthesisText}> {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</ThemedText>
             )}
           </ThemedText>
           <PINInput

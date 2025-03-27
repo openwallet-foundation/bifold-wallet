@@ -1,4 +1,3 @@
-import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
@@ -9,7 +8,6 @@ import { second, minute, hour } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
 
@@ -25,7 +23,6 @@ const AttemptLockout: React.FC = () => {
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()
   const [timeoutDone, setTimeoutDone] = useState<boolean>(false)
-  const navigation = useNavigation()
   const { fontScale } = useWindowDimensions()
   const styles = StyleSheet.create({
     container: {
@@ -79,9 +76,11 @@ const AttemptLockout: React.FC = () => {
           minutes: minutesLeft,
           seconds: secondsLeft,
         }
+
         setTime(timer)
       }
     }
+
     return penaltyServed
   }, [state.loginAttempt.lockoutDate])
 
@@ -107,13 +106,7 @@ const AttemptLockout: React.FC = () => {
       type: DispatchAction.ATTEMPT_UPDATED,
       payload: [{ loginAttempts: state.loginAttempt.loginAttempts, lockoutDate: undefined, servedPenalty: true }],
     })
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: Screens.EnterPIN }],
-      })
-    )
-  }, [dispatch, state.loginAttempt.loginAttempts, navigation])
+  }, [dispatch, state.loginAttempt.loginAttempts])
 
   return (
     <SafeAreaView style={styles.container}>
