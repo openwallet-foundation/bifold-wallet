@@ -47,17 +47,22 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
             }
           />
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 32,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 32,
+                  "fontWeight": "bold",
+                },
+                undefined,
+              ]
             }
           >
             Preface.PrimaryHeading
           </Text>
           <Text
+            maxFontSizeMultiplier={2}
             style={
               Array [
                 Object {
@@ -156,19 +161,27 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
               </Text>
             </View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "flexShrink": 1,
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginLeft": 0,
-                    "marginRight": 10,
                   },
-                  Object {
-                    "fontWeight": "bold",
-                  },
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flexShrink": 1,
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                      "marginLeft": 0,
+                      "marginRight": 10,
+                    },
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                  ],
                 ]
               }
             >
@@ -232,17 +245,25 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      false,
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >
@@ -305,17 +326,22 @@ exports[`Preface Screen Renders correctly 1`] = `
             }
           />
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 32,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 32,
+                  "fontWeight": "bold",
+                },
+                undefined,
+              ]
             }
           >
             Preface.PrimaryHeading
           </Text>
           <Text
+            maxFontSizeMultiplier={2}
             style={
               Array [
                 Object {
@@ -414,19 +440,27 @@ exports[`Preface Screen Renders correctly 1`] = `
               </Text>
             </View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "flexShrink": 1,
                     "fontSize": 18,
                     "fontWeight": "normal",
-                    "marginLeft": 0,
-                    "marginRight": 10,
                   },
-                  Object {
-                    "fontWeight": "bold",
-                  },
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flexShrink": 1,
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                      "marginLeft": 0,
+                      "marginRight": 10,
+                    },
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                  ],
                 ]
               }
             >
@@ -490,22 +524,30 @@ exports[`Preface Screen Renders correctly 1`] = `
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >

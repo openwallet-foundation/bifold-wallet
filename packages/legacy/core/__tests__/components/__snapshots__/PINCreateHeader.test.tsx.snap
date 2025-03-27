@@ -3,6 +3,7 @@
 exports[`PINCreateHeader Component Renders correctly 1`] = `
 <View>
   <Text
+    maxFontSizeMultiplier={2}
     style={
       Array [
         Object {
@@ -17,10 +18,18 @@ exports[`PINCreateHeader Component Renders correctly 1`] = `
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
-        Object {
-          "fontWeight": "bold",
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       PINCreate.RememberPIN

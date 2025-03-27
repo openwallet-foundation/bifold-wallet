@@ -1,11 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 import SafeAreaModal from '../modals/SafeAreaModal'
 
 interface Action {
@@ -79,22 +80,21 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
           >
             <Icon name="window-close" size={35} style={styles.drawerRowItem}></Icon>
           </TouchableOpacity>
-          {actions &&
-            actions.map((action) => {
-              return (
-                <TouchableOpacity
-                  key={action.text}
-                  testID={testIdWithKey(action.text)}
-                  accessibilityLabel={testIdWithKey(action.text)}
-                  accessibilityRole="button"
-                  style={styles.drawerRow}
-                  onPress={action.onPress}
-                >
-                  <action.icon />
-                  <Text style={{ ...styles.drawerRowItem, marginLeft: 5 }}>{action.text}</Text>
-                </TouchableOpacity>
-              )
-            })}
+          {actions?.map((action) => {
+            return (
+              <TouchableOpacity
+                key={action.text}
+                testID={testIdWithKey(action.text)}
+                accessibilityLabel={testIdWithKey(action.text)}
+                accessibilityRole="button"
+                style={styles.drawerRow}
+                onPress={action.onPress}
+              >
+                <action.icon />
+                <ThemedText style={{ ...styles.drawerRowItem, marginLeft: 5 }}>{action.text}</ThemedText>
+              </TouchableOpacity>
+            )
+          })}
         </View>
       </View>
     </SafeAreaModal>

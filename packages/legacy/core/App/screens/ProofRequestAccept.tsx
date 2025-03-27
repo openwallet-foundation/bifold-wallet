@@ -3,7 +3,7 @@ import { useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -12,6 +12,7 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 export interface ProofRequestAcceptProps {
   visible: boolean
@@ -85,21 +86,23 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
             {proofDeliveryStatus === ProofState.RequestReceived && (
-              <Text
-                style={[TextTheme.modalHeadingThree, styles.messageText]}
+              <ThemedText
+                variant="modalHeadingThree"
+                style={styles.messageText}
                 testID={testIdWithKey('SendingProofRequest')}
               >
                 {t('ProofRequest.SendingTheInformationSecurely')}
-              </Text>
+              </ThemedText>
             )}
 
             {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
-              <Text
-                style={[TextTheme.modalHeadingThree, styles.messageText]}
+              <ThemedText
+                variant="modalHeadingThree"
+                style={styles.messageText}
                 testID={testIdWithKey('SentProofRequest')}
               >
                 {t('ProofRequest.InformationSentSuccessfully')}
-              </Text>
+              </ThemedText>
             )}
           </View>
 

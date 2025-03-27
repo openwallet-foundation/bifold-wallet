@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,6 +11,7 @@ import { useTheme } from '../../contexts/theme'
 import { HomeStackParams, Screens } from '../../types/navigators'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import { ThemedText } from '../texts/ThemedText'
 import SafeAreaModal from './SafeAreaModal'
 
 interface NotificationModalProps extends React.PropsWithChildren {
@@ -102,9 +103,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           </View>
         ) : null}
         <View style={styles.childContainer}>
-          <Text style={[TextTheme.headingThree, { fontWeight: TextTheme.normal.fontWeight, textAlign: 'center' }]}>
+          <ThemedText variant="headingThree" style={{ fontWeight: TextTheme.normal.fontWeight, textAlign: 'center' }}>
             {title}
-          </Text>
+          </ThemedText>
           {children}
         </View>
         {doneVisible ? (

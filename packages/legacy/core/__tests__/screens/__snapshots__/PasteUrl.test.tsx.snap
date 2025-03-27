@@ -27,13 +27,18 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "marginBottom": 20,
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "marginBottom": 20,
+              },
+            ]
           }
         >
           PasteUrl.PasteUrlDescription
@@ -150,22 +155,30 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
-                    },
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -232,17 +245,25 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >

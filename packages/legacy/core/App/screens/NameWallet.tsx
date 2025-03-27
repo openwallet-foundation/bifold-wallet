@@ -2,7 +2,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -15,6 +15,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { generateRandomWalletName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ErrorState = {
   visible: boolean
@@ -24,7 +25,7 @@ type ErrorState = {
 
 const NameWallet: React.FC = () => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
   const navigation = useNavigation()
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
@@ -105,7 +106,7 @@ const NameWallet: React.FC = () => {
       <View style={styles.screenContainer}>
         <View style={styles.contentContainer}>
           <Assets.svg.contactBook height={100} style={{ marginVertical: 20 }} />
-          <Text style={[TextTheme.normal, { width: '100%', marginBottom: 16 }]}>{t('NameWallet.ThisIsTheName')}</Text>
+          <ThemedText style={{ width: '100%', marginBottom: 16 }}>{t('NameWallet.ThisIsTheName')}</ThemedText>
           <View style={{ width: '100%' }}>
             <LimitedTextInput
               defaultValue={walletName}

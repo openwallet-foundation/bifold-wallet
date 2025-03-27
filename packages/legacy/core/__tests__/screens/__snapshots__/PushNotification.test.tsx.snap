@@ -43,6 +43,7 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
           < />
         </View>
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
@@ -59,12 +60,16 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
           PushNotifications.EnableNotifiactions
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
           }
         >
           PushNotifications.BeNotified
@@ -78,25 +83,37 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
             }
           >
             •
           </Text>
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "flex": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "paddingLeft": 5,
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "paddingLeft": 5,
+                },
+              ]
             }
           >
             PushNotifications.BulletOne
@@ -111,25 +128,37 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
             }
           >
             •
           </Text>
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "flex": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "paddingLeft": 5,
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "paddingLeft": 5,
+                },
+              ]
             }
           >
             PushNotifications.BulletTwo
@@ -144,25 +173,37 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
             }
           >
             •
           </Text>
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "flex": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "paddingLeft": 5,
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "paddingLeft": 5,
+                },
+              ]
             }
           >
             PushNotifications.BulletThree
@@ -177,25 +218,37 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
             }
           >
             •
           </Text>
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "flex": 1,
-                "fontSize": 18,
-                "fontWeight": "normal",
-                "paddingLeft": 5,
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                  "paddingLeft": 5,
+                },
+              ]
             }
           >
             PushNotifications.BulletFour
@@ -218,12 +271,16 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  undefined,
+                ]
               }
             >
               PushNotifications.ReceiveNotifications

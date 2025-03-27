@@ -2,7 +2,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Text, useWindowDimensions, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 import { isTablet } from 'react-native-device-info'
@@ -24,11 +24,39 @@ import { testIdWithKey } from '../utils/testable'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
 import { BaseTourID } from '../types/tour'
+import { ThemedText } from '../components/texts/ThemedText'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()
-  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] =
-    useServices([TOKENS.NOTIFICATIONS, TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
+  const badgeFontSize = useMemo(() => {
+    if (fontScale >= 1.2 && fontScale < 1.5) {
+      return {
+        fontSize: 15,
+        lineHeight: 15,
+      }
+    } else if (fontScale >= 1.5 && fontScale < 1.7) {
+      return {
+        fontSize: 10,
+        lineHeight: 10,
+      }
+    } else if (fontScale >= 1.7 && fontScale < 3) {
+      return {
+        fontSize: 8,
+        lineHeight: 8,
+      }
+    } else if (fontScale >= 3 && fontScale < 4) {
+      return {
+        fontSize: 6,
+        lineHeight: 6,
+      }
+    }
+    return null
+  }, [fontScale])
+  const [{ useNotifications }, { enableImplicitInvitations, enableReuseConnections }, logger] = useServices([
+    TOKENS.NOTIFICATIONS,
+    TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+  ])
   const notifications = useNotifications({})
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
@@ -152,6 +180,7 @@ const TabStack: React.FC = () => {
             tabBarBadgeStyle: {
               marginLeft: leftMarginForDevice(),
               backgroundColor: ColorPallet.semantic.error,
+              ...badgeFontSize,
             },
           }}
         />
@@ -199,15 +228,19 @@ const TabStack: React.FC = () => {
                             style={{ paddingLeft: 0.5, paddingRight: 0.5 }}
                           />
                         </View>
-                        <Text
-                          style={{
-                            ...TabTheme.tabBarTextStyle,
-                            color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
-                            marginTop: 5,
-                          }}
-                        >
-                          {t('TabStack.Scan')}
-                        </Text>
+
+                        {showLabels && (
+                          <ThemedText
+                            maxFontSizeMultiplier={1.2}
+                            style={{
+                              ...TabTheme.tabBarTextStyle,
+                              color: focused ? TabTheme.tabBarActiveTintColor : TabTheme.tabBarInactiveTintColor,
+                              marginTop: 5,
+                            }}
+                          >
+                            {t('TabStack.Scan')}
+                          </ThemedText>
+                        )}
                       </View>
                     </AttachTourStep>
                   </View>

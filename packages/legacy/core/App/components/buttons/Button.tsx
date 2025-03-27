@@ -1,9 +1,10 @@
 import React, { forwardRef, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
 import { Button, ButtonType, ButtonProps } from './Button-api'
+import { ThemedText } from '../texts/ThemedText'
 
 const ButtonImplComponent = (
   {
@@ -66,7 +67,7 @@ const ButtonImplComponent = (
         }}
       >
         {children}
-        <Text
+        <ThemedText
           style={[
             buttonStyles[buttonType].text,
             disabled &&
@@ -80,7 +81,7 @@ const ButtonImplComponent = (
           ]}
         >
           {title}
-        </Text>
+        </ThemedText>
       </View>
     </TouchableOpacity>
   )

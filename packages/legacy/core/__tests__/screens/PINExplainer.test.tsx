@@ -3,17 +3,26 @@ import React from 'react'
 
 import PINExplainer from '../../App/screens/PINExplainer'
 import { testIdWithKey } from '../../App/utils/testable'
+import { BasicAppContext } from '../helpers/app'
 
 describe('PINExplainer Screen', () => {
   const continueCreatePIN = jest.fn()
 
   test('Renders correctly', async () => {
-    const tree = render(<PINExplainer continueCreatePIN={continueCreatePIN} />)
+    const tree = render(
+      <BasicAppContext>
+        <PINExplainer continueCreatePIN={continueCreatePIN} />
+      </BasicAppContext>
+    )
     expect(tree).toMatchSnapshot()
   })
 
   test('Button exists and works', async () => {
-    render(<PINExplainer continueCreatePIN={continueCreatePIN} />)
+    render(
+      <BasicAppContext>
+        <PINExplainer continueCreatePIN={continueCreatePIN} />
+      </BasicAppContext>
+    )
 
     const continueButton = await screen.findByTestId(testIdWithKey('ContinueCreatePIN'))
     fireEvent(continueButton, 'press')

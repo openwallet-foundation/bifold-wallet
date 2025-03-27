@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -9,6 +9,7 @@ import { useTheme } from '../contexts/theme'
 import { Locales, storeLanguage } from '../localization'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import { ThemedText } from '../components/texts/ThemedText'
 interface Language {
   id: Locales
   value: string
@@ -16,7 +17,7 @@ interface Language {
 
 const Language = () => {
   const { t, i18n } = useTranslation()
-  const { ColorPallet, TextTheme, SettingsTheme } = useTheme()
+  const { ColorPallet, SettingsTheme } = useTheme()
   const [{ supportedLanguages }] = useServices([TOKENS.CONFIG])
 
   const languages: Language[] = supportedLanguages.map((lang) => ({
@@ -65,7 +66,7 @@ const Language = () => {
           const { id, value }: Language = language
           return (
             <View style={[styles.section, styles.sectionRow]}>
-              <Text style={TextTheme.title}>{value}</Text>
+              <ThemedText variant="title">{value}</ThemedText>
               <BouncyCheckbox
                 accessibilityLabel={`${id === i18n.language ? t('Language.Checked') : t('Language.NotChecked')}`} // add on voice over the text checked / not checked after the text from value above
                 accessibilityRole="radio"

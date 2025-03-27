@@ -3,12 +3,11 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Pressable, StyleSheet, Text, useWindowDimensions, Share, ScrollView, ColorValue } from 'react-native'
+import { View, Pressable, StyleSheet, useWindowDimensions, Share, ScrollView, ColorValue } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { hitSlop } from '../../constants'
-import { TOKENS, useServices } from '../../container-api'
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
 import { useConnectionByOutOfBandId } from '../../hooks/connections'
@@ -25,6 +24,8 @@ import SafeAreaModal from '../modals/SafeAreaModal'
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
+import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 import ScanTab from './ScanTab'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
@@ -38,7 +39,14 @@ interface Props extends ConnectProps {
 
 const overlayTint: ColorValue = 'rgba(0, 0, 0, 0.4)'
 
-const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handleCodeScan, error, enableCameraOnError, navigation }) => {
+const QRScanner: React.FC<Props> = ({
+  showTabs = false,
+  defaultToConnect,
+  handleCodeScan,
+  error,
+  enableCameraOnError,
+  navigation,
+}) => {
   const { agent } = useAgent()
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
@@ -52,7 +60,7 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
   const [torchActive, setTorchActive] = useState(false)
   const [showInfoBox, setShowInfoBox] = useState(false)
   const [showErrorDetailsModal, setShowErrorDetailsModal] = useState(false)
-  
+
   const qrSize = width - 40
 
   const styles = StyleSheet.create({
@@ -117,7 +125,6 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
       padding: 4,
     },
     textStyle: {
-      ...TextTheme.title,
       color: 'white',
       marginHorizontal: 10,
       textAlign: 'center',
@@ -132,19 +139,11 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
       flex: 1,
     },
     walletName: {
-      ...TextTheme.headingTwo,
       textAlign: 'center',
     },
     secondaryText: {
-      ...TextTheme.normal,
       marginTop: 20,
       textAlign: 'center',
-    },
-    editButton: {
-      ...TextTheme.headingTwo,
-      marginBottom: 20,
-      marginLeft: 10,
-      color: ColorPallet.brand.primary,
     },
   })
 
@@ -235,21 +234,21 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
             />
             <View style={styles.cameraViewContainer}>
               <View style={styles.overlayContainer}>
-                <View style={styles.overlayTop}/>
+                <View style={styles.overlayTop} />
                 <View style={styles.overlayCenterRow}>
-                  <View style={styles.overlayLeft}/>
-                  <View style={styles.overlayOpening}/>
-                  <View style={styles.overlayRight}/>
+                  <View style={styles.overlayLeft} />
+                  <View style={styles.overlayOpening} />
+                  <View style={styles.overlayRight} />
                 </View>
-                <View style={styles.overlayBottom}/>
+                <View style={styles.overlayBottom} />
               </View>
               <View style={styles.messageContainer}>
                 {error ? (
                   <>
                     <Icon style={styles.icon} name="cancel" size={40} />
-                    <Text testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
+                    <ThemedText testID={testIdWithKey('ErrorMessage')} style={styles.textStyle}>
                       {error.message}
-                    </Text>
+                    </ThemedText>
                     {showScanErrorButton && (
                       <Pressable
                         onPress={() => setShowErrorDetailsModal(true)}
@@ -265,7 +264,9 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
                 ) : (
                   <>
                     <Icon name="qrcode-scan" size={40} style={styles.icon} />
-                    <Text style={styles.textStyle}>{t('Scan.WillScanAutomatically')}</Text>
+                    <ThemedText variant="title" style={styles.textStyle}>
+                      {t('Scan.WillScanAutomatically')}
+                    </ThemedText>
                   </>
                 )}
               </View>
@@ -348,19 +349,23 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
                     justifyContent: 'center',
                   }}
                 >
-                  <Text testID={testIdWithKey('WalletName')} style={[styles.walletName, { paddingHorizontal: 20 }]}>
+                  <ThemedText
+                    variant="headingTwo"
+                    testID={testIdWithKey('WalletName')}
+                    style={[styles.walletName, { paddingHorizontal: 20 }]}
+                  >
                     {store.preferences.walletName}
-                  </Text>
+                  </ThemedText>
                   <IconButton
                     buttonLocation={ButtonLocation.Right}
                     accessibilityLabel={t('NameWallet.EditWalletName')}
                     testID={testIdWithKey('EditWalletName')}
                     onPress={handleEdit}
                     icon={'pencil'}
-                    iconTintColor={styles.walletName.color}
+                    iconTintColor={TextTheme.headingTwo.color}
                   />
                 </View>
-                <Text style={styles.secondaryText}>{t('Connection.ShareQR')}</Text>
+                <ThemedText style={styles.secondaryText}>{t('Connection.ShareQR')}</ThemedText>
               </View>
             </View>
           </ScrollView>
@@ -382,7 +387,7 @@ const QRScanner: React.FC<Props> = ({ showTabs = false, defaultToConnect, handle
           </View>
         ) : null}
       </SafeAreaView>
-      {showTabs ? <SafeAreaView edges={['bottom']} style={styles.bottomSafeArea}/> : null}
+      {showTabs ? <SafeAreaView edges={['bottom']} style={styles.bottomSafeArea} /> : null}
     </View>
   )
 }

@@ -37,15 +37,21 @@ exports[`InfoTextBox Component Renders correctly 1`] = `
       />
     </View>
     <Text
+      maxFontSizeMultiplier={2}
       style={
-        Object {
-          "alignSelf": "center",
-          "color": "#FFFFFF",
-          "flex": 1,
-          "flexWrap": "wrap",
-          "fontSize": 18,
-          "fontWeight": "bold",
-        }
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "bold",
+          },
+          Object {
+            "alignSelf": "center",
+            "color": "#FFFFFF",
+            "flex": 1,
+            "flexWrap": "wrap",
+          },
+        ]
       }
     >
       Hello World

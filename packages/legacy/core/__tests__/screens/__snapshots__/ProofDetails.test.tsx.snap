@@ -43,12 +43,20 @@ exports[`ProofDetails Screen renders correctly with an unverified proof Unverifi
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 32,
-                "fontWeight": "normal",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 32,
+                  "fontWeight": "normal",
+                },
+              ]
             }
           >
             Verifier.ProofVerificationFailed
@@ -130,17 +138,25 @@ exports[`ProofDetails Screen renders correctly with an unverified proof Unverifi
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -208,17 +224,25 @@ exports[`ProofDetails Screen renders correctly with an unverified proof Unverifi
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -292,25 +316,45 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
           >
             < />
           </View>
-          <Text>
-            <Text
-              style={
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
                 Object {
                   "color": "#FFFFFF",
                   "fontSize": 18,
-                  "fontWeight": "bold",
-                }
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  undefined,
+                ]
               }
             >
               Verifier.InformationReceived 
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  undefined,
+                ]
               }
             >
               Verifier.InformationReceivedDetails
@@ -420,6 +464,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                         }
                       >
                         <Text
+                          maxFontSizeMultiplier={2}
                           style={
                             Array [
                               Object {
@@ -458,6 +503,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                             }
                           >
                             <Text
+                              maxFontSizeMultiplier={2}
                               style={
                                 Array [
                                   Object {
@@ -465,15 +511,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                     "fontSize": 18,
                                     "fontWeight": "bold",
                                   },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "flexShrink": 1,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                  },
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                    },
+                                  ],
                                 ]
                               }
                               testID="com.ariesbifold:id/CredentialName"
@@ -551,6 +599,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               >
                                 <View>
                                   <Text
+                                    maxFontSizeMultiplier={2}
                                     style={
                                       Array [
                                         Object {
@@ -558,15 +607,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           "fontSize": 14,
                                           "fontWeight": "normal",
                                         },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flexShrink": 1,
-                                          "lineHeight": 24,
-                                        },
-                                        Object {
-                                          "lineHeight": 19,
-                                          "opacity": 0.8,
-                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ],
                                       ]
                                     }
                                     testID="com.ariesbifold:id/AttributeName"
@@ -575,6 +626,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                   </Text>
                                   <View>
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -612,6 +664,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               >
                                 <View>
                                   <Text
+                                    maxFontSizeMultiplier={2}
                                     style={
                                       Array [
                                         Object {
@@ -619,15 +672,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           "fontSize": 14,
                                           "fontWeight": "normal",
                                         },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flexShrink": 1,
-                                          "lineHeight": 24,
-                                        },
-                                        Object {
-                                          "lineHeight": 19,
-                                          "opacity": 0.8,
-                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ],
                                       ]
                                     }
                                     testID="com.ariesbifold:id/AttributeName"
@@ -636,6 +691,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                   </Text>
                                   <View>
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -732,17 +788,25 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                 }
               >
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
                         "color": "#FFFFFF",
                         "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
+                        "fontWeight": "normal",
                       },
-                      false,
-                      false,
-                      false,
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                        false,
+                      ],
                     ]
                   }
                 >
@@ -802,17 +866,25 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
-                      "color": "#42803E",
+                      "color": "#FFFFFF",
                       "fontSize": 18,
-                      "fontWeight": "bold",
-                      "textAlign": "center",
+                      "fontWeight": "normal",
                     },
-                    false,
-                    false,
-                    false,
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
                   ]
                 }
               >
@@ -868,19 +940,31 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "normal",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                ]
               }
             >
               Verifier.ConnectionLessLabel
@@ -992,6 +1076,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                         }
                       >
                         <Text
+                          maxFontSizeMultiplier={2}
                           style={
                             Array [
                               Object {
@@ -1030,6 +1115,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                             }
                           >
                             <Text
+                              maxFontSizeMultiplier={2}
                               style={
                                 Array [
                                   Object {
@@ -1037,15 +1123,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                     "fontSize": 18,
                                     "fontWeight": "bold",
                                   },
-                                  Object {
-                                    "color": "#FFFFFF",
-                                    "flexShrink": 1,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "flex": 1,
-                                    "flexWrap": "wrap",
-                                  },
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                    },
+                                  ],
                                 ]
                               }
                               testID="com.ariesbifold:id/CredentialName"
@@ -1123,6 +1211,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               >
                                 <View>
                                   <Text
+                                    maxFontSizeMultiplier={2}
                                     style={
                                       Array [
                                         Object {
@@ -1130,15 +1219,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           "fontSize": 14,
                                           "fontWeight": "normal",
                                         },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flexShrink": 1,
-                                          "lineHeight": 24,
-                                        },
-                                        Object {
-                                          "lineHeight": 19,
-                                          "opacity": 0.8,
-                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ],
                                       ]
                                     }
                                     testID="com.ariesbifold:id/AttributeName"
@@ -1147,6 +1238,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                   </Text>
                                   <View>
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {
@@ -1184,6 +1276,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               >
                                 <View>
                                   <Text
+                                    maxFontSizeMultiplier={2}
                                     style={
                                       Array [
                                         Object {
@@ -1191,15 +1284,17 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                           "fontSize": 14,
                                           "fontWeight": "normal",
                                         },
-                                        Object {
-                                          "color": "#FFFFFF",
-                                          "flexShrink": 1,
-                                          "lineHeight": 24,
-                                        },
-                                        Object {
-                                          "lineHeight": 19,
-                                          "opacity": 0.8,
-                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ],
                                       ]
                                     }
                                     testID="com.ariesbifold:id/AttributeName"
@@ -1208,6 +1303,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                                   </Text>
                                   <View>
                                     <Text
+                                      maxFontSizeMultiplier={2}
                                       style={
                                         Array [
                                           Object {

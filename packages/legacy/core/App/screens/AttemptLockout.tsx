@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -9,6 +9,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface Timer {
   hours: number
@@ -17,11 +18,12 @@ interface Timer {
 }
 
 const AttemptLockout: React.FC = () => {
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
   const { t } = useTranslation()
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()
   const [timeoutDone, setTimeoutDone] = useState<boolean>(false)
+  const { fontScale } = useWindowDimensions()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -29,23 +31,19 @@ const AttemptLockout: React.FC = () => {
       backgroundColor: ColorPallet.brand.primaryBackground,
     },
     title: {
-      ...TextTheme.headingThree,
       marginHorizontal: 50,
       textAlign: 'center',
       marginBottom: 50,
     },
     description: {
-      ...TextTheme.normal,
       textAlign: 'center',
       marginHorizontal: 50,
       marginBottom: 50,
     },
     tryAgain: {
-      ...TextTheme.normal,
       textAlign: 'center',
     },
     countDown: {
-      ...TextTheme.bold,
       textAlign: 'center',
     },
     image: {
@@ -53,6 +51,7 @@ const AttemptLockout: React.FC = () => {
       height: 150,
       marginBottom: 20,
       marginTop: 25,
+      alignSelf: 'center',
     },
   })
 
@@ -111,10 +110,12 @@ const AttemptLockout: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Assets.svg.appLockout style={styles.image} />
-      <View>
-        <Text style={styles.title}>{t('AttemptLockout.Title')}</Text>
-        <Text style={styles.description}>{t('AttemptLockout.Description')}</Text>
+      <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={fontScale >= 1.7}>
+        <Assets.svg.appLockout style={styles.image} />
+        <ThemedText variant="headingThree" style={styles.title}>
+          {t('AttemptLockout.Title')}
+        </ThemedText>
+        <ThemedText style={styles.description}>{t('AttemptLockout.Description')}</ThemedText>
         {timeoutDone ? (
           <Button
             title={t('Global.TryAgain')}
@@ -125,16 +126,16 @@ const AttemptLockout: React.FC = () => {
           />
         ) : (
           <View>
-            <Text style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</Text>
+            <ThemedText style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</ThemedText>
             {time && (
-              <Text style={styles.countDown}>
+              <ThemedText variant="bold" style={styles.countDown}>
                 {time?.hours} {t('AttemptLockout.Hours')} {time?.minutes} {t('AttemptLockout.Minutes')} {time?.seconds}{' '}
                 {t('AttemptLockout.Seconds')}
-              </Text>
+              </ThemedText>
             )}
           </View>
         )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }

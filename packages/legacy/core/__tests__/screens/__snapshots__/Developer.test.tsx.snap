@@ -27,6 +27,7 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -62,14 +63,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -159,14 +165,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -255,14 +266,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -351,14 +367,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -447,14 +468,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -543,14 +569,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -639,14 +670,19 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink
@@ -748,6 +784,7 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -783,14 +820,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -880,14 +922,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -976,14 +1023,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -1072,14 +1124,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -1168,14 +1225,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -1264,14 +1326,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -1360,14 +1427,19 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink
@@ -1469,6 +1541,7 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -1504,14 +1577,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -1601,14 +1679,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -1697,14 +1780,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -1793,14 +1881,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -1889,14 +1982,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -1985,14 +2083,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -2081,14 +2184,19 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink
@@ -2190,6 +2298,7 @@ exports[`Developer Screen screen renders correctly 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -2225,14 +2334,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -2322,14 +2436,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -2418,14 +2537,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -2514,14 +2638,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -2610,14 +2739,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -2706,14 +2840,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -2802,14 +2941,19 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink
@@ -2911,6 +3055,7 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -2946,14 +3091,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -3043,14 +3193,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -3139,14 +3294,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -3235,14 +3395,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -3331,14 +3496,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -3427,14 +3597,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -3523,14 +3698,19 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink
@@ -3632,6 +3812,7 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -3667,14 +3848,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -3764,14 +3950,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -3860,14 +4051,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -3956,14 +4152,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -4052,14 +4253,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -4148,14 +4354,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -4244,14 +4455,19 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink
@@ -4353,6 +4569,7 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
   >
     <View>
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
@@ -4388,14 +4605,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseVerifierCapability
@@ -4485,14 +4707,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
         >
           <Text
             accessible={false}
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.AcceptDevCredentials
@@ -4581,14 +4808,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Connection.UseConnectionInviterCapability
@@ -4677,14 +4909,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Verifier.UseDevVerifierTemplates
@@ -4773,14 +5010,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             NameWallet.EnableWalletNaming
@@ -4869,14 +5111,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             Settings.PreventAutoLock
@@ -4965,14 +5212,19 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "marginRight": 10,
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
             }
           >
             PasteUrl.UseShareableLink

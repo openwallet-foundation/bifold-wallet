@@ -12,6 +12,7 @@ Array [
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
@@ -29,6 +30,7 @@ Array [
       •
     </Text>
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
@@ -57,6 +59,7 @@ Array [
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
@@ -74,6 +77,7 @@ Array [
       •
     </Text>
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
@@ -102,6 +106,7 @@ Array [
     }
   >
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {
@@ -119,6 +124,7 @@ Array [
       •
     </Text>
     <Text
+      maxFontSizeMultiplier={2}
       style={
         Array [
           Object {

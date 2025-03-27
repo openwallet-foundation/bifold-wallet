@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, useWindowDimensions, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, useWindowDimensions, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Toast from 'react-native-toast-message'
+import { ThemedText } from '../texts/ThemedText'
 
 interface BaseToastProps {
   title?: string
@@ -100,13 +101,13 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon style={styles.icon} name={iconName} color={iconColor} size={iconSize} />
           <View style={styles.textContainer}>
-            <Text style={[TextTheme.normal, styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
+            <ThemedText style={[styles.title, { color: textColor }]} testID={testIdWithKey('ToastTitle')}>
               {title}
-            </Text>
+            </ThemedText>
             {body && (
-              <Text style={[TextTheme.normal, styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
+              <ThemedText style={[styles.body, { color: textColor }]} testID={testIdWithKey('ToastBody')}>
                 {body}
-              </Text>
+              </ThemedText>
             )}
           </View>
         </View>

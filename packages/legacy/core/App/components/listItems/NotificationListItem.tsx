@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { EventTypes, hitSlop } from '../../constants'
@@ -33,6 +33,7 @@ import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
 import CommonRemoveModal from '../modals/CommonRemoveModal'
+import { ThemedText } from '../texts/ThemedText'
 
 const iconSize = 30
 
@@ -87,7 +88,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { agent } = useAgent()
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [action, setAction] = useState<any>()
@@ -132,13 +133,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       paddingBottom: 5,
     },
     headerText: {
-      ...TextTheme.bold,
       flexGrow: 1,
       alignSelf: 'center',
       flex: 1,
     },
     bodyText: {
-      ...TextTheme.normal,
       flexShrink: 1,
       marginVertical: 15,
       paddingBottom: 10,
@@ -469,9 +468,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         <View style={styles.icon}>
           <Icon accessible={false} name={styleConfig.iconName} size={iconSize} color={styleConfig.iconColor} />
         </View>
-        <Text style={[styles.headerText, styleConfig.textStyle]} testID={testIdWithKey('HeaderText')}>
+        <ThemedText
+          variant="bold"
+          style={[styles.headerText, styleConfig.textStyle]}
+          testID={testIdWithKey('HeaderText')}
+        >
           {details.title}
-        </Text>
+        </ThemedText>
         {[
           NotificationType.BasicMessage,
           NotificationType.Custom,
@@ -492,9 +495,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         )}
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={[styles.bodyText, styleConfig.textStyle]} testID={testIdWithKey('BodyText')}>
+        <ThemedText style={[styles.bodyText, styleConfig.textStyle]} testID={testIdWithKey('BodyText')}>
           {details.body}
-        </Text>
+        </ThemedText>
         <Button
           title={details.buttonTitle ?? t('Global.View')}
           accessibilityLabel={details.buttonTitle ?? t('Global.View')}

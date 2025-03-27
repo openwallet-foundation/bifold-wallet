@@ -1,9 +1,10 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
 import { useMemo } from 'react'
+import { ThemedText } from '../texts/ThemedText'
 
 type Props = {
   overlay: CredentialOverlay<BrandingOverlay>
@@ -14,7 +15,7 @@ const CredentialCardLogo: React.FC<Props> = ({
   overlay,
   brandingOverlayType = BrandingOverlayType.Branding10,
 }: Props) => {
-  const { TextTheme, CredentialCardShadowTheme } = useTheme()
+  const { CredentialCardShadowTheme } = useTheme()
   const logoHeight = brandingOverlayType === BrandingOverlayType.Branding10 ? 80 : 48
   const paddingHorizontal = 24
 
@@ -55,9 +56,9 @@ const CredentialCardLogo: React.FC<Props> = ({
           }}
         />
       ) : (
-        <Text style={[TextTheme.title, { fontSize: 0.5 * logoHeight, color: '#000' }]} accessible={false}>
+        <ThemedText variant="title" style={{ fontSize: 0.5 * logoHeight, color: '#000' }} accessible={false}>
           {logoText}
-        </Text>
+        </ThemedText>
       )}
     </View>
   )

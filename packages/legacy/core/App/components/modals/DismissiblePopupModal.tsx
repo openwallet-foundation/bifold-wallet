@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   useWindowDimensions,
@@ -16,6 +15,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import { ThemedText } from '../texts/ThemedText'
 import SafeAreaModal from './SafeAreaModal'
 
 interface DismissiblePopupModalProps {
@@ -33,9 +33,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
   onCallToActionLabel,
   onDismissPressed,
 }) => {
-  const { height, width } = useWindowDimensions()
+  const { height, width, fontScale } = useWindowDimensions()
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const iconSize = 30
 
   const styles = StyleSheet.create({
@@ -55,8 +55,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       borderWidth: 1,
       padding: 10,
       minWidth: width - 2 * 25,
+      maxWidth: width,
       flex: 1,
-      maxHeight: '50%',
+      maxHeight: fontScale < 1.7 ? '50%' : '70%',
     },
     headerContainer: {
       flexDirection: 'row',
@@ -72,7 +73,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       justifyContent: 'space-between',
     },
     headerTextContainer: {
-      flexGrow: 1,
+      ...(fontScale < 1.7 ? { flexGrow: 1 } : { flexShrink: 1 }),
     },
     headerText: {
       ...TextTheme.bold,
@@ -98,7 +99,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       alignSelf: 'center',
     },
     dismissIcon: {
-      alignSelf: 'flex-end',
+      alignSelf: fontScale < 1.7 ? 'flex-end' : 'flex-start',
     },
   })
 
@@ -117,9 +118,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                   <Icon name={infoIconName} size={iconSize} color={iconColor} />
                 </View>
                 <View style={styles.headerTextContainer}>
-                  <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                  <ThemedText variant="bold" style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {title}
-                  </Text>
+                  </ThemedText>
                 </View>
                 <View style={styles.dismissIcon}>
                   <TouchableOpacity
@@ -140,9 +141,9 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
                   style={styles.scrollViewStyle}
                 >
                   <View onStartShouldSetResponder={() => true}>
-                    <Text selectable={true} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+                    <ThemedText selectable={true} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
                       {description}
-                    </Text>
+                    </ThemedText>
                   </View>
                 </ScrollView>
                 {onCallToActionPressed && (

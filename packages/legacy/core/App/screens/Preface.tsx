@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -12,6 +12,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { AuthenticateStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 const Preface: React.FC = () => {
   const [, dispatch] = useStore()
@@ -44,8 +45,8 @@ const Preface: React.FC = () => {
         <View style={style.screenContainer}>
           <View style={style.contentContainer}>
             <Assets.svg.preface style={{ alignSelf: 'center', marginBottom: 20 }} height={200} />
-            <Text style={TextTheme.headingTwo}>{t('Preface.PrimaryHeading')}</Text>
-            <Text style={[TextTheme.normal, { marginTop: 20, marginBottom: 20 }]}>{t('Preface.Paragraph1')}</Text>
+            <ThemedText variant="headingTwo">{t('Preface.PrimaryHeading')}</ThemedText>
+            <ThemedText style={{ marginTop: 20, marginBottom: 20 }}>{t('Preface.Paragraph1')}</ThemedText>
           </View>
           <View style={style.controlsContainer}>
             <CheckBoxRow

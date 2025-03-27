@@ -3,7 +3,7 @@ import { isPresentationFailed, isPresentationReceived } from '@hyperledger/aries
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import PresentationLoading from '../components/animated/PresentationLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -12,6 +12,7 @@ import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type MobileVerifierLoadingProps = StackScreenProps<DeliveryStackParams, Screens.MobileVerifierLoading>
 
@@ -75,9 +76,13 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
       <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
-            <Text style={[TextTheme.modalHeadingThree, styles.messageText]} testID={testIdWithKey('VerifierLoading')}>
+            <ThemedText
+              variant="modalHeadingThree"
+              style={styles.messageText}
+              testID={testIdWithKey('VerifierLoading')}
+            >
               {t('Verifier.WaitingForResponse')}
-            </Text>
+            </ThemedText>
           </View>
 
           <View style={styles.image}>
