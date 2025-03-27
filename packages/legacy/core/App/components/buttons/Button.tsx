@@ -70,7 +70,11 @@ const ButtonImplComponent = (
           style={[
             buttonStyles[buttonType].text,
             disabled &&
-              (buttonType === ButtonType.Primary ? Buttons.primaryTextDisabled : Buttons.secondaryTextDisabled),
+              (buttonType === ButtonType.Primary
+                ? Buttons.primaryTextDisabled
+                : buttonType === ButtonType.Secondary
+                ? Buttons.secondaryTextDisabled
+                : Buttons.tertiaryTextDisabled),
             isActive && { textDecorationLine: 'underline' },
             isActive && buttonType === ButtonType.Secondary && { color: Buttons.primaryText.color },
           ]}
