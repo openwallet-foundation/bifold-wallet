@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, View, DeviceEventEmitter, InteractionManager, Pressable } from 'react-native'
+import { Keyboard, StyleSheet, View, DeviceEventEmitter, InteractionManager, Pressable } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
@@ -20,6 +20,7 @@ import { Screens } from '../types/navigators'
 import { hashPIN } from '../utils/crypto'
 import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -76,7 +77,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       marginVertical: 5,
     },
     helpText: {
-      ...TextTheme.normal,
       alignSelf: 'auto',
       textAlign: 'left',
       marginBottom: isNewDesign ? 40 : 16,
@@ -85,7 +85,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       ...TextTheme.caption,
     },
     modalText: {
-      ...TextTheme.popupModalText,
       marginVertical: 5,
     },
     image: {
@@ -95,16 +94,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
       resizeMode: Assets.img.logoSecondary.resizeMode,
     },
     title: {
-      ...TextTheme.headingTwo,
       marginTop: isNewDesign ? 20 : 0,
       marginBottom: isNewDesign ? 40 : 20,
     },
     subTitle: {
-      ...TextTheme.labelSubtitle,
       marginBottom: 20,
     },
     subText: {
-      ...TextTheme.bold,
       marginBottom: isNewDesign ? 20 : 4,
     },
   })
@@ -463,10 +459,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     if (store.lockout.displayNotification) {
       return (
         <>
-          <Text style={style.helpText}>
+          <ThemedText style={style.helpText}>
             {t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })}
-          </Text>
-          <Text style={style.helpText}>{t('PINEnter.ReEnterPIN')}</Text>
+          </ThemedText>
+          <ThemedText style={style.helpText}>{t('PINEnter.ReEnterPIN')}</ThemedText>
         </>
       )
     }
@@ -474,8 +470,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     if (biometricsEnrollmentChange) {
       return (
         <>
-          <Text style={style.helpText}>{t('PINEnter.BiometricsChanged')}</Text>
-          <Text style={style.helpText}>{t('PINEnter.BiometricsChangedEnterPIN')}</Text>
+          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsChanged')}</ThemedText>
+          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsChangedEnterPIN')}</ThemedText>
         </>
       )
     }
@@ -483,29 +479,35 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     if (biometricsErr) {
       return (
         <>
-          <Text style={style.helpText}>{t('PINEnter.BiometricsError')}</Text>
-          <Text style={style.helpText}>{t('PINEnter.BiometricsErrorEnterPIN')}</Text>
+          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsError')}</ThemedText>
+          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsErrorEnterPIN')}</ThemedText>
         </>
       )
     }
 
     if (usage === PINEntryUsage.PINCheck) {
-      return <Text style={style.helpText}>{t('PINEnter.AppSettingChanged')}</Text>
+      return <ThemedText style={style.helpText}>{t('PINEnter.AppSettingChanged')}</ThemedText>
     }
 
     if (usage === PINEntryUsage.ChangeBiometrics) {
       return (
         <>
-          <Text style={style.title}>{t('PINEnter.ChangeBiometricsHeader')}</Text>
-          <Text style={style.helpText}>{t('PINEnter.ChangeBiometricsSubtext')}</Text>
+          <ThemedText variant="headingTwo" style={style.title}>
+            {t('PINEnter.ChangeBiometricsHeader')}
+          </ThemedText>
+          <ThemedText style={style.helpText}>{t('PINEnter.ChangeBiometricsSubtext')}</ThemedText>
         </>
       )
     }
 
     return (
       <>
-        <Text style={style.title}>{t('PINEnter.Title')}</Text>
-        <Text style={style.subTitle}>{t('PINEnter.SubText')}</Text>
+        <ThemedText variant="headingTwo" style={style.title}>
+          {t('PINEnter.Title')}
+        </ThemedText>
+        <ThemedText variant="labelSubtitle" style={style.subTitle}>
+          {t('PINEnter.SubText')}
+        </ThemedText>
       </>
     )
   }, [
@@ -514,8 +516,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
     t,
     biometricsEnrollmentChange,
     biometricsErr,
-    style.subTitle,
     style.title,
+    style.subTitle,
     store.preferences.autoLockTime,
     usage,
   ])
@@ -531,12 +533,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           ) : (
             displayHelpText()
           )}
-          <Text style={style.subText}>
+          <ThemedText variant="bold" style={style.subText}>
             {inputLabelText[usage]}
             {usage === PINEntryUsage.ChangeBiometrics && (
-              <Text style={style.parenthesisText}> {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</Text>
+              <ThemedText style={style.parenthesisText}> {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</ThemedText>
             )}
-          </Text>
+          </ThemedText>
           <PINInput
             onPINChanged={(p: string) => {
               setPIN(p)
@@ -569,7 +571,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
 
           {store.preferences.useBiometry && usage === PINEntryUsage.WalletUnlock && (
             <>
-              <Text style={[TextTheme.normal, { alignSelf: 'center', marginTop: 10 }]}>{t('PINEnter.Or')}</Text>
+              <ThemedText style={{ alignSelf: 'center', marginTop: 10 }}>{t('PINEnter.Or')}</ThemedText>
               <View style={[style.buttonContainer, { marginTop: 10 }]}>
                 <Button
                   title={t('PINEnter.BiometricsUnlock')}
@@ -602,9 +604,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated, usage = PINEntryU
           title={t('PINEnter.IncorrectPIN')}
           bodyContent={
             <View>
-              <Text style={style.modalText}>{alertModalMessage}</Text>
+              <ThemedText variant="popupModalText" style={style.modalText}>
+                {alertModalMessage}
+              </ThemedText>
               {displayLockoutWarning ? (
-                <Text style={style.modalText}>{t('PINEnter.AttemptLockoutWarning')}</Text>
+                <ThemedText variant="popupModalText" style={style.modalText}>
+                  {t('PINEnter.AttemptLockoutWarning')}
+                </ThemedText>
               ) : null}
             </View>
           }

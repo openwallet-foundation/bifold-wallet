@@ -5,9 +5,9 @@ import {
   ScrollView,
   SectionList,
   StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  useWindowDimensions,
   View,
 } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'
@@ -25,6 +25,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -35,10 +36,18 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
   const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
-    TOKENS.CONFIG,
-    TOKENS.HISTORY_ENABLED,
-  ])
+  const [
+    {
+      settings,
+      enableTours,
+      enablePushNotifications,
+      disableContactsInSettings,
+      accessibilityMaxFontSizeMultiplier = 2,
+    },
+    historyEnabled,
+  ] = useServices([TOKENS.CONFIG, TOKENS.HISTORY_ENABLED])
+  const { fontScale } = useWindowDimensions()
+  const fontIsGreaterThanCap = fontScale >= accessibilityMaxFontSizeMultiplier
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
@@ -61,8 +70,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       marginBottom: 10,
     },
     sectionRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: fontIsGreaterThanCap ? 'column' : 'row',
+      alignItems: fontIsGreaterThanCap ? 'flex-start' : 'center',
       justifyContent: 'space-between',
       flexGrow: 1,
       paddingHorizontal: 25,
@@ -167,10 +176,10 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     ...(settings || []),
   ]
-  
+
   // Remove the Contact section from Setting per TOKENS.CONFIG
   if (disableContactsInSettings) {
-    settingsSections.shift();
+    settingsSections.shift()
   }
 
   // add optional push notifications menu to settings
@@ -298,14 +307,15 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             size={icon.size ?? defaultIconSize}
             style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
           />
-          <Text
+          <ThemedText
+            variant="headingThree"
             testID={titleTestID}
             numberOfLines={1}
             accessibilityRole={'header'}
-            style={[TextTheme.headingThree, { flexShrink: 1 }]}
+            style={{ flexShrink: 1 }}
           >
             {title}
-          </Text>
+          </ThemedText>
         </View>
         {iconRight && (
           <IconButton
@@ -327,9 +337,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           size={24}
           style={{ marginRight: 10, color: SettingsTheme.iconColor }}
         />
-        <Text accessibilityRole={'header'} style={[TextTheme.headingThree, { flexShrink: 1 }]}>
+        <ThemedText
+          maxFontSizeMultiplier={1.8}
+          variant="headingThree"
+          accessibilityRole={'header'}
+          style={{ flexShrink: 1 }}
+        >
           {title}
-        </Text>
+        </ThemedText>
       </View>
     )
 
@@ -349,8 +364,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         style={styles.sectionRow}
         onPress={onPress}
       >
-        <Text style={[TextTheme.settingsText, { marginRight: 14 }]}>{title}</Text>
-        <Text style={[TextTheme.settingsText, { color: ColorPallet.brand.link }]}>{value}</Text>
+        <ThemedText
+          style={[TextTheme.settingsText, { marginRight: 14, maxWidth: fontIsGreaterThanCap ? '95%' : '100%' }]}
+        >
+          {title}
+        </ThemedText>
+        <ThemedText style={[TextTheme.settingsText, { color: ColorPallet.brand.link }]}>{value}</ThemedText>
       </TouchableOpacity>
     </ScrollView>
   )
@@ -385,9 +404,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               disabled={store.preferences.developerModeEnabled}
             >
               <View>
-                <Text style={TextTheme.normal} testID={testIdWithKey('Version')}>
+                <ThemedText testID={testIdWithKey('Version')}>
                   {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
-                </Text>
+                </ThemedText>
                 <Assets.svg.logo style={{ alignSelf: 'center' }} width={150} height={75} />
               </View>
             </TouchableWithoutFeedback>

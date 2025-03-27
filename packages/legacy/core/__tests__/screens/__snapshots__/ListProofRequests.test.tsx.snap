@@ -172,27 +172,43 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               numberOfLines={1}
               style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#000000",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginBottom": 4,
+                  },
+                ]
               }
             >
               Student full name
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               numberOfLines={2}
               style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "marginBottom": 4,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#000000",
+                    "fontSize": 16,
+                    "fontWeight": "normal",
+                    "marginBottom": 4,
+                  },
+                ]
               }
             >
               Verify the full name of a student
@@ -287,37 +303,61 @@ exports[`ListProofRequests Component Renders correctly 1`] = `
             }
           >
             <Text
+              maxFontSizeMultiplier={2}
               numberOfLines={1}
               style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                  "marginBottom": 4,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#000000",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                    "marginBottom": 4,
+                  },
+                ]
               }
             >
               Student full name and expiration date
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               numberOfLines={2}
               style={
-                Object {
-                  "color": "#000000",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "marginBottom": 4,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#000000",
+                    "fontSize": 16,
+                    "fontWeight": "normal",
+                    "marginBottom": 4,
+                  },
+                ]
               }
             >
               Verify that full name of a student and that he/she has a not expired student card.
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#606060",
-                  "fontSize": 12,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#606060",
+                    "fontSize": 12,
+                  },
+                ]
               }
             >
               Verifier.ZeroKnowledgeProof

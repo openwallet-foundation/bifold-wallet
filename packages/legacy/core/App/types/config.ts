@@ -46,6 +46,7 @@ export interface Config {
   disableContactsInSettings?: boolean
   internetReachabilityUrls: string[]
   attemptLockoutConfig?: AttemptLockoutConfig
+  accessibilityMaxFontSizeMultiplier?: number
   appUpdateConfig?: AppUpdateConfig
 }
 

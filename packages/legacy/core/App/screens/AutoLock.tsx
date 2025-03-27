@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native'
+import { Pressable, StyleSheet, View, FlatList } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -10,6 +10,7 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../contexts/theme'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type AutoLockListItem = {
   title: string
@@ -25,7 +26,7 @@ type LockoutRowProps = AutoLockListItem & {
 const AutoLock: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
-  const { ColorPallet, SettingsTheme, TextTheme } = useTheme()
+  const { ColorPallet, SettingsTheme } = useTheme()
   const currentLockoutTime = store.preferences.autoLockTime ?? AutoLockTime.FiveMinutes
   const styles = StyleSheet.create({
     container: {
@@ -61,7 +62,7 @@ const AutoLock: React.FC = () => {
 
   const LockoutRow: React.FC<LockoutRowProps> = ({ title, value, selected, testID, onPress }) => (
     <View style={[styles.section, styles.sectionRow]}>
-      <Text style={TextTheme.title}>{title}</Text>
+      <ThemedText variant="title">{title}</ThemedText>
       <Pressable
         style={styles.checkboxContainer}
         accessibilityLabel={title}

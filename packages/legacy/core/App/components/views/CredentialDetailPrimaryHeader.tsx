@@ -1,4 +1,4 @@
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import CardWatermark from '../../components/misc/CardWatermark'
@@ -8,6 +8,7 @@ import { testIdWithKey } from '../../utils/testable'
 import { CredentialExchangeRecord } from '@credo-ts/core'
 import { useTranslation } from 'react-i18next'
 import { formatTime } from '../../utils/helpers'
+import { ThemedText } from '../texts/ThemedText'
 
 type CredentialDetailPrimaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
@@ -25,7 +26,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   credential,
 }: CredentialDetailPrimaryHeaderProps) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { ColorPallet } = useTheme()
   const { width, height } = useWindowDimensions()
   const styles = StyleSheet.create({
     primaryHeaderContainer: {
@@ -51,11 +52,11 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
           <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
         )}
         {brandingOverlayType === BrandingOverlayType.Branding10 && (
-          <Text
+          <ThemedText
             accessibilityLabel={`${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`}
             testID={testIdWithKey('CredentialIssuer')}
+            variant="label"
             style={[
-              TextTheme.label,
               styles.textContainer,
               {
                 paddingLeft: logoHeight + paddingVertical,
@@ -67,13 +68,12 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
             numberOfLines={1}
           >
             {overlay.metaOverlay?.issuer}
-          </Text>
+          </ThemedText>
         )}
-        <Text
+        <ThemedText
           accessibilityLabel={`${overlay.metaOverlay?.name} ${t('Credentials.Credential')}`}
           testID={testIdWithKey('CredentialName')}
           style={[
-            TextTheme.normal,
             styles.textContainer,
             {
               lineHeight: 24,
@@ -81,12 +81,11 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
           ]}
         >
           {overlay.metaOverlay?.name}
-        </Text>
+        </ThemedText>
         {brandingOverlayType === BrandingOverlayType.Branding11 && credential && (
-          <Text
+          <ThemedText
             testID={testIdWithKey('IssuedOn')}
             style={[
-              TextTheme.normal,
               styles.textContainer,
               {
                 lineHeight: 24,
@@ -97,7 +96,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
             ]}
           >
             {t('CredentialDetails.IssuedOn')} {formatTime(credential.createdAt, { includeHour: true })}
-          </Text>
+          </ThemedText>
         )}
       </View>
     </View>

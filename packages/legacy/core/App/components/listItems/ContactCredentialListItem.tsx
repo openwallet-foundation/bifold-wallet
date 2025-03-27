@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
 import { useTheme } from '../../contexts/theme'
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, StyleSheet } from 'react-native'
 import { useBranding } from '../../hooks/bundle-resolver'
 import { useTranslation } from 'react-i18next'
 import { getCredentialIdentifiers } from '../../utils/credential'
@@ -8,6 +8,7 @@ import { useCredentialConnectionLabel } from '../../utils/helpers'
 import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@hyperledger/aries-oca'
 import { useMemo } from 'react'
+import { ThemedText } from '../texts/ThemedText'
 
 export type ContactCredentialListItemProps = {
   credential: CredentialExchangeRecord
@@ -15,7 +16,7 @@ export type ContactCredentialListItemProps = {
 }
 
 const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialListItemProps) => {
-  const { TextTheme, Assets, ColorPallet } = useTheme()
+  const { Assets, ColorPallet } = useTheme()
   const { t, i18n } = useTranslation()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const params = useMemo(
@@ -66,7 +67,7 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
       accessibilityRole={'button'}
     >
       <View style={styles.credentialContainer}>
-        <Text style={[{ ...TextTheme.normal }, styles.credentialName]}>{overlay?.metaOverlay?.name}</Text>
+        <ThemedText style={styles.credentialName}>{overlay?.metaOverlay?.name}</ThemedText>
       </View>
       <View style={styles.iconContainer}>
         <Assets.svg.iconChevronRight {...icon} />

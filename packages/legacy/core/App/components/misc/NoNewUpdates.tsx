@@ -1,10 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import InfoTextBox from '../texts/InfoTextBox'
+import { ThemedText } from '../texts/ThemedText'
 
 const NoNewUpdates: React.FC = () => {
   const { t } = useTranslation()
@@ -26,9 +27,9 @@ const NoNewUpdates: React.FC = () => {
   return (
     <View style={styles.noNewUpdatesContainer}>
       <InfoTextBox>
-        <Text style={styles.noNewUpdatesText} testID={testIdWithKey('NoNewUpdates')}>
+        <ThemedText style={styles.noNewUpdatesText} testID={testIdWithKey('NoNewUpdates')}>
           {t('Home.NoNewUpdates')}
-        </Text>
+        </ThemedText>
       </InfoTextBox>
     </View>
   )

@@ -3,7 +3,7 @@ import type { ConnectionRecord } from '@credo-ts/core'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 
 import { useStore } from '../../contexts/store'
 import { useTheme } from '../../contexts/theme'
@@ -12,6 +12,7 @@ import { ContactStackParams, Screens, Stacks } from '../../types/navigators'
 import { formatTime, getConnectionName } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 
 export interface ContactListItemProps {
   contact: ConnectionRecord
@@ -20,7 +21,7 @@ export interface ContactListItemProps {
 
 const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet, ListItems } = useTheme()
+  const { ColorPallet, ListItems } = useTheme()
   const messages = useChatMessagesByConnection(contact)
   const message = messages[0]
   const hasOnlyInitialMessage = messages.length < 2
@@ -44,7 +45,6 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
       marginRight: 16,
     },
     avatarPlaceholder: {
-      ...TextTheme.headingFour,
       textAlign: 'center',
     },
     avatarImage: {
@@ -60,15 +60,9 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
       justifyContent: 'space-between',
       flex: 1,
     },
-    contactNameText: {
-      ...TextTheme.labelTitle,
-    },
     timeContainer: {
       paddingVertical: 4,
       alignSelf: 'center',
-    },
-    timeText: {
-      color: TextTheme.normal.color,
     },
   })
 
@@ -99,25 +93,25 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
               <Image style={styles.avatarImage} source={{ uri: contact.imageUrl }} />
             </View>
           ) : (
-            <Text style={styles.avatarPlaceholder}>{contactLabelAbbr}</Text>
+            <ThemedText allowFontScaling={false} variant="headingFour" style={styles.avatarPlaceholder}>
+              {contactLabelAbbr}
+            </ThemedText>
           )}
         </View>
         <View style={{ flex: 1 }}>
           <View style={styles.nameAndTimeContainer}>
             <View style={styles.contactNameContainer}>
-              <Text style={styles.contactNameText}>{contactLabel}</Text>
+              <ThemedText variant="labelTitle">{contactLabel}</ThemedText>
             </View>
             <View style={styles.timeContainer}>
-              {message && (
-                <Text style={styles.timeText}>{formatTime(message.createdAt, { shortMonth: true, trim: true })}</Text>
-              )}
+              {message && <ThemedText>{formatTime(message.createdAt, { shortMonth: true, trim: true })}</ThemedText>}
             </View>
           </View>
           <View>
             {message && !hasOnlyInitialMessage && (
-              <Text style={TextTheme.normal} numberOfLines={1} ellipsizeMode={'tail'}>
+              <ThemedText numberOfLines={1} ellipsizeMode={'tail'}>
                 {message.text}
-              </Text>
+              </ThemedText>
             )}
           </View>
         </View>

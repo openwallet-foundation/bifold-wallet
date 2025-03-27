@@ -11,7 +11,7 @@ import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -24,6 +24,7 @@ import { useTemplate } from '../hooks/proof-request-templates'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 const onlyNumberRegex = /^\d+$/
 
@@ -118,9 +119,6 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     header: {
       marginTop: 12,
       marginBottom: 36,
-    },
-    title: {
-      ...TextTheme.headingThree,
     },
     description: {
       marginTop: 10,
@@ -218,8 +216,8 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const Header: React.FC = () => {
     return (
       <View style={style.header}>
-        <Text style={style.title}>{meta?.name}</Text>
-        <Text style={style.description}>{meta?.description}</Text>
+        <ThemedText variant="headingThree">{meta?.name}</ThemedText>
+        <ThemedText style={style.description}>{meta?.description}</ThemedText>
       </View>
     )
   }

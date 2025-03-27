@@ -14,7 +14,6 @@ import {
   Image,
   ImageBackground,
   StyleSheet,
-  Text,
   View,
   ViewStyle,
   TextInput,
@@ -34,6 +33,7 @@ import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import { Shade, shadeIsLightOrDark } from '../../utils/luminance'
 import CredentialIssuerBody from './CredentialCard11Issuer'
+import { ThemedText } from '../texts/ThemedText'
 
 interface VerifierCredentialCardProps {
   style?: ViewStyle
@@ -126,9 +126,9 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
 
     return (
       <View>
-        <Text
+        <ThemedText
+          variant="labelSubtitle"
           style={[
-            TextTheme.labelSubtitle,
             styles.textContainer,
             {
               lineHeight: 19,
@@ -138,7 +138,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
           testID={testIdWithKey('AttributeName')}
         >
           {ylabel}
-        </Text>
+        </ThemedText>
         {value && (
           <View>
             {isDataUrl(value) ? (
@@ -151,9 +151,9 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
                 <Image style={styles.imageAttr} source={{ uri: value as string }} />
               </TouchableOpacity>
             ) : (
-              <Text style={[TextTheme.bold, styles.textContainer]} testID={testIdWithKey('AttributeValue')}>
+              <ThemedText variant="bold" style={styles.textContainer} testID={testIdWithKey('AttributeValue')}>
                 {value}
-              </Text>
+              </ThemedText>
             )}
           </View>
         )}
@@ -192,17 +192,20 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
 
     return (
       <View>
-        <Text
-          style={[TextTheme.labelSubtitle, styles.textContainer, predicateStyles.predicateLabel]}
+        <ThemedText
+          variant="labelSubtitle"
+          style={[styles.textContainer, predicateStyles.predicateLabel]}
           testID={testIdWithKey('PredicateName')}
         >
           {ylabel}
-        </Text>
+        </ThemedText>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' }}>
           {item.satisfied && !preview ? (
             <Icon style={{ marginRight: 5 }} size={24} name={'check-circle'} color={ColorPallet.semantic.success} />
           ) : null}
-          <Text style={[TextTheme.bold, styles.textContainer, predicateStyles.predicateType]}>{item.pType}</Text>
+          <ThemedText variant="bold" style={[styles.textContainer, predicateStyles.predicateType]}>
+            {item.pType}
+          </ThemedText>
           {/* Only allow editing parametrizable predicates in preview mode */}
           {item.parameterizable && preview && onChangeValue ? (
             <TextInput
@@ -217,9 +220,9 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
               {currentValue}
             </TextInput>
           ) : (
-            <Text style={[TextTheme.bold, styles.textContainer]} testID={testIdWithKey('PredicateValue')}>
+            <ThemedText variant="bold" style={styles.textContainer} testID={testIdWithKey('PredicateValue')}>
               {item.pValue}
-            </Text>
+            </ThemedText>
           )}
         </View>
       </View>
@@ -262,12 +265,13 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
             />
           )}
           <View style={{ flexDirection: 'row' }}>
-            <Text
+            <ThemedText
+              variant="bold"
               testID={testIdWithKey('CredentialName')}
-              style={[TextTheme.bold, styles.textContainer, styles.credentialName]}
+              style={[styles.textContainer, styles.credentialName]}
             >
               {overlay.metaOverlay?.name}
-            </Text>
+            </ThemedText>
           </View>
         </View>
         <FlatList

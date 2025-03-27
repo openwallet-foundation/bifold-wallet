@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, Text } from 'react-native'
+import { Linking } from 'react-native'
 
 import { ChatEvent } from '../components/chat/ChatEvent'
 import { ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
@@ -30,6 +30,7 @@ import {
   getProofEventLabel,
   getProofEventRole,
 } from '../utils/helpers'
+import { ThemedText } from '../components/texts/ThemedText'
 
 /**
  * Determines the callback to be called when the button below a given chat message is pressed, if it exists.
@@ -101,26 +102,26 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
         Linking.openURL(link)
       }
       const msgText = (
-        <Text style={role === Role.me ? theme.rightText : theme.leftText}>
+        <ThemedText style={role === Role.me ? theme.rightText : theme.leftText}>
           {record.content.split(linkRegex).map((split, i) => {
             if (i < links.length) {
               const link = links[i]
               return (
                 <Fragment key={`${record.id}-${i}`}>
-                  <Text>{split}</Text>
-                  <Text
+                  <ThemedText>{split}</ThemedText>
+                  <ThemedText
                     onPress={() => handleLinkPress(link)}
                     style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
                     accessibilityRole={'link'}
                   >
                     {link}
-                  </Text>
+                  </ThemedText>
                 </Fragment>
               )
             }
-            return <Text key={`${record.id}-${i}`}>{split}</Text>
+            return <ThemedText key={`${record.id}-${i}`}>{split}</ThemedText>
           })}
-        </Text>
+        </ThemedText>
       )
 
       return {
@@ -241,10 +242,10 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
           _id: 'connected',
           text: `${t('Chat.YouConnected')} ${theirLabel}`,
           renderEvent: () => (
-            <Text style={theme.rightText}>
+            <ThemedText style={theme.rightText}>
               {t('Chat.YouConnected')}
-              <Text style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</Text>
-            </Text>
+              <ThemedText style={[theme.rightText, theme.rightTextHighlighted]}> {theirLabel}</ThemedText>
+            </ThemedText>
           ),
           createdAt: connection.createdAt,
           user: { _id: Role.me },

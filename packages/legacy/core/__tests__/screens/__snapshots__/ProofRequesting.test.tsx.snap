@@ -86,27 +86,38 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#000000",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "marginTop": 8,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#000000",
+                "marginTop": 8,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Verifier.ScanQR
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-              "marginTop": 20,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26,
+                "fontWeight": "bold",
+              },
+              Object {
+                "marginTop": 20,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Student full name
@@ -173,22 +184,30 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+                "fontWeight": "normal",
               },
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+              ],
             ]
           }
         >
@@ -286,27 +305,38 @@ exports[`ProofRequesting Component renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#000000",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "marginTop": 8,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#000000",
+                "marginTop": 8,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Verifier.ScanQR
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-              "marginTop": 20,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26,
+                "fontWeight": "bold",
+              },
+              Object {
+                "marginTop": 20,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Student full name
@@ -373,22 +403,30 @@ exports[`ProofRequesting Component renders correctly 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+                "fontWeight": "normal",
               },
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
-              },
-              false,
-              false,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+              ],
             ]
           }
         >
@@ -441,27 +479,38 @@ exports[`ProofRequesting Component renders correctly 2`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#000000",
-              "fontSize": 18,
-              "fontWeight": "normal",
-              "marginTop": 8,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#000000",
+                "marginTop": 8,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Verifier.ScanQR
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 26,
-              "fontWeight": "bold",
-              "marginTop": 20,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26,
+                "fontWeight": "bold",
+              },
+              Object {
+                "marginTop": 20,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Student full name
@@ -528,17 +577,25 @@ exports[`ProofRequesting Component renders correctly 2`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+                "fontWeight": "normal",
               },
-              false,
-              false,
-              false,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+                false,
+              ],
             ]
           }
         >

@@ -6,7 +6,7 @@ import { Attribute, CredentialOverlay } from '@hyperledger/aries-oca/build/legac
 import { useIsFocused } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -36,6 +36,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import CredentialOfferAccept from './CredentialOfferAccept'
 import { BaseTourID } from '../types/tour'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type CredentialOfferProps = {
   navigation: any
@@ -45,7 +46,7 @@ type CredentialOfferProps = {
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentialId }) => {
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { ColorPallet } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertNetworkConnected } = useNetwork()
   const [
@@ -82,7 +83,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       paddingVertical: 16,
     },
     headerText: {
-      ...TextTheme.normal,
       flexShrink: 1,
     },
     footerButton: {
@@ -159,7 +159,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     updateCredentialPreview()
       .then(() => resolvePresentationFields())
       .then(({ fields, metaOverlay }) => {
-        setOverlay({metaOverlay: (metaOverlay as MetaOverlay), presentationFields: (fields as Attribute[]).filter((field) => field.value) })
+        setOverlay({
+          metaOverlay: metaOverlay as MetaOverlay,
+          presentationFields: (fields as Attribute[]).filter((field) => field.value),
+        })
         setLoading(false)
       })
   }, [credential, agent, bundleResolver, i18n.language])
@@ -255,10 +258,10 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       <>
         <ConnectionImage connectionId={credential?.connectionId} />
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-            <Text>{credentialConnectionLabel || t('ContactDetails.AContact')}</Text>{' '}
+          <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+            <ThemedText>{credentialConnectionLabel || t('ContactDetails.AContact')}</ThemedText>{' '}
             {t('CredentialOffer.IsOfferingYouACredential')}
-          </Text>
+          </ThemedText>
         </View>
         {!loading && credential && (
           <View style={{ marginHorizontal: 15, marginBottom: 16 }}>

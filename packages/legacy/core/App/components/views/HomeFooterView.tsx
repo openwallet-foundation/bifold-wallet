@@ -2,9 +2,10 @@ import { CredentialState } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
+import { ThemedText } from '../texts/ThemedText'
 
 const offset = 25
 
@@ -52,21 +53,23 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
 
     if (credentialCount === 1) {
       credentialMsg = (
-        <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
+        <ThemedText>
+          {t('Home.YouHave')}{' '}
+          <ThemedText style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</ThemedText>{' '}
           {t('Home.Credential')} {t('Home.InYourWallet')}
-        </Text>
+        </ThemedText>
       )
     } else if (credentialCount > 1) {
       credentialMsg = (
-        <Text>
-          {t('Home.YouHave')} <Text style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</Text>{' '}
+        <ThemedText>
+          {t('Home.YouHave')}{' '}
+          <ThemedText style={{ fontWeight: TextTheme.bold.fontWeight }}>{credentialCount}</ThemedText>{' '}
           {t('Home.Credentials')} {t('Home.InYourWallet')}
-        </Text>
+        </ThemedText>
       )
     } else {
-      credentialMsg = <Text style={[TextTheme.bold]}>{t('Home.NoCredentials')}</Text>
-      scanReminder = <Text>{t('Home.ScanOfferAddCard')}</Text>
+      credentialMsg = <ThemedText variant="bold">{t('Home.NoCredentials')}</ThemedText>
+      scanReminder = <ThemedText>{t('Home.ScanOfferAddCard')}</ThemedText>
     }
 
     return (
@@ -76,11 +79,21 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
         </View>
 
         <View style={styles.messageContainer}>
-          <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{credentialMsg}</Text>
+          <ThemedText
+            adjustsFontSizeToFit
+            style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}
+          >
+            {credentialMsg}
+          </ThemedText>
         </View>
 
         <View style={styles.messageContainer}>
-          <Text style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}>{scanReminder}</Text>
+          <ThemedText
+            adjustsFontSizeToFit
+            style={[HomeTheme.credentialMsg, { marginTop: offset, textAlign: 'center' }]}
+          >
+            {scanReminder}
+          </ThemedText>
         </View>
       </>
     )

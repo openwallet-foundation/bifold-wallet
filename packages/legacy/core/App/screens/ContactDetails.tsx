@@ -9,7 +9,6 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   useWindowDimensions,
@@ -30,6 +29,7 @@ import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import { toImageSource } from '../utils/credential'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ContactDetailsProps = StackScreenProps<ContactStackParams, Screens.ContactDetails>
 
@@ -52,7 +52,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ].filter((credential) => credential.connectionId === connection?.id)
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPallet, Assets } = useTheme()
   const [store] = useStore()
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
@@ -102,7 +102,6 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       maxWidth: contactImageHeight,
     },
     contactLabel: {
-      ...TextTheme.headingThree,
       flex: 2,
       flexShrink: 1,
       alignSelf: 'flex-start',
@@ -210,20 +209,19 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           </View>
         ) : (
           <View style={styles.contactFirstLetterContainer}>
-            <Text
+            <ThemedText
+              allowFontScaling={false}
+              variant="bold"
               accessible={false}
-              style={[
-                TextTheme.bold,
-                {
-                  fontSize: contactImageHeight,
-                  lineHeight: contactImageHeight,
-                  alignSelf: 'center',
-                  color: ColorPallet.brand.primary,
-                },
-              ]}
+              style={{
+                fontSize: contactImageHeight,
+                lineHeight: contactImageHeight,
+                alignSelf: 'center',
+                color: ColorPallet.brand.primary,
+              }}
             >
               {contactLabel.charAt(0).toUpperCase()}
-            </Text>
+            </ThemedText>
           </View>
         )}
       </>
@@ -235,25 +233,29 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       <View style={[styles.contentContainer, contactDetailsOptions?.enableCredentialList && { flex: 2 }]}>
         <View style={styles.contactContainer}>
           {contactImage()}
-          <Text style={styles.contactLabel}>{contactLabel}</Text>
+          <ThemedText variant="headingThree" style={styles.contactLabel}>
+            {contactLabel}
+          </ThemedText>
         </View>
         {contactDetailsOptions?.showConnectedTime && (
-          <Text style={{ ...TextTheme.normal, marginTop: 20 }}>
+          <ThemedText style={{ marginTop: 20 }}>
             {t('ContactDetails.DateOfConnection', {
               date: connection?.createdAt ? formatTime(connection.createdAt, { includeHour: true }) : '',
             })}
-          </Text>
+          </ThemedText>
         )}
         {contactDetailsOptions?.enableCredentialList && (
           <>
             <View style={{ borderTopColor: ColorPallet.grayscale.lightGrey, borderWidth: 1, marginTop: 20 }}></View>
-            <Text style={{ ...TextTheme.headingFour, marginVertical: 16 }}>{t('ContactDetails.Credentials')}</Text>
+            <ThemedText variant="headingFour" style={{ marginVertical: 16 }}>
+              {t('ContactDetails.Credentials')}
+            </ThemedText>
             <FlatList
               ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
               ListEmptyComponent={() => (
-                <Text style={{ ...TextTheme.normal, color: ColorPallet.grayscale.lightGrey }}>
+                <ThemedText style={{ color: ColorPallet.grayscale.lightGrey }}>
                   {t('ContactDetails.NoCredentials')}
-                </Text>
+                </ThemedText>
               )}
               data={connectionCredentials}
               renderItem={({ item }) => (
@@ -277,7 +279,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
             style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
           >
             <Assets.svg.iconEdit width={20} height={20} color={ColorPallet.brand.text} />
-            <Text style={{ ...TextTheme.normal }}>{t('Screens.RenameContact')}</Text>
+            <ThemedText>{t('Screens.RenameContact')}</ThemedText>
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -288,9 +290,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
         >
           <Assets.svg.iconDelete width={20} height={20} color={ColorPallet.semantic.error} />
-          <Text style={{ ...TextTheme.normal, color: ColorPallet.semantic.error }}>
-            {t('ContactDetails.RemoveContact')}
-          </Text>
+          <ThemedText style={{ color: ColorPallet.semantic.error }}>{t('ContactDetails.RemoveContact')}</ThemedText>
         </TouchableOpacity>
       </View>
       <CommonRemoveModal

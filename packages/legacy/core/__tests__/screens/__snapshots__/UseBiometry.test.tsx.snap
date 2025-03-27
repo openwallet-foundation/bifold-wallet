@@ -46,33 +46,45 @@ exports[`UseBiometry Screen renders correctly when biometry available 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
           }
         >
           Biometry.EnabledText1
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
           }
         >
           Biometry.EnabledText2
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                undefined,
+              ]
             }
           >
              
@@ -98,12 +110,16 @@ exports[`UseBiometry Screen renders correctly when biometry available 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                undefined,
+              ]
             }
           >
             Biometry.UseToUnlock
@@ -268,17 +284,25 @@ exports[`UseBiometry Screen renders correctly when biometry available 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+                "fontWeight": "normal",
               },
-              false,
-              false,
-              false,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+                false,
+              ],
             ]
           }
         >
@@ -336,23 +360,31 @@ exports[`UseBiometry Screen renders correctly when biometry unavailable 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
           }
         >
           Biometry.NotEnabledText1
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontSize": 18,
-              "fontWeight": "normal",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
           }
         >
           Biometry.NotEnabledText2
@@ -376,12 +408,16 @@ exports[`UseBiometry Screen renders correctly when biometry unavailable 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 18,
-                "fontWeight": "bold",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                undefined,
+              ]
             }
           >
             Biometry.UseToUnlock
@@ -546,17 +582,25 @@ exports[`UseBiometry Screen renders correctly when biometry unavailable 1`] = `
         }
       >
         <Text
+          maxFontSizeMultiplier={2}
           style={
             Array [
               Object {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "fontWeight": "bold",
-                "textAlign": "center",
+                "fontWeight": "normal",
               },
-              false,
-              false,
-              false,
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+                false,
+              ],
             ]
           }
         >

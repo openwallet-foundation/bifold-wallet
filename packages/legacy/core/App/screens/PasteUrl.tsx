@@ -2,7 +2,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -13,6 +13,7 @@ import { useTheme } from '../contexts/theme'
 import { ConnectStackParams } from '../types/navigators'
 import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 export type PasteProps = StackScreenProps<ConnectStackParams>
 
@@ -22,7 +23,10 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState<{ title: string; message: string } | undefined>()
   const { t } = useTranslation()
   const { agent } = useAgent()
-  const [logger, { enableImplicitInvitations, enableReuseConnections }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const [logger, { enableImplicitInvitations, enableReuseConnections }] = useServices([
+    TOKENS.UTIL_LOGGER,
+    TOKENS.CONFIG,
+  ])
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -32,7 +36,6 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
       margin: 20,
     },
     description: {
-      ...TextTheme.normal,
       marginBottom: 20,
     },
     textBox: {
@@ -87,7 +90,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
           </View>
         </SafeAreaModal>
         <View style={styles.content}>
-          <Text style={styles.description}>{t('PasteUrl.PasteUrlDescription')}</Text>
+          <ThemedText style={styles.description}>{t('PasteUrl.PasteUrlDescription')}</ThemedText>
           <TextInput
             testID={testIdWithKey('PastedUrl')}
             style={styles.textBox}

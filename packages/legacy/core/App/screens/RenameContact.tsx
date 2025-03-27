@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import ButtonLoading from '../components/animated/ButtonLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -17,6 +17,7 @@ import { useTheme } from '../contexts/theme'
 import { ContactStackParams, Screens } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ErrorState = {
   visible: boolean
@@ -30,7 +31,7 @@ const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
   const { connectionId } = route.params
   const connection = useConnectionById(connectionId)
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const navigation = useNavigation()
   const [store, dispatch] = useStore()
   const [contactName, setContactName] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
@@ -102,9 +103,7 @@ const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
     <KeyboardView>
       <View style={styles.screenContainer}>
         <View style={styles.contentContainer}>
-          <Text style={[TextTheme.normal, { width: '100%', marginBottom: 16 }]}>
-            {t('RenameContact.ThisContactName')}
-          </Text>
+          <ThemedText style={{ width: '100%', marginBottom: 16 }}>{t('RenameContact.ThisContactName')}</ThemedText>
           <View style={{ width: '100%' }}>
             <LimitedTextInput
               defaultValue={contactName}

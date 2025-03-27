@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
-import { TextTheme } from '../../../../theme'
+import { ThemedText } from '../../../../components/texts/ThemedText'
 
 interface Props {
   pointsText?: string
@@ -28,19 +28,19 @@ const BulletPoint: React.FC<Props> = ({ pointsText, pointsTextAxsLabel, pointsTe
 
   return (
     <View style={styles.pointsView} accessible={true}>
-      <Text style={[TextTheme.normal, styles.pointsBullet]}>{'\u2022'}</Text>
+      <ThemedText style={styles.pointsBullet}>{'\u2022'}</ThemedText>
       {pointsTextAxsLabel ? (
-        <Text style={[TextTheme.normal, styles.pointsText]} accessibilityLabel={pointsTextAxsLabel}>
+        <ThemedText style={styles.pointsText} accessibilityLabel={pointsTextAxsLabel}>
           <Trans
             i18nKey={pointsTextAxsKey}
             components={{
-              b: <Text style={TextTheme.bold} />,
+              b: <ThemedText variant="bold" />,
             }}
             t={t}
           />
-        </Text>
+        </ThemedText>
       ) : (
-        <Text style={[TextTheme.normal, styles.pointsText]}>{pointsText}</Text>
+        <ThemedText style={styles.pointsText}>{pointsText}</ThemedText>
       )}
     </View>
   )

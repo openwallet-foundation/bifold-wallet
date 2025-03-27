@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, StyleSheet, View, TouchableWithoutFeedback } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import CredentialList from '../assets/img/credential-list.svg'
@@ -17,6 +17,7 @@ import { testIdWithKey } from '../utils/testable'
 import { useTheme } from '../contexts/theme'
 
 import { OnboardingStyleSheet } from './Onboarding'
+import { ThemedText } from '../components/texts/ThemedText'
 
 export const createCarouselStyle = (OnboardingTheme: any) => {
   return StyleSheet.create<OnboardingStyleSheet>({
@@ -99,13 +100,13 @@ const CustomPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
           <Assets.svg.secureImage {...imageDisplayOptions} />
         </View>
         <View style={{ marginBottom: 20 }}>
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
             Ornare suspendisse sed nisi lacus
-          </Text>
-          <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
+          </ThemedText>
+          <ThemedText style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
             Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer
             quis auctor elit sed.
-          </Text>
+          </ThemedText>
         </View>
       </ScrollView>
       <View style={{ marginTop: 'auto', margin: 20 }}>
@@ -146,9 +147,9 @@ export const createPageWith = (
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
   const titleElement = (
-    <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+    <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
       {title}
-    </Text>
+    </ThemedText>
   )
   return (
     <ScrollView style={{ padding: 20 }}>
@@ -161,9 +162,9 @@ export const createPageWith = (
         ) : (
           titleElement
         )}
-        <Text style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
+        <ThemedText style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
           {body}
-        </Text>
+        </ThemedText>
       </View>
     </ScrollView>
   )

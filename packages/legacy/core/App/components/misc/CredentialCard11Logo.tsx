@@ -1,9 +1,10 @@
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { Image, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface CredentialCardLogo {
   noLogoText: string
@@ -18,7 +19,7 @@ const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({
   overlayType,
   elevated,
 }: CredentialCardLogo) => {
-  const { TextTheme, CredentialCardShadowTheme } = useTheme()
+  const { CredentialCardShadowTheme } = useTheme()
   const { width } = useWindowDimensions()
   const padding = width * 0.05
   const logoHeight = width * 0.12
@@ -52,19 +53,17 @@ const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({
           testID={testIdWithKey('Logo')}
         />
       ) : (
-        <Text
-          style={[
-            TextTheme.bold,
-            {
-              fontSize: 0.5 * logoHeight,
-              alignSelf: 'center',
-              color: '#000',
-            },
-          ]}
+        <ThemedText
+          variant="bold"
+          style={{
+            fontSize: 0.5 * logoHeight,
+            alignSelf: 'center',
+            color: '#000',
+          }}
           testID={testIdWithKey('NoLogoText')}
         >
           {noLogoText.charAt(0).toUpperCase()}
-        </Text>
+        </ThemedText>
       )}
     </View>
   )

@@ -1,28 +1,25 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 
 import Link from '../components/texts/Link'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface WhatAreContactsProps {
   navigation: NavigationProp<ParamListBase>
 }
 
 const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
       backgroundColor: ColorPallet.brand.primaryBackground,
-    },
-    title: {
-      ...TextTheme.headingTwo,
-      marginBottom: 15,
     },
     pageContent: {
       marginTop: 30,
@@ -43,8 +40,8 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
   ].map((text, index) => {
     return (
       <View key={index} style={{ marginBottom: 10, flexDirection: 'row' }}>
-        <Text style={{ ...TextTheme.normal, paddingRight: 5 }}>{'\u2022'}</Text>
-        <Text style={[TextTheme.normal, { flexShrink: 1 }]}>{text}</Text>
+        <ThemedText style={{ paddingRight: 5 }}>{'\u2022'}</ThemedText>
+        <ThemedText style={{ flexShrink: 1 }}>{text}</ThemedText>
       </View>
     )
   })
@@ -57,15 +54,15 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
         automaticallyAdjustContentInsets={false}
         showsHorizontalScrollIndicator={false}
       >
-        <Text style={styles.title} accessibilityRole="header">
+        <ThemedText variant="headingTwo" style={{ marginBottom: 15 }} accessibilityRole="header">
           {t('WhatAreContacts.Title')}
-        </Text>
-        <Text style={TextTheme.normal}>{t('WhatAreContacts.Preamble')}</Text>
+        </ThemedText>
+        <ThemedText>{t('WhatAreContacts.Preamble')}</ThemedText>
         {bulletPoints}
-        <Text style={TextTheme.normal}>
+        <ThemedText>
           {`${t('WhatAreContacts.RemoveContacts')} `}
           <Link linkText={t('WhatAreContacts.ContactsLink')} onPress={goToContactList} />
-        </Text>
+        </ThemedText>
       </ScrollView>
     </SafeAreaView>
   )

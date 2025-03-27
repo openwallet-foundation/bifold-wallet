@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import Text from '../texts/Text'
+import { ThemedText } from '../texts/ThemedText'
 
 export interface BlockSelection {
   value: string
@@ -42,7 +42,7 @@ const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect
     <View style={styles.container}>
       {selection.map((item) => (
         <TouchableOpacity key={item.id} style={styles.row} onPress={() => handleSelect(item)} hitSlop={hitSlop}>
-          <Text style={Inputs.singleSelectText}>{item.value}</Text>
+          <ThemedText style={Inputs.singleSelectText}>{item.value}</ThemedText>
           {item.id === selected.id ? <Icon name={'check'} size={25} color={Inputs.singleSelectIcon.color} /> : null}
         </TouchableOpacity>
       ))}

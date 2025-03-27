@@ -21,7 +21,11 @@ jest.mock('react-native-device-info', () => {
 
 describe('NameWallet Screen', () => {
   test('LimitedInput and continue button are present', async () => {
-    const tree = render(<NameWallet />)
+    const tree = render(
+      <BasicAppContext>
+        <NameWallet />
+      </BasicAppContext>
+    )
 
     const WalletNameInput = await tree.getByTestId(testIdWithKey('NameInput'))
 

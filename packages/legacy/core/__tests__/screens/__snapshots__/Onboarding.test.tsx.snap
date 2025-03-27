@@ -55,14 +55,14 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
               onPress={[MockFunction]}
               testID="com.ariesbifold:id/DeveloperModeTouch"
             >
-              <Text
+              <ThemedText
                 style={Object {}}
                 testID="com.ariesbifold:id/HeaderText"
               >
                 test
-              </Text>
+              </ThemedText>
             </TouchableWithoutFeedback>
-            <Text
+            <ThemedText
               style={
                 Array [
                   Object {
@@ -76,7 +76,7 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
               testID="com.ariesbifold:id/BodyText"
             >
               body
-            </Text>
+            </ThemedText>
           </View>
         </ScrollView>,
       ]
@@ -189,6 +189,7 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
                   }
                   accessible={true}
                   focusable={true}
+                  maxFontSizeMultiplier={2}
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -196,20 +197,37 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={Object {}}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
                   testID="com.ariesbifold:id/DeveloperModeTouch"
                 >
                   test
                 </Text>
                 <Text
+                  maxFontSizeMultiplier={2}
                   style={
                     Array [
                       Object {
-                        "flexShrink": 1,
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
                       },
-                      Object {
-                        "marginTop": 25,
-                      },
+                      Array [
+                        Object {
+                          "flexShrink": 1,
+                        },
+                        Object {
+                          "marginTop": 25,
+                        },
+                      ],
                     ]
                   }
                   testID="com.ariesbifold:id/BodyText"
@@ -281,17 +299,25 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
       testID="com.ariesbifold:id/Back"
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
-              "color": "#42803E",
+              "color": "#FFFFFF",
               "fontSize": 18,
-              "fontWeight": "bold",
+              "fontWeight": "normal",
             },
-            Object {
-              "color": "transparent",
-              "paddingRight": 20,
-            },
+            Array [
+              Object {
+                "color": "#42803E",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "transparent",
+                "paddingRight": 20,
+              },
+            ],
           ]
         }
       >
@@ -384,17 +410,25 @@ exports[`Onboarding Screen Onboarding Developer mode 1`] = `
       testID="com.ariesbifold:id/Next"
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
-              "color": "#42803E",
+              "color": "#FFFFFF",
               "fontSize": 18,
-              "fontWeight": "bold",
+              "fontWeight": "normal",
             },
-            Object {
-              "color": "transparent",
-              "paddingLeft": 20,
-            },
+            Array [
+              Object {
+                "color": "#42803E",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "transparent",
+                "paddingLeft": 20,
+              },
+            ],
           ]
         }
       >
@@ -427,18 +461,18 @@ exports[`Onboarding Screen Renders correctly 1`] = `
     data={
       Array [
         <React.Fragment>
-          <Text
+          <ThemedText
             testID="bodyText"
           >
             Hello
-          </Text>
+          </ThemedText>
         </React.Fragment>,
         <React.Fragment>
-          <Text
+          <ThemedText
             testID="bodyText"
           >
             World
-          </Text>
+          </ThemedText>
         </React.Fragment>,
       ]
     }
@@ -508,6 +542,17 @@ exports[`Onboarding Screen Renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
+            }
             testID="bodyText"
           >
             Hello
@@ -540,6 +585,17 @@ exports[`Onboarding Screen Renders correctly 1`] = `
           }
         >
           <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
+            }
             testID="bodyText"
           >
             World
@@ -606,17 +662,25 @@ exports[`Onboarding Screen Renders correctly 1`] = `
       testID="com.ariesbifold:id/Back"
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
-              "color": "#42803E",
+              "color": "#FFFFFF",
               "fontSize": 18,
-              "fontWeight": "bold",
+              "fontWeight": "normal",
             },
-            Object {
-              "color": "transparent",
-              "paddingRight": 20,
-            },
+            Array [
+              Object {
+                "color": "#42803E",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "transparent",
+                "paddingRight": 20,
+              },
+            ],
           ]
         }
       >
@@ -730,17 +794,25 @@ exports[`Onboarding Screen Renders correctly 1`] = `
       testID="com.ariesbifold:id/Next"
     >
       <Text
+        maxFontSizeMultiplier={2}
         style={
           Array [
             Object {
-              "color": "#42803E",
+              "color": "#FFFFFF",
               "fontSize": 18,
-              "fontWeight": "bold",
+              "fontWeight": "normal",
             },
-            Object {
-              "color": "#42803E",
-              "paddingLeft": 20,
-            },
+            Array [
+              Object {
+                "color": "#42803E",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "#42803E",
+                "paddingLeft": 20,
+              },
+            ],
           ]
         }
       >
