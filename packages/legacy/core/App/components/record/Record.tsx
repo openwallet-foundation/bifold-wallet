@@ -38,9 +38,16 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
     },
   })
 
+  const isAttributesShown = shown.includes(true)
+
   const hideAll = useCallback((): void => {
     setShown(fields.map(() => false))
   }, [fields])
+
+  const showAll = useCallback((): void => {
+    setShown(fields.map(() => true))
+  }, [fields])
+
 
   useEffect(() => {
     hideAll()
@@ -77,13 +84,13 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                 <TouchableOpacity
                   style={styles.link}
                   activeOpacity={1}
-                  onPress={hideAll}
+                  onPress={isAttributesShown ? hideAll : showAll}
                   testID={testIdWithKey('HideAll')}
                   accessible={true}
-                  accessibilityLabel={t('Record.HideAll')}
+                  accessibilityLabel={isAttributesShown ? t('Record.HideAll') : t('Record.ShowAll')}
                   accessibilityRole="button"
                 >
-                  <ThemedText style={ListItems.recordLink}>{t('Record.HideAll')}</ThemedText>
+                  <ThemedText style={ListItems.recordLink}>{isAttributesShown ? t('Record.HideAll') : t('Record.ShowAll') }</ThemedText>
                 </TouchableOpacity>
               </View>
             ) : null}
