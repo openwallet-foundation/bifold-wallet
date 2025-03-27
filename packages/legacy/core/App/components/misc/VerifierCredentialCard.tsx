@@ -67,6 +67,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const isBranding10 = brandingOverlayType === BrandingOverlayType.Branding10
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
   const { styles, borderRadius } = useCredentialCardStyles(overlay, brandingOverlayType, isBranding10)
 
   const attributeTypes = overlay.bundle?.captureBase.attributes
@@ -256,12 +257,11 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
             <CredentialIssuerBody
               overlay={overlay}
               overlayType={brandingOverlayType}
-              elevated={elevated}
               hasBody={overlay.metaOverlay?.issuer !== 'Unknown Contact'}
               proof
             />
           )}
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.primaryBodyNameContainer}>
             <Text
               testID={testIdWithKey('CredentialName')}
               style={[TextTheme.bold, styles.textContainer, styles.credentialName]}
@@ -283,7 +283,6 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
           <CredentialIssuerBody
             overlay={overlay}
             overlayType={brandingOverlayType}
-            elevated={elevated}
             hasBody={overlay.metaOverlay?.issuer !== 'Unknown Contact'}
           />
         )}
@@ -312,31 +311,38 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   }
 
   const CredentialCard: React.FC = () => {
+    const watermarkLabel = overlay.metaOverlay?.watermark ? overlay.metaOverlay?.watermark + ',' : ''
+    const issuerAccessibilityLabel = overlay.metaOverlay?.issuer
+      ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`
+      : ''
+    const accessibilityLabel = isBranding11
+      ? `${watermarkLabel} ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}${
+          displayItems.length > 0 ? ',' : ''
+        }` +
+        displayItems.map((item) => {
+          const { label, value } = parseAttribute(item as Attribute & Predicate)
+          if (label && value) {
+            return ` ${label}, ${value}`
+          }
+        }) +
+        `, ${issuerAccessibilityLabel}`
+      : `${issuerAccessibilityLabel}, ${overlay.metaOverlay?.watermark ?? ''} ${overlay.metaOverlay?.name ?? ''} ${t(
+          'Credentials.Credential'
+        )}.` +
+        displayItems.map((item) => {
+          const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
+          if (label) {
+            return value ? ` ${label}, ${value}` : ` ${label}`
+          }
+        })
     return (
-      <View
-        style={styles.cardContainer}
-        accessible={true}
-        accessibilityLabel={
-          `${overlay.metaOverlay?.issuer ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}` : ''}, ${
-            overlay.metaOverlay?.watermark ?? ''
-          } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
-          displayItems.map((item) => {
-            const { label, value } = parseAttribute(item as (Attribute & Predicate) | undefined)
-            if (label) {
-              return value ? ` ${label}, ${value}` : ` ${label}`
-            }
-          })
-        }
-      >
+      <View style={styles.cardContainer} accessible={true} accessibilityLabel={accessibilityLabel}>
         <CredentialCardSecondaryBody />
-        {isBranding10 && (
-          <CredentialCard11Logo
-            noLogoText={overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'}
-            overlay={overlay}
-            overlayType={brandingOverlayType}
-            elevated={elevated}
-          />
-        )}
+        <CredentialCard11Logo
+          noLogoText={overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'}
+          overlay={overlay}
+          elevated={elevated}
+        />
         <CredentialCardPrimaryBody />
       </View>
     )

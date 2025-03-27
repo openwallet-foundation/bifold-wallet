@@ -2,9 +2,9 @@ import React from 'react'
 import { render } from '@testing-library/react-native'
 
 import CredentialCard11Logo from '../../App/components/misc/CredentialCard11Logo'
-import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
 import { useTheme } from '../../App/contexts/theme'
 import { testIdWithKey } from '../../App/utils/testable'
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('../../App/contexts/theme', () => ({
   useTheme: jest.fn(),
@@ -16,6 +16,27 @@ describe('CredentialCard11Logo', () => {
       TextTheme: {
         bold: {
           fontWeight: 'bold',
+        },
+      },
+      ListItems: {
+        recordAttributeText: {
+          fontSize: 18,
+          fontWeight: 'normal',
+        },
+        proofError: {
+          color: '#D8292F',
+        }
+      },
+      ColorPallet: {
+        grayscale: {
+          white: '#fff',
+          darkGrey: '#313132',
+        },
+        semantic: {
+          focus: '#3399FF',
+        },
+        brand: {
+          link: '#42803E',
         },
       },
       CredentialCardShadowTheme: {
@@ -30,11 +51,11 @@ describe('CredentialCard11Logo', () => {
   })
 
   test('Renders correctly', async () => {
-    const tree = render(<CredentialCard11Logo
-      noLogoText="Credential"
-      overlay={{} as any}
-      overlayType={BrandingOverlayType.Branding10}
-    />)
+    const tree = render(
+      <BasicAppContext>
+        <CredentialCard11Logo noLogoText="Credential" overlay={{} as any} />
+      </BasicAppContext>
+    )
     expect(tree).toMatchSnapshot()
   })
 
@@ -46,11 +67,9 @@ describe('CredentialCard11Logo', () => {
     }
 
     const tree = render(
-      <CredentialCard11Logo
-        noLogoText="Credential"
-        overlay={overlay as any}
-        overlayType={BrandingOverlayType.Branding10}
-      />
+      <BasicAppContext>
+        <CredentialCard11Logo noLogoText="Credential" overlay={overlay as any} />
+      </BasicAppContext>
     )
 
     const imageLogo = tree.getByTestId(testIdWithKey('Logo'))
@@ -64,12 +83,9 @@ describe('CredentialCard11Logo', () => {
     }
 
     const tree = render(
-      <CredentialCard11Logo
-        noLogoText="Credential"
-        overlay={overlay as any}
-        overlayType={BrandingOverlayType.Branding10}
-        elevated={true}
-      />
+      <BasicAppContext>
+        <CredentialCard11Logo noLogoText="Credential" overlay={overlay as any} elevated={true} />
+      </BasicAppContext>
     )
 
     const text = tree.getByTestId(testIdWithKey('NoLogoText'))
