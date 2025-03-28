@@ -8,7 +8,6 @@ import { OnboardingTheme, theme } from '../../App/theme'
 import CredentialList from '../../App/assets/img/credential-list.svg'
 import { testIdWithKey } from '../../App/utils/testable'
 import { ThemedText } from '../../App/components/texts/ThemedText'
-import { BasicAppContext } from '../helpers/app'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
@@ -24,11 +23,7 @@ const pages = [
 describe('Onboarding Screen', () => {
   test('Renders correctly', () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
-    const tree = render(
-      <BasicAppContext>
-        <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
-      </BasicAppContext>
-    )
+    const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -36,9 +31,7 @@ describe('Onboarding Screen', () => {
   test('Pages exist', async () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const { findAllByTestId } = render(
-      <BasicAppContext>
-        <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
-      </BasicAppContext>
+      <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
     )
     const foundPages = await findAllByTestId('bodyText')
 
@@ -49,14 +42,12 @@ describe('Onboarding Screen', () => {
     jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const testFunc = jest.fn()
     const tree = render(
-      <BasicAppContext>
-        <Onboarding
-          pages={[createPageWith(CredentialList, 'test', 'body', {}, true, testFunc)]}
-          nextButtonText="Next"
-          previousButtonText="Back"
-          style={carousel}
-        />
-      </BasicAppContext>
+      <Onboarding
+        pages={[createPageWith(CredentialList, 'test', 'body', {}, true, testFunc)]}
+        nextButtonText="Next"
+        previousButtonText="Back"
+        style={carousel}
+      />
     )
     expect(tree).toMatchSnapshot()
 

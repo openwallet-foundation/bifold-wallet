@@ -3,7 +3,6 @@ import React from 'react'
 
 import DismissiblePopupModal from '../../App/components/modals/DismissiblePopupModal'
 import { testIdWithKey } from '../../App/utils/testable'
-import { BasicAppContext } from '../helpers/app'
 
 const title = 'Test Title'
 const description = 'Lorem ipsum sit dolar amet'
@@ -12,9 +11,7 @@ describe('DismissiblePopupModal Component', () => {
   test('Renders correctly without call to action', () => {
     const onDismissPressed = jest.fn()
     const tree = render(
-      <BasicAppContext>
-        <DismissiblePopupModal title={title} description={description} onDismissPressed={onDismissPressed} />
-      </BasicAppContext>
+      <DismissiblePopupModal title={title} description={description} onDismissPressed={onDismissPressed} />
     )
 
     expect(tree).toMatchSnapshot()
@@ -24,14 +21,12 @@ describe('DismissiblePopupModal Component', () => {
     const onDismissPressed = jest.fn()
     const onCallToActionPressed = jest.fn()
     const tree = render(
-      <BasicAppContext>
-        <DismissiblePopupModal
-          title={title}
-          description={description}
-          onDismissPressed={onDismissPressed}
-          onCallToActionPressed={onCallToActionPressed}
-        />
-      </BasicAppContext>
+      <DismissiblePopupModal
+        title={title}
+        description={description}
+        onDismissPressed={onDismissPressed}
+        onCallToActionPressed={onCallToActionPressed}
+      />
     )
 
     expect(tree).toMatchSnapshot()
@@ -41,14 +36,12 @@ describe('DismissiblePopupModal Component', () => {
     const onDismissPressed = jest.fn()
     const onCallToActionPressed = jest.fn()
     const { getByTestId } = render(
-      <BasicAppContext>
-        <DismissiblePopupModal
-          title={title}
-          description={description}
-          onDismissPressed={onDismissPressed}
-          onCallToActionPressed={onCallToActionPressed}
-        />
-      </BasicAppContext>
+      <DismissiblePopupModal
+        title={title}
+        description={description}
+        onDismissPressed={onDismissPressed}
+        onCallToActionPressed={onCallToActionPressed}
+      />
     )
     const okayButton = getByTestId(testIdWithKey('Okay'))
     fireEvent(okayButton, 'press')
@@ -60,14 +53,12 @@ describe('DismissiblePopupModal Component', () => {
     const onDismissPressed = jest.fn()
     const onCallToActionPressed = jest.fn()
     const { getByTestId } = render(
-      <BasicAppContext>
-        <DismissiblePopupModal
-          title={title}
-          description={description}
-          onDismissPressed={onDismissPressed}
-          onCallToActionPressed={onCallToActionPressed}
-        />
-      </BasicAppContext>
+      <DismissiblePopupModal
+        title={title}
+        description={description}
+        onDismissPressed={onDismissPressed}
+        onCallToActionPressed={onCallToActionPressed}
+      />
     )
     const dismissButton = getByTestId(testIdWithKey('Dismiss'))
     fireEvent(dismissButton, 'press')

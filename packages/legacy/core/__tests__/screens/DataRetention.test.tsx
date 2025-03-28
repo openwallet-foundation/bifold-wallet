@@ -3,7 +3,6 @@ import React from 'react'
 
 import DataRetention from '../../App/screens/DataRetention'
 import { testIdWithKey } from '../../App/utils/testable'
-import { BasicAppContext } from '../helpers/app'
 
 describe('DataRetention Screen', () => {
   beforeEach(() => {
@@ -19,21 +18,13 @@ describe('DataRetention Screen', () => {
   })
 
   test('screen renders correctly', () => {
-    const tree = render(
-      <BasicAppContext>
-        <DataRetention />
-      </BasicAppContext>
-    )
+    const tree = render(<DataRetention />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('pressables exist', async () => {
-    const { findByTestId } = render(
-      <BasicAppContext>
-        <DataRetention />
-      </BasicAppContext>
-    )
+    const { findByTestId } = render(<DataRetention />)
 
     const OnButton = await findByTestId(testIdWithKey('dataRetentionOn'))
     const OffButton = await findByTestId(testIdWithKey('dataRetentionOff'))

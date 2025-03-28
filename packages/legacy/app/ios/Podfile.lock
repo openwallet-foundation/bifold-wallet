@@ -1374,11 +1374,11 @@ SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: f64d1e2ea739b4d8f7e4740cde18089cd97fe864
   FBReactNativeSpec: 9f2b8b243131565335437dba74923a8d3015e780
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 9cecf9953a681df7556b8cc9c74905de8f3293c0
   indy-vdr: aada31078a9ed270dd618fadb4cf69bcdc333d68
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
@@ -1446,7 +1446,7 @@ SPEC CHECKSUMS:
   RNVectorIcons: 76364622e6f8e55bb456705582cde20f55ef889c
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: fc6f0f2cf7dd3da7c6496b279350bb357fab9964
-  Yoga: d17d2cc8105eed528474683b42e2ea310e1daf61
+  Yoga: 805bf71192903b20fc14babe48080582fee65a80
 
 PODFILE CHECKSUM: 3d15cc8fb1e3ac59a55d60aa16f7b32abff7fd00
 
