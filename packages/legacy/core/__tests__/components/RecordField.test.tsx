@@ -7,7 +7,6 @@ import RecordField from '../../App/components/record/RecordField'
 import { hiddenFieldValue } from '../../App/constants'
 import { testIdWithKey } from '../../App/utils/testable'
 import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
-import { BasicAppContext } from '../helpers/app'
 
 const base64ImagePath = path.join(__dirname, '../fixtures/base64-image.txt')
 const base64Image = fs.readFileSync(base64ImagePath, 'utf8')
@@ -21,11 +20,7 @@ const defaultField = {
 
 describe('RecordField Component', () => {
   test('Hidden normal field', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <RecordField field={defaultField} shown={false} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordField field={defaultField} shown={false} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
     expect(hiddenFieldText.children[0]).toEqual(hiddenFieldValue)
@@ -33,11 +28,7 @@ describe('RecordField Component', () => {
 
   test('Hidden binary field', async () => {
     const binaryField = { ...defaultField, encoding: 'base64', format: 'image/png' }
-    const tree = render(
-      <BasicAppContext>
-        <RecordField field={binaryField} shown={false} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordField field={binaryField} shown={false} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
     expect(hiddenFieldText.children[0]).toEqual(hiddenFieldValue)
@@ -45,22 +36,14 @@ describe('RecordField Component', () => {
 
   test('Hidden date field ', async () => {
     const dateField = { ...defaultField, type: CaptureBaseAttributeType.DateInt }
-    const tree = render(
-      <BasicAppContext>
-        <RecordField field={dateField} shown={false} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordField field={dateField} shown={false} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
     expect(hiddenFieldText.children[0]).toEqual(hiddenFieldValue)
   })
 
   test('Shown normal field should render value', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <RecordField field={defaultField} shown={true} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordField field={defaultField} shown={true} />)
     const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 
     expect(hiddenFieldText.children[0]).toEqual('Test')
@@ -73,11 +56,7 @@ describe('RecordField Component', () => {
       format: 'image/png',
       value: base64Image,
     }
-    const tree = render(
-      <BasicAppContext>
-        <RecordField field={binaryField} shown={true} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordField field={binaryField} shown={true} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -88,11 +67,7 @@ describe('RecordField Component', () => {
       type: CaptureBaseAttributeType.DateInt,
       value: 20000101,
     }
-    const tree = render(
-      <BasicAppContext>
-        <RecordField field={dateField} shown={true} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordField field={dateField} shown={true} />)
 
     expect(tree).toMatchSnapshot()
   })

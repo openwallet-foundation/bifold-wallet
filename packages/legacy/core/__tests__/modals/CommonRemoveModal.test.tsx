@@ -4,15 +4,10 @@ import React from 'react'
 import CommonRemoveModal from '../../App/components/modals/CommonRemoveModal'
 import { ModalUsage } from '../../App/types/remove'
 import { testIdWithKey } from '../../App/utils/testable'
-import { BasicAppContext } from '../helpers/app'
 
 describe('CommonRemoveModal Component', () => {
   test('Rerenders correctly when not visible', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.ContactRemove} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ContactRemove} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -21,9 +16,7 @@ describe('CommonRemoveModal Component', () => {
     const onSubmit = jest.fn()
     const onCancel = jest.fn()
     const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal onSubmit={onSubmit} onCancel={onCancel} visible={true} usage={ModalUsage.ContactRemove} />
-      </BasicAppContext>
+      <CommonRemoveModal onSubmit={onSubmit} onCancel={onCancel} visible={true} usage={ModalUsage.ContactRemove} />
     )
 
     const confirmButton = tree.getByTestId(testIdWithKey('ConfirmRemoveButton'))
@@ -37,61 +30,37 @@ describe('CommonRemoveModal Component', () => {
   })
 
   test('Remove contact renders correctly', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.ContactRemove} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ContactRemove} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Remove contact renders correctly2', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.ContactRemoveWithCredentials} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ContactRemoveWithCredentials} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Remove credential renders correctly', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.CredentialRemove} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.CredentialRemove} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Credential offer decline renders correctly', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.CredentialOfferDecline} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.CredentialOfferDecline} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Proof request decline renders correctly', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.ProofRequestDecline} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.ProofRequestDecline} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Custom notification decline renders correctly', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <CommonRemoveModal visible={true} usage={ModalUsage.CustomNotificationDecline} />
-      </BasicAppContext>
-    )
+    const tree = render(<CommonRemoveModal visible={true} usage={ModalUsage.CustomNotificationDecline} />)
 
     expect(tree).toMatchSnapshot()
   })

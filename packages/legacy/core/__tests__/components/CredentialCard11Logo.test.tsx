@@ -5,7 +5,6 @@ import CredentialCard11Logo from '../../App/components/misc/CredentialCard11Logo
 import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
 import { useTheme } from '../../App/contexts/theme'
 import { testIdWithKey } from '../../App/utils/testable'
-import { BasicAppContext } from '../helpers/app'
 
 jest.mock('../../App/contexts/theme', () => ({
   useTheme: jest.fn(),
@@ -27,18 +26,13 @@ describe('CredentialCard11Logo', () => {
         },
         shadowOpacity: 0.3,
       },
+      maxFontSizeMultiplier: 2,
     })
   })
 
   test('Renders correctly', async () => {
     const tree = render(
-      <BasicAppContext>
-        <CredentialCard11Logo
-          noLogoText="Credential"
-          overlay={{} as any}
-          overlayType={BrandingOverlayType.Branding10}
-        />
-      </BasicAppContext>
+      <CredentialCard11Logo noLogoText="Credential" overlay={{} as any} overlayType={BrandingOverlayType.Branding10} />
     )
     expect(tree).toMatchSnapshot()
   })
@@ -51,13 +45,11 @@ describe('CredentialCard11Logo', () => {
     }
 
     const tree = render(
-      <BasicAppContext>
-        <CredentialCard11Logo
-          noLogoText="Credential"
-          overlay={overlay as any}
-          overlayType={BrandingOverlayType.Branding10}
-        />
-      </BasicAppContext>
+      <CredentialCard11Logo
+        noLogoText="Credential"
+        overlay={overlay as any}
+        overlayType={BrandingOverlayType.Branding10}
+      />
     )
 
     const imageLogo = tree.getByTestId(testIdWithKey('Logo'))
@@ -71,14 +63,12 @@ describe('CredentialCard11Logo', () => {
     }
 
     const tree = render(
-      <BasicAppContext>
-        <CredentialCard11Logo
-          noLogoText="Credential"
-          overlay={overlay as any}
-          overlayType={BrandingOverlayType.Branding10}
-          elevated={true}
-        />
-      </BasicAppContext>
+      <CredentialCard11Logo
+        noLogoText="Credential"
+        overlay={overlay as any}
+        overlayType={BrandingOverlayType.Branding10}
+        elevated={true}
+      />
     )
 
     const text = tree.getByTestId(testIdWithKey('NoLogoText'))

@@ -35,19 +35,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store, dispatch] = useStore()
   const developerOptionCount = useRef(0)
-  const { SettingsTheme, TextTheme, ColorPallet, Assets } = useTheme()
-  const [
-    {
-      settings,
-      enableTours,
-      enablePushNotifications,
-      disableContactsInSettings,
-      accessibilityMaxFontSizeMultiplier = 2,
-    },
-    historyEnabled,
-  ] = useServices([TOKENS.CONFIG, TOKENS.HISTORY_ENABLED])
+  const { SettingsTheme, TextTheme, ColorPallet, Assets, maxFontSizeMultiplier } = useTheme()
+  const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
+    TOKENS.CONFIG,
+    TOKENS.HISTORY_ENABLED,
+  ])
   const { fontScale } = useWindowDimensions()
-  const fontIsGreaterThanCap = fontScale >= accessibilityMaxFontSizeMultiplier
+  const fontIsGreaterThanCap = fontScale >= maxFontSizeMultiplier
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {

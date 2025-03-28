@@ -269,6 +269,7 @@ export const mediumOpacity = 0.5
 export const lightOpacity = 0.35
 export const zeroOpacity = 0.0
 export const borderWidth = 2
+export const maxFontSizeMultiplier = 2
 
 const GrayscaleColors: IGrayscaleColors = {
   black: '#000000',
@@ -1092,6 +1093,7 @@ export interface ITheme {
   heavyOpacity: any
   borderRadius: any
   borderWidth: typeof borderWidth
+  maxFontSizeMultiplier: number
   Assets: IAssets
 }
 
@@ -1117,5 +1119,6 @@ export const theme: ITheme = {
   heavyOpacity,
   borderRadius,
   borderWidth,
+  maxFontSizeMultiplier,
   Assets,
 }

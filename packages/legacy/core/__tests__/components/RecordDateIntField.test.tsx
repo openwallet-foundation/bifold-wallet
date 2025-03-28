@@ -4,7 +4,6 @@ import React from 'react'
 import RecordDateIntField from '../../App/components/record/RecordDateIntField'
 import { hiddenFieldValue } from '../../App/constants'
 import { testIdWithKey } from '../../App/utils/testable'
-import { BasicAppContext } from '../helpers/app'
 
 describe('RecordDateIntField Component', () => {
   test('Invalid dateInt render field value as is', async () => {
@@ -14,11 +13,7 @@ describe('RecordDateIntField Component', () => {
       type: 'DateInt',
       value: 'invalid date',
     }
-    const tree = render(
-      <BasicAppContext>
-        <RecordDateIntField field={field} shown={true} />
-      </BasicAppContext>
-    )
+    const tree = render(<RecordDateIntField field={field} shown={true} />)
 
     expect(tree).toMatchSnapshot()
   })
@@ -30,11 +25,7 @@ test('Valid dateInt render field value in format', async () => {
     type: 'DateInt',
     value: '20000101',
   }
-  const tree = render(
-    <BasicAppContext>
-      <RecordDateIntField field={field} shown={true} />
-    </BasicAppContext>
-  )
+  const tree = render(<RecordDateIntField field={field} shown={true} />)
 
   expect(tree).toMatchSnapshot()
 })
@@ -45,11 +36,7 @@ test('Hidden field should render hidden value', async () => {
     type: 'DateInt',
     value: '20000101',
   }
-  const tree = render(
-    <BasicAppContext>
-      <RecordDateIntField field={field} shown={false} />
-    </BasicAppContext>
-  )
+  const tree = render(<RecordDateIntField field={field} shown={false} />)
 
   const hiddenFieldText = tree.getByTestId(testIdWithKey('AttributeValue'))
 

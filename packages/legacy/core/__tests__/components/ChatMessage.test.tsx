@@ -5,7 +5,6 @@ import { MessageProps } from 'react-native-gifted-chat'
 import { ChatMessage, CallbackType, ExtendedChatMessage } from '../../App/components/chat/ChatMessage'
 import { Role } from '../../App/types/chat'
 import { testIdWithKey } from '../../App/utils/testable'
-import { BasicAppContext } from '../helpers/app'
 
 const onDetailsMock = jest.fn()
 const user = {
@@ -34,11 +33,7 @@ describe('ChatMessage', () => {
 
   test('Credential offer renders correctly', () => {
     props.currentMessage!.messageOpensCallbackType = CallbackType.CredentialOffer
-    const tree = render(
-      <BasicAppContext>
-        <ChatMessage messageProps={props} />
-      </BasicAppContext>
-    )
+    const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.ViewOffer'))
 
     fireEvent(button, 'press')
@@ -50,11 +45,7 @@ describe('ChatMessage', () => {
 
   test('Proof request renders correctly', () => {
     props.currentMessage!.messageOpensCallbackType = CallbackType.ProofRequest
-    const tree = render(
-      <BasicAppContext>
-        <ChatMessage messageProps={props} />
-      </BasicAppContext>
-    )
+    const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.ViewRequest'))
 
     fireEvent(button, 'press')
@@ -66,11 +57,7 @@ describe('ChatMessage', () => {
 
   test('Sent presentation renders correctly', () => {
     props.currentMessage!.messageOpensCallbackType = CallbackType.PresentationSent
-    const tree = render(
-      <BasicAppContext>
-        <ChatMessage messageProps={props} />
-      </BasicAppContext>
-    )
+    const tree = render(<ChatMessage messageProps={props} />)
     const button = tree.getByTestId(testIdWithKey('Chat.OpenPresentation'))
 
     fireEvent(button, 'press')
