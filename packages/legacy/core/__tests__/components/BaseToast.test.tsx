@@ -2,18 +2,15 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import BaseToast, { ToastType } from '../../App/components/toast/BaseToast'
-import { BasicAppContext } from '../helpers/app'
 
 describe('BaseToast Component', () => {
   test('Info renders correctly', () => {
     const tree = render(
-      <BasicAppContext>
-        <BaseToast
-          title={'Hello World'}
-          body={'The quick brown fox jumped over the lazy dog'}
-          toastType={ToastType.Info}
-        />
-      </BasicAppContext>
+      <BaseToast
+        title={'Hello World'}
+        body={'The quick brown fox jumped over the lazy dog'}
+        toastType={ToastType.Info}
+      />
     )
 
     expect(tree).toMatchSnapshot()
@@ -21,13 +18,11 @@ describe('BaseToast Component', () => {
 
   test('Success renders correctly', () => {
     const tree = render(
-      <BasicAppContext>
-        <BaseToast
-          title={'Hello World'}
-          body={'The quick brown fox jumped over the lazy dog'}
-          toastType={ToastType.Success}
-        />
-      </BasicAppContext>
+      <BaseToast
+        title={'Hello World'}
+        body={'The quick brown fox jumped over the lazy dog'}
+        toastType={ToastType.Success}
+      />
     )
 
     expect(tree).toMatchSnapshot()
@@ -35,13 +30,11 @@ describe('BaseToast Component', () => {
 
   test('Warn renders correctly', () => {
     const tree = render(
-      <BasicAppContext>
-        <BaseToast
-          title={'Hello World'}
-          body={'The quick brown fox jumped over the lazy dog'}
-          toastType={ToastType.Warn}
-        />
-      </BasicAppContext>
+      <BaseToast
+        title={'Hello World'}
+        body={'The quick brown fox jumped over the lazy dog'}
+        toastType={ToastType.Warn}
+      />
     )
 
     expect(tree).toMatchSnapshot()
@@ -49,24 +42,18 @@ describe('BaseToast Component', () => {
 
   test('Error renders correctly', () => {
     const tree = render(
-      <BasicAppContext>
-        <BaseToast
-          title={'Hello World'}
-          body={'The quick brown fox jumped over the lazy dog'}
-          toastType={ToastType.Error}
-        />
-      </BasicAppContext>
+      <BaseToast
+        title={'Hello World'}
+        body={'The quick brown fox jumped over the lazy dog'}
+        toastType={ToastType.Error}
+      />
     )
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Toast Renders without body text', () => {
-    const tree = render(
-      <BasicAppContext>
-        <BaseToast title={'Hello World'} toastType={ToastType.Error} />
-      </BasicAppContext>
-    )
+    const tree = render(<BaseToast title={'Hello World'} toastType={ToastType.Error} />)
     const bodyText = tree.queryByTestId('ToastBody')
     expect(bodyText).toBeNull()
   })

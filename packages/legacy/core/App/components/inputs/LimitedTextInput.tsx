@@ -3,7 +3,6 @@ import { View, StyleSheet, TextInput, TextInputProps } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { ThemedText } from '../texts/ThemedText'
-import { TOKENS, useServices } from '../../container-api'
 
 interface Props extends TextInputProps {
   label: string
@@ -14,8 +13,7 @@ interface Props extends TextInputProps {
 const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
   const [characterCount, setCharacterCount] = useState(0)
-  const { Inputs, TextTheme } = useTheme()
-  const [{ accessibilityMaxFontSizeMultiplier = 2 }] = useServices([TOKENS.CONFIG])
+  const { Inputs, TextTheme, maxFontSizeMultiplier } = useTheme()
   const styles = StyleSheet.create({
     container: {
       marginVertical: 10,
@@ -45,7 +43,7 @@ const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...
     <View style={styles.container}>
       <ThemedText style={{ marginBottom: 5 }}>{label}</ThemedText>
       <TextInput
-        maxFontSizeMultiplier={accessibilityMaxFontSizeMultiplier}
+        maxFontSizeMultiplier={maxFontSizeMultiplier}
         style={[styles.textInput, focused && { ...Inputs.inputSelected }]}
         selectionColor={Inputs.inputSelected.borderColor}
         onFocus={() => setFocused(true)}
