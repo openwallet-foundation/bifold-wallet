@@ -97,6 +97,15 @@ export const PINRules: PINValidationRules = {
 
 export const domain = 'didcomm://invite'
 
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 40,
+}
+
 export const tourMargin = 25
 
 export const hitSlop = { top: 44, bottom: 44, left: 44, right: 44 }
