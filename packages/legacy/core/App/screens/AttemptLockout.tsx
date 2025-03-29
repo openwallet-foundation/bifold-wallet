@@ -137,7 +137,7 @@ const AttemptLockout: React.FC = () => {
             </View>
           )}
         </View>
-        <InfoTextBox style={{ flex: 1, padding: Spacing.md }}>
+        <InfoTextBox style={{ flexShrink: 1, padding: Spacing.md }}>
           <View style={{ flex: 1 }}>
             <ThemedText variant="bold" style={{ marginBottom: Spacing.md }}>
               {t('AttemptLockout.ForgotPIN')}
