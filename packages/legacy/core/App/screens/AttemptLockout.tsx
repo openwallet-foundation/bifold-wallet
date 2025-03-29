@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -24,11 +24,9 @@ const AttemptLockout: React.FC = () => {
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()
   const [timeoutDone, setTimeoutDone] = useState<boolean>(false)
-  const { fontScale } = useWindowDimensions()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
       backgroundColor: ColorPallet.brand.primaryBackground,
       paddingHorizontal: Spacing.lg,
     },
@@ -112,7 +110,7 @@ const AttemptLockout: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
-      <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={fontScale >= 1.7}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <Assets.svg.appLockout style={styles.image} />
         <ThemedText variant="headingThree" style={styles.title}>
           {t('AttemptLockout.Title')}
@@ -139,8 +137,8 @@ const AttemptLockout: React.FC = () => {
             </View>
           )}
         </View>
-        <InfoTextBox style={{ padding: Spacing.md }}>
-          <View style={{ flex: 1}}>
+        <InfoTextBox style={{ flexGrow: 1, padding: Spacing.md }}>
+          <View style={{ flex: 1 }}>
             <ThemedText variant="bold" style={{ marginBottom: Spacing.md }}>
               {t('AttemptLockout.ForgotPIN')}
             </ThemedText>
