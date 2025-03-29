@@ -4,12 +4,13 @@ import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import { second, minute, hour } from '../constants'
+import { Spacing, second, minute, hour } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import InfoTextBox from '../components/texts/InfoTextBox'
 
 interface Timer {
   hours: number
@@ -29,16 +30,18 @@ const AttemptLockout: React.FC = () => {
       flex: 1,
       alignItems: 'center',
       backgroundColor: ColorPallet.brand.primaryBackground,
+      paddingHorizontal: Spacing.lg,
     },
     title: {
-      marginHorizontal: 50,
       textAlign: 'center',
-      marginBottom: 50,
+      marginBottom: Spacing.lg,
     },
     description: {
       textAlign: 'center',
-      marginHorizontal: 50,
-      marginBottom: 50,
+      marginBottom: Spacing.lg,
+    },
+    actionContainer: {
+      marginBottom: Spacing.lg,
     },
     tryAgain: {
       textAlign: 'center',
@@ -49,8 +52,7 @@ const AttemptLockout: React.FC = () => {
     image: {
       width: 150,
       height: 150,
-      marginBottom: 20,
-      marginTop: 25,
+      marginVertical: Spacing.lg,
       alignSelf: 'center',
     },
   })
@@ -109,32 +111,42 @@ const AttemptLockout: React.FC = () => {
   }, [dispatch, state.loginAttempt.loginAttempts])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
       <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={fontScale >= 1.7}>
         <Assets.svg.appLockout style={styles.image} />
         <ThemedText variant="headingThree" style={styles.title}>
           {t('AttemptLockout.Title')}
         </ThemedText>
         <ThemedText style={styles.description}>{t('AttemptLockout.Description')}</ThemedText>
-        {timeoutDone ? (
-          <Button
-            title={t('Global.TryAgain')}
-            buttonType={ButtonType.Primary}
-            testID={testIdWithKey('Enter')}
-            accessibilityLabel={t('Global.TryAgain')}
-            onPress={unlock}
-          />
-        ) : (
-          <View>
-            <ThemedText style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</ThemedText>
-            {time && (
-              <ThemedText variant="bold" style={styles.countDown}>
-                {time?.hours} {t('AttemptLockout.Hours')} {time?.minutes} {t('AttemptLockout.Minutes')} {time?.seconds}{' '}
-                {t('AttemptLockout.Seconds')}
-              </ThemedText>
-            )}
+        <View style={styles.actionContainer}>
+          {timeoutDone ? (
+            <Button
+              title={t('Global.TryAgain')}
+              buttonType={ButtonType.Primary}
+              testID={testIdWithKey('Enter')}
+              accessibilityLabel={t('Global.TryAgain')}
+              onPress={unlock}
+            />
+          ) : (
+            <View>
+              <ThemedText style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</ThemedText>
+              {time && (
+                <ThemedText variant="bold" style={styles.countDown}>
+                  {time?.hours} {t('AttemptLockout.Hours')} {time?.minutes} {t('AttemptLockout.Minutes')}{' '}
+                  {time?.seconds} {t('AttemptLockout.Seconds')}
+                </ThemedText>
+              )}
+            </View>
+          )}
+        </View>
+        <InfoTextBox style={{ padding: Spacing.md }}>
+          <View style={{ flex: 1}}>
+            <ThemedText variant="bold" style={{ marginBottom: Spacing.md }}>
+              {t('AttemptLockout.ForgotPIN')}
+            </ThemedText>
+            <ThemedText>{t('AttemptLockout.ForgotPINDescription')}</ThemedText>
           </View>
-        )}
+        </InfoTextBox>
       </ScrollView>
     </SafeAreaView>
   )
