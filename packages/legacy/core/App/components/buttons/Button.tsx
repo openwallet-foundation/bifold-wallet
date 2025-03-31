@@ -15,6 +15,7 @@ const ButtonImplComponent = (
     testID,
     onPress,
     disabled = false,
+    maxfontSizeMultiplier,
     children,
   }: ButtonProps,
   ref: React.LegacyRef<TouchableOpacity>
@@ -68,6 +69,7 @@ const ButtonImplComponent = (
       >
         {children}
         <ThemedText
+          maxFontSizeMultiplier={maxfontSizeMultiplier}
           style={[
             buttonStyles[buttonType].text,
             disabled &&
