@@ -11,7 +11,7 @@ import {
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { BackHandler, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -23,6 +23,7 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
+import { ThemedText } from '../components/texts/ThemedText'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -78,18 +79,9 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
-    headerTitle: {
-      ...TextTheme.bold,
-    },
-    headerDetails: {
-      ...TextTheme.normal,
-    },
     descriptionContainer: {
       marginHorizontal: 30,
       marginVertical: 30,
-    },
-    descriptionText: {
-      ...TextTheme.normal,
     },
     label: {
       fontWeight: TextTheme.bold.fontWeight,
@@ -114,19 +106,19 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
         <View style={styles.container}>
           {sharedProofDataItems.length > 0 && (
             <View style={styles.descriptionContainer}>
-              <Text style={styles.descriptionText}>
+              <ThemedText>
                 {senderReview ? (
                   <>
                     {t('ProofRequest.ReviewSentInformation', { count: sharedProofDataItems.length })}{' '}
-                    <Text style={styles.label}>{connectionLabel}</Text>
+                    <ThemedText style={styles.label}>{connectionLabel}</ThemedText>
                   </>
                 ) : (
                   <>
-                    <Text style={styles.label}>{connectionLabel}</Text>{' '}
+                    <ThemedText style={styles.label}>{connectionLabel}</ThemedText>{' '}
                     {t('ProofRequest.ShareFollowingInformation', { count: sharedProofDataItems.length })}
                   </>
                 )}
-              </Text>
+              </ThemedText>
             </View>
           )}
           <View style={styles.content}>
@@ -142,10 +134,10 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.iconContainer}>{<Assets.svg.informationReceived />}</View>
-          <Text>
-            <Text style={styles.headerTitle}>{t('Verifier.InformationReceived') + ' '}</Text>
-            <Text style={styles.headerDetails}>{t('Verifier.InformationReceivedDetails')}</Text>
-          </Text>
+          <ThemedText>
+            <ThemedText variant="bold">{t('Verifier.InformationReceived') + ' '}</ThemedText>
+            <ThemedText>{t('Verifier.InformationReceivedDetails')}</ThemedText>
+          </ThemedText>
         </View>
         <View style={styles.content}>
           <SharedProofData recordId={record.id} />
@@ -205,10 +197,14 @@ const UnverifiedProof: React.FC<UnverifiedProofProps> = ({ record, onBackPressed
       <View style={styles.header}>
         <View style={styles.headerTitleContainer}>
           {record.state === ProofState.Abandoned && (
-            <Text style={styles.headerTitle}>{t('ProofRequest.ProofRequestDeclined')}</Text>
+            <ThemedText variant="bold" style={styles.headerTitle}>
+              {t('ProofRequest.ProofRequestDeclined')}
+            </ThemedText>
           )}
           {record.isVerified === false && (
-            <Text style={styles.headerTitle}>{t('Verifier.ProofVerificationFailed')}</Text>
+            <ThemedText variant="bold" style={styles.headerTitle}>
+              {t('Verifier.ProofVerificationFailed')}
+            </ThemedText>
           )}
         </View>
         <Assets.svg.verifierRequestDeclined style={{ alignSelf: 'center', marginTop: 20 }} height={200} />

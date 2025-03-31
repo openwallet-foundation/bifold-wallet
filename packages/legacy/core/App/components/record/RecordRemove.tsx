@@ -1,12 +1,13 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import { TOKENS, useServices } from '../../container-api'
 import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
+import { ThemedText } from '../texts/ThemedText'
 
 interface RecordRemoveProps {
   onRemove?: GenericFn
@@ -22,7 +23,6 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
       ...TextTheme.normal,
     },
     footerText: {
-      ...TextTheme.normal,
       color: ColorPallet.brand.link,
     },
     linkContainer: {
@@ -55,9 +55,9 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
         onPress={onRemove}
       >
         <Assets.svg.iconDelete width={20} height={20} color={ColorPallet.semantic.error} />
-        <Text style={[styles.footerText, { color: ColorPallet.semantic.error }]}>
+        <ThemedText style={[styles.footerText, { color: ColorPallet.semantic.error }]}>
           {t('CredentialDetails.RemoveFromWallet')}
-        </Text>
+        </ThemedText>
       </TouchableOpacity>
     </View>
   )

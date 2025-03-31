@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { View, StyleSheet, TextInput, TextInputProps } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { ThemedText } from '../texts/ThemedText'
 
 interface Props extends TextInputProps {
   label: string
@@ -12,15 +13,11 @@ interface Props extends TextInputProps {
 const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...textInputProps }) => {
   const [focused, setFocused] = useState(false)
   const [characterCount, setCharacterCount] = useState(0)
-  const { Inputs, TextTheme } = useTheme()
+  const { Inputs, TextTheme, maxFontSizeMultiplier } = useTheme()
   const styles = StyleSheet.create({
     container: {
       marginVertical: 10,
       width: '100%',
-    },
-    label: {
-      ...TextTheme.normal,
-      marginBottom: 5,
     },
     textInput: {
       ...Inputs.textInput,
@@ -44,8 +41,9 @@ const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <ThemedText style={{ marginBottom: 5 }}>{label}</ThemedText>
       <TextInput
+        maxFontSizeMultiplier={maxFontSizeMultiplier}
         style={[styles.textInput, focused && { ...Inputs.inputSelected }]}
         selectionColor={Inputs.inputSelected.borderColor}
         onFocus={() => setFocused(true)}
@@ -53,9 +51,9 @@ const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...
         onChangeText={onChangeText}
         {...textInputProps}
       />
-      <Text style={styles.limitCounter}>
+      <ThemedText style={styles.limitCounter}>
         {characterCount}/{limit}
-      </Text>
+      </ThemedText>
     </View>
   )
 }

@@ -5,6 +5,7 @@ exports[`Link Component Renders correctly, testID exists, and is pressable 1`] =
   accessibilityLabel="my link"
   accessibilityRole="link"
   accessible={true}
+  maxFontSizeMultiplier={2}
   onPress={
     [MockFunction] {
       "calls": Array [
@@ -21,13 +22,18 @@ exports[`Link Component Renders correctly, testID exists, and is pressable 1`] =
   style={
     Array [
       Object {
-        "alignSelf": "flex-start",
-        "color": "#42803E",
+        "color": "#FFFFFF",
         "fontSize": 18,
         "fontWeight": "normal",
-        "textDecorationLine": "underline",
       },
-      Object {},
+      Array [
+        Object {
+          "alignSelf": "flex-start",
+          "color": "#42803E",
+          "textDecorationLine": "underline",
+        },
+        Object {},
+      ],
     ]
   }
   testID="com.ariesbifold:id/MyLink"

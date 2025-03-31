@@ -20,6 +20,7 @@ import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import Link from './components/texts/Link'
 import Text from './components/texts/Text'
+import { ThemedText } from './components/texts/ThemedText'
 import { ToastType } from './components/toast/BaseToast'
 import toastConfig from './components/toast/ToastConfig'
 import { AttachTourStep } from './components/tour/AttachTourStep'
@@ -111,7 +112,7 @@ export type {
   IAssets,
   ITheme,
 } from './theme'
-export type { PersistentState } from './types/state'
+export type { VersionInfo, PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
@@ -200,6 +201,7 @@ export {
   components,
   contexts,
   Text,
+  ThemedText,
   loadLoginAttempt,
   Button,
   BifoldLogger,

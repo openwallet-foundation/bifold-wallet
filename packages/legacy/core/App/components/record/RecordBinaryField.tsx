@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import ImageModal from '../../components/modals/ImageModal'
 import { hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface RecordBinaryFieldProps {
   attributeValue: string
@@ -42,9 +43,9 @@ const RecordBinaryField: React.FC<RecordBinaryFieldProps> = ({ attributeValue, s
           <Image style={styles.image} source={{ uri: attributeValue }} />
         </TouchableOpacity>
       ) : (
-        <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
+        <ThemedText style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
           {hiddenFieldValue}
-        </Text>
+        </ThemedText>
       )}
       {showImageModal && <ImageModal uri={attributeValue} onDismissPressed={() => setShowImageModal(false)} />}
     </View>

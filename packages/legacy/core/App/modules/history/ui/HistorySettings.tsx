@@ -3,7 +3,7 @@ import { ParamListBase } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 // eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../../../components/buttons/Button-api'
@@ -16,6 +16,7 @@ import { testIdWithKey } from '../../../utils/testable'
 import { HistoryBlockSelection, IHistoryManager } from '../types'
 
 import SingleSelectBlock from './components/SingleSelectBlock'
+import { ThemedText } from '../../../components/texts/ThemedText'
 
 interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> {}
 
@@ -24,7 +25,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
   const [isLoading] = useState(false)
   const { t } = useTranslation()
 
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
@@ -133,15 +134,17 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
     getSavedHistorySettingsOption().catch((e) => {
       logger.error(`[${HistorySettings.name}]:[getSavedHistorySettingsOption] Error: ${e}`)
     })
-    }, [historyManager, logger])
+  }, [historyManager, logger])
 
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <View>
-            <Text style={[style.title, TextTheme.headerTitle]}>{t('ActivityHistory.Title')}</Text>
-            <Text style={[style.title, TextTheme.normal]}>{t('ActivityHistory.Description')}</Text>
+            <ThemedText variant="headerTitle" style={style.title}>
+              {t('ActivityHistory.Title')}
+            </ThemedText>
+            <ThemedText style={style.title}>{t('ActivityHistory.Description')}</ThemedText>
             <View style={style.gap} />
             <SingleSelectBlock
               initialSelect={initialHistory}

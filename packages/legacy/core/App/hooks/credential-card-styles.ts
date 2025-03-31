@@ -11,7 +11,7 @@ const useCredentialCardStyles = (
   proof?: boolean
 ) => {
   const { ColorPallet, TextTheme, ListItems, CredentialCardShadowTheme } = useTheme()
-  const { width } = useWindowDimensions()
+  const { width, fontScale } = useWindowDimensions()
   const padding = width * 0.05
   const logoHeight = width * 0.12
   const borderRadius = 10
@@ -66,8 +66,8 @@ const useCredentialCardStyles = (
       alignItems: 'center',
     },
     logoContainer: {
-      width: logoHeight,
-      height: logoHeight,
+      width: logoHeight * (fontScale > 1.7 ? 1.2 : 1),
+      height: logoHeight * (fontScale > 1.7 ? 1.2 : 1),
       backgroundColor: '#ffffff',
       borderRadius: 8,
       justifyContent: 'center',

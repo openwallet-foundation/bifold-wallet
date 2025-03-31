@@ -92,15 +92,21 @@ exports[`AlertModal Component Renders correctly 1`] = `
               
             </Text>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "alignSelf": "center",
-                  "color": "#FFFFFF",
-                  "flexShrink": 1,
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "marginLeft": 7,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "alignSelf": "center",
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "marginLeft": 7,
+                  },
+                ]
               }
               testID="com.ariesbifold:id/HeaderText"
             >
@@ -121,14 +127,20 @@ exports[`AlertModal Component Renders correctly 1`] = `
         >
           <View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "flexShrink": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginVertical": 16,
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "marginVertical": 16,
+                  },
+                ]
               }
               testID="com.ariesbifold:id/BodyText"
             >
@@ -191,17 +203,25 @@ exports[`AlertModal Component Renders correctly 1`] = `
                   }
                 >
                   <Text
+                    maxFontSizeMultiplier={2}
                     style={
                       Array [
                         Object {
                           "color": "#FFFFFF",
                           "fontSize": 18,
-                          "fontWeight": "bold",
-                          "textAlign": "center",
+                          "fontWeight": "normal",
                         },
-                        false,
-                        false,
-                        false,
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "bold",
+                            "textAlign": "center",
+                          },
+                          false,
+                          false,
+                          false,
+                        ],
                       ]
                     }
                   >

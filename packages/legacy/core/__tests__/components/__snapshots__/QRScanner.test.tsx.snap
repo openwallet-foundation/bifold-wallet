@@ -150,14 +150,20 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
           󰐳
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "white",
-              "fontSize": 20,
-              "fontWeight": "bold",
-              "marginHorizontal": 10,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "white",
+                "marginHorizontal": 10,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Scan.WillScanAutomatically
@@ -691,17 +697,22 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
               }
             >
               <Text
+                maxFontSizeMultiplier={2}
                 style={
                   Array [
                     Object {
                       "color": "#FFFFFF",
                       "fontSize": 32,
                       "fontWeight": "bold",
-                      "textAlign": "center",
                     },
-                    Object {
-                      "paddingHorizontal": 20,
-                    },
+                    Array [
+                      Object {
+                        "textAlign": "center",
+                      },
+                      Object {
+                        "paddingHorizontal": 20,
+                      },
+                    ],
                   ]
                 }
                 testID="com.ariesbifold:id/WalletName"
@@ -787,14 +798,19 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
               </View>
             </View>
             <Text
+              maxFontSizeMultiplier={2}
               style={
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "marginTop": 20,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginTop": 20,
+                    "textAlign": "center",
+                  },
+                ]
               }
             >
               Connection.ShareQR
@@ -1118,14 +1134,20 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
           󰐳
         </Text>
         <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "color": "white",
-              "fontSize": 20,
-              "fontWeight": "bold",
-              "marginHorizontal": 10,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "white",
+                "marginHorizontal": 10,
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Scan.WillScanAutomatically

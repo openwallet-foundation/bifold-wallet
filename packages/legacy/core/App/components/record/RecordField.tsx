@@ -3,7 +3,7 @@ import { Attribute, BrandingOverlayType, Field } from '@hyperledger/aries-oca/bu
 import startCase from 'lodash.startcase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
@@ -13,6 +13,7 @@ import { testIdWithKey } from '../../utils/testable'
 import RecordBinaryField from './RecordBinaryField'
 import RecordDateIntField from './RecordDateIntField'
 import { useServices, TOKENS } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 
 interface RecordFieldProps {
   field: Field
@@ -50,9 +51,9 @@ export const AttributeValue: React.FC<AttributeValueParams> = ({ field, style, s
     return <RecordDateIntField field={field} style={style} shown={shown} />
   }
   return (
-    <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
+    <ThemedText style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
       {shown ? field.value : hiddenFieldValue}
-    </Text>
+    </ThemedText>
   )
 }
 
@@ -109,9 +110,9 @@ const RecordField: React.FC<RecordFieldProps> = ({
           {fieldLabel ? (
             fieldLabel(field)
           ) : (
-            <Text style={ListItems.recordAttributeLabel} testID={testIdWithKey('AttributeName')}>
+            <ThemedText style={ListItems.recordAttributeLabel} testID={testIdWithKey('AttributeName')}>
               {field.label ?? startCase(field.name || '')}
-            </Text>
+            </ThemedText>
           )}
         </View>
 
@@ -126,7 +127,9 @@ const RecordField: React.FC<RecordFieldProps> = ({
               onPress={onToggleViewPressed}
               style={styles.link}
             >
-              <Text style={ListItems.recordLink}>{shown ? t('Record.Hide') : t('Record.Show')}</Text>
+              <ThemedText maxFontSizeMultiplier={1.2} style={ListItems.recordLink}>
+                {shown ? t('Record.Hide') : t('Record.Show')}
+              </ThemedText>
             </TouchableOpacity>
           ) : null}
         </View>

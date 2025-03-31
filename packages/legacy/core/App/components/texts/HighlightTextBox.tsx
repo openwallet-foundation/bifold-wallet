@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { ThemedText } from './ThemedText'
 
 export interface TextBoxProps {
   children: string
@@ -32,7 +33,7 @@ const HighlightTextBox: React.FC<TextBoxProps> = ({ children }) => {
   return (
     <View style={style.container}>
       <View style={style.accentBox} />
-      <Text style={[style.headerText, { paddingTop: offset, paddingBottom: offset }]}>{children}</Text>
+      <ThemedText style={[style.headerText, { paddingTop: offset, paddingBottom: offset }]}>{children}</ThemedText>
     </View>
   )
 }

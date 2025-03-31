@@ -47,6 +47,7 @@ describe('CredentialCard11Logo', () => {
         },
         shadowOpacity: 0.3,
       },
+      maxFontSizeMultiplier: 2,
     })
   })
 

@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleProp, Text, TextStyle, View, StyleSheet } from 'react-native'
+import { StyleProp, TextStyle, View, StyleSheet } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
+import { ThemedText } from '../texts/ThemedText'
 
 interface CardWatermarkProps {
   watermark: string
@@ -35,14 +36,14 @@ const CardWatermark: React.FC<CardWatermarkProps> = ({ watermark, style, height,
   return (
     <View style={styles.container}>
       {Array.from({ length: Math.ceil((height * 2) / fontSize + 1) }).map((_, i) => (
-        <Text
+        <ThemedText
           accessible={false}
           key={i}
           numberOfLines={1}
           style={StyleSheet.compose({ ...styles.watermarkText, ...{ fontSize } }, style)}
         >
           {watermarkText}
-        </Text>
+        </ThemedText>
       ))}
     </View>
   )

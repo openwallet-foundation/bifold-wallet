@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Text, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, useWindowDimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop } from '../../constants'
@@ -8,6 +8,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import Button, { ButtonType } from '../buttons/Button'
+import { ThemedText } from '../texts/ThemedText'
 import SafeAreaModal from './SafeAreaModal'
 
 interface AppGuideModalProps {
@@ -31,7 +32,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
 }) => {
   const { height, width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { ColorPallet } = useTheme()
   const iconSize = 30
   const dismissIconName = 'clear'
   const iconColor = ColorPallet.notification.infoIcon
@@ -63,13 +64,11 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
       flexWrap: 'wrap',
     },
     headerText: {
-      ...TextTheme.headingThree,
       alignSelf: 'flex-start',
       flexWrap: 'wrap',
       color: ColorPallet.notification.infoText,
     },
     bodyText: {
-      ...TextTheme.normal,
       flexShrink: 1,
       marginVertical: 16,
       color: ColorPallet.notification.infoText,
@@ -85,9 +84,14 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <View style={styles.headerTextContainer}>
-              <Text style={styles.headerText} testID={testIdWithKey('HeaderText')} accessibilityRole="header">
+              <ThemedText
+                variant="headingThree"
+                style={styles.headerText}
+                testID={testIdWithKey('HeaderText')}
+                accessibilityRole="header"
+              >
                 {title}
-              </Text>
+              </ThemedText>
             </View>
             <View style={styles.dismissIcon}>
               <TouchableOpacity
@@ -102,9 +106,9 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
             </View>
           </View>
           <View>
-            <Text style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+            <ThemedText style={styles.bodyText} testID={testIdWithKey('BodyText')}>
               {description}
-            </Text>
+            </ThemedText>
             {onCallToActionPressed && (
               <View style={{ width: '100%', marginBottom: 10 }}>
                 <Button

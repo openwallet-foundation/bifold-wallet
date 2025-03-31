@@ -1,7 +1,7 @@
 import { Header, useHeaderHeight, HeaderBackButton } from '@react-navigation/elements'
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, View, ScrollView, Linking, Platform } from 'react-native'
+import { StyleSheet, View, ScrollView, Linking, Platform } from 'react-native'
 import { PERMISSIONS, RESULTS, request, check, PermissionStatus } from 'react-native-permissions'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -20,6 +20,7 @@ import { testIdWithKey } from '../utils/testable'
 import PINEnter, { PINEntryUsage } from './PINEnter'
 import { TOKENS, useServices } from '../container-api'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { ThemedText } from '../components/texts/ThemedText'
 
 enum UseBiometryUsage {
   InitialSetup,
@@ -50,7 +51,7 @@ const UseBiometry: React.FC = () => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { TextTheme, ColorPallet, Assets } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const screenUsage = useMemo(() => {
     return store.onboarding.didCompleteOnboarding ? UseBiometryUsage.ToggleOnOff : UseBiometryUsage.InitialSetup
@@ -287,21 +288,21 @@ const UseBiometry: React.FC = () => {
         </View>
         {biometryAvailable ? (
           <View style={styles.biometryAvailableRowGap}>
-            <Text style={TextTheme.normal}>{t('Biometry.EnabledText1')}</Text>
-            <Text style={TextTheme.normal}>
+            <ThemedText>{t('Biometry.EnabledText1')}</ThemedText>
+            <ThemedText>
               {t('Biometry.EnabledText2')}
-              <Text style={TextTheme.bold}> {t('Biometry.Warning')}</Text>
-            </Text>
+              <ThemedText variant="bold"> {t('Biometry.Warning')}</ThemedText>
+            </ThemedText>
           </View>
         ) : (
           <View style={styles.biometryAvailableRowGap}>
-            <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText1')}</Text>
-            <Text style={TextTheme.normal}>{t('Biometry.NotEnabledText2')}</Text>
+            <ThemedText>{t('Biometry.NotEnabledText1')}</ThemedText>
+            <ThemedText>{t('Biometry.NotEnabledText2')}</ThemedText>
           </View>
         )}
         <View style={{ flexDirection: 'row', marginVertical: 20 }}>
           <View style={{ flexShrink: 1, marginRight: 10, justifyContent: 'center' }}>
-            <Text style={TextTheme.bold}>{t('Biometry.UseToUnlock')}</Text>
+            <ThemedText variant="bold">{t('Biometry.UseToUnlock')}</ThemedText>
           </View>
           <View style={{ justifyContent: 'center' }}>
             <ToggleButton

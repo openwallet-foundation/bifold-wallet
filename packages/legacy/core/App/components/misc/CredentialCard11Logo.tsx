@@ -1,11 +1,12 @@
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import { Image, Text, View } from 'react-native'
+import { Image, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../../components/texts/ThemedText'
 
 interface CredentialCardLogo {
   noLogoText: string
@@ -38,7 +39,8 @@ const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({ noLogoText, overla
           testID={testIdWithKey('Logo')}
         />
       ) : (
-        <Text
+        <ThemedText
+          variant="bold"
           style={[
             TextTheme.bold,
             {
@@ -50,7 +52,7 @@ const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({ noLogoText, overla
           testID={testIdWithKey('NoLogoText')}
         >
           {noLogoText.charAt(0).toUpperCase()}
-        </Text>
+        </ThemedText>
       )}
     </View>
   )

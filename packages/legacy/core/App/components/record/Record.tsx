@@ -1,7 +1,7 @@
 import { BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
@@ -10,6 +10,7 @@ import RecordField from './RecordField'
 import RecordFooter from './RecordFooter'
 import RecordHeader from './RecordHeader'
 import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 
 export interface RecordProps {
   header?: () => React.ReactElement | null
@@ -84,7 +85,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
                   accessibilityLabel={t('Record.HideAll')}
                   accessibilityRole="button"
                 >
-                  <Text style={ListItems.recordLink}>{t('Record.HideAll')}</Text>
+                  <ThemedText style={ListItems.recordLink}>{t('Record.HideAll')}</ThemedText>
                 </TouchableOpacity>
               </View>
             ) : null}

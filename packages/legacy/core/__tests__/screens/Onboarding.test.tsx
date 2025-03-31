@@ -1,6 +1,5 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { Text } from 'react-native'
 
 import * as themeContext from '../../App/contexts/theme' // note we're importing with a * to import all the exports
 import Onboarding, { OnboardingStyleSheet } from '../../App/screens/Onboarding'
@@ -8,15 +7,16 @@ import { createCarouselStyle, createPageWith } from '../../App/screens/Onboardin
 import { OnboardingTheme, theme } from '../../App/theme'
 import CredentialList from '../../App/assets/img/credential-list.svg'
 import { testIdWithKey } from '../../App/utils/testable'
+import { ThemedText } from '../../App/components/texts/ThemedText'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
 const pages = [
   <>
-    <Text testID={'bodyText'}>Hello</Text>
+    <ThemedText testID={'bodyText'}>Hello</ThemedText>
   </>,
   <>
-    <Text testID={'bodyText'}>World</Text>
+    <ThemedText testID={'bodyText'}>World</ThemedText>
   </>,
 ]
 

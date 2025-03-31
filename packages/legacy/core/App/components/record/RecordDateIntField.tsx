@@ -1,12 +1,13 @@
 import { Attribute } from '@hyperledger/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { dateIntFormat, hiddenFieldValue } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
+import { ThemedText } from '../texts/ThemedText'
 
 interface RecordBinaryFieldProps {
   field: Attribute
@@ -53,9 +54,9 @@ const RecordDateIntField: React.FC<RecordBinaryFieldProps> = ({ field, shown, st
   })
 
   return (
-    <Text style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
+    <ThemedText style={style || styles.text} testID={testIdWithKey('AttributeValue')}>
       {shown ? date : hiddenFieldValue}
-    </Text>
+    </ThemedText>
   )
 }
 
