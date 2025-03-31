@@ -85,6 +85,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
           <View style={styles.headerContainer}>
             <View style={styles.headerTextContainer}>
               <ThemedText
+                maxFontSizeMultiplier={1.5}
                 variant="headingThree"
                 style={styles.headerText}
                 testID={testIdWithKey('HeaderText')}
@@ -106,7 +107,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
             </View>
           </View>
           <View>
-            <ThemedText style={styles.bodyText} testID={testIdWithKey('BodyText')}>
+            <ThemedText maxFontSizeMultiplier={1.5} style={styles.bodyText} testID={testIdWithKey('BodyText')}>
               {description}
             </ThemedText>
             {onCallToActionPressed && (
@@ -117,6 +118,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
                   testID={testIdWithKey('Primary')}
                   buttonType={ButtonType.Primary}
                   onPress={onCallToActionPressed}
+                  maxfontSizeMultiplier={1.5}
                 />
               </View>
             )}
@@ -127,6 +129,7 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
                 testID={testIdWithKey('Secondary')}
                 buttonType={ButtonType.Secondary}
                 onPress={onSecondCallToActionPressed}
+                maxfontSizeMultiplier={1.5}
               />
             )}
           </View>

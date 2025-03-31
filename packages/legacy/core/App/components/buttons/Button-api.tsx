@@ -16,6 +16,7 @@ export interface ButtonProps extends React.PropsWithChildren {
   buttonType: ButtonType
   accessibilityLabel?: string
   accessibilityHint?: string
+  maxfontSizeMultiplier?: number
   testID?: string
   onPress?: () => void
   disabled?: boolean
