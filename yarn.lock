@@ -2147,6 +2147,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch::locator=aries-bifold-root%40workspace%3A.":
+  version: 0.5.13
+  resolution: "@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch::version=0.5.13&hash=4f5cb7&locator=aries-bifold-root%40workspace%3A."
+  dependencies:
+    "@astronautlabs/jsonpath": ^1.1.2
+    "@credo-ts/core": 0.5.13
+    "@sphereon/pex-models": ^2.3.1
+    big-integer: ^1.6.51
+    bn.js: ^5.2.1
+    class-transformer: 0.5.1
+    class-validator: 0.14.1
+    reflect-metadata: ^0.1.13
+  peerDependencies:
+    "@hyperledger/anoncreds-shared": ^0.2.2
+  checksum: 251bbbe6c0829454604027f461fa5d042fc8ff2b2fcc808953ec7967bdbfdcd66b84631f0750bd212f7fa899735b9eb4f73f8c1d697bf64a9576afd2e822738d
+  languageName: node
+  linkType: hard
+
 "@credo-ts/askar@npm:0.5.13":
   version: 0.5.13
   resolution: "@credo-ts/askar@npm:0.5.13"
@@ -2219,7 +2237,7 @@ __metadata:
 
 "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=aries-bifold-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=7eff54&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=680100&locator=aries-bifold-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2263,7 +2281,7 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
     webcrypto-core: ^1.8.0
-  checksum: 2593029c121f9bcfbd80b28cb3ba57abb68240a32ea5764611415b9646fec78632e7b0ec20fea8a7ba233172ce8ec537dab59a3da66e7ded0cc536d36b4625fe
+  checksum: c1f2440de34e2930cfc4db6ccf1920f068126d83fadf9caf56afe90a1bbb25a145b8b3c990bbe1fb51b69b5ac099e7ea64dfa9cbf625a7b0f31ad7051f4dd8ad
   languageName: node
   linkType: hard
 
