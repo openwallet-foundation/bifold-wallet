@@ -115,6 +115,15 @@ export interface ISVGAssets {
   tabThreeFocusedIcon: React.FC<SvgProps>
 }
 
+export interface ISpacing {
+  xs: number
+  sm: number
+  md: number
+  lg: number
+  xl: number
+  xxl: number
+}
+
 export interface IFontAttributes {
   fontFamily?: string
   fontStyle?: 'normal' | 'italic'
@@ -270,6 +279,15 @@ export const lightOpacity = 0.35
 export const zeroOpacity = 0.0
 export const borderWidth = 2
 export const maxFontSizeMultiplier = 2
+
+const Spacing: ISpacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 40,
+}
 
 const GrayscaleColors: IGrayscaleColors = {
   black: '#000000',
@@ -1072,6 +1090,7 @@ const InputInlineMessage: IInlineInputMessage = {
 }
 
 export interface ITheme {
+  Spacing: ISpacing
   ColorPallet: IColorPallet
   TextTheme: ITextTheme
   InputInlineMessage: IInlineInputMessage
@@ -1098,6 +1117,7 @@ export interface ITheme {
 }
 
 export const theme: ITheme = {
+  Spacing,
   ColorPallet,
   TextTheme,
   InputInlineMessage,
