@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import Link from '../components/texts/Link'
 import { ThemedText } from '../components/texts/ThemedText'
-import { Spacing } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -21,7 +20,7 @@ type UpdateAvailableProps = {
 const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, googlePlayStoreUrl }) => {
   const { t } = useTranslation()
   const [, dispatch] = useStore()
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPallet, Assets, Spacing } = useTheme()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   // Check if both store links are available

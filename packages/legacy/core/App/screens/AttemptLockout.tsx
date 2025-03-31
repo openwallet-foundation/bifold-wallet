@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import { Spacing, second, minute, hour } from '../constants'
+import { second, minute, hour } from '../constants'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -19,7 +19,7 @@ interface Timer {
 }
 
 const AttemptLockout: React.FC = () => {
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPallet, Assets, Spacing } = useTheme()
   const { t } = useTranslation()
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()

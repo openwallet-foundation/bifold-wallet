@@ -53,7 +53,7 @@ import * as types from './types'
 import Scan from './screens/Scan'
 import Onboarding from './screens/Onboarding'
 import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
-import { Spacing, PINRules, walletTimeout, tours, attemptLockoutConfig } from './constants'
+import { PINRules, walletTimeout, tours, attemptLockoutConfig } from './constants'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
@@ -100,6 +100,7 @@ export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 export type { AnimatedComponents } from './animated-components'
 export type {
   ISVGAssets,
+  ISpacing,
   IFontAttributes,
   IInputAttributes,
   IInputs,
@@ -208,7 +209,6 @@ export {
   LimitedTextInput,
   KeyboardView,
   BulletPoint,
-  Spacing,
   PINRules,
   walletTimeout,
   attemptLockoutConfig,
