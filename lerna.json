@@ -5,7 +5,7 @@
     "packages/verifier",
     "packages/remote-logs",
     "packages/react-native-attestation",
-    "packages/legacy/core"
+    "packages/core"
   ],
   "useWorkspaces": true,
   "npmClient": "yarn",
