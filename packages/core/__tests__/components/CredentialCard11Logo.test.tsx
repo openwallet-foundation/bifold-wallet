@@ -3,33 +3,28 @@ import { render } from '@testing-library/react-native'
 
 import CredentialCard11Logo from '../../src/components/misc/CredentialCard11Logo'
 import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
-import { useTheme } from '../../src/contexts/theme'
 import { testIdWithKey } from '../../src/utils/testable'
 
 jest.mock('../../src/contexts/theme', () => ({
-  useTheme: jest.fn(),
+  useTheme: jest.fn().mockReturnValue({
+    TextTheme: {
+      bold: {
+        fontWeight: 'bold',
+      },
+    },
+    CredentialCardShadowTheme: {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 0.3,
+    },
+    maxFontSizeMultiplier: 2,
+  }),
 }))
 
 describe('CredentialCard11Logo', () => {
-  beforeEach(() => {
-    ;(useTheme as jest.Mock).mockReturnValue({
-      TextTheme: {
-        bold: {
-          fontWeight: 'bold',
-        },
-      },
-      CredentialCardShadowTheme: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 1,
-          height: 1,
-        },
-        shadowOpacity: 0.3,
-      },
-      maxFontSizeMultiplier: 2,
-    })
-  })
-
   test('Renders correctly', async () => {
     const tree = render(
       <CredentialCard11Logo noLogoText="Credential" overlay={{} as any} overlayType={BrandingOverlayType.Branding10} />
