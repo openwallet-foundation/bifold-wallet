@@ -7,10 +7,8 @@ import { W3cCredentialDisplay } from '../types'
  * i.e. sanitizeString("helloWorld")  // returns: 'Hello world'
  */
 export function sanitizeString(str: string) {
-  // @ts-expect-error TODO: fix this, was previously ignored due to an error in our tsconfig
   const result = str.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replaceAll('_', ' ')
   let words = result.split(' ')
-  // @ts-expect-error TODO: fix this, was previously ignored due to an error in our tsconfig
   words = words.map((word, index) => {
     if (index === 0 || word.toUpperCase() === word) {
       return word.charAt(0).toUpperCase() + word.slice(1)

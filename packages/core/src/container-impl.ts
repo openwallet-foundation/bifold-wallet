@@ -4,7 +4,6 @@ import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
-// @ts-expect-error TODO: fix this, was previously ignored due to an error in our tsconfig
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import defaultIndyLedgers from './configs/ledgers/indy'

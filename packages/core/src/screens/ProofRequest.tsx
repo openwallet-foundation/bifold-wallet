@@ -371,9 +371,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       const records = fullCredentials.filter((record: CredentialExchangeRecord) =>
         record.credentials.some((cred: CredentialRecordBinding) => credList.includes(cred.credentialRecordId))
       )
-      const foundRevocationOffense =
-        containsRevokedCreds(records, unpackCredToField(activeCreds)) ||
-        containsRevokedCreds(records, unpackCredToField(activeCreds))
+      const foundRevocationOffense = containsRevokedCreds(records, unpackCredToField(activeCreds))
       setRevocationOffense(foundRevocationOffense)
     }
 
