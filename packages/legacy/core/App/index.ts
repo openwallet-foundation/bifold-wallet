@@ -100,6 +100,7 @@ export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 export type { AnimatedComponents } from './animated-components'
 export type {
   ISVGAssets,
+  ISpacing,
   IFontAttributes,
   IInputAttributes,
   IInputs,

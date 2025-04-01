@@ -272,6 +272,16 @@ const translation = {
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (PT-BR)",
     "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
   },
+  "AttemptLockout": {
+    "Title": "Your wallet is temporarily locked (PT-BR)",
+    "Description": "You have had too many unsuccessful PIN attempts. (PT-BR)",
+    "TryAgain": "You can try again in: (PT-BR)",
+    "Hours": "hours (PT-BR)",
+    "Minutes": "minutes (PT-BR)",
+    "Seconds": "seconds (PT-BR)",
+    "ForgotPIN": "Forgot your PIN? (PT-BR)",
+    "ForgotPINDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)",
+  },
   "Biometry": {
     "Toggle": "Habilitar Biometria",
     "On": "Biometria ativada",

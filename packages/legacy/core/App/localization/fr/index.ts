@@ -293,6 +293,8 @@ const translation = {
         "Hours": "heures",
         "Minutes": "minutes",
         "Seconds": "secondes",
+        "ForgotPIN": "Forgot your PIN? (FR)",
+        "ForgotPINDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)",
     },
     "Biometry": {
         "Toggle": "Basculer la biométrie",

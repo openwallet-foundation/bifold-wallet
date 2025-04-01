@@ -61,6 +61,7 @@
     "@react-navigation/native": "6.0.6",
     "@react-navigation/stack": "6.0.11",
     "@types/node": "16.9.6",
+    "@credo-ts/anoncreds@0.5.13": "patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch",
     "@credo-ts/core@0.5.13": "patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch",
     "@credo-ts/indy-vdr@0.5.13": "patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch",
     "@credo-ts/react-hooks": "patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch",

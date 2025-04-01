@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View, Platform, Linking } from 'react-native'
+import { ScrollView, StyleSheet, View, Platform, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import Link from '../components/texts/Link'
+import { ThemedText } from '../components/texts/ThemedText'
 import { useTheme } from '../contexts/theme'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -19,7 +20,7 @@ type UpdateAvailableProps = {
 const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, googlePlayStoreUrl }) => {
   const { t } = useTranslation()
   const [, dispatch] = useStore()
-  const { ColorPallet, Assets, TextTheme } = useTheme()
+  const { ColorPallet, Assets, Spacing } = useTheme()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   // Check if both store links are available
@@ -47,7 +48,7 @@ const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, goo
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      flexGrow: 1,
       padding: 20,
     },
     image: {
@@ -76,13 +77,13 @@ const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, goo
   })
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
           <Assets.svg.updateAvailable {...iconOptions} />
         </View>
-        <Text style={[TextTheme.headingTwo, { marginBottom: 24 }]}>{t('AppUpdate.Heading')}</Text>
-        <Text style={TextTheme.normal}>{t('AppUpdate.Body')}</Text>
+        <ThemedText variant="headingTwo" style={{ marginBottom: Spacing.lg }}>{t('AppUpdate.Heading')}</ThemedText>
+        <ThemedText>{t('AppUpdate.Body')}</ThemedText>
 
         {hasStoreLinks && (
           <Link style={{ marginVertical: 24 }} onPress={onPressWhatIsNew} linkText={t('AppUpdate.LearnMore')} />

@@ -294,6 +294,8 @@ const translation = {
     "Hours": "hours",
     "Minutes": "minutes",
     "Seconds": "seconds",
+    "ForgotPIN": "Forgot your PIN?",
+    "ForgotPINDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again.",
   },
   "Biometry": {
     "Toggle": "Toggle Biometrics",

@@ -24,24 +24,21 @@ const RootStack: React.FC = () => {
 
   useDeepLinks()
 
-  const isOnboardingComplete = useMemo(() => onboardingComplete, [onboardingComplete])
+  const shouldRenderMainStack = useMemo(() => onboardingComplete && store.authentication.didAuthenticate, [onboardingComplete, store.authentication.didAuthenticate])
 
   useEffect(() => {
     const sub = DeviceEventEmitter.addListener(EventTypes.DID_COMPLETE_ONBOARDING, () => {
       setOnboardingComplete(true)
     })
 
-    return () => {
-      sub.remove()
-    }
-  }, [setOnboardingComplete])
+    return sub.remove
+  }, [])
 
   useEffect(() => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => {})
+        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => null)
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
@@ -55,7 +52,7 @@ const RootStack: React.FC = () => {
     })
   }, [dispatch, loadState, t])
 
-  if (isOnboardingComplete) {
+  if (shouldRenderMainStack) {
     return <MainStack />
   }
 
