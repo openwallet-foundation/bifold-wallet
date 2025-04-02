@@ -26,6 +26,7 @@
     "next-version-bump": "ts-node ./scripts/get-next-bump.ts"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
     "@eslint/js": "^8.56.0",
     "@react-native/eslint-config": "^0.73.2",
     "@types/conventional-recommended-bump": "^6.1.0",

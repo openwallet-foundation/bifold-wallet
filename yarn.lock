@@ -7833,6 +7833,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aries-bifold-root@workspace:."
   dependencies:
+    "@commitlint/cli": ^11.0.0
     "@eslint/js": ^8.56.0
     "@react-native/eslint-config": ^0.73.2
     "@types/conventional-recommended-bump": ^6.1.0
