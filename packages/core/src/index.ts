@@ -103,16 +103,20 @@ export type {
   ISpacing,
   IFontAttributes,
   IInputAttributes,
+  IInlineInputMessage,
   IInputs,
   ITextTheme,
   IBrandColors,
   ISemanticColors,
   INotificationColors,
+  IErrorColors,
   IGrayscaleColors,
   IColorPallet,
   IAssets,
   ITheme,
 } from './theme'
+export type { basicMessageCustomMetadata, credentialCustomMetadata } from './types/metadata'
+export { CredentialMetadata, BasicMessageMetadata } from './types/metadata'
 export type { VersionInfo, PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
