@@ -27,7 +27,7 @@ updates:
 
   # Maintain dependencies for Gradle
   - package-ecosystem: "gradle"
-    directory: "/packages/legacy/app/android/app"
+    directory: "/samples/app/android/app"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -39,7 +39,7 @@ updates:
 
   # Maintain dependencies for Gradle
   - package-ecosystem: "gradle"
-    directory: "/packages/legacy/app/android"
+    directory: "/samples/app/android"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -87,7 +87,7 @@ updates:
 
   # Maintain dependencies for Ruby
   - package-ecosystem: "bundler"
-    directory: "/packages/legacy/app"
+    directory: "/samples/app"
     schedule:
       interval: "weekly"
       day: "monday"

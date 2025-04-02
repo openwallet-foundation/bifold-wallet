@@ -3054,9 +3054,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-bifold-core@^1.0.0, @hyperledger/aries-bifold-core@workspace:packages/legacy/core":
+"@hyperledger/aries-bifold-core@^1.0.0, @hyperledger/aries-bifold-core@workspace:packages/core":
   version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-bifold-core@workspace:packages/legacy/core"
+  resolution: "@hyperledger/aries-bifold-core@workspace:packages/core"
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/runtime": ^7.20.0
@@ -7729,9 +7729,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aries-bifold-app@workspace:packages/legacy/app":
+"aries-bifold-app@workspace:samples/app":
   version: 0.0.0-use.local
-  resolution: "aries-bifold-app@workspace:packages/legacy/app"
+  resolution: "aries-bifold-app@workspace:samples/app"
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
@@ -7848,6 +7848,7 @@ __metadata:
     eslint-plugin-prettier: ^5.2.1
     eslint-plugin-react: ^7.35.0
     eslint-plugin-react-hooks: ^4.6.2
+    husky: ^7.0.0
     lerna: ^6.6.2
     npm-run-all: ^4.1.5
     prettier: ^2.8.8

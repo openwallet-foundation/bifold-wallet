@@ -1,8 +1,0 @@
-{
-  "extends": "../../../tsconfig-base.json",
-  "compilerOptions": {
-    "baseUrl": "./App",
-    "outDir": "./lib"
-  },
-  "exclude": ["node_modules", "babel.config.js", "jest.config.js", "jestSetup.js", "lib", "build"]
-}
