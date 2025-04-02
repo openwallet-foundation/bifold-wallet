@@ -12,7 +12,8 @@ jest.mock('../../src/contexts/theme', () => ({
 
 describe('CredentialCard11Logo', () => {
   beforeEach(() => {
-    ;(useTheme as jest.Mock).mockReturnValue({
+    // prettier-ignore
+    (useTheme as jest.Mock).mockReturnValue({
       TextTheme: {
         bold: {
           fontWeight: 'bold',
