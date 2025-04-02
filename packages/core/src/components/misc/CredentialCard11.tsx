@@ -131,6 +131,15 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       }, {})
   }, [overlay])
 
+  const logoText = useMemo(() => {
+    if (isBranding11) {
+      return overlay.metaOverlay?.issuer && overlay.metaOverlay?.issuer !== 'Unknown Contact'
+        ? overlay.metaOverlay?.issuer
+        : t('Contacts.UnknownContact')
+    }
+    return overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'
+  }, [overlay, isBranding11, t])
+
   const cardData: Field[] = useMemo(() => {
     const fields: Field[] = displayItems ?? []
     const primaryField = overlay?.presentationFields?.find(
@@ -405,32 +414,29 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const CredentialCardPrimaryBody: React.FC = () => {
     return (
       <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
-        <View>
-          {brandingOverlayType === BrandingOverlayType.Branding10 && (
-            <CredentialIssuerBody
-              overlay={overlay}
-              overlayType={brandingOverlayType}
-              elevated={elevated}
-              proof={proof}
-              hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
-            />
-          )}
+        {brandingOverlayType === BrandingOverlayType.Branding10 && (
+          <CredentialIssuerBody
+            overlay={overlay}
+            overlayType={brandingOverlayType}
+            proof={proof}
+            hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
+          />
+        )}
 
-          <View style={styles.primaryBodyNameContainer}>
-            <ThemedText
-              variant="bold"
-              testID={testIdWithKey('CredentialName')}
-              style={[
-                styles.textContainer,
-                styles.credentialName,
-                {
-                  color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
-                },
-              ]}
-            >
-              {overlay.metaOverlay?.name}
-            </ThemedText>
-          </View>
+        <View style={styles.primaryBodyNameContainer}>
+          <ThemedText
+            variant="bold"
+            testID={testIdWithKey('CredentialName')}
+            style={[
+              styles.textContainer,
+              styles.credentialName,
+              {
+                color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
+              },
+            ]}
+          >
+            {overlay.metaOverlay?.name}
+          </ThemedText>
         </View>
         {extraOverlayParameter && !displayItems && (
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -478,7 +484,6 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 <CredentialIssuerBody
                   overlay={overlay}
                   overlayType={brandingOverlayType}
-                  elevated={elevated}
                   proof={proof}
                   hasBody={!(overlay.metaOverlay?.issuer === 'Unknown Contact' && proof)}
                 />
@@ -573,31 +578,35 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   }
 
   const CredentialCard: React.FC<{ status?: 'error' | 'warning' }> = ({ status }) => {
+    const issuerAccessibilityLabel = overlay.metaOverlay?.issuer
+      ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`
+      : ''
+    const watermarkLabel = overlay.metaOverlay?.watermark ? overlay.metaOverlay?.watermark + ',' : ''
+    const accessibilityLabel = isBranding11
+      ? `${watermarkLabel} ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}${
+          cardData.length > 0 ? ',' : ''
+        }` +
+        cardData.map((item) => {
+          const { label, value } = parseAttribute(item as Attribute & Predicate)
+          if (label && value) {
+            return ` ${label}, ${value}`
+          }
+        }) +
+        `, ${issuerAccessibilityLabel}`
+      : `${issuerAccessibilityLabel}, ${watermarkLabel} ${overlay.metaOverlay?.name ?? ''} ${t(
+          'Credentials.Credential'
+        )}.` +
+        cardData.map((item) => {
+          const { label, value } = parseAttribute(item as Attribute & Predicate)
+          if (label && value) {
+            return ` ${label}, ${value}`
+          }
+        })
+
     const MainCredentialBody = () => (
-      <View
-        style={styles.cardContainer}
-        accessible={true}
-        accessibilityLabel={
-          `${overlay.metaOverlay?.issuer ? `${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}` : ''}, ${
-            overlay.metaOverlay?.watermark ?? ''
-          } ${overlay.metaOverlay?.name ?? ''} ${t('Credentials.Credential')}.` +
-          cardData.map((item) => {
-            const { label, value } = parseAttribute(item as Attribute & Predicate)
-            if (label && value) {
-              return ` ${label}, ${value}`
-            }
-          })
-        }
-      >
+      <View style={styles.cardContainer} accessible={true} accessibilityLabel={accessibilityLabel}>
         <CredentialCardSecondaryBody />
-        {brandingOverlayType === BrandingOverlayType.Branding10 && (
-          <CredentialCard11Logo
-            noLogoText={overlay.metaOverlay?.name ?? overlay.metaOverlay?.issuer ?? 'C'}
-            overlay={overlay}
-            overlayType={brandingOverlayType}
-            elevated={elevated}
-          />
-        )}
+        <CredentialCard11Logo noLogoText={logoText} overlay={overlay} elevated={elevated} />
         <CredentialCardPrimaryBody />
         <CredentialCardStatus status={status} />
       </View>
