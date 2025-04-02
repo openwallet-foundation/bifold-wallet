@@ -4,11 +4,11 @@ The following document is intended to help developers get started with the Bifol
 
 # Project Overview
 
-The Aries Mobile Agent React Native (Bifold) is a user-friendly mobile agent that is built with React Native and uses Credo to exchange verifiable credentials with other agents. While Credo handles the heavy lifting of verifiable credential work, Bifold focuses on user experience and interactions with these credentials.
+The Bifold Wallet is a user-friendly mobile agent that is built with React Native and uses Credo to exchange verifiable credentials with other agents. While Credo handles the heavy lifting of verifiable credential work, Bifold focuses on user experience and interactions with these credentials.
 
 Key points to note:
 
-- Bifold uses the Credo library, which in turn uses these Rust libraries.
+- Bifold uses the Credo library, which in turn uses  Rust libraries.
 - Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
 - Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
 
@@ -58,7 +58,7 @@ yarn run build
 As noted above Bifold requires a mediator to communicate with other Agents. For development purposes, this can be set by creating a `.env` file in the following directory:
 
 ```sh
-touch packages/legacy/app/.env
+touch samples/app/.env
 ```
 
 Add a line to the `.env` file with the following content:
@@ -76,7 +76,7 @@ You can use the above mentioned public mediator hosted by Indecio or set up your
 The simplest way to run Bifold on Android is via Android Studio. Here's how:
 
 1. Open Android Studio.
-2. Select `File -> Open` and navigate to the `packages/legacy/app/android` directory. This will load the project into Android Studio.
+2. Select `File -> Open` and navigate to the `samples/app/android` directory. This will load the project into Android Studio.
 3. Run the app on a connected device or emulator by selecting one from the list and clicking the green 'Play' button.
 
 If you prefer using the command line interface (CLI), follow these steps:
@@ -110,27 +110,26 @@ Use `-partition-size 1024` to increase the size of the emulator's data partition
 3. Start Metro, the React Native packager:
 
    ```sh
-   cd packages/legacy/app
+   cd samples/app
    yarn start
    ```
 
-4. Make sure you have the `JAVA_HOME` and `ANDROID_HOME` environment variables set correctly:
+4. Make sure you have the `JAVA_HOME` environment variable set correctly:
 
    ```sh
-   export JAVA_HOME=~/android-studio/jre
-   export ANDROID_HOME=~/Android/Sdk
+   export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
    ```
 
 5. Allow the Android emulator to communicate with Metro on port `tcp:8097`:
 
    ```sh
-   ~/Android/Sdk/platform-tools/adb reverse tcp:8097 tcp:8097
+   ~/Android/Sdk/platform-tools/adb reverse tcp:8081 tcp:8081
    ```
 
 6. Finally, run the app in the emulator:
 
    ```sh
-   cd packages/legacy/app
+   cd samples/app
    yarn run android
    ```
 
@@ -159,14 +158,14 @@ brew install cocoapods
 2. Install the necessary dependencies:
 
 ```sh
-cd packages/legacy/app/ios
+cd samples/app/ios
 pod install
 ```
 
 3. Open the workspace (not the project file) in Xcode:
 
 ```sh
-open packages/legacy/app/ios/ariesbifold.xcworkspace
+open samples/app/ios/ariesbifold.xcworkspace
 ```
 
 4. In Xcode, select your device, development team, and (if necessary) your Bundle ID. Note: Detailing these steps is beyond the scope of this guide.
@@ -174,6 +173,6 @@ open packages/legacy/app/ios/ariesbifold.xcworkspace
 5. Run the app on your device by clicking the 'Play' button in Xcode. This will launch Bifold on your selected iOS device for development and testing. It will also launch Metro, the React Native packager, in a separate terminal window. If you prefer to do this manually use the following command:
 
 ```sh
-cd packages/legacy/app
+cd samples/app
 yarn start
 ```

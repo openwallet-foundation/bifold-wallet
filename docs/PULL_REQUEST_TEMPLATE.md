@@ -22,7 +22,7 @@ Tick all boxes below to demonstrate that you have completed the respective task.
 - [ ] If applicable, screenshots, gifs, or video are included for UI changes
 - [ ] If applicable, breaking changes are described above along with how to address them
 - [ ] Updated documentation as needed for changed code and new or modified features
-- [ ] Added sufficient [tests](../packages/legacy/core/__tests__/) so that overall code coverage is not reduced
+- [ ] Added sufficient [tests](../packages/core/__tests__/) so that overall code coverage is not reduced
 
 If you have _any_ questions to _any_ of the points above, just **submit and ask**! This checklist is here to _help_ you, not to deter you from contributing!
 
