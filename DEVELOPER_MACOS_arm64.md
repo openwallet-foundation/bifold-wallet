@@ -77,7 +77,7 @@
             emulator -avd Pixel_6_API_31 -netdelay none -netspeed full
             ```
 
-1.  Install and Activate Java
+7.  Install and Activate Java
     1. Install Java
        ```sh
        brew install --cask zulu@17
