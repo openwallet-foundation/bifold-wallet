@@ -48,7 +48,6 @@ const initLanguages = (resources: TranslationResources, fallbackLng: Locales = L
   }
 
   i18n.use(initReactI18next).init({
-    debug: true,
     lng: translationToUse,
     fallbackLng,
     resources,
