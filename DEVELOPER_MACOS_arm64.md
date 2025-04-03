@@ -6,7 +6,7 @@
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
 
-    Follow post installation instructions. The following should be added to your `~/.zprofile`
+    Follow post installation instructions. The following should be added to your `~/.zshrc`
 
     ```sh
     # Set PATH, MANPATH, etc., for Homebrew.
@@ -15,39 +15,41 @@
 
     IMPORTANT: close and start a new terminal session
 
-1.  Install Watchman
+2.  Install Watchman
 
     ```
     brew install watchman
     ```
 
-1.  Install NVM
+3.  Install NVM
     ```
     brew install nvm
     ```
-    Follow post installation instructions. The following should be added to your `~/.zprofile`
+    Follow post installation instructions. The following should be added to your `~/.zshrc`
     ```sh
     source $(brew --prefix nvm)/nvm.sh
     ```
-1.  Install Node
+4.  Install Node (use the version from the GitHub Actions)
     ```sh
     nvm install 18.18.2
     ```
-    Activate node version by adding the following to your `~/.zprofile`
+
+    Activate node version by adding the following to your `~/.zshrc`
     ```sh
     source $(brew --prefix nvm)/nvm.sh
     nvm use 18.18.2
     ```
-1.  Install Yarn
+
+5.  Install Yarn
     ```sh
     corepack enable
     corepack prepare yarn@3.3.1 --activate
     ```
     IMPORTANT: Check `packageManager` for the exact and up-todate version in the root [package.json](./package.json)
-1.  Manually Download and Install Android Studio as per documentation:
+6.  Manually Download and Install Android Studio as per documentation:
     https://developer.android.com/studio
 
-        1. Setup Android SDK by adding the following to your `~/.zprofile`
+        1. Setup Android SDK by adding the following to your `~/.zshrc`
             ```sh
             # The ordering is important!!!
             export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -75,15 +77,15 @@
             emulator -avd Pixel_6_API_31 -netdelay none -netspeed full
             ```
 
-1.  Install and Activate Java
+7.  Install and Activate Java
     1. Install Java
        ```sh
-       brew install --cask zulu11
+       brew install --cask zulu@17
        ```
-    1. Activate Java by adding the following to your `~/.zprofile`
+    1. Activate Java by adding the following to your `~/.zshrc`
        ```sh
        # check output of /usr/libexec/java_home -V
-       alias java11="export JAVA_HOME=\"/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home\""
-       java11 # optional if you want to have Java 11 always enabled by default
+       alias java17="export JAVA_HOME=\"/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home\""
+       java17 # optional if you want to have Java 17 always enabled by default
        ```
        IMPORTANT: close and start a new terminal session

@@ -47,6 +47,7 @@ export interface Config {
   internetReachabilityUrls: string[]
   attemptLockoutConfig?: AttemptLockoutConfig
   appUpdateConfig?: AppUpdateConfig
+  preventScreenCapture?: boolean
 }
 
 export interface HistoryEventsLoggerConfig {
