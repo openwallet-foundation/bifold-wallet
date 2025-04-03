@@ -8,27 +8,43 @@ describe('usePreventScreenCapture', () => {
     jest.resetAllMocks()
   })
 
-  it('should call preventScreenshot when no argument for `active` is supplied', () => {
-    renderHook(() => usePreventScreenCapture())
-
-    expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
-  })
-
-  it('should call preventScreenshot when `active` is true', () => {
+  it('with no `active` supplied, should call preventScreenshot', () => {
     renderHook(() => usePreventScreenCapture())
 
     expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
   })
   
-  it('should call allowScreenshot when `active` is true but component is then unmounted', () => {
-    const { unmount } = renderHook(() => usePreventScreenCapture(true))
+  it('with no `active` supplied, should then call allowScreenshot when component is unmounted', () => {
+    const { unmount } = renderHook(() => usePreventScreenCapture())
+
+    expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
+    expect(CaptureProtection.allowScreenshot).not.toHaveBeenCalled()
+    
     unmount()
 
     expect(CaptureProtection.allowScreenshot).toHaveBeenCalledTimes(1)
     expect(CaptureProtection.allowScreenshot).toHaveBeenCalledWith(true)
   })
 
-  it('should not call screenshot methods when `active` is false', () => {
+  it('with `active` true, should call preventScreenshot', () => {
+    renderHook(() => usePreventScreenCapture(true))
+
+    expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
+  })
+  
+  it('with `active` true, should then call allowScreenshot when component is unmounted', () => {
+    const { unmount } = renderHook(() => usePreventScreenCapture(true))
+
+    expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
+    expect(CaptureProtection.allowScreenshot).not.toHaveBeenCalled()
+    
+    unmount()
+
+    expect(CaptureProtection.allowScreenshot).toHaveBeenCalledTimes(1)
+    expect(CaptureProtection.allowScreenshot).toHaveBeenCalledWith(true)
+  })
+
+  it('with `active` false, should not call screenshot methods', () => {
     renderHook(() => usePreventScreenCapture(false))
 
     expect(CaptureProtection.preventScreenshot).not.toHaveBeenCalled()
