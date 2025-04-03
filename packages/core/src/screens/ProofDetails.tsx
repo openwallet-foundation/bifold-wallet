@@ -246,8 +246,8 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [store] = useStore()
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  usePreventScreenCapture()
+  const [logger, { preventScreenCapture }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  usePreventScreenCapture(preventScreenCapture)
 
   const connectionLabel = useMemo(
     () =>
