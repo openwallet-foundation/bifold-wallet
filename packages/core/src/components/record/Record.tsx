@@ -1,4 +1,4 @@
-import { Field } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -9,6 +9,7 @@ import { testIdWithKey } from '../../utils/testable'
 import RecordField from './RecordField'
 import RecordFooter from './RecordFooter'
 import RecordHeader from './RecordHeader'
+import { TOKENS, useServices } from '../../container-api'
 import { ThemedText } from '../texts/ThemedText'
 
 export interface RecordProps {
@@ -23,13 +24,14 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
   const { ListItems, TextTheme } = useTheme()
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
     linkContainer: {
       ...ListItems.recordContainer,
       flexDirection: 'row',
       justifyContent: 'flex-end',
-      paddingHorizontal: 25,
+      paddingHorizontal: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? 25 : 16,
       paddingVertical: 16,
     },
     link: {

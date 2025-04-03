@@ -136,7 +136,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       "alignItems": "center",
                       "backgroundColor": "#ffffff",
                       "borderRadius": 8,
-                      "height": 90,
+                      "height": 108,
                       "justifyContent": "center",
                       "left": -52.5,
                       "shadowColor": "#000",
@@ -146,7 +146,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       },
                       "shadowOpacity": 0.3,
                       "top": 37.5,
-                      "width": 90,
+                      "width": 108,
                     },
                     Object {
                       "elevation": 5,
@@ -163,11 +163,18 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                         "fontSize": 18,
                         "fontWeight": "bold",
                       },
-                      Object {
-                        "alignSelf": "center",
-                        "color": "#000",
-                        "fontSize": 45,
-                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                        },
+                        Object {
+                          "alignSelf": "center",
+                          "color": "#000",
+                          "fontSize": 45,
+                        },
+                      ],
                     ]
                   }
                   testID="com.ariesbifold:id/NoLogoText"

@@ -5,6 +5,8 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
+import { TOKENS, useServices } from '../../container-api'
+import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
 import { ThemedText } from '../texts/ThemedText'
 
 interface RecordRemoveProps {
@@ -14,6 +16,7 @@ interface RecordRemoveProps {
 const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) => {
   const { t } = useTranslation()
   const { TextTheme, ColorPallet, Assets } = useTheme()
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
     headerText: {
@@ -38,7 +41,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
       style={{
         backgroundColor: ColorPallet.brand.secondaryBackground,
         marginTop: 16,
-        paddingHorizontal: 25,
+        paddingHorizontal: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? 25 : 16,
         paddingVertical: 16,
       }}
     >

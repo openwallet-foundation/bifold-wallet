@@ -1,5 +1,5 @@
 import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
-import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
 import startCase from 'lodash.startcase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +12,7 @@ import { testIdWithKey } from '../../utils/testable'
 
 import RecordBinaryField from './RecordBinaryField'
 import RecordDateIntField from './RecordDateIntField'
+import { useServices, TOKENS } from '../../container-api'
 import { ThemedText } from '../texts/ThemedText'
 
 interface RecordFieldProps {
@@ -67,10 +68,11 @@ const RecordField: React.FC<RecordFieldProps> = ({
 }) => {
   const { t } = useTranslation()
   const { ListItems } = useTheme()
+  const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const styles = StyleSheet.create({
     container: {
       ...ListItems.recordContainer,
-      paddingHorizontal: 25,
+      paddingHorizontal: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? 25 : 16,
       paddingTop: 16,
     },
     border: {

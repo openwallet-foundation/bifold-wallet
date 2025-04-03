@@ -13,13 +13,13 @@ describe('usePreventScreenCapture', () => {
 
     expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
   })
-  
+
   it('with no `active` supplied, should then call allowScreenshot when component is unmounted', () => {
     const { unmount } = renderHook(() => usePreventScreenCapture())
 
     expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
     expect(CaptureProtection.allowScreenshot).not.toHaveBeenCalled()
-    
+
     unmount()
 
     expect(CaptureProtection.allowScreenshot).toHaveBeenCalledTimes(1)
@@ -31,13 +31,13 @@ describe('usePreventScreenCapture', () => {
 
     expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
   })
-  
+
   it('with `active` true, should then call allowScreenshot when component is unmounted', () => {
     const { unmount } = renderHook(() => usePreventScreenCapture(true))
 
     expect(CaptureProtection.preventScreenshot).toHaveBeenCalledTimes(1)
     expect(CaptureProtection.allowScreenshot).not.toHaveBeenCalled()
-    
+
     unmount()
 
     expect(CaptureProtection.allowScreenshot).toHaveBeenCalledTimes(1)
