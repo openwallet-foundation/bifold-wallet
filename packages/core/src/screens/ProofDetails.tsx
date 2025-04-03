@@ -24,6 +24,7 @@ import { getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { ThemedText } from '../components/texts/ThemedText'
+import usePreventScreenCapture from '../hooks/screen-capture'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -246,6 +247,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   const { agent } = useAgent()
   const [store] = useStore()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  usePreventScreenCapture()
 
   const connectionLabel = useMemo(
     () =>

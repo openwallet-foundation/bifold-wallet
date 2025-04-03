@@ -3135,6 +3135,7 @@ __metadata:
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
     react-native-builder-bob: ^0.21.3
+    react-native-capture-protection: ^1.9.20
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -3211,6 +3212,7 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
+    react-native-capture-protection: "*"
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -7796,6 +7798,7 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
+    react-native-capture-protection: ^1.9.20
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -19647,6 +19650,16 @@ __metadata:
   bin:
     bob: bin/bob
   checksum: 0a7b05926556dcba0ed9dbadd1316136886bcb054b2229ff58af6ba71178c0add0bcbd31d78b11683f05cacfd8ba408f1d50d7ec6c413ae694a51b11f02ea2de
+  languageName: node
+  linkType: hard
+
+"react-native-capture-protection@npm:^1.9.20":
+  version: 1.9.20
+  resolution: "react-native-capture-protection@npm:1.9.20"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 82a4641c03137f664e081bbfc751d55fbaa5df467eb2cbe91c7481e6f2bf1dae5f92c13ae9549dee3a275b4df34055921df44eef2161d8f6a1b46fe585a4f22f
   languageName: node
   linkType: hard
 
