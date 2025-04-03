@@ -16,9 +16,6 @@ const networksToAdd = [
   { id: 'imn', connectOnStartup: true, production: true },
   { id: 'idn', connectOnStartup: true, production: false },
   { id: 'itn', connectOnStartup: true, production: false },
-  { id: 'sbn', connectOnStartup: true, production: false },
-  { id: 'ssn', connectOnStartup: true, production: false },
-  { id: 'smn', connectOnStartup: true, production: true },
 ]
 const networkNameRe = /\W+/im
 
