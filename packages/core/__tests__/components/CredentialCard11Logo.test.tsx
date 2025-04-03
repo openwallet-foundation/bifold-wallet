@@ -2,32 +2,61 @@ import React from 'react'
 import { render } from '@testing-library/react-native'
 
 import CredentialCard11Logo from '../../src/components/misc/CredentialCard11Logo'
-import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
+import { useTheme } from '../../src/contexts/theme'
 import { testIdWithKey } from '../../src/utils/testable'
+import { BasicAppContext } from '../helpers/app'
 
 jest.mock('../../src/contexts/theme', () => ({
-  useTheme: jest.fn().mockReturnValue({
-    TextTheme: {
-      bold: {
-        fontWeight: 'bold',
-      },
-    },
-    CredentialCardShadowTheme: {
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 1,
-        height: 1,
-      },
-      shadowOpacity: 0.3,
-    },
-    maxFontSizeMultiplier: 2,
-  }),
+  useTheme: jest.fn(),
 }))
 
 describe('CredentialCard11Logo', () => {
+  beforeEach(() => {
+    // prettier-ignore
+    (useTheme as jest.Mock).mockReturnValue({
+      TextTheme: {
+        bold: {
+          fontWeight: 'bold',
+        },
+      },
+      ListItems: {
+        recordAttributeText: {
+          fontSize: 18,
+          fontWeight: 'normal',
+        },
+        proofError: {
+          color: '#D8292F',
+        },
+      },
+      ColorPallet: {
+        grayscale: {
+          white: '#fff',
+          darkGrey: '#313132',
+        },
+        semantic: {
+          focus: '#3399FF',
+        },
+        brand: {
+          link: '#42803E',
+        },
+      },
+      CredentialCardShadowTheme: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 1,
+          height: 1,
+        },
+        shadowOpacity: 0.3,
+      },
+      maxFontSizeMultiplier: 2,
+    })
+  })
+
   test('Renders correctly', async () => {
     const tree = render(
-      <CredentialCard11Logo noLogoText="Credential" overlay={{} as any} overlayType={BrandingOverlayType.Branding10} />
+      <BasicAppContext>
+        <CredentialCard11Logo noLogoText="Credential" overlay={{} as any} />
+      </BasicAppContext>
     )
     expect(tree).toMatchSnapshot()
   })
@@ -40,11 +69,9 @@ describe('CredentialCard11Logo', () => {
     }
 
     const tree = render(
-      <CredentialCard11Logo
-        noLogoText="Credential"
-        overlay={overlay as any}
-        overlayType={BrandingOverlayType.Branding10}
-      />
+      <BasicAppContext>
+        <CredentialCard11Logo noLogoText="Credential" overlay={overlay as any} />
+      </BasicAppContext>
     )
 
     const imageLogo = tree.getByTestId(testIdWithKey('Logo'))
@@ -58,12 +85,9 @@ describe('CredentialCard11Logo', () => {
     }
 
     const tree = render(
-      <CredentialCard11Logo
-        noLogoText="Credential"
-        overlay={overlay as any}
-        overlayType={BrandingOverlayType.Branding10}
-        elevated={true}
-      />
+      <BasicAppContext>
+        <CredentialCard11Logo noLogoText="Credential" overlay={overlay as any} elevated={true} />
+      </BasicAppContext>
     )
 
     const text = tree.getByTestId(testIdWithKey('NoLogoText'))

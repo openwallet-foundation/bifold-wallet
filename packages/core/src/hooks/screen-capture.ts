@@ -3,7 +3,7 @@ import { CaptureProtection } from 'react-native-capture-protection'
 
 /**
  * Prevents screenshots when component is mounted. When unmounted, allows them again
- * 
+ *
  * @param {boolean} [active=true] - If `false`, hook does nothing
  * @remarks
  * - If `active` param is `true`, it prevents screenshots when the
@@ -11,7 +11,7 @@ import { CaptureProtection } from 'react-native-capture-protection'
  * - On unmount, or when `active` is changed to false, it restores
  * the ability to take screenshots
  * - Should be used at the screen level only
- * 
+ *
  * @example
  * ```tsx
  * import usePreventScreenCapture from './hooks/screen-capture';
