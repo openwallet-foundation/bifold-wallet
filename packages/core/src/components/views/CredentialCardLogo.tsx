@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
 import { useTheme } from '../../contexts/theme'
@@ -16,8 +16,14 @@ const CredentialCardLogo: React.FC<Props> = ({
   brandingOverlayType = BrandingOverlayType.Branding10,
 }: Props) => {
   const { CredentialCardShadowTheme } = useTheme()
+  const { fontScale } = useWindowDimensions()
   const logoHeight = brandingOverlayType === BrandingOverlayType.Branding10 ? 80 : 48
   const paddingHorizontal = 24
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
+  const textColor =
+    overlay.brandingOverlay?.secondaryBackgroundColor && overlay.brandingOverlay.secondaryBackgroundColor !== ''
+      ? overlay.brandingOverlay.secondaryBackgroundColor
+      : overlay.brandingOverlay?.primaryBackgroundColor
 
   const logoText = useMemo(() => {
     if (brandingOverlayType === BrandingOverlayType.Branding11) {
@@ -28,8 +34,8 @@ const CredentialCardLogo: React.FC<Props> = ({
 
   const styles = StyleSheet.create({
     logoContainer: {
-      width: logoHeight,
-      height: logoHeight,
+      width: logoHeight * (fontScale > 1.7 ? 1.2 : 1),
+      height: logoHeight * (fontScale > 1.7 ? 1.2 : 1),
       backgroundColor: '#ffffff',
       borderRadius: 8,
       justifyContent: 'center',
@@ -56,7 +62,11 @@ const CredentialCardLogo: React.FC<Props> = ({
           }}
         />
       ) : (
-        <ThemedText variant="title" style={{ fontSize: 0.5 * logoHeight, color: '#000' }} accessible={false}>
+        <ThemedText
+          variant="title"
+          style={{ fontSize: 0.5 * logoHeight, color: isBranding11 ? textColor : '#000' }}
+          accessible={false}
+        >
           {logoText}
         </ThemedText>
       )}

@@ -99,6 +99,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
+  const isBranding11 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11
 
   const containerBackgroundColor =
     overlay.brandingOverlay?.secondaryBackgroundColor && overlay.brandingOverlay.secondaryBackgroundColor !== ''
@@ -294,7 +295,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           brandingOverlayType={bundleResolver.getBrandingOverlayType()}
         />
         <TouchableOpacity
-          accessibilityLabel={`${t('Credentials.IssuedBy')} ${overlay.metaOverlay?.issuer}`}
+          accessibilityLabel={`${overlay.metaOverlay?.watermark ? overlay.metaOverlay.watermark + '. ' : ''}${t(
+            'Credentials.IssuedBy'
+          )} ${overlay.metaOverlay?.issuer}`}
           accessibilityRole="button"
           accessibilityHint={t('CredentialDetails.NavigateToIssuerDetailsHint')}
           onPress={navigateToContactDetails}
@@ -303,24 +306,20 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           {overlay.metaOverlay?.watermark && (
             <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
           )}
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 3 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 2 }}>
               <CredentialCardLogo overlay={overlay} brandingOverlayType={bundleResolver.getBrandingOverlayType()} />
               <ThemedText
-                style={{ color: credentialTextColor(ColorPallet, containerBackgroundColor), flexWrap: 'wrap' }}
+                style={{
+                  color: credentialTextColor(ColorPallet, containerBackgroundColor),
+                  flexWrap: 'wrap',
+                  maxWidth: '90%',
+                }}
               >
                 {overlay.metaOverlay?.issuer}
               </ThemedText>
             </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Assets.svg.iconChevronRight {...icon} />
-            </View>
+            <Assets.svg.iconChevronRight {...icon} />
           </View>
         </TouchableOpacity>
         <View style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}>
@@ -348,7 +347,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       <View style={styles.container}>
         {getCredentialTop()}
         {isRevoked && !isRevokedMessageHidden ? (
-          <View style={{ padding: paddingVertical, paddingTop: 0 }}>
+          <View
+            style={{
+              padding: paddingVertical,
+              backgroundColor: ColorPallet.brand.secondaryBackground,
+              ...(isBranding11 && { paddingTop: 0 }),
+            }}
+          >
             {credential && <CredentialRevocationMessage credential={credential} />}
           </View>
         ) : null}

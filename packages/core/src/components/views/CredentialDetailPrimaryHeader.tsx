@@ -1,7 +1,7 @@
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import { BrandingOverlay } from '@hyperledger/aries-oca'
 import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
-import CardWatermark from '../misc/CardWatermark'
+import CardWatermark from '../../components/misc/CardWatermark'
 import { useTheme } from '../../contexts/theme'
 import { credentialTextColor } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'
@@ -28,9 +28,10 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const { width, height } = useWindowDimensions()
+  const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
   const styles = StyleSheet.create({
     primaryHeaderContainer: {
-      paddingHorizontal,
+      paddingHorizontal: isBranding11 ? 16 : paddingHorizontal,
       paddingVertical,
       overflow: 'hidden',
     },
