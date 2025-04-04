@@ -172,7 +172,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     (PINOne: string, PINTwo: string): boolean => {
       for (const validation of PINOneValidations) {
         if (validation.isInvalid) {
-          attentionMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.${validation.errorName}`), true)
+          attentionMessage(
+            t('PINCreate.InvalidPIN'),
+            t(`PINCreate.Message.${validation.errorName}`, validation?.errorTextAddition),
+            true
+          )
           return false
         }
       }
