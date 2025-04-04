@@ -155,8 +155,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         }
 
         await agent.wallet.close()
+        // wallet.rotateKey calls open under the hood
         await agent.wallet.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
-        await agent.wallet.open({ ...newSecret })
 
         await storeWalletSecret(newSecret, useBiometry)
         setWalletSecret(newSecret)
