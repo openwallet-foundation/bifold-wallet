@@ -3152,7 +3152,7 @@ __metadata:
     react-native-qrcode-svg: 6.2.0
     react-native-safe-area-context: ^4.8.2
     react-native-scalable-image: ^1.1.0
-    react-native-screenguard: 1.0.6
+    react-native-screenguard: ^1.0.8-beta3
     react-native-screens: ^3.29.0
     react-native-splash-screen: ^3.3.0
     react-native-svg: ^15.0.0
@@ -7815,7 +7815,7 @@ __metadata:
     react-native-qrcode-svg: 6.2.0
     react-native-safe-area-context: ^3.2.0
     react-native-scalable-image: ^1.1.0
-    react-native-screenguard: 1.0.6
+    react-native-screenguard: ^1.0.8-beta3
     react-native-screens: 4.4.0
     react-native-splash-screen: ^3.3.0
     react-native-svg: ^15.0.0
@@ -19928,13 +19928,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-screenguard@npm:1.0.6":
-  version: 1.0.6
-  resolution: "react-native-screenguard@npm:1.0.6"
+"react-native-screenguard@npm:^1.0.8-beta3":
+  version: 1.0.8-beta3
+  resolution: "react-native-screenguard@npm:1.0.8-beta3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 1348d817c26edf1b6039d971389924f72b7b30b98c2a1843d9032b9149eeb72dfba7d489dbca581190070cc1ab1d9d3f060389c8514981e68f4c1e4881a14456
+  checksum: e1eb62d1a1395ee88fe13f63331587de21f32fa4fe451e8e4173375bd3c89febbe952526c130c5d674b2342c3a97f651b4be78109cf6639ce3f3aa002e5a882e
   languageName: node
   linkType: hard
 

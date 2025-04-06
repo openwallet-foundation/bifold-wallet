@@ -36,7 +36,7 @@ const usePreventScreenCapture = (active: boolean = true) => {
 
     if (Platform.OS === 'android') {
       // on Android, plain `register` will trigger AppState to
-      // change monetarily, which can have side effects.
+      // change momentarily, which can have side effects.
       // `registerWithoutEffect` prevents that
       ScreenGuardModule.registerWithoutEffect()
     } else {

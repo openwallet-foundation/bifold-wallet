@@ -4,15 +4,5 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
-    
-    <!-- react-native-screenguard -->
-    <style name="Theme.AppCompat.Translucent">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-    </style>
 
 </resources>

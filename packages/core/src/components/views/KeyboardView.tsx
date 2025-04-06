@@ -14,7 +14,7 @@ const KeyboardView: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         style={{ flex: 1 }}
         // below property is the distance to account for between the top of the screen and the top of the view. It is at most 100 with max zoom + font settings
         keyboardVerticalOffset={100}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'handled'}>
           {children}

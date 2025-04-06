@@ -914,7 +914,9 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
-  - react-native-screenguard (1.0.6):
+  - react-native-screenguard (1.0.8-beta3):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - SDWebImage (~> 5.19.4)
   - react-native-splash-screen (3.3.0):
@@ -1419,7 +1421,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-orientation-locker: cc6f357b289a2e0dd2210fea0c52cb8e0727fdaa
   react-native-safe-area-context: 667324e20fb3dd9c39c12d6036675ed90099bcd5
-  react-native-screenguard: d2165d56a87d318905022390d2c89fed03ba4e96
+  react-native-screenguard: 936ece62b4e66a47fa2a33691a2dcc505a861b4a
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-tcp-socket: 61379457d7e702e83e28c213b6e085ac079e480f
   react-native-webview: 8fd271a5b5c027fd640f00465aeac44bfa16d5a9
