@@ -1,5 +1,11 @@
 import { useEffect } from 'react'
-import { CaptureProtection } from 'react-native-capture-protection'
+import { Platform } from 'react-native'
+import ScreenGuardModule from 'react-native-screenguard'
+
+export const screenGuardOptions = {
+  timeAfterResume: 500, // milliseconds
+  backgroundColor: '#000000', // black
+}
 
 /**
  * Prevents screenshots when component is mounted. When unmounted, allows them again
@@ -28,10 +34,17 @@ const usePreventScreenCapture = (active: boolean = true) => {
   useEffect(() => {
     if (!active) return
 
-    CaptureProtection.preventScreenshot()
+    if (Platform.OS === 'android') {
+      // on Android, plain `register` will trigger AppState to
+      // change momentarily, which can have side effects.
+      // `registerWithoutEffect` prevents that
+      ScreenGuardModule.registerWithoutEffect()
+    } else {
+      ScreenGuardModule.register(screenGuardOptions)
+    }
 
     return () => {
-      CaptureProtection.allowScreenshot(true)
+      ScreenGuardModule.unregister()
     }
   }, [active])
 }

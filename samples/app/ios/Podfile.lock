@@ -900,8 +900,6 @@ PODS:
   - React-Mapbuffer (0.73.6):
     - glog
     - React-debug
-  - react-native-capture-protection (1.9.20):
-    - React-Core
   - react-native-config (1.5.3):
     - react-native-config/App (= 1.5.3)
   - react-native-config/App (1.5.3):
@@ -916,6 +914,11 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
+  - react-native-screenguard (1.0.8-beta3):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - SDWebImage (~> 5.19.4)
   - react-native-splash-screen (3.3.0):
     - React-Core
   - react-native-tcp-socket (6.2.0):
@@ -1126,6 +1129,9 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+  - SDWebImage (5.19.7):
+    - SDWebImage/Core (= 5.19.7)
+  - SDWebImage/Core (5.19.7)
   - SocketRocket (0.6.1)
   - VisionCamera (4.3.1):
     - VisionCamera/Core (= 4.3.1)
@@ -1169,13 +1175,13 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
-  - react-native-capture-protection (from `../node_modules/react-native-capture-protection`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-screenguard (from `../node_modules/react-native-screenguard`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-tcp-socket (from `../node_modules/react-native-tcp-socket`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -1220,6 +1226,7 @@ SPEC REPOS:
     - CocoaAsyncSocket
     - fmt
     - libevent
+    - SDWebImage
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1284,8 +1291,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
-  react-native-capture-protection:
-    :path: "../node_modules/react-native-capture-protection"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-encrypted-storage:
@@ -1298,6 +1303,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-orientation-locker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-screenguard:
+    :path: "../node_modules/react-native-screenguard"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-tcp-socket:
@@ -1408,13 +1415,13 @@ SPEC CHECKSUMS:
   React-jsinspector: 85583ef014ce53d731a98c66a0e24496f7a83066
   React-logger: 55764cd993880c6f887505854581c9faf68feff2
   React-Mapbuffer: 15dfcfeb4428d8799cce75e7fe85b18b706029e0
-  react-native-capture-protection: c175fc931a44180c7dcbb68e71d2170863ef7381
   react-native-config: ea75335a7cca1d3326de1da384227e580a7c082e
   react-native-encrypted-storage: 569d114e329b1c2c2d9f8c84bcdbe4478dda2258
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-orientation-locker: cc6f357b289a2e0dd2210fea0c52cb8e0727fdaa
   react-native-safe-area-context: 667324e20fb3dd9c39c12d6036675ed90099bcd5
+  react-native-screenguard: 936ece62b4e66a47fa2a33691a2dcc505a861b4a
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-tcp-socket: 61379457d7e702e83e28c213b6e085ac079e480f
   react-native-webview: 8fd271a5b5c027fd640f00465aeac44bfa16d5a9
@@ -1450,6 +1457,7 @@ SPEC CHECKSUMS:
   RNScreens: e0f79783ce405f4362c29d098b19fe7e241f11a9
   RNSVG: 36ab724902de0406127ef8d63d940c055e2a1442
   RNVectorIcons: 76364622e6f8e55bb456705582cde20f55ef889c
+  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: fc6f0f2cf7dd3da7c6496b279350bb357fab9964
   Yoga: d17d2cc8105eed528474683b42e2ea310e1daf61
