@@ -192,7 +192,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               <ThemedText variant="modalTitle">{t('ContactDetails.RemoveTitle')}</ThemedText>
             </View>
             <View>
-              <<ThemedText variant="modalNormal" style={ marginBottom: 24 }>
+              <ThemedText variant="modalNormal" style={{ marginBottom: 24 }}>
                 {t('ContactDetails.RemoveContactMessageWarning')}
               </ThemedText>
               <ThemedText variant="modalNormal">{t('ContactDetails.RemoveContactMessageTop')}</ThemedText>
