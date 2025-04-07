@@ -3135,7 +3135,6 @@ __metadata:
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
     react-native-builder-bob: ^0.21.3
-    react-native-capture-protection: ^1.9.20
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -3153,6 +3152,7 @@ __metadata:
     react-native-qrcode-svg: 6.2.0
     react-native-safe-area-context: ^4.8.2
     react-native-scalable-image: ^1.1.0
+    react-native-screenguard: ^1.0.8-beta3
     react-native-screens: ^3.29.0
     react-native-splash-screen: ^3.3.0
     react-native-svg: ^15.0.0
@@ -3212,7 +3212,6 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
-    react-native-capture-protection: "*"
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -3229,6 +3228,7 @@ __metadata:
     react-native-permissions: ^4.0.1
     react-native-qrcode-svg: 6.2.0
     react-native-safe-area-context: ^4.8.2
+    react-native-screenguard: "*"
     react-native-screens: ^3.24.0
     react-native-splash-screen: ^3.3.0
     react-native-svg: ^15.0.0
@@ -7798,7 +7798,6 @@ __metadata:
     react-native-animated-pagination-dots: ^0.1.72
     react-native-argon2: ^2.0.1
     react-native-bouncy-checkbox: ^3.0.5
-    react-native-capture-protection: ^1.9.20
     react-native-collapsible: ^1.6.1
     react-native-config: ^1.4.2
     react-native-confirmation-code-field: ^7.3.0
@@ -7816,6 +7815,7 @@ __metadata:
     react-native-qrcode-svg: 6.2.0
     react-native-safe-area-context: ^3.2.0
     react-native-scalable-image: ^1.1.0
+    react-native-screenguard: ^1.0.8-beta3
     react-native-screens: 4.4.0
     react-native-splash-screen: ^3.3.0
     react-native-svg: ^15.0.0
@@ -19653,16 +19653,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-capture-protection@npm:^1.9.20":
-  version: 1.9.20
-  resolution: "react-native-capture-protection@npm:1.9.20"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 82a4641c03137f664e081bbfc751d55fbaa5df467eb2cbe91c7481e6f2bf1dae5f92c13ae9549dee3a275b4df34055921df44eef2161d8f6a1b46fe585a4f22f
-  languageName: node
-  linkType: hard
-
 "react-native-collapsible@npm:^1.6.1":
   version: 1.6.2
   resolution: "react-native-collapsible@npm:1.6.2"
@@ -19935,6 +19925,16 @@ __metadata:
     react: ^16.8.3
     react-native: ">=0.59.0"
   checksum: 3eda10ea873532ec2264c3bbde905c7712d68bfae242ccae2d76a4bb86ff79213ce3db086b7f56f4eb775aa06e6e7e78a11ff7c3333ce29ede582debe91468db
+  languageName: node
+  linkType: hard
+
+"react-native-screenguard@npm:^1.0.8-beta3":
+  version: 1.0.8-beta3
+  resolution: "react-native-screenguard@npm:1.0.8-beta3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: e1eb62d1a1395ee88fe13f63331587de21f32fa4fe451e8e4173375bd3c89febbe952526c130c5d674b2342c3a97f651b4be78109cf6639ce3f3aa002e5a882e
   languageName: node
   linkType: hard
 
