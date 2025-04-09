@@ -192,12 +192,15 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               <ThemedText variant="modalTitle">{t('ContactDetails.RemoveTitle')}</ThemedText>
             </View>
             <View>
+              <ThemedText variant="modalNormal" style={{ marginBottom: 24 }}>
+                {t('ContactDetails.RemoveContactMessageWarning')}
+              </ThemedText>
               <ThemedText variant="modalNormal">{t('ContactDetails.RemoveContactMessageTop')}</ThemedText>
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint1')} textStyle={styles.bodyText} />
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint2')} textStyle={styles.bodyText} />
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint3')} textStyle={styles.bodyText} />
               <BulletPoint text={t('ContactDetails.RemoveContactsBulletPoint4')} textStyle={styles.bodyText} />
-              <ThemedText variant="modalNormal" style={{ marginTop: 10 }}>
+              <ThemedText variant="modalNormal" style={{ marginTop: 24 }}>
                 {t('ContactDetails.RemoveContactMessageBottom')}
               </ThemedText>
             </View>
