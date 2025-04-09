@@ -161,17 +161,19 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         logHistoryRecord()
       }
 
+      const basicMessages = await agent.basicMessages.findAllByQuery({ connectionId: connection.id })
       const proofs = await agent.proofs.findAllByQuery({ connectionId: connection.id })
       const offers = await agent.credentials.findAllByQuery({
         connectionId: connection.id,
         state: CredentialState.OfferReceived,
       })
 
-      logger.info(`Removing connection ${connection.id}, and ${proofs.length} proofs, ${offers.length} offers`)
+      logger.info(`Removing connection ${connection.id}, ${basicMessages.length} messages, ${proofs.length} proofs, and ${offers.length} offers`)
 
       const results = await Promise.allSettled([
         ...proofs.map((proof) => agent.proofs.deleteById(proof.id)),
         ...offers.map((offer) => agent.credentials.deleteById(offer.id)),
+        ...basicMessages.map((msg) => agent.basicMessages.deleteById(msg.id)),
         agent.connections.deleteById(connection.id),
       ])
 
