@@ -725,7 +725,9 @@ const translation = {
     "TabStack": {
         "Home": "Notifications",
         "Scan": "Numériser",
-        "Credentials": "Justificatifs"
+        "Credentials": "Justificatifs",
+        "Wallet": "portefeuille",
+        "More": "plus",
     },
     "RootStack": {
         "Contacts": "Contacts",

@@ -9,9 +9,9 @@ import { MetaOverlay } from '@hyperledger/aries-oca'
 import { Field } from '@hyperledger/aries-oca/build/legacy'
 import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -25,6 +25,7 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 const onlyNumberRegex = /^\d+$/
 
@@ -108,8 +109,16 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     throw new Error('ProofRequestDetails route params were not set properly')
   }
 
-  const { templateId, connectionId } = route.params
+  const { templateId, connectionId, directTemplate } = route?.params ?? {};
 
+  // Ensure templateId is always a string
+  const validTemplateId = templateId ?? "";
+  
+  const fetchedTemplate = useTemplate(validTemplateId);
+  
+  const template = useMemo(() => {
+    return templateId ? fetchedTemplate : directTemplate;
+  }, [templateId, fetchedTemplate, directTemplate]);
   const style = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -138,15 +147,12 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     { visible: boolean; predicate: string | undefined } | undefined
   >(undefined)
 
-  const template = useTemplate(templateId)
-
   useEffect(() => {
     if (!template) {
       return
     }
     const attributes = template.payload.type === ProofRequestType.AnonCreds ? template.payload.data : []
-
-    bundleResolver.resolve({ identifiers: { templateId }, language: i18n.language }).then((bundle) => {
+    bundleResolver.resolve({ identifiers: { templateId:template.id }, language: i18n.language }).then((bundle) => {
       const metaOverlay =
         bundle?.metaOverlay ||
         new MetaOverlay({
@@ -164,7 +170,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       setMeta(metaOverlay)
       setAttributes(attributes)
     })
-  }, [template, bundleResolver, templateId, i18n.language])
+  }, [template, bundleResolver, templateId, i18n.language, directTemplate])
 
   const onChangeValue = useCallback(
     (schema: string, label: string, name: string, value: string) => {
@@ -186,31 +192,42 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   const activateProofRequest = useCallback(async () => {
     if (!template) {
-      return
+      return;
     }
-
+  
     if (invalidPredicate) {
-      setInvalidPredicate({ visible: true, predicate: invalidPredicate.predicate })
-      return
+      setInvalidPredicate({ visible: true, predicate: invalidPredicate.predicate });
+      return;
     }
-
+  
     if (connectionId) {
-      // Send to specific contact and redirect to the chat with him
+      // Send proof request to a specific contact
       sendProofRequest(agent, template, connectionId, customPredicateValues).then((result) => {
         if (result?.proofRecord) {
-          linkProofWithTemplate(agent, result.proofRecord, templateId)
-        }
-      })
 
-      navigation.getParent()?.navigate(Screens.Chat, { connectionId })
-    } else {
-      // Else redirect to the screen with connectionless request
-      navigation.navigate(Screens.ProofRequesting, { templateId, predicateValues: customPredicateValues })
+            linkProofWithTemplate(agent, result.proofRecord, template.id);
+          
+        }
+      });
+  
+      // Navigate to chat screen
+      navigation.getParent()?.navigate(Screens.Chat, { connectionId });
+      return;
     }
-  }, [template, invalidPredicate, connectionId, agent, customPredicateValues, templateId, navigation])
+  
+    // Handle connectionless proof requests
+    const proofRequestParams = 
+       { templateId, directTemplate, predicateValues: customPredicateValues }
+
+  
+    navigation.navigate(Screens.ProofRequesting, proofRequestParams);
+  }, [template, invalidPredicate, connectionId, agent, customPredicateValues, navigation, templateId, directTemplate]);
 
   const showTemplateUsageHistory = useCallback(async () => {
-    navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
+    if(!templateId){
+      return;
+    }    
+      navigation.navigate(Screens.ProofRequestUsageHistory, { templateId })
   }, [navigation, templateId])
 
   const Header: React.FC = () => {
@@ -234,7 +251,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
             onPress={() => activateProofRequest()}
           />
         </View>
-        {store.preferences.useDataRetention && (
+        {store.preferences.useDataRetention && templateId && (
           <View style={style.footerButton}>
             <Button
               title={t('Verifier.ShowTemplateUsageHistory')}
@@ -250,7 +267,9 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   }
 
   return (
-    <SafeAreaView style={style.container} edges={['left', 'right']}>
+    <SafeAreaView>
+      <SecondaryHeader/>
+      <View style={style.container}>
       {invalidPredicate?.visible && (
         <AlertModal
           title={t('Verifier.InvalidPredicateValueTitle', { predicate: invalidPredicate.predicate })}
@@ -263,6 +282,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
         <ProofRequestCards attributes={attributes} onChangeValue={onChangeValue} />
         <Footer />
       </ScrollView>
+      </View>
     </SafeAreaView>
   )
 }

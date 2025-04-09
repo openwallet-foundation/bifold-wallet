@@ -32,7 +32,8 @@ const ProofRequestStack: React.FC = () => {
         component={ListProofRequests}
         options={{
           title: t('Screens.ChooseProofRequest'),
-          ...ScreenOptionsDictionary[Screens.ProofRequest],
+          headerShown: false,
+          ...ScreenOptionsDictionary[Screens.ProofRequest]
         }}
       />
       <Stack.Screen
@@ -40,13 +41,16 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestDetails}
         options={() => ({
           title: '',
-          ...ScreenOptionsDictionary[Screens.ProofRequestDetails],
+          headerShown: false,
+          ...ScreenOptionsDictionary[Screens.ProofRequestDetails]
         })}
       />
       <Stack.Screen
         name={Screens.MobileVerifierLoading}
         component={MobileVerifierLoading}
-        options={{ ...defaultStackOptions }}
+        options={{ 
+          ...defaultStackOptions 
+        }}
       />
       <Stack.Screen
         name={Screens.ProofChangeCredential}
@@ -61,16 +65,8 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequesting}
         options={({ navigation }) => ({
           title: t('ProofRequest.RequestForProof'),
-          headerLeft: () => (
-            <IconButton
-              buttonLocation={ButtonLocation.Left}
-              accessibilityLabel={t('Global.Back')}
-              testID={testIdWithKey('BackButton')}
-              onPress={() => navigation.navigate(Screens.ProofRequests, {})}
-              icon="arrow-left"
-            />
-          ),
-          ...ScreenOptionsDictionary[Screens.ProofRequesting],
+          headerShown: false,
+          ...ScreenOptionsDictionary[Screens.ProofRequesting]
         })}
       />
       <Stack.Screen
@@ -78,23 +74,24 @@ const ProofRequestStack: React.FC = () => {
         component={ProofDetails}
         options={({ navigation, route }) => ({
           title: '',
-          headerLeft: () => (
-            <IconButton
-              buttonLocation={ButtonLocation.Left}
-              accessibilityLabel={t('Global.Back')}
-              testID={testIdWithKey('BackButton')}
-              onPress={() => {
-                if (route.params.isHistory) {
-                  navigation.goBack()
-                } else {
-                  navigation.navigate(Screens.ProofRequests, {})
-                }
-              }}
-              icon="arrow-left"
-            />
-          ),
-          headerRight: () => <HeaderRightHome />,
-          ...ScreenOptionsDictionary[Screens.ProofDetails],
+          // headerLeft: () => (
+          //   <IconButton
+          //     buttonLocation={ButtonLocation.Left}
+          //     accessibilityLabel={t('Global.Back')}
+          //     testID={testIdWithKey('BackButton')}
+          //     onPress={() => {
+          //       if (route.params.isHistory) {
+          //         navigation.goBack()
+          //       } else {
+          //         navigation.navigate(Screens.ProofRequests, {})
+          //       }
+          //     }}
+          //     icon="arrow-left"
+          //   />
+          // ),
+          // headerRight: () => <HeaderRightHome />,
+          // ...ScreenOptionsDictionary[Screens.ProofDetails]
+          headerShown: false,
         })}
       />
       <Stack.Screen
@@ -102,8 +99,9 @@ const ProofRequestStack: React.FC = () => {
         component={ProofRequestUsageHistory}
         options={() => ({
           title: t('Screens.ProofRequestUsageHistory'),
-          headerRight: () => <HeaderRightHome />,
-          ...ScreenOptionsDictionary[Screens.ProofRequestUsageHistory],
+          headerShown: false,
+          // headerRight: () => <HeaderRightHome />,
+          // ...ScreenOptionsDictionary[Screens.ProofRequestUsageHistory]
         })}
       />
     </Stack.Navigator>

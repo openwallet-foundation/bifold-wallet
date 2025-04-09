@@ -1,12 +1,13 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import Link from '../components/texts/Link'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
 import { ThemedText } from '../components/texts/ThemedText'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 interface WhatAreContactsProps {
   navigation: NavigationProp<ParamListBase>
@@ -48,6 +49,7 @@ const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <SecondaryHeader/>
       <ScrollView
         contentContainerStyle={styles.pageContent}
         directionalLockEnabled

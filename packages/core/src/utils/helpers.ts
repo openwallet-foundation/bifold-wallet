@@ -33,9 +33,10 @@ import moment from 'moment'
 import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
 import { TFunction } from 'react-i18next'
-import { DeviceEventEmitter } from 'react-native'
+import { Alert, DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
+import { Schemadetails, LinkedAttachments,Attributes } from '../types/Icredytypes/credentialSchema'; 
 import { i18n } from '../localization/index'
 import { BifoldLogger } from '../services/logger'
 import { Role } from '../types/chat'
@@ -971,7 +972,7 @@ export const sortCredentialsForAutoSelect = (
  * invitation was not completed. Does nothing if no previously
  * received invitations exist
  * @param agent an Agent instance
- * @param invitationId specifically a *received* invitation id
+ * @param invitationId id of invitation
  */
 export const removeExistingInvitationsById = async (agent: Agent | undefined, invitationId: string): Promise<void> => {
   // This is implemented just as findByReceivedInvitationId is
@@ -1279,3 +1280,78 @@ export function getSecondaryBackgroundColor(
       : overlay.brandingOverlay?.secondaryBackgroundColor
   }
 }
+
+/**
+ * Returns CredentialExchangeRecord for the send-proposal.
+ *
+ * @param {Agent} agent - The agent instance.
+ * @param {string}[connectionId]  - The connectionId of the holder.
+ * @param {schemaDetails} [schemaDetails] - schemaDetails for the sent-proposal.
+ * @param {attributes} [attributes] - attributes for the proposals.
+ * @param {linkedAttachments} [linkedAttachments] - linkedAttachments for the proposals.
+ * @param {string} [comment] - comment for the proposals.
+ * @returns {CredentialExchangeRecord} - returns proposal CredentialExchangeRecord .
+ */
+
+const showStatusAlert = (title: string, message: string, isError = false, navigation?: any) => {
+  Alert.alert(
+    title,
+    message,
+    [{ 
+      text: 'OK', 
+      onPress: () => {
+        if (!isError && navigation) {
+          navigation.navigate('HomeScreen');
+        }
+      }
+    }],
+    { cancelable: false }
+  );
+};
+export const sendCredentialProposal = async ( agent: Agent<any>| undefined,connectionId: string|undefined,
+  // schemadetails: Schemadetails, 
+  // linkedAttachments: LinkedAttachments[],
+  attributes:Attributes[] ,comment:string ="" ,  navigation?: any):
+Promise<CredentialExchangeRecord> => {
+
+ if (!agent) {
+ throw new Error('Agent not initialized');
+ }
+ if(!connectionId){
+   throw new Error('Connection not established');  
+ }
+
+ try {
+ const proposalOptions: ProposeCredentialOptions = {
+   protocolVersion: 'v2',
+   credentialFormats: {
+     indy: {
+      //  ...schemadetails,
+       attributes: attributes,
+      //  linkedAttachments: linkedAttachments
+       // issuerDid: "WgWxqztrNooG92RXvxSTWv"
+     }
+   },
+   autoAcceptCredential: AutoAcceptCredential.Never,
+   comment: comment,
+   connectionId: connectionId
+ };
+ const proposal = await agent.credentials.proposeCredential(proposalOptions as ProposeCredentialOptions<[]>);
+ 
+ showStatusAlert(
+ 'Success',
+ 'Documents uploaded and credential proposed successfully',
+ false,
+ navigation
+ );
+ return proposal;
+ 
+ } catch (error) {
+ showStatusAlert(
+ 'Error',
+ 'Failed to send credential proposal. Please try again.',
+ true
+ );
+ throw error;
+ }
+ }

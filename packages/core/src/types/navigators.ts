@@ -3,6 +3,8 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenId4VPRequestRecord, OpenIDCredentialType } from '../modules/openid/types'
 import { LayoutProps } from '../layout/ScreenLayout'
+import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
+
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -13,6 +15,11 @@ export enum Screens {
   CreatePIN = 'Create a PIN',
   EnterPIN = 'Enter PIN',
   Home = 'Home',
+  HomeScreen = 'HomeScreen',
+  RequestCredential = 'RequestCredential',
+  DocumentType = 'DocumentType',
+  EmployementDocument = 'EmployementDocument',
+  Onfido = 'Onfido',
   Scan = 'Scan',
   PasteUrl = 'Paste URL',
   Credentials = 'Credentials',
@@ -52,6 +59,10 @@ export enum Screens {
   HistoryDetails = 'History details',
   AutoLock = 'AutoLock',
   UpdateAvailable = 'Update Available',
+  Wallet = 'Wallet',
+  More = 'More',
+  EstablishedConnection = "EstablishedConnection",
+  CredentialProof = "CredentialProof",
 }
 
 export enum Stacks {
@@ -66,12 +77,18 @@ export enum Stacks {
   ConnectionStack = 'Connection Stack',
   HistoryStack = 'History Stack',
   CustomNavStack1 = 'Custom Nav Stack 1',
+  WalletStack = 'Wallet Stack',
+  MoreStack = 'More Stack',
+  EstablishedConnection = 'EstablishedConnection'
 }
 
 export enum TabStacks {
   HomeStack = 'Tab Home Stack',
   ConnectStack = 'Tab Connect Stack',
   CredentialStack = 'Tab Credential Stack',
+  WalletStack = 'Tab Wallet Stack',
+  MoreStack = 'Tab More Stack',
+  EstablishedConnection = 'Tab EstablishedConnection Stack'
 }
 
 export type RootStackParams = {
@@ -85,7 +102,7 @@ export type RootStackParams = {
   [Stacks.NotificationStack]: NavigatorScreenParams<NotificationStackParams>
   [Stacks.HistoryStack]: NavigatorScreenParams<HistoryStackParams>
   [Screens.CredentialDetails]: { credentialId: string }
-  [Screens.OpenIDCredentialDetails]: { credentialId: string; type: OpenIDCredentialType }
+  [Screens.OpenIDCredentialDetails]: { credentialId: string }
   [Stacks.CustomNavStack1]: undefined
 }
 
@@ -93,6 +110,9 @@ export type TabStackParams = {
   [TabStacks.HomeStack]: NavigatorScreenParams<HomeStackParams>
   [TabStacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
   [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
+  [TabStacks.WalletStack]: NavigatorScreenParams<WalletStackParams>
+  [TabStacks.MoreStack]: NavigatorScreenParams<MoreStackParams>
+  [TabStacks.EstablishedConnection]: NavigatorScreenParams<EstablishedConnectionStackParams>
 }
 
 export type AuthenticateStackParams = {
@@ -126,11 +146,11 @@ export type ContactStackParams = {
 
 export type ProofRequestsStackParams = {
   [Screens.ProofRequests]: { connectionId?: string }
-  [Screens.ProofRequesting]: { templateId: string; predicateValues?: Record<string, Record<string, number>> }
+  [Screens.ProofRequesting]: { templateId: string | undefined;directTemplate?:  ProofRequestTemplate | undefined; predicateValues?: Record<string, Record<string, number>> }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean; senderReview?: boolean }
-  [Screens.ProofRequestDetails]: { templateId: string; connectionId?: string }
+  [Screens.ProofRequestDetails]: { templateId?: string | undefined; connectionId?: string; directTemplate?: ProofRequestTemplate| undefined;} 
   [Screens.MobileVerifierLoading]: { proofId: string; connectionId: string }
-  [Screens.ProofRequestUsageHistory]: { templateId: string }
+  [Screens.ProofRequestUsageHistory]: { templateId: string | undefined }
   [Screens.ProofChangeCredential]: {
     selectedCred: string
     altCredentials: string[]
@@ -139,12 +159,30 @@ export type ProofRequestsStackParams = {
   }
 }
 
+export type WalletStackParams = {
+  [Screens.Wallet]: undefined
+}
+
+export type MoreStackParams = {
+  [Screens.More]: undefined
+}
+
+export type EstablishedConnectionStackParams = {
+  [Screens.EstablishedConnection]: undefined
+}
+
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
 }
 
 export type HomeStackParams = {
   [Screens.Home]: undefined
+  [Screens.HomeScreen]: undefined
+  [Screens.RequestCredential]: undefined
+  [Screens.DocumentType]: undefined
+  [Screens.EmployementDocument]: undefined
+  [Screens.Onfido]: undefined
+  [Screens.CredentialProof]: undefined
 }
 
 export type ConnectStackParams = {

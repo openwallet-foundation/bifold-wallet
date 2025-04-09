@@ -15,6 +15,7 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { formatTime, getConnectionName } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 type ProofRequestUsageHistoryProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequestUsageHistory>
 
@@ -138,13 +139,16 @@ const ProofRequestUsageHistory: React.FC<ProofRequestUsageHistoryProps> = ({ rou
   const proofs = useProofsByTemplateId(templateId)
 
   return (
-    <SafeAreaView style={style.container} edges={['left', 'right']}>
+    <SafeAreaView>
+      <SecondaryHeader/>
+      <View style={style.container}>
       <FlatList
         data={proofs}
         keyExtractor={(proof) => proof.id}
         renderItem={({ item }) => <ProofRequestUsageHistoryRecord record={item} navigation={navigation} />}
         ListEmptyComponent={() => <EmptyList />}
       />
+      </View>
     </SafeAreaView>
   )
 }

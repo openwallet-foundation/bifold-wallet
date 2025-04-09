@@ -21,10 +21,13 @@ import { GenericCredentialExchangeRecord } from '../types/credentials'
 import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { BaseTourID } from '../types/tour'
 import { OpenIDCredentialType } from '../modules/openid/types'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { PrimaryHeader } from '../components/IcredyComponents'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
+  const [activeTab, setActiveTab] = useState("Issued");
   const [
     CredentialListOptions,
     credentialEmptyList,
@@ -48,7 +51,7 @@ const ListCredentials: React.FC = () => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
     ...w3cCredentialRecords,
-    ...sdJwtVcRecords,
+    ...sdJwtVcRecords
   ]
 
   const CredentialEmptyList = credentialEmptyList as React.FC<EmptyListProps>
@@ -58,6 +61,7 @@ const ListCredentials: React.FC = () => {
   if (!store.preferences.developerModeEnabled) {
     credentials = credentials.filter((r) => {
       const credDefId = r.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId
+      
       return !credentialHideList?.includes(credDefId)
     })
   }
@@ -66,7 +70,7 @@ const ListCredentials: React.FC = () => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(BaseTourID.CredentialsTour)
+      start(TourID.CredentialsTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR,
         payload: [true],
@@ -80,6 +84,11 @@ const ListCredentials: React.FC = () => {
   }, [stop])
 
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
+    const isRevoked = (cred as CredentialExchangeRecord).revocationNotification?.revocationDate;
+
+    if ((activeTab === 'Revoked' && !isRevoked) || (activeTab === 'Issued' && isRevoked)) {
+      return null; // Don't render if it doesn't belong in the selected tab
+    }
     return (
       <CredentialCard
         credential={cred as CredentialExchangeRecord}
@@ -104,9 +113,42 @@ const ListCredentials: React.FC = () => {
       />
     )
   }
-
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    // setSearchQuery(""); 
+};
+console.log('credentials', credentials)
   return (
     <View>
+      <PrimaryHeader/>
+         <View style={styles.tabContainer}>
+                          <TouchableOpacity
+                              style={[styles.tab, activeTab === "Issued" && styles.activeTab]}
+                              onPress={() => handleTabChange("Issued")}
+                          >
+                              <MaterialIcons
+                                  name="business"
+                                  size={20}
+                                  style={[styles.icon, activeTab === "Issued" && styles.activeIcon]}
+                              />
+                              <Text style={[styles.tabText, activeTab === "Issued" && styles.activeTabText]}>
+                                  Issued
+                              </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                              style={[styles.tab, activeTab === "Revoked" && styles.activeTab]}
+                              onPress={() => handleTabChange("Revoked")}
+                          >
+                              <MaterialIcons
+                                  name="person"
+                                  size={20}
+                                  style={[styles.icon, activeTab === "Revoked" && styles.activeIcon]}
+                              />
+                              <Text style={[styles.tabText, activeTab === "Revoked" && styles.activeTabText]}>
+                                  Revoked
+                              </Text>
+                          </TouchableOpacity>
+                      </View>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
@@ -131,5 +173,62 @@ const ListCredentials: React.FC = () => {
     </View>
   )
 }
-
+const styles = StyleSheet.create({
+    safeContainer: {
+        flex: 1,
+        backgroundColor: "#f5f5f5",
+    },
+    mainContainer: {
+        flex: 1,
+        backgroundColor: "#fff",
+    },
+    scrollView: {
+        flex: 1,
+        backgroundColor: "#fff",
+    },
+    scrollViewContent: {
+        flexGrow: 1,
+        paddingBottom: 20,
+    },
+    tabContainer: {
+      flexDirection: "row",
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      borderRadius: 25,
+      padding: 5,
+      marginHorizontal: 0,
+      width: "100%",
+      justifyContent: "space-between",
+      marginTop: 20,
+      marginBottom: 15, 
+  },
+    searchContainer: {
+        paddingHorizontal: 5,
+        paddingBottom: 15, // Added padding bottom for spacing
+    },
+    tab: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: 10,
+      justifyContent: "center",
+      borderRadius: 25,
+  },
+  activeTab: {
+      backgroundColor: ColorPallet.brand.primary,
+  },
+  tabText: {
+      ...TextTheme.bold,
+      color: ColorPallet.brand.text,
+  },
+  activeTabText: {
+      color: ColorPallet.grayscale.white,
+  },
+    icon: {
+        marginRight: 5,
+        color: ColorPallet.grayscale.black,
+    },
+    activeIcon: {
+        color:ColorPallet.grayscale.white,
+    },
+});
 export default ListCredentials

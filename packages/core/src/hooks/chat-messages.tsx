@@ -12,14 +12,15 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking } from 'react-native'
+import { Linking, Text } from 'react-native'
 
 import { ChatEvent } from '../components/chat/ChatEvent'
-import { ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
+// import { ExtendedChatMessage, CallbackType } from '../components/chat/ChatMessage'
+import { ExtendedChatMessage } from '../components/chat/ChatMessage'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { useCredentialsByConnectionId } from './credentials'
-import { useProofsByConnectionId } from './proofs'
+// import { useCredentialsByConnectionId } from '../hooks/credentials'
+// import { useProofsByConnectionId } from '../hooks/proofs'
 import { Role } from '../types/chat'
 import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
 import {
@@ -40,29 +41,29 @@ import { ThemedText } from '../components/texts/ThemedText'
  * @param {CredentialExchangeRecord | ProofExchangeRecord} record - The record to determine the callback type for.
  * @returns {CallbackType} The callback type for the given record.
  */
-const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
-  if (
-    record instanceof CredentialExchangeRecord &&
-    (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
-  ) {
-    return CallbackType.CredentialOffer
-  }
+// const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
+//   if (
+//     record instanceof CredentialExchangeRecord &&
+//     (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
+//   ) {
+//     return CallbackType.CredentialOffer
+//   }
 
-  if (
-    (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
-    record.state === ProofState.RequestReceived ||
-    (record.state === ProofState.Done && record.isVerified === undefined)
-  ) {
-    return CallbackType.ProofRequest
-  }
+//   if (
+//     (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
+//     record.state === ProofState.RequestReceived ||
+//     (record.state === ProofState.Done && record.isVerified === undefined)
+//   ) {
+//     return CallbackType.ProofRequest
+//   }
 
-  if (
-    record instanceof ProofExchangeRecord &&
-    (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
-  ) {
-    return CallbackType.PresentationSent
-  }
-}
+//   if (
+//     record instanceof ProofExchangeRecord &&
+//     (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
+//   ) {
+//     return CallbackType.PresentationSent
+//   }
+// }
 
 /**
  * Custom hook for retrieving chat messages for a given connection. This hook includes some of
@@ -78,8 +79,8 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
   const { ChatTheme: theme, ColorPallet } = useTheme()
   const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
   const basicMessages = useBasicMessagesByConnectionId(connection?.id)
-  const credentials = useCredentialsByConnectionId(connection?.id)
-  const proofs = useProofsByConnectionId(connection?.id)
+  // const credentials = useCredentialsByConnectionId(connection?.id)
+  // const proofs = useProofsByConnectionId(connection?.id)
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
@@ -134,108 +135,108 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
       }
     })
 
-    transformedMessages.push(
-      ...credentials.map((record: CredentialExchangeRecord) => {
-        const role = getCredentialEventRole(record)
-        const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
-        const actionLabel = t(getCredentialEventLabel(record) as any)
+    // transformedMessages.push(
+    //   ...credentials.map((record: CredentialExchangeRecord) => {
+    //     const role = getCredentialEventRole(record)
+    //     const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
+    //     const actionLabel = t(getCredentialEventLabel(record) as any)
 
-        return {
-          _id: record.id,
-          text: actionLabel,
-          renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
-          createdAt: record.createdAt,
-          type: record.type,
-          user: { _id: role },
-          messageOpensCallbackType: callbackTypeForMessage(record),
-          onDetails: () => {
-            const navMap: { [key in CredentialState]?: () => void } = {
-              [CredentialState.Done]: () => {
-                navigation.navigate(Stacks.ContactStack as any, {
-                  screen: Screens.CredentialDetails,
-                  params: { credential: record },
-                })
-              },
-              [CredentialState.OfferReceived]: () => {
-                // if we are in the contact stack, use the parent navigator
-                if (navigation.getParent()) {
-                  navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-                    screen: Screens.Connection,
-                    params: { credentialId: record.id },
-                  })
-                } else {
-                  // if we are in the root stack, use the current navigator
-                  navigation.navigate(Stacks.ConnectionStack as any, {
-                    screen: Screens.Connection,
-                    params: { credentialId: record.id },
-                  })
-                }
-              },
-            }
-            const nav = navMap[record.state]
-            if (nav) {
-              nav()
-            }
-          },
-        }
-      })
-    )
+    //     return {
+    //       _id: record.id,
+    //       text: actionLabel,
+    //       renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
+    //       createdAt: record.createdAt,
+    //       type: record.type,
+    //       user: { _id: role },
+    //       messageOpensCallbackType: callbackTypeForMessage(record),
+    //       onDetails: () => {
+    //         const navMap: { [key in CredentialState]?: () => void } = {
+    //           [CredentialState.Done]: () => {
+    //             navigation.navigate(Stacks.ContactStack as any, {
+    //               screen: Screens.CredentialDetails,
+    //               params: { credential: record },
+    //             })
+    //           },
+    //           [CredentialState.OfferReceived]: () => {
+    //             // if we are in the contact stack, use the parent navigator
+    //             if (navigation.getParent()) {
+    //               navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+    //                 screen: Screens.Connection,
+    //                 params: { credentialId: record.id },
+    //               })
+    //             } else {
+    //               // if we are in the root stack, use the current navigator
+    //               navigation.navigate(Stacks.ConnectionStack as any, {
+    //                 screen: Screens.Connection,
+    //                 params: { credentialId: record.id },
+    //               })
+    //             }
+    //           },
+    //         }
+    //         const nav = navMap[record.state]
+    //         if (nav) {
+    //           nav()
+    //         }
+    //       },
+    //     }
+    //   })
+    // )
 
-    transformedMessages.push(
-      ...proofs.map((record: ProofExchangeRecord) => {
-        const role = getProofEventRole(record)
-        const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
-        const actionLabel = t(getProofEventLabel(record) as any)
+    // transformedMessages.push(
+    //   ...proofs.map((record: ProofExchangeRecord) => {
+    //     const role = getProofEventRole(record)
+    //     const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
+    //     const actionLabel = t(getProofEventLabel(record) as any)
 
-        return {
-          _id: record.id,
-          text: actionLabel,
-          renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
-          createdAt: record.createdAt,
-          type: record.type,
-          user: { _id: role },
-          messageOpensCallbackType: callbackTypeForMessage(record),
-          onDetails: () => {
-            const toProofDetails = () => {
-              navigation.navigate(Stacks.ContactStack as any, {
-                screen: Screens.ProofDetails,
-                params: {
-                  recordId: record.id,
-                  isHistory: true,
-                  senderReview:
-                    record.state === ProofState.PresentationSent ||
-                    (record.state === ProofState.Done && record.isVerified === undefined),
-                },
-              })
-            }
-            const navMap: { [key in ProofState]?: () => void } = {
-              [ProofState.Done]: toProofDetails,
-              [ProofState.PresentationSent]: toProofDetails,
-              [ProofState.PresentationReceived]: toProofDetails,
-              [ProofState.RequestReceived]: () => {
-                // if we are in the contact stack, use the parent navigator
-                if (navigation.getParent()) {
-                  navigation.getParent()?.navigate(Stacks.ConnectionStack, {
-                    screen: Screens.Connection,
-                    params: { proofId: record.id },
-                  })
-                } else {
-                  // if we are in the root stack, use the current navigator
-                  navigation.navigate(Stacks.ConnectionStack as any, {
-                    screen: Screens.Connection,
-                    params: { proofId: record.id },
-                  })
-                }
-              },
-            }
-            const nav = navMap[record.state]
-            if (nav) {
-              nav()
-            }
-          },
-        }
-      })
-    )
+    //     return {
+    //       _id: record.id,
+    //       text: actionLabel,
+    //       renderEvent: () => <ChatEvent role={role} userLabel={userLabel} actionLabel={actionLabel} />,
+    //       createdAt: record.createdAt,
+    //       type: record.type,
+    //       user: { _id: role },
+    //       messageOpensCallbackType: callbackTypeForMessage(record),
+    //       onDetails: () => {
+    //         const toProofDetails = () => {
+    //           navigation.navigate(Stacks.ContactStack as any, {
+    //             screen: Screens.ProofDetails,
+    //             params: {
+    //               recordId: record.id,
+    //               isHistory: true,
+    //               senderReview:
+    //                 record.state === ProofState.PresentationSent ||
+    //                 (record.state === ProofState.Done && record.isVerified === undefined),
+    //             },
+    //           })
+    //         }
+    //         const navMap: { [key in ProofState]?: () => void } = {
+    //           [ProofState.Done]: toProofDetails,
+    //           [ProofState.PresentationSent]: toProofDetails,
+    //           [ProofState.PresentationReceived]: toProofDetails,
+    //           [ProofState.RequestReceived]: () => {
+    //             // if we are in the contact stack, use the parent navigator
+    //             if (navigation.getParent()) {
+    //               navigation.getParent()?.navigate(Stacks.ConnectionStack, {
+    //                 screen: Screens.Connection,
+    //                 params: { proofId: record.id },
+    //               })
+    //             } else {
+    //               // if we are in the root stack, use the current navigator
+    //               navigation.navigate(Stacks.ConnectionStack as any, {
+    //                 screen: Screens.Connection,
+    //                 params: { proofId: record.id },
+    //               })
+    //             }
+    //           },
+    //         }
+    //         const nav = navMap[record.state]
+    //         if (nav) {
+    //           nav()
+    //         }
+    //       },
+    //     }
+    //   })
+    // )
 
     const connectedMessage = connection
       ? {
@@ -257,7 +258,8 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
         ? [...transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt), connectedMessage]
         : transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)
     )
-  }, [ColorPallet, basicMessages, theme, credentials, t, navigation, proofs, theirLabel, connection])
+  // }, [ColorPallet, basicMessages, theme, credentials, t, navigation, proofs, theirLabel, connection])
+}, [ColorPallet, basicMessages, theme, t, navigation, theirLabel, connection])
 
   return messages
 }

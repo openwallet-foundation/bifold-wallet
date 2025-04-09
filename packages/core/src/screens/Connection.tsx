@@ -136,11 +136,27 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           type: ToastType.Success,
           text1: t('Connection.ConnectionCompleted'),
         })
-      }
-    },
-    [dispatch, navigation, enableChat, t]
-  )
 
+        }
+
+    },  
+    [dispatch,enableChat, navigation, t]
+  )
+  const handleNavigationToast = useCallback(
+    (connectionId: string) => {
+      dispatch({ inProgress: false })
+console.log("handleNavigationToast", connectionId)
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.RequestCredential, params: { connectionId } })
+        Toast.show({
+          type: ToastType.Success,
+          text1: t('Connection.ConnectionCompleted'),
+        })
+
+        
+
+    },  
+    [navigation, t]
+  )
   const onDismissModalTouched = useCallback(() => {
     dispatch({ inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
@@ -225,7 +241,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
-      handleNavigation(connection.id)
+      handleNavigationToast(connection.id)
 
       return
     }
@@ -275,17 +291,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
 
     handleNavigation(connection.id)
-  }, [
-    oobRecord,
-    state.inProgress,
-    connection,
-    logger,
-    dispatch,
-    navigation,
-    t,
-    state.notificationRecord,
-    handleNavigation,
-  ])
+  }, [oobRecord, state.inProgress, connection, logger, dispatch, navigation, t, state.notificationRecord, handleNavigation, handleNavigationToast])
 
   // This hook will monitor notification for openID type credentials
   // where there is not connection or oobID present

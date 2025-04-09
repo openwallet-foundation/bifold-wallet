@@ -123,8 +123,8 @@ const NameWallet: React.FC = () => {
             <Button
               title={didCompleteOnboarding ? t('Global.Save') : t('Global.Continue')}
               buttonType={ButtonType.Primary}
-              testID={didCompleteOnboarding ? testIdWithKey('Save') : testIdWithKey('Continue')}
-              accessibilityLabel={didCompleteOnboarding ? t('Global.Save') : t('Global.Continue')}
+              testID={onBoardingComplete ? testIdWithKey('Save') : testIdWithKey('Continue')}
+              accessibilityLabel={onBoardingComplete ? t('Global.Save') : t('Global.Continue')}
               onPress={handleContinuePressed}
               disabled={loading}
             >

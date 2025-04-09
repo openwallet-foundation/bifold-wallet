@@ -744,6 +744,8 @@ const translation = {
     "Home": "Notifications",
     "Scan": "Scan",
     "Credentials": "Credentials",
+    "Wallet": "Wallet",
+    "More": "More",
   },
   "RootStack": {
     "Contacts": "Contacts",
@@ -814,6 +816,9 @@ const translation = {
     "History": "History",
     "HistoryDetails": "History Details",
     "UpdateAvailable": "Update Available",
+    "Wallet": "Wallet",
+    "More": "More",
+    "EstablishedConnection": "EstablishedConnection"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

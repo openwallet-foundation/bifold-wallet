@@ -1,174 +1,318 @@
 {
-  "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card": {
-    "capture_base": {
-      "attributes": {
-        "student_first_name": "Text",
-        "student_last_name": "Text"
-      },
-      "classification": "",
-      "digest": "xuDvIavV99IjR4ZghUZb8ohgKUVvlBzw424Fv8na7MEF",
-      "flagged_attributes": [],
-      "type": "spec/capture_base/1.0"
-    },
-    "overlays": [
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "en",
-        "name": "Student",
-        "credential_help_text": "http://example.com/help",
-        "credential_support_url": "http://example.com/help",
-        "description": "",
-        "issuer": "",
-        "issuer_description": "",
-        "issuer_url": ""
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "fr",
-        "name": "Étudiant",
-        "credential_help_text": "http://example.com/help",
-        "credential_support_url": "http://example.com/help",
-        "description": "",
-        "issuer": "",
-        "issuer_description": "",
-        "issuer_url": ""
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/label/1.0",
-        "language": "en",
-        "attribute_labels": {
-          "student_first_name": "First Name",
-          "student_last_name": "Last Name"
-        }
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/label/1.0",
-        "language": "fr",
-        "attribute_labels": {
-          "student_last_name": "nom de famille"
-        }
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "aries/overlays/branding/0.1",
-        "language": "en",
-        "background_color": "#FFFFFF",
-        "header": {
-          "color": "#FFFFFF"
-        },
-        "footer": {
-          "color": "#FFFFFF"
-        }
-      }
-    ]
-  },
-  "XUxBrVSALWHLeycAUhrNr9:2:student_card:1.0": {
-    "capture_base": {
-      "attributes": {
-        "student_first_name": "Text",
-        "student_last_name": "Text"
-      },
-      "classification": "",
-      "digest": "xuDvIavV99IjR4ZghUZb8ohgKUVvlBzw424Fv8na7MEF",
-      "flagged_attributes": [],
-      "type": "spec/capture_base/1.0"
-    },
-    "overlays": [
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "en",
-        "name": "Student",
-        "credential_help_text": "http://example.com/help",
-        "credential_support_url": "http://example.com/help",
-        "description": "",
-        "issuer": "",
-        "issuer_description": "",
-        "issuer_url": ""
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "fr",
-        "name": "Étudiant",
-        "credential_help_text": "http://example.com/help",
-        "credential_support_url": "http://example.com/help",
-        "description": "",
-        "issuer": "",
-        "issuer_description": "",
-        "issuer_url": ""
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/label/1.0",
-        "language": "en",
-        "attribute_labels": {
-          "student_first_name": "First Name",
-          "student_last_name": "Last Name"
-        }
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/label/1.0",
-        "language": "fr",
-        "attribute_labels": {
-          "student_last_name": "nom de famille"
-        }
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "aries/overlays/branding/0.1",
-        "language": "en",
-        "background_color": "#FFFFFF",
-        "header": {
-          "color": "#FFFFFF"
-        },
-        "footer": {
-          "color": "#FFFFFF"
-        }
-      }
-    ]
-  },
-  "Aries:5:StudentFullName:0.0.1:indy": {
-    "capture_base": {
-      "attributes": {
-        "student_first_name": "Text",
-        "student_last_name": "Text"
-      },
-      "classification": "",
-      "digest": "xuDvIavV99IjR4ZghUZb8ohgKUVvlBzw424Fv8na7MEF",
-      "flagged_attributes": [],
-      "type": "spec/capture_base/1.0"
-    },
-    "overlays": [
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "en",
-        "name": "Student full name",
-        "description": "Verify the full name of a student",
-        "credential_help_text": "",
-        "credential_support_url": "",
-        "issuer": "",
-        "issuer_description": "",
-        "issuer_url": ""
-      },
-      {
-        "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
-        "type": "spec/overlays/meta/1.0",
-        "language": "fr",
-        "name": "Nom complet de l'étudiant",
-        "description": "Vérifier le nom complet d'un étudiant",
-        "credential_help_text": "",
-        "credential_support_url": "",
-        "issuer": "",
-        "issuer_description": "",
-        "issuer_url": ""
-      }
-    ]
-  }
+"Q9ug9WCZUpguUjWHYmWU2h:2:finance:1.0":{
+"capture_base": {
+"attributes": {
+"owner_name": "Text",
+"property_address": "Text",
+"icredy_credit_rating": "Numeric",
+"icredy_financial_rating": "Numeric",
+"score": "Numeric"
+},
+"classification": "",
+"flagged_attributes": [
+"owner_name",
+"property_address"
+],
+"type": "spec/capture_base/1.0"
+},
+"overlays": [
+{
+"attribute_character_encoding": {
+"owner_name": "utf-8",
+"property_address": "utf-8",
+"icredy_credit_rating": "utf-8",
+"icredy_financial_rating": "utf-8",
+"score": "utf-8"
+},
+"capture_base": "Z5Wpl33kzO8ZNp9kEHsryByhm4S3_ASccnZqrKcvrOM",
+"default_character_encoding": "utf-8",
+"digest": "EF0nuwB5M61E5ESTeCN8whh3y259ImG5vz-y3dZd4PPU",
+"type": "spec/overlays/character_encoding/1.0"
+},
+{
+"attribute_categories": [],
+"attribute_labels": {
+"owner_name": "Owner's Name",
+"property_address": "Property Address",
+"icredy_credit_rating": "iCredy Credit Rating",
+"icredy_financial_rating": "iCredy Financial Rating",
+"score": "Score"
+},
+"capture_base": "Z5Wpl33kzO8ZNp9kEHsryByhm4S3_ASccnZqrKcvrOM",
+"category_labels": {},
+"digest": "E0XJF-M1yoyeal0KYqsKKdt8iIkYKVHTPpvr8Qv-D0O8",
+"language": "en",
+"type": "spec/overlays/label/1.0"
+},
+{
+"attribute_information": {
+"owner_name": "Owner's Name",
+"property_address": "Property Address",
+"icredy_credit_rating": "iCredy Credit Rating",
+"icredy_financial_rating": "iCredy Financial Rating",
+"score": "Score"
+},
+"capture_base": "Z5Wpl33kzO8ZNp9kEHsryByhm4S3_ASccnZqrKcvrOM",
+"digest": "EAbxFvoqDpdr0aNVD2djBq4cSm99ULsxWes6N9UqFzpI",
+"language": "en",
+"type": "spec/overlays/information/1.0"
+},
+{
+"capture_base": "Z5Wpl33kzO8ZNp9kEHsryByhm4S3_ASccnZqrKcvrOM",
+"credential_help_text": "This credential serves as a verified proof for financial, issued by iCredy.",
+"credential_support_url": "davinder.kandhari@icredy.ca",
+"description": "A digital credential issued by iCredy for finacial verification.",
+"digest": "EMfbDGo5OVmGKFy5sRVgZA2qhS7IRC5jd_9LXQj7-TE0",
+"issuer": "iCredy",
+"issuer_description": "iCredy",
+"issuer_url": "https://icredy.ca/contact",
+"language": "en",
+"name": "Financial Proof",
+"type": "spec/overlays/meta/1.0"
+},
+{
+"logo": "https://github.com/icredyRepo/extras/raw/main/IC-logo.png",
+"background_image_slice": "https://github.com/icredyRepo/extras/raw/main/background-image-slicepng.png",
+"background_image": "https://github.com/icredyRepo/extras/raw/main/background-image.png",
+"primary_background_color": "#355e3b",
+"capture_base": "Z5Wpl33kzO8ZNp9kEHsryByhm4S3_ASccnZqrKcvrOM",
+"digest": "E7OCNjEpNLqhtWsowmqQBiDEo6V7MCr4U-HV_2xoJP7w",
+"expiry_date_attribute": "expiry_dateint",
+"type": "aries/overlays/branding/1.0"
+}
+]
+},
+
+"NJEP7EKT3T7tUUUk15i1Ws:2:emp:1.0":{
+"capture_base": {
+"attributes": {
+"curemp_biweekly_pay": "Numeric",
+"curemp_name": "Text",
+"curemp_position": "Text",
+"curemp_since": "DateTime",
+"curemp_type": "Text",
+"prevemp_biweekly_pay": "Numeric",
+"prevemp_name": "Text",
+"prevemp_position": "Text",
+"prevemp_since": "DateTime",
+"prevemp_type": "Text"
+},
+"classification": "",
+"flagged_attributes": [
+"curemp_name",
+"prevemp_name"
+],
+"type": "spec/capture_base/1.0"
+},
+"overlays": [
+{
+"attribute_character_encoding": {
+"curemp_biweekly_pay": "utf-8",
+"curemp_name": "utf-8",
+"curemp_position": "utf-8",
+"curemp_since": "utf-8",
+"curemp_type": "utf-8",
+"prevemp_biweekly_pay": "utf-8",
+"prevemp_name": "utf-8",
+"prevemp_position": "utf-8",
+"prevemp_since": "utf-8",
+"prevemp_type": "utf-8"
+},
+"capture_base": "JUga9kngCTL5POdbncea3FLh6gqeWS-8-zGtrl448BM",
+"default_character_encoding": "utf-8",
+"digest": "Eh6lZwsVT-VIrA0vEwfa8SPZ22acrXV-3secJ8ZOXi7U",
+"type": "spec/overlays/character_encoding/1.0"
+},
+{
+"attribute_categories": ["curemp","prevemp"],
+"cat_labels": {
+"curemp": "Current Employee",
+"prevemp": "Previous Employee"
+},
+"cat_attributes": {
+"curemp": [
+"curemp_biweekly_pay",
+"curemp_name",
+"curemp_position",
+"curemp_since",
+"curemp_type"
+],
+"prevemp": [
+"prevemp_biweekly_pay",
+"prevemp_name",
+"prevemp_position",
+"prevemp_since",
+"prevemp_type"
+]
+},
+"attribute_labels": {
+"curemp_biweekly_pay": "Current Employer Biweekly Pay",
+"curemp_name": "Current Employer Name",
+"curemp_position": "Current Employer Position",
+"curemp_since": "Current Employer Since",
+"curemp_type": "Current Employer Employement Type",
+"prevemp_biweekly_pay": "Previous Employer Biweekly Pay",
+"prevemp_name": "Previous Employer Name",
+"prevemp_position": "Previous Employer Position",
+"prevemp_since": "Previous Employer Since",
+"prevemp_type": "Previous Employer Employement Type"
+},
+"capture_base": "JUga9kngCTL5POdbncea3FLh6gqeWS-8-zGtrl448BM",
+"category_labels": {},
+"digest": "XXbfU8DaawaFs274pEKiuobdcKe3rmW276IMAQdC5GEb",
+"language": "en",
+"type": "spec/overlays/label/1.0"
+},
+{
+"attribute_formats": {
+"curemp_since": "YYYY-MM-DD",
+"prevemp_since": "YYYY-MM-DD"
+},
+"digest": "enQE2GnwJv2P9PAciU-0edM4pXtTKFcLn1YJ35kYQ157",
+"capture_base": "JUga9kngCTL5POdbncea3FLh6gqeWS-8-zGtrl448BM",
+"type": "spec/overlays/format/2.0.0"
+},
+{
+"attribute_information": {
+"curemp_biweekly_pay": "Current Employer Biweekly Pay",
+"curemp_name": "Current Employer Name",
+"curemp_position": "Current Employer Position",
+"curemp_since": "Current Employer Since",
+"curemp_type": "Current Employer Employement Type",
+"prevemp_biweekly_pay": "Previous Employer Biweekly Pay",
+"prevemp_name": "Previous Employer Name",
+"prevemp_position": "Previous Employer Position",
+"prevemp_since": "Previous Employer Since",
+"prevemp_type": "Previous Employer Employement Type"
+},
+"capture_base": "JUga9kngCTL5POdbncea3FLh6gqeWS-8-zGtrl448BM",
+"digest": "UooKfLQTMSJLKmCNiAKrjfckUJCAU7LnMT3nHNghf1OP",
+"language": "en",
+"type": "spec/overlays/information/1.0"
+},
+{
+"capture_base": "JUga9kngCTL5POdbncea3FLh6gqeWS-8-zGtrl448BM",
+"credential_help_text": "This credential serves as a verified proof for employement, issued by iCredy.",
+"credential_support_url": "davinder.kandhari@icredy.ca",
+"description": "A digital credential issued by iCredy for employement verification.",
+"digest": "EMc-KEj_i6rjF2q8uo8wlBt3RKMwxqttJCcfSyeJtIBQ",
+"issuer": "iCredy",
+"issuer_description": "iCredy",
+"issuer_url": "https://icredy.ca/contact",
+"language": "en",
+"name": "Employement Proof",
+"type": "spec/overlays/meta/1.0"
+},
+{
+"logo": "https://github.com/icredyRepo/extras/raw/main/IC-logo.png",
+"background_image_slice": "https://github.com/icredyRepo/extras/raw/main/background-image-slicepng.png",
+"background_image": "https://github.com/icredyRepo/extras/raw/main/background-image.png",
+"primary_background_color": "#194c68",
+"capture_base": "JUga9kngCTL5POdbncea3FLh6gqeWS-8-zGtrl448BM",
+"digest": "E_lAYee0_1x9UHpqm5_OX8yrut3nLL5diuYLPuDhFfA0",
+"expiry_date_attribute": "expiry_dateint",
+"type": "aries/overlays/branding/1.0"
+}
+]
+},
+
+"NJEP7EKT3T7tUUUk15i1Ws:2:identity:1.1":{
+"capture_base": {
+"attributes": {
+"name": "Text",
+"address": "Text",
+"date_of_birth": "DateTime",
+"date_of_expiry": "DateTime",
+"type_of_id": "Text",
+"photo": "Binary"
+},
+"classification": "",
+"flagged_attributes": [
+"name",
+"address",
+"date_of_birth"
+],
+"type": "spec/capture_base/1.0"
+},
+"overlays": [
+{
+"attribute_character_encoding": {
+"name": "utf-8",
+"address": "utf-8",
+"date_of_birth": "utf-8",
+"date_of_expiry": "utf-8",
+"type_of_id": "utf-8",
+"photo": "base64"
+},
+"capture_base": "wDkAyvlli6u9bjp9Vwq0MiVYYUnBqyE_MEaOZi2sGdLq",
+"default_character_encoding": "utf-8",
+"digest": "9zc061OAdYEK4W1bA8oDBzugLKcM3zvrVdFO0CzmT-jQ",
+"type": "spec/overlays/character_encoding/1.0"
+},
+{
+"attribute_formats": {
+"date_of_birth": "YYYY-MM-DD",
+"date_of_expiry": "YYYY-MM-DD",
+"photo": "image/jpeg"
+},
+"digest": "T4Zcm6un1ggSbf5BqDhbw9dA5qO2Y7VaUGo2L0B9weG7",
+"capture_base": "wDkAyvlli6u9bjp9Vwq0MiVYYUnBqyE_MEaOZi2sGdLq",
+"type": "spec/overlays/format/2.0.0"
+},
+{
+"attribute_categories": [],
+"attribute_labels": {
+"name": "Name",
+"address": "Address",
+"date_of_birth": "Date of Birth",
+"date_of_expiry": "Date of Expiry",
+"type_of_id": "Type of ID",
+"photo": "Image"
+},
+"capture_base": "wDkAyvlli6u9bjp9Vwq0MiVYYUnBqyE_MEaOZi2sGdLq",
+"category_labels": {},
+"digest": "eYaw23e0_h3Vd6w9hjyjeq8gUg8fT-z0FVU2as0Qn8S2",
+"language": "en",
+"type": "spec/overlays/label/1.0"
+},
+{
+"attribute_information": {
+"name": "Name",
+"address": "Address",
+"date_of_birth": "Date of Birth",
+"date_of_expiry": "Date of Expiry",
+"type_of_id": "Type of ID",
+"photo": "Image"
+},
+"capture_base": "wDkAyvlli6u9bjp9Vwq0MiVYYUnBqyE_MEaOZi2sGdLq",
+"digest": "op61bFRcEFUgA8PhK_sLikEVu1e8_AO4CpwB1fNfyas5",
+"language": "en",
+"type": "spec/overlays/information/1.0"
+},
+{
+"capture_base": "wDkAyvlli6u9bjp9Vwq0MiVYYUnBqyE_MEaOZi2sGdLq",
+"credential_help_text": "This credential serves as a verified proof of identity, issued by iCredy.",
+"credential_support_url": "davinder.kandhari@icredy.ca",
+"description": "A digital credential issued by iCredy for identity verification.",
+"digest": "HqzJ3hZuUC-xcX67RMac_Oi1VxMCvBzQfAfdAANYoazJ",
+"issuer": "iCredy",
+"issuer_description": "iCredy",
+"issuer_url": "https://icredy.ca/contact",
+"language": "en",
+"name": "ID Proof",
+"type": "spec/overlays/meta/1.0"
+},
+{
+"logo": "https://github.com/icredyRepo/extras/raw/main/IC-logo.png",
+"background_image_slice": "https://github.com/icredyRepo/extras/raw/main/background-image-slicepng.png",
+"background_image": "https://github.com/icredyRepo/extras/raw/main/background-image.png",
+"primary_background_color": "#0f606b",
+"capture_base": "wDkAyvlli6u9bjp9Vwq0MiVYYUnBqyE_MEaOZi2sGdLq",
+"digest": "wJEXqWBug_uhX6CWa3dqTIrkaBDbp5-diLOhAu-STkuD",
+"expiry_date_attribute": "expiry_dateint",
+"type": "aries/overlays/branding/1.0"
+}
+]
+}
+
 }

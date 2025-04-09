@@ -39,6 +39,7 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { createTempConnectionInvitation } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 
@@ -55,7 +56,8 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     throw new Error('ProofRequesting route params were not set properly')
   }
 
-  const { templateId, predicateValues } = route.params
+
+  const { templateId,directTemplate,predicateValues } = route.params || {}
   const { agent } = useAgent()
   if (!agent) {
     throw new Error('Unable to fetch agent from Credo')
@@ -71,7 +73,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const [proofRecordId, setProofRecordId] = useState<string | undefined>(undefined)
   const record = useConnectionByOutOfBandId(connectionRecordId ?? '')
   const proofRecord = useProofById(proofRecordId ?? '')
-  const template = useTemplate(templateId)
+  const validTemplateId = templateId ?? "";
+  const fetchedTemplate = useTemplate(validTemplateId);
+  const template = templateId ? fetchedTemplate : directTemplate;
   const { qrSize, qrContainerSize } = useQrSizeForDevice()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
@@ -196,7 +200,12 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
           // verifier side doesn't have access to the goal code so we need to add metadata here
           const metadata = result.proofRecord.metadata.get(ProofMetadata.customMetadata) as ProofCustomMetadata
           result.proofRecord.metadata.set(ProofMetadata.customMetadata, { ...metadata, delete_conn_after_seen: true })
-          linkProofWithTemplate(agent, result.proofRecord, templateId)
+          if(!templateId){
+            console.log("no templateid here direct template")
+          }else{
+            linkProofWithTemplate(agent, result.proofRecord, templateId)
+          }
+
         }
 
         setProofRecordId(result?.proofRecord.id)
@@ -221,6 +230,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
 
   return (
     <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
+      <SecondaryHeader/>
       <ScrollView>
         <View style={styles.qrContainer}>
           {generating && <LoadingIndicator />}

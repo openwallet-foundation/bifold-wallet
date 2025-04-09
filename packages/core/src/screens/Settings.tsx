@@ -26,6 +26,7 @@ import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -49,7 +50,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       width: '100%',
     },
     section: {
-      backgroundColor: SettingsTheme.groupBackground,
+      backgroundColor: ColorPallet.brand.primaryBackground,
       paddingVertical: 24,
       flexGrow: 1,
     },
@@ -97,37 +98,37 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   }
 
   const settingsSections: SettingSection[] = [
-    {
-      header: {
-        icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
-        title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
-        iconRight: {
-          name: 'edit',
-          action: () => {
-            navigation.navigate(Screens.NameWallet)
-          },
-          accessibilityLabel: t('NameWallet.EditWalletName'),
-          testID: testIdWithKey('EditWalletName'),
-          style: { color: ColorPallet.brand.primary },
-        },
-        titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
-      },
-      data: [
-        {
-          title: t('Screens.Contacts'),
-          accessibilityLabel: t('Screens.Contacts'),
-          testID: testIdWithKey('Contacts'),
-          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts }),
-        },
-        {
-          title: t('Settings.WhatAreContacts'),
-          accessibilityLabel: t('Settings.WhatAreContacts'),
-          testID: testIdWithKey('WhatAreContacts'),
-          onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.WhatAreContacts }),
-          value: undefined,
-        },
-      ],
-    },
+    // {
+    //   header: {
+    //     icon: { name: store.preferences.useConnectionInviterCapability ? 'person' : 'apartment', size: 30 },
+    //     title: store.preferences.useConnectionInviterCapability ? store.preferences.walletName : t('Screens.Contacts'),
+    //     iconRight: {
+    //       name: 'edit',
+    //       action: () => {
+    //         navigation.navigate(Screens.NameWallet)
+    //       },
+    //       accessibilityLabel: t('NameWallet.EditWalletName'),
+    //       testID: testIdWithKey('EditWalletName'),
+    //       style: { color: ColorPallet.brand.primary },
+    //     },
+    //     titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
+    //   },
+    //   data: [
+    //     {
+    //       title: t('Screens.Contacts'),
+    //       accessibilityLabel: t('Screens.Contacts'),
+    //       testID: testIdWithKey('Contacts'),
+    //       onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.Contacts }),
+    //     },
+    //     {
+    //       title: t('Settings.WhatAreContacts'),
+    //       accessibilityLabel: t('Settings.WhatAreContacts'),
+    //       testID: testIdWithKey('WhatAreContacts'),
+    //       onPress: () => navigation.getParent()?.navigate(Stacks.ContactStack, { screen: Screens.WhatAreContacts }),
+    //       value: undefined,
+    //     },
+    //   ],
+    // },
     {
       header: {
         icon: { name: 'settings' },
@@ -369,7 +370,9 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   )
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
+    // <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
+    <SafeAreaView style={styles.container}>
+      <SecondaryHeader/>
       <SectionList
         renderItem={({ item: { title, value, accessibilityLabel, testID, onPress } }) => (
           <SectionRow

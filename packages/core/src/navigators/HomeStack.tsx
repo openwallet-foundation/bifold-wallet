@@ -5,7 +5,14 @@ import { useTranslation } from 'react-i18next'
 import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import HistoryMenu from '../modules/history/ui/components/HistoryMenu'
-import Home from '../screens/Home'
+import HomeScreen from '../screens/HomeScreen'
+import RequestCredential from '../screens/RequestCredential'
+import DocumentTypeSelectionScreen from '../screens/DocumentTypeSelectionScreen';
+import EmployementDocumentScreen from '../screens/EmployementDocumentScreen';
+import Onfido from '../screens/Onfido'
+
+import CredentialProof from '../screens/CredentialProofScreen'
+
 import { HomeStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
@@ -21,13 +28,36 @@ const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
-        name={Screens.Home}
-        component={Home}
+        name={Screens.HomeScreen}
+        component={HomeScreen}
         options={() => ({
-          title: t('Screens.Home'),
-          headerRight: () => (historyEnabled ? <HistoryMenu /> : null),
-          headerLeft: () => <SettingsMenu />,
-          ...ScreenOptionsDictionary[Screens.Home],
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen name={Screens.RequestCredential} component={RequestCredential}
+        options={() => ({
+          headerShown: false,
+        })} />
+      <Stack.Screen name={Screens.DocumentType} component={DocumentTypeSelectionScreen}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen name={Screens.EmployementDocument} component={EmployementDocumentScreen}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+
+      <Stack.Screen name={Screens.CredentialProof} component={CredentialProof}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+
+      <Stack.Screen name={Screens.Onfido} component={Onfido}
+        options={() => ({
+          headerShown: false,
         })}
       />
     </Stack.Navigator>

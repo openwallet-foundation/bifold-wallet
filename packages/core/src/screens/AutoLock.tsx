@@ -11,6 +11,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../contexts/theme'
 import { ThemedText } from '../components/texts/ThemedText'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 type AutoLockListItem = {
   title: string

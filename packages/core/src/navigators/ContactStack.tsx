@@ -30,14 +30,17 @@ const ContactStack: React.FC = () => {
       <Stack.Screen
         name={Screens.Contacts}
         component={ListContacts}
-        options={{ title: t('Screens.Contacts'), ...ScreenOptionsDictionary[Screens.Contacts] }}
+        options={{ title: t('Screens.Contacts'),
+        headerShown: false,
+          ...ScreenOptionsDictionary[Screens.Contacts]
+        }}
       />
       <Stack.Screen
         name={Screens.ContactDetails}
         component={ContactDetails}
         options={{
           title: t('Screens.ContactDetails'),
-          ...ScreenOptionsDictionary[Screens.ContactDetails],
+          ...ScreenOptionsDictionary[Screens.ContactDetails]
         }}
       />
       <Stack.Screen
@@ -45,14 +48,15 @@ const ContactStack: React.FC = () => {
         component={RenameContact}
         options={{
           title: t('Screens.RenameContact'),
-          ...ScreenOptionsDictionary[Screens.RenameContact],
+          headerShown: false,
+          ...ScreenOptionsDictionary[Screens.RenameContact]
         }}
       />
       <Stack.Screen
         name={Screens.Chat}
         component={Chat}
         options={{
-          ...ScreenOptionsDictionary[Screens.Chat],
+          ...ScreenOptionsDictionary[Screens.Chat]
         }}
       />
       <Stack.Screen
@@ -60,34 +64,43 @@ const ContactStack: React.FC = () => {
         component={WhatAreContacts}
         options={{
           title: '',
-          ...ScreenOptionsDictionary[Screens.WhatAreContacts],
-        }}
+          headerShown: false,
+          ...ScreenOptionsDictionary[Screens.WhatAreContacts]
+         }}
       />
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}
-        options={{ title: t('Screens.CredentialDetails'), ...ScreenOptionsDictionary[Screens.CredentialDetails] }}
+        options={{ title: t('Screens.CredentialDetails'),
+        headerShown: false,
+          ...ScreenOptionsDictionary[Screens.CredentialDetails]
+        }}
       />
       <Stack.Screen
         name={Screens.CredentialOffer}
         component={CredentialOffer}
-        options={{ title: t('Screens.CredentialOffer'), ...ScreenOptionsDictionary[Screens.CredentialOffer] }}
+        options={{ title: t('Screens.CredentialOffer'),
+        headerShown: false,
+          ...ScreenOptionsDictionary[Screens.CredentialOffer],
+        }}
       />
       <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
         options={() => ({
+          headerShown: false,
           title: '',
           headerRight: () => <HeaderRightHome />,
-          ...ScreenOptionsDictionary[Screens.ProofDetails],
+          ...ScreenOptionsDictionary[Screens.ProofDetails]
         })}
       />
       <Stack.Screen
         name={Screens.ProofRequest}
         component={ProofRequest}
         options={{
+          headerShown: false,
           title: t('Screens.ProofRequest'),
-          ...ScreenOptionsDictionary[Screens.ProofRequest],
+          ...ScreenOptionsDictionary[Screens.ProofRequest]
         }}
       />
     </Stack.Navigator>

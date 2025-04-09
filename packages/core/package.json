@@ -1,22 +1,17 @@
 {
-  "name": "@hyperledger/aries-bifold-core",
+  "name": "@hyperledger/IcredyCore-core",
   "version": "1.0.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "src/index.ts",
   "source": "src/index",
-  "types": "lib/typescript/src/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
-    "directory": "packages/core"
-  },
+  "types": "lib/typescript/App/index.d.ts",
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "bin": {
     "bifold": "bin/bifold"
   },
   "files": [
-    "src",
+    "App",
     "lib",
     "!**/__tests__",
     "!**/__fixtures__",
@@ -39,7 +34,8 @@
     "test": "TZ=GMT jest",
     "test:coverage": "TZ=GMT jest --coverage",
     "test:watch": "TZ=GMT jest --watch --notify --notifyMode=change --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "bob build"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -79,6 +75,7 @@
     "@react-navigation/core": "6.1.0",
     "@react-navigation/devtools": "^6.0.8",
     "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^7.2.0",
     "@react-navigation/stack": "^6.3.21",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.3.0",
@@ -117,13 +114,15 @@
     "react-native": "^0.73.6",
     "react-native-animated-pagination-dots": "^0.1.72",
     "react-native-argon2": "^2.0.1",
+    "react-native-blob-util": "0.19.11",
     "react-native-bouncy-checkbox": "^3.0.5",
-    "react-native-builder-bob": "^0.21.3",
+    "react-native-builder-bob": "^0.36.0",
     "react-native-capture-protection": "^1.9.20",
     "react-native-collapsible": "^1.6.1",
     "react-native-config": "^1.4.2",
     "react-native-confirmation-code-field": "^7.3.0",
     "react-native-device-info": "^8.4.9",
+    "react-native-document-picker": "^9.3.1",
     "react-native-encrypted-storage": "^4.0.2",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^2.14.0",
@@ -135,6 +134,7 @@
     "react-native-orientation-locker": "^1.6.0",
     "react-native-permissions": "^4.0.1",
     "react-native-qrcode-svg": "6.2.0",
+    "react-native-reanimated": "3.4.2",
     "react-native-safe-area-context": "^4.8.2",
     "react-native-scalable-image": "^1.1.0",
     "react-native-screens": "^3.29.0",
@@ -228,6 +228,18 @@
   "installConfig": {
     "hoistingLimits": "workspaces"
   },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib\\typescript\\module\\src\\index.d.ts",
+        "default": "./lib\\module\\index.js"
+      },
+      "require": {
+        "types": "./lib\\typescript\\commonjs\\src\\index.d.ts",
+        "default": "./lib\\commonjs\\index.js"
+      }
+    }
+  },
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
@@ -236,5 +248,14 @@
       "module",
       "typescript"
     ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "dependencies": {
+    "@onfido/react-native-sdk": "^14.4.0",
+    "fast-text-encoding": "^1.0.6",
+    "react-native-zip-archive": "^7.0.1"
   }
 }

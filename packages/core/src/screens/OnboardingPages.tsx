@@ -104,8 +104,9 @@ const CustomPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
             Ornare suspendisse sed nisi lacus
           </ThemedText>
           <ThemedText style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
-            Enim facilisis gravida neque convallis a cras semper. Suscipit adipiscing bibendum est ultricies integer
-            quis auctor elit sed.
+          Your privacy matters.{'\n\n'}With iCredy, your digital credentials are securely stored and shared only with
+          your consent. We do not track, analyze, or store your interactions. {'\n\n'}You are in control—approve every use and share only the necessary
+          information.
           </ThemedText>
         </View>
       </ScrollView>
@@ -125,14 +126,14 @@ const CustomPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any) => {
 const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string; devModeListener?: boolean }> = [
   {
     image: CredentialList,
-    title: 'Lorem ipsum dolor sit amet',
-    body: 'Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus.',
+    title: 'iCredy: Your Smart Digital Identity',
+    body: 'Unlike traditional wallets, iCredy simplifies identity verification for both online and in-person interactions. Securely store and manage your digital credentials, ensuring seamless access to trusted services. \n\nExperience a hassle-free way to prove your identity with confidence, backed by the latest in secure digital technology.',
     devModeListener: true,
   },
   {
     image: ScanShare,
-    title: 'Excepteur sint occaecat ',
-    body: 'Mollis aliquam ut porttitor leo a diam sollicitudin tempor.',
+    title: 'Digital Credentials',
+    body: 'Your identity, digitized and secured. \n\nDigital credentials replace traditional physical documents like certificates and permits, allowing you to securely store and share verified information with trusted services.\n\nWith iCredy, identity verification becomes faster and more reliable, enabling seamless access to essential services.',
   },
 ]
 

@@ -43,6 +43,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Settings'),
           headerBackTestID: testIdWithKey('Back'),
+          headerShown: false,
           ...ScreenOptionsDictionary[Screens.Settings],
         }}
       />
@@ -61,6 +62,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Language'),
           headerBackTestID: testIdWithKey('Back'),
+          // headerShown: false,
           ...ScreenOptionsDictionary[Screens.Language],
         }}
       />
@@ -70,6 +72,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: 'Auto lock Options',
           headerBackTestID: testIdWithKey('Back'),
+          // headerShown: false,
           ...ScreenOptionsDictionary[Screens.AutoLock],
         }}
       />
@@ -97,6 +100,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.Biometry'),
           headerBackTestID: testIdWithKey('Back'),
+          // headerShown: false,
           ...ScreenOptionsDictionary[Screens.UseBiometry],
         }}
       />
@@ -105,6 +109,7 @@ const SettingStack: React.FC = () => {
         options={{
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
+          // headerShown: false,
           ...ScreenOptionsDictionary[Screens.CreatePIN],
         }}
       >

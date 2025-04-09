@@ -25,6 +25,7 @@ import { testIdWithKey } from '../utils/testable'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { ThemedText } from '../components/texts/ThemedText'
 import usePreventScreenCapture from '../hooks/screen-capture'
+import { SecondaryHeader } from '../components/IcredyComponents'
 
 type ProofDetailsProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofDetails>
 
@@ -332,7 +333,9 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
   if (!record) return null
 
   return (
-    <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
+    <SafeAreaView>
+      <SecondaryHeader/>
+      <View style={{ flexGrow: 1 }}>
       {(record.isVerified || senderReview) && (
         <VerifiedProof
           record={record}
@@ -346,6 +349,7 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
       {!(record.isVerified || senderReview) && (
         <UnverifiedProof record={record} onBackPressed={onBackPressed} onGenerateNewPressed={onGenerateNewPressed} />
       )}
+      </View>
     </SafeAreaView>
   )
 }

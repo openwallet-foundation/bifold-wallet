@@ -52,6 +52,7 @@ import TabOneIcon from './assets/img/message-text-icon-outline.svg'
 import TabTwoIcon from './assets/img/qrcode-scan-icon.svg'
 import TabThreeFocusedIcon from './assets/img/wallet-icon.svg'
 import TabThreeIcon from './assets/img/wallet-icon-outline.svg'
+import IcredyLogo from './assets/img/icredy-logo.svg'
 
 export interface ISVGAssets {
   activityIndicator: React.FC<SvgProps>
@@ -304,28 +305,30 @@ const InlineErrorMessageColors: IErrorColors = {
 }
 
 const BrandColors: IBrandColors = {
-  primary: '#42803E',
-  primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
+  primary: '#154ABF',
+  // primary: '#253B66',
+  primaryDisabled: `rgba(21, 74, 191, ${lightOpacity})`,
   secondary: '#FFFFFFFF',
   secondaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
   tertiary: '#FFFFFFFF',
   tertiaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
   primaryLight: `rgba(53, 130, 63, ${lightOpacity})`,
   highlight: '#FCBA19',
-  primaryBackground: '#000000',
-  secondaryBackground: '#313132',
+  primaryBackground: '#FFFFFF',
+  // primaryBackground: '#FAFDFF',
+  secondaryBackground: '#F0F5FA',
   tertiaryBackground: '#313132',
-  modalPrimary: '#42803E',
+  modalPrimary: '#154ABF',
   modalSecondary: '#FFFFFFFF',
   modalTertiary: '#FFFFFFFF',
-  modalPrimaryBackground: '#000000',
-  modalSecondaryBackground: '#313132',
+  modalPrimaryBackground: '#FFFFFF',
+  modalSecondaryBackground: '#F0F5FA',
   modalTertiaryBackground: '#313132',
-  modalIcon: GrayscaleColors.white,
-  unorderedList: GrayscaleColors.white,
-  unorderedListModal: GrayscaleColors.white,
-  link: '#42803E',
-  text: GrayscaleColors.white,
+  modalIcon: GrayscaleColors.black,
+  unorderedList: GrayscaleColors.black,
+  unorderedListModal: GrayscaleColors.black,
+  link: '#154ABF',
+  text: GrayscaleColors.black,
   icon: GrayscaleColors.white,
   headerIcon: GrayscaleColors.white,
   headerText: GrayscaleColors.white,
@@ -342,22 +345,22 @@ const SemanticColors: ISemanticColors = {
 }
 
 const NotificationColors: INotificationColors = {
-  success: '#313132',
-  successBorder: '#2E8540',
-  successIcon: '#2E8540',
-  successText: '#FFFFFF',
-  info: '#313132',
-  infoBorder: '#0099FF',
-  infoIcon: '#0099FF',
-  infoText: '#FFFFFF',
-  warn: '#313132',
-  warnBorder: '#FCBA19',
-  warnIcon: '#FCBA19',
-  warnText: '#FFFFFF',
-  error: '#313132',
-  errorBorder: '#D8292F',
-  errorIcon: '#D8292F',
-  errorText: '#FFFFFF',
+  success: '#F0F5FA',
+  successBorder: '#154ABF',
+  successIcon: '#154ABF',
+  successText: '#154ABF',
+  info: '#F0F5FA',
+  infoBorder: '#154ABF',
+  infoIcon: '#154ABF',
+  infoText: '#154ABF',
+  warn: '#F0F5FA',
+  warnBorder: '#154ABF',
+  warnIcon: '#154ABF',
+  warnText: '#154ABF',
+  error: '#F0F5FA',
+  errorBorder: '#154ABF',
+  errorIcon: '#154ABF',
+  errorText: '#154ABF',
   popupOverlay: `rgba(0, 0, 0, ${mediumOpacity})`,
 }
 
@@ -438,27 +441,27 @@ export const TextTheme: ITextTheme = {
   modalNormal: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   modalHeadingOne: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   modalHeadingThree: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   popupModalText: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   settingsText: {
     fontSize: 21,
@@ -688,7 +691,7 @@ export const ListItems = StyleSheet.create({
     ...TextTheme.normal,
   },
   requestTemplateBackground: {
-    backgroundColor: ColorPallet.grayscale.white,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
   },
   requestTemplateIconColor: {
     color: ColorPallet.notification.infoText,
@@ -720,7 +723,7 @@ export const ListItems = StyleSheet.create({
 export const TabTheme = {
   tabBarStyle: {
     height: 60,
-    backgroundColor: ColorPallet.brand.secondaryBackground,
+    backgroundColor: ColorPallet.brand.primary,
     shadowOffset: { width: 0, height: -3 },
     shadowRadius: 6,
     shadowColor: ColorPallet.grayscale.black,
@@ -733,7 +736,7 @@ export const TabTheme = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  tabBarActiveTintColor: ColorPallet.brand.primary,
+  tabBarActiveTintColor: ColorPallet.brand.secondaryBackground,
   tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
   tabBarTextStyle: {
     ...TextTheme.labelSubtitle,
@@ -745,7 +748,8 @@ export const TabTheme = {
   focusTabIconStyle: {
     height: 60,
     width: 60,
-    backgroundColor: ColorPallet.brand.primary,
+    // backgroundColor: ColorPallet.brand.primary,
+    backgroundColor: ColorPallet.brand.secondaryBackground,
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
@@ -816,13 +820,13 @@ export const ChatTheme = {
     marginLeft: 16,
   },
   rightBubble: {
-    backgroundColor: ColorPallet.brand.primaryLight,
+    backgroundColor: ColorPallet.brand.primary,
     borderRadius: 4,
     padding: 16,
     marginRight: 16,
   },
   timeStyleLeft: {
-    color: ColorPallet.grayscale.lightGrey,
+    color: ColorPallet.grayscale.black,
     fontSize: 12,
     marginTop: 8,
   },
@@ -832,7 +836,7 @@ export const ChatTheme = {
     marginTop: 8,
   },
   leftText: {
-    color: ColorPallet.brand.secondary,
+    color: ColorPallet.brand.text,
     fontSize: TextTheme.normal.fontSize,
   },
   leftTextHighlighted: {
@@ -856,6 +860,7 @@ export const ChatTheme = {
     lineHeight: undefined,
     fontWeight: '500',
     fontSize: TextTheme.normal.fontSize,
+    color: ColorPallet.grayscale.black
   },
   placeholderText: ColorPallet.grayscale.lightGrey,
   sendContainer: {
@@ -934,16 +939,16 @@ export const DialogTheme = {
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },
   titleText: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   description: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   closeButtonIcon: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
   carouselButtonText: {
-    color: ColorPallet.grayscale.white,
+    color: ColorPallet.grayscale.black,
   },
 }
 
@@ -969,7 +974,7 @@ const PINInputTheme = {
     color: ColorPallet.brand.text,
   },
   icon: {
-    color: ColorPallet.brand.headerIcon,
+    color: ColorPallet.grayscale.black,
   },
   codeFieldRoot: {
     justifyContent: 'flex-start',

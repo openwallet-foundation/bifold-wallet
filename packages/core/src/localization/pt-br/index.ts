@@ -716,6 +716,8 @@ const translation = {
     "Home": "Notificações",
     "Scan": "Scanear",
     "Credentials": "Credenciais",
+    "Wallet": "carteira",
+    "More": "mais"
   },
   "RootStack": {
     "Contacts": "Contatos",
