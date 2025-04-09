@@ -1569,6 +1569,23 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                       "fontSize": 18,
                       "fontWeight": "normal",
                     },
+                    Object {
+                      "marginBottom": 24,
+                    },
+                  ]
+                }
+              >
+                ContactDetails.RemoveContactMessageWarning
+              </Text>
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
                     undefined,
                   ]
                 }
@@ -1841,7 +1858,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                       "fontWeight": "normal",
                     },
                     Object {
-                      "marginTop": 10,
+                      "marginTop": 24,
                     },
                   ]
                 }
@@ -3557,6 +3574,23 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                       "fontSize": 18,
                       "fontWeight": "normal",
                     },
+                    Object {
+                      "marginBottom": 24,
+                    },
+                  ]
+                }
+              >
+                ContactDetails.RemoveContactMessageWarning
+              </Text>
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
                     undefined,
                   ]
                 }
@@ -3829,7 +3863,7 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                       "fontWeight": "normal",
                     },
                     Object {
-                      "marginTop": 10,
+                      "marginTop": 24,
                     },
                   ]
                 }
