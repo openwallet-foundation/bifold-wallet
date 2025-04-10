@@ -50,7 +50,6 @@ export const getProofRequestTemplates = (useDevRestrictions: boolean) => {
                   'curemp_name',
                   'curemp_since',
                   'curemp_position',
-                  'curemp_biweekly_pay',
                   'curemp_type',
                   'prevemp_name',
                   'prevemp_since',
@@ -59,6 +58,14 @@ export const getProofRequestTemplates = (useDevRestrictions: boolean) => {
                   'prevemp_type'
                 ],
                 restrictions: employmentRestrictions,
+              },
+            ],
+            requestedPredicates: [
+              {
+                name: 'curemp_biweekly_pay',
+                predicateType: '>=',
+                predicateValue: 20240101,
+                restrictions:employmentRestrictions,
               },
             ],
           },

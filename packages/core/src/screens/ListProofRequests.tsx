@@ -1,5 +1,4 @@
 import { ProofRequestTemplate, hasPredicates, isParameterizable } from '@hyperledger/aries-bifold-verifier'
-import { ProofRequestTemplateBuilder } from '../utils/customTemplate'
 import { MetaOverlay, OverlayType } from '@hyperledger/aries-oca'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
@@ -116,7 +115,6 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const [store] = useStore()
-const [modalVisible, setModalVisible] = useState(false)
   const style = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -126,46 +124,10 @@ const [modalVisible, setModalVisible] = useState(false)
     buttonContainer: {
       marginBottom: 16,
     },
-    modalView: {
-      flex: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
-    },
-    modalContent: {
-      flex: 1,
-      padding: 20,
-    },
-    modalHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
-    },
-    modalTitle: {
-      // ...TextTheme.normal,
-      fontWeight: 'bold',
-      fontSize: 18,
-    },
-    closeButton: {
-      padding: 8,
-    },
-    closeIcon: {
-      fontSize: 24,
-      color: ColorPallet.brand.primary,
-    },
-    builderContainer: {
-      flex: 1,
-    }
+
   })
 
   const connectionId = route?.params?.connectionId
-  const onProofRequestTemplateBuilderSave =(template: ProofRequestTemplate) => {
-    setModalVisible(false)
-    console.log('Template saved', template)
-    navigation.navigate(Screens.ProofRequestDetails, { directTemplate: template, connectionId:connectionId })
-  }
   // if useDevVerifierTemplates not set then exclude dev templates
   const proofRequestTemplates = useTemplates().filter(
     (tem) => store.preferences.useDevVerifierTemplates || !tem.devOnly
@@ -176,38 +138,7 @@ const [modalVisible, setModalVisible] = useState(false)
        <SecondaryHeader/>
        <View style={style.container}>
           <View style={style.buttonContainer}>
-        <Button
-          title={t('Verifier.CustomProofRequest')}
-          onPress={() => setModalVisible(true)}
-          testID={testIdWithKey('NewTemplateButton')}
-        />
       </View>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-        testID={testIdWithKey('TemplateBuilderModal')}
-      >
-        <SafeAreaView style={style.modalView}>
-          <View style={style.modalHeader}>
-            <Text style={style.modalTitle}>{t('Verifier.CustomProofRequest')}</Text>
-            <TouchableOpacity 
-              style={style.closeButton} 
-              onPress={() => setModalVisible(false)}
-              testID={testIdWithKey('CloseModalButton')}
-            >
-              <Icon name="close" style={style.closeIcon} />
-            </TouchableOpacity>
-          </View>
-          <View style={style.modalContent}>
-            <View style={style.builderContainer}>
-              <ProofRequestTemplateBuilder onSaveTemplate={onProofRequestTemplateBuilderSave} />
-            </View>
-          </View>
-        </SafeAreaView>
-      </Modal>
-  
      
       <View style={style.container}>
       <FlatList

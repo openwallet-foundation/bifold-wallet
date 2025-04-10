@@ -9,41 +9,19 @@ import {
   Switch,
   Alert,
 } from 'react-native';
-import { getProofRequestTemplates,AnonCredsProofRequestTemplatePayload,ProofRequestTemplate ,ProofRequestType} from '@hyperledger/aries-bifold-verifier';
-import { AnonCredsProofRequestRestriction, AnonCredsRequestedPredicate,AnonCredsRequestedAttribute } from '@credo-ts/anoncreds';
-import { ColorPallet, TextTheme } from '../theme'
+import {  ProofRequestTemplate, ProofRequestType } from '@hyperledger/aries-bifold-verifier';
+import { AnonCredsProofRequestRestriction, AnonCredsRequestedPredicate, AnonCredsRequestedAttribute } from '@credo-ts/anoncreds';
+import { ColorPallet, TextTheme } from '../theme';
+
 interface ProofRequestTemplateBuilderProps {
+  initialTemplate: ProofRequestTemplate;
   onSaveTemplate: (template: ProofRequestTemplate) => void;
 }
 
-export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderProps> = ({ 
-  onSaveTemplate, 
+export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderProps> = ({
+  initialTemplate,
+  onSaveTemplate,
 }) => {
-
-  const initialTemplate: ProofRequestTemplate = {
-    id: '',
-    name: 'Student verification',
-    description: 'Verify student credentials',
-    version: '0.0.1',
-    payload: {
-      type: ProofRequestType.AnonCreds,
-      data: [
-        {
-          schema: '',
-          requestedAttributes: [],
-          requestedPredicates: []
-        },
-      ],
-    },
-  };
- interface ProofRequestTemplate {
-  id: string
-  name: string
-  description: string
-  version: string
-  devOnly?: boolean
-  payload: AnonCredsProofRequestTemplatePayload 
-}
   const [template, setTemplate] = useState<ProofRequestTemplate>(initialTemplate);
   const [availableAttributes, setAvailableAttributes] = useState<AnonCredsRequestedAttribute[]>([]);
   const [availablePredicates, setAvailablePredicates] = useState<AnonCredsRequestedPredicate[]>([]);
@@ -63,10 +41,9 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
 
   useEffect(() => {
     const extractSchemaInfo = () => {
-      const templates = getProofRequestTemplates(true);
-      
-      if (!templates || templates.length === 0) {
-        console.warn('No templates available to extract schema information');
+      // Use the single template for extraction
+      if (!template) {
+        console.warn('No template available to extract schema information');
         return;
       }
   
@@ -74,65 +51,85 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
       const extractedPredicates = new Map();
       const extractedSchemas = new Set();
       const extractedRestrictions = new Map();
-      templates.forEach(template => {
-        if (template.payload?.type == ProofRequestType.DIF) return;  //The custom template is not ready for DIF 
+      
+      if (template.payload?.type === ProofRequestType.DIF) return; // The custom template is not ready for DIF
+      
+      template.payload.data.forEach(dataItem => {
+        if (dataItem.schema) {
+          extractedSchemas.add(dataItem.schema);
+        }
         
-        template.payload.data.forEach(dataItem => {
-          if (dataItem.schema) {
-            extractedSchemas.add(dataItem.schema);
-          }
-          
-          if (dataItem.requestedAttributes) {
-            dataItem.requestedAttributes.forEach(attr => {
-              if (attr.name) {
-                extractedAttributes.add(attr.name);
-              } else if (attr.names) {
-                attr.names.forEach(name => extractedAttributes.add(name));
-              }
-              if(attr.restrictions) {
-                attr.restrictions.forEach(restriction => {
-                  if (restriction) {
-                    extractedRestrictions.set(restriction.schema_name, restriction);
-                  }
-                });
-              }
-            });
-          }
-          
-          if (dataItem.requestedPredicates) {
-            dataItem.requestedPredicates.forEach(pred => {
-              if (pred.name) {
-                extractedPredicates.set(pred.name, {
-                  name: pred.name,
-                  description: pred.name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-                });
-              }
-            });
-          }
-        });
+        if (dataItem.requestedAttributes) {
+          dataItem.requestedAttributes.forEach(attr => {
+            if (attr.name) {
+              extractedAttributes.add(attr.name);
+            } else if (attr.names) {
+              attr.names.forEach(name => extractedAttributes.add(name));
+            }
+            if(attr.restrictions) {
+              attr.restrictions.forEach(restriction => {
+                if (restriction) {
+                  extractedRestrictions.set(restriction.schema_name, restriction);
+                }
+              });
+            }
+          });
+        }
+        
+        if (dataItem.requestedPredicates) {
+          dataItem.requestedPredicates.forEach(pred => {
+            if (pred.name) {
+              extractedPredicates.set(pred.name, {
+                name: pred.name,
+                description: pred.name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+              });
+            }
+          });
+        }
       });
   
       const schemasList = Array.from(extractedSchemas);
       setAvailableSchemas(schemasList as string[]);
-      setSelectedSchema(schemasList.length > 0 ? schemasList[0] as string: "");
+      setSelectedSchema(schemasList.length > 0 ? schemasList[0] as string : "");
       setAvailableAttributes(Array.from(extractedAttributes) as AnonCredsRequestedAttribute[]);
       setAvailablePredicates(Array.from(extractedPredicates.values()));
       setAvailableRestrictions(Array.from(extractedRestrictions.values()) as AnonCredsProofRequestRestriction[]);
+      
       if (schemasList.length > 0) {
         updateTemplateSchema(schemasList[0] as string);
       }
+      
+      // Initialize used attributes and predicates based on the initial template
+      const initialUsedAttributes: string[] = [];
+      const initialUsedPredicates: string[] = [];
+      
+      template.payload.data.forEach(dataItem => {
+        dataItem.requestedAttributes?.forEach(attr => {
+          if (attr.name) {
+            initialUsedAttributes.push(attr.name);
+          } else if (attr.names) {
+            initialUsedAttributes.push(...attr.names);
+          }
+        });
+        
+        dataItem.requestedPredicates?.forEach(pred => {
+          if (pred.name) {
+            initialUsedPredicates.push(pred.name);
+          }
+        });
+      });
+      
+      setUsedAttributes(initialUsedAttributes);
+      setUsedPredicates(initialUsedPredicates);
     };
+    
     extractSchemaInfo();
   }, []);
 
-
-  
   const updateTemplateSchema = (schema: string) => {
     setTemplate(prevTemplate => {
-   
       const updatedTemplate = { ...prevTemplate };
-        updatedTemplate.payload.data[0].schema = schema;
-    
+      updatedTemplate.payload.data[0].schema = schema;
       return updatedTemplate;
     });
   };
@@ -145,27 +142,27 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
     }
   };
 
-  const isAttributeUsed = (attributeName:string) => {
+  const isAttributeUsed = (attributeName: string) => {
     return usedAttributes.includes(attributeName);
   };
 
-  const isPredicateUsed = (predicateName:string) => {
+  const isPredicateUsed = (predicateName: string) => {
     return usedPredicates.includes(predicateName);
   };
 
-  const isUsedInPredicate = (attributeName:string) => {
+  const isUsedInPredicate = (attributeName: string) => {
     return usedPredicates.includes(attributeName);
   };
 
-  const isAttributeDisabled = (attributeName:string) => {
+  const isAttributeDisabled = (attributeName: string) => {
     return isAttributeUsed(attributeName) || isUsedInPredicate(attributeName);
   };
 
-  const isPredicateDisabled = (predicateName:string) => {
+  const isPredicateDisabled = (predicateName: string) => {
     return isPredicateUsed(predicateName) || isAttributeUsed(predicateName);
   };
 
-  const toggleAttributeSelection = (attributeName:string) => {
+  const toggleAttributeSelection = (attributeName: string) => {
     if (isAttributeDisabled(attributeName)) {
       if (isUsedInPredicate(attributeName)) {
         Alert.alert('Already Used in Predicate', `The attribute "${attributeName}" is already being used as a predicate in this template.`);
@@ -212,10 +209,9 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
       const newAttr = {
         names: [...selectedGroupAttributes],
         restrictions: restrictions ? restrictions : [],
- 
       };
     
-        updatedTemplate.payload.data[0].requestedAttributes?.push(newAttr);
+      updatedTemplate.payload.data[0].requestedAttributes?.push(newAttr);
 
       setTemplate(updatedTemplate);
       setUsedAttributes([...usedAttributes, ...selectedGroupAttributes]);
@@ -227,7 +223,6 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
       }
 
       const updatedTemplate = { ...template };
-
       const restrictions = getRestrictions();
       
       selectedAttributes.forEach(attrName => {
@@ -236,9 +231,7 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
           restrictions: restrictions ? restrictions : [],
         };
         
-        
-          updatedTemplate.payload.data[0].requestedAttributes?.push(newAttr);
-        
+        updatedTemplate.payload.data[0].requestedAttributes?.push(newAttr);
       });
 
       setTemplate(updatedTemplate);
@@ -326,17 +319,8 @@ export const ProofRequestTemplateBuilder: React.FC<ProofRequestTemplateBuilderPr
       ...template,
       id: template.id || generateTemplateId()
     };
-    
+
     onSaveTemplate(finalTemplate);
-    setTemplate(initialTemplate);
-    setSelectedAttributes([]);
-    setSelectedGroupAttributes([]);
-    setSelectedPredicate(undefined);
-    setPredicateValue('');
-    setUsedAttributes([]);
-    setUsedPredicates([]);
-    setCustomCredDefId('');
-    setUseRestrictions(true);
     Alert.alert('Success', 'Proof request generated successfully');
   };
 
@@ -594,6 +578,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    padding: 16,
+    marginBottom: 16,
   },
   sectionTitle: {
     ...TextTheme.headingFour,
@@ -611,7 +597,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 12,
     marginBottom: 16,
-    backgroundColor: ColorPallet.grayscale.veryLightGrey ,
+    backgroundColor: ColorPallet.grayscale.veryLightGrey,
     color: ColorPallet.grayscale.black,
   },
   textArea: {

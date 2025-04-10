@@ -87,14 +87,9 @@ interface ProofRequestCardsProps {
   onChangeValue: (schema: string, label: string, name: string, value: string) => void
 }
 
-const ProofRequestCardsComponent: React.FC<ProofRequestCardsProps> = ({ attributes = [], onChangeValue }) => {
-  return attributes.map((item) => (
-    <ProofRequestAttributesCard key={item.schema} data={item} onChangeValue={onChangeValue} />
-  ))
-}
 
 // memo'd to prevent rerendering when onChangeValue is called from child and updates parent
-const ProofRequestCards = memo(ProofRequestCardsComponent)
+// const ProofRequestCards = memo(ProofRequestCardsComponent)
 
 const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, navigation }) => {
   const { ColorPallet, TextTheme } = useTheme()
@@ -116,12 +111,15 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
 
   // Ensure templateId is always a string
   const validTemplateId = templateId ?? "";
-  
+
+  // Fetch the template using the hook
   const fetchedTemplate = useTemplate(validTemplateId);
   
+  // Determine the template to use
   const template = useMemo(() => {
-    return templateId ? fetchedTemplate : directTemplate;
-  }, [templateId, fetchedTemplate, directTemplate]);
+    // Prioritize directTemplate if it's provided
+    return directTemplate ?? fetchedTemplate;
+  }, [directTemplate, fetchedTemplate]);
 
 
   const style = StyleSheet.create({
@@ -208,7 +206,14 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       setAttributes(attributes)
     })
   }, [template, bundleResolver, templateId, i18n.language, directTemplate])
-
+  const ProofRequestCardsComponent: React.FC<ProofRequestCardsProps> = ({ attributes = [], onChangeValue }) => {
+    console.log(attributes)
+    return attributes.map((item) => (
+      <ProofRequestAttributesCard key={item.schema} data={item} onChangeValue={onChangeValue} />
+    ))
+  }
+  // memo'd to prevent rerendering when onChangeValue is called from child and updates parent
+const ProofRequestCards = memo(ProofRequestCardsComponent)
   const onChangeValue = useCallback(
     (schema: string, label: string, name: string, value: string) => {
       if (!onlyNumberRegex.test(value)) {
@@ -230,7 +235,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     setModalVisible(false)
     console.log('Template saved', template)
     console.log('Template saved', template.payload?.data[0]?.requestedAttributes[0].restrictions)
-    navigation.navigate(Screens.ProofRequestDetails, { directTemplate: template, connectionId: connectionId, templateId:templateId })
+    navigation.navigate(Screens.ProofRequestDetails, { directTemplate: template, connectionId: connectionId ,templateId:templateId})
   }
 
   const activateProofRequest = useCallback(async () => {
@@ -311,7 +316,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       >
         <SafeAreaView style={style.modalView}>
           <View style={style.modalHeader}>
-            <Text style={style.modalTitle}>{t('Global.CreateCustomRequest')}</Text>
+            <Text style={style.modalTitle}>{t('Verifier.CustomProofRequest')}</Text>
             <TouchableOpacity 
               style={style.closeButton} 
               onPress={() => setModalVisible(false)}
@@ -322,7 +327,9 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
           </View>
           <View style={style.modalContent}>
             <View style={style.builderContainer}>
-              <ProofRequestTemplateBuilder onSaveTemplate={onProofRequestTemplateBuilderSave} />
+              {template && (
+                <ProofRequestTemplateBuilder onSaveTemplate={onProofRequestTemplateBuilderSave} initialTemplate={template} />
+              )}
             </View>
           </View>
         </SafeAreaView>

@@ -75,7 +75,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const proofRecord = useProofById(proofRecordId ?? '')
   const validTemplateId = templateId ?? "";
   const fetchedTemplate = useTemplate(validTemplateId);
-  const template = templateId ? fetchedTemplate : directTemplate;
+  const template = directTemplate ?? fetchedTemplate;
   const { qrSize, qrContainerSize } = useQrSizeForDevice()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
