@@ -228,7 +228,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
           testID={testIdWithKey('CredentialIssued')}
           maxFontSizeMultiplier={1}
         >
-          {overlayAttributeField.label ?? startCase(overlayAttributeField.name || '')}: {overlayAttributeField.value}
+          {overlayAttributeField.label ?? overlayAttributeField.name}: {overlayAttributeField.value}
         </Text>
       </View>
     )

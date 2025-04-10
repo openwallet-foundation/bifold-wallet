@@ -30,7 +30,6 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
 
-  // console.log('$$ ====> Credential Display', JSON.stringify(credentialDisplay))
   const { t } = useTranslation()
   const { ColorPallet, TextTheme } = useTheme()
   const { agent } = useAgent()
