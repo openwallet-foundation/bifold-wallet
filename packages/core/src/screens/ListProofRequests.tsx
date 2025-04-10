@@ -4,7 +4,7 @@ import { MetaOverlay, OverlayType } from '@hyperledger/aries-oca'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Button, FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 

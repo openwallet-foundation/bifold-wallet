@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* AriesBifoldTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AriesBifoldTests.m */; };
+		00E356F31AD99517003FC87E /* icredyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* icredyTests.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		43857C042720ABB4004F54E0 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43857C032720ABB4004F54E0 /* libswiftWebKit.tbd */; };
 		442476102D61583B00100568 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4424760F2D61583B00100568 /* AppDelegate.mm */; };
-		563D09E68798437ED7A25487 /* libPods-AriesBifold-AriesBifoldTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB934F8D18E47FA5D71904 /* libPods-AriesBifold-AriesBifoldTests.a */; };
+		563D09E68798437ED7A25487 /* libPods-icredy-icredyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB934F8D18E47FA5D71904 /* libPods-icredy-icredyTests.a */; };
 		566FB1F2273B158E003E9BEE /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 566FB1F1273B158E003E9BEE /* Media.xcassets */; };
 		56D96E222D31B8C40029DA6A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 56D96E212D31B8C40029DA6A /* PrivacyInfo.xcprivacy */; };
+		621079362D9294FE00AD09BA /* swiftVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621079352D9294F500AD09BA /* swiftVersion.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		FE8E5FF56635B38E3EDDB4FE /* libPods-AriesBifold.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FD3028FC6F338DC6AC5F0E /* libPods-AriesBifold.a */; };
+		FE8E5FF56635B38E3EDDB4FE /* libPods-icredy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FD3028FC6F338DC6AC5F0E /* libPods-icredy.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,7 +26,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = AriesBifold;
+			remoteInfo = icredy;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -43,26 +44,27 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* AriesBifoldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AriesBifoldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* icredyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = icredyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* AriesBifoldTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AriesBifoldTests.m; sourceTree = "<group>"; };
-		0DCEA582210DEA8A082CA163 /* Pods-AriesBifold.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AriesBifold.release.xcconfig"; path = "Target Support Files/Pods-AriesBifold/Pods-AriesBifold.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* AriesBifold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AriesBifold.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AriesBifold/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AriesBifold/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AriesBifold/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AriesBifold/main.m; sourceTree = "<group>"; };
-		3E80637D552C876D84B165B7 /* Pods-AriesBifold.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AriesBifold.debug.xcconfig"; path = "Target Support Files/Pods-AriesBifold/Pods-AriesBifold.debug.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* icredyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = icredyTests.m; sourceTree = "<group>"; };
+		0DCEA582210DEA8A082CA163 /* Pods-icredy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icredy.release.xcconfig"; path = "Target Support Files/Pods-icredy/Pods-icredy.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* icredy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = icredy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = icredy/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = icredy/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = icredy/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = icredy/main.m; sourceTree = "<group>"; };
+		3E80637D552C876D84B165B7 /* Pods-icredy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icredy.debug.xcconfig"; path = "Target Support Files/Pods-icredy/Pods-icredy.debug.xcconfig"; sourceTree = "<group>"; };
 		433E773D26557E1B00F569EE /* Indy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Indy.framework; path = Pods/Frameworks/Indy.framework; sourceTree = "<group>"; };
 		43857C032720ABB4004F54E0 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
-		4424760F2D61583B00100568 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ariesbifold/AppDelegate.mm; sourceTree = "<group>"; };
+		4424760F2D61583B00100568 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = icredy/AppDelegate.mm; sourceTree = "<group>"; };
 		566FB1F1273B158E003E9BEE /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		56D96E212D31B8C40029DA6A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AriesBifold/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A8972A320F0B6EBEB2CB479C /* Pods-AriesBifold-AriesBifoldTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AriesBifold-AriesBifoldTests.release.xcconfig"; path = "Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests.release.xcconfig"; sourceTree = "<group>"; };
-		C4FD3028FC6F338DC6AC5F0E /* libPods-AriesBifold.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AriesBifold.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEAB934F8D18E47FA5D71904 /* libPods-AriesBifold-AriesBifoldTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AriesBifold-AriesBifoldTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCF9D06A2825CDDEE5DE863A /* Pods-AriesBifold-AriesBifoldTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AriesBifold-AriesBifoldTests.debug.xcconfig"; path = "Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests.debug.xcconfig"; sourceTree = "<group>"; };
+		621079352D9294F500AD09BA /* swiftVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftVersion.swift; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = icredy/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A8972A320F0B6EBEB2CB479C /* Pods-icredy-icredyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icredy-icredyTests.release.xcconfig"; path = "Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests.release.xcconfig"; sourceTree = "<group>"; };
+		C4FD3028FC6F338DC6AC5F0E /* libPods-icredy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icredy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEAB934F8D18E47FA5D71904 /* libPods-icredy-icredyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-icredy-icredyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCF9D06A2825CDDEE5DE863A /* Pods-icredy-icredyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-icredy-icredyTests.debug.xcconfig"; path = "Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -71,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				563D09E68798437ED7A25487 /* libPods-AriesBifold-AriesBifoldTests.a in Frameworks */,
+				563D09E68798437ED7A25487 /* libPods-icredy-icredyTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,20 +82,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				43857C042720ABB4004F54E0 /* libswiftWebKit.tbd in Frameworks */,
-				FE8E5FF56635B38E3EDDB4FE /* libPods-AriesBifold.a in Frameworks */,
+				FE8E5FF56635B38E3EDDB4FE /* libPods-icredy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* AriesBifoldTests */ = {
+		00E356EF1AD99517003FC87E /* icredyTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* AriesBifoldTests.m */,
+				00E356F21AD99517003FC87E /* icredyTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = AriesBifoldTests;
+			path = icredyTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -104,7 +106,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* AriesBifold */ = {
+		13B07FAE1A68108700A75B9A /* icredy */ = {
 			isa = PBXGroup;
 			children = (
 				4424760F2D61583B00100568 /* AppDelegate.mm */,
@@ -114,7 +116,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = AriesBifold;
+			name = icredy;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -123,8 +125,8 @@
 				43857C032720ABB4004F54E0 /* libswiftWebKit.tbd */,
 				433E773D26557E1B00F569EE /* Indy.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				C4FD3028FC6F338DC6AC5F0E /* libPods-AriesBifold.a */,
-				CEAB934F8D18E47FA5D71904 /* libPods-AriesBifold-AriesBifoldTests.a */,
+				C4FD3028FC6F338DC6AC5F0E /* libPods-icredy.a */,
+				CEAB934F8D18E47FA5D71904 /* libPods-icredy-icredyTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -146,10 +148,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				621079352D9294F500AD09BA /* swiftVersion.swift */,
 				56D96E212D31B8C40029DA6A /* PrivacyInfo.xcprivacy */,
 				566FB1F1273B158E003E9BEE /* Media.xcassets */,
-				13B07FAE1A68108700A75B9A /* AriesBifold */,
-				00E356EF1AD99517003FC87E /* AriesBifoldTests */,
+				13B07FAE1A68108700A75B9A /* icredy */,
+				00E356EF1AD99517003FC87E /* icredyTests */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
@@ -164,8 +167,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* AriesBifold.app */,
-				00E356EE1AD99517003FC87E /* AriesBifoldTests.xctest */,
+				13B07F961A680F5B00A75B9A /* icredy.app */,
+				00E356EE1AD99517003FC87E /* icredyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,10 +176,10 @@
 		8ACF6F3B2962FE31C0EE5408 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3E80637D552C876D84B165B7 /* Pods-AriesBifold.debug.xcconfig */,
-				0DCEA582210DEA8A082CA163 /* Pods-AriesBifold.release.xcconfig */,
-				DCF9D06A2825CDDEE5DE863A /* Pods-AriesBifold-AriesBifoldTests.debug.xcconfig */,
-				A8972A320F0B6EBEB2CB479C /* Pods-AriesBifold-AriesBifoldTests.release.xcconfig */,
+				3E80637D552C876D84B165B7 /* Pods-icredy.debug.xcconfig */,
+				0DCEA582210DEA8A082CA163 /* Pods-icredy.release.xcconfig */,
+				DCF9D06A2825CDDEE5DE863A /* Pods-icredy-icredyTests.debug.xcconfig */,
+				A8972A320F0B6EBEB2CB479C /* Pods-icredy-icredyTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -184,9 +187,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* AriesBifoldTests */ = {
+		00E356ED1AD99517003FC87E /* icredyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AriesBifoldTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "icredyTests" */;
 			buildPhases = (
 				0507FCB86F2F2D466A4631B3 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -200,14 +203,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = AriesBifoldTests;
-			productName = AriesBifoldTests;
-			productReference = 00E356EE1AD99517003FC87E /* AriesBifoldTests.xctest */;
+			name = icredyTests;
+			productName = icredyTests;
+			productReference = 00E356EE1AD99517003FC87E /* icredyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* AriesBifold */ = {
+		13B07F861A680F5B00A75B9A /* icredy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AriesBifold" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "icredy" */;
 			buildPhases = (
 				823CA00D72237B1F5855240B /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -223,9 +226,9 @@
 			);
 			dependencies = (
 			);
-			name = AriesBifold;
-			productName = AriesBifold;
-			productReference = 13B07F961A680F5B00A75B9A /* AriesBifold.app */;
+			name = icredy;
+			productName = icredy;
+			productReference = 13B07F961A680F5B00A75B9A /* icredy.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -241,11 +244,11 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1620;
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ariesbifold" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "icredy" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -258,8 +261,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* AriesBifold */,
-				00E356ED1AD99517003FC87E /* AriesBifoldTests */,
+				13B07F861A680F5B00A75B9A /* icredy */,
+				00E356ED1AD99517003FC87E /* icredyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -315,7 +318,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AriesBifold-AriesBifoldTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-icredy-icredyTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -328,15 +331,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		823CA00D72237B1F5855240B /* [CP] Check Pods Manifest.lock */ = {
@@ -354,7 +357,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AriesBifold-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-icredy-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -367,15 +370,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy/Pods-icredy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy/Pods-icredy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-icredy/Pods-icredy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CE595219BD015E8367A1C692 /* [CP] Copy Pods Resources */ = {
@@ -384,15 +387,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy/Pods-icredy-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy/Pods-icredy-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-icredy/Pods-icredy-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E6297F8E43AE6BFDCD542EB0 /* [CP] Copy Pods Resources */ = {
@@ -401,15 +404,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AriesBifold-AriesBifoldTests/Pods-AriesBifold-AriesBifoldTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-icredy-icredyTests/Pods-icredy-icredyTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -438,7 +441,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* AriesBifoldTests.m in Sources */,
+				00E356F31AD99517003FC87E /* icredyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621079362D9294FE00AD09BA /* swiftVersion.swift in Sources */,
 				442476102D61583B00100568 /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -456,7 +460,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* AriesBifold */;
+			target = 13B07F861A680F5B00A75B9A /* icredy */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -464,7 +468,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCF9D06A2825CDDEE5DE863A /* Pods-AriesBifold-AriesBifoldTests.debug.xcconfig */;
+			baseConfigurationReference = DCF9D06A2825CDDEE5DE863A /* Pods-icredy-icredyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = "";
@@ -472,7 +476,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = AriesBifoldTests/Info.plist;
+				INFOPLIST_FILE = icredyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -486,18 +490,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AriesBifold.app/AriesBifold";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/icredy.app/icredy";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8972A320F0B6EBEB2CB479C /* Pods-AriesBifold-AriesBifoldTests.release.xcconfig */;
+			baseConfigurationReference = A8972A320F0B6EBEB2CB479C /* Pods-icredy-icredyTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AriesBifoldTests/Info.plist;
+				INFOPLIST_FILE = icredyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -511,22 +515,24 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AriesBifold.app/AriesBifold";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/icredy.app/icredy";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E80637D552C876D84B165B7 /* Pods-AriesBifold.debug.xcconfig */;
+			baseConfigurationReference = 3E80637D552C876D84B165B7 /* Pods-icredy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = AriesBifold/Info.plist;
+				INFOPLIST_FILE = icredy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iCredy;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -541,8 +547,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.AriesBifold;
-				PRODUCT_NAME = AriesBifold;
+				PRODUCT_BUNDLE_IDENTIFIER = org.icredy.com;
+				PRODUCT_NAME = icredy;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -556,16 +562,18 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0DCEA582210DEA8A082CA163 /* Pods-AriesBifold.release.xcconfig */;
+			baseConfigurationReference = 0DCEA582210DEA8A082CA163 /* Pods-icredy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = AriesBifold/Info.plist;
+				INFOPLIST_FILE = icredy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iCredy;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -580,8 +588,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.AriesBifold;
-				PRODUCT_NAME = AriesBifold;
+				PRODUCT_BUNDLE_IDENTIFIER = org.icredy.com;
+				PRODUCT_NAME = icredy;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -656,10 +664,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -725,10 +730,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -739,7 +741,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AriesBifoldTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "icredyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -748,7 +750,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AriesBifold" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "icredy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -757,7 +759,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ariesbifold" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "icredy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

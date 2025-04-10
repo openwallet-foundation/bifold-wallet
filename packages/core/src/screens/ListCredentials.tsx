@@ -3,9 +3,9 @@ import { CredentialExchangeRecord, CredentialState, SdJwtVcRecord, W3cCredential
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect } from 'react'
+import React, { useEffect ,useState} from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View } from 'react-native'
+import { FlatList, View,StyleSheet, TouchableOpacity, Text } from 'react-native'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -23,6 +23,7 @@ import { BaseTourID } from '../types/tour'
 import { OpenIDCredentialType } from '../modules/openid/types'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { PrimaryHeader } from '../components/IcredyComponents'
+import { ColorPallet ,TextTheme} from '../theme'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -70,7 +71,7 @@ const ListCredentials: React.FC = () => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenCredentialsTour
 
     if (shouldShowTour && screenIsFocused) {
-      start(TourID.CredentialsTour)
+      start(BaseTourID.CredentialsTour)
       dispatch({
         type: DispatchAction.UPDATE_SEEN_CREDENTIALS_TOUR,
         payload: [true],

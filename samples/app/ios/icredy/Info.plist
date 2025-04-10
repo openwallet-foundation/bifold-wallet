@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>AriesBifold</string>
+	<string>iCredy</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -37,6 +37,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NFCReaderUsageDescription</key>
+	<string>Required to read ePassports</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Required for video capture</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera used for in-app QR Code scanning</string>
 	<key>NSFaceIDUsageDescription</key>
@@ -59,6 +63,17 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>com.apple.developer.nfc.readersession.felica.systemcodes</key>
+	<array>
+ 	 <string>12FC</string>
+	</array>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+ 	 <string>A0000002471001</string>
+  	<string>A0000002472001</string>
+  	<string>00000000000000</string>
+  	<string>D2760000850101</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

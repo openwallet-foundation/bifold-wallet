@@ -23,6 +23,8 @@ import {
   OutOfBandRecord,
   CredentialPreviewAttribute,
   OutOfBandRole,
+  AutoAcceptCredential,
+  ProposeCredentialOptions,
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
 import { useConnectionById } from '@credo-ts/react-hooks'

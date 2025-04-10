@@ -1,4 +1,4 @@
-package com.ariesbifold
+package com.icredy
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -23,7 +23,7 @@ class MainActivity : ReactActivity() {
     /**
      * Returns the name of the main component registered from JavaScript.
      */
-    override fun getMainComponentName(): String = "aries-bifold"
+    override fun getMainComponentName(): String = "icredy"
 
     /**
      * Returns the instance of the ReactActivityDelegate.

@@ -14,7 +14,7 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-platform :ios, min_ios_version_supported
+platform :ios, '15.1'
 prepare_react_native_project!
 
 # uncomment wanted permissions (also from RNP docs linked above)
@@ -58,7 +58,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'AriesBifold' do
+target 'icredy' do
   config = use_native_modules!
 
   #permissions_path = '../node_modules/react-native-permissions/ios'
@@ -77,7 +77,7 @@ target 'AriesBifold' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'AriesBifoldTests' do
+  target 'icredyTests' do
     inherit! :complete
     # Pods for testing
   end

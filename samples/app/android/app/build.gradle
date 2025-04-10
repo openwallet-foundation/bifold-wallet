@@ -80,7 +80,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 android {
-    namespace "com.ariesbifold" 
+    namespace "com.icredy" 
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
@@ -95,13 +95,14 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.ariesbifold"
+        applicationId "com.icredy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         missingDimensionStrategy 'react-native-camera', 'general'
+        multiDexEnabled true
     }
     signingConfigs {
         debug {
@@ -128,7 +129,17 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
-        packagingOptions {
+
+    //   splits {
+    //     abi {
+    //         enable true
+    //         reset()
+    //         include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+    //         universalApk false  // set to true if you also want a universal APK
+    //     }
+    // }
+
+    packagingOptions {
         exclude 'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
     }
 }
@@ -154,6 +165,7 @@ configurations{
   all*.exclude module: 'bcpkix-jdk15on'
   all*.exclude module: 'bcutil-jdk15on'
 }
+
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

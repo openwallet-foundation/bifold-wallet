@@ -184,7 +184,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourID.HomeTour} index={2}>
+              <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'link' : 'link'} color={color} size={30} />
                   {showLabels && (
@@ -219,7 +219,7 @@ const TabStack: React.FC = () => {
                   width: 90,
                 }}
               >
-                <AttachTourStep tourID={TourID.HomeTour} index={0} fill>
+                <AttachTourStep tourID={BaseTourID.HomeTour} index={0} fill>
                   <View
                     style={{
                       position: 'absolute',
@@ -230,7 +230,7 @@ const TabStack: React.FC = () => {
                       margin: 'auto',
                     }}
                   >
-                    <AttachTourStep tourID={TourID.CredentialsTour} index={0} fill>
+                    <AttachTourStep tourID={BaseTourID.CredentialsTour} index={0} fill>
                       <View
                         style={{
                           flexGrow: 1,
@@ -294,7 +294,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourID.HomeTour} index={2}>
+              <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'wallet' : 'wallet-outline'} color={color} size={30} />
                   {showLabels && (
@@ -323,7 +323,7 @@ const TabStack: React.FC = () => {
           options={{
             tabBarIconStyle: styles.tabBarIcon,
             tabBarIcon: ({ color, focused }) => (
-              <AttachTourStep tourID={TourID.HomeTour} index={2}>
+              <AttachTourStep tourID={BaseTourID.HomeTour} index={2}>
                 <View style={{ ...TabTheme.tabBarContainerStyle, justifyContent: showLabels ? 'flex-end' : 'center' }}>
                   <Icon name={focused ? 'dots-horizontal' : 'dots-horizontal'} color={color} size={30} />
                   {showLabels && (

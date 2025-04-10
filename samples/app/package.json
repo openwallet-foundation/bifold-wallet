@@ -1,8 +1,8 @@
 {
-  "name": "aries-bifold-app",
+  "name": "icredy-app",
   "version": "1.0.0",
   "private": true,
-  "description": "Aries Bifold Wallet App",
+  "description": "icredy Wallet App",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",

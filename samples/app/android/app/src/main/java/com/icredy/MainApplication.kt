@@ -1,4 +1,4 @@
-package com.ariesbifold
+package com.icredy
 
 import android.app.Application
 import com.facebook.react.PackageList
