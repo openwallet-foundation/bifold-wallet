@@ -58,6 +58,7 @@ export const walletTimeout = minute * 5
 15 incorrect => 1 hour lockout
 20, 25, 30, etc incorrect => 1 day lockout
 */
+
 export const attemptLockoutConfig: AttemptLockoutConfig = {
   baseRules: {
     5: minute,

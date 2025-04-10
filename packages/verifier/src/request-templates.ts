@@ -1,28 +1,33 @@
 import { ProofRequestTemplate, ProofRequestType } from './types/proof-reqeust-template'
 
 export const getProofRequestTemplates = (useDevRestrictions: boolean) => {
-  const studentRestrictions = [{ cred_def_id: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card' }]
-  const studentDevRestrictions = [{ schema_name: 'student_card' }]
-  const restrictions = useDevRestrictions ? studentDevRestrictions : studentRestrictions
+  const identityRestrictions = useDevRestrictions
+    ? [{ schema_name: 'identity' }]
+    : [{ schema_id: 'NJEP7EKT3T7tUUUk15i1Ws:2:identity:1.1' }]
+   
+  const employmentRestrictions = useDevRestrictions
+    ? [{ schema_name: 'emp' }]
+    : [{ schema_id: 'NJEP7EKT3T7tUUUk15i1Ws:2:emp:1.0' }]
+   
+  const financialRestrictions = useDevRestrictions
+    ? [{ schema_name: 'finance' }]
+    : [{ schema_id: 'Q9ug9WCZUpguUjWHYmWU2h:2:finance:1.0' }]
+   
   const defaultProofRequestTemplates: Array<ProofRequestTemplate> = [
     {
-      id: 'Aries:5:StudentFullName:0.0.1:indy',
-      name: 'Student full name',
-      description: 'Verify the full name of a student',
+      id: 'Aries:5:IdentityVerification:0.0.1:indy',
+      name: 'Identity Verification',
+      description: 'Verify personal identity details including ID, name, photo, dates, and address',
       version: '0.0.1',
       payload: {
         type: ProofRequestType.AnonCreds,
         data: [
           {
-            schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
+            schema: 'NJEP7EKT3T7tUUUk15i1Ws:2:identity:1.1',
             requestedAttributes: [
               {
-                name: 'student_first_name',
-                restrictions,
-              },
-              {
-                name: 'student_last_name',
-                restrictions,
+                names: ['type_of_id', 'date_of_expiry', 'date_of_birth', 'name', 'address', 'photo'],
+                restrictions: identityRestrictions,
               },
             ],
           },
@@ -30,27 +35,56 @@ export const getProofRequestTemplates = (useDevRestrictions: boolean) => {
       },
     },
     {
-      id: 'Aries:5:StudentFullNameAndExpirationDate:0.0.1:indy',
-      name: 'Student full name and expiration date',
-      description: 'Verify that full name of a student and that he/she has a not expired student card.',
+      id: 'Aries:5:EmploymentVerification:0.0.2:indy',
+      name: 'Employment Verification',
+      description: 'Verify current and previous employment details',
       version: '0.0.1',
       payload: {
         type: ProofRequestType.AnonCreds,
         data: [
           {
-            schema: 'XUxBrVSALWHLeycAUhrNr9:3:CL:26293:Student Card',
+            schema: 'NJEP7EKT3T7tUUUk15i1Ws:2:emp:1.0',
             requestedAttributes: [
               {
-                names: ['student_first_name', 'student_last_name'],
-                restrictions,
+                names: [
+                  'curemp_name',
+                  'curemp_since',
+                  'curemp_position',
+                  'curemp_biweekly_pay',
+                  'curemp_type',
+                  'prevemp_name',
+                  'prevemp_since',
+                  'prevemp_position',
+                  'prevemp_biweekly_pay',
+                  'prevemp_type'
+                ],
+                restrictions: employmentRestrictions,
               },
             ],
-            requestedPredicates: [
+          },
+        ],
+      },
+    },
+    {
+      id: 'Aries:5:FinancialVerification:0.0.3:indy',
+      name: 'Financial Verification',
+      description: 'Verify financial health, credit scores, and property ownership',
+      version: '0.0.1',
+      payload: {
+        type: ProofRequestType.AnonCreds,
+        data: [
+          {
+            schema: 'Q9ug9WCZUpguUjWHYmWU2h:2:finance:1.0',
+            requestedAttributes: [
               {
-                name: 'expiry_date',
-                predicateType: '>=',
-                predicateValue: 20240101,
-                restrictions,
+                names: [
+                  'owner_name',
+                  'icredy_credit_rating',
+                  'score',
+                  'icredy_financial_rating',
+                  'property_address'
+                ],
+                restrictions: financialRestrictions,
               },
             ],
           },
@@ -58,5 +92,6 @@ export const getProofRequestTemplates = (useDevRestrictions: boolean) => {
       },
     },
   ]
+
   return defaultProofRequestTemplates
 }

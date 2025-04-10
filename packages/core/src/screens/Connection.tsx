@@ -142,21 +142,38 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     },  
     [dispatch,enableChat, navigation, t]
   )
-  const handleNavigationToast = useCallback(
-    (connectionId: string) => {
-      dispatch({ inProgress: false })
-console.log("handleNavigationToast", connectionId)
-        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.RequestCredential, params: { connectionId } })
-        Toast.show({
-          type: ToastType.Success,
-          text1: t('Connection.ConnectionCompleted'),
-        })
+//   const handleNavigationToast = useCallback(
+//     (connectionId: string) => {
+//       dispatch({ inProgress: false })
+// console.log("handleNavigationToast", connectionId)
+//         navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.RequestCredential, params: { connectionId } })
+//         Toast.show({
+//           type: ToastType.Success,
+//           text1: t('Connection.ConnectionCompleted'),
+//         })
 
         
 
-    },  
-    [navigation, t]
-  )
+//     },  
+//     [navigation, t]
+//   )
+
+const handleNavigationToast = useCallback(
+  (connectionId: string) => {
+    dispatch({ inProgress: false })
+    console.log("handleNavigationToast", connectionId)
+    
+    // Navigate correctly to RequestCredential
+    navigation.navigate(Screens.RequestCredential, { connectionId });
+    
+    Toast.show({
+      type: ToastType.Success,
+      text1: t('Connection.ConnectionCompleted'),
+    })
+  },  
+  [navigation, t]
+)
+
   const onDismissModalTouched = useCallback(() => {
     dispatch({ inProgress: false })
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
@@ -193,10 +210,19 @@ console.log("handleNavigationToast", connectionId)
     }
   }, [attestationMonitor])
 
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+  //   return () => backHandler.remove()
+  // }, [])
+
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Only prevent back navigation if connection is in progress
+      return state.inProgress || state.attestationLoading
+    })
     return () => backHandler.remove()
-  }, [])
+  }, [state.inProgress, state.attestationLoading])
+  
 
   useEffect(() => {
     if (proofId) {

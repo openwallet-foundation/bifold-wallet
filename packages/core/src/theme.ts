@@ -114,6 +114,7 @@ export interface ISVGAssets {
   tabTwoIcon: React.FC<SvgProps>
   tabThreeIcon: React.FC<SvgProps>
   tabThreeFocusedIcon: React.FC<SvgProps>
+  IcredyLogo: React.FC<SvgProps>
 }
 
 export interface ISpacing {
@@ -1068,6 +1069,7 @@ export const Assets = {
     tabTwoIcon: TabTwoIcon,
     tabThreeIcon: TabThreeIcon,
     tabThreeFocusedIcon: TabThreeFocusedIcon,
+    IcredyLogo: IcredyLogo
   },
   img: {
     logoPrimary: {

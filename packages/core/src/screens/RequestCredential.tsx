@@ -11,8 +11,10 @@ import {
   useWindowDimensions,
   SafeAreaView,
   Alert,
+  BackHandler,
 } from 'react-native';
 import { useNavigation, NavigationProp, useFocusEffect } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/core';
 import {SearchBar} from '../components/IcredyComponents'; 
 import { SecondaryHeader } from '../components/IcredyComponents';
 import { useServices,TOKENS } from '../container-api'
@@ -46,6 +48,7 @@ const RequestCredential = ({route}) => {
   const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
   const [organizations, setOrganizations] = useState<Organization[]>([
     { id: '1', name: 'icredy', status: 'Connect', invitationUrl: 'https://warthog-eager-horribly.ngrok-free.app?oob=eyJAdHlwZSI6ICJodHRwczovL2RpZGNvbW0ub3JnL291dC1vZi1iYW5kLzEuMS9pbnZpdGF0aW9uIiwgIkBpZCI6ICJiODIyNjZmOC05ZTFhLTQ4MDUtODBmOC1hZWE0N2FlOTNkNzEiLCAibGFiZWwiOiAiaUNyZWR5IiwgImhhbmRzaGFrZV9wcm90b2NvbHMiOiBbImh0dHBzOi8vZGlkY29tbS5vcmcvZGlkZXhjaGFuZ2UvMS4xIl0sICJzZXJ2aWNlcyI6IFt7ImlkIjogIiNpbmxpbmUiLCAidHlwZSI6ICJkaWQtY29tbXVuaWNhdGlvbiIsICJyZWNpcGllbnRLZXlzIjogWyJkaWQ6a2V5Ono2TWt1NWlKWUM4R0xoVGZod2VZcEJTUHZmb2ZEYlFxTjNUWUV5VzE4ZmdFUm56ZCN6Nk1rdTVpSllDOEdMaFRmaHdlWXBCU1B2Zm9mRGJRcU4zVFlFeVcxOGZnRVJuemQiXSwgInNlcnZpY2VFbmRwb2ludCI6ICJodHRwczovL3dhcnRob2ctZWFnZXItaG9ycmlibHkubmdyb2stZnJlZS5hcHAifV19',connectionId:"" },
+    { id: '2', name: 'anshu', status: 'Connect', invitationUrl: 'https://traction-sandbox-acapy.apps.silver.devops.gov.bc.ca?oob=eyJAdHlwZSI6ICJodHRwczovL2RpZGNvbW0ub3JnL291dC1vZi1iYW5kLzEuMS9pbnZpdGF0aW9uIiwgIkBpZCI6ICI0ZjNiNWMxYi0xZTRmLTQxYzktYTg0NS04ZmRkOTE3Y2RlMjQiLCAibGFiZWwiOiAiYW5zaHUiLCAiaGFuZHNoYWtlX3Byb3RvY29scyI6IFsiaHR0cHM6Ly9kaWRjb21tLm9yZy9kaWRleGNoYW5nZS8xLjAiLCAiaHR0cHM6Ly9kaWRjb21tLm9yZy9jb25uZWN0aW9ucy8xLjAiXSwgImFjY2VwdCI6IFsiZGlkY29tbS9haXAxIiwgImRpZGNvbW0vYWlwMjtlbnY9cmZjMTkiXSwgInNlcnZpY2VzIjogW3siaWQiOiAiI2lubGluZSIsICJ0eXBlIjogImRpZC1jb21tdW5pY2F0aW9uIiwgInJlY2lwaWVudEtleXMiOiBbImRpZDprZXk6ejZNa21aVHFVWUoyczlnWm8zS3JRaFdwMkNGS3lEUEV2bTlLc1hFUVNOZm04eWF3I3o2TWttWlRxVVlKMnM5Z1pvM0tyUWhXcDJDRkt5RFBFdm05S3NYRVFTTmZtOHlhdyJdLCAic2VydmljZUVuZHBvaW50IjogImh0dHBzOi8vdHJhY3Rpb24tc2FuZGJveC1hY2FweS5hcHBzLnNpbHZlci5kZXZvcHMuZ292LmJjLmNhIn1dLCAiZ29hbF9jb2RlIjogIiIsICJnb2FsIjogIiJ9',connectionId:"" },
   ]);
   const connectionId = route.params?.connectionId;
 
@@ -60,6 +63,41 @@ const RequestCredential = ({route}) => {
       };
     }, [])
   );
+
+  React.useEffect(() => {
+    const backAction = () => {
+      if (connectionId) {
+        // Navigate to the home screen correctly
+        navigation.navigate(Screens.HomeScreen);
+        return true; // Prevent default back behavior
+      }
+      return false; // Allow default back behavior
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [connectionId, navigation]);
+
+  // Add to RequestCredential.tsx
+  React.useEffect(() => {
+    if (connectionId) {
+      // Fix bottom tab navigation when on RequestCredential after connection
+      const unsubscribe = navigation.addListener('tabPress', (e) => {
+        // Let normal tab navigation happen, but ensure we're not stuck in this screen
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: e.target.split('-')[0] // Gets the tab name from the event target
+          })
+        );
+      });
+
+      return unsubscribe;
+    }
+  }, [connectionId, navigation]);
 
   useEffect(() => {
     if(!connectionId){
@@ -194,7 +232,16 @@ const RequestCredential = ({route}) => {
   
   return (
     <SafeAreaView style={styles.container}>
-      <SecondaryHeader />
+      {/* <SecondaryHeader /> */}
+      <SecondaryHeader
+        customBackAction={() => {
+          if (connectionId) {
+            navigation.navigate(Screens.HomeScreen);
+          } else {
+            navigation.goBack();
+          }
+        }}
+      />
       <View style={[styles.header, { paddingHorizontal: width * 0.05, marginTop: height * 0.09 }]}>
         <Text style={styles.headerText}>Request for Credential</Text>
       </View>

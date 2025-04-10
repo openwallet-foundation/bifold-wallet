@@ -176,7 +176,6 @@ export type CredentialStackParams = {
 }
 
 export type HomeStackParams = {
-  [Screens.Home]: undefined
   [Screens.HomeScreen]: undefined
   [Screens.RequestCredential]: undefined
   [Screens.DocumentType]: undefined

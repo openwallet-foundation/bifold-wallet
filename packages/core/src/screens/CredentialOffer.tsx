@@ -30,7 +30,7 @@ import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
 import { parseCredDefFromId } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
-import { useCredentialConnectionLabel } from '../utils/helpers'
+import { useCredentialConnectionLabel, isDataUrl } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 
@@ -139,15 +139,37 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       }
     }
 
+    // const resolvePresentationFields = async () => {
+    //   const identifiers = getCredentialIdentifiers(credential)
+    //   const attributes = buildFieldsFromAnonCredsCredential(credential)
+    //   const bundle = await bundleResolver.resolveAllBundles({ identifiers, attributes, language: i18n.language })
+    //   const fields = bundle?.presentationFields ?? []
+    //   const metaOverlay = bundle?.metaOverlay ?? {}
+
+    //   return { fields, metaOverlay }
+    // }
+
     const resolvePresentationFields = async () => {
       const identifiers = getCredentialIdentifiers(credential)
-      const attributes = buildFieldsFromAnonCredsCredential(credential)
-      const bundle = await bundleResolver.resolveAllBundles({ identifiers, attributes, language: i18n.language })
-      const fields = bundle?.presentationFields ?? []
-      const metaOverlay = bundle?.metaOverlay ?? {}
-
-      return { fields, metaOverlay }
+      const attributes = buildFieldsFromAnonCredsCredential(credential).map(field => {
+        // If this is the photo field and it's not already a data URL
+        if (field.name === 'photo' && field.value && typeof field.value === 'string' && !isDataUrl(field.value)) {
+          // Set proper encoding and format for binary fields
+          field.encoding = 'base64'
+          field.format = 'image/jpeg'
+          
+          // Format as data URL if not already formatted
+          if (!field.value.startsWith('data:')) {
+            field.value = `data:image/jpeg;base64,${field.value}`
+          }
+        }
+        return field
+      })
+      const fields = await bundleResolver.presentationFields({ identifiers, attributes, language: i18n.language })
+    
+      return { fields }
     }
+
 
     /**
      * FIXME: Formatted data needs to be added to the record in Credo extensions

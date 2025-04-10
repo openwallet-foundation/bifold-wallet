@@ -291,57 +291,57 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     title: string
     titleTestID?: string
   }> = ({ icon, iconRight, title, titleTestID }) =>
-    // gate keep behind developer mode
-    store.preferences.useConnectionInviterCapability ? (
-      <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
-        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+      // gate keep behind developer mode
+      store.preferences.useConnectionInviterCapability ? (
+        <View style={[styles.section, styles.sectionHeader, { justifyContent: iconRight ? 'space-between' : undefined }]}>
+          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Icon
+              importantForAccessibility={'no-hide-descendants'}
+              accessible={false}
+              name={icon.name}
+              size={icon.size ?? defaultIconSize}
+              style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
+            />
+            <ThemedText
+              variant="headingThree"
+              testID={titleTestID}
+              numberOfLines={1}
+              accessibilityRole={'header'}
+              style={{ flexShrink: 1 }}
+            >
+              {title}
+            </ThemedText>
+          </View>
+          {iconRight && (
+            <IconButton
+              buttonLocation={ButtonLocation.Right}
+              accessibilityLabel={iconRight.accessibilityLabel!}
+              testID={iconRight.testID!}
+              onPress={iconRight.action!}
+              icon={'pencil'}
+              iconTintColor={TextTheme.headingThree.color}
+            />
+          )}
+        </View>
+      ) : (
+        <View style={[styles.section, styles.sectionHeader]}>
           <Icon
             importantForAccessibility={'no-hide-descendants'}
             accessible={false}
             name={icon.name}
-            size={icon.size ?? defaultIconSize}
-            style={[{ marginRight: 10, color: SettingsTheme.iconColor }, icon.style]}
+            size={24}
+            style={{ marginRight: 10, color: SettingsTheme.iconColor }}
           />
           <ThemedText
+            maxFontSizeMultiplier={1.8}
             variant="headingThree"
-            testID={titleTestID}
-            numberOfLines={1}
             accessibilityRole={'header'}
             style={{ flexShrink: 1 }}
           >
             {title}
           </ThemedText>
         </View>
-        {iconRight && (
-          <IconButton
-            buttonLocation={ButtonLocation.Right}
-            accessibilityLabel={iconRight.accessibilityLabel!}
-            testID={iconRight.testID!}
-            onPress={iconRight.action!}
-            icon={'pencil'}
-            iconTintColor={TextTheme.headingThree.color}
-          />
-        )}
-      </View>
-    ) : (
-      <View style={[styles.section, styles.sectionHeader]}>
-        <Icon
-          importantForAccessibility={'no-hide-descendants'}
-          accessible={false}
-          name={icon.name}
-          size={24}
-          style={{ marginRight: 10, color: SettingsTheme.iconColor }}
-        />
-        <ThemedText
-          maxFontSizeMultiplier={1.8}
-          variant="headingThree"
-          accessibilityRole={'header'}
-          style={{ flexShrink: 1 }}
-        >
-          {title}
-        </ThemedText>
-      </View>
-    )
+      )
 
   const SectionRow: React.FC<{
     title: string
@@ -372,7 +372,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   return (
     // <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
     <SafeAreaView style={styles.container}>
-      <SecondaryHeader/>
+      <SecondaryHeader />
       <SectionList
         renderItem={({ item: { title, value, accessibilityLabel, testID, onPress } }) => (
           <SectionRow
@@ -400,12 +400,17 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
               onPress={incrementDeveloperMenuCounter}
               disabled={store.preferences.developerModeEnabled}
             >
-              <View>
+              <View style={{ alignItems: 'center' }}>
                 <ThemedText testID={testIdWithKey('Version')}>
                   {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
                 </ThemedText>
-                <Assets.svg.logo style={{ alignSelf: 'center' }} width={150} height={75} />
+                <Assets.svg.IcredyLogo
+                  style={{ marginTop: '-12%' }}
+                  width={200}
+                  height={200}
+                />
               </View>
+
             </TouchableWithoutFeedback>
           </View>
         )}

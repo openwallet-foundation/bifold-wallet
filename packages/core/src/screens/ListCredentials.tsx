@@ -152,6 +152,7 @@ console.log('credentials', credentials)
                       </View>
       <FlatList
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        contentContainerStyle={{ paddingBottom: 100 }}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
         keyExtractor={(credential) => credential.id}
         renderItem={({ item: credential, index }) => {

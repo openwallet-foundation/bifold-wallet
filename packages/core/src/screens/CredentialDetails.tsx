@@ -34,6 +34,8 @@ import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailP
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
 import { ThemedText } from '../components/texts/ThemedText'
 import CardWatermark from '../components/misc/CardWatermark'
+import { SecondaryHeader } from '../components/IcredyComponents'
+import { isDataUrl } from '../utils/helpers'
 
 type CredentialDetailsProps = StackScreenProps<RootStackParams, Screens.CredentialDetails>
 
@@ -137,7 +139,19 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
   }, [agent, t])
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (!(credential && isValidAnonCredsCredential(credential))) {
+  //     return
+  //   }
+
+  //   credential.revocationNotification == undefined ? setIsRevoked(false) : setIsRevoked(true)
+  //   if (credential?.revocationNotification?.revocationDate) {
+  //     const date = new Date(credential.revocationNotification.revocationDate)
+  //     setRevocationDate(formatTime(date, { shortMonth: true }))
+  //     setPreciseRevocationDate(formatTime(date, { includeHour: true }))
+  //   }
+
+  const prepareCredentialData = useCallback(() => {
     if (!(credential && isValidAnonCredsCredential(credential))) {
       return
     }
@@ -149,24 +163,60 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       setPreciseRevocationDate(formatTime(date, { includeHour: true }))
     }
 
-    const params = {
-      identifiers: getCredentialIdentifiers(credential),
-      meta: {
-        alias: credentialConnectionLabel,
-        credConnectionId: credential.connectionId,
-      },
-      attributes: buildFieldsFromAnonCredsCredential(credential),
-      language: i18n.language,
-    }
+  //   const params = {
+  //     identifiers: getCredentialIdentifiers(credential),
+  //     meta: {
+  //       alias: credentialConnectionLabel,
+  //       credConnectionId: credential.connectionId,
+  //     },
+  //     attributes: buildFieldsFromAnonCredsCredential(credential),
+  //     language: i18n.language,
+  //   }
 
-    bundleResolver.resolveAllBundles(params).then((bundle) => {
-      setOverlay((o) => ({
-        ...o,
-        ...(bundle as CredentialOverlay<BrandingOverlay>),
-        presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
-      }))
-    })
-  }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
+  //   bundleResolver.resolveAllBundles(params).then((bundle) => {
+  //     setOverlay((o) => ({
+  //       ...o,
+  //       ...(bundle as CredentialOverlay<BrandingOverlay>),
+  //       presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
+  //     }))
+  //   })
+  // }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
+
+  const params = {
+    identifiers: getCredentialIdentifiers(credential),
+    meta: {
+      alias: credentialConnectionLabel,
+      credConnectionId: credential.connectionId,
+    },
+    attributes: buildFieldsFromAnonCredsCredential(credential).map(field => {
+      // If this is the photo field and it's not already a data URL
+      if (field.name === 'photo' && field.value && typeof field.value === 'string' && !isDataUrl(field.value)) {
+        // Set proper encoding and format for binary fields
+        field.encoding = 'base64'
+        field.format = 'image/jpeg'
+        
+        // Format as data URL if not already formatted
+        if (!field.value.startsWith('data:')) {
+          field.value = `data:image/jpeg;base64,${field.value}`
+        }
+      }
+      return field
+    }),
+    language: i18n.language,
+  }
+  bundleResolver.resolveAllBundles(params).then((bundle) => {
+    setOverlay((o) => ({
+      ...o,
+      ...(bundle as CredentialOverlay<BrandingOverlay>),
+      presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
+    }))
+  })
+}, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
+
+useEffect(() => {
+  prepareCredentialData()
+}, [prepareCredentialData])
+
 
   useEffect(() => {
     if (credential?.revocationNotification) {
@@ -415,6 +465,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
+        {/* <SecondaryHeader/> */}
       <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
       <CommonRemoveModal
         usage={ModalUsage.CredentialRemove}

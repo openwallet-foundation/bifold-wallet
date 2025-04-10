@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, Modal, SafeAreaView, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
-import { NotificationType } from '../listItems/NotificationListItem';
+import { NotificationType } from '../../components/listItems/NotificationListItem';
 import { useServices, TOKENS } from '../../container-api';
 import { useTheme } from '../../contexts/theme';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,7 +10,11 @@ import { RootStackParams, Screens, Stacks } from '../../types/navigators';
 import { useTranslation } from 'react-i18next';
 import { testIdWithKey } from '../../utils/testable';
 
-const SecondaryHeader = () => {
+type SecondaryHeaderProps = {
+  customBackAction?: () => void;
+};
+
+const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({ customBackAction }) => {
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const { ColorPallet, TextTheme } = useTheme();
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
@@ -59,7 +63,8 @@ const SecondaryHeader = () => {
   return (
     <>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        {/* <TouchableOpacity onPress={() => navigation.goBack()}> */}
+        <TouchableOpacity onPress={customBackAction || (() => navigation.goBack())}>
           <MaterialIcons name="arrow-back" size={28} color="black" />
         </TouchableOpacity>
         <View style={styles.iconContainer}>

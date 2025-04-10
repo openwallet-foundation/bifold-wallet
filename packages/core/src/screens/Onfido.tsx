@@ -79,7 +79,8 @@ const OnfidoScreen: React.FC = () => {
 
     try {
       setState(prevState => ({ ...prevState, loading: true }));
-      const apiToken = 'api_live_ca.WLv-Dr6rxyM.3tqhj3ObYp-CSG4Go876AQCZxyy7XhtO';
+      // const apiToken = 'api_live_ca.WLv-Dr6rxyM.3tqhj3ObYp-CSG4Go876AQCZxyy7XhtO';
+      const apiToken = 'api_sandbox_ca.BAkCwyz8yfb.0zyi1MM5xmuOThZwUBdzviaZaUjQToWY';
       const workflowId = 'eeaa94b3-0ac9-4d2b-a534-a4dd8155e85c';
       const applicationId = Platform.OS === 'ios' ? 'org.icredy.com' : 'com.icredy';
 
@@ -178,7 +179,7 @@ const OnfidoScreen: React.FC = () => {
         currentStep: VerificationStep.GENERATING_FILE 
       }));
       
-      const apiToken = 'api_live_ca.WLv-Dr6rxyM.3tqhj3ObYp-CSG4Go876AQCZxyy7XhtO';
+      const apiToken = 'api_sandbox_ca.BAkCwyz8yfb.0zyi1MM5xmuOThZwUBdzviaZaUjQToWY';
       const response = await fetch(`https://api.ca.onfido.com/v3.6/workflow_runs/${workflowRunId}/timeline_file`, {
         method: 'POST',
         headers: {
