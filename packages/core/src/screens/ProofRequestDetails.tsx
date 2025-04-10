@@ -4,10 +4,10 @@ import {
   ProofRequestType,
   linkProofWithTemplate,
   sendProofRequest,
-} from '@hyperledger/aries-bifold-verifier'
-import { MetaOverlay } from '@hyperledger/aries-oca'
-import { Field } from '@hyperledger/aries-oca/build/legacy'
-import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
+} from '@bryce-mcmath/aries-bifold-verifier'
+import { MetaOverlay } from '@bryce-mcmath/aries-oca'
+import { Field } from '@bryce-mcmath/aries-oca/build/legacy'
+import { OverlayType } from '@bryce-mcmath/aries-oca/build/types/TypeEnums'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

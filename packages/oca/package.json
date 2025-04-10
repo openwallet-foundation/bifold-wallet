@@ -1,5 +1,5 @@
 {
-  "name": "@hyperledger/aries-oca",
+  "name": "@bryce-mcmath/aries-oca",
   "version": "1.0.0",
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
@@ -11,16 +11,16 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
+    "build": "echo 'building oca 🏗️' && yarn run clean && yarn run compile && echo 'oca built ✅'",
     "clean": "rimraf ./build",
     "compile": "tsc",
-    "prepublishOnly": "yarn run build",
     "test": "TZ=GMT jest --config ./jest.config.js",
-    "test:watch": "TZ=GMT jest --config ./jest.config.js --watch"
+    "test:watch": "TZ=GMT jest --config ./jest.config.js --watch",
+    "coverage": "TZ=GMT jest --config ./jest.config.js --coverage"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "url": "git+https://github.com/bryce-mcmath/bifold-wallet.git",
     "directory": "packages/oca"
   },
   "publishConfig": {
@@ -28,9 +28,9 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/openwallet-foundation/bifold-wallet/issues"
+    "url": "https://github.com/bryce-mcmath/bifold-wallet/issues"
   },
-  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
+  "homepage": "https://github.com/bryce-mcmath/bifold-wallet/",
   "devDependencies": {
     "@testing-library/jest-native": "5.4.3",
     "@types/jest": "29.5.5",

@@ -1,5 +1,5 @@
 {
-  "name": "@hyperledger/aries-bifold-remote-logs",
+  "name": "@bryce-mcmath/aries-bifold-remote-logs",
   "version": "1.0.0",
   "description": "Remote logging for credo-ts agents",
   "main": "build/index.js",
@@ -11,15 +11,13 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
+    "build": "echo 'building remote-logs 🏗️' && yarn run clean && yarn run compile && echo 'remote-logs built ✅'",
     "clean": "rimraf ./build",
-    "compile": "tsc",
-    "prepublishOnly": "yarn run build",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "url": "git+https://github.com/bryce-mcmath/bifold-wallet.git",
     "directory": "packages/remote-logging"
   },
   "publishConfig": {
@@ -27,9 +25,9 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/openwallet-foundation/bifold-wallet/issues"
+    "url": "https://github.com/bryce-mcmath/bifold-wallet/issues"
   },
-  "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
+  "homepage": "https://github.com/bryce-mcmath/bifold-wallet",
   "devDependencies": {
     "@babel/runtime": "^7.20.0",
     "@typescript-eslint/parser": "^6.6.0",
@@ -50,8 +48,8 @@
     "hoistingLimits": "workspaces"
   },
   "dependencies": {
+    "@bryce-mcmath/aries-bifold-core": "1.0.0",
     "@credo-ts/core": "0.5.13",
-    "@hyperledger/aries-bifold-core": "1.0.0",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "react": "18.2.0",

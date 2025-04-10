@@ -1051,7 +1051,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-for-of@npm:^7.0.0, @babel/plugin-transform-for-of@npm:^7.25.9":
+"@babel/plugin-transform-for-of@npm:^7.0.0":
+  version: 7.26.9
+  resolution: "@babel/plugin-transform-for-of@npm:7.26.9"
+  dependencies:
+    "@babel/helper-plugin-utils": ^7.26.5
+    "@babel/helper-skip-transparent-expression-wrappers": ^7.25.9
+  peerDependencies:
+    "@babel/core": ^7.0.0-0
+  checksum: 361323cfc1d9e9dc0bf0d68326b5e7f4da5b8a8be8931f6cacda749d39b88ee1b0f9b4d8b771a5a4d52bb881a90da97950c8a9e6fb47f2c9db11d91f6351768e
+  languageName: node
+  linkType: hard
+
+"@babel/plugin-transform-for-of@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/plugin-transform-for-of@npm:7.25.9"
   dependencies:
@@ -1728,6 +1740,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.5.5":
+  version: 7.27.0
+  resolution: "@babel/runtime@npm:7.27.0"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 3e73d9e65f76fad8f99802b5364c941f4a60c693b3eca66147bb0bfa54cf0fbe017232155e16e3fd83c0a049b51b8d7239efbd73626534abe8b54a6dd57dcb1b
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.0.0, @babel/template@npm:^7.25.9, @babel/template@npm:^7.3.3":
   version: 7.25.9
   resolution: "@babel/template@npm:7.25.9"
@@ -1768,6 +1789,544 @@ __metadata:
   version: 0.2.3
   resolution: "@bcoe/v8-coverage@npm:0.2.3"
   checksum: 850f9305536d0f2bd13e9e0881cb5f02e4f93fad1189f7b2d4bebf694e3206924eadee1068130d43c11b750efcc9405f88a8e42ef098b6d75239c0f047de1a27
+  languageName: node
+  linkType: hard
+
+"@bryce-mcmath/aries-bifold-core@1.0.0, @bryce-mcmath/aries-bifold-core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@bryce-mcmath/aries-bifold-core@workspace:packages/core"
+  dependencies:
+    "@babel/core": ^7.20.0
+    "@babel/runtime": ^7.20.0
+    "@bryce-mcmath/aries-bifold-verifier": 1.0.0
+    "@bryce-mcmath/aries-oca": 1.0.0
+    "@commitlint/cli": ^11.0.0
+    "@credo-ts/anoncreds": 0.5.13
+    "@credo-ts/askar": 0.5.13
+    "@credo-ts/core": 0.5.13
+    "@credo-ts/indy-sdk-to-askar-migration": 0.5.13
+    "@credo-ts/indy-vdr": 0.5.13
+    "@credo-ts/openid4vc": 0.5.13
+    "@credo-ts/push-notifications": ^0.7.0
+    "@credo-ts/question-answer": 0.5.13
+    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-native": 0.5.13
+    "@formatjs/intl-datetimeformat": 4.2.4
+    "@formatjs/intl-displaynames": 5.2.4
+    "@formatjs/intl-getcanonicallocales": 1.7.3
+    "@formatjs/intl-listformat": 6.3.4
+    "@formatjs/intl-locale": 2.4.38
+    "@formatjs/intl-numberformat": 7.2.4
+    "@formatjs/intl-pluralrules": 4.1.4
+    "@formatjs/intl-relativetimeformat": 9.3.1
+    "@hyperledger/anoncreds-react-native": 0.2.4
+    "@hyperledger/aries-askar-react-native": 0.2.3
+    "@hyperledger/indy-vdr-react-native": 0.2.2
+    "@hyperledger/indy-vdr-shared": 0.2.2
+    "@react-native-async-storage/async-storage": ^1.22.0
+    "@react-native-community/netinfo": ^11.3.0
+    "@react-native-masked-view/masked-view": ^0.3.0
+    "@react-native/babel-preset": ^0.73.0
+    "@react-native/eslint-config": ^0.73.2
+    "@react-native/eslint-plugin": ^0.73.1
+    "@react-navigation/bottom-tabs": 6.0.9
+    "@react-navigation/core": 6.1.0
+    "@react-navigation/devtools": ^6.0.8
+    "@react-navigation/native": ^6.0.8
+    "@react-navigation/stack": ^6.3.21
+    "@testing-library/jest-native": ^5.4.3
+    "@testing-library/react-native": ^12.3.0
+    "@types/jest": ^29.5.5
+    "@types/lodash.flatten": ^4.4.6
+    "@types/lodash.startcase": ^4.4.7
+    "@types/react": ^18.2.6
+    "@types/react-native-vector-icons": ^6.4.6
+    "@types/react-test-renderer": ^18.0.1
+    "@typescript-eslint/eslint-plugin": ^6.6.0
+    "@typescript-eslint/parser": ^6.6.0
+    axios: ^1.4.0
+    babel-jest: ^27.5.1
+    babel-plugin-module-resolver: ^5.0.0
+    base-64: ^1.0.0
+    commitlint: ^17.7.1
+    eslint: ^8.48.0
+    eslint-import-resolver-typescript: ^2.5.0
+    eslint-plugin-import: ^2.28.1
+    eslint-plugin-prettier: ^4.0.0
+    husky: ^7.0.0
+    i18next: ^21.4.0
+    install-peerdeps: ^3.0.3
+    jest: ^29.6.4
+    lint-staged: ^11.2.6
+    lodash.flatten: ^4.4.0
+    lodash.startcase: ^4.4.0
+    mockdate: ^3.0.5
+    moment: ^2.29.4
+    node-notifier: ^10.0.1
+    patch-package: ^6.4.4
+    prettier: ^2.8.8
+    query-string: ^7.0.1
+    react: ^18.2.0
+    react-i18next: 11.13.0
+    react-native: ^0.73.6
+    react-native-animated-pagination-dots: ^0.1.72
+    react-native-argon2: ^2.0.1
+    react-native-bouncy-checkbox: ^3.0.5
+    react-native-builder-bob: ^0.21.3
+    react-native-collapsible: ^1.6.1
+    react-native-config: ^1.4.2
+    react-native-confirmation-code-field: ^7.3.0
+    react-native-device-info: ^8.4.9
+    react-native-encrypted-storage: ^4.0.2
+    react-native-fs: ^2.18.0
+    react-native-gesture-handler: ^2.14.0
+    react-native-get-random-values: ^1.7.0
+    react-native-gifted-chat: 2.4.0
+    react-native-keychain: ^8.1.3
+    react-native-localize: ^2.2.4
+    react-native-logs: ^5.1.0
+    react-native-orientation-locker: ^1.6.0
+    react-native-permissions: ^4.0.1
+    react-native-qrcode-svg: 6.2.0
+    react-native-safe-area-context: ^4.8.2
+    react-native-scalable-image: ^1.1.0
+    react-native-screenguard: ^1.0.8-beta3
+    react-native-screens: ^3.29.0
+    react-native-splash-screen: ^3.3.0
+    react-native-svg: ^15.0.0
+    react-native-svg-transformer: ^0.14.3
+    react-native-tcp-socket: ^6.0.6
+    react-native-toast-message: ^2.1.6
+    react-native-uuid: ^2.0.1
+    react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: 4.3.1
+    react-test-renderer: ^18.2.0
+    rimraf: ^5.0.0
+    tsyringe: ^4.7.0
+    typescript: ^5.0.4
+    uuid: ^9.0.0
+  peerDependencies:
+    "@bryce-mcmath/aries-bifold-verifier": "*"
+    "@bryce-mcmath/aries-oca": "*"
+    "@credo-ts/anoncreds": 0.5.13
+    "@credo-ts/askar": 0.5.13
+    "@credo-ts/core": 0.5.13
+    "@credo-ts/indy-sdk-to-askar-migration": 0.5.13
+    "@credo-ts/indy-vdr": 0.5.13
+    "@credo-ts/openid4vc": 0.5.13
+    "@credo-ts/push-notifications": ^0.7.0
+    "@credo-ts/question-answer": 0.5.13
+    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-native": 0.5.13
+    "@formatjs/intl-datetimeformat": 4.2.4
+    "@formatjs/intl-displaynames": 5.2.4
+    "@formatjs/intl-getcanonicallocales": 1.7.3
+    "@formatjs/intl-listformat": 6.3.4
+    "@formatjs/intl-locale": 2.4.38
+    "@formatjs/intl-numberformat": 7.2.4
+    "@formatjs/intl-pluralrules": 4.1.4
+    "@formatjs/intl-relativetimeformat": 9.3.1
+    "@hyperledger/anoncreds-react-native": 0.2.4
+    "@hyperledger/aries-askar-react-native": 0.2.3
+    "@hyperledger/indy-vdr-react-native": 0.2.2
+    "@hyperledger/indy-vdr-shared": 0.2.2
+    "@react-native-async-storage/async-storage": ^1.22.0
+    "@react-native-community/netinfo": ^11.3.0
+    "@react-native-masked-view/masked-view": ^0.3.0
+    "@react-navigation/bottom-tabs": 6.0.9
+    "@react-navigation/core": 6.1.0
+    "@react-navigation/devtools": ^6.0.8
+    "@react-navigation/native": ^6.0.8
+    "@react-navigation/stack": ^6.3.21
+    axios: ^1.4.0
+    base-64: ^1.0.0
+    i18next: ^21.4.0
+    lodash.flatten: ^4.4.0
+    lodash.startcase: ^4.4.0
+    moment: ^2.29.4
+    query-string: ^7.0.1
+    react: ^18.2.0
+    react-i18next: 11.13.0
+    react-native: "*"
+    react-native-animated-pagination-dots: ^0.1.72
+    react-native-argon2: ^2.0.1
+    react-native-bouncy-checkbox: ^3.0.5
+    react-native-collapsible: ^1.6.1
+    react-native-config: ^1.4.2
+    react-native-confirmation-code-field: ^7.3.0
+    react-native-device-info: ^8.4.9
+    react-native-encrypted-storage: ^4.0.2
+    react-native-fs: ^2.16.6
+    react-native-gesture-handler: ^2.14.0
+    react-native-get-random-values: ^1.7.0
+    react-native-gifted-chat: 2.4.0
+    react-native-keychain: ^8.1.3
+    react-native-localize: ^2.2.4
+    react-native-logs: ^5.1.0
+    react-native-orientation-locker: "*"
+    react-native-permissions: ^4.0.1
+    react-native-qrcode-svg: 6.2.0
+    react-native-safe-area-context: ^4.8.2
+    react-native-screenguard: "*"
+    react-native-screens: ^3.24.0
+    react-native-splash-screen: ^3.3.0
+    react-native-svg: ^15.0.0
+    react-native-tcp-socket: ^6.0.6
+    react-native-toast-message: ^2.1.6
+    react-native-uuid: ^2.0.1
+    react-native-vector-icons: ^10.0.0
+    react-native-vision-camera: "*"
+    tsyringe: ^4.7.0
+    uuid: ^9.0.0
+  bin:
+    bifold: bin/bifold
+  languageName: unknown
+  linkType: soft
+
+"@bryce-mcmath/aries-bifold-remote-logs@workspace:packages/remote-logs":
+  version: 0.0.0-use.local
+  resolution: "@bryce-mcmath/aries-bifold-remote-logs@workspace:packages/remote-logs"
+  dependencies:
+    "@babel/runtime": ^7.20.0
+    "@bryce-mcmath/aries-bifold-core": 1.0.0
+    "@credo-ts/core": 0.5.13
+    "@typescript-eslint/parser": ^6.6.0
+    axios: ^1.4.0
+    buffer: ^6.0.3
+    eslint: ^8.48.0
+    eslint-import-resolver-typescript: ^2.5.0
+    react: 18.2.0
+    react-native: ^0.73.6
+    react-native-logs: ^5.1.0
+    rimraf: ^5.0.0
+    typescript: ^5.0.4
+  peerDependencies:
+    "@credo-ts/core": 0.5.13
+    axios: ^1.4.0
+    buffer: ^6.0.3
+    react: ^18.2.0
+    react-native: ^0.73.6
+    react-native-logs: ^5.1.0
+  languageName: unknown
+  linkType: soft
+
+"@bryce-mcmath/aries-bifold-verifier@1.0.0, @bryce-mcmath/aries-bifold-verifier@workspace:packages/verifier":
+  version: 0.0.0-use.local
+  resolution: "@bryce-mcmath/aries-bifold-verifier@workspace:packages/verifier"
+  dependencies:
+    "@babel/core": ^7.20.0
+    "@credo-ts/anoncreds": 0.5.13
+    "@credo-ts/core": 0.5.13
+    "@credo-ts/react-hooks": ^0.6.0
+    "@hyperledger/anoncreds-shared": 0.2.4
+    "@react-native/babel-preset": 0.73.21
+    "@types/jest": ^29.5.5
+    "@types/react": ^18.2.6
+    babel-jest: ^27.5.1
+    eslint: ^8.48.0
+    jest: ^29.6.4
+    react: ^18.2.0
+    react-native-builder-bob: ^0.21.3
+    rimraf: ^5.0.0
+    typescript: ^5.0.4
+  peerDependencies:
+    "@credo-ts/anoncreds": 0.5.13
+    "@credo-ts/core": 0.5.13
+    "@credo-ts/react-hooks": ^0.6.0
+    "@hyperledger/anoncreds-shared": 0.2.4
+    react: ^18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@bryce-mcmath/aries-oca@1.0.0, @bryce-mcmath/aries-oca@workspace:packages/oca":
+  version: 0.0.0-use.local
+  resolution: "@bryce-mcmath/aries-oca@workspace:packages/oca"
+  dependencies:
+    "@credo-ts/anoncreds": 0.5.13
+    "@credo-ts/core": 0.5.13
+    "@testing-library/jest-native": 5.4.3
+    "@types/jest": 29.5.5
+    "@types/lodash.startcase": ^4.4.7
+    "@typescript-eslint/parser": ^6.6.0
+    axios: ^1.4.0
+    eslint: ^8.48.0
+    eslint-import-resolver-typescript: ^2.5.0
+    jest: 29.6.4
+    lodash.startcase: ^4.4.0
+    react-native-fs: ^2.16.6
+    rimraf: ^5.0.0
+    ts-jest: ^29.1.2
+    typescript: ^5.0.4
+  languageName: unknown
+  linkType: soft
+
+"@bryce-mcmath/aries-react-native-attestation@workspace:packages/react-native-attestation":
+  version: 0.0.0-use.local
+  resolution: "@bryce-mcmath/aries-react-native-attestation@workspace:packages/react-native-attestation"
+  dependencies:
+    "@babel/core": ^7.20.0
+    "@babel/plugin-proposal-class-properties": ^7.17.12
+    "@babel/preset-env": ^7.20.0
+    "@babel/preset-react": ^7.17.12
+    "@babel/preset-typescript": ^7.17.12
+    "@commitlint/config-conventional": ^17.0.2
+    "@react-native/eslint-config": ^0.73.2
+    "@release-it/conventional-changelog": ^5.0.0
+    "@types/jest": ^29.5.5
+    "@types/react": ^18.2.6
+    commitlint: ^17.7.1
+    del-cli: ^5.0.0
+    eslint: ^8.48.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-ft-flow: ^3.0.0
+    eslint-plugin-prettier: ^4.0.0
+    jest: ^29.6.4
+    pod-install: 0.1.38
+    prettier: ^2.8.8
+    react: "*"
+    react-native: "*"
+    react-native-builder-bob: ^0.21.3
+    release-it: ^15.0.0
+    rimraf: ^5.0.0
+    turbo: ^1.10.7
+    typescript: ^5.0.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  languageName: unknown
+  linkType: soft
+
+"@changesets/apply-release-plan@npm:^7.0.10":
+  version: 7.0.10
+  resolution: "@changesets/apply-release-plan@npm:7.0.10"
+  dependencies:
+    "@changesets/config": ^3.1.1
+    "@changesets/get-version-range-type": ^0.4.0
+    "@changesets/git": ^3.0.2
+    "@changesets/should-skip-package": ^0.1.2
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+    detect-indent: ^6.0.0
+    fs-extra: ^7.0.1
+    lodash.startcase: ^4.4.0
+    outdent: ^0.5.0
+    prettier: ^2.7.1
+    resolve-from: ^5.0.0
+    semver: ^7.5.3
+  checksum: 4a9d5ddd2a151432ba7d139351cf4e2622e34d13094da29f69b9f3fe8f0dd086244112e749c0b1e0430681fc8917a6ed5beb9efa453fa33f0b4b79e4758f8c6d
+  languageName: node
+  linkType: hard
+
+"@changesets/assemble-release-plan@npm:^6.0.6":
+  version: 6.0.6
+  resolution: "@changesets/assemble-release-plan@npm:6.0.6"
+  dependencies:
+    "@changesets/errors": ^0.2.0
+    "@changesets/get-dependents-graph": ^2.1.3
+    "@changesets/should-skip-package": ^0.1.2
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+    semver: ^7.5.3
+  checksum: 9150dc52d6064d074f6b9ab39362caef2eff89d082d3edc1e1262db87ba31f4a6f5e31e23a06ce07cbb6a952e29549114722d737b5c1ecb97fb8bbfa4445345d
+  languageName: node
+  linkType: hard
+
+"@changesets/changelog-git@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@changesets/changelog-git@npm:0.2.1"
+  dependencies:
+    "@changesets/types": ^6.1.0
+  checksum: ccd1569b2af2538c6c1e8920feb53dcfda3d76eba4251f76572cdbe9ac99dc008a4ed37042f64e48ac585e502d8899994bc9da5ca938aa221e4d8bee6683e212
+  languageName: node
+  linkType: hard
+
+"@changesets/cli@npm:^2.28.1":
+  version: 2.28.1
+  resolution: "@changesets/cli@npm:2.28.1"
+  dependencies:
+    "@changesets/apply-release-plan": ^7.0.10
+    "@changesets/assemble-release-plan": ^6.0.6
+    "@changesets/changelog-git": ^0.2.1
+    "@changesets/config": ^3.1.1
+    "@changesets/errors": ^0.2.0
+    "@changesets/get-dependents-graph": ^2.1.3
+    "@changesets/get-release-plan": ^4.0.8
+    "@changesets/git": ^3.0.2
+    "@changesets/logger": ^0.1.1
+    "@changesets/pre": ^2.0.2
+    "@changesets/read": ^0.6.3
+    "@changesets/should-skip-package": ^0.1.2
+    "@changesets/types": ^6.1.0
+    "@changesets/write": ^0.4.0
+    "@manypkg/get-packages": ^1.1.3
+    ansi-colors: ^4.1.3
+    ci-info: ^3.7.0
+    enquirer: ^2.4.1
+    external-editor: ^3.1.0
+    fs-extra: ^7.0.1
+    mri: ^1.2.0
+    p-limit: ^2.2.0
+    package-manager-detector: ^0.2.0
+    picocolors: ^1.1.0
+    resolve-from: ^5.0.0
+    semver: ^7.5.3
+    spawndamnit: ^3.0.1
+    term-size: ^2.1.0
+  bin:
+    changeset: bin.js
+  checksum: d30347d2bc1564dc39067ef7e1826ca4f24f4a1cce4e25b4b45120cda9063c08e1996c1372ed2c5288d9ade324d248defb17739826381f08618e17117d0ff8db
+  languageName: node
+  linkType: hard
+
+"@changesets/config@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@changesets/config@npm:3.1.1"
+  dependencies:
+    "@changesets/errors": ^0.2.0
+    "@changesets/get-dependents-graph": ^2.1.3
+    "@changesets/logger": ^0.1.1
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+    fs-extra: ^7.0.1
+    micromatch: ^4.0.8
+  checksum: ba1f0c369497ae67ed2bdc3f1b3ee51b22bf71d7829dbf0fc8b150b6b198efc61065f3f7bd01625e633a05d6465e4394552db33685b5480fc232d07cf9a422b4
+  languageName: node
+  linkType: hard
+
+"@changesets/errors@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@changesets/errors@npm:0.2.0"
+  dependencies:
+    extendable-error: ^0.1.5
+  checksum: 4b79373f92287af4f723e8dbbccaf0299aa8735fc043243d0ad587f04a7614615ea50180be575d4438b9f00aa82d1cf85e902b77a55bdd3e0a8dd97e77b18c60
+  languageName: node
+  linkType: hard
+
+"@changesets/get-dependents-graph@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "@changesets/get-dependents-graph@npm:2.1.3"
+  dependencies:
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+    picocolors: ^1.1.0
+    semver: ^7.5.3
+  checksum: eef7fa4d9629a13ce25bb83c2f657969cd2903cbe7ebe0e5a260f2639d7a3ad43bca220bc2356262067dd3f2ade9597cabdfa64523bd2f2f961a3d8200b48977
+  languageName: node
+  linkType: hard
+
+"@changesets/get-release-plan@npm:^4.0.8":
+  version: 4.0.8
+  resolution: "@changesets/get-release-plan@npm:4.0.8"
+  dependencies:
+    "@changesets/assemble-release-plan": ^6.0.6
+    "@changesets/config": ^3.1.1
+    "@changesets/pre": ^2.0.2
+    "@changesets/read": ^0.6.3
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+  checksum: 4ae87ddc45fe6c48f42c9ef3292e6fa390d4a88baa0470788923ed45a751b1c76e45d4ba35a885565743ddbf8035c131efd4f2695f5b84852bbc83ffeb51550b
+  languageName: node
+  linkType: hard
+
+"@changesets/get-version-range-type@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@changesets/get-version-range-type@npm:0.4.0"
+  checksum: 2e8c511e658e193f48de7f09522649c4cf072932f0cbe0f252a7f2703d7775b0b90b632254526338795d0658e340be9dff3879cfc8eba4534b8cd6071efff8c9
+  languageName: node
+  linkType: hard
+
+"@changesets/git@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@changesets/git@npm:3.0.2"
+  dependencies:
+    "@changesets/errors": ^0.2.0
+    "@manypkg/get-packages": ^1.1.3
+    is-subdir: ^1.1.1
+    micromatch: ^4.0.8
+    spawndamnit: ^3.0.1
+  checksum: 56d15fd74881fccd7d46aa8e4d6b808e8d5a349103a5a54f2dd52d91a17056b271b04c28f7709fb162bab48ecaee2f51678fca01ed77be5a8392bf8efa6340c7
+  languageName: node
+  linkType: hard
+
+"@changesets/logger@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@changesets/logger@npm:0.1.1"
+  dependencies:
+    picocolors: ^1.1.0
+  checksum: acca50ef6bf6e446b46eb576b32f1955bf4579dbf4bbc316768ed2c1d4ba4066c9c73b114eedefaa1b3e360b1060a020e6bd3dbdbc44b74da732df92307beab0
+  languageName: node
+  linkType: hard
+
+"@changesets/parse@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@changesets/parse@npm:0.4.1"
+  dependencies:
+    "@changesets/types": ^6.1.0
+    js-yaml: ^3.13.1
+  checksum: e45c0c818266294c57147e51dad34e145c1e7ae2edf1607a7944eb165ac6fa75dd9080bd3bb02b08f56bd49b33a6ed1bb6d77e452692b89562a604ce9d9218e4
+  languageName: node
+  linkType: hard
+
+"@changesets/pre@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@changesets/pre@npm:2.0.2"
+  dependencies:
+    "@changesets/errors": ^0.2.0
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+    fs-extra: ^7.0.1
+  checksum: 2bb7c3e40c015575eb2979bb1225c767ff9d4cdf4d289cbeae6998567b4e6a405ee12e84f0ddab636710ce9679905a940379f4853311eeb48962eb589fc174eb
+  languageName: node
+  linkType: hard
+
+"@changesets/read@npm:^0.6.3":
+  version: 0.6.3
+  resolution: "@changesets/read@npm:0.6.3"
+  dependencies:
+    "@changesets/git": ^3.0.2
+    "@changesets/logger": ^0.1.1
+    "@changesets/parse": ^0.4.1
+    "@changesets/types": ^6.1.0
+    fs-extra: ^7.0.1
+    p-filter: ^2.1.0
+    picocolors: ^1.1.0
+  checksum: 0b9c7babadfac948b52a4e18e7627f24306e697b87eb3ee48ec1aeea5e9dd0790f628160f37a189386b02699dac836a6572ee9c6649a3ff818cbc4bd23d626ae
+  languageName: node
+  linkType: hard
+
+"@changesets/should-skip-package@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@changesets/should-skip-package@npm:0.1.2"
+  dependencies:
+    "@changesets/types": ^6.1.0
+    "@manypkg/get-packages": ^1.1.3
+  checksum: d09fcf1200ee201f0dd5b8049d90e8b5e0cfd34cc94f5c661c4cdab182a8263628733f9bc5886550a92f6f7857339d79fc77f12ffd53559b029a2bf9a2fa7ace
+  languageName: node
+  linkType: hard
+
+"@changesets/types@npm:^4.0.1":
+  version: 4.1.0
+  resolution: "@changesets/types@npm:4.1.0"
+  checksum: 72c1f58044178ca867dd9349ecc4b7c233ce3781bb03b5b72a70c3166fbbab54a2f2cb19a81f96b4649ba004442c8734569fba238be4dd737fb4624a135c6098
+  languageName: node
+  linkType: hard
+
+"@changesets/types@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@changesets/types@npm:6.1.0"
+  checksum: 2d01231ddb835b48f9c7963a92ffee7ff347be407cdd52b2a9dcfd2a6e75f2ba13d3009d954a8bca4b622d4cac369f86b496ee9c55f5b788e295ca2d3cba4b94
+  languageName: node
+  linkType: hard
+
+"@changesets/write@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@changesets/write@npm:0.4.0"
+  dependencies:
+    "@changesets/types": ^6.1.0
+    fs-extra: ^7.0.1
+    human-id: ^4.1.1
+    prettier: ^2.7.1
+  checksum: b9ac7de32009b6f2f1e6019fd7df97da53431e8c9f20242771652f937a8cd3a23b0ee2c416906616f9dc4bafa9b5fc0c456d5757c59ed6107100991a10b38293
   languageName: node
   linkType: hard
 
@@ -2147,9 +2706,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch::locator=aries-bifold-root%40workspace%3A.":
+"@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch::version=0.5.13&hash=4f5cb7&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/anoncreds@patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch::version=0.5.13&hash=4f5cb7&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@astronautlabs/jsonpath": ^1.1.2
     "@credo-ts/core": 0.5.13
@@ -2235,9 +2794,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=aries-bifold-root%40workspace%3A.":
+"@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=680100&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=680100&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2311,9 +2870,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::locator=aries-bifold-root%40workspace%3A.":
+"@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=c42b94&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=c42b94&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/core": 0.5.13
@@ -2393,9 +2952,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::locator=aries-bifold-root%40workspace%3A.":
+"@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.6.0
-  resolution: "@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::version=0.6.0&hash=fb715c&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::version=0.6.0&hash=fb715c&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     rxjs: ^7.2.0
   peerDependencies:
@@ -3054,309 +3613,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/aries-bifold-core@1.0.0, @hyperledger/aries-bifold-core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-bifold-core@workspace:packages/core"
-  dependencies:
-    "@babel/core": ^7.20.0
-    "@babel/runtime": ^7.20.0
-    "@commitlint/cli": ^11.0.0
-    "@credo-ts/anoncreds": 0.5.13
-    "@credo-ts/askar": 0.5.13
-    "@credo-ts/core": 0.5.13
-    "@credo-ts/indy-sdk-to-askar-migration": 0.5.13
-    "@credo-ts/indy-vdr": 0.5.13
-    "@credo-ts/openid4vc": 0.5.13
-    "@credo-ts/push-notifications": ^0.7.0
-    "@credo-ts/question-answer": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
-    "@credo-ts/react-native": 0.5.13
-    "@formatjs/intl-datetimeformat": 4.2.4
-    "@formatjs/intl-displaynames": 5.2.4
-    "@formatjs/intl-getcanonicallocales": 1.7.3
-    "@formatjs/intl-listformat": 6.3.4
-    "@formatjs/intl-locale": 2.4.38
-    "@formatjs/intl-numberformat": 7.2.4
-    "@formatjs/intl-pluralrules": 4.1.4
-    "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": 0.2.4
-    "@hyperledger/aries-askar-react-native": 0.2.3
-    "@hyperledger/aries-bifold-verifier": 1.0.0
-    "@hyperledger/aries-oca": 1.0.0
-    "@hyperledger/indy-vdr-react-native": 0.2.2
-    "@hyperledger/indy-vdr-shared": 0.2.2
-    "@react-native-async-storage/async-storage": ^1.22.0
-    "@react-native-community/netinfo": ^11.3.0
-    "@react-native-masked-view/masked-view": ^0.3.0
-    "@react-native/babel-preset": ^0.73.0
-    "@react-native/eslint-config": ^0.73.2
-    "@react-native/eslint-plugin": ^0.73.1
-    "@react-navigation/bottom-tabs": 6.0.9
-    "@react-navigation/core": 6.1.0
-    "@react-navigation/devtools": ^6.0.8
-    "@react-navigation/native": ^6.0.8
-    "@react-navigation/stack": ^6.3.21
-    "@testing-library/jest-native": ^5.4.3
-    "@testing-library/react-native": ^12.3.0
-    "@types/jest": ^29.5.5
-    "@types/lodash.flatten": ^4.4.6
-    "@types/lodash.startcase": ^4.4.7
-    "@types/react": ^18.2.6
-    "@types/react-native-vector-icons": ^6.4.6
-    "@types/react-test-renderer": ^18.0.1
-    "@typescript-eslint/eslint-plugin": ^6.6.0
-    "@typescript-eslint/parser": ^6.6.0
-    axios: ^1.4.0
-    babel-jest: ^27.5.1
-    babel-plugin-module-resolver: ^5.0.0
-    base-64: ^1.0.0
-    commitlint: ^17.7.1
-    eslint: ^8.48.0
-    eslint-import-resolver-typescript: ^2.5.0
-    eslint-plugin-import: ^2.28.1
-    eslint-plugin-prettier: ^4.0.0
-    husky: ^7.0.0
-    i18next: ^21.4.0
-    install-peerdeps: ^3.0.3
-    jest: ^29.6.4
-    lint-staged: ^11.2.6
-    lodash.flatten: ^4.4.0
-    lodash.startcase: ^4.4.0
-    mockdate: ^3.0.5
-    moment: ^2.29.4
-    node-notifier: ^10.0.1
-    patch-package: ^6.4.4
-    prettier: ^2.8.8
-    query-string: ^7.0.1
-    react: ^18.2.0
-    react-i18next: 11.13.0
-    react-native: ^0.73.6
-    react-native-animated-pagination-dots: ^0.1.72
-    react-native-argon2: ^2.0.1
-    react-native-bouncy-checkbox: ^3.0.5
-    react-native-builder-bob: ^0.21.3
-    react-native-collapsible: ^1.6.1
-    react-native-config: ^1.4.2
-    react-native-confirmation-code-field: ^7.3.0
-    react-native-device-info: ^8.4.9
-    react-native-encrypted-storage: ^4.0.2
-    react-native-fs: ^2.18.0
-    react-native-gesture-handler: ^2.14.0
-    react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: 2.4.0
-    react-native-keychain: ^8.1.3
-    react-native-localize: ^2.2.4
-    react-native-logs: ^5.1.0
-    react-native-orientation-locker: ^1.6.0
-    react-native-permissions: ^4.0.1
-    react-native-qrcode-svg: 6.2.0
-    react-native-safe-area-context: ^4.8.2
-    react-native-scalable-image: ^1.1.0
-    react-native-screenguard: ^1.0.8-beta3
-    react-native-screens: ^3.29.0
-    react-native-splash-screen: ^3.3.0
-    react-native-svg: ^15.0.0
-    react-native-svg-transformer: ^0.14.3
-    react-native-tcp-socket: ^6.0.6
-    react-native-toast-message: ^2.1.6
-    react-native-uuid: ^2.0.1
-    react-native-vector-icons: ^10.0.0
-    react-native-vision-camera: 4.3.1
-    react-test-renderer: ^18.2.0
-    tsyringe: ^4.7.0
-    typescript: ^5.0.4
-    uuid: ^9.0.0
-  peerDependencies:
-    "@credo-ts/anoncreds": 0.5.13
-    "@credo-ts/askar": 0.5.13
-    "@credo-ts/core": 0.5.13
-    "@credo-ts/indy-sdk-to-askar-migration": 0.5.13
-    "@credo-ts/indy-vdr": 0.5.13
-    "@credo-ts/openid4vc": 0.5.13
-    "@credo-ts/push-notifications": ^0.7.0
-    "@credo-ts/question-answer": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
-    "@credo-ts/react-native": 0.5.13
-    "@formatjs/intl-datetimeformat": 4.2.4
-    "@formatjs/intl-displaynames": 5.2.4
-    "@formatjs/intl-getcanonicallocales": 1.7.3
-    "@formatjs/intl-listformat": 6.3.4
-    "@formatjs/intl-locale": 2.4.38
-    "@formatjs/intl-numberformat": 7.2.4
-    "@formatjs/intl-pluralrules": 4.1.4
-    "@formatjs/intl-relativetimeformat": 9.3.1
-    "@hyperledger/anoncreds-react-native": 0.2.4
-    "@hyperledger/aries-askar-react-native": 0.2.3
-    "@hyperledger/aries-bifold-verifier": "*"
-    "@hyperledger/aries-oca": "*"
-    "@hyperledger/indy-vdr-react-native": 0.2.2
-    "@hyperledger/indy-vdr-shared": 0.2.2
-    "@react-native-async-storage/async-storage": ^1.22.0
-    "@react-native-community/netinfo": ^11.3.0
-    "@react-native-masked-view/masked-view": ^0.3.0
-    "@react-navigation/bottom-tabs": 6.0.9
-    "@react-navigation/core": 6.1.0
-    "@react-navigation/devtools": ^6.0.8
-    "@react-navigation/native": ^6.0.8
-    "@react-navigation/stack": ^6.3.21
-    axios: ^1.4.0
-    base-64: ^1.0.0
-    i18next: ^21.4.0
-    lodash.flatten: ^4.4.0
-    lodash.startcase: ^4.4.0
-    moment: ^2.29.4
-    query-string: ^7.0.1
-    react: ^18.2.0
-    react-i18next: 11.13.0
-    react-native: "*"
-    react-native-animated-pagination-dots: ^0.1.72
-    react-native-argon2: ^2.0.1
-    react-native-bouncy-checkbox: ^3.0.5
-    react-native-collapsible: ^1.6.1
-    react-native-config: ^1.4.2
-    react-native-confirmation-code-field: ^7.3.0
-    react-native-device-info: ^8.4.9
-    react-native-encrypted-storage: ^4.0.2
-    react-native-fs: ^2.16.6
-    react-native-gesture-handler: ^2.14.0
-    react-native-get-random-values: ^1.7.0
-    react-native-gifted-chat: 2.4.0
-    react-native-keychain: ^8.1.3
-    react-native-localize: ^2.2.4
-    react-native-logs: ^5.1.0
-    react-native-orientation-locker: "*"
-    react-native-permissions: ^4.0.1
-    react-native-qrcode-svg: 6.2.0
-    react-native-safe-area-context: ^4.8.2
-    react-native-screenguard: "*"
-    react-native-screens: ^3.24.0
-    react-native-splash-screen: ^3.3.0
-    react-native-svg: ^15.0.0
-    react-native-tcp-socket: ^6.0.6
-    react-native-toast-message: ^2.1.6
-    react-native-uuid: ^2.0.1
-    react-native-vector-icons: ^10.0.0
-    react-native-vision-camera: "*"
-    tsyringe: ^4.7.0
-    uuid: ^9.0.0
-  bin:
-    bifold: bin/bifold
-  languageName: unknown
-  linkType: soft
-
-"@hyperledger/aries-bifold-remote-logs@workspace:packages/remote-logs":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-bifold-remote-logs@workspace:packages/remote-logs"
-  dependencies:
-    "@babel/runtime": ^7.20.0
-    "@credo-ts/core": 0.5.13
-    "@hyperledger/aries-bifold-core": 1.0.0
-    "@typescript-eslint/parser": ^6.6.0
-    axios: ^1.4.0
-    buffer: ^6.0.3
-    eslint: ^8.48.0
-    eslint-import-resolver-typescript: ^2.5.0
-    react: 18.2.0
-    react-native: ^0.73.6
-    react-native-logs: ^5.1.0
-    rimraf: ^5.0.0
-    typescript: ^5.0.4
-  peerDependencies:
-    "@credo-ts/core": 0.5.13
-    axios: ^1.4.0
-    buffer: ^6.0.3
-    react: ^18.2.0
-    react-native: ^0.73.6
-    react-native-logs: ^5.1.0
-  languageName: unknown
-  linkType: soft
-
-"@hyperledger/aries-bifold-verifier@1.0.0, @hyperledger/aries-bifold-verifier@workspace:packages/verifier":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-bifold-verifier@workspace:packages/verifier"
-  dependencies:
-    "@babel/core": ^7.20.0
-    "@credo-ts/anoncreds": 0.5.13
-    "@credo-ts/core": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
-    "@hyperledger/anoncreds-shared": 0.2.4
-    "@react-native/babel-preset": 0.73.21
-    "@types/jest": ^29.5.5
-    "@types/react": ^18.2.6
-    babel-jest: ^27.5.1
-    eslint: ^8.48.0
-    jest: ^29.6.4
-    react: ^18.2.0
-    react-native-builder-bob: ^0.21.3
-    rimraf: ^5.0.0
-    typescript: ^5.0.4
-  peerDependencies:
-    "@credo-ts/anoncreds": 0.5.13
-    "@credo-ts/core": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
-    "@hyperledger/anoncreds-shared": 0.2.4
-    react: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@hyperledger/aries-oca@1.0.0, @hyperledger/aries-oca@workspace:packages/oca":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-oca@workspace:packages/oca"
-  dependencies:
-    "@credo-ts/anoncreds": 0.5.13
-    "@credo-ts/core": 0.5.13
-    "@testing-library/jest-native": 5.4.3
-    "@types/jest": 29.5.5
-    "@types/lodash.startcase": ^4.4.7
-    "@typescript-eslint/parser": ^6.6.0
-    axios: ^1.4.0
-    eslint: ^8.48.0
-    eslint-import-resolver-typescript: ^2.5.0
-    jest: 29.6.4
-    lodash.startcase: ^4.4.0
-    react-native-fs: ^2.16.6
-    rimraf: ^5.0.0
-    ts-jest: ^29.1.2
-    typescript: ^5.0.4
-  languageName: unknown
-  linkType: soft
-
-"@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation":
-  version: 0.0.0-use.local
-  resolution: "@hyperledger/aries-react-native-attestation@workspace:packages/react-native-attestation"
-  dependencies:
-    "@babel/core": ^7.20.0
-    "@babel/plugin-proposal-class-properties": ^7.17.12
-    "@babel/preset-env": ^7.20.0
-    "@babel/preset-react": ^7.17.12
-    "@babel/preset-typescript": ^7.17.12
-    "@commitlint/config-conventional": ^17.0.2
-    "@react-native/eslint-config": ^0.73.2
-    "@release-it/conventional-changelog": ^5.0.0
-    "@types/jest": ^29.5.5
-    "@types/react": ^18.2.6
-    commitlint: ^17.7.1
-    del-cli: ^5.0.0
-    eslint: ^8.48.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-ft-flow: ^3.0.0
-    eslint-plugin-prettier: ^4.0.0
-    jest: ^29.6.4
-    pod-install: 0.1.38
-    prettier: ^2.8.8
-    react: "*"
-    react-native: "*"
-    react-native-builder-bob: ^0.21.3
-    release-it: ^15.0.0
-    rimraf: ^5.0.0
-    turbo: ^1.10.7
-    typescript: ^5.0.4
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  languageName: unknown
-  linkType: soft
-
 "@hyperledger/indy-vdr-react-native@npm:0.2.2":
   version: 0.2.2
   resolution: "@hyperledger/indy-vdr-react-native@npm:0.2.2"
@@ -3370,9 +3626,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch::locator=aries-bifold-root%40workspace%3A.":
+"@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.2.2
-  resolution: "@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch::version=0.2.2&hash=28418c&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch::version=0.2.2&hash=28418c&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@hyperledger/indy-vdr-shared": 0.2.2
     "@mapbox/node-pre-gyp": ^1.0.10
@@ -3390,9 +3646,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/indy-vdr-shared@patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch::locator=aries-bifold-root%40workspace%3A.":
+"@hyperledger/indy-vdr-shared@patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.2.2
-  resolution: "@hyperledger/indy-vdr-shared@patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch::version=0.2.2&hash=4d1d6e&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@hyperledger/indy-vdr-shared@patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch::version=0.2.2&hash=4d1d6e&locator=bifold-wallet-root%40workspace%3A."
   checksum: c9b0576703be02428c3d0a0b39474ebca3b2f49c5402f7450003b72157d0bd010fd4dff436d4de422f9b6ea4de05361fa41dc8c470e462eaecb9407474dc4391
   languageName: node
   linkType: hard
@@ -3917,6 +4173,32 @@ __metadata:
     write-pkg: 4.0.0
     yargs: 16.2.0
   checksum: e5f8cf3a68b6b98c2a2546dec81927b99d1f58200892597943254ec2b5b027036ace7998c787662e95835e1c7d2b1f196204e1e62930362e06b04bb4b1045f4a
+  languageName: node
+  linkType: hard
+
+"@manypkg/find-root@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@manypkg/find-root@npm:1.1.0"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    "@types/node": ^12.7.1
+    find-up: ^4.1.0
+    fs-extra: ^8.1.0
+  checksum: f0fd881a5a81a351cb6561cd24117e8ee9481bbf3b6d1c7d9d10bef1f4744ca2ba3d064713e83c0a0574416d1e5b4a4c6c414aad91913c4a1c6040d87283ac50
+  languageName: node
+  linkType: hard
+
+"@manypkg/get-packages@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@manypkg/get-packages@npm:1.1.3"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    "@changesets/types": ^4.0.1
+    "@manypkg/find-root": ^1.1.0
+    fs-extra: ^8.1.0
+    globby: ^11.0.0
+    read-yaml-file: ^1.1.0
+  checksum: f5a756e5a659e0e1c33f48852d56826d170d5b10a3cdea89ce4fcaa77678d8799aa4004b30e1985c87b73dbc390b95bb6411b78336dd1e0db87c08c74b5c0e74
   languageName: node
   linkType: hard
 
@@ -5714,9 +5996,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch::locator=aries-bifold-root%40workspace%3A.":
+"@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 3.3.3
-  resolution: "@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch::version=3.3.3&hash=be3141&locator=aries-bifold-root%40workspace%3A."
+  resolution: "@sphereon/pex@patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch::version=3.3.3&hash=be3141&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@astronautlabs/jsonpath": ^1.1.2
     "@sd-jwt/decode": ^0.6.1
@@ -7563,7 +7845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-colors@npm:^4.1.1":
+"ansi-colors@npm:^4.1.1, ansi-colors@npm:^4.1.3":
   version: 4.1.3
   resolution: "ansi-colors@npm:4.1.3"
   checksum: a9c2ec842038a1fabc7db9ece7d3177e2fe1c5dc6f0c51ecfbf5f39911427b89c00b5dc6b8bd95f82a26e9b16aaae2e83d45f060e98070ce4d1333038edceb0e
@@ -7738,6 +8020,8 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@bryce-mcmath/aries-bifold-core": 1.0.0
+    "@bryce-mcmath/aries-oca": 1.0.0
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/askar": 0.5.13
     "@credo-ts/core": 0.5.13
@@ -7758,8 +8042,6 @@ __metadata:
     "@formatjs/intl-relativetimeformat": 9.3.1
     "@hyperledger/anoncreds-react-native": 0.2.4
     "@hyperledger/aries-askar-react-native": 0.2.3
-    "@hyperledger/aries-bifold-core": 1.0.0
-    "@hyperledger/aries-oca": 1.0.0
     "@hyperledger/indy-vdr-react-native": 0.2.2
     "@react-native-async-storage/async-storage": ^1.22.0
     "@react-native-community/netinfo": ^11.3.0
@@ -7829,37 +8111,6 @@ __metadata:
     tsyringe: ^4.7.0
     typescript: ^5.0.4
     uuid: ^9.0.0
-  languageName: unknown
-  linkType: soft
-
-"aries-bifold-root@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "aries-bifold-root@workspace:."
-  dependencies:
-    "@commitlint/cli": ^11.0.0
-    "@eslint/js": ^8.56.0
-    "@react-native/eslint-config": ^0.73.2
-    "@types/conventional-recommended-bump": ^6.1.0
-    "@types/eslint__js": ^8.42.3
-    "@typescript-eslint/eslint-plugin": ^7.18.0
-    "@typescript-eslint/parser": ^7.18.0
-    commitlint: ^17.7.1
-    conventional-changelog-conventionalcommits: ^5.0.0
-    conventional-recommended-bump: ^6.1.0
-    eslint: ^8.56.0
-    eslint-import-resolver-typescript: ^3.6.1
-    eslint-plugin-import: ^2.29.1
-    eslint-plugin-jest: ^28.8.0
-    eslint-plugin-prettier: ^5.2.1
-    eslint-plugin-react: ^7.35.0
-    eslint-plugin-react-hooks: ^4.6.2
-    husky: ^7.0.0
-    lerna: ^6.6.2
-    npm-run-all: ^4.1.5
-    prettier: ^2.8.8
-    ts-node: ^10.0.0
-    typescript: ^5.5.4
-    typescript-eslint: ^7.18.0
   languageName: unknown
   linkType: soft
 
@@ -8505,6 +8756,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"better-path-resolve@npm:1.0.0":
+  version: 1.0.0
+  resolution: "better-path-resolve@npm:1.0.0"
+  dependencies:
+    is-windows: ^1.0.0
+  checksum: 5392dbe04e7fe68b944eb37961d9dfa147aaac3ee9ee3f6e13d42e2c9fbe949e68d16e896c14ee9016fa5f8e6e53ec7fd8b5f01b50a32067a7d94ac9cfb9a050
+  languageName: node
+  linkType: hard
+
+"bifold-wallet-root@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "bifold-wallet-root@workspace:."
+  dependencies:
+    "@changesets/cli": ^2.28.1
+    "@commitlint/cli": ^11.0.0
+    "@eslint/js": ^8.56.0
+    "@react-native/eslint-config": ^0.73.2
+    "@types/conventional-recommended-bump": ^6.1.0
+    "@types/eslint__js": ^8.42.3
+    "@typescript-eslint/eslint-plugin": ^7.18.0
+    "@typescript-eslint/parser": ^7.18.0
+    commitlint: ^17.7.1
+    conventional-changelog-conventionalcommits: ^5.0.0
+    conventional-recommended-bump: ^6.1.0
+    eslint: ^8.56.0
+    eslint-import-resolver-typescript: ^3.6.1
+    eslint-plugin-import: ^2.29.1
+    eslint-plugin-jest: ^28.8.0
+    eslint-plugin-prettier: ^5.2.1
+    eslint-plugin-react: ^7.35.0
+    eslint-plugin-react-hooks: ^4.6.2
+    husky: ^7.0.0
+    lerna: ^6.6.2
+    npm-run-all: ^4.1.5
+    prettier: ^2.8.8
+    ts-node: ^10.0.0
+    typescript: ^5.5.4
+    typescript-eslint: ^7.18.0
+  languageName: unknown
+  linkType: soft
+
 "big-integer@npm:^1.6.44, big-integer@npm:^1.6.51":
   version: 1.6.52
   resolution: "big-integer@npm:1.6.52"
@@ -9131,7 +9423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^3.2.0, ci-info@npm:^3.6.1":
+"ci-info@npm:^3.2.0, ci-info@npm:^3.6.1, ci-info@npm:^3.7.0":
   version: 3.9.0
   resolution: "ci-info@npm:3.9.0"
   checksum: 6b19dc9b2966d1f8c2041a838217299718f15d6c4b63ae36e4674edd2bee48f780e94761286a56aa59eb305a85fbea4ddffb7630ec063e7ec7e7e5ad42549a87
@@ -10151,6 +10443,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-spawn@npm:^7.0.5":
+  version: 7.0.6
+  resolution: "cross-spawn@npm:7.0.6"
+  dependencies:
+    path-key: ^3.1.0
+    shebang-command: ^2.0.0
+    which: ^2.0.1
+  checksum: 8d306efacaf6f3f60e0224c287664093fa9185680b2d195852ba9a863f85d02dcc737094c6e512175f8ee0161f9b87c73c6826034c2422e39de7d6569cf4503b
+  languageName: node
+  linkType: hard
+
 "crypt@npm:0.0.2":
   version: 0.0.2
   resolution: "crypt@npm:0.0.2"
@@ -10701,6 +11004,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"detect-indent@npm:^6.0.0":
+  version: 6.1.0
+  resolution: "detect-indent@npm:6.1.0"
+  checksum: ab953a73c72dbd4e8fc68e4ed4bfd92c97eb6c43734af3900add963fd3a9316f3bc0578b018b24198d4c31a358571eff5f0656e81a1f3b9ad5c547d58b2d093d
+  languageName: node
+  linkType: hard
+
 "detect-libc@npm:^2.0.0":
   version: 2.0.3
   resolution: "detect-libc@npm:2.0.3"
@@ -11086,7 +11396,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enquirer@npm:^2.3.6":
+"enquirer@npm:^2.3.6, enquirer@npm:^2.4.1":
   version: 2.4.1
   resolution: "enquirer@npm:2.4.1"
   dependencies:
@@ -12111,7 +12421,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"external-editor@npm:^3.0.3":
+"extendable-error@npm:^0.1.5":
+  version: 0.1.7
+  resolution: "extendable-error@npm:0.1.7"
+  checksum: 80478be7429a1675d2085f701239796bab3230ed6f2fb1b138fbabec24bea6516b7c5ceb6e9c209efcc9c089948d93715703845653535f8e8a49655066a9255e
+  languageName: node
+  linkType: hard
+
+"external-editor@npm:^3.0.3, external-editor@npm:^3.1.0":
   version: 3.1.0
   resolution: "external-editor@npm:3.1.0"
   dependencies:
@@ -12614,6 +12931,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fs-extra@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "fs-extra@npm:7.0.1"
+  dependencies:
+    graceful-fs: ^4.1.2
+    jsonfile: ^4.0.0
+    universalify: ^0.1.0
+  checksum: 141b9dccb23b66a66cefdd81f4cda959ff89282b1d721b98cea19ba08db3dcbe6f862f28841f3cf24bb299e0b7e6c42303908f65093cb7e201708e86ea5a8dcf
+  languageName: node
+  linkType: hard
+
 "fs-extra@npm:^8.1.0":
   version: 8.1.0
   resolution: "fs-extra@npm:8.1.0"
@@ -13108,7 +13436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:11.1.0, globby@npm:^11.0.1, globby@npm:^11.1.0":
+"globby@npm:11.1.0, globby@npm:^11.0.0, globby@npm:^11.0.1, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
   dependencies:
@@ -13190,7 +13518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.15, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.10, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.15, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.5, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.10, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: ac85f94da92d8eb6b7f5a8b20ce65e43d66761c55ce85ac96df6865308390da45a8d3f0296dd3a663de65d30ba497bd46c696cc1e248c72b13d6d567138a4fc7
@@ -13540,6 +13868,15 @@ __metadata:
     agent-base: ^7.0.2
     debug: 4
   checksum: 2e1a28960f13b041a50702ee74f240add8e75146a5c37fc98f1960f0496710f6918b3a9fe1e5aba41e50f58e6df48d107edd9c405c5f0d73ac260dabf2210857
+  languageName: node
+  linkType: hard
+
+"human-id@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "human-id@npm:4.1.1"
+  bin:
+    human-id: dist/cli.js
+  checksum: 7d78857b532323e065ae6b6d141b3b8407d6a3714adea8c91f451d5ea8e5461677970b2e2c99e879ff94a8bbefdaa396e9a0f337d82e840183a86fa78c4f88ce
   languageName: node
   linkType: hard
 
@@ -14440,6 +14777,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-subdir@npm:^1.1.1":
+  version: 1.2.0
+  resolution: "is-subdir@npm:1.2.0"
+  dependencies:
+    better-path-resolve: 1.0.0
+  checksum: 31029a383972bff4cc4f1bd1463fd04dde017e0a04ae3a6f6e08124a90c6c4656312d593101b0f38805fa3f3c8f6bc4583524bbf72c50784fa5ca0d3e5a76279
+  languageName: node
+  linkType: hard
+
 "is-symbol@npm:^1.0.2, is-symbol@npm:^1.0.3":
   version: 1.0.4
   resolution: "is-symbol@npm:1.0.4"
@@ -14532,7 +14878,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-windows@npm:^1.0.1":
+"is-windows@npm:^1.0.0, is-windows@npm:^1.0.1":
   version: 1.0.2
   resolution: "is-windows@npm:1.0.2"
   checksum: 438b7e52656fe3b9b293b180defb4e448088e7023a523ec21a91a80b9ff8cdb3377ddb5b6e60f7c7de4fa8b63ab56e121b6705fe081b3cf1b828b0a380009ad7
@@ -15479,7 +15825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.10.0, js-yaml@npm:^3.13.1":
+"js-yaml@npm:^3.10.0, js-yaml@npm:^3.13.1, js-yaml@npm:^3.6.1":
   version: 3.14.1
   resolution: "js-yaml@npm:3.14.1"
   dependencies:
@@ -17056,7 +17402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
+"micromatch@npm:^4.0.2, micromatch@npm:^4.0.4, micromatch@npm:^4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
@@ -17430,6 +17776,13 @@ __metadata:
   version: 2.30.1
   resolution: "moment@npm:2.30.1"
   checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
+  languageName: node
+  linkType: hard
+
+"mri@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "mri@npm:1.2.0"
+  checksum: 83f515abbcff60150873e424894a2f65d68037e5a7fcde8a9e2b285ee9c13ac581b63cfc1e6826c4732de3aeb84902f7c1e16b7aff46cd3f897a0f757a894e85
   languageName: node
   linkType: hard
 
@@ -18506,10 +18859,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"outdent@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "outdent@npm:0.5.0"
+  checksum: 6e6c63dd09e9890e67ef9a0b4d35df0b0b850b2059ce3f7e19e4cc1a146b26dc5d8c45df238dbf187dfffc8bd82cd07d37c697544015680bcb9f07f29a36c678
+  languageName: node
+  linkType: hard
+
 "p-cancelable@npm:^3.0.0":
   version: 3.0.0
   resolution: "p-cancelable@npm:3.0.0"
   checksum: 2b5ae34218f9c2cf7a7c18e5d9a726ef9b165ef07e6c959f6738371509e747334b5f78f3bcdeb03d8a12dcb978faf641fd87eb21486ed7d36fb823b8ddef3219
+  languageName: node
+  linkType: hard
+
+"p-filter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "p-filter@npm:2.1.0"
+  dependencies:
+    p-map: ^2.0.0
+  checksum: 76e552ca624ce2233448d68b19eec9de42b695208121998f7e011edce71d1079a83096ee6a2078fb2a59cfa8a5c999f046edf00ebf16a8e780022010b4693234
   languageName: node
   linkType: hard
 
@@ -18596,6 +18965,13 @@ __metadata:
   dependencies:
     aggregate-error: ^3.0.0
   checksum: cb0ab21ec0f32ddffd31dfc250e3afa61e103ef43d957cc45497afe37513634589316de4eb88abdfd969fe6410c22c0b93ab24328833b8eb1ccc087fc0442a1c
+  languageName: node
+  linkType: hard
+
+"p-map@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "p-map@npm:2.1.0"
+  checksum: 9e3ad3c9f6d75a5b5661bcad78c91f3a63849189737cd75e4f1225bf9ac205194e5c44aac2ef6f09562b1facdb9bd1425584d7ac375bfaa17b3f1a142dab936d
   languageName: node
   linkType: hard
 
@@ -18706,6 +19082,15 @@ __metadata:
     registry-url: ^6.0.0
     semver: ^7.3.7
   checksum: 28bec6f42bf9fba66b7c8fea07576fc23d08ec7923433f7835d6cd8654e72169d74f9738b3785107d18a476ae76712e0daeb1dddcd6930e69f9e4b47eba7c0ca
+  languageName: node
+  linkType: hard
+
+"package-manager-detector@npm:^0.2.0":
+  version: 0.2.11
+  resolution: "package-manager-detector@npm:0.2.11"
+  dependencies:
+    quansync: ^0.2.7
+  checksum: cea626a294f04028ea291bf0a5a32a21e3914daef4f3959e708ae36f8f2d8097d813e8bb488f5d2b6edaf43a976c6a3d2c361ef8dd9a12c360a7129cd8e29e0f
   languageName: node
   linkType: hard
 
@@ -19139,7 +19524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.8.8":
+"prettier@npm:^2.7.1, prettier@npm:^2.8.8":
   version: 2.8.8
   resolution: "prettier@npm:2.8.8"
   bin:
@@ -19436,6 +19821,13 @@ __metadata:
   dependencies:
     side-channel: ^1.0.6
   checksum: e9404dc0fc2849245107108ce9ec2766cde3be1b271de0bf1021d049dc5b98d1a2901e67b431ac5509f865420a7ed80b7acb3980099fe1c118a1c5d2e1432ad8
+  languageName: node
+  linkType: hard
+
+"quansync@npm:^0.2.7":
+  version: 0.2.10
+  resolution: "quansync@npm:0.2.10"
+  checksum: 0328dd30fc864722e1ebd9cc779ca2c36005ac7552f52f1b318eb6cc225382c0ee337d021a086daa113efcfeec8d9a5891e3fd26d8081425eaf33cbc108f68f4
   languageName: node
   linkType: hard
 
@@ -20089,15 +20481,15 @@ __metadata:
   linkType: hard
 
 "react-native-webview@npm:^13.10.0":
-  version: 13.13.2
-  resolution: "react-native-webview@npm:13.13.2"
+  version: 13.13.5
+  resolution: "react-native-webview@npm:13.13.5"
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 034b1ac22b32f3c9c66c1be96ec71078657b569ddd0970639a90ddf2f3849fa31bc010cff19e5b9b315ce836b9061926b196a156a72b9438f5cee24512ebc33a
+  checksum: 7f3bce1b37d6be9b2f07f0f7481181d5344f9e58022645b0d20dc58cd66056bb6efecacb231963959db6283cc66d977593db62a403c7c151f83568f83041c2eb
   languageName: node
   linkType: hard
 
@@ -20342,6 +20734,18 @@ __metadata:
     parse-json: ^5.2.0
     type-fest: ^1.0.1
   checksum: 0cebdff381128e923815c643074a87011070e5fc352bee575d327d6485da3317fab6d802a7b03deeb0be7be8d3ad1640397b3d5d2f044452caf4e8d1736bf94f
+  languageName: node
+  linkType: hard
+
+"read-yaml-file@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "read-yaml-file@npm:1.1.0"
+  dependencies:
+    graceful-fs: ^4.1.5
+    js-yaml: ^3.6.1
+    pify: ^4.0.1
+    strip-bom: ^3.0.0
+  checksum: 41ee5f075507ef0403328dd54e225a61c3149f915675ce7fd0fd791ddcce2e6c30a9fe0f76ffa7a465c1c157b9b4ad8ded1dcf47dc3b396103eeb013490bbc2e
   languageName: node
   linkType: hard
 
@@ -21467,6 +21871,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"spawndamnit@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "spawndamnit@npm:3.0.1"
+  dependencies:
+    cross-spawn: ^7.0.5
+    signal-exit: ^4.0.1
+  checksum: 47d88a7f1e5691e13e435eddc3d34123c2f7746e2853e91bfac5ea7c6e3bb4b1d1995223b25f7a8745871510d92f63ecd3c9fa02aa2896ac0c79fb618eb08bbe
+  languageName: node
+  linkType: hard
+
 "spdx-correct@npm:^3.0.0":
   version: 3.2.0
   resolution: "spdx-correct@npm:3.2.0"
@@ -22065,6 +22479,13 @@ __metadata:
     type-fest: ^0.16.0
     unique-string: ^2.0.0
   checksum: 11541b9d4c5b6b6e4912ded3058cfb5a1294dcc0519b73fc1fc74f950f9a68cd380f78cbefe38514ac9233f749efc6486ac14592dcb29ad35a9b3807328cba1b
+  languageName: node
+  linkType: hard
+
+"term-size@npm:^2.1.0":
+  version: 2.2.1
+  resolution: "term-size@npm:2.2.1"
+  checksum: 1ed981335483babc1e8206f843e06bd2bf89b85f0bf5a9a9d928033a0fcacdba183c03ba7d91814643015543ba002f1339f7112402a21da8f24b6c56b062a5a9
   languageName: node
   linkType: hard
 

@@ -5,14 +5,18 @@ env:
 
 on:
   pull_request:
-    branches: [main]
+    branches: [fake-main]
     paths:
       - 'packages/**'
       - 'samples/app/**'
       - '**/yarn.lock'
     types: [opened, synchronize, reopened, labeled]
   push:
-    branches: [main]
+    branches: [fake-main]
+
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
   build-ios:
@@ -63,7 +67,7 @@ jobs:
 
       - name: Build Workspace
         run: |
-          yarn lerna run build
+          yarn build
 
       - name: Create .xcode.env.local file
         working-directory: ./samples/app/ios
@@ -154,8 +158,51 @@ jobs:
 
       - name: Build Workspace
         run: |
-          yarn lerna run build
+          yarn build
 
       - name: Android Release Build
         working-directory: ./samples/app/android
         run: ./gradlew --no-daemon bundleRelease
+
+  release:
+    name: Release
+    runs-on: ubuntu-22.04
+    needs: [build-ios, build-android] # won't publish if either build fails
+    paths:
+      - 'packages/**' # only if one or more package changes
+      - '.github/workflows/main.yaml' # or if this workflow changes
+    if: github.ref_name == 'fake-main' && github.event_name == 'push' # so we don't publish on PRs
+    steps:
+      - name: Checkout bifold-wallet
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+
+      - name: Install dependencies
+        run: |
+          yarn install --immutable
+      
+      - name: Build Workspace
+        run: |
+          yarn build
+      
+      - name: Publish to npm and GitHub
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          title: 'chore(release): new version'
+          commit: 'chore(release): new version'
+          publish: yarn release
+          version: yarn changeset-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
+      
+      - name: Get new package version
+        run: echo $(node -p "require('./packages/core/package.json').version")
+

@@ -1,5 +1,5 @@
-import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay } from '@bryce-mcmath/aries-oca'
+import { BrandingOverlayType, CredentialOverlay } from '@bryce-mcmath/aries-oca/build/legacy'
 import { Image, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { useTheme } from '../../contexts/theme'

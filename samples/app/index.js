@@ -33,7 +33,7 @@ if (!global.atob) {
   global.atob = decode
 }
 
-import { NavigationTheme, App as BifoldApp, MainContainer } from '@hyperledger/aries-bifold-core'
+import { NavigationTheme, App as BifoldApp, MainContainer } from '@bryce-mcmath/aries-bifold-core'
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
 import * as React from 'react'
 import { AppRegistry, LogBox } from 'react-native'

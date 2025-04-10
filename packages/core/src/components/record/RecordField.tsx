@@ -1,5 +1,5 @@
-import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
-import { Attribute, BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
+import { CaptureBaseAttributeType } from '@bryce-mcmath/aries-oca'
+import { Attribute, BrandingOverlayType, Field } from '@bryce-mcmath/aries-oca/build/legacy'
 import startCase from 'lodash.startcase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'

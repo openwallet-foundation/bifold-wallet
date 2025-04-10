@@ -1,6 +1,6 @@
 import { Agent } from '@credo-ts/core'
-import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
-import { DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+import { getProofRequestTemplates } from '@bryce-mcmath/aries-bifold-verifier'
+import { DefaultOCABundleResolver } from '@bryce-mcmath/aries-oca/build/legacy'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 

@@ -1,4 +1,4 @@
-import { ProofRequestTemplate } from '@hyperledger/aries-bifold-verifier'
+import { ProofRequestTemplate } from '@bryce-mcmath/aries-bifold-verifier'
 import { useEffect, useState } from 'react'
 
 import { TOKENS, useServices } from '../container-api'

@@ -5,5 +5,5 @@
     "outDir": "./build"
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules", "babel.config.js", "jest.config.js", "jestSetup.js", "lib"]
+  "exclude": ["node_modules", "__tests__", "babel.config.js", "jest.config.js", "jestSetup.js", "lib"]
 }

@@ -1,5 +1,5 @@
-import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay } from '@bryce-mcmath/aries-oca'
+import { BrandingOverlayType, CredentialOverlay } from '@bryce-mcmath/aries-oca/build/legacy'
 import { View } from 'react-native'
 import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'

@@ -1,5 +1,5 @@
 {
-  "name": "@hyperledger/aries-bifold-core",
+  "name": "@bryce-mcmath/aries-bifold-core",
   "version": "1.0.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -8,10 +8,10 @@
   "types": "lib/typescript/src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "url": "git+https://github.com/bryce-mcmath/bifold-wallet.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
+  "homepage": "https://github.com/bryce-mcmath/bifold-wallet/",
   "bin": {
     "bifold": "bin/bifold"
   },
@@ -23,27 +23,19 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "android": "react-native run-android",
-    "postinstall": "npx patch-package",
-    "ios": "npx react-native run-ios --device",
-    "lint": "eslint --color .",
-    "build": "bob build",
-    "prepack": "bob build",
-    "pre-commit-lint": "npx lint-staged",
-    "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
-    "setup": "cd .. && husky install .husky",
-    "start": "npx react-native start --reset-cache",
-    "style-check": "npm run prettier -- --check",
-    "style-format": "npm run prettier -- --write",
-    "style-watch": "onchange '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)' -- prettier --write {{changed}}",
+    "build": "echo 'building core 🏗️' && yarn clean && bob build && echo 'core built ✅'",
+    "clean": "rimraf ./lib",
+    "pre-commit-lint": "lint-staged",
     "test": "TZ=GMT jest",
-    "test:coverage": "TZ=GMT jest --coverage",
+    "coverage": "TZ=GMT jest --coverage",
     "test:watch": "TZ=GMT jest --watch --notify --notifyMode=change --coverage",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@bryce-mcmath/aries-bifold-verifier": "1.0.0",
+    "@bryce-mcmath/aries-oca": "1.0.0",
     "@commitlint/cli": "^11.0.0",
     "@credo-ts/anoncreds": "0.5.13",
     "@credo-ts/askar": "0.5.13",
@@ -65,8 +57,6 @@
     "@formatjs/intl-relativetimeformat": "9.3.1",
     "@hyperledger/anoncreds-react-native": "0.2.4",
     "@hyperledger/aries-askar-react-native": "0.2.3",
-    "@hyperledger/aries-bifold-verifier": "1.0.0",
-    "@hyperledger/aries-oca": "1.0.0",
     "@hyperledger/indy-vdr-react-native": "0.2.2",
     "@hyperledger/indy-vdr-shared": "0.2.2",
     "@react-native-async-storage/async-storage": "^1.22.0",
@@ -147,11 +137,14 @@
     "react-native-vector-icons": "^10.0.0",
     "react-native-vision-camera": "4.3.1",
     "react-test-renderer": "^18.2.0",
+    "rimraf": "^5.0.0",
     "tsyringe": "^4.7.0",
     "typescript": "^5.0.4",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
+    "@bryce-mcmath/aries-bifold-verifier": "*",
+    "@bryce-mcmath/aries-oca": "*",
     "@credo-ts/anoncreds": "0.5.13",
     "@credo-ts/askar": "0.5.13",
     "@credo-ts/core": "0.5.13",
@@ -172,8 +165,6 @@
     "@formatjs/intl-relativetimeformat": "9.3.1",
     "@hyperledger/anoncreds-react-native": "0.2.4",
     "@hyperledger/aries-askar-react-native": "0.2.3",
-    "@hyperledger/aries-bifold-verifier": "*",
-    "@hyperledger/aries-oca": "*",
     "@hyperledger/indy-vdr-react-native": "0.2.2",
     "@hyperledger/indy-vdr-shared": "0.2.2",
     "@react-native-async-storage/async-storage": "^1.22.0",

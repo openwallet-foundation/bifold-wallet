@@ -1,4 +1,4 @@
-import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
+import { getProofRequestTemplates } from '@bryce-mcmath/aries-bifold-verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { act, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'

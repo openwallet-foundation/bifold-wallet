@@ -7,7 +7,7 @@ import {
   ProofMetadata,
   linkProofWithTemplate,
   sendProofRequest,
-} from '@hyperledger/aries-bifold-verifier'
+} from '@bryce-mcmath/aries-bifold-verifier'
 import { TOKENS, useServices } from '../container-api'
 import { useIsFocused, useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'

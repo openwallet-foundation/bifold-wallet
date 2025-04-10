@@ -3,8 +3,8 @@ import {
   GroupedSharedProofDataItem,
   getProofData,
   groupSharedProofDataByCredential,
-} from '@hyperledger/aries-bifold-verifier'
-import { BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
+} from '@bryce-mcmath/aries-bifold-verifier'
+import { BrandingOverlayType, Field } from '@bryce-mcmath/aries-oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 

@@ -1,5 +1,5 @@
 {
-  "name": "@hyperledger/aries-react-native-attestation",
+  "name": "@bryce-mcmath/aries-react-native-attestation",
   "version": "1.0.0",
   "description": "Mobile app attestation",
   "main": "build/commonjs/index.js",
@@ -15,18 +15,12 @@
     "react-native-attestation.podspec"
   ],
   "scripts": {
-    "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "build": "yarn run clean && bob build",
+    "build": "echo 'building react-native-attestation 🏗️' && yarn run clean && bob build && echo 'react-native-attestation built ✅'",
     "clean": "rimraf ./build && del-cli android/build ios/build",
     "compile": "tsc",
-    "prepack": "bob build",
-    "release": "release-it",
-    "example": "yarn --cwd example",
-    "build:android": "cd example/android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
-    "build:ios": "cd example/ios && xcodebuild -workspace AttestationExample.xcworkspace -scheme AttestationExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO",
-    "bootstrap": "yarn example && yarn install && yarn example pods"
+    "prepack": "bob build"
   },
   "keywords": [
     "react-native",
@@ -35,15 +29,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "url": "git+https://github.com/bryce-mcmath/bifold-wallet.git",
     "directory": "packages/react-native-attestation"
   },
   "author": "Jason C. Leach <jason.leach@fullboar.ca> (https://github.com/fullboar)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/openwallet-foundation/bifold-wallet/issues"
+    "url": "https://github.com/bryce-mcmath/bifold-wallet/issues"
   },
-  "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
+  "homepage": "https://github.com/bryce-mcmath/bifold-wallet",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -97,23 +91,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    }
   },
   "prettier": {
     "quoteProps": "consistent",

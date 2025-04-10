@@ -7,7 +7,7 @@ import {
   ProofCustomMetadata,
   ProofMetadata,
   markProofAsViewed,
-} from '@hyperledger/aries-bifold-verifier'
+} from '@bryce-mcmath/aries-bifold-verifier'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
