@@ -66,6 +66,7 @@
     "react-native": "*",
     "react-native-animated-pagination-dots": "^0.1.72",
     "react-native-argon2": "^2.0.1",
+    "react-native-blob-util": "0.19.11",
     "react-native-bouncy-checkbox": "^3.0.5",
     "react-native-capture-protection": "^1.9.20",
     "react-native-collapsible": "^1.6.1",

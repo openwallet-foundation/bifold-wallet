@@ -128,6 +128,9 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+        packagingOptions {
+        exclude 'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
+    }
 }
 
 dependencies {
@@ -145,6 +148,11 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+}
+configurations{
+  all*.exclude module: 'bcprov-jdk15on'
+  all*.exclude module: 'bcpkix-jdk15on'
+  all*.exclude module: 'bcutil-jdk15on'
 }
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
