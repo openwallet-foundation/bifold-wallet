@@ -354,7 +354,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
           submit={() => setInvalidPredicate({ visible: false, predicate: invalidPredicate.predicate })}
         />
       )}
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
         <Header />
         <ProofRequestCards attributes={attributes} onChangeValue={onChangeValue} />
         <Footer />
