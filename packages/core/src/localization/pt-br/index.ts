@@ -850,6 +850,7 @@ const translation = {
     "ViewDetails": "Ver detalhes",
     "HideDetails": "Detalhes ocultos",
     "UseProofRequest": "Envie d'une sollicitation de compromis",
+    "CustomProofRequest": "Solicitação de prova personalizada",
     "SendThisProofRequest": "Envie esta solicitação de prova",
     "SendProofRequest": "Envie uma Solicitação de Comprovante",
     "EmptyList": "Sua carteira está vazia. Seus modelos de solicitação de prova serão adicionados aqui.",

@@ -868,6 +868,7 @@ const translation = {
         "ViewDetails": "Voir les détails",
         "HideDetails": "Cacher les détails",
         "UseProofRequest": "Utilisez cette demande de preuve",
+        "CustomProofRequest": "Demande d'épreuve personnalisée",
         "SendThisProofRequest": "Envoyer cette demande d'attestation",
         "SendProofRequest": "Envoyer une demande de preuve",
         "EmptyList": "Votre portefeuille est vide. Vos modèles de demande de preuve seront ajoutés ici.",

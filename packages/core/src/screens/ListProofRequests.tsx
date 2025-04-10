@@ -177,7 +177,7 @@ const [modalVisible, setModalVisible] = useState(false)
        <View style={style.container}>
           <View style={style.buttonContainer}>
         <Button
-          title={t('Global.CreateCustomRequest')}
+          title={t('Verifier.CustomProofRequest')}
           onPress={() => setModalVisible(true)}
           testID={testIdWithKey('NewTemplateButton')}
         />
@@ -191,7 +191,7 @@ const [modalVisible, setModalVisible] = useState(false)
       >
         <SafeAreaView style={style.modalView}>
           <View style={style.modalHeader}>
-            <Text style={style.modalTitle}>{t('Global.CreateCustomRequest')}</Text>
+            <Text style={style.modalTitle}>{t('Verifier.CustomProofRequest')}</Text>
             <TouchableOpacity 
               style={style.closeButton} 
               onPress={() => setModalVisible(false)}

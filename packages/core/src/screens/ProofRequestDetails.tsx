@@ -1,6 +1,7 @@
 import { useAgent } from '@credo-ts/react-hooks'
 import {
   AnonCredsProofRequestTemplatePayloadData,
+  ProofRequestTemplate,
   ProofRequestType,
   linkProofWithTemplate,
   sendProofRequest,
@@ -11,7 +12,7 @@ import { OverlayType } from '@hyperledger/aries-oca/build/types/TypeEnums'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -26,6 +27,8 @@ import { buildFieldsFromAnonCredsProofRequestTemplate } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
 import { SecondaryHeader } from '../components/IcredyComponents'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { ProofRequestTemplateBuilder } from '../utils/customTemplate'
 
 const onlyNumberRegex = /^\d+$/
 
@@ -119,6 +122,8 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const template = useMemo(() => {
     return templateId ? fetchedTemplate : directTemplate;
   }, [templateId, fetchedTemplate, directTemplate]);
+
+
   const style = StyleSheet.create({
     container: {
       flexGrow: 1,
@@ -126,8 +131,8 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       padding: 16,
     },
     header: {
-      marginTop: 12,
-      marginBottom: 36,
+      marginTop: 6,
+      marginBottom: 20,
     },
     description: {
       marginTop: 10,
@@ -138,6 +143,38 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
       marginTop: 'auto',
       marginBottom: 10,
     },
+    modalView: {
+      flex: 1,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+    },
+    modalContent: {
+      flex: 1,
+      padding: 20,
+    },
+    modalHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPallet.brand.secondaryBackground,
+    },
+    modalTitle: {
+      // ...TextTheme.normal,
+      fontWeight: 'bold',
+      fontSize: 18,
+    },
+    closeButton: {
+      padding: 8,
+    },
+    closeIcon: {
+      fontSize: 24,
+      color: ColorPallet.brand.primary,
+    },
+    builderContainer: {
+      flex: 1,
+    }
   })
 
   const [meta, setMeta] = useState<MetaOverlay | undefined>(undefined)
@@ -146,7 +183,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const [invalidPredicate, setInvalidPredicate] = useState<
     { visible: boolean; predicate: string | undefined } | undefined
   >(undefined)
-
+  const [modalVisible, setModalVisible] = useState(false)
   useEffect(() => {
     if (!template) {
       return
@@ -189,6 +226,12 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
     },
     [setCustomPredicateValues, setInvalidPredicate]
   )
+  const onProofRequestTemplateBuilderSave = (template: ProofRequestTemplate) => {
+    setModalVisible(false)
+    console.log('Template saved', template)
+    console.log('Template saved', template.payload?.data[0]?.requestedAttributes[0].restrictions)
+    navigation.navigate(Screens.ProofRequestDetails, { directTemplate: template, connectionId: connectionId, templateId:templateId })
+  }
 
   const activateProofRequest = useCallback(async () => {
     if (!template) {
@@ -251,6 +294,40 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
             onPress={() => activateProofRequest()}
           />
         </View>
+        <View style={style.footerButton}>
+        <Button
+            title={t('Verifier.CustomProofRequest')}
+            accessibilityLabel={t('Verifier.CustomProofRequest')}
+            testID={testIdWithKey('CustomProofRequest')}
+            buttonType={ButtonType.Primary}
+            onPress={() => setModalVisible(true)}
+          />
+        <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+        testID={testIdWithKey('TemplateBuilderModal')}
+      >
+        <SafeAreaView style={style.modalView}>
+          <View style={style.modalHeader}>
+            <Text style={style.modalTitle}>{t('Global.CreateCustomRequest')}</Text>
+            <TouchableOpacity 
+              style={style.closeButton} 
+              onPress={() => setModalVisible(false)}
+              testID={testIdWithKey('CloseModalButton')}
+            >
+              <Icon name="close" style={style.closeIcon} />
+            </TouchableOpacity>
+          </View>
+          <View style={style.modalContent}>
+            <View style={style.builderContainer}>
+              <ProofRequestTemplateBuilder onSaveTemplate={onProofRequestTemplateBuilderSave} />
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
+      </View>
         {store.preferences.useDataRetention && templateId && (
           <View style={style.footerButton}>
             <Button
