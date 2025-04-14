@@ -1,4 +1,4 @@
-import { BifoldLogger, Container, TokenMapping } from '@hyperledger/aries-bifold-core'
+import { BifoldLogger, Container, TokenMapping } from '@bifold/core'
 import { DependencyContainer } from 'tsyringe'
 
 export class AppContainer implements Container {

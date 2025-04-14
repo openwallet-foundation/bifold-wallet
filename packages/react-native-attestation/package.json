@@ -1,6 +1,6 @@
 {
-  "name": "@hyperledger/aries-react-native-attestation",
-  "version": "1.0.0",
+  "name": "@bifold/react-native-attestation",
+  "version": "0.0.0",
   "description": "Mobile app attestation",
   "main": "build/commonjs/index.js",
   "module": "build/module/index.js",
@@ -15,18 +15,10 @@
     "react-native-attestation.podspec"
   ],
   "scripts": {
-    "test": "jest",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
-    "build": "yarn run clean && bob build",
+    "build": "echo 'building react-native-attestation 🏗️' && yarn run clean && bob build && echo 'react-native-attestation built ✅'",
     "clean": "rimraf ./build && del-cli android/build ios/build",
-    "compile": "tsc",
-    "prepack": "bob build",
-    "release": "release-it",
-    "example": "yarn --cwd example",
-    "build:android": "cd example/android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
-    "build:ios": "cd example/ios && xcodebuild -workspace AttestationExample.xcworkspace -scheme AttestationExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO",
-    "bootstrap": "yarn example && yarn install && yarn example pods"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "react-native",
@@ -59,7 +51,6 @@
     "@babel/preset-typescript": "^7.17.12",
     "@commitlint/config-conventional": "^17.0.2",
     "@react-native/eslint-config": "^0.73.2",
-    "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.2.6",
     "commitlint": "^17.7.1",
@@ -74,9 +65,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-builder-bob": "^0.21.3",
-    "release-it": "^15.0.0",
     "rimraf": "^5.0.0",
-    "turbo": "^1.10.7",
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
@@ -97,23 +86,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": "angular"
-      }
-    }
   },
   "prettier": {
     "quoteProps": "consistent",

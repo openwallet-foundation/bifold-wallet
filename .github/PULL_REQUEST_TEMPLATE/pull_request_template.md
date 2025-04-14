@@ -21,7 +21,7 @@ Tick all boxes below to demonstrate that you have completed the respective task.
 - [ ] All commits contain a DCO `Signed-off-by` line (we use the [DCO GitHub app](https://github.com/apps/dco) to enforce this)
 - [ ] If applicable, screenshots, gifs, or video are included for UI changes
 - [ ] If applicable, breaking changes are described above along with how to address them
-- [ ] Updated documentation as needed for changed code and new or modified features
+- [ ] If applicable, added [changeset(s)](https://github.com/changesets/changesets) 
 - [ ] Added sufficient [tests](../packages/core/__tests__/) so that overall code coverage is not reduced
 
 If you have _any_ questions to _any_ of the points above, just **submit and ask**! This checklist is here to _help_ you, not to deter you from contributing!
@@ -30,4 +30,3 @@ Pro Tip 🤓
 
 - Read our [contribution guide](../CONTRIBUTING.md) at least once; it will save you a few review cycles!
 - Your PR will likely not be reviewed until all the above boxes are checked and all automated checks have passed
-

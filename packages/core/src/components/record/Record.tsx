@@ -1,4 +1,4 @@
-import { BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType, Field } from '@bifold/oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'

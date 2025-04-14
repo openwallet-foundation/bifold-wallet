@@ -2,18 +2,15 @@ import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
 import { StoreProvider, defaultState } from '../../src/contexts/store'
-import { ContainerProvider } from '../../src/container-api'
 import PasteUrl from '../../src/screens/PasteUrl'
 import { useNavigation } from '@react-navigation/native'
-import { MainContainer } from '../../src/container-impl'
-import { container } from 'tsyringe'
 import { testIdWithKey } from '../../src/utils/testable'
+import { BasicAppContext } from '../helpers/app'
 
 describe('PasteUrl Screen', () => {
   test('Paste URL renders correctly', () => {
-    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
-      <ContainerProvider value={main}>
+      <BasicAppContext>
         <StoreProvider
           initialState={{
             ...defaultState,
@@ -22,15 +19,14 @@ describe('PasteUrl Screen', () => {
         >
           <PasteUrl navigation={useNavigation()} route={{} as any} />
         </StoreProvider>
-      </ContainerProvider>
+      </BasicAppContext>
     )
     expect(tree).toMatchSnapshot()
   })
 
   test('Test Error textbox empty messages', async () => {
-    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
-      <ContainerProvider value={main}>
+      <BasicAppContext>
         <StoreProvider
           initialState={{
             ...defaultState,
@@ -39,7 +35,7 @@ describe('PasteUrl Screen', () => {
         >
           <PasteUrl navigation={useNavigation()} route={{} as any} />
         </StoreProvider>
-      </ContainerProvider>
+      </BasicAppContext>
     )
     const touchableDisabled = tree.getByTestId(testIdWithKey('ScanPastedUrlDisabled'))
     expect(touchableDisabled).not.toBeNull()
@@ -50,9 +46,8 @@ describe('PasteUrl Screen', () => {
   })
 
   test('Test Error textbox invalid url messages', async () => {
-    const main = new MainContainer(container.createChildContainer()).init()
     const tree = render(
-      <ContainerProvider value={main}>
+      <BasicAppContext>
         <StoreProvider
           initialState={{
             ...defaultState,
@@ -61,7 +56,7 @@ describe('PasteUrl Screen', () => {
         >
           <PasteUrl navigation={useNavigation()} route={{} as any} />
         </StoreProvider>
-      </ContainerProvider>
+      </BasicAppContext>
     )
     const textbox = tree.getByTestId(testIdWithKey('PastedUrl'))
     expect(textbox).not.toBeNull()
@@ -76,10 +71,9 @@ describe('PasteUrl Screen', () => {
   })
 
   test('Test valid url navigation', async () => {
-    const main = new MainContainer(container.createChildContainer()).init()
     const navigation = { navigate: jest.fn(), getParent: jest.fn().mockReturnValue({ navigate: jest.fn() }) }
     const tree = render(
-      <ContainerProvider value={main}>
+      <BasicAppContext>
         <StoreProvider
           initialState={{
             ...defaultState,
@@ -88,7 +82,7 @@ describe('PasteUrl Screen', () => {
         >
           <PasteUrl navigation={navigation as any} route={{} as any} />
         </StoreProvider>
-      </ContainerProvider>
+      </BasicAppContext>
     )
     const textbox = tree.getByTestId(testIdWithKey('PastedUrl'))
     expect(textbox).not.toBeNull()

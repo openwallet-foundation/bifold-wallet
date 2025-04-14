@@ -1,6 +1,6 @@
 import { AnonCredsCredentialsForProofRequest } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 
 export type CredentialDataForProof = {

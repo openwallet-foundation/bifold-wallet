@@ -1,4 +1,4 @@
-import { hashCode, hashToRGBA } from '@hyperledger/aries-oca'
+import { hashCode, hashToRGBA } from '@bifold/oca'
 import React from 'react'
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 

@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { LegacyBrandingOverlay } from '@hyperledger/aries-oca'
-import { CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { LegacyBrandingOverlay } from '@bifold/oca'
+import { CredentialOverlay } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { AnonCredsProofRequestTemplatePayloadData, CredentialSharedProofData } from '@hyperledger/aries-bifold-verifier'
+import { AnonCredsProofRequestTemplatePayloadData, CredentialSharedProofData } from '@bifold/verifier'
 import {
   Attribute,
   CredentialOverlay,
@@ -7,9 +7,9 @@ import {
   OCABundleResolveAllParams,
   OCABundleResolverType,
   Predicate,
-} from '@hyperledger/aries-oca/build/legacy'
+} from '@bifold/oca/build/legacy'
 import { W3cCredentialDisplay } from '../modules/openid/types'
-import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { BrandingOverlay } from '@bifold/oca'
 
 export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []

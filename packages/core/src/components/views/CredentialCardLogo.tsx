@@ -1,6 +1,6 @@
 import { Image, StyleSheet, useWindowDimensions, View } from 'react-native'
-import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay } from '@bifold/oca'
+import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
 import { useMemo } from 'react'

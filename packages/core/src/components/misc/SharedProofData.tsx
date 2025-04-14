@@ -1,10 +1,6 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import {
-  GroupedSharedProofDataItem,
-  getProofData,
-  groupSharedProofDataByCredential,
-} from '@hyperledger/aries-bifold-verifier'
-import { BrandingOverlayType, Field } from '@hyperledger/aries-oca/build/legacy'
+import { GroupedSharedProofDataItem, getProofData, groupSharedProofDataByCredential } from '@bifold/verifier'
+import { BrandingOverlayType, Field } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 

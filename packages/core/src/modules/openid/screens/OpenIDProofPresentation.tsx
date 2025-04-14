@@ -25,7 +25,7 @@ import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { CredentialCard } from '../../../components/misc'
 import { getCredentialForDisplay } from '../display'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
-import { Attribute } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute } from '@bifold/oca/build/legacy'
 import ScreenLayout from '../../../layout/ScreenLayout'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 

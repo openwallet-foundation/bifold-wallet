@@ -1,9 +1,7 @@
 {
   "_tags": {
     "invitationId": "c449124b-07ec-4f8d-ab46-65519aaa9d5d",
-    "recipientKeyFingerprints": [
-      "123fake"
-    ],
+    "recipientKeyFingerprints": ["123fake"],
     "role": "receiver",
     "state": "prepare-response",
     "threadId": "c449124b-07ec-4f8d-ab46-65519aaa9d5d"
@@ -17,14 +15,10 @@
     "@type": "https://didcomm.org/out-of-band/1.0/invitation",
     "goal": "Showcase connection",
     "goal_code": "aries.vc.issue",
-    "handshake_protocols": [
-      "some-cool-protocol"
-    ],
+    "handshake_protocols": ["some-cool-protocol"],
     "label": "BestBC College",
     "requests~attach": null,
-    "services": [
-      "some-cool-service"
-    ],
+    "services": ["some-cool-service"],
     "~attach": null,
     "~l10n": null,
     "~please_ack": null,

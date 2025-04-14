@@ -1,4 +1,4 @@
-import { RemoteOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+import { RemoteOCABundleResolver } from '@bifold/oca/build/legacy'
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

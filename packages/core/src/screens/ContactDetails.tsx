@@ -168,7 +168,9 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         state: CredentialState.OfferReceived,
       })
 
-      logger.info(`Removing connection ${connection.id}, ${basicMessages.length} messages, ${proofs.length} proofs, and ${offers.length} offers`)
+      logger.info(
+        `Removing connection ${connection.id}, ${basicMessages.length} messages, ${proofs.length} proofs, and ${offers.length} offers`
+      )
 
       const results = await Promise.allSettled([
         ...proofs.map((proof) => agent.proofs.deleteById(proof.id)),

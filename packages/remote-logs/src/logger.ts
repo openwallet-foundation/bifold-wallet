@@ -1,4 +1,4 @@
-import { BifoldError, BifoldLogger } from '@hyperledger/aries-bifold-core'
+import { BifoldError, BifoldLogger } from '@bifold/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
 import { consoleTransport, logger } from 'react-native-logs'
 

@@ -1,4 +1,4 @@
-## Contributor's Guide TODO:
+## Contributor's Guide:
 
 Thanks for your interest in the project! We welcome pull requests from developers of all skill levels.
 
@@ -11,7 +11,9 @@ Please note that all contributors and maintainers of this project are subject to
 
 ### Pull Requests
 
-Before submitting a pull request, please ensure you have added or updated tests as appropriate, and that all existing tests still pass with your changes. Please also ensure that your coding style is consistent with existing code in the project. A checklist is included in the PR template as a friendly reminder.
+Before submitting a pull request, please ensure you have added or updated tests as appropriate, and that all existing tests still pass with your changes. Please also ensure that your coding style is consistent with existing code in the project. A checklist is included in the PR template as a friendly reminder. 
+
+**If your changes should result in a new version, please add a changeset with `yarn changeset add`**
 
 ### Commit Messages
 
@@ -19,16 +21,7 @@ We require all contributors to agree to the [DCO](https://developercertificate.o
 
 ### Test coverage
 
-Pull requests must maintain 100% test coverage of all code branches. This helps ensure the quality of the project. To check coverage before submitting a pull request:
+At minimum, all pull requests should maintain current test coverage, and preferably increase it. To run tests with coverage output, run `yarn coverage` from the root of the repo.
 
-### Coding Style
-
-One of the easiest ways to ensure your contributions adhere to the project's coding style is to use [Prettier](https://prettier.io/) (included as a dev dependency).
-
-To have Prettier monitor your files and make changes as you do, open a terminal window to the project folder and type `npm run style-watch`.<br />
-To check your files, you can type `npm run style-check"`<br />
-To have Prettier format all your files, type `npm run style-format`<br />
-
-More Prettier CLI options can be found here: [https://prettier.io/docs/en/cli.html](https://prettier.io/docs/en/cli.html)
 
 [coc]: ./CODE_OF_CONDUCT.md

@@ -2,12 +2,7 @@ import type { StackScreenProps } from '@react-navigation/stack'
 
 import { DidExchangeState, ProofState } from '@credo-ts/core'
 import { useAgent, useProofById } from '@credo-ts/react-hooks'
-import {
-  ProofCustomMetadata,
-  ProofMetadata,
-  linkProofWithTemplate,
-  sendProofRequest,
-} from '@hyperledger/aries-bifold-verifier'
+import { ProofCustomMetadata, ProofMetadata, linkProofWithTemplate, sendProofRequest } from '@bifold/verifier'
 import { TOKENS, useServices } from '../container-api'
 import { useIsFocused, useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'

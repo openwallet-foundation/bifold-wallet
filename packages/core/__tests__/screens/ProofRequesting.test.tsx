@@ -10,8 +10,8 @@ import {
 } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
 import { useConnections } from '@credo-ts/react-hooks'
-import * as verifier from '@hyperledger/aries-bifold-verifier'
-import { getProofRequestTemplates } from '@hyperledger/aries-bifold-verifier'
+import * as verifier from '@bifold/verifier'
+import { getProofRequestTemplates } from '@bifold/verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
@@ -23,8 +23,8 @@ import ProofRequesting from '../../src/screens/ProofRequesting'
 import { BasicAppContext } from '../helpers/app'
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('@hyperledger/aries-bifold-verifier', () => {
-  const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
+jest.mock('@bifold/verifier', () => {
+  const original = jest.requireActual('@bifold/verifier')
   return {
     ...original,
     __esModule: true,

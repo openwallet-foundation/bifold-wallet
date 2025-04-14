@@ -1,3 +1,0 @@
-{
-  "**/*.{js,jsx,ts,tsx}": ["npm run lint -- --fix", "npx prettier --write"]
-}

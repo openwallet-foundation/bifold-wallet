@@ -1,6 +1,6 @@
 comment:
-  layout: "header"
-  behavior: "default"
+  layout: 'header'
+  behavior: 'default'
   max_warnings: 0
 # coverage:
 #   precision: 2

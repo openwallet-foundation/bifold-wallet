@@ -1,4 +1,4 @@
 ---
-name: "General issue"
+name: 'General issue'
 about: For everything else
 ---

@@ -1,6 +1,6 @@
 {
-  "name": "@hyperledger/aries-bifold-verifier",
-  "version": "1.0.0",
+  "name": "@bifold/verifier",
+  "version": "0.0.0",
   "main": "build/commonjs/index.js",
   "types": "build/typescript/index.d.ts",
   "module": "build/module/index.js",
@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
   "scripts": {
-    "build": "yarn run clean && yarn run bob build",
+    "build": "echo 'building verifier 🏗️' && yarn run clean && yarn run bob build && echo 'verifier built ✅'",
     "clean": "rimraf ./build",
-    "prepublishOnly": "yarn run build",
     "test": "TZ=GMT jest",
-    "test:coverage": "TZ=GMT jest --coverage"
+    "test:watch": "TZ=GMT jest --watch",
+    "coverage": "TZ=GMT jest --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
