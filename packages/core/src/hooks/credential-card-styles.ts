@@ -1,5 +1,5 @@
-import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay } from '@bifold/oca'
+import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import { useTheme } from '../contexts/theme'
 import { StyleSheet, useWindowDimensions } from 'react-native'
 import { getSecondaryBackgroundColor } from '../utils/helpers'

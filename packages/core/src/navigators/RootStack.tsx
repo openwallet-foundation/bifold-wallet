@@ -1,6 +1,6 @@
 import { ProofState } from '@credo-ts/core'
 import { useAgent, useProofByState } from '@credo-ts/react-hooks'
-import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
+import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'

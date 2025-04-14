@@ -1,11 +1,11 @@
-import { BrandingOverlay } from '@hyperledger/aries-oca'
+import { BrandingOverlay } from '@bifold/oca'
 import {
   Attribute,
   CredentialOverlay,
   Predicate,
   Field,
   BrandingOverlayType,
-} from '@hyperledger/aries-oca/build/legacy'
+} from '@bifold/oca/build/legacy'
 import startCase from 'lodash.startcase'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

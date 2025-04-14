@@ -2,7 +2,7 @@ import {
   AnonCredsProofRequestTemplatePayload,
   ProofRequestTemplate,
   getProofRequestTemplates,
-} from '@hyperledger/aries-bifold-verifier'
+} from '@bifold/verifier'
 import { useState, useEffect } from 'react'
 
 import { TOKENS, useServices } from '../container-api'

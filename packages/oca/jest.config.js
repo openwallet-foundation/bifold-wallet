@@ -9,4 +9,18 @@ module.exports = {
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
   },
+  testPathIgnorePatterns: [
+    '\\.snap$',
+    '<rootDir>/node_modules/',
+    '<rootDir>/lib',
+    '<rootDir>/build',
+    '<rootDir>/coverage',
+  ],
+  coveragePathIgnorePatterns: [
+    '\\.snap$',
+    '<rootDir>/node_modules/',
+    '<rootDir>/lib',
+    '<rootDir>/build',
+    '<rootDir>/coverage',
+  ],
 }

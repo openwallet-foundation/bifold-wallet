@@ -1,4 +1,4 @@
-import { BrandingOverlayType, DefaultOCABundleResolver } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType, DefaultOCABundleResolver } from '@bifold/oca/build/legacy'
 
 const { TOKENS: T } = jest.requireActual('../../src/container-api')
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { BrandingOverlay } from '@hyperledger/aries-oca'
-import { BrandingOverlayType, CredentialOverlay } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay } from '@bifold/oca'
+import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import { ImageBackground, StyleSheet, View } from 'react-native'
 import { toImageSource } from '../../utils/credential'
 import { testIdWithKey } from '../../utils/testable'

@@ -1,5 +1,5 @@
 import { getDomainFromUrl } from '@credo-ts/core'
-import { Attribute, Field } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, Field } from '@bifold/oca/build/legacy'
 import { W3cCredentialDisplay } from '../types'
 
 /**

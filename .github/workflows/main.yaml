@@ -1,15 +1,19 @@
-name: Native Build & Test
+name: Native Build
 
 env:
-  cacheId: '10' # increment to expire the cache
+  cacheId: '11' # increment to expire the cache
 
 on:
   pull_request:
     branches: [main]
     paths:
+      - '.github/workflows/main.yaml'
+      - '.github/actions/setup-node/action.yaml'
+      - '.github/actions/publish.yaml'
       - 'packages/**'
-      - 'samples/app/**'
-      - '**/yarn.lock'
+      - 'samples/**'
+      - 'package.json'
+      - 'yarn.lock'
     types: [opened, synchronize, reopened, labeled]
   push:
     branches: [main]
@@ -63,7 +67,7 @@ jobs:
 
       - name: Build Workspace
         run: |
-          yarn lerna run build
+          yarn build
 
       - name: Create .xcode.env.local file
         working-directory: ./samples/app/ios
@@ -154,7 +158,7 @@ jobs:
 
       - name: Build Workspace
         run: |
-          yarn lerna run build
+          yarn build
 
       - name: Android Release Build
         working-directory: ./samples/app/android

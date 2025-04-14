@@ -5,7 +5,7 @@ Mobile app attestation
 ## Installation
 
 ```sh
-yarn add @hyperledger/react-native-attestation
+yarn add @bifold/react-native-attestation
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import {
   appleAttestation,
   isPlayIntegrityAvailable,
   googleAttestation,
-} from '@hyperledger/aries-react-native-attestation';
+} from '@bifold/react-native-attestation';
 
 // ...
 if (Platform.OS === 'ios') {
@@ -29,10 +29,6 @@ if (Platform.OS === 'ios') {
   }
 }
 ```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 

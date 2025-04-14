@@ -2,7 +2,7 @@ import { AnonCredsProof, INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentation
 import { ProofExchangeRecord, ProofRole, ProofState } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
 import { useProofById } from '@credo-ts/react-hooks'
-import * as verifier from '@hyperledger/aries-bifold-verifier'
+import * as verifier from '@bifold/verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import '@testing-library/jest-native'
 import { RenderAPI, cleanup, fireEvent, render } from '@testing-library/react-native'
@@ -14,8 +14,8 @@ import { BasicAppContext } from '../helpers/app'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('@hyperledger/aries-bifold-verifier', () => {
-  const original = jest.requireActual('@hyperledger/aries-bifold-verifier')
+jest.mock('@bifold/verifier', () => {
+  const original = jest.requireActual('@bifold/verifier')
   return {
     ...original,
     __esModule: true,

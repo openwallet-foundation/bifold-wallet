@@ -5,10 +5,10 @@ import {
   OCABundleResolveAllParams,
   OCABundleResolveDefaultParams,
   OCABundleResolvePresentationFieldsParams,
-} from '@hyperledger/aries-oca/build/legacy'
+} from '@bifold/oca/build/legacy'
 import { TOKENS, useServices } from '../container-api'
 import { useEffect, useState } from 'react'
-import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@hyperledger/aries-oca'
+import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@bifold/oca'
 
 type BundleResolverParams<T> = T extends CredentialOverlay<BrandingOverlay | BaseOverlay | LegacyBrandingOverlay>
   ? OCABundleResolveAllParams
