@@ -10,11 +10,6 @@ on:
       - 'packages/**'
       - 'package.json'
       - 'yarn.lock'
-  workflow_dispatch:
-  workflow_run:
-    workflows: ['Native Build']
-    branches: [main]
-    types: [completed]
 
 permissions:
   pull-requests: write
@@ -23,16 +18,10 @@ permissions:
 jobs:
   release:
     name: Release
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout bifold-wallet
         uses: actions/checkout@v4
-
-      - name: Set git config
-        run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       - uses: actions/setup-python@v4
         with:
@@ -57,7 +46,6 @@ jobs:
           commit: 'chore(release): new version'
           publish: yarn release
           version: yarn changeset-version
-          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
