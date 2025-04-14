@@ -5,8 +5,8 @@ on:
       - main
     paths:
       - '.github/workflows/main.yaml'
+      - '.github/workflows/publish.yaml'
       - '.github/actions/setup-node/action.yaml'
-      - '.github/actions/publish.yaml'
       - 'packages/**'
       - 'package.json'
       - 'yarn.lock'
