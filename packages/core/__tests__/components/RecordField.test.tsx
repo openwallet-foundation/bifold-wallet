@@ -6,7 +6,7 @@ import React from 'react'
 import RecordField from '../../src/components/record/RecordField'
 import { hiddenFieldValue } from '../../src/constants'
 import { testIdWithKey } from '../../src/utils/testable'
-import { CaptureBaseAttributeType } from '@hyperledger/aries-oca'
+import { CaptureBaseAttributeType } from '@bifold/oca'
 import { BasicAppContext } from '../helpers/app'
 
 const base64ImagePath = path.join(__dirname, '../fixtures/base64-image.txt')

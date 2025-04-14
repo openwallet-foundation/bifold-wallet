@@ -1,12 +1,6 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { BrandingOverlay } from '@hyperledger/aries-oca'
-import {
-  Attribute,
-  BrandingOverlayType,
-  CredentialOverlay,
-  Field,
-  Predicate,
-} from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlay } from '@bifold/oca'
+import { Attribute, BrandingOverlayType, CredentialOverlay, Field, Predicate } from '@bifold/oca/build/legacy'
 import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'

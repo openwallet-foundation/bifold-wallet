@@ -1,4 +1,4 @@
-import { Attribute } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'

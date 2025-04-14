@@ -6,7 +6,7 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
 import { TOKENS, useServices } from '../../container-api'
-import { BrandingOverlayType } from '@hyperledger/aries-oca/build/legacy'
+import { BrandingOverlayType } from '@bifold/oca/build/legacy'
 import { ThemedText } from '../texts/ThemedText'
 
 interface RecordRemoveProps {

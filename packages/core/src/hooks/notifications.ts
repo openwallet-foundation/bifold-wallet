@@ -9,7 +9,7 @@ import {
   W3cCredentialRecord,
 } from '@credo-ts/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
-import { ProofCustomMetadata, ProofMetadata } from '@hyperledger/aries-bifold-verifier'
+import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
 import { useEffect, useState } from 'react'
 
 import {

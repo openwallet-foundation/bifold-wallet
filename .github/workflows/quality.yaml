@@ -10,7 +10,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-22.04
-    name: Linting
+    name: Linting and formatter
     steps:
       - name: Checkout aries-mobile-agent-react-native
         uses: actions/checkout@v4
@@ -28,15 +28,15 @@ jobs:
 
       - name: Build Workspace
         run: |
-          yarn lerna run build
+          yarn build
 
-      - name: Check style
+      - name: Run formatter
         run: |
-          yarn run prettier
+          yarn prettier
 
-      - name: LINTing
+      - name: Run linter
         run: |
-          yarn run lint
+          yarn lint
 
   test:
     runs-on: ubuntu-22.04
@@ -58,11 +58,11 @@ jobs:
 
       - name: Build Workspace
         run: |
-          yarn lerna run build
+          yarn build
 
       - name: Automated testing
         run: |
-          yarn lerna run --stream test:coverage
+          yarn coverage
 
       - uses: codecov/codecov-action@v3
         with:

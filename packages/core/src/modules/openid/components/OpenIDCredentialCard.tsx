@@ -22,7 +22,7 @@ import { getCredentialForDisplay } from '../display'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { getAttributeField } from '../utils/utils'
-import { Attribute } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute } from '@bifold/oca/build/legacy'
 import startCase from 'lodash.startcase'
 
 interface CredentialCardProps {

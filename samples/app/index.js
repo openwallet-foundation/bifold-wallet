@@ -1,10 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/**
- * @format
- */
 import 'fast-text-encoding' // polyfill for TextEncoder and TextDecoder
 import 'react-native-gesture-handler'
-// remove these when updated to react-native 0.65.0
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'
 import '@formatjs/intl-pluralrules/polyfill'
@@ -33,7 +28,7 @@ if (!global.atob) {
   global.atob = decode
 }
 
-import { NavigationTheme, App as BifoldApp, MainContainer } from '@hyperledger/aries-bifold-core'
+import { NavigationTheme, App as BifoldApp, MainContainer } from '@bifold/core'
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
 import * as React from 'react'
 import { AppRegistry, LogBox } from 'react-native'

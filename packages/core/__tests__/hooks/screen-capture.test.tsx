@@ -15,7 +15,7 @@ describe('usePreventScreenCapture', () => {
     expect(ScreenGuardModule.register).toHaveBeenCalledTimes(1)
     expect(ScreenGuardModule.register).toHaveBeenCalledWith(screenGuardOptions)
   })
-  
+
   it('with no `active` supplied on Android, should call registerWithoutEffect', () => {
     const { OS } = Platform
     Platform.OS = 'android'

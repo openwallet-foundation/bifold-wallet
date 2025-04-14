@@ -56,6 +56,7 @@ export default [
       'scripts/get-next-bump.ts',
       '**/jest.config.js',
       '**/metro.config.js',
+      '.changeset/commit.js',
       '.yarn/',
       'packages/verifier/build/',
       'packages/oca/build/',

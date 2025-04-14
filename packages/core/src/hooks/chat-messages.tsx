@@ -7,7 +7,7 @@ import {
   ProofState,
 } from '@credo-ts/core'
 import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
-import { isPresentationReceived } from '@hyperledger/aries-bifold-verifier'
+import { isPresentationReceived } from '@bifold/verifier'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { Fragment, useEffect, useState } from 'react'

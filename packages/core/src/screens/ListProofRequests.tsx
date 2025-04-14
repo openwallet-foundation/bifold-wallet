@@ -1,5 +1,5 @@
-import { ProofRequestTemplate, hasPredicates, isParameterizable } from '@hyperledger/aries-bifold-verifier'
-import { MetaOverlay, OverlayType } from '@hyperledger/aries-oca'
+import { ProofRequestTemplate, hasPredicates, isParameterizable } from '@bifold/verifier'
+import { MetaOverlay, OverlayType } from '@bifold/oca'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

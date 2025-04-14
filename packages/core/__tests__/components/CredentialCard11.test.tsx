@@ -10,7 +10,7 @@ import CredentialCard11, { CredentialErrors } from '../../src/components/misc/Cr
 import { testIdWithKey } from '../../src/utils/testable'
 import { Linking } from 'react-native'
 import { BasicAppContext } from '../helpers/app'
-import { Attribute, Predicate } from '@hyperledger/aries-oca/build/legacy'
+import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import timeTravel from '../helpers/timetravel'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')

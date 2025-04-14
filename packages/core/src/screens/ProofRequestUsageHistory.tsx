@@ -1,6 +1,6 @@
 import { ProofExchangeRecord, ProofState } from '@credo-ts/core'
 import { useConnectionById } from '@credo-ts/react-hooks'
-import { isPresentationReceived, useProofsByTemplateId } from '@hyperledger/aries-bifold-verifier'
+import { isPresentationReceived, useProofsByTemplateId } from '@bifold/verifier'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

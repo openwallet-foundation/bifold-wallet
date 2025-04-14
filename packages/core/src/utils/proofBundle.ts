@@ -1,8 +1,4 @@
-import {
-  AnonCredsProofRequestTemplatePayload,
-  ProofRequestTemplate,
-  getProofRequestTemplates,
-} from '@hyperledger/aries-bifold-verifier'
+import { AnonCredsProofRequestTemplatePayload, ProofRequestTemplate, getProofRequestTemplates } from '@bifold/verifier'
 import { useState, useEffect } from 'react'
 
 import { TOKENS, useServices } from '../container-api'

@@ -1,8 +1,6 @@
 {
   "_tags": {
-    "recipientKeyFingerprints": [
-      "z6MkgopJypqUusEtLpSkn9NckpjGjpyoAk9aC6RpTETx3W7p"
-    ]
+    "recipientKeyFingerprints": ["z6MkgopJypqUusEtLpSkn9NckpjGjpyoAk9aC6RpTETx3W7p"]
   },
   "metadata": {},
   "id": "8dcd8d3a-1332-4e7c-8f76-ad2014ea406d",
@@ -11,25 +9,15 @@
     "@type": "https://didcomm.org/out-of-band/1.1/invitation",
     "@id": "62ed78cd-0fe8-4479-b897-1e0895e1ea54",
     "label": "My Wallet - 8094",
-    "accept": [
-      "didcomm/aip1",
-      "didcomm/aip2;env=rfc19"
-    ],
-    "handshake_protocols": [
-      "https://didcomm.org/didexchange/1.0",
-      "https://didcomm.org/connections/1.0"
-    ],
+    "accept": ["didcomm/aip1", "didcomm/aip2;env=rfc19"],
+    "handshake_protocols": ["https://didcomm.org/didexchange/1.0", "https://didcomm.org/connections/1.0"],
     "services": [
       {
         "id": "#inline-0",
         "serviceEndpoint": "https://aries-mediator-agent-pq-test.apps.silver.devops.gov.bc.ca",
         "type": "did-communication",
-        "recipientKeys": [
-          "did:key:z6MkgopJypqUusEtLpSkn9NckpjGjpyoAk9aC6RpTETx3W7p"
-        ],
-        "routingKeys": [
-          "did:key:z6MknaRLHo7ctdB6ia863shz4ySMVm8caP2yse5mudjowVj9"
-        ]
+        "recipientKeys": ["did:key:z6MkgopJypqUusEtLpSkn9NckpjGjpyoAk9aC6RpTETx3W7p"],
+        "routingKeys": ["did:key:z6MknaRLHo7ctdB6ia863shz4ySMVm8caP2yse5mudjowVj9"]
       }
     ]
   },

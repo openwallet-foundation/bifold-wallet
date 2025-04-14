@@ -1,6 +1,6 @@
 {
-  "name": "@hyperledger/aries-oca",
-  "version": "1.0.0",
+  "name": "@bifold/oca",
+  "version": "0.0.0",
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -11,12 +11,12 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
+    "build": "echo 'building oca 🏗️' && yarn run clean && yarn run compile && echo 'oca built ✅'",
     "clean": "rimraf ./build",
     "compile": "tsc",
-    "prepublishOnly": "yarn run build",
     "test": "TZ=GMT jest --config ./jest.config.js",
-    "test:watch": "TZ=GMT jest --config ./jest.config.js --watch"
+    "test:watch": "TZ=GMT jest --config ./jest.config.js --watch",
+    "coverage": "TZ=GMT jest --config ./jest.config.js --coverage"
   },
   "repository": {
     "type": "git",
