@@ -30,4 +30,3 @@ Pro Tip 🤓
 
 - Read our [contribution guide](../CONTRIBUTING.md) at least once; it will save you a few review cycles!
 - Your PR will likely not be reviewed until all the above boxes are checked and all automated checks have passed
-

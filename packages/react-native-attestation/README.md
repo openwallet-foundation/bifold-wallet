@@ -23,9 +23,9 @@ if (Platform.OS === 'ios') {
   const keyId = await generateKey();
   const attestationAsBuffer = await appleAttestation(keyId, nonce);
 } else if (Platform.OS === 'android') {
-  const available = await isPlayIntegrityAvailable()
+  const available = await isPlayIntegrityAvailable();
   if (available) {
-    const integrityToken = await googleAttestation(nonce)
+    const integrityToken = await googleAttestation(nonce);
   }
 }
 ```

@@ -12,7 +12,7 @@ on:
       - 'yarn.lock'
   workflow_dispatch:
   workflow_run:
-    workflows: ["Native Build"]
+    workflows: ['Native Build']
     branches: [main]
     types: [completed]
 
@@ -44,11 +44,11 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --immutable
-      
+
       - name: Disable husky hooks
         run: |
           yarn husky uninstall
-      
+
       - name: Update release PR or publish to npm
         id: changesets
         uses: changesets/action@v1

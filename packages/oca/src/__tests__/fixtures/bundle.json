@@ -8,10 +8,7 @@
       },
       "classification": "",
       "digest": "E75sopl65qnoZRwjQQ0FjWGemLlOXcXtanhScZ2CloJY",
-      "flagged_attributes": [
-        "student_last_name",
-        "student_first_name"
-      ],
+      "flagged_attributes": ["student_last_name", "student_first_name"],
       "type": "spec/capture_base/1.0"
     },
     "overlays": [

@@ -144,6 +144,7 @@ Due to the [issue](https://github.com/openwallet-foundation/credo-ts/issues/1250
 Instead, we have to use two legacy approaches to cover our cases:
 
 - Case 1: Connectionless proof.
+
   - We can use legacy connectionless proof format when `~service` decorator is included in the request ([RFC](https://github.com/hyperledger/aries-rfcs/tree/main/features/0056-service-decorator)).
 
     ```typescript
@@ -159,6 +160,7 @@ Instead, we have to use two legacy approaches to cover our cases:
       domain: 'https://??????.com', // what domain should be used here??? URL Shortere?
     })
     ```
+
 - Case 2: Request proof from a specific connection.
   ```typescript
   await this.agent.proofs.requestProof({

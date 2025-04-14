@@ -8,7 +8,7 @@ The Bifold Wallet is a user-friendly mobile agent that is built with React Nativ
 
 Key points to note:
 
-- Bifold uses the Credo library, which in turn uses  Rust libraries.
+- Bifold uses the Credo library, which in turn uses Rust libraries.
 - Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
 - Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
 

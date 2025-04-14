@@ -30,11 +30,13 @@
     source $(brew --prefix nvm)/nvm.sh
     ```
 4.  Install Node (use the version from the GitHub Actions)
+
     ```sh
     nvm install 18.20.6
     ```
 
     Activate node version by adding the following to your `~/.zshrc`
+
     ```sh
     source $(brew --prefix nvm)/nvm.sh
     nvm use 18.20.6

@@ -14,7 +14,7 @@ export const BasicAppContext: React.FC<PropsWithChildren> = ({ children }) => {
     c.resolve(TOKENS.UTIL_LOGGER)
     c.container.registerInstance(TOKENS.UTIL_LOGGER, new MockLogger())
     return c
-  },[])
+  }, [])
 
   return (
     <ContainerProvider value={context}>
