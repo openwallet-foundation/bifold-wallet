@@ -33,7 +33,9 @@ export const useAttemptLockout = () => {
 export const useGetLockoutPenalty = () => {
   const [{ attemptLockoutConfig: { baseRules, thresholdRules } = attemptLockoutConfig }] = useServices([TOKENS.CONFIG])
   return useCallback((attempts: number) => {
-    let penalty = baseRules[attempts + 1]
+    let penalty = baseRules[attempts]
+    console.log(attempts)
+    console.log(penalty)
     if (!penalty && attempts >= thresholdRules.threshold && !(attempts % thresholdRules.increment)) {
       penalty = thresholdRules.thresholdPenaltyDuration
     }

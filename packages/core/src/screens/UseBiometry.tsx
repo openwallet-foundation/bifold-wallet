@@ -17,7 +17,7 @@ import { useTheme } from '../contexts/theme'
 import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
 
-import PINEnter, { PINEntryUsage } from './PINEnter'
+import PINVerify, { PINEntryUsage } from './PINVerify'
 import { TOKENS, useServices } from '../container-api'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { ThemedText } from '../components/texts/ThemedText'
@@ -344,7 +344,7 @@ const UseBiometry: React.FC = () => {
           headerStyle={{ height: headerHeight }}
           headerLeft={renderHeaderLeft}
         />
-        <PINEnter
+        <PINVerify
           usage={PINEntryUsage.ChangeBiometrics}
           setAuthenticated={onAuthenticationComplete}
           onCancelAuth={setCanSeeCheckPIN}

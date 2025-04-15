@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View, DeviceEventEmitter, InteractionManager, Pressable } from 'react-native'
@@ -21,6 +20,7 @@ import { InlineErrorType, InlineMessageProps } from '../components/inputs/Inline
 import { ThemedText } from '../components/texts/ThemedText'
 import { useDeveloperMode } from '../hooks/developer-mode'
 import { useLockout } from '../hooks/lockout'
+import { useGotoPostAuthScreens } from '../hooks/onboarding'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -34,7 +34,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
-  const navigation = useNavigation()
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet } = useTheme()
@@ -47,18 +46,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
-
   const { incrementDeveloperMenuCounter } = useDeveloperMode()
-
-  const gotoPostAuthScreens = useCallback(() => {
-    if (store.onboarding.postAuthScreens.length) {
-      const screen = store.onboarding.postAuthScreens[0]
-      if (screen) {
-        navigation.navigate(screen as never)
-      }
-    }
-  }, [store.onboarding.postAuthScreens, navigation])
-
+  const gotoPostAuthScreens = useGotoPostAuthScreens()
   const isContinueDisabled = (inlineMessages.enabled) ? !continueEnabled : (!continueEnabled || PIN.length < minPINLength)
 
   // listen for biometrics error event
@@ -66,7 +55,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     const handle = DeviceEventEmitter.addListener(EventTypes.BIOMETRY_ERROR, (value?: boolean) => {
       setBiometricsErr((prev) => value ?? !prev)
     })
-
     return () => {
       handle.remove()
     }
@@ -80,13 +68,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         type: DispatchAction.LOCKOUT_UPDATED,
         payload: [{ displayNotification: false }],
       })
-
       // reset login attempts if login is successful
       dispatch({
         type: DispatchAction.ATTEMPT_UPDATED,
         payload: [{ loginAttempts: 0 }],
       })
-
       setAuthenticated(true)
       gotoPostAuthScreens()
     }
@@ -97,7 +83,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       if (!store.preferences.useBiometry) {
         return
       }
-
       try {
         const active = await isBiometricsActive()
         if (!active) {
@@ -135,19 +120,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       try {
         setContinueEnabled(false)
         const result = await checkWalletPIN(PIN)
-
         if (store.loginAttempt.servedPenalty) {
           // once the user starts entering their PIN, unMark them as having served their
           // lockout penalty
           unMarkServedPenalty()
         }
-
         if (!result) {
           const newAttempt = store.loginAttempt.loginAttempts + 1
-          let message = '';
+          let message = ''
           const attemptsLeft =
             (thresholdRules.increment - (newAttempt % thresholdRules.increment)) % thresholdRules.increment
-
           if (!inlineMessages.enabled && !getLockoutPenalty(newAttempt)) {
             // skip displaying modals if we are going to lockout
             setAlertModalVisible(true)
@@ -155,7 +137,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           if (attemptsLeft > 1) {
               message = t('PINEnter.IncorrectPINTries', { tries: attemptsLeft })
           }
-          if(attemptsLeft === 1) {
+          else if(attemptsLeft === 1) {
               message = t('PINEnter.LastTryBeforeTimeout')
           }
           else {
@@ -163,6 +145,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             if (penalty !== undefined) {
               attemptLockout(penalty) // Only call attemptLockout if penalty is defined
             }
+            setContinueEnabled(true)
             return
           }
           if (inlineMessages.enabled) {
@@ -175,7 +158,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             setAlertModalMessage(message)
           }
           setContinueEnabled(true)
-
           // log incorrect login attempts
           dispatch({
             type: DispatchAction.ATTEMPT_UPDATED,
@@ -183,19 +165,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           })
           return
         }
-
         // reset login attempts if login is successful
         dispatch({
           type: DispatchAction.ATTEMPT_UPDATED,
           payload: [{ loginAttempts: 0 }],
         })
-
         // remove lockout notification if login is successful
         dispatch({
           type: DispatchAction.LOCKOUT_UPDATED,
           payload: [{ displayNotification: false }],
         })
-
         setAuthenticated(true)
         gotoPostAuthScreens()
       } catch (err: unknown) {
@@ -236,7 +215,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           inlineType: InlineErrorType.error,
           config: inlineMessages,
         })
-
         return
       }
       setContinueEnabled(false)
@@ -245,42 +223,29 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     [unlockWalletWithPIN, t, inlineMessages]
   )
 
-  const showHelpText = (store.lockout.displayNotification || biometricsEnrollmentChange || biometricsErr)
-
   const HelpText = useMemo(() => {
+    const showHelpText = (store.lockout.displayNotification || biometricsEnrollmentChange || biometricsErr)
+    let header = t('PINEnter.Title')
+    let subheader = t('PINEnter.SubText')
     if (store.lockout.displayNotification) {
-      return (
-        <>
-          <ThemedText style={style.helpText}>
-            {t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })}
-          </ThemedText>
-          <ThemedText style={style.helpText}>{t('PINEnter.ReEnterPIN')}</ThemedText>
-        </>
-      )
+      header = t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })
+      subheader = t('PINEnter.ReEnterPIN')
     }
     if (biometricsEnrollmentChange) {
-      return (
-        <>
-          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsChanged')}</ThemedText>
-          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsChangedEnterPIN')}</ThemedText>
-        </>
-      )
+      header = t('PINEnter.BiometricsChanged')
+      subheader = t('PINEnter.BiometricsChangedEnterPIN')
     }
     if (biometricsErr) {
-      return (
-        <>
-          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsError')}</ThemedText>
-          <ThemedText style={style.helpText}>{t('PINEnter.BiometricsErrorEnterPIN')}</ThemedText>
-        </>
-      )
+      header = t('PINEnter.BiometricsError')
+      subheader = t('PINEnter.BiometricsErrorEnterPIN')
     }
     return (
       <>
-        <ThemedText variant="headingTwo" style={style.title}>
-          {t('PINEnter.Title')}
+        <ThemedText variant={showHelpText ? 'normal' : 'headingThree'} style={style.helpText}>
+          {header}
         </ThemedText>
-        <ThemedText variant="labelSubtitle" style={style.subTitle}>
-          {t('PINEnter.SubText')}
+        <ThemedText variant={showHelpText ? 'normal' : 'labelSubtitle'} style={style.helpText}>
+          {subheader}
         </ThemedText>
       </>
     )
@@ -290,20 +255,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     t,
     biometricsEnrollmentChange,
     biometricsErr,
-    style.title,
-    style.subTitle,
     store.preferences.autoLockTime,
   ])
 
   return (
     <KeyboardView>
       <View style={[style.screenContainer, { backgroundColor: ColorPallet.brand.primaryBackground }]}>
-        <View style={style.contentContainer}>
+        <View>
           <Pressable onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}} testID={testIdWithKey('DeveloperCounter')}>
             {HelpText}
           </Pressable>
           <ThemedText variant="bold" style={style.inputLabel}>
-            { t('PINEnter.EnterPIN')}
+            {t('PINEnter.EnterPIN')}
           </ThemedText>
           <PINInput
             onPINChanged={(p: string) => {
@@ -318,7 +281,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             inlineMessage={inlineMessageField}
           />
         </View>
-        <View style={style.controlsContainer}>
+        <View>
           <View style={style.buttonContainer}>
             <Button
               title={t('PINEnter.Unlock')}
@@ -356,7 +319,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           notificationType={InfoBoxType.Info}
           title={t('PINEnter.IncorrectPIN')}
           bodyContent={
-            <View>
+            <>
               <ThemedText variant="popupModalText" style={style.modalText}>
                 {alertModalMessage}
               </ThemedText>
@@ -365,7 +328,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
                   {t('PINEnter.AttemptLockoutWarning')}
                 </ThemedText>
               ) : null}
-            </View>
+            </>
           }
           onCallToActionLabel={t('Global.Okay')}
           onCallToActionPressed={clearAlertModal}
@@ -378,13 +341,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
 const style = StyleSheet.create({
   screenContainer: {
     height: '100%',
-
     padding: 20,
     justifyContent: 'space-between',
   },
-  // below used as helpful labels for views, no properties needed atp
-  contentContainer: {},
-  controlsContainer: {},
   buttonContainer: {
     width: '100%',
   },
@@ -396,12 +355,6 @@ const style = StyleSheet.create({
   inputLabel: {
     marginBottom: 16,
   },
-  title: {
-
-  },
-  subtext: {
-
-  },
   modalText: {
     marginVertical: 5,
   },
@@ -411,4 +364,3 @@ const style = StyleSheet.create({
 })
 
 export default PINEnter
-
