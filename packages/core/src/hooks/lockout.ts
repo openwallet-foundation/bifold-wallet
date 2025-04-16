@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import { useStore } from "../contexts/store"
 import { DispatchAction } from '../contexts/reducers/store'

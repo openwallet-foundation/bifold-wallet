@@ -12,7 +12,7 @@ export const useDeveloperMode = () => {
   const { navigate } = useNavigation()
 
   const incrementDeveloperMenuCounter = useCallback(() => {
-    if (developerOptionCount.current = TOUCH_COUNT_TO_ENABLE_DEVELOPER_MODE) {
+    if (developerOptionCount.current === TOUCH_COUNT_TO_ENABLE_DEVELOPER_MODE) {
       developerOptionCount.current = 0
       dispatch({
         type: DispatchAction.ENABLE_DEVELOPER_MODE,

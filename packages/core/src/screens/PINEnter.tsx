@@ -251,7 +251,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     )
   }, [
     store.lockout.displayNotification,
-    style.helpText,
     t,
     biometricsEnrollmentChange,
     biometricsErr,

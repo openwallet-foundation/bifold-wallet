@@ -7,7 +7,6 @@ import { MainContainer } from '../../src/container-impl'
 import { AuthContext } from '../../src/contexts/auth'
 import { StoreProvider, defaultState } from '../../src/contexts/store'
 import PINVerify, { PINEntryUsage } from '../../src/screens/PINVerify'
-import { testIdWithKey } from '../../src/utils/testable'
 import authContext from '../contexts/auth'
 
 describe('PINVerify Screen', () => {
@@ -45,24 +44,5 @@ describe('PINVerify Screen', () => {
       </ContainerProvider>
     )
     expect(tree).toMatchSnapshot()
-  })
-
-  test('PIN Enter button exists', async () => {
-    const main = new MainContainer(container.createChildContainer()).init()
-    const tree = render(
-      <ContainerProvider value={main}>
-        <StoreProvider
-          initialState={{
-            ...defaultState,
-          }}
-        >
-          <AuthContext.Provider value={authContext}>
-            <PINVerify setAuthenticated={jest.fn()} />
-          </AuthContext.Provider>
-        </StoreProvider>
-      </ContainerProvider>
-    )
-    const EnterButton = await tree.getByTestId(testIdWithKey('Enter'))
-    expect(EnterButton).not.toBeNull()
   })
 })

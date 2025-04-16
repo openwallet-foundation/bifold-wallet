@@ -60,7 +60,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
       setLoading(false)
       setContinueDisabled(false)
     },
-    [verifyPIN, setContinueDisabled, setLoading, setAuthenticated, setContinueDisabled, PIN, Keyboard]
+    [verifyPIN, setLoading, setAuthenticated, setContinueDisabled, PIN]
   )
 
   const inputLabelText = {
