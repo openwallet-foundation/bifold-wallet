@@ -4,7 +4,7 @@ import { useStore } from "../contexts/store"
 import { DispatchAction } from '../contexts/reducers/store'
 import { Screens } from '../types/navigators'
 import { TOKENS, useServices } from '../container-api'
-import { defaultAutoLockTime, attemptLockoutConfig } from '../constants'
+import { attemptLockoutConfig } from '../constants'
 
 export const useAttemptLockout = () => {
   const [store, dispatch] = useStore()
@@ -34,8 +34,6 @@ export const useGetLockoutPenalty = () => {
   const [{ attemptLockoutConfig: { baseRules, thresholdRules } = attemptLockoutConfig }] = useServices([TOKENS.CONFIG])
   return useCallback((attempts: number) => {
     let penalty = baseRules[attempts]
-    console.log(attempts)
-    console.log(penalty)
     if (!penalty && attempts >= thresholdRules.threshold && !(attempts % thresholdRules.increment)) {
       penalty = thresholdRules.thresholdPenaltyDuration
     }
