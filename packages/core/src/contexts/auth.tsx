@@ -2,7 +2,7 @@
 import '@hyperledger/aries-askar-react-native'
 
 import 'reflect-metadata'
-
+import { DeviceEventEmitter } from 'react-native'
 import { AskarWallet } from '@credo-ts/askar'
 import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
@@ -23,6 +23,8 @@ import {
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 import { migrateToAskar } from '../utils/migration'
+import { BifoldError } from '../types/error'
+import { EventTypes } from '../constants'
 
 export interface AuthContext {
   checkWalletPIN: (PIN: string) => Promise<boolean>
@@ -34,6 +36,7 @@ export interface AuthContext {
   commitWalletToKeychain: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
   rekeyWallet: (oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
+  verifyPIN: (PIN: string) => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
@@ -168,6 +171,36 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     [agent]
   )
 
+  const verifyPIN = useCallback(
+    async (PIN: string) => {
+      try {
+        const credentials = await getWalletSecret()
+        if (!credentials) {
+          throw new Error('Get wallet credentials error')
+        }
+
+        const key = await hashPIN(PIN, credentials.salt)
+        if (credentials.key !== key) {
+          return false
+        }
+
+        return true
+
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1042'),
+          t('Error.Message1042'),
+          (err as Error)?.message ?? err,
+          1042
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        return false
+      }
+    },
+    [getWalletSecret, t]
+  )
+
+
   return (
     <AuthContext.Provider
       value={{
@@ -180,6 +213,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         isBiometricsActive,
         rekeyWallet,
         walletSecret,
+        verifyPIN,
       }}
     >
       {children}
