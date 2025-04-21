@@ -8,15 +8,15 @@ import {
   CredentialExchangeRecord,
   CredentialRecordBinding,
   DifPexInputDescriptorToCredentials,
-  ProofState,
   CredoError,
   V2RequestPresentationMessage,
+  ProofState,
 } from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -129,7 +129,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     TOKENS.HISTORY_ENABLED,
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
-
+  const shareDisabledRef = useRef({
+    hasCredentialError: false,
+    hasSatisfiedPredicateError: false, // this should mark the credential in some way
+    hasRevokedOffense: false,
+    hasProofStateReceivedError: false,
+  })
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -619,11 +624,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }, [navigation])
 
   const isShareDisabled = useCallback(() => {
+    shareDisabledRef.current = {
+      hasCredentialError: !hasAvailableCredentials,
+      hasSatisfiedPredicateError: !hasSatisfiedPredicates(getCredentialsFields()),
+      hasRevokedOffense: revocationOffense,
+      hasProofStateReceivedError: proof?.state !== ProofState.RequestReceived,
+    }
     return (
-      !hasAvailableCredentials ||
-      !hasSatisfiedPredicates(getCredentialsFields()) ||
-      revocationOffense ||
-      proof?.state !== ProofState.RequestReceived
+      shareDisabledRef.current.hasCredentialError ||
+      shareDisabledRef.current.hasSatisfiedPredicateError ||
+      shareDisabledRef.current.hasRevokedOffense ||
+      shareDisabledRef.current.hasProofStateReceivedError
     )
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
 
@@ -679,7 +690,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               )}
               {isShareDisabled() && (
                 <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
-                  {t('ProofRequest.YouCantRespond')}
+                  {buildShareDisabledMessage()}
                 </InfoTextBox>
               )}
             </View>
@@ -687,6 +698,25 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         )}
       </View>
     )
+  }
+
+  const buildShareDisabledMessage = () => {
+    let finalMessage = t('ProofRequest.YouCantRespond') + '\n'
+
+    if (shareDisabledRef.current.hasCredentialError) {
+      finalMessage += `\n${t('ProofRequest.CredentialNotInWallet')}`
+    }
+    if (shareDisabledRef.current.hasSatisfiedPredicateError) {
+      finalMessage += `\n${t('ProofRequest.ProofRequestPredicateError')}`
+    }
+    if (shareDisabledRef.current.hasRevokedOffense) {
+      finalMessage += `\n${t('ProofRequest.CredentialForProofIsRevoked')}`
+    }
+    if (shareDisabledRef.current.hasProofStateReceivedError) {
+      finalMessage += `\n${t('ProofRequest.ProofRequestStateError')}`
+    }
+
+    return finalMessage
   }
 
   const handleAltCredChange = useCallback(
