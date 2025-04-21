@@ -46,6 +46,7 @@ const translation = {
     "Updated": "Updated",
     "Close": "Fechar",
     "Remove": "Remover",
+    "Send": "Enviar",
   },
   "Date": {
     "ShortFormat": "D MMM",

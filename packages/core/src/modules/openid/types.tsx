@@ -86,6 +86,7 @@ export interface W3cCredentialDisplay {
   claimFormat: ClaimFormat
   validUntil: Date | undefined
   validFrom: Date | undefined
+  credentialSubject: CredentialSubjectRecord | undefined
 }
 
 export interface OpenId4VPRequestRecord extends OpenId4VcSiopResolvedAuthorizationRequest {
@@ -95,6 +96,13 @@ export interface OpenId4VPRequestRecord extends OpenId4VcSiopResolvedAuthorizati
   credentialsForRequest: DifPexCredentialsForRequest | undefined
   type: string
 }
+
+interface DisplayInfo {
+  name: string
+  locale?: string
+}
+
+export type CredentialSubjectRecord = Record<string, { display: DisplayInfo[] }>
 
 export enum OpenIDCredentialType {
   W3cCredential,
