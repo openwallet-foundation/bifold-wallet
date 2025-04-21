@@ -630,12 +630,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       hasRevokedOffense: revocationOffense,
       hasProofStateReceivedError: proof?.state !== ProofState.RequestReceived,
     }
-    return (
-      shareDisabledRef.current.hasCredentialError ||
-      shareDisabledRef.current.hasSatisfiedPredicateError ||
-      shareDisabledRef.current.hasRevokedOffense ||
-      shareDisabledRef.current.hasProofStateReceivedError
-    )
+
+    return Object.values(shareDisabledRef.current).some((value) => value)
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
 
   const proofPageHeader = () => {
