@@ -631,9 +631,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       hasProofStateReceivedError: proof?.state !== ProofState.RequestReceived,
     }
     return (
-      shareDisabledRef.current.hasCredentialError ??
-      shareDisabledRef.current.hasSatisfiedPredicateError ??
-      shareDisabledRef.current.hasRevokedOffense ??
+      shareDisabledRef.current.hasCredentialError ||
+      shareDisabledRef.current.hasSatisfiedPredicateError ||
+      shareDisabledRef.current.hasRevokedOffense ||
       shareDisabledRef.current.hasProofStateReceivedError
     )
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
@@ -672,14 +672,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                   <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
                     <ThemedText variant="title">
-                      {proofConnectionLabel ?? outOfBandInvitation?.label ?? t('ContactDetails.AContact')}
+                      {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
                     </ThemedText>
                   </ThemedText>
                 </View>
               ) : (
                 <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <ThemedText variant="title">
-                    {proofConnectionLabel ?? outOfBandInvitation?.label ?? t('ContactDetails.AContact')}
+                    {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
                   </ThemedText>{' '}
                   <ThemedText>{t('ProofRequest.IsRequestingYouToShare')}</ThemedText>
                   <ThemedText variant="title">{` ${activeCreds?.length} `}</ThemedText>
