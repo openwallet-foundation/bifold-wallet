@@ -492,7 +492,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           proofFormats: { presentationExchange: { credentials: selectedCredentials } },
         })
 
-        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+        if (proof.connectionId && goalCode?.endsWith('verify.once')) {
           agent.connections.deleteById(proof.connectionId)
         }
         return
@@ -538,7 +538,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         proofRecordId: proof.id,
         proofFormats: automaticRequestedCreds.proofFormats,
       })
-      if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+      if (proof.connectionId && goalCode?.endsWith('verify.once')) {
         agent.connections.deleteById(proof.connectionId)
       }
 
@@ -575,7 +575,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
-        if (connectionId && goalCode && goalCode.endsWith('verify.once')) {
+        if (connectionId && goalCode?.endsWith('verify.once')) {
           agent.connections.deleteById(connectionId)
         }
       }
@@ -609,7 +609,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         await agent.proofs.sendProblemReport({ proofRecordId: proof.id, description: t('ProofRequest.Declined') })
         await agent.proofs.declineRequest({ proofRecordId: proof.id })
 
-        if (proof.connectionId && goalCode && goalCode.endsWith('verify.once')) {
+        if (proof.connectionId && goalCode?.endsWith('verify.once')) {
           agent.connections.deleteById(proof.connectionId)
         }
       }
@@ -631,9 +631,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       hasProofStateReceivedError: proof?.state !== ProofState.RequestReceived,
     }
     return (
-      shareDisabledRef.current.hasCredentialError ||
-      shareDisabledRef.current.hasSatisfiedPredicateError ||
-      shareDisabledRef.current.hasRevokedOffense ||
+      shareDisabledRef.current.hasCredentialError ??
+      shareDisabledRef.current.hasSatisfiedPredicateError ??
+      shareDisabledRef.current.hasRevokedOffense ??
       shareDisabledRef.current.hasProofStateReceivedError
     )
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
@@ -672,14 +672,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                   <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                     {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
                     <ThemedText variant="title">
-                      {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                      {proofConnectionLabel ?? outOfBandInvitation?.label ?? t('ContactDetails.AContact')}
                     </ThemedText>
                   </ThemedText>
                 </View>
               ) : (
                 <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <ThemedText variant="title">
-                    {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                    {proofConnectionLabel ?? outOfBandInvitation?.label ?? t('ContactDetails.AContact')}
                   </ThemedText>{' '}
                   <ThemedText>{t('ProofRequest.IsRequestingYouToShare')}</ThemedText>
                   <ThemedText variant="title">{` ${activeCreds?.length} `}</ThemedText>
@@ -752,7 +752,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             {t('ProofRequest.SensitiveInformation')}
           </InfoTextBox>
         )}
-        {!loading && proofConnectionLabel && goalCode === 'aries.vc.verify' && (
+        {!loading && Boolean(proofConnectionLabel) && goalCode === 'aries.vc.verify' && (
           <ConnectionAlert connectionID={proofConnectionLabel} />
         )}
         {!loading && isShareDisabled() ? (
