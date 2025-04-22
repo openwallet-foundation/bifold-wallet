@@ -399,19 +399,19 @@ const translation = {
     "Button": "Sort/Filter",
     "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.",
     "CardTitle": {
-      "CardAccepted": "Card accepted:",
-      "CardDeclined": "Card declined:",
-      "CardExpired": "Card expired",
-      "CardRemoved": "Card removed",
-      "CardRevoked": "Card revoked",
-      "CardUpdates": "Card updates",
-      "WalletPinUpdated": "Wallet PIN updated",
-      "InformationSent": "Information sent to:",
-      "InformationNotSent": "Information not sent to:",
-      "Connection": "Connection",
-      "ConnectionRemoved": "Connection removed",
-      "ActivateBiometry": "Biometrics activated",
-      "DeactivateBiometry": "Biometrics deactivated"
+      "CardAccepted": "Card accepted: (PT-BR)",
+      "CardDeclined": "Card declined: (PT-BR)",
+      "CardExpired": "Card expired (PT-BR)",
+      "CardRemoved": "Card removed (PT-BR)",
+      "CardRevoked": "Card revoked (PT-BR)",
+      "CardUpdates": "Card updates (PT-BR)",
+      "WalletPinUpdated": "Wallet PIN updated (PT-BR)",
+      "InformationSent": "Information sent to (PT-BR):",
+      "InformationNotSent": "Information not sent to (PT-BR):",
+      "Connection": "Connection (PT-BR)",
+      "ConnectionRemoved": "Connection removed (PT-BR)",
+      "ActivateBiometry": "Biometrics activated (PT-BR)",
+      "DeactivateBiometry": "Biometrics deactivated (PT-BR)"
     },
     "CardDescription": {
       "CardExpired": "{{cardName}} expired",
@@ -690,6 +690,9 @@ const translation = {
     "YourInfo": "Your information was not shared (PT-BR)",
     "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (PT-BR)",
     "CredentailNotInWallet": "This credential is not present in your wallet. (PT-BR)",
+    "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details. (PT-BR)",
+    "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential. (PT-BR)",
+    "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again. (PT-BR)"
   },
   "Settings": {
     "Version": "Versão",

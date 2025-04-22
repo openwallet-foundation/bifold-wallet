@@ -16,10 +16,10 @@ import UnorderedList from './UnorderedList'
 import { ThemedText } from '../texts/ThemedText'
 
 interface ConnectionAlertProps {
-  connectionID?: string
+  connectionLabel?: string
 }
 
-const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
+const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionLabel }) => {
   const { t } = useTranslation()
   const { ColorPallet } = useTheme()
   const [infoCardVisible, setInfoCardVisible] = useState(false)
@@ -113,7 +113,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionID }) => {
       )}
       <ThemedText style={styles.notifyText}>
         {t('ConnectionAlert.NotificationBodyUpper') +
-          (connectionID || t('ContactDetails.AContact').toLowerCase()) +
+          (connectionLabel ?? t('ContactDetails.AContact').toLowerCase()) +
           t('ConnectionAlert.NotificationBodyLower')}
       </ThemedText>
     </View>

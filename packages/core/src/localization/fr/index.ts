@@ -414,20 +414,20 @@ const translation = {
         },
         "Button": "Sort/Filter(fr)",
         "NoHistory": "You haven't used any cards yet.\n\nEach time you add or use a card, that activity will be saved here.(fr)",
-        "CardTitle":{
-          "CardAccepted": "Carte Acceptée:",
-          "CardDeclined": "Carte refusée:",
-          "CardExpired": "Card expirée",
-          "CardRemoved": "Carte retirée",
-          "CardRevoked": "Carte révoquée",
-          "CardUpdates": "Mises à jour de la carte",
-          "WalletPinUpdated": "NIP du portefeuille mis à jour",
-          "InformationSent": "Information envoyée à:",
-          "InformationNotSent": "Information non envoyée à:",
-          "Connection": "Connexion",
-          "ConnectionRemoved": "Connexion retirée",
-          "ActivateBiometry": "Biométrie activée",
-          "DeactivateBiometry": "Biométrie désactivée",
+        "CardTitle": {
+            "CardAccepted": "Carte Acceptée:",
+            "CardDeclined": "Carte refusée:",
+            "CardExpired": "Card expirée",
+            "CardRemoved": "Carte retirée",
+            "CardRevoked": "Carte révoquée",
+            "CardUpdates": "Mises à jour de la carte",
+            "WalletPinUpdated": "NIP du portefeuille mis à jour",
+            "InformationSent": "Information envoyée à:",
+            "InformationNotSent": "Information non envoyée à:",
+            "Connection": "Connexion",
+            "ConnectionRemoved": "Connexion retirée",
+            "ActivateBiometry": "Biométrie activée",
+            "DeactivateBiometry": "Biométrie désactivée",
         },
         "CardDescription": {
             "CardExpired": "{{cardName}} expired(fr)",
@@ -699,6 +699,9 @@ const translation = {
         "YourInfo": "Votre information n'a pas été partagée",
         "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (FR)",
         "CredentailNotInWallet": "This credential is not present in your wallet.(FR)",
+        "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details. (FR)",
+        "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential. (FR)",
+        "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again. (FR)"
     },
     "Settings": {
         "Version": "Version",
@@ -892,6 +895,6 @@ const translation = {
         "LearnMore": "Learn what's New (FR)",
         "UpdateNow": "Update the app (FR)",
         "UpdateLater": "Do this later (FR)",
-      },
+    },
 }
 export default translation
