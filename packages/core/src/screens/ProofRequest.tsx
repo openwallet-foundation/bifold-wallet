@@ -16,11 +16,10 @@ import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
@@ -129,12 +128,6 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     TOKENS.HISTORY_ENABLED,
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
-  const shareDisabledRef = useRef({
-    hasCredentialError: false,
-    hasSatisfiedPredicateError: false, // this should mark the credential in some way
-    hasRevokedOffense: false,
-    hasProofStateReceivedError: false,
-  })
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -623,16 +616,18 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }, [navigation])
 
-  const isShareDisabled = useCallback(() => {
-    shareDisabledRef.current = {
+  const shareDisabledErrors = useMemo(() => {
+    return {
       hasCredentialError: !hasAvailableCredentials,
       hasSatisfiedPredicateError: !hasSatisfiedPredicates(getCredentialsFields()),
       hasRevokedOffense: revocationOffense,
       hasProofStateReceivedError: proof?.state !== ProofState.RequestReceived,
     }
-
-    return Object.values(shareDisabledRef.current).some((value) => value)
   }, [hasAvailableCredentials, hasSatisfiedPredicates, getCredentialsFields, revocationOffense, proof])
+
+  const isShareDisabled = useMemo(() => {
+    return Object.values(shareDisabledErrors).some((value) => value)
+  }, [shareDisabledErrors])
 
   const proofPageHeader = () => {
     return (
@@ -656,23 +651,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icon
-                    style={{ marginLeft: -2, marginRight: 10 }}
-                    name="highlight-off"
-                    color={ListItems.proofIcon.color}
-                    size={ListItems.proofIcon.fontSize}
-                  />
-
-                  <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                    {t('ProofRequest.YouDoNotHaveDataPredicate')}{' '}
-                    <ThemedText variant="title">
-                      {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
-                    </ThemedText>
-                  </ThemedText>
-                </View>
-              ) : (
+              {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? null : (
                 <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
                   <ThemedText variant="title">
                     {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
@@ -684,9 +663,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                   </ThemedText>
                 </ThemedText>
               )}
-              {isShareDisabled() && (
+              {isShareDisabled && (
                 <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
-                  {buildShareDisabledMessage()}
+                  {shareDisabledMessage}
                 </InfoTextBox>
               )}
             </View>
@@ -696,24 +675,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     )
   }
 
-  const buildShareDisabledMessage = () => {
+  const shareDisabledMessage = useMemo(() => {
     let finalMessage = t('ProofRequest.YouCantRespond') + '\n'
 
-    if (shareDisabledRef.current.hasCredentialError) {
+    if (shareDisabledErrors.hasCredentialError) {
       finalMessage += `\n${t('ProofRequest.CredentialNotInWallet')}`
     }
-    if (shareDisabledRef.current.hasSatisfiedPredicateError) {
+    if (shareDisabledErrors.hasSatisfiedPredicateError) {
       finalMessage += `\n${t('ProofRequest.ProofRequestPredicateError')}`
     }
-    if (shareDisabledRef.current.hasRevokedOffense) {
+    if (shareDisabledErrors.hasRevokedOffense) {
       finalMessage += `\n${t('ProofRequest.CredentialForProofIsRevoked')}`
     }
-    if (shareDisabledRef.current.hasProofStateReceivedError) {
+    if (shareDisabledErrors.hasProofStateReceivedError) {
       finalMessage += `\n${t('ProofRequest.ProofRequestStateError')}`
     }
 
     return finalMessage
-  }
+  }, [t, shareDisabledErrors])
 
   const handleAltCredChange = useCallback(
     (selectedCred: string, altCredentials: string[]) => {
@@ -749,9 +728,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           </InfoTextBox>
         )}
         {!loading && Boolean(proofConnectionLabel) && goalCode === 'aries.vc.verify' && (
-          <ConnectionAlert connectionID={proofConnectionLabel} />
+          <ConnectionAlert connectionLabel={proofConnectionLabel} />
         )}
-        {!loading && isShareDisabled() ? (
+        {!loading && isShareDisabled ? (
           <View style={styles.footerButton}>
             <Button
               title={t('Global.Cancel')}
