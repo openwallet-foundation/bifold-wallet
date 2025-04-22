@@ -207,7 +207,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
   [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
-  [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionID?: string }>
+  [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionLabel?: string }>
 }
 
 export interface Container {

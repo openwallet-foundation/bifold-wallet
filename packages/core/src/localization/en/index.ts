@@ -714,6 +714,9 @@ const translation = {
     "YourInfo": "Your information was not shared",
     "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing.",
     "CredentialNotInWallet": "This credential is not present in your wallet.",
+    "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details.",
+    "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential.",
+    "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again."
   },
   "Settings": {
     "Version": "Version",

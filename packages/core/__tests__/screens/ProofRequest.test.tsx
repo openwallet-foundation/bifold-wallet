@@ -505,8 +505,7 @@ describe('displays a proof request screen', () => {
       })
 
       // fails
-      const predicateMessage = getByText('ProofRequest.YouDoNotHaveDataPredicate', { exact: false })
-      const contact = getByText('ContactDetails.AContact', { exact: false })
+      const predicateMessage = getByText('ProofRequest.ProofRequestPredicateError', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
       const ageLabel = getByText(/Age/, { exact: false })
@@ -515,8 +514,6 @@ describe('displays a proof request screen', () => {
 
       expect(predicateMessage).not.toBeNull()
       expect(predicateMessage).toBeTruthy()
-      expect(contact).not.toBeNull()
-      expect(contact).toBeTruthy()
       expect(emailLabel).not.toBeNull()
       expect(emailLabel).toBeTruthy()
       expect(emailValue).not.toBeNull()
