@@ -18,7 +18,15 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, View } from 'react-native'
+import {
+  DeviceEventEmitter,
+  EmitterSubscription,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -65,6 +73,7 @@ import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
+import PopupModal from '../components/modals/PopupModal'
 
 type ProofRequestProps = {
   navigation: any
@@ -101,6 +110,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
 
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
@@ -167,6 +177,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       textDecorationLine: 'underline',
     },
   })
+
+  useEffect(() => {
+    // if (proof) {
+    //   proof.state = ProofState.ProposalSent
+    // }
+    if (proof && proof?.state !== ProofState.RequestReceived) {
+      // this needs to navigate back home when dismissed
+      DeviceEventEmitter.emit(
+        EventTypes.ERROR_ADDED,
+        new BifoldError(
+          t('Error.Title1048'),
+          t('Error.Message1048'),
+          t('ProofRequest.ProofRequestStateError', { state: proof.state }),
+          1048
+        )
+      )
+    }
+  }, [t, proof])
 
   useEffect(() => {
     if (!attestationMonitor) {
@@ -664,9 +692,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 </ThemedText>
               )}
               {isShareDisabled && (
-                <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
-                  {shareDisabledMessage}
-                </InfoTextBox>
+                <TouchableOpacity onPress={() => setShowDetailsModal(true)}>
+                  <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
+                    {t('ProofRequest.YouCantRespond')}
+                  </InfoTextBox>
+                </TouchableOpacity>
               )}
             </View>
           </>
@@ -676,7 +706,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }
 
   const shareDisabledMessage = useMemo(() => {
-    let finalMessage = t('ProofRequest.YouCantRespond') + '\n'
+    let finalMessage = ''
 
     if (shareDisabledErrors.hasCredentialError) {
       finalMessage += `\n${t('ProofRequest.CredentialNotInWallet')}`
@@ -834,6 +864,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
+      {showDetailsModal && (
+        <PopupModal
+          title={t('Error.Title1027')}
+          description={t('ProofRequest.ProofRequestErrorMessage')}
+          message={shareDisabledMessage}
+          notificationType={InfoBoxType.Error}
+          onCallToActionPressed={() => setShowDetailsModal(false)}
+          onCallToActionLabel={t('Global.Okay')}
+        />
+      )}
       <ScrollView>
         <View style={styles.pageContent}>
           {proofPageHeader()}

@@ -144,6 +144,8 @@ const translation = {
     "Message1046": "There was a problem while fetching contacts.",
     "Title1047": "Unable to display card.",
     "Message1047": "There was a problem parsing credential card.",
+    "Title1048": "Proof request problems.",
+    "Message1048": "There was a problem with the proof request.",
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -716,7 +718,8 @@ const translation = {
     "CredentialNotInWallet": "This credential is not present in your wallet.",
     "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details.",
     "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential.",
-    "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again."
+    "ProofRequestStateError": "The proof request received is in: {{state}}, decline this proof and try again.",
+    "ProofRequestErrorMessage": "Something went wrong with the proof request."
   },
   "Settings": {
     "Version": "Version",
