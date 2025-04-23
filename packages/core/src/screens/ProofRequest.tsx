@@ -25,6 +25,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -32,7 +33,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionImage from '../components/misc/ConnectionImage'
-import { InfoBoxType } from '../components/misc/InfoBox'
+import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
@@ -73,7 +74,6 @@ import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
-import PopupModal from '../components/modals/PopupModal'
 
 type ProofRequestProps = {
   navigation: any
@@ -91,6 +91,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertNetworkConnected } = useNetwork()
+  const { height } = useWindowDimensions()
   const proof = useProofById(proofId)
   const connection = useConnectionById(proof?.connectionId ?? '')
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
@@ -111,6 +112,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
+  // const [showErrorModal, setShowErrorModal] = useState(false)
 
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
@@ -179,9 +181,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   })
 
   useEffect(() => {
-    // if (proof) {
-    //   proof.state = ProofState.ProposalSent
-    // }
+    if (proof) {
+      // proof.state = ProofState.ProposalSent
+    }
     if (proof && proof?.state !== ProofState.RequestReceived) {
       // this needs to navigate back home when dismissed
       DeviceEventEmitter.emit(
@@ -692,11 +694,30 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 </ThemedText>
               )}
               {isShareDisabled && (
-                <TouchableOpacity onPress={() => setShowDetailsModal(true)}>
-                  <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
-                    {t('ProofRequest.YouCantRespond')}
-                  </InfoTextBox>
-                </TouchableOpacity>
+                <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
+                  <View style={{ flex: 1, flexWrap: 'wrap' }}>
+                    <ThemedText
+                      style={{
+                        alignSelf: 'center',
+                        flex: 1,
+                        flexWrap: 'wrap',
+                        color: ColorPallet.notification.errorText,
+                      }}
+                    >
+                      {t('ProofRequest.YouCantRespond')}
+                    </ThemedText>
+                    <TouchableOpacity onPress={() => setShowDetailsModal(true)}>
+                      <ThemedText
+                        style={{
+                          fontWeight: TextTheme.normal.fontWeight,
+                          color: ColorPallet.brand.link,
+                        }}
+                      >
+                        {t('Global.ShowDetails')}
+                      </ThemedText>
+                    </TouchableOpacity>
+                  </View>
+                </InfoTextBox>
               )}
             </View>
           </>
@@ -864,15 +885,37 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
-      {showDetailsModal && (
-        <PopupModal
+      {/* {showErrorModal && (
+        <InfoBox
           title={t('Error.Title1027')}
           description={t('ProofRequest.ProofRequestErrorMessage')}
           message={shareDisabledMessage}
           notificationType={InfoBoxType.Error}
           onCallToActionPressed={() => setShowDetailsModal(false)}
           onCallToActionLabel={t('Global.Okay')}
+          showVersionFooter={true}
         />
+      )} */}
+      {showDetailsModal && (
+        <SafeAreaView
+          style={{
+            minHeight: height,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: ColorPallet.brand.primaryBackground,
+          }}
+        >
+          <InfoBox
+            title={t('Error.Title1027')}
+            description={t('ProofRequest.ProofRequestErrorMessage')}
+            message={shareDisabledMessage}
+            notificationType={InfoBoxType.Error}
+            onCallToActionPressed={() => setShowDetailsModal(false)}
+            onCallToActionLabel={t('Global.Okay')}
+            showVersionFooter={true}
+          />
+        </SafeAreaView>
       )}
       <ScrollView>
         <View style={styles.pageContent}>
