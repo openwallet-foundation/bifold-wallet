@@ -145,6 +145,8 @@ const translation = {
         "Message1046": "Il y a eu un problème lors de la récupération des contacts.",
         "Title1047": "Unable to display card. (PT-FR)",
         "Message1047": "There was a problem parsing credential card. (PT-FR)",
+        "Title1048": "Proof request problems. (FR)",
+        "Message1048": "There was a problem with the proof request. (FR)",
     },
     "SelectionAxs": {
         "RadioChecked": "checked(fr)",
