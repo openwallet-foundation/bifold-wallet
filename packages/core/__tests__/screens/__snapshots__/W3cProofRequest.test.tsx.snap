@@ -193,6 +193,9 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   }
                 >
                   ProofRequest.YouCantRespond
+
+ProofRequest.CredentialNotInWallet
+ProofRequest.ProofRequestPredicateError
                 </Text>
               </View>
             </View>
