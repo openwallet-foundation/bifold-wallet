@@ -41,8 +41,7 @@ export const getAttributeField = (display: W3cCredentialDisplay, searchKey: stri
   if (credentialSubject) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [key, value] of Object.entries(credentialSubject)) {
-      if (key !== searchKey) continue
-      if (!value) continue
+      if (key !== searchKey || !value) continue
       const { display } = value
       const { name } = display[0]
       attributeName = name
@@ -66,8 +65,7 @@ export const buildFieldsFromW3cCredsCredential = (
   return (
     Object.entries(display.attributes)
       .filter(([key]) => key !== 'id')
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(([key, value]) => getAttributeField(display, key))
+      .map(([key]) => getAttributeField(display, key))
       .filter((field) => field !== undefined)
       .filter((field: FiledExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
       .map((fld) => fld.field) || []
