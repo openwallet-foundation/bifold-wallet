@@ -251,6 +251,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     })
 
     return revList.some((item) => {
+      // no revocation date means it's not revoked, leave early
+      if (!item.revocationDate) {
+        return false
+      }
       const revDate = moment(item.revocationDate)
       return item.id.some((id) => {
         return Object.keys(fields).some((key) => {
