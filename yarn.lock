@@ -2778,7 +2778,7 @@ __metadata:
 
 "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=483c50&locator=bifold-wallet-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=b37c4f&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2822,7 +2822,7 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
     webcrypto-core: ^1.8.0
-  checksum: a4067ec213273a779780e4d32f2e0cb0e654e4e3fec348d7b3dabc24d4bfe299d003a951962e550be01d0306488bd7d657eb079037f82f9491edc1381007b33b
+  checksum: 42a0ec9b9efbd63ffd489790e16a735bff5253107d1f3b6d2dbc813b25539c95aa2cda3d880422ec284e9f8bee55582952b0214ea7c6fd2c0ad478f3d332c8d7
   languageName: node
   linkType: hard
 
