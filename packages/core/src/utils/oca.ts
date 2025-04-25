@@ -16,18 +16,20 @@ export type FiledExt = {
   attribute_name: string
 }
 
+type AttributeFieldValue = string | number | null
+
 export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FiledExt | undefined => {
   let attributeName: string = 'Unknown'
-  let attributeValue: string | number | null = 'Unknown'
+  let attributeValue: AttributeFieldValue = 'Unknown'
 
   for (const [key, value] of Object.entries(display.attributes)) {
-    let formattedValue: string | number | null
+    let formattedValue: AttributeFieldValue
 
     if (searchKey === key) {
       if (typeof value === 'object' && value !== null) {
         formattedValue = JSON.stringify(value) // Convert object to string
       } else {
-        formattedValue = value as string | number | null
+        formattedValue = value as AttributeFieldValue
       }
 
       attributeName = key
@@ -51,7 +53,7 @@ export const getAttributeField = (display: W3cCredentialDisplay, searchKey: stri
   return {
     field: new Attribute({
       name: attributeName,
-      value: attributeValue as string | number | null,
+      value: attributeValue,
       mimeType: typeof attributeValue === 'number' ? 'text/number' : 'text/plain',
     }),
     attribute_name: searchKey,
