@@ -889,7 +889,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           <InfoBox
             title={t('Error.Title1027')}
             description={t('ProofRequest.ProofRequestErrorMessage')}
-            message={shareDisabledMessage}
+            message={t('ProofRequest.ProofRequestStateError', { state: proof?.state })}
             notificationType={InfoBoxType.Error}
             onCallToActionLabel={t('Global.TryAgain')}
             onCallToActionPressed={() => {
