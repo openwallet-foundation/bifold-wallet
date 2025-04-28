@@ -37,7 +37,15 @@ export const ThemeProvider = ({ themes, defaultThemeName, children }: ThemeProvi
     [themes, dispatch]
   )
 
-  return <ThemeContext.Provider value={{ ...activeTheme, setTheme }}>{children}</ThemeContext.Provider>
+  // prevent re-rendering of the context value
+  const value = useMemo(() => {
+    return {
+      ...activeTheme,
+      setTheme,
+    }
+  }, [activeTheme, setTheme])
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
 
 export const useTheme = () => useContext(ThemeContext)
