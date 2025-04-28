@@ -491,7 +491,7 @@ const translation = {
         "Credential": "attestation",
     },
     "PushNotifications": {
-        "EnableNotifiactions": "Activer les Notifications pour recevoir des alertes instantanées",
+        "EnableNotifications": "Activer les Notifications pour recevoir des alertes instantanées",
         "BeNotified": "Soyez averti lorsque vous recevez :",
         "ReceiveNotifications": "Recevoir des notifications",
         "BulletFour": "nouveaux messages",

@@ -469,7 +469,7 @@ const translation = {
     "Credential": "credencial"
   },
   "PushNotifications": {
-    "EnableNotifiactions": "Enable Notifications to get instant alerts (PT-BR)",
+    "EnableNotifications": "Enable Notifications to get instant alerts (PT-BR)",
     "BeNotified": "Be notified when you receive: (PT-BR)",
     "ReceiveNotifications": "Receive notifications (PT-BR)",
     "BulletFour": "new messages (PT-BR)",

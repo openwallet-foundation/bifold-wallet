@@ -4,6 +4,8 @@ import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
 import { useNavigationContainerRef } from '@react-navigation/native'
+import { isTablet } from 'react-native-device-info'
+import Orientation from 'react-native-orientation-locker'
 import { animatedComponents } from './animated-components'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
@@ -34,6 +36,10 @@ const createApp = (container: Container): React.FC => {
       // RN version can be displayed.
       SplashScreen.hide()
     }, [])
+
+    if (!isTablet()) {
+      Orientation.lockToPortrait()
+    }
 
     return (
       <ContainerProvider value={container}>

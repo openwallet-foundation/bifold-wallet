@@ -40,6 +40,7 @@ export enum Screens {
   Biometry = 'Biometry',
   ToggleBiometry = 'Toggle Biometry',
   PushNotifications = 'Push Notifications',
+  TogglePushNotifications = 'Toggle Push Notifications',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofChangeCredential = 'Choose a credential',
@@ -163,7 +164,7 @@ export type SettingStackParams = {
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
-  [Screens.PushNotifications]: { isMenu?: boolean }
+  [Screens.TogglePushNotifications]: undefined
   [Screens.HistorySettings]: undefined
   [Screens.AutoLock]: undefined
 }

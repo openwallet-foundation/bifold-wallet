@@ -10,7 +10,7 @@ import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINChange from '../screens/PINChange'
-import PushNotification from '../screens/PushNotification'
+import TogglePushNotifications from '../screens/TogglePushNotifications'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
 import { Screens, SettingStackParams } from '../types/navigators'
@@ -110,12 +110,12 @@ const SettingStack: React.FC = () => {
         }}
       ></Stack.Screen>
       <Stack.Screen
-        name={Screens.PushNotifications}
-        component={PushNotification}
+        name={Screens.TogglePushNotifications}
+        component={TogglePushNotifications}
         options={{
           title: t('Screens.PushNotifications'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.PushNotifications],
+          ...ScreenOptionsDictionary[Screens.TogglePushNotifications],
         }}
       />
       <Stack.Screen

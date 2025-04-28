@@ -486,7 +486,7 @@ const translation = {
     "Credential": "credential"
   },
   "PushNotifications": {
-    "EnableNotifiactions": "Enable Notifications to get instant alerts",
+    "EnableNotifications": "Enable Notifications to get instant alerts",
     "BeNotified": "Be notified when you receive:",
     "ReceiveNotifications": "Receive notifications",
     "BulletFour": "new messages",
@@ -812,7 +812,7 @@ const translation = {
     "OnTheWay": 'On The Way',
     "Declined": 'Declined',
     "UseBiometry": 'Use Biometry',
-    "PushNotifications": 'Use Push Notifications',
+    "PushNotifications": 'Push notifications',
     "CustomNotification": 'Custom Notification',
     "ProofRequesting": 'Proof Requesting',
     "NameWallet": "Name your wallet",

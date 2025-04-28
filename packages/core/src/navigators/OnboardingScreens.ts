@@ -19,7 +19,7 @@ interface ScreenComponents {
   Terms: React.FC<StackScreenProps<ParamListBase>>
   NameWallet: React.FC<StackScreenProps<ParamListBase>>
   Biometry: React.FC<StackScreenProps<ParamListBase>>
-  PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.PushNotifications>>
+  PushNotifications: React.FC<StackScreenProps<ParamListBase>>
   Developer: React.FC<StackScreenProps<ParamListBase>>
   AttemptLockout: React.FC<StackScreenProps<ParamListBase>>
   OnboardingScreen: React.FC
@@ -111,7 +111,7 @@ export const getOnboardingScreens = (
   },
   {
     name: Screens.PushNotifications,
-    component: components.PushNotification,
+    component: components.PushNotifications,
     options: () => ({
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.PushNotifications'),

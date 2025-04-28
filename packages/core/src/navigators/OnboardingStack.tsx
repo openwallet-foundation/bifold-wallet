@@ -17,7 +17,7 @@ import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
-import PushNotification from '../screens/PushNotification'
+import PushNotifications from '../screens/PushNotifications'
 import { OnboardingStackParams } from '../types/navigators'
 import { WalletSecret } from '../types/security'
 import { State } from '../types/state'
@@ -171,7 +171,7 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
         Terms,
         NameWallet,
         Biometry,
-        PushNotification,
+        PushNotifications,
         Developer,
         AttemptLockout,
         OnboardingScreen,

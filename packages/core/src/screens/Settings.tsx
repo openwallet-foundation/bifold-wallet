@@ -183,9 +183,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         accessibilityLabel: t('Settings.Notifications'),
         testID: testIdWithKey('Notifications'),
         onPress: () =>
-          navigation
-            .getParent()
-            ?.navigate(Stacks.SettingStack, { screen: Screens.PushNotifications, params: { isMenu: true } }),
+          navigation.navigate(Screens.TogglePushNotifications),
       })
   }
 

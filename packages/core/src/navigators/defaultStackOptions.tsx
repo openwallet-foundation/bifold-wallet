@@ -50,6 +50,10 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerBackTestID: testIdWithKey('Back'),
   },
+  [Screens.TogglePushNotifications]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerBackTestID: testIdWithKey('Back'),
+  },
   [Screens.OpenIDCredentialDetails]: {
     headerShown: true,
   },

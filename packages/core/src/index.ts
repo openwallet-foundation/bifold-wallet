@@ -36,6 +36,7 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
 import { AutoLockTime, ActivityProvider, useActivity } from './contexts/activity'
 import { AuthProvider } from './contexts/auth'
+import NavContainer from './contexts/navigation'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
@@ -182,6 +183,7 @@ export {
   AutoLockTime,
   ToastType,
   toastConfig,
+  NavContainer,
   NetInfo,
   OnboardingPages,
   OpenIDCredentialRecordProvider,
