@@ -18,13 +18,21 @@ import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, EmitterSubscription, FlatList, ScrollView, StyleSheet, View } from 'react-native'
+import {
+  DeviceEventEmitter,
+  EmitterSubscription,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { CredentialCard } from '../components/misc'
 import ConnectionImage from '../components/misc/ConnectionImage'
-import { InfoBoxType } from '../components/misc/InfoBox'
+import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
@@ -82,6 +90,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const { agent } = useAppAgent()
   const { t } = useTranslation()
   const { assertNetworkConnected } = useNetwork()
+  const { height } = useWindowDimensions()
   const proof = useProofById(proofId)
   const connection = useConnectionById(proof?.connectionId ?? '')
   const [pendingModalVisible, setPendingModalVisible] = useState(false)
@@ -101,6 +110,8 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
 
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
@@ -169,6 +180,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   })
 
   useEffect(() => {
+    if (proof && proof?.state !== ProofState.RequestReceived) {
+      setShowErrorModal(true)
+    }
+  }, [t, proof])
+
+  useEffect(() => {
     if (!attestationMonitor) {
       return
     }
@@ -234,6 +251,10 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     })
 
     return revList.some((item) => {
+      // no revocation date means it's not revoked, leave early
+      if (!item.revocationDate) {
+        return false
+      }
       const revDate = moment(item.revocationDate)
       return item.id.some((id) => {
         return Object.keys(fields).some((key) => {
@@ -651,21 +672,39 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           <>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
-              {hasAvailableCredentials && !hasSatisfiedPredicates(getCredentialsFields()) ? null : (
-                <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-                  <ThemedText variant="title">
-                    {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
-                  </ThemedText>{' '}
-                  <ThemedText>{t('ProofRequest.IsRequestingYouToShare')}</ThemedText>
-                  <ThemedText variant="title">{` ${activeCreds?.length} `}</ThemedText>
-                  <ThemedText>
-                    {activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}
-                  </ThemedText>
+              <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+                <ThemedText variant="title">
+                  {proofConnectionLabel || outOfBandInvitation?.label || t('ContactDetails.AContact')}
+                </ThemedText>{' '}
+                <ThemedText>{t('ProofRequest.IsRequestingYouToShare')}</ThemedText>
+                <ThemedText variant="title">{` ${activeCreds?.length} `}</ThemedText>
+                <ThemedText>
+                  {activeCreds?.length > 1 ? t('ProofRequest.Credentials') : t('ProofRequest.Credential')}
                 </ThemedText>
-              )}
+              </ThemedText>
               {isShareDisabled && (
                 <InfoTextBox type={InfoBoxType.Error} style={{ marginTop: 16 }} textStyle={{ fontWeight: 'normal' }}>
-                  {shareDisabledMessage}
+                  <View style={{ flex: 1, flexWrap: 'wrap' }}>
+                    <ThemedText
+                      style={{
+                        alignSelf: 'center',
+                        flex: 1,
+                        flexWrap: 'wrap',
+                        color: ColorPallet.notification.errorText,
+                      }}
+                    >
+                      {t('ProofRequest.YouCantRespond')}{' '}
+                      <ThemedText
+                        style={{
+                          fontWeight: TextTheme.normal.fontWeight,
+                          color: ColorPallet.brand.link,
+                        }}
+                        onPress={() => setShowDetailsModal(true)}
+                      >
+                        {t('Global.ShowDetails')}
+                      </ThemedText>
+                    </ThemedText>
+                  </View>
                 </InfoTextBox>
               )}
             </View>
@@ -676,23 +715,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }
 
   const shareDisabledMessage = useMemo(() => {
-    let finalMessage = t('ProofRequest.YouCantRespond') + '\n'
+    let finalMessage = `${t('ProofRequest.YouCantRespondReasons')}\n`
 
     if (shareDisabledErrors.hasCredentialError) {
-      finalMessage += `\n${t('ProofRequest.CredentialNotInWallet')}`
+      finalMessage += `\n \u2B24 ${t('ProofRequest.CredentialIsMissing')}`
     }
     if (shareDisabledErrors.hasSatisfiedPredicateError) {
-      finalMessage += `\n${t('ProofRequest.ProofRequestPredicateError')}`
+      finalMessage += `\n \u2B24 ${t('ProofRequest.ProofRequestPredicateError')}`
     }
     if (shareDisabledErrors.hasRevokedOffense) {
-      finalMessage += `\n${t('ProofRequest.CredentialForProofIsRevoked')}`
+      finalMessage += `\n \u2B24 ${t('ProofRequest.CredentialForProofIsRevoked')}`
     }
     if (shareDisabledErrors.hasProofStateReceivedError) {
-      finalMessage += `\n${t('ProofRequest.ProofRequestStateError')}`
+      finalMessage += `\n \u2B24 ${t('ProofRequest.ProofRequestStateError', { state: proof?.state })}`
     }
 
+    finalMessage += `\n\n${t('ProofRequest.PleaseAddress')}`
     return finalMessage
-  }, [t, shareDisabledErrors])
+  }, [t, shareDisabledErrors, proof])
 
   const handleAltCredChange = useCallback(
     (selectedCred: string, altCredentials: string[]) => {
@@ -834,6 +874,53 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }
   return (
     <SafeAreaView style={styles.pageContainer} edges={['bottom', 'left', 'right']}>
+      {showErrorModal && (
+        <SafeAreaView
+          style={{
+            minHeight: height,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: ColorPallet.brand.primaryBackground,
+          }}
+        >
+          <InfoBox
+            title={t('Error.Title1027')}
+            description={t('ProofRequest.ProofRequestErrorMessage')}
+            message={t('ProofRequest.ProofRequestStateError', { state: proof?.state })}
+            notificationType={InfoBoxType.Error}
+            onCallToActionLabel={t('Global.TryAgain')}
+            onCallToActionPressed={() => {
+              setShowErrorModal(false)
+              handleCancelTouched()
+            }}
+            showVersionFooter={true}
+          />
+        </SafeAreaView>
+      )}
+      {showDetailsModal && (
+        <SafeAreaView
+          style={{
+            minHeight: height,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: ColorPallet.brand.primaryBackground,
+          }}
+        >
+          <InfoBox
+            title={t('Error.Title1027')}
+            description={t('ProofRequest.ProofRequestErrorMessage')}
+            message={shareDisabledMessage}
+            notificationType={InfoBoxType.Error}
+            onCallToActionPressed={() => setShowDetailsModal(false)}
+            onCallToActionLabel={t('Global.GotIt')}
+            showVersionFooter={true}
+            renderShowDetails={true}
+            onClosePressed={() => setShowDetailsModal(false)}
+          />
+        </SafeAreaView>
+      )}
       <ScrollView>
         <View style={styles.pageContent}>
           {proofPageHeader()}

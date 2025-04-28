@@ -47,6 +47,7 @@ const translation = {
         "Updated": "Mis à jour",
         "Remove": "Supprimer",
         "Close": "Fermer",
+        "GotIt": "Got it (FR)",
     },
     "Date": {
         "ShortFormat": "D MMM",
@@ -144,6 +145,8 @@ const translation = {
         "Message1046": "Il y a eu un problème lors de la récupération des contacts.",
         "Title1047": "Unable to display card. (PT-FR)",
         "Message1047": "There was a problem parsing credential card. (PT-FR)",
+        "Title1048": "Proof request problems. (FR)",
+        "Message1048": "There was a problem with the proof request. (FR)",
     },
     "SelectionAxs": {
         "RadioChecked": "checked(fr)",
@@ -697,11 +700,15 @@ const translation = {
         "DeclineBulletPoint3": "Etes-vous sûr vous voulez refuser cette demande de preuve?",
         "NoInfoShared": "Aucune information n'a été partagée",
         "YourInfo": "Votre information n'a pas été partagée",
-        "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (FR)",
-        "CredentailNotInWallet": "This credential is not present in your wallet.(FR)",
-        "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details. (FR)",
-        "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential. (FR)",
-        "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again. (FR)"
+        "YouCantRespond": "You can't respond to this proof request. (FR)",
+        "YouCantRespondReasons": "You can't respond due to:  (FR)",
+        "CredentialNotInWallet": "This credential is not present in your wallet. (FR)",
+        "CredentialIsMissing": "missing credentials (FR)",
+        "ProofRequestPredicateError": "requirements aren't met (FR)",
+        "CredentialForProofIsRevoked": "revoked credential (FR)",
+        "ProofRequestStateError": "The proof request received is in: {{state}}, decline this proof and try again. (FR)",
+        "ProofRequestErrorMessage": "Something went wrong with the proof request. (FR)",
+        "PleaseAddress": " Please address them before continuing. (FR)",
     },
     "Settings": {
         "Version": "Version",

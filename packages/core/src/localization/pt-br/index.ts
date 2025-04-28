@@ -46,6 +46,7 @@ const translation = {
     "Updated": "Updated",
     "Close": "Fechar",
     "Remove": "Remover",
+    "GotIt": "Got it (PT-BR)",
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -143,6 +144,8 @@ const translation = {
     "Message1046": "There was a problem while fetching contacts. (PT-BR)",
     "Title1047": "Unable to display card. (PT-BR)",
     "Message1047": "There was a problem parsing credential card. (PT-BR)",
+    "Title1048": "Proof request problems. (PT-BR)",
+    "Message1048": "There was a problem with the proof request. (PT-BR)",
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -688,11 +691,15 @@ const translation = {
     "DeclineBulletPoint3": "Você tem certeza que quer recusar esta requisição de prova?",
     "NoInfoShared": "No information was shared (PT-BR)",
     "YourInfo": "Your information was not shared (PT-BR)",
-    "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing. (PT-BR)",
-    "CredentailNotInWallet": "This credential is not present in your wallet. (PT-BR)",
-    "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details. (PT-BR)",
-    "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential. (PT-BR)",
-    "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again. (PT-BR)"
+    "YouCantRespond": "You can't respond to this proof request. (PT-BR)",
+    "YouCantRespondReasons": "You can't respond due to:  (PT-BR)",
+    "CredentialNotInWallet": "This credential is not present in your wallet. (PT-BR)",
+    "CredentialIsMissing": "missing credentials (PT-BR)",
+    "ProofRequestPredicateError": "requirements aren't met (PT-BR)",
+    "CredentialForProofIsRevoked": "revoked credential (PT-BR)",
+    "ProofRequestStateError": "The proof request received is in: {{state}}, decline this proof and try again. (PT-BR)",
+    "ProofRequestErrorMessage": "Something went wrong with the proof request. (PT-BR)",
+    "PleaseAddress": " Please address them before continuing. (PT-BR)",
   },
   "Settings": {
     "Version": "Versão",

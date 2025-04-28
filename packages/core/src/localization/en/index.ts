@@ -47,6 +47,7 @@ const translation = {
     "Updated": "Updated",
     "Close": "Close",
     "Remove": "Remove",
+    "GotIt": "Got it",
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -144,6 +145,8 @@ const translation = {
     "Message1046": "There was a problem while fetching contacts.",
     "Title1047": "Unable to display card.",
     "Message1047": "There was a problem parsing credential card.",
+    "Title1048": "Proof request problems.",
+    "Message1048": "There was a problem with the proof request.",
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -712,11 +715,15 @@ const translation = {
     "DeclineBulletPoint3": "Are you sure you want to decline this proof request?",
     "NoInfoShared": "No information was shared",
     "YourInfo": "Your information was not shared",
-    "YouCantRespond": "You can't respond due to the following reasons. Please address them before continuing.",
+    "YouCantRespond": "You can't respond to this proof request.",
+    "YouCantRespondReasons": "You can't respond due to: ",
     "CredentialNotInWallet": "This credential is not present in your wallet.",
-    "ProofRequestPredicateError": "One of the predicate checks has failed, see credential card for details.",
-    "CredentialForProofIsRevoked": "The credential requested for proof has been revoked and cannot be used, please request a new credential.",
-    "ProofRequestStateError": "The proof request metadata is malformed, decline this proof and try again."
+    "CredentialIsMissing": "missing credentials",
+    "ProofRequestPredicateError": "requirements aren't met",
+    "CredentialForProofIsRevoked": "revoked credential",
+    "ProofRequestStateError": "The proof request received is in: {{state}}, decline this proof and try again.",
+    "ProofRequestErrorMessage": "Something went wrong with the proof request.",
+    "PleaseAddress": " Please address them before continuing.",
   },
   "Settings": {
     "Version": "Version",
