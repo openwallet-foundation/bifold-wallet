@@ -426,9 +426,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   }, [activeCreds, bundleResolver])
 
   const hasAvailableCredentials = useMemo(() => {
-    // console.log('hasAvailableCredentials', retrievedCredentials)
     const fields = getCredentialsFields()
-    // console.log('hasAvailableCredentials', fields)
 
     return !!retrievedCredentials && Object.values(fields).every((c) => c.length > 0)
   }, [retrievedCredentials, getCredentialsFields])
