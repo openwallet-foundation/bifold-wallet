@@ -15,7 +15,7 @@ import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import { ThemedText } from '../components/texts/ThemedText'
 
-const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePushNotifications>> = ({ route }) => {
+const PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.PushNotifications>> = ({ route }) => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const { agent } = useAgent()

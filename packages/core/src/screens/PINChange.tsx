@@ -1,42 +1,38 @@
-import { ParamListBase } from '@react-navigation/native'
-import { StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { ParamListBase, useNavigation } from '@react-navigation/native'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
+  DeviceEventEmitter,
+  findNodeHandle,
   Keyboard,
   StyleSheet,
-  View,
   TextInput,
   TouchableOpacity,
-  findNodeHandle,
-  DeviceEventEmitter,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../components/buttons/Button-api'
+import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 import PINInput from '../components/inputs/PINInput'
 import AlertModal from '../components/modals/AlertModal'
+import { ThemedText } from '../components/texts/ThemedText'
 import KeyboardView from '../components/views/KeyboardView'
 import { EventTypes, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { Screens } from '../types/navigators'
+import { OnboardingStackParams, Screens } from '../types/navigators'
+import { useAppAgent } from '../utils/agent'
 import { createPINValidations, PINValidationsType } from '../utils/PINValidation'
 import { testIdWithKey } from '../utils/testable'
-import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
-import { ThemedText } from '../components/texts/ThemedText'
-
-interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
-  setAuthenticated: (status: boolean) => void
-  explainedStatus: boolean
-}
 
 interface ModalState {
   visible: boolean
@@ -45,10 +41,12 @@ interface ModalState {
   onModalDismiss?: () => void
 }
 
-const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus }) => {
-  const { setPIN: setWalletPIN } = useAuth()
+const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = () => {
+  const { agent } = useAppAgent()
+  const { checkWalletPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
+  const [PINOld, setPINOld] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [modalState, setModalState] = useState<ModalState>({
     visible: false,
@@ -56,25 +54,34 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     message: '',
   })
   const iconSize = 24
-  const [, dispatch] = useStore()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
+  const [store] = useStore()
   const { t } = useTranslation()
   const [inlineMessageField1, setInlineMessageField1] = useState<InlineMessageProps>()
   const [inlineMessageField2, setInlineMessageField2] = useState<InlineMessageProps>()
-
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
-  const [PINExplainer, PINHeader, { PINSecurity, showPINExplainer }, Button, inlineMessages] = useServices([
-    TOKENS.SCREEN_PIN_EXPLAINER,
+  const [
+    PINHeader,
+    { PINSecurity },
+    Button,
+    inlineMessages,
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+  ] = useServices([
     TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
     TOKENS.INLINE_ERRORS,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
-
-  const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
-
   const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
     createPINValidations(PIN, PINSecurity.rules)
   )
@@ -91,29 +98,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     contentContainer: {},
     controlsContainer: {},
   })
-
-  const passcodeCreate = useCallback(
-    async (PIN: string) => {
-      try {
-        await setWalletPIN(PIN)
-        setAuthenticated(true)
-        // this dispatch finishes this step of onboarding and will cause a navigation
-        dispatch({
-          type: DispatchAction.DID_CREATE_PIN,
-        })
-      } catch (err: unknown) {
-        const error = new BifoldError(
-          t('Error.Title1040'),
-          t('Error.Message1040'),
-          (err as Error)?.message ?? err,
-          1040
-        )
-
-        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
-      }
-    },
-    [setWalletPIN, setAuthenticated, dispatch, t]
-  )
 
   const attentionMessage = useCallback(
     (title: string, message: string, pinOne: boolean) => {
@@ -160,37 +144,104 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     [PINOneValidations, t, attentionMessage]
   )
 
-  const handleCreatePinTap = useCallback(async () => {
-    setIsLoading(true)
-    if (validatePINEntry(PIN, PINTwo)) {
-      await passcodeCreate(PIN)
+  const checkOldPIN = useCallback(
+    async (PIN: string): Promise<boolean> => {
+      const valid = await checkWalletPIN(PIN)
+      if (!valid) {
+        setModalState({
+          visible: true,
+          title: t('PINCreate.InvalidPIN'),
+          message: t(`PINCreate.Message.OldPINIncorrect`),
+        })
+      }
+      return valid
+    },
+    [checkWalletPIN, t]
+  )
+
+  const logHistoryRecord = useCallback(() => {
+    try {
+      if (!(agent && historyEnabled)) {
+        logger.trace(
+          `[${PINChange.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined`
+        )
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+      /** Save history record for pin edited */
+      const recordData: HistoryRecord = {
+        type: HistoryCardType.PinChanged,
+        message: HistoryCardType.PinChanged,
+        createdAt: new Date(),
+      }
+
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${PINChange.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-    setIsLoading(false)
-  }, [PIN, PINTwo, passcodeCreate, validatePINEntry])
+  }, [agent, historyEnabled, logger, historyManagerCurried])
+
+  const handleChangePinTap = async () => {
+    try {
+      setIsLoading(true)
+      const valid = validatePINEntry(PIN, PINTwo)
+      if (valid) {
+        const oldPinValid = await checkOldPIN(PINOld)
+        if (oldPinValid) {
+          const success = await rekeyWallet(agent, PINOld, PIN, store.preferences.useBiometry)
+          if (success) {
+            if (historyEventsLogger.logPinChanged) {
+              logHistoryRecord()
+            }
+
+            setModalState({
+              visible: true,
+              title: t('PINChange.PinChangeSuccessTitle'),
+              message: t('PINChange.PinChangeSuccessMessage'),
+              onModalDismiss: () => {
+                navigation.navigate(Screens.Settings as never)
+              },
+            })
+          }
+        }
+      }
+    } catch (err: unknown) {
+      const error = new BifoldError(t('Error.Title1049'), t('Error.Message1049'), (err as Error)?.message ?? err, 1049)
+
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const isContinueDisabled = useMemo((): boolean => {
-    if (inlineMessages.enabled) {
+    if (inlineMessages || isLoading) {
       return false
     }
-    return isLoading || PIN.length < minPINLength || PINTwo.length < minPINLength
-  }, [isLoading, PIN, PINTwo, inlineMessages])
 
-  const continueCreatePIN = useCallback(() => {
-    setExplained(true)
-  }, [])
+    return PIN === '' || PINTwo === '' || PINOld === '' || PIN.length < minPINLength || PINTwo.length < minPINLength
+  }, [inlineMessages, isLoading, PIN, PINTwo, PINOld])
 
   useEffect(() => {
     setInlineMessageField1(undefined)
     setInlineMessageField2(undefined)
   }, [PIN, PINTwo])
 
-  return explained ? (
+  return (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <PINHeader />
+          <PINHeader updatePin />
           <PINInput
-            label={t('PINCreate.EnterPINTitle')}
+            label={t('PINChange.EnterOldPINTitle')}
+            testID={testIdWithKey('EnterOldPIN')}
+            accessibilityLabel={t('PINChange.EnterOldPIN')}
+            onPINChanged={(p: string) => {
+              setPINOld(p)
+            }}
+          />
+          <PINInput
+            label={t('PINChange.EnterPINTitle')}
             onPINChanged={(p: string) => {
               setPIN(p)
               setPINOneValidations(createPINValidations(p, PINSecurity.rules))
@@ -213,7 +264,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             inlineMessage={inlineMessageField1}
           />
           <PINInput
-            label={t('PINCreate.ReenterPIN')}
+            label={t('PINChange.ReenterPIN')}
             onPINChanged={(p: string) => {
               setPINTwo(p)
               if (p.length === minPINLength) {
@@ -229,7 +280,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
               }
             }}
             testID={testIdWithKey('ReenterPIN')}
-            accessibilityLabel={t('PINCreate.ReenterPIN')}
+            accessibilityLabel={t('PINChange.ReenterPIN')}
             autoFocus={false}
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
@@ -275,12 +326,12 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
         </View>
         <View style={style.controlsContainer}>
           <Button
-            title={t('PINCreate.CreatePIN')}
-            testID={testIdWithKey('CreatePIN')}
-            accessibilityLabel={t('PINCreate.CreatePIN')}
+            title={t('PINChange.ChangePIN')}
+            testID={testIdWithKey('ChangePIN')}
+            accessibilityLabel={t('PINChange.ChangePIN')}
             buttonType={ButtonType.Primary}
             disabled={isContinueDisabled}
-            onPress={handleCreatePinTap}
+            onPress={handleChangePinTap}
             ref={createPINButtonRef}
           >
             {isLoading ? <ButtonLoading /> : null}
@@ -288,9 +339,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
         </View>
       </View>
     </KeyboardView>
-  ) : (
-    <PINExplainer continueCreatePIN={continueCreatePIN} />
   )
 }
 
-export default PINCreate
+export default PINChange

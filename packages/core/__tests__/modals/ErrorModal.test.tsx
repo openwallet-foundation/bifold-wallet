@@ -3,14 +3,16 @@ import React from 'react'
 
 import ErrorModal from '../../src/components/modals/ErrorModal'
 import * as themeContext from '../../src/contexts/theme' // note we're importing with a * to import all the exports
-import { theme } from '../../src/theme'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../src/constants'
 import { BasicAppContext } from '../helpers/app'
+import { mockThemeContext } from '../contexts/theme'
 
 describe('ErrorModal Component', () => {
+  beforeAll(() => {
+    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => mockThemeContext)
+  })
   test('Renders correctly', async () => {
-    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const tree = render(
       <BasicAppContext>
         <ErrorModal />
@@ -24,7 +26,6 @@ describe('ErrorModal Component', () => {
   })
 
   test('Dismiss on demand', async () => {
-    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const tree = render(
       <BasicAppContext>
         <ErrorModal />

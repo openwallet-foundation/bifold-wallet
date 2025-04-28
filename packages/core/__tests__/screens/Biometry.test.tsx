@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React from 'react'
 import { AuthContext } from '../../src/contexts/auth'
-import UseBiometry from '../../src/screens/UseBiometry'
+import Biometry from '../../src/screens/Biometry'
 import { testIdWithKey } from '../../src/utils/testable'
 import authContext from '../contexts/auth'
 import { BasicAppContext } from '../helpers/app'
@@ -38,7 +38,7 @@ const customStore = {
   },
 }
 
-describe('UseBiometry Screen', () => {
+describe('Biometry Screen', () => {
   beforeAll(() => {
     jest.spyOn(global.console, 'error').mockImplementation(() => null)
   })
@@ -56,7 +56,7 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+          <Biometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -70,7 +70,7 @@ describe('UseBiometry Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+          <Biometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -83,7 +83,7 @@ describe('UseBiometry Screen', () => {
     const { findByTestId, findByText } = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+          <Biometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -99,7 +99,7 @@ describe('UseBiometry Screen', () => {
     const { findByTestId, findByText } = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+          <Biometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
@@ -117,7 +117,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -139,7 +139,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -161,7 +161,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -185,7 +185,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -210,7 +210,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -235,7 +235,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -256,7 +256,7 @@ describe('UseBiometry Screen', () => {
       <StoreProvider initialState={customStore}>
         <BasicAppContext>
           <AuthContext.Provider value={authContext}>
-            <UseBiometry />
+            <Biometry />
           </AuthContext.Provider>
         </BasicAppContext>
       </StoreProvider>
@@ -278,7 +278,7 @@ describe('UseBiometry Screen', () => {
     const { findByTestId, findByText } = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <UseBiometry />
+          <Biometry />
         </AuthContext.Provider>
       </BasicAppContext>
     )
