@@ -38,6 +38,7 @@ interface InfoBoxProps {
   onCallToActionLabel?: string
   onClosePressed?: GenericFn
   showVersionFooter?: boolean
+  renderShowDetails?: boolean
 }
 
 const InfoBox: React.FC<InfoBoxProps> = ({
@@ -56,11 +57,12 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   onCallToActionLabel,
   onClosePressed,
   showVersionFooter,
+  renderShowDetails = false,
 }) => {
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
   const { TextTheme, ColorPallet } = useTheme()
-  const [showDetails, setShowDetails] = useState<boolean>(false)
+  const [showDetails, setShowDetails] = useState<boolean>(renderShowDetails)
   const [{ showDetailsInfo }] = useServices([TOKENS.CONFIG])
   const styles = StyleSheet.create({
     container: {

@@ -505,15 +505,15 @@ describe('displays a proof request screen', () => {
       })
 
       // fails
-      const predicateMessage = getByText('ProofRequest.ProofRequestPredicateError', { exact: false })
+      const errorMessage = getByText('ProofRequest.YouCantRespond', { exact: false })
       const emailLabel = getByText(/Email/, { exact: false })
       const emailValue = getByText(testEmail)
       const ageLabel = getByText(/Age/, { exact: false })
       const ageNotSatisfied = getByText('ProofRequest.PredicateNotSatisfied', { exact: false })
       const cancelButton = getByTestId(testIdWithKey('Cancel'))
 
-      expect(predicateMessage).not.toBeNull()
-      expect(predicateMessage).toBeTruthy()
+      expect(errorMessage).not.toBeNull()
+      expect(errorMessage).toBeTruthy()
       expect(emailLabel).not.toBeNull()
       expect(emailLabel).toBeTruthy()
       expect(emailValue).not.toBeNull()

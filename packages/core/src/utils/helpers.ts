@@ -742,6 +742,8 @@ export const retrieveCredentialsForProof = async (
 ): Promise<CredentialDataForProof | undefined> => {
   // This is the only valid state to retrieve credentials for a proof
   // `getCredentialsForRequest` will fail otherwise.
+  // if a proof is declined, it will move out of a RequestReceived state
+  // and this will fail because it is running against a declined proof
   if (proof.state !== ProofState.RequestReceived) {
     return
   }
