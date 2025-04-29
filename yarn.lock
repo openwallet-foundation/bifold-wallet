@@ -1797,7 +1797,7 @@ __metadata:
     "@credo-ts/openid4vc": 0.5.13
     "@credo-ts/push-notifications": ^0.7.0
     "@credo-ts/question-answer": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-hooks": 0.6.0
     "@credo-ts/react-native": 0.5.13
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
@@ -1901,7 +1901,7 @@ __metadata:
     "@credo-ts/openid4vc": 0.5.13
     "@credo-ts/push-notifications": ^0.7.0
     "@credo-ts/question-answer": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-hooks": 0.6.0
     "@credo-ts/react-native": 0.5.13
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4
@@ -2057,7 +2057,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/core": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-hooks": 0.6.0
     "@hyperledger/anoncreds-shared": 0.2.4
     "@react-native/babel-preset": 0.73.21
     "@types/jest": ^29.5.5
@@ -2072,7 +2072,7 @@ __metadata:
   peerDependencies:
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/core": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-hooks": 0.6.0
     "@hyperledger/anoncreds-shared": 0.2.4
     react: ^18.2.0
   languageName: unknown
@@ -2778,7 +2778,7 @@ __metadata:
 
 "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=680100&locator=bifold-wallet-root%40workspace%3A."
+  resolution: "@credo-ts/core@patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch::version=0.5.13&hash=b37c4f&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@digitalcredentials/jsonld": ^6.0.0
     "@digitalcredentials/jsonld-signatures": ^9.4.0
@@ -2822,7 +2822,7 @@ __metadata:
     varint: ^6.0.0
     web-did-resolver: ^2.0.21
     webcrypto-core: ^1.8.0
-  checksum: c1f2440de34e2930cfc4db6ccf1920f068126d83fadf9caf56afe90a1bbb25a145b8b3c990bbe1fb51b69b5ac099e7ea64dfa9cbf625a7b0f31ad7051f4dd8ad
+  checksum: 42a0ec9b9efbd63ffd489790e16a735bff5253107d1f3b6d2dbc813b25539c95aa2cda3d880422ec284e9f8bee55582952b0214ea7c6fd2c0ad478f3d332c8d7
   languageName: node
   linkType: hard
 
@@ -2931,19 +2931,6 @@ __metadata:
     "@credo-ts/question-answer": ^0.5.0
     react: ">=17.0.0 <19.0.0"
   checksum: 5334bbbe6db019ffb62ab9fc6d860ce7c21687e1f85feabc334fc532de60784eef72e37bf33957c2cea7c39793bb1b2d1cc502b144cb9d7d2b319df37a7a127e
-  languageName: node
-  linkType: hard
-
-"@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::locator=bifold-wallet-root%40workspace%3A.":
-  version: 0.6.0
-  resolution: "@credo-ts/react-hooks@patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch::version=0.6.0&hash=fb715c&locator=bifold-wallet-root%40workspace%3A."
-  dependencies:
-    rxjs: ^7.2.0
-  peerDependencies:
-    "@credo-ts/core": ^0.5.0
-    "@credo-ts/question-answer": ^0.5.0
-    react: ">=17.0.0 <19.0.0"
-  checksum: 73c0dc8af916eeeaf21ded565b0ecdba7d6e0b679e40dcc8db949ac06a2557984ad5640f23ff4c3c6dab4ab8a743b2f26dae973041b51e1330ff7952c4a4fa42
   languageName: node
   linkType: hard
 
@@ -7749,7 +7736,7 @@ __metadata:
     "@credo-ts/openid4vc": 0.5.13
     "@credo-ts/push-notifications": ^0.7.0
     "@credo-ts/question-answer": 0.5.13
-    "@credo-ts/react-hooks": ^0.6.0
+    "@credo-ts/react-hooks": 0.6.0
     "@credo-ts/react-native": 0.5.13
     "@formatjs/intl-datetimeformat": 4.2.4
     "@formatjs/intl-displaynames": 5.2.4

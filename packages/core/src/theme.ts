@@ -1090,6 +1090,7 @@ const InputInlineMessage: IInlineInputMessage = {
 }
 
 export interface ITheme {
+  themeName: string
   Spacing: ISpacing
   ColorPallet: IColorPallet
   TextTheme: ITextTheme
@@ -1116,7 +1117,8 @@ export interface ITheme {
   Assets: IAssets
 }
 
-export const theme: ITheme = {
+export const bifoldTheme: ITheme = {
+  themeName: 'bifold',
   Spacing,
   ColorPallet,
   TextTheme,
@@ -1142,3 +1144,5 @@ export const theme: ITheme = {
   maxFontSizeMultiplier,
   Assets,
 }
+
+export const themes: ITheme[] = [bifoldTheme]

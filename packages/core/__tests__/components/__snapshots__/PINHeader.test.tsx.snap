@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PINHeader Component Renders correctly 1`] = `
+<View>
+  <Text
+    maxFontSizeMultiplier={2}
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        },
+        Object {
+          "marginBottom": 16,
+        },
+      ]
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={2}
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      PINCreate.RememberPIN
+    </Text>
+     
+    PINCreate.PINDisclaimer
+  </Text>
+</View>
+`;
+
+exports[`PINHeader Component Renders correctly for change pin 1`] = `
+<View>
+  <Text
+    maxFontSizeMultiplier={2}
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "fontWeight": "normal",
+        },
+        Object {
+          "marginBottom": 16,
+        },
+      ]
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={2}
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "fontWeight": "normal",
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      PINChange.RememberChangePIN
+    </Text>
+     
+    PINCreate.PINDisclaimer
+  </Text>
+</View>
+`;

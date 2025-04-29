@@ -1,3 +1,4 @@
+import { Agent } from '@credo-ts/core'
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigationState } from '@react-navigation/native'
 import { State } from '../types/state'
@@ -12,7 +13,13 @@ export const useOnboardingState = (
   store: State,
   config: Config,
   termsVersion: number,
-  generateOnboardingWorkflowSteps: (store: State, config: Config, termsVersion: number) => OnboardingTask[]
+  agent: Agent | null,
+  generateOnboardingWorkflowSteps: (
+    store: State,
+    config: Config,
+    termsVersion: number,
+    agent: Agent | null
+  ) => OnboardingTask[]
 ): {
   onboardingState: OnboardingTask[]
   setOnboardingState: React.Dispatch<React.SetStateAction<OnboardingTask[]>>
@@ -32,9 +39,9 @@ export const useOnboardingState = (
       return
     }
 
-    const onboardingTasks = generateOnboardingWorkflowSteps(store, config, termsVersion)
+    const onboardingTasks = generateOnboardingWorkflowSteps(store, config, termsVersion, agent)
     setOnboardingState(onboardingTasks)
-  }, [store, config, termsVersion, generateOnboardingWorkflowSteps])
+  }, [store, config, termsVersion, agent, generateOnboardingWorkflowSteps])
 
   return {
     onboardingState,

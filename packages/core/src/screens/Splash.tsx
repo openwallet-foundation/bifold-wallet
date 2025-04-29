@@ -1,5 +1,4 @@
 import { RemoteOCABundleResolver } from '@bifold/oca/build/legacy'
-import { useNavigation, CommonActions } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet } from 'react-native'
@@ -9,25 +8,25 @@ import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
-import useInitializeAgent from '../hooks/initialize-agent'
 import { BifoldError } from '../types/error'
-import { Stacks } from '../types/navigators'
+import { WalletSecret } from '../types/security'
 import { useAuth } from '../contexts/auth'
 import { useStore } from '../contexts/store'
 
+export type SplashProps = {
+  initializeAgent: (walletSecret: WalletSecret) => Promise<void>
+}
+
 /**
- * To customize this splash screen set the background color of the
- * iOS and Android launch screen to match the background color of
- * of this view.
+ * This Splash screen is shown in two scenarios: initial load of the app,
+ * and during agent initialization after login
  */
-const Splash: React.FC = () => {
+const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
   const { walletSecret } = useAuth()
   const { t } = useTranslation()
-  const navigation = useNavigation()
   const [store] = useStore()
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
-  const { initializeAgent } = useInitializeAgent()
   const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
@@ -53,18 +52,7 @@ const Splash: React.FC = () => {
           throw new Error('Wallet secret is missing')
         }
 
-        const agent = await initializeAgent(walletSecret)
-
-        if (!agent) {
-          return
-        }
-
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: Stacks.TabStack }],
-          })
-        )
+        await initializeAgent(walletSecret)
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1045'),
@@ -79,7 +67,7 @@ const Splash: React.FC = () => {
     }
 
     initAgentAsyncEffect()
-  }, [initializeAgent, ocaBundleResolver, logger, navigation, walletSecret, t, store.authentication.didAuthenticate])
+  }, [initializeAgent, ocaBundleResolver, logger, walletSecret, t, store.authentication.didAuthenticate])
 
   return (
     <SafeAreaView style={styles.container}>

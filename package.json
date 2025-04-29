@@ -13,7 +13,7 @@
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "scripts": {
     "preinstall": "npx husky install .husky",
-    "clean": "yarn workspaces foreach --topological-dev -p run clean",
+    "clean": "yarn workspaces foreach --topological-dev -p run clean && echo 'Cleaned all packages 🧹'",
     "build": "yarn workspaces foreach --topological-dev -p run build",
     "test": "yarn workspaces foreach --topological-dev run test",
     "test:watch": "cd packages/core && yarn test:watch",
@@ -67,7 +67,6 @@
     "@credo-ts/anoncreds@0.5.13": "patch:@credo-ts/anoncreds@npm%3A0.5.13#./.yarn/patches/@credo-ts-anoncreds-npm-0.5.13-446ac3168e.patch",
     "@credo-ts/core@0.5.13": "patch:@credo-ts/core@npm%3A0.5.13#./.yarn/patches/@credo-ts-core-npm-0.5.13-725ab940d0.patch",
     "@credo-ts/indy-vdr@0.5.13": "patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch",
-    "@credo-ts/react-hooks": "patch:@credo-ts/react-hooks@npm%3A0.6.0#./.yarn/patches/@credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch",
     "@sphereon/pex": "patch:@sphereon/pex@npm%3A3.3.3#./.yarn/patches/@sphereon-pex-npm-3.3.3-144d9252ec.patch",
     "@hyperledger/indy-vdr-react-native@0.2.2": "patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch",
     "@hyperledger/indy-vdr-shared@0.2.2": "patch:@hyperledger/indy-vdr-shared@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-shared-npm-0.2.2-b989282fc6.patch"

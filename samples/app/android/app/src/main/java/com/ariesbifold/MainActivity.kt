@@ -23,7 +23,7 @@ class MainActivity : ReactActivity() {
     /**
      * Returns the name of the main component registered from JavaScript.
      */
-    override fun getMainComponentName(): String = "aries-bifold"
+    override fun getMainComponentName(): String = "Aries-Bifold"
 
     /**
      * Returns the instance of the ReactActivityDelegate.

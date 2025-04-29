@@ -12,7 +12,7 @@ import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import ScreenLayout from '../layout/ScreenLayout'
 import { ThemedText } from '../components/texts/ThemedText'
@@ -24,7 +24,7 @@ const Terms: React.FC = () => {
   const agreedToPreviousTerms = store.onboarding.didAgreeToTerms
   const [checked, setChecked] = useState(agreedToPreviousTerms)
   const { t } = useTranslation()
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
   const [Button] = useServices([TOKENS.COMP_BUTTON])
   const onSubmitPressed = useCallback(() => {

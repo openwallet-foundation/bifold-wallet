@@ -27,7 +27,7 @@ describe('Splash Screen', () => {
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
-          <Splash />
+          <Splash initializeAgent={jest.fn()} />
         </AuthContext.Provider>
       </BasicAppContext>
     )

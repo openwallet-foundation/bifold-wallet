@@ -59,6 +59,7 @@ enum PreferencesDispatchAction {
   USE_SHAREABLE_LINK = 'preferences/useShareableLink',
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
   AUTO_LOCK_TIME = 'preferences/autoLockTime',
+  SET_THEME = 'preferences/setTheme',
 }
 
 enum ToursDispatchAction {
@@ -339,6 +340,17 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
 
       return newState
+    }
+    case PreferencesDispatchAction.SET_THEME: {
+      const theme = (action?.payload ?? []).pop() ?? ''
+      const preferences = { ...state.preferences, theme }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+
+      return {
+        ...state,
+        preferences,
+      }
     }
     case ToursDispatchAction.UPDATE_SEEN_TOUR_PROMPT: {
       const seenToursPrompt: ToursState = (action?.payload ?? []).pop() ?? false

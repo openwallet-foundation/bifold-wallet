@@ -143,10 +143,12 @@ const translation = {
         "Message1045": "Il y a eu un problème lors de l'initialisation de l'agent.",
         "Title1046": "Impossible de récupérer les contacts.",
         "Message1046": "Il y a eu un problème lors de la récupération des contacts.",
-        "Title1047": "Unable to display card. (PT-FR)",
-        "Message1047": "There was a problem parsing credential card. (PT-FR)",
+        "Title1047": "Unable to display card. (FR)",
+        "Message1047": "There was a problem parsing credential card. (FR)",
         "Title1048": "Proof request problems. (FR)",
         "Message1048": "There was a problem with the proof request. (FR)",
+        "Title1049": "Unable to change PIN. (FR)",
+        "Message1049": "There was a problem while attempting to change your PIN. (FR)",
     },
     "SelectionAxs": {
         "RadioChecked": "checked(fr)",
@@ -489,7 +491,7 @@ const translation = {
         "Credential": "attestation",
     },
     "PushNotifications": {
-        "EnableNotifiactions": "Activer les Notifications pour recevoir des alertes instantanées",
+        "EnableNotifications": "Activer les Notifications pour recevoir des alertes instantanées",
         "BeNotified": "Soyez averti lorsque vous recevez :",
         "ReceiveNotifications": "Recevoir des notifications",
         "BulletFour": "nouveaux messages",

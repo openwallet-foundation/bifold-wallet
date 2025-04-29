@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PushNotification Screen Push notification screen renders correctly in settings 1`] = `
+exports[`TogglePushNotification Screen Push notification screen renders correctly in settings 1`] = `
 <RNCSafeAreaView
   edges={
     Object {
@@ -57,7 +57,7 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
             ]
           }
         >
-          PushNotifications.EnableNotifiactions
+          PushNotifications.EnableNotifications
         </Text>
         <Text
           maxFontSizeMultiplier={2}
@@ -257,59 +257,52 @@ exports[`PushNotification Screen Push notification screen renders correctly in s
         <View
           style={
             Object {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
               "marginTop": 25,
             }
           }
         >
-          <View
+          <Text
+            maxFontSizeMultiplier={2}
             style={
-              Object {
-                "display": "flex",
-                "flexDirection": "row",
-                "justifyContent": "space-between",
-              }
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
             }
           >
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  undefined,
-                ]
-              }
-            >
-              PushNotifications.ReceiveNotifications
-            </Text>
-            <RCTSwitch
-              accessibilityLabel="PushNotifications.ReceiveNotifications"
-              accessibilityRole="switch"
-              onChange={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              onTintColor="rgba(53, 130, 63, 0.35)"
-              style={
-                Array [
-                  Object {
-                    "height": 31,
-                    "width": 51,
-                  },
-                  Object {
-                    "backgroundColor": "#D3D3D3",
-                    "borderRadius": 16,
-                  },
-                ]
-              }
-              testID="com.ariesbifold:id/PushNotificationSwitch"
-              thumbTintColor="#606060"
-              tintColor="#D3D3D3"
-              value={false}
-            />
-          </View>
+            PushNotifications.ReceiveNotifications
+          </Text>
+          <RCTSwitch
+            accessibilityLabel="PushNotifications.ReceiveNotifications"
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/PushNotificationSwitch"
+            thumbTintColor="#606060"
+            tintColor="#D3D3D3"
+            value={false}
+          />
         </View>
       </View>
     </View>

@@ -10,11 +10,12 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native'
-import { getVersion, getBuildNumber } from 'react-native-device-info'
+import { getBuildNumber, getVersion } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
+import { ThemedText } from '../components/texts/ThemedText'
 import { TOKENS, useServices } from '../container-api'
 import { AutoLockTime } from '../contexts/activity'
 import { DispatchAction } from '../contexts/reducers/store'
@@ -25,7 +26,6 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
-import { ThemedText } from '../components/texts/ThemedText'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -139,17 +139,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
           accessibilityLabel: t('Global.Biometrics'),
           testID: testIdWithKey('Biometrics'),
-          onPress: () => navigation.navigate(Screens.UseBiometry),
+          onPress: () => navigation.navigate(Screens.ToggleBiometry),
         },
         {
           title: t('Settings.ChangePin'),
           value: undefined,
           accessibilityLabel: t('Settings.ChangePin'),
           testID: testIdWithKey('Change Pin'),
-          onPress: () =>
-            navigation
-              .getParent()
-              ?.navigate(Stacks.SettingStack, { screen: Screens.CreatePIN, params: { updatePin: true } }),
+          onPress: () => navigation.navigate(Screens.ChangePIN),
         },
         {
           title: t('Settings.Language'),
@@ -186,9 +183,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         accessibilityLabel: t('Settings.Notifications'),
         testID: testIdWithKey('Notifications'),
         onPress: () =>
-          navigation
-            .getParent()
-            ?.navigate(Stacks.SettingStack, { screen: Screens.UsePushNotifications, params: { isMenu: true } }),
+          navigation.navigate(Screens.TogglePushNotifications),
       })
   }
 

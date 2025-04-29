@@ -9,7 +9,7 @@ import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { Pagination } from '../components/misc/Pagination'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { AuthenticateStackParams } from '../types/navigators'
+import { OnboardingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 export interface OnboardingStyleSheet {
   container: ViewStyle
@@ -41,7 +41,7 @@ const Onboarding: React.FC<OnboardingProps> = ({
   const flatList: Ref<FlatList> = useRef(null)
   const scrollX = useRef(new Animated.Value(0)).current
   const { t } = useTranslation()
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const [, dispatch] = useStore()
   const { width } = useWindowDimensions()
 

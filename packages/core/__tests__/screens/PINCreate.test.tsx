@@ -34,9 +34,42 @@ describe('PINCreate Screen', () => {
 
     // Causes RangeError: Invalid string length
     // expect(tree).toMatchSnapshot()
+    const continueButton = await tree.queryByTestId(testIdWithKey('ContinueCreatePIN'))
+    expect(continueButton).toBeFalsy()
     const pinInput1 = tree.getByTestId(testIdWithKey('EnterPIN'))
     const pinInput2 = tree.getByTestId(testIdWithKey('ReenterPIN'))
     expect(pinInput1).not.toBe(null)
     expect(pinInput2).not.toBe(null)
+  })
+
+  test('PIN Explainer pops up correctly', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINCreate
+              route={{} as any}
+              navigation={jest.fn() as any}
+              setAuthenticated={jest.fn()}
+              explainedStatus={false}
+            />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+
+    // Causes RangeError: Invalid string length
+    // expect(tree).toMatchSnapshot()
+    const continueButton = tree.getByTestId(testIdWithKey('ContinueCreatePIN'))
+    expect(continueButton).not.toBe(null)
+    const pinInput1 = await tree.queryByTestId(testIdWithKey('EnterPIN'))
+    const pinInput2 = await tree.queryByTestId(testIdWithKey('ReenterPIN'))
+    expect(pinInput1).toBeFalsy()
+    expect(pinInput2).toBeFalsy()
   })
 })

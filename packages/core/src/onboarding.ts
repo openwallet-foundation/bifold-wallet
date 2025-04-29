@@ -1,7 +1,8 @@
-import { Screens, OnboardingTask } from './types/navigators'
+import { Agent } from '@credo-ts/core'
+import { OnboardingTask, Screens } from './types/navigators'
 
-import { State } from './types/state'
 import { Config } from './types/config'
+import { State } from './types/state'
 
 export const isPrefaceComplete = (didSeePreface: boolean, showPreface: boolean): OnboardingTask => {
   return { name: Screens.Preface, completed: (didSeePreface && showPreface) || !showPreface }
@@ -24,7 +25,7 @@ export const isPINCreationComplete = (didCreatePIN: boolean): OnboardingTask => 
 }
 
 export const isBiometryComplete = (didConsiderBiometry: boolean): OnboardingTask => {
-  return { name: Screens.UseBiometry, completed: didConsiderBiometry }
+  return { name: Screens.Biometry, completed: didConsiderBiometry }
 }
 
 export const isPushNotificationComplete = (
@@ -32,7 +33,7 @@ export const isPushNotificationComplete = (
   enablePushNotifications: any
 ): OnboardingTask => {
   return {
-    name: Screens.UsePushNotifications,
+    name: Screens.PushNotifications,
     completed: !enablePushNotifications || (didConsiderPushNotifications && enablePushNotifications),
   }
 }
@@ -49,10 +50,15 @@ export const isAttemptLockoutComplete = (servedPenalty: boolean | undefined): On
   return { name: Screens.AttemptLockout, completed: servedPenalty !== false }
 }
 
+export const isAgentInitializationComplete = (agent: Agent | null): OnboardingTask => {
+  return { name: Screens.Splash, completed: !!agent }
+}
+
 export const generateOnboardingWorkflowSteps = (
   state: State,
   config: Config,
-  termsVersion: number
+  termsVersion: number,
+  agent: Agent | null
 ): Array<OnboardingTask> => {
   const {
     didSeePreface,
@@ -79,5 +85,6 @@ export const generateOnboardingWorkflowSteps = (
     isNameWalletComplete(didNameWallet, enableWalletNaming),
     isAttemptLockoutComplete(servedPenalty),
     isAuthenticationComplete(didCreatePIN, didAuthenticate),
+    isAgentInitializationComplete(agent),
   ]
 }

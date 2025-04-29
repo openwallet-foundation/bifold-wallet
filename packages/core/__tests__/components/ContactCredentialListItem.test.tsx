@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native'
+import { render, waitFor } from '@testing-library/react-native'
 import fs from 'fs'
 import path from 'path'
 import React from 'react'
@@ -11,7 +11,7 @@ const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json'
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
 
 describe('ContactCredentialListItem Component', () => {
-  test('Renders correctly', () => {
+  test('Renders correctly', async () => {
     const credentialRecord = new CredentialExchangeRecord(credential)
     credentialRecord.credentials.push({
       credentialRecordType: 'anoncreds',
@@ -24,6 +24,8 @@ describe('ContactCredentialListItem Component', () => {
       </BasicAppContext>
     )
 
-    expect(tree).toMatchSnapshot()
+    await waitFor(async () => {
+      expect(tree).toMatchSnapshot()
+    })
   })
 })

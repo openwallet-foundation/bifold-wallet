@@ -25,7 +25,7 @@ export interface PINValidationsType {
   errorTextAddition?: Record<string, string>
 }
 
-export const PINCreationValidations = (PIN: string, PINRules: PINValidationRules) => {
+export const createPINValidations = (PIN: string, PINRules: PINValidationRules) => {
   const PINValidations: PINValidationsType[] = []
 
   if (PINRules.no_cross_pattern) {

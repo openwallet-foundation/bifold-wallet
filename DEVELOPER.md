@@ -165,7 +165,7 @@ pod install
 3. Open the workspace (not the project file) in Xcode:
 
 ```sh
-open samples/app/ios/ariesbifold.xcworkspace
+open samples/app/ios/AriesBifold.xcworkspace
 ```
 
 4. In Xcode, select your device, development team, and (if necessary) your Bundle ID. Note: Detailing these steps is beyond the scope of this guide.

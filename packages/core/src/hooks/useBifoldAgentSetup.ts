@@ -1,9 +1,8 @@
 import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
 import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
-import { useAgent } from '@credo-ts/react-hooks'
 import { agentDependencies } from '@credo-ts/react-native'
 import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { Config } from 'react-native-config'
 import { CachesDirectoryPath } from 'react-native-fs'
 
@@ -14,8 +13,14 @@ import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
 import { WalletSecret } from '../types/security'
 
-const useInitializeAgent = () => {
-  const { agent, setAgent } = useAgent()
+export type AgentSetupReturnType = {
+  agent: Agent | null
+  initializeAgent: (walletSecret: WalletSecret) => Promise<void>
+  shutdownAndClearAgentIfExists: () => Promise<void>
+}
+
+const useBifoldAgentSetup = (): AgentSetupReturnType => {
+  const [agent, setAgent] = useState<Agent | null>(null)
   const [store, dispatch] = useStore()
   const [cacheSchemas, cacheCredDefs, logger, indyLedgers] = useServices([
     TOKENS.CACHE_SCHEMAS,
@@ -24,37 +29,8 @@ const useInitializeAgent = () => {
     TOKENS.UTIL_LEDGERS,
   ])
 
-  const restartExistingAgent = useCallback(
-    async (walletSecret: WalletSecret) => {
-      // if the agent is initialized, it was not a clean shutdown and should be replaced, not restarted
-      if (!agent || agent.isInitialized) {
-        return
-      }
-
-      logger.info('Agent already created, restarting...')
-      try {
-        await agent.wallet.open({
-          id: walletSecret.id,
-          key: walletSecret.key,
-        })
-        await agent.initialize()
-      } catch {
-        // if the existing agents wallet cannot be opened or initialize() fails it was
-        // again not a clean shutdown and the agent should be replaced, not restarted
-        logger.warn('Failed to restart existing agent, skipping agent restart')
-        return
-      }
-
-      logger.info('Successfully restarted existing agent')
-      return agent
-    },
-    [agent, logger]
-  )
-
   const createNewAgent = useCallback(
-    async (walletSecret: WalletSecret): Promise<Agent | undefined> => {
-      logger.info('No agent initialized, creating a new one')
-
+    async (walletSecret: WalletSecret): Promise<Agent> => {
       const newAgent = new Agent({
         config: {
           label: store.preferences.walletName || 'Aries Bifold',
@@ -91,11 +67,7 @@ const useInitializeAgent = () => {
     async (newAgent: Agent, walletSecret: WalletSecret) => {
       // If we haven't migrated to Aries Askar yet, we need to do this before we initialize the agent.
       if (!store.migration.didMigrateToAskar) {
-        newAgent.config.logger.debug('Agent not updated to Aries Askar, updating...')
-
         await migrateToAskar(walletSecret.id, walletSecret.key, newAgent)
-
-        newAgent.config.logger.debug('Successfully finished updating agent to Aries Askar')
         // Store that we migrated to askar.
         dispatch({
           type: DispatchAction.DID_MIGRATE_TO_ASKAR,
@@ -124,35 +96,41 @@ const useInitializeAgent = () => {
   )
 
   const initializeAgent = useCallback(
-    async (walletSecret: WalletSecret): Promise<Agent | undefined> => {
-      const existingAgent = await restartExistingAgent(walletSecret)
-      if (existingAgent) {
-        setAgent(existingAgent)
-        return existingAgent
-      }
-
+    async (walletSecret: WalletSecret): Promise<void> => {
+      logger.info('Creating agent')
       const newAgent = await createNewAgent(walletSecret)
-      if (!newAgent) {
-        logger.error('Failed to create a new agent')
-        return
-      }
 
+      logger.info('Migrating if required...')
       await migrateIfRequired(newAgent, walletSecret)
 
+      logger.info('Initializing agent...')
       await newAgent.initialize()
 
+      logger.info('Creating link secret if required...')
       await createLinkSecretIfRequired(newAgent)
 
+      logger.info('Warming up cache...')
       await warmUpCache(newAgent)
 
+      logger.info('Agent initialized successfully')
       setAgent(newAgent)
-
-      return newAgent
     },
-    [logger, restartExistingAgent, setAgent, createNewAgent, migrateIfRequired, warmUpCache]
+    [logger, createNewAgent, migrateIfRequired, warmUpCache]
   )
 
-  return { initializeAgent }
+  const shutdownAndClearAgentIfExists = useCallback(async () => {
+    if (agent) {
+      try {
+        await agent.shutdown()
+      } catch (error) {
+        logger.error(`Error shutting down agent with shutdownAndClearAgentIfExists: ${error}`)
+      }
+    }
+
+    setAgent(null)
+  }, [agent, logger])
+
+  return { agent, initializeAgent, shutdownAndClearAgentIfExists }
 }
 
-export default useInitializeAgent
+export default useBifoldAgentSetup
