@@ -10,7 +10,7 @@ import CheckBoxRow from '../components/inputs/CheckBoxRow'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
+import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
 
@@ -18,7 +18,7 @@ const Preface: React.FC = () => {
   const [, dispatch] = useStore()
   const [checked, setChecked] = useState(false)
   const { t } = useTranslation()
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const { Assets, OnboardingTheme, TextTheme } = useTheme()
   const onSubmitPressed = () => {
     dispatch({
