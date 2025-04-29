@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { DeviceEventEmitter } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { StackScreenProps } from '@react-navigation/stack'
 
-import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
+import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../../../types/navigators'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import {
   formatDifPexCredentialsForRequest,
@@ -30,6 +30,17 @@ import ScreenLayout from '../../../layout/ScreenLayout'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
+type TypedCred = {
+  credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+  claimFormat: string
+}
+
+type SelectedCredentialsFormat = {
+  [inputDescriptorId: string]: {
+    id: string
+    claimFormat: string
+  }
+}
 
 const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   navigation,
@@ -104,30 +115,25 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     [credential]
   )
 
-  const selectedCredentials:
-    | {
-        [inputDescriptorId: string]: {
-          id: string
-          claimFormat: string
+  const [selectedCredentials, setSelectedCredentials] = useState<SelectedCredentialsFormat>()
+
+  useEffect(() => {
+    if (!submission) return
+    const selectedCreds = submission?.entries.reduce((acc, entry) => {
+      if (entry.isSatisfied) {
+        //TODO: Support multiplae credentials
+        return {
+          ...acc,
+          [entry.inputDescriptorId]: {
+            id: entry.credentials[0].id,
+            claimFormat: entry.credentials[0].claimFormat,
+          },
         }
       }
-    | undefined = useMemo(
-    () =>
-      submission?.entries.reduce((acc, entry) => {
-        if (entry.isSatisfied) {
-          //TODO: Support multiplae credentials
-          return {
-            ...acc,
-            [entry.inputDescriptorId]: {
-              id: entry.credentials[0].id,
-              claimFormat: entry.credentials[0].claimFormat,
-            },
-          }
-        }
-        return acc
-      }, {}),
-    [submission]
-  )
+      return acc
+    }, {})
+    setSelectedCredentials(selectedCreds)
+  }, [submission])
 
   useEffect(() => {
     async function fetchCreds() {
@@ -185,6 +191,36 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
+  // selectedCredID: string
+  // altCredIDs: {
+  //   id: string
+  //   claimFormat: string
+  // }[]
+  // onCredChange: ({ id, claimFormat }: { id: string; claimFormat: string }) => void
+
+  const handleAltCredChange = useCallback(
+    (selectedCredID: string, inputDescriptor: string) => {
+      const submittionEntries = submission?.entries.find((entry) => entry.inputDescriptorId === inputDescriptor)
+      const credsForEntry = submittionEntries?.credentials
+
+      if (!credsForEntry) return
+      const onCredChange = ({ id, claimFormat }: { id: string; claimFormat: string }) => {
+        console.log('onCredChange', id, claimFormat)
+      }
+      navigation.navigate(Screens.OpenIDProofCredentialSelect, {
+        selectedCredID: selectedCredID,
+        altCredIDs: credsForEntry.map((cred) => {
+          return {
+            id: cred.id,
+            claimFormat: cred.claimFormat,
+          }
+        }),
+        onCredChange: onCredChange,
+      })
+    },
+    [submission, navigation]
+  )
+
   const renderHeader = () => {
     return (
       <View style={styles.headerTextContainer}>
@@ -200,8 +236,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const renderCard = (
     sub: FormattedSubmissionEntry,
     selectedCredential: FormattedSelectedCredentialEntry,
-    //TODO: Support multiplae credentials
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     hasMultipleCreds: boolean
   ) => {
     const credential = credentialsRequested.find((c) => c.id === selectedCredential.id)
@@ -216,9 +250,10 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       <CredentialCard
         credential={credential}
         displayItems={fieldsMapped as Attribute[]}
-        //TODO: Support multiplae credentials
-        // hasAltCredentials={hasMultipleCreds}
-        // handleAltCredChange={selectAltCredentail}
+        hasAltCredentials={hasMultipleCreds}
+        handleAltCredChange={() => {
+          handleAltCredChange(selectedCredential.id, sub.inputDescriptorId)
+        }}
       />
     )
   }
@@ -230,7 +265,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       <View style={styles.credentialsList}>
         {submission.entries.map((s, i) => {
           //TODO: Support multiplae credentials
-          const selectedCredential = s.credentials[0]
+          const selectedSubmission = s.credentials[0]
 
           const globalSubmissionName = submission.name
           const globalSubmissionPurpose = submission.purpose
@@ -250,8 +285,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                       <Text style={TextTheme.labelSubtitle}>{purpose}</Text>
                     </View>
                   )}
-                  {s.isSatisfied && selectedCredential?.requestedAttributes ? (
-                    renderCard(s, selectedCredential, s.credentials.length > 1)
+                  {s.isSatisfied && selectedSubmission?.requestedAttributes ? (
+                    renderCard(s, selectedSubmission, s.credentials.length > 1)
                   ) : (
                     <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
                   )}

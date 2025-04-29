@@ -21,6 +21,7 @@ export enum Screens {
   OpenIDCredentialDetails = 'Open ID Credential details',
   OpenIDCredentialOffer = 'Open ID Credential offer',
   OpenIDProofPresentation = 'Open ID Proof Presentation',
+  OpenIDProofCredentialSelect = 'Open ID Proof Credential Select',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
   ProofRequestUsageHistory = 'Proof Request Usage History',
@@ -200,6 +201,14 @@ export type DeliveryStackParams = {
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   }
   [Screens.OpenIDProofPresentation]: { credential: OpenId4VPRequestRecord }
+  [Screens.OpenIDProofCredentialSelect]: {
+    selectedCredID: string
+    altCredIDs: {
+      id: string
+      claimFormat: string
+    }[]
+    onCredChange: ({ id, claimFormat }: { id: string; claimFormat: string }) => void
+  }
 }
 
 export type HistoryStackParams = {
