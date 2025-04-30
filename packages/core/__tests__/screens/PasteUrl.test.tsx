@@ -1,13 +1,23 @@
-import { fireEvent, render } from '@testing-library/react-native'
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 
+import { useNavigation } from '@react-navigation/core'
 import { StoreProvider, defaultState } from '../../src/contexts/store'
 import PasteUrl from '../../src/screens/PasteUrl'
-import { useNavigation } from '@react-navigation/native'
 import { testIdWithKey } from '../../src/utils/testable'
 import { BasicAppContext } from '../helpers/app'
+import * as helpers from '../../src/utils/helpers'
+
+const waitTimeMs = 300
 
 describe('PasteUrl Screen', () => {
+  const mockConnectFromScanOrDeepLink = jest.spyOn(helpers, 'connectFromScanOrDeepLink').mockResolvedValue(undefined)
+  const navigation = useNavigation()
+
+  beforeEach(() => {
+    mockConnectFromScanOrDeepLink.mockClear()
+  })
+
   test('Paste URL renders correctly', () => {
     const tree = render(
       <BasicAppContext>
@@ -17,7 +27,7 @@ describe('PasteUrl Screen', () => {
             preferences: { ...defaultState.preferences, enableShareableLink: true },
           }}
         >
-          <PasteUrl navigation={useNavigation()} route={{} as any} />
+          <PasteUrl navigation={navigation as any} route={{} as any} />
         </StoreProvider>
       </BasicAppContext>
     )
@@ -33,45 +43,26 @@ describe('PasteUrl Screen', () => {
             preferences: { ...defaultState.preferences, enableShareableLink: true },
           }}
         >
-          <PasteUrl navigation={useNavigation()} route={{} as any} />
+          <PasteUrl navigation={navigation as any} route={{} as any} />
         </StoreProvider>
       </BasicAppContext>
     )
+
     const touchableDisabled = tree.getByTestId(testIdWithKey('ScanPastedUrlDisabled'))
     expect(touchableDisabled).not.toBeNull()
-    fireEvent.press(touchableDisabled, 'press')
 
-    const errorModal = await tree.findByText('PasteUrl.ErrorTextboxEmpty')
-    expect(errorModal).not.toBeNull()
+    await act(async () => {
+      fireEvent.press(touchableDisabled)
+      await new Promise((resolve) => setTimeout(resolve, waitTimeMs))
+    })
+
+    await waitFor(async () => {
+      expect(await tree.queryAllByText('PasteUrl.ErrorTextboxEmpty')).toHaveLength(1)
+    })
   })
 
   test('Test Error textbox invalid url messages', async () => {
-    const tree = render(
-      <BasicAppContext>
-        <StoreProvider
-          initialState={{
-            ...defaultState,
-            preferences: { ...defaultState.preferences, enableShareableLink: true },
-          }}
-        >
-          <PasteUrl navigation={useNavigation()} route={{} as any} />
-        </StoreProvider>
-      </BasicAppContext>
-    )
-    const textbox = tree.getByTestId(testIdWithKey('PastedUrl'))
-    expect(textbox).not.toBeNull()
-    textbox.props.onChangeText('didcom://invalid_url?c_i=hjhsdb')
-
-    const continueButton = tree.getByTestId(testIdWithKey('ScanPastedUrl'))
-    expect(continueButton).not.toBeNull()
-    fireEvent.press(continueButton, 'press')
-
-    const errorModal = await tree.findByText('PasteUrl.ErrorInvalidUrl')
-    expect(errorModal).not.toBeNull()
-  })
-
-  test('Test valid url navigation', async () => {
-    const navigation = { navigate: jest.fn(), getParent: jest.fn().mockReturnValue({ navigate: jest.fn() }) }
+    mockConnectFromScanOrDeepLink.mockRejectedValueOnce('Invalid URL')
     const tree = render(
       <BasicAppContext>
         <StoreProvider
@@ -84,17 +75,60 @@ describe('PasteUrl Screen', () => {
         </StoreProvider>
       </BasicAppContext>
     )
+
     const textbox = tree.getByTestId(testIdWithKey('PastedUrl'))
     expect(textbox).not.toBeNull()
-    textbox.props.onChangeText(
-      'didcomm://invite?oob=eyJAdHlwZSI6Imh0dHBzOi8vZGlkY29tbS5vcmcvb3V0LW9mLWJhbmQvMS4xL2ludml0YXRpb24iLCJAaWQiOiJlNGVlZjBjYS05ODZiLTRlZDUtODcyNi1jZmRhN2ZhMWIwYWMiLCJsYWJlbCI6Ik15IFdhbGxldCAtIDIwNjgiLCJhY2NlcHQiOlsiZGlkY29tbS9haXAxIiwiZGlkY29tbS9haXAyO2Vudj1yZmMxOSJdLCJoYW5kc2hha2VfcHJvdG9jb2xzIjpbImh0dHBzOi8vZGlkY29tbS5vcmcvZGlkZXhjaGFuZ2UvMS4xIiwiaHR0cHM6Ly9kaWRjb21tLm9yZy9jb25uZWN0aW9ucy8xLjAiXSwic2VydmljZXMiOlt7ImlkIjoiI2lubGluZS0wIiwic2VydmljZUVuZHBvaW50IjoiaHR0cHM6Ly9hcmllcy1tZWRpYXRvci1hZ2VudC10ZXN0LmFwcHMuc2lsdmVyLmRldm9wcy5nb3YuYmMuY2EiLCJ0eXBlIjoiZGlkLWNvbW11bmljYXRpb24iLCJyZWNpcGllbnRLZXlzIjpbImRpZDprZXk6ejZNa3RORHppdWk3S2tNYVhkNjRlczVWNzc5OUxaNXdqRktDcVNRNHYzck16UXB5Il0sInJvdXRpbmdLZXlzIjpbImRpZDprZXk6ejZNa2lGV0dXeXZQUldkRnZIaXlyZjU5R3l4ZFY0Q0toYmtzQ1hvOEpraHJnNUgyIl19XX0'
-    )
+
+    act(() => {
+      fireEvent.changeText(textbox, 'non-empty-text')
+    })
 
     const continueButton = tree.getByTestId(testIdWithKey('ScanPastedUrl'))
     expect(continueButton).not.toBeNull()
-    fireEvent.press(continueButton, 'press')
 
-    const errorModal = tree.queryByText('PasteUrl.ErrorInvalidUrl')
-    expect(errorModal).toBeNull()
+    await act(async () => {
+      fireEvent.press(continueButton)
+      await new Promise((resolve) => setTimeout(resolve, waitTimeMs))
+    })
+
+    await waitFor(async () => {
+      expect(await tree.queryAllByText('PasteUrl.ErrorInvalidUrl')).toHaveLength(1)
+    })
+  })
+
+  test('Test valid url navigation', async () => {
+    const tree = render(
+      <BasicAppContext>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+            preferences: { ...defaultState.preferences, enableShareableLink: true },
+          }}
+        >
+          <PasteUrl navigation={navigation as any} route={{} as any} />
+        </StoreProvider>
+      </BasicAppContext>
+    )
+
+    const textbox = tree.getByTestId(testIdWithKey('PastedUrl'))
+    expect(textbox).not.toBeNull()
+
+    act(() => {
+      fireEvent.changeText(textbox, 'non-empty-text')
+    })
+
+    const continueButton = tree.getByTestId(testIdWithKey('ScanPastedUrl'))
+    expect(continueButton).not.toBeNull()
+
+    await act(async () => {
+      fireEvent.press(continueButton)
+      await new Promise((resolve) => setTimeout(resolve, waitTimeMs))
+    })
+
+    expect(mockConnectFromScanOrDeepLink).toHaveBeenCalledTimes(1)
+
+    await waitFor(async () => {
+      expect(await tree.queryAllByTestId(testIdWithKey('ErrorModal'))).toHaveLength(0)
+    })
   })
 })

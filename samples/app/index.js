@@ -28,33 +28,17 @@ if (!global.atob) {
   global.atob = decode
 }
 
-import { NavigationTheme, App as BifoldApp, MainContainer } from '@bifold/core'
-import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
-import * as React from 'react'
+import { initLanguages, translationResources, createApp, MainContainer } from '@bifold/core'
 import { AppRegistry, LogBox } from 'react-native'
 import { container } from 'tsyringe'
 
-//import App from './App'
 import { name as appName } from './app.json'
 import { AppContainer } from './container-imp'
 
-const navigationTheme = {
-  ...NavigationTheme,
-}
-
 LogBox.ignoreAllLogs()
-// console.log(`React Native Version:${ReactNativeVersion.major}.${ReactNativeVersion.minor}.${ReactNativeVersion.patch}`)
+
+initLanguages(translationResources)
 const bifoldContainer = new MainContainer(container.createChildContainer()).init()
-const App = BifoldApp(new AppContainer(bifoldContainer).init())
-
-const Base = () => {
-  const navigationRef = useNavigationContainerRef()
-
-  return (
-    <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-      <App />
-    </NavigationContainer>
-  )
-}
-
-AppRegistry.registerComponent(appName, () => Base)
+const appContainer = new AppContainer(bifoldContainer).init()
+const App = createApp(appContainer)
+AppRegistry.registerComponent(appName, () => App)

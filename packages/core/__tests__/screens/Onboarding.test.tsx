@@ -4,10 +4,11 @@ import React from 'react'
 import * as themeContext from '../../src/contexts/theme' // note we're importing with a * to import all the exports
 import Onboarding, { OnboardingStyleSheet } from '../../src/screens/Onboarding'
 import { createCarouselStyle, createPageWith } from '../../src/screens/OnboardingPages'
-import { OnboardingTheme, theme } from '../../src/theme'
+import { OnboardingTheme } from '../../src/theme'
 import CredentialList from '../../src/assets/img/credential-list.svg'
 import { testIdWithKey } from '../../src/utils/testable'
 import { ThemedText } from '../../src/components/texts/ThemedText'
+import { mockThemeContext } from '../contexts/theme'
 
 export const carousel: OnboardingStyleSheet = createCarouselStyle(OnboardingTheme)
 
@@ -21,15 +22,17 @@ const pages = [
 ]
 
 describe('Onboarding Screen', () => {
+  beforeAll(() => {
+    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => mockThemeContext)
+  })
+
   test('Renders correctly', () => {
-    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const tree = render(<Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />)
 
     expect(tree).toMatchSnapshot()
   })
 
   test('Pages exist', async () => {
-    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const { findAllByTestId } = render(
       <Onboarding pages={pages} nextButtonText="Next" previousButtonText="Back" style={carousel} />
     )
@@ -39,7 +42,6 @@ describe('Onboarding Screen', () => {
   })
 
   test('Onboarding Developer mode', async () => {
-    jest.spyOn(themeContext, 'useTheme').mockImplementation(() => theme)
     const testFunc = jest.fn()
     const tree = render(
       <Onboarding

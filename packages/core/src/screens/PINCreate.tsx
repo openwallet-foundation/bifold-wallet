@@ -1,22 +1,22 @@
-import { ParamListBase, useNavigation } from '@react-navigation/native'
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { ParamListBase } from '@react-navigation/native'
+import { StackScreenProps } from '@react-navigation/stack'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
+  DeviceEventEmitter,
   Keyboard,
   StyleSheet,
-  View,
   TextInput,
   TouchableOpacity,
+  View,
   findNodeHandle,
-  DeviceEventEmitter,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 // eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
+import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
 import { EventTypes, minPINLength } from '../constants'
@@ -26,81 +26,46 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { usePINValidation } from '../hooks/usePINValidation'
 import { BifoldError } from '../types/error'
-import { AuthenticateStackParams, Screens } from '../types/navigators'
-import { PINCreationValidations, PINValidationsType } from '../utils/PINCreationValidation'
+import { Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
-import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { useAppAgent } from '../utils/agent'
-import { ThemedText } from '../components/texts/ThemedText'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
   explainedStatus: boolean
 }
 
-interface ModalState {
-  visible: boolean
-  title: string
-  message: string
-  onModalDismiss?: () => void
-}
-
-const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus, route }) => {
-  const updatePin = (route.params as any)?.updatePin
-  const { agent } = useAppAgent()
-  const { setPIN: setWalletPIN, checkWalletPIN, rekeyWallet } = useAuth()
+const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus }) => {
+  const { setPIN: setWalletPIN } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
-  const [PINOld, setPINOld] = useState('')
-  const [continueEnabled, setContinueEnabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
-  const [modalState, setModalState] = useState<ModalState>({
-    visible: false,
-    title: '',
-    message: '',
-  })
-  const iconSize = 24
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
-  const [store, dispatch] = useStore()
+  const [, dispatch] = useStore()
   const { t } = useTranslation()
-  const [inlineMessageField1, setInlineMessageField1] = useState<InlineMessageProps>()
-  const [inlineMessageField2, setInlineMessageField2] = useState<InlineMessageProps>()
 
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
-  const actionButtonLabel = updatePin ? t('PINCreate.ChangePIN') : t('PINCreate.CreatePIN')
-  const actionButtonTestId = updatePin ? testIdWithKey('ChangePIN') : testIdWithKey('CreatePIN')
-  const [
-    PINExplainer,
-    PINCreateHeader,
-    { PINSecurity, showPINExplainer },
-    Button,
-    inlineMessages,
-    logger,
-    historyManagerCurried,
-    historyEnabled,
-    historyEventsLogger,
-  ] = useServices([
+  const [PINExplainer, PINHeader, { showPINExplainer }, Button, inlineMessages] = useServices([
     TOKENS.SCREEN_PIN_EXPLAINER,
-    TOKENS.COMPONENT_PIN_CREATE_HEADER,
+    TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.CONFIG,
     TOKENS.COMP_BUTTON,
     TOKENS.INLINE_ERRORS,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_ENABLED,
-    TOKENS.HISTORY_EVENTS_LOGGER,
   ])
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
-  const [PINOneValidations, setPINOneValidations] = useState<PINValidationsType[]>(
-    PINCreationValidations(PIN, PINSecurity.rules)
-  )
+  const {
+    PINValidations,
+    validatePINEntry,
+    inlineMessageField1,
+    inlineMessageField2,
+    modalState,
+    PINSecurity
+  } = usePINValidation(PIN, PINTwo)
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -118,11 +83,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const passcodeCreate = useCallback(
     async (PIN: string) => {
       try {
-        setContinueEnabled(false)
         await setWalletPIN(PIN)
-        // This will trigger initAgent
         setAuthenticated(true)
-
+        // this dispatch finishes this step of onboarding and will cause a navigation
         dispatch({
           type: DispatchAction.DID_CREATE_PIN,
         })
@@ -140,184 +103,39 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     [setWalletPIN, setAuthenticated, dispatch, t]
   )
 
-  const displayModalMessage = (title: string, message: string) => {
-    setModalState({
-      visible: true,
-      title: title,
-      message: message,
-    })
-  }
-
-  const attentionMessage = useCallback(
-    (title: string, message: string, pinOne: boolean) => {
-      if (inlineMessages.enabled) {
-        const config = {
-          message: message,
-          inlineType: InlineErrorType.error,
-          config: inlineMessages,
-        }
-        if (pinOne) {
-          setInlineMessageField1(config)
-        } else {
-          setInlineMessageField2(config)
-        }
-      } else {
-        displayModalMessage(title, message)
-      }
-    },
-    [inlineMessages]
-  )
-
-  const validatePINEntry = useCallback(
-    (PINOne: string, PINTwo: string): boolean => {
-      for (const validation of PINOneValidations) {
-        if (validation.isInvalid) {
-          attentionMessage(
-            t('PINCreate.InvalidPIN'),
-            t(`PINCreate.Message.${validation.errorName}`, validation?.errorTextAddition),
-            true
-          )
-          return false
-        }
-      }
-      if (PINOne !== PINTwo) {
-        attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
-        return false
-      }
-      return true
-    },
-    [PINOneValidations, t, attentionMessage]
-  )
-
-  const checkOldPIN = useCallback(
-    async (PIN: string): Promise<boolean> => {
-      const valid = await checkWalletPIN(PIN)
-      if (!valid) {
-        displayModalMessage(t('PINCreate.InvalidPIN'), t(`PINCreate.Message.OldPINIncorrect`))
-      }
-      return valid
-    },
-    [checkWalletPIN, t]
-  )
-
-  const confirmEntry = useCallback(
-    async (PINOne: string, PINTwo: string) => {
-      if (!validatePINEntry(PINOne, PINTwo)) {
-        return
-      }
-
-      await passcodeCreate(PINOne)
-    },
-    [validatePINEntry, passcodeCreate]
-  )
-
-  const logHistoryRecord = useCallback(() => {
-    try {
-      if (!(agent && historyEnabled)) {
-        logger.trace(
-          `[${PINCreate.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
-        )
-        return
-      }
-      const historyManager = historyManagerCurried(agent)
-      /** Save history record for pin edited */
-      const recordData: HistoryRecord = {
-        type: HistoryCardType.PinChanged,
-        message: HistoryCardType.PinChanged,
-        createdAt: new Date(),
-      }
-
-      historyManager.saveHistory(recordData)
-    } catch (err: unknown) {
-      logger.error(`[${PINCreate.name}]:[logHistoryRecord] Error saving history: ${err}`)
-    }
-  }, [agent, historyEnabled, logger, historyManagerCurried])
-
-  const handleCreatePinTap = async () => {
+  const handleCreatePinTap = useCallback(async () => {
     setIsLoading(true)
-    if (updatePin) {
-      const valid = validatePINEntry(PIN, PINTwo)
-      if (valid) {
-        setContinueEnabled(false)
-        const oldPinValid = await checkOldPIN(PINOld)
-        if (oldPinValid) {
-          const success = await rekeyWallet(PINOld, PIN, store.preferences.useBiometry)
-          if (success) {
-            if (historyEventsLogger.logPinChanged) {
-              logHistoryRecord()
-            }
-
-            setModalState({
-              visible: true,
-              title: t('PINCreate.PinChangeSuccessTitle'),
-              message: t('PINCreate.PinChangeSuccessMessage'),
-              onModalDismiss: () => {
-                navigation.navigate(Screens.Settings as never)
-              },
-            })
-          }
-        }
-
-        setContinueEnabled(true)
-      }
-    } else {
-      await confirmEntry(PIN, PINTwo)
+    if (validatePINEntry(PIN, PINTwo)) {
+      await passcodeCreate(PIN)
     }
     setIsLoading(false)
-  }
+  }, [PIN, PINTwo, passcodeCreate, validatePINEntry])
 
-  const isContinueDisabled = (): boolean => {
-    if (inlineMessages) {
+  const isContinueDisabled = useMemo((): boolean => {
+    if (inlineMessages.enabled) {
       return false
     }
-    return !continueEnabled || PIN.length < minPINLength || PINTwo.length < minPINLength
-  }
+    return isLoading || PIN.length < minPINLength || PINTwo.length < minPINLength
+  }, [isLoading, PIN, PINTwo, inlineMessages])
 
-  useEffect(() => {
-    if (updatePin) {
-      setContinueEnabled(PIN !== '' && PINTwo !== '' && PINOld !== '')
-    }
-  }, [updatePin, PIN, PINTwo, PINOld])
-
-  const continueCreatePIN = () => {
+  const continueCreatePIN = useCallback(() => {
     setExplained(true)
-  }
-
-  useEffect(() => {
-    setInlineMessageField1(undefined)
-    setInlineMessageField2(undefined)
-  }, [PIN, PINTwo])
+  }, [])
 
   return explained ? (
     <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <PINCreateHeader updatePin={updatePin} />
-          {updatePin && (
-            <PINInput
-              label={t('PINCreate.EnterOldPINTitle')}
-              testID={testIdWithKey('EnterOldPIN')}
-              accessibilityLabel={t('PINCreate.EnterOldPIN')}
-              onPINChanged={(p: string) => {
-                setPINOld(p)
-              }}
-            />
-          )}
+          <PINHeader />
           <PINInput
-            label={t('PINCreate.EnterPINTitle', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
+            label={t('PINCreate.EnterPINTitle')}
             onPINChanged={(p: string) => {
               setPIN(p)
-              setPINOneValidations(PINCreationValidations(p, PINSecurity.rules))
-
-              if (p.length === minPINLength) {
-                if (PINTwoInputRef?.current) {
-                  PINTwoInputRef.current.focus()
-                  // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
-                  // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
-                  const reactTag = findNodeHandle(PINTwoInputRef.current)
-                  if (reactTag) {
-                    AccessibilityInfo.setAccessibilityFocus(reactTag)
-                  }
+              if (p.length === minPINLength && PINTwoInputRef?.current) {
+                PINTwoInputRef.current.focus()
+                const reactTag = findNodeHandle(PINTwoInputRef.current)
+                if (reactTag) {
+                  AccessibilityInfo.setAccessibilityFocus(reactTag)
                 }
               }
             }}
@@ -327,79 +145,45 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             inlineMessage={inlineMessageField1}
           />
           <PINInput
-            label={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
+            label={t('PINCreate.ReenterPIN')}
             onPINChanged={(p: string) => {
               setPINTwo(p)
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
-                if (createPINButtonRef?.current) {
-                  // NOTE:(jl) `findNodeHandle` will be deprecated in React 18.
-                  // https://reactnative.dev/docs/new-architecture-library-intro#preparing-your-javascript-codebase-for-the-new-react-native-renderer-fabric
-                  const reactTag = findNodeHandle(createPINButtonRef.current)
-                  if (reactTag) {
-                    AccessibilityInfo.setAccessibilityFocus(reactTag)
-                  }
+                const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
+                if (reactTag) {
+                  AccessibilityInfo.setAccessibilityFocus(reactTag)
                 }
               }
             }}
             testID={testIdWithKey('ReenterPIN')}
-            accessibilityLabel={t('PINCreate.ReenterPIN', { new: updatePin ? t('PINCreate.NewPIN') + ' ' : '' })}
+            accessibilityLabel={t('PINCreate.ReenterPIN')}
             autoFocus={false}
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
           />
           {PINSecurity.displayHelper && (
-            <View style={{ marginBottom: 16 }}>
-              {PINOneValidations.map((validation, index) => {
-                return (
-                  <View style={{ flexDirection: 'row' }} key={index}>
-                    {validation.isInvalid ? (
-                      <Icon
-                        accessibilityLabel={t('PINCreate.Helper.ClearIcon')}
-                        name="clear"
-                        size={iconSize}
-                        color={ColorPallet.notification.errorIcon}
-                      />
-                    ) : (
-                      <Icon
-                        accessibilityLabel={t('PINCreate.Helper.CheckIcon')}
-                        name="check"
-                        size={iconSize}
-                        color={ColorPallet.notification.successIcon}
-                      />
-                    )}
-                    <ThemedText style={{ paddingLeft: 4 }}>
-                      {t(`PINCreate.Helper.${validation.errorName}`, validation?.errorTextAddition)}
-                    </ThemedText>
-                  </View>
-                )
-              })}
-            </View>
+            <PINValidationHelper validations={PINValidations} />
           )}
           {modalState.visible && (
             <AlertModal
               title={modalState.title}
               message={modalState.message}
-              submit={() => {
-                if (modalState.onModalDismiss) {
-                  modalState.onModalDismiss()
-                }
-                setModalState({ ...modalState, visible: false, onModalDismiss: undefined })
-              }}
+              submit={modalState.onModalDismiss}
             />
           )}
         </View>
         <View style={style.controlsContainer}>
           <Button
-            title={actionButtonLabel}
-            testID={actionButtonTestId}
-            accessibilityLabel={actionButtonLabel}
+            title={t('PINCreate.CreatePIN')}
+            testID={testIdWithKey('CreatePIN')}
+            accessibilityLabel={t('PINCreate.CreatePIN')}
             buttonType={ButtonType.Primary}
-            disabled={isContinueDisabled()}
+            disabled={isContinueDisabled}
             onPress={handleCreatePinTap}
             ref={createPINButtonRef}
           >
-            {!continueEnabled && isLoading ? <ButtonLoading /> : null}
+            {isLoading ? <ButtonLoading /> : null}
           </Button>
         </View>
       </View>

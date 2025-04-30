@@ -53,7 +53,6 @@ export default [
       '.eslintrc-common.js',
       '**/.eslintrc.js',
       'scripts/make-blocks.js',
-      'scripts/get-next-bump.ts',
       '**/jest.config.js',
       '**/metro.config.js',
       '.changeset/commit.js',

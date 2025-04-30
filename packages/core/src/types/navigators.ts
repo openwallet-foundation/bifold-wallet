@@ -11,6 +11,7 @@ export enum Screens {
   Terms = 'Terms',
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
+  ChangePIN = 'Change PIN',
   EnterPIN = 'Enter PIN',
   Home = 'Home',
   Scan = 'Scan',
@@ -36,8 +37,10 @@ export enum Screens {
   MobileVerifierLoading = 'Mobile Verifier Loading',
   OnTheWay = 'On The Way',
   Declined = 'Declined',
-  UseBiometry = 'Use Biometry',
-  UsePushNotifications = 'Use Push Notifications',
+  Biometry = 'Biometry',
+  ToggleBiometry = 'Toggle Biometry',
+  PushNotifications = 'Push Notifications',
+  TogglePushNotifications = 'Toggle Push Notifications',
   Developer = 'Developer',
   CustomNotification = 'Custom Notification',
   ProofChangeCredential = 'Choose a credential',
@@ -95,20 +98,16 @@ export type TabStackParams = {
   [TabStacks.CredentialStack]: NavigatorScreenParams<CredentialStackParams>
 }
 
-export type AuthenticateStackParams = {
+export type OnboardingStackParams = {
   [Screens.Preface]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
   [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
-  [Screens.UseBiometry]: undefined
+  [Screens.Biometry]: undefined
   [Screens.NameWallet]: undefined
-  [Screens.UsePushNotifications]: undefined
-}
-
-export type OnboardingStackParams = {
-  [Screens.Onboarding]: undefined
+  [Screens.PushNotifications]: undefined
   [Screens.Developer]: undefined
 }
 
@@ -160,12 +159,12 @@ export type SettingStackParams = {
   [Screens.Language]: undefined
   [Screens.DataRetention]: undefined
   [Screens.Tours]: undefined
-  [Screens.UseBiometry]: undefined
-  [Screens.CreatePIN]: undefined
+  [Screens.ToggleBiometry]: undefined
+  [Screens.ChangePIN]: undefined
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined
-  [Screens.UsePushNotifications]: { isMenu?: boolean }
+  [Screens.TogglePushNotifications]: undefined
   [Screens.HistorySettings]: undefined
   [Screens.AutoLock]: undefined
 }

@@ -290,8 +290,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         }}
       >
         {loading ? <RecordLoading /> : null}
-        {credentialConnectionLabel && goalCode === 'aries.vc.issue' && (
-          <ConnectionAlert connectionID={credentialConnectionLabel} />
+        {Boolean(credentialConnectionLabel) && goalCode === 'aries.vc.issue' && (
+          <ConnectionAlert connectionLabel={credentialConnectionLabel} />
         )}
         <View style={styles.footerButton}>
           <Button

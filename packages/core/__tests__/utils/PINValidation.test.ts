@@ -1,4 +1,4 @@
-import { PINCreationValidations } from '../../src/utils/PINCreationValidation'
+import { createPINValidations } from '../../src/utils/PINValidation'
 
 const defaultPINRules = {
   only_numbers: false,
@@ -13,9 +13,9 @@ const defaultPINRules = {
 
 const validPIN = '132465'
 
-describe('PIN creation validations', () => {
+describe('PIN validations', () => {
   test('Valid PIN with every validations to false should return everything as valid', async () => {
-    const PINValidations = PINCreationValidations(validPIN, defaultPINRules)
+    const PINValidations = createPINValidations(validPIN, defaultPINRules)
 
     for (const PINValidation of PINValidations) {
       expect(PINValidation.isInvalid).toBe(false)
@@ -24,7 +24,7 @@ describe('PIN creation validations', () => {
 
   test('PIN too short with every validations to false should return PINTooShortValidation as invalid', async () => {
     const PINTooShort = '12345'
-    const PINValidations = PINCreationValidations(PINTooShort, defaultPINRules)
+    const PINValidations = createPINValidations(PINTooShort, defaultPINRules)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'PINTooShortValidation') {
@@ -35,7 +35,7 @@ describe('PIN creation validations', () => {
 
   test('PIN too long with every validations to false should return PINTooLongValidation as invalid', async () => {
     const PINTooLong = '1234567'
-    const PINValidations = PINCreationValidations(PINTooLong, defaultPINRules)
+    const PINValidations = createPINValidations(PINTooLong, defaultPINRules)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'PINTooLongValidation') {
@@ -46,7 +46,7 @@ describe('PIN creation validations', () => {
 
   test('PIN adjacent number repetion is allowed when the repeating test is disabled', async () => {
     const PINRepeating = '111111'
-    const PINValidations = PINCreationValidations(PINRepeating, defaultPINRules)
+    const PINValidations = createPINValidations(PINRepeating, defaultPINRules)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'PINTooLongValidation') {
@@ -62,7 +62,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithoutOnlyNumbers = '123v4a'
-    const PINValidations = PINCreationValidations(PINWithoutOnlyNumbers, PINRulesWithOnlyNumbers)
+    const PINValidations = createPINValidations(PINWithoutOnlyNumbers, PINRulesWithOnlyNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'PINOnlyContainDigitsValidation') {
@@ -78,7 +78,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithOnlyNumbers = '123456'
-    const PINValidations = PINCreationValidations(PINWithOnlyNumbers, PINRulesWithOnlyNumbers)
+    const PINValidations = createPINValidations(PINWithOnlyNumbers, PINRulesWithOnlyNumbers)
 
     for (const PINValidation of PINValidations) {
       expect(PINValidation.isInvalid).toBe(false)
@@ -92,7 +92,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithRepeatedNumbers = '113456'
-    const PINValidations = PINCreationValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
+    const PINValidations = createPINValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'NoRepetitionOfTheSameNumbersValidation') {
@@ -108,7 +108,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithRepeatedNumbers = '111456'
-    const PINValidations = PINCreationValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
+    const PINValidations = createPINValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'NoRepetitionOfTheSameNumbersValidation') {
@@ -124,7 +124,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithRepeatedNumbers = '111456'
-    const PINValidations = PINCreationValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
+    const PINValidations = createPINValidations(PINWithRepeatedNumbers, PINRulesWithRepeatedNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'NoRepetitionOfTheSameNumbersValidation') {
@@ -140,7 +140,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithSeriesOfNumbers = '123456'
-    const PINValidations = PINCreationValidations(PINWithSeriesOfNumbers, PINRulesWithNoSeriesOfNumbers)
+    const PINValidations = createPINValidations(PINWithSeriesOfNumbers, PINRulesWithNoSeriesOfNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'NoSeriesOfNumbersValidation') {
@@ -155,7 +155,7 @@ describe('PIN creation validations', () => {
       no_series_of_numbers: true,
     }
 
-    const PINValidations = PINCreationValidations(validPIN, PINRulesWithNoSeriesOfNumbers)
+    const PINValidations = createPINValidations(validPIN, PINRulesWithNoSeriesOfNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'NoSeriesOfNumbersValidation') {
@@ -171,7 +171,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithRepetitionOfTwoSameNumbers = '151545'
-    const PINValidations = PINCreationValidations(
+    const PINValidations = createPINValidations(
       PINWithRepetitionOfTwoSameNumbers,
       PINRulesWithNoRepetitionOfTwoSameNumbers
     )
@@ -190,7 +190,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithRepetitionOfTwoSameNumbers = '151515'
-    const PINValidations = PINCreationValidations(
+    const PINValidations = createPINValidations(
       PINWithRepetitionOfTwoSameNumbers,
       PINRulesWithNoRepetitionOfTwoSameNumbers
     )
@@ -209,7 +209,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithRepetitionOfTwoSameNumbers = '151545'
-    const PINValidations = PINCreationValidations(
+    const PINValidations = createPINValidations(
       PINWithRepetitionOfTwoSameNumbers,
       PINRulesWithNoRepetitionOfTwoSameNumbers
     )
@@ -228,7 +228,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithSeriesOfOddNumbers = '135790'
-    const PINValidations = PINCreationValidations(PINWithSeriesOfOddNumbers, PINRulesWithNoSeriesOfOddNumbers)
+    const PINValidations = createPINValidations(PINWithSeriesOfOddNumbers, PINRulesWithNoSeriesOfOddNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'OddOrEvenSequenceValidation') {
@@ -244,7 +244,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithSeriesOfEvenNumbers = '024680'
-    const PINValidations = PINCreationValidations(PINWithSeriesOfEvenNumbers, PINRulesWithNoSeriesOfEvenNumbers)
+    const PINValidations = createPINValidations(PINWithSeriesOfEvenNumbers, PINRulesWithNoSeriesOfEvenNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'OddOrEvenSequenceValidation') {
@@ -259,7 +259,7 @@ describe('PIN creation validations', () => {
       no_series_of_odd_numbers: true,
     }
 
-    const PINValidations = PINCreationValidations(validPIN, PINRulesWithNoSeriesOfOddNumbers)
+    const PINValidations = createPINValidations(validPIN, PINRulesWithNoSeriesOfOddNumbers)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'OddOrEvenSequenceValidation') {
@@ -275,7 +275,7 @@ describe('PIN creation validations', () => {
     }
 
     const PINWithCrossPattern = '753951'
-    const PINValidations = PINCreationValidations(PINWithCrossPattern, PINRulesWithNoCrossPattern)
+    const PINValidations = createPINValidations(PINWithCrossPattern, PINRulesWithNoCrossPattern)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'CrossPatternValidation') {
@@ -290,7 +290,7 @@ describe('PIN creation validations', () => {
       no_cross_pattern: true,
     }
 
-    const PINValidations = PINCreationValidations(validPIN, PINRulesWithNoCrossPattern)
+    const PINValidations = createPINValidations(validPIN, PINRulesWithNoCrossPattern)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'CrossPatternValidation') {

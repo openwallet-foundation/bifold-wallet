@@ -3,7 +3,7 @@ import React from 'react'
 
 import { AuthContext } from '../../src/contexts/auth'
 import { StoreProvider, defaultState } from '../../src/contexts/store'
-import PINCreate from '../../src/screens/PINCreate'
+import PINChange from '../../src/screens/PINChange'
 import { testIdWithKey } from '../../src/utils/testable'
 import authContext from '../contexts/auth'
 import { MainContainer } from '../../src/container-impl'
@@ -17,11 +17,7 @@ describe('PINChange Screen', () => {
 
   test('PIN change renders correctly', async () => {
     const main = new MainContainer(container.createChildContainer()).init()
-    const route = {
-      params: {
-        updatePin: true,
-      },
-    } as any
+    const route = {} as any
     const tree = render(
       <ContainerProvider value={main}>
         <StoreProvider
@@ -30,12 +26,7 @@ describe('PINChange Screen', () => {
           }}
         >
           <AuthContext.Provider value={authContext}>
-            <PINCreate
-              route={route}
-              navigation={jest.fn() as any}
-              setAuthenticated={jest.fn()}
-              explainedStatus={true}
-            />
+            <PINChange route={route} navigation={jest.fn() as any} />
           </AuthContext.Provider>
         </StoreProvider>
       </ContainerProvider>
