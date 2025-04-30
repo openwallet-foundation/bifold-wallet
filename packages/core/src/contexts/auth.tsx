@@ -26,6 +26,7 @@ import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 
 export interface AuthContext {
+  lockOutUser: () => void
   checkWalletPIN: (PIN: string) => Promise<boolean>
   getWalletSecret: () => Promise<WalletSecret | undefined>
   walletSecret?: WalletSecret
@@ -131,6 +132,18 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     setWalletSecret(undefined)
   }, [])
 
+  const lockOutUser = useCallback(() => {
+    removeSavedWalletSecret()
+    dispatch({
+      type: DispatchAction.DID_AUTHENTICATE,
+      payload: [false],
+    })
+    dispatch({
+      type: DispatchAction.LOCKOUT_UPDATED,
+      payload: [{ displayNotification: true }],
+    })
+  }, [removeSavedWalletSecret, dispatch])
+
   const disableBiometrics = useCallback(async () => {
     await wipeWalletKey(true)
   }, [])
@@ -202,6 +215,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   return (
     <AuthContext.Provider
       value={{
+        lockOutUser,
         checkWalletPIN,
         getWalletSecret,
         removeSavedWalletSecret,
