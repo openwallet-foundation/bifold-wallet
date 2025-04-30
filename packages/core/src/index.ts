@@ -4,7 +4,7 @@ import type { OnboardingStyleSheet } from './screens/Onboarding'
 import { Agent } from '@credo-ts/core'
 import AgentProvider from '@credo-ts/react-hooks'
 
-import App from './App'
+import createApp from './App'
 import * as components from './components'
 import { Button as IButton, ButtonImpl as Button, ButtonType } from './components/buttons/Button'
 import IconButton, { ButtonLocation } from './components/buttons/IconButton'
@@ -36,6 +36,7 @@ import NotificationListItem from './components/listItems/NotificationListItem'
 import * as contexts from './contexts'
 import { AutoLockTime, ActivityProvider, useActivity } from './contexts/activity'
 import { AuthProvider } from './contexts/auth'
+import NavContainer from './contexts/navigation'
 import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
@@ -46,7 +47,7 @@ import Preface from './screens/Preface'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UpdateAvailable from './screens/UpdateAvailable'
-import UseBiometry from './screens/UseBiometry'
+import Biometry from './screens/Biometry'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
 import * as types from './types'
@@ -57,7 +58,7 @@ import { PINRules, walletTimeout, tours, attemptLockoutConfig } from './constant
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
-import useInitializeAgent from './hooks/initialize-agent'
+import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import usePreventScreenCapture from './hooks/screen-capture'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 
@@ -76,10 +77,9 @@ export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { ColorPallet } from './theme'
 export { animatedComponents } from './animated-components'
-export { theme } from './theme'
+export { bifoldTheme } from './theme'
 export { useAuth } from './contexts/auth'
 export { useNetwork } from './contexts/network'
-export { NavigationTheme } from './theme'
 export { testIdWithKey, testIdForAccessabilityLabel } from './utils/testable'
 export { Screens, Stacks, TabStacks } from './types/navigators'
 export { createStyles } from './screens/OnboardingPages'
@@ -122,12 +122,7 @@ export type { VersionInfo, PersistentState } from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { TourStep, RenderProps } from './contexts/tour/tour-context'
 export type { GenericFn } from './types/fn'
-export type {
-  AuthenticateStackParams,
-  OnboardingStackParams,
-  NotificationStackParams,
-  ContactStackParams,
-} from './types/navigators'
+export type { OnboardingStackParams, NotificationStackParams, ContactStackParams } from './types/navigators'
 export type { OnboardingStyleSheet }
 export type { WalletSecret } from './types/security'
 export type { ReducerAction } from './contexts/reducers/store'
@@ -152,9 +147,11 @@ export type { ScreenLayoutConfig, OnboardingTask } from './types/navigators'
 export type { Config, HistoryEventsLoggerConfig } from './types/config'
 
 export { BaseTourID } from './types/tour'
+export type { SplashProps } from './screens/Splash'
+export type { OnboardingStackProps } from './navigators/OnboardingStack'
 
 export {
-  App,
+  createApp,
   Agent,
   AgentProvider,
   AuthProvider,
@@ -186,12 +183,13 @@ export {
   AutoLockTime,
   ToastType,
   toastConfig,
+  NavContainer,
   NetInfo,
   OnboardingPages,
   OpenIDCredentialRecordProvider,
   NotificationListItem,
   useDefaultStackOptions,
-  useInitializeAgent,
+  useBifoldAgentSetup,
   usePreventScreenCapture,
   Splash,
   Developer,
@@ -199,7 +197,7 @@ export {
   Preface,
   UpdateAvailable,
   HomeFooterView as HomeContentView,
-  UseBiometry,
+  Biometry,
   AttemptLockout,
   Record,
   Scan,

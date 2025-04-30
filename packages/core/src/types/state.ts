@@ -32,6 +32,7 @@ export interface Preferences {
   enableShareableLink: boolean
   alternateContactNames: Record<string, string>
   autoLockTime: number
+  theme?: string
 }
 
 export interface Tours {

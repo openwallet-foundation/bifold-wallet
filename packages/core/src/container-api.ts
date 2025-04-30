@@ -10,32 +10,40 @@ import { Button } from './components/buttons/Button-api'
 import { ReducerAction } from './contexts/reducers/store'
 import { IHistoryManager } from './modules/history'
 import Onboarding from './screens/Onboarding'
+import { SplashProps } from './screens/Splash'
 import UpdateAvailable from './screens/UpdateAvailable'
 import { AttestationMonitor } from './types/attestation'
 import { IVersionCheckService } from './types/version-check'
 import { GenericFn } from './types/fn'
-import { AuthenticateStackParams, ScreenLayoutConfig, ScreenOptionsType, OnboardingTask } from './types/navigators'
+import { OnboardingStackParams, ScreenLayoutConfig, ScreenOptionsType, OnboardingTask } from './types/navigators'
 import { CustomNotification } from './types/notification'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { State } from './types/state'
 import { NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 import { NotificationListItemProps } from './components/listItems/NotificationListItem'
-import { PINCreateHeaderProps } from './components/misc/PINCreateHeader'
+import { PINHeaderProps } from './components/misc/PINHeader'
 import { PINExplainerProps } from './screens/PINExplainer'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { ContactListItemProps } from './components/listItems/ContactListItem'
 import { ContactCredentialListItemProps } from './components/listItems/ContactCredentialListItem'
 import { InlineErrorConfig } from './types/error'
 import { BifoldLogger } from './services/logger'
+import { AgentSetupReturnType } from './hooks/useBifoldAgentSetup'
+import { OnboardingStackProps } from './navigators/OnboardingStack'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
-  navigation: StackNavigationProp<AuthenticateStackParams>
+  navigation: StackNavigationProp<OnboardingStackParams>
 ) => GenericFn
 
 type LoadStateFn = (dispatch: React.Dispatch<ReducerAction<unknown>>) => Promise<void>
 
-type GenerateOnboardingWorkflowStepsFn = (state: State, config: Config, termsVersion: number) => Array<OnboardingTask>
+type GenerateOnboardingWorkflowStepsFn = (
+  state: State,
+  config: Config,
+  termsVersion: number,
+  agent: Agent | null
+) => Array<OnboardingTask>
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
@@ -54,12 +62,17 @@ export const SCREEN_TOKENS = {
   SCREEN_ONBOARDING_PAGES: 'screen.onboarding.pages',
   SCREEN_SPLASH: 'screen.splash',
   SCREEN_SCAN: 'screen.scan',
-  SCREEN_USE_BIOMETRY: 'screen.use-biometry',
+  SCREEN_BIOMETRY: 'screen.biometry',
+  SCREEN_TOGGLE_BIOMETRY: 'screen.toggle-biometry',
   SCREEN_PIN_EXPLAINER: 'screen.pin-explainer',
 } as const
 
 export const NAV_TOKENS = {
   CUSTOM_NAV_STACK_1: 'nav.slot1',
+} as const
+
+export const HOOK_TOKENS = {
+  HOOK_USE_AGENT_SETUP: 'hook.useAgentSetup',
 } as const
 
 export const COMPONENT_TOKENS = {
@@ -68,7 +81,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_HOME_FOOTER: 'component.home.footer',
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
   COMPONENT_RECORD: 'component.record',
-  COMPONENT_PIN_CREATE_HEADER: 'component.pin-create-header',
+  COMPONENT_PIN_HEADER: 'component.pin-create-header',
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
   COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
   COMPONENT_CONNECTION_ALERT: 'component.connection-alert',
@@ -137,6 +150,7 @@ export const TOKENS = {
   ...PROOF_TOKENS,
   ...COMPONENT_TOKENS,
   ...SCREEN_TOKENS,
+  ...HOOK_TOKENS,
   ...NAV_TOKENS,
   ...SERVICE_TOKENS,
   ...STACK_TOKENS,
@@ -162,15 +176,17 @@ export type TokenMapping = {
   [TOKENS.GROUP_BY_REFERENT]: boolean
   [TOKENS.SCREEN_PREFACE]: React.FC
   [TOKENS.SCREEN_UPDATE_AVAILABLE]: typeof UpdateAvailable
-  [TOKENS.STACK_ONBOARDING]: React.FC
+  [TOKENS.STACK_ONBOARDING]: React.FC<OnboardingStackProps>
   [TOKENS.SCREEN_TERMS]: { screen: React.FC; version: boolean | string }
   [TOKENS.SCREEN_DEVELOPER]: React.FC
   [TOKENS.SCREEN_ONBOARDING_PAGES]: (onTutorialCompleted: GenericFn, OnboardingTheme: any) => Array<Element>
-  [TOKENS.SCREEN_SPLASH]: React.FC
+  [TOKENS.SCREEN_SPLASH]: React.FC<SplashProps>
   [TOKENS.SCREEN_SCAN]: React.FC
-  [TOKENS.SCREEN_USE_BIOMETRY]: React.FC
+  [TOKENS.SCREEN_BIOMETRY]: React.FC
+  [TOKENS.SCREEN_TOGGLE_BIOMETRY]: React.FC
   [TOKENS.SCREEN_ONBOARDING]: typeof Onboarding
   [TOKENS.SCREEN_PIN_EXPLAINER]: React.FC<PINExplainerProps>
+  [TOKENS.HOOK_USE_AGENT_SETUP]: () => AgentSetupReturnType
   [TOKENS.FN_ONBOARDING_DONE]: FN_ONBOARDING_DONE
   [TOKENS.LOAD_STATE]: LoadStateFn
   [TOKENS.COMP_BUTTON]: Button
@@ -181,7 +197,7 @@ export type TokenMapping = {
   [TOKENS.NOTIFICATIONS_LIST_ITEM]: React.FC<NotificationListItemProps>
   [TOKENS.OBJECT_SCREEN_CONFIG]: ScreenOptionsType
   [TOKENS.OBJECT_LAYOUT_CONFIG]: ScreenLayoutConfig
-  [TOKENS.COMPONENT_PIN_CREATE_HEADER]: React.FC<PINCreateHeaderProps>
+  [TOKENS.COMPONENT_PIN_HEADER]: React.FC<PINHeaderProps>
   [TOKENS.CACHE_CRED_DEFS]: { did: string; id: string }[]
   [TOKENS.CACHE_SCHEMAS]: { did: string; id: string }[]
   [TOKENS.UTIL_LOGGER]: BifoldLogger
