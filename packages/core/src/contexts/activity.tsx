@@ -10,11 +10,10 @@ import React, {
   useState,
 } from 'react'
 import { AppState, AppStateStatus, PanResponder, View } from 'react-native'
+import { defaultAutoLockTime } from '../constants'
+import { TOKENS, useServices } from '../container-api'
 import { useAuth } from './auth'
 import { useStore } from './store'
-import { DispatchAction } from './reducers/store'
-import { TOKENS, useServices } from '../container-api'
-import { defaultAutoLockTime } from '../constants'
 
 // number of minutes before the timeout action is triggered
 // a value of 0 will never trigger the lock out action and
@@ -34,9 +33,9 @@ export const ActivityContext = createContext<ActivityContext>(null as unknown as
 
 export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const [store, dispatch] = useStore()
+  const [store] = useStore()
   const { agent } = useAgent()
-  const { removeSavedWalletSecret } = useAuth()
+  const { lockOutUser } = useAuth()
   const lastActiveTimeRef = useRef<number | undefined>(undefined)
   const timeoutInMilliseconds = useRef<number>((store.preferences.autoLockTime ?? defaultAutoLockTime) * 60000)
   const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -46,18 +45,6 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
   if (!agent) {
     throw new Error('ActivityProvider must be used within agent context provider')
   }
-
-  const lockOutUser = useCallback(() => {
-    removeSavedWalletSecret()
-    dispatch({
-      type: DispatchAction.DID_AUTHENTICATE,
-      payload: [false],
-    })
-    dispatch({
-      type: DispatchAction.LOCKOUT_UPDATED,
-      payload: [{ displayNotification: true }],
-    })
-  }, [removeSavedWalletSecret, dispatch])
 
   const clearInactivityTimeoutIfExists = useCallback(() => {
     if (inactivityTimeoutRef.current) {
