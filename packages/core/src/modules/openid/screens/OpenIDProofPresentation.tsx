@@ -59,7 +59,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   >([])
   const [satistfiedCredentialsSubmission, setSatistfiedCredentialsSubmission] = useState<SatisfiedCredentialsFormat>()
   const [selectedCredentialsSubmission, setSelectedCredentialsSubmission] = useState<SelectedCredentialsFormat>()
-  // const [selectedCredentialSubmission, setSelectedCredentialSubmission] = useState<FormattedSelectedCredentialEntry>()
 
   const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
