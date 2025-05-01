@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.0.1
+
+### Patch Changes
+
+- 498451c: Prevent unwanted duplicate initial storage loads and export AuthProvider lockUserOut function for reuse elsewhere if desired
+
 ## 2.0.0
 
 ### Major Changes
