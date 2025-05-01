@@ -202,12 +202,21 @@ export type DeliveryStackParams = {
   }
   [Screens.OpenIDProofPresentation]: { credential: OpenId4VPRequestRecord }
   [Screens.OpenIDProofCredentialSelect]: {
+    inputDescriptorID: string
     selectedCredID: string
     altCredIDs: {
       id: string
       claimFormat: string
     }[]
-    onCredChange: ({ id, claimFormat }: { id: string; claimFormat: string }) => void
+    onCredChange: ({
+      inputDescriptorID,
+      id,
+      claimFormat,
+    }: {
+      inputDescriptorID: string
+      id: string
+      claimFormat: string
+    }) => void
   }
 }
 

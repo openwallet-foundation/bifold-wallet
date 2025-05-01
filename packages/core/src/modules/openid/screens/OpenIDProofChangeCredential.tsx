@@ -81,6 +81,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
 
   const changeCred = (selection: TypedCred) => {
     onCredChange({
+      inputDescriptorID: route.params.inputDescriptorID,
       id: selection.credential.id,
       claimFormat: selection.claimFormat,
     })

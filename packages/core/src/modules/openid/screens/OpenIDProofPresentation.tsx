@@ -4,7 +4,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { StackScreenProps } from '@react-navigation/stack'
 
-import { DeliveryStackParams, Screens, Stacks, TabStacks } from '../../../types/navigators'
+import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import {
   formatDifPexCredentialsForRequest,
@@ -30,9 +30,12 @@ import ScreenLayout from '../../../layout/ScreenLayout'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
-type TypedCred = {
-  credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
-  claimFormat: string
+
+type SatisfiedCredentialsFormat = {
+  [inputDescriptorId: string]: {
+    id: string
+    claimFormat: string
+  }[]
 }
 
 type SelectedCredentialsFormat = {
@@ -54,6 +57,10 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [credentialsRequested, setCredentialsRequested] = useState<
     Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord>
   >([])
+  const [satistfiedCredentialsSubmission, setSatistfiedCredentialsSubmission] = useState<SatisfiedCredentialsFormat>()
+  const [selectedCredentialsSubmission, setSelectedCredentialsSubmission] = useState<SelectedCredentialsFormat>()
+  // const [selectedCredentialSubmission, setSelectedCredentialSubmission] = useState<FormattedSelectedCredentialEntry>()
+
   const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
   const { ColorPallet, ListItems, TextTheme } = useTheme()
@@ -115,48 +122,61 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     [credential]
   )
 
-  const [selectedCredentials, setSelectedCredentials] = useState<SelectedCredentialsFormat>()
-
+  //This should run only once when the screen is mounted
   useEffect(() => {
     if (!submission) return
-    const selectedCreds = submission?.entries.reduce((acc, entry) => {
-      if (entry.isSatisfied) {
-        //TODO: Support multiplae credentials
-        return {
-          ...acc,
-          [entry.inputDescriptorId]: {
-            id: entry.credentials[0].id,
-            claimFormat: entry.credentials[0].claimFormat,
-          },
-        }
-      }
+    const creds = submission.entries.reduce((acc: SatisfiedCredentialsFormat, entry) => {
+      acc[entry.inputDescriptorId] = entry.credentials.map((cred) => ({
+        id: cred.id,
+        claimFormat: cred.claimFormat,
+      }))
       return acc
     }, {})
-    setSelectedCredentials(selectedCreds)
+    setSatistfiedCredentialsSubmission(creds)
   }, [submission])
 
+  //Fetch all credentials satisfying the proof
   useEffect(() => {
     async function fetchCreds() {
-      if (!selectedCredentials) return
+      if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries) return
 
       const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
 
-      for (const [inputDescriptorID, { id, claimFormat }] of Object.entries(selectedCredentials)) {
-        let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
-        if (isW3CProofRequest(claimFormat)) {
-          credential = await getW3CCredentialById(id)
-        } else if (isSdJwtProofRequest(claimFormat)) {
-          credential = await getSdJwtCredentialById(id)
-        }
+      for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
+        for (const { id, claimFormat } of credIDs) {
+          let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
+          if (isW3CProofRequest(claimFormat)) {
+            credential = await getW3CCredentialById(id)
+          } else if (isSdJwtProofRequest(claimFormat)) {
+            credential = await getSdJwtCredentialById(id)
+          }
 
-        if (credential && inputDescriptorID) {
-          creds.push(credential)
+          if (credential && inputDescriptorID) {
+            creds.push(credential)
+          }
         }
       }
       setCredentialsRequested(creds)
     }
     fetchCreds()
-  }, [selectedCredentials, getW3CCredentialById, getSdJwtCredentialById])
+  }, [satistfiedCredentialsSubmission, getW3CCredentialById, getSdJwtCredentialById])
+
+  //Once satisfied credentials are set and all credentials fetched, we select the first one of each submission to display on screen
+  useEffect(() => {
+    if (!satistfiedCredentialsSubmission || credentialsRequested?.length <= 0) return
+
+    const creds = Object.entries(satistfiedCredentialsSubmission).reduce(
+      (acc: SelectedCredentialsFormat, [inputDescriptorId, credentials]) => {
+        acc[inputDescriptorId] = {
+          id: credentials[0].id,
+          claimFormat: credentials[0].claimFormat,
+        }
+        return acc
+      },
+      {}
+    )
+    setSelectedCredentialsSubmission(creds)
+  }, [satistfiedCredentialsSubmission, credentialsRequested])
 
   const { verifierName } = useMemo(() => {
     return { verifierName: credential?.verifierHostName }
@@ -164,16 +184,15 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const handleAcceptTouched = async () => {
     try {
-      if (!agent || !credential.credentialsForRequest || !selectedCredentials) {
+      if (!agent || !credential.credentialsForRequest || !selectedCredentialsSubmission) {
         return
       }
       await shareProof({
         agent,
         authorizationRequest: credential.authorizationRequest,
         credentialsForRequest: credential.credentialsForRequest,
-        selectedCredentials,
+        selectedCredentials: selectedCredentialsSubmission,
       })
-
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
@@ -191,23 +210,34 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
-  // selectedCredID: string
-  // altCredIDs: {
-  //   id: string
-  //   claimFormat: string
-  // }[]
-  // onCredChange: ({ id, claimFormat }: { id: string; claimFormat: string }) => void
+  // Re-construct the selected credentials object based on user alt credential
+  const onCredChange = ({
+    inputDescriptorID,
+    id,
+    claimFormat,
+  }: {
+    inputDescriptorID: string
+    id: string
+    claimFormat: string
+  }) => {
+    setSelectedCredentialsSubmission((prev) => ({
+      ...prev,
+      [inputDescriptorID]: {
+        id,
+        claimFormat,
+      },
+    }))
+  }
 
   const handleAltCredChange = useCallback(
-    (selectedCredID: string, inputDescriptor: string) => {
+    (inputDescriptorID: string, selectedCredID: string, inputDescriptor: string) => {
       const submittionEntries = submission?.entries.find((entry) => entry.inputDescriptorId === inputDescriptor)
       const credsForEntry = submittionEntries?.credentials
 
       if (!credsForEntry) return
-      const onCredChange = ({ id, claimFormat }: { id: string; claimFormat: string }) => {
-        console.log('onCredChange', id, claimFormat)
-      }
+
       navigation.navigate(Screens.OpenIDProofCredentialSelect, {
+        inputDescriptorID: inputDescriptorID,
         selectedCredID: selectedCredID,
         altCredIDs: credsForEntry.map((cred) => {
           return {
@@ -252,25 +282,30 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         displayItems={fieldsMapped as Attribute[]}
         hasAltCredentials={hasMultipleCreds}
         handleAltCredChange={() => {
-          handleAltCredChange(selectedCredential.id, sub.inputDescriptorId)
+          handleAltCredChange(sub.inputDescriptorId, selectedCredential.id, sub.inputDescriptorId)
         }}
       />
     )
   }
 
   const renderBody = () => {
-    if (!submission) return null
+    if (!selectedCredentialsSubmission || !submission) return null
 
     return (
       <View style={styles.credentialsList}>
-        {submission.entries.map((s, i) => {
+        {Object.entries(selectedCredentialsSubmission).map(([inputDescriptorId, credentialSimplified], i) => {
           //TODO: Support multiplae credentials
-          const selectedSubmission = s.credentials[0]
 
           const globalSubmissionName = submission.name
           const globalSubmissionPurpose = submission.purpose
-          const submissionName = s.name
-          const submissionPurpose = s.purpose
+          const correspondingSubmission = submission.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
+          const submissionName = correspondingSubmission?.name
+          const submissionPurpose = correspondingSubmission?.purpose
+          const isSatisfied = correspondingSubmission?.isSatisfied
+          const credentialSubmittion = correspondingSubmission?.credentials.find(
+            (s) => s.id === credentialSimplified.id
+          )
+          const requestedAttributes = credentialSubmittion?.requestedAttributes
 
           const name = submissionName || globalSubmissionName || undefined
           const purpose = submissionPurpose || globalSubmissionPurpose || undefined
@@ -285,8 +320,12 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                       <Text style={TextTheme.labelSubtitle}>{purpose}</Text>
                     </View>
                   )}
-                  {s.isSatisfied && selectedSubmission?.requestedAttributes ? (
-                    renderCard(s, selectedSubmission, s.credentials.length > 1)
+                  {isSatisfied && requestedAttributes ? (
+                    renderCard(
+                      correspondingSubmission,
+                      credentialSubmittion,
+                      correspondingSubmission.credentials.length > 1
+                    )
                   ) : (
                     <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
                   )}
@@ -330,7 +369,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           backgroundColor: ColorPallet.brand.secondaryBackground,
         }}
       >
-        {selectedCredentials && Object.keys(selectedCredentials).length > 0 ? (
+        {selectedCredentialsSubmission && Object.keys(selectedCredentialsSubmission).length > 0 ? (
           <>
             {footerButton(
               t('Global.Accept'),
