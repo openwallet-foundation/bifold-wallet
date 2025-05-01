@@ -13,13 +13,13 @@ type ScreenOptions = RouteConfig<
 >
 
 interface ScreenComponents {
-  Splash: React.FC<StackScreenProps<ParamListBase>>
+  SplashScreen: React.FC<StackScreenProps<ParamListBase>>
   Preface: React.FC<StackScreenProps<ParamListBase>>
   UpdateAvailableScreen: React.FC
   Terms: React.FC<StackScreenProps<ParamListBase>>
   NameWallet: React.FC<StackScreenProps<ParamListBase>>
-  useBiometry: React.FC<StackScreenProps<ParamListBase>>
-  PushNotification: React.FC<StackScreenProps<ParamListBase, Screens.UsePushNotifications>>
+  Biometry: React.FC<StackScreenProps<ParamListBase>>
+  PushNotifications: React.FC<StackScreenProps<ParamListBase>>
   Developer: React.FC<StackScreenProps<ParamListBase>>
   AttemptLockout: React.FC<StackScreenProps<ParamListBase>>
   OnboardingScreen: React.FC
@@ -34,7 +34,7 @@ export const getOnboardingScreens = (
 ): ScreenOptions[] => [
   {
     name: Screens.Splash,
-    component: components.Splash,
+    component: components.SplashScreen,
     options: {
       ...TransitionPresets.ModalFadeTransition,
       title: t('Screens.Splash'),
@@ -100,23 +100,23 @@ export const getOnboardingScreens = (
     component: components.NameWallet,
   },
   {
-    name: Screens.UseBiometry,
+    name: Screens.Biometry,
     options: () => ({
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Biometry'),
       headerLeft: () => false,
-      ...ScreenOptionsDictionary[Screens.UseBiometry],
+      ...ScreenOptionsDictionary[Screens.Biometry],
     }),
-    component: components.useBiometry,
+    component: components.Biometry,
   },
   {
-    name: Screens.UsePushNotifications,
-    component: components.PushNotification,
+    name: Screens.PushNotifications,
+    component: components.PushNotifications,
     options: () => ({
       ...TransitionPresets.SlideFromRightIOS,
-      title: t('Screens.UsePushNotifications'),
+      title: t('Screens.PushNotifications'),
       headerLeft: () => false,
-      ...ScreenOptionsDictionary[Screens.UsePushNotifications],
+      ...ScreenOptionsDictionary[Screens.PushNotifications],
     }),
   },
   {

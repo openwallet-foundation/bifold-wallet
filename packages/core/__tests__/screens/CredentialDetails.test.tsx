@@ -184,7 +184,7 @@ describe('CredentialDetails Screen', () => {
   })
 
   test('pressing the `Hide all` button hides all un-hidden attribute values`', async () => {
-    const { queryAllByText, findAllByText, findByText } = await render(
+    const { queryAllByText, findAllByText, findByText } = render(
       <BasicAppContext>
         <CredentialDetails
           navigation={useNavigation()}
@@ -192,29 +192,36 @@ describe('CredentialDetails Screen', () => {
         ></CredentialDetails>
       </BasicAppContext>
     )
+
+    let showButtons = await findAllByText('Record.Show')
+    let hiddenValues = await findAllByText(hiddenFieldValue)
+
+    expect(showButtons).toHaveLength(3)
+    expect(hiddenValues).toHaveLength(3)
+
+    for (const button of showButtons) {
+      await act(async () => {
+        fireEvent(button, 'press')
+      })
+    }
+
+    showButtons = await queryAllByText('Record.Show')
+    hiddenValues = await queryAllByText(hiddenFieldValue)
+
+    expect(showButtons).toHaveLength(0)
+    expect(hiddenValues).toHaveLength(0)
+
+    const hideAllButton = await findByText('Record.HideAll')
+    expect(hideAllButton).not.toBe(null)
+
     await act(async () => {
-      let showButtons = await findAllByText('Record.Show')
-      let hiddenValues = await findAllByText(hiddenFieldValue)
-
-      showButtons.forEach((button) => fireEvent(button, 'press'))
-
-      showButtons = await queryAllByText('Record.Show')
-      hiddenValues = await queryAllByText(hiddenFieldValue)
-
-      expect(showButtons).toHaveLength(0)
-      expect(hiddenValues).toHaveLength(0)
-
-      const hideAllButton = await findByText('Record.HideAll')
-
-      expect(hideAllButton).not.toBe(null)
-
       fireEvent(hideAllButton, 'press')
-
-      showButtons = await findAllByText('Record.Show')
-      hiddenValues = await findAllByText(hiddenFieldValue)
-
-      expect(showButtons).toHaveLength(3)
-      expect(hiddenValues).toHaveLength(3)
     })
-  }, 10000)
+
+    showButtons = await findAllByText('Record.Show')
+    hiddenValues = await findAllByText(hiddenFieldValue)
+
+    expect(showButtons).toHaveLength(3)
+    expect(hiddenValues).toHaveLength(3)
+  })
 })

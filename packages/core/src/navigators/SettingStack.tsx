@@ -9,8 +9,8 @@ import Language from '../screens/Language'
 import NameWallet from '../screens/NameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
-import PINCreate from '../screens/PINCreate'
-import PushNotification from '../screens/PushNotification'
+import PINChange from '../screens/PINChange'
+import TogglePushNotifications from '../screens/TogglePushNotifications'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
 import { Screens, SettingStackParams } from '../types/navigators'
@@ -24,10 +24,10 @@ const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
-  const [pages, { screen: terms }, UseBiometry, developer, ScreenOptionsDictionary] = useServices([
+  const [pages, { screen: terms }, ToggleBiometry, developer, ScreenOptionsDictionary] = useServices([
     TOKENS.SCREEN_ONBOARDING_PAGES,
     TOKENS.SCREEN_TERMS,
-    TOKENS.SCREEN_USE_BIOMETRY,
+    TOKENS.SCREEN_TOGGLE_BIOMETRY,
     TOKENS.SCREEN_DEVELOPER,
     TOKENS.OBJECT_SCREEN_CONFIG,
   ])
@@ -92,31 +92,30 @@ const SettingStack: React.FC = () => {
         }}
       />
       <Stack.Screen
-        name={Screens.UseBiometry}
-        component={UseBiometry}
+        name={Screens.ToggleBiometry}
+        component={ToggleBiometry}
         options={{
           title: t('Screens.Biometry'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.UseBiometry],
+          ...ScreenOptionsDictionary[Screens.ToggleBiometry],
         }}
       />
       <Stack.Screen
-        name={Screens.CreatePIN}
+        name={Screens.ChangePIN}
+        component={PINChange}
         options={{
           title: t('Screens.ChangePIN'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.CreatePIN],
+          ...ScreenOptionsDictionary[Screens.ChangePIN],
         }}
-      >
-        {(props: any) => <PINCreate explainedStatus {...props} />}
-      </Stack.Screen>
+      ></Stack.Screen>
       <Stack.Screen
-        name={Screens.UsePushNotifications}
-        component={PushNotification}
+        name={Screens.TogglePushNotifications}
+        component={TogglePushNotifications}
         options={{
-          title: t('Screens.UsePushNotifications'),
+          title: t('Screens.PushNotifications'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.UsePushNotifications],
+          ...ScreenOptionsDictionary[Screens.TogglePushNotifications],
         }}
       />
       <Stack.Screen

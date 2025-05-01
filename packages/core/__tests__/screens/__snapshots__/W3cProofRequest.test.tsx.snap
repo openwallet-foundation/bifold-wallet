@@ -173,30 +173,55 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                     
                   </Text>
                 </View>
-                <Text
-                  maxFontSizeMultiplier={2}
+                <View
                   style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                      },
-                      Object {
-                        "alignSelf": "center",
-                        "color": "#FFFFFF",
-                        "flex": 1,
-                        "flexWrap": "wrap",
-                        "fontWeight": "normal",
-                      },
-                    ]
+                    Object {
+                      "flex": 1,
+                      "flexWrap": "wrap",
+                    }
                   }
                 >
-                  ProofRequest.YouCantRespond
-
-ProofRequest.CredentialNotInWallet
-ProofRequest.ProofRequestPredicateError
-                </Text>
+                  <Text
+                    maxFontSizeMultiplier={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "alignSelf": "center",
+                          "color": "#FFFFFF",
+                          "flex": 1,
+                          "flexWrap": "wrap",
+                        },
+                      ]
+                    }
+                  >
+                    ProofRequest.YouCantRespond
+                     
+                    <Text
+                      maxFontSizeMultiplier={2}
+                      onPress={[Function]}
+                      style={
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "normal",
+                          },
+                          Object {
+                            "color": "#42803E",
+                            "fontWeight": "normal",
+                          },
+                        ]
+                      }
+                    >
+                      Global.ShowDetails
+                    </Text>
+                  </Text>
+                </View>
               </View>
             </View>
           </View>

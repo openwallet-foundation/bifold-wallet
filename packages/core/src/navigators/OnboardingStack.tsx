@@ -1,30 +1,37 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Agent } from '@credo-ts/core'
 import { StackActions, useNavigation, useNavigationState } from '@react-navigation/native'
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
-import { EventTypes } from '../constants'
 import React, { useMemo, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DeviceEventEmitter } from 'react-native'
 
+import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { useOnboardingState } from '../hooks/useOnboardingState'
 import AttemptLockout from '../screens/AttemptLockout'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
-import PushNotification from '../screens/PushNotification'
-import { AuthenticateStackParams } from '../types/navigators'
+import PushNotifications from '../screens/PushNotifications'
+import { OnboardingStackParams } from '../types/navigators'
+import { WalletSecret } from '../types/security'
 import { State } from '../types/state'
 import { Config } from '../types/config'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
-import { DeviceEventEmitter } from 'react-native'
 import { getOnboardingScreens } from './OnboardingScreens'
-import { useOnboardingState } from '../hooks/useOnboardingState'
 
-const OnboardingStack: React.FC = () => {
+export type OnboardingStackProps = {
+  initializeAgent: (walletSecret: WalletSecret) => Promise<void>
+  agent: Agent | null
+}
+
+const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agent }) => {
   const [store, dispatch] = useStore<State>()
   const { t } = useTranslation()
   const Stack = createStackNavigator()
@@ -35,7 +42,7 @@ const OnboardingStack: React.FC = () => {
     config,
     Splash,
     pages,
-    useBiometry,
+    Biometry,
     Onboarding,
     Developer,
     { screen: Terms, version: termsVersion },
@@ -49,7 +56,7 @@ const OnboardingStack: React.FC = () => {
     TOKENS.CONFIG,
     TOKENS.SCREEN_SPLASH,
     TOKENS.SCREEN_ONBOARDING_PAGES,
-    TOKENS.SCREEN_USE_BIOMETRY,
+    TOKENS.SCREEN_BIOMETRY,
     TOKENS.SCREEN_ONBOARDING,
     TOKENS.SCREEN_DEVELOPER,
     TOKENS.SCREEN_TERMS,
@@ -61,7 +68,7 @@ const OnboardingStack: React.FC = () => {
     TOKENS.ONBOARDING,
   ])
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const navigation = useNavigation<StackNavigationProp<AuthenticateStackParams>>()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const onTutorialCompleted = onTutorialCompletedCurried(dispatch, navigation)
   const currentRoute = useNavigationState((state) => state?.routes[state?.index])
   const { disableOnboardingSkip } = config as Config
@@ -69,6 +76,7 @@ const OnboardingStack: React.FC = () => {
     store,
     config,
     Number(termsVersion),
+    agent,
     generateOnboardingWorkflowSteps
   )
 
@@ -93,6 +101,10 @@ const OnboardingStack: React.FC = () => {
     },
     [dispatch]
   )
+
+  const SplashScreen = useCallback(() => {
+    return <Splash initializeAgent={initializeAgent} />
+  }, [Splash, initializeAgent])
 
   const UpdateAvailableScreen = useCallback(() => {
     return (
@@ -153,13 +165,13 @@ const OnboardingStack: React.FC = () => {
   const screens = useMemo(
     () =>
       getOnboardingScreens(t, ScreenOptionsDictionary, {
-        Splash,
+        SplashScreen,
         Preface,
         UpdateAvailableScreen,
         Terms,
         NameWallet,
-        useBiometry,
-        PushNotification,
+        Biometry,
+        PushNotifications,
         Developer,
         AttemptLockout,
         OnboardingScreen,
@@ -167,14 +179,14 @@ const OnboardingStack: React.FC = () => {
         EnterPINScreen,
       }),
     [
-      Splash,
+      SplashScreen,
       CreatePINScreen,
       Developer,
       EnterPINScreen,
       OnboardingScreen,
       Preface,
       Terms,
-      useBiometry,
+      Biometry,
       t,
       ScreenOptionsDictionary,
       UpdateAvailableScreen,

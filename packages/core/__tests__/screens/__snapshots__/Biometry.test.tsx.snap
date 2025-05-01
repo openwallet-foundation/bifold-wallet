@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UseBiometry Screen renders correctly when biometry available 1`] = `
+exports[`Biometry Screen renders correctly when biometry available 1`] = `
 <RNCSafeAreaView
   edges={
     Object {
@@ -314,7 +314,7 @@ exports[`UseBiometry Screen renders correctly when biometry available 1`] = `
 </RNCSafeAreaView>
 `;
 
-exports[`UseBiometry Screen renders correctly when biometry unavailable 1`] = `
+exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
 <RNCSafeAreaView
   edges={
     Object {

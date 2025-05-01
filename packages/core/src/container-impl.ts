@@ -1,57 +1,59 @@
-import { Agent } from '@credo-ts/core'
-import { getProofRequestTemplates } from '@bifold/verifier'
 import { DefaultOCABundleResolver } from '@bifold/oca/build/legacy'
+import { getProofRequestTemplates } from '@bifold/verifier'
+import { Agent } from '@credo-ts/core'
 import { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
 import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
+import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
+import ContactListItem from './components/listItems/ContactListItem'
+import NotificationListItem from './components/listItems/NotificationListItem'
+import ConnectionAlert from './components/misc/ConnectionAlert'
+import EmptyList from './components/misc/EmptyList'
+import NoNewUpdates from './components/misc/NoNewUpdates'
+import PINHeader from './components/misc/PINHeader'
+import Record from './components/record/Record'
+import HomeFooterView from './components/views/HomeFooterView'
+import HomeHeaderView from './components/views/HomeHeaderView'
 import defaultIndyLedgers from './configs/ledgers/indy'
 import { LocalStorageKeys, PINRules } from './constants'
-import { TOKENS, Container, TokenMapping } from './container-api'
+import { Container, TokenMapping, TOKENS } from './container-api'
 import { DispatchAction, ReducerAction } from './contexts/reducers/store'
 import { defaultState } from './contexts/store'
 import { useNotifications } from './hooks/notifications'
+import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
+import { Locales } from './localization'
 import { IHistoryManager } from './modules/history'
 import HistoryManager from './modules/history/context/historyManager'
 import OnboardingStack from './navigators/OnboardingStack'
+import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
+import { generateOnboardingWorkflowSteps } from './onboarding'
+import Biometry from './screens/Biometry'
 import Developer from './screens/Developer'
 import Onboarding from './screens/Onboarding'
+import OnboardingPages from './screens/OnboardingPages'
+import PINExplainer from './screens/PINExplainer'
 import Preface from './screens/Preface'
+import Scan from './screens/Scan'
 import Splash from './screens/Splash'
-import UpdateAvailable from './screens/UpdateAvailable'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
+import ToggleBiometry from './screens/ToggleBiometry'
+import UpdateAvailable from './screens/UpdateAvailable'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
+import { PersistentStorage } from './services/storage'
+import { Config, HistoryEventsLoggerConfig } from './types/config'
+import { InlineErrorPosition } from './types/error'
 import {
   Migration as MigrationState,
+  PersistentState,
   Preferences as PreferencesState,
   State,
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
-  PersistentState,
 } from './types/state'
-import OnboardingPages from './screens/OnboardingPages'
-import UseBiometry from './screens/UseBiometry'
-import Scan from './screens/Scan'
-import PINExplainer from './screens/PINExplainer'
-import HomeHeaderView from './components/views/HomeHeaderView'
-import HomeFooterView from './components/views/HomeFooterView'
-import EmptyList from './components/misc/EmptyList'
-import Record from './components/record/Record'
-import NotificationListItem from './components/listItems/NotificationListItem'
-import NoNewUpdates from './components/misc/NoNewUpdates'
-import PINCreateHeader from './components/misc/PINCreateHeader'
-import { PersistentStorage } from './services/storage'
-import { Config, HistoryEventsLoggerConfig } from './types/config'
-import { Locales } from './localization'
-import ContactListItem from './components/listItems/ContactListItem'
-import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
-import { InlineErrorPosition } from './types/error'
-import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
-import ConnectionAlert from './components/misc/ConnectionAlert'
-import { generateOnboardingWorkflowSteps } from './onboarding'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -119,12 +121,14 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.SCREEN_SPLASH, Splash)
     this._container.registerInstance(TOKENS.SCREEN_UPDATE_AVAILABLE, UpdateAvailable)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_PAGES, OnboardingPages)
-    this._container.registerInstance(TOKENS.COMPONENT_PIN_CREATE_HEADER, PINCreateHeader)
-    this._container.registerInstance(TOKENS.SCREEN_USE_BIOMETRY, UseBiometry)
+    this._container.registerInstance(TOKENS.COMPONENT_PIN_HEADER, PINHeader)
+    this._container.registerInstance(TOKENS.SCREEN_BIOMETRY, Biometry)
+    this._container.registerInstance(TOKENS.SCREEN_TOGGLE_BIOMETRY, ToggleBiometry)
     this._container.registerInstance(TOKENS.SCREEN_SCAN, Scan)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING_ITEM, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_ONBOARDING, Onboarding)
     this._container.registerInstance(TOKENS.SCREEN_PIN_EXPLAINER, PINExplainer)
+    this._container.registerInstance(TOKENS.HOOK_USE_AGENT_SETUP, useBifoldAgentSetup)
     this._container.registerInstance(TOKENS.STACK_ONBOARDING, OnboardingStack)
     this._container.registerInstance(TOKENS.COMP_BUTTON, Button)
     this._container.registerInstance(TOKENS.GROUP_BY_REFERENT, false)

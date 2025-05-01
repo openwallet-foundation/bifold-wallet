@@ -1,33 +1,33 @@
-import AgentProvider from '@credo-ts/react-hooks'
-import * as React from 'react'
-import { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { StatusBar } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 
+import { useNavigationContainerRef } from '@react-navigation/native'
+import { isTablet } from 'react-native-device-info'
+import Orientation from 'react-native-orientation-locker'
 import { animatedComponents } from './animated-components'
 import ErrorModal from './components/modals/ErrorModal'
 import NetInfo from './components/network/NetInfo'
 import toastConfig from './components/toast/ToastConfig'
+import { tours } from './constants'
 import { Container, ContainerProvider } from './container-api'
-import { ActivityProvider } from './contexts/activity'
 import { AnimatedComponentsProvider } from './contexts/animated-components'
 import { AuthProvider } from './contexts/auth'
+import NavContainer from './contexts/navigation'
 import { NetworkProvider } from './contexts/network'
 import { StoreProvider } from './contexts/store'
 import { ThemeProvider } from './contexts/theme'
 import { TourProvider } from './contexts/tour/tour-provider'
-import { initLanguages, initStoredLanguage, translationResources } from './localization'
+import { initStoredLanguage } from './localization'
 import RootStack from './navigators/RootStack'
-import { theme } from './theme'
-import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
-import { tours } from './constants'
+import { bifoldTheme, themes } from './theme'
 
-const App = (system: Container): React.FC => {
-  initLanguages(translationResources)
+const createApp = (container: Container): React.FC => {
+  const AppComponent: React.FC = () => {
+    const navigationRef = useNavigationContainerRef()
 
-  const AppComponent = () => {
-    useMemo(() => {
+    useEffect(() => {
       initStoredLanguage().then()
     }, [])
 
@@ -37,35 +37,35 @@ const App = (system: Container): React.FC => {
       SplashScreen.hide()
     }, [])
 
+    if (!isTablet()) {
+      Orientation.lockToPortrait()
+    }
+
     return (
-      <ContainerProvider value={system}>
+      <ContainerProvider value={container}>
         <StoreProvider>
-          <AgentProvider agent={undefined}>
-            <OpenIDCredentialRecordProvider>
-              <ThemeProvider value={theme}>
-                <AnimatedComponentsProvider value={animatedComponents}>
-                  <AuthProvider>
-                    <NetworkProvider>
-                      <ActivityProvider>
-                        <StatusBar
-                          hidden={false}
-                          barStyle="light-content"
-                          backgroundColor={theme.ColorPallet.brand.primary}
-                          translucent={false}
-                        />
-                        <NetInfo />
-                        <ErrorModal />
-                        <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
-                          <RootStack />
-                        </TourProvider>
-                        <Toast topOffset={15} config={toastConfig} />
-                      </ActivityProvider>
-                    </NetworkProvider>
-                  </AuthProvider>
-                </AnimatedComponentsProvider>
-              </ThemeProvider>
-            </OpenIDCredentialRecordProvider>
-          </AgentProvider>
+          <ThemeProvider themes={themes} defaultThemeName={bifoldTheme.themeName}>
+            <NavContainer navigationRef={navigationRef}>
+              <AnimatedComponentsProvider value={animatedComponents}>
+                <AuthProvider>
+                  <NetworkProvider>
+                    <StatusBar
+                      hidden={false}
+                      barStyle="light-content"
+                      backgroundColor={bifoldTheme.ColorPallet.brand.primary}
+                      translucent={false}
+                    />
+                    <NetInfo />
+                    <ErrorModal />
+                    <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
+                      <RootStack />
+                    </TourProvider>
+                    <Toast topOffset={15} config={toastConfig} />
+                  </NetworkProvider>
+                </AuthProvider>
+              </AnimatedComponentsProvider>
+            </NavContainer>
+          </ThemeProvider>
         </StoreProvider>
       </ContainerProvider>
     )
@@ -73,4 +73,5 @@ const App = (system: Container): React.FC => {
 
   return AppComponent
 }
-export default App
+
+export default createApp

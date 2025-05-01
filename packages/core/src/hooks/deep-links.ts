@@ -27,15 +27,13 @@ export const useDeepLinks = () => {
 
   // deeplink while already open
   useEffect(() => {
-    Linking.addEventListener('url', async ({ url }) => {
+    const listener = Linking.addListener('url', ({ url }) => {
       if (url) {
         setStashedDeepLink(url)
       }
     })
 
-    return () => {
-      Linking.removeAllListeners('url')
-    }
+    return listener.remove
   })
 
   // activate stashed deeplink when ready

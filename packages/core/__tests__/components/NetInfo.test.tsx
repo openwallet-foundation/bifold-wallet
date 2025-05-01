@@ -10,7 +10,15 @@ import { BasicAppContext } from '../helpers/app'
 // Bifold's top offset for toasts
 const topOffset = 15
 
+// For toast animations
+jest.useFakeTimers()
+
 describe('NetInfo Component', () => {
+  beforeEach(() => {
+    jest.clearAllTimers()
+    jest.clearAllMocks()
+  })
+
   it('should not show toast when internet is reachable', async () => {
     mockNetworkContext.assertInternetReachable.mockReturnValue(true)
 

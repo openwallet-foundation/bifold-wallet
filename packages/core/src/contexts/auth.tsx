@@ -4,8 +4,7 @@ import '@hyperledger/aries-askar-react-native'
 import 'reflect-metadata'
 
 import { AskarWallet } from '@credo-ts/askar'
-import { ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { Agent, ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,6 +24,7 @@ import { hashPIN } from '../utils/crypto'
 import { migrateToAskar } from '../utils/migration'
 
 export interface AuthContext {
+  lockOutUser: () => void
   checkWalletPIN: (PIN: string) => Promise<boolean>
   getWalletSecret: () => Promise<WalletSecret | undefined>
   walletSecret?: WalletSecret
@@ -33,7 +33,7 @@ export interface AuthContext {
   setPIN: (PIN: string) => Promise<void>
   commitWalletToKeychain: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
-  rekeyWallet: (oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
+  rekeyWallet: (agent: Agent, oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
@@ -41,7 +41,6 @@ export const AuthContext = createContext<AuthContext>(null as unknown as AuthCon
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [store, dispatch] = useStore()
-  const { agent } = useAgent()
   const { t } = useTranslation()
 
   const setPIN = useCallback(async (PIN: string): Promise<void> => {
@@ -130,12 +129,24 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     setWalletSecret(undefined)
   }, [])
 
+  const lockOutUser = useCallback(() => {
+    removeSavedWalletSecret()
+    dispatch({
+      type: DispatchAction.DID_AUTHENTICATE,
+      payload: [false],
+    })
+    dispatch({
+      type: DispatchAction.LOCKOUT_UPDATED,
+      payload: [{ displayNotification: true }],
+    })
+  }, [removeSavedWalletSecret, dispatch])
+
   const disableBiometrics = useCallback(async () => {
     await wipeWalletKey(true)
   }, [])
 
   const rekeyWallet = useCallback(
-    async (oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
+    async (agent: Agent, oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
       try {
         if (!agent) {
           // no agent set, cannot rekey the wallet
@@ -165,12 +176,13 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       }
       return true
     },
-    [agent]
+    []
   )
 
   return (
     <AuthContext.Provider
       value={{
+        lockOutUser,
         checkWalletPIN,
         getWalletSecret,
         removeSavedWalletSecret,

@@ -10,11 +10,10 @@ import React, {
   useState,
 } from 'react'
 import { AppState, AppStateStatus, PanResponder, View } from 'react-native'
+import { defaultAutoLockTime } from '../constants'
+import { TOKENS, useServices } from '../container-api'
 import { useAuth } from './auth'
 import { useStore } from './store'
-import { DispatchAction } from './reducers/store'
-import { TOKENS, useServices } from '../container-api'
-import { defaultAutoLockTime } from '../constants'
 
 // number of minutes before the timeout action is triggered
 // a value of 0 will never trigger the lock out action and
@@ -34,38 +33,18 @@ export const ActivityContext = createContext<ActivityContext>(null as unknown as
 
 export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const [store, dispatch] = useStore()
+  const [store] = useStore()
   const { agent } = useAgent()
-  const { removeSavedWalletSecret } = useAuth()
+  const { lockOutUser } = useAuth()
   const lastActiveTimeRef = useRef<number | undefined>(undefined)
   const timeoutInMilliseconds = useRef<number>((store.preferences.autoLockTime ?? defaultAutoLockTime) * 60000)
   const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const prevAppStateStatusRef = useRef(AppState.currentState)
   const [appStateStatus, setAppStateStatus] = useState<AppStateStatus>(AppState.currentState)
 
-  const lockOutUser = useCallback(async () => {
-    if (!store.authentication.didAuthenticate) {
-      return
-    }
-
-    try {
-      removeSavedWalletSecret()
-      await agent?.shutdown()
-      logger.info('Agent shutdown successfully')
-    } catch (error) {
-      logger.error(`Error during agent shutdown: ${error}`)
-    }
-
-    dispatch({
-      type: DispatchAction.DID_AUTHENTICATE,
-      payload: [false],
-    })
-
-    dispatch({
-      type: DispatchAction.LOCKOUT_UPDATED,
-      payload: [{ displayNotification: true }],
-    })
-  }, [agent, removeSavedWalletSecret, dispatch, logger, store.authentication.didAuthenticate])
+  if (!agent) {
+    throw new Error('ActivityProvider must be used within agent context provider')
+  }
 
   const clearInactivityTimeoutIfExists = useCallback(() => {
     if (inactivityTimeoutRef.current) {
@@ -74,7 +53,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [])
 
   const resetInactivityTimeout = useCallback(
-    async (milliseconds: number) => {
+    (milliseconds: number) => {
       clearInactivityTimeoutIfExists()
       lastActiveTimeRef.current = Date.now()
 
@@ -94,15 +73,11 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
       if (['active', 'inactive'].includes(prevAppStateStatusRef.current) && nextAppState === 'background') {
         // remove timeout when backgrounded as timeout refs can be lost when app is backgrounded
         clearInactivityTimeoutIfExists()
-
-        // if going to background after agent initialization, stop message pickup
-        if (agent?.isInitialized) {
-          try {
-            await agent.mediationRecipient.stopMessagePickup()
-            logger.info('Stopped agent message pickup')
-          } catch (err) {
-            logger.error(`Error stopping agent message pickup, ${err}`)
-          }
+        try {
+          await agent.mediationRecipient.stopMessagePickup()
+          logger.info('Stopped agent message pickup')
+        } catch (err) {
+          logger.error(`Error stopping agent message pickup, ${err}`)
         }
       }
 
@@ -114,9 +89,9 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
           Date.now() - lastActiveTimeRef.current >= timeoutInMilliseconds.current &&
           timeoutInMilliseconds.current > 0
         ) {
-          await lockOutUser()
-        } else if (agent?.isInitialized) {
-          // otherwise if agent is initialized, restart message pickup
+          lockOutUser()
+        } else {
+          // otherwise restart message pickup
           try {
             await agent.mediationRecipient.initiateMessagePickup()
             logger.info('Restarted agent message pickup')
@@ -126,7 +101,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
         }
 
         // app coming into the foreground is 'user activity', reset timeout
-        await resetInactivityTimeout(timeoutInMilliseconds.current)
+        resetInactivityTimeout(timeoutInMilliseconds.current)
       }
 
       prevAppStateStatusRef.current = nextAppState

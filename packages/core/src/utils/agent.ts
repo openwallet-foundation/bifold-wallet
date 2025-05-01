@@ -110,8 +110,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
 
 interface MyAgentContextInterface {
   loading: boolean
-  agent?: BifoldAgent
-  setAgent: (agent?: BifoldAgent) => void
+  agent: BifoldAgent
 }
 
 export const useAppAgent = useAgent as () => MyAgentContextInterface
