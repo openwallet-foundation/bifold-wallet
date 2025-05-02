@@ -34,7 +34,10 @@ const Biometry: React.FC = () => {
   }, [])
 
   return (
-    <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
+    <BiometryControl 
+      biometryEnabled={biometryEnabled} 
+      onBiometryToggle={handleBiometryToggle}
+    >
       <View style={{ marginTop: 'auto', margin: 20 }}>
         <Button
           title={t('Global.Continue')}

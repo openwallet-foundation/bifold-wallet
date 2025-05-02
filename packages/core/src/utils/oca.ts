@@ -11,14 +11,14 @@ import {
 import { W3cCredentialDisplay } from '../modules/openid/types'
 import { BrandingOverlay } from '@bifold/oca'
 
-export type FiledExt = {
+export type FieldExt = {
   field: Attribute
   attribute_name: string
 }
 
 type AttributeFieldValue = string | number | null
 
-export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FiledExt | undefined => {
+export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FieldExt | undefined => {
   let attributeName: string = 'Unknown'
   let attributeValue: AttributeFieldValue = 'Unknown'
 
@@ -69,7 +69,7 @@ export const buildFieldsFromW3cCredsCredential = (
       .filter(([key]) => key !== 'id')
       .map(([key]) => getAttributeField(display, key))
       .filter((field) => field !== undefined)
-      .filter((field: FiledExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
+      .filter((field: FieldExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
       .map((fld) => fld.field) || []
   )
 }
