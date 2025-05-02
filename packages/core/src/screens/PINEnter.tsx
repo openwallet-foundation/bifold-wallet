@@ -223,6 +223,40 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     [unlockWalletWithPIN, t, inlineMessages]
   )
 
+  const style = StyleSheet.create({
+    screenContainer: {
+      height: '100%',
+      padding: 20,
+      justifyContent: 'space-between',
+      backgroundColor: ColorPallet.brand.primaryBackground ,
+    },
+    buttonContainer: {
+      width: '100%',
+    },
+    biometricsButtonContainer: {
+      width: '100%',
+      marginTop: 10,
+    },
+    biometricsText: {
+      alignSelf: 'center',
+      marginTop: 10
+    },
+    helpText: {
+      alignSelf: 'auto',
+      textAlign: 'left',
+      marginBottom: 16,
+    },
+    inputLabel: {
+      marginBottom: 16,
+    },
+    modalText: {
+      marginVertical: 5,
+    },
+    subTitle: {
+      marginBottom: 20,
+    },
+  })
+
   const HelpText = useMemo(() => {
     const showHelpText = (store.lockout.displayNotification || biometricsEnrollmentChange || biometricsErr)
     let header = t('PINEnter.Title')
@@ -250,6 +284,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       </>
     )
   }, [
+    style.helpText,
     store.lockout.displayNotification,
     t,
     biometricsEnrollmentChange,
@@ -259,7 +294,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
 
   return (
     <KeyboardView>
-      <View style={[style.screenContainer, { backgroundColor: ColorPallet.brand.primaryBackground }]}>
+      <View style={style.screenContainer}>
         <View>
           <Pressable onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}} testID={testIdWithKey('DeveloperCounter')}>
             {HelpText}
@@ -298,8 +333,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           </View>
           {store.preferences.useBiometry && (
             <>
-              <ThemedText style={{ alignSelf: 'center', marginTop: 10 }}>{t('PINEnter.Or')}</ThemedText>
-              <View style={[style.buttonContainer, { marginTop: 10 }]}>
+              <ThemedText style={style.biometricsText}>{t('PINEnter.Or')}</ThemedText>
+              <View style={style.biometricsButtonContainer}>
                 <Button
                   title={t('PINEnter.BiometricsUnlock')}
                   buttonType={ButtonType.Secondary}
@@ -336,30 +371,5 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     </KeyboardView>
   )
 }
-
-const style = StyleSheet.create({
-  screenContainer: {
-    height: '100%',
-    padding: 20,
-    justifyContent: 'space-between',
-  },
-  buttonContainer: {
-    width: '100%',
-  },
-  helpText: {
-    alignSelf: 'auto',
-    textAlign: 'left',
-    marginBottom: 16,
-  },
-  inputLabel: {
-    marginBottom: 16,
-  },
-  modalText: {
-    marginVertical: 5,
-  },
-  subTitle: {
-    marginBottom: 20,
-  },
-})
 
 export default PINEnter

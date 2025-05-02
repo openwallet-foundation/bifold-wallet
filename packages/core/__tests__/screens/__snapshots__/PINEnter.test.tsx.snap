@@ -41,16 +41,12 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
       <View>
         <View
           style={
-            Array [
-              Object {
-                "height": "100%",
-                "justifyContent": "space-between",
-                "padding": 20,
-              },
-              Object {
-                "backgroundColor": "#000000",
-              },
-            ]
+            Object {
+              "backgroundColor": "#000000",
+              "height": "100%",
+              "justifyContent": "space-between",
+              "padding": 20,
+            }
           }
         >
           <View>
@@ -594,16 +590,12 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
       <View>
         <View
           style={
-            Array [
-              Object {
-                "height": "100%",
-                "justifyContent": "space-between",
-                "padding": 20,
-              },
-              Object {
-                "backgroundColor": "#000000",
-              },
-            ]
+            Object {
+              "backgroundColor": "#000000",
+              "height": "100%",
+              "justifyContent": "space-between",
+              "padding": 20,
+            }
           }
         >
           <View>

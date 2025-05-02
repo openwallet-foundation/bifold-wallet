@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, Text, View } from 'react-native'
+import { Keyboard, StyleSheet, View } from 'react-native'
 import Button, { ButtonType } from '../components/buttons/Button'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
@@ -12,6 +12,7 @@ import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 import { InlineMessageProps } from '../components/inputs/InlineErrorText'
+import { ThemedText } from '../components/texts/ThemedText'
 
 interface Props {
   setAuthenticated: (status: boolean) => void
@@ -31,7 +32,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const [continueDisabled, setContinueDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   // Temporary until all use cases are built with the new design
@@ -90,23 +91,49 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
 
   const isContinueDisabled = (continueDisabled || PIN.length < minPINLength)
 
+  const style = StyleSheet.create({
+    screenContainer: {
+      height: '100%',
+      padding: 20,
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      justifyContent: isNewDesign ? 'flex-start' : 'space-between'
+    },
+    buttonContainer: {
+      width: '100%',
+    },
+    helpText: {
+      alignSelf: 'auto',
+      textAlign: 'left',
+      marginBottom: isNewDesign ? 40 : 20
+    },
+    inputLabelText: {
+      alignSelf: 'auto',
+      textAlign: 'left',
+      marginBottom: isNewDesign ? 20 : 4
+    },
+    modalText: {
+      marginVertical: 5,
+    },
+    changeBiometricsHeader: {
+      marginTop: isNewDesign ? 20 : 0,
+      marginBottom: isNewDesign ? 40 : 20,
+    },
+  })
+
   return (
     <KeyboardView>
-      <View style={[style.screenContainer, { backgroundColor: ColorPallet.brand.primaryBackground, justifyContent: isNewDesign ? 'flex-start' : 'space-between' }]}>
-          {usage === PINEntryUsage.ChangeBiometrics && <Text 
-            style={{
-              ...TextTheme.headingTwo,
-              marginTop: isNewDesign ? 20 : 0,
-              marginBottom: isNewDesign ? 40 : 20,
-            }}
-          >
-          {t('PINEnter.ChangeBiometricsHeader')}
-          </Text>}
-          <Text style={[style.helpText, { ...TextTheme.normal, marginBottom: isNewDesign ? 40 : 16 }]}>{helpText[usage]}</Text>
-        <Text style={{ ...TextTheme.bold, marginBottom: isNewDesign ? 20 : 4 }}>
+      <View style={style.screenContainer}>
+          {usage === PINEntryUsage.ChangeBiometrics && 
+          <ThemedText variant='headingTwo' style={style.changeBiometricsHeader}>
+            {t('PINEnter.ChangeBiometricsHeader')}
+          </ThemedText>}
+          <ThemedText style={style.helpText}>
+            {helpText[usage]}
+          </ThemedText>
+        <ThemedText variant='bold' style={style.inputLabelText}>
           {inputLabelText[usage]}
-          {usage === PINEntryUsage.ChangeBiometrics && <Text style={{ ...TextTheme.caption }}>{` `}{t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</Text>}
-        </Text>
+          {usage === PINEntryUsage.ChangeBiometrics && <ThemedText variant='caption'>{` `}{t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</ThemedText>}
+        </ThemedText>
         <PINInput
           onPINChanged={(p: string) => {
             setPIN(p)
@@ -156,22 +183,5 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
     </KeyboardView>
   )
 }
-
-const style = StyleSheet.create({
-  screenContainer: {
-    height: '100%',
-    padding: 20,
-  },
-  buttonContainer: {
-    width: '100%',
-  },
-  helpText: {
-    alignSelf: 'auto',
-    textAlign: 'left',
-  },
-  modalText: {
-    marginVertical: 5,
-  },
-})
 
 export default PINVerify
