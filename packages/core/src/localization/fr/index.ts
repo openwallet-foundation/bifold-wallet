@@ -48,6 +48,7 @@ const translation = {
         "Remove": "Supprimer",
         "Close": "Fermer",
         "GotIt": "Got it (FR)",
+        "Send": "Envoyer",
     },
     "Date": {
         "ShortFormat": "D MMM",

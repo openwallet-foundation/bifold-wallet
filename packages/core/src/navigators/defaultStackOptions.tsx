@@ -62,6 +62,7 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
   [Screens.OpenIDProofPresentation]: {
     headerShown: true,
+    headerRight: () => false,
   },
 }
 

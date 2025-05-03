@@ -351,6 +351,7 @@ export function getCredentialForDisplay(
       claimFormat: ClaimFormat.SdJwtVc,
       validUntil: mapped.raw.validUntil,
       validFrom: mapped.raw.validFrom,
+      credentialSubject: openId4VcMetadata?.credential.credential_subject,
     }
   }
 
@@ -383,6 +384,7 @@ export function getCredentialForDisplay(
       claimFormat: ClaimFormat.MsoMdoc,
       validUntil: mdocInstance.validityInfo.validUntil,
       validFrom: mdocInstance.validityInfo.validFrom,
+      credentialSubject: openId4VcMetadata?.credential.credential_subject,
     }
   }
 
@@ -427,6 +429,7 @@ export function getCredentialForDisplay(
     validFrom: credentialRecord.credential.issuanceDate
       ? new Date(credentialRecord.credential.issuanceDate)
       : undefined,
+    credentialSubject: openId4VcMetadata?.credential.credential_subject,
   }
 }
 
