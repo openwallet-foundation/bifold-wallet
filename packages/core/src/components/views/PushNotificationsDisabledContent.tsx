@@ -14,15 +14,15 @@ const PushNotificationsDisabledContent: React.FC = () => {
   ]
 
   const style = StyleSheet.create({
-      heading: {
-        marginBottom: 20,
-      },
-      listItem: {
-        ...TextTheme.normal,
-        flex: 1,
-        paddingLeft: 5,
-      },
-    })
+    heading: {
+      marginBottom: 20,
+    },
+    listItem: {
+      ...TextTheme.normal,
+      flex: 1,
+      paddingLeft: 5,
+    },
+  })
 
   return (
     <>

@@ -57,18 +57,21 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
     setSettingsPopupConfig(null)
   }
 
-  const onRequestSystemBiometrics = useCallback(async (newToggleValue: boolean) => {
-    const permissionResult: PermissionStatus = await request(BIOMETRY_PERMISSION)
-    switch (permissionResult) {
-      case RESULTS.GRANTED:
-      case RESULTS.LIMITED:
-        // Granted
-        onBiometryToggle(newToggleValue)
-        break
-      default:
-        break
-    }
-  }, [onBiometryToggle])
+  const onRequestSystemBiometrics = useCallback(
+    async (newToggleValue: boolean) => {
+      const permissionResult: PermissionStatus = await request(BIOMETRY_PERMISSION)
+      switch (permissionResult) {
+        case RESULTS.GRANTED:
+        case RESULTS.LIMITED:
+          // Granted
+          onBiometryToggle(newToggleValue)
+          break
+        default:
+          break
+      }
+    },
+    [onBiometryToggle]
+  )
 
   const onCheckSystemBiometrics = useCallback(async (): Promise<PermissionStatus> => {
     if (Platform.OS === 'android') {
