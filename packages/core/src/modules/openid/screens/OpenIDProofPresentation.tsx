@@ -272,13 +272,12 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       return null
     }
     const credentialDisplay = getCredentialForDisplay(credential)
-    const fields = buildFieldsFromW3cCredsCredential(credentialDisplay)
     const requestedAttributes = selectedCredential.requestedAttributes
-    const fieldsMapped = fields.filter((field) => requestedAttributes?.includes(field.name))
+    const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
     return (
       <CredentialCard
         credential={credential}
-        displayItems={fieldsMapped as Attribute[]}
+        displayItems={fields as Attribute[]}
         hasAltCredentials={hasMultipleCreds}
         handleAltCredChange={() => {
           handleAltCredChange(sub.inputDescriptorId, selectedCredential.id, sub.inputDescriptorId)
@@ -315,8 +314,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                 <View style={styles.cardGroupContainer}>
                   {name && purpose && (
                     <View style={styles.cardGroupHeader}>
-                      <Text style={TextTheme.labelSubtitle}>{name}</Text>
-                      <Text style={TextTheme.labelSubtitle}>{purpose}</Text>
+                      <Text style={TextTheme.bold}>{name}</Text>
+                      <Text style={TextTheme.labelTitle}>{purpose}</Text>
                     </View>
                   )}
                   {isSatisfied && requestedAttributes ? (
@@ -371,11 +370,11 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         {selectedCredentialsSubmission && Object.keys(selectedCredentialsSubmission).length > 0 ? (
           <>
             {footerButton(
-              t('Global.Accept'),
+              t('Global.Send'),
               handleAcceptTouched,
               ButtonType.Primary,
               testIdWithKey('AcceptCredentialOffer'),
-              t('Global.Accept')
+              t('Global.Send')
             )}
             {footerButton(
               t('Global.Decline'),
