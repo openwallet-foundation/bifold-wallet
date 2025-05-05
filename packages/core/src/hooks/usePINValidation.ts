@@ -28,7 +28,7 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
   const clearModal = useCallback(() => {
     setModalState(initialModalState)
   }, [])
-  
+
   const [PINValidations, setPINValidations] = useState<PINValidationsType[]>(
     createPINValidations(PIN, PINSecurity.rules)
   )
@@ -57,7 +57,7 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
           visible: true,
           title: title,
           message: message,
-          onModalDismiss: clearModal
+          onModalDismiss: clearModal,
         })
       }
     },
@@ -93,6 +93,6 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
     modalState,
     setModalState,
     clearModal,
-    PINSecurity
+    PINSecurity,
   }
 }

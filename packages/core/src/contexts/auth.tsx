@@ -196,7 +196,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         }
 
         return true
-
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1042'),
@@ -210,7 +209,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     },
     [getWalletSecret, t]
   )
-
 
   return (
     <AuthContext.Provider

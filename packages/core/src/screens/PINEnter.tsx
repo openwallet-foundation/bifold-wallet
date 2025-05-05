@@ -38,17 +38,15 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const [
-    logger,
-    { enableHiddenDevModeTrigger, attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig },
-  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const [logger, { enableHiddenDevModeTrigger, attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig }] =
+    useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
   const { incrementDeveloperMenuCounter } = useDeveloperMode()
   const gotoPostAuthScreens = useGotoPostAuthScreens()
-  const isContinueDisabled = (inlineMessages.enabled) ? !continueEnabled : (!continueEnabled || PIN.length < minPINLength)
+  const isContinueDisabled = inlineMessages.enabled ? !continueEnabled : !continueEnabled || PIN.length < minPINLength
 
   // listen for biometrics error event
   useEffect(() => {
@@ -76,7 +74,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       setAuthenticated(true)
       gotoPostAuthScreens()
     }
-  },[getWalletSecret, dispatch, setAuthenticated, gotoPostAuthScreens])
+  }, [getWalletSecret, dispatch, setAuthenticated, gotoPostAuthScreens])
 
   useEffect(() => {
     const handle = InteractionManager.runAfterInteractions(async () => {
@@ -135,12 +133,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             setAlertModalVisible(true)
           }
           if (attemptsLeft > 1) {
-              message = t('PINEnter.IncorrectPINTries', { tries: attemptsLeft })
-          }
-          else if(attemptsLeft === 1) {
-              message = t('PINEnter.LastTryBeforeTimeout')
-          }
-          else {
+            message = t('PINEnter.IncorrectPINTries', { tries: attemptsLeft })
+          } else if (attemptsLeft === 1) {
+            message = t('PINEnter.LastTryBeforeTimeout')
+          } else {
             const penalty = getLockoutPenalty(newAttempt)
             if (penalty !== undefined) {
               attemptLockout(penalty) // Only call attemptLockout if penalty is defined
@@ -228,7 +224,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       height: '100%',
       padding: 20,
       justifyContent: 'space-between',
-      backgroundColor: ColorPallet.brand.primaryBackground ,
+      backgroundColor: ColorPallet.brand.primaryBackground,
     },
     buttonContainer: {
       width: '100%',
@@ -239,7 +235,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     },
     biometricsText: {
       alignSelf: 'center',
-      marginTop: 10
+      marginTop: 10,
     },
     helpText: {
       alignSelf: 'auto',
@@ -258,7 +254,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   })
 
   const HelpText = useMemo(() => {
-    const showHelpText = (store.lockout.displayNotification || biometricsEnrollmentChange || biometricsErr)
+    const showHelpText = store.lockout.displayNotification || biometricsEnrollmentChange || biometricsErr
     let header = t('PINEnter.Title')
     let subheader = t('PINEnter.SubText')
     if (store.lockout.displayNotification) {
@@ -296,7 +292,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     <KeyboardView>
       <View style={style.screenContainer}>
         <View>
-          <Pressable onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}} testID={testIdWithKey('DeveloperCounter')}>
+          <Pressable
+            onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}}
+            testID={testIdWithKey('DeveloperCounter')}
+          >
             {HelpText}
           </Pressable>
           <ThemedText variant="bold" style={style.inputLabel}>
@@ -310,7 +309,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
               }
             }}
             testID={testIdWithKey('EnterPIN')}
-            accessibilityLabel={ t('PINEnter.EnterPIN')}
+            accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
             inlineMessage={inlineMessageField}
           />

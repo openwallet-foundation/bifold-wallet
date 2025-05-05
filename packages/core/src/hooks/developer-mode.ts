@@ -1,6 +1,6 @@
-import { useRef, useCallback } from "react"
+import { useRef, useCallback } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { useStore } from "../contexts/store"
+import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import { Screens } from '../types/navigators'
 
@@ -20,8 +20,7 @@ export const useDeveloperMode = () => {
       })
       navigate(Screens.Developer as never)
       return
-    } 
-    else developerOptionCount.current = developerOptionCount.current + 1
+    } else developerOptionCount.current = developerOptionCount.current + 1
   }, [dispatch, navigate])
 
   return { incrementDeveloperMenuCounter }

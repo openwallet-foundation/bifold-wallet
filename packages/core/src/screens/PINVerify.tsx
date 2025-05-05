@@ -43,26 +43,23 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   }, [PIN])
 
   const clearAlertModal = useCallback(() => {
-      setAlertModalVisible(false)
-      setAuthenticated(false)
+    setAlertModalVisible(false)
+    setAuthenticated(false)
   }, [setAlertModalVisible, setAuthenticated])
 
-  const onPINInputCompleted = useCallback(
-    async () => {
-      Keyboard.dismiss()
-      setLoading(true)
-      setContinueDisabled(true)
-      const isPINVerified = await verifyPIN(PIN)
-      if (isPINVerified) {
-        setAuthenticated(true)
-      } else {
-        setAlertModalVisible(true)
-      }
-      setLoading(false)
-      setContinueDisabled(false)
-    },
-    [verifyPIN, setLoading, setAuthenticated, setContinueDisabled, PIN]
-  )
+  const onPINInputCompleted = useCallback(async () => {
+    Keyboard.dismiss()
+    setLoading(true)
+    setContinueDisabled(true)
+    const isPINVerified = await verifyPIN(PIN)
+    if (isPINVerified) {
+      setAuthenticated(true)
+    } else {
+      setAlertModalVisible(true)
+    }
+    setLoading(false)
+    setContinueDisabled(false)
+  }, [verifyPIN, setLoading, setAuthenticated, setContinueDisabled, PIN])
 
   const inputLabelText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsInputLabel'),
@@ -89,14 +86,14 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChanged'),
   }
 
-  const isContinueDisabled = (continueDisabled || PIN.length < minPINLength)
+  const isContinueDisabled = continueDisabled || PIN.length < minPINLength
 
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
       padding: 20,
       backgroundColor: ColorPallet.brand.primaryBackground,
-      justifyContent: isNewDesign ? 'flex-start' : 'space-between'
+      justifyContent: isNewDesign ? 'flex-start' : 'space-between',
     },
     buttonContainer: {
       width: '100%',
@@ -104,12 +101,12 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
     helpText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: isNewDesign ? 40 : 20
+      marginBottom: isNewDesign ? 40 : 20,
     },
     inputLabelText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: isNewDesign ? 20 : 4
+      marginBottom: isNewDesign ? 20 : 4,
     },
     modalText: {
       marginVertical: 5,
@@ -123,16 +120,20 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
-          {usage === PINEntryUsage.ChangeBiometrics && 
-          <ThemedText variant='headingTwo' style={style.changeBiometricsHeader}>
+        {usage === PINEntryUsage.ChangeBiometrics && (
+          <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
             {t('PINEnter.ChangeBiometricsHeader')}
-          </ThemedText>}
-          <ThemedText style={style.helpText}>
-            {helpText[usage]}
           </ThemedText>
-        <ThemedText variant='bold' style={style.inputLabelText}>
+        )}
+        <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>
+        <ThemedText variant="bold" style={style.inputLabelText}>
           {inputLabelText[usage]}
-          {usage === PINEntryUsage.ChangeBiometrics && <ThemedText variant='caption'>{` `}{t('PINEnter.ChangeBiometricsInputLabelParenthesis')}</ThemedText>}
+          {usage === PINEntryUsage.ChangeBiometrics && (
+            <ThemedText variant="caption">
+              {` `}
+              {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
+            </ThemedText>
+          )}
         </ThemedText>
         <PINInput
           onPINChanged={(p: string) => {
