@@ -13,7 +13,7 @@ import { GenericCredentialExchangeRecord } from '../../types/credentials'
 import { BrandingOverlay } from '@bifold/oca'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../../modules/openid/display'
-import { getAttributeField } from '../../modules/openid/utils/utils'
+import { getAttributeField } from '../../utils/oca'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -70,7 +70,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       resolveOverlay(credential)
       const credentialDisplay = getCredentialForDisplay(credential)
       if (credentialDisplay.display.primary_overlay_attribute) {
-        const attributeValue = getAttributeField(credentialDisplay, credentialDisplay.display.primary_overlay_attribute)
+        const attributeValue = getAttributeField(
+          credentialDisplay,
+          credentialDisplay.display.primary_overlay_attribute
+        )?.field
         setExtraOverlayAttribute(attributeValue)
       }
     }
