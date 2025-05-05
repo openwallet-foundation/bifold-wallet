@@ -47,23 +47,16 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
 
-  const [
-    PINHeader,
-    Button,
-    inlineMessages,
-    logger,
-    historyManagerCurried,
-    historyEnabled,
-    historyEventsLogger,
-  ] = useServices([
-    TOKENS.COMPONENT_PIN_HEADER,
-    TOKENS.COMP_BUTTON,
-    TOKENS.INLINE_ERRORS,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_ENABLED,
-    TOKENS.HISTORY_EVENTS_LOGGER,
-  ])
+  const [PINHeader, Button, inlineMessages, logger, historyManagerCurried, historyEnabled, historyEventsLogger] =
+    useServices([
+      TOKENS.COMPONENT_PIN_HEADER,
+      TOKENS.COMP_BUTTON,
+      TOKENS.INLINE_ERRORS,
+      TOKENS.UTIL_LOGGER,
+      TOKENS.FN_LOAD_HISTORY,
+      TOKENS.HISTORY_ENABLED,
+      TOKENS.HISTORY_EVENTS_LOGGER,
+    ])
 
   const {
     PINValidations,
@@ -169,7 +162,6 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
     return PIN === '' || PINTwo === '' || PINOld === '' || PIN.length < minPINLength || PINTwo.length < minPINLength
   }, [inlineMessages, isLoading, PIN, PINTwo, PINOld])
 
-
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
@@ -218,15 +210,9 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
           />
-          {PINSecurity.displayHelper && (
-            <PINValidationHelper validations={PINValidations} />
-          )}
+          {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (
-            <AlertModal
-              title={modalState.title}
-              message={modalState.message}
-              submit={modalState.onModalDismiss}
-            />
+            <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
         <View style={style.controlsContainer}>

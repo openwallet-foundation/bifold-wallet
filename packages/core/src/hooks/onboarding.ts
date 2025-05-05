@@ -1,6 +1,6 @@
-import { useCallback } from "react"
-import { useNavigation } from "@react-navigation/core"
-import { useStore } from "../contexts/store"
+import { useCallback } from 'react'
+import { useNavigation } from '@react-navigation/core'
+import { useStore } from '../contexts/store'
 
 export const useGotoPostAuthScreens = () => {
   const [store] = useStore()

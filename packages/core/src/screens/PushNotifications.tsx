@@ -28,7 +28,7 @@ const PushNotifications: React.FC = () => {
     },
     controlsContainer: {
       marginTop: 'auto',
-    }
+    },
   })
 
   const activatePushNotifications = async () => {
@@ -40,7 +40,7 @@ const PushNotifications: React.FC = () => {
     <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom']}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.screenContainer}>
-          <PushNotificationsContent/>
+          <PushNotificationsContent />
           <View style={styles.controlsContainer}>
             <Button
               buttonType={ButtonType.Primary}

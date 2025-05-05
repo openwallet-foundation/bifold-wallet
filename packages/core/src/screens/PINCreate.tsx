@@ -58,14 +58,8 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
 
-  const {
-    PINValidations,
-    validatePINEntry,
-    inlineMessageField1,
-    inlineMessageField2,
-    modalState,
-    PINSecurity
-  } = usePINValidation(PIN, PINTwo)
+  const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity } =
+    usePINValidation(PIN, PINTwo)
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -162,15 +156,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
           />
-          {PINSecurity.displayHelper && (
-            <PINValidationHelper validations={PINValidations} />
-          )}
+          {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (
-            <AlertModal
-              title={modalState.title}
-              message={modalState.message}
-              submit={modalState.onModalDismiss}
-            />
+            <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
         <View style={style.controlsContainer}>

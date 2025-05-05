@@ -182,8 +182,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         value: undefined,
         accessibilityLabel: t('Settings.Notifications'),
         testID: testIdWithKey('Notifications'),
-        onPress: () =>
-          navigation.navigate(Screens.TogglePushNotifications),
+        onPress: () => navigation.navigate(Screens.TogglePushNotifications),
       })
   }
 

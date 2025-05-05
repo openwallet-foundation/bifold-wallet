@@ -79,11 +79,14 @@ const ToggleBiometry: React.FC = () => {
     store.onboarding.didConsiderBiometry,
   ])
 
-  const handleBiometryToggle = useCallback((newValue: boolean) => {
-    if (newValue === biometryEnabled) return
-    
-    onSwitchToggleAllowed()
-  }, [biometryEnabled, onSwitchToggleAllowed])
+  const handleBiometryToggle = useCallback(
+    (newValue: boolean) => {
+      if (newValue === biometryEnabled) return
+
+      onSwitchToggleAllowed()
+    },
+    [biometryEnabled, onSwitchToggleAllowed]
+  )
 
   const onAuthenticationComplete = useCallback(
     (status: boolean) => {
@@ -91,7 +94,7 @@ const ToggleBiometry: React.FC = () => {
       if (status) {
         const newValue = !biometryEnabled
         setBiometryEnabled(newValue)
-        
+
         if (newValue) {
           commitWalletToKeychain(newValue).then(() => {
             dispatch({
@@ -107,7 +110,7 @@ const ToggleBiometry: React.FC = () => {
             })
           })
         }
-        
+
         if (
           historyEventsLogger.logToggleBiometry &&
           store.onboarding.didAgreeToTerms &&
@@ -137,10 +140,7 @@ const ToggleBiometry: React.FC = () => {
   )
 
   return (
-    <BiometryControl 
-      biometryEnabled={biometryEnabled} 
-      onBiometryToggle={handleBiometryToggle}
-    >
+    <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
       <SafeAreaModal
         style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
         visible={canSeeCheckPIN}
