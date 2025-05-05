@@ -11,7 +11,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
-import PINEnter, { PINEntryUsage } from './PINEnter'
+import PINVerify, { PINEntryUsage } from './PINVerify'
 
 interface BackButtonProps {
   setCanSeeCheckPIN: (value: boolean) => void
@@ -154,7 +154,7 @@ const ToggleBiometry: React.FC = () => {
           headerStyle={{ height: headerHeight }}
           headerLeft={renderHeaderLeft}
         />
-        <PINEnter
+        <PINVerify
           usage={PINEntryUsage.ChangeBiometrics}
           setAuthenticated={onAuthenticationComplete}
           onCancelAuth={setCanSeeCheckPIN}

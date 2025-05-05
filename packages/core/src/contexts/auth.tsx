@@ -2,7 +2,7 @@
 import '@hyperledger/aries-askar-react-native'
 
 import 'reflect-metadata'
-
+import { DeviceEventEmitter } from 'react-native'
 import { AskarWallet } from '@credo-ts/askar'
 import { Agent, ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
 import { agentDependencies } from '@credo-ts/react-native'
@@ -22,6 +22,8 @@ import {
 import { WalletSecret } from '../types/security'
 import { hashPIN } from '../utils/crypto'
 import { migrateToAskar } from '../utils/migration'
+import { BifoldError } from '../types/error'
+import { EventTypes } from '../constants'
 
 export interface AuthContext {
   lockOutUser: () => void
@@ -33,6 +35,7 @@ export interface AuthContext {
   setPIN: (PIN: string) => Promise<void>
   commitWalletToKeychain: (useBiometry: boolean) => Promise<boolean>
   isBiometricsActive: () => Promise<boolean>
+  verifyPIN: (PIN: string) => Promise<boolean>
   rekeyWallet: (agent: Agent, oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
 }
 
@@ -179,6 +182,36 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     []
   )
 
+  const verifyPIN = useCallback(
+    async (PIN: string) => {
+      try {
+        const credentials = await getWalletSecret()
+        if (!credentials) {
+          throw new Error('Get wallet credentials error')
+        }
+
+        const key = await hashPIN(PIN, credentials.salt)
+        if (credentials.key !== key) {
+          return false
+        }
+
+        return true
+
+      } catch (err: unknown) {
+        const error = new BifoldError(
+          t('Error.Title1042'),
+          t('Error.Message1042'),
+          (err as Error)?.message ?? err,
+          1042
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        return false
+      }
+    },
+    [getWalletSecret, t]
+  )
+
+
   return (
     <AuthContext.Provider
       value={{
@@ -192,6 +225,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         isBiometricsActive,
         rekeyWallet,
         walletSecret,
+        verifyPIN,
       }}
     >
       {children}
