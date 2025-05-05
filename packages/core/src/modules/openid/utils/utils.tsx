@@ -1,6 +1,5 @@
 import { getDomainFromUrl } from '@credo-ts/core'
 import { Attribute, Field } from '@bifold/oca/build/legacy'
-import { W3cCredentialDisplay } from '../types'
 
 /**
  * Converts a camelCase string to a sentence format (first letter capitalized, rest in lower case).
@@ -51,19 +50,6 @@ export function formatDate(input: string | Date): string {
     minute: '2-digit',
     hour12: true,
   })
-}
-
-export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): Attribute | undefined => {
-  for (const [key, value] of Object.entries(display.attributes)) {
-    if (searchKey === key) {
-      return new Attribute({
-        name: key,
-        value: value as string | number | null,
-        mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
-      })
-    }
-  }
-  return undefined
 }
 
 /**
