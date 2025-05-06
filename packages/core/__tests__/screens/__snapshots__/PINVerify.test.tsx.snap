@@ -407,6 +407,7 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
           <View
             style={
               Object {
+                "marginTop": "auto",
                 "width": "100%",
               }
             }
@@ -497,6 +498,7 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
             style={
               Array [
                 Object {
+                  "marginTop": "auto",
                   "width": "100%",
                 },
                 Object {
@@ -1031,6 +1033,7 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
           <View
             style={
               Object {
+                "marginTop": "auto",
                 "width": "100%",
               }
             }
