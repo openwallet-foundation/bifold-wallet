@@ -1,5 +1,18 @@
 # @bifold/core
 
+## 2.1.0
+
+### Minor Changes
+
+- 450c153: feat: Add the ability to select alternative credentil when presenting OpenID proof request
+- 211f88a: Refactor PIN Enter screen into two separate screens for verifying PIN in unlocked wallet and for unlocking wallet
+
+### Patch Changes
+
+- f50bea0: fix: UI updates for OpenID cards flow
+- 7384419: UI fixes, optionally block screenshots on pin screens, developer modal from onboarding
+- 7384419: Fixed error on navigation to credential from chat, auto open dev mode from settings when triggered, fixed hanging wallet rename
+
 ## 2.0.1
 
 ### Patch Changes
