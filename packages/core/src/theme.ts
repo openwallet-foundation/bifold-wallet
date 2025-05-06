@@ -718,7 +718,7 @@ export const ListItems = StyleSheet.create({
 })
 
 export interface ITabTheme {
-  tabBarStyle: {
+  tabBarStyle: ViewStyle & {
     height: number
     backgroundColor: string
     shadowOffset: {

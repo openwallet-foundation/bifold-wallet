@@ -100,6 +100,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
       justifyContent: isNewDesign ? 'flex-start' : 'space-between',
     },
     buttonContainer: {
+      marginTop: 'auto',
       width: '100%',
     },
     helpText: {
