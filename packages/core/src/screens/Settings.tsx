@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   ScrollView,
@@ -18,9 +18,9 @@ import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { ThemedText } from '../components/texts/ThemedText'
 import { TOKENS, useServices } from '../container-api'
 import { AutoLockTime } from '../contexts/activity'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import { useDeveloperMode } from '../hooks/developer-mode'
 import { Locales } from '../localization'
 import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
@@ -29,12 +29,11 @@ import { testIdWithKey } from '../utils/testable'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
-const touchCountToEnableBiometrics = 9
-
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
-  const [store, dispatch] = useStore()
-  const developerOptionCount = useRef(0)
+  const [store] = useStore()
+  const onDevModeTriggered = () => navigation.navigate(Screens.Developer)
+  const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
   const { SettingsTheme, TextTheme, ColorPallet, Assets, maxFontSizeMultiplier } = useTheme()
   const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
     TOKENS.CONFIG,
@@ -82,19 +81,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   })
 
   const currentLanguage = i18n.t('Language.code', { context: i18n.language as Locales })
-  const incrementDeveloperMenuCounter = () => {
-    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
-      developerOptionCount.current = 0
-      dispatch({
-        type: DispatchAction.ENABLE_DEVELOPER_MODE,
-        payload: [true],
-      })
-
-      return
-    }
-
-    developerOptionCount.current = developerOptionCount.current + 1
-  }
 
   const settingsSections: SettingSection[] = [
     {

@@ -26,6 +26,7 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
 import { BifoldError } from '../types/error'
 import { Screens } from '../types/navigators'
@@ -48,7 +49,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
-  const [PINExplainer, PINHeader, { showPINExplainer }, Button, inlineMessages] = useServices([
+  const [PINExplainer, PINHeader, { showPINExplainer, preventScreenCapture }, Button, inlineMessages] = useServices([
     TOKENS.SCREEN_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.CONFIG,
@@ -57,9 +58,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   ])
 
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
-
   const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity } =
     usePINValidation(PIN, PINTwo)
+  usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
     screenContainer: {

@@ -88,12 +88,12 @@ const NameWallet: React.FC = () => {
         type: DispatchAction.UPDATE_WALLET_NAME,
         payload: [walletName],
       })
+      dispatch({ type: DispatchAction.DID_NAME_WALLET })
 
       if (agent) {
         agent.config.label = walletName
+        navigation.goBack()
       }
-
-      dispatch({ type: DispatchAction.DID_NAME_WALLET })
     }
   }
 

@@ -1,26 +1,28 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Keyboard, StyleSheet, View, DeviceEventEmitter, InteractionManager, Pressable } from 'react-native'
+import { DeviceEventEmitter, InteractionManager, Keyboard, Pressable, StyleSheet, View } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
+import DeveloperModal from '../components/modals/DeveloperModal'
 import PopupModal from '../components/modals/PopupModal'
+import { ThemedText } from '../components/texts/ThemedText'
 import KeyboardView from '../components/views/KeyboardView'
-import { minPINLength, EventTypes, defaultAutoLockTime, attemptLockoutConfig } from '../constants'
+import { EventTypes, attemptLockoutConfig, defaultAutoLockTime, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
-import { BifoldError } from '../types/error'
-import { testIdWithKey } from '../utils/testable'
-import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
-import { ThemedText } from '../components/texts/ThemedText'
 import { useDeveloperMode } from '../hooks/developer-mode'
 import { useLockout } from '../hooks/lockout'
 import { useGotoPostAuthScreens } from '../hooks/onboarding'
+import usePreventScreenCapture from '../hooks/screen-capture'
+import { BifoldError } from '../types/error'
+import { testIdWithKey } from '../utils/testable'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -34,19 +36,23 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [continueEnabled, setContinueEnabled] = useState(true)
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
-  const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
-  const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState<boolean>(false)
+  const [alertModalVisible, setAlertModalVisible] = useState(false)
+  const [devModalVisible, setDevModalVisible] = useState(false)
+  const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const [logger, { enableHiddenDevModeTrigger, attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig }] =
+  const [logger, { preventScreenCapture, enableHiddenDevModeTrigger, attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig }] =
     useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
-  const { incrementDeveloperMenuCounter } = useDeveloperMode()
+  const onBackPressed = () => setDevModalVisible(false)
+  const onDevModeTriggered = () => setDevModalVisible(true)
+  const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
   const gotoPostAuthScreens = useGotoPostAuthScreens()
   const isContinueDisabled = inlineMessages.enabled ? !continueEnabled : !continueEnabled || PIN.length < minPINLength
+  usePreventScreenCapture(preventScreenCapture)
 
   // listen for biometrics error event
   useEffect(() => {
@@ -347,7 +353,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           )}
         </View>
       </View>
-      {alertModalVisible && (
+      {alertModalVisible ? (
         <PopupModal
           notificationType={InfoBoxType.Info}
           title={t('PINEnter.IncorrectPIN')}
@@ -366,7 +372,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           onCallToActionLabel={t('Global.Okay')}
           onCallToActionPressed={clearAlertModal}
         />
-      )}
+      ) : null}
+      {devModalVisible ? <DeveloperModal onBackPressed={onBackPressed} /> : null}
     </KeyboardView>
   )
 }
