@@ -73,7 +73,7 @@ const QRScanner: React.FC<Props> = ({
     },
     bottomSafeArea: {
       flex: 0,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: TabTheme.tabBarSecondaryBackgroundColor,
     },
     cameraViewContainer: {
       flex: 1,

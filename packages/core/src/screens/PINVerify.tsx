@@ -2,17 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View } from 'react-native'
 import Button, { ButtonType } from '../components/buttons/Button'
+import { InlineMessageProps } from '../components/inputs/InlineErrorText'
 import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
+import { ThemedText } from '../components/texts/ThemedText'
 import KeyboardView from '../components/views/KeyboardView'
 import { minPINLength } from '../constants'
+import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
+import usePreventScreenCapture from '../hooks/screen-capture'
 import { testIdWithKey } from '../utils/testable'
-import { InlineMessageProps } from '../components/inputs/InlineErrorText'
-import { ThemedText } from '../components/texts/ThemedText'
 
 interface Props {
   setAuthenticated: (status: boolean) => void
@@ -37,6 +39,8 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   // Temporary until all use cases are built with the new design
   const isNewDesign = usage === PINEntryUsage.ChangeBiometrics
+  const [{ preventScreenCapture }] = useServices([TOKENS.CONFIG])
+  usePreventScreenCapture(preventScreenCapture)
 
   useEffect(() => {
     setInlineMessageField(undefined)
@@ -90,12 +94,13 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
 
   const style = StyleSheet.create({
     screenContainer: {
-      height: '100%',
+      flex: 1,
       padding: 20,
       backgroundColor: ColorPallet.brand.primaryBackground,
       justifyContent: isNewDesign ? 'flex-start' : 'space-between',
     },
     buttonContainer: {
+      marginTop: 'auto',
       width: '100%',
     },
     helpText: {
@@ -112,7 +117,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
       marginVertical: 5,
     },
     changeBiometricsHeader: {
-      marginTop: isNewDesign ? 20 : 0,
+      marginTop: 0,
       marginBottom: isNewDesign ? 40 : 20,
     },
   })

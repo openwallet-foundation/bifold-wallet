@@ -42,6 +42,9 @@ import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
 import AttemptLockout from './screens/AttemptLockout'
 import Developer from './screens/Developer'
+import DeveloperModal from './components/modals/DeveloperModal'
+import { useDeveloperMode } from './hooks/developer-mode'
+import FauxHeader from './components/misc/FauxHeader'
 import OnboardingPages from './screens/OnboardingPages'
 import Preface from './screens/Preface'
 import Splash from './screens/Splash'
@@ -107,6 +110,7 @@ export type {
   IInlineInputMessage,
   IInputs,
   ITextTheme,
+  ITabTheme,
   IBrandColors,
   ISemanticColors,
   INotificationColors,
@@ -193,6 +197,9 @@ export {
   usePreventScreenCapture,
   Splash,
   Developer,
+  DeveloperModal,
+  useDeveloperMode,
+  FauxHeader,
   Terms,
   Preface,
   UpdateAvailable,

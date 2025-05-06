@@ -153,7 +153,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
               [CredentialState.Done]: () => {
                 navigation.navigate(Stacks.ContactStack as any, {
                   screen: Screens.CredentialDetails,
-                  params: { credential: record },
+                  params: { credentialId: record.id },
                 })
               },
               [CredentialState.OfferReceived]: () => {

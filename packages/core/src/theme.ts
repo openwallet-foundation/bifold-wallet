@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
@@ -717,7 +717,37 @@ export const ListItems = StyleSheet.create({
   },
 })
 
-export const TabTheme = {
+export interface ITabTheme {
+  tabBarStyle: ViewStyle & {
+    height: number
+    backgroundColor: string
+    shadowOffset: {
+      width: number
+      height: number
+    }
+    shadowRadius: number
+    shadowColor: string
+    shadowOpacity: number
+    borderTopWidth: number
+    paddingBottom: number
+  },
+  tabBarContainerStyle: ViewStyle,
+  tabBarActiveTintColor: string,
+  tabBarInactiveTintColor: string,
+  tabBarTextStyle: TextStyle & {
+    fontSize: number
+  },
+  tabBarButtonIconStyle: {
+    color: string
+  },
+  focusTabIconStyle: ViewStyle,
+  focusTabActiveTintColor: {
+    backgroundColor: string
+  },
+  tabBarSecondaryBackgroundColor: string,
+}
+
+export const TabTheme: ITabTheme = {
   tabBarStyle: {
     height: 60,
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -753,6 +783,7 @@ export const TabTheme = {
   focusTabActiveTintColor: {
     backgroundColor: ColorPallet.brand.secondary,
   },
+  tabBarSecondaryBackgroundColor: ColorPallet.brand.secondaryBackground,
 }
 
 export const NavigationTheme = {
@@ -1098,7 +1129,7 @@ export interface ITheme {
   Inputs: IInputs
   Buttons: any
   ListItems: any
-  TabTheme: any
+  TabTheme: ITabTheme
   NavigationTheme: any
   HomeTheme: any
   SettingsTheme: any

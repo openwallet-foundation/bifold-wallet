@@ -61,7 +61,7 @@ const TabStack: React.FC = () => {
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertNetworkConnected } = useNetwork()
-  const { ColorPallet, TabTheme, TextTheme, Assets } = useTheme()
+  const { ColorPallet, TabTheme, TextTheme, Assets, NavigationTheme } = useTheme()
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
@@ -133,7 +133,7 @@ const TabStack: React.FC = () => {
   }, [store.deepLink, agent, store.authentication.didAuthenticate, handleDeepLink])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: ColorPallet.brand.primary }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: NavigationTheme.colors.primary }} edges={['left', 'right', 'top']}>
       <Tab.Navigator
         initialRouteName={TabStacks.HomeStack}
         screenOptions={{
@@ -296,6 +296,7 @@ const TabStack: React.FC = () => {
           }}
         />
       </Tab.Navigator>
+      <SafeAreaView style={{ backgroundColor: TabTheme.tabBarSecondaryBackgroundColor }} edges={['bottom']} />
     </SafeAreaView>
   )
 }

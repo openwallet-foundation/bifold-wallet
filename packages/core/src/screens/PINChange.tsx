@@ -25,6 +25,7 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
@@ -47,16 +48,25 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
 
-  const [PINHeader, Button, inlineMessages, logger, historyManagerCurried, historyEnabled, historyEventsLogger] =
-    useServices([
-      TOKENS.COMPONENT_PIN_HEADER,
-      TOKENS.COMP_BUTTON,
-      TOKENS.INLINE_ERRORS,
-      TOKENS.UTIL_LOGGER,
-      TOKENS.FN_LOAD_HISTORY,
-      TOKENS.HISTORY_ENABLED,
-      TOKENS.HISTORY_EVENTS_LOGGER,
-    ])
+  const [
+    PINHeader,
+    Button,
+    inlineMessages,
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
+    { preventScreenCapture },
+  ] = useServices([
+    TOKENS.COMPONENT_PIN_HEADER,
+    TOKENS.COMP_BUTTON,
+    TOKENS.INLINE_ERRORS,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
+    TOKENS.CONFIG,
+  ])
 
   const {
     PINValidations,
@@ -68,6 +78,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
     clearModal,
     PINSecurity,
   } = usePINValidation(PIN, PINTwo)
+  usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
     screenContainer: {

@@ -584,7 +584,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
     }
     style={
       Object {
-        "backgroundColor": "#000000",
+        "backgroundColor": "#313132",
         "flex": 0,
       }
     }
@@ -976,7 +976,7 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
     }
     style={
       Object {
-        "backgroundColor": "#000000",
+        "backgroundColor": "#313132",
         "flex": 0,
       }
     }

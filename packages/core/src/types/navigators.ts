@@ -109,7 +109,6 @@ export type OnboardingStackParams = {
   [Screens.Biometry]: undefined
   [Screens.NameWallet]: undefined
   [Screens.PushNotifications]: undefined
-  [Screens.Developer]: undefined
 }
 
 export type ContactStackParams = {
