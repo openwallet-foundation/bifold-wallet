@@ -2,7 +2,7 @@
 import { Agent } from '@credo-ts/core'
 import { StackActions, useNavigation, useNavigationState } from '@react-navigation/native'
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack'
-import React, { useMemo, useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
@@ -18,10 +18,10 @@ import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotifications from '../screens/PushNotifications'
+import { Config } from '../types/config'
 import { OnboardingStackParams } from '../types/navigators'
 import { WalletSecret } from '../types/security'
 import { State } from '../types/state'
-import { Config } from '../types/config'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { getOnboardingScreens } from './OnboardingScreens'
@@ -44,7 +44,6 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
     pages,
     Biometry,
     Onboarding,
-    Developer,
     { screen: Terms, version: termsVersion },
     onTutorialCompletedCurried,
     ScreenOptionsDictionary,
@@ -58,7 +57,6 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
     TOKENS.SCREEN_ONBOARDING_PAGES,
     TOKENS.SCREEN_BIOMETRY,
     TOKENS.SCREEN_ONBOARDING,
-    TOKENS.SCREEN_DEVELOPER,
     TOKENS.SCREEN_TERMS,
     TOKENS.FN_ONBOARDING_DONE,
     TOKENS.OBJECT_SCREEN_CONFIG,
@@ -172,7 +170,6 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
         NameWallet,
         Biometry,
         PushNotifications,
-        Developer,
         AttemptLockout,
         OnboardingScreen,
         CreatePINScreen,
@@ -181,7 +178,6 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
     [
       SplashScreen,
       CreatePINScreen,
-      Developer,
       EnterPINScreen,
       OnboardingScreen,
       Preface,

@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FauxHeader Component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "stretch",
+      "backgroundColor": "#42803E",
+      "borderWidth": 0,
+      "elevation": 0,
+      "flexDirection": "row",
+      "minHeight": 44,
+      "shadowColor": "#000000",
+      "shadowOffset": Object {
+        "height": 6,
+        "width": 0,
+      },
+      "shadowOpacity": 0.15,
+      "shadowRadius": 6,
+      "zIndex": 2,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Global.Back"
+      accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={
+        Object {
+          "bottom": 44,
+          "left": 44,
+          "right": 44,
+          "top": 44,
+        }
+      }
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="com.ariesbifold:id/BackButton"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "marginLeft": 15,
+            "marginRight": 0,
+            "minHeight": 26,
+            "minWidth": 26,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          󰅁
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexShrink": 1,
+        "justifyContent": "center",
+        "marginHorizontal": 16,
+        "maxWidth": "68%",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      ellipsizeMode="tail"
+      maxFontSizeMultiplier={2}
+      numberOfLines={1}
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 28,
+            "fontWeight": "bold",
+          },
+          Object {
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      test
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "justifyContent": "center",
+      }
+    }
+  />
+</View>
+`;

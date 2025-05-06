@@ -20,7 +20,6 @@ interface ScreenComponents {
   NameWallet: React.FC<StackScreenProps<ParamListBase>>
   Biometry: React.FC<StackScreenProps<ParamListBase>>
   PushNotifications: React.FC<StackScreenProps<ParamListBase>>
-  Developer: React.FC<StackScreenProps<ParamListBase>>
   AttemptLockout: React.FC<StackScreenProps<ParamListBase>>
   OnboardingScreen: React.FC
   CreatePINScreen: React.FC
@@ -117,15 +116,6 @@ export const getOnboardingScreens = (
       title: t('Screens.PushNotifications'),
       headerLeft: () => false,
       ...ScreenOptionsDictionary[Screens.PushNotifications],
-    }),
-  },
-  {
-    name: Screens.Developer,
-    component: components.Developer,
-    options: () => ({
-      title: t('Screens.Developer'),
-      headerBackAccessibilityLabel: t('Global.Back'),
-      ...ScreenOptionsDictionary[Screens.Developer],
     }),
   },
   {
