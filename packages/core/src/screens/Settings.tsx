@@ -32,7 +32,8 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store] = useStore()
-  const { incrementDeveloperMenuCounter } = useDeveloperMode()
+  const onDevModeTriggered = () => navigation.navigate(Screens.Developer)
+  const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
   const { SettingsTheme, TextTheme, ColorPallet, Assets, maxFontSizeMultiplier } = useTheme()
   const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
     TOKENS.CONFIG,
