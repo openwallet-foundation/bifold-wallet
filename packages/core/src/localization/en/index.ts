@@ -247,6 +247,7 @@ const translation = {
     "PINDisclaimer": "If you forget it, you may need to set up your wallet again and re-add your cards.",
     "Show": "Show PIN",
     "Hide": "Hide PIN",
+    "Masked": "PIN Masked for privacy",
   },
   "PINChange": {
     "PinChangeSuccessTitle": "Successfully changed your PIN",
