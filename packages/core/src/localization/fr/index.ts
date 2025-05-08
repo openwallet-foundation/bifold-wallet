@@ -258,6 +258,7 @@ const translation = {
         "PINDisclaimer": "Si vous l'oubliez, vous devrez configurer à nouveau votre portefeuille et vos cartes.",
         "Show": "Afficher NIP",
         "Hide": "Masquer NIP",
+        "Masked": "PIN Masked for privacy (FR)",
         "ChangePIN": "Changer votre NIP",
         "Continue": "Continuer",
         "EnterYourCurrentPIN": "Entrez votre NIP actuel"
