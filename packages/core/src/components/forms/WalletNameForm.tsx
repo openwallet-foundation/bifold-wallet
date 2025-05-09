@@ -29,11 +29,10 @@ interface NameWalletProps {
 
 const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess, onCancel }) => {
   const { t } = useTranslation()
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPallet, Assets, Spacing } = useTheme()
   const [store, dispatch] = useStore()
-  const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
   const [loading, setLoading] = useState(false)
-
+  const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
   const [errorState, setErrorState] = useState<ErrorState>({
     visible: false,
     title: '',
@@ -42,20 +41,17 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
 
   const styles = StyleSheet.create({
     screenContainer: {
-      height: '100%',
+      flex: 1,
       backgroundColor: ColorPallet.brand.primaryBackground,
-      padding: 20,
+      padding: Spacing.md,
       justifyContent: 'space-between',
     },
-
     contentContainer: {
       justifyContent: 'center',
       alignItems: 'center',
       width: '100%',
     },
-    // below used as helpful label for view, no properties needed atp
     controlsContainer: {},
-
     buttonContainer: {
       width: '100%',
     },
@@ -80,7 +76,6 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
       })
     } else {
       setLoading(true)
-
       dispatch({
         type: DispatchAction.UPDATE_WALLET_NAME,
         payload: [walletName],
@@ -98,8 +93,8 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
     <KeyboardView>
       <View style={styles.screenContainer}>
         <View style={styles.contentContainer}>
-          <Assets.svg.contactBook height={100} style={{ marginVertical: 20 }} />
-          <ThemedText style={{ width: '100%', marginBottom: 16 }}>{t('NameWallet.ThisIsTheName')}</ThemedText>
+          <Assets.svg.contactBook height={100} style={{ marginVertical: Spacing.md }} />
+          <ThemedText style={{ width: '100%', marginBottom: Spacing.md }}>{t('NameWallet.ThisIsTheName')}</ThemedText>
           <View style={{ width: '100%' }}>
             <LimitedTextInput
               defaultValue={walletName}
@@ -124,7 +119,7 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
               {loading && <ButtonLoading />}
             </Button>
             {isRenaming && (
-              <View style={{ marginTop: 15 }}>
+              <View style={{ marginTop: Spacing.md }}>
                 <Button
                   title={t('Global.Cancel')}
                   buttonType={ButtonType.Secondary}
