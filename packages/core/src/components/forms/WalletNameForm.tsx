@@ -119,7 +119,7 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
               {loading && <ButtonLoading />}
             </Button>
             {isRenaming && (
-              <View style={{ marginTop: Spacing.md }}>
+              <View style={{ marginTop: Spacing.sm }}>
                 <Button
                   title={t('Global.Cancel')}
                   buttonType={ButtonType.Secondary}

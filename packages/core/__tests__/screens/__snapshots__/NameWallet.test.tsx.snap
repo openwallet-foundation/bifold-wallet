@@ -43,9 +43,9 @@ exports[`NameWallet Screen LimitedInput and continue button are present 1`] = `
           style={
             Object {
               "backgroundColor": "#000000",
-              "height": "100%",
+              "flex": 1,
               "justifyContent": "space-between",
-              "padding": 20,
+              "padding": 16,
             }
           }
         >
@@ -62,7 +62,7 @@ exports[`NameWallet Screen LimitedInput and continue button are present 1`] = `
               height={100}
               style={
                 Object {
-                  "marginVertical": 20,
+                  "marginVertical": 16,
                 }
               }
             />
