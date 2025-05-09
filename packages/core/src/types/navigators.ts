@@ -49,6 +49,7 @@ export enum Screens {
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
   NameWallet = 'Name Wallet',
+  RenameWallet = 'Rename Wallet',
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
   HistorySettings = 'History Settings',
@@ -148,13 +149,13 @@ export type HomeStackParams = {
 
 export type ConnectStackParams = {
   [Screens.Scan]: undefined
-  [Screens.NameWallet]: undefined
+  [Screens.RenameWallet]: undefined
   [Screens.ScanHelp]: undefined
   [Screens.PasteUrl]: undefined
 }
 
 export type SettingStackParams = {
-  [Screens.NameWallet]: undefined
+  [Screens.RenameWallet]: undefined
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
   [Screens.DataRetention]: undefined

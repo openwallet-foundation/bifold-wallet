@@ -90,7 +90,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         iconRight: {
           name: 'edit',
           action: () => {
-            navigation.navigate(Screens.NameWallet)
+            navigation.navigate(Screens.RenameWallet)
           },
           accessibilityLabel: t('NameWallet.EditWalletName'),
           testID: testIdWithKey('EditWalletName'),

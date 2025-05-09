@@ -718,16 +718,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     let finalMessage = `${t('ProofRequest.YouCantRespondReasons')}\n`
 
     if (shareDisabledErrors.hasCredentialError) {
-      finalMessage += `\n \u2B24 ${t('ProofRequest.CredentialIsMissing')}`
+      finalMessage += `\n \u2022 ${t('ProofRequest.CredentialIsMissing')}`
     }
     if (shareDisabledErrors.hasSatisfiedPredicateError) {
-      finalMessage += `\n \u2B24 ${t('ProofRequest.ProofRequestPredicateError')}`
+      finalMessage += `\n \u2022 ${t('ProofRequest.ProofRequestPredicateError')}`
     }
     if (shareDisabledErrors.hasRevokedOffense) {
-      finalMessage += `\n \u2B24 ${t('ProofRequest.CredentialForProofIsRevoked')}`
+      finalMessage += `\n \u2022 ${t('ProofRequest.CredentialForProofIsRevoked')}`
     }
     if (shareDisabledErrors.hasProofStateReceivedError) {
-      finalMessage += `\n \u2B24 ${t('ProofRequest.ProofRequestStateError', { state: proof?.state })}`
+      finalMessage += `\n \u2022 ${t('ProofRequest.ProofRequestStateError', { state: proof?.state })}`
     }
 
     finalMessage += `\n\n${t('ProofRequest.PleaseAddress')}`
