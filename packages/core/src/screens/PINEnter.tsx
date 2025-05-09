@@ -41,8 +41,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const [logger, { preventScreenCapture, enableHiddenDevModeTrigger, attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig }] =
-    useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const [
+    logger,
+    {
+      preventScreenCapture,
+      enableHiddenDevModeTrigger,
+      attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig,
+    },
+  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
