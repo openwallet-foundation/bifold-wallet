@@ -652,9 +652,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
   const proofPageHeader = () => {
     return (
-      <View style={styles.pageMargin}>
+      <>
         {attestationLoading && (
-          <View style={{ paddingTop: 20 }}>
+          <View style={{ padding: 20 }}>
             <InfoTextBox>{t('ProofRequest.JustAMoment')}</InfoTextBox>
           </View>
         )}
@@ -669,7 +669,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             testID={testIdWithKey('ProofRequestLoading')}
           />
         ) : (
-          <>
+          <View style={styles.pageMargin}>
             <ConnectionImage connectionId={proof?.connectionId} />
             <View style={styles.headerTextContainer}>
               <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
@@ -708,9 +708,9 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                 </InfoTextBox>
               )}
             </View>
-          </>
+          </View>
         )}
-      </View>
+      </>
     )
   }
 
