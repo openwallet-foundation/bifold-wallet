@@ -6,7 +6,7 @@ import { useTheme } from '../contexts/theme'
 import HistorySettings from '../modules/history/ui/HistorySettings'
 import DataRetention from '../screens/DataRetention'
 import Language from '../screens/Language'
-import NameWallet from '../screens/NameWallet'
+import RenameWallet from '../screens/RenameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINChange from '../screens/PINChange'
@@ -47,12 +47,12 @@ const SettingStack: React.FC = () => {
         }}
       />
       <Stack.Screen
-        name={Screens.NameWallet}
-        component={NameWallet}
+        name={Screens.RenameWallet}
+        component={RenameWallet}
         options={{
           title: t('Screens.NameWallet'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.NameWallet],
+          ...ScreenOptionsDictionary[Screens.RenameWallet],
         }}
       />
       <Stack.Screen

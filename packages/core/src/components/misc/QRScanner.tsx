@@ -157,7 +157,7 @@ const QRScanner: React.FC<Props> = ({
   }, [agent])
 
   const handleEdit = useCallback(() => {
-    navigation.navigate(Screens.NameWallet)
+    navigation.navigate(Screens.RenameWallet)
   }, [navigation])
 
   useEffect(() => {
