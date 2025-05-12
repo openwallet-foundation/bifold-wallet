@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NameWallet Screen LimitedInput and continue button are present 1`] = `
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
+  }
+  style={
+    Object {
+      "backgroundColor": "#000000",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "flexGrow": 1,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#000000",
+              "flex": 1,
+              "justifyContent": "space-between",
+              "padding": 16,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "justifyContent": "center",
+                "width": "100%",
+              }
+            }
+          >
+            <
+              height={100}
+              style={
+                Object {
+                  "marginVertical": 16,
+                }
+              }
+            />
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "marginBottom": 16,
+                    "width": "100%",
+                  },
+                ]
+              }
+            >
+              NameWallet.ThisIsTheName
+            </Text>
+            <View
+              style={
+                Object {
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "marginVertical": 10,
+                    "width": "100%",
+                  }
+                }
+              >
+                <Text
+                  maxFontSizeMultiplier={2}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "marginBottom": 5,
+                      },
+                    ]
+                  }
+                >
+                  NameWallet.NameYourWallet
+                </Text>
+                <TextInput
+                  accessibilityLabel="NameWallet.NameYourWallet"
+                  defaultValue="test-wallet"
+                  maxFontSizeMultiplier={2}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  selectionColor="#42803E"
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#000000",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "color": "#FFFFFF",
+                        "fontSize": 16,
+                        "padding": 10,
+                      },
+                      false,
+                    ]
+                  }
+                  testID="com.ariesbifold:id/NameInput"
+                />
+                <Text
+                  maxFontSizeMultiplier={2}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "alignSelf": "flex-end",
+                        "color": "#FFFFFF",
+                      },
+                    ]
+                  }
+                >
+                  11
+                  /
+                  50
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={Object {}}
+          >
+            <View
+              style={
+                Object {
+                  "width": "100%",
+                }
+              }
+            >
+              <View
+                accessibilityLabel="Global.Continue"
+                accessibilityRole="button"
+                accessibilityState={
+                  Object {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  Object {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#42803E",
+                    "borderRadius": 4,
+                    "opacity": 1,
+                    "padding": 16,
+                  }
+                }
+                testID="com.ariesbifold:id/Continue"
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <Text
+                    maxFontSizeMultiplier={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Array [
+                          Object {
+                            "color": "#FFFFFF",
+                            "fontSize": 18,
+                            "fontWeight": "bold",
+                            "textAlign": "center",
+                          },
+                          false,
+                          false,
+                          false,
+                        ],
+                      ]
+                    }
+                  >
+                    Global.Continue
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</RNCSafeAreaView>
+`;

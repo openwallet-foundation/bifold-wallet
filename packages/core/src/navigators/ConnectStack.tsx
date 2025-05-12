@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../contexts/theme'
-import NameWallet from '../screens/NameWallet'
+import RenameWallet from '../screens/RenameWallet'
 import PasteUrl from '../screens/PasteUrl'
 import ScanHelp from '../screens/ScanHelp'
 import { ConnectStackParams, Screens } from '../types/navigators'
@@ -53,12 +53,12 @@ const ConnectStack: React.FC = () => {
       />
 
       <Stack.Screen
-        name={Screens.NameWallet}
-        component={NameWallet}
+        name={Screens.RenameWallet}
+        component={RenameWallet}
         options={{
           title: t('Screens.NameWallet'),
           headerBackTestID: testIdWithKey('Back'),
-          ...ScreenOptionsDictionary[Screens.NameWallet],
+          ...ScreenOptionsDictionary[Screens.RenameWallet],
         }}
       />
     </Stack.Navigator>
