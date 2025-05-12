@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, InteractionManager, Keyboard, Pressable, StyleSheet, View } from 'react-native'
+import { DeviceEventEmitter, InteractionManager, Keyboard, Pressable, StyleSheet, Vibration, View } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
@@ -41,14 +41,23 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const [logger, { preventScreenCapture, enableHiddenDevModeTrigger, attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig }] =
-    useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const [
+    logger,
+    {
+      preventScreenCapture,
+      enableHiddenDevModeTrigger,
+      attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig,
+    },
+  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
   const onBackPressed = () => setDevModalVisible(false)
-  const onDevModeTriggered = () => setDevModalVisible(true)
+  const onDevModeTriggered = () => {
+    Vibration.vibrate()
+    setDevModalVisible(true)
+  }
   const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
   const gotoPostAuthScreens = useGotoPostAuthScreens()
   const isContinueDisabled = inlineMessages.enabled ? !continueEnabled : !continueEnabled || PIN.length < minPINLength
