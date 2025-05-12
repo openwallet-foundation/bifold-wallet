@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.1.1
+
+### Patch Changes
+
+- a939fdf: Fix onboarding crash when developer sfeature enabled by refactoring wallet naming screens
+
 ## 2.1.0
 
 ### Minor Changes
