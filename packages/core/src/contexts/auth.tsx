@@ -118,8 +118,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
         await askarWallet.close()
 
-        const fullSecret = await secretForPIN(PIN, secret.salt)
-        setWalletSecret(fullSecret)
+        setWalletSecret({ id: secret.id, key: hash, salt: secret.salt })
         return true
       } catch (e) {
         return false

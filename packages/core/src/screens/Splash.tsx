@@ -1,5 +1,5 @@
 import { RemoteOCABundleResolver } from '@bifold/oca/build/legacy'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -27,6 +27,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
   const [store] = useStore()
   const { ColorPallet } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
+  const initializing = useRef(false)
   const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
@@ -39,18 +40,19 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
   })
 
   useEffect(() => {
+    if (initializing.current || !store.authentication.didAuthenticate) {
+      return
+    }
+
+    if (!walletSecret) {
+      throw new Error('Wallet secret is missing')
+    }
+    
+    initializing.current = true
+
     const initAgentAsyncEffect = async (): Promise<void> => {
       try {
         await (ocaBundleResolver as RemoteOCABundleResolver).checkForUpdates?.()
-
-        // User hasn't authenticated yet, no point in trying to initialize wallet agent
-        if (!store.authentication.didAuthenticate) {
-          return
-        }
-
-        if (!walletSecret) {
-          throw new Error('Wallet secret is missing')
-        }
 
         await initializeAgent(walletSecret)
       } catch (err: unknown) {
