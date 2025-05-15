@@ -250,8 +250,10 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
           <View style={{ marginBottom: 25 }}>
             <ThemedText variant="modalTitle" style={{ marginTop: 15 }}>{t('CredentialOffer.DeclineTitle')}</ThemedText>
             <ThemedText variant="modalNormal" style={{ marginVertical: 30 }}>
-              {extraDetails ?
-                t('CredentialOffer.DeclineParagraph1WithIssuerName', { issuer: extraDetails }): t('CredentialOffer.DeclineParagraph1')}
+              {extraDetails
+                ? t('CredentialOffer.DeclineParagraph1WithIssuerName', { issuer: extraDetails })
+                : t('CredentialOffer.DeclineParagraph1')
+              }
             </ThemedText>
             <ThemedText variant="modalNormal">{t('CredentialOffer.DeclineParagraph2')}</ThemedText>
           </View>
