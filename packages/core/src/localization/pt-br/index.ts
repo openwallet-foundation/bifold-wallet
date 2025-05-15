@@ -626,6 +626,7 @@ const translation = {
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "DeclineParagraph1": "Para receber novamente a oferta de credencial, você precisara iniciar novamente o processo de emissão com o serviço emissor.",
+    "DeclineParagraph1WithIssuerName": "If you change your mind you will need to request the card from {{ issuer }} again. (PT-BR)",
     "DeclineParagraph2": "Você tem certeza que quer recusar esta oferta de credencial?",
     "CustomOfferTitle": "Remover esta oferta?",
     "CustomOfferParagraph1": "Remover esta oferta irá remover a notificação de sua lista.",

@@ -183,6 +183,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
         visible={isRemoveModalDisplayed}
         onSubmit={handleDeclineTouched}
         onCancel={toggleDeclineModalVisible}
+        extraDetails={display.issuer.name}
       />
     </ScreenLayout>
   )

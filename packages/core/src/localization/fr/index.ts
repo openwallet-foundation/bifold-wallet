@@ -644,6 +644,7 @@ const translation = {
         "DeclineTitle": "Refuser l'offre d'attestation d'identité?",
         "Declined": "Refusé",
         "DeclineParagraph1": "Afin de recevoir à nouveau l'offre d'attestation d'identité, vous devrez recommencer le processus d'émission avec le service d'émission.",
+        "DeclineParagraph1WithIssuerName": "If you change your mind you will need to request the card from {{ issuer }} again. (FR)",
         "DeclineParagraph2": "Êtes-vous sûr de vouloir refuser cette offre d'attestation d'identité?",
         "CustomOfferTitle": "Supprimer cette offre?",
         "CustomOfferParagraph1": "La suppression de cette offre supprimera la notification de votre liste.",
