@@ -176,3 +176,5 @@ lib/
 **/.yarn/install-state.gz
 **/.xcode.env.local
 **/app/vendor/bundle/**
+
+\.expo/
