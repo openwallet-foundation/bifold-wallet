@@ -46,7 +46,8 @@
     "Updated": "Updated",
     "Close": "Close",
     "Remove": "Remove",
-    "GotIt": "Got it"
+    "GotIt": "Got it",
+    "Send": "Send"
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -106,7 +107,7 @@
     "Message1027": "There was a problem while accepting the proof request.",
     "Title1028": "Unable to reject proof request",
     "Message1028": "There was a problem while rejecting the proof request",
-    "Title1029": "Details unabled to update retrieved credentials.",
+    "Title1029": "Details unable to update retrieved credentials.",
     "Message1029": "There was a problem while updating retrieved credentials.",
     "Title1030": "Unable to accept connection.",
     "Message1030": "There was a problem while accepting the connection redirection.",
