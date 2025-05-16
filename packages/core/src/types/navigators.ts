@@ -22,6 +22,7 @@ export enum Screens {
   OpenIDCredentialDetails = 'Open ID Credential details',
   OpenIDCredentialOffer = 'Open ID Credential offer',
   OpenIDProofPresentation = 'Open ID Proof Presentation',
+  OpenIDProofCredentialSelect = 'Open ID Proof Credential Select',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
   ProofRequestUsageHistory = 'Proof Request Usage History',
@@ -48,6 +49,7 @@ export enum Screens {
   ProofRequesting = 'Proof Requesting',
   ProofDetails = 'Proof Details',
   NameWallet = 'Name Wallet',
+  RenameWallet = 'Rename Wallet',
   RenameContact = 'Rename Contact',
   ScanHelp = 'Scan Help',
   HistorySettings = 'History Settings',
@@ -108,7 +110,6 @@ export type OnboardingStackParams = {
   [Screens.Biometry]: undefined
   [Screens.NameWallet]: undefined
   [Screens.PushNotifications]: undefined
-  [Screens.Developer]: undefined
 }
 
 export type ContactStackParams = {
@@ -148,13 +149,13 @@ export type HomeStackParams = {
 
 export type ConnectStackParams = {
   [Screens.Scan]: undefined
-  [Screens.NameWallet]: undefined
+  [Screens.RenameWallet]: undefined
   [Screens.ScanHelp]: undefined
   [Screens.PasteUrl]: undefined
 }
 
 export type SettingStackParams = {
-  [Screens.NameWallet]: undefined
+  [Screens.RenameWallet]: undefined
   [Screens.Settings]: undefined
   [Screens.Language]: undefined
   [Screens.DataRetention]: undefined
@@ -199,6 +200,23 @@ export type DeliveryStackParams = {
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   }
   [Screens.OpenIDProofPresentation]: { credential: OpenId4VPRequestRecord }
+  [Screens.OpenIDProofCredentialSelect]: {
+    inputDescriptorID: string
+    selectedCredID: string
+    altCredIDs: {
+      id: string
+      claimFormat: string
+    }[]
+    onCredChange: ({
+      inputDescriptorID,
+      id,
+      claimFormat,
+    }: {
+      inputDescriptorID: string
+      id: string
+      claimFormat: string
+    }) => void
+  }
 }
 
 export type HistoryStackParams = {

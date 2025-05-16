@@ -25,6 +25,7 @@ import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
+import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
@@ -55,6 +56,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
     historyManagerCurried,
     historyEnabled,
     historyEventsLogger,
+    { preventScreenCapture },
   ] = useServices([
     TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.COMP_BUTTON,
@@ -63,6 +65,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
     TOKENS.FN_LOAD_HISTORY,
     TOKENS.HISTORY_ENABLED,
     TOKENS.HISTORY_EVENTS_LOGGER,
+    TOKENS.CONFIG,
   ])
 
   const {
@@ -75,6 +78,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
     clearModal,
     PINSecurity,
   } = usePINValidation(PIN, PINTwo)
+  usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
     screenContainer: {
@@ -169,7 +173,6 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
     return PIN === '' || PINTwo === '' || PINOld === '' || PIN.length < minPINLength || PINTwo.length < minPINLength
   }, [inlineMessages, isLoading, PIN, PINTwo, PINOld])
 
-
   return (
     <KeyboardView>
       <View style={style.screenContainer}>
@@ -218,15 +221,9 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
           />
-          {PINSecurity.displayHelper && (
-            <PINValidationHelper validations={PINValidations} />
-          )}
+          {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (
-            <AlertModal
-              title={modalState.title}
-              message={modalState.message}
-              submit={modalState.onModalDismiss}
-            />
+            <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
         <View style={style.controlsContainer}>

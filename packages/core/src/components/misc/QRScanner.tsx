@@ -73,7 +73,7 @@ const QRScanner: React.FC<Props> = ({
     },
     bottomSafeArea: {
       flex: 0,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: TabTheme.tabBarSecondaryBackgroundColor,
     },
     cameraViewContainer: {
       flex: 1,
@@ -157,7 +157,7 @@ const QRScanner: React.FC<Props> = ({
   }, [agent])
 
   const handleEdit = useCallback(() => {
-    navigation.navigate(Screens.NameWallet)
+    navigation.navigate(Screens.RenameWallet)
   }, [navigation])
 
   useEffect(() => {

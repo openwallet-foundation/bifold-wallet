@@ -1,23 +1,18 @@
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import CredentialList from '../assets/img/credential-list.svg'
 import ScanShare from '../assets/img/scan-share.svg'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
 import { GenericFn } from '../types/fn'
-import { OnboardingStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { useTheme } from '../contexts/theme'
 
-import { OnboardingStyleSheet } from './Onboarding'
 import { ThemedText } from '../components/texts/ThemedText'
+import { OnboardingStyleSheet } from './Onboarding'
 
 export const createCarouselStyle = (OnboardingTheme: any) => {
   return StyleSheet.create<OnboardingStyleSheet>({
@@ -136,32 +131,17 @@ const guides: Array<{ image: React.FC<SvgProps>; title: string; body: string; de
   },
 ]
 
-export const createPageWith = (
-  PageImage: React.FC<SvgProps>,
-  title: string,
-  body: string,
-  OnboardingTheme: any,
-  devModeListener?: boolean,
-  onDevModeTouched?: () => void
-) => {
+export const createPageWith = (PageImage: React.FC<SvgProps>, title: string, body: string, OnboardingTheme: any) => {
   const styles = createStyles(OnboardingTheme)
   const imageDisplayOptions = createImageDisplayOptions(OnboardingTheme)
-  const titleElement = (
-    <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-      {title}
-    </ThemedText>
-  )
+
   return (
     <ScrollView style={{ padding: 20 }}>
       <View style={{ alignItems: 'center' }}>{<PageImage style={imageDisplayOptions} />}</View>
       <View style={{ marginBottom: 20 }}>
-        {devModeListener ? (
-          <TouchableWithoutFeedback testID={testIdWithKey('DeveloperModeTouch')} onPress={onDevModeTouched}>
-            {titleElement}
-          </TouchableWithoutFeedback>
-        ) : (
-          titleElement
-        )}
+        <ThemedText style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+          {title}
+        </ThemedText>
         <ThemedText style={[styles.bodyText, { marginTop: 25 }]} testID={testIdWithKey('BodyText')}>
           {body}
         </ThemedText>
@@ -171,40 +151,8 @@ export const createPageWith = (
 }
 
 const OnboardingPages = (onTutorialCompleted: GenericFn, OnboardingTheme: any): Array<Element> => {
-  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
-  const [, dispatch] = useStore()
-  const onDevModeEnabled = () => {
-    dispatch({
-      type: DispatchAction.ENABLE_DEVELOPER_MODE,
-      payload: [true],
-    })
-    navigation.getParent()?.navigate(Screens.Developer)
-  }
-  const developerOptionCount = useRef(0)
-  const touchCountToEnableBiometrics = 9
-
-  const incrementDeveloperMenuCounter = () => {
-    if (developerOptionCount.current >= touchCountToEnableBiometrics) {
-      developerOptionCount.current = 0
-      if (onDevModeEnabled) {
-        onDevModeEnabled()
-      }
-      return
-    }
-
-    developerOptionCount.current = developerOptionCount.current + 1
-  }
   return [
-    ...guides.map((g) =>
-      createPageWith(
-        g.image,
-        g.title,
-        g.body,
-        OnboardingTheme,
-        g.devModeListener,
-        g.devModeListener ? incrementDeveloperMenuCounter : undefined
-      )
-    ),
+    ...guides.map((g) => createPageWith(g.image, g.title, g.body, OnboardingTheme)),
     CustomPages(onTutorialCompleted, OnboardingTheme),
   ]
 }

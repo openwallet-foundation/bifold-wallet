@@ -45,7 +45,7 @@ const RootStack: React.FC = () => {
   useEffect(() => {
     // Load state only if it hasn't been loaded yet
     if (store.stateLoaded) return
-    
+
     loadState(dispatch).catch((err: unknown) => {
       const error = new BifoldError(t('Error.Title1044'), t('Error.Message1044'), (err as Error).message, 1001)
 

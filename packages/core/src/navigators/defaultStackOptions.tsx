@@ -34,6 +34,10 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerBackTestID: testIdWithKey('Back'),
   },
+  [Screens.RenameWallet]: {
+    headerTintColor: OnboardingTheme.headerTintColor,
+    headerBackTestID: testIdWithKey('Back'),
+  },
   [Screens.Biometry]: {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerBackTestID: testIdWithKey('Back'),
@@ -62,6 +66,7 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
   [Screens.OpenIDProofPresentation]: {
     headerShown: true,
+    headerRight: () => false,
   },
 }
 

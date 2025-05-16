@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
-import { StoreContext } from '../../src'
+import { StoreProvider } from '../../src'
 import NameWallet from '../../src/screens/NameWallet'
 import { testIdWithKey } from '../../src/utils/testable'
 import { testDefaultState } from '../contexts/store'
@@ -21,51 +21,20 @@ jest.mock('react-native-device-info', () => {
 
 describe('NameWallet Screen', () => {
   test('LimitedInput and continue button are present', async () => {
-    const tree = render(<NameWallet />)
+    const tree = render(
+      <StoreProvider initialState={testDefaultState}>
+        <BasicAppContext>
+          <NameWallet />
+        </BasicAppContext>
+      </StoreProvider>
+    )
 
     const WalletNameInput = await tree.getByTestId(testIdWithKey('NameInput'))
-
     const ContinueButton = await tree.getByTestId(testIdWithKey('Continue'))
 
     expect(WalletNameInput).not.toBeNull()
     expect(ContinueButton).not.toBeNull()
-  })
+    expect(tree).toMatchSnapshot()
 
-  test('Check non-onboarding rendering', async () => {
-    const customState = {
-      ...testDefaultState,
-      onboarding: {
-        didAgreeToTerms: true,
-        didCompleteTutorial: true,
-        didCreatePIN: true,
-        didConsiderBiometry: true,
-        didNameWallet: true,
-        didSeePreface: true,
-        didConsiderPushNotifications: true,
-        onboardingVersion: 0,
-        didCompleteOnboarding: true,
-        postAuthScreens: [],
-      },
-    }
-    const tree = render(
-      <StoreContext.Provider
-        value={[
-          customState,
-          () => {
-            return
-          },
-        ]}
-      >
-        <BasicAppContext>
-          <NameWallet />
-        </BasicAppContext>
-      </StoreContext.Provider>
-    )
-
-    const SaveButton = await tree.getByTestId(testIdWithKey('Save'))
-    const CancelButton = await tree.getByTestId(testIdWithKey('Cancel'))
-
-    expect(SaveButton).not.toBeNull()
-    expect(CancelButton).not.toBeNull()
   })
 })

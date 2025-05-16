@@ -11,30 +11,71 @@ import {
 import { W3cCredentialDisplay } from '../modules/openid/types'
 import { BrandingOverlay } from '@bifold/oca'
 
-export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
-  return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
+export type FieldExt = {
+  field: Attribute
+  attribute_name: string
 }
 
-export const buildFieldsFromW3cCredsCredential = (value: W3cCredentialDisplay): Array<Field> => {
+type AttributeFieldValue = string | number | null
+
+export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FieldExt | undefined => {
+  let attributeName: string = 'Unknown'
+  let attributeValue: AttributeFieldValue = 'Unknown'
+
+  for (const [key, value] of Object.entries(display.attributes)) {
+    let formattedValue: AttributeFieldValue
+
+    if (searchKey === key) {
+      if (typeof value === 'object' && value !== null) {
+        formattedValue = JSON.stringify(value) // Convert object to string
+      } else {
+        formattedValue = value as AttributeFieldValue
+      }
+
+      attributeName = key
+      attributeValue = formattedValue
+    }
+  }
+
+  //Now check credentialSubject for attributeName mapping
+  const credentialSubject = display.credentialSubject
+
+  if (credentialSubject) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [key, value] of Object.entries(credentialSubject)) {
+      if (key !== searchKey || !value) continue
+      const { display } = value
+      const { name } = display[0]
+      attributeName = name
+    }
+  }
+
+  return {
+    field: new Attribute({
+      name: attributeName,
+      value: attributeValue,
+      mimeType: typeof attributeValue === 'number' ? 'text/number' : 'text/plain',
+    }),
+    attribute_name: searchKey,
+  }
+}
+
+export const buildFieldsFromW3cCredsCredential = (
+  display: W3cCredentialDisplay,
+  filterByAttributes?: string[]
+): Array<Field> => {
   return (
-    Object.entries(value.attributes)
+    Object.entries(display.attributes)
       .filter(([key]) => key !== 'id')
-      .map(([key, value]) => {
-        let formattedValue: string | number | null
-
-        if (typeof value === 'object' && value !== null) {
-          formattedValue = JSON.stringify(value) // Convert object to string
-        } else {
-          formattedValue = value as string | number | null
-        }
-
-        return new Attribute({
-          name: key,
-          value: formattedValue,
-          mimeType: typeof value === 'number' ? 'text/number' : 'text/plain',
-        })
-      }) || []
+      .map(([key]) => getAttributeField(display, key))
+      .filter((field) => field !== undefined)
+      .filter((field: FieldExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
+      .map((fld) => fld.field) || []
   )
+}
+
+export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
+  return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
 }
 
 export const buildFieldsFromAnonCredsProofRequestTemplate = (
