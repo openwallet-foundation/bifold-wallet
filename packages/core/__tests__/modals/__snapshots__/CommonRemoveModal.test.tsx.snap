@@ -150,7 +150,9 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                     "fontSize": 24,
                     "fontWeight": "bold",
                   },
-                  undefined,
+                  Object {
+                    "marginTop": 15,
+                  },
                 ]
               }
             >
@@ -166,7 +168,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                     "fontWeight": "normal",
                   },
                   Object {
-                    "marginTop": 30,
+                    "marginVertical": 30,
                   },
                 ]
               }
