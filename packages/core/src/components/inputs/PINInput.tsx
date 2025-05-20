@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, Ref } from 'react'
+import React, { useState, forwardRef, Ref, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmation-code-field'
@@ -37,6 +37,9 @@ const PINInputComponent = (
     value: PIN,
     setValue: onChangeText,
   })
+  const allyLabel = useMemo(() => {
+    return showPIN ? PIN.split('').join(' ') : t('PINCreate.Masked')
+  }, [showPIN, PIN, t])
 
   const style = StyleSheet.create({
     container: {
@@ -67,13 +70,14 @@ const PINInputComponent = (
         <CodeField
           {...props}
           testID={testID}
-          accessibilityLabel={accessibilityLabel}
+          accessibilityLabel={PIN ? allyLabel : accessibilityLabel}
+          accessibilityRole={'text'}
           accessible
           value={PIN}
           rootStyle={PINInputTheme.codeFieldRoot}
           onChangeText={onChangeText}
           cellCount={minPINLength}
-          keyboardType="numeric"
+          keyboardType="number-pad"
           textContentType="password"
           renderCell={({ index, symbol, isFocused }) => {
             let child: React.ReactNode | string = ''

@@ -18,7 +18,10 @@ const DeveloperModal: React.FC<DeveloperModalProps> = ({ onBackPressed }) => {
 
   return (
     <SafeAreaModal>
-      <SafeAreaView edges={['left', 'right', 'top']} style={{ flex: 1, backgroundColor: NavigationTheme.colors.primary }}>
+      <SafeAreaView
+        edges={['left', 'right', 'top']}
+        style={{ flex: 1, backgroundColor: NavigationTheme.colors.primary }}
+      >
         <FauxHeader title={t('Screens.Developer')} onBackPressed={onBackPressed} />
         <Developer />
       </SafeAreaView>
