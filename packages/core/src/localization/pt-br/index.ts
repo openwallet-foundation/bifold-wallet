@@ -239,6 +239,7 @@ const translation = {
     "PINDisclaimer": "Se você o esquecer, você precisará redefinir sua carteira e readicionar seus cards.",
     "Show": "Mostrar PIN",
     "Hide": "Esconder PIN",
+    "Masked": "PIN Masked for privacy (PT-BR)",
   },
   "PINChange": {
     "PinChangeSuccessTitle": "Seu PIN foi alterado com sucesso",
