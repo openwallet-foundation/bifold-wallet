@@ -11,6 +11,8 @@ import { BasicAppContext } from '../helpers/app'
 import { CustomBasicAppContext } from '../helpers/app'
 import { TOKENS } from '../../src/container-api'
 import { MainContainer } from '../../src/container-impl'
+import { AuthContext } from 'contexts/auth'
+import authContext from '../contexts/auth'
 
 describe('Settings Screen', () => {
   beforeEach(() => {
@@ -28,18 +30,20 @@ describe('Settings Screen', () => {
     }
 
     const tree = render(
-      <StoreContext.Provider
-        value={[
-          customState,
-          () => {
-            return
-          },
-        ]}
-      >
-        <BasicAppContext>
-          <Settings navigation={useNavigation()} route={{} as any} />
-        </BasicAppContext>
-      </StoreContext.Provider>
+      <AuthContext.Provider value={authContext}>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <BasicAppContext>
+            <Settings navigation={useNavigation()} route={{} as any} />
+          </BasicAppContext>
+        </StoreContext.Provider>
+      </AuthContext.Provider>
     )
     expect(tree).toMatchSnapshot()
   })
