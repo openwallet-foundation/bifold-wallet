@@ -2854,13 +2854,13 @@ __metadata:
 
 "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=c42b94&locator=bifold-wallet-root%40workspace%3A."
+  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=90a927&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/core": 0.5.13
   peerDependencies:
     "@hyperledger/indy-vdr-shared": ^0.2.2
-  checksum: ff4bc71ff42c36ffd27b7d4959730b4bf1acacf108a37dce2e8946b17e99380ecfe9c955e35f1289d730b839111b3d89ed8eb52092a62f2255b4707a79931f8a
+  checksum: d4d277ae722dc05f508ccfd6d5a770ed8790f53c084c98a39bf24aed15cbb4493f5bb48c40eb92ed7f8316a21b66f136a25e39d7d342a26f2b500d649d16c25b
   languageName: node
   linkType: hard
 
