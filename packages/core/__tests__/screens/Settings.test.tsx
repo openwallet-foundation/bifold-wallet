@@ -39,9 +39,7 @@ describe('Settings Screen', () => {
         ]}
       >
         <BasicAppContext>
-          <AuthContext.Provider value={authContext}>
-            <Settings navigation={useNavigation()} route={{} as any} />
-          </AuthContext.Provider>
+          <Settings navigation={useNavigation()} route={{} as any} />
         </BasicAppContext>
       </StoreContext.Provider>
     )
