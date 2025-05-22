@@ -12,14 +12,15 @@ const RenameWallet: React.FC = () => {
     navigation.goBack()
   }, [navigation])
 
-  const onSubmitSuccess = useCallback((name: string) => {
-    agent.config.label = name
-    navigation.goBack()
-  }, [navigation, agent])
-
-  return (
-    <WalletNameForm isRenaming onCancel={onCancel} onSubmitSuccess={onSubmitSuccess} />
+  const onSubmitSuccess = useCallback(
+    (name: string) => {
+      agent.config.label = name
+      navigation.goBack()
+    },
+    [navigation, agent]
   )
+
+  return <WalletNameForm isRenaming onCancel={onCancel} onSubmitSuccess={onSubmitSuccess} />
 }
 
 export default RenameWallet

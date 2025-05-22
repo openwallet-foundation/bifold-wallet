@@ -35,6 +35,5 @@ describe('NameWallet Screen', () => {
     expect(WalletNameInput).not.toBeNull()
     expect(ContinueButton).not.toBeNull()
     expect(tree).toMatchSnapshot()
-
   })
 })
