@@ -59,7 +59,7 @@ export const wipeWalletKey = async (useBiometrics: boolean) => {
   await Keychain.resetGenericPassword(opts)
 }
 
-export const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
+const storeWalletKey = async (secret: WalletKey, useBiometrics = false): Promise<boolean> => {
   const opts = optionsForKeychainAccess(KeychainServices.Key, useBiometrics)
   const secretAsString = JSON.stringify(secret)
   await wipeWalletKey(useBiometrics)
