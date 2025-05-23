@@ -47,7 +47,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
     if (!walletSecret) {
       throw new Error('Wallet secret is missing')
     }
-    
+
     initializing.current = true
 
     const initAgentAsyncEffect = async (): Promise<void> => {
