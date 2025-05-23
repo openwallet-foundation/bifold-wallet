@@ -14,7 +14,6 @@ import { useAppAgent } from '../utils/agent'
 import PINVerify, { PINEntryUsage } from './PINVerify'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-
 const ToggleBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
   const { agent } = useAppAgent()
@@ -138,8 +137,8 @@ const ToggleBiometry: React.FC = () => {
         animationType={'slide'}
         presentationStyle={'fullScreen'}
       >
-        <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }}/>
-        <FauxHeader title={t('Screens.EnterPIN')} onBackPressed={onBackPressed}/>
+        <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }} />
+        <FauxHeader title={t('Screens.EnterPIN')} onBackPressed={onBackPressed} />
         <PINVerify
           usage={PINEntryUsage.ChangeBiometrics}
           setAuthenticated={onAuthenticationComplete}

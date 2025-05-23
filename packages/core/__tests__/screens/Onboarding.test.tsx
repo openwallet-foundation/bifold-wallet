@@ -2,7 +2,7 @@ import { render } from '@testing-library/react-native'
 import React from 'react'
 
 import { ThemedText } from '../../src/components/texts/ThemedText'
-import * as themeContext from '../../src/contexts/theme'; // note we're importing with a * to import all the exports
+import * as themeContext from '../../src/contexts/theme' // note we're importing with a * to import all the exports
 import Onboarding, { OnboardingStyleSheet } from '../../src/screens/Onboarding'
 import { createCarouselStyle } from '../../src/screens/OnboardingPages'
 import { OnboardingTheme } from '../../src/theme'

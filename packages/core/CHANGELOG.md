@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 2.1.2
+
+### Patch Changes
+
+- cb5c501: Vibrate on dev mode enabled from onboarding
+
+## 2.1.1
+
+### Patch Changes
+
+- a939fdf: Fix onboarding crash when developer sfeature enabled by refactoring wallet naming screens
+
 ## 2.1.0
 
 ### Minor Changes

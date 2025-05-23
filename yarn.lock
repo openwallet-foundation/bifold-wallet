@@ -2145,14 +2145,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bifold/core@2.1.0, @bifold/core@workspace:packages/core":
+"@bifold/core@2.1.2, @bifold/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@bifold/oca": 2.1.0
-    "@bifold/verifier": 2.1.0
+    "@bifold/oca": 2.1.2
+    "@bifold/verifier": 2.1.2
     "@commitlint/cli": ^11.0.0
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/askar": 0.5.13
@@ -2339,7 +2339,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/oca@2.1.0, @bifold/oca@workspace:packages/oca":
+"@bifold/oca@2.1.2, @bifold/oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
@@ -2399,7 +2399,7 @@ __metadata:
   resolution: "@bifold/remote-logs@workspace:packages/remote-logs"
   dependencies:
     "@babel/runtime": ^7.20.0
-    "@bifold/core": 2.1.0
+    "@bifold/core": 2.1.2
     "@credo-ts/core": 0.5.13
     "@typescript-eslint/parser": ^6.6.0
     axios: ^1.4.0
@@ -2421,7 +2421,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/verifier@2.1.0, @bifold/verifier@workspace:packages/verifier":
+"@bifold/verifier@2.1.2, @bifold/verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
@@ -3225,13 +3225,13 @@ __metadata:
 
 "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::locator=bifold-wallet-root%40workspace%3A.":
   version: 0.5.13
-  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=c42b94&locator=bifold-wallet-root%40workspace%3A."
+  resolution: "@credo-ts/indy-vdr@patch:@credo-ts/indy-vdr@npm%3A0.5.13#./.yarn/patches/@credo-ts-indy-vdr-npm-0.5.13-007d41ad5c.patch::version=0.5.13&hash=90a927&locator=bifold-wallet-root%40workspace%3A."
   dependencies:
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/core": 0.5.13
   peerDependencies:
     "@hyperledger/indy-vdr-shared": ^0.2.2
-  checksum: ff4bc71ff42c36ffd27b7d4959730b4bf1acacf108a37dce2e8946b17e99380ecfe9c955e35f1289d730b839111b3d89ed8eb52092a62f2255b4707a79931f8a
+  checksum: d4d277ae722dc05f508ccfd6d5a770ed8790f53c084c98a39bf24aed15cbb4493f5bb48c40eb92ed7f8316a21b66f136a25e39d7d342a26f2b500d649d16c25b
   languageName: node
   linkType: hard
 
@@ -8688,8 +8688,8 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@bifold/core": 2.1.0
-    "@bifold/oca": 2.1.0
+    "@bifold/core": 2.1.2
+    "@bifold/oca": 2.1.2
     "@credo-ts/anoncreds": 0.5.13
     "@credo-ts/askar": 0.5.13
     "@credo-ts/core": 0.5.13

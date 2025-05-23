@@ -247,6 +247,7 @@ const translation = {
     "PINDisclaimer": "If you forget it, you may need to set up your wallet again and re-add your cards.",
     "Show": "Show PIN",
     "Hide": "Hide PIN",
+    "Masked": "PIN Masked for privacy",
   },
   "PINChange": {
     "PinChangeSuccessTitle": "Successfully changed your PIN",
@@ -641,6 +642,7 @@ const translation = {
     "DeclineTitle": "Decline credential offer?",
     "Declined": "Declined",
     "DeclineParagraph1": "In order to receive the credential offer again, you will need to restart the issuing process again with the issuing service.",
+    "DeclineParagraph1WithIssuerName": "If you change your mind you will need to request the card from {{ issuer }} again.",
     "DeclineParagraph2": "Are you sure you want to decline this credential offer?",
     "CustomOfferTitle": "Delete this offer?",
     "CustomOfferParagraph1": "Deleting this offer will remove the notification from your list.",
