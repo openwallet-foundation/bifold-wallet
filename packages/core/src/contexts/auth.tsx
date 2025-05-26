@@ -40,10 +40,10 @@ export interface AuthContext {
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
-export type LockoutReason = 'logout' | 'timeout'
-
-export const reasonLogout: LockoutReason = 'logout'
-export const reasonTimeout: LockoutReason = 'timeout'
+export enum LockoutReason {
+  Timeout = "Timeout",
+  Logout = "Logout",
+}
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
