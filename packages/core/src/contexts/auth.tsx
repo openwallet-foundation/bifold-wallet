@@ -144,7 +144,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       })
       dispatch({
         type: DispatchAction.LOCKOUT_UPDATED,
-        payload: [{ displayNotification: reason === reasonTimeout }],
+        payload: [{ displayNotification: reason === LockoutReason.Timeout }],
       })
     },
     [removeSavedWalletSecret, dispatch]
