@@ -41,8 +41,8 @@ export interface AuthContext {
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
 export enum LockoutReason {
-  Timeout = "Timeout",
-  Logout = "Logout",
+  Timeout = 'Timeout',
+  Logout = 'Logout',
 }
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {

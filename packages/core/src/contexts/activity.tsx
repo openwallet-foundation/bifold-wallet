@@ -12,7 +12,7 @@ import React, {
 import { AppState, AppStateStatus, PanResponder, View } from 'react-native'
 import { defaultAutoLockTime } from '../constants'
 import { TOKENS, useServices } from '../container-api'
-import { reasonTimeout, useAuth } from './auth'
+import { LockoutReason, useAuth } from './auth'
 import { useStore } from './store'
 
 // number of minutes before the timeout action is triggered
@@ -60,7 +60,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
       // do not set timeout if timeout duration is set to 0
       if (milliseconds > 0) {
         // create new timeout
-        inactivityTimeoutRef.current = setTimeout(() => lockOutUser(reasonTimeout), milliseconds)
+        inactivityTimeoutRef.current = setTimeout(() => lockOutUser(LockoutReason.Timeout), milliseconds)
       }
     },
     [clearInactivityTimeoutIfExists, lockOutUser]
@@ -89,7 +89,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
           Date.now() - lastActiveTimeRef.current >= timeoutInMilliseconds.current &&
           timeoutInMilliseconds.current > 0
         ) {
-          lockOutUser(reasonTimeout)
+          lockOutUser(LockoutReason.Timeout)
         } else {
           // otherwise restart message pickup
           try {
