@@ -175,7 +175,7 @@ export const loadWalletSecret = async (title?: string, description?: string): Pr
   return secret
 }
 
-export const isBiometricsActive = async (): Promise<boolean> => {
+export const isBiometricsAvailable = async (): Promise<boolean> => {
   const result = await getSupportedBiometryType()
   return Boolean(result)
 }

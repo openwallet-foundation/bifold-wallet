@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LockoutReason, useAuth } from '../contexts/auth'
 import {
@@ -28,6 +28,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
+import { isBiometricsAvailable } from '../services/keychain'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -127,13 +128,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       },
       data: [
         {
-          title: t('Global.Biometrics'),
-          value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
-          accessibilityLabel: t('Global.Biometrics'),
-          testID: testIdWithKey('Biometrics'),
-          onPress: () => navigation.navigate(Screens.ToggleBiometry),
-        },
-        {
           title: t('Settings.ChangePin'),
           value: undefined,
           accessibilityLabel: t('Settings.ChangePin'),
@@ -159,6 +153,25 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     ...(settings || []),
   ]
+
+  useEffect(() => {
+    const checkForBiometry = async () => {
+      // if biometrics are not available on the device, we shouldn't be showing the biometry screen
+      const isActive = await isBiometricsAvailable()
+
+      if (isActive) {
+        settingsSections[1].data.splice(0, 1, {
+          title: t('Global.Biometrics'),
+          value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
+          accessibilityLabel: t('Global.Biometrics'),
+          testID: testIdWithKey('Biometrics'),
+          onPress: () => navigation.navigate(Screens.ToggleBiometry),
+        })
+      }
+    }
+    checkForBiometry()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation, store.preferences.useBiometry, t])
 
   // Remove the Contact section from Setting per TOKENS.CONFIG
   if (disableContactsInSettings) {
