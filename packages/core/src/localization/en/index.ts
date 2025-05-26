@@ -743,6 +743,7 @@ const translation = {
     "Developer": "Developer options",
     "Notifications": "Notifications",
     "AutoLockTime": "Auto lock time",
+    "Logout": "Log out",
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes",

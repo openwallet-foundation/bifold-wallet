@@ -24,7 +24,7 @@ describe('RenameWallet Screen', () => {
     const tree = render(
       <StoreProvider initialState={testDefaultState}>
         <BasicAppContext>
-          <RenameWallet/>
+          <RenameWallet />
         </BasicAppContext>
       </StoreProvider>
     )

@@ -731,6 +731,7 @@ const translation = {
         "ScanMyQR": "Scanner mon code QR",
         "Developer": "Options de développeur",
         "AutoLockTime": "Auto lock time (FR)",
+        "Logout": "Déconnexion",
     },
     "AutoLockTimes": {
         "FiveMinutes": "Five Minutes (FR)",
