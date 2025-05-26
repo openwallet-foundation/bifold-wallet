@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { reasonLogout, useAuth } from '../contexts/auth'
+import { LockoutReason, useAuth } from '../contexts/auth'
 import {
   ScrollView,
   SectionList,
@@ -218,17 +218,11 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           testID: testIdWithKey('DeveloperOptions'),
           onPress: () => navigation.navigate(Screens.Developer),
         },
-      ]
-    }
-    const additionalSection = settingsSections.find((item) => item.header.title === t('Settings.AppSettings'))
-    if (additionalSection && !additionalSection.data.some((item) => item.testID === testIdWithKey('Logout'))) {
-      additionalSection.data = [
-        ...additionalSection.data,
         {
           title: t('Settings.Logout'),
           accessibilityLabel: t('Settings.Logout'),
           testID: testIdWithKey('Logout'),
-          onPress: () => lockOutUser(reasonLogout),
+          onPress: () => lockOutUser(LockoutReason.Logout),
         },
       ]
     }

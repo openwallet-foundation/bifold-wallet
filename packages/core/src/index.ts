@@ -153,8 +153,7 @@ export type { Config, HistoryEventsLoggerConfig } from './types/config'
 export { BaseTourID } from './types/tour'
 export type { SplashProps } from './screens/Splash'
 export type { OnboardingStackProps } from './navigators/OnboardingStack'
-export type { LockoutReason } from './contexts/auth'
-export { reasonLogout, reasonTimeout } from './contexts/auth'
+export { LockoutReason } from './contexts/auth'
 
 export {
   createApp,
