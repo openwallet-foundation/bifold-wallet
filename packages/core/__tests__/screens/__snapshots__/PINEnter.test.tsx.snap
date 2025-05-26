@@ -351,6 +351,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     </View>
                     <TextInput
                       accessibilityLabel="PINEnter.EnterPIN"
+                      accessibilityRole="text"
                       accessible={true}
                       autoCapitalize="characters"
                       autoComplete="one-time-code"
@@ -360,7 +361,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       caretHidden={true}
                       clearButtonMode="never"
                       disableFullscreenUI={true}
-                      keyboardType="numeric"
+                      keyboardType="number-pad"
                       maxLength={6}
                       onBlur={[Function]}
                       onChangeText={[Function]}
@@ -900,6 +901,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     </View>
                     <TextInput
                       accessibilityLabel="PINEnter.EnterPIN"
+                      accessibilityRole="text"
                       accessible={true}
                       autoCapitalize="characters"
                       autoComplete="one-time-code"
@@ -909,7 +911,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       caretHidden={true}
                       clearButtonMode="never"
                       disableFullscreenUI={true}
-                      keyboardType="numeric"
+                      keyboardType="number-pad"
                       maxLength={6}
                       onBlur={[Function]}
                       onChangeText={[Function]}

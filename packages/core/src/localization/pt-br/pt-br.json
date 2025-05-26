@@ -237,7 +237,8 @@
     "RememberPIN": "Criar um PIN para assegurar sua carteira.",
     "PINDisclaimer": "Se você o esquecer, você precisará redefinir sua carteira e readicionar seus cards.",
     "Show": "Mostrar PIN",
-    "Hide": "Esconder PIN"
+    "Hide": "Esconder PIN",
+    "Masked": "PIN Masked for privacy (PT-BR)"
   },
   "PINChange": {
     "PinChangeSuccessTitle": "Seu PIN foi alterado com sucesso",
@@ -625,6 +626,7 @@
     "ShareFollowingInformation_one": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "ShareFollowingInformation_other": "está compartilhando as seguintes informações de credenciais {{count}}.",
     "DeclineParagraph1": "Para receber novamente a oferta de credencial, você precisara iniciar novamente o processo de emissão com o serviço emissor.",
+    "DeclineParagraph1WithIssuerName": "If you change your mind you will need to request the card from {{ issuer }} again. (PT-BR)",
     "DeclineParagraph2": "Você tem certeza que quer recusar esta oferta de credencial?",
     "CustomOfferTitle": "Remover esta oferta?",
     "CustomOfferParagraph1": "Remover esta oferta irá remover a notificação de sua lista.",
@@ -711,7 +713,8 @@
     "WhatAreContacts": "O que são Contatos?",
     "ScanMyQR": "Scanear meu QR code",
     "Developer": "Opções de Desenvolvedor",
-    "AutoLockTime": "Auto lock time (PT-BR)"
+    "AutoLockTime": "Auto lock time (PT-BR)",
+    "Logout": "Sair"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (PT-BR)",

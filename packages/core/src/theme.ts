@@ -730,21 +730,21 @@ export interface ITabTheme {
     shadowOpacity: number
     borderTopWidth: number
     paddingBottom: number
-  },
-  tabBarContainerStyle: ViewStyle,
-  tabBarActiveTintColor: string,
-  tabBarInactiveTintColor: string,
+  }
+  tabBarContainerStyle: ViewStyle
+  tabBarActiveTintColor: string
+  tabBarInactiveTintColor: string
   tabBarTextStyle: TextStyle & {
     fontSize: number
-  },
+  }
   tabBarButtonIconStyle: {
     color: string
-  },
-  focusTabIconStyle: ViewStyle,
+  }
+  focusTabIconStyle: ViewStyle
   focusTabActiveTintColor: {
     backgroundColor: string
-  },
-  tabBarSecondaryBackgroundColor: string,
+  }
+  tabBarSecondaryBackgroundColor: string
 }
 
 export const TabTheme: ITabTheme = {

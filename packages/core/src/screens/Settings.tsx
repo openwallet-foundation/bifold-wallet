@@ -1,6 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { LockoutReason, useAuth } from '../contexts/auth'
 import {
   ScrollView,
   SectionList,
@@ -33,6 +34,7 @@ type SettingsProps = StackScreenProps<SettingStackParams>
 const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const { t, i18n } = useTranslation()
   const [store] = useStore()
+  const { lockOutUser } = useAuth()
   const onDevModeTriggered = () => {
     Vibration.vibrate()
     navigation.navigate(Screens.Developer)
@@ -215,6 +217,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           accessibilityLabel: t('Settings.Developer'),
           testID: testIdWithKey('DeveloperOptions'),
           onPress: () => navigation.navigate(Screens.Developer),
+        },
+        {
+          title: t('Settings.Logout'),
+          accessibilityLabel: t('Settings.Logout'),
+          testID: testIdWithKey('Logout'),
+          onPress: () => lockOutUser(LockoutReason.Logout),
         },
       ]
     }
