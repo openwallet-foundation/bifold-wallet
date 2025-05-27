@@ -38,7 +38,7 @@ interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreateP
 }
 
 const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus }) => {
-  const { setPIN: setWalletPIN } = useAuth()
+  const { setPIN: setWalletPIN, commitWalletToKeychain, isBiometricsAvailable } = useAuth()
   const [PIN, setPIN] = useState('')
   const [PINTwo, setPINTwo] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -79,6 +79,14 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     async (PIN: string) => {
       try {
         await setWalletPIN(PIN)
+
+        // if biometrics is not available
+        // the wallet store will need to be updated with that information
+        // this step is normally done in Biometry screen but if biometrics is not available
+        // that onboarding screen will be skipped
+        if (!(await isBiometricsAvailable())) {
+          await commitWalletToKeychain(false)
+        }
         setAuthenticated(true)
         // this dispatch finishes this step of onboarding and will cause a navigation
         dispatch({
@@ -95,7 +103,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     },
-    [setWalletPIN, setAuthenticated, dispatch, t]
+    [setWalletPIN, setAuthenticated, dispatch, t, commitWalletToKeychain, isBiometricsAvailable]
   )
 
   const handleCreatePinTap = useCallback(async () => {

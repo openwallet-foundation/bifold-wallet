@@ -160,7 +160,8 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
       const isActive = await isBiometricsAvailable()
 
       if (isActive) {
-        settingsSections[1].data.splice(0, 1, {
+        // biometry is available, add this section back to the settings screen
+        settingsSections[1].data.splice(0, 0, {
           title: t('Global.Biometrics'),
           value: store.preferences.useBiometry ? t('Global.On') : t('Global.Off'),
           accessibilityLabel: t('Global.Biometrics'),

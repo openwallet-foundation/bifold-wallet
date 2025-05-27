@@ -41,7 +41,7 @@ import Splash from './screens/Splash'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import ToggleBiometry from './screens/ToggleBiometry'
 import UpdateAvailable from './screens/UpdateAvailable'
-import { loadLoginAttempt } from './services/keychain'
+import { isBiometricsAvailable, loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
 import { PersistentStorage } from './services/storage'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
@@ -192,6 +192,14 @@ export class MainContainer implements Container {
       let migration = defaultState.migration
       let tours = defaultState.tours
       let onboarding = defaultState.onboarding
+
+      // if biometrics are not available, we skip the biometry onboarding step
+      // another change is made in PINEnter.tsx to account for this change
+      if (!(await isBiometricsAvailable())) {
+        // loki logger, send info saying users device does not support biometrics
+        this.log?.info(`Biometrics not available on this device, biometry onboarding step will be skipped.`)
+        onboarding.didConsiderBiometry = true
+      }
 
       await Promise.all([
         loadLoginAttempt().then((data) => {
