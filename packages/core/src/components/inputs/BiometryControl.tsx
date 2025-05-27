@@ -22,7 +22,7 @@ export interface BiometryControlProps {
 
 const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBiometryToggle, children }) => {
   const { t } = useTranslation()
-  const { isBiometricsAvailable } = useAuth()
+  const { isBiometricsActive } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
   const { ColorPallet, Assets } = useTheme()
@@ -44,10 +44,10 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   })
 
   useEffect(() => {
-    isBiometricsAvailable().then((result: boolean) => {
+    isBiometricsActive().then((result: boolean) => {
       setBiometryAvailable(result)
     })
-  }, [isBiometricsAvailable])
+  }, [isBiometricsActive])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()

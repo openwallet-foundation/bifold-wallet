@@ -30,7 +30,7 @@ interface PINEnterProps {
 
 const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const { t } = useTranslation()
-  const { checkWalletPIN, getWalletSecret, isBiometricsAvailable, disableBiometrics } = useAuth()
+  const { checkWalletPIN, getWalletSecret, isBiometricsActive, disableBiometrics } = useAuth()
   const [store, dispatch] = useStore()
   const [PIN, setPIN] = useState<string>('')
   const [continueEnabled, setContinueEnabled] = useState(true)
@@ -97,7 +97,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         return
       }
       try {
-        const active = await isBiometricsAvailable()
+        const active = await isBiometricsActive()
         if (!active) {
           // biometry state has changed, display message and disable biometry
           setBiometricsEnrollmentChange(true)
@@ -114,7 +114,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     })
 
     return handle.cancel
-  }, [store.preferences.useBiometry, isBiometricsAvailable, disableBiometrics, dispatch, loadWalletCredentials, logger])
+  }, [store.preferences.useBiometry, isBiometricsActive, disableBiometrics, dispatch, loadWalletCredentials, logger])
 
   useEffect(() => {
     // check number of login attempts and determine if app should apply lockout

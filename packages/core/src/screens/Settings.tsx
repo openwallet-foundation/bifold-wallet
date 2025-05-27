@@ -28,7 +28,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
-import { isBiometricsAvailable } from '../services/keychain'
+import { isBiometricsActive } from '../services/keychain'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -157,7 +157,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   useEffect(() => {
     const checkForBiometry = async () => {
       // if biometrics are not available on the device, we shouldn't be showing the biometry screen
-      const isActive = await isBiometricsAvailable()
+      const isActive = await isBiometricsActive()
 
       if (isActive) {
         // biometry is available, add this section back to the settings screen

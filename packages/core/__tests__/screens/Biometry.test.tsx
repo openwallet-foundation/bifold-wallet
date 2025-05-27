@@ -51,7 +51,7 @@ describe('Biometry Screen', () => {
   })
 
   beforeEach(() => {
-    authContext.isBiometricsAvailable = jest.fn().mockResolvedValue(true)
+    authContext.isBiometricsActive = jest.fn().mockResolvedValue(true)
     customStore.preferences.useBiometry = false
     mockedCheck.mockClear()
     mockedRequest.mockClear()
@@ -73,7 +73,7 @@ describe('Biometry Screen', () => {
   })
 
   test('renders correctly when biometry unavailable', async () => {
-    authContext.isBiometricsAvailable = jest.fn().mockResolvedValue(false)
+    authContext.isBiometricsActive = jest.fn().mockResolvedValue(false)
     const tree = render(
       <BasicAppContext>
         <AuthContext.Provider value={authContext}>
@@ -101,7 +101,7 @@ describe('Biometry Screen', () => {
   })
 
   test('toggle is enabled even when biometry is not available', async () => {
-    authContext.isBiometricsAvailable = jest.fn().mockResolvedValue(false)
+    authContext.isBiometricsActive = jest.fn().mockResolvedValue(false)
 
     const { findByTestId, findByText } = render(
       <BasicAppContext>

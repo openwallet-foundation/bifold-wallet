@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { DispatchAction } from './reducers/store'
 import { useStore } from './store'
 import {
-  isBiometricsAvailable,
+  isBiometricsActive,
   loadWalletSalt,
   loadWalletSecret,
   secretForPIN,
@@ -34,7 +34,7 @@ export interface AuthContext {
   disableBiometrics: () => Promise<void>
   setPIN: (PIN: string) => Promise<void>
   commitWalletToKeychain: (useBiometry: boolean) => Promise<boolean>
-  isBiometricsAvailable: () => Promise<boolean>
+  isBiometricsActive: () => Promise<boolean>
   verifyPIN: (PIN: string) => Promise<boolean>
   rekeyWallet: (agent: Agent, oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
 }
@@ -226,7 +226,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         disableBiometrics,
         commitWalletToKeychain,
         setPIN,
-        isBiometricsAvailable,
+        isBiometricsActive,
         rekeyWallet,
         walletSecret,
         verifyPIN,
