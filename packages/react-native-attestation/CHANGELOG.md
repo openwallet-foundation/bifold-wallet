@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.1.4
+
+### Patch Changes
+
+- 7a82c42: fixed issue with ios touch id not working
+
 ## 2.1.3
 
 ## 2.1.2

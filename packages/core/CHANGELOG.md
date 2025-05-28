@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 2.1.4
+
+### Patch Changes
+
+- 7a82c42: fixed issue with ios touch id not working
+- c75e2cd: fix issue with message pickup after lockout
+
 ## 2.1.3
 
 ### Patch Changes
