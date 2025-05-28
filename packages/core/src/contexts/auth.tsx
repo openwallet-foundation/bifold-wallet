@@ -26,7 +26,7 @@ import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 
 export interface AuthContext {
-  lockOutUser: () => void
+  lockOutUser: (reason: LockoutReason) => void
   checkWalletPIN: (PIN: string) => Promise<boolean>
   getWalletSecret: () => Promise<WalletSecret | undefined>
   walletSecret?: WalletSecret
@@ -40,6 +40,10 @@ export interface AuthContext {
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
+export enum LockoutReason {
+  Timeout = 'Timeout',
+  Logout = 'Logout',
+}
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
@@ -131,17 +135,20 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     setWalletSecret(undefined)
   }, [])
 
-  const lockOutUser = useCallback(() => {
-    removeSavedWalletSecret()
-    dispatch({
-      type: DispatchAction.DID_AUTHENTICATE,
-      payload: [false],
-    })
-    dispatch({
-      type: DispatchAction.LOCKOUT_UPDATED,
-      payload: [{ displayNotification: true }],
-    })
-  }, [removeSavedWalletSecret, dispatch])
+  const lockOutUser = useCallback(
+    (reason: LockoutReason) => {
+      removeSavedWalletSecret()
+      dispatch({
+        type: DispatchAction.DID_AUTHENTICATE,
+        payload: [false],
+      })
+      dispatch({
+        type: DispatchAction.LOCKOUT_UPDATED,
+        payload: [{ displayNotification: reason === LockoutReason.Timeout }],
+      })
+    },
+    [removeSavedWalletSecret, dispatch]
+  )
 
   const disableBiometrics = useCallback(async () => {
     await wipeWalletKey(true)

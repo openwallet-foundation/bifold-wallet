@@ -91,6 +91,12 @@ exports[`Settings Screen Renders correctly 1`] = `
               "testID": "com.ariesbifold:id/DeveloperOptions",
               "title": "Settings.Developer",
             },
+            Object {
+              "accessibilityLabel": "Settings.Logout",
+              "onPress": [Function],
+              "testID": "com.ariesbifold:id/Logout",
+              "title": "Settings.Logout",
+            },
           ],
           "header": Object {
             "icon": Object {
@@ -1184,10 +1190,20 @@ exports[`Settings Screen Renders correctly 1`] = `
           <View
             style={
               Object {
-                "marginBottom": 10,
+                "backgroundColor": "#313132",
               }
             }
-          />
+          >
+            <View
+              style={
+                Object {
+                  "borderBottomColor": "#000000",
+                  "borderBottomWidth": 1,
+                  "marginHorizontal": 25,
+                }
+              }
+            />
+          </View>
         </View>
       </View>
       <View

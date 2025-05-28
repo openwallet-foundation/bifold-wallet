@@ -11,6 +11,8 @@ import { BasicAppContext } from '../helpers/app'
 import { CustomBasicAppContext } from '../helpers/app'
 import { TOKENS } from '../../src/container-api'
 import { MainContainer } from '../../src/container-impl'
+import { AuthContext } from '../../src/contexts/auth'
+import authContext from '../contexts/auth'
 
 describe('Settings Screen', () => {
   beforeEach(() => {
@@ -37,7 +39,9 @@ describe('Settings Screen', () => {
         ]}
       >
         <BasicAppContext>
-          <Settings navigation={useNavigation()} route={{} as any} />
+          <AuthContext.Provider value={authContext}>
+            <Settings navigation={useNavigation()} route={{} as any} />
+          </AuthContext.Provider>
         </BasicAppContext>
       </StoreContext.Provider>
     )
@@ -65,7 +69,9 @@ describe('Settings Screen', () => {
         ]}
       >
         <BasicAppContext>
-          <Settings navigation={useNavigation()} route={{} as any} />
+          <AuthContext.Provider value={authContext}>
+            <Settings navigation={useNavigation()} route={{} as any} />
+          </AuthContext.Provider>
         </BasicAppContext>
       </StoreContext.Provider>
     )
@@ -96,7 +102,9 @@ describe('Settings Screen', () => {
         ]}
       >
         <BasicAppContext>
-          <Settings navigation={useNavigation()} route={{} as any} />
+          <AuthContext.Provider value={authContext}>
+            <Settings navigation={useNavigation()} route={{} as any} />
+          </AuthContext.Provider>
         </BasicAppContext>
       </StoreContext.Provider>
     )
@@ -124,7 +132,9 @@ describe('Settings Screen', () => {
         ]}
       >
         <BasicAppContext>
-          <Settings navigation={useNavigation()} route={{} as any} />
+          <AuthContext.Provider value={authContext}>
+            <Settings navigation={useNavigation()} route={{} as any} />
+          </AuthContext.Provider>
         </BasicAppContext>
       </StoreContext.Provider>
     )
@@ -156,7 +166,9 @@ describe('Settings Screen', () => {
         ]}
       >
         <CustomBasicAppContext container={context}>
-          <Settings navigation={useNavigation()} route={{} as any} />
+          <AuthContext.Provider value={authContext}>
+            <Settings navigation={useNavigation()} route={{} as any} />
+          </AuthContext.Provider>
         </CustomBasicAppContext>
       </StoreContext.Provider>
     )
