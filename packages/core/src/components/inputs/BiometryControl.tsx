@@ -115,8 +115,8 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
           // Not in iOS or no touch id available for iOS, send user to settings
           // to enable biometrics
           setSettingsPopupConfig({
-            title: t('Biometry.AllowBiometricsTitle'),
-            description: t('Biometry.AllowBiometricsDesc'),
+            title: t('Biometry.SetupBiometricsTitle'),
+            description: t('Biometry.SetupBiometricsDesc'),
           })
         }
         break

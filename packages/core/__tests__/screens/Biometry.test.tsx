@@ -9,6 +9,7 @@ import { Linking } from 'react-native'
 import { testDefaultState } from '../contexts/store'
 import { StoreProvider } from '../../src/contexts/store'
 import { RESULTS, check, request } from 'react-native-permissions'
+import { getSupportedBiometryType } from 'react-native-keychain'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 const mockedCheck = check as jest.MockedFunction<typeof check>
@@ -161,9 +162,8 @@ describe('Biometry Screen', () => {
     expect(toggleButton.props.accessibilityState.checked).toBe(true)
   })
 
-  // skipping this test until we decide how to handle the case when permission is UNAVAILABLE
-  // this is the case when the user's device has no biometric capabilities
-  test.skip('shows settings popup when permission is UNAVAILABLE', async () => {
+  test('shows settings popup when permission is UNAVAILABLE', async () => {
+    ;(getSupportedBiometryType as jest.Mock).mockResolvedValueOnce(null)
     mockedCheck.mockResolvedValue(RESULTS.UNAVAILABLE)
 
     const { findByTestId, findByText } = render(
