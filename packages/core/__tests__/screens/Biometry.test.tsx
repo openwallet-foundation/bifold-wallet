@@ -163,8 +163,8 @@ describe('Biometry Screen', () => {
   })
 
   test('shows settings popup when permission is UNAVAILABLE', async () => {
-    ;(getSupportedBiometryType as jest.Mock).mockResolvedValueOnce(null)
     mockedCheck.mockResolvedValue(RESULTS.UNAVAILABLE)
+    ;(getSupportedBiometryType as jest.Mock).mockResolvedValueOnce(null)
 
     const { findByTestId, findByText } = render(
       <StoreProvider initialState={customStore}>
