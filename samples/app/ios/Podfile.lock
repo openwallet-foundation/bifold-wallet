@@ -1116,7 +1116,7 @@ PODS:
     - React-Core
   - RNLocalize (2.2.6):
     - React-Core
-  - RNPermissions (4.1.5):
+  - RNPermissions (5.4.0):
     - React-Core
   - RNScreens (4.4.0):
     - glog
@@ -1453,7 +1453,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 47da1222b52f679105bfaab61556e599277869c1
   RNKeychain: bbe2f6d5cc008920324acb49ef86ccc03d3b38e4
   RNLocalize: 8bf466de4c92d4721b254aabe1ff0a1456e7b9f4
-  RNPermissions: 7fcfd9df7f70de24605ac7b8cc0e22852a1688ee
+  RNPermissions: 93ba7a0a90dcfeee7d173f569d6384bc480ec300
   RNScreens: e0f79783ce405f4362c29d098b19fe7e241f11a9
   RNSVG: 36ab724902de0406127ef8d63d940c055e2a1442
   RNVectorIcons: 76364622e6f8e55bb456705582cde20f55ef889c
