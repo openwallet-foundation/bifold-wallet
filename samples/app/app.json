@@ -1,4 +1,7 @@
 {
   "name": "Aries-Bifold",
-  "displayName": "Aries Bifold"
+  "displayName": "Aries Bifold",
+  "plugins": [
+    "expo-secure-store"
+  ]
 }

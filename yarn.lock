@@ -2206,7 +2206,7 @@ __metadata:
     eslint-import-resolver-typescript: ^2.5.0
     eslint-plugin-import: ^2.28.1
     eslint-plugin-prettier: ^4.0.0
-    expo-secure-store: "*"
+    expo-secure-store: ~12.8.1
     husky: ^7.0.0
     i18next: ^21.4.0
     install-peerdeps: ^3.0.3
@@ -8704,7 +8704,7 @@ __metadata:
     eslint: ^8.48.0
     eslint-import-resolver-typescript: ^2.5.0
     expo: ~50.0.0
-    expo-secure-store: "*"
+    expo-secure-store: ~12.8.1
     fast-text-encoding: ^1.0.6
     i18next: ^21.4.0
     lodash.flatten: ^4.4.0
@@ -12163,12 +12163,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-secure-store@npm:^14.2.3":
-  version: 14.2.3
-  resolution: "expo-secure-store@npm:14.2.3"
+"expo-secure-store@npm:~12.8.1":
+  version: 12.8.1
+  resolution: "expo-secure-store@npm:12.8.1"
   peerDependencies:
     expo: "*"
-  checksum: f51993a89394b48717bbc7e99c40bd215ebef5204c5ffb57b460189bef5ce392284aef22e8f00f376da73859e3fb0bca288e1d33e9a36e506568d7b3f44d2736
+  checksum: 739540167e66f70c1f2d1053251a19ff753ba9cc435b9184f0b63f22fab408d96428a3fef8e276f9f12d1b2fc61435a181f59117a19fc5f4bfd6da0487652b64
   languageName: node
   linkType: hard
 
