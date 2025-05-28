@@ -111,6 +111,13 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         if (Platform.OS === 'ios' && supported_type === BIOMETRY_TYPE.TOUCH_ID) {
           // if available, access to touch id can be granted without a request
           onBiometryToggle(newValue)
+        } else {
+          // Not in iOS or no touch id available for iOS, send user to settings
+          // to enable biometrics
+          setSettingsPopupConfig({
+            title: t('Biometry.AllowBiometricsTitle'),
+            description: t('Biometry.AllowBiometricsDesc'),
+          })
         }
         break
       case RESULTS.BLOCKED:
