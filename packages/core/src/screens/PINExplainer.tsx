@@ -8,7 +8,7 @@ import BulletPoint from '../components/inputs/BulletPoint'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
-// import * as SecureStore from 'expo-secure-store'
+import * as SecureStore from 'expo-secure-store'
 
 export interface PINExplainerProps {
   continueCreatePIN: () => void
@@ -42,34 +42,35 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
     height: 150,
     width: 150,
   }
-  // //Testing secure store
-  // const saveData = async () => {
-  //   try {
-  //     await SecureStore.setItemAsync('test-1', 'Hellow moos')
-  //     console.log('Data saved successfully')
-  //   } catch (error) {
-  //     console.log('Error saving data', JSON.stringify(error))
-  //   }
-  // }
 
-  // // Retrieve data from secure store
-  // const getData = async () => {
-  //   try {
-  //     const result = await SecureStore.getItemAsync('test-1')
-  //     if (result) {
-  //       console.log('Data retrieved successfully:', result)
-  //     } else {
-  //       console.log('No data found')
-  //       saveData()
-  //     }
-  //   } catch (error) {
-  //     console.log('Error retrieving data', JSON.stringify(error))
-  //   }
-  // }
+  //Testing secure store
+  const saveData = async () => {
+    try {
+      await SecureStore.setItemAsync('test-1', 'Hellow moos')
+      console.log('Data saved successfully')
+    } catch (error) {
+      console.log('Error saving data', JSON.stringify(error))
+    }
+  }
 
-  // useEffect(() => {
-  //   getData()
-  // }, [])
+  // Retrieve data from secure store
+  const getData = async () => {
+    try {
+      const result = await SecureStore.getItemAsync('test-1')
+      if (result) {
+        console.log('Data retrieved successfully:', result)
+      } else {
+        console.log('No data found')
+        saveData()
+      }
+    } catch (error) {
+      console.log('Error retrieving data', JSON.stringify(error))
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
     <SafeAreaView style={style.safeAreaView} edges={['bottom', 'left', 'right']}>
