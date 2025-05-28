@@ -51,7 +51,7 @@ import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UpdateAvailable from './screens/UpdateAvailable'
 import Biometry from './screens/Biometry'
-import { loadLoginAttempt } from './services/keychain'
+import { loadLoginAttempt, isBiometricsActive } from './services/keychain'
 import { BifoldLogger } from './services/logger'
 import * as types from './types'
 import Scan from './screens/Scan'
@@ -216,6 +216,7 @@ export {
   Text,
   ThemedText,
   loadLoginAttempt,
+  isBiometricsActive,
   Button,
   BifoldLogger,
   LimitedTextInput,

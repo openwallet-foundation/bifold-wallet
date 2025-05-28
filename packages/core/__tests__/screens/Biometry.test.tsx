@@ -9,12 +9,20 @@ import { Linking } from 'react-native'
 import { testDefaultState } from '../contexts/store'
 import { StoreProvider } from '../../src/contexts/store'
 import { RESULTS, check, request } from 'react-native-permissions'
+import { getSupportedBiometryType } from 'react-native-keychain'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 const mockedCheck = check as jest.MockedFunction<typeof check>
 const mockedRequest = request as jest.MockedFunction<typeof request>
 
 jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
+jest.mock('react-native-keychain', () => ({
+  getSupportedBiometryType: jest.fn().mockResolvedValue('FaceID'),
+  BIOMETRY_TYPE: {
+    FACE_ID: 'FaceID',
+    TOUCH_ID: 'TouchID',
+  },
+}))
 
 jest.mock('@react-navigation/elements', () => ({
   Header: jest.fn().mockImplementation(() => {
@@ -156,6 +164,7 @@ describe('Biometry Screen', () => {
 
   test('shows settings popup when permission is UNAVAILABLE', async () => {
     mockedCheck.mockResolvedValue(RESULTS.UNAVAILABLE)
+    ;(getSupportedBiometryType as jest.Mock).mockResolvedValueOnce(null)
 
     const { findByTestId, findByText } = render(
       <StoreProvider initialState={customStore}>
