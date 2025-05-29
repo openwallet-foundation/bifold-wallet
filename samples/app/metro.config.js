@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
+const { mergeConfig } = require('@react-native/metro-config')
+const { getDefaultConfig } = require('expo/metro-config')
 const escape = require('escape-string-regexp')
 const exclusionList = require('metro-config/src/defaults/exclusionList')
 const path = require('path')
@@ -33,7 +34,7 @@ for (const packageDir of packageDirs) {
 
 const {
   resolver: { sourceExts, assetExts },
-} = getDefaultConfig()
+} = getDefaultConfig(__dirname)
 
 /**
  * Metro configuration
