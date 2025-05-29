@@ -2,16 +2,16 @@ import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/cor
 import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
 import { agentDependencies } from '@credo-ts/react-native'
 import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Config } from 'react-native-config'
 import { CachesDirectoryPath } from 'react-native-fs'
 
 import { TOKENS, useServices } from '../container-api'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { getAgentModules, createLinkSecretIfRequired } from '../utils/agent'
-import { migrateToAskar } from '../utils/migration'
 import { WalletSecret } from '../types/security'
+import { createLinkSecretIfRequired, getAgentModules } from '../utils/agent'
+import { migrateToAskar } from '../utils/migration'
 
 export type AgentSetupReturnType = {
   agent: Agent | null
@@ -21,6 +21,7 @@ export type AgentSetupReturnType = {
 
 const useBifoldAgentSetup = (): AgentSetupReturnType => {
   const [agent, setAgent] = useState<Agent | null>(null)
+  const agentInstanceRef = useRef<Agent | null>(null)
   const [store, dispatch] = useStore()
   const [cacheSchemas, cacheCredDefs, logger, indyLedgers] = useServices([
     TOKENS.CACHE_SCHEMAS,
@@ -28,6 +29,26 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
     TOKENS.UTIL_LOGGER,
     TOKENS.UTIL_LEDGERS,
   ])
+
+  const restartExistingAgent = useCallback(
+    async (agent: Agent, walletSecret: WalletSecret): Promise<Agent | undefined> => {
+      try {
+        await agent.wallet.open({
+          id: walletSecret.id,
+          key: walletSecret.key,
+        })
+        await agent.initialize()
+      } catch (error) {
+        logger.warn(`Agent restart failed with error ${error}`)
+        // if the existing agents wallet cannot be opened or initialize() fails it was
+        // again not a clean shutdown and the agent should be replaced, not restarted
+        return
+      }
+
+      return agent
+    },
+    [logger]
+  )
 
   const createNewAgent = useCallback(
     async (walletSecret: WalletSecret): Promise<Agent> => {
@@ -97,7 +118,18 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
 
   const initializeAgent = useCallback(
     async (walletSecret: WalletSecret): Promise<void> => {
-      logger.info('Creating agent')
+      logger.info('Checking for existing agent...')
+      if (agentInstanceRef.current) {
+        const restartedAgent = await restartExistingAgent(agentInstanceRef.current, walletSecret)
+        if (restartedAgent) {
+          logger.info('Successfully restarted existing agent...')
+          agentInstanceRef.current = restartedAgent
+          setAgent(restartedAgent)
+          return
+        }
+      }
+
+      logger.info('Creating new agent...')
       const newAgent = await createNewAgent(walletSecret)
 
       logger.info('Migrating if required...')
@@ -113,9 +145,10 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       await warmUpCache(newAgent)
 
       logger.info('Agent initialized successfully')
+      agentInstanceRef.current = newAgent
       setAgent(newAgent)
     },
-    [logger, createNewAgent, migrateIfRequired, warmUpCache]
+    [logger, restartExistingAgent, createNewAgent, migrateIfRequired, warmUpCache]
   )
 
   const shutdownAndClearAgentIfExists = useCallback(async () => {
@@ -124,10 +157,10 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
         await agent.shutdown()
       } catch (error) {
         logger.error(`Error shutting down agent with shutdownAndClearAgentIfExists: ${error}`)
+      } finally {
+        setAgent(null)
       }
     }
-
-    setAgent(null)
   }, [agent, logger])
 
   return { agent, initializeAgent, shutdownAndClearAgentIfExists }

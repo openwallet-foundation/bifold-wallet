@@ -18,8 +18,8 @@
     "start": "react-native start --experimental-debugger"
   },
   "dependencies": {
-    "@bifold/core": "2.1.3",
-    "@bifold/oca": "2.1.3",
+    "@bifold/core": "2.1.4",
+    "@bifold/oca": "2.1.4",
     "@credo-ts/anoncreds": "0.5.13",
     "@credo-ts/askar": "0.5.13",
     "@credo-ts/core": "0.5.13",
@@ -79,7 +79,7 @@
     "react-native-localize": "^2.2.4",
     "react-native-logs": "^5.1.0",
     "react-native-orientation-locker": "^1.6.0",
-    "react-native-permissions": "^4.0.1",
+    "react-native-permissions": "^5.4.0",
     "react-native-qrcode-svg": "6.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-scalable-image": "^1.1.0",

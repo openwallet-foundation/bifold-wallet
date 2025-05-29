@@ -10,6 +10,7 @@ import { ThemedText } from '../texts/ThemedText'
 import { useAuth } from '../../contexts/auth'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
+import { getSupportedBiometryType, BIOMETRY_TYPE } from 'react-native-keychain'
 
 const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -43,7 +44,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   })
 
   useEffect(() => {
-    isBiometricsActive().then((result) => {
+    isBiometricsActive().then((result: boolean) => {
       setBiometryAvailable(result)
     })
   }, [isBiometricsActive])
@@ -97,6 +98,8 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
     // If the user is turning it on, they need
     // to first authenticate the OS biometrics before this action is accepted
     const permissionResult: PermissionStatus = await onCheckSystemBiometrics()
+    const supported_type = await getSupportedBiometryType()
+
     switch (permissionResult) {
       case RESULTS.GRANTED:
       case RESULTS.LIMITED:
@@ -104,10 +107,18 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         onBiometryToggle(newValue)
         break
       case RESULTS.UNAVAILABLE:
-        setSettingsPopupConfig({
-          title: t('Biometry.SetupBiometricsTitle'),
-          description: t('Biometry.SetupBiometricsDesc'),
-        })
+        // Permission is unavailable/ not supported on this device
+        if (Platform.OS === 'ios' && supported_type === BIOMETRY_TYPE.TOUCH_ID) {
+          // if available, access to touch id can be granted without a request
+          onBiometryToggle(newValue)
+        } else {
+          // Not in iOS or no touch id available for iOS, send user to settings
+          // to enable biometrics
+          setSettingsPopupConfig({
+            title: t('Biometry.SetupBiometricsTitle'),
+            description: t('Biometry.SetupBiometricsDesc'),
+          })
+        }
         break
       case RESULTS.BLOCKED:
         // Previously denied
