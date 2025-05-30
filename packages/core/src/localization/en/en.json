@@ -878,7 +878,8 @@
     "ProofRequestRejected": "rejected a proof request",
     "ProofRequestRejectReceived": "rejected a proof request",
     "ProofRequestSatisfied": "shared information",
-    "Actions": "More"
+    "Actions": "More",
+    "Details": "Details"
   },
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
