@@ -55,6 +55,11 @@
     "yarn": "^3.3.1"
   },
   "resolutions": {
+    "@unimodules/react-native-adapter": "./noop",
+    "@unimodules/core": "./noop",
+    "expo": "~50.0.0",
+    "expo-secure-store": "~12.8.1",
+    "react": "^18.2.0",
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",
     "react-native": "0.73.6",
