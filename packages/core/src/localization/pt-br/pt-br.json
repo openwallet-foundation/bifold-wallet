@@ -836,7 +836,9 @@
     "ProofRequestReceived": "has sent you a proof request (PT-BR)",
     "ProofRequestRejected": "rejeitou uma solicitação de prova",
     "ProofRequestRejectReceived": "rejeitou um pedido de prova",
-    "ProofRequestSatisfied": "informações compartilhadas"
+    "ProofRequestSatisfied": "informações compartilhadas",
+    "Actions": "More (PT-BR)",
+    "Details": "Details (PT-BR)"
   },
   "Verifier": {
     "UseVerifierCapability": "Usar o recurso Verificador?",
