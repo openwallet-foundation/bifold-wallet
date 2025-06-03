@@ -85,7 +85,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
               <TouchableOpacity
                 key={action.text}
                 testID={testIdWithKey(action.text)}
-                accessibilityLabel={testIdWithKey(action.text)}
+                accessibilityLabel={action.text}
                 accessibilityRole="button"
                 style={styles.drawerRow}
                 onPress={action.onPress}
