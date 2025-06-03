@@ -2,7 +2,6 @@ import type { ConnectionRecord } from '@credo-ts/core'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 
 import { useStore } from '../../contexts/store'
@@ -20,7 +19,6 @@ export interface ContactListItemProps {
 }
 
 const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }) => {
-  const { t } = useTranslation()
   const { ColorPallet, ListItems } = useTheme()
   const messages = useChatMessagesByConnection(contact)
   const message = messages[0]
@@ -83,7 +81,7 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
     <TouchableOpacity
       onPress={navigateToContact}
       testID={testIdWithKey('Contact')}
-      accessibilityLabel={t('ContactDetails.AContact')}
+      accessibilityLabel={contactLabel}
       accessibilityRole="button"
     >
       <View style={styles.container}>

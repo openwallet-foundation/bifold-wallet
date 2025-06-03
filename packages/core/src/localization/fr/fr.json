@@ -859,7 +859,9 @@
     "ProofRequestReceived": "has sent you a proof request (FR)",
     "ProofRequestRejected": "rejeté une demande d'attestation",
     "ProofRequestRejectReceived": "a rejeté une demande d'attestation",
-    "ProofRequestSatisfied": "informations partagées"
+    "ProofRequestSatisfied": "informations partagées",
+    "Actions": "More (FR)",
+    "Details": "Détails"
   },
   "Verifier": {
     "UseVerifierCapability": "Utiliser la fonctionnalité Verifier?",
