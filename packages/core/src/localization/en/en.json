@@ -877,7 +877,9 @@
     "ProofRequestReceived": "has sent you a proof request",
     "ProofRequestRejected": "rejected a proof request",
     "ProofRequestRejectReceived": "rejected a proof request",
-    "ProofRequestSatisfied": "shared information"
+    "ProofRequestSatisfied": "shared information",
+    "Actions": "More",
+    "Details": "Details"
   },
   "Verifier": {
     "UseVerifierCapability": "Use Verifier capability?",
