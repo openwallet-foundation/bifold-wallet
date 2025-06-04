@@ -35,8 +35,8 @@ const LoadingIndicator: React.FC = () => {
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }} testID={testIdWithKey('LoadingActivityIndicator')}>
       <Image
-        source={Assets.img.logoPrimary.src}
-        style={{ width: Assets.img.logoPrimary.width, height: Assets.img.logoPrimary.height, objectFit: 'contain' }}
+        source={Assets.img.logoSecondary.src}
+        style={{ width: Assets.img.logoSecondary.width, height: Assets.img.logoSecondary.height, objectFit: 'contain' }}
         testID={testIdWithKey('LoadingActivityIndicatorImage')}
       />
       <Animated.View style={[style.animation, { transform: [{ rotate: rotation }] }]}>
