@@ -18,8 +18,8 @@
     "start": "react-native start --experimental-debugger"
   },
   "dependencies": {
-    "@bifold/core": "2.1.5",
-    "@bifold/oca": "2.1.5",
+    "@bifold/core": "2.1.6",
+    "@bifold/oca": "2.1.6",
     "@credo-ts/anoncreds": "0.5.13",
     "@credo-ts/askar": "0.5.13",
     "@credo-ts/core": "0.5.13",
