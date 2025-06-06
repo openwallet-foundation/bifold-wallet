@@ -23,6 +23,7 @@ import { useGotoPostAuthScreens } from '../hooks/onboarding'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
+import { getBuildNumber, getVersion } from 'react-native-device-info'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -41,6 +42,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [devModalVisible, setDevModalVisible] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPallet } = useTheme()
+  const { TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [
     logger,
@@ -272,6 +274,12 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       color: ColorPallet.brand.primary,
       fontSize: 20,
     },
+    buildNumberText: {
+      fontSize: 14,
+      color: TextTheme.labelSubtitle.color,
+      textAlign: 'center',
+      marginTop: 20,
+    },
   })
 
   const HelpText = useMemo(() => {
@@ -369,6 +377,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
               </View>
             </>
           )}
+          <ThemedText testID={testIdWithKey('Version')} style={style.buildNumberText}>
+            {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+          </ThemedText>
         </View>
       </View>
       {alertModalVisible ? (

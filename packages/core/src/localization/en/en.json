@@ -288,7 +288,7 @@
     "ChangeBiometricsInputLabelParenthesis": "(Required)",
     "ForgotPINLink": "Forgot your PIN?",
     "ForgotPINModalTitle": "Forgot your PIN?",
-    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again.",
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again."
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",
