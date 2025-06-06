@@ -55,6 +55,8 @@
     "yarn": "^3.3.1"
   },
   "resolutions": {
+    "@unimodules/react-native-adapter": "file:./noop",
+    "@unimodules/core": "file:./noop",
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",
     "react-native": "0.73.6",
