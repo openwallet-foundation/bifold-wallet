@@ -37,6 +37,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState(false)
+  const [forgotPINModalVisible, setForgotPINModalVisible] = useState(false)
   const [devModalVisible, setDevModalVisible] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPallet } = useTheme()
@@ -266,6 +267,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     subTitle: {
       marginBottom: 20,
     },
+    forgotPINText: {
+      textAlign: 'left',
+      color: ColorPallet.brand.primary,
+      fontSize: 20,
+    },
   })
 
   const HelpText = useMemo(() => {
@@ -328,6 +334,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             autoFocus={true}
             inlineMessage={inlineMessageField}
           />
+          <ThemedText variant="bold" style={style.forgotPINText} onPress={() => setForgotPINModalVisible(true)}>
+            {t('PINEnter.ForgotPINLink')}
+          </ThemedText>
         </View>
         <View>
           <View style={style.buttonContainer}>
@@ -380,6 +389,19 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           }
           onCallToActionLabel={t('Global.Okay')}
           onCallToActionPressed={clearAlertModal}
+        />
+      ) : null}
+      {forgotPINModalVisible ? (
+        <PopupModal
+          notificationType={InfoBoxType.Info}
+          title={t('PINEnter.ForgotPINModalTitle')}
+          bodyContent={
+            <ThemedText variant="popupModalText" style={style.modalText}>
+              {t('PINEnter.ForgotPINModalDescription')}
+            </ThemedText>
+          }
+          onCallToActionLabel={t('Global.Okay')}
+          onCallToActionPressed={() => setForgotPINModalVisible(false)}
         />
       ) : null}
       {devModalVisible ? <DeveloperModal onBackPressed={onBackPressed} /> : null}

@@ -289,7 +289,10 @@
     "ChangeBiometricsHeader": "Change in biometrics (FR)",
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (FR)",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (FR)",
-    "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)"
+    "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)",
+    "ForgotPINLink": "Forgot your PIN? (FR)",
+    "ForgotPINModalTitle": "Forgot your PIN? (FR)",
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)"
   },
   "AttemptLockout": {
     "Title": "Votre portefeuille est temporairement verrouillé",
