@@ -1,13 +1,16 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/core'
 
 import HeaderRightHome from '../components/buttons/HeaderHome'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import { DeliveryStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import OpenIDProofPresentation from '../modules/openid/screens/OpenIDProofPresentation'
@@ -16,6 +19,7 @@ import OpenIDCredentialOffer from '../modules/openid/screens/OpenIDCredentialOff
 import OpenIDProofCredentialSelect from '../modules/openid/screens/OpenIDProofChangeCredential'
 
 const DeliveryStack: React.FC = () => {
+  const navigation = useNavigation()
   const Stack = createStackNavigator<DeliveryStackParams>()
   const { t } = useTranslation()
   const theme = useTheme()
@@ -72,7 +76,16 @@ const DeliveryStack: React.FC = () => {
         name={Screens.OpenIDProofCredentialSelect}
         component={OpenIDProofCredentialSelect}
         options={{
-          title: t('Screens.ProofRequest'),
+          title: t('Screens.ChangeCard'),
+          headerLeft: () => (
+            <IconButton
+              buttonLocation={ButtonLocation.Left}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => navigation.goBack()}
+              icon="arrow-left"
+            />
+          ),
           ...ScreenOptionsDictionary[Screens.OpenIDProofCredentialSelect],
         }}
       />
