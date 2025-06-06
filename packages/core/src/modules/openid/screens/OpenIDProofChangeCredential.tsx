@@ -90,13 +90,13 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
 
   const listHeader = () => {
     return (
-      <View style={{ ...styles.pageMargin, marginVertical: 20 }}>
+      <View style={{ ...styles.pageMargin, marginVertical: 40 }}>
         {loading ? (
           <View style={styles.cardLoading}>
             <RecordLoading />
           </View>
         ) : (
-          <ThemedText>{t('ProofRequest.MultipleCredentials')}</ThemedText>
+          <ThemedText variant='bold'>{t('ProofRequest.AvailableCards')}</ThemedText>
         )}
       </View>
     )
