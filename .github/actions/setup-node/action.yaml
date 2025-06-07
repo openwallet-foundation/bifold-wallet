@@ -17,12 +17,6 @@ runs:
         node-version: ${{ inputs.node-version }}
         registry-url: 'https://registry.npmjs.org/'
         cache: 'yarn'
-
-    - name: Setup Yarn
-      shell: bash
-      run: |
-        corepack enable
-        corepack prepare yarn@4.0.2 --activate
         
     - name: Node Version
       shell: bash
