@@ -45,7 +45,7 @@
 5.  Install Yarn
     ```sh
     corepack enable
-    corepack prepare yarn@4.0.2 --activate
+    corepack prepare yarn@4.9.2 --activate
     ```
     IMPORTANT: Check `packageManager` for the exact and up-todate version in the root [package.json](./package.json)
 6.  Manually Download and Install Android Studio as per documentation:

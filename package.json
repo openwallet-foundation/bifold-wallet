@@ -52,9 +52,9 @@
   },
   "engines": {
     "node": ">=20.19.2 <21.0.0",
-    "yarn": "^4.0.2"
+    "yarn": "4.9.2"
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.9.2",
   "resolutions": {
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",

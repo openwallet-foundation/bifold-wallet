@@ -117,9 +117,9 @@
   },
   "engines": {
     "node": ">=20.19.2 <21.0.0",
-    "yarn": "^4.0.2"
+    "yarn": "4.9.2"
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.9.2",
   "installConfig": {
     "hoistingLimits": "workspaces"
   }
