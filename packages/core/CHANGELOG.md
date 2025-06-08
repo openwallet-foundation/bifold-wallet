@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.1.5
+
+### Patch Changes
+
+- c1fc9b1: updated accessibility labels
+
 ## 2.1.4
 
 ### Patch Changes
