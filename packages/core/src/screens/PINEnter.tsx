@@ -342,7 +342,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             autoFocus={true}
             inlineMessage={inlineMessageField}
           />
-          <ThemedText variant="bold" style={style.forgotPINText} onPress={() => setForgotPINModalVisible(true)}>
+          <ThemedText
+            variant="bold"
+            style={style.forgotPINText}
+            onPress={() => setForgotPINModalVisible(true)}
+            accessible={true}
+            accessibilityRole="link"
+            accessibilityLabel={t('PINEnter.ForgotPINLink')}
+          >
             {t('PINEnter.ForgotPINLink')}
           </ThemedText>
         </View>
