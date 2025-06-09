@@ -18,6 +18,12 @@ runs:
         registry-url: 'https://registry.npmjs.org/'
         cache: 'yarn'
         
+    - name: Enable corepack and setup Yarn 4.9.2
+      shell: bash
+      run: |
+        corepack enable
+        corepack prepare yarn@4.9.2 --activate
+        
     - name: Node Version
       shell: bash
       run: |
