@@ -22,7 +22,7 @@ This is a [yarn](https://yarnpkg.com) based project, not [npm](https://www.npmjs
 
 ```sh
 npm install -g yarn
-nvm install 18.20.6
+nvm install 20.19.2
 ```
 
 This project will need to run on an iOS device or Android device or emulator. While it is recommended to test your software on both, especially if you're contributing back to the project, for demonstration purposes you can choose one or the other.
