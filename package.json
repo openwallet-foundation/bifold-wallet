@@ -13,14 +13,14 @@
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
   "scripts": {
     "preinstall": "npx husky install .husky",
-    "clean": "yarn workspaces foreach --topological-dev -p run clean && echo 'Cleaned all packages 🧹'",
-    "build": "yarn workspaces foreach --topological-dev -p run build",
-    "test": "yarn workspaces foreach --topological-dev run test",
+    "clean": "yarn workspaces foreach --all --topological-dev -p run clean && echo 'Cleaned all packages 🧹'",
+    "build": "yarn workspaces foreach --all --topological-dev -p run build",
+    "test": "yarn workspaces foreach --all --topological-dev run test",
     "test:watch": "cd packages/core && yarn test:watch",
-    "coverage": "yarn workspaces foreach --topological-dev run coverage",
+    "coverage": "yarn workspaces foreach --all --topological-dev run coverage",
     "prettier": "prettier --ignore-path .gitignore '**/*.+(js|jsx|json|ts|tsx|md|yml|yaml)'",
     "lint": "eslint --color .",
-    "typecheck": "yarn workspaces foreach --topological-dev -p run typecheck",
+    "typecheck": "yarn workspaces foreach --all --topological-dev -p run typecheck",
     "release": "yarn build && yarn changeset publish --no-git-tag",
     "changeset-version": "changeset version && yarn install --no-immutable"
   },
@@ -51,9 +51,10 @@
     "typescript-eslint": "^7.18.0"
   },
   "engines": {
-    "node": ">=18.20.6 <20.0.0",
-    "yarn": "^3.3.1"
+    "node": ">=20.19.2 <21.0.0",
+    "yarn": "4.9.2"
   },
+  "packageManager": "yarn@4.9.2",
   "resolutions": {
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",
