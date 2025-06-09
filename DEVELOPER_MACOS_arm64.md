@@ -32,20 +32,20 @@
 4.  Install Node (use the version from the GitHub Actions)
 
     ```sh
-    nvm install 18.20.6
+    nvm install 20.19.2
     ```
 
     Activate node version by adding the following to your `~/.zshrc`
 
     ```sh
     source $(brew --prefix nvm)/nvm.sh
-    nvm use 18.20.6
+    nvm use 20.19.2
     ```
 
 5.  Install Yarn
     ```sh
     corepack enable
-    corepack prepare yarn@3.3.1 --activate
+    corepack prepare yarn@4.9.2 --activate
     ```
     IMPORTANT: Check `packageManager` for the exact and up-todate version in the root [package.json](./package.json)
 6.  Manually Download and Install Android Studio as per documentation:

@@ -12,9 +12,6 @@ Prevent error on agent restart when same IndyVDR pool is reused. Part of this PR
 
 - https://github.com/openwallet-foundation/credo-ts/pull/2137
 
-#### @credo-ts-react-hooks-npm-0.6.0-3c59ce13d2.patch
-
-Patch to add setAgent functionality and properly restart listeners after agent restart. This functionality will not actually be needed once we refactor Bifold to properly use the AgentProvider at a lower level and pass the agent in from outside of it
 
 #### @hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch
 
