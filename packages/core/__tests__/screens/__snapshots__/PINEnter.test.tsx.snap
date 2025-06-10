@@ -475,6 +475,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   },
                 ]
               }
+              testID="com.ariesbifold:id/ForgotPINLink"
             >
               PINEnter.ForgotPINLink
             </Text>
@@ -1068,6 +1069,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   },
                 ]
               }
+              testID="com.ariesbifold:id/ForgotPINLink"
             >
               PINEnter.ForgotPINLink
             </Text>

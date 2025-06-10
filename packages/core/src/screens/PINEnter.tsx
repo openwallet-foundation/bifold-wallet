@@ -344,6 +344,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             variant="bold"
             style={style.forgotPINText}
             onPress={() => setForgotPINModalVisible(true)}
+            testID={testIdWithKey('ForgotPINLink')}
             accessible={true}
             accessibilityRole="link"
             accessibilityLabel={t('PINEnter.ForgotPINLink')}
@@ -412,7 +413,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           notificationType={InfoBoxType.Info}
           title={t('PINEnter.ForgotPINModalTitle')}
           bodyContent={
-            <ThemedText variant="popupModalText" style={style.modalText}>
+            <ThemedText
+              variant="popupModalText"
+              style={style.modalText}
+              testID={testIdWithKey('ForgotPINModalDescription')}
+            >
               {t('PINEnter.ForgotPINModalDescription')}
             </ThemedText>
           }
