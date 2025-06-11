@@ -349,8 +349,148 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                         }
                       />
                     </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
                     <TextInput
-                      accessibilityLabel="PINEnter.EnterPIN"
+                      accessibilityLabel="PINCreate.Masked"
                       accessibilityRole="text"
                       accessible={true}
                       autoCapitalize="characters"
@@ -362,7 +502,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       clearButtonMode="never"
                       disableFullscreenUI={true}
                       keyboardType="number-pad"
-                      maxLength={6}
+                      maxLength={11}
                       onBlur={[Function]}
                       onChangeText={[Function]}
                       onFocus={[Function]}
@@ -943,8 +1083,148 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                         }
                       />
                     </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
                     <TextInput
-                      accessibilityLabel="PINEnter.EnterPIN"
+                      accessibilityLabel="PINCreate.Masked"
                       accessibilityRole="text"
                       accessible={true}
                       autoCapitalize="characters"
@@ -956,7 +1236,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       clearButtonMode="never"
                       disableFullscreenUI={true}
                       keyboardType="number-pad"
-                      maxLength={6}
+                      maxLength={11}
                       onBlur={[Function]}
                       onChangeText={[Function]}
                       onFocus={[Function]}
