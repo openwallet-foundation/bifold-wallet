@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
   "devDependencies": {
-    "@babel/runtime": "^7.20.0",
+    "@babel/runtime": "^7.26.10",
     "@typescript-eslint/parser": "^6.6.0",
     "eslint": "^8.48.0",
     "eslint-import-resolver-typescript": "^2.5.0",

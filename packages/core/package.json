@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@babel/runtime": "^7.20.0",
+    "@babel/runtime": "^7.26.10",
     "@bifold/oca": "2.1.7",
     "@bifold/verifier": "2.1.7",
     "@commitlint/cli": "^11.0.0",
