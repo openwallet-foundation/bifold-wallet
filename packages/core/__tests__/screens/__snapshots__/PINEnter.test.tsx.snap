@@ -456,6 +456,29 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 </View>
               </View>
             </View>
+            <Text
+              accessibilityLabel="PINEnter.ForgotPINLink"
+              accessibilityRole="link"
+              accessible={true}
+              maxFontSizeMultiplier={2}
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 20,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/ForgotPINLink"
+            >
+              PINEnter.ForgotPINLink
+            </Text>
           </View>
           <View>
             <View
@@ -542,6 +565,27 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 </View>
               </View>
             </View>
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 14,
+                    "marginTop": 20,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/Version"
+            >
+              Settings.Version 1 Settings.Build (1)
+            </Text>
           </View>
         </View>
       </View>
@@ -1006,6 +1050,29 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 </View>
               </View>
             </View>
+            <Text
+              accessibilityLabel="PINEnter.ForgotPINLink"
+              accessibilityRole="link"
+              accessible={true}
+              maxFontSizeMultiplier={2}
+              onPress={[Function]}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 20,
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/ForgotPINLink"
+            >
+              PINEnter.ForgotPINLink
+            </Text>
           </View>
           <View>
             <View
@@ -1092,6 +1159,27 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 </View>
               </View>
             </View>
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 14,
+                    "marginTop": 20,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+              testID="com.ariesbifold:id/Version"
+            >
+              Settings.Version 1 Settings.Build (1)
+            </Text>
           </View>
         </View>
       </View>

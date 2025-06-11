@@ -257,6 +257,7 @@
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
+    "IncorrectPINTries": "Incorrect PIN: {{tries}} tries before your app is temporarily locked (PT-BR)",
     "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity. (PT-BR)",
     "ReEnterPIN": "Re-enter your wallet PIN (PT-BR)",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
@@ -270,7 +271,10 @@
     "ChangeBiometricsHeader": "Change in biometrics (PT-BR)",
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (PT-BR)",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (PT-BR)",
-    "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)"
+    "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
+    "ForgotPINLink": "Forgot your PIN? (PT-BR)",
+    "ForgotPINModalTitle": "Forgot your PIN? (PT-BR)",
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)"
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked (PT-BR)",
