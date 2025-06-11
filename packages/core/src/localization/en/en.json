@@ -267,7 +267,7 @@
     "BiometricsUnlock": "Unlock with biometrics",
     "IncorrectPIN": "Incorrect PIN",
     "RepeatPIN": "Please try your PIN again.",
-    "IncorrectPINTries": "Incorrect PIN: {{tries}} tries before timeout",
+    "IncorrectPINTries": "Incorrect PIN: {{tries}} tries before your app is temporarily locked",
     "LastTryBeforeTimeout": "Incorrect PIN: Last try before timeout",
     "EnableBiometrics": "You have to enable biometrics to be able to load the wallet.",
     "BiometricsNotProvided": "Biometrics not provided, you may use PIN to load the wallet.",
@@ -285,7 +285,10 @@
     "ChangeBiometricsHeader": "Change in biometrics",
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN",
-    "ChangeBiometricsInputLabelParenthesis": "(Required)"
+    "ChangeBiometricsInputLabelParenthesis": "(Required)",
+    "ForgotPINLink": "Forgot your PIN?",
+    "ForgotPINModalTitle": "Forgot your PIN?",
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again."
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",
