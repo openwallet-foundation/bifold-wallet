@@ -11,6 +11,10 @@ import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
 import { InlineErrorPosition } from '../../types/error'
 import { ThemedText } from '../texts/ThemedText'
 
+
+// adjusting for the spaces between numbers
+const cellCount = minPINLength * 2 - 1
+
 interface PINInputProps {
   label?: string
   onPINChanged?: (PIN: string) => void
@@ -29,17 +33,44 @@ const PINInputComponent = (
   const { t } = useTranslation()
   const { PINInputTheme } = useTheme()
   const cellHeight = 48
+  
+  // including spaces to prevent screen reader from reading the PIN as a single number
+  // filling with bullets when masked to prevent screen reader from reading the actual PIN
+  // and to have the proper appearance when the PIN is masked
+  const displayValue = useMemo(() => {
+    if (showPIN) {
+      return PIN.split('').join(' ')
+    } else {
+      return '●'.repeat(PIN.length).split('').join(' ')
+    }
+  }, [PIN, showPIN])
+  
   const onChangeText = (value: string) => {
-    onPINChanged && onPINChanged(value)
-    setPIN(value)
+    const cleanValue = value.replaceAll(' ', '')
+    // typed new characters
+    if (cleanValue.length > PIN.length) {
+      // add new characters to the actual PIN
+      const newChars = cleanValue.slice(PIN.length)
+      const newPIN = PIN + newChars.replace(/●/g, '')
+      setPIN(newPIN)
+      onPINChanged && onPINChanged(newPIN)
+    // characters were removed
+    } else if (cleanValue.length < displayValue.replaceAll(' ', '').length) {
+      // remove same number of characters from actual PIN
+      const newPIN = PIN.slice(0, cleanValue.length)
+      setPIN(newPIN)
+      onPINChanged && onPINChanged(newPIN)
+    }
   }
+  
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value: PIN,
+    value: displayValue,
     setValue: onChangeText,
   })
+
   const allyLabel = useMemo(() => {
-    return showPIN ? PIN.split('').join(' ') : t('PINCreate.Masked')
-  }, [showPIN, PIN, t])
+    return showPIN ? accessibilityLabel : t('PINCreate.Masked')
+  }, [accessibilityLabel, showPIN, t])
 
   const style = StyleSheet.create({
     container: {
@@ -70,19 +101,20 @@ const PINInputComponent = (
         <CodeField
           {...props}
           testID={testID}
-          accessibilityLabel={PIN ? allyLabel : accessibilityLabel}
+          accessibilityLabel={allyLabel}
           accessibilityRole={'text'}
           accessible
-          value={PIN}
+          value={displayValue}
           rootStyle={PINInputTheme.codeFieldRoot}
           onChangeText={onChangeText}
-          cellCount={minPINLength}
+          cellCount={cellCount}
           keyboardType="number-pad"
           textContentType="password"
           renderCell={({ index, symbol, isFocused }) => {
             let child: React.ReactNode | string = ''
-            if (symbol) {
-              child = showPIN ? symbol : '●' // Show or hide PIN
+            // skip spaces
+            if (symbol && symbol !== ' ') {
+              child = symbol
             } else if (isFocused) {
               child = <Cursor />
             }
