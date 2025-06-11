@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 2.1.7
+
+### Patch Changes
+
+- a6d2698: added Forgot your PIN link to PINEnter screen that displays a popup explaining that the PIN cannot be reset. added build number to bottom of PINEnter screen.
+- 877a83c: fix PINInput accessibility issues
+
 ## 2.1.6
 
 ### Patch Changes
