@@ -4,7 +4,7 @@ import { State } from '../types/state'
 import { generateRandomWalletName } from '../utils/helpers'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
-import { defaultAutoLockTime } from '../constants'
+import { defaultAutoLockTime, defaultMediator } from '../constants'
 
 type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
@@ -57,6 +57,8 @@ export const defaultState: State = {
     enableShareableLink: false,
     alternateContactNames: {},
     autoLockTime: defaultAutoLockTime, // default wallets lockout time to 5 minutes
+    availableMediators: [defaultMediator ?? ''],
+    selectedMediator: defaultMediator ?? '',
   },
   tours: {
     seenToursPrompt: false,
