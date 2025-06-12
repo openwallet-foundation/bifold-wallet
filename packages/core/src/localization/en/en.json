@@ -47,7 +47,8 @@
     "Close": "Close",
     "Remove": "Remove",
     "GotIt": "Got it",
-    "Send": "Send"
+    "Send": "Send",
+    "Reset": "Reset"
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -745,7 +746,10 @@
     "Developer": "Developer options",
     "Notifications": "Notifications",
     "AutoLockTime": "Auto lock time",
-    "Logout": "Log out"
+    "Logout": "Log out",
+    "ConfigureMediator": "Configure Mediator",
+    "ChangeMediator": "Change Mediator",
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue?"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes",

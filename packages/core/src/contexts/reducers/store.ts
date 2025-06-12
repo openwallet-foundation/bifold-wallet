@@ -1,4 +1,4 @@
-import { LocalStorageKeys } from '../../constants'
+import { defaultMediator, LocalStorageKeys } from '../../constants'
 import { storeLoginAttempt } from '../../services/keychain'
 import {
   Preferences as PreferencesState,
@@ -60,6 +60,9 @@ enum PreferencesDispatchAction {
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
   AUTO_LOCK_TIME = 'preferences/autoLockTime',
   SET_THEME = 'preferences/setTheme',
+  SET_SELECTED_MEDIATORS = 'preferences/setSelectedMediators',
+  ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
+  RESET_MEDIATORS = 'preferences/resetMediators',
 }
 
 enum ToursDispatchAction {
@@ -515,6 +518,48 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
     }
+    case PreferencesDispatchAction.SET_SELECTED_MEDIATORS: {
+      const selectedMediator = (action?.payload ?? []).pop() ?? ''
+      const preferences: Preferences = {
+        ...state.preferences,
+        selectedMediator,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+    case PreferencesDispatchAction.ADD_AVAILABLE_MEDIATOR: {
+      const mediatorsToAdd = action.payload as string[]
+      const updatedAvailableMediators = [
+        ...state.preferences.availableMediators,
+        ...mediatorsToAdd.filter((m) => !state.preferences.availableMediators.includes(m)),
+      ]
+      const preferences: Preferences = {
+        ...state.preferences,
+        availableMediators: updatedAvailableMediators,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+    case PreferencesDispatchAction.RESET_MEDIATORS: {
+      const preferences: Preferences = {
+        ...state.preferences,
+        availableMediators: [defaultMediator as string],
+        selectedMediator: defaultMediator as string,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
     case OnboardingDispatchAction.ONBOARDING_VERSION: {
       const version = (action?.payload || []).pop()
       const onboarding = {

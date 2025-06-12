@@ -1,0 +1,205 @@
+import { FlatList, StyleSheet, View, Pressable } from 'react-native'
+import BouncyCheckbox from 'react-native-bouncy-checkbox'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useStore } from '../contexts/store'
+import { DispatchAction } from '../contexts/reducers/store'
+import { useTheme } from '../contexts/theme'
+import { ThemedText } from '../components/texts/ThemedText'
+import { testIdWithKey } from '../utils/testable'
+import { useCallback, useEffect, useState } from 'react'
+import { useRoute } from '@react-navigation/native'
+import { LockoutReason, useAuth } from '../contexts/auth'
+import { useAgent } from '@credo-ts/react-hooks'
+import { Agent, MediationRecipientService } from '@credo-ts/core'
+import Config from 'react-native-config'
+import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
+import { useTranslation } from 'react-i18next'
+
+type MediatorItem = {
+  id: string
+  label: string
+  testID: string
+}
+
+const ConfigureMediator = () => {
+  const [store, dispatch] = useStore()
+  const { agent } = useAgent()
+  const { ColorPallet, SettingsTheme } = useTheme()
+  const { t } = useTranslation()
+  const { lockOutUser } = useAuth()
+  const supportedMediators = store.preferences.availableMediators
+  const route = useRoute()
+  const scannedMediatorUri = (route.params as { scannedMediatorUri?: string })?.scannedMediatorUri
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [pendingMediatorId, setPendingMediatorId] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (scannedMediatorUri && !store.preferences.availableMediators.includes(scannedMediatorUri)) {
+      dispatch({
+        type: DispatchAction.ADD_AVAILABLE_MEDIATOR,
+        payload: [scannedMediatorUri],
+      })
+    }
+  }, [scannedMediatorUri, dispatch, store.preferences.availableMediators])
+  const mediators: MediatorItem[] = supportedMediators.map((mediator) => ({
+    id: mediator,
+    label: String(mediator),
+    testID: testIdWithKey(mediator),
+  }))
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: ColorPallet.brand.primaryBackground,
+      width: '100%',
+    },
+    section: {
+      backgroundColor: SettingsTheme.groupBackground,
+      paddingHorizontal: 25,
+      paddingVertical: 16,
+    },
+    sectionRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    itemSeparator: {
+      borderBottomWidth: 1,
+      borderBottomColor: ColorPallet.brand.primaryBackground,
+      marginHorizontal: 25,
+    },
+    checkboxContainer: {
+      justifyContent: 'center',
+    },
+  })
+
+  const getConnectionIdFromMediatorUrl = async (agent: Agent, mediatorUrl: string): Promise<string | null> => {
+    try {
+      const invite = await agent.oob.parseInvitation(mediatorUrl)
+      const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invite.id)
+      let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : []
+      if (!connection) {
+        const fallbackInvite = await agent.oob.parseInvitation(Config.MEDIATOR_URL!)
+        const { connectionRecord: newConnection } = await agent.oob.receiveInvitation(fallbackInvite)
+        if (!newConnection) {
+          return null
+        }
+        connection = newConnection
+      }
+      const readyConnection = connection.isReady
+        ? connection
+        : await agent.connections.returnWhenIsConnected(connection.id)
+      return readyConnection.id
+    } catch (error) {
+      return null
+    }
+  }
+
+  const setMediationToDefault = useCallback(async (agent: Agent, mediatorUrl: string) => {
+    const connectionId = await getConnectionIdFromMediatorUrl(agent, mediatorUrl)
+    if (!connectionId) {
+      return
+    }
+    const currentDefault = await agent.mediationRecipient.findDefaultMediator()
+    if (currentDefault?.connectionId === connectionId) {
+      return
+    }
+    let mediationRecord = await agent.mediationRecipient.findByConnectionId(connectionId)
+    if (!mediationRecord) {
+      const connection = await agent.connections.findById(connectionId)
+      if (!connection) {
+        return
+      }
+      mediationRecord = await agent.mediationRecipient.requestMediation(connection)
+    }
+    await agent.mediationRecipient.setDefaultMediator(mediationRecord)
+  }, [])
+
+  const confirmMediatorChange = async () => {
+    if (!pendingMediatorId || !agent) return
+
+    await agent.dependencyManager.resolve(MediationRecipientService).clearDefaultMediator(agent.context)
+    await setMediationToDefault(agent, pendingMediatorId)
+    dispatch({
+      type: DispatchAction.SET_SELECTED_MEDIATORS,
+      payload: [pendingMediatorId],
+    })
+    lockOutUser(LockoutReason.Logout)
+    setIsModalVisible(false)
+  }
+
+  const handleMediatorChange = async (mediatorId: string) => {
+    if (mediatorId === store.preferences.selectedMediator) return
+    setPendingMediatorId(mediatorId)
+    setIsModalVisible(true)
+  }
+
+  const MediatorRow = ({
+    label,
+    id,
+    testID,
+    selected,
+    onPress,
+  }: {
+    label: string
+    id: string
+    testID: string
+    selected: boolean
+    onPress: (id: string) => void
+  }) => (
+    <View style={[styles.section, styles.sectionRow]}>
+      <ThemedText variant="title">{label}</ThemedText>
+      <Pressable
+        style={styles.checkboxContainer}
+        accessibilityLabel={label}
+        accessibilityRole="radio"
+        testID={testIdWithKey(testID)}
+      >
+        <BouncyCheckbox
+          disableText
+          fillColor={ColorPallet.brand.secondaryBackground}
+          unfillColor={ColorPallet.brand.secondaryBackground}
+          size={36}
+          innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
+          ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary} />}
+          onPress={() => onPress(id)}
+          isChecked={selected}
+          disableBuiltInState
+        />
+      </Pressable>
+    </View>
+  )
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={mediators}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <MediatorRow
+            label={item.label.split('?')[0]}
+            id={item.id}
+            testID={item.testID}
+            selected={store.preferences.selectedMediator === item.id}
+            onPress={handleMediatorChange}
+          />
+        )}
+        ItemSeparatorComponent={() => (
+          <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
+            <View style={styles.itemSeparator} />
+          </View>
+        )}
+      />
+      {isModalVisible && (
+        <DismissiblePopupModal
+          title={t('Settings.ChangeMediator')}
+          description={t('Settings.ChangeMediatorDescription')}
+          onCallToActionLabel={t('Global.Confirm')}
+          onCallToActionPressed={() => confirmMediatorChange()}
+          onDismissPressed={() => setIsModalVisible(false)}
+        />
+      )}
+    </SafeAreaView>
+  )
+}
+
+export default ConfigureMediator
