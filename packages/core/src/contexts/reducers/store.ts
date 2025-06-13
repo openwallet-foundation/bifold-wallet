@@ -1,4 +1,4 @@
-import { defaultMediator, LocalStorageKeys } from '../../constants'
+import { LocalStorageKeys } from '../../constants'
 import { storeLoginAttempt } from '../../services/keychain'
 import {
   Preferences as PreferencesState,
@@ -13,6 +13,7 @@ import {
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
+import Config from 'react-native-config'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -549,8 +550,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     case PreferencesDispatchAction.RESET_MEDIATORS: {
       const preferences: Preferences = {
         ...state.preferences,
-        availableMediators: [defaultMediator as string],
-        selectedMediator: defaultMediator as string,
+        availableMediators: [Config.MEDIATOR_URL as string],
+        selectedMediator: Config.MEDIATOR_URL as string,
       }
 
       PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
