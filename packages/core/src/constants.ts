@@ -5,7 +5,6 @@ import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { credentialOfferTourSteps } from './components/tour/CredentialOfferTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { AttemptLockoutConfig } from './types/attempt-lockout-config'
-import Config from 'react-native-config'
 
 const lengthOfHiddenAttributes = 10
 const unicodeForBulletCharacter = '\u2022'
@@ -73,7 +72,6 @@ export const attemptLockoutConfig: AttemptLockoutConfig = {
 }
 
 export const defaultAutoLockTime = 5
-export const defaultMediator = Config.MEDIATOR_URL
 export const tours: Tours = {
   homeTourSteps,
   credentialsTourSteps,

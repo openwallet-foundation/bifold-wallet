@@ -4,7 +4,8 @@ import { State } from '../types/state'
 import { generateRandomWalletName } from '../utils/helpers'
 
 import _defaultReducer, { ReducerAction } from './reducers/store'
-import { defaultAutoLockTime, defaultMediator } from '../constants'
+import { defaultAutoLockTime } from '../constants'
+import Config from 'react-native-config'
 
 type Reducer = <S extends State>(state: S, action: ReducerAction<any>) => S
 
@@ -57,8 +58,8 @@ export const defaultState: State = {
     enableShareableLink: false,
     alternateContactNames: {},
     autoLockTime: defaultAutoLockTime, // default wallets lockout time to 5 minutes
-    availableMediators: [defaultMediator ?? ''],
-    selectedMediator: defaultMediator ?? '',
+    availableMediators: [Config.MEDIATOR_URL ?? ''],
+    selectedMediator: Config.MEDIATOR_URL ?? '',
   },
   tours: {
     seenToursPrompt: false,
