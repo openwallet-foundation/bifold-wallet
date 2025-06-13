@@ -19,7 +19,6 @@ import OpenIDCredentialOffer from '../modules/openid/screens/OpenIDCredentialOff
 import OpenIDProofCredentialSelect from '../modules/openid/screens/OpenIDProofChangeCredential'
 
 const DeliveryStack: React.FC = () => {
-  const navigation = useNavigation()
   const Stack = createStackNavigator<DeliveryStackParams>()
   const { t } = useTranslation()
   const theme = useTheme()
@@ -75,7 +74,7 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen
         name={Screens.OpenIDProofCredentialSelect}
         component={OpenIDProofCredentialSelect}
-        options={{
+        options={({ navigation }) => ({
           title: t('Screens.ChangeCard'),
           headerLeft: () => (
             <IconButton
@@ -87,7 +86,7 @@ const DeliveryStack: React.FC = () => {
             />
           ),
           ...ScreenOptionsDictionary[Screens.OpenIDProofCredentialSelect],
-        }}
+        })}
       />
     </Stack.Navigator>
   )
