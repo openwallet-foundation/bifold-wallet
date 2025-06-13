@@ -12,6 +12,7 @@ import ListContacts from '../screens/ListContacts'
 import ProofDetails from '../screens/ProofDetails'
 import ProofRequest from '../screens/ProofRequest'
 import RenameContact from '../screens/RenameContact'
+import JSONDetails from '../screens/JSONDetails'
 import WhatAreContacts from '../screens/WhatAreContacts'
 import { ContactStackParams, Screens } from '../types/navigators'
 
@@ -46,6 +47,14 @@ const ContactStack: React.FC = () => {
         options={{
           title: t('Screens.RenameContact'),
           ...ScreenOptionsDictionary[Screens.RenameContact],
+        }}
+      />
+      <Stack.Screen
+        name={Screens.JSONDetails}
+        component={JSONDetails}
+        options={{
+          title: t('Screens.JSONDetails'),
+          ...ScreenOptionsDictionary[Screens.JSONDetails],
         }}
       />
       <Stack.Screen
