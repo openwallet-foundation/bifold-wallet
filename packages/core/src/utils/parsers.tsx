@@ -1,3 +1,6 @@
+import { parse } from 'query-string'
+import { Buffer } from 'buffer'
+
 export type ParseInvitationResult =
   | {
       success: true
@@ -65,6 +68,33 @@ export const isDidCommInvitation = (url: string) => {
 
   if (url.includes('c_i=') || url.includes('oob=') || url.includes('oobUrl=') || url.includes('d_m=')) {
     return true
+  }
+
+  return false
+}
+
+export const parseMediatorInvitation = (url: string): Record<string, any> | null => {
+  if (!url.includes('c_i=')) return null
+
+  try {
+    const { c_i: encoded } = parse(url.split('?')[1] || '')
+    if (typeof encoded !== 'string') return null
+
+    let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
+    while (base64.length % 4 !== 0) base64 += '='
+
+    const decoded = Buffer.from(base64, 'base64').toString('utf-8')
+    return JSON.parse(decoded)
+  } catch (e) {
+    return null
+  }
+}
+
+export const isMediatorInvitation = (url: string): boolean => {
+  const invitation = parseMediatorInvitation(url)
+
+  if (invitation) {
+    return typeof invitation.label === 'string' && invitation.label.toLowerCase().includes('mediator')
   }
 
   return false
