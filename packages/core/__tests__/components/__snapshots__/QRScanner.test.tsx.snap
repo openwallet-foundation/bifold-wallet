@@ -650,9 +650,9 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
                 }
                 style={
                   Object {
-                    "height": "33%",
+                    "height": 120,
                     "objectFit": "contain",
-                    "width": "33%",
+                    "width": 120,
                   }
                 }
                 testID="com.ariesbifold:id/LoadingActivityIndicatorImage"

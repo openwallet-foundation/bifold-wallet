@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react-native'
-import React from 'react'
+import { render, fireEvent } from '@testing-library/react-native'
+import React, { act } from 'react'
 import { container } from 'tsyringe'
 
 import { ContainerProvider } from '../../src/container-api'
@@ -69,5 +69,92 @@ describe('PINEnter Screen', () => {
     )
     const EnterButton = await tree.getByTestId(testIdWithKey('Enter'))
     expect(EnterButton).not.toBeNull()
+  })
+
+  test('Forgot PIN link exists', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINEnter setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    const forgotPinLink = await tree.getByTestId(testIdWithKey('ForgotPINLink'))
+    expect(forgotPinLink).not.toBeNull()
+  })
+
+  test('Forgot PIN link displays popup modal on press', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINEnter setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    const forgotPinLink = await tree.getByTestId(testIdWithKey('ForgotPINLink'))
+    act(() => {
+      forgotPinLink.props.onPress()
+    })
+    const popupModal = await tree.getByTestId(testIdWithKey('ForgotPINModalDescription'))
+    expect(popupModal).not.toBeNull()
+  })
+
+  test('Forgot PIN modal is closed on close button press', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINEnter setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    const forgotPinLink = await tree.getByTestId(testIdWithKey('ForgotPINLink'))
+    act(() => {
+      forgotPinLink.props.onPress()
+    })
+    const okayButton = await tree.getByLabelText('Global.Okay')
+    act(() => {
+      fireEvent.press(okayButton)
+    })
+    expect(tree.queryByTestId(testIdWithKey('ForgotPINModalDescription'))).toBeNull()
+  })
+
+  test('Vesion number is displayed', async () => {
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={authContext}>
+            <PINEnter setAuthenticated={jest.fn()} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    const versionText = await tree.getByTestId(testIdWithKey('Version'))
+    expect(versionText).not.toBeNull()
   })
 })

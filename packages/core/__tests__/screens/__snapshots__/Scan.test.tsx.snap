@@ -37,9 +37,9 @@ exports[`Scan Screen Renders correctly 1`] = `
       }
       style={
         Object {
-          "height": "33%",
+          "height": 120,
           "objectFit": "contain",
-          "width": "33%",
+          "width": 120,
         }
       }
       testID="com.ariesbifold:id/LoadingActivityIndicatorImage"

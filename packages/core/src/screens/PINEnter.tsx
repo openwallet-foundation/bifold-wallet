@@ -23,6 +23,7 @@ import { useGotoPostAuthScreens } from '../hooks/onboarding'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
+import { getBuildNumber, getVersion } from 'react-native-device-info'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -37,9 +38,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState(false)
+  const [forgotPINModalVisible, setForgotPINModalVisible] = useState(false)
   const [devModalVisible, setDevModalVisible] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
-  const { ColorPallet } = useTheme()
+  const { ColorPallet, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [
     logger,
@@ -266,6 +268,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     subTitle: {
       marginBottom: 20,
     },
+    forgotPINText: {
+      color: ColorPallet.brand.link,
+      fontSize: 20,
+    },
+    buildNumberText: {
+      fontSize: 14,
+      color: TextTheme.labelSubtitle.color,
+      textAlign: 'center',
+      marginTop: 20,
+    },
   })
 
   const HelpText = useMemo(() => {
@@ -328,6 +340,17 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             autoFocus={true}
             inlineMessage={inlineMessageField}
           />
+          <ThemedText
+            variant="bold"
+            style={style.forgotPINText}
+            onPress={() => setForgotPINModalVisible(true)}
+            testID={testIdWithKey('ForgotPINLink')}
+            accessible={true}
+            accessibilityRole="link"
+            accessibilityLabel={t('PINEnter.ForgotPINLink')}
+          >
+            {t('PINEnter.ForgotPINLink')}
+          </ThemedText>
         </View>
         <View>
           <View style={style.buttonContainer}>
@@ -360,6 +383,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
               </View>
             </>
           )}
+          <ThemedText testID={testIdWithKey('Version')} style={style.buildNumberText}>
+            {`${t('Settings.Version')} ${getVersion()} ${t('Settings.Build')} (${getBuildNumber()})`}
+          </ThemedText>
         </View>
       </View>
       {alertModalVisible ? (
@@ -380,6 +406,23 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           }
           onCallToActionLabel={t('Global.Okay')}
           onCallToActionPressed={clearAlertModal}
+        />
+      ) : null}
+      {forgotPINModalVisible ? (
+        <PopupModal
+          notificationType={InfoBoxType.Info}
+          title={t('PINEnter.ForgotPINModalTitle')}
+          bodyContent={
+            <ThemedText
+              variant="popupModalText"
+              style={style.modalText}
+              testID={testIdWithKey('ForgotPINModalDescription')}
+            >
+              {t('PINEnter.ForgotPINModalDescription')}
+            </ThemedText>
+          }
+          onCallToActionLabel={t('Global.Okay')}
+          onCallToActionPressed={() => setForgotPINModalVisible(false)}
         />
       ) : null}
       {devModalVisible ? <DeveloperModal onBackPressed={onBackPressed} /> : null}

@@ -18,8 +18,8 @@
     "start": "react-native start --experimental-debugger"
   },
   "dependencies": {
-    "@bifold/core": "2.1.5",
-    "@bifold/oca": "2.1.5",
+    "@bifold/core": "2.1.7",
+    "@bifold/oca": "2.1.7",
     "@credo-ts/anoncreds": "0.5.13",
     "@credo-ts/askar": "0.5.13",
     "@credo-ts/core": "0.5.13",
@@ -118,8 +118,10 @@
     "typescript": "^5.0.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19.2 <21.0.0",
+    "yarn": "4.9.2"
   },
+  "packageManager": "yarn@4.9.2",
   "installConfig": {
     "hoistingLimits": "workspaces"
   }
