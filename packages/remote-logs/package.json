@@ -42,7 +42,7 @@
     "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-native": "^0.73.6",
-    "react-native-logs": "^5.1.0"
+    "react-native-logs": "~5.1.0"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"
@@ -54,6 +54,6 @@
     "buffer": "^6.0.3",
     "react": "18.2.0",
     "react-native": "^0.73.6",
-    "react-native-logs": "^5.1.0"
+    "react-native-logs": "~5.1.0"
   }
 }
