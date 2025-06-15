@@ -933,11 +933,11 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
-  - react-native-screenguard (1.0.9):
+  - react-native-screenguard (1.0.8-beta3):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-    - SDWebImage (~> 5.21.0)
+    - SDWebImage (~> 5.19.4)
   - react-native-splash-screen (3.3.0):
     - React-Core
   - react-native-tcp-socket (6.3.0):
@@ -1148,9 +1148,9 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - SDWebImage (5.21.0):
-    - SDWebImage/Core (= 5.21.0)
-  - SDWebImage/Core (5.21.0)
+  - SDWebImage (5.19.7):
+    - SDWebImage/Core (= 5.19.7)
+  - SDWebImage/Core (5.19.7)
   - SocketRocket (0.6.1)
   - VisionCamera (4.3.1):
     - VisionCamera/Core (= 4.3.1)
@@ -1468,7 +1468,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-orientation-locker: cc6f357b289a2e0dd2210fea0c52cb8e0727fdaa
   react-native-safe-area-context: 667324e20fb3dd9c39c12d6036675ed90099bcd5
-  react-native-screenguard: 6caae66695a0f6b18fa2223d2b24c670c57d079b
+  react-native-screenguard: 936ece62b4e66a47fa2a33691a2dcc505a861b4a
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-tcp-socket: 120072c8020262032773f80f0daaf3964aaa08a1
   react-native-webview: b5ce7d587df0e93c4b2789b93fd76816bf719f9f
@@ -1504,7 +1504,7 @@ SPEC CHECKSUMS:
   RNScreens: e0f79783ce405f4362c29d098b19fe7e241f11a9
   RNSVG: 70d9f7add64092eb33e975b75ee5fa04295318cc
   RNVectorIcons: 76364622e6f8e55bb456705582cde20f55ef889c
-  SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
+  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: fc6f0f2cf7dd3da7c6496b279350bb357fab9964
   Yoga: d17d2cc8105eed528474683b42e2ea310e1daf61

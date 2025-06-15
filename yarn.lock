@@ -8517,7 +8517,7 @@ __metadata:
     react-native-qrcode-svg: "npm:6.2.0"
     react-native-safe-area-context: "npm:^3.2.0"
     react-native-scalable-image: "npm:^1.1.0"
-    react-native-screenguard: "npm:^1.0.9"
+    react-native-screenguard: "npm:^1.0.8-beta3"
     react-native-screens: "npm:4.4.0"
     react-native-splash-screen: "npm:^3.3.0"
     react-native-svg: "npm:^15.0.0"
@@ -18344,13 +18344,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-screenguard@npm:^1.0.8-beta3, react-native-screenguard@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "react-native-screenguard@npm:1.0.9"
+"react-native-screenguard@npm:1.0.8-beta3":
+  version: 1.0.8-beta3
+  resolution: "react-native-screenguard@npm:1.0.8-beta3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10c0/9d1c103e85fe1f618b2a91146e1e0c561558ceab40a6b5ebbd41c836f1d95962e191238c1b960bb72bb9b70875164b8c31ee357e32d4b8ed96ee18b615b003e8
+  checksum: 10c0/5bbd2cdc8bfea9fa1c85ca2ed9df8bbbc1d8c365ac02de2bd79a0876e9026b77c0cfc20b67d61605cfe1df88f334e9d6d06fdbff857f39c6613dd159769c0cc4
   languageName: node
   linkType: hard
 
