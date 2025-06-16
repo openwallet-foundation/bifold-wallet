@@ -38,7 +38,7 @@
   },
   "peerDependencies": {
     "@credo-ts/core": "0.5.13",
-    "axios": "^1.4.0",
+    "axios": "^1.7.9",
     "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-native": "^0.73.6",
@@ -50,7 +50,7 @@
   "dependencies": {
     "@bifold/core": "2.1.7",
     "@credo-ts/core": "0.5.13",
-    "axios": "^1.4.0",
+    "axios": "^1.7.9",
     "buffer": "^6.0.3",
     "react": "18.2.0",
     "react-native": "^0.73.6",
