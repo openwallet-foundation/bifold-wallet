@@ -1,4 +1,5 @@
 package com.ariesbifold
+import expo.modules.ReactActivityDelegateWrapper
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -29,9 +30,9 @@ class MainActivity : ReactActivity() {
      * Returns the instance of the ReactActivityDelegate.
      */
     override fun createReactActivityDelegate(): ReactActivityDelegate =
-        DefaultReactActivityDelegate(
+        ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, DefaultReactActivityDelegate(
             this,
             mainComponentName,
             DefaultNewArchitectureEntryPoint.fabricEnabled
-        )
+        ))
 }

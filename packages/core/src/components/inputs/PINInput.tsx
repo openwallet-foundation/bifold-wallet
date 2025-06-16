@@ -11,7 +11,6 @@ import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
 import { InlineErrorPosition } from '../../types/error'
 import { ThemedText } from '../texts/ThemedText'
 
-
 // adjusting for the spaces between numbers
 const cellCount = minPINLength * 2 - 1
 
@@ -33,7 +32,7 @@ const PINInputComponent = (
   const { t } = useTranslation()
   const { PINInputTheme } = useTheme()
   const cellHeight = 48
-  
+
   // including spaces to prevent screen reader from reading the PIN as a single number
   // filling with bullets when masked to prevent screen reader from reading the actual PIN
   // and to have the proper appearance when the PIN is masked
@@ -44,7 +43,7 @@ const PINInputComponent = (
       return '●'.repeat(PIN.length).split('').join(' ')
     }
   }, [PIN, showPIN])
-  
+
   const onChangeText = (value: string) => {
     const cleanValue = value.replaceAll(' ', '')
     // typed new characters
@@ -54,7 +53,7 @@ const PINInputComponent = (
       const newPIN = PIN + newChars.replace(/●/g, '')
       setPIN(newPIN)
       onPINChanged && onPINChanged(newPIN)
-    // characters were removed
+      // characters were removed
     } else if (cleanValue.length < displayValue.replaceAll(' ', '').length) {
       // remove same number of characters from actual PIN
       const newPIN = PIN.slice(0, cleanValue.length)
@@ -62,7 +61,7 @@ const PINInputComponent = (
       onPINChanged && onPINChanged(newPIN)
     }
   }
-  
+
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value: displayValue,
     setValue: onChangeText,

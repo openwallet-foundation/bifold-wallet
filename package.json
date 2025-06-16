@@ -56,6 +56,13 @@
   },
   "packageManager": "yarn@4.9.2",
   "resolutions": {
+    "@unimodules/react-native-adapter": "./noop",
+    "@unimodules/core": "./noop",
+    "expo": "~50.0.0",
+    "expo-secure-store": "~12.8.1",
+    "nanoid": "3.3.7",
+    "react-native-screenguard": "1.0.8-beta3",
+    "react": "^18.2.0",
     "typescript": "^5.0.4",
     "tsyringe": "4.8.0",
     "react-native": "0.73.6",
