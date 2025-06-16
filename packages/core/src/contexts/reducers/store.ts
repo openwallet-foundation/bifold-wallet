@@ -61,7 +61,7 @@ enum PreferencesDispatchAction {
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
   AUTO_LOCK_TIME = 'preferences/autoLockTime',
   SET_THEME = 'preferences/setTheme',
-  SET_SELECTED_MEDIATORS = 'preferences/setSelectedMediators',
+  SET_SELECTED_MEDIATOR = 'preferences/setSelectedMediator',
   ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
   RESET_MEDIATORS = 'preferences/resetMediators',
 }
@@ -519,7 +519,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
     }
-    case PreferencesDispatchAction.SET_SELECTED_MEDIATORS: {
+    case PreferencesDispatchAction.SET_SELECTED_MEDIATOR: {
       const selectedMediator = (action?.payload ?? []).pop() ?? ''
       const preferences: Preferences = {
         ...state.preferences,
@@ -532,20 +532,20 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     case PreferencesDispatchAction.ADD_AVAILABLE_MEDIATOR: {
-      const mediatorsToAdd = action.payload as string[]
-      const updatedAvailableMediators = [
-        ...state.preferences.availableMediators,
-        ...mediatorsToAdd.filter((m) => !state.preferences.availableMediators.includes(m)),
-      ]
-      const preferences: Preferences = {
-        ...state.preferences,
-        availableMediators: updatedAvailableMediators,
+      const mediatorToAdd = (action?.payload ?? []).pop() ?? ''
+      if (!state.preferences.availableMediators.includes(mediatorToAdd)) {
+        const updatedAvailableMediators = [...state.preferences.availableMediators, mediatorToAdd]
+        const preferences: Preferences = {
+          ...state.preferences,
+          availableMediators: updatedAvailableMediators,
+        }
+        PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+        return {
+          ...state,
+          preferences,
+        }
       }
-      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
-      return {
-        ...state,
-        preferences,
-      }
+      return state
     }
     case PreferencesDispatchAction.RESET_MEDIATORS: {
       const preferences: Preferences = {

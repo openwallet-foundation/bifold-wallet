@@ -74,15 +74,18 @@ export const isDidCommInvitation = (url: string) => {
 }
 
 export const parseMediatorInvitation = (url: string): Record<string, any> | null => {
-  if (!url.includes('c_i=')) return null
-
+  if (!url.includes('c_i=')) {
+    return null
+  }
   try {
     const { c_i: encoded } = parse(url.split('?')[1] || '')
-    if (typeof encoded !== 'string') return null
-
+    if (typeof encoded !== 'string') {
+      return null
+    }
     let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
-    while (base64.length % 4 !== 0) base64 += '='
-
+    while (base64.length % 4 !== 0) {
+      base64 += '='
+    }
     const decoded = Buffer.from(base64, 'base64').toString('utf-8')
     return JSON.parse(decoded)
   } catch (e) {
@@ -92,12 +95,14 @@ export const parseMediatorInvitation = (url: string): Record<string, any> | null
 
 export const isMediatorInvitation = (url: string): boolean => {
   const invitation = parseMediatorInvitation(url)
-
-  if (invitation) {
-    return typeof invitation.label === 'string' && invitation.label.toLowerCase().includes('mediator')
+  if (!invitation) {
+    return false
   }
-
-  return false
+  const labelCheck = typeof invitation.label === 'string' && invitation.label.toLowerCase().includes('mediator')
+  const hasRoutingKeys = Array.isArray(invitation.routingKeys) && invitation.routingKeys.length > 0
+  const serviceTypeCheck =
+    typeof invitation.serviceEndpoint === 'string' && invitation.serviceEndpoint.toLowerCase().includes('mediator')
+  return labelCheck || hasRoutingKeys || serviceTypeCheck
 }
 
 export async function parseInvitationUrl(invitationUrl: string): Promise<ParseInvitationResult> {

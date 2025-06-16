@@ -169,7 +169,7 @@ export type SettingStackParams = {
   [Screens.TogglePushNotifications]: undefined
   [Screens.HistorySettings]: undefined
   [Screens.AutoLock]: undefined
-  [Screens.ConfigureMediator]: undefined
+  [Screens.ConfigureMediator]: { scannedMediatorUri: string } | undefined
 }
 
 export type NotificationStackParams = {

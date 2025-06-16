@@ -8,29 +8,30 @@ import { useTheme } from '../contexts/theme'
 import { ThemedText } from '../components/texts/ThemedText'
 import { testIdWithKey } from '../utils/testable'
 import { useCallback, useEffect, useState } from 'react'
-import { useRoute } from '@react-navigation/native'
 import { LockoutReason, useAuth } from '../contexts/auth'
 import { useAgent } from '@credo-ts/react-hooks'
 import { Agent, MediationRecipientService } from '@credo-ts/core'
 import Config from 'react-native-config'
 import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 import { useTranslation } from 'react-i18next'
+import { StackScreenProps } from '@react-navigation/stack'
+import { Screens, SettingStackParams } from '../types/navigators'
 
 type MediatorItem = {
   id: string
   label: string
   testID: string
 }
+type ConfigureMediatorProps = StackScreenProps<SettingStackParams, Screens.ConfigureMediator>
 
-const ConfigureMediator = () => {
+const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
   const { ColorPallet, SettingsTheme } = useTheme()
   const { t } = useTranslation()
   const { lockOutUser } = useAuth()
   const supportedMediators = store.preferences.availableMediators
-  const route = useRoute()
-  const scannedMediatorUri = (route.params as { scannedMediatorUri?: string })?.scannedMediatorUri
+  const scannedMediatorUri = route.params?.scannedMediatorUri
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [pendingMediatorId, setPendingMediatorId] = useState<string | null>(null)
 
@@ -120,7 +121,7 @@ const ConfigureMediator = () => {
     await agent.dependencyManager.resolve(MediationRecipientService).clearDefaultMediator(agent.context)
     await setMediationToDefault(agent, pendingMediatorId)
     dispatch({
-      type: DispatchAction.SET_SELECTED_MEDIATORS,
+      type: DispatchAction.SET_SELECTED_MEDIATOR,
       payload: [pendingMediatorId],
     })
     lockOutUser(LockoutReason.Logout)
