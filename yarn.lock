@@ -1884,7 +1884,7 @@ __metadata:
     react-native-svg-transformer: "npm:^0.14.3"
     react-native-tcp-socket: "npm:^6.0.6"
     react-native-toast-message: "npm:^2.1.6"
-    react-native-uuid: "npm:^2.0.1"
+    react-native-uuid: "npm:^2.0.3"
     react-native-vector-icons: "npm:^10.0.0"
     react-native-vision-camera: "npm:4.3.1"
     react-test-renderer: "npm:^18.2.0"
@@ -1958,7 +1958,7 @@ __metadata:
     react-native-svg: ^15.0.0
     react-native-tcp-socket: ^6.0.6
     react-native-toast-message: ^2.1.6
-    react-native-uuid: ^2.0.1
+    react-native-uuid: ^2.0.3
     react-native-vector-icons: ^10.0.0
     react-native-vision-camera: "*"
     tsyringe: ^4.7.0
@@ -7810,7 +7810,7 @@ __metadata:
     react-native-svg-transformer: "npm:^0.14.3"
     react-native-tcp-socket: "npm:^6.0.6"
     react-native-toast-message: "npm:^2.1.6"
-    react-native-uuid: "npm:^2.0.1"
+    react-native-uuid: "npm:^2.0.3"
     react-native-vector-icons: "npm:^10.0.0"
     react-native-vision-camera: "npm:4.3.1"
     react-native-webview: "npm:^13.10.0"
@@ -17099,10 +17099,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-uuid@npm:^2.0.1":
-  version: 2.0.2
-  resolution: "react-native-uuid@npm:2.0.2"
-  checksum: 10c0/326678b3e1d076e7cda6db41ab3ee073695b31217a0e849f87bae3616a7f79e876fd8b5d735bee030275bddd44312eea9b6bfc5217997b2001d68a5d4aceec96
+"react-native-uuid@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "react-native-uuid@npm:2.0.3"
+  checksum: 10c0/d94bccc28936c2dea081ab404f90b0c968092013af4d428b8e74bf407d6098ad5410914f77a903ad1296cce364fc85d27d8dfd70d22ec48d8cf1b7edc8803a8d
   languageName: node
   linkType: hard
 
