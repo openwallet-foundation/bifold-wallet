@@ -143,6 +143,7 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
+  [Screens.JSONDetails]: { jsonBlob: string }
 }
 
 export type HomeStackParams = {
