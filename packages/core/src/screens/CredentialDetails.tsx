@@ -67,11 +67,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     (credential?.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
       ?.revoked_detail_dismissed ?? false
   )
-
   const [store] = useStore()
-  const callViewJSONDetails = useCallback(() => {
-    navigation.navigate<any>(Screens.JSONDetails, { jsonBlob: JSON.stringify(credential, null, 2) })
-  }, [navigation, credential])
 
   useEffect(() => {
     setIsRevokedMessageHidden(
@@ -133,6 +129,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       })
     }
   }
+
+  const callViewJSONDetails = useCallback(() => {
+    navigation.navigate(Stacks.ContactStack, {
+      screen: Screens.JSONDetails,
+      params: { jsonBlob: JSON.stringify(credential, null, 2) },
+    })
+  }, [navigation, credential])
 
   useEffect(() => {
     if (!agent) {

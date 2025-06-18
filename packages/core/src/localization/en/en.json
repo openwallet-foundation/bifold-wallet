@@ -773,9 +773,10 @@
     "GenerationError": "Unable to generate QR code"
   },
   "JSONDetails": {
-    "Download": "Download file",
+    "Share": "Share JSON",
     "Copy": "Copy contents",
-    "CopiedToClipboard": "Copied to clipboard"
+    "CopiedSuccess": "Copied to clipboard",
+    "CopiedError": "Unable to copy to clipboard"
   },
   "Record": {
     "Hide": "Hide",
