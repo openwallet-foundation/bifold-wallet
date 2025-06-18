@@ -91,7 +91,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
 
   const listHeader = () => {
     return (
-      <View style={{ ...styles.pageMargin, marginVertical: 40 }}>
+      <View style={{ ...styles.pageMargin, marginTop: 40, marginBottom: 20 }}>
         {loading ? (
           <View style={styles.cardLoading}>
             <RecordLoading />

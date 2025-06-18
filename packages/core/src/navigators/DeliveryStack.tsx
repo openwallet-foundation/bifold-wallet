@@ -1,7 +1,6 @@
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigation } from '@react-navigation/core'
 
 import HeaderRightHome from '../components/buttons/HeaderHome'
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
