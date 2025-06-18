@@ -1,5 +1,5 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Share } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../contexts/theme'
 import { ThemedText } from '../components/texts/ThemedText'
@@ -8,6 +8,9 @@ import { ContactStackParams, Screens } from '../types/navigators'
 import Button, { ButtonType } from '../components/buttons/Button'
 import { testIdWithKey } from '../utils/testable'
 import { ScrollView } from 'react-native-gesture-handler'
+import Clipboard from '@react-native-clipboard/clipboard'
+import Toast from 'react-native-toast-message'
+import { ToastType } from '../components/toast/BaseToast'
 
 type JSONDetailsProps = StackScreenProps<ContactStackParams, Screens.JSONDetails>
 
@@ -41,12 +44,25 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
     },
   })
 
-  const copyToClipboard = () => {
-    // copy jsonBlob to clipboard
+  const copyToClipboard = async () => {
+    try {
+      await Clipboard.setString(jsonBlob)
+      Toast.show({
+        type: ToastType.Success,
+        text1: t('JSONDetails.CopiedSuccess'),
+      })
+    } catch (e) {
+      Toast.show({
+        type: ToastType.Error,
+        text1: `${t('JSONDetails.CopiedError')}: ${e}`,
+      })
+    }
   }
 
-  const download = () => {
-    // download jsonBlob as a file
+  const shareJSON = async () => {
+    await Share.share({
+      message: jsonBlob,
+    })
   }
 
   return (
@@ -58,12 +74,12 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
 
         <View style={styles.buttonContainer}>
           <Button
-            title={t('JSONDetails.Download')}
+            title={t('JSONDetails.Share')}
             buttonType={ButtonType.Primary}
-            testID={testIdWithKey('Download')}
-            accessibilityLabel={t('JSONDetails.Download')}
+            testID={testIdWithKey('Share')}
+            accessibilityLabel={t('JSONDetails.Share')}
             onPress={() => {
-              download()
+              shareJSON()
             }}
           ></Button>
         </View>
@@ -74,7 +90,6 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
             testID={testIdWithKey('CopyToClipboard')}
             accessibilityLabel={t('JSONDetails.Copy')}
             onPress={() => {
-              // copy json to clipboard
               copyToClipboard()
             }}
           ></Button>
