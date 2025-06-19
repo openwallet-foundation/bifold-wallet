@@ -316,9 +316,8 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
             testID={testIdWithKey('JSONDetails')}
             style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
           >
-            {/* Uncomment when icon added*/}
-            {/* <Assets.svg.JSONDetails width={20} height={20} color={ColorPallet.brand.text}></Assets.svg.JSONDetails> */}
-            <ThemedText>{'{} ' + t('ContactDetails.JSONDetails')}</ThemedText>
+            <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.text} />
+            <ThemedText>{t('ContactDetails.JSONDetails')}</ThemedText>
           </TouchableOpacity>
         )}
         <TouchableOpacity

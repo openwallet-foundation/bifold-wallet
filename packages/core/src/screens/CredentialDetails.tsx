@@ -417,10 +417,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               accessibilityLabel={t('ContactDetails.JSONDetails')}
               accessibilityRole={'button'}
               testID={testIdWithKey('JSONDetails')}
+              style={{ flexDirection: 'row', gap: 8 }}
             >
-              {/* Uncomment when icon added*/}
-              {/* <Assets.svg.JSONDetails width={20} height={20} color={ColorPallet.brand.text}></Assets.svg.JSONDetails> */}
-              <ThemedText>{'{} ' + t('ContactDetails.JSONDetails')}</ThemedText>
+              <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.secondary} />
+              <ThemedText>{t('ContactDetails.JSONDetails')}</ThemedText>
             </TouchableOpacity>
           </View>
         )}
