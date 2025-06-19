@@ -72,7 +72,6 @@ export const attemptLockoutConfig: AttemptLockoutConfig = {
 }
 
 export const defaultAutoLockTime = 5
-
 export const tours: Tours = {
   homeTourSteps,
   credentialsTourSteps,

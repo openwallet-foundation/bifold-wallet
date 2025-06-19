@@ -57,6 +57,7 @@ export enum Screens {
   HistoryDetails = 'History details',
   AutoLock = 'AutoLock',
   UpdateAvailable = 'Update Available',
+  ConfigureMediator = 'Configure Mediator',
 }
 
 export enum Stacks {
@@ -168,6 +169,7 @@ export type SettingStackParams = {
   [Screens.TogglePushNotifications]: undefined
   [Screens.HistorySettings]: undefined
   [Screens.AutoLock]: undefined
+  [Screens.ConfigureMediator]: { scannedMediatorUri: string } | undefined
 }
 
 export type NotificationStackParams = {
