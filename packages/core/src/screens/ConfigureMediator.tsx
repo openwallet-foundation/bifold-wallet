@@ -7,15 +7,15 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useTheme } from '../contexts/theme'
 import { ThemedText } from '../components/texts/ThemedText'
 import { testIdWithKey } from '../utils/testable'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LockoutReason, useAuth } from '../contexts/auth'
 import { useAgent } from '@credo-ts/react-hooks'
-import { Agent, MediationRecipientService } from '@credo-ts/core'
-import Config from 'react-native-config'
+import { MediationRecipientService } from '@credo-ts/core'
 import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 import { useTranslation } from 'react-i18next'
 import { StackScreenProps } from '@react-navigation/stack'
 import { Screens, SettingStackParams } from '../types/navigators'
+import { setMediationToDefault } from '../utils/mediatorhelpers'
 
 type MediatorItem = {
   id: string
@@ -72,48 +72,6 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
       justifyContent: 'center',
     },
   })
-
-  const getConnectionIdFromMediatorUrl = async (agent: Agent, mediatorUrl: string): Promise<string | null> => {
-    try {
-      const invite = await agent.oob.parseInvitation(mediatorUrl)
-      const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invite.id)
-      let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : []
-      if (!connection) {
-        const fallbackInvite = await agent.oob.parseInvitation(Config.MEDIATOR_URL!)
-        const { connectionRecord: newConnection } = await agent.oob.receiveInvitation(fallbackInvite)
-        if (!newConnection) {
-          return null
-        }
-        connection = newConnection
-      }
-      const readyConnection = connection.isReady
-        ? connection
-        : await agent.connections.returnWhenIsConnected(connection.id)
-      return readyConnection.id
-    } catch (error) {
-      return null
-    }
-  }
-
-  const setMediationToDefault = useCallback(async (agent: Agent, mediatorUrl: string) => {
-    const connectionId = await getConnectionIdFromMediatorUrl(agent, mediatorUrl)
-    if (!connectionId) {
-      return
-    }
-    const currentDefault = await agent.mediationRecipient.findDefaultMediator()
-    if (currentDefault?.connectionId === connectionId) {
-      return
-    }
-    let mediationRecord = await agent.mediationRecipient.findByConnectionId(connectionId)
-    if (!mediationRecord) {
-      const connection = await agent.connections.findById(connectionId)
-      if (!connection) {
-        return
-      }
-      mediationRecord = await agent.mediationRecipient.requestMediation(connection)
-    }
-    await agent.mediationRecipient.setDefaultMediator(mediationRecord)
-  }, [])
 
   const confirmMediatorChange = async () => {
     if (!pendingMediatorId || !agent) return
