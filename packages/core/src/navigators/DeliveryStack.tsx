@@ -3,11 +3,13 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import HeaderRightHome from '../components/buttons/HeaderHome'
+import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
 import CredentialOffer from '../screens/CredentialOffer'
 import ProofRequest from '../screens/ProofRequest'
 import { DeliveryStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import OpenIDProofPresentation from '../modules/openid/screens/OpenIDProofPresentation'
@@ -71,10 +73,19 @@ const DeliveryStack: React.FC = () => {
       <Stack.Screen
         name={Screens.OpenIDProofCredentialSelect}
         component={OpenIDProofCredentialSelect}
-        options={{
-          title: t('Screens.ProofRequest'),
+        options={({ navigation }) => ({
+          title: t('Screens.ChangeCard'),
+          headerLeft: () => (
+            <IconButton
+              buttonLocation={ButtonLocation.Left}
+              accessibilityLabel={t('Global.Back')}
+              testID={testIdWithKey('BackButton')}
+              onPress={() => navigation.goBack()}
+              icon="arrow-left"
+            />
+          ),
           ...ScreenOptionsDictionary[Screens.OpenIDProofCredentialSelect],
-        }}
+        })}
       />
     </Stack.Navigator>
   )
