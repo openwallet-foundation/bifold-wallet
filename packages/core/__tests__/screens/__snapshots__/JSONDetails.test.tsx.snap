@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSONDetails Screen JSONDetails Screen render render matches snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
+  }
+  style={
+    Object {
+      "backgroundColor": "#000000",
+      "flex": 1,
+      "padding": 20,
+    }
+  }
+>
+  <View>
+    <RCTScrollView
+      collapsable={false}
+      handlerTag={-1}
+      handlerType="NativeViewGestureHandler"
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "height": "75%",
+          "padding": 16,
+        }
+      }
+      testID="com.ariesbifold:id/JSONDetails.ScrollView"
+    >
+      <View>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
+          {
+  "_tags": {
+    "anonCredsCredentialRevocationId": "712",
+    "anonCredsRevocationRegistryId": "did:indy:bcovrin:test:QEquAHkM35w4XVT3Ku5yat/anoncreds/v0/REV_REG_DEF/834674/member_card/3ccbf09e-1d5e-4484-a906-86cca6809a39",
+    "anonCredsUnqualifiedRevocationRegistryId": "QEquAHkM35w4XVT3Ku5yat:4:QEquAHkM35w4XVT3Ku5yat:3:CL:834674:member_card:CL_ACCUM:3ccbf09e-1d5e-4484-a906-86cca6809a39",
+    "connectionId": "abb78f2d-887f-4fdf-bdf3-5ceb0635a32b",
+    "credentialIds": [
+      "19d9ac9a-1bc6-468c-b6ab-8693c20a392d"
+    ],
+    "role": "holder",
+    "state": "done",
+    "threadId": "d731ad63-dbe0-4c2e-a09a-21da3f0075b6"
+  },
+  "metadata": {
+    "_anoncreds/credentialRequest": {
+      "link_secret_blinding_data": {
+        "v_prime": "12558773405074986407016595755241195883585779298582197944359249133865516016194613099767720410485680081743270874834017963311561019043224403447871278209091147039916466337112528947479366499888501586461830241682366172465715848761522159899079494671142161829575233674895307880988572289916781251544511562158623409488178204177240603595488837714704523136331508652697210478698797729843348277225169275100843643358846942895804457070602440440792748829796565199381305645795934116742717037341472565117176530625111703271008556298303087440031396822606652491380349684609402532631859436252512176801201030553690693417528622326283838533756817531187410658514180224",
+        "vr_prime": "07E3F3B42E72F43F4F7D35E51AAB90A43E11F953FB023074F88E16CFFFE6D912"
+      },
+      "nonce": "543894974289883359961803",
+      "link_secret_name": "85772c8c-cca9-4055-9ec9-5fc53db296e6"
+    },
+    "_anoncreds/credential": {
+      "credentialDefinitionId": "QEquAHkM35w4XVT3Ku5yat:3:CL:834674:member_card",
+      "schemaId": "QEquAHkM35w4XVT3Ku5yat:2:member_card:1.54",
+      "credentialRevocationId": "712",
+      "revocationRegistryId": "did:indy:bcovrin:test:QEquAHkM35w4XVT3Ku5yat/anoncreds/v0/REV_REG_DEF/834674/member_card/3ccbf09e-1d5e-4484-a906-86cca6809a39"
+    }
+  },
+  "credentials": [
+    {
+      "credentialRecordType": "w3c",
+      "credentialRecordId": "19d9ac9a-1bc6-468c-b6ab-8693c20a392d"
+    }
+  ],
+  "id": "911baea9-3984-4a93-92a9-1735eaf3e372",
+  "createdAt": "2025-06-16T16:16:45.341Z",
+  "state": "done",
+  "role": "holder",
+  "connectionId": "abb78f2d-887f-4fdf-bdf3-5ceb0635a32b",
+  "threadId": "d731ad63-dbe0-4c2e-a09a-21da3f0075b6",
+  "protocolVersion": "v1",
+  "updatedAt": "2025-06-16T16:16:54.544Z",
+  "credentialAttributes": [
+    {
+      "mime-type": "text/plain",
+      "name": "Member Status",
+      "value": "Active"
+    },
+    {
+      "mime-type": "text/plain",
+      "name": "Given Name",
+      "value": "Joyce"
+    },
+    {
+      "mime-type": "text/plain",
+      "name": "PPID",
+      "value": "MC12349"
+    },
+    {
+      "mime-type": "text/plain",
+      "name": "Member Status Code",
+      "value": "1"
+    },
+    {
+      "mime-type": "text/plain",
+      "name": "Surname",
+      "value": "Lee-Martinez"
+    }
+  ]
+}
+
+        </Text>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Object {
+          "paddingVertical": 8,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        accessibilityLabel="JSONDetails.Share"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#42803E",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/Share"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ],
+              ]
+            }
+          >
+            JSONDetails.Share
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingVertical": 8,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        accessibilityLabel="JSONDetails.Copy"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "borderColor": "#42803E",
+            "borderRadius": 4,
+            "borderWidth": 2,
+            "opacity": 1,
+            "padding": 16,
+          }
+        }
+        testID="com.ariesbifold:id/CopyToClipboard"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                Array [
+                  Object {
+                    "color": "#42803E",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                  },
+                  false,
+                  false,
+                  false,
+                ],
+              ]
+            }
+          >
+            JSONDetails.Copy
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;

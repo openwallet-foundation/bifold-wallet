@@ -474,7 +474,8 @@
     "GoToCredentialDetail": "Aller au détail de l'attestation",
     "CredentialName": "Nom du justificatif",
     "Credentials": "Mes justificatifs avec ce contact",
-    "NoCredentials": "Vous n'avez aucun justificatif de ce contact."
+    "NoCredentials": "Vous n'avez aucun justificatif de ce contact.",
+    "JSONDetails": "View JSON details (FR)"
   },
   "WhatAreContacts": {
     "Title": "Que sont les Contacts?",
@@ -491,6 +492,7 @@
     "CredentialDetails": "Détails des attestations",
     "EmptyList": "Votre portefeuille est vide. Vos attestations acceptés seront ajoutés ici.",
     "IssuedBy": "Émis par",
+    "Issued": "Issued (FR)",
     "Credential": "attestation"
   },
   "PushNotifications": {
@@ -757,6 +759,12 @@
   "QRRender": {
     "GenerationError": "Impossible de générer le code QR"
   },
+  "JSONDetails": {
+    "Share": "Share JSON (FR)",
+    "Copy": "Copy contents (FR)",
+    "CopiedSuccess": "Copied to clipboard (FR)",
+    "CopiedError": "Unable to copy to clipboard (FR)"
+  },
   "Record": {
     "Hide": "Masquer",
     "Show": "Afficher",
@@ -812,7 +820,8 @@
     "HistorySettings": "History Settings FR)",
     "History": "History (FR)",
     "HistoryDetails": "History Details (FR)",
-    "UpdateAvailable": "Update Available (FR)"
+    "UpdateAvailable": "Update Available (FR)",
+    "JSONDetails": "JSON details (FR)"
   },
   "Loading": {
     "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
