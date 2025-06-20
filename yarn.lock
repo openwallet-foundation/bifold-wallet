@@ -8561,7 +8561,6 @@ __metadata:
     "@changesets/cli": "npm:^2.28.1"
     "@commitlint/cli": "npm:^11.0.0"
     "@eslint/js": "npm:^8.56.0"
-    "@react-native-clipboard/clipboard": "npm:^1.16.2"
     "@react-native/eslint-config": "npm:^0.73.2"
     "@types/conventional-recommended-bump": "npm:^6.1.0"
     "@types/eslint__js": "npm:^8.42.3"
