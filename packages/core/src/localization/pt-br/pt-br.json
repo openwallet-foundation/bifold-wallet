@@ -454,7 +454,8 @@
     "GoToCredentialDetail": "Ir para os detalhes da credencial",
     "CredentialName": "Nome da credencial",
     "Credentials": "Minhas credenciais",
-    "NoCredentials": "Você não tem nenhuma credencial com esse Contato."
+    "NoCredentials": "Você não tem nenhuma credencial com esse Contato.",
+    "JSONDetails": "View JSON details (PT-BR)"
   },
   "WhatAreContacts": {
     "Title": "O que são Contatos?",
@@ -471,6 +472,7 @@
     "CredentialDetails": "Detalhes da Credencial",
     "EmptyList": "Sua carteira está vazia. Suas credenciais aceitas serão adicionadas aqui.",
     "IssuedBy": "Emitida por",
+    "Issued": "Issued (PT-BR)",
     "Credential": "credencial"
   },
   "PushNotifications": {
@@ -743,6 +745,12 @@
   "QRRender": {
     "GenerationError": "Não foi possível gerar o código QR"
   },
+  "JSONDetails": {
+    "Share": "Share JSON (PT-BR)",
+    "Copy": "Copy contents (PT-BR)",
+    "CopiedSuccess": "Copied to clipboard (PT-BR)",
+    "CopiedError": "Unable to copy to clipboard (PT-BR)"
+  },
   "Record": {
     "Hide": "Esconder",
     "Show": "Mostrar",
@@ -790,7 +798,8 @@
     "HistorySettings": "History Settings (PT-BR)",
     "History": "History (PT-BR)",
     "HistoryDetails": "History Details (PT-BR)",
-    "UpdateAvailable": "Update Available (PT-BR)"
+    "UpdateAvailable": "Update Available (PT-BR)",
+    "JSONDetails": "JSON details (PT-BR)"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
