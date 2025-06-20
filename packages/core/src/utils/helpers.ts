@@ -56,7 +56,8 @@ import {
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
 import { parseCredDefFromId } from './cred-def'
-import { isMediatorInvitation, isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
+import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
+import { isMediatorInvitation } from './mediatorhelpers'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -1091,7 +1092,7 @@ export const connectFromScanOrDeepLink = async (
 
       return
     }
-    if (isMediatorInvitation(uri)) {
+    if (await isMediatorInvitation(uri)) {
       navigation.navigate(Stacks.SettingStack as any, {
         screen: Screens.ConfigureMediator,
         params: { scannedMediatorUri: uri },
