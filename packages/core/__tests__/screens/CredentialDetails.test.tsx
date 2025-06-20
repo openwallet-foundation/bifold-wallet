@@ -2,8 +2,8 @@ import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
 import { useAgent, useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
-import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
-import React from 'react'
+import { cleanup, fireEvent, render } from '@testing-library/react-native'
+import React, { act } from 'react'
 import { Screens, Stacks } from '../../src/types/navigators'
 import { StoreContext } from '../../src'
 import { hiddenFieldValue } from '../../src/constants'
@@ -322,5 +322,61 @@ describe('CredentialDetails Screen', () => {
         params: { jsonBlob: JSON.stringify(credential, null, 2) },
       })
     })
+  })
+
+  test('Isseud date is displayed when dev mode is enabled', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+      },
+    }
+    const tree = render(
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <CredentialDetails
+            navigation={useNavigation()}
+            route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
+          ></CredentialDetails>
+        </StoreContext.Provider>
+      </BasicAppContext>
+    )
+    const issuedDate = await tree.findByTestId(testIdWithKey('IssuedDate'))
+    expect(issuedDate).not.toBeNull()
+  })
+  test('Issued date is not displayed when dev mode is disabled', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: false,
+      },
+    }
+    const tree = render(
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <CredentialDetails
+            navigation={useNavigation()}
+            route={{ params: { credentialId: mock_testOpenVPCredentialRecord.id } } as any}
+          ></CredentialDetails>
+        </StoreContext.Provider>
+      </BasicAppContext>
+    )
+    await expect(tree.findByTestId(testIdWithKey('IssuedDate'))).rejects.toThrow()
   })
 })

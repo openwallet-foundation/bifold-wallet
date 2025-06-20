@@ -392,7 +392,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             </ThemedText>
             {/* issued date if dev mode */}
             {store?.preferences.developerModeEnabled && credential?.createdAt ? (
-              <ThemedText>
+              <ThemedText testID={testIdWithKey('IssuedDate')}>
                 <ThemedText variant="title" style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
                   {t('CredentialDetails.Issued') + ': '}
                 </ThemedText>
