@@ -21,7 +21,7 @@ exports[`JSONDetails Screen JSONDetails Screen render render matches snapshot 1`
   <View>
     <RCTScrollView
       collapsable={false}
-      handlerTag={1}
+      handlerTag={-1}
       handlerType="NativeViewGestureHandler"
       onGestureHandlerEvent={[Function]}
       onGestureHandlerStateChange={[Function]}
