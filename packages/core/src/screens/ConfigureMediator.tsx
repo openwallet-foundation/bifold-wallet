@@ -77,6 +77,7 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
     if (!pendingMediatorId || !agent) return
 
     await agent.dependencyManager.resolve(MediationRecipientService).clearDefaultMediator(agent.context)
+    agent.config.logger.info(`successfully cleared default mediator`)
     await setMediationToDefault(agent, pendingMediatorId)
     dispatch({
       type: DispatchAction.SET_SELECTED_MEDIATOR,

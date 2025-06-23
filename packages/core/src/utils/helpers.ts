@@ -1092,7 +1092,7 @@ export const connectFromScanOrDeepLink = async (
 
       return
     }
-    if (await isMediatorInvitation(uri)) {
+    if (await isMediatorInvitation(agent, uri)) {
       navigation.navigate(Stacks.SettingStack as any, {
         screen: Screens.ConfigureMediator,
         params: { scannedMediatorUri: uri },
