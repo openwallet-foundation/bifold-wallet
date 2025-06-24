@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.1.8
+
+### Patch Changes
+
+- c4a8205: fixed issue with limited text input
+- Updated dependencies [c4a8205]
+  - @bifold/core@2.1.8
+
 ## 2.1.7
 
 ### Patch Changes

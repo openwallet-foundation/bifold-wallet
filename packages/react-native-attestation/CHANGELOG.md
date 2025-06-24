@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.1.8
+
+### Patch Changes
+
+- c4a8205: fixed issue with limited text input
+
 ## 2.1.7
 
 ## 2.1.6
