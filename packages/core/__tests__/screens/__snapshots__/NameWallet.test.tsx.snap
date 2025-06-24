@@ -120,6 +120,7 @@ exports[`NameWallet Screen LimitedInput and continue button are present 1`] = `
                   accessibilityLabel="NameWallet.NameYourWallet"
                   defaultValue="test-wallet"
                   maxFontSizeMultiplier={2}
+                  maxLength={50}
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
