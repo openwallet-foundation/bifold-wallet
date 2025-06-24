@@ -4,13 +4,20 @@ import { View, StyleSheet, TextInput, TextInputProps } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { ThemedText } from '../texts/ThemedText'
 
-interface Props extends TextInputProps {
+interface LimitedTextInputProps extends TextInputProps {
+  showLimitCounter?: boolean
   label: string
   limit: number
   handleChangeText: (text: string) => void
 }
 
-const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...textInputProps }) => {
+const LimitedTextInput: React.FC<LimitedTextInputProps> = ({
+  showLimitCounter = true,
+  label,
+  limit,
+  handleChangeText,
+  ...textInputProps
+}) => {
   const [focused, setFocused] = useState(false)
   const [characterCount, setCharacterCount] = useState(0)
   const { Inputs, TextTheme, maxFontSizeMultiplier } = useTheme()
@@ -43,6 +50,7 @@ const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...
     <View style={styles.container}>
       <ThemedText style={{ marginBottom: 5 }}>{label}</ThemedText>
       <TextInput
+        maxLength={limit}
         maxFontSizeMultiplier={maxFontSizeMultiplier}
         style={[styles.textInput, focused && { ...Inputs.inputSelected }]}
         selectionColor={Inputs.inputSelected.borderColor}
@@ -51,9 +59,11 @@ const LimitedTextInput: React.FC<Props> = ({ label, limit, handleChangeText, ...
         onChangeText={onChangeText}
         {...textInputProps}
       />
-      <ThemedText style={styles.limitCounter}>
-        {characterCount}/{limit}
-      </ThemedText>
+      {showLimitCounter && (
+        <ThemedText style={styles.limitCounter}>
+          {characterCount}/{limit}
+        </ThemedText>
+      )}
     </View>
   )
 }
