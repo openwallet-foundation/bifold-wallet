@@ -1,7 +1,5 @@
 import { Agent, ConnectionRecord, ConnectionType } from '@credo-ts/core'
 import Config from 'react-native-config'
-import { parse } from 'query-string'
-import { Buffer } from 'buffer'
 
 export const validateMediatorUrl = async (url?: string): Promise<boolean> => {
   if (!url) return false
@@ -18,121 +16,68 @@ export const getMediatorUrl = async (selectedMediator: string): Promise<string> 
   return resolved
 }
 
-export const getMediatorConnection = async (agent: Agent): Promise<ConnectionRecord | undefined> => {
-  const connections: ConnectionRecord[] = await agent.connections.getAll()
-  const mediators = connections.filter((r) => r.connectionTypes.includes(ConnectionType.Mediator))
-  if (mediators.length < 1) {
-    agent.config.logger.warn(`Mediator connection not found`)
-    return undefined
-  }
-
-  // get most recent mediator connection
-  const latestMediator = mediators.reduce((acc, cur) => {
-    if (!acc.updatedAt) {
-      if (!cur.updatedAt) {
-        return acc.createdAt > cur.createdAt ? acc : cur
-      } else {
-        return acc.createdAt > cur.updatedAt ? acc : cur
-      }
-    }
-
-    if (!cur.updatedAt) {
-      return acc.updatedAt > cur.createdAt ? acc : cur
-    } else {
-      return acc.updatedAt > cur.updatedAt ? acc : cur
-    }
-  }, mediators[0])
-
-  return latestMediator
-}
-
-export const isMediatorCapable = async (agent: Agent): Promise<boolean | undefined> => {
-  const mediator = await getMediatorConnection(agent)
-  if (!mediator) {
-    return
-  }
-  agent.config.logger.info(`Mediator connection record: ${JSON.stringify(mediator, null, 2)}`)
-  const connectionTypes = mediator.connectionTypes ?? mediator.getTags?.()?.connectionTypes
-  const isMediator = Array.isArray(connectionTypes) && connectionTypes.includes('mediator')
-
-  return isMediator
-}
-
-export const getConnectionIdFromMediatorUrl = async (agent: Agent, mediatorUrl: string): Promise<string | null> => {
+export const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Promise<ConnectionRecord | undefined> => {
   try {
-    const invite = await agent.oob.parseInvitation(mediatorUrl)
-    let outOfBandRecord = await agent.oob.findByReceivedInvitationId(invite.id)
-
+    const invitation = await agent.oob.parseInvitation(url)
+    console.log(`Parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
+    if (!invitation) {
+      agent.config.logger.warn(`No invitation found in URL: ${url}`)
+      return undefined
+    }
+    let outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitation.id)
+    
     if (!outOfBandRecord) {
-      const { outOfBandRecord: newOobRecord } = await agent.oob.receiveInvitation(invite)
+      const { outOfBandRecord: newOobRecord } = await agent.oob.receiveInvitation(invitation)
       outOfBandRecord = newOobRecord
     }
+    console.log(`Out of band record: ${JSON.stringify(outOfBandRecord, null, 2)}`)
     const [connection] = await agent.connections.findAllByOutOfBandId(outOfBandRecord.id)
-    const readyConnection = connection?.isReady
-      ? connection
-      : connection
-      ? await agent.connections.returnWhenIsConnected(connection.id)
-      : null
-
-    return readyConnection?.id ?? null
+    const result = connection.isReady ? connection : await agent.connections.returnWhenIsConnected(connection.id)
+    console.log(`Connection record: ${JSON.stringify(result, null, 2)}`)
+    return result
   } catch (error) {
     agent.config.logger.warn(`Failed to get connection ID from mediator URL: ${error}`)
-    return null
-  }
-}
-
-export const parseMediatorInvitation = (agent: Agent, url: string): Record<string, any> | null => {
-  if (!url.includes('c_i=')) {
-    return null
-  }
-  try {
-    const { c_i: encoded } = parse(url.split('?')[1] || '')
-    if (typeof encoded !== 'string') {
-      return null
-    }
-    let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
-    while (base64.length % 4 !== 0) {
-      base64 += '='
-    }
-    const decoded = Buffer.from(base64, 'base64').toString('utf-8')
-    return JSON.parse(decoded)
-  } catch (e) {
-    agent.config.logger.warn(`Failed to parse mediator invitation: ${e}`)
-    return null
+    return
   }
 }
 
 export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
-  const invitation = parseMediatorInvitation(agent, url)
+  const invitation = await getConnectionRecordFromMediatorUrl(agent, url)
   if (!invitation) {
     return false
   }
-  const capable = await isMediatorCapable(agent)
-  return !!capable
+  console.log(`Parsed mediator invitation: ${JSON.stringify(invitation, null, 2)}`)
+  agent.config.logger.info(`Has Mediator ID: ${!!invitation.mediatorId}`)
+  return !!invitation.mediatorId
 }
 
 export const setMediationToDefault = async (agent: Agent, mediatorUrl: string) => {
-  const connectionId = await getConnectionIdFromMediatorUrl(agent, mediatorUrl)
-  agent.config.logger.info(`Setting mediation to default for connection ID: ${connectionId}`)
-  if (!connectionId) {
+  let connectionRecord = await getConnectionRecordFromMediatorUrl(agent, mediatorUrl)
+  agent.config.logger.info(`Setting mediation to default for connection ID: ${connectionRecord?.id}`)
+  if (!connectionRecord) {
+    agent.config.logger.warn(`No connection record found for mediator URL: ${mediatorUrl}`)
     return
   }
   const currentDefault = await agent.mediationRecipient.findDefaultMediator()
-  if (currentDefault?.connectionId === connectionId) {
+  if (currentDefault?.connectionId === connectionRecord.id) {
+    agent.config.logger.info(`Default mediator already set for connection ID: ${connectionRecord.id}`)
     return
   }
-  let mediationRecord = await agent.mediationRecipient.findByConnectionId(connectionId)
+  let mediationRecord = await agent.mediationRecipient.findByConnectionId(connectionRecord.id)
   agent.config.logger.info(`Mediation record found: ${!!mediationRecord}`)
   if (!mediationRecord) {
-    agent.config.logger.info(`mediation record failed to find. Requesting mediation for connection ID: ${connectionId}`)
-    const connection = await agent.connections.findById(connectionId)
-    if (!connection) {
-      agent.config.logger.warn(`Connection with ID ${connectionId} not found`)
+    agent.config.logger.info(`mediation record failed to find. Requesting mediation for connection ID: ${connectionRecord.id}`)
+    const connect = await agent.connections.findById(connectionRecord.id)
+    if (!connect) {
+      agent.config.logger.warn(`Connection not found for ID: ${connectionRecord.id}`)
       return
     }
-    agent.config.logger.info(`Requesting mediation for connection: ${connection.id}`)
-    mediationRecord = await agent.mediationRecipient.requestMediation(connection)
+    agent.config.logger.info(`Requesting mediation for connection: ${connectionRecord.id}`)
+    mediationRecord = await agent.mediationRecipient.requestMediation(connect)
   }
-  await agent.mediationRecipient.setDefaultMediator(mediationRecord)
-  agent.config.logger.info(`setting default mediator with record: ${JSON.stringify(mediationRecord)}`)
+
+  await agent.mediationRecipient.setDefaultMediator(mediationRecord) 
+  // agent.config.logger.info(`Provisioning mediation for connection ID: ${connectionRecord.id}`)
+  // await agent.mediationRecipient.provision(connectionRecord)
+  console.log(`setting default mediator with record: ${JSON.stringify(mediationRecord)}`)
 }
