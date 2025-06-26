@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.1.10
+
+### Patch Changes
+
+- 7ce710c: added json details button to proof request screen
+
 ## 2.1.9
 
 ### Patch Changes
