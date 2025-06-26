@@ -85,6 +85,21 @@ If you prefer using the command line interface (CLI), follow these steps:
 
 (Note: The following instructions assume you have Android Studio and the Android SDK installed in your home directory. If your setup is different, adjust the paths accordingly.)
 
+#### OpenJDK17
+
+You will need to have OpenJDK 17 installed. You can install it using your package manager. 
+
+##### Manual Installation
+
+Some linux distros, such as Kali, might not have OpenJDK 17 available. The instructions below mentions `zulu-17.jdk`, which is a OpenJDK 17 distribution that can be downloaded from [Zulu OpenJDK](https://www.azul.com/downloads/?package=jdk#zulu). You can then run `sudo dpkg -i zulu17.58.21-ca-jdk17.0.15-linux_amd64.deb
+` to install it.
+
+If you have more than one version installed, you can run the following command to pick openJDK17 version:
+
+```sh
+sudo update-alternatives --config java
+```
+
 1. List the available emulators:
 
    ```sh
