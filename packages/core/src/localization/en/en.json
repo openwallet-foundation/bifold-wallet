@@ -47,7 +47,8 @@
     "Close": "Close",
     "Remove": "Remove",
     "GotIt": "Got it",
-    "Send": "Send"
+    "Send": "Send",
+    "ViewJSON": "View JSON Details"
   },
   "Date": {
     "ShortFormat": "MMM D",
