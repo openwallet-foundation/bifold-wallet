@@ -414,13 +414,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           >
             <TouchableOpacity
               onPress={callViewJSONDetails}
-              accessibilityLabel={t('ContactDetails.JSONDetails')}
+              accessibilityLabel={t('Global.ViewJSON')}
               accessibilityRole={'button'}
               testID={testIdWithKey('JSONDetails')}
               style={{ flexDirection: 'row', gap: 8 }}
             >
               <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.secondary} />
-              <ThemedText>{t('ContactDetails.JSONDetails')}</ThemedText>
+              <ThemedText>{t('Global.ViewJSON')}</ThemedText>
             </TouchableOpacity>
           </View>
         )}

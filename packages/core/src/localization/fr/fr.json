@@ -47,7 +47,9 @@
     "Remove": "Supprimer",
     "Close": "Fermer",
     "GotIt": "Got it (FR)",
-    "Send": "Envoyer"
+    "Send": "Envoyer",
+    "ViewJSON": "View JSON Details (FR)"
+
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -474,8 +476,7 @@
     "GoToCredentialDetail": "Aller au détail de l'attestation",
     "CredentialName": "Nom du justificatif",
     "Credentials": "Mes justificatifs avec ce contact",
-    "NoCredentials": "Vous n'avez aucun justificatif de ce contact.",
-    "JSONDetails": "View JSON details (FR)"
+    "NoCredentials": "Vous n'avez aucun justificatif de ce contact."
   },
   "WhatAreContacts": {
     "Title": "Que sont les Contacts?",

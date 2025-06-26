@@ -311,13 +311,13 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         {store?.preferences.developerModeEnabled && (
           <TouchableOpacity
             onPress={callViewJSONDetails}
-            accessibilityLabel={t('ContactDetails.JSONDetails')}
+            accessibilityLabel={t('Global.ViewJSON')}
             accessibilityRole={'button'}
             testID={testIdWithKey('JSONDetails')}
             style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
           >
             <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.text} />
-            <ThemedText>{t('ContactDetails.JSONDetails')}</ThemedText>
+            <ThemedText>{t('Global.ViewJSON')}</ThemedText>
           </TouchableOpacity>
         )}
         <TouchableOpacity
