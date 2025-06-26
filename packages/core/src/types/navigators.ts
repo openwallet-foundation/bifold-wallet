@@ -51,6 +51,7 @@ export enum Screens {
   NameWallet = 'Name Wallet',
   RenameWallet = 'Rename Wallet',
   RenameContact = 'Rename Contact',
+  JSONDetails = 'JSON Details',
   ScanHelp = 'Scan Help',
   HistorySettings = 'History Settings',
   HistoryPage = 'History',
@@ -122,6 +123,7 @@ export type ContactStackParams = {
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequest]: { proofId: string }
+  [Screens.JSONDetails]: { jsonBlob: string }
 }
 
 export type ProofRequestsStackParams = {
@@ -141,6 +143,7 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
+  [Screens.JSONDetails]: { jsonBlob: string }
 }
 
 export type HomeStackParams = {

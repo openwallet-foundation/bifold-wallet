@@ -42,6 +42,7 @@
     "@hyperledger/aries-askar-react-native": "0.2.3",
     "@hyperledger/indy-vdr-react-native": "0.2.2",
     "@react-native-async-storage/async-storage": "^1.22.0",
+    "@react-native-clipboard/clipboard": "^1.16.2",
     "@react-native-community/netinfo": "^11.3.0",
     "@react-native-masked-view/masked-view": "^0.3.0",
     "@react-navigation/bottom-tabs": "6.0.9",
