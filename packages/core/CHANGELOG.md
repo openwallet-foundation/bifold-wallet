@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 2.1.10
+
+### Patch Changes
+
+- 7ce710c: added json details button to proof request screen
+
+## 2.1.9
+
+### Patch Changes
+
+- 3cca189: added ability to view json details from credential and contact details screen in dev mode, added issued date to credential details screen in dev mode
+
 ## 2.1.8
 
 ### Patch Changes
