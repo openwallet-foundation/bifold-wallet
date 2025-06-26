@@ -216,6 +216,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     navigation.navigate(Screens.RenameContact, { connectionId })
   }, [navigation, connectionId])
 
+  const callViewJSONDetails = useCallback(() => {
+    navigation.navigate(Screens.JSONDetails, { jsonBlob: JSON.stringify(connection, null, 2) })
+  }, [navigation, connection])
+
   const contactLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
@@ -301,6 +305,19 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           >
             <Assets.svg.iconEdit width={20} height={20} color={ColorPallet.brand.text} />
             <ThemedText>{t('Screens.RenameContact')}</ThemedText>
+          </TouchableOpacity>
+        )}
+        {/* JSON button on dev mode enabled */}
+        {store?.preferences.developerModeEnabled && (
+          <TouchableOpacity
+            onPress={callViewJSONDetails}
+            accessibilityLabel={t('ContactDetails.JSONDetails')}
+            accessibilityRole={'button'}
+            testID={testIdWithKey('JSONDetails')}
+            style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
+          >
+            <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.text} />
+            <ThemedText>{t('ContactDetails.JSONDetails')}</ThemedText>
           </TouchableOpacity>
         )}
         <TouchableOpacity

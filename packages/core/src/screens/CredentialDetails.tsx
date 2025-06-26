@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
+import { useStore } from '../contexts/store'
 
 import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
@@ -66,6 +67,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     (credential?.metadata.get(CredentialMetadata.customMetadata) as credentialCustomMetadata)
       ?.revoked_detail_dismissed ?? false
   )
+  const [store] = useStore()
 
   useEffect(() => {
     setIsRevokedMessageHidden(
@@ -127,6 +129,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       })
     }
   }
+
+  const callViewJSONDetails = useCallback(() => {
+    navigation.navigate(Stacks.ContactStack, {
+      screen: Screens.JSONDetails,
+      params: { jsonBlob: JSON.stringify(credential, null, 2) },
+    })
+  }, [navigation, credential])
 
   useEffect(() => {
     if (!agent) {
@@ -381,8 +390,40 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
                 {credentialConnectionLabel}
               </ThemedText>
             </ThemedText>
+            {/* issued date if dev mode */}
+            {store?.preferences.developerModeEnabled && credential?.createdAt ? (
+              <ThemedText testID={testIdWithKey('IssuedDate')}>
+                <ThemedText variant="title" style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
+                  {t('CredentialDetails.Issued') + ': '}
+                </ThemedText>
+                <ThemedText style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
+                  {formatTime(credential.createdAt, { format: 'YYYY-MM-DD HH:mm:ss [UTC]' })}
+                </ThemedText>
+              </ThemedText>
+            ) : null}
           </View>
         ) : null}
+        {store?.preferences.developerModeEnabled && (
+          <View
+            style={{
+              backgroundColor: ColorPallet.brand.secondaryBackground,
+              marginTop: paddingVertical,
+              paddingHorizontal,
+              paddingVertical,
+            }}
+          >
+            <TouchableOpacity
+              onPress={callViewJSONDetails}
+              accessibilityLabel={t('ContactDetails.JSONDetails')}
+              accessibilityRole={'button'}
+              testID={testIdWithKey('JSONDetails')}
+              style={{ flexDirection: 'row', gap: 8 }}
+            >
+              <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.secondary} />
+              <ThemedText>{t('ContactDetails.JSONDetails')}</ThemedText>
+            </TouchableOpacity>
+          </View>
+        )}
         {isRevoked ? (
           <View
             style={{

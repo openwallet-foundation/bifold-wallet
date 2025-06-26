@@ -6,6 +6,7 @@ import SettingsMenu from '../components/buttons/SettingsMenu'
 import { useTheme } from '../contexts/theme'
 import ListCredentials from '../screens/ListCredentials'
 import { CredentialStackParams, Screens } from '../types/navigators'
+import JSONDetails from '../screens/JSONDetails'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
@@ -30,6 +31,14 @@ const CredentialStack: React.FC = () => {
           headerRight: () => <CredentialListHeaderRight />,
           headerLeft: () => <SettingsMenu />,
           ...ScreenOptionsDictionary[Screens.Credentials],
+        })}
+      />
+      <Stack.Screen
+        name={Screens.JSONDetails}
+        component={JSONDetails}
+        options={() => ({
+          title: t('Screens.JSONDetails'),
+          ...ScreenOptionsDictionary[Screens.JSONDetails],
         })}
       />
     </Stack.Navigator>
