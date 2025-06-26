@@ -637,6 +637,19 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }, [navigation])
 
+  const callViewJSONDetails = useCallback(() => {
+    navigation.navigate(Stacks.ContactStack, {
+      screen: Screens.JSONDetails,
+      params: {
+        jsonBlob:
+          '"proof":' +
+          JSON.stringify(proof, null, 2) +
+          '\n"retrievedCredentials":' +
+          JSON.stringify(retrievedCredentials, null, 2),
+      },
+    })
+  }, [navigation, proof, retrievedCredentials])
+
   const shareDisabledErrors = useMemo(() => {
     return {
       hasCredentialError: !hasAvailableCredentials,
@@ -802,6 +815,19 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                     onPress={toggleDeclineModalVisible}
                   />
                 </View>
+                {store.preferences.developerModeEnabled && (
+                  <>
+                    <View style={styles.footerButton}>
+                      <Button
+                        title={t('Global.ViewJSON')}
+                        accessibilityLabel={t('Global.ViewJSON')}
+                        testID={testIdWithKey('JSONDetails')}
+                        buttonType={ButtonType.Secondary}
+                        onPress={callViewJSONDetails}
+                      />
+                    </View>
+                  </>
+                )}
               </>
             )}
           </>

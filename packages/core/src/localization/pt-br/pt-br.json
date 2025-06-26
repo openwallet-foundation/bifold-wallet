@@ -46,7 +46,9 @@
     "Close": "Fechar",
     "Remove": "Remover",
     "GotIt": "Got it (PT-BR)",
-    "Send": "Enviar"
+    "Send": "Enviar",
+    "ViewJSON": "View JSON Details (PT-BR)"
+
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -454,8 +456,7 @@
     "GoToCredentialDetail": "Ir para os detalhes da credencial",
     "CredentialName": "Nome da credencial",
     "Credentials": "Minhas credenciais",
-    "NoCredentials": "Você não tem nenhuma credencial com esse Contato.",
-    "JSONDetails": "View JSON details (PT-BR)"
+    "NoCredentials": "Você não tem nenhuma credencial com esse Contato."
   },
   "WhatAreContacts": {
     "Title": "O que são Contatos?",

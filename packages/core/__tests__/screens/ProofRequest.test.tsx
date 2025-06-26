@@ -13,7 +13,8 @@ import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native'
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react-native'
-import React from 'react'
+import React, { act } from 'react'
+import { Screens, Stacks } from '../../src/types/navigators'
 
 import ProofRequest from '../../src/screens/ProofRequest'
 import { testIdWithKey } from '../../src/utils/testable'
@@ -21,6 +22,8 @@ import timeTravel from '../helpers/timetravel'
 import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
 import { BasicAppContext } from '../helpers/app'
 import * as Helpers from '../../src/utils/helpers'
+import { StoreContext } from '../../src'
+import { testDefaultState } from '../contexts/store'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -524,6 +527,118 @@ describe('displays a proof request screen', () => {
       expect(ageNotSatisfied).toBeTruthy()
       expect(cancelButton).not.toBeNull()
       expect(cancelButton).not.toBeDisabled()
+    })
+
+    test('JSON Detail button exists when dev mode is enabled', async () => {
+      const { agent } = useAgent()
+
+      // @ts-expect-error this method will be replaced with a mock which does have this method
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-expect-error this method will be replaced with a mock which does have this method
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
+
+      const customState = {
+        ...testDefaultState,
+        preferences: {
+          ...testDefaultState.preferences,
+          developerModeEnabled: true,
+        },
+      }
+      const tree = render(
+        <BasicAppContext>
+          <StoreContext.Provider
+            value={[
+              customState,
+              () => {
+                return
+              },
+            ]}
+          >
+            <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id}></ProofRequest>
+          </StoreContext.Provider>
+        </BasicAppContext>
+      )
+
+      const jsonDetailsButton = await tree.findByTestId(testIdWithKey('JSONDetails'))
+      expect(jsonDetailsButton).not.toBeNull()
+    })
+
+    test('JSON Details button does not exist when dev mode is disabled', async () => {
+      const customState = {
+        ...testDefaultState,
+        preferences: {
+          ...testDefaultState.preferences,
+          developerModeEnabled: false,
+        },
+      }
+      const tree = render(
+        <BasicAppContext>
+          <StoreContext.Provider
+            value={[
+              customState,
+              () => {
+                return
+              },
+            ]}
+          >
+            <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id}></ProofRequest>
+          </StoreContext.Provider>
+        </BasicAppContext>
+      )
+      expect(() => tree.getByTestId(testIdWithKey('JSONDetails'))).toThrow()
+    })
+
+    test('JSON Details button navigates', async () => {
+      const navigate = jest.fn()
+      const navigation = { navigate } as any
+      const proof = testProofRequest
+      const retrievedCredentials = testRetrievedCredentials.proofFormats.indy
+
+      const { agent } = useAgent()
+
+      // @ts-expect-error this method will be replaced with a mock which does have this method
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-expect-error this method will be replaced with a mock which does have this method
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials)
+
+      const customState = {
+        ...testDefaultState,
+        preferences: {
+          ...testDefaultState.preferences,
+          developerModeEnabled: true,
+        },
+      }
+      const tree = render(
+        <BasicAppContext>
+          <StoreContext.Provider
+            value={[
+              customState,
+              () => {
+                return
+              },
+            ]}
+          >
+            <ProofRequest navigation={navigation} proofId={testProofRequest.id} />
+          </StoreContext.Provider>
+        </BasicAppContext>
+      )
+      const jsonDetailsButton = await tree.findByTestId(testIdWithKey('JSONDetails'))
+
+      await act(async () => {
+        fireEvent.press(jsonDetailsButton)
+        expect(navigation.navigate).toHaveBeenCalledWith(Stacks.ContactStack, {
+          screen: Screens.JSONDetails,
+          params: {
+            jsonBlob:
+              '"proof":' +
+              JSON.stringify(proof, null, 2) +
+              '\n"retrievedCredentials":' +
+              JSON.stringify(retrievedCredentials, null, 2),
+          },
+        })
+      })
     })
   })
 })

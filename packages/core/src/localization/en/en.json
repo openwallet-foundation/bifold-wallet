@@ -47,7 +47,8 @@
     "Close": "Close",
     "Remove": "Remove",
     "GotIt": "Got it",
-    "Send": "Send"
+    "Send": "Send",
+    "ViewJSON": "View JSON Details"
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -470,8 +471,7 @@
     "GoToCredentialDetail": "Go to credential details",
     "CredentialName": "Credential name",
     "Credentials": "My credentials from this contact",
-    "NoCredentials": "You don't have any credentials from this contact.",
-    "JSONDetails": "View JSON details"
+    "NoCredentials": "You don't have any credentials from this contact."
   },
   "WhatAreContacts": {
     "Title": "What are Contacts?",
