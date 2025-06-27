@@ -143,11 +143,6 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
             onPress={handleMediatorChange}
           />
         )}
-        ItemSeparatorComponent={() => (
-          <View style={{ backgroundColor: SettingsTheme.groupBackground }}>
-            <View style={styles.itemSeparator} />
-          </View>
-        )}
       />
       {isModalVisible && (
         <DismissiblePopupModal

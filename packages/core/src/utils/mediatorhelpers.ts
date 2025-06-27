@@ -38,7 +38,7 @@ export const isMediatorInvitation = async (agent: Agent, url: string): Promise<b
   const invitation = parseMediatorInvitation(url)
   if (!invitation) return false
   agent.config.logger.info(`Parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
-  const type = invitation['@type'] || invitation['type'] || ''
+  const type = invitation['@type'] ?? invitation['type'] ?? ''
   if (!type.includes('connections/1.0/invitation') && !type.includes('connections/2.0/invitation')) {
     agent.config.logger.warn(`Invalid invitation type: ${type}`)
     return false
