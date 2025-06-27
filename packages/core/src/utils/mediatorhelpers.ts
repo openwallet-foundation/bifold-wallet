@@ -21,17 +21,15 @@ export const getMediatorUrl = async (selectedMediator: string): Promise<string> 
 const parseMediatorInvitation = (url: string): Record<string, any> | null => {
   const query = url.split('?')[1] || ''
   const { c_i, oob } = parse(query)
-  const encoded = typeof c_i === 'string' ? c_i : (typeof oob === 'string' ? oob : null)
-  if (!encoded) return null
-
-  try {
-    let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
-    while (base64.length % 4 !== 0) base64 += '='
-    const decoded = Buffer.from(base64, 'base64').toString('utf-8')
-    return JSON.parse(decoded)
-  } catch (e) {
-    throw e
+  const encoded = typeof c_i === 'string' ? c_i : typeof oob === 'string' ? oob : null
+  if (!encoded) {
+    return null
   }
+  let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
+  while (base64.length % 4 !== 0) base64 += '='
+  const decoded = Buffer.from(base64, 'base64').toString('utf-8')
+
+  return JSON.parse(decoded)
 }
 
 export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
@@ -56,7 +54,7 @@ const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Pr
     }
     const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitation.id)
     let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : []
-    
+
     if (!connection) {
       agent.config.logger.warn(`No connection found for out-of-band record: ${outOfBandRecord?.id}`)
       const invite = await agent.oob.parseInvitation(url)
@@ -76,7 +74,7 @@ const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Pr
 }
 
 export const setMediationToDefault = async (agent: Agent, mediatorUrl: string) => {
-  let mediationRecord = await getConnectionRecordFromMediatorUrl(agent, mediatorUrl)
+  const mediationRecord = await getConnectionRecordFromMediatorUrl(agent, mediatorUrl)
   if (!mediationRecord) {
     agent.config.logger.warn(`No connection record found for mediator URL: ${mediatorUrl}`)
     return
@@ -86,6 +84,6 @@ export const setMediationToDefault = async (agent: Agent, mediatorUrl: string) =
     agent.config.logger.info(`Default mediator already set for connection ID: ${mediationRecord.id}`)
     return
   }
-  await agent.mediationRecipient.setDefaultMediator(mediationRecord) 
-  console.log(`setting default mediator with record: ${JSON.stringify(mediationRecord)}`)
+  await agent.mediationRecipient.setDefaultMediator(mediationRecord)
+  agent.config.logger.info(`setting default mediator with record: ${JSON.stringify(mediationRecord)}`)
 }
