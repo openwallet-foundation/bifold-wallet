@@ -21,7 +21,7 @@ export const getMediatorUrl = async (selectedMediator: string): Promise<string> 
 const parseMediatorInvitation = (url: string): Record<string, any> | null => {
   const query = url.split('?')[1] || ''
   const { c_i, oob } = parse(query)
-  const encoded = typeof c_i === 'string' ? c_i : typeof oob === 'string' ? oob : null
+  const encoded = typeof c_i === 'string' ? c_i : (typeof oob === 'string' ? oob : null)
   if (!encoded) return null
 
   try {
@@ -30,7 +30,7 @@ const parseMediatorInvitation = (url: string): Record<string, any> | null => {
     const decoded = Buffer.from(base64, 'base64').toString('utf-8')
     return JSON.parse(decoded)
   } catch (e) {
-    return null
+    throw e
   }
 }
 
