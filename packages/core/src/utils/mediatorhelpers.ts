@@ -1,7 +1,9 @@
-import { Agent, ConnectionRecord, ConnectionType } from '@credo-ts/core'
+import { Agent, MediationRecord } from '@credo-ts/core'
 import Config from 'react-native-config'
+import { parse } from 'query-string'
+import { Buffer } from 'buffer'
 
-export const validateMediatorUrl = async (url?: string): Promise<boolean> => {
+const validateMediatorUrl = async (url?: string): Promise<boolean> => {
   if (!url) return false
   try {
     const response = await fetch(url, { method: 'HEAD' })
@@ -16,68 +18,74 @@ export const getMediatorUrl = async (selectedMediator: string): Promise<string> 
   return resolved
 }
 
-export const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Promise<ConnectionRecord | undefined> => {
+const parseMediatorInvitation = (url: string): Record<string, any> | null => {
+  const query = url.split('?')[1] || ''
+  const { c_i, oob } = parse(query)
+  const encoded = typeof c_i === 'string' ? c_i : typeof oob === 'string' ? oob : null
+  if (!encoded) return null
+
+  try {
+    let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
+    while (base64.length % 4 !== 0) base64 += '='
+    const decoded = Buffer.from(base64, 'base64').toString('utf-8')
+    return JSON.parse(decoded)
+  } catch (e) {
+    return null
+  }
+}
+
+export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
+  const invitation = parseMediatorInvitation(url)
+  if (!invitation) return false
+  agent.config.logger.info(`Parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
+  const type = invitation['@type'] || invitation['type'] || ''
+  if (!type.includes('connections/1.0/invitation') && !type.includes('connections/2.0/invitation')) {
+    agent.config.logger.warn(`Invalid invitation type: ${type}`)
+    return false
+  }
+
+  return true
+}
+
+const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Promise<MediationRecord | undefined> => {
   try {
     const invitation = await agent.oob.parseInvitation(url)
-    console.log(`Parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
     if (!invitation) {
       agent.config.logger.warn(`No invitation found in URL: ${url}`)
       return undefined
     }
-    let outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitation.id)
+    const outOfBandRecord = await agent.oob.findByReceivedInvitationId(invitation.id)
+    let [connection] = outOfBandRecord ? await agent.connections.findAllByOutOfBandId(outOfBandRecord.id) : []
     
-    if (!outOfBandRecord) {
-      const { outOfBandRecord: newOobRecord } = await agent.oob.receiveInvitation(invitation)
-      outOfBandRecord = newOobRecord
+    if (!connection) {
+      agent.config.logger.warn(`No connection found for out-of-band record: ${outOfBandRecord?.id}`)
+      const invite = await agent.oob.parseInvitation(url)
+      const { connectionRecord: newConnection } = await agent.oob.receiveInvitation(invite)
+      if (!newConnection) {
+        agent.config.logger.warn(`Failed to create connection from invitation: ${JSON.stringify(invite, null, 2)}`)
+        return
+      }
+      connection = newConnection
     }
-    console.log(`Out of band record: ${JSON.stringify(outOfBandRecord, null, 2)}`)
-    const [connection] = await agent.connections.findAllByOutOfBandId(outOfBandRecord.id)
     const result = connection.isReady ? connection : await agent.connections.returnWhenIsConnected(connection.id)
-    console.log(`Connection record: ${JSON.stringify(result, null, 2)}`)
-    return result
+    return agent.mediationRecipient.provision(result)
   } catch (error) {
     agent.config.logger.warn(`Failed to get connection ID from mediator URL: ${error}`)
     return
   }
 }
 
-export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
-  const invitation = await getConnectionRecordFromMediatorUrl(agent, url)
-  if (!invitation) {
-    return false
-  }
-  console.log(`Parsed mediator invitation: ${JSON.stringify(invitation, null, 2)}`)
-  agent.config.logger.info(`Has Mediator ID: ${!!invitation.mediatorId}`)
-  return !!invitation.mediatorId
-}
-
 export const setMediationToDefault = async (agent: Agent, mediatorUrl: string) => {
-  let connectionRecord = await getConnectionRecordFromMediatorUrl(agent, mediatorUrl)
-  agent.config.logger.info(`Setting mediation to default for connection ID: ${connectionRecord?.id}`)
-  if (!connectionRecord) {
+  let mediationRecord = await getConnectionRecordFromMediatorUrl(agent, mediatorUrl)
+  if (!mediationRecord) {
     agent.config.logger.warn(`No connection record found for mediator URL: ${mediatorUrl}`)
     return
   }
   const currentDefault = await agent.mediationRecipient.findDefaultMediator()
-  if (currentDefault?.connectionId === connectionRecord.id) {
-    agent.config.logger.info(`Default mediator already set for connection ID: ${connectionRecord.id}`)
+  if (currentDefault?.connectionId === mediationRecord.id) {
+    agent.config.logger.info(`Default mediator already set for connection ID: ${mediationRecord.id}`)
     return
   }
-  let mediationRecord = await agent.mediationRecipient.findByConnectionId(connectionRecord.id)
-  agent.config.logger.info(`Mediation record found: ${!!mediationRecord}`)
-  if (!mediationRecord) {
-    agent.config.logger.info(`mediation record failed to find. Requesting mediation for connection ID: ${connectionRecord.id}`)
-    const connect = await agent.connections.findById(connectionRecord.id)
-    if (!connect) {
-      agent.config.logger.warn(`Connection not found for ID: ${connectionRecord.id}`)
-      return
-    }
-    agent.config.logger.info(`Requesting mediation for connection: ${connectionRecord.id}`)
-    mediationRecord = await agent.mediationRecipient.requestMediation(connect)
-  }
-
   await agent.mediationRecipient.setDefaultMediator(mediationRecord) 
-  // agent.config.logger.info(`Provisioning mediation for connection ID: ${connectionRecord.id}`)
-  // await agent.mediationRecipient.provision(connectionRecord)
   console.log(`setting default mediator with record: ${JSON.stringify(mediationRecord)}`)
 }
