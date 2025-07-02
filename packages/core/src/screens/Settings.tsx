@@ -219,6 +219,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.Developer),
         },
         {
+          title: t('Settings.ConfigureMediator'),
+          value: store.preferences.selectedMediator,
+          accessibilityLabel: t('Settings.ConfigureMediator'),
+          testID: testIdWithKey('ConfigureMediator'),
+          onPress: () => navigation.navigate(Screens.ConfigureMediator),
+        },
+        {
           title: t('Settings.Logout'),
           accessibilityLabel: t('Settings.Logout'),
           testID: testIdWithKey('Logout'),

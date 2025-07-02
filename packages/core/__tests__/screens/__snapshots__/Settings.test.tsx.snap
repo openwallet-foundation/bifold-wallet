@@ -92,6 +92,13 @@ exports[`Settings Screen Renders correctly 1`] = `
               "title": "Settings.Developer",
             },
             Object {
+              "accessibilityLabel": "Settings.ConfigureMediator",
+              "onPress": [Function],
+              "testID": "com.ariesbifold:id/ConfigureMediator",
+              "title": "Settings.ConfigureMediator",
+              "value": "",
+            },
+            Object {
               "accessibilityLabel": "Settings.Logout",
               "onPress": [Function],
               "testID": "com.ariesbifold:id/Logout",

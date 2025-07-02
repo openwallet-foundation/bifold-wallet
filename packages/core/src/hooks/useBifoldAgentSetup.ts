@@ -3,7 +3,6 @@ import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
 import { agentDependencies } from '@credo-ts/react-native'
 import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
 import { useCallback, useRef, useState } from 'react'
-import { Config } from 'react-native-config'
 import { CachesDirectoryPath } from 'react-native-fs'
 
 import { TOKENS, useServices } from '../container-api'
@@ -12,6 +11,7 @@ import { useStore } from '../contexts/store'
 import { WalletSecret } from '../types/security'
 import { createLinkSecretIfRequired, getAgentModules } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
+import { getMediatorUrl } from '../utils/mediatorhelpers'
 
 export type AgentSetupReturnType = {
   agent: Agent | null
@@ -51,7 +51,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
   )
 
   const createNewAgent = useCallback(
-    async (walletSecret: WalletSecret): Promise<Agent> => {
+    async (walletSecret: WalletSecret, mediatorUrl: string): Promise<Agent> => {
       const newAgent = new Agent({
         config: {
           label: store.preferences.walletName || 'Aries Bifold',
@@ -65,7 +65,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
         dependencies: agentDependencies,
         modules: getAgentModules({
           indyNetworks: indyLedgers,
-          mediatorInvitationUrl: Config.MEDIATOR_URL,
+          mediatorInvitationUrl: mediatorUrl,
           txnCache: {
             capacity: 1000,
             expiryOffsetMs: 1000 * 60 * 60 * 24 * 7,
@@ -118,6 +118,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
 
   const initializeAgent = useCallback(
     async (walletSecret: WalletSecret): Promise<void> => {
+      const mediatorUrl = await getMediatorUrl(store.preferences.selectedMediator)
       logger.info('Checking for existing agent...')
       if (agentInstanceRef.current) {
         const restartedAgent = await restartExistingAgent(agentInstanceRef.current, walletSecret)
@@ -130,7 +131,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       }
 
       logger.info('Creating new agent...')
-      const newAgent = await createNewAgent(walletSecret)
+      const newAgent = await createNewAgent(walletSecret, mediatorUrl)
 
       logger.info('Migrating if required...')
       await migrateIfRequired(newAgent, walletSecret)
@@ -148,7 +149,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       agentInstanceRef.current = newAgent
       setAgent(newAgent)
     },
-    [logger, restartExistingAgent, createNewAgent, migrateIfRequired, warmUpCache]
+    [logger, restartExistingAgent, createNewAgent, migrateIfRequired, warmUpCache, store.preferences.selectedMediator]
   )
 
   const shutdownAndClearAgentIfExists = useCallback(async () => {
