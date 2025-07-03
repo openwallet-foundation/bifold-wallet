@@ -47,7 +47,8 @@
     "Close": "Close",
     "Remove": "Remove",
     "GotIt": "Got it",
-    "Send": "Send"
+    "Send": "Send",
+    "ViewJSON": "View JSON Details"
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -487,6 +488,7 @@
     "CredentialDetails": "Credential Details",
     "EmptyList": "Your wallet is empty. Your accepted credentials will be added here.",
     "IssuedBy": "Issued by",
+    "Issued": "Issued",
     "Credential": "credential"
   },
   "PushNotifications": {
@@ -771,6 +773,12 @@
   "QRRender": {
     "GenerationError": "Unable to generate QR code"
   },
+  "JSONDetails": {
+    "Share": "Share JSON",
+    "Copy": "Copy contents",
+    "CopiedSuccess": "Copied to clipboard",
+    "CopiedError": "Unable to copy to clipboard"
+  },
   "Record": {
     "Hide": "Hide",
     "Show": "Show",
@@ -828,7 +836,8 @@
     "HistorySettings": "History Settings",
     "History": "History",
     "HistoryDetails": "History Details",
-    "UpdateAvailable": "Update Available"
+    "UpdateAvailable": "Update Available",
+    "JSONDetails": "JSON details"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",

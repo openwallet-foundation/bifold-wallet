@@ -4,6 +4,7 @@ import { SvgProps } from 'react-native-svg'
 import Arrow from './assets/icons/large-arrow.svg'
 import IconDelete from './assets/icons/trash.svg'
 import IconEdit from './assets/icons/pencil.svg'
+import IconCode from './assets/icons/code.svg'
 import ActivityIndicator from './assets/img/activity-indicator-circle.svg'
 import AppLockout from './assets/img/app-lockout.svg'
 import Biometrics from './assets/img/biometrics.svg'
@@ -52,6 +53,7 @@ import TabOneIcon from './assets/img/message-text-icon-outline.svg'
 import TabTwoIcon from './assets/img/qrcode-scan-icon.svg'
 import TabThreeFocusedIcon from './assets/img/wallet-icon.svg'
 import TabThreeIcon from './assets/img/wallet-icon-outline.svg'
+import React from 'react'
 
 export interface ISVGAssets {
   activityIndicator: React.FC<SvgProps>
@@ -108,6 +110,7 @@ export interface ISVGAssets {
   iconEdit: React.FC<SvgProps>
   iconWarning: React.FC<SvgProps>
   iconError: React.FC<SvgProps>
+  iconCode: React.FC<SvgProps>
   tabOneIcon: React.FC<SvgProps>
   tabOneFocusedIcon: React.FC<SvgProps>
   tabTwoIcon: React.FC<SvgProps>
@@ -1087,6 +1090,7 @@ export const Assets = {
     homeCenterImg: HomeCenterImg,
     iconDelete: IconDelete,
     iconEdit: IconEdit,
+    iconCode: IconCode,
     iconError: IconError,
     iconWarning: IconWarning,
     tabOneIcon: TabOneIcon,

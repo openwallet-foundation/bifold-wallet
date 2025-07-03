@@ -120,6 +120,7 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                   accessibilityLabel="NameWallet.NameYourWallet"
                   defaultValue="test-wallet"
                   maxFontSizeMultiplier={2}
+                  maxLength={50}
                   onBlur={[Function]}
                   onChangeText={[Function]}
                   onFocus={[Function]}
