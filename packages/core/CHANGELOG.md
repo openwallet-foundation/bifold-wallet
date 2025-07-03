@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.2.0
+
+### Minor Changes
+
+- 3eb208e: Update OID proof request select card UI
+
 ## 2.1.10
 
 ### Patch Changes
