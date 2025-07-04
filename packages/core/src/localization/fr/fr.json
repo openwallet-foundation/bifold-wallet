@@ -48,6 +48,7 @@
     "Close": "Fermer",
     "GotIt": "Got it (FR)",
     "Send": "Envoyer",
+    "Reset": "Reset (FR)",
     "ViewJSON": "View JSON Details (FR)"
 
   },
@@ -736,7 +737,10 @@
     "ScanMyQR": "Scanner mon code QR",
     "Developer": "Options de développeur",
     "AutoLockTime": "Auto lock time (FR)",
-    "Logout": "Déconnexion"
+    "Logout": "Déconnexion",
+    "ConfigureMediator": "Configurer le médiateur",
+    "ChangeMediator": "Change mediator (FR)",
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (FR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (FR)",
