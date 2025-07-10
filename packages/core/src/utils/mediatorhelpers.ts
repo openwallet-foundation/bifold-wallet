@@ -18,7 +18,7 @@ export const getMediatorUrl = async (selectedMediator: string): Promise<string> 
   return resolved
 }
 
-const parseMediatorInvitation = (url: string): Record<string, any> | null => {
+const parseInvitationUrl = (url: string): Record<string, any> | null => {
   const query = url.split('?')[1] || ''
   const { c_i, oob } = parse(query)
   const encoded = typeof c_i === 'string' ? c_i : typeof oob === 'string' ? oob : null
@@ -33,26 +33,34 @@ const parseMediatorInvitation = (url: string): Record<string, any> | null => {
 }
 
 export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
-  const invitation = parseMediatorInvitation(url)
+  const invitation = parseInvitationUrl(url)
   if (!invitation) {
     return false
   }
-  agent.config.logger.info(`base64 parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
+
+  agent.config.logger.info(`Parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
+
   const type = invitation['@type'] ?? invitation['type'] ?? ''
-  if (!type.includes('connections/1.0/invitation') && !type.includes('connections/2.0/invitation')) {
+  const isValidType = type.includes('connections/1.0/invitation') || type.includes('out-of-band/1.1/invitation')
+  if (!isValidType) {
     agent.config.logger.warn(`Invalid invitation type: ${type}`)
     return false
   }
-  // const goalCode = invitation['goal_code'] ?? ''
-  // if (!goalCode.includes('aries.vc.mediate')) {
-  //   agent.config.logger.warn(`Goal code: ${goalCode} is not a valid mediator invitataion`)
-  //   return false
-  // }
+
+  const goalCode = invitation['goal_code'] ?? ''
+  const isMediatorGoal = goalCode.includes('aries.vc.mediate')
+  if (!isMediatorGoal) {
+    agent.config.logger.warn(`Invalid mediator goal code: ${goalCode}`)
+    return false
+  }
 
   return true
 }
 
-const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Promise<MediationRecord | undefined> => {
+const provisionMediationRecordFromMediatorUrl = async (
+  agent: Agent,
+  url: string
+): Promise<MediationRecord | undefined> => {
   try {
     const invitation = await agent.oob.parseInvitation(url)
     if (!invitation) {
@@ -81,7 +89,7 @@ const getConnectionRecordFromMediatorUrl = async (agent: Agent, url: string): Pr
 }
 
 export const setMediationToDefault = async (agent: Agent, mediatorUrl: string) => {
-  const mediationRecord = await getConnectionRecordFromMediatorUrl(agent, mediatorUrl)
+  const mediationRecord = await provisionMediationRecordFromMediatorUrl(agent, mediatorUrl)
   if (!mediationRecord) {
     agent.config.logger.warn(`No connection record found for mediator URL: ${mediatorUrl}`)
     return
