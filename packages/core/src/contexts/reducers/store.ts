@@ -520,7 +520,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
     case PreferencesDispatchAction.SET_SELECTED_MEDIATOR: {
-      const selectedMediator = (action?.payload ?? []).pop() ?? ''
+      const selectedMediator = (action?.payload ?? []).pop() ?? state.preferences.selectedMediator
       const preferences: Preferences = {
         ...state.preferences,
         selectedMediator,

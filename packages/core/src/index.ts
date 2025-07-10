@@ -100,7 +100,6 @@ export {
 } from './utils/helpers'
 export { isValidAnonCredsCredential, getCredentialIdentifiers } from './utils/credential'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
-export { getMediatorUrl } from './utils/mediatorhelpers'
 
 export type { AnimatedComponents } from './animated-components'
 export type {

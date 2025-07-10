@@ -1,60 +1,16 @@
 import { Agent, MediationRecord } from '@credo-ts/core'
-import Config from 'react-native-config'
-import { parse } from 'query-string'
-import { Buffer } from 'buffer'
-
-const validateMediatorUrl = async (url?: string): Promise<boolean> => {
-  if (!url) return false
-  try {
-    const response = await fetch(url, { method: 'HEAD' })
-    return response.ok
-  } catch {
-    return false
-  }
-}
-
-export const getMediatorUrl = async (selectedMediator: string): Promise<string> => {
-  const resolved = (await validateMediatorUrl(selectedMediator)) ? selectedMediator : Config.MEDIATOR_URL!
-  return resolved
-}
-
-const parseInvitationUrl = (url: string): Record<string, any> | null => {
-  const query = url.split('?')[1] || ''
-  const { c_i, oob } = parse(query)
-  const encoded = typeof c_i === 'string' ? c_i : typeof oob === 'string' ? oob : null
-  if (!encoded) {
-    return null
-  }
-  let base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
-  while (base64.length % 4 !== 0) base64 += '='
-  const decoded = Buffer.from(base64, 'base64').toString('utf-8')
-
-  return JSON.parse(decoded)
-}
 
 export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
-  const invitation = parseInvitationUrl(url)
+  const invitation = await agent.oob.parseInvitation(url)
   if (!invitation) {
     return false
   }
-
-  agent.config.logger.info(`Parsed invitation: ${JSON.stringify(invitation, null, 2)}`)
-
-  const type = invitation['@type'] ?? invitation['type'] ?? ''
-  const isValidType = type.includes('connections/1.0/invitation') || type.includes('out-of-band/1.1/invitation')
-  if (!isValidType) {
-    agent.config.logger.warn(`Invalid invitation type: ${type}`)
-    return false
+  if (invitation.goalCode === 'aries.vc.mediate') {
+    agent.config.logger.info(`Invitation is a mediator invitation with goal code: ${invitation.goalCode}`)
+    return true
   }
-
-  const goalCode = invitation['goal_code'] ?? ''
-  const isMediatorGoal = goalCode.includes('aries.vc.mediate')
-  if (!isMediatorGoal) {
-    agent.config.logger.warn(`Invalid mediator goal code: ${goalCode}`)
-    return false
-  }
-
-  return true
+  agent.config.logger.info(`Invitation is not a mediator invitation, goal code: ${invitation.goalCode}`)
+  return false
 }
 
 const provisionMediationRecordFromMediatorUrl = async (

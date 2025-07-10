@@ -11,7 +11,6 @@ import { useStore } from '../contexts/store'
 import { WalletSecret } from '../types/security'
 import { createLinkSecretIfRequired, getAgentModules } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
-import { getMediatorUrl } from '../utils/mediatorhelpers'
 
 export type AgentSetupReturnType = {
   agent: Agent | null
@@ -118,7 +117,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
 
   const initializeAgent = useCallback(
     async (walletSecret: WalletSecret): Promise<void> => {
-      const mediatorUrl = await getMediatorUrl(store.preferences.selectedMediator)
+      const mediatorUrl = store.preferences.selectedMediator
       logger.info('Checking for existing agent...')
       if (agentInstanceRef.current) {
         const restartedAgent = await restartExistingAgent(agentInstanceRef.current, walletSecret)
