@@ -521,6 +521,16 @@ export const Buttons = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: ColorPallet.brand.primary,
   },
+  criticalText: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.buttonText,
+    textAlign: 'center',
+  },
+  criticalTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.buttonText,
+    textAlign: 'center',
+  },
   primary: {
     padding: 16,
     borderRadius: 4,
@@ -583,13 +593,39 @@ export const Buttons = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: ColorPallet.brand.primary,
   },
+  modalCriticalDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.primaryDisabled,
+  },
+  modalCriticalText: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.buttonText,
+    textAlign: 'center',
+  },
+  modalCriticalTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.buttonText,
+    textAlign: 'center',
+  },
   modalPrimary: {
     padding: 16,
     borderRadius: 4,
     backgroundColor: ColorPallet.brand.modalPrimary,
   },
+  modalPrimaryDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.primaryDisabled,
+  },
   modalPrimaryText: {
     ...TextTheme.bold,
+    color: ColorPallet.brand.buttonText,
+    textAlign: 'center',
+  },
+  modalPrimaryTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.buttonText,
     textAlign: 'center',
   },
   modalSecondary: {
@@ -598,17 +634,36 @@ export const Buttons = StyleSheet.create({
     borderWidth: 2,
     borderColor: ColorPallet.brand.modalPrimary,
   },
+  modalSecondaryDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: ColorPallet.brand.secondaryDisabled,
+  },
   modalSecondaryText: {
     ...TextTheme.bold,
     color: ColorPallet.brand.modalPrimary,
     textAlign: 'center',
   },
+  modalSecondaryTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.secondaryDisabled,
+    textAlign: 'center',
+  },
   modalTertiary: {
+    padding: 16,
+  },
+  modalTertiaryDisabled: {
     padding: 16,
   },
   modalTertiaryText: {
     ...TextTheme.bold,
     color: ColorPallet.brand.modalPrimary,
+    textAlign: 'center',
+  },
+  modalTertiaryTextDisabled: {
+    ...TextTheme.bold,
+    color: ColorPallet.brand.tertiaryDisabled,
     textAlign: 'center',
   },
 })
