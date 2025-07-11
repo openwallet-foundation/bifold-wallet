@@ -22,14 +22,54 @@ const ButtonImplComponent = (
 ) => {
   const { Buttons, heavyOpacity } = useTheme()
   const buttonStyles = {
-    [ButtonType.Critical]: { color: Buttons.critical, text: Buttons.primaryText },
-    [ButtonType.Primary]: { color: Buttons.primary, text: Buttons.primaryText },
-    [ButtonType.Secondary]: { color: Buttons.secondary, text: Buttons.secondaryText },
-    [ButtonType.Tertiary]: { color: Buttons.tertiary, text: Buttons.tertiaryText },
-    [ButtonType.ModalCritical]: { color: Buttons.modalCritical, text: Buttons.primaryText },
-    [ButtonType.ModalPrimary]: { color: Buttons.modalPrimary, text: Buttons.modalPrimaryText },
-    [ButtonType.ModalSecondary]: { color: Buttons.modalSecondary, text: Buttons.modalSecondaryText },
-    [ButtonType.ModalTertiary]: { color: Buttons.modalTertiary, text: Buttons.modalTertiaryText },
+    [ButtonType.Critical]: { 
+      color: Buttons.critical, 
+      colorDisabled: Buttons.criticalTextDisabled,
+      text: Buttons.criticalText,
+      textDisabled: Buttons.criticalTextDisabled
+    },
+    [ButtonType.Primary]: { 
+      color: Buttons.primary, 
+      colorDisabled: Buttons.primaryDisabled,
+      text: Buttons.primaryText,
+      textDisabled: Buttons.primaryTextDisabled
+    },
+    [ButtonType.Secondary]: { 
+      color: Buttons.secondary, 
+      colorDisabled: Buttons.secondaryDisabled,
+      text: Buttons.secondaryText,
+      textDisabled: Buttons.secondaryTextDisabled
+    },
+    [ButtonType.Tertiary]: { 
+      color: Buttons.tertiary, 
+      colorDisabled: Buttons.tertiaryDisabled,
+      text: Buttons.tertiaryText,
+      textDisabled: Buttons.tertiaryTextDisabled
+    },
+    [ButtonType.ModalCritical]: { 
+      color: Buttons.modalCritical, 
+      colorDisabled: Buttons.modalCriticalDisabled,
+      text: Buttons.modalCriticalText,
+      textDisabled: Buttons.modalCriticalTextDisabled
+    },
+    [ButtonType.ModalPrimary]: { 
+      color: Buttons.modalPrimary, 
+      colorDisabled: Buttons.modalPrimaryDisabled,
+      text: Buttons.modalPrimaryText,
+      textDisabled: Buttons.modalPrimaryTextDisabled
+    },
+    [ButtonType.ModalSecondary]: { 
+      color: Buttons.modalSecondary, 
+      colorDisabled: Buttons.modalSecondaryDisabled,
+      text: Buttons.modalSecondaryText,
+      textDisabled: Buttons.modalSecondaryTextDisabled
+    },
+    [ButtonType.ModalTertiary]: { 
+      color: Buttons.modalTertiary, 
+      colorDisabled: Buttons.modalTertiaryDisabled,
+      text: Buttons.modalTertiaryText,
+      textDisabled: Buttons.modalTertiaryTextDisabled
+    },
   }
   const [isActive, setIsActive] = useState<boolean>(false)
 
@@ -45,12 +85,7 @@ const ButtonImplComponent = (
       testID={testID}
       style={[
         buttonStyles[buttonType].color,
-        disabled &&
-          (buttonType === ButtonType.Primary
-            ? Buttons.primaryDisabled
-            : buttonType === ButtonType.Secondary
-            ? Buttons.secondaryDisabled
-            : Buttons.tertiaryDisabled),
+        disabled && buttonStyles[buttonType].colorDisabled,
         isActive &&
           (buttonType === ButtonType.Secondary || buttonType === ButtonType.Tertiary) && {
             backgroundColor: Buttons.primary.backgroundColor,
@@ -72,12 +107,7 @@ const ButtonImplComponent = (
           maxFontSizeMultiplier={maxfontSizeMultiplier}
           style={[
             buttonStyles[buttonType].text,
-            disabled &&
-              (buttonType === ButtonType.Primary
-                ? Buttons.primaryTextDisabled
-                : buttonType === ButtonType.Secondary
-                ? Buttons.secondaryTextDisabled
-                : Buttons.tertiaryTextDisabled),
+            disabled && buttonStyles[buttonType].textDisabled,
             isActive && { textDecorationLine: 'underline' },
             isActive && buttonType === ButtonType.Secondary && { color: Buttons.primaryText.color },
           ]}
