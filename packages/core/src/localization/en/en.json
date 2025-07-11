@@ -48,6 +48,7 @@
     "Remove": "Remove",
     "GotIt": "Got it",
     "Send": "Send",
+    "Reset": "Reset",
     "ViewJSON": "View JSON Details"
   },
   "Date": {
@@ -748,7 +749,10 @@
     "Developer": "Developer options",
     "Notifications": "Notifications",
     "AutoLockTime": "Auto lock time",
-    "Logout": "Log out"
+    "Logout": "Log out",
+    "ConfigureMediator": "Configure Mediator",
+    "ChangeMediator": "Change Mediator",
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue?"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes",

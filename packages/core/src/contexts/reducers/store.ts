@@ -13,6 +13,7 @@ import {
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
+import Config from 'react-native-config'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -60,6 +61,9 @@ enum PreferencesDispatchAction {
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
   AUTO_LOCK_TIME = 'preferences/autoLockTime',
   SET_THEME = 'preferences/setTheme',
+  SET_SELECTED_MEDIATOR = 'preferences/setSelectedMediator',
+  ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
+  RESET_MEDIATORS = 'preferences/resetMediators',
 }
 
 enum ToursDispatchAction {
@@ -515,6 +519,48 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
     }
+    case PreferencesDispatchAction.SET_SELECTED_MEDIATOR: {
+      const selectedMediator = (action?.payload ?? []).pop() ?? state.preferences.selectedMediator
+      const preferences: Preferences = {
+        ...state.preferences,
+        selectedMediator,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+    case PreferencesDispatchAction.ADD_AVAILABLE_MEDIATOR: {
+      const mediatorToAdd = (action?.payload ?? []).pop() ?? ''
+      if (!state.preferences.availableMediators.includes(mediatorToAdd)) {
+        const updatedAvailableMediators = [...state.preferences.availableMediators, mediatorToAdd]
+        const preferences: Preferences = {
+          ...state.preferences,
+          availableMediators: updatedAvailableMediators,
+        }
+        PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+        return {
+          ...state,
+          preferences,
+        }
+      }
+      return state
+    }
+    case PreferencesDispatchAction.RESET_MEDIATORS: {
+      const preferences: Preferences = {
+        ...state.preferences,
+        availableMediators: [Config.MEDIATOR_URL as string],
+        selectedMediator: Config.MEDIATOR_URL as string,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
     case OnboardingDispatchAction.ONBOARDING_VERSION: {
       const version = (action?.payload || []).pop()
       const onboarding = {

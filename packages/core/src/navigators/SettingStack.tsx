@@ -19,6 +19,7 @@ import { testIdWithKey } from '../utils/testable'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
 import AutoLock from '../screens/AutoLock'
+import ConfigureMediator from '../screens/ConfigureMediator'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -62,6 +63,15 @@ const SettingStack: React.FC = () => {
           title: t('Screens.Language'),
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.Language],
+        }}
+      />
+      <Stack.Screen
+        name={Screens.ConfigureMediator}
+        component={ConfigureMediator}
+        options={{
+          title: 'Configure Mediator',
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.ConfigureMediator],
         }}
       />
       <Stack.Screen

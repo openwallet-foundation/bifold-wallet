@@ -33,6 +33,8 @@ export interface Preferences {
   alternateContactNames: Record<string, string>
   autoLockTime: number
   theme?: string
+  selectedMediator: string
+  availableMediators: string[]
 }
 
 export interface Tours {
