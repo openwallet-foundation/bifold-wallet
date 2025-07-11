@@ -1,5 +1,16 @@
 # @bifold/core
 
+## 2.2.0
+
+### Minor Changes
+
+- 3eb208e: Update OID proof request select card UI
+
+### Patch Changes
+
+- 2983113: feat: custom mediator added to developer mode
+- 5a0db59: use correct button styles from theme
+
 ## 2.1.10
 
 ### Patch Changes
