@@ -47,6 +47,7 @@
     "Remove": "Remover",
     "GotIt": "Got it (PT-BR)",
     "Send": "Enviar",
+    "Reset": "Reset (PT-BR)",
     "ViewJSON": "View JSON Details (PT-BR)"
 
   },
@@ -722,7 +723,10 @@
     "ScanMyQR": "Scanear meu QR code",
     "Developer": "Opções de Desenvolvedor",
     "AutoLockTime": "Auto lock time (PT-BR)",
-    "Logout": "Sair"
+    "Logout": "Sair",
+    "ConfigureMediator": "Configurar Mediator",
+    "ChangeMediator": "Change mediator (PT-BR)",
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (PT-BR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (PT-BR)",
