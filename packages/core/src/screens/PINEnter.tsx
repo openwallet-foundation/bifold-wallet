@@ -333,6 +333,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
               setPIN(p)
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
+                onPINInputCompleted(p)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
