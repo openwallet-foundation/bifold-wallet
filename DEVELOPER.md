@@ -85,6 +85,18 @@ If you prefer using the command line interface (CLI), follow these steps:
 
 (Note: The following instructions assume you have Android Studio and the Android SDK installed in your home directory. If your setup is different, adjust the paths accordingly.)
 
+#### Android SDK
+
+You will need to have the Android SDK installed. You can install it using your package manager or download it from the [Android Studio](https://developer.android.com/studio) website.
+
+Then make sure you have ANDROID_HOME environment variable set to the Android SDK directory:
+
+```sh
+export ANDROID_HOME=~/Android/Sdk
+```
+
+For more detailed information how to setup android SDK in react native, please refer to the [React Native Android SDK Setup](https://reactnative.dev/docs/set-up-your-environment#android-sdk) documentation.
+
 #### OpenJDK17
 
 You will need to have OpenJDK 17 installed. You can install it using your package manager. 
