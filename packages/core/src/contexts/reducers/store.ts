@@ -564,7 +564,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
 
     case PreferencesDispatchAction.BANNER_MESSAGES: {
-      const bannerMessageToAdd = action?.payload ?? [] ?? []
+      const bannerMessageToAdd = action?.payload ?? []
       const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
       const preferences: Preferences = {
         ...state.preferences,
@@ -578,7 +578,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
 
     case PreferencesDispatchAction.REMOVE_BANNER_MESSAGE: {
-      const keysToRemove = action?.payload ?? [] ?? []
+      const keysToRemove = action?.payload ?? []
       const newBannerMessages = state.preferences.bannerMessages.filter((msg) => !keysToRemove.includes(msg.id))
       const preferences: Preferences = {
         ...state.preferences,
