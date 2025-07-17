@@ -10,6 +10,7 @@ import JSONDetails from '../screens/JSONDetails'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const CredentialStack: React.FC = () => {
   const Stack = createStackNavigator<CredentialStackParams>()
@@ -22,7 +23,7 @@ const CredentialStack: React.FC = () => {
   const defaultStackOptions = useDefaultStackOptions(theme)
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, header: (props) => <HeaderWithBanner {...props} /> }}>
       <Stack.Screen
         name={Screens.Credentials}
         component={ListCredentials}

@@ -10,6 +10,7 @@ import { HomeStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const HomeStack: React.FC = () => {
   const Stack = createStackNavigator<HomeStackParams>()
@@ -19,7 +20,7 @@ const HomeStack: React.FC = () => {
   const [ScreenOptionsDictionary, historyEnabled] = useServices([TOKENS.OBJECT_SCREEN_CONFIG, TOKENS.HISTORY_ENABLED])
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, header: (props) => <HeaderWithBanner {...props} /> }}>
       <Stack.Screen
         name={Screens.Home}
         component={Home}

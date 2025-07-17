@@ -28,6 +28,7 @@ import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const MainStack: React.FC = () => {
   const { t } = useTranslation()
@@ -36,10 +37,9 @@ const MainStack: React.FC = () => {
   const [store] = useStore()
   const { agent } = useAgent()
   const defaultStackOptions = useDefaultStackOptions(theme)
-  const [CustomNavStack1, ScreenOptionsDictionary, NotificationBanner] = useServices([
+  const [CustomNavStack1, ScreenOptionsDictionary] = useServices([
     TOKENS.CUSTOM_NAV_STACK_1,
     TOKENS.OBJECT_SCREEN_CONFIG,
-    TOKENS.COMPONENT_NOTIFICATION_BANNER,
   ])
   const declinedProofs = useProofByState([ProofState.Declined, ProofState.Abandoned])
   useDeepLinks()
@@ -68,11 +68,14 @@ const MainStack: React.FC = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <NotificationBanner />
       <View style={{ flex: 1 }} importantForAccessibility={hideElements}>
         <Stack.Navigator
           initialRouteName={Stacks.TabStack}
-          screenOptions={{ ...defaultStackOptions, headerShown: false }}
+          screenOptions={{
+            ...defaultStackOptions,
+            headerShown: false,
+            header: (props) => <HeaderWithBanner {...props} />,
+          }}
         >
           <Stack.Screen name={Stacks.TabStack} component={TabStack} />
           <Stack.Screen

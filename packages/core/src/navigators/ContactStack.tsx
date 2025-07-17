@@ -18,6 +18,7 @@ import { ContactStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const ContactStack: React.FC = () => {
   const Stack = createStackNavigator<ContactStackParams>()
@@ -27,7 +28,7 @@ const ContactStack: React.FC = () => {
   const [ScreenOptionsDictionary] = useServices([TOKENS.OBJECT_SCREEN_CONFIG])
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions, header: (props) => <HeaderWithBanner {...props} /> }}>
       <Stack.Screen
         name={Screens.Contacts}
         component={ListContacts}

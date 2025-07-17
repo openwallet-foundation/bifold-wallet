@@ -11,6 +11,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const ConnectStack: React.FC = () => {
   const Stack = createStackNavigator<ConnectStackParams>()
@@ -23,6 +24,7 @@ const ConnectStack: React.FC = () => {
     <Stack.Navigator
       screenOptions={{
         ...defaultStackOptions,
+        header: (props) => <HeaderWithBanner {...props} />,
       }}
     >
       <Stack.Screen
