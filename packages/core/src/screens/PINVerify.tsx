@@ -92,7 +92,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
 
   const style = StyleSheet.create({
     screenContainer: {
-      height: '100%',
+      flex: 1,
       padding: 20,
       backgroundColor: ColorPallet.brand.primaryBackground,
       justifyContent: 'space-between',
