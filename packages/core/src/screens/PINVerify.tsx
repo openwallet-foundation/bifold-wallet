@@ -122,36 +122,38 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   return (
     <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
-        {usage === PINEntryUsage.ChangeBiometrics && (
-          <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
-            {t('PINEnter.ChangeBiometricsHeader')}
-          </ThemedText>
-        )}
-        <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>
-        <ThemedText variant="bold" style={style.inputLabelText}>
-          {inputLabelText[usage]}
+        <View>
           {usage === PINEntryUsage.ChangeBiometrics && (
-            <ThemedText variant="caption">
-              {` `}
-              {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
+            <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
+              {t('PINEnter.ChangeBiometricsHeader')}
             </ThemedText>
           )}
-        </ThemedText>
-        <PINInput
-          onPINChanged={(p: string) => {
-            setPIN(p)
-            if (p.length === minPINLength) {
-              Keyboard.dismiss()
-            }
-          }}
-          testID={testIdWithKey(inputTestId[usage])}
-          accessibilityLabel={inputLabelText[usage]}
-          autoFocus={true}
-          inlineMessage={inlineMessageField}
-          onSubmitEditing={async () => {
-            await onPINInputCompleted()
-          }}
-        />
+          <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>
+          <ThemedText variant="bold" style={style.inputLabelText}>
+            {inputLabelText[usage]}
+            {usage === PINEntryUsage.ChangeBiometrics && (
+              <ThemedText variant="caption">
+                {` `}
+                {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
+              </ThemedText>
+            )}
+          </ThemedText>
+          <PINInput
+            onPINChanged={(p: string) => {
+              setPIN(p)
+              if (p.length === minPINLength) {
+                Keyboard.dismiss()
+              }
+            }}
+            testID={testIdWithKey(inputTestId[usage])}
+            accessibilityLabel={inputLabelText[usage]}
+            autoFocus={true}
+            inlineMessage={inlineMessageField}
+            onSubmitEditing={async () => {
+              await onPINInputCompleted()
+            }}
+          />
+        </View>
         <View style={style.buttonContainer}>
           <Button
             title={primaryButtonText[usage]}
