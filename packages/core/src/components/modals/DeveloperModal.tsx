@@ -12,7 +12,7 @@ interface DeveloperModalProps {
 }
 
 const DeveloperModal: React.FC<DeveloperModalProps> = ({ onBackPressed }) => {
-  const { NavigationTheme, ColorPallet } = useTheme()
+  const { NavigationTheme } = useTheme()
   const [Developer] = useServices([TOKENS.SCREEN_DEVELOPER])
   const { t } = useTranslation()
 
@@ -25,7 +25,6 @@ const DeveloperModal: React.FC<DeveloperModalProps> = ({ onBackPressed }) => {
         <FauxHeader title={t('Screens.Developer')} onBackPressed={onBackPressed} />
         <Developer />
       </SafeAreaView>
-      <SafeAreaView edges={['bottom']} style={{ backgroundColor: ColorPallet.brand.primaryBackground }} />
     </SafeAreaModal>
   )
 }
