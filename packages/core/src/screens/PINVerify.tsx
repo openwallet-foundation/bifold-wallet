@@ -37,8 +37,6 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
-  // Temporary until all use cases are built with the new design
-  const isNewDesign = usage === PINEntryUsage.ChangeBiometrics
   const [{ preventScreenCapture }] = useServices([TOKENS.CONFIG])
   usePreventScreenCapture(preventScreenCapture)
 
@@ -94,36 +92,35 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
 
   const style = StyleSheet.create({
     screenContainer: {
-      flex: 1,
+      height: '100%',
       padding: 20,
       backgroundColor: ColorPallet.brand.primaryBackground,
-      justifyContent: isNewDesign ? 'flex-start' : 'space-between',
+      justifyContent: 'space-between',
     },
     buttonContainer: {
-      marginTop: 'auto',
       width: '100%',
     },
     helpText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: isNewDesign ? 40 : 20,
+      marginBottom: 40,
     },
     inputLabelText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: isNewDesign ? 20 : 4,
+      marginBottom: 20,
     },
     modalText: {
       marginVertical: 5,
     },
     changeBiometricsHeader: {
       marginTop: 0,
-      marginBottom: isNewDesign ? 40 : 20,
+      marginBottom: 40,
     },
   })
 
   return (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         {usage === PINEntryUsage.ChangeBiometrics && (
           <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
@@ -151,6 +148,9 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
           accessibilityLabel={inputLabelText[usage]}
           autoFocus={true}
           inlineMessage={inlineMessageField}
+          onSubmitEditing={async () => {
+            await onPINInputCompleted()
+          }}
         />
         <View style={style.buttonContainer}>
           <Button
