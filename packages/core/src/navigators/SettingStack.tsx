@@ -20,7 +20,6 @@ import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
 import AutoLock from '../screens/AutoLock'
 import ConfigureMediator from '../screens/ConfigureMediator'
-import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -38,7 +37,7 @@ const SettingStack: React.FC = () => {
   const carousel = createCarouselStyle(OnboardingTheme)
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions, header: (props) => <HeaderWithBanner {...props} /> }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
         name={Screens.Settings}
         component={Settings}

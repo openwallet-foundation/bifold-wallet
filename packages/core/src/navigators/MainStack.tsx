@@ -28,7 +28,6 @@ import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const MainStack: React.FC = () => {
   const { t } = useTranslation()
@@ -74,7 +73,6 @@ const MainStack: React.FC = () => {
           screenOptions={{
             ...defaultStackOptions,
             headerShown: false,
-            header: (props) => <HeaderWithBanner {...props} />,
           }}
         >
           <Stack.Screen name={Stacks.TabStack} component={TabStack} />

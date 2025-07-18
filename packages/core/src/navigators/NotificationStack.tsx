@@ -10,7 +10,6 @@ import ProofRequest from '../screens/ProofRequest'
 import { NotificationStackParams, Screens } from '../types/navigators'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
-import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 const NotificationStack: React.FC = () => {
   const Stack = createStackNavigator<NotificationStackParams>()
@@ -23,7 +22,7 @@ const NotificationStack: React.FC = () => {
   ])
 
   return (
-    <Stack.Navigator screenOptions={{ ...defaultStackOptions, header: (props) => <HeaderWithBanner {...props} /> }}>
+    <Stack.Navigator screenOptions={{ ...defaultStackOptions }}>
       <Stack.Screen
         name={Screens.CredentialDetails}
         component={CredentialDetails}
