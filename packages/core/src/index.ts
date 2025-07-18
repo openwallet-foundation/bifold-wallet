@@ -15,7 +15,6 @@ import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
-import NetInfo from './components/network/NetInfo'
 import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import Link from './components/texts/Link'
@@ -189,7 +188,6 @@ export {
   ToastType,
   toastConfig,
   NavContainer,
-  NetInfo,
   OnboardingPages,
   OpenIDCredentialRecordProvider,
   NotificationListItem,
