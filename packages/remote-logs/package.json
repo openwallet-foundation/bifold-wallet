@@ -41,7 +41,7 @@
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "react": "^18.2.0",
-    "react-native": "^0.73.6",
+    "react-native": "^0.73.11",
     "react-native-logs": "~5.1.0"
   },
   "installConfig": {
@@ -53,7 +53,7 @@
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "react": "18.2.0",
-    "react-native": "^0.73.6",
+    "react-native": "^0.73.11",
     "react-native-logs": "~5.1.0"
   }
 }

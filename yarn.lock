@@ -1823,7 +1823,7 @@ __metadata:
     query-string: "npm:^7.0.1"
     react: "npm:*"
     react-i18next: "npm:11.13.0"
-    react-native: "npm:^0.73.6"
+    react-native: "npm:^0.73.11"
     react-native-animated-pagination-dots: "npm:^0.1.72"
     react-native-argon2: "npm:^2.0.1"
     react-native-bouncy-checkbox: "npm:^3.0.5"
@@ -2005,7 +2005,7 @@ __metadata:
     eslint: "npm:^8.48.0"
     eslint-import-resolver-typescript: "npm:^2.5.0"
     react: "npm:18.2.0"
-    react-native: "npm:^0.73.6"
+    react-native: "npm:^0.73.11"
     react-native-logs: "npm:~5.1.0"
     rimraf: "npm:^5.0.0"
     typescript: "npm:^5.0.4"
@@ -2014,7 +2014,7 @@ __metadata:
     axios: ^1.4.0
     buffer: ^6.0.3
     react: ^18.2.0
-    react-native: ^0.73.6
+    react-native: ^0.73.11
     react-native-logs: ~5.1.0
   languageName: unknown
   linkType: soft

@@ -105,7 +105,7 @@
     "query-string": "^7.0.1",
     "react": "*",
     "react-i18next": "11.13.0",
-    "react-native": "^0.73.6",
+    "react-native": "^0.73.11",
     "react-native-animated-pagination-dots": "^0.1.72",
     "react-native-argon2": "^2.0.1",
     "react-native-bouncy-checkbox": "^3.0.5",
