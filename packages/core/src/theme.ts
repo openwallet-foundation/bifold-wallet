@@ -1186,22 +1186,22 @@ export interface ITheme {
   TextTheme: ITextTheme
   InputInlineMessage: IInlineInputMessage
   Inputs: IInputs
-  Buttons: any
-  ListItems: any
+  Buttons: typeof Buttons
+  ListItems: typeof ListItems
   TabTheme: ITabTheme
-  NavigationTheme: any
-  HomeTheme: any
-  SettingsTheme: any
-  ChatTheme: any
-  OnboardingTheme: any
-  DialogTheme: any
-  LoadingTheme: any
-  PINEnterTheme: any
-  PINInputTheme: any
+  NavigationTheme: typeof NavigationTheme
+  HomeTheme: typeof HomeTheme
+  SettingsTheme: typeof SettingsTheme
+  ChatTheme: typeof ChatTheme
+  OnboardingTheme: typeof OnboardingTheme
+  DialogTheme: typeof DialogTheme
+  LoadingTheme: typeof LoadingTheme
+  PINEnterTheme: typeof PINEnterTheme
+  PINInputTheme: typeof PINInputTheme
   CredentialCardShadowTheme: ViewStyle
   SelectedCredTheme: ViewStyle
-  heavyOpacity: any
-  borderRadius: any
+  heavyOpacity: typeof heavyOpacity
+  borderRadius: typeof borderRadius
   borderWidth: typeof borderWidth
   maxFontSizeMultiplier: number
   Assets: IAssets
