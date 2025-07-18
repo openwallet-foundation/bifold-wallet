@@ -1,7 +1,10 @@
 import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
-import { createContext, useContext, useState, useCallback, PropsWithChildren } from 'react'
+import { createContext, useContext, useState, useCallback, PropsWithChildren, useEffect } from 'react'
 
 import NetInfoModal from '../components/modals/NetInfoModal'
+import { useTranslation } from 'react-i18next'
+import { useStore } from './store'
+import { DispatchAction } from './reducers/store'
 
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean | null
@@ -19,6 +22,9 @@ export const NetworkContext = createContext<NetworkContext>(null as unknown as N
 export const NetworkProvider = ({ children }: PropsWithChildren) => {
   const { isConnected, type, isInternetReachable } = useNetInfo()
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
+  const { t } = useTranslation()
+  const [hasShown, setHasShown] = useState(false)
+  const [, dispatch] = useStore()
 
   const displayNetInfoModal = useCallback(() => {
     setIsNetInfoModalDisplayed(true)
@@ -61,6 +67,38 @@ export const NetworkProvider = ({ children }: PropsWithChildren) => {
   const assertInternetReachable = useCallback((): boolean | null => {
     return isInternetReachable
   }, [isInternetReachable])
+
+  const showNetworkWarning = useCallback(() => {
+    setHasShown(true)
+    dispatch({
+      type: DispatchAction.BANNER_MESSAGES,
+      payload: [
+        {
+          id: 'netinfo-no-internet',
+          title: t('NetInfo.NoInternetConnectionTitle'),
+          type: 'error',
+          variant: 'detail',
+          dismissible: false,
+        },
+      ],
+    })
+  }, [dispatch, t])
+
+  useEffect(() => {
+    const internetReachable = assertInternetReachable()
+    if (internetReachable) {
+      setHasShown(false)
+      dispatch({
+        type: DispatchAction.REMOVE_BANNER_MESSAGE,
+        payload: ['netinfo-no-internet'],
+      })
+    }
+
+    // Strict check for false, null means the network state is not yet known
+    if (internetReachable === false && !hasShown) {
+      showNetworkWarning()
+    }
+  }, [showNetworkWarning, assertInternetReachable, hasShown, dispatch])
 
   return (
     <NetworkContext.Provider

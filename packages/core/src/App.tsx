@@ -8,7 +8,6 @@ import { isTablet } from 'react-native-device-info'
 import Orientation from 'react-native-orientation-locker'
 import { animatedComponents } from './animated-components'
 import ErrorModal from './components/modals/ErrorModal'
-import NetInfo from './components/network/NetInfo'
 import toastConfig from './components/toast/ToastConfig'
 import { tours } from './constants'
 import { Container, ContainerProvider } from './container-api'
@@ -55,7 +54,6 @@ const createApp = (container: Container): React.FC => {
                       backgroundColor={bifoldTheme.ColorPallet.brand.primary}
                       translucent={false}
                     />
-                    <NetInfo />
                     <ErrorModal />
                     <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
                       <RootStack />
