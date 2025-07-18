@@ -1,19 +1,22 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { DispatchAction } from '../../contexts/reducers/store'
+import { useStore } from '../../contexts/store'
+import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import { ThemedText } from '../texts/ThemedText'
-import { useTheme } from '../../contexts/theme'
-import { useStore } from '../../contexts/store'
-import { DispatchAction } from '../../contexts/reducers/store'
-import { useTranslation } from 'react-i18next'
 
-export interface BannerSectionProps {
+export interface BannerMessage {
   id: string
   title: string
   type: 'error' | 'warning' | 'info' | 'success'
-  dismissible?: boolean
   variant: 'summary' | 'detail'
+  dismissible?: boolean
+}
+
+export interface BannerSectionProps extends BannerMessage {
   expanded?: boolean
   onDismiss?: () => void
   onToggle?: () => void
@@ -24,7 +27,7 @@ export const Banner: React.FC = () => {
   const [expanded, setExpanded] = useState(false)
   const bannerMessages = store.preferences.bannerMessages
   const { t } = useTranslation()
-  const alertMessage: BannerSectionProps = {
+  const alertMessage: BannerMessage = {
     id: 'alertMessage',
     title: t('Banner.AlertsLength', { alerts: bannerMessages.length }),
     type: 'error',

@@ -1,4 +1,4 @@
-import { BannerSectionProps } from 'components/views/Banner'
+import { BannerMessage } from 'components/views/Banner'
 
 export interface Onboarding {
   didSeePreface: boolean
@@ -37,7 +37,7 @@ export interface Preferences {
   theme?: string
   selectedMediator: string
   availableMediators: string[]
-  bannerMessages: BannerSectionProps[]
+  bannerMessages: BannerMessage[]
 }
 
 export interface Tours {
