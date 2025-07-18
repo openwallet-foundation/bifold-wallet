@@ -73,7 +73,7 @@
     "react-native-device-info": "^8.4.9",
     "react-native-encrypted-storage": "^4.0.2",
     "react-native-fs": "^2.18.0",
-    "react-native-gesture-handler": "2.18.0",
+    "react-native-gesture-handler": "2.18.1",
     "react-native-get-random-values": "^1.7.0",
     "react-native-gifted-chat": "2.4.0",
     "react-native-keychain": "^8.1.3",
