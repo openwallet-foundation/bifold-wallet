@@ -27,7 +27,6 @@ import ProofRequestStack from './ProofRequestStack'
 import SettingStack from './SettingStack'
 import TabStack from './TabStack'
 import { useDefaultStackOptions } from './defaultStackOptions'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MainStack: React.FC = () => {
   const { t } = useTranslation()
@@ -66,83 +65,81 @@ const MainStack: React.FC = () => {
   const hideElements = useMemo(() => (currentStep === undefined ? 'auto' : 'no-hide-descendants'), [currentStep])
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <View style={{ flex: 1 }} importantForAccessibility={hideElements}>
-        <Stack.Navigator
-          initialRouteName={Stacks.TabStack}
-          screenOptions={{
-            ...defaultStackOptions,
-            headerShown: false,
+    <View style={{ flex: 1 }} importantForAccessibility={hideElements}>
+      <Stack.Navigator
+        initialRouteName={Stacks.TabStack}
+        screenOptions={{
+          ...defaultStackOptions,
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name={Stacks.TabStack} component={TabStack} />
+        <Stack.Screen
+          name={Screens.CredentialDetails}
+          component={CredentialDetails}
+          options={{
+            title: t('Screens.CredentialDetails'),
+            headerShown: true,
+            ...ScreenOptionsDictionary[Screens.CredentialDetails],
           }}
-        >
-          <Stack.Screen name={Stacks.TabStack} component={TabStack} />
-          <Stack.Screen
-            name={Screens.CredentialDetails}
-            component={CredentialDetails}
-            options={{
-              title: t('Screens.CredentialDetails'),
-              headerShown: true,
-              ...ScreenOptionsDictionary[Screens.CredentialDetails],
-            }}
-          />
-          <Stack.Screen
-            name={Screens.OpenIDCredentialDetails}
-            component={OpenIDCredentialDetails}
-            options={{
-              title: t('Screens.CredentialDetails'),
-              ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails],
-            }}
-          />
-          <Stack.Screen
-            name={Screens.Chat}
-            component={Chat}
-            options={({ navigation }) => ({
-              headerShown: true,
-              title: t('Screens.CredentialOffer'),
-              headerLeft: () => (
-                <IconButton
-                  buttonLocation={ButtonLocation.Left}
-                  accessibilityLabel={t('Global.Back')}
-                  testID={testIdWithKey('BackButton')}
-                  onPress={() => {
-                    navigation.navigate(TabStacks.HomeStack, { screen: Screens.Home })
-                  }}
-                  icon="arrow-left"
-                />
-              ),
-            })}
-          />
-          <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} />
-          <Stack.Screen
-            name={Stacks.SettingStack}
-            component={SettingStack}
-            options={{
-              cardStyleInterpolator: forFade,
-            }}
-          />
-          <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
-          <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
-          <Stack.Screen
-            name={Stacks.ConnectionStack}
-            component={DeliveryStack}
-            options={{
-              gestureEnabled: false,
-              cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-              presentation: 'modal',
-            }}
-          />
-          <Stack.Screen name={Stacks.ProofRequestsStack} component={ProofRequestStack} />
-          <Stack.Screen
-            name={Stacks.HistoryStack}
-            component={HistoryStack}
-            options={{
-              cardStyleInterpolator: forFade,
-            }}
-          />
-          {CustomNavStack1 ? <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} /> : null}
-        </Stack.Navigator>
-      </View>
-    </SafeAreaView>
+        />
+        <Stack.Screen
+          name={Screens.OpenIDCredentialDetails}
+          component={OpenIDCredentialDetails}
+          options={{
+            title: t('Screens.CredentialDetails'),
+            ...ScreenOptionsDictionary[Screens.OpenIDCredentialDetails],
+          }}
+        />
+        <Stack.Screen
+          name={Screens.Chat}
+          component={Chat}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: t('Screens.CredentialOffer'),
+            headerLeft: () => (
+              <IconButton
+                buttonLocation={ButtonLocation.Left}
+                accessibilityLabel={t('Global.Back')}
+                testID={testIdWithKey('BackButton')}
+                onPress={() => {
+                  navigation.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+                }}
+                icon="arrow-left"
+              />
+            ),
+          })}
+        />
+        <Stack.Screen name={Stacks.ConnectStack} component={ConnectStack} />
+        <Stack.Screen
+          name={Stacks.SettingStack}
+          component={SettingStack}
+          options={{
+            cardStyleInterpolator: forFade,
+          }}
+        />
+        <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
+        <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
+        <Stack.Screen
+          name={Stacks.ConnectionStack}
+          component={DeliveryStack}
+          options={{
+            gestureEnabled: false,
+            cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+            presentation: 'modal',
+          }}
+        />
+        <Stack.Screen name={Stacks.ProofRequestsStack} component={ProofRequestStack} />
+        <Stack.Screen
+          name={Stacks.HistoryStack}
+          component={HistoryStack}
+          options={{
+            cardStyleInterpolator: forFade,
+          }}
+        />
+        {CustomNavStack1 ? <Stack.Screen name={Stacks.CustomNavStack1} component={CustomNavStack1} /> : null}
+      </Stack.Navigator>
+    </View>
   )
 }
 

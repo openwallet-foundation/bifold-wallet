@@ -6,6 +6,7 @@ import { ThemedText } from '../texts/ThemedText'
 import { useTheme } from '../../contexts/theme'
 import { useStore } from '../../contexts/store'
 import { DispatchAction } from '../../contexts/reducers/store'
+import { useTranslation } from 'react-i18next'
 
 export interface BannerSectionProps {
   id: string
@@ -22,9 +23,10 @@ export const Banner: React.FC = () => {
   const [store, dispatch] = useStore()
   const [expanded, setExpanded] = useState(false)
   const bannerMessages = store.preferences.bannerMessages
+  const { t } = useTranslation()
   const alertMessage: BannerSectionProps = {
     id: 'alertMessage',
-    title: `You have ${bannerMessages.length} alerts`,
+    title: t('Banner.AlertsLength', { alerts: bannerMessages.length }),
     type: 'error',
     variant: 'summary',
   }
@@ -58,7 +60,7 @@ export const Banner: React.FC = () => {
     <View>
       <BannerSection
         id={alertMessage.id}
-        title={`You have ${bannerMessages.length} alerts`}
+        title={t('Banner.AlertsLength', { alerts: bannerMessages.length })}
         type={alertMessage.type}
         variant={alertMessage.variant}
         expanded={expanded}
