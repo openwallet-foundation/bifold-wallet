@@ -15,6 +15,7 @@ import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINHeader from './components/misc/PINHeader'
 import Record from './components/record/Record'
 import HomeFooterView from './components/views/HomeFooterView'
+import { Banner } from './components/views/Banner'
 import HomeHeaderView from './components/views/HomeHeaderView'
 import defaultIndyLedgers from './configs/ledgers/indy'
 import { LocalStorageKeys, PINRules } from './constants'
@@ -153,6 +154,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_FOOTER, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)
+    this._container.registerInstance(TOKENS.COMPONENT_NOTIFICATION_BANNER, Banner)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST, NoNewUpdates)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_FOOTER, HomeFooterView)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_EMPTY_LIST, EmptyList)

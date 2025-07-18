@@ -7,6 +7,7 @@ import { ITheme, OnboardingTheme } from '../theme'
 import { ScreenOptionsType, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.Preface]: {
@@ -94,6 +95,7 @@ export function useDefaultStackOptions({ ColorPallet }: ITheme): StackNavigation
       },
       headerTitleAlign: 'center' as 'center' | 'left',
       headerTitle: (props: { children: React.ReactNode }) => <HeaderTitle {...props} />,
+      header: (props) => <HeaderWithBanner {...props} />,
       headerBackAccessibilityLabel: t('Global.Back'),
     }
   )

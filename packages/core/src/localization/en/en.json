@@ -944,5 +944,8 @@
     "LearnMore": "Learn what's New",
     "UpdateNow": "Update the app",
     "UpdateLater": "Do this later"
+  },
+  "Banner": {
+    "AlertsLength": "You have {{ alerts }} alerts"
   }
 }

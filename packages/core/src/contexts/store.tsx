@@ -60,6 +60,7 @@ export const defaultState: State = {
     autoLockTime: defaultAutoLockTime, // default wallets lockout time to 5 minutes
     availableMediators: [Config.MEDIATOR_URL ?? ''],
     selectedMediator: Config.MEDIATOR_URL ?? '',
+    bannerMessages: [],
   },
   tours: {
     seenToursPrompt: false,

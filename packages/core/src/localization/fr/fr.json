@@ -927,5 +927,8 @@
     "LearnMore": "Learn what's New (FR)",
     "UpdateNow": "Update the app (FR)",
     "UpdateLater": "Do this later (FR)"
+  },
+  "Banner": {
+    "AlertsLength": "You have {{ alerts }} alerts (FR)"
   }
 }
