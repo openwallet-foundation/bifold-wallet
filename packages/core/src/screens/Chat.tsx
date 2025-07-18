@@ -1,6 +1,7 @@
 import { BasicMessageRepository, ConnectionRecord } from '@credo-ts/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { useHeaderHeight } from '@react-navigation/elements'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +21,7 @@ import { Role } from '../types/chat'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../types/metadata'
 import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
+import { KeyboardAvoidingView } from 'react-native'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
@@ -41,6 +43,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const [showActionSlider, setShowActionSlider] = useState(false)
   const { ChatTheme: theme, Assets } = useTheme()
   const [theirLabel, setTheirLabel] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
+  const headerHeight = useHeaderHeight()
 
   // This useEffect is for properly rendering changes to the alt contact name, useMemo did not pick them up
   useEffect(() => {
@@ -105,25 +108,28 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
 
   return (
     <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
-      <GiftedChat
-        messages={chatMessages}
-        showAvatarForEveryMessage={true}
-        alignTop
-        renderAvatar={() => null}
-        messageIdGenerator={(msg) => msg?._id.toString() || '0'}
-        renderMessage={(props) => <ChatMessage messageProps={props} />}
-        renderInputToolbar={(props) => renderInputToolbar(props, theme)}
-        renderSend={(props) => renderSend(props, theme)}
-        renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
-        disableComposer={!silentAssertConnectedNetwork()}
-        onSend={onSend}
-        user={{
-          _id: Role.me,
-        }}
-        renderActions={(props) => renderActions(props, theme, actions)}
-        onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
-      />
-      {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={headerHeight}>
+        <GiftedChat
+          keyboardShouldPersistTaps={'handled'}
+          messages={chatMessages}
+          showAvatarForEveryMessage={true}
+          alignTop
+          renderAvatar={() => null}
+          messageIdGenerator={(msg) => msg?._id.toString() || '0'}
+          renderMessage={(props) => <ChatMessage messageProps={props} />}
+          renderInputToolbar={(props) => renderInputToolbar(props, theme)}
+          renderSend={(props) => renderSend(props, theme)}
+          renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
+          disableComposer={!silentAssertConnectedNetwork()}
+          onSend={onSend}
+          user={{
+            _id: Role.me,
+          }}
+          renderActions={(props) => renderActions(props, theme, actions)}
+          onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
+        />
+        {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }

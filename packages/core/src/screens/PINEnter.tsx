@@ -316,7 +316,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ])
 
   return (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View>
           <Pressable
@@ -340,6 +340,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
             inlineMessage={inlineMessageField}
+            onSubmitEditing={() => {
+              onPINInputCompleted(PIN)
+            }}
           />
           <ThemedText
             variant="bold"

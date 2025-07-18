@@ -15,6 +15,10 @@ import { BasicMessageMetadata } from '../../src/types/metadata'
 import navigationContext from '../contexts/navigation'
 import { BasicAppContext } from '../helpers/app'
 
+jest.mock('@react-navigation/elements', () => ({
+  useHeaderHeight: jest.fn(() => 100),
+}))
+
 const props = { params: { connectionId: '1' } }
 
 const connection = new ConnectionRecord({

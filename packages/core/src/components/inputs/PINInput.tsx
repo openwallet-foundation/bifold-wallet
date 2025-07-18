@@ -21,10 +21,11 @@ interface PINInputProps {
   accessibilityLabel?: string
   autoFocus?: boolean
   inlineMessage?: InlineMessageProps
+  onSubmitEditing?: () => void
 }
 
 const PINInputComponent = (
-  { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage }: PINInputProps,
+  { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage, onSubmitEditing }: PINInputProps,
   ref: Ref<TextInput>
 ) => {
   const [PIN, setPIN] = useState('')
@@ -127,6 +128,7 @@ const PINInputComponent = (
           }}
           autoFocus={autoFocus}
           ref={ref}
+          onSubmitEditing={onSubmitEditing}
         />
       </View>
       <TouchableOpacity

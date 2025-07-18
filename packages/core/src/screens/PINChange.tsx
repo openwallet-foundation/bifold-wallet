@@ -174,7 +174,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
   }, [inlineMessages, isLoading, PIN, PINTwo, PINOld])
 
   return (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />
@@ -185,6 +185,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             onPINChanged={(p: string) => {
               setPINOld(p)
             }}
+            onSubmitEditing={handleChangePinTap}
           />
           <PINInput
             label={t('PINChange.EnterPINTitle')}
@@ -202,6 +203,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             accessibilityLabel={t('PINCreate.EnterPIN')}
             autoFocus={false}
             inlineMessage={inlineMessageField1}
+            onSubmitEditing={handleChangePinTap}
           />
           <PINInput
             label={t('PINChange.ReenterPIN')}
@@ -220,6 +222,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             autoFocus={false}
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
+            onSubmitEditing={handleChangePinTap}
           />
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (
