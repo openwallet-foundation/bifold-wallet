@@ -220,9 +220,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     bundleResolver.resolveAllBundles(params).then((bundle: any) => {
       if (proof) {
         setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
-        const credHelpUrl =
-          (bundle as any).bundle.bundle.metadata.credentialSupportUrl[params.language] ??
-          Object.values((bundle as any).bundle.bundle.metadata.credentialSupportUrl)?.[0]
+        const issuerUrl =
+          (bundle as any).bundle.bundle.metadata.issuerUrl[params.language] ??
+          Object.values((bundle as any).bundle.bundle.metadata.issuerUrl)?.[0]
 
         // Check if there is a help action override for this credential
         const override = credHelpActionOverrides?.find(
@@ -234,9 +234,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           setHelpAction(() => () => {
             override.action(navigation)
           })
-        } else if (credHelpUrl) {
+        } else if (issuerUrl) {
           setHelpAction(() => () => {
-            Linking.openURL(credHelpUrl)
+            Linking.openURL(issuerUrl)
           })
         }
       }
