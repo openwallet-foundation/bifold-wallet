@@ -21,7 +21,6 @@ import { TourProvider } from './contexts/tour/tour-provider'
 import { initStoredLanguage } from './localization'
 import RootStack from './navigators/RootStack'
 import { bifoldTheme, themes } from './theme'
-import NetInfo from './components/network/NetInfo'
 
 const createApp = (container: Container): React.FC => {
   const AppComponent: React.FC = () => {
@@ -55,7 +54,6 @@ const createApp = (container: Container): React.FC => {
                       backgroundColor={bifoldTheme.ColorPallet.brand.primary}
                       translucent={false}
                     />
-                    <NetInfo />
                     <ErrorModal />
                     <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
                       <RootStack />
