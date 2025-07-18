@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.2.2
+
+### Patch Changes
+
+- 84e7336: Updated revoked credential styling
+
 ## 2.2.1
 
 ### Patch Changes
