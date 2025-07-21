@@ -521,6 +521,11 @@ export const Buttons = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: ColorPallet.brand.primary,
   },
+  criticalDisabled: {
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: ColorPallet.brand.primaryDisabled,
+  },
   criticalText: {
     ...TextTheme.bold,
     color: ColorPallet.brand.buttonText,
