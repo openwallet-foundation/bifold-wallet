@@ -881,20 +881,25 @@ export const HomeTheme = StyleSheet.create({
   },
 })
 
-export const SettingsTheme = {
+const SettingsThemeBase = StyleSheet.create({
   groupHeader: {
     ...TextTheme.normal,
     marginBottom: 8,
   },
-  groupBackground: ColorPallet.brand.secondaryBackground,
-  iconColor: TextTheme.normal.color,
   text: {
     ...TextTheme.caption,
     color: ColorPallet.grayscale.white,
   },
+})
+
+const SettingsThemeExtension = {
+  groupBackground: ColorPallet.brand.secondaryBackground,
+  iconColor: TextTheme.normal.color,
 }
 
-export const ChatTheme = {
+export const SettingsTheme = { ...SettingsThemeBase, ...SettingsThemeExtension }
+
+const ChatThemeBase = StyleSheet.create({
   containerStyle: {
     marginBottom: 16,
     marginLeft: 16,
@@ -951,16 +956,11 @@ export const ChatTheme = {
     fontWeight: '500',
     fontSize: TextTheme.normal.fontSize,
   },
-  placeholderText: ColorPallet.grayscale.lightGrey,
   sendContainer: {
     marginBottom: 4,
     paddingHorizontal: 4,
     justifyContent: 'center',
   },
-  sendEnabled: ColorPallet.brand.primary,
-  sendDisabled: ColorPallet.brand.primaryDisabled,
-  options: ColorPallet.brand.primary,
-  optionsText: ColorPallet.grayscale.black,
   openButtonStyle: {
     borderRadius: 32,
     backgroundColor: ColorPallet.brand.primary,
@@ -988,9 +988,22 @@ export const ChatTheme = {
   documentIcon: {
     color: ColorPallet.grayscale.white,
   },
+})
+
+// TODO: Invesitigate if these are still needed.
+// Note: They are not currently used in bifold, extending
+// to allow backwards compatibility.
+const ChatThemeExtension = {
+  placeholderText: ColorPallet.grayscale.lightGrey,
+  sendEnabled: ColorPallet.brand.primary,
+  sendDisabled: ColorPallet.brand.primaryDisabled,
+  options: ColorPallet.brand.primary,
+  optionsText: ColorPallet.grayscale.black,
 }
 
-export const OnboardingTheme = {
+export const ChatTheme = { ...ChatThemeBase, ...ChatThemeExtension }
+
+const OnboardingThemeBase = StyleSheet.create({
   container: {
     backgroundColor: ColorPallet.brand.primaryBackground,
   },
@@ -1011,19 +1024,24 @@ export const OnboardingTheme = {
     fontWeight: 'bold',
     fontSize: 18,
   },
-  headerTintColor: ColorPallet.grayscale.white,
   headerText: {
     ...TextTheme.bold,
   },
   bodyText: {
     ...TextTheme.normal,
   },
+})
+
+const OnboardingThemeExtension = {
+  headerTintColor: ColorPallet.grayscale.white,
   imageDisplayOptions: {
     fill: ColorPallet.notification.infoText,
   },
 }
 
-export const DialogTheme = {
+export const OnboardingTheme = { ...OnboardingThemeBase, ...OnboardingThemeExtension }
+
+export const DialogTheme = StyleSheet.create({
   modalView: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
   },
@@ -1039,7 +1057,7 @@ export const DialogTheme = {
   carouselButtonText: {
     color: ColorPallet.grayscale.white,
   },
-}
+})
 
 const LoadingTheme = {
   backgroundColor: ColorPallet.brand.modalPrimaryBackground,
@@ -1050,7 +1068,7 @@ const PINEnterTheme = {
     marginBottom: 20,
   },
 }
-const PINInputTheme = {
+const PINInputTheme = StyleSheet.create({
   cell: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
     borderColor: ColorPallet.brand.secondary,
@@ -1079,7 +1097,7 @@ const PINInputTheme = {
     borderColor: ColorPallet.brand.secondary,
     borderWidth: 1,
   },
-}
+})
 
 const CredentialCardShadowTheme = {
   shadowColor: '#000',
@@ -1198,7 +1216,7 @@ export interface ITheme {
   HomeTheme: typeof HomeTheme
   SettingsTheme: typeof SettingsTheme
   ChatTheme: typeof ChatTheme
-  OnboardingTheme: typeof OnboardingTheme
+  OnboardingTheme: typeof OnboardingThemeBase
   DialogTheme: typeof DialogTheme
   LoadingTheme: typeof LoadingTheme
   PINEnterTheme: typeof PINEnterTheme
