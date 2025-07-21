@@ -1,6 +1,9 @@
 import { ITheme } from 'theme'
 import lodash from 'lodash'
 
+/**
+ * DeepPartial is a utility type that recursively makes all properties of a type optional.
+ */
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? (T[P] extends (...args: any[]) => any ? T[P] : DeepPartial<T[P]>) : T[P]
 }
@@ -23,26 +26,34 @@ export class ThemeBuilder {
   }
 
   /**
-   * Extends the current theme with a partial theme object.
+   * Overrides properties in the current theme with the provided themeOverrides.
    *
-   * @example new ThemeBuilder(theme).mergeTheme({ Buttons: { primary: { color: 'red' } } })
+   * Note: This will overwrite existing properties in the current theme with those from the provided themeOverrides.
    *
-   * @param {DeepPartial<ITheme>} themeChunk - A partial theme object to merge with the current theme.
+   * @example
+   * new ThemeBuilder({ Buttons: { color: 'purple', size: 'large' }})
+   * .withOverrides({ Buttons: { color: 'red' }})
+   * .withOverrides({ Buttons: { spacing: 10 }}) // { Buttons: { color: 'red', size: 'large', spacing: 10 }}
+   *
+   * @param {DeepPartial<ITheme>} themeOverrides - A partial theme object to merge with the current theme.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  mergeTheme(themeChunk: DeepPartial<ITheme>) {
-    this._theme = lodash.merge(this._theme, themeChunk)
+  withOverrides(themeOverrides: DeepPartial<ITheme>) {
+    // clone then merge the themeOverrides into the current theme
+    // note: Without the empty object, lodash.merge will mutate the original theme
+    // and not properly update the nested properties
+    this._theme = lodash.merge({}, this._theme, themeOverrides)
 
     // Return the instance for method chaining
     return this
   }
 
   /**
-   * Retrieves the current theme.
+   * Builds and returns the final theme object.
    *
-   * @returns {*} {ITheme} Returns the current theme object.
+   * @returns {*} {ITheme} Returns the final theme object.
    */
-  getTheme(): ITheme {
+  build(): ITheme {
     return this._theme
   }
 }
