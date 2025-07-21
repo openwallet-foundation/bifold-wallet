@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native'
+import { StyleSheet, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
@@ -146,80 +146,6 @@ export interface IInputAttributes {
   borderColor?: string
 }
 
-export interface IInlineInputMessage {
-  inlineErrorText: IFontAttributes
-  InlineErrorIcon: React.FC<SvgProps>
-  inlineWarningText: IFontAttributes
-  InlineWarningIcon: React.FC<SvgProps>
-}
-
-export interface IInputs {
-  label: IFontAttributes
-  textInput: IInputAttributes
-  inputSelected: IInputAttributes
-  singleSelect: IInputAttributes
-  singleSelectText: IFontAttributes
-  singleSelectIcon: IInputAttributes
-  checkBoxColor: IInputAttributes
-  checkBoxText: IFontAttributes
-}
-
-export interface ITextTheme {
-  headingOne: IFontAttributes
-  headingTwo: IFontAttributes
-  headingThree: IFontAttributes
-  headingFour: IFontAttributes
-  normal: IFontAttributes
-  bold: IFontAttributes
-  label: IFontAttributes
-  labelTitle: IFontAttributes
-  labelSubtitle: IFontAttributes
-  labelText: IFontAttributes
-  caption: IFontAttributes
-  title: IFontAttributes
-  headerTitle: IFontAttributes
-  modalNormal: IFontAttributes
-  modalTitle: IFontAttributes
-  popupModalText: IFontAttributes
-  modalHeadingOne: IFontAttributes
-  modalHeadingThree: IFontAttributes
-  settingsText: IFontAttributes
-  inlineErrorText: IFontAttributes
-  inlineWarningText: IFontAttributes
-}
-
-export interface IBrandColors {
-  primary: string
-  primaryDisabled: string
-  secondary: string
-  secondaryDisabled: string
-  tertiary: string
-  tertiaryDisabled: string
-  primaryLight: string
-  highlight: string
-  primaryBackground: string
-  secondaryBackground: string
-  tertiaryBackground: string
-  modalPrimary: string
-  modalSecondary: string
-  modalTertiary: string
-  modalPrimaryBackground: string
-  modalSecondaryBackground: string
-  modalTertiaryBackground: string
-  modalIcon: string
-  link: string
-  text: string
-  icon: string
-  headerText: string
-  headerIcon: string
-  buttonText: string
-  tabBarInactive: string
-  unorderedList: string
-  unorderedListModal: string
-  inlineError: string
-  inlineWarning: string
-}
-
 export interface ISemanticColors {
   error: string
   success: string
@@ -306,7 +232,7 @@ const InlineErrorMessageColors: IErrorColors = {
   warning: '#ff9000',
 }
 
-const BrandColors: IBrandColors = {
+const BrandColors = {
   primary: '#42803E',
   primaryDisabled: `rgba(53, 130, 63, ${lightOpacity})`,
   secondary: '#FFFFFFFF',
@@ -337,6 +263,7 @@ const BrandColors: IBrandColors = {
   inlineError: InlineErrorMessageColors.error,
   inlineWarning: InlineErrorMessageColors.warning,
 }
+export type IBrandColors = typeof BrandColors
 
 const SemanticColors: ISemanticColors = {
   error: '#D8292F',
@@ -371,7 +298,7 @@ export const ColorPallet: IColorPallet = {
   grayscale: GrayscaleColors,
 }
 
-export const TextTheme: ITextTheme = {
+export const TextTheme = StyleSheet.create({
   headingOne: {
     fontSize: 38,
     fontWeight: 'bold',
@@ -478,9 +405,10 @@ export const TextTheme: ITextTheme = {
     fontWeight: 'normal',
     color: ColorPallet.brand.inlineWarning,
   },
-}
+})
+export type ITextTheme = typeof TextTheme
 
-export const Inputs: IInputs = StyleSheet.create({
+export const Inputs = StyleSheet.create({
   label: {
     ...TextTheme.label,
   },
@@ -514,6 +442,7 @@ export const Inputs: IInputs = StyleSheet.create({
     ...TextTheme.normal,
   },
 })
+export type IInputs = typeof Inputs
 
 export const Buttons = StyleSheet.create({
   critical: {
@@ -672,6 +601,7 @@ export const Buttons = StyleSheet.create({
     textAlign: 'center',
   },
 })
+export type IButtons = typeof Buttons
 
 export const ListItems = StyleSheet.create({
   credentialBackground: {
@@ -779,38 +709,9 @@ export const ListItems = StyleSheet.create({
     fontSize: 10,
   },
 })
+export type IListItems = typeof ListItems
 
-export interface ITabTheme {
-  tabBarStyle: ViewStyle & {
-    height: number
-    backgroundColor: string
-    shadowOffset: {
-      width: number
-      height: number
-    }
-    shadowRadius: number
-    shadowColor: string
-    shadowOpacity: number
-    borderTopWidth: number
-    paddingBottom: number
-  }
-  tabBarContainerStyle: ViewStyle
-  tabBarActiveTintColor: string
-  tabBarInactiveTintColor: string
-  tabBarTextStyle: TextStyle & {
-    fontSize: number
-  }
-  tabBarButtonIconStyle: {
-    color: string
-  }
-  focusTabIconStyle: ViewStyle
-  focusTabActiveTintColor: {
-    backgroundColor: string
-  }
-  tabBarSecondaryBackgroundColor: string
-}
-
-export const TabTheme: ITabTheme = {
+const TabThemeBase = StyleSheet.create({
   tabBarStyle: {
     height: 60,
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -826,8 +727,6 @@ export const TabTheme: ITabTheme = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  tabBarActiveTintColor: ColorPallet.brand.primary,
-  tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
   tabBarTextStyle: {
     ...TextTheme.labelSubtitle,
     paddingBottom: 5,
@@ -846,8 +745,16 @@ export const TabTheme: ITabTheme = {
   focusTabActiveTintColor: {
     backgroundColor: ColorPallet.brand.secondary,
   },
+})
+
+const TabThemeExtension = {
+  tabBarActiveTintColor: ColorPallet.brand.primary,
+  tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
   tabBarSecondaryBackgroundColor: ColorPallet.brand.secondaryBackground,
 }
+
+export const TabTheme = { ...TabThemeBase, ...TabThemeExtension }
+export type ITabTheme = typeof TabTheme
 
 export const NavigationTheme = {
   dark: true,
@@ -860,6 +767,8 @@ export const NavigationTheme = {
     notification: ColorPallet.grayscale.white,
   },
 }
+
+export type INavigationTheme = typeof NavigationTheme
 
 export const HomeTheme = StyleSheet.create({
   welcomeHeader: {
@@ -880,6 +789,7 @@ export const HomeTheme = StyleSheet.create({
     color: ColorPallet.brand.link,
   },
 })
+export type IHomeTheme = typeof HomeTheme
 
 const SettingsThemeBase = StyleSheet.create({
   groupHeader: {
@@ -898,6 +808,7 @@ const SettingsThemeExtension = {
 }
 
 export const SettingsTheme = { ...SettingsThemeBase, ...SettingsThemeExtension }
+export type ISettingsTheme = typeof SettingsTheme
 
 const ChatThemeBase = StyleSheet.create({
   containerStyle: {
@@ -991,8 +902,8 @@ const ChatThemeBase = StyleSheet.create({
 })
 
 // TODO: Invesitigate if these are still needed.
-// Note: They are not currently used in bifold, extending
-// to allow backwards compatibility.
+// Note: They are not currently used in bifold
+// extending to allow backwards compatibility.
 const ChatThemeExtension = {
   placeholderText: ColorPallet.grayscale.lightGrey,
   sendEnabled: ColorPallet.brand.primary,
@@ -1002,6 +913,7 @@ const ChatThemeExtension = {
 }
 
 export const ChatTheme = { ...ChatThemeBase, ...ChatThemeExtension }
+export type IChatTheme = typeof ChatTheme
 
 const OnboardingThemeBase = StyleSheet.create({
   container: {
@@ -1040,6 +952,7 @@ const OnboardingThemeExtension = {
 }
 
 export const OnboardingTheme = { ...OnboardingThemeBase, ...OnboardingThemeExtension }
+export type IOnboardingTheme = typeof OnboardingTheme
 
 export const DialogTheme = StyleSheet.create({
   modalView: {
@@ -1058,16 +971,21 @@ export const DialogTheme = StyleSheet.create({
     color: ColorPallet.grayscale.white,
   },
 })
+export type IDialogTheme = typeof DialogTheme
 
 const LoadingTheme = {
   backgroundColor: ColorPallet.brand.modalPrimaryBackground,
 }
+export type ILoadingTheme = typeof LoadingTheme
+
 const PINEnterTheme = {
   image: {
     alignSelf: 'center',
     marginBottom: 20,
   },
 }
+export type IPINEnterTheme = typeof PINEnterTheme
+
 const PINInputTheme = StyleSheet.create({
   cell: {
     backgroundColor: ColorPallet.brand.secondaryBackground,
@@ -1098,6 +1016,7 @@ const PINInputTheme = StyleSheet.create({
     borderWidth: 1,
   },
 })
+export type IPINInputTheme = typeof PINInputTheme
 
 const CredentialCardShadowTheme = {
   shadowColor: '#000',
@@ -1195,12 +1114,13 @@ export const Assets = {
   },
 }
 
-const InputInlineMessage: IInlineInputMessage = {
+const InputInlineMessage = {
   inlineErrorText: { ...TextTheme.inlineErrorText },
   InlineErrorIcon: Assets.svg.iconError,
   inlineWarningText: { ...TextTheme.inlineWarningText },
   InlineWarningIcon: Assets.svg.iconWarning,
 }
+export type IInlineInputMessage = typeof InputInlineMessage
 
 export interface ITheme {
   themeName: string
@@ -1209,18 +1129,18 @@ export interface ITheme {
   TextTheme: ITextTheme
   InputInlineMessage: IInlineInputMessage
   Inputs: IInputs
-  Buttons: typeof Buttons
-  ListItems: typeof ListItems
+  Buttons: IButtons
+  ListItems: IListItems
   TabTheme: ITabTheme
-  NavigationTheme: typeof NavigationTheme
-  HomeTheme: typeof HomeTheme
-  SettingsTheme: typeof SettingsTheme
-  ChatTheme: typeof ChatTheme
-  OnboardingTheme: typeof OnboardingThemeBase
-  DialogTheme: typeof DialogTheme
-  LoadingTheme: typeof LoadingTheme
-  PINEnterTheme: typeof PINEnterTheme
-  PINInputTheme: typeof PINInputTheme
+  NavigationTheme: INavigationTheme
+  HomeTheme: IHomeTheme
+  SettingsTheme: ISettingsTheme
+  ChatTheme: IChatTheme
+  OnboardingTheme: IOnboardingTheme
+  DialogTheme: IDialogTheme
+  LoadingTheme: ILoadingTheme
+  PINEnterTheme: IPINEnterTheme
+  PINInputTheme: IPINInputTheme
   CredentialCardShadowTheme: ViewStyle
   SelectedCredTheme: ViewStyle
   heavyOpacity: typeof heavyOpacity
