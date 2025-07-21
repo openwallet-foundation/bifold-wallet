@@ -52,7 +52,7 @@ Key points to note:
 - Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
 - Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
 
-## Setup
+## Setup for Windows & Linux
 
 The setup for Bifold is similar to other React Native projects. The following sections will walk you through the process of setting up your development environment, installing dependencies, and running the app in an emulator.
 
@@ -164,7 +164,7 @@ This project will need to run on an iOS device or Android device or emulator. Wh
        ```
        IMPORTANT: close and start a new terminal session
 
-### Setup & Configure for All Platforms
+### Configuration for All Platforms
 
 Start by cloning the repository:
 
