@@ -490,30 +490,55 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     )
   }
 
-  function getSliceBackgroundColor(): ColorValue | undefined {
-    if (hideSlice) return 'transparent'
-    return brandingOverlayType === BrandingOverlayType.Branding10
-      ? backgroundColorIfRevoked(styles.secondaryBodyContainer.backgroundColor)
-      : overlay.brandingOverlay?.secondaryBackgroundColor
+  /**
+   * Returns the background color for the slice of the card.
+   *
+   * @return {ColorValue} - The background color for the slice.
+   */
+  function getSliceBackgroundColor(): ColorValue {
+    if (overlay.brandingOverlay?.secondaryBackgroundColor) {
+      return overlay.brandingOverlay.secondaryBackgroundColor
+    }
+
+    if (styles.secondaryBodyContainer.backgroundColor) {
+      return styles.secondaryBodyContainer.backgroundColor
+    }
+
+    return 'transparent'
   }
 
   const CredentialCardSecondaryBody: React.FC = () => {
+    // If the slice is hidden, we return an empty view with the same styles
+    if (hideSlice) {
+      return (
+        <View
+          testID={testIdWithKey('CredentialCardSecondaryBody')}
+          style={[
+            styles.secondaryBodyContainer,
+            {
+              backgroundColor: 'transparent',
+              overflow: 'hidden',
+            },
+          ]}
+        />
+      )
+    }
+
     return (
       <View
         testID={testIdWithKey('CredentialCardSecondaryBody')}
         style={[
           styles.secondaryBodyContainer,
           {
-            backgroundColor: getSliceBackgroundColor() ?? ColorPallet.brand.secondaryBackground,
+            backgroundColor: getSliceBackgroundColor(),
             overflow: 'hidden',
           },
         ]}
       >
         {overlay.brandingOverlay?.backgroundImageSlice &&
-        (!displayItems || brandingOverlayType === BrandingOverlayType.Branding11) &&
-        !hideSlice ? (
+        (!displayItems || brandingOverlayType === BrandingOverlayType.Branding11) ? (
           <ImageBackground
-            source={toImageSource(overlay.brandingOverlay?.backgroundImageSlice)}
+            source={toImageSource(overlay.brandingOverlay.backgroundImageSlice)}
             style={{ flexGrow: 1 }}
             imageStyle={{
               borderTopLeftRadius: borderRadius,
@@ -521,8 +546,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor(overlay, proof)) &&
-          !hideSlice && (
+          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor(overlay, proof)) && (
             <View
               style={[
                 {

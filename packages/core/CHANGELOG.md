@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 2.2.1
+
+### Patch Changes
+
+- b25d47a: App no longer resizes when software keyboard is open on Android
+  KeyboardView now takes optional prop to be keyboardavoiding
+  Keyboard avoidance added to pinenter, changebiometry, pinverify, pinchange, and chat.
+- 4dd8198: updated no interest toast to use banner instead
+- d7f53f9: Remove extra safearea from developer modal
+- 0716823: PIN automatically triggers unlock when minPINLength characters are entered
+- 242c7f8: Swapped credential_help_url for issuer_url in failed proof request
+
 ## 2.2.0
 
 ### Minor Changes

@@ -20,11 +20,25 @@ exports[`Chat Screen Renders correctly 1`] = `
   <View
     onLayout={[Function]}
     style={
-      Object {
-        "flex": 1,
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
     }
-    testID="GC_LOADING_CONTAINER"
-  />
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+      testID="GC_LOADING_CONTAINER"
+    />
+  </View>
 </RNCSafeAreaView>
 `;

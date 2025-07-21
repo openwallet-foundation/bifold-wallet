@@ -136,6 +136,7 @@ const ToggleBiometry: React.FC = () => {
         transparent={false}
         animationType={'slide'}
         presentationStyle={'fullScreen'}
+        statusBarTranslucent={true}
       >
         <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }} />
         <FauxHeader title={t('Screens.EnterPIN')} onBackPressed={onBackPressed} />
