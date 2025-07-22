@@ -15,12 +15,12 @@ export interface PINExplainerProps {
 
 const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPalette, TextTheme, Assets } = useTheme()
 
   const style = StyleSheet.create({
     safeAreaView: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     scrollViewContentContainer: {
       padding: 20,
@@ -37,7 +37,7 @@ const PINExplainer: React.FC<PINExplainerProps> = ({ continueCreatePIN }) => {
   })
 
   const imageDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 150,
     width: 150,
   }

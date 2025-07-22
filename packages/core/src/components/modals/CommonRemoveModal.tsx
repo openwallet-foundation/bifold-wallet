@@ -32,7 +32,7 @@ interface RemoveProps {
 }
 
 const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPalette } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
 
   return (
@@ -44,7 +44,7 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
         style={[
           {
             padding: 15,
-            backgroundColor: ColorPallet.brand.modalSecondaryBackground,
+            backgroundColor: ColorPalette.brand.modalSecondaryBackground,
             borderRadius: 5,
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -58,7 +58,7 @@ const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>
         <View
-          style={{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPallet.brand.modalSecondaryBackground }}
+          style={{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPalette.brand.modalSecondaryBackground }}
         >
           <UnorderedList unorderedListItems={content} />
         </View>
@@ -73,7 +73,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   }
 
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPalette, TextTheme, Assets } = useTheme()
 
   const imageDisplayOptions = {
     height: 115,
@@ -82,7 +82,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
 
   const styles = StyleSheet.create({
     safeAreaView: {
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10,
     },
@@ -296,7 +296,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               onPress={() => onCancel && onCancel()}
               hitSlop={hitSlop}
             >
-              <Icon name={'close'} size={42} color={ColorPallet.brand.modalIcon} />
+              <Icon name={'close'} size={42} color={ColorPalette.brand.modalIcon} />
             </TouchableOpacity>
           </View>
           <ScrollView style={styles.container}>
@@ -306,7 +306,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
             </>
           </ScrollView>
           <View style={styles.controlsContainer}>
-            <ContentGradient backgroundColor={ColorPallet.brand.modalPrimaryBackground} height={30} />
+            <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
             <View style={{ paddingTop: 10 }}>
               <Button
                 title={titleForConfirmButton()}

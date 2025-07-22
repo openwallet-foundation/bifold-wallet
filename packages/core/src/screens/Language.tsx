@@ -17,7 +17,7 @@ interface Language {
 
 const Language = () => {
   const { t, i18n } = useTranslation()
-  const { ColorPallet, SettingsTheme } = useTheme()
+  const { ColorPalette, SettingsTheme } = useTheme()
   const [{ supportedLanguages }] = useServices([TOKENS.CONFIG])
 
   const languages: Language[] = supportedLanguages.map((lang) => ({
@@ -27,7 +27,7 @@ const Language = () => {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       width: '100%',
     },
     section: {
@@ -42,7 +42,7 @@ const Language = () => {
     },
     itemSeparator: {
       borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomColor: ColorPalette.brand.primaryBackground,
       marginHorizontal: 25,
     },
   })
@@ -71,11 +71,11 @@ const Language = () => {
                 accessibilityLabel={`${id === i18n.language ? t('Language.Checked') : t('Language.NotChecked')}`} // add on voice over the text checked / not checked after the text from value above
                 accessibilityRole="radio"
                 disableText
-                fillColor={ColorPallet.brand.secondaryBackground}
-                unfillColor={ColorPallet.brand.secondaryBackground}
+                fillColor={ColorPalette.brand.secondaryBackground}
+                unfillColor={ColorPalette.brand.secondaryBackground}
                 size={36}
-                innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
-                ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}
+                innerIconStyle={{ borderColor: ColorPalette.brand.primary, borderWidth: 2 }}
+                ImageComponent={() => <Icon name="circle" size={18} color={ColorPalette.brand.primary}></Icon>}
                 onPress={async () => await handleLanguageChange(language)}
                 isChecked={id === i18n.language}
                 disableBuiltInState

@@ -28,7 +28,7 @@ describe('CredentialCard11Logo', () => {
           color: '#D8292F',
         },
       },
-      ColorPallet: {
+      ColorPalette: {
         grayscale: {
           white: '#fff',
           darkGrey: '#313132',

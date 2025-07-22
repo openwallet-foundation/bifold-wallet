@@ -10,7 +10,7 @@ const useCredentialCardStyles = (
   brandingOverlayType: BrandingOverlayType,
   proof?: boolean
 ) => {
-  const { ColorPallet, TextTheme, ListItems, CredentialCardShadowTheme } = useTheme()
+  const { ColorPalette, TextTheme, ListItems, CredentialCardShadowTheme } = useTheme()
   const { width, fontScale } = useWindowDimensions()
   const padding = width * 0.05
   const logoHeight = width * 0.12
@@ -91,7 +91,7 @@ const useCredentialCardStyles = (
       color:
         proof && brandingOverlayType === BrandingOverlayType.Branding10
           ? TextTheme.normal.color
-          : credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor),
+          : credentialTextColor(ColorPalette, overlay.brandingOverlay?.primaryBackgroundColor),
       flexShrink: 1,
       ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
         fontSize: 16,
@@ -125,12 +125,12 @@ const useCredentialCardStyles = (
     selectedCred: {
       borderWidth: 5,
       borderRadius: 15,
-      borderColor: ColorPallet.semantic.focus,
+      borderColor: ColorPalette.semantic.focus,
     },
     credActionText: {
       fontSize: 20,
       fontWeight: TextTheme.bold.fontWeight,
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
     },
     cardAttributeContainer: {
       marginVertical: 16,

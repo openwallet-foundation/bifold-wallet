@@ -10,7 +10,7 @@ const timing: Animated.TimingAnimationConfig = {
 }
 
 const SendingProof: React.FC = () => {
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
@@ -26,12 +26,12 @@ const SendingProof: React.FC = () => {
     },
   })
   const credentialInHandDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 130,
     width: 130,
   }
   const animatedCircleDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 250,
     width: 250,
   }

@@ -37,7 +37,7 @@ const ListCredentials: React.FC = () => {
     TOKENS.CONFIG,
   ])
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { start, stop } = useTour()
   const screenIsFocused = useIsFocused()
   const {
@@ -108,7 +108,7 @@ const ListCredentials: React.FC = () => {
   return (
     <View>
       <FlatList
-        style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        style={{ backgroundColor: ColorPalette.brand.primaryBackground }}
         data={credentials.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())}
         keyExtractor={(credential) => credential.id}
         renderItem={({ item: credential, index }) => {

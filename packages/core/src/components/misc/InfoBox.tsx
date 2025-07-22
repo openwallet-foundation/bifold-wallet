@@ -61,13 +61,13 @@ const InfoBox: React.FC<InfoBoxProps> = ({
 }) => {
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet } = useTheme()
+  const { TextTheme, ColorPalette } = useTheme()
   const [showDetails, setShowDetails] = useState<boolean>(renderShowDetails)
   const [{ showDetailsInfo }] = useServices([TOKENS.CONFIG])
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-      borderColor: ColorPallet.notification.infoBorder,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
+      borderColor: ColorPalette.notification.infoBorder,
       borderRadius: 5,
       borderWidth: 1,
       padding: 10,
@@ -89,12 +89,12 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       marginLeft: 7,
       flexShrink: 1,
       alignSelf: 'center',
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     bodyText: {
       flexShrink: 1,
       marginVertical: 16,
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     icon: {
       marginRight: 10,
@@ -102,82 +102,82 @@ const InfoBox: React.FC<InfoBoxProps> = ({
     },
     showDetailsText: {
       fontWeight: TextTheme.normal.fontWeight,
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
     },
   })
   let iconName = 'info'
-  let iconColor = ColorPallet.notification.infoIcon
+  let iconColor = ColorPalette.notification.infoIcon
 
   switch (notificationType) {
     case InfoBoxType.Info:
       iconName = 'info'
-      iconColor = ColorPallet.notification.infoIcon
+      iconColor = ColorPalette.notification.infoIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.info,
-        borderColor: ColorPallet.notification.infoBorder,
+        backgroundColor: ColorPalette.notification.info,
+        borderColor: ColorPalette.notification.infoBorder,
       }
       styles.headerText = {
         ...styles.headerText,
-        color: ColorPallet.notification.infoText,
+        color: ColorPalette.notification.infoText,
       }
       styles.bodyText = {
         ...styles.bodyText,
-        color: ColorPallet.notification.infoText,
+        color: ColorPalette.notification.infoText,
       }
       break
 
     case InfoBoxType.Success:
       iconName = 'check-circle'
-      iconColor = ColorPallet.notification.successIcon
+      iconColor = ColorPalette.notification.successIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.success,
-        borderColor: ColorPallet.notification.successBorder,
+        backgroundColor: ColorPalette.notification.success,
+        borderColor: ColorPalette.notification.successBorder,
       }
       styles.headerText = {
         ...styles.headerText,
-        color: ColorPallet.notification.successText,
+        color: ColorPalette.notification.successText,
       }
       styles.bodyText = {
         ...styles.bodyText,
-        color: ColorPallet.notification.successText,
+        color: ColorPalette.notification.successText,
       }
       break
 
     case InfoBoxType.Warn:
       iconName = 'warning'
-      iconColor = ColorPallet.notification.warnIcon
+      iconColor = ColorPalette.notification.warnIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.warn,
-        borderColor: ColorPallet.notification.warnBorder,
+        backgroundColor: ColorPalette.notification.warn,
+        borderColor: ColorPalette.notification.warnBorder,
       }
       styles.headerText = {
         ...styles.headerText,
-        color: ColorPallet.notification.warnText,
+        color: ColorPalette.notification.warnText,
       }
       styles.bodyText = {
         ...styles.bodyText,
-        color: ColorPallet.notification.warnText,
+        color: ColorPalette.notification.warnText,
       }
       break
 
     case InfoBoxType.Error:
       iconName = 'error'
-      iconColor = ColorPallet.notification.errorIcon
+      iconColor = ColorPalette.notification.errorIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.error,
-        borderColor: ColorPallet.notification.errorBorder,
+        backgroundColor: ColorPalette.notification.error,
+        borderColor: ColorPalette.notification.errorBorder,
       }
       styles.headerText = {
         ...styles.headerText,
-        color: ColorPallet.notification.errorText,
+        color: ColorPalette.notification.errorText,
       }
       styles.bodyText = {
         ...styles.bodyText,
-        color: ColorPallet.notification.errorText,
+        color: ColorPalette.notification.errorText,
       }
       break
 
@@ -207,7 +207,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
               onPress={onClosePressed}
               hitSlop={hitSlop}
             >
-              <Icon name={'close'} size={iconSize} color={ColorPallet.notification.infoIcon} />
+              <Icon name={'close'} size={iconSize} color={ColorPalette.notification.infoIcon} />
             </TouchableOpacity>
           </View>
         )}
@@ -233,7 +233,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
                 <ThemedText variant="title" style={styles.showDetailsText}>
                   {t('Global.ShowDetails')}{' '}
                 </ThemedText>
-                <Icon name="chevron-right" size={iconSize} color={ColorPallet.brand.link} />
+                <Icon name="chevron-right" size={iconSize} color={ColorPalette.brand.link} />
               </View>
             </TouchableOpacity>
           )}

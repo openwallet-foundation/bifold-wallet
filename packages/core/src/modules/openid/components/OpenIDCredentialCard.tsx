@@ -44,7 +44,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   onPress = undefined,
 }) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
 
   const display = useMemo((): CredentialDisplay | undefined => {
     if (credentialDisplay) return credentialDisplay.display
@@ -119,7 +119,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       borderBottomRightRadius: borderRadius,
     },
     revokedFooter: {
-      backgroundColor: ColorPallet.notification.error,
+      backgroundColor: ColorPalette.notification.error,
       flexGrow: 1,
       marginHorizontal: -1 * paddingHorizontal,
       marginVertical: -1 * paddingVertical,
@@ -139,13 +139,13 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
     credentialInfoContainer: {},
     titleFontCredentialName: {
       ...TextTheme.labelTitle,
-      color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
+      color: display?.textColor ?? credentialTextColor(ColorPalette, display?.backgroundColor),
       textAlignVertical: 'center',
       marginBottom: 8,
     },
     titleFontCredentialDescription: {
       ...TextTheme.label,
-      color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
+      color: display?.textColor ?? credentialTextColor(ColorPalette, display?.backgroundColor),
       textAlignVertical: 'center',
     },
   })
@@ -221,7 +221,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
           style={[
             TextTheme.caption,
             {
-              color: display?.textColor ?? credentialTextColor(ColorPallet, display?.backgroundColor),
+              color: display?.textColor ?? credentialTextColor(ColorPalette, display?.backgroundColor),
             },
           ]}
           testID={testIdWithKey('CredentialIssued')}

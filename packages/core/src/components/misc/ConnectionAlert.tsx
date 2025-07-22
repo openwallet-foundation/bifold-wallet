@@ -21,7 +21,7 @@ interface ConnectionAlertProps {
 
 const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionLabel }) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [infoCardVisible, setInfoCardVisible] = useState(false)
 
   const settingsNavigation = useNavigation<StackNavigationProp<RootStackParams>>()
@@ -31,12 +31,12 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionLabel }) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.notification.popupOverlay,
+      backgroundColor: ColorPalette.notification.popupOverlay,
       padding: 20,
     },
     notifyTextContainer: {
-      borderLeftColor: ColorPallet.brand.highlight,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      borderLeftColor: ColorPalette.brand.highlight,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       borderLeftWidth: 10,
       flex: 1,
       paddingLeft: 10,
@@ -56,7 +56,7 @@ const ConnectionAlert: React.FC<ConnectionAlertProps> = ({ connectionLabel }) =>
       marginVertical: 6,
     },
     informationIcon: {
-      color: ColorPallet.notification.infoIcon,
+      color: ColorPalette.notification.infoIcon,
       marginLeft: 10,
     },
   })

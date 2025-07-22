@@ -16,7 +16,7 @@ interface SharedProofDataProps {
 }
 
 const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ sharedData }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [attributes, setAttributes] = useState<Field[]>([])
   useEffect(() => {
     const attributes = buildFieldsFromSharedAnonCredsProof(sharedData.data)
@@ -30,7 +30,7 @@ const SharedDataCard: React.FC<{ sharedData: GroupedSharedProofDataItem }> = ({ 
         displayItems={attributes}
         style={
           bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
-            ? { backgroundColor: ColorPallet.brand.secondaryBackground }
+            ? { backgroundColor: ColorPalette.brand.secondaryBackground }
             : undefined
         }
         credDefId={sharedData.identifiers.cred_def_id}

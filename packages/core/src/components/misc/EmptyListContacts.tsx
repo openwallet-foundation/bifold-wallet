@@ -14,7 +14,7 @@ export interface EmptyListProps {
 
 const EmptyListContacts: React.FC<EmptyListProps> = ({ navigation }) => {
   const { t } = useTranslation()
-  const { ListItems, Assets, ColorPallet } = useTheme()
+  const { ListItems, Assets, ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -23,7 +23,7 @@ const EmptyListContacts: React.FC<EmptyListProps> = ({ navigation }) => {
       alignItems: 'center',
       padding: 40,
       paddingTop: 100,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     text: {
       textAlign: 'center',

@@ -42,7 +42,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const [credential, setCredential] = useState<W3cCredentialRecord | SdJwtVcRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
@@ -180,7 +180,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       <View style={{ marginBottom: 50 }}>
         <View
           style={{
-            backgroundColor: ColorPallet.brand.secondaryBackground,
+            backgroundColor: ColorPalette.brand.secondaryBackground,
             marginTop: paddingVertical,
             paddingHorizontal,
             paddingVertical,

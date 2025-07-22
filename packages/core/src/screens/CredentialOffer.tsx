@@ -46,7 +46,7 @@ type CredentialOfferProps = {
 const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentialId }) => {
   const { agent } = useAppAgent()
   const { t, i18n } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { RecordLoading } = useAnimatedComponents()
   const { assertNetworkConnected } = useNetwork()
   const [
@@ -286,7 +286,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           paddingHorizontal: 25,
           paddingVertical: 16,
           paddingBottom: 26,
-          backgroundColor: ColorPallet.brand.secondaryBackground,
+          backgroundColor: ColorPalette.brand.secondaryBackground,
         }}
       >
         {loading ? <RecordLoading /> : null}

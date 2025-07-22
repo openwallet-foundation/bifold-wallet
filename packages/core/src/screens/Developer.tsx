@@ -12,7 +12,7 @@ import { ThemedText } from '../components/texts/ThemedText'
 const Developer: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [useVerifierCapability, setUseVerifierCapability] = useState(!!store.preferences.useVerifierCapability)
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
@@ -136,9 +136,9 @@ const Developer: React.FC = () => {
             testID={testIdWithKey('ToggleVerifierCapability')}
           >
             <Switch
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={useVerifierCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={useVerifierCapability ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={toggleVerifierCapabilitySwitch}
               testID={testIdWithKey('VerifierCapabilitySwitchElement')}
               value={useVerifierCapability}
@@ -158,9 +158,9 @@ const Developer: React.FC = () => {
             testID={testIdWithKey('ToggleAcceptDevCredentials')}
           >
             <Switch
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={acceptDevCredentials ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={acceptDevCredentials ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={toggleAcceptDevCredentialsSwitch}
               testID={testIdWithKey('AcceptDevCredentialsSwitchElement')}
               value={acceptDevCredentials}
@@ -180,9 +180,11 @@ const Developer: React.FC = () => {
             testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
           >
             <Switch
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={useConnectionInviterCapability ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={
+                useConnectionInviterCapability ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey
+              }
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={toggleConnectionInviterCapabilitySwitch}
               testID={testIdWithKey('ConnectionInviterCapabilitySwitchElement')}
               value={useConnectionInviterCapability}
@@ -202,9 +204,9 @@ const Developer: React.FC = () => {
             testID={testIdWithKey('ToggleDevVerifierTemplatesSwitch')}
           >
             <Switch
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={useDevVerifierTemplates ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={useDevVerifierTemplates ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={toggleDevVerifierTemplatesSwitch}
               testID={testIdWithKey('DevVerifierTemplatesSwitchElement')}
               value={useDevVerifierTemplates}
@@ -225,9 +227,9 @@ const Developer: React.FC = () => {
               testID={testIdWithKey('ToggleEnableWalletNamingSwitch')}
             >
               <Switch
-                trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-                thumbColor={enableWalletNaming ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-                ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+                trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+                thumbColor={enableWalletNaming ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+                ios_backgroundColor={ColorPalette.grayscale.lightGrey}
                 onValueChange={toggleWalletNamingSwitch}
                 testID={testIdWithKey('EnableWalletNamingSwitchElement')}
                 value={enableWalletNaming}
@@ -248,9 +250,9 @@ const Developer: React.FC = () => {
             testID={testIdWithKey('TogglePreventAutoLockSwitch')}
           >
             <Switch
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={preventAutoLock ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={preventAutoLock ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={togglePreventAutoLockSwitch}
               testID={testIdWithKey('PreventAutoLockSwitchElement')}
               value={preventAutoLock}
@@ -270,9 +272,9 @@ const Developer: React.FC = () => {
             testID={testIdWithKey('ToggleUseShareableLink')}
           >
             <Switch
-              trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-              thumbColor={enableShareableLink ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={enableShareableLink ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={toggleShareableLinkSwitch}
               testID={testIdWithKey('ShareableLinkSwitchElement')}
               value={enableShareableLink}

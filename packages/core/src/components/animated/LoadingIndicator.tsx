@@ -11,7 +11,7 @@ const timing: Animated.TimingAnimationConfig = {
 }
 
 const LoadingIndicator: React.FC = () => {
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
@@ -23,7 +23,7 @@ const LoadingIndicator: React.FC = () => {
     },
   })
   const imageDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 200,
     width: 200,
   }

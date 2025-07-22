@@ -12,17 +12,17 @@ interface ConnectionImageProps {
 }
 
 const ConnectionImage: React.FC<ConnectionImageProps> = ({ connectionId, imageUri, marginTop }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     connectionImageContainer: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       width: 90,
       height: 90,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 45,
       marginTop: marginTop ?? 15,
-      borderColor: ColorPallet.grayscale.lightGrey,
+      borderColor: ColorPalette.grayscale.lightGrey,
       borderWidth: 3,
       alignSelf: 'center',
     },

@@ -15,7 +15,7 @@ const iconSize = 24
 
 const PINValidationHelper: React.FC<PINValidationHelperProps> = ({ validations }) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
 
   return (
     <View style={{ marginBottom: 16 }}>
@@ -26,14 +26,14 @@ const PINValidationHelper: React.FC<PINValidationHelperProps> = ({ validations }
               accessibilityLabel={t('PINCreate.Helper.ClearIcon')}
               name="clear"
               size={iconSize}
-              color={ColorPallet.notification.errorIcon}
+              color={ColorPalette.notification.errorIcon}
             />
           ) : (
             <Icon
               accessibilityLabel={t('PINCreate.Helper.CheckIcon')}
               name="check"
               size={iconSize}
-              color={ColorPallet.notification.successIcon}
+              color={ColorPalette.notification.successIcon}
             />
           )}
           <ThemedText style={{ paddingLeft: 4 }}>

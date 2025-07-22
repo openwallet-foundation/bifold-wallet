@@ -103,7 +103,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [cancelModalVisible, setCancelModalVisible] = useState(false)
-  const { ColorPallet, ListItems, TextTheme } = useTheme()
+  const { ColorPalette, ListItems, TextTheme } = useTheme()
   const goalCode = useOutOfBandByConnectionId(proof?.connectionId ?? '')?.outOfBandInvitation.goalCode
   const outOfBandInvitation = useOutOfBandByReceivedInvitationId(proof?.parentThreadId ?? '')?.outOfBandInvitation
   const [containsPI, setContainsPI] = useState(false)
@@ -174,7 +174,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     },
     detailsButton: {
       ...ListItems.recordAttributeText,
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
       textDecorationLine: 'underline',
     },
   })
@@ -703,14 +703,14 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                         alignSelf: 'center',
                         flex: 1,
                         flexWrap: 'wrap',
-                        color: ColorPallet.notification.errorText,
+                        color: ColorPalette.notification.errorText,
                       }}
                     >
                       {t('ProofRequest.YouCantRespond')}{' '}
                       <ThemedText
                         style={{
                           fontWeight: TextTheme.normal.fontWeight,
-                          color: ColorPallet.brand.link,
+                          color: ColorPalette.brand.link,
                         }}
                         onPress={() => setShowDetailsModal(true)}
                       >
@@ -907,7 +907,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: ColorPallet.brand.primaryBackground,
+            backgroundColor: ColorPalette.brand.primaryBackground,
           }}
         >
           <InfoBox
@@ -931,7 +931,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: ColorPallet.brand.primaryBackground,
+            backgroundColor: ColorPalette.brand.primaryBackground,
           }}
         >
           <InfoBox
@@ -965,7 +965,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
                   style={{
                     width: 'auto',
                     borderWidth: 1,
-                    borderColor: ColorPallet.grayscale.lightGrey,
+                    borderColor: ColorPalette.grayscale.lightGrey,
                     marginTop: 20,
                   }}
                 />

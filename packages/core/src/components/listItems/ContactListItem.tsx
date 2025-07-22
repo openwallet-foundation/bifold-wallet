@@ -19,7 +19,7 @@ export interface ContactListItemProps {
 }
 
 const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }) => {
-  const { ColorPallet, ListItems } = useTheme()
+  const { ColorPalette, ListItems } = useTheme()
   const messages = useChatMessagesByConnection(contact)
   const message = messages[0]
   const hasOnlyInitialMessage = messages.length < 2
@@ -30,7 +30,7 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ contact, navigation }
     container: {
       flexDirection: 'row',
       padding: 16,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
     },
     avatarContainer: {
       alignItems: 'center',

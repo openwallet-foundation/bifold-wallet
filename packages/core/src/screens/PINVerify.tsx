@@ -34,7 +34,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const [continueDisabled, setContinueDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [{ preventScreenCapture }] = useServices([TOKENS.CONFIG])
@@ -94,7 +94,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
     screenContainer: {
       flex: 1,
       padding: 20,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       justifyContent: 'space-between',
     },
     buttonContainer: {

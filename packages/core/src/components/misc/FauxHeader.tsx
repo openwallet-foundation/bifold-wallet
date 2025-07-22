@@ -14,7 +14,7 @@ interface FauxHeaderProps {
 
 // Used for modals that we want to look like regular screens
 const FauxHeader: React.FC<FauxHeaderProps> = ({ title, onBackPressed }) => {
-  const { ColorPallet, Spacing, NavigationTheme } = useTheme()
+  const { ColorPalette, Spacing, NavigationTheme } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
     header: {
@@ -22,7 +22,7 @@ const FauxHeader: React.FC<FauxHeaderProps> = ({ title, onBackPressed }) => {
       elevation: 0,
       shadowOffset: { width: 0, height: 6 },
       shadowRadius: 6,
-      shadowColor: ColorPallet.grayscale.black,
+      shadowColor: ColorPalette.grayscale.black,
       shadowOpacity: 0.15,
       zIndex: 2,
       borderWidth: 0,

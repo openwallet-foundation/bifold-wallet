@@ -11,7 +11,7 @@ const timing: Animated.TimingAnimationConfig = {
 }
 
 const ButtonLoading: React.FC = () => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
@@ -24,7 +24,7 @@ const ButtonLoading: React.FC = () => {
 
   return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-      <Icon style={{ color: ColorPallet.brand.icon }} size={25} name="refresh" />
+      <Icon style={{ color: ColorPalette.brand.icon }} size={25} name="refresh" />
     </Animated.View>
   )
 }

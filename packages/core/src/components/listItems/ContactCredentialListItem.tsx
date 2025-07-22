@@ -16,7 +16,7 @@ export type ContactCredentialListItemProps = {
 }
 
 const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialListItemProps) => {
-  const { Assets, ColorPallet } = useTheme()
+  const { Assets, ColorPalette } = useTheme()
   const { t, i18n } = useTranslation()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const params = useMemo(
@@ -43,7 +43,7 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
       flex: 9,
     },
     credentialName: {
-      color: ColorPallet.brand.primary,
+      color: ColorPalette.brand.primary,
       fontWeight: '600',
     },
     iconContainer: {
@@ -53,7 +53,7 @@ const ContactCredentialListItem = ({ credential, onPress }: ContactCredentialLis
   })
 
   const icon = {
-    color: ColorPallet.brand.primary,
+    color: ColorPalette.brand.primary,
     width: 48,
     height: 48,
   }

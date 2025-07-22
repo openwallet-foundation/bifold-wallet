@@ -23,7 +23,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const [historyItems, setHistoryItems] = useState<CustomRecord[]>()
   const { t } = useTranslation()
   const { agent } = useAgent()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
 
   const actionButtonLabel = t('Global.SaveSettings')
@@ -37,7 +37,7 @@ const HistoryPage: React.FC<HistoryPageProps> = () => {
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
       justifyContent: 'space-between',
     },

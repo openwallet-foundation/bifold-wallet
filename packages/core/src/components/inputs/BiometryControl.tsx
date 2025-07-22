@@ -25,13 +25,13 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   const { isBiometricsActive } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
       height: '100%',
       padding: 20,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     image: {
       minWidth: 200,

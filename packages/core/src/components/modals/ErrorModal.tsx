@@ -22,14 +22,14 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   const [error, setError] = useState<BifoldError>()
   const [reported, setReported] = useState(false)
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
       minHeight: height,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
   })
 
@@ -78,9 +78,9 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   const secondaryCallToActionIcon = useMemo(
     () =>
       reported ? (
-        <Icon style={{ marginRight: 8 }} name={'check-circle'} size={18} color={ColorPallet.semantic.success} />
+        <Icon style={{ marginRight: 8 }} name={'check-circle'} size={18} color={ColorPalette.semantic.success} />
       ) : undefined,
-    [reported, ColorPallet.semantic.success]
+    [reported, ColorPalette.semantic.success]
   )
 
   return (

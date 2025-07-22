@@ -57,7 +57,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   }
 
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const isFocused = useIsFocused()
   const [store] = useStore()
   const [generating, setGenerating] = useState(true)
@@ -73,7 +73,7 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
-      backgroundColor: ColorPallet.grayscale.white,
+      backgroundColor: ColorPalette.grayscale.white,
     },
     headerContainer: {
       alignItems: 'center',
@@ -88,18 +88,18 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
     secondaryHeaderText: {
       textAlign: 'center',
       marginTop: 8,
-      color: ColorPallet.grayscale.black,
+      color: ColorPalette.grayscale.black,
     },
     interopText: {
       alignSelf: 'center',
       marginBottom: -20,
       paddingHorizontal: 10,
-      backgroundColor: ColorPallet.grayscale.white,
+      backgroundColor: ColorPalette.grayscale.white,
       zIndex: 100,
       textAlign: 'center',
       fontWeight: TextTheme.bold.fontWeight,
       fontSize: 22,
-      color: ColorPallet.brand.primary,
+      color: ColorPalette.brand.primary,
     },
     qrContainer: {
       height: qrContainerSize,
