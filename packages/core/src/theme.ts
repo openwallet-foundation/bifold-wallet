@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native'
+import { ColorValue, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
@@ -298,686 +298,904 @@ export const ColorPallet: IColorPallet = {
   grayscale: GrayscaleColors,
 }
 
-export const TextTheme = StyleSheet.create({
-  headingOne: {
-    fontSize: 38,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  headingTwo: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  headingThree: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  headingFour: {
-    fontSize: 21,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  normal: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: ColorPallet.brand.text,
-  },
-  bold: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  labelTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  labelSubtitle: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: ColorPallet.brand.text,
-  },
-  labelText: {
-    fontSize: 10,
-    fontWeight: 'normal',
-    fontStyle: 'italic',
-    color: ColorPallet.brand.text,
-  },
-  caption: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: ColorPallet.brand.text,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.text,
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: ColorPallet.brand.headerText,
-  },
-  modalNormal: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
-  },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
-  },
-  modalHeadingOne: {
-    fontSize: 38,
-    fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
-  },
-  modalHeadingThree: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: ColorPallet.grayscale.white,
-  },
-  popupModalText: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    color: ColorPallet.grayscale.white,
-  },
-  settingsText: {
-    fontSize: 21,
-    fontWeight: 'normal',
-    color: ColorPallet.brand.text,
-  },
-  inlineErrorText: {
-    fontSize: 16,
-    fontWeight: 'normal',
-    color: ColorPallet.brand.inlineError,
-  },
-  inlineWarningText: {
-    fontSize: 16,
-    fontWeight: 'normal',
-    color: ColorPallet.brand.inlineWarning,
-  },
-})
-export type ITextTheme = typeof TextTheme
-
-export const Inputs = StyleSheet.create({
-  label: {
-    ...TextTheme.label,
-  },
-  textInput: {
-    padding: 10,
-    borderRadius,
-    fontSize: 16,
-    backgroundColor: ColorPallet.brand.primaryBackground,
-    color: ColorPallet.notification.infoText,
-    borderWidth: 2,
-    borderColor: ColorPallet.brand.secondary,
-  },
-  inputSelected: {
-    borderColor: ColorPallet.brand.primary,
-  },
-  singleSelect: {
-    padding: 12,
-    borderRadius: borderRadius * 2,
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  singleSelectText: {
-    ...TextTheme.normal,
-  },
-  singleSelectIcon: {
-    color: ColorPallet.grayscale.white,
-  },
-  checkBoxColor: {
-    color: ColorPallet.brand.primary,
-  },
-  checkBoxText: {
-    ...TextTheme.normal,
-  },
-})
-export type IInputs = typeof Inputs
-
-export const Buttons = StyleSheet.create({
-  critical: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primary,
-  },
-  criticalDisabled: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primaryDisabled,
-  },
-  criticalText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  criticalTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  primary: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primary,
-  },
-  primaryDisabled: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primaryDisabled,
-  },
-  primaryText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  primaryTextDisabled: {
-    ...TextTheme.bold,
-    textAlign: 'center',
-  },
-  secondary: {
-    padding: 16,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: ColorPallet.brand.primary,
-  },
-  secondaryDisabled: {
-    padding: 16,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: ColorPallet.brand.secondaryDisabled,
-  },
-  secondaryText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.primary,
-    textAlign: 'center',
-  },
-  secondaryTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.secondaryDisabled,
-    textAlign: 'center',
-  },
-  tertiary: {
-    padding: 16,
-  },
-  tertiaryDisabled: {
-    padding: 16,
-  },
-  tertiaryText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.primary,
-    textAlign: 'center',
-  },
-  tertiaryTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.tertiaryDisabled,
-    textAlign: 'center',
-  },
-  modalCritical: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primary,
-  },
-  modalCriticalDisabled: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primaryDisabled,
-  },
-  modalCriticalText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  modalCriticalTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  modalPrimary: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.modalPrimary,
-  },
-  modalPrimaryDisabled: {
-    padding: 16,
-    borderRadius: 4,
-    backgroundColor: ColorPallet.brand.primaryDisabled,
-  },
-  modalPrimaryText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  modalPrimaryTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.buttonText,
-    textAlign: 'center',
-  },
-  modalSecondary: {
-    padding: 16,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: ColorPallet.brand.modalPrimary,
-  },
-  modalSecondaryDisabled: {
-    padding: 16,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: ColorPallet.brand.secondaryDisabled,
-  },
-  modalSecondaryText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.modalPrimary,
-    textAlign: 'center',
-  },
-  modalSecondaryTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.secondaryDisabled,
-    textAlign: 'center',
-  },
-  modalTertiary: {
-    padding: 16,
-  },
-  modalTertiaryDisabled: {
-    padding: 16,
-  },
-  modalTertiaryText: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.modalPrimary,
-    textAlign: 'center',
-  },
-  modalTertiaryTextDisabled: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.tertiaryDisabled,
-    textAlign: 'center',
-  },
-})
-export type IButtons = typeof Buttons
-
-export const ListItems = StyleSheet.create({
-  credentialBackground: {
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  credentialTitle: {
-    ...TextTheme.headingFour,
-  },
-  credentialDetails: {
-    ...TextTheme.caption,
-  },
-  credentialOfferBackground: {
-    backgroundColor: ColorPallet.brand.modalPrimaryBackground,
-  },
-  credentialOfferTitle: {
-    ...TextTheme.modalHeadingThree,
-    fontWeight: 'normal',
-  },
-  credentialOfferDetails: {
-    ...TextTheme.normal,
-  },
-  revoked: {
-    backgroundColor: ColorPallet.notification.error,
-    borderColor: ColorPallet.notification.errorBorder,
-  },
-  contactBackground: {
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  credentialIconColor: {
-    color: ColorPallet.notification.infoText,
-  },
-  contactTitle: {
-    color: ColorPallet.brand.text,
-  },
-  contactDate: {
-    color: ColorPallet.brand.text,
-    marginTop: 10,
-  },
-  contactIconBackground: {
-    backgroundColor: ColorPallet.brand.primary,
-  },
-  contactIcon: {
-    color: ColorPallet.grayscale.white,
-  },
-  recordAttributeLabel: {
-    ...TextTheme.bold,
-  },
-  recordContainer: {
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  recordBorder: {
-    borderBottomColor: ColorPallet.brand.primaryBackground,
-  },
-  recordLink: {
-    color: ColorPallet.brand.link,
-  },
-  recordAttributeText: {
-    ...TextTheme.normal,
-  },
-  proofIcon: {
-    ...TextTheme.headingOne,
-  },
-  proofError: {
-    color: ColorPallet.semantic.error,
-  },
-  avatarText: {
-    ...TextTheme.headingTwo,
-    fontWeight: 'normal',
-  },
-  avatarCircle: {
-    borderRadius: TextTheme.headingTwo.fontSize,
-    borderColor: TextTheme.headingTwo.color,
-    width: TextTheme.headingTwo.fontSize * 2,
-    height: TextTheme.headingTwo.fontSize * 2,
-  },
-  emptyList: {
-    ...TextTheme.normal,
-  },
-  requestTemplateBackground: {
-    backgroundColor: ColorPallet.grayscale.white,
-  },
-  requestTemplateIconColor: {
-    color: ColorPallet.notification.infoText,
-  },
-  requestTemplateTitle: {
-    color: ColorPallet.grayscale.black,
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  requestTemplateDetails: {
-    color: ColorPallet.grayscale.black,
-    fontWeight: 'normal',
-    fontSize: 16,
-  },
-  requestTemplateZkpLabel: {
-    color: ColorPallet.grayscale.mediumGrey,
-    fontSize: 12,
-  },
-  requestTemplateIcon: {
-    color: ColorPallet.grayscale.black,
-    fontSize: 36,
-  },
-  requestTemplateDate: {
-    color: ColorPallet.grayscale.mediumGrey,
-    fontSize: 10,
-  },
-})
-export type IListItems = typeof ListItems
-
-const TabThemeBase = StyleSheet.create({
-  tabBarStyle: {
-    height: 60,
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-    shadowOffset: { width: 0, height: -3 },
-    shadowRadius: 6,
-    shadowColor: ColorPallet.grayscale.black,
-    shadowOpacity: 0.1,
-    borderTopWidth: 0,
-    paddingBottom: 0,
-  },
-  tabBarContainerStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tabBarTextStyle: {
-    ...TextTheme.labelSubtitle,
-    paddingBottom: 5,
-  },
-  tabBarButtonIconStyle: {
-    color: ColorPallet.brand.headerIcon,
-  },
-  focusTabIconStyle: {
-    height: 60,
-    width: 60,
-    backgroundColor: ColorPallet.brand.primary,
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  focusTabActiveTintColor: {
-    backgroundColor: ColorPallet.brand.secondary,
-  },
-})
-
-const TabThemeExtension = {
-  tabBarActiveTintColor: ColorPallet.brand.primary,
-  tabBarInactiveTintColor: ColorPallet.brand.tabBarInactive,
-  tabBarSecondaryBackgroundColor: ColorPallet.brand.secondaryBackground,
+export interface ITextTheme {
+  headingOne: TextStyle
+  headingTwo: TextStyle
+  headingThree: TextStyle
+  headingFour: TextStyle
+  normal: TextStyle
+  bold: TextStyle
+  label: TextStyle
+  labelTitle: TextStyle
+  labelSubtitle: TextStyle
+  labelText: TextStyle
+  caption: TextStyle
+  title: TextStyle
+  headerTitle: TextStyle
+  modalNormal: TextStyle
+  modalTitle: TextStyle
+  modalHeadingOne: TextStyle
+  modalHeadingThree: TextStyle
+  popupModalText: TextStyle
+  settingsText: TextStyle
+  inlineErrorText: TextStyle
+  inlineWarningText: TextStyle
 }
 
-export const TabTheme = { ...TabThemeBase, ...TabThemeExtension }
-export type ITabTheme = typeof TabTheme
+export function createTextTheme(theme: { ColorPallet: IColorPallet }): ITextTheme {
+  return StyleSheet.create({
+    headingOne: {
+      fontSize: 38,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    headingTwo: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    headingThree: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    headingFour: {
+      fontSize: 21,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    normal: {
+      fontSize: 18,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.brand.text,
+    },
+    bold: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    labelTitle: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    labelSubtitle: {
+      fontSize: 14,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.brand.text,
+    },
+    labelText: {
+      fontSize: 10,
+      fontWeight: 'normal',
+      fontStyle: 'italic',
+      color: theme.ColorPallet.brand.text,
+    },
+    caption: {
+      fontSize: 14,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.brand.text,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.text,
+    },
+    headerTitle: {
+      fontSize: 28,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.brand.headerText,
+    },
+    modalNormal: {
+      fontSize: 18,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.grayscale.white,
+    },
+    modalTitle: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.grayscale.white,
+    },
+    modalHeadingOne: {
+      fontSize: 38,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.grayscale.white,
+    },
+    modalHeadingThree: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      color: theme.ColorPallet.grayscale.white,
+    },
+    popupModalText: {
+      fontSize: 18,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.grayscale.white,
+    },
+    settingsText: {
+      fontSize: 21,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.brand.text,
+    },
+    inlineErrorText: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.brand.inlineError,
+    },
+    inlineWarningText: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      color: theme.ColorPallet.brand.inlineWarning,
+    },
+  })
+}
+export const TextTheme = createTextTheme({ ColorPallet })
 
-export const NavigationTheme = {
-  dark: true,
+export interface IInputs {
+  label: TextStyle
+  textInput: TextStyle
+  inputSelected: ViewStyle
+  singleSelect: ViewStyle
+  singleSelectText: TextStyle
+  singleSelectIcon: TextStyle
+  checkBoxColor: TextStyle
+  checkBoxText: TextStyle
+}
+
+export function createInputsTheme(theme: {
+  ColorPallet: IColorPallet
+  TextTheme: ITextTheme
+  borderRadius: number
+}): IInputs {
+  return StyleSheet.create({
+    label: {
+      ...theme.TextTheme.label,
+    },
+    textInput: {
+      padding: 10,
+      borderRadius,
+      fontSize: 16,
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+      color: theme.ColorPallet.notification.infoText,
+      borderWidth: 2,
+      borderColor: theme.ColorPallet.brand.secondary,
+    },
+    inputSelected: {
+      borderColor: theme.ColorPallet.brand.primary,
+    },
+    singleSelect: {
+      padding: 12,
+      borderRadius: theme.borderRadius * 2,
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    singleSelectText: {
+      ...theme.TextTheme.normal,
+    },
+    singleSelectIcon: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+    checkBoxColor: {
+      color: theme.ColorPallet.brand.primary,
+    },
+    checkBoxText: {
+      ...theme.TextTheme.normal,
+    },
+  })
+}
+export const Inputs = createInputsTheme({ ColorPallet, TextTheme, borderRadius })
+
+export interface IButtons {
+  critical: ViewStyle
+  criticalDisabled: ViewStyle
+  criticalText: TextStyle
+  criticalTextDisabled: TextStyle
+  primary: ViewStyle
+  primaryDisabled: ViewStyle
+  primaryText: TextStyle
+  primaryTextDisabled: TextStyle
+  secondary: ViewStyle
+  secondaryDisabled: ViewStyle
+  secondaryText: TextStyle
+  secondaryTextDisabled: TextStyle
+  tertiary: ViewStyle
+  tertiaryDisabled: ViewStyle
+  tertiaryText: TextStyle
+  tertiaryTextDisabled: TextStyle
+  modalCritical: ViewStyle
+  modalCriticalDisabled: ViewStyle
+  modalCriticalText: TextStyle
+  modalCriticalTextDisabled: TextStyle
+  modalPrimary: ViewStyle
+  modalPrimaryDisabled: ViewStyle
+  modalPrimaryText: TextStyle
+  modalPrimaryTextDisabled: TextStyle
+  modalSecondary: ViewStyle
+  modalSecondaryDisabled: ViewStyle
+  modalSecondaryText: TextStyle
+  modalSecondaryTextDisabled: TextStyle
+  modalTertiary: ViewStyle
+  modalTertiaryDisabled: ViewStyle
+  modalTertiaryText: TextStyle
+  modalTertiaryTextDisabled: TextStyle
+}
+
+export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IButtons {
+  return StyleSheet.create({
+    critical: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primary,
+    },
+    criticalDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+    },
+    criticalText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    criticalTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    primary: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primary,
+    },
+    primaryDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+    },
+    primaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    primaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      textAlign: 'center',
+    },
+    secondary: {
+      padding: 16,
+      borderRadius: 4,
+      borderWidth: 2,
+      borderColor: theme.ColorPallet.brand.primary,
+    },
+    secondaryDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      borderWidth: 2,
+      borderColor: theme.ColorPallet.brand.secondaryDisabled,
+    },
+    secondaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.primary,
+      textAlign: 'center',
+    },
+    secondaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.secondaryDisabled,
+      textAlign: 'center',
+    },
+    tertiary: {
+      padding: 16,
+    },
+    tertiaryDisabled: {
+      padding: 16,
+    },
+    tertiaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.primary,
+      textAlign: 'center',
+    },
+    tertiaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.tertiaryDisabled,
+      textAlign: 'center',
+    },
+    modalCritical: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primary,
+    },
+    modalCriticalDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+    },
+    modalCriticalText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalCriticalTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalPrimary: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.modalPrimary,
+    },
+    modalPrimaryDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+    },
+    modalPrimaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalPrimaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalSecondary: {
+      padding: 16,
+      borderRadius: 4,
+      borderWidth: 2,
+      borderColor: theme.ColorPallet.brand.modalPrimary,
+    },
+    modalSecondaryDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      borderWidth: 2,
+      borderColor: theme.ColorPallet.brand.secondaryDisabled,
+    },
+    modalSecondaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.modalPrimary,
+      textAlign: 'center',
+    },
+    modalSecondaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.secondaryDisabled,
+      textAlign: 'center',
+    },
+    modalTertiary: {
+      padding: 16,
+    },
+    modalTertiaryDisabled: {
+      padding: 16,
+    },
+    modalTertiaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.modalPrimary,
+      textAlign: 'center',
+    },
+    modalTertiaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.tertiaryDisabled,
+      textAlign: 'center',
+    },
+  })
+}
+export const Buttons = createButtonsTheme({ ColorPallet, TextTheme })
+
+export interface IListItems {
+  credentialBackground: ViewStyle
+  credentialTitle: TextStyle
+  credentialDetails: TextStyle
+  credentialOfferBackground: ViewStyle
+  credentialOfferTitle: TextStyle
+  credentialOfferDetails: TextStyle
+  revoked: ViewStyle
+  contactBackground: ViewStyle
+  credentialIconColor: TextStyle
+  contactTitle: TextStyle
+  contactDate: TextStyle
+  contactIconBackground: ViewStyle
+  contactIcon: TextStyle
+  recordAttributeLabel: TextStyle
+  recordContainer: ViewStyle
+  recordBorder: ViewStyle
+  recordLink: TextStyle
+  recordAttributeText: TextStyle
+  proofIcon: TextStyle
+  proofError: TextStyle
+  avatarText: TextStyle
+  avatarCircle: ViewStyle
+  emptyList: TextStyle
+  requestTemplateBackground: ViewStyle
+  requestTemplateIconColor: TextStyle
+  requestTemplateTitle: TextStyle
+  requestTemplateDetails: TextStyle
+  requestTemplateZkpLabel: TextStyle
+  requestTemplateIcon: TextStyle
+  requestTemplateDate: TextStyle
+}
+
+export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IListItems {
+  return StyleSheet.create({
+    credentialBackground: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    credentialTitle: {
+      ...theme.TextTheme.headingFour,
+    },
+    credentialDetails: {
+      ...theme.TextTheme.caption,
+    },
+    credentialOfferBackground: {
+      backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
+    },
+    credentialOfferTitle: {
+      ...theme.TextTheme.modalHeadingThree,
+      fontWeight: 'normal',
+    },
+    credentialOfferDetails: {
+      ...theme.TextTheme.normal,
+    },
+    revoked: {
+      backgroundColor: theme.ColorPallet.notification.error,
+      borderColor: theme.ColorPallet.notification.errorBorder,
+    },
+    contactBackground: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    credentialIconColor: {
+      color: theme.ColorPallet.notification.infoText,
+    },
+    contactTitle: {
+      color: theme.ColorPallet.brand.text,
+    },
+    contactDate: {
+      color: theme.ColorPallet.brand.text,
+      marginTop: 10,
+    },
+    contactIconBackground: {
+      backgroundColor: theme.ColorPallet.brand.primary,
+    },
+    contactIcon: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+    recordAttributeLabel: {
+      ...theme.TextTheme.bold,
+    },
+    recordContainer: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    recordBorder: {
+      borderBottomColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    recordLink: {
+      color: theme.ColorPallet.brand.link,
+    },
+    recordAttributeText: {
+      ...theme.TextTheme.normal,
+    },
+    proofIcon: {
+      ...theme.TextTheme.headingOne,
+    },
+    proofError: {
+      color: theme.ColorPallet.semantic.error,
+    },
+    avatarText: {
+      ...theme.TextTheme.headingTwo,
+      fontWeight: 'normal',
+    },
+    avatarCircle: {
+      borderRadius: theme.TextTheme.headingTwo.fontSize,
+      borderColor: theme.TextTheme.headingTwo.color,
+      width: (theme.TextTheme.headingTwo.fontSize ?? 32) * 2,
+      height: (theme.TextTheme.headingTwo.fontSize ?? 32) * 2,
+    },
+    emptyList: {
+      ...theme.TextTheme.normal,
+    },
+    requestTemplateBackground: {
+      backgroundColor: theme.ColorPallet.grayscale.white,
+    },
+    requestTemplateIconColor: {
+      color: theme.ColorPallet.notification.infoText,
+    },
+    requestTemplateTitle: {
+      color: theme.ColorPallet.grayscale.black,
+      fontWeight: 'bold',
+      fontSize: 16,
+    },
+    requestTemplateDetails: {
+      color: theme.ColorPallet.grayscale.black,
+      fontWeight: 'normal',
+      fontSize: 16,
+    },
+    requestTemplateZkpLabel: {
+      color: theme.ColorPallet.grayscale.mediumGrey,
+      fontSize: 12,
+    },
+    requestTemplateIcon: {
+      color: theme.ColorPallet.grayscale.black,
+      fontSize: 36,
+    },
+    requestTemplateDate: {
+      color: theme.ColorPallet.grayscale.mediumGrey,
+      fontSize: 10,
+    },
+  })
+}
+export const ListItems = createListItemsTheme({ ColorPallet, TextTheme })
+
+export interface ITabTheme {
+  tabBarActiveTintColor: string
+  tabBarInactiveTintColor: string
+  tabBarSecondaryBackgroundColor: string
+  tabBarStyle: ViewStyle
+  tabBarContainerStyle: ViewStyle
+  tabBarTextStyle: TextStyle
+  tabBarButtonIconStyle: TextStyle
+  focusTabIconStyle: ViewStyle
+  focusTabActiveTintColor: ViewStyle
+}
+
+export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): ITabTheme {
+  const tabTheme = StyleSheet.create({
+    tabBarStyle: {
+      height: 60,
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      shadowOffset: { width: 0, height: -3 },
+      shadowRadius: 6,
+      shadowColor: theme.ColorPallet.grayscale.black,
+      shadowOpacity: 0.1,
+      borderTopWidth: 0,
+      paddingBottom: 0,
+    },
+    tabBarContainerStyle: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    tabBarTextStyle: {
+      ...theme.TextTheme.labelSubtitle,
+      paddingBottom: 5,
+    },
+    tabBarButtonIconStyle: {
+      color: theme.ColorPallet.brand.headerIcon,
+    },
+    focusTabIconStyle: {
+      height: 60,
+      width: 60,
+      backgroundColor: theme.ColorPallet.brand.primary,
+      borderRadius: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    focusTabActiveTintColor: {
+      backgroundColor: theme.ColorPallet.brand.secondary,
+    },
+  })
+
+  return {
+    ...tabTheme,
+    tabBarActiveTintColor: theme.ColorPallet.brand.primary,
+    tabBarInactiveTintColor: theme.ColorPallet.brand.tabBarInactive,
+    tabBarSecondaryBackgroundColor: theme.ColorPallet.brand.secondaryBackground,
+  }
+}
+export const TabTheme = createTabTheme({ ColorPallet, TextTheme })
+
+export interface INavigationTheme {
+  dark: boolean
   colors: {
-    primary: ColorPallet.brand.primary,
-    background: ColorPallet.brand.primaryBackground,
-    card: ColorPallet.brand.primary,
-    text: ColorPallet.grayscale.white,
-    border: ColorPallet.grayscale.white,
-    notification: ColorPallet.grayscale.white,
-  },
+    primary: string
+    background: string
+    card: string
+    text: string
+    border: string
+    notification: string
+  }
 }
 
-export type INavigationTheme = typeof NavigationTheme
+export function createNavigationTheme(theme: { ColorPallet: IColorPallet }): INavigationTheme {
+  return {
+    dark: true,
+    colors: {
+      primary: theme.ColorPallet.brand.primary,
+      background: theme.ColorPallet.brand.primaryBackground,
+      card: theme.ColorPallet.brand.primary,
+      text: theme.ColorPallet.grayscale.white,
+      border: theme.ColorPallet.grayscale.white,
+      notification: theme.ColorPallet.grayscale.white,
+    },
+  }
+}
+export const NavigationTheme = createNavigationTheme({ ColorPallet })
 
-export const HomeTheme = StyleSheet.create({
-  welcomeHeader: {
-    ...TextTheme.headingOne,
-  },
-  credentialMsg: {
-    ...TextTheme.normal,
-  },
-  notificationsHeader: {
-    ...TextTheme.headingThree,
-  },
-  noNewUpdatesText: {
-    ...TextTheme.normal,
-    color: ColorPallet.notification.infoText,
-  },
-  link: {
-    ...TextTheme.normal,
-    color: ColorPallet.brand.link,
-  },
-})
-export type IHomeTheme = typeof HomeTheme
-
-const SettingsThemeBase = StyleSheet.create({
-  groupHeader: {
-    ...TextTheme.normal,
-    marginBottom: 8,
-  },
-  text: {
-    ...TextTheme.caption,
-    color: ColorPallet.grayscale.white,
-  },
-})
-
-const SettingsThemeExtension = {
-  groupBackground: ColorPallet.brand.secondaryBackground,
-  iconColor: TextTheme.normal.color,
+export interface IHomeTheme {
+  welcomeHeader: TextStyle
+  credentialMsg: TextStyle
+  notificationsHeader: TextStyle
+  noNewUpdatesText: TextStyle
+  link: TextStyle
 }
 
-export const SettingsTheme = { ...SettingsThemeBase, ...SettingsThemeExtension }
-export type ISettingsTheme = typeof SettingsTheme
+export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IHomeTheme {
+  return StyleSheet.create({
+    welcomeHeader: {
+      ...theme.TextTheme.headingOne,
+    },
+    credentialMsg: {
+      ...theme.TextTheme.normal,
+    },
+    notificationsHeader: {
+      ...theme.TextTheme.headingThree,
+    },
+    noNewUpdatesText: {
+      ...theme.TextTheme.normal,
+      color: theme.ColorPallet.notification.infoText,
+    },
+    link: {
+      ...theme.TextTheme.normal,
+      color: theme.ColorPallet.brand.link,
+    },
+  })
+}
+export const HomeTheme = createHomeTheme({ ColorPallet, TextTheme })
 
-const ChatThemeBase = StyleSheet.create({
-  containerStyle: {
-    marginBottom: 16,
-    marginLeft: 16,
-    marginRight: 16,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    alignSelf: 'flex-end',
-  },
-  leftBubble: {
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderRadius: 4,
-    padding: 16,
-    marginLeft: 16,
-  },
-  rightBubble: {
-    backgroundColor: ColorPallet.brand.primaryLight,
-    borderRadius: 4,
-    padding: 16,
-    marginRight: 16,
-  },
-  timeStyleLeft: {
-    color: ColorPallet.grayscale.lightGrey,
-    fontSize: 12,
-    marginTop: 8,
-  },
-  timeStyleRight: {
-    color: ColorPallet.grayscale.lightGrey,
-    fontSize: 12,
-    marginTop: 8,
-  },
-  leftText: {
-    color: ColorPallet.brand.secondary,
-    fontSize: TextTheme.normal.fontSize,
-  },
-  leftTextHighlighted: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.secondary,
-  },
-  rightText: {
-    color: ColorPallet.brand.secondary,
-    fontSize: TextTheme.normal.fontSize,
-  },
-  rightTextHighlighted: {
-    ...TextTheme.bold,
-    color: ColorPallet.brand.secondary,
-  },
-  inputToolbar: {
-    backgroundColor: ColorPallet.brand.secondary,
-    shadowColor: ColorPallet.brand.primaryDisabled,
-    borderRadius: 10,
-  },
-  inputText: {
-    lineHeight: undefined,
-    fontWeight: '500',
-    fontSize: TextTheme.normal.fontSize,
-  },
-  sendContainer: {
-    marginBottom: 4,
-    paddingHorizontal: 4,
-    justifyContent: 'center',
-  },
-  openButtonStyle: {
-    borderRadius: 32,
-    backgroundColor: ColorPallet.brand.primary,
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
-    marginTop: 16,
-  },
-  openButtonTextStyle: {
-    fontSize: TextTheme.normal.fontSize,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  documentIconContainer: {
-    backgroundColor: ColorPallet.brand.primary,
-    alignSelf: 'flex-start',
-    borderRadius: 4,
-    marginBottom: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 50,
-    height: 50,
-  },
-  documentIcon: {
-    color: ColorPallet.grayscale.white,
-  },
-})
-
-// TODO: Invesitigate if these are still needed.
-// Note: They are not currently used in bifold
-// extending to allow backwards compatibility.
-const ChatThemeExtension = {
-  placeholderText: ColorPallet.grayscale.lightGrey,
-  sendEnabled: ColorPallet.brand.primary,
-  sendDisabled: ColorPallet.brand.primaryDisabled,
-  options: ColorPallet.brand.primary,
-  optionsText: ColorPallet.grayscale.black,
+export interface ISettingsTheme {
+  groupHeader: TextStyle
+  text: TextStyle
+  groupBackground: ColorValue
+  iconColor: ColorValue | undefined
 }
 
-export const ChatTheme = { ...ChatThemeBase, ...ChatThemeExtension }
-export type IChatTheme = typeof ChatTheme
+export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): ISettingsTheme {
+  const settingsTheme = StyleSheet.create({
+    groupHeader: {
+      ...theme.TextTheme.normal,
+      marginBottom: 8,
+    },
+    text: {
+      ...theme.TextTheme.caption,
+      color: theme.ColorPallet.grayscale.white,
+    },
+  })
 
-const OnboardingThemeBase = StyleSheet.create({
-  container: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  carouselContainer: {
-    backgroundColor: ColorPallet.brand.primaryBackground,
-  },
-  pagerDot: {
-    borderColor: ColorPallet.brand.primary,
-  },
-  pagerDotActive: {
-    color: ColorPallet.brand.primary,
-  },
-  pagerDotInactive: {
-    color: ColorPallet.brand.secondary,
-  },
-  pagerNavigationButton: {
-    color: ColorPallet.brand.primary,
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  headerText: {
-    ...TextTheme.bold,
-  },
-  bodyText: {
-    ...TextTheme.normal,
-  },
-})
+  return {
+    ...settingsTheme,
+    groupBackground: theme.ColorPallet.brand.secondaryBackground,
+    iconColor: theme.TextTheme.normal.color,
+  }
+}
+export const SettingsTheme = createSettingsTheme({ ColorPallet, TextTheme })
 
-const OnboardingThemeExtension = {
-  headerTintColor: ColorPallet.grayscale.white,
+export interface IChatTheme {
+  containerStyle: ViewStyle
+  leftBubble: ViewStyle
+  rightBubble: ViewStyle
+  timeStyleLeft: TextStyle
+  timeStyleRight: TextStyle
+  leftText: TextStyle
+  leftTextHighlighted: TextStyle
+  rightText: TextStyle
+  rightTextHighlighted: TextStyle
+  inputToolbar: ViewStyle
+  inputText: TextStyle
+  sendContainer: ViewStyle
+  openButtonStyle: ViewStyle
+  openButtonTextStyle: TextStyle
+  documentIconContainer: ViewStyle
+  documentIcon: TextStyle
+  placeholderText: ColorValue
+  sendEnabled: ColorValue
+  sendDisabled: ColorValue
+  options: ColorValue
+  optionsText: ColorValue
+}
+
+export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IChatTheme {
+  const chatTheme = StyleSheet.create({
+    containerStyle: {
+      marginBottom: 16,
+      marginLeft: 16,
+      marginRight: 16,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      alignSelf: 'flex-end',
+    },
+    leftBubble: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      borderRadius: 4,
+      padding: 16,
+      marginLeft: 16,
+    },
+    rightBubble: {
+      backgroundColor: theme.ColorPallet.brand.primaryLight,
+      borderRadius: 4,
+      padding: 16,
+      marginRight: 16,
+    },
+    timeStyleLeft: {
+      color: theme.ColorPallet.grayscale.lightGrey,
+      fontSize: 12,
+      marginTop: 8,
+    },
+    timeStyleRight: {
+      color: theme.ColorPallet.grayscale.lightGrey,
+      fontSize: 12,
+      marginTop: 8,
+    },
+    leftText: {
+      color: theme.ColorPallet.brand.secondary,
+      fontSize: TextTheme.normal.fontSize,
+    },
+    leftTextHighlighted: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.secondary,
+    },
+    rightText: {
+      color: theme.ColorPallet.brand.secondary,
+      fontSize: theme.TextTheme.normal.fontSize,
+    },
+    rightTextHighlighted: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.secondary,
+    },
+    inputToolbar: {
+      backgroundColor: theme.ColorPallet.brand.secondary,
+      shadowColor: theme.ColorPallet.brand.primaryDisabled,
+      borderRadius: 10,
+    },
+    inputText: {
+      lineHeight: undefined,
+      fontWeight: '500',
+      fontSize: theme.TextTheme.normal.fontSize,
+    },
+    sendContainer: {
+      marginBottom: 4,
+      paddingHorizontal: 4,
+      justifyContent: 'center',
+    },
+    openButtonStyle: {
+      borderRadius: 32,
+      backgroundColor: theme.ColorPallet.brand.primary,
+      paddingTop: 8,
+      paddingBottom: 8,
+      paddingLeft: 16,
+      paddingRight: 16,
+      marginTop: 16,
+    },
+    openButtonTextStyle: {
+      fontSize: theme.TextTheme.normal.fontSize,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    documentIconContainer: {
+      backgroundColor: theme.ColorPallet.brand.primary,
+      alignSelf: 'flex-start',
+      borderRadius: 4,
+      marginBottom: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 50,
+      height: 50,
+    },
+    documentIcon: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+  })
+
+  return {
+    ...chatTheme,
+    // TODO: Invesitigate if these are still needed.
+    // Note: They are not currently used in bifold
+    // extending to allow backwards compatibility.
+    placeholderText: theme.ColorPallet.grayscale.lightGrey,
+    sendEnabled: theme.ColorPallet.brand.primary,
+    sendDisabled: theme.ColorPallet.brand.primaryDisabled,
+    options: theme.ColorPallet.brand.primary,
+    optionsText: theme.ColorPallet.grayscale.black,
+  }
+}
+export const ChatTheme = createChatTheme({ ColorPallet, TextTheme })
+
+export interface IOnboardingTheme {
+  container: ViewStyle
+  carouselContainer: ViewStyle
+  pagerDot: ViewStyle
+  pagerDotActive: TextStyle
+  pagerDotInactive: TextStyle
+  pagerNavigationButton: TextStyle
+  headerText: TextStyle
+  bodyText: TextStyle
+  headerTintColor: string
   imageDisplayOptions: {
-    fill: ColorPallet.notification.infoText,
-  },
+    fill: string
+  }
 }
 
-export const OnboardingTheme = { ...OnboardingThemeBase, ...OnboardingThemeExtension }
-export type IOnboardingTheme = typeof OnboardingTheme
+export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IOnboardingTheme {
+  const onboardingTheme = StyleSheet.create({
+    container: {
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    carouselContainer: {
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    pagerDot: {
+      borderColor: theme.ColorPallet.brand.primary,
+    },
+    pagerDotActive: {
+      color: theme.ColorPallet.brand.primary,
+    },
+    pagerDotInactive: {
+      color: theme.ColorPallet.brand.secondary,
+    },
+    pagerNavigationButton: {
+      color: theme.ColorPallet.brand.primary,
+      fontWeight: 'bold',
+      fontSize: 18,
+    },
+    headerText: {
+      ...theme.TextTheme.bold,
+    },
+    bodyText: {
+      ...theme.TextTheme.normal,
+    },
+  })
 
-export const DialogTheme = StyleSheet.create({
-  modalView: {
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-  },
-  titleText: {
-    color: ColorPallet.grayscale.white,
-  },
-  description: {
-    color: ColorPallet.grayscale.white,
-  },
-  closeButtonIcon: {
-    color: ColorPallet.grayscale.white,
-  },
-  carouselButtonText: {
-    color: ColorPallet.grayscale.white,
-  },
-})
-export type IDialogTheme = typeof DialogTheme
-
-const LoadingTheme = {
-  backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+  return {
+    ...onboardingTheme,
+    headerTintColor: ColorPallet.grayscale.white,
+    imageDisplayOptions: {
+      fill: ColorPallet.notification.infoText,
+    },
+  }
 }
-export type ILoadingTheme = typeof LoadingTheme
+export const OnboardingTheme = createOnboardingTheme({ ColorPallet, TextTheme })
 
+interface IDialogTheme {
+  modalView: ViewStyle
+  titleText: TextStyle
+  description: TextStyle
+  closeButtonIcon: TextStyle
+  carouselButtonText: TextStyle
+}
+
+export function createDialogTheme(theme: { ColorPallet: IColorPallet }): IDialogTheme {
+  return StyleSheet.create({
+    modalView: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    titleText: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+    description: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+    closeButtonIcon: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+    carouselButtonText: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+  })
+}
+export const DialogTheme = createDialogTheme({ ColorPallet })
+
+export interface ILoadingTheme {
+  backgroundColor: string
+}
+
+export function createLoadingTheme(theme: { ColorPallet: IColorPallet }): ILoadingTheme {
+  return {
+    backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
+  }
+}
+export const LoadingTheme = createLoadingTheme({ ColorPallet })
+
+// NOTE: If ColorPallet or TextTheme is needed in this theme,
+// we can convert this to a function like the others.
 const PINEnterTheme = {
   image: {
     alignSelf: 'center',
@@ -986,37 +1204,48 @@ const PINEnterTheme = {
 }
 export type IPINEnterTheme = typeof PINEnterTheme
 
-const PINInputTheme = StyleSheet.create({
-  cell: {
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderColor: ColorPallet.brand.secondary,
-    borderWidth: 1,
-  },
-  focussedCell: {
-    borderColor: ColorPallet.brand.headerIcon,
-  },
-  cellText: {
-    color: ColorPallet.brand.text,
-  },
-  icon: {
-    color: ColorPallet.brand.headerIcon,
-  },
-  codeFieldRoot: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  labelAndFieldContainer: {
-    flexDirection: 'row',
-    borderRadius: 5,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    alignItems: 'center',
-    backgroundColor: ColorPallet.brand.secondaryBackground,
-    borderColor: ColorPallet.brand.secondary,
-    borderWidth: 1,
-  },
-})
-export type IPINInputTheme = typeof PINInputTheme
+export interface IPINInputTheme {
+  cell: ViewStyle
+  focussedCell: ViewStyle
+  cellText: TextStyle
+  icon: TextStyle
+  codeFieldRoot: ViewStyle
+  labelAndFieldContainer: ViewStyle
+}
+
+export function createPINInputTheme(theme: { ColorPallet: IColorPallet }): IPINInputTheme {
+  return StyleSheet.create({
+    cell: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      borderColor: theme.ColorPallet.brand.secondary,
+      borderWidth: 1,
+    },
+    focussedCell: {
+      borderColor: theme.ColorPallet.brand.headerIcon,
+    },
+    cellText: {
+      color: theme.ColorPallet.brand.text,
+    },
+    icon: {
+      color: theme.ColorPallet.brand.headerIcon,
+    },
+    codeFieldRoot: {
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    labelAndFieldContainer: {
+      flexDirection: 'row',
+      borderRadius: 5,
+      paddingHorizontal: 12,
+      paddingVertical: 4,
+      alignItems: 'center',
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      borderColor: theme.ColorPallet.brand.secondary,
+      borderWidth: 1,
+    },
+  })
+}
+export const PINInputTheme = createPINInputTheme({ ColorPallet })
 
 const CredentialCardShadowTheme = {
   shadowColor: '#000',
@@ -1114,13 +1343,22 @@ export const Assets = {
   },
 }
 
-const InputInlineMessage = {
-  inlineErrorText: { ...TextTheme.inlineErrorText },
-  InlineErrorIcon: Assets.svg.iconError,
-  inlineWarningText: { ...TextTheme.inlineWarningText },
-  InlineWarningIcon: Assets.svg.iconWarning,
+export interface IInlineInputMessage {
+  inlineErrorText: TextStyle
+  InlineErrorIcon: typeof Assets.svg.iconError
+  inlineWarningText: TextStyle
+  InlineWarningIcon: typeof Assets.svg.iconWarning
 }
-export type IInlineInputMessage = typeof InputInlineMessage
+
+export function createInputInlineMessageTheme(theme: { TextTheme: ITextTheme; Assets: IAssets }): IInlineInputMessage {
+  return {
+    inlineErrorText: { ...theme.TextTheme.inlineErrorText },
+    InlineErrorIcon: theme.Assets.svg.iconError,
+    inlineWarningText: { ...theme.TextTheme.inlineWarningText },
+    InlineWarningIcon: theme.Assets.svg.iconWarning,
+  }
+}
+export const InputInlineMessage = createInputInlineMessageTheme({ TextTheme, Assets })
 
 export interface ITheme {
   themeName: string

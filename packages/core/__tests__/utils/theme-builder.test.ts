@@ -4,7 +4,7 @@ import { ThemeBuilder } from '../../src/theme-builder'
 describe('Theme Builder', () => {
   describe('getTheme', () => {
     it('should return the theme', () => {
-      const theme = new ThemeBuilder({ theme: 'test' } as any).build()
+      const theme = new ThemeBuilder(bifoldTheme).build()
 
       expect(theme).toStrictEqual({
         theme: 'test',
@@ -14,7 +14,15 @@ describe('Theme Builder', () => {
 
   describe('withOverrides', () => {
     it('should merge the new theme into the existing theme', () => {
-      const theme = new ThemeBuilder({ theme: 'test' } as any).withOverrides({ additional: 'value' } as any).build()
+      const theme = new ThemeBuilder(bifoldTheme)
+        .withOverrides({
+          Buttons: {
+            critical: {
+              margin: 20,
+            },
+          },
+        })
+        .build()
 
       expect(theme).toStrictEqual({
         theme: 'test',
@@ -23,9 +31,7 @@ describe('Theme Builder', () => {
     })
 
     it('should override existing properties in the default theme', () => {
-      const theme = new ThemeBuilder({ theme: { color: 'blue' } } as any)
-        .withOverrides({ theme: { color: 'red' } } as any)
-        .build()
+      const theme = new ThemeBuilder(bifoldTheme).withOverrides({ theme: { color: 'red' } } as any).build()
 
       expect(theme).toStrictEqual({
         theme: { color: 'red' },
@@ -33,7 +39,7 @@ describe('Theme Builder', () => {
     })
 
     it('should add new nested properties to the theme', () => {
-      const theme = new ThemeBuilder({ theme: { color: 'blue' } } as any)
+      const theme = new ThemeBuilder(bifoldTheme)
         .withOverrides({ theme: { nested: { property: 'value' } } } as any)
         .build()
 
@@ -43,9 +49,7 @@ describe('Theme Builder', () => {
     })
 
     it('should not override the entire theme when merging', () => {
-      const theme = new ThemeBuilder({ theme: { color: 'blue', size: 'medium' } } as any)
-        .withOverrides({} as any)
-        .build()
+      const theme = new ThemeBuilder(bifoldTheme).withOverrides({} as any).build()
 
       expect(theme).toStrictEqual({
         theme: { color: 'blue', size: 'medium' },
@@ -53,7 +57,7 @@ describe('Theme Builder', () => {
     })
 
     it('should chain multiple merges', () => {
-      const theme = new ThemeBuilder({ theme: { color: 'blue' } } as any)
+      const theme = new ThemeBuilder(bifoldTheme)
         .withOverrides({ theme: { size: 'large' } } as any)
         .withOverrides({ theme: { padding: 10 } } as any)
         .withOverrides({ theme: { color: 'green' } } as any)
