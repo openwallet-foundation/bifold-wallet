@@ -1,4 +1,4 @@
-import { ColorValue, StyleSheet, TextStyle, ViewStyle } from 'react-native'
+import { StyleSheet, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
@@ -298,31 +298,7 @@ export const ColorPallet: IColorPallet = {
   grayscale: GrayscaleColors,
 }
 
-export interface ITextTheme {
-  headingOne: TextStyle
-  headingTwo: TextStyle
-  headingThree: TextStyle
-  headingFour: TextStyle
-  normal: TextStyle
-  bold: TextStyle
-  label: TextStyle
-  labelTitle: TextStyle
-  labelSubtitle: TextStyle
-  labelText: TextStyle
-  caption: TextStyle
-  title: TextStyle
-  headerTitle: TextStyle
-  modalNormal: TextStyle
-  modalTitle: TextStyle
-  modalHeadingOne: TextStyle
-  modalHeadingThree: TextStyle
-  popupModalText: TextStyle
-  settingsText: TextStyle
-  inlineErrorText: TextStyle
-  inlineWarningText: TextStyle
-}
-
-export function createTextTheme(theme: { ColorPallet: IColorPallet }): ITextTheme {
+export function createTextTheme(theme: { ColorPallet: IColorPallet }) {
   return StyleSheet.create({
     headingOne: {
       fontSize: 38,
@@ -432,24 +408,10 @@ export function createTextTheme(theme: { ColorPallet: IColorPallet }): ITextThem
     },
   })
 }
+export type ITextTheme = ReturnType<typeof createTextTheme>
 export const TextTheme = createTextTheme({ ColorPallet })
 
-export interface IInputs {
-  label: TextStyle
-  textInput: TextStyle
-  inputSelected: ViewStyle
-  singleSelect: ViewStyle
-  singleSelectText: TextStyle
-  singleSelectIcon: TextStyle
-  checkBoxColor: TextStyle
-  checkBoxText: TextStyle
-}
-
-export function createInputsTheme(theme: {
-  ColorPallet: IColorPallet
-  TextTheme: ITextTheme
-  borderRadius: number
-}): IInputs {
+export function createInputsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme; borderRadius: number }) {
   return StyleSheet.create({
     label: {
       ...theme.TextTheme.label,
@@ -485,44 +447,10 @@ export function createInputsTheme(theme: {
     },
   })
 }
+export type IInputs = ReturnType<typeof createInputsTheme>
 export const Inputs = createInputsTheme({ ColorPallet, TextTheme, borderRadius })
 
-export interface IButtons {
-  critical: ViewStyle
-  criticalDisabled: ViewStyle
-  criticalText: TextStyle
-  criticalTextDisabled: TextStyle
-  primary: ViewStyle
-  primaryDisabled: ViewStyle
-  primaryText: TextStyle
-  primaryTextDisabled: TextStyle
-  secondary: ViewStyle
-  secondaryDisabled: ViewStyle
-  secondaryText: TextStyle
-  secondaryTextDisabled: TextStyle
-  tertiary: ViewStyle
-  tertiaryDisabled: ViewStyle
-  tertiaryText: TextStyle
-  tertiaryTextDisabled: TextStyle
-  modalCritical: ViewStyle
-  modalCriticalDisabled: ViewStyle
-  modalCriticalText: TextStyle
-  modalCriticalTextDisabled: TextStyle
-  modalPrimary: ViewStyle
-  modalPrimaryDisabled: ViewStyle
-  modalPrimaryText: TextStyle
-  modalPrimaryTextDisabled: TextStyle
-  modalSecondary: ViewStyle
-  modalSecondaryDisabled: ViewStyle
-  modalSecondaryText: TextStyle
-  modalSecondaryTextDisabled: TextStyle
-  modalTertiary: ViewStyle
-  modalTertiaryDisabled: ViewStyle
-  modalTertiaryText: TextStyle
-  modalTertiaryTextDisabled: TextStyle
-}
-
-export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IButtons {
+export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   return StyleSheet.create({
     critical: {
       padding: 16,
@@ -681,42 +609,10 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
     },
   })
 }
+export type IButtons = ReturnType<typeof createButtonsTheme>
 export const Buttons = createButtonsTheme({ ColorPallet, TextTheme })
 
-export interface IListItems {
-  credentialBackground: ViewStyle
-  credentialTitle: TextStyle
-  credentialDetails: TextStyle
-  credentialOfferBackground: ViewStyle
-  credentialOfferTitle: TextStyle
-  credentialOfferDetails: TextStyle
-  revoked: ViewStyle
-  contactBackground: ViewStyle
-  credentialIconColor: TextStyle
-  contactTitle: TextStyle
-  contactDate: TextStyle
-  contactIconBackground: ViewStyle
-  contactIcon: TextStyle
-  recordAttributeLabel: TextStyle
-  recordContainer: ViewStyle
-  recordBorder: ViewStyle
-  recordLink: TextStyle
-  recordAttributeText: TextStyle
-  proofIcon: TextStyle
-  proofError: TextStyle
-  avatarText: TextStyle
-  avatarCircle: ViewStyle
-  emptyList: TextStyle
-  requestTemplateBackground: ViewStyle
-  requestTemplateIconColor: TextStyle
-  requestTemplateTitle: TextStyle
-  requestTemplateDetails: TextStyle
-  requestTemplateZkpLabel: TextStyle
-  requestTemplateIcon: TextStyle
-  requestTemplateDate: TextStyle
-}
-
-export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IListItems {
+export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   return StyleSheet.create({
     credentialBackground: {
       backgroundColor: theme.ColorPallet.brand.secondaryBackground,
@@ -824,21 +720,10 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
     },
   })
 }
+export type IListItems = ReturnType<typeof createListItemsTheme>
 export const ListItems = createListItemsTheme({ ColorPallet, TextTheme })
 
-export interface ITabTheme {
-  tabBarActiveTintColor: string
-  tabBarInactiveTintColor: string
-  tabBarSecondaryBackgroundColor: string
-  tabBarStyle: ViewStyle
-  tabBarContainerStyle: ViewStyle
-  tabBarTextStyle: TextStyle
-  tabBarButtonIconStyle: TextStyle
-  focusTabIconStyle: ViewStyle
-  focusTabActiveTintColor: ViewStyle
-}
-
-export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): ITabTheme {
+export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const tabTheme = StyleSheet.create({
     tabBarStyle: {
       height: 60,
@@ -882,21 +767,10 @@ export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: IT
     tabBarSecondaryBackgroundColor: theme.ColorPallet.brand.secondaryBackground,
   }
 }
+export type ITabTheme = ReturnType<typeof createTabTheme>
 export const TabTheme = createTabTheme({ ColorPallet, TextTheme })
 
-export interface INavigationTheme {
-  dark: boolean
-  colors: {
-    primary: string
-    background: string
-    card: string
-    text: string
-    border: string
-    notification: string
-  }
-}
-
-export function createNavigationTheme(theme: { ColorPallet: IColorPallet }): INavigationTheme {
+export function createNavigationTheme(theme: { ColorPallet: IColorPallet }) {
   return {
     dark: true,
     colors: {
@@ -909,17 +783,10 @@ export function createNavigationTheme(theme: { ColorPallet: IColorPallet }): INa
     },
   }
 }
+export type INavigationTheme = ReturnType<typeof createNavigationTheme>
 export const NavigationTheme = createNavigationTheme({ ColorPallet })
 
-export interface IHomeTheme {
-  welcomeHeader: TextStyle
-  credentialMsg: TextStyle
-  notificationsHeader: TextStyle
-  noNewUpdatesText: TextStyle
-  link: TextStyle
-}
-
-export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IHomeTheme {
+export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   return StyleSheet.create({
     welcomeHeader: {
       ...theme.TextTheme.headingOne,
@@ -940,16 +807,10 @@ export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
     },
   })
 }
+export type IHomeTheme = ReturnType<typeof createHomeTheme>
 export const HomeTheme = createHomeTheme({ ColorPallet, TextTheme })
 
-export interface ISettingsTheme {
-  groupHeader: TextStyle
-  text: TextStyle
-  groupBackground: ColorValue
-  iconColor: ColorValue | undefined
-}
-
-export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): ISettingsTheme {
+export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const settingsTheme = StyleSheet.create({
     groupHeader: {
       ...theme.TextTheme.normal,
@@ -967,33 +828,10 @@ export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextThem
     iconColor: theme.TextTheme.normal.color,
   }
 }
+export type ISettingsTheme = ReturnType<typeof createSettingsTheme>
 export const SettingsTheme = createSettingsTheme({ ColorPallet, TextTheme })
 
-export interface IChatTheme {
-  containerStyle: ViewStyle
-  leftBubble: ViewStyle
-  rightBubble: ViewStyle
-  timeStyleLeft: TextStyle
-  timeStyleRight: TextStyle
-  leftText: TextStyle
-  leftTextHighlighted: TextStyle
-  rightText: TextStyle
-  rightTextHighlighted: TextStyle
-  inputToolbar: ViewStyle
-  inputText: TextStyle
-  sendContainer: ViewStyle
-  openButtonStyle: ViewStyle
-  openButtonTextStyle: TextStyle
-  documentIconContainer: ViewStyle
-  documentIcon: TextStyle
-  placeholderText: ColorValue
-  sendEnabled: ColorValue
-  sendDisabled: ColorValue
-  options: ColorValue
-  optionsText: ColorValue
-}
-
-export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IChatTheme {
+export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const chatTheme = StyleSheet.create({
     containerStyle: {
       marginBottom: 16,
@@ -1097,24 +935,10 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
     optionsText: theme.ColorPallet.grayscale.black,
   }
 }
+export type IChatTheme = ReturnType<typeof createChatTheme>
 export const ChatTheme = createChatTheme({ ColorPallet, TextTheme })
 
-export interface IOnboardingTheme {
-  container: ViewStyle
-  carouselContainer: ViewStyle
-  pagerDot: ViewStyle
-  pagerDotActive: TextStyle
-  pagerDotInactive: TextStyle
-  pagerNavigationButton: TextStyle
-  headerText: TextStyle
-  bodyText: TextStyle
-  headerTintColor: string
-  imageDisplayOptions: {
-    fill: string
-  }
-}
-
-export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IOnboardingTheme {
+export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const onboardingTheme = StyleSheet.create({
     container: {
       backgroundColor: theme.ColorPallet.brand.primaryBackground,
@@ -1152,17 +976,10 @@ export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTh
     },
   }
 }
+export type IOnboardingTheme = ReturnType<typeof createOnboardingTheme>
 export const OnboardingTheme = createOnboardingTheme({ ColorPallet, TextTheme })
 
-interface IDialogTheme {
-  modalView: ViewStyle
-  titleText: TextStyle
-  description: TextStyle
-  closeButtonIcon: TextStyle
-  carouselButtonText: TextStyle
-}
-
-export function createDialogTheme(theme: { ColorPallet: IColorPallet }): IDialogTheme {
+export function createDialogTheme(theme: { ColorPallet: IColorPallet }) {
   return StyleSheet.create({
     modalView: {
       backgroundColor: theme.ColorPallet.brand.secondaryBackground,
@@ -1181,17 +998,15 @@ export function createDialogTheme(theme: { ColorPallet: IColorPallet }): IDialog
     },
   })
 }
+export type IDialogTheme = ReturnType<typeof createDialogTheme>
 export const DialogTheme = createDialogTheme({ ColorPallet })
 
-export interface ILoadingTheme {
-  backgroundColor: string
-}
-
-export function createLoadingTheme(theme: { ColorPallet: IColorPallet }): ILoadingTheme {
+export function createLoadingTheme(theme: { ColorPallet: IColorPallet }) {
   return {
     backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
   }
 }
+export type ILoadingTheme = ReturnType<typeof createLoadingTheme>
 export const LoadingTheme = createLoadingTheme({ ColorPallet })
 
 // NOTE: If ColorPallet or TextTheme is needed in this theme,
@@ -1204,16 +1019,7 @@ const PINEnterTheme = {
 }
 export type IPINEnterTheme = typeof PINEnterTheme
 
-export interface IPINInputTheme {
-  cell: ViewStyle
-  focussedCell: ViewStyle
-  cellText: TextStyle
-  icon: TextStyle
-  codeFieldRoot: ViewStyle
-  labelAndFieldContainer: ViewStyle
-}
-
-export function createPINInputTheme(theme: { ColorPallet: IColorPallet }): IPINInputTheme {
+export function createPINInputTheme(theme: { ColorPallet: IColorPallet }) {
   return StyleSheet.create({
     cell: {
       backgroundColor: theme.ColorPallet.brand.secondaryBackground,
@@ -1245,6 +1051,7 @@ export function createPINInputTheme(theme: { ColorPallet: IColorPallet }): IPINI
     },
   })
 }
+export type IPINInputTheme = ReturnType<typeof createPINInputTheme>
 export const PINInputTheme = createPINInputTheme({ ColorPallet })
 
 const CredentialCardShadowTheme = {
@@ -1343,14 +1150,7 @@ export const Assets = {
   },
 }
 
-export interface IInlineInputMessage {
-  inlineErrorText: TextStyle
-  InlineErrorIcon: typeof Assets.svg.iconError
-  inlineWarningText: TextStyle
-  InlineWarningIcon: typeof Assets.svg.iconWarning
-}
-
-export function createInputInlineMessageTheme(theme: { TextTheme: ITextTheme; Assets: IAssets }): IInlineInputMessage {
+export function createInputInlineMessageTheme(theme: { TextTheme: ITextTheme; Assets: IAssets }) {
   return {
     inlineErrorText: { ...theme.TextTheme.inlineErrorText },
     InlineErrorIcon: theme.Assets.svg.iconError,
@@ -1358,6 +1158,7 @@ export function createInputInlineMessageTheme(theme: { TextTheme: ITextTheme; As
     InlineWarningIcon: theme.Assets.svg.iconWarning,
   }
 }
+export type IInlineInputMessage = ReturnType<typeof createInputInlineMessageTheme>
 export const InputInlineMessage = createInputInlineMessageTheme({ TextTheme, Assets })
 
 export interface ITheme {
