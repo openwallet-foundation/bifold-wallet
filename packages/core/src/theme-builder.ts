@@ -18,9 +18,7 @@ import {
 } from './theme'
 import lodash from 'lodash'
 
-/**
- * DeepPartial is a utility type that recursively makes all properties of a type optional.
- */
+// DeepPartial is a utility type that recursively makes all properties of a type optional.
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? (T[P] extends (...args: any[]) => any ? T[P] : DeepPartial<T[P]>) : T[P]
 }
@@ -32,6 +30,7 @@ type DeepPartial<T> = {
  */
 export class ThemeBuilder {
   private _theme: ITheme
+  private _themeOverrides: DeepPartial<ITheme>
 
   /**
    * Creates an instance of ThemeBuilder.
@@ -40,10 +39,14 @@ export class ThemeBuilder {
    */
   constructor(baseTheme: ITheme) {
     this._theme = baseTheme
+    this._themeOverrides = {}
   }
 
   /**
    * Sets the color pallet for the theme.
+   *
+   * Note: This method is mostly a convenience method to set the color pallet for the theme.
+   * The same can be achieved by directly modifying the theme object using the `withOverrides` method.
    *
    * @param {IColorPallet} colorPallet - The color pallet to set for the theme.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
@@ -68,12 +71,9 @@ export class ThemeBuilder {
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
   withOverrides(themeOverrides: DeepPartial<ITheme>) {
-    /**
-     * clone then merge the themeOverrides into the current theme
-     * note: Without the empty object, lodash.merge will mutate the original theme
-     * and not properly update the nested properties
-     */
-    this._theme = lodash.merge({}, this._theme, themeOverrides)
+    // note: without the empty object, lodash.merge will mutate the original theme overrides,
+    // and not properly update the nested properties
+    this._themeOverrides = lodash.merge({}, this._themeOverrides, themeOverrides)
 
     // Return the instance for method chaining
     return this
@@ -85,36 +85,32 @@ export class ThemeBuilder {
    * @returns {*} {ITheme} Returns the final theme object.
    */
   build(): ITheme {
-    /**
-     * Note: This is to ensure that the theme is built with all the necessary dependencies.
-     * If in a previous call to `withOverrides` the user has updated a theme dependency,
-     * this will ensure that the theme is built with the latest version of that dependency.
-     */
-    this._theme = lodash.merge(
-      /**
-       * Note: The order of this `merge` is opposite to the order of the `withOverrides` merge.
-       * This is to apply the latest version of the theme over the injected themes.
-       * This way, if the user has updated a theme dependency, it will applied to the final theme. ie: ColorPallet
-       */
-      {},
-      {
-        TextTheme: createTextTheme(this._theme),
-        InputInlineMessage: createInputInlineMessageTheme(this._theme),
-        Inputs: createInputsTheme(this._theme),
-        Buttons: createButtonsTheme(this._theme),
-        ListItems: createListItemsTheme(this._theme),
-        TabTheme: createTabTheme(this._theme),
-        NavigationTheme: createNavigationTheme(this._theme),
-        HomeTheme: createHomeTheme(this._theme),
-        SettingsTheme: createSettingsTheme(this._theme),
-        ChatTheme: createChatTheme(this._theme),
-        OnboardingTheme: createOnboardingTheme(this._theme),
-        DialogTheme: createDialogTheme(this._theme),
-        LoadingTheme: createLoadingTheme(this._theme),
-        PINInputTheme: createPINInputTheme(this._theme),
-      },
-      this._theme
-    )
+    // 1. Merge the theme overrides onto the original theme, producing the new base theme.
+    const baseTheme = lodash.merge({}, this._theme, this._themeOverrides)
+
+    // 2. Create dependent theme slices based on the new base theme.
+    const dependentThemeSlices = {
+      TextTheme: createTextTheme(baseTheme),
+      InputInlineMessage: createInputInlineMessageTheme(baseTheme),
+      Inputs: createInputsTheme(baseTheme),
+      Buttons: createButtonsTheme(baseTheme),
+      ListItems: createListItemsTheme(baseTheme),
+      TabTheme: createTabTheme(baseTheme),
+      NavigationTheme: createNavigationTheme(baseTheme),
+      HomeTheme: createHomeTheme(baseTheme),
+      SettingsTheme: createSettingsTheme(baseTheme),
+      ChatTheme: createChatTheme(baseTheme),
+      OnboardingTheme: createOnboardingTheme(baseTheme),
+      DialogTheme: createDialogTheme(baseTheme),
+      LoadingTheme: createLoadingTheme(baseTheme),
+      PINInputTheme: createPINInputTheme(baseTheme),
+    }
+
+    // 3. Merge the base theme with the dependent themes and the theme overrides.
+    // Why do we apply the overrides after the dependent themes?
+    // Because the `dependentThemeSlices` contain additional properties that may have
+    // been modified by the overrides previously.
+    this._theme = lodash.merge({}, baseTheme, dependentThemeSlices, this._themeOverrides)
 
     return this._theme
   }
