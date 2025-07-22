@@ -27,7 +27,7 @@ type ConfigureMediatorProps = StackScreenProps<SettingStackParams, Screens.Confi
 const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
-  const { ColorPallet, SettingsTheme } = useTheme()
+  const { ColorPalette, SettingsTheme } = useTheme()
   const { t } = useTranslation()
   const { lockOutUser } = useAuth()
   const supportedMediators = store.preferences.availableMediators
@@ -50,7 +50,7 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
   }))
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       width: '100%',
     },
     section: {
@@ -65,7 +65,7 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
     },
     itemSeparator: {
       borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomColor: ColorPalette.brand.primaryBackground,
       marginHorizontal: 25,
     },
     checkboxContainer: {
@@ -116,11 +116,11 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
       >
         <BouncyCheckbox
           disableText
-          fillColor={ColorPallet.brand.secondaryBackground}
-          unfillColor={ColorPallet.brand.secondaryBackground}
+          fillColor={ColorPalette.brand.secondaryBackground}
+          unfillColor={ColorPalette.brand.secondaryBackground}
           size={36}
-          innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
-          ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary} />}
+          innerIconStyle={{ borderColor: ColorPalette.brand.primary, borderWidth: 2 }}
+          ImageComponent={() => <Icon name="circle" size={18} color={ColorPalette.brand.primary} />}
           onPress={() => onPress(id)}
           isChecked={selected}
           disableBuiltInState

@@ -95,10 +95,10 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
   expanded,
   onToggle,
 }) => {
-  const { Spacing, ColorPallet } = useTheme()
+  const { Spacing, ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primary,
+      backgroundColor: ColorPalette.brand.primary,
       flexDirection: 'row',
       alignItems: 'center',
       padding: Spacing.md,
@@ -154,14 +154,14 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
       <Icon
         name={iconName(type)}
         size={24}
-        color={type === 'warning' ? ColorPallet.brand.secondaryBackground : ColorPallet.grayscale.white}
+        color={type === 'warning' ? ColorPalette.brand.secondaryBackground : ColorPalette.grayscale.white}
         style={styles.icon}
         testID={testIdWithKey(`icon-${type}`)}
       />
       <ThemedText
         variant={'bold'}
         style={{
-          color: type === 'warning' ? ColorPallet.brand.secondaryBackground : ColorPallet.grayscale.white,
+          color: type === 'warning' ? ColorPalette.brand.secondaryBackground : ColorPalette.grayscale.white,
           flex: 1,
         }}
         testID={testIdWithKey(`text-${type}`)}

@@ -13,13 +13,13 @@ interface WhatAreContactsProps {
 }
 
 const WhatAreContacts: React.FC<WhatAreContactsProps> = ({ navigation }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     pageContent: {
       marginTop: 30,

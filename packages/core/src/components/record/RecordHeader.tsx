@@ -4,10 +4,10 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 
 const RecordHeader: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
   })
 

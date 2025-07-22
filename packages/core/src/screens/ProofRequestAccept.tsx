@@ -25,13 +25,13 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
   const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
   const proof = useProofById(proofId)
   const navigation = useNavigation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const { SendingProof, SentProof } = useAnimatedComponents()
 
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       padding: 20,
     },
     image: {
@@ -82,7 +82,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
   return (
     <SafeAreaModal visible={visible} transparent={true} animationType={'none'}>
-      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
+      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
             {proofDeliveryStatus === ProofState.RequestReceived && (

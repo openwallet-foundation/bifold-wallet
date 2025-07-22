@@ -41,7 +41,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [forgotPINModalVisible, setForgotPINModalVisible] = useState(false)
   const [devModalVisible, setDevModalVisible] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [
     logger,
@@ -241,7 +241,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       height: '100%',
       padding: 20,
       justifyContent: 'space-between',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     buttonContainer: {
       width: '100%',
@@ -269,7 +269,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       marginBottom: 20,
     },
     forgotPINText: {
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
       fontSize: 20,
     },
     buildNumberText: {

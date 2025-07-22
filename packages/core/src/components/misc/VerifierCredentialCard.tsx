@@ -57,7 +57,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
 }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const isBranding10 = brandingOverlayType === BrandingOverlayType.Branding10
@@ -74,9 +74,9 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
     }, {})
 
   const getCardWatermarkTextColor = (background?: string) => {
-    if (isBranding10) return ColorPallet.grayscale.mediumGrey
-    const shade = shadeIsLightOrDark(background ?? ColorPallet.grayscale.lightGrey)
-    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
+    if (isBranding10) return ColorPalette.grayscale.mediumGrey
+    const shade = shadeIsLightOrDark(background ?? ColorPalette.grayscale.lightGrey)
+    return shade == Shade.Light ? ColorPalette.grayscale.darkGrey : ColorPalette.grayscale.lightGrey
   }
 
   const parseAttribute = (item: (Attribute & Predicate) | undefined) => {
@@ -160,7 +160,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   const PredicateItem: React.FC<{
     item: Predicate
   }> = ({ item }) => {
-    const { ColorPallet } = useTheme()
+    const { ColorPalette } = useTheme()
     const label = (item.label || item.name)!
     const ylabel = overlay.bundle?.labelOverlay?.attributeLabels[label] ?? startCase(label)
     const [currentValue, setCurrentValue] = useState(`${item.pValue ?? ''}`)
@@ -169,7 +169,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
       input: {
         textAlign: 'center',
         textAlignVertical: 'bottom',
-        borderBottomColor: ColorPallet.grayscale.black,
+        borderBottomColor: ColorPalette.grayscale.black,
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
         borderBottomWidth: 1,
         lineHeight: 19,
@@ -196,7 +196,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
         </ThemedText>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end' }}>
           {item.satisfied && !preview ? (
-            <Icon style={{ marginRight: 5 }} size={24} name={'check-circle'} color={ColorPallet.semantic.success} />
+            <Icon style={{ marginRight: 5 }} size={24} name={'check-circle'} color={ColorPalette.semantic.success} />
           ) : null}
           <ThemedText variant="bold" style={[styles.textContainer, predicateStyles.predicateType]}>
             {item.pType}

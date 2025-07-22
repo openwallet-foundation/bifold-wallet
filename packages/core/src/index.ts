@@ -77,7 +77,7 @@ export { useDeepLinks } from './hooks/deep-links'
 export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
-export { ColorPallet } from './theme'
+export { ColorPalette as ColorPalette } from './theme'
 export { animatedComponents } from './animated-components'
 export { bifoldTheme } from './theme'
 export { useAuth } from './contexts/auth'
@@ -115,7 +115,7 @@ export type {
   INotificationColors,
   IErrorColors,
   IGrayscaleColors,
-  IColorPallet,
+  IColorPalette as IColorPalette,
   IAssets,
   ITheme,
 } from './theme'
