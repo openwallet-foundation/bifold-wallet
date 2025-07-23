@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
 import Arrow from './assets/icons/large-arrow.svg'
@@ -298,8 +298,22 @@ export const ColorPallet: IColorPallet = {
   grayscale: GrayscaleColors,
 }
 
+// Utility function to create a typed StyleSheet for Text styles
+function typedTextStyleSheetCreate<TStyles extends { [key: string]: TextStyle }>(
+  styles: TStyles
+): { [K in keyof TStyles]: TStyles[K] & TextStyle } {
+  return StyleSheet.create(styles)
+}
+
+// Utility function to create a typed StyleSheet for View styles
+function typedViewStyleSheetCreate<TStyles extends { [key: string]: ViewStyle }>(
+  styles: TStyles
+): { [K in keyof TStyles]: TStyles[K] & ViewStyle } {
+  return StyleSheet.create(styles)
+}
+
 export function createTextTheme(theme: { ColorPallet: IColorPallet }) {
-  return StyleSheet.create({
+  return typedTextStyleSheetCreate({
     headingOne: {
       fontSize: 38,
       fontWeight: 'bold',
@@ -412,7 +426,7 @@ export type ITextTheme = ReturnType<typeof createTextTheme>
 export const TextTheme = createTextTheme({ ColorPallet })
 
 export function createInputsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme; borderRadius: number }) {
-  return StyleSheet.create({
+  const textStyles = typedTextStyleSheetCreate({
     label: {
       ...theme.TextTheme.label,
     },
@@ -424,14 +438,6 @@ export function createInputsTheme(theme: { ColorPallet: IColorPallet; TextTheme:
       color: theme.ColorPallet.notification.infoText,
       borderWidth: 2,
       borderColor: theme.ColorPallet.brand.secondary,
-    },
-    inputSelected: {
-      borderColor: theme.ColorPallet.brand.primary,
-    },
-    singleSelect: {
-      padding: 12,
-      borderRadius: theme.borderRadius * 2,
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
     },
     singleSelectText: {
       ...theme.TextTheme.normal,
@@ -446,22 +452,60 @@ export function createInputsTheme(theme: { ColorPallet: IColorPallet; TextTheme:
       ...theme.TextTheme.normal,
     },
   })
+
+  const viewStyles = typedViewStyleSheetCreate({
+    inputSelected: {
+      borderColor: theme.ColorPallet.brand.primary,
+    },
+    singleSelect: {
+      padding: 12,
+      borderRadius: theme.borderRadius * 2,
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+  })
+
+  return { ...textStyles, ...viewStyles }
 }
 export type IInputs = ReturnType<typeof createInputsTheme>
 export const Inputs = createInputsTheme({ ColorPallet, TextTheme, borderRadius })
 
-export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  return StyleSheet.create({
-    critical: {
-      padding: 16,
-      borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primary,
-    },
-    criticalDisabled: {
-      padding: 16,
-      borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
-    },
+export interface IButtons {
+  critical: ViewStyle
+  criticalDisabled: ViewStyle
+  criticalText: TextStyle
+  criticalTextDisabled: TextStyle
+  primary: ViewStyle
+  primaryDisabled: ViewStyle
+  primaryText: TextStyle
+  primaryTextDisabled: TextStyle
+  secondary: ViewStyle
+  secondaryDisabled: ViewStyle
+  secondaryText: TextStyle
+  secondaryTextDisabled: TextStyle
+  tertiary: ViewStyle
+  tertiaryDisabled: ViewStyle
+  tertiaryText: TextStyle
+  tertiaryTextDisabled: TextStyle
+  modalCritical: ViewStyle
+  modalCriticalDisabled: ViewStyle
+  modalCriticalText: TextStyle
+  modalCriticalTextDisabled: TextStyle
+  modalPrimary: ViewStyle
+  modalPrimaryDisabled: ViewStyle
+  modalPrimaryText: TextStyle
+  modalPrimaryTextDisabled: TextStyle
+  modalSecondary: ViewStyle
+  modalSecondaryDisabled: ViewStyle
+  modalSecondaryText: TextStyle
+  modalSecondaryTextDisabled: TextStyle
+  modalTertiary: ViewStyle
+  modalTertiaryDisabled: ViewStyle
+  modalTertiaryText: TextStyle
+  modalTertiaryTextDisabled: TextStyle
+}
+
+export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IButtons {
+  const textStyles = typedTextStyleSheetCreate({
     criticalText: {
       ...theme.TextTheme.bold,
       color: theme.ColorPallet.brand.buttonText,
@@ -472,6 +516,88 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
       color: theme.ColorPallet.brand.buttonText,
       textAlign: 'center',
     },
+    primaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    primaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      textAlign: 'center',
+    },
+    secondaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.primary,
+      textAlign: 'center',
+    },
+    secondaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.secondaryDisabled,
+      textAlign: 'center',
+    },
+    tertiaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.primary,
+      textAlign: 'center',
+    },
+    tertiaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.tertiaryDisabled,
+      textAlign: 'center',
+    },
+    modalCriticalText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalCriticalTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalPrimaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalPrimaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.buttonText,
+      textAlign: 'center',
+    },
+    modalSecondaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.modalPrimary,
+      textAlign: 'center',
+    },
+    modalSecondaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.secondaryDisabled,
+      textAlign: 'center',
+    },
+    modalTertiaryText: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.modalPrimary,
+      textAlign: 'center',
+    },
+    modalTertiaryTextDisabled: {
+      ...theme.TextTheme.bold,
+      color: theme.ColorPallet.brand.tertiaryDisabled,
+      textAlign: 'center',
+    },
+  })
+
+  const viewStyles = typedViewStyleSheetCreate({
+    critical: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primary,
+    },
+    criticalDisabled: {
+      padding: 16,
+      borderRadius: 4,
+      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+    },
     primary: {
       padding: 16,
       borderRadius: 4,
@@ -481,15 +607,6 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
       padding: 16,
       borderRadius: 4,
       backgroundColor: theme.ColorPallet.brand.primaryDisabled,
-    },
-    primaryText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
-      textAlign: 'center',
-    },
-    primaryTextDisabled: {
-      ...theme.TextTheme.bold,
-      textAlign: 'center',
     },
     secondary: {
       padding: 16,
@@ -503,31 +620,11 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
       borderWidth: 2,
       borderColor: theme.ColorPallet.brand.secondaryDisabled,
     },
-    secondaryText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.primary,
-      textAlign: 'center',
-    },
-    secondaryTextDisabled: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.secondaryDisabled,
-      textAlign: 'center',
-    },
     tertiary: {
       padding: 16,
     },
     tertiaryDisabled: {
       padding: 16,
-    },
-    tertiaryText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.primary,
-      textAlign: 'center',
-    },
-    tertiaryTextDisabled: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.tertiaryDisabled,
-      textAlign: 'center',
     },
     modalCritical: {
       padding: 16,
@@ -539,16 +636,6 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
       borderRadius: 4,
       backgroundColor: theme.ColorPallet.brand.primaryDisabled,
     },
-    modalCriticalText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
-      textAlign: 'center',
-    },
-    modalCriticalTextDisabled: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
-      textAlign: 'center',
-    },
     modalPrimary: {
       padding: 16,
       borderRadius: 4,
@@ -558,16 +645,6 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
       padding: 16,
       borderRadius: 4,
       backgroundColor: theme.ColorPallet.brand.primaryDisabled,
-    },
-    modalPrimaryText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
-      textAlign: 'center',
-    },
-    modalPrimaryTextDisabled: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
-      textAlign: 'center',
     },
     modalSecondary: {
       padding: 16,
@@ -581,50 +658,25 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
       borderWidth: 2,
       borderColor: theme.ColorPallet.brand.secondaryDisabled,
     },
-    modalSecondaryText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.modalPrimary,
-      textAlign: 'center',
-    },
-    modalSecondaryTextDisabled: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.secondaryDisabled,
-      textAlign: 'center',
-    },
     modalTertiary: {
       padding: 16,
     },
     modalTertiaryDisabled: {
       padding: 16,
     },
-    modalTertiaryText: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.modalPrimary,
-      textAlign: 'center',
-    },
-    modalTertiaryTextDisabled: {
-      ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.tertiaryDisabled,
-      textAlign: 'center',
-    },
   })
+
+  return { ...textStyles, ...viewStyles }
 }
-export type IButtons = ReturnType<typeof createButtonsTheme>
 export const Buttons = createButtonsTheme({ ColorPallet, TextTheme })
 
 export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  return StyleSheet.create({
-    credentialBackground: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
-    },
+  const testStyles = typedTextStyleSheetCreate({
     credentialTitle: {
       ...theme.TextTheme.headingFour,
     },
     credentialDetails: {
       ...theme.TextTheme.caption,
-    },
-    credentialOfferBackground: {
-      backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
     },
     credentialOfferTitle: {
       ...theme.TextTheme.modalHeadingThree,
@@ -632,13 +684,6 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
     },
     credentialOfferDetails: {
       ...theme.TextTheme.normal,
-    },
-    revoked: {
-      backgroundColor: theme.ColorPallet.notification.error,
-      borderColor: theme.ColorPallet.notification.errorBorder,
-    },
-    contactBackground: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
     },
     credentialIconColor: {
       color: theme.ColorPallet.notification.infoText,
@@ -650,20 +695,11 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
       color: theme.ColorPallet.brand.text,
       marginTop: 10,
     },
-    contactIconBackground: {
-      backgroundColor: theme.ColorPallet.brand.primary,
-    },
     contactIcon: {
       color: theme.ColorPallet.grayscale.white,
     },
     recordAttributeLabel: {
       ...theme.TextTheme.bold,
-    },
-    recordContainer: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
-    },
-    recordBorder: {
-      borderBottomColor: theme.ColorPallet.brand.primaryBackground,
     },
     recordLink: {
       color: theme.ColorPallet.brand.link,
@@ -686,12 +722,6 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
       borderColor: theme.TextTheme.headingTwo.color,
       width: (theme.TextTheme.headingTwo.fontSize ?? 32) * 2,
       height: (theme.TextTheme.headingTwo.fontSize ?? 32) * 2,
-    },
-    emptyList: {
-      ...theme.TextTheme.normal,
-    },
-    requestTemplateBackground: {
-      backgroundColor: theme.ColorPallet.grayscale.white,
     },
     requestTemplateIconColor: {
       color: theme.ColorPallet.notification.infoText,
@@ -719,12 +749,54 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
       fontSize: 10,
     },
   })
+
+  const viewStyles = typedViewStyleSheetCreate({
+    credentialBackground: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    credentialOfferBackground: {
+      backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
+    },
+    revoked: {
+      backgroundColor: theme.ColorPallet.notification.error,
+      borderColor: theme.ColorPallet.notification.errorBorder,
+    },
+    contactBackground: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    contactIconBackground: {
+      backgroundColor: theme.ColorPallet.brand.primary,
+    },
+    recordContainer: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    },
+    recordBorder: {
+      borderBottomColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    emptyList: {
+      ...theme.TextTheme.normal,
+    },
+    requestTemplateBackground: {
+      backgroundColor: theme.ColorPallet.grayscale.white,
+    },
+  })
+
+  return { ...testStyles, ...viewStyles }
 }
 export type IListItems = ReturnType<typeof createListItemsTheme>
 export const ListItems = createListItemsTheme({ ColorPallet, TextTheme })
 
 export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  const tabTheme = StyleSheet.create({
+  const textStyles = typedTextStyleSheetCreate({
+    tabBarTextStyle: {
+      ...theme.TextTheme.labelSubtitle,
+      paddingBottom: 5,
+    },
+    tabBarButtonIconStyle: {
+      color: theme.ColorPallet.brand.headerIcon,
+    },
+  })
+  const viewStyles = typedViewStyleSheetCreate({
     tabBarStyle: {
       height: 60,
       backgroundColor: theme.ColorPallet.brand.secondaryBackground,
@@ -740,13 +812,6 @@ export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: IT
       justifyContent: 'center',
       alignItems: 'center',
     },
-    tabBarTextStyle: {
-      ...theme.TextTheme.labelSubtitle,
-      paddingBottom: 5,
-    },
-    tabBarButtonIconStyle: {
-      color: theme.ColorPallet.brand.headerIcon,
-    },
     focusTabIconStyle: {
       height: 60,
       width: 60,
@@ -761,7 +826,8 @@ export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: IT
   })
 
   return {
-    ...tabTheme,
+    ...textStyles,
+    ...viewStyles,
     tabBarActiveTintColor: theme.ColorPallet.brand.primary,
     tabBarInactiveTintColor: theme.ColorPallet.brand.tabBarInactive,
     tabBarSecondaryBackgroundColor: theme.ColorPallet.brand.secondaryBackground,
@@ -787,7 +853,7 @@ export type INavigationTheme = ReturnType<typeof createNavigationTheme>
 export const NavigationTheme = createNavigationTheme({ ColorPallet })
 
 export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  return StyleSheet.create({
+  return typedTextStyleSheetCreate({
     welcomeHeader: {
       ...theme.TextTheme.headingOne,
     },
@@ -811,7 +877,7 @@ export type IHomeTheme = ReturnType<typeof createHomeTheme>
 export const HomeTheme = createHomeTheme({ ColorPallet, TextTheme })
 
 export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  const settingsTheme = StyleSheet.create({
+  const settingsTheme = typedTextStyleSheetCreate({
     groupHeader: {
       ...theme.TextTheme.normal,
       marginBottom: 8,
@@ -825,34 +891,14 @@ export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextThem
   return {
     ...settingsTheme,
     groupBackground: theme.ColorPallet.brand.secondaryBackground,
-    iconColor: theme.TextTheme.normal.color,
+    iconColor: theme.ColorPallet.brand.text,
   }
 }
 export type ISettingsTheme = ReturnType<typeof createSettingsTheme>
 export const SettingsTheme = createSettingsTheme({ ColorPallet, TextTheme })
 
 export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  const chatTheme = StyleSheet.create({
-    containerStyle: {
-      marginBottom: 16,
-      marginLeft: 16,
-      marginRight: 16,
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      alignSelf: 'flex-end',
-    },
-    leftBubble: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
-      borderRadius: 4,
-      padding: 16,
-      marginLeft: 16,
-    },
-    rightBubble: {
-      backgroundColor: theme.ColorPallet.brand.primaryLight,
-      borderRadius: 4,
-      padding: 16,
-      marginRight: 16,
-    },
+  const textStyles = typedTextStyleSheetCreate({
     timeStyleLeft: {
       color: theme.ColorPallet.grayscale.lightGrey,
       fontSize: 12,
@@ -879,15 +925,41 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       ...theme.TextTheme.bold,
       color: theme.ColorPallet.brand.secondary,
     },
-    inputToolbar: {
-      backgroundColor: theme.ColorPallet.brand.secondary,
-      shadowColor: theme.ColorPallet.brand.primaryDisabled,
-      borderRadius: 10,
-    },
     inputText: {
       lineHeight: undefined,
       fontWeight: '500',
       fontSize: theme.TextTheme.normal.fontSize,
+    },
+    openButtonTextStyle: {
+      fontSize: theme.TextTheme.normal.fontSize,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    documentIcon: {
+      color: theme.ColorPallet.grayscale.white,
+    },
+  })
+
+  const viewStyles = typedViewStyleSheetCreate({
+    containerStyle: {
+      marginBottom: 16,
+      marginLeft: 16,
+      marginRight: 16,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      alignSelf: 'flex-end',
+    },
+    leftBubble: {
+      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      borderRadius: 4,
+      padding: 16,
+      marginLeft: 16,
+    },
+    rightBubble: {
+      backgroundColor: theme.ColorPallet.brand.primaryLight,
+      borderRadius: 4,
+      padding: 16,
+      marginRight: 16,
     },
     sendContainer: {
       marginBottom: 4,
@@ -903,11 +975,6 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       paddingRight: 16,
       marginTop: 16,
     },
-    openButtonTextStyle: {
-      fontSize: theme.TextTheme.normal.fontSize,
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
     documentIconContainer: {
       backgroundColor: theme.ColorPallet.brand.primary,
       alignSelf: 'flex-start',
@@ -918,13 +985,16 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       width: 50,
       height: 50,
     },
-    documentIcon: {
-      color: theme.ColorPallet.grayscale.white,
+    inputToolbar: {
+      backgroundColor: theme.ColorPallet.brand.secondary,
+      shadowColor: theme.ColorPallet.brand.primaryDisabled,
+      borderRadius: 10,
     },
   })
 
   return {
-    ...chatTheme,
+    ...textStyles,
+    ...viewStyles,
     // TODO: Invesitigate if these are still needed.
     // Note: They are not currently used in bifold
     // extending to allow backwards compatibility.
@@ -939,13 +1009,7 @@ export type IChatTheme = ReturnType<typeof createChatTheme>
 export const ChatTheme = createChatTheme({ ColorPallet, TextTheme })
 
 export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
-  const onboardingTheme = StyleSheet.create({
-    container: {
-      backgroundColor: theme.ColorPallet.brand.primaryBackground,
-    },
-    carouselContainer: {
-      backgroundColor: theme.ColorPallet.brand.primaryBackground,
-    },
+  const textStyles = typedTextStyleSheetCreate({
     pagerDot: {
       borderColor: theme.ColorPallet.brand.primary,
     },
@@ -968,8 +1032,18 @@ export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTh
     },
   })
 
+  const viewStyles = typedViewStyleSheetCreate({
+    container: {
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+    },
+    carouselContainer: {
+      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+    },
+  })
+
   return {
-    ...onboardingTheme,
+    ...textStyles,
+    ...viewStyles,
     headerTintColor: ColorPallet.grayscale.white,
     imageDisplayOptions: {
       fill: ColorPallet.notification.infoText,
@@ -1020,7 +1094,16 @@ const PINEnterTheme = {
 export type IPINEnterTheme = typeof PINEnterTheme
 
 export function createPINInputTheme(theme: { ColorPallet: IColorPallet }) {
-  return StyleSheet.create({
+  const textStyles = typedTextStyleSheetCreate({
+    cellText: {
+      color: theme.ColorPallet.brand.text,
+    },
+    icon: {
+      color: theme.ColorPallet.brand.headerIcon,
+    },
+  })
+
+  const viewStyles = typedViewStyleSheetCreate({
     cell: {
       backgroundColor: theme.ColorPallet.brand.secondaryBackground,
       borderColor: theme.ColorPallet.brand.secondary,
@@ -1028,12 +1111,6 @@ export function createPINInputTheme(theme: { ColorPallet: IColorPallet }) {
     },
     focussedCell: {
       borderColor: theme.ColorPallet.brand.headerIcon,
-    },
-    cellText: {
-      color: theme.ColorPallet.brand.text,
-    },
-    icon: {
-      color: theme.ColorPallet.brand.headerIcon,
     },
     codeFieldRoot: {
       justifyContent: 'flex-start',
@@ -1050,6 +1127,8 @@ export function createPINInputTheme(theme: { ColorPallet: IColorPallet }) {
       borderWidth: 1,
     },
   })
+
+  return { ...textStyles, ...viewStyles }
 }
 export type IPINInputTheme = ReturnType<typeof createPINInputTheme>
 export const PINInputTheme = createPINInputTheme({ ColorPallet })

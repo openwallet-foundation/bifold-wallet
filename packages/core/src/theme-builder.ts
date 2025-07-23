@@ -57,11 +57,11 @@ export class ThemeBuilder {
    * Note: This method is mostly a convenience method to set the color pallet for the theme.
    * The same can be achieved by directly modifying the theme object using the `withOverrides` method.
    *
-   * @param {IColorPallet} colorPallet - The color pallet to set for the theme.
+   * @param {IColorPallet} colorPalette - The color pallet to set for the theme.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  setColorPallet(colorPallet: IColorPallet): ThemeBuilder {
-    this._theme.ColorPallet = colorPallet
+  setColorPalette(colorPalette: IColorPallet): ThemeBuilder {
+    this._theme.ColorPallet = colorPalette
 
     return this
   }

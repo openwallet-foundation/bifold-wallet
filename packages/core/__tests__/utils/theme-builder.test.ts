@@ -71,10 +71,10 @@ describe('Theme Builder', () => {
     })
   })
 
-  describe('setColorPallet', () => {
+  describe('setColorPalette', () => {
     it('should set the color pallet for the theme', () => {
       const theme = new ThemeBuilder(bifoldTheme)
-        .setColorPallet({
+        .setColorPalette({
           ...bifoldTheme.ColorPallet,
           brand: {
             ...bifoldTheme.ColorPallet.brand,
@@ -88,7 +88,7 @@ describe('Theme Builder', () => {
 
     it('should not override the entire color pallet when building: sanity check', () => {
       const theme = new ThemeBuilder(bifoldTheme)
-        .setColorPallet({
+        .setColorPalette({
           ...bifoldTheme.ColorPallet,
           brand: {
             ...bifoldTheme.ColorPallet.brand,
