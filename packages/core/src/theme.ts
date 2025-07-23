@@ -312,6 +312,12 @@ function typedViewStyleSheetCreate<TStyles extends { [key: string]: ViewStyle }>
   return StyleSheet.create(styles)
 }
 
+/**
+ * Creates a text theme based on the provided color pallet.
+ *
+ * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @returns {*} {ITextTheme} - The created text theme
+ */
 export function createTextTheme(theme: { ColorPallet: IColorPallet }) {
   return typedTextStyleSheetCreate({
     headingOne: {
@@ -425,6 +431,12 @@ export function createTextTheme(theme: { ColorPallet: IColorPallet }) {
 export type ITextTheme = ReturnType<typeof createTextTheme>
 export const TextTheme = createTextTheme({ ColorPallet })
 
+/**
+ * Creates a theme for inputs based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme; borderRadius: number }} theme - The theme object containing the color pallet, text theme, and border radius
+ * @returns {*} {IInputs} - The created inputs theme
+ */
 export function createInputsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme; borderRadius: number }) {
   const textStyles = typedTextStyleSheetCreate({
     label: {
@@ -469,42 +481,13 @@ export function createInputsTheme(theme: { ColorPallet: IColorPallet; TextTheme:
 export type IInputs = ReturnType<typeof createInputsTheme>
 export const Inputs = createInputsTheme({ ColorPallet, TextTheme, borderRadius })
 
-export interface IButtons {
-  critical: ViewStyle
-  criticalDisabled: ViewStyle
-  criticalText: TextStyle
-  criticalTextDisabled: TextStyle
-  primary: ViewStyle
-  primaryDisabled: ViewStyle
-  primaryText: TextStyle
-  primaryTextDisabled: TextStyle
-  secondary: ViewStyle
-  secondaryDisabled: ViewStyle
-  secondaryText: TextStyle
-  secondaryTextDisabled: TextStyle
-  tertiary: ViewStyle
-  tertiaryDisabled: ViewStyle
-  tertiaryText: TextStyle
-  tertiaryTextDisabled: TextStyle
-  modalCritical: ViewStyle
-  modalCriticalDisabled: ViewStyle
-  modalCriticalText: TextStyle
-  modalCriticalTextDisabled: TextStyle
-  modalPrimary: ViewStyle
-  modalPrimaryDisabled: ViewStyle
-  modalPrimaryText: TextStyle
-  modalPrimaryTextDisabled: TextStyle
-  modalSecondary: ViewStyle
-  modalSecondaryDisabled: ViewStyle
-  modalSecondaryText: TextStyle
-  modalSecondaryTextDisabled: TextStyle
-  modalTertiary: ViewStyle
-  modalTertiaryDisabled: ViewStyle
-  modalTertiaryText: TextStyle
-  modalTertiaryTextDisabled: TextStyle
-}
-
-export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IButtons {
+/**
+ * Creates a theme for buttons based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {IButtons} - The created buttons theme
+ */
+export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const textStyles = typedTextStyleSheetCreate({
     criticalText: {
       ...theme.TextTheme.bold,
@@ -668,8 +651,15 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
 
   return { ...textStyles, ...viewStyles }
 }
+export type IButtons = ReturnType<typeof createButtonsTheme>
 export const Buttons = createButtonsTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates a theme for list items based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {IListItems} - The created list items theme
+ */
 export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const testStyles = typedTextStyleSheetCreate({
     credentialTitle: {
@@ -786,6 +776,12 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
 export type IListItems = ReturnType<typeof createListItemsTheme>
 export const ListItems = createListItemsTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates a theme for tabs based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {ITabTheme} - The created tab theme
+ */
 export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const textStyles = typedTextStyleSheetCreate({
     tabBarTextStyle: {
@@ -836,6 +832,12 @@ export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: IT
 export type ITabTheme = ReturnType<typeof createTabTheme>
 export const TabTheme = createTabTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates a navigation theme based on the provided color pallet.
+ *
+ * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @returns {*} {INavigationTheme} - The created navigation theme
+ */
 export function createNavigationTheme(theme: { ColorPallet: IColorPallet }) {
   return {
     dark: true,
@@ -852,6 +854,12 @@ export function createNavigationTheme(theme: { ColorPallet: IColorPallet }) {
 export type INavigationTheme = ReturnType<typeof createNavigationTheme>
 export const NavigationTheme = createNavigationTheme({ ColorPallet })
 
+/**
+ * Creates a home theme based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {IHomeTheme} - The created home theme
+ */
 export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   return typedTextStyleSheetCreate({
     welcomeHeader: {
@@ -876,6 +884,12 @@ export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
 export type IHomeTheme = ReturnType<typeof createHomeTheme>
 export const HomeTheme = createHomeTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates a settings theme based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {ISettingsTheme} - The created settings theme
+ */
 export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const settingsTheme = typedTextStyleSheetCreate({
     groupHeader: {
@@ -897,6 +911,12 @@ export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextThem
 export type ISettingsTheme = ReturnType<typeof createSettingsTheme>
 export const SettingsTheme = createSettingsTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates a chat theme based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {IChatTheme} - The created chat theme
+ */
 export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const textStyles = typedTextStyleSheetCreate({
     timeStyleLeft: {
@@ -1008,6 +1028,12 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
 export type IChatTheme = ReturnType<typeof createChatTheme>
 export const ChatTheme = createChatTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates an onboarding theme based on the provided color pallet and text theme.
+ *
+ * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @returns {*} {IOnboardingTheme} - The created onboarding theme
+ */
 export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }) {
   const textStyles = typedTextStyleSheetCreate({
     pagerDot: {
@@ -1053,6 +1079,12 @@ export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTh
 export type IOnboardingTheme = ReturnType<typeof createOnboardingTheme>
 export const OnboardingTheme = createOnboardingTheme({ ColorPallet, TextTheme })
 
+/**
+ * Creates a dialog theme based on the provided color pallet.
+ *
+ * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @returns {*} {IDialogTheme} - The created dialog theme
+ */
 export function createDialogTheme(theme: { ColorPallet: IColorPallet }) {
   return StyleSheet.create({
     modalView: {
@@ -1093,6 +1125,12 @@ const PINEnterTheme = {
 }
 export type IPINEnterTheme = typeof PINEnterTheme
 
+/**
+ * Creates a theme for PIN input based on the provided color pallet.
+ *
+ * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @returns {*} {IPINInputTheme} - The created PIN input theme
+ */
 export function createPINInputTheme(theme: { ColorPallet: IColorPallet }) {
   const textStyles = typedTextStyleSheetCreate({
     cellText: {
@@ -1229,6 +1267,12 @@ export const Assets = {
   },
 }
 
+/**
+ * Creates a theme for inline messages in inputs based on the provided text theme and assets.
+ *
+ * @param {{ TextTheme: ITextTheme; Assets: IAssets }} theme - The theme object containing the text theme and assets
+ * @return {*} {IInlineInputMessage} - The created inline input message theme
+ */
 export function createInputInlineMessageTheme(theme: { TextTheme: ITextTheme; Assets: IAssets }) {
   return {
     inlineErrorText: { ...theme.TextTheme.inlineErrorText },

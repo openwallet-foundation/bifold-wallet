@@ -19,17 +19,10 @@ import {
 import lodash from 'lodash'
 
 /**
- * DeepPartialWithExtras is a utility type that allows for deep partials of an object,
- * while also allowing for additional properties to be added without losing autocomplete.
+ * DeepPartial is a utility type that recursively makes all properties of a type optional.
  */
-type DeepPartialWithExtras<T> = {
-  [K in keyof T]?: T[K] extends object
-    ? T[K] extends (...args: any[]) => any
-      ? T[K]
-      : DeepPartialWithExtras<T[K]>
-    : T[K]
-} & {
-  [key: string]: any // allows new keys while preserving autocomplete
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? (T[P] extends (...args: any[]) => any ? T[P] : DeepPartial<T[P]>) : T[P]
 }
 
 /**
@@ -39,7 +32,7 @@ type DeepPartialWithExtras<T> = {
  */
 export class ThemeBuilder {
   private _theme: ITheme
-  private _themeOverrides: DeepPartialWithExtras<ITheme>
+  private _themeOverrides: DeepPartial<ITheme>
 
   /**
    * Creates an instance of ThemeBuilder.
@@ -79,7 +72,7 @@ export class ThemeBuilder {
    * @param {DeepPartial<ITheme>} themeOverrides - A partial theme object to merge with the current theme.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  withOverrides(themeOverrides: DeepPartialWithExtras<ITheme>) {
+  withOverrides(themeOverrides: DeepPartial<ITheme>) {
     // note: without the empty object, lodash.merge will mutate the original theme overrides,
     // and not properly update the nested properties
     this._themeOverrides = lodash.merge({}, this._themeOverrides, themeOverrides)

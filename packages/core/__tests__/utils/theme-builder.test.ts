@@ -16,6 +16,7 @@ describe('Theme Builder', () => {
         .withOverrides({
           Buttons: {
             critical: {
+              padding: 0,
               margin: -1,
             },
           },
