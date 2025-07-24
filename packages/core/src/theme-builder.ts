@@ -22,7 +22,14 @@ import lodash from 'lodash'
  * DeepPartial is a utility type that recursively makes all properties of a type optional.
  */
 type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? (T[P] extends (...args: any[]) => any ? T[P] : DeepPartial<T[P]>) : T[P]
+  [P in keyof T]?: T[P] extends object
+    ? T[P] extends (...args: any[]) => any
+      ? T[P] // keep functions as is
+      : // For object types, make all keys optional recursively:
+      Partial<T[P]> extends infer O
+      ? { [K in keyof O]?: DeepPartial<O[K]> }
+      : never
+    : T[P]
 }
 
 /**

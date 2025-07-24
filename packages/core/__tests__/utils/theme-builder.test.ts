@@ -52,7 +52,7 @@ describe('Theme Builder', () => {
         .withOverrides({ Buttons: { critical: { aspectRatio: 'value' } } })
         .build()
 
-      expect(theme.Buttons.critical.aspectRatio).toStrictEqual('value')
+      expect(theme.Buttons.critical?.aspectRatio).toStrictEqual('value')
     })
 
     it('should not override the entire theme when merging', () => {
@@ -67,8 +67,8 @@ describe('Theme Builder', () => {
         .withOverrides({ Buttons: { critical: { borderRadius: -1 } } })
         .build()
 
-      expect(theme.Buttons.critical.padding).toEqual(-1)
-      expect(theme.Buttons.critical.borderRadius).toEqual(-1)
+      expect(theme.Buttons.critical?.padding).toEqual(-1)
+      expect(theme.Buttons.critical?.borderRadius).toEqual(-1)
     })
   })
 
@@ -100,7 +100,7 @@ describe('Theme Builder', () => {
         .build()
 
       expect(theme.ColorPallet.brand.primary).toEqual('TEST')
-      expect(theme.Buttons.critical.padding).toEqual(-1)
+      expect(theme.Buttons.critical?.padding).toEqual(-1)
       // Ensure the color pallet is being applied to the dependent properties
       expect(theme.Inputs.inputSelected.borderColor).toEqual('TEST')
     })

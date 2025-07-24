@@ -64,7 +64,7 @@ import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import usePreventScreenCapture from './hooks/screen-capture'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
-import { ThemeBuilder } from 'theme-builder'
+import { ThemeBuilder } from './theme-builder'
 
 export * from './navigators'
 export * from './services/storage'
