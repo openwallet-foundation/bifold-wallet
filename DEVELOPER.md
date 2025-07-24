@@ -99,7 +99,7 @@ For more detailed information how to setup android SDK in react native, please r
 
 #### OpenJDK17
 
-You will need to have OpenJDK 17 installed. You can install it using your package manager. 
+You will need to have OpenJDK 17 installed. You can install it using your package manager.
 
 ##### Manual Installation
 
