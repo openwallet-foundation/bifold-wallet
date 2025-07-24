@@ -1,5 +1,4 @@
 import { useAgent } from '@credo-ts/react-hooks'
-import { ParamListBase } from '@react-navigation/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,14 +10,14 @@ import KeyboardView from '../../../components/views/KeyboardView'
 import { TOKENS, useServices } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
-import { Screens } from '../../../types/navigators'
+import { Screens, SettingStackParams } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 import { HistoryBlockSelection, IHistoryManager } from '../types'
 
 import SingleSelectBlock from './components/SingleSelectBlock'
 import { ThemedText } from '../../../components/texts/ThemedText'
 
-interface HistorySettingsProps extends StackScreenProps<ParamListBase, Screens.HistorySettings> {}
+interface HistorySettingsProps extends StackScreenProps<SettingStackParams, Screens.HistorySettings> {}
 
 const HistorySettings: React.FC<HistorySettingsProps> = () => {
   const [continueEnabled] = useState(true)

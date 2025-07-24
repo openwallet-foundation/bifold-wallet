@@ -22,7 +22,7 @@ import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
-import { RootStackParams, Screens, Stacks } from '../types/navigators'
+import { ContactStackParams, NotificationStackParams, RootStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { credentialTextColor, getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
@@ -36,7 +36,10 @@ import CredentialDetailSecondaryHeader from '../components/views/CredentialDetai
 import { ThemedText } from '../components/texts/ThemedText'
 import CardWatermark from '../components/misc/CardWatermark'
 
-type CredentialDetailsProps = StackScreenProps<RootStackParams, Screens.CredentialDetails>
+type CredentialDetailsProps = StackScreenProps<
+  RootStackParams & ContactStackParams & NotificationStackParams,
+  Screens.CredentialDetails
+>
 
 const paddingHorizontal = 24
 const paddingVertical = 16

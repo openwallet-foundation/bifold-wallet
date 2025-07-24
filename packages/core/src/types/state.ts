@@ -10,7 +10,6 @@ export interface Onboarding {
   didNameWallet: boolean
   onboardingVersion: number
   didCompleteOnboarding: boolean
-  postAuthScreens: string[]
 }
 
 export interface Migration {
