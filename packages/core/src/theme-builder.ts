@@ -97,8 +97,8 @@ export class ThemeBuilder {
     // 1. Merge the theme overrides onto the original theme, producing the new base theme.
     const baseTheme = lodash.merge({}, this._theme, this._themeOverrides)
 
-    // 2. Create dependent theme slices based on the new base theme.
-    const dependentThemeSlices = {
+    // 2. Create dependent themes based on the new base theme.
+    const dependentThemes = {
       TextTheme: createTextTheme(baseTheme),
       InputInlineMessage: createInputInlineMessageTheme(baseTheme),
       Inputs: createInputsTheme(baseTheme),
@@ -115,11 +115,14 @@ export class ThemeBuilder {
       PINInputTheme: createPINInputTheme(baseTheme),
     }
 
-    // 3. Merge the base theme with the dependent themes and the theme overrides.
-    // Why do we apply the overrides after the dependent themes?
-    // Because the `dependentThemeSlices` contain additional properties that may have
-    // been modified by the overrides previously.
-    this._theme = lodash.merge({}, baseTheme, dependentThemeSlices, this._themeOverrides)
+    /**
+     * 3. Merge the base theme with the dependent themes and the theme overrides.
+     *
+     * Why do we apply the overrides after the dependent themes?
+     * Because the `dependentThemes` contain additional properties that may have
+     * been modified by the overrides previously.
+     */
+    this._theme = lodash.merge({}, baseTheme, dependentThemes, this._themeOverrides)
 
     return this._theme
   }

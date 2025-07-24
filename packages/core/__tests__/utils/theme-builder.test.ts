@@ -30,6 +30,7 @@ describe('Theme Builder', () => {
 
       expect(theme.Buttons.critical).toStrictEqual({
         ...bifoldTheme.Buttons.critical,
+        padding: 0,
         margin: -1,
       })
       expect(theme.TextTheme.headingOne).toStrictEqual({
@@ -73,7 +74,7 @@ describe('Theme Builder', () => {
   })
 
   describe('setColorPalette', () => {
-    it('should set the color pallet for the theme', () => {
+    it('should set the color palette for the theme', () => {
       const theme = new ThemeBuilder(bifoldTheme)
         .setColorPalette({
           ...bifoldTheme.ColorPallet,
@@ -87,7 +88,7 @@ describe('Theme Builder', () => {
       expect(theme.ColorPallet.brand.primary).toEqual('TEST')
     })
 
-    it('should not override the entire color pallet when building: sanity check', () => {
+    it('should not override the entire color palette when building: sanity check', () => {
       const theme = new ThemeBuilder(bifoldTheme)
         .setColorPalette({
           ...bifoldTheme.ColorPallet,
@@ -101,8 +102,25 @@ describe('Theme Builder', () => {
 
       expect(theme.ColorPallet.brand.primary).toEqual('TEST')
       expect(theme.Buttons.critical?.padding).toEqual(-1)
-      // Ensure the color pallet is being applied to the dependent properties
+      // Ensure the color palette is being applied to the dependent properties
       expect(theme.Inputs.inputSelected.borderColor).toEqual('TEST')
+    })
+
+    it('should set the color palette and be able to override it', () => {
+      const theme = new ThemeBuilder(bifoldTheme)
+        .setColorPalette({
+          ...bifoldTheme.ColorPallet,
+          brand: {
+            ...bifoldTheme.ColorPallet.brand,
+            primary: 'TEST',
+          },
+        })
+        .withOverrides({ ColorPallet: { brand: { primary: 'OVERRIDE' } } })
+        .build()
+
+      expect(theme.ColorPallet.brand.primary).toEqual('OVERRIDE')
+      // Ensure the color palette is being applied to the dependent properties
+      expect(theme.Inputs.inputSelected.borderColor).toEqual('OVERRIDE')
     })
   })
 })
