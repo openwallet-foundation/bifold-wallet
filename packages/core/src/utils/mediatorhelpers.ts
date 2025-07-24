@@ -1,16 +1,20 @@
 import { Agent, MediationRecord } from '@credo-ts/core'
 
 export const isMediatorInvitation = async (agent: Agent, url: string): Promise<boolean> => {
-  const invitation = await agent.oob.parseInvitation(url)
-  if (!invitation) {
+  try {
+    const invitation = await agent.oob.parseInvitation(url)
+    if (!invitation) {
+      return false
+    }
+    if (invitation.goalCode === 'aries.vc.mediate') {
+      agent.config.logger.info(`Invitation is a mediator invitation with goal code: ${invitation.goalCode}`)
+      return true
+    }
+    return false
+  } catch (error) {
+    agent.config.logger.info(`Invitation is not a mediator invitation: ${error}`)
     return false
   }
-  if (invitation.goalCode === 'aries.vc.mediate') {
-    agent.config.logger.info(`Invitation is a mediator invitation with goal code: ${invitation.goalCode}`)
-    return true
-  }
-  agent.config.logger.info(`Invitation is not a mediator invitation, goal code: ${invitation.goalCode}`)
-  return false
 }
 
 const provisionMediationRecordFromMediatorUrl = async (
