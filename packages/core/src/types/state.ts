@@ -1,4 +1,4 @@
-import { BannerMessage } from 'components/views/Banner'
+import { BannerMessage } from '../components/views/Banner'
 
 export interface Onboarding {
   didSeePreface: boolean

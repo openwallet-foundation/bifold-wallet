@@ -2339,7 +2339,7 @@ __metadata:
     expo: "npm:*"
     expo-secure-store: "npm:*"
     husky: "npm:~7.0.4"
-    i18next: "npm:~21.10.0"
+    i18next: "npm:~21.6.16"
     install-peerdeps: "npm:~3.0.7"
     jest: "npm:~29.6.4"
     lodash.flatten: "npm:~4.4.0"
@@ -2350,7 +2350,7 @@ __metadata:
     prettier: "npm:~2.8.8"
     query-string: "npm:~7.1.3"
     react: "npm:*"
-    react-i18next: "npm:~11.13.0"
+    react-i18next: "npm:~11.17.1"
     react-native: "npm:0.73.11"
     react-native-animated-pagination-dots: "npm:~0.1.73"
     react-native-argon2: "npm:~2.0.1"
@@ -2422,13 +2422,13 @@ __metadata:
     "@react-navigation/stack": ~6.3.29
     axios: ~1.4.0
     base-64: ~1.0.0
-    i18next: ~21.10.0
+    i18next: ~21.6.16
     lodash.flatten: ~4.4.0
     lodash.startcase: ~4.4.0
     moment: ~2.29.4
     query-string: ~7.1.3
     react: ~18.3.1
-    react-i18next: ~11.13.0
+    react-i18next: ~11.17.1
     react-native: "*"
     react-native-animated-pagination-dots: ~0.1.73
     react-native-argon2: ~2.0.1
@@ -8901,7 +8901,7 @@ __metadata:
     expo: "npm:*"
     expo-secure-store: "npm:*"
     fast-text-encoding: "npm:~1.0.6"
-    i18next: "npm:~21.10.0"
+    i18next: "npm:~21.6.16"
     lodash.flatten: "npm:~4.4.0"
     lodash.startcase: "npm:~4.4.0"
     metro-react-native-babel-transformer: "npm:~0.77.0"
@@ -8910,7 +8910,7 @@ __metadata:
     prettier: "npm:~2.8.8"
     query-string: "npm:~7.1.3"
     react: "npm:*"
-    react-i18next: "npm:~11.13.0"
+    react-i18next: "npm:~11.17.1"
     react-native: "npm:*"
     react-native-animated-pagination-dots: "npm:~0.1.73"
     react-native-argon2: "npm:~2.0.1"
@@ -13397,7 +13397,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-escaper@npm:^2.0.0":
+"html-escaper@npm:^2.0.0, html-escaper@npm:^2.0.2":
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: 10c0/208e8a12de1a6569edbb14544f4567e6ce8ecc30b9394fcaa4e7bb1e60c12a7c9a1ed27e31290817157e8626f3a4f29e76c8747030822eb84a6abb15c255f0a0
@@ -13502,12 +13502,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:~21.10.0":
-  version: 21.10.0
-  resolution: "i18next@npm:21.10.0"
+"i18next@npm:~21.6.16":
+  version: 21.6.16
+  resolution: "i18next@npm:21.6.16"
   dependencies:
     "@babel/runtime": "npm:^7.17.2"
-  checksum: 10c0/2a674739aab219704d5a0bf62d03bed20ad2bceff9579efb4da61c4946c883fc172062ba7405a26bf795995860f2ab15826b05271f4c457bf7eb19e852f6006d
+  checksum: 10c0/d116bf02de3878e1541945bdcdd7af8646a3b7a50849957efa925c9e14174683a4be66e03a55490459c13f820e2a4b516e1be591cde4ea9cd5a73cb2616efdeb
   languageName: node
   linkType: hard
 
@@ -18379,16 +18379,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:~11.13.0":
-  version: 11.13.0
-  resolution: "react-i18next@npm:11.13.0"
+"react-i18next@npm:~11.17.1":
+  version: 11.17.4
+  resolution: "react-i18next@npm:11.17.4"
   dependencies:
     "@babel/runtime": "npm:^7.14.5"
+    html-escaper: "npm:^2.0.2"
     html-parse-stringify: "npm:^3.0.1"
   peerDependencies:
     i18next: ">= 19.0.0"
     react: ">= 16.8.0"
-  checksum: 10c0/d2152b87b47a9067f614e70c5b221a55b99e8f52e62f3df751eee777c1a3f6db1063211678abbc8bbe8b6ee72c401592de4a17ca12add2079b51de01e7f09be3
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 10c0/67d62abff126719b97d931edeb4e083604187050938dcca424984f2a2643472dde9c490c23506ca30c56a1232b46cae316be61bbae473aaca7f0ba8658e557ba
   languageName: node
   linkType: hard
 
