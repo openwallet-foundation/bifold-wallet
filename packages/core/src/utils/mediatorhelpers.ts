@@ -14,7 +14,7 @@ export const isMediatorInvitation = async (agent: Agent, url: string): Promise<b
 
     return false
   } catch (error) {
-    agent.config.logger.info(`Invitation is not a mediator invitation: ${error}`)
+    agent.config.logger.error(`Invitation is not a mediator invitation: ${error}`)
     return false
   }
 }
@@ -26,7 +26,7 @@ const provisionMediationRecordFromMediatorUrl = async (
   try {
     const invitation = await agent.oob.parseInvitation(url)
     if (!invitation) {
-      agent.config.logger.warn(`No invitation found in URL: ${url}`)
+      agent.config.logger.error(`No invitation found in URL: ${url}`)
       return undefined
     }
 
@@ -39,7 +39,7 @@ const provisionMediationRecordFromMediatorUrl = async (
       const { connectionRecord: newConnection } = await agent.oob.receiveInvitation(invite)
 
       if (!newConnection) {
-        agent.config.logger.warn(`Failed to create connection from invitation: ${JSON.stringify(invite, null, 2)}`)
+        agent.config.logger.error(`Failed to create connection from invitation: ${JSON.stringify(invite, null, 2)}`)
         return
       }
       connection = newConnection
@@ -48,7 +48,7 @@ const provisionMediationRecordFromMediatorUrl = async (
     const result = connection.isReady ? connection : await agent.connections.returnWhenIsConnected(connection.id)
     return agent.mediationRecipient.provision(result)
   } catch (error) {
-    agent.config.logger.warn(`Failed to get connection ID from mediator URL: ${error}`)
+    agent.config.logger.error(`Failed to get connection ID from mediator URL: ${error}`)
     return
   }
 }
@@ -56,7 +56,7 @@ const provisionMediationRecordFromMediatorUrl = async (
 export const setMediationToDefault = async (agent: Agent, mediatorUrl: string) => {
   const mediationRecord = await provisionMediationRecordFromMediatorUrl(agent, mediatorUrl)
   if (!mediationRecord) {
-    agent.config.logger.warn(`No connection record found for mediator URL: ${mediatorUrl}`)
+    agent.config.logger.error(`No connection record found for mediator URL: ${mediatorUrl}`)
     return
   }
 
