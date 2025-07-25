@@ -1,5 +1,5 @@
-import { render, fireEvent, waitFor } from '@testing-library/react-native'
-import React, { act } from 'react'
+import { render, fireEvent, waitFor, act } from '@testing-library/react-native'
+import React from 'react'
 import { container } from 'tsyringe'
 import { Keyboard } from 'react-native'
 

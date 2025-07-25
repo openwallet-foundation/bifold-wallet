@@ -49,7 +49,6 @@
     "Send": "Enviar",
     "Reset": "Reset (PT-BR)",
     "ViewJSON": "View JSON Details (PT-BR)"
-
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -906,7 +905,7 @@
     "UpdateNow": "Update the app (PT-BR)",
     "UpdateLater": "Do this later (PT-BR)"
   },
-   "Banner": {
+  "Banner": {
     "AlertsLength": "You have {{ alerts }} alerts (PT-BR)"
   }
 }

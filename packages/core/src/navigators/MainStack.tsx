@@ -11,7 +11,7 @@ import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import HistoryStack from '../modules/history/navigation/HistoryStack'
 import Chat from '../screens/Chat'
-import { Screens, Stacks, TabStacks } from '../types/navigators'
+import { RootStackParams, Screens, Stacks, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { useStore } from '../contexts/store'
 import { useTour } from '../contexts/tour/tour-context'
@@ -53,7 +53,7 @@ const MainStack: React.FC = () => {
     })
   }, [declinedProofs, agent, store.preferences.useDataRetention])
 
-  const Stack = createStackNavigator()
+  const Stack = createStackNavigator<RootStackParams>()
 
   // This function is to make the fade in behavior of both iOS and
   // Android consistent for the settings menu
