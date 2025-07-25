@@ -905,5 +905,8 @@
     "LearnMore": "Learn what's New (PT-BR)",
     "UpdateNow": "Update the app (PT-BR)",
     "UpdateLater": "Do this later (PT-BR)"
+  },
+   "Banner": {
+    "AlertsLength": "You have {{ alerts }} alerts (PT-BR)"
   }
 }

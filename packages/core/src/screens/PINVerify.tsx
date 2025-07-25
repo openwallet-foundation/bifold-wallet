@@ -37,8 +37,6 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const { ColorPallet } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
-  // Temporary until all use cases are built with the new design
-  const isNewDesign = usage === PINEntryUsage.ChangeBiometrics
   const [{ preventScreenCapture }] = useServices([TOKENS.CONFIG])
   usePreventScreenCapture(preventScreenCapture)
 
@@ -97,61 +95,65 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
       flex: 1,
       padding: 20,
       backgroundColor: ColorPallet.brand.primaryBackground,
-      justifyContent: isNewDesign ? 'flex-start' : 'space-between',
+      justifyContent: 'space-between',
     },
     buttonContainer: {
-      marginTop: 'auto',
       width: '100%',
     },
     helpText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: isNewDesign ? 40 : 20,
+      marginBottom: 40,
     },
     inputLabelText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: isNewDesign ? 20 : 4,
+      marginBottom: 20,
     },
     modalText: {
       marginVertical: 5,
     },
     changeBiometricsHeader: {
       marginTop: 0,
-      marginBottom: isNewDesign ? 40 : 20,
+      marginBottom: 40,
     },
   })
 
   return (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
-        {usage === PINEntryUsage.ChangeBiometrics && (
-          <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
-            {t('PINEnter.ChangeBiometricsHeader')}
-          </ThemedText>
-        )}
-        <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>
-        <ThemedText variant="bold" style={style.inputLabelText}>
-          {inputLabelText[usage]}
+        <View>
           {usage === PINEntryUsage.ChangeBiometrics && (
-            <ThemedText variant="caption">
-              {` `}
-              {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
+            <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
+              {t('PINEnter.ChangeBiometricsHeader')}
             </ThemedText>
           )}
-        </ThemedText>
-        <PINInput
-          onPINChanged={(p: string) => {
-            setPIN(p)
-            if (p.length === minPINLength) {
-              Keyboard.dismiss()
-            }
-          }}
-          testID={testIdWithKey(inputTestId[usage])}
-          accessibilityLabel={inputLabelText[usage]}
-          autoFocus={true}
-          inlineMessage={inlineMessageField}
-        />
+          <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>
+          <ThemedText variant="bold" style={style.inputLabelText}>
+            {inputLabelText[usage]}
+            {usage === PINEntryUsage.ChangeBiometrics && (
+              <ThemedText variant="caption">
+                {` `}
+                {t('PINEnter.ChangeBiometricsInputLabelParenthesis')}
+              </ThemedText>
+            )}
+          </ThemedText>
+          <PINInput
+            onPINChanged={(p: string) => {
+              setPIN(p)
+              if (p.length === minPINLength) {
+                Keyboard.dismiss()
+              }
+            }}
+            testID={testIdWithKey(inputTestId[usage])}
+            accessibilityLabel={inputLabelText[usage]}
+            autoFocus={true}
+            inlineMessage={inlineMessageField}
+            onSubmitEditing={async () => {
+              await onPINInputCompleted()
+            }}
+          />
+        </View>
         <View style={style.buttonContainer}>
           <Button
             title={primaryButtonText[usage]}
