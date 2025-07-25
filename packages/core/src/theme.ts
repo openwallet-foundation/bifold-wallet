@@ -208,6 +208,7 @@ export interface IBrandColors {
   modalTertiaryBackground: string
   modalIcon: string
   link: string
+  credentialLink: string
   text: string
   icon: string
   headerText: string
@@ -328,6 +329,7 @@ const BrandColors: IBrandColors = {
   unorderedList: GrayscaleColors.white,
   unorderedListModal: GrayscaleColors.white,
   link: '#42803E',
+  credentialLink: '#42803E',
   text: GrayscaleColors.white,
   icon: GrayscaleColors.white,
   headerIcon: GrayscaleColors.white,
