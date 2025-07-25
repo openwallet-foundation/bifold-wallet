@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import { cleanup, fireEvent, render } from '@testing-library/react-native'
-import React, { act } from 'react'
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native'
+import React from 'react'
 import { testIdWithKey } from '../../src/utils/testable'
 import { BasicAppContext } from '../helpers/app'
 import JSONDetails from '../../src/screens/JSONDetails'

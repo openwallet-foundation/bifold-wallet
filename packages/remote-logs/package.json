@@ -29,19 +29,19 @@
   },
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet",
   "devDependencies": {
-    "@babel/runtime": "^7.20.0",
-    "@typescript-eslint/parser": "^6.6.0",
-    "eslint": "^8.48.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
-    "rimraf": "^5.0.0",
-    "typescript": "^5.0.4"
+    "@babel/runtime": "~7.23.9",
+    "@typescript-eslint/parser": "~7.18.0",
+    "eslint": "~8.57.1",
+    "eslint-import-resolver-typescript": "~3.6.3",
+    "rimraf": "~5.0.10",
+    "typescript": "~5.5.4"
   },
   "peerDependencies": {
     "@credo-ts/core": "0.5.13",
-    "axios": "^1.4.0",
-    "buffer": "^6.0.3",
-    "react": "^18.2.0",
-    "react-native": "^0.73.6",
+    "axios": "~1.4.0",
+    "buffer": "~6.0.3",
+    "react": "~18.3.1",
+    "react-native": "0.73.11",
     "react-native-logs": "~5.1.0"
   },
   "installConfig": {
@@ -50,10 +50,10 @@
   "dependencies": {
     "@bifold/core": "2.2.1",
     "@credo-ts/core": "0.5.13",
-    "axios": "^1.4.0",
-    "buffer": "^6.0.3",
-    "react": "18.2.0",
-    "react-native": "^0.73.6",
+    "axios": "~1.4.0",
+    "buffer": "~6.0.3",
+    "react": "~18.3.1",
+    "react-native": "~0.73.11",
     "react-native-logs": "~5.1.0"
   }
 }

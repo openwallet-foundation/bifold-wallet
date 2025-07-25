@@ -16,8 +16,8 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
 >
   <RNSVGSvgView
     align="xMidYMid"
-    bbHeight={1335}
-    bbWidth={751}
+    bbHeight="1335"
+    bbWidth="751"
     focusable={false}
     height={1335}
     meetOrSlice={0}
@@ -67,14 +67,13 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
               "type": 0,
             }
           }
-          height={1335}
+          height="1335"
           maskContentUnits={1}
-          maskType={0}
           maskUnits={0}
           name="mask"
-          width={751}
-          x={0}
-          y={0}
+          width="751"
+          x="0"
+          y="0"
         >
           <RNSVGRect
             fill={
@@ -83,15 +82,15 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
                 "type": 0,
               }
             }
-            height={1335}
+            height="1335"
             propList={
               Array [
                 "fill",
               ]
             }
-            width={751}
-            x={0}
-            y={0}
+            width="751"
+            x="0"
+            y="0"
           />
         </RNSVGMask>
       </RNSVGDefs>
@@ -102,7 +101,7 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
             "type": 0,
           }
         }
-        height={1335}
+        height="1335"
         mask="mask"
         opacity={0.7}
         propList={
@@ -110,9 +109,9 @@ exports[`TourOverlay Component Renders properly with defaults 1`] = `
             "fill",
           ]
         }
-        width={751}
-        x={0}
-        y={0}
+        width="751"
+        x="0"
+        y="0"
       />
     </RNSVGGroup>
   </RNSVGSvgView>

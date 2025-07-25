@@ -6,8 +6,6 @@ import HeaderRightHome from '../components/buttons/HeaderHome'
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import { useTheme } from '../contexts/theme'
 import Connection from '../screens/Connection'
-import CredentialOffer from '../screens/CredentialOffer'
-import ProofRequest from '../screens/ProofRequest'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
@@ -38,22 +36,6 @@ const DeliveryStack: React.FC = () => {
       }}
     >
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
-      <Stack.Screen
-        name={Screens.ProofRequest}
-        component={ProofRequest}
-        options={{
-          title: t('Screens.ProofRequest'),
-          ...ScreenOptionsDictionary[Screens.ProofRequest],
-        }}
-      />
-      <Stack.Screen
-        name={Screens.CredentialOffer}
-        component={CredentialOffer}
-        options={{
-          title: t('Screens.CredentialOffer'),
-          ...ScreenOptionsDictionary[Screens.CredentialOffer],
-        }}
-      />
       <Stack.Screen
         name={Screens.OpenIDCredentialOffer}
         component={OpenIDCredentialOffer}

@@ -281,8 +281,8 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -746,8 +746,8 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -1221,8 +1221,8 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -1959,8 +1959,8 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -2407,8 +2407,8 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -3226,8 +3226,8 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -3964,8 +3964,8 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   ]
                 }
                 width="100%"
-                x={0}
-                y={0}
+                x="0"
+                y="0"
               />
             </RNSVGGroup>
           </RNSVGSvgView>

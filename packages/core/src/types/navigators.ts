@@ -86,6 +86,7 @@ export type RootStackParams = {
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
   [Screens.Chat]: { connectionId: string }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [Stacks.ConnectionStack]: NavigatorScreenParams<DeliveryStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>

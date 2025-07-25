@@ -374,7 +374,6 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           accessibilityRole="text"
           accessible={true}
           autoCapitalize="characters"
-          autoComplete="one-time-code"
           autoCorrect={false}
           autoFocus={false}
           blurOnSubmit={false}
@@ -835,7 +834,6 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           accessibilityRole="text"
           accessible={true}
           autoCapitalize="characters"
-          autoComplete="one-time-code"
           autoCorrect={false}
           autoFocus={false}
           blurOnSubmit={false}
@@ -1348,7 +1346,6 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           accessibilityRole="text"
           accessible={true}
           autoCapitalize="characters"
-          autoComplete="one-time-code"
           autoCorrect={false}
           autoFocus={false}
           blurOnSubmit={false}
@@ -1826,7 +1823,6 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           accessibilityRole="text"
           accessible={true}
           autoCapitalize="characters"
-          autoComplete="one-time-code"
           autoCorrect={false}
           autoFocus={false}
           blurOnSubmit={false}

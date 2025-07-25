@@ -35,34 +35,34 @@ export class BifoldLogger extends BaseLogger {
   }
 
   public test(message: string, data?: object | undefined): void {
-    this._log?.test(message, data)
+    this._log?.test({ message, data })
   }
 
   public trace(message: string, data?: object | undefined): void {
-    this._log?.trace(message, data)
+    this._log?.trace({ message, data })
   }
 
   public debug(message: string, data?: object | undefined): void {
-    this._log?.debug(message, data)
+    this._log?.debug({ message, data })
   }
 
   public info(message: string, data?: object | undefined): void {
-    this._log?.info(message, data)
+    this._log?.info({ message, data })
   }
 
   public warn(message: string, data?: object | undefined): void {
-    this._log?.warn(message, data)
+    this._log?.warn({ message, data })
   }
 
   public error(message: string, data?: object | undefined): void {
-    this._log?.error(message, data)
+    this._log?.error({ message, data })
   }
 
   public fatal(message: string, data?: object | undefined): void {
-    this._log?.fatal(message, data)
+    this._log?.fatal({ message, data })
   }
 
   public report(bifoldError: BifoldError): void {
-    this._log?.info('No remote logging configured, report not sent for error:', bifoldError)
+    this._log?.info({ message: 'No remote logging configured, report not sent for error:', data: bifoldError.message })
   }
 }

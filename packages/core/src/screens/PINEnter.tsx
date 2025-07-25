@@ -19,7 +19,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeveloperMode } from '../hooks/developer-mode'
 import { useLockout } from '../hooks/lockout'
-import { useGotoPostAuthScreens } from '../hooks/onboarding'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
@@ -61,7 +60,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     setDevModalVisible(true)
   }
   const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
-  const gotoPostAuthScreens = useGotoPostAuthScreens()
   const isContinueDisabled = inlineMessages.enabled ? !continueEnabled : !continueEnabled || PIN.length < minPINLength
   usePreventScreenCapture(preventScreenCapture)
 
@@ -89,9 +87,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         payload: [{ loginAttempts: 0 }],
       })
       setAuthenticated(true)
-      gotoPostAuthScreens()
     }
-  }, [getWalletSecret, dispatch, setAuthenticated, gotoPostAuthScreens])
+  }, [getWalletSecret, dispatch, setAuthenticated])
 
   useEffect(() => {
     const handle = InteractionManager.runAfterInteractions(async () => {
@@ -189,7 +186,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           payload: [{ displayNotification: false }],
         })
         setAuthenticated(true)
-        gotoPostAuthScreens()
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1041'),
@@ -207,7 +203,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       getLockoutPenalty,
       dispatch,
       setAuthenticated,
-      gotoPostAuthScreens,
       t,
       attemptLockout,
       inlineMessages,

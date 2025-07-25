@@ -97,7 +97,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
             <RecordLoading />
           </View>
         ) : (
-          <ThemedText variant='bold'>{t('ProofRequest.AvailableCards')}</ThemedText>
+          <ThemedText variant={'bold'}>{t('ProofRequest.AvailableCards')}</ThemedText>
         )}
       </View>
     )

@@ -27,25 +27,14 @@ const Terms: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const { OnboardingTheme, TextTheme } = useTheme()
   const [Button] = useServices([TOKENS.COMP_BUTTON])
+
   const onSubmitPressed = useCallback(() => {
     dispatch({
       type: DispatchAction.DID_AGREE_TO_TERMS,
       payload: [{ DidAgreeToTerms: TermsVersion }],
     })
+  }, [dispatch])
 
-    if (!(agreedToPreviousTerms && store.onboarding.didCreatePIN)) {
-      navigation.navigate(Screens.CreatePIN)
-    } else if (store.onboarding.postAuthScreens.length) {
-      const screens: string[] = store.onboarding.postAuthScreens
-      screens.shift()
-      dispatch({ type: DispatchAction.SET_POST_AUTH_SCREENS, payload: [screens] })
-      if (screens.length) {
-        navigation.navigate(screens[0] as never)
-      } else {
-        dispatch({ type: DispatchAction.DID_COMPLETE_ONBOARDING, payload: [true] })
-      }
-    }
-  }, [dispatch, agreedToPreviousTerms, navigation, store.onboarding.postAuthScreens, store.onboarding.didCreatePIN])
   const style = StyleSheet.create({
     container: {
       ...OnboardingTheme.container,
@@ -60,6 +49,7 @@ const Terms: React.FC = () => {
       marginBottom: 20,
     },
   })
+
   const onBackPressed = () => {
     //TODO:(jl) goBack() does not unwind the navigation stack but rather goes
     //back to the splash screen. Needs fixing before the following code will

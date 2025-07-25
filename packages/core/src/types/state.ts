@@ -1,4 +1,4 @@
-import { BannerMessage } from 'components/views/Banner'
+import { BannerMessage } from '../components/views/Banner'
 
 export interface Onboarding {
   didSeePreface: boolean
@@ -10,7 +10,6 @@ export interface Onboarding {
   didNameWallet: boolean
   onboardingVersion: number
   didCompleteOnboarding: boolean
-  postAuthScreens: string[]
 }
 
 export interface Migration {

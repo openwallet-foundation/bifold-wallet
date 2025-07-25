@@ -25,7 +25,6 @@ export const defaultState: State = {
     didNameWallet: false,
     onboardingVersion: 0,
     didCompleteOnboarding: false,
-    postAuthScreens: [],
   },
   authentication: {
     didAuthenticate: false,
