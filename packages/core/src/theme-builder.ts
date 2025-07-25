@@ -86,14 +86,7 @@ export class ThemeBuilder {
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
   withOverrides(themeOverrides: DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>)) {
-    let resolvedOverrides: DeepPartial<ITheme>
-
-    // If themeOverrides is a function, call it with the current theme to get the overrides.
-    if (typeof themeOverrides === 'function') {
-      resolvedOverrides = themeOverrides(this._theme)
-    } else {
-      resolvedOverrides = themeOverrides
-    }
+    const resolvedOverrides = typeof themeOverrides === 'function' ? themeOverrides(this._theme) : themeOverrides
 
     // note: without the empty object, lodash.merge will mutate the original theme overrides,
     // and not properly update the nested properties
