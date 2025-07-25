@@ -77,6 +77,7 @@ export const HOOK_TOKENS = {
 
 export const COMPONENT_TOKENS = {
   COMPONENT_HOME_HEADER: 'component.home.header',
+  COMPONENT_NOTIFICATION_BANNER: 'component.notification.banner',
   COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST: 'component.home.notifications-empty-list',
   COMPONENT_HOME_FOOTER: 'component.home.footer',
   COMPONENT_CRED_EMPTY_LIST: 'component.cred.empty-list',
@@ -215,6 +216,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
+  [TOKENS.COMPONENT_NOTIFICATION_BANNER]: React.FC
   [TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST]: React.FC
   [TOKENS.COMPONENT_HOME_FOOTER]: React.FC
   [TOKENS.COMPONENT_CRED_EMPTY_LIST]: React.FC

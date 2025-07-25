@@ -68,7 +68,10 @@ const MainStack: React.FC = () => {
     <View style={{ flex: 1 }} importantForAccessibility={hideElements}>
       <Stack.Navigator
         initialRouteName={Stacks.TabStack}
-        screenOptions={{ ...defaultStackOptions, headerShown: false }}
+        screenOptions={{
+          ...defaultStackOptions,
+          headerShown: false,
+        }}
       >
         <Stack.Screen name={Stacks.TabStack} component={TabStack} />
         <Stack.Screen

@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react-native'
+import { render, fireEvent, waitFor } from '@testing-library/react-native'
 import React, { act } from 'react'
 import { container } from 'tsyringe'
 import { Keyboard } from 'react-native'
@@ -209,5 +209,43 @@ describe('PINEnter Screen', () => {
       fireEvent.changeText(pinInput, '123456') // minpinlength is 6
     })
     expect(setAuthenticatedMock).toHaveBeenCalled()
+  })
+
+  test('Keyboard enter button submits PIN', async () => {
+    const setAuthenticatedMock = jest.fn()
+    const mockAuthContext = {
+      ...authContext,
+      checkWalletPIN: jest.fn().mockResolvedValue(true),
+      setAuthenticated: setAuthenticatedMock,
+    }
+    const main = new MainContainer(container.createChildContainer()).init()
+    const tree = render(
+      <ContainerProvider value={main}>
+        <StoreProvider
+          initialState={{
+            ...defaultState,
+          }}
+        >
+          <AuthContext.Provider value={mockAuthContext}>
+            <PINEnter setAuthenticated={mockAuthContext.setAuthenticated} />
+          </AuthContext.Provider>
+        </StoreProvider>
+      </ContainerProvider>
+    )
+    const pinInput = tree.getByTestId(testIdWithKey('EnterPIN'))
+    await act(async () => {
+      fireEvent.changeText(pinInput, '12345') // only 5 characters so the pin isnt autosubmitted
+    })
+
+    await act(async () => {
+      fireEvent(pinInput, 'submitEditing')
+    })
+    await waitFor(
+      () => {
+        // look for inline error message
+        expect(tree.queryByText('PINCreate.PINTooShort')).not.toBeNull()
+      },
+      { timeout: 1000 }
+    )
   })
 })

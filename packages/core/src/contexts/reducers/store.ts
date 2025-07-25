@@ -64,6 +64,8 @@ enum PreferencesDispatchAction {
   SET_SELECTED_MEDIATOR = 'preferences/setSelectedMediator',
   ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
   RESET_MEDIATORS = 'preferences/resetMediators',
+  BANNER_MESSAGES = 'preferences/bannerMessages',
+  REMOVE_BANNER_MESSAGE = 'REMOVE_BANNER_MESSAGE',
 }
 
 enum ToursDispatchAction {
@@ -554,6 +556,34 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         selectedMediator: Config.MEDIATOR_URL as string,
       }
 
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
+    case PreferencesDispatchAction.BANNER_MESSAGES: {
+      const bannerMessageToAdd = action?.payload ?? []
+      const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
+      const preferences: Preferences = {
+        ...state.preferences,
+        bannerMessages: newBannerMessages,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
+    case PreferencesDispatchAction.REMOVE_BANNER_MESSAGE: {
+      const keysToRemove = action?.payload ?? []
+      const newBannerMessages = state.preferences.bannerMessages.filter((msg) => !keysToRemove.includes(msg.id))
+      const preferences: Preferences = {
+        ...state.preferences,
+        bannerMessages: newBannerMessages,
+      }
       PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
       return {
         ...state,
