@@ -1009,9 +1009,6 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
   return {
     ...textStyles,
     ...viewStyles,
-    // TODO: Invesitigate if these are still needed.
-    // Note: They are not currently used in bifold
-    // extending to allow backwards compatibility.
     placeholderText: theme.ColorPallet.grayscale.lightGrey,
     sendEnabled: theme.ColorPallet.brand.primary,
     sendDisabled: theme.ColorPallet.brand.primaryDisabled,

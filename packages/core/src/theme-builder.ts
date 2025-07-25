@@ -60,7 +60,7 @@ export class ThemeBuilder {
    * @param {IColorPallet} colorPalette - The color pallet to set for the theme.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  setColorPalette(colorPalette: IColorPallet): ThemeBuilder {
+  setColorPalette(colorPalette: IColorPallet): this {
     this._theme.ColorPallet = colorPalette
 
     return this
@@ -85,7 +85,7 @@ export class ThemeBuilder {
    * @param {DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>) } themeOverrides A partial theme object to merge with the current theme or a callback function that receives the current theme and returns a partial theme object.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  withOverrides(themeOverrides: DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>)) {
+  withOverrides(themeOverrides: DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>)): this {
     const resolvedOverrides = typeof themeOverrides === 'function' ? themeOverrides(this._theme) : themeOverrides
 
     // note: without the empty object, lodash.merge will mutate the original theme overrides,
