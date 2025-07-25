@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
 ## 2.2.1
 
 ## 2.2.0

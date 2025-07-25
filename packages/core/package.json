@@ -1,6 +1,6 @@
 {
   "name": "@bifold/core",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "src/index.ts",
@@ -33,8 +33,8 @@
   "devDependencies": {
     "@babel/core": "~7.22.20",
     "@babel/runtime": "~7.23.9",
-    "@bifold/oca": "2.2.1",
-    "@bifold/verifier": "2.2.1",
+    "@bifold/oca": "2.3.0",
+    "@bifold/verifier": "2.3.0",
     "@commitlint/cli": "~11.0.0",
     "@credo-ts/anoncreds": "0.5.13",
     "@credo-ts/askar": "0.5.13",
