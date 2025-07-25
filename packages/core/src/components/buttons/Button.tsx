@@ -24,7 +24,7 @@ const ButtonImplComponent = (
   const buttonStyles = {
     [ButtonType.Critical]: {
       color: Buttons.critical,
-      colorDisabled: Buttons.criticalTextDisabled,
+      colorDisabled: Buttons.criticalDisabled,
       text: Buttons.criticalText,
       textDisabled: Buttons.criticalTextDisabled,
     },
