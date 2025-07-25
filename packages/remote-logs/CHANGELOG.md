@@ -1,5 +1,18 @@
 # Change Log
 
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
+### Patch Changes
+
+- Updated dependencies [da487bb]
+- Updated dependencies [84e7336]
+- Updated dependencies [85f21e2]
+  - @bifold/core@2.3.0
+
 ## 2.2.1
 
 ### Patch Changes
