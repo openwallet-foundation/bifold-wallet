@@ -74,15 +74,33 @@ export class ThemeBuilder {
    * @example
    * new ThemeBuilder({ Buttons: { color: 'purple', size: 'large' }})
    * .withOverrides({ Buttons: { color: 'red' }})
-   * .withOverrides({ Buttons: { spacing: 10 }}) // { Buttons: { color: 'red', size: 'large', spacing: 10 }}
+   * .withOverrides({ Buttons: { spacing: 10 }}) // => { Buttons: { color: 'red', size: 'large', spacing: 10 }}
    *
-   * @param {DeepPartial<ITheme>} themeOverrides - A partial theme object to merge with the current theme.
+   * @example
+   * new ThemeBuilder({ Buttons: { critical: { padding: 10, margin: 0 }}})
+   * .withOverrides((theme) => ({
+   *  Buttons: { critical: { padding: 0, margin: -1 } },
+   * })) // => { Buttons: { critical: { padding: 0, margin: -1 } }}
+   *
+   * @param {DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>) } themeOverrides A partial theme object to merge with the current theme or a callback function that receives the current theme and returns a partial theme object.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  withOverrides(themeOverrides: DeepPartial<ITheme>) {
+  withOverrides(themeOverrides: DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>)) {
+    let resolvedOverrides: DeepPartial<ITheme>
+
+    // If themeOverrides is a function, call it with the current theme to get the overrides.
+    if (typeof themeOverrides === 'function') {
+      resolvedOverrides = themeOverrides(this._theme)
+    } else {
+      resolvedOverrides = themeOverrides
+    }
+
     // note: without the empty object, lodash.merge will mutate the original theme overrides,
     // and not properly update the nested properties
-    this._themeOverrides = lodash.merge({}, this._themeOverrides, themeOverrides)
+    this._themeOverrides = lodash.merge({}, this._themeOverrides, resolvedOverrides)
+
+    // Rebuild the theme with the new overrides so following chained calls will use the updated theme.
+    this._theme = this.build()
 
     // Return the instance for method chaining
     return this
@@ -94,11 +112,11 @@ export class ThemeBuilder {
    * @returns {*} {ITheme} Returns the final theme object.
    */
   build(): ITheme {
-    // 1. Merge the theme overrides onto the original theme, producing the new base theme.
+    // Step 1. Merge the theme overrides onto the original theme, producing the new base theme.
     const baseTheme = lodash.merge({}, this._theme, this._themeOverrides)
 
-    // 2. Create dependent themes based on the new base theme.
-    const dependentThemes = {
+    // Step 2. Generate computed properties that depend on the base theme
+    const dependentThemes: Partial<ITheme> = {
       TextTheme: createTextTheme(baseTheme),
       InputInlineMessage: createInputInlineMessageTheme(baseTheme),
       Inputs: createInputsTheme(baseTheme),
@@ -116,7 +134,7 @@ export class ThemeBuilder {
     }
 
     /**
-     * 3. Merge the base theme with the dependent themes and the theme overrides.
+     * Step 3. Merge all together - base + generated + overrides
      *
      * Why do we apply the overrides after the dependent themes?
      * Because the `dependentThemes` contain additional properties that may have

@@ -925,7 +925,7 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
     },
     leftText: {
       color: theme.ColorPallet.brand.secondary,
-      fontSize: TextTheme.normal.fontSize,
+      fontSize: theme.TextTheme.normal.fontSize,
     },
     leftTextHighlighted: {
       ...theme.TextTheme.bold,

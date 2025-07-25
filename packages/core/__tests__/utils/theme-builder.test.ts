@@ -11,6 +11,108 @@ describe('Theme Builder', () => {
   })
 
   describe('withOverrides', () => {
+    describe('when passing a function', () => {
+      it('should merge the new theme into the existing theme', () => {
+        const theme = new ThemeBuilder(bifoldTheme)
+          .withOverrides((theme) => {
+            expect(theme).toStrictEqual(bifoldTheme)
+
+            return {
+              Buttons: {
+                critical: {
+                  padding: 0,
+                  margin: -1,
+                },
+              },
+              TextTheme: {
+                headingOne: {
+                  margin: -1,
+                },
+              },
+            }
+          })
+          .build()
+
+        expect(theme.Buttons.critical).toStrictEqual({
+          ...bifoldTheme.Buttons.critical,
+          padding: 0,
+          margin: -1,
+        })
+        expect(theme.TextTheme.headingOne).toStrictEqual({
+          ...bifoldTheme.TextTheme.headingOne,
+          margin: -1,
+        })
+      })
+
+      it('should override existing properties in the default theme', () => {
+        const theme = new ThemeBuilder(bifoldTheme)
+          .withOverrides((theme) => {
+            expect(theme).toStrictEqual(bifoldTheme)
+
+            return { Buttons: { critical: { padding: -1 } } }
+          })
+          .build()
+
+        expect(theme.Buttons.critical).toStrictEqual({
+          ...bifoldTheme.Buttons.critical,
+          padding: -1,
+        })
+      })
+
+      it('should add new nested properties to the theme', () => {
+        const theme = new ThemeBuilder(bifoldTheme)
+          .withOverrides((theme) => {
+            expect(theme).toStrictEqual(bifoldTheme)
+
+            return { Buttons: { critical: { aspectRatio: 'value' } } }
+          })
+          .build()
+
+        expect(theme.Buttons.critical?.aspectRatio).toStrictEqual('value')
+      })
+
+      it('should not override the entire theme when merging', () => {
+        const theme = new ThemeBuilder(bifoldTheme).withOverrides(() => ({} as any)).build()
+
+        expect(theme).toStrictEqual(bifoldTheme)
+      })
+
+      it('should chain multiple merges', () => {
+        const theme = new ThemeBuilder(bifoldTheme)
+          .withOverrides({
+            Buttons: {
+              critical: {
+                width: -1,
+              },
+            },
+          })
+          .withOverrides((theme) => {
+            expect(theme).toStrictEqual({
+              ...bifoldTheme,
+              Buttons: {
+                ...bifoldTheme.Buttons,
+                critical: {
+                  ...bifoldTheme.Buttons.critical,
+                  width: -1,
+                },
+              },
+            })
+
+            return { Buttons: { critical: { padding: -1 } } }
+          })
+          .withOverrides((theme) => {
+            expect(theme.Buttons.critical?.padding).toEqual(-1)
+
+            return { Buttons: { critical: { padding: 0, borderRadius: -1 } } }
+          })
+          .build()
+
+        expect(theme.Buttons.critical?.padding).toEqual(0)
+        expect(theme.Buttons.critical?.borderRadius).toEqual(-1)
+        expect(theme.Buttons.critical?.width).toEqual(-1)
+      })
+    })
+    describe('when passing an object', () => {})
     it('should merge the new theme into the existing theme', () => {
       const theme = new ThemeBuilder(bifoldTheme)
         .withOverrides({
