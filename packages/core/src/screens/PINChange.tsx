@@ -1,4 +1,4 @@
-import { ParamListBase, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,6 @@ import {
   View,
 } from 'react-native'
 
-// eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
@@ -29,11 +28,11 @@ import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { OnboardingStackParams, Screens } from '../types/navigators'
+import { OnboardingStackParams, Screens, SettingStackParams } from '../types/navigators'
 import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
 
-const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = () => {
+const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN>> = () => {
   const { agent } = useAppAgent()
   const { checkWalletPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')

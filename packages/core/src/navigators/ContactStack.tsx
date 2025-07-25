@@ -7,10 +7,8 @@ import { useTheme } from '../contexts/theme'
 import Chat from '../screens/Chat'
 import ContactDetails from '../screens/ContactDetails'
 import CredentialDetails from '../screens/CredentialDetails'
-import CredentialOffer from '../screens/CredentialOffer'
 import ListContacts from '../screens/ListContacts'
 import ProofDetails from '../screens/ProofDetails'
-import ProofRequest from '../screens/ProofRequest'
 import RenameContact from '../screens/RenameContact'
 import JSONDetails from '../screens/JSONDetails'
 import WhatAreContacts from '../screens/WhatAreContacts'
@@ -78,11 +76,6 @@ const ContactStack: React.FC = () => {
         options={{ title: t('Screens.CredentialDetails'), ...ScreenOptionsDictionary[Screens.CredentialDetails] }}
       />
       <Stack.Screen
-        name={Screens.CredentialOffer}
-        component={CredentialOffer}
-        options={{ title: t('Screens.CredentialOffer'), ...ScreenOptionsDictionary[Screens.CredentialOffer] }}
-      />
-      <Stack.Screen
         name={Screens.ProofDetails}
         component={ProofDetails}
         options={() => ({
@@ -90,14 +83,6 @@ const ContactStack: React.FC = () => {
           headerRight: () => <HeaderRightHome />,
           ...ScreenOptionsDictionary[Screens.ProofDetails],
         })}
-      />
-      <Stack.Screen
-        name={Screens.ProofRequest}
-        component={ProofRequest}
-        options={{
-          title: t('Screens.ProofRequest'),
-          ...ScreenOptionsDictionary[Screens.ProofRequest],
-        }}
       />
     </Stack.Navigator>
   )
