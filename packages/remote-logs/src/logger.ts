@@ -129,32 +129,34 @@ export class RemoteLogger extends BifoldLogger {
     }, expirationInMinutes * 60000)
   }
 
-  public test(message: string, data?: object | undefined): void {
-    this._log?.test({ message, data })
+  public test(...msgs: unknown[]): void {
+    this._log?.test(...msgs)
   }
 
-  public trace(message: string, data?: object | undefined): void {
-    this._log?.trace({ message, data })
+  public trace(...msgs: unknown[]): void {
+    this._log?.trace(...msgs)
   }
 
-  public debug(message: string, data?: object | undefined): void {
-    this._log?.debug({ message, data })
+  public debug(...msgs: unknown[]): void {
+    this._log?.debug(...msgs)
   }
 
-  public info(message: string, data?: object | undefined): void {
-    this._log?.info({ message, data })
+  public info(...msgs: unknown[]): void {
+    this._log?.info(...msgs)
   }
 
-  public warn(message: string, data?: object | undefined): void {
-    this._log?.warn({ message, data })
+  public warn(...msgs: unknown[]): void {
+    this._log?.warn(...msgs)
   }
 
-  public error(message: string, data?: object | undefined): void {
-    this._log?.error({ message, data })
+  public error(...msgs: unknown[]): void {
+    const stack = new Error().stack ?? ''
+    this._log?.error(...msgs, stack)
   }
 
-  public fatal(message: string, data?: object | undefined): void {
-    this._log?.fatal({ message, data })
+  public fatal(...msgs: unknown[]): void {
+    const stack = new Error().stack ?? ''
+    this._log?.fatal(...msgs, stack)
   }
 
   public report(bifoldError: BifoldError): void {
