@@ -52,25 +52,18 @@ Key points to note:
 - Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
 - Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
 
-## Setup for Windows & Linux
+## Setup
 
 The setup for Bifold is similar to other React Native projects. The following sections will walk you through the process of setting up your development environment, installing dependencies, and running the app in an emulator.
 
 ### Prerequisites
 
-This is a [yarn](https://yarnpkg.com) based project, not [npm](https://www.npmjs.com/). You will need to install yarn if you don't already have it installed. Also, you will need a version of node that is compatible with the version of yarn specified in the `engines` field of [./package.json](./package.json). If you don't have a compatible version of node installed, you can use [nvm](https://github.com/nvm-sh/nvm) to install a compatible version of node.
-
-```sh
-npm install -g yarn
-nvm install 20.19.2
-```
-
-This project will need to run on an iOS device or Android device or emulator. While it is recommended to test your software on both, especially if you're contributing back to the project, for demonstration purposes you can choose one or the other.
-
 [Android Studio](https://developer.android.com/studio)
 [Apple Xcode](https://developer.apple.com/xcode/)
 
-## Suggested Setup for Mac OS ARM64 architecture
+Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited 
+
+## Suggested Setup
 
 1.  Install [Homebrew](https://brew.sh/)
 
@@ -134,19 +127,19 @@ This project will need to run on an iOS device or Android device or emulator. Wh
             export PATH=$PATH:$ANDROID_HOME/platform-tools
             ```
             IMPORTANT: close and start a new terminal session
-        1. Install additional build tools
+        2. Install additional build tools
             ```sh
             sdkmanager --install "emulator" "build-tools;31.0.0" "cmake;3.22.1" "platforms;android-31" "ndk;25.1.8937393" "system-images;android-31;google_apis;arm64-v8a"
             ```
-        1. Setup Build Tools
+        3. Setup Build Tools
             ```sh
             export PATH=$PATH:$ANDROID_HOME/cmake/3.22.1/bin
             ```
-        1. Create Android Virtual Device (AVD)
+        4. Create Android Virtual Device (AVD)
             ```sh
             avdmanager --verbose create avd --force --name Pixel_6_API_31 --device "pixel_6" --package "system-images;android-31;google_apis;arm64-v8a" --tag "google_apis" --abi "arm64-v8a"
             ```
-        1. Start Emulator (AVD)
+        5. Start Emulator (AVD)
             ```sh
             emulator -avd Pixel_6_API_31 -netdelay none -netspeed full
             ```
@@ -163,6 +156,14 @@ This project will need to run on an iOS device or Android device or emulator. Wh
        java17 # optional if you want to have Java 17 always enabled by default
        ```
        IMPORTANT: close and start a new terminal session
+
+**ProTip 🤓**
+
+You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run 
+
+```sh
+mise install
+```
 
 ### Configuration for All Platforms
 
@@ -302,17 +303,9 @@ Use `-partition-size 1024` to increase the size of the emulator's data partition
 
 This will launch Bifold on your selected Android emulator for development and testing.
 
-### For MacOS
-
-TBD - Help Wanted
-
-### For Windows
-
-TBD - Help Wanted
-
 ## Running Bifold on an iOS Device
 
-Please note, you can't run the iOS version of Bifold on an iOS simulator – it must be run on an actual iOS device. To develop for iOS, you'll need a Mac with Xcode installed and potentially a developer team membership to execute Bifold on your device.
+To develop for iOS, you'll need a Mac with Xcode installed and potentially a developer team membership to execute Bifold on your device.
 
 The easiest way to run Bifold on an iOS device is through Xcode, as outlined below:
 
