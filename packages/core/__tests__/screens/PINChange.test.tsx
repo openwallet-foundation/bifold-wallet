@@ -1,5 +1,5 @@
-import { render, fireEvent } from '@testing-library/react-native'
-import React, { act } from 'react'
+import { render, fireEvent, act } from '@testing-library/react-native'
+import React from 'react'
 
 import { StoreProvider, defaultState } from '../../src/contexts/store'
 import PINChange from '../../src/screens/PINChange'

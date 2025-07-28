@@ -1,5 +1,16 @@
 # @bifold/core
 
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
+### Patch Changes
+
+- 84e7336: Updated revoked credential styling
+- 85f21e2: react native gifted chat no longer uses redundant keyboard avoiding view padding on ios
+
 ## 2.2.1
 
 ### Patch Changes
