@@ -150,13 +150,11 @@ export class RemoteLogger extends BifoldLogger {
   }
 
   public error(...msgs: unknown[]): void {
-    const stack = new Error().stack ?? ''
-    this._log?.error(...msgs, stack)
+    this._log?.error(...msgs)
   }
 
   public fatal(...msgs: unknown[]): void {
-    const stack = new Error().stack ?? ''
-    this._log?.fatal(...msgs, stack)
+    this._log?.fatal(...msgs)
   }
 
   public report(bifoldError: BifoldError): void {
