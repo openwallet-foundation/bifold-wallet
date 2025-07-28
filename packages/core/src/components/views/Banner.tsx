@@ -77,7 +77,7 @@ export const Banner: React.FC = () => {
         bannerMessages.map((message) => (
           <React.Fragment key={message.id}>
             {/* Render a divider between the banners when multiple banners exist */}
-            <View style={{ height: 2, backgroundColor: ColorPallet.grayscale.white }} />
+            <View style={{ height: 2, backgroundColor: ColorPallet.brand.primaryBackground }} />
             <BannerSection
               id={message.id}
               key={message.id}
