@@ -13,7 +13,7 @@ interface Props extends React.PropsWithChildren {
   onPress?: () => void
 }
 
-function createStyles({ ColorPallet }: ITheme) {
+function createStyles({ ColorPalette }: ITheme) {
   return StyleSheet.create({
     container: {
       width: 24,
@@ -21,7 +21,7 @@ function createStyles({ ColorPallet }: ITheme) {
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: ColorPallet.grayscale.white,
+      borderColor: ColorPalette.grayscale.white,
       borderRadius: 24,
       marginBottom: 50,
     },
@@ -41,7 +41,7 @@ const TorchButton: React.FC<Props> = ({ active, onPress, children }) => {
       accessibilityLabel={active ? t('Scan.TorchOn') : t('Scan.TorchOff')}
       accessibilityRole={'button'}
       testID={testIdWithKey('ScanTorch')}
-      style={[styles.container, { backgroundColor: active ? theme.ColorPallet.grayscale.white : undefined }]}
+      style={[styles.container, { backgroundColor: active ? theme.ColorPalette.grayscale.white : undefined }]}
       onPress={onPress}
       hitSlop={hitSlop}
     >
@@ -56,7 +56,7 @@ const TorchIcon: React.FC<Props> = ({ active }) => {
   return (
     <Icon
       name={active ? 'flash-on' : 'flash-off'}
-      color={active ? theme.ColorPallet.grayscale.black : theme.ColorPallet.grayscale.white}
+      color={active ? theme.ColorPalette.grayscale.black : theme.ColorPalette.grayscale.white}
       size={24}
       style={styles.icon}
     />

@@ -73,18 +73,18 @@ export function TourBox(props: TourBoxProps): ReactElement {
     stepOn,
     stepsOutOf,
   } = props
-  const { TextTheme, ColorPallet, OnboardingTheme } = useTheme()
+  const { TextTheme, ColorPalette, OnboardingTheme } = useTheme()
   const iconSize = 30
   const dismissIconName = 'clear'
-  const iconColor = ColorPallet.notification.infoIcon
+  const iconColor = ColorPalette.notification.infoIcon
   const [paginationDots, setPaginationDots] = useState<PaginationDotTypes[]>([])
   const [xPos, setXPos] = useState(0)
   const swipeThreshold = 75
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.notification.info,
-      borderColor: ColorPallet.notification.infoBorder,
+      backgroundColor: ColorPalette.notification.info,
+      borderColor: ColorPalette.notification.infoBorder,
       borderRadius: 5,
       borderWidth: 1,
       padding: 20,
@@ -101,7 +101,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
     headerText: {
       ...TextTheme.headingThree,
       alignSelf: 'flex-start',
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     dismissIcon: {
       alignSelf: 'flex-end',
@@ -116,7 +116,7 @@ export function TourBox(props: TourBoxProps): ReactElement {
     },
     navText: {
       ...TextTheme.bold,
-      color: ColorPallet.brand.primary,
+      color: ColorPalette.brand.primary,
     },
     pagerContainer: {
       flexDirection: 'row',

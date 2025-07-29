@@ -24,7 +24,7 @@ export interface BannerSectionProps extends BannerMessage {
 
 export const Banner: React.FC = () => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [store, dispatch] = useStore()
   const [expanded, setExpanded] = useState(false)
 
@@ -77,7 +77,7 @@ export const Banner: React.FC = () => {
         bannerMessages.map((message) => (
           <React.Fragment key={message.id}>
             {/* Render a divider between the banners when multiple banners exist */}
-            <View style={{ height: 2, backgroundColor: ColorPallet.brand.primaryBackground }} />
+            <View style={{ height: 2, backgroundColor: ColorPalette.brand.primaryBackground }} />
             <BannerSection
               id={message.id}
               key={message.id}
@@ -102,10 +102,10 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
   expanded,
   onToggle,
 }) => {
-  const { Spacing, ColorPallet } = useTheme()
+  const { Spacing, ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primary,
+      backgroundColor: ColorPalette.brand.primary,
       flexDirection: 'row',
       alignItems: 'center',
       padding: Spacing.md,
@@ -161,14 +161,14 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
       <Icon
         name={iconName(type)}
         size={24}
-        color={type === 'warning' ? ColorPallet.brand.secondaryBackground : ColorPallet.grayscale.white}
+        color={type === 'warning' ? ColorPalette.brand.secondaryBackground : ColorPalette.grayscale.white}
         style={styles.icon}
         testID={testIdWithKey(`icon-${type}`)}
       />
       <ThemedText
         variant={'bold'}
         style={{
-          color: type === 'warning' ? ColorPallet.brand.secondaryBackground : ColorPallet.grayscale.white,
+          color: type === 'warning' ? ColorPalette.brand.secondaryBackground : ColorPalette.grayscale.white,
           flex: 1,
         }}
         testID={testIdWithKey(`text-${type}`)}

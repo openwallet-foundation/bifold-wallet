@@ -17,11 +17,11 @@ interface ProofCancelModalProps {
 
 const ProofCancelModal: React.FC<ProofCancelModalProps> = ({ visible, onDone }) => {
   const { t } = useTranslation()
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
 
   const styles = StyleSheet.create({
     safeAreaView: {
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       flex: 1,
     },
     container: {

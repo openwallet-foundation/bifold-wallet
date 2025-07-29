@@ -40,7 +40,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     navigation.navigate(Screens.Developer)
   }
   const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
-  const { SettingsTheme, TextTheme, ColorPallet, Assets, maxFontSizeMultiplier } = useTheme()
+  const { SettingsTheme, TextTheme, ColorPalette, Assets, maxFontSizeMultiplier } = useTheme()
   const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
     TOKENS.CONFIG,
     TOKENS.HISTORY_ENABLED,
@@ -50,7 +50,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   const defaultIconSize = 24
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       width: '100%',
     },
     section: {
@@ -77,7 +77,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
     },
     itemSeparator: {
       borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomColor: ColorPalette.brand.primaryBackground,
       marginHorizontal: 25,
     },
     footer: {
@@ -100,7 +100,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           },
           accessibilityLabel: t('NameWallet.EditWalletName'),
           testID: testIdWithKey('EditWalletName'),
-          style: { color: ColorPallet.brand.primary },
+          style: { color: ColorPalette.brand.primary },
         },
         titleTestID: store.preferences.useConnectionInviterCapability ? testIdWithKey('WalletName') : undefined,
       },
@@ -362,7 +362,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         >
           {title}
         </ThemedText>
-        <ThemedText style={[TextTheme.settingsText, { color: ColorPallet.brand.link }]}>{value}</ThemedText>
+        <ThemedText style={[TextTheme.settingsText, { color: ColorPalette.brand.link }]}>{value}</ThemedText>
       </TouchableOpacity>
     </ScrollView>
   )
