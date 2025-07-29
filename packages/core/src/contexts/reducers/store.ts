@@ -565,10 +565,13 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     case PreferencesDispatchAction.BANNER_MESSAGES: {
       const bannerMessageToAdd = action?.payload ?? []
       const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
+      const uniqueBannerMessages = Array.from(new Set(newBannerMessages))
+
       const preferences: Preferences = {
         ...state.preferences,
-        bannerMessages: newBannerMessages,
+        bannerMessages: uniqueBannerMessages,
       }
+
       PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
       return {
         ...state,
