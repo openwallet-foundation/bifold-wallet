@@ -201,7 +201,7 @@ export interface IErrorColors {
   warning: string
 }
 
-export interface IColorPallet {
+export interface IColorPalette {
   brand: IBrandColors
   semantic: ISemanticColors
   notification: INotificationColors
@@ -306,7 +306,7 @@ const NotificationColors: INotificationColors = {
   popupOverlay: `rgba(0, 0, 0, ${mediumOpacity})`,
 }
 
-export const ColorPallet: IColorPallet = {
+export const ColorPalette: IColorPalette = {
   brand: BrandColors,
   semantic: SemanticColors,
   notification: NotificationColors,
@@ -316,129 +316,129 @@ export const ColorPallet: IColorPallet = {
 /**
  * Creates a text theme based on the provided color pallet.
  *
- * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @param {{ ColorPalette: IColorPalette }} theme - The theme object containing the color pallet
  * @returns {*} {ITextTheme} - The created text theme
  */
-export function createTextTheme(theme: { ColorPallet: IColorPallet }): ITextTheme {
+export function createTextTheme(theme: { ColorPalette: IColorPalette }): ITextTheme {
   return StyleSheet.create({
     headingOne: {
       fontSize: 38,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     headingTwo: {
       fontSize: 32,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     headingThree: {
       fontSize: 26,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     headingFour: {
       fontSize: 21,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     normal: {
       fontSize: 18,
       fontWeight: 'normal',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     bold: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     label: {
       fontSize: 14,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     labelTitle: {
       fontSize: 16,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     labelSubtitle: {
       fontSize: 14,
       fontWeight: 'normal',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     labelText: {
       fontSize: 10,
       fontWeight: 'normal',
       fontStyle: 'italic',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     caption: {
       fontSize: 14,
       fontWeight: 'normal',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     title: {
       fontSize: 20,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     headerTitle: {
       fontSize: 28,
       fontWeight: 'bold',
-      color: theme.ColorPallet.brand.headerText,
+      color: theme.ColorPalette.brand.headerText,
     },
     modalNormal: {
       fontSize: 18,
       fontWeight: 'normal',
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     modalTitle: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     modalHeadingOne: {
       fontSize: 38,
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
       fontWeight: 'bold',
     },
     modalHeadingThree: {
       fontSize: 26,
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
       fontWeight: 'bold',
     },
     popupModalText: {
       fontSize: 18,
       fontWeight: 'normal',
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     settingsText: {
       fontSize: 21,
       fontWeight: 'normal',
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     inlineErrorText: {
       fontSize: 16,
       fontWeight: 'normal',
-      color: theme.ColorPallet.brand.inlineError,
+      color: theme.ColorPalette.brand.inlineError,
     },
     inlineWarningText: {
       fontSize: 16,
       fontWeight: 'normal',
-      color: theme.ColorPallet.brand.inlineWarning,
+      color: theme.ColorPalette.brand.inlineWarning,
     },
   })
 }
-export const TextTheme = createTextTheme({ ColorPallet })
+export const TextTheme = createTextTheme({ ColorPalette })
 
 /**
  * Creates a theme for inputs based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme; borderRadius: number }} theme - The theme object containing the color pallet, text theme, and border radius
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme; borderRadius: number }} theme - The theme object containing the color pallet, text theme, and border radius
  * @returns {*} {IInputs} - The created inputs theme
  */
 export function createInputsTheme(theme: {
-  ColorPallet: IColorPallet
+  ColorPalette: IColorPalette
   TextTheme: ITextTheme
   borderRadius: number
 }): IInputs {
@@ -450,56 +450,56 @@ export function createInputsTheme(theme: {
       padding: 10,
       borderRadius,
       fontSize: 16,
-      backgroundColor: theme.ColorPallet.brand.primaryBackground,
-      color: theme.ColorPallet.notification.infoText,
+      backgroundColor: theme.ColorPalette.brand.primaryBackground,
+      color: theme.ColorPalette.notification.infoText,
       borderWidth: 2,
-      borderColor: theme.ColorPallet.brand.secondary,
+      borderColor: theme.ColorPalette.brand.secondary,
     },
     singleSelectText: {
       ...theme.TextTheme.normal,
     },
     singleSelectIcon: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     checkBoxColor: {
-      color: theme.ColorPallet.brand.primary,
+      color: theme.ColorPalette.brand.primary,
     },
     checkBoxText: {
       ...theme.TextTheme.normal,
     },
     inputSelected: {
-      borderColor: theme.ColorPallet.brand.primary,
+      borderColor: theme.ColorPalette.brand.primary,
     },
     singleSelect: {
       padding: 12,
       borderRadius: theme.borderRadius * 2,
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
     },
   })
 }
-export const Inputs = createInputsTheme({ ColorPallet, TextTheme, borderRadius })
+export const Inputs = createInputsTheme({ ColorPalette, TextTheme, borderRadius })
 
 /**
  * Creates a theme for buttons based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {IButtons} - The created buttons theme
  */
-export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IButtons {
+export function createButtonsTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): IButtons {
   const textStyles = StyleSheet.create({
     criticalText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     criticalTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     primaryText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     primaryTextDisabled: {
@@ -508,62 +508,62 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
     },
     secondaryText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.primary,
+      color: theme.ColorPalette.brand.primary,
       textAlign: 'center',
     },
     secondaryTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.secondaryDisabled,
+      color: theme.ColorPalette.brand.secondaryDisabled,
       textAlign: 'center',
     },
     tertiaryText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.primary,
+      color: theme.ColorPalette.brand.primary,
       textAlign: 'center',
     },
     tertiaryTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.tertiaryDisabled,
+      color: theme.ColorPalette.brand.tertiaryDisabled,
       textAlign: 'center',
     },
     modalCriticalText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     modalCriticalTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     modalPrimaryText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     modalPrimaryTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.buttonText,
+      color: theme.ColorPalette.brand.buttonText,
       textAlign: 'center',
     },
     modalSecondaryText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.modalPrimary,
+      color: theme.ColorPalette.brand.modalPrimary,
       textAlign: 'center',
     },
     modalSecondaryTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.secondaryDisabled,
+      color: theme.ColorPalette.brand.secondaryDisabled,
       textAlign: 'center',
     },
     modalTertiaryText: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.modalPrimary,
+      color: theme.ColorPalette.brand.modalPrimary,
       textAlign: 'center',
     },
     modalTertiaryTextDisabled: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.tertiaryDisabled,
+      color: theme.ColorPalette.brand.tertiaryDisabled,
       textAlign: 'center',
     },
   })
@@ -572,34 +572,34 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
     critical: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
     },
     criticalDisabled: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+      backgroundColor: theme.ColorPalette.brand.primaryDisabled,
     },
     primary: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
     },
     primaryDisabled: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+      backgroundColor: theme.ColorPalette.brand.primaryDisabled,
     },
     secondary: {
       padding: 16,
       borderRadius: 4,
       borderWidth: 2,
-      borderColor: theme.ColorPallet.brand.primary,
+      borderColor: theme.ColorPalette.brand.primary,
     },
     secondaryDisabled: {
       padding: 16,
       borderRadius: 4,
       borderWidth: 2,
-      borderColor: theme.ColorPallet.brand.secondaryDisabled,
+      borderColor: theme.ColorPalette.brand.secondaryDisabled,
     },
     tertiary: {
       padding: 16,
@@ -610,34 +610,34 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
     modalCritical: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
     },
     modalCriticalDisabled: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+      backgroundColor: theme.ColorPalette.brand.primaryDisabled,
     },
     modalPrimary: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.modalPrimary,
+      backgroundColor: theme.ColorPalette.brand.modalPrimary,
     },
     modalPrimaryDisabled: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPallet.brand.primaryDisabled,
+      backgroundColor: theme.ColorPalette.brand.primaryDisabled,
     },
     modalSecondary: {
       padding: 16,
       borderRadius: 4,
       borderWidth: 2,
-      borderColor: theme.ColorPallet.brand.modalPrimary,
+      borderColor: theme.ColorPalette.brand.modalPrimary,
     },
     modalSecondaryDisabled: {
       padding: 16,
       borderRadius: 4,
       borderWidth: 2,
-      borderColor: theme.ColorPallet.brand.secondaryDisabled,
+      borderColor: theme.ColorPalette.brand.secondaryDisabled,
     },
     modalTertiary: {
       padding: 16,
@@ -649,15 +649,15 @@ export function createButtonsTheme(theme: { ColorPallet: IColorPallet; TextTheme
 
   return { ...textStyles, ...viewStyles }
 }
-export const Buttons = createButtonsTheme({ ColorPallet, TextTheme })
+export const Buttons = createButtonsTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates a theme for list items based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {IListItems} - The created list items theme
  */
-export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IListItems {
+export function createListItemsTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): IListItems {
   const testStyles = StyleSheet.create({
     credentialTitle: {
       ...theme.TextTheme.headingFour,
@@ -673,23 +673,23 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
       ...theme.TextTheme.normal,
     },
     credentialIconColor: {
-      color: theme.ColorPallet.notification.infoText,
+      color: theme.ColorPalette.notification.infoText,
     },
     contactTitle: {
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     contactDate: {
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
       marginTop: 10,
     },
     contactIcon: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     recordAttributeLabel: {
       ...theme.TextTheme.bold,
     },
     recordLink: {
-      color: theme.ColorPallet.brand.link,
+      color: theme.ColorPalette.brand.link,
     },
     recordAttributeText: {
       ...theme.TextTheme.normal,
@@ -698,7 +698,7 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
       ...theme.TextTheme.headingOne,
     },
     proofError: {
-      color: theme.ColorPallet.semantic.error,
+      color: theme.ColorPalette.semantic.error,
     },
     avatarText: {
       ...theme.TextTheme.headingTwo,
@@ -711,91 +711,91 @@ export function createListItemsTheme(theme: { ColorPallet: IColorPallet; TextThe
       height: (theme.TextTheme.headingTwo.fontSize ?? 32) * 2,
     },
     requestTemplateIconColor: {
-      color: theme.ColorPallet.notification.infoText,
+      color: theme.ColorPalette.notification.infoText,
     },
     requestTemplateTitle: {
-      color: theme.ColorPallet.grayscale.black,
+      color: theme.ColorPalette.grayscale.black,
       fontWeight: 'bold',
       fontSize: 16,
     },
     requestTemplateDetails: {
-      color: theme.ColorPallet.grayscale.black,
+      color: theme.ColorPalette.grayscale.black,
       fontWeight: 'normal',
       fontSize: 16,
     },
     requestTemplateZkpLabel: {
-      color: theme.ColorPallet.grayscale.mediumGrey,
+      color: theme.ColorPalette.grayscale.mediumGrey,
       fontSize: 12,
     },
     requestTemplateIcon: {
-      color: theme.ColorPallet.grayscale.black,
+      color: theme.ColorPalette.grayscale.black,
       fontSize: 36,
     },
     requestTemplateDate: {
-      color: theme.ColorPallet.grayscale.mediumGrey,
+      color: theme.ColorPalette.grayscale.mediumGrey,
       fontSize: 10,
     },
   })
 
   const viewStyles = StyleSheet.create({
     credentialBackground: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
     },
     credentialOfferBackground: {
-      backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: theme.ColorPalette.brand.modalPrimaryBackground,
     },
     revoked: {
-      backgroundColor: theme.ColorPallet.notification.error,
-      borderColor: theme.ColorPallet.notification.errorBorder,
+      backgroundColor: theme.ColorPalette.notification.error,
+      borderColor: theme.ColorPalette.notification.errorBorder,
     },
     contactBackground: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
     },
     contactIconBackground: {
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
     },
     recordContainer: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
     },
     recordBorder: {
-      borderBottomColor: theme.ColorPallet.brand.primaryBackground,
+      borderBottomColor: theme.ColorPalette.brand.primaryBackground,
     },
     emptyList: {
       ...theme.TextTheme.normal,
     },
     requestTemplateBackground: {
-      backgroundColor: theme.ColorPallet.grayscale.white,
+      backgroundColor: theme.ColorPalette.grayscale.white,
     },
   })
 
   return { ...testStyles, ...viewStyles }
 }
-export const ListItems = createListItemsTheme({ ColorPallet, TextTheme })
+export const ListItems = createListItemsTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates a theme for tabs based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {ITabTheme} - The created tab theme
  */
-export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): ITabTheme {
+export function createTabTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): ITabTheme {
   const textStyles = StyleSheet.create({
     tabBarTextStyle: {
       ...theme.TextTheme.labelSubtitle,
       paddingBottom: 5,
     },
     tabBarButtonIconStyle: {
-      color: theme.ColorPallet.brand.headerIcon,
+      color: theme.ColorPalette.brand.headerIcon,
     },
   })
 
   const viewStyles = StyleSheet.create({
     tabBarStyle: {
       height: 60,
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
       shadowOffset: { width: 0, height: -3 },
       shadowRadius: 6,
-      shadowColor: theme.ColorPallet.grayscale.black,
+      shadowColor: theme.ColorPalette.grayscale.black,
       shadowOpacity: 0.1,
       borderTopWidth: 0,
       paddingBottom: 0,
@@ -808,55 +808,55 @@ export function createTabTheme(theme: { ColorPallet: IColorPallet; TextTheme: IT
     focusTabIconStyle: {
       height: 60,
       width: 60,
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
       borderRadius: 60,
       justifyContent: 'center',
       alignItems: 'center',
     },
     focusTabActiveTintColor: {
-      backgroundColor: theme.ColorPallet.brand.secondary,
+      backgroundColor: theme.ColorPalette.brand.secondary,
     },
   })
 
   return {
     ...textStyles,
     ...viewStyles,
-    tabBarActiveTintColor: theme.ColorPallet.brand.primary,
-    tabBarInactiveTintColor: theme.ColorPallet.brand.tabBarInactive,
-    tabBarSecondaryBackgroundColor: theme.ColorPallet.brand.secondaryBackground,
+    tabBarActiveTintColor: theme.ColorPalette.brand.primary,
+    tabBarInactiveTintColor: theme.ColorPalette.brand.tabBarInactive,
+    tabBarSecondaryBackgroundColor: theme.ColorPalette.brand.secondaryBackground,
   }
 }
-export const TabTheme = createTabTheme({ ColorPallet, TextTheme })
+export const TabTheme = createTabTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates a navigation theme based on the provided color pallet.
  *
- * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @param {{ ColorPalette: IColorPalette }} theme - The theme object containing the color pallet
  * @returns {*} {INavigationTheme} - The created navigation theme
  */
-export function createNavigationTheme(theme: { ColorPallet: IColorPallet }) {
+export function createNavigationTheme(theme: { ColorPalette: IColorPalette }) {
   return {
     dark: true,
     colors: {
-      primary: theme.ColorPallet.brand.primary,
-      background: theme.ColorPallet.brand.primaryBackground,
-      card: theme.ColorPallet.brand.primary,
-      text: theme.ColorPallet.grayscale.white,
-      border: theme.ColorPallet.grayscale.white,
-      notification: theme.ColorPallet.grayscale.white,
+      primary: theme.ColorPalette.brand.primary,
+      background: theme.ColorPalette.brand.primaryBackground,
+      card: theme.ColorPalette.brand.primary,
+      text: theme.ColorPalette.grayscale.white,
+      border: theme.ColorPalette.grayscale.white,
+      notification: theme.ColorPalette.grayscale.white,
     },
   }
 }
 export type INavigationTheme = ReturnType<typeof createNavigationTheme>
-export const NavigationTheme = createNavigationTheme({ ColorPallet })
+export const NavigationTheme = createNavigationTheme({ ColorPalette })
 
 /**
  * Creates a home theme based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {IHomeTheme} - The created home theme
  */
-export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IHomeTheme {
+export function createHomeTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): IHomeTheme {
   return StyleSheet.create({
     welcomeHeader: {
       ...theme.TextTheme.headingOne,
@@ -869,23 +869,23 @@ export function createHomeTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
     },
     noNewUpdatesText: {
       ...theme.TextTheme.normal,
-      color: theme.ColorPallet.notification.infoText,
+      color: theme.ColorPalette.notification.infoText,
     },
     link: {
       ...theme.TextTheme.normal,
-      color: theme.ColorPallet.brand.link,
+      color: theme.ColorPalette.brand.link,
     },
   })
 }
-export const HomeTheme = createHomeTheme({ ColorPallet, TextTheme })
+export const HomeTheme = createHomeTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates a settings theme based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {ISettingsTheme} - The created settings theme
  */
-export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): ISettingsTheme {
+export function createSettingsTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): ISettingsTheme {
   const settingsTheme = StyleSheet.create({
     groupHeader: {
       ...theme.TextTheme.normal,
@@ -893,51 +893,51 @@ export function createSettingsTheme(theme: { ColorPallet: IColorPallet; TextThem
     },
     text: {
       ...theme.TextTheme.caption,
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
   })
 
   return {
     ...settingsTheme,
-    groupBackground: theme.ColorPallet.brand.secondaryBackground,
-    iconColor: theme.ColorPallet.brand.text,
+    groupBackground: theme.ColorPalette.brand.secondaryBackground,
+    iconColor: theme.ColorPalette.brand.text,
   }
 }
-export const SettingsTheme = createSettingsTheme({ ColorPallet, TextTheme })
+export const SettingsTheme = createSettingsTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates a chat theme based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {IChatTheme} - The created chat theme
  */
-export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IChatTheme {
+export function createChatTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): IChatTheme {
   const textStyles = StyleSheet.create({
     timeStyleLeft: {
-      color: theme.ColorPallet.grayscale.lightGrey,
+      color: theme.ColorPalette.grayscale.lightGrey,
       fontSize: 12,
       marginTop: 8,
     },
     timeStyleRight: {
-      color: theme.ColorPallet.grayscale.lightGrey,
+      color: theme.ColorPalette.grayscale.lightGrey,
       fontSize: 12,
       marginTop: 8,
     },
     leftText: {
-      color: theme.ColorPallet.brand.secondary,
+      color: theme.ColorPalette.brand.secondary,
       fontSize: theme.TextTheme.normal.fontSize,
     },
     leftTextHighlighted: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.secondary,
+      color: theme.ColorPalette.brand.secondary,
     },
     rightText: {
-      color: theme.ColorPallet.brand.secondary,
+      color: theme.ColorPalette.brand.secondary,
       fontSize: theme.TextTheme.normal.fontSize,
     },
     rightTextHighlighted: {
       ...theme.TextTheme.bold,
-      color: theme.ColorPallet.brand.secondary,
+      color: theme.ColorPalette.brand.secondary,
     },
     inputText: {
       lineHeight: undefined,
@@ -950,7 +950,7 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       textAlign: 'center',
     },
     documentIcon: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
   })
 
@@ -964,13 +964,13 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       alignSelf: 'flex-end',
     },
     leftBubble: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
       borderRadius: 4,
       padding: 16,
       marginLeft: 16,
     },
     rightBubble: {
-      backgroundColor: theme.ColorPallet.brand.primaryLight,
+      backgroundColor: theme.ColorPalette.brand.primaryLight,
       borderRadius: 4,
       padding: 16,
       marginRight: 16,
@@ -982,7 +982,7 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
     },
     openButtonStyle: {
       borderRadius: 32,
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
       paddingTop: 8,
       paddingBottom: 8,
       paddingLeft: 16,
@@ -990,7 +990,7 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       marginTop: 16,
     },
     documentIconContainer: {
-      backgroundColor: theme.ColorPallet.brand.primary,
+      backgroundColor: theme.ColorPalette.brand.primary,
       alignSelf: 'flex-start',
       borderRadius: 4,
       marginBottom: 16,
@@ -1000,8 +1000,8 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
       height: 50,
     },
     inputToolbar: {
-      backgroundColor: theme.ColorPallet.brand.secondary,
-      shadowColor: theme.ColorPallet.brand.primaryDisabled,
+      backgroundColor: theme.ColorPalette.brand.secondary,
+      shadowColor: theme.ColorPalette.brand.primaryDisabled,
       borderRadius: 10,
     },
   })
@@ -1009,34 +1009,34 @@ export function createChatTheme(theme: { ColorPallet: IColorPallet; TextTheme: I
   return {
     ...textStyles,
     ...viewStyles,
-    placeholderText: theme.ColorPallet.grayscale.lightGrey,
-    sendEnabled: theme.ColorPallet.brand.primary,
-    sendDisabled: theme.ColorPallet.brand.primaryDisabled,
-    options: theme.ColorPallet.brand.primary,
-    optionsText: theme.ColorPallet.grayscale.black,
+    placeholderText: theme.ColorPalette.grayscale.lightGrey,
+    sendEnabled: theme.ColorPalette.brand.primary,
+    sendDisabled: theme.ColorPalette.brand.primaryDisabled,
+    options: theme.ColorPalette.brand.primary,
+    optionsText: theme.ColorPalette.grayscale.black,
   }
 }
-export const ChatTheme = createChatTheme({ ColorPallet, TextTheme })
+export const ChatTheme = createChatTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates an onboarding theme based on the provided color pallet and text theme.
  *
- * @param {{ ColorPallet: IColorPallet; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
+ * @param {{ ColorPalette: IColorPalette; TextTheme: ITextTheme }} theme - The theme object containing the color pallet and text theme
  * @returns {*} {IOnboardingTheme} - The created onboarding theme
  */
-export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTheme: ITextTheme }): IOnboardingTheme {
+export function createOnboardingTheme(theme: { ColorPalette: IColorPalette; TextTheme: ITextTheme }): IOnboardingTheme {
   const textStyles = StyleSheet.create({
     pagerDot: {
-      borderColor: theme.ColorPallet.brand.primary,
+      borderColor: theme.ColorPalette.brand.primary,
     },
     pagerDotActive: {
-      color: theme.ColorPallet.brand.primary,
+      color: theme.ColorPalette.brand.primary,
     },
     pagerDotInactive: {
-      color: theme.ColorPallet.brand.secondary,
+      color: theme.ColorPalette.brand.secondary,
     },
     pagerNavigationButton: {
-      color: theme.ColorPallet.brand.primary,
+      color: theme.ColorPalette.brand.primary,
       fontWeight: 'bold',
       fontSize: 18,
     },
@@ -1050,59 +1050,59 @@ export function createOnboardingTheme(theme: { ColorPallet: IColorPallet; TextTh
 
   const viewStyles = StyleSheet.create({
     container: {
-      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+      backgroundColor: theme.ColorPalette.brand.primaryBackground,
     },
     carouselContainer: {
-      backgroundColor: theme.ColorPallet.brand.primaryBackground,
+      backgroundColor: theme.ColorPalette.brand.primaryBackground,
     },
   })
 
   return {
     ...textStyles,
     ...viewStyles,
-    headerTintColor: ColorPallet.grayscale.white,
+    headerTintColor: ColorPalette.grayscale.white,
     imageDisplayOptions: {
-      fill: ColorPallet.notification.infoText,
+      fill: ColorPalette.notification.infoText,
     },
   }
 }
-export const OnboardingTheme = createOnboardingTheme({ ColorPallet, TextTheme })
+export const OnboardingTheme = createOnboardingTheme({ ColorPalette, TextTheme })
 
 /**
  * Creates a dialog theme based on the provided color pallet.
  *
- * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @param {{ ColorPalette: IColorPalette }} theme - The theme object containing the color pallet
  * @returns {*} {IDialogTheme} - The created dialog theme
  */
-export function createDialogTheme(theme: { ColorPallet: IColorPallet }): IDialogTheme {
+export function createDialogTheme(theme: { ColorPalette: IColorPalette }): IDialogTheme {
   return StyleSheet.create({
     modalView: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
     },
     titleText: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     description: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     closeButtonIcon: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
     carouselButtonText: {
-      color: theme.ColorPallet.grayscale.white,
+      color: theme.ColorPalette.grayscale.white,
     },
   })
 }
-export const DialogTheme = createDialogTheme({ ColorPallet })
+export const DialogTheme = createDialogTheme({ ColorPalette })
 
-export function createLoadingTheme(theme: { ColorPallet: IColorPallet }): ILoadingTheme {
+export function createLoadingTheme(theme: { ColorPalette: IColorPalette }): ILoadingTheme {
   return {
-    backgroundColor: theme.ColorPallet.brand.modalPrimaryBackground,
+    backgroundColor: theme.ColorPalette.brand.modalPrimaryBackground,
   }
 }
-export const LoadingTheme = createLoadingTheme({ ColorPallet })
+export const LoadingTheme = createLoadingTheme({ ColorPalette })
 
-// NOTE: If ColorPallet or TextTheme is needed in this theme,
+// NOTE: If ColorPalette or TextTheme is needed in this theme,
 // we can convert this to a function like the others.
 const PINEnterTheme = {
   image: {
@@ -1115,27 +1115,27 @@ export type IPINEnterTheme = typeof PINEnterTheme
 /**
  * Creates a theme for PIN input based on the provided color pallet.
  *
- * @param {{ ColorPallet: IColorPallet }} theme - The theme object containing the color pallet
+ * @param {{ ColorPalette: IColorPalette }} theme - The theme object containing the color pallet
  * @returns {*} {IPINInputTheme} - The created PIN input theme
  */
-export function createPINInputTheme(theme: { ColorPallet: IColorPallet }): IPINInputTheme {
+export function createPINInputTheme(theme: { ColorPalette: IColorPalette }): IPINInputTheme {
   const textStyles = StyleSheet.create({
     cellText: {
-      color: theme.ColorPallet.brand.text,
+      color: theme.ColorPalette.brand.text,
     },
     icon: {
-      color: theme.ColorPallet.brand.headerIcon,
+      color: theme.ColorPalette.brand.headerIcon,
     },
   })
 
   const viewStyles = StyleSheet.create({
     cell: {
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
-      borderColor: theme.ColorPallet.brand.secondary,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
+      borderColor: theme.ColorPalette.brand.secondary,
       borderWidth: 1,
     },
     focussedCell: {
-      borderColor: theme.ColorPallet.brand.headerIcon,
+      borderColor: theme.ColorPalette.brand.headerIcon,
     },
     codeFieldRoot: {
       justifyContent: 'flex-start',
@@ -1147,15 +1147,15 @@ export function createPINInputTheme(theme: { ColorPallet: IColorPallet }): IPINI
       paddingHorizontal: 12,
       paddingVertical: 4,
       alignItems: 'center',
-      backgroundColor: theme.ColorPallet.brand.secondaryBackground,
-      borderColor: theme.ColorPallet.brand.secondary,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
+      borderColor: theme.ColorPalette.brand.secondary,
       borderWidth: 1,
     },
   })
 
   return { ...textStyles, ...viewStyles }
 }
-export const PINInputTheme = createPINInputTheme({ ColorPallet })
+export const PINInputTheme = createPINInputTheme({ ColorPalette })
 
 const CredentialCardShadowTheme = {
   shadowColor: '#000',
@@ -1169,7 +1169,7 @@ const CredentialCardShadowTheme = {
 const SelectedCredTheme = {
   borderWidth: 5,
   borderRadius: 15,
-  borderColor: ColorPallet.semantic.focus,
+  borderColor: ColorPalette.semantic.focus,
 } satisfies ViewStyle
 
 export const Assets = {
@@ -1272,7 +1272,7 @@ export const InputInlineMessage = createInputInlineMessageTheme({ TextTheme, Ass
 export interface ITheme {
   themeName: string
   Spacing: ISpacing
-  ColorPallet: IColorPallet
+  ColorPalette: IColorPalette
   TextTheme: ITextTheme
   InputInlineMessage: IInlineInputMessage
   Inputs: IInputs
@@ -1300,7 +1300,7 @@ export interface ITheme {
 export const bifoldTheme: ITheme = {
   themeName: 'bifold',
   Spacing,
-  ColorPallet,
+  ColorPalette,
   TextTheme,
   InputInlineMessage,
   Inputs,

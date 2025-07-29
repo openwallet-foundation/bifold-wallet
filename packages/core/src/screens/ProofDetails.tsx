@@ -47,21 +47,21 @@ const VerifiedProof: React.FC<VerifiedProofProps> = ({
   onGenerateNewPressed,
 }: VerifiedProofProps) => {
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, Assets } = useTheme()
+  const { ColorPalette, TextTheme, Assets } = useTheme()
   const [sharedProofDataItems, setSharedProofDataItems] = useState<GroupedSharedProofDataItem[]>([])
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
     },
     iconContainer: {
-      backgroundColor: ColorPallet.notification.info,
+      backgroundColor: ColorPalette.notification.info,
       width: 100,
       height: 100,
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 15,
       borderRadius: 50,
-      borderColor: ColorPallet.notification.infoBorder,
+      borderColor: ColorPalette.notification.infoBorder,
       borderWidth: 3,
       alignSelf: 'center',
       overflow: 'hidden',

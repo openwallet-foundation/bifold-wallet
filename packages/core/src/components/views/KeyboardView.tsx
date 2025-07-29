@@ -16,11 +16,11 @@ const KeyboardView: React.FC<{ children: React.ReactNode; keyboardAvoiding?: boo
   children,
   keyboardAvoiding = true,
 }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const headerHeight = useSafeHeaderHeight()
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: ColorPallet.brand.primaryBackground }}
+      style={{ flex: 1, backgroundColor: ColorPalette.brand.primaryBackground }}
       edges={['bottom', 'left', 'right']}
     >
       {keyboardAvoiding ? (

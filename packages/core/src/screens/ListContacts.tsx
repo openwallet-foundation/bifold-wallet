@@ -22,7 +22,7 @@ interface ListContactsProps {
 }
 
 const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { t } = useTranslation()
   const { agent } = useAgent()
   const [connections, setConnections] = useState<ConnectionRecord[]>([])
@@ -35,10 +35,10 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   ])
   const style = StyleSheet.create({
     list: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
     },
     itemSeparator: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       height: 1,
       marginHorizontal: 16,
     },

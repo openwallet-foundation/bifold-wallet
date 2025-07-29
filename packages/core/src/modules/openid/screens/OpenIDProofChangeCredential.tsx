@@ -27,7 +27,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
   const selectedCredentialID = route.params.selectedCredID
   const altCredentials = route.params.altCredIDs
   const onCredChange = route.params.onCredChange
-  const { ColorPallet, SelectedCredTheme } = useTheme()
+  const { ColorPalette, SelectedCredTheme } = useTheme()
   const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
   const { t } = useTranslation()
@@ -71,7 +71,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
       marginHorizontal: 20,
     },
     cardLoading: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       flex: 1,
       flexGrow: 1,
       marginVertical: 35,

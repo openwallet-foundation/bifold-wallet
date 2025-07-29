@@ -29,7 +29,7 @@ interface NameWalletProps {
 
 const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess, onCancel }) => {
   const { t } = useTranslation()
-  const { ColorPallet, Assets, Spacing } = useTheme()
+  const { ColorPalette, Assets, Spacing } = useTheme()
   const [store, dispatch] = useStore()
   const [loading, setLoading] = useState(false)
   const [walletName, setWalletName] = useState(store.preferences.walletName ?? generateRandomWalletName())
@@ -42,7 +42,7 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
   const styles = StyleSheet.create({
     screenContainer: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: Spacing.md,
       justifyContent: 'space-between',
     },

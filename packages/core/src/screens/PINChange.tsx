@@ -42,7 +42,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const [store] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
@@ -82,7 +82,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
       justifyContent: 'space-between',
     },
