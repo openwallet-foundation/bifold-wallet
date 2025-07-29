@@ -1,5 +1,19 @@
 # @bifold/core
 
+## 2.4.0
+
+### Minor Changes
+
+- 2ac4abc: Added types for all missing theme properties.
+  Removed redundant types from theme.
+  Created a ThemeBuilder class to override existing theme styles.
+  Patched a couple places which were using incorrect styles.
+- 28dbede: Swapped references to ColorPallet -> ColorPalette
+
+### Patch Changes
+
+- 0d86620: Adds divider between notification banners
+
 ## 2.3.0
 
 ### Minor Changes
