@@ -23,10 +23,12 @@ export interface BannerSectionProps extends BannerMessage {
 }
 
 export const Banner: React.FC = () => {
+  const { t } = useTranslation()
+  const { ColorPallet } = useTheme()
   const [store, dispatch] = useStore()
   const [expanded, setExpanded] = useState(false)
+
   const bannerMessages = store.preferences.bannerMessages
-  const { t } = useTranslation()
   const alertMessage: BannerMessage = {
     id: 'alertMessage',
     title: t('Banner.AlertsLength', { alerts: bannerMessages.length }),
@@ -40,6 +42,7 @@ export const Banner: React.FC = () => {
       payload: [key],
     })
   }
+
   if (!bannerMessages || bannerMessages.length == 0) {
     return null
   }
@@ -72,15 +75,19 @@ export const Banner: React.FC = () => {
       />
       {expanded &&
         bannerMessages.map((message) => (
-          <BannerSection
-            id={message.id}
-            key={message.id}
-            title={message.title}
-            type={message.type}
-            variant="detail"
-            onDismiss={() => dismissBanner(message.id)}
-            dismissible={message.dismissible}
-          />
+          <React.Fragment key={message.id}>
+            {/* Render a divider between the banners when multiple banners exist */}
+            <View style={{ height: 2, backgroundColor: ColorPallet.brand.primaryBackground }} />
+            <BannerSection
+              id={message.id}
+              key={message.id}
+              title={message.title}
+              type={message.type}
+              variant="detail"
+              onDismiss={() => dismissBanner(message.id)}
+              dismissible={message.dismissible}
+            />
+          </React.Fragment>
         ))}
     </View>
   )
