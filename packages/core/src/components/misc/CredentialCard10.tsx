@@ -79,7 +79,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const cardHeight = width / 2 // a card height is half of the screen width
   const cardHeaderHeight = cardHeight / 4 // a card has a total of 4 rows, and the header occupy 1 row
   const { t, i18n } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const [overlay, setOverlay] = useState<CredentialOverlay<LegacyBrandingOverlay>>({})
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -119,7 +119,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       borderBottomRightRadius: borderRadius,
     },
     revokedFooter: {
-      backgroundColor: ColorPallet.notification.error,
+      backgroundColor: ColorPalette.notification.error,
       flexGrow: 1,
       marginHorizontal: -1 * paddingHorizontal,
       marginVertical: -1 * paddingVertical,
@@ -189,7 +189,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
                   color:
                     overlay?.brandingOverlay?.header?.color ??
                     credentialTextColor(
-                      ColorPallet,
+                      ColorPalette,
                       overlay?.brandingOverlay?.header?.backgroundColor || overlay?.brandingOverlay?.backgroundColor
                     ),
                   paddingHorizontal: 0.5 * paddingHorizontal,
@@ -212,7 +212,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
                 color:
                   overlay?.brandingOverlay?.header?.color ??
                   credentialTextColor(
-                    ColorPallet,
+                    ColorPalette,
                     overlay?.brandingOverlay?.header?.backgroundColor || overlay?.brandingOverlay?.backgroundColor
                   ),
                 textAlign: 'right',
@@ -241,7 +241,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
         {revoked ? (
           <View style={styles.revokedFooter}>
             <Text
-              style={[TextTheme.label, { color: ColorPallet.semantic.error }]}
+              style={[TextTheme.label, { color: ColorPalette.semantic.error }]}
               testID={testIdWithKey('CredentialRevoked')}
             >
               {t('CredentialDetails.Revoked')}
@@ -255,7 +255,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
                 color:
                   overlay?.brandingOverlay?.footer?.color ??
                   credentialTextColor(
-                    ColorPallet,
+                    ColorPalette,
                     overlay?.brandingOverlay?.footer?.backgroundColor || overlay?.brandingOverlay?.backgroundColor
                   ),
               },

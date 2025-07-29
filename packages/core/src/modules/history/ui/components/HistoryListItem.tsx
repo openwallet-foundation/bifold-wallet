@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 const HistoryListItem: React.FC<Props> = ({ item }) => {
   const { t } = useTranslation()
-  const { Assets, ColorPallet } = useTheme()
+  const { Assets, ColorPalette } = useTheme()
   //TODO: navigate to history details
   //   const navigation = useNavigation<StackNavigationProp<RootStackParams, 'HistoryDetails'>>()
 
@@ -229,7 +229,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
             {renderCardDate(item.content.createdAt)}
           </View>
           <View style={styles.arrowContainer}>
-            <Assets.svg.iconChevronRight color={ColorPallet.brand.primary} />
+            <Assets.svg.iconChevronRight color={ColorPalette.brand.primary} />
           </View>
         </View>
         <View style={styles.cardBottomBorder} />

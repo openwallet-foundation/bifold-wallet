@@ -179,30 +179,30 @@ describe('Theme Builder', () => {
     it('should set the color palette for the theme', () => {
       const theme = new ThemeBuilder(bifoldTheme)
         .setColorPalette({
-          ...bifoldTheme.ColorPallet,
+          ...bifoldTheme.ColorPalette,
           brand: {
-            ...bifoldTheme.ColorPallet.brand,
+            ...bifoldTheme.ColorPalette.brand,
             primary: 'TEST',
           },
         })
         .build()
 
-      expect(theme.ColorPallet.brand.primary).toEqual('TEST')
+      expect(theme.ColorPalette.brand.primary).toEqual('TEST')
     })
 
     it('should not override the entire color palette when building: sanity check', () => {
       const theme = new ThemeBuilder(bifoldTheme)
         .setColorPalette({
-          ...bifoldTheme.ColorPallet,
+          ...bifoldTheme.ColorPalette,
           brand: {
-            ...bifoldTheme.ColorPallet.brand,
+            ...bifoldTheme.ColorPalette.brand,
             primary: 'TEST',
           },
         })
         .withOverrides({ Buttons: { critical: { padding: -1 } } })
         .build()
 
-      expect(theme.ColorPallet.brand.primary).toEqual('TEST')
+      expect(theme.ColorPalette.brand.primary).toEqual('TEST')
       expect(theme.Buttons.critical?.padding).toEqual(-1)
       // Ensure the color palette is being applied to the dependent properties
       expect(theme.Inputs.inputSelected.borderColor).toEqual('TEST')
@@ -211,16 +211,16 @@ describe('Theme Builder', () => {
     it('should set the color palette and be able to override it', () => {
       const theme = new ThemeBuilder(bifoldTheme)
         .setColorPalette({
-          ...bifoldTheme.ColorPallet,
+          ...bifoldTheme.ColorPalette,
           brand: {
-            ...bifoldTheme.ColorPallet.brand,
+            ...bifoldTheme.ColorPalette.brand,
             primary: 'TEST',
           },
         })
-        .withOverrides({ ColorPallet: { brand: { primary: 'OVERRIDE' } } })
+        .withOverrides({ ColorPalette: { brand: { primary: 'OVERRIDE' } } })
         .build()
 
-      expect(theme.ColorPallet.brand.primary).toEqual('OVERRIDE')
+      expect(theme.ColorPalette.brand.primary).toEqual('OVERRIDE')
       // Ensure the color palette is being applied to the dependent properties
       expect(theme.Inputs.inputSelected.borderColor).toEqual('OVERRIDE')
     })

@@ -17,7 +17,7 @@ interface QRRendererProps {
 const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
@@ -26,7 +26,7 @@ const QRRenderer: React.FC<QRRendererProps> = ({ value, onError, size }) => {
       backgroundColor: 'white',
     },
     errorMessage: {
-      color: ColorPallet.semantic.error,
+      color: ColorPalette.semantic.error,
       textAlign: 'center',
     },
   })

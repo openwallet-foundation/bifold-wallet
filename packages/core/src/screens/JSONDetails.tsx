@@ -19,12 +19,12 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
     throw new Error('JSONDetails route params were not set properly')
   }
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { jsonBlob } = route.params
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
     },
     title: {
@@ -36,7 +36,7 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
     },
     jsonContainer: {
       padding: 16,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       height: '75%',
       borderWidth: 1,
       borderStyle: 'solid',

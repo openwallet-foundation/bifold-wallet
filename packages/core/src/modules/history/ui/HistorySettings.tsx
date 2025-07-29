@@ -24,7 +24,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
   const [isLoading] = useState(false)
   const { t } = useTranslation()
 
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const actionButtonLabel = t('Global.SaveSettings')
   const actionButtonTestId = testIdWithKey('Save')
@@ -39,7 +39,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
       justifyContent: 'space-between',
     },

@@ -11,7 +11,7 @@ interface BulletPointProps {
 }
 
 const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     iconContainer: {
       marginRight: 10,
@@ -22,7 +22,7 @@ const BulletPoint: React.FC<BulletPointProps> = ({ text, textStyle }) => {
   return (
     <View style={{ marginVertical: 10, flexDirection: 'row', alignItems: 'flex-start' }}>
       <View style={styles.iconContainer}>
-        <Icon name={'circle'} size={9} color={ColorPallet.brand.modalIcon} />
+        <Icon name={'circle'} size={9} color={ColorPalette.brand.modalIcon} />
       </View>
       <ThemedText style={[textStyle, { flexShrink: 1 }]}>{text}</ThemedText>
     </View>

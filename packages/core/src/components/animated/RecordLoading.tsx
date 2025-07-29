@@ -20,20 +20,20 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
   const { width } = useWindowDimensions()
   const padding = width * 0.05
   const logoHeight = width * 0.12
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const rowFadeAnim = useRef(new Animated.Value(1))
   const myStyle = StyleSheet.create({
     container: {
       flexDirection: 'column',
     },
     rectangle: {
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      backgroundColor: ColorPalette.grayscale.lightGrey,
       height: 30,
       marginVertical: 5,
       borderRadius,
     },
     margin: {
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      backgroundColor: ColorPalette.grayscale.lightGrey,
       width: 40,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
@@ -41,7 +41,7 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
     logo: {
       marginLeft: -1 * logoHeight + padding,
       marginTop: padding,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      backgroundColor: ColorPalette.grayscale.lightGrey,
       height: logoHeight,
       width: logoHeight,
       borderRadius,
@@ -54,7 +54,7 @@ const RecordLoading: React.FC<RecordLoadingProps> = ({ style }) => {
 
   return (
     <Animated.View
-      style={[{ opacity: rowFadeAnim.current, backgroundColor: ColorPallet.grayscale.white, borderRadius: 15 }, style]}
+      style={[{ opacity: rowFadeAnim.current, backgroundColor: ColorPalette.grayscale.white, borderRadius: 15 }, style]}
     >
       <View style={myStyle.container} testID={testIdWithKey('RecordLoading')}>
         <View style={{ flexDirection: 'row' }}>

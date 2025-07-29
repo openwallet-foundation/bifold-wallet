@@ -23,7 +23,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   disabledIcon = 'close',
   disabled = false,
 }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [toggleAnim] = useState(new Animated.Value(isEnabled ? 1 : 0))
   const { t } = useTranslation()
 
@@ -37,7 +37,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
 
   const backgroundColor = toggleAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [ColorPallet.grayscale.lightGrey, ColorPallet.brand.primary],
+    outputRange: [ColorPalette.grayscale.lightGrey, ColorPalette.brand.primary],
   })
 
   const translateX = toggleAnim.interpolate({
@@ -82,7 +82,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
           <Icon
             name={isEnabled ? enabledIcon : disabledIcon}
             size={15}
-            color={isEnabled ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
+            color={isEnabled ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
           />
         </Animated.View>
       </Animated.View>

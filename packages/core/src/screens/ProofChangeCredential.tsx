@@ -32,7 +32,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
   const selectedCred = route.params.selectedCred
   const altCredentials = route.params.altCredentials
   const onCredChange = route.params.onCredChange
-  const { ColorPallet, SelectedCredTheme } = useTheme()
+  const { ColorPalette, SelectedCredTheme } = useTheme()
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [proofItems, setProofItems] = useState<ProofCredentialItems[]>([])
@@ -46,7 +46,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
       marginHorizontal: 20,
     },
     cardLoading: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       flex: 1,
       flexGrow: 1,
       marginVertical: 35,

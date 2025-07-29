@@ -14,12 +14,12 @@ import { ThemedText } from '../components/texts/ThemedText'
 const DataRetention: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
-  const { ColorPallet, SettingsTheme } = useTheme()
+  const { ColorPalette, SettingsTheme } = useTheme()
   const [useDataRetention, setUseDataRetention] = useState<boolean>(!!store.preferences.useDataRetention)
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       width: '100%',
     },
     section: {
@@ -34,7 +34,7 @@ const DataRetention: React.FC = () => {
     },
     itemSeparator: {
       borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomColor: ColorPalette.brand.primaryBackground,
       marginHorizontal: 25,
     },
   })
@@ -54,11 +54,11 @@ const DataRetention: React.FC = () => {
         <BouncyCheckbox
           accessibilityLabel={t('Global.On')}
           disableText
-          fillColor={ColorPallet.brand.secondaryBackground}
-          unfillColor={ColorPallet.brand.secondaryBackground}
+          fillColor={ColorPalette.brand.secondaryBackground}
+          unfillColor={ColorPalette.brand.secondaryBackground}
           size={36}
-          innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
-          ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}
+          innerIconStyle={{ borderColor: ColorPalette.brand.primary, borderWidth: 2 }}
+          ImageComponent={() => <Icon name="circle" size={18} color={ColorPalette.brand.primary}></Icon>}
           onPress={() => updateDataRetention(true)}
           isChecked={useDataRetention}
           disableBuiltInState
@@ -73,11 +73,11 @@ const DataRetention: React.FC = () => {
         <BouncyCheckbox
           accessibilityLabel={t('Global.Off')}
           disableText
-          fillColor={ColorPallet.brand.secondaryBackground}
-          unfillColor={ColorPallet.brand.secondaryBackground}
+          fillColor={ColorPalette.brand.secondaryBackground}
+          unfillColor={ColorPalette.brand.secondaryBackground}
           size={36}
-          innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
-          ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}
+          innerIconStyle={{ borderColor: ColorPalette.brand.primary, borderWidth: 2 }}
+          ImageComponent={() => <Icon name="circle" size={18} color={ColorPalette.brand.primary}></Icon>}
           onPress={() => updateDataRetention(false)}
           isChecked={!useDataRetention}
           disableBuiltInState

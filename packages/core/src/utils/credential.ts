@@ -14,12 +14,12 @@ export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const credentialTextColor = (ColorPallet: any, hex?: string) => {
+export const credentialTextColor = (ColorPalette: any, hex?: string) => {
   const midpoint = 255 / 2
   if ((luminanceForHexColor(hex ?? '') ?? 0) >= midpoint) {
-    return ColorPallet.grayscale.darkGrey
+    return ColorPalette.grayscale.darkGrey
   }
-  return ColorPallet.grayscale.white
+  return ColorPalette.grayscale.white
 }
 
 export const toImageSource = (source: unknown): ImageSourcePropType => {

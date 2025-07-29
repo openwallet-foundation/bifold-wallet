@@ -62,7 +62,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
-  const { ColorPallet, ListItems, TextTheme } = useTheme()
+  const { ColorPalette, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
   const { agent } = useAgent()
 
@@ -91,13 +91,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     cardContainer: {
       paddingHorizontal: 25,
       paddingVertical: 16,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       marginBottom: 20,
     },
     cardAttributes: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      borderColor: ColorPallet.grayscale.lightGrey,
+      borderColor: ColorPalette.grayscale.lightGrey,
       borderWidth: 1,
       borderRadius: 8,
       padding: 8,
@@ -364,7 +364,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           paddingHorizontal: 25,
           paddingVertical: 16,
           paddingBottom: 26,
-          backgroundColor: ColorPallet.brand.secondaryBackground,
+          backgroundColor: ColorPalette.brand.secondaryBackground,
         }}
       >
         {selectedCredentialsSubmission && Object.keys(selectedCredentialsSubmission).length > 0 ? (

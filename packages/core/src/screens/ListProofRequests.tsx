@@ -112,7 +112,7 @@ type ListProofRequestsProps = StackScreenProps<ProofRequestsStackParams, Screens
 
 const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route }) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [store] = useStore()
 
   const style = StyleSheet.create({
@@ -133,7 +133,7 @@ const ListProofRequests: React.FC<ListProofRequestsProps> = ({ navigation, route
   return (
     <SafeAreaView style={style.container} edges={['left', 'right']}>
       <FlatList
-        style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        style={{ backgroundColor: ColorPalette.brand.primaryBackground }}
         data={proofRequestTemplates}
         keyExtractor={(records) => records.id}
         renderItem={({ item }) => {

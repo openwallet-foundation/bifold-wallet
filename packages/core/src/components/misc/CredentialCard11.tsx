@@ -103,7 +103,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPallet, ListItems } = useTheme()
+  const { ColorPalette, ListItems } = useTheme()
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -152,18 +152,18 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const navigation = useNavigation()
 
   const backgroundColorIfRevoked = (backgroundColor?: string) =>
-    credentialErrors.includes(CredentialErrors.Revoked) ? ColorPallet.notification.errorBorder : backgroundColor
+    credentialErrors.includes(CredentialErrors.Revoked) ? ColorPalette.notification.errorBorder : backgroundColor
 
   const fontColorWithHighContrast = () => {
     if (proof && brandingOverlayType === BrandingOverlayType.Branding10) {
-      return ColorPallet.grayscale.mediumGrey
+      return ColorPalette.grayscale.mediumGrey
     }
 
     const c =
-      backgroundColorIfRevoked(overlay.brandingOverlay?.primaryBackgroundColor) ?? ColorPallet.grayscale.lightGrey
+      backgroundColorIfRevoked(overlay.brandingOverlay?.primaryBackgroundColor) ?? ColorPalette.grayscale.lightGrey
     const shade = shadeIsLightOrDark(c)
 
-    return shade == Shade.Light ? ColorPallet.grayscale.darkGrey : ColorPallet.grayscale.lightGrey
+    return shade == Shade.Light ? ColorPalette.grayscale.darkGrey : ColorPalette.grayscale.lightGrey
   }
 
   const parseAttribute = useCallback(
@@ -317,7 +317,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             variant="bold"
             style={[
               styles.textContainer,
-              { color: warn ? ColorPallet.notification.warnText : styles.textContainer.color },
+              { color: warn ? ColorPalette.notification.warnText : styles.textContainer.color },
             ]}
             testID={testIdWithKey('AttributeValue')}
           >
@@ -354,7 +354,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
                 testID={testIdWithKey('AttributeNameWarningIcon')}
                 style={{ paddingTop: 2, paddingHorizontal: 2 }}
                 name="warning"
-                color={ColorPallet.notification.warnIcon}
+                color={ColorPalette.notification.warnIcon}
                 size={ListItems.recordAttributeText.fontSize}
               />
             )}
@@ -385,7 +385,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           text={t('ProofRequest.ChangeCredential')}
           testID={'ChangeCredential'}
           textColor={
-            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+            isBranding11
+              ? credentialTextColor(ColorPalette, overlay.brandingOverlay?.primaryBackgroundColor)
+              : undefined
           }
         />
       )
@@ -397,7 +399,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           text={t('ProofRequest.GetThisCredential')}
           testID={'GetThisCredential'}
           textColor={
-            isBranding11 ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor) : undefined
+            isBranding11
+              ? credentialTextColor(ColorPalette, overlay.brandingOverlay?.primaryBackgroundColor)
+              : undefined
           }
         />
       )
@@ -425,7 +429,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
               styles.textContainer,
               styles.credentialName,
               {
-                color: allPI && proof ? ColorPallet.notification.warnText : styles.textContainer.color,
+                color: allPI && proof ? ColorPalette.notification.warnText : styles.textContainer.color,
               },
             ]}
           >
@@ -578,13 +582,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             style={[
               styles.statusContainer,
               {
-                backgroundColor: status === 'error' ? ColorPallet.notification.error : ColorPallet.notification.warn,
+                backgroundColor: status === 'error' ? ColorPalette.notification.error : ColorPalette.notification.warn,
               },
             ]}
           >
             <Icon
               size={0.7 * logoHeight}
-              style={{ color: status === 'error' ? ColorPallet.semantic.error : ColorPallet.notification.warnIcon }}
+              style={{ color: status === 'error' ? ColorPalette.semantic.error : ColorPalette.notification.warnIcon }}
               name={status}
             />
           </View>

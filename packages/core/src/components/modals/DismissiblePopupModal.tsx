@@ -35,7 +35,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
 }) => {
   const { height, width, fontScale } = useWindowDimensions()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const iconSize = 30
 
   const styles = StyleSheet.create({
@@ -43,14 +43,14 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.notification.popupOverlay,
+      backgroundColor: ColorPalette.notification.popupOverlay,
       padding: 20,
       minHeight: height,
       minWidth: width,
     },
     container: {
-      backgroundColor: ColorPallet.notification.info,
-      borderColor: ColorPallet.notification.infoBorder,
+      backgroundColor: ColorPalette.notification.info,
+      borderColor: ColorPalette.notification.infoBorder,
       borderRadius: 5,
       borderWidth: 1,
       padding: 10,
@@ -78,7 +78,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
     headerText: {
       ...TextTheme.bold,
       alignSelf: 'flex-start',
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     scrollViewContentContainer: {
       flexGrow: 1,
@@ -89,7 +89,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
     bodyText: {
       ...TextTheme.normal,
       paddingVertical: 16,
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     footer: {
       paddingTop: 10,
@@ -105,7 +105,7 @@ const DismissiblePopupModal: React.FC<DismissiblePopupModalProps> = ({
 
   const infoIconName = 'info'
   const dismissIconName = 'clear'
-  const iconColor = ColorPallet.notification.infoIcon
+  const iconColor = ColorPalette.notification.infoIcon
 
   return (
     <SafeAreaModal transparent>

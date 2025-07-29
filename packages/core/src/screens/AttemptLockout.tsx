@@ -19,7 +19,7 @@ interface Timer {
 }
 
 const AttemptLockout: React.FC = () => {
-  const { ColorPallet, Assets, Spacing } = useTheme()
+  const { ColorPalette, Assets, Spacing } = useTheme()
   const { t } = useTranslation()
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()
@@ -27,7 +27,7 @@ const AttemptLockout: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       paddingHorizontal: Spacing.lg,
     },
     title: {

@@ -36,7 +36,7 @@ interface ProofRequestAttributesCardProps {
 }
 
 const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({ data, onChangeValue }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { i18n } = useTranslation()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const [attributes, setAttributes] = useState<Field[] | undefined>(undefined)
@@ -67,7 +67,7 @@ const ProofRequestAttributesCard: React.FC<ProofRequestAttributesCardProps> = ({
       <VerifierCredentialCard
         onChangeValue={onChangeValue}
         displayItems={attributes}
-        style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}
+        style={{ backgroundColor: ColorPalette.brand.secondaryBackground }}
         credDefId={credDefId}
         schemaId={data.schema}
         preview
@@ -93,7 +93,7 @@ const ProofRequestCardsComponent: React.FC<ProofRequestCardsProps> = ({ attribut
 const ProofRequestCards = memo(ProofRequestCardsComponent)
 
 const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, navigation }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const [store] = useStore()
   const { t } = useTranslation()
   const { i18n } = useTranslation()
@@ -113,7 +113,7 @@ const ProofRequestDetails: React.FC<ProofRequestDetailsProps> = ({ route, naviga
   const style = StyleSheet.create({
     container: {
       flexGrow: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 16,
     },
     header: {

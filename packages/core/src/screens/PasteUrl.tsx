@@ -18,7 +18,7 @@ import { ThemedText } from '../components/texts/ThemedText'
 export type PasteProps = StackScreenProps<ConnectStackParams>
 
 const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const [pastedContent, setPastedContent] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<{ title: string; message: string } | undefined>()
   const { t } = useTranslation()
@@ -30,7 +30,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     content: {
       margin: 20,
@@ -41,10 +41,10 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
     textBox: {
       ...TextTheme.normal,
       textAlignVertical: 'top',
-      borderColor: ColorPallet.grayscale.darkGrey,
+      borderColor: ColorPalette.grayscale.darkGrey,
       borderWidth: 1,
       borderRadius: 5,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      backgroundColor: ColorPalette.grayscale.lightGrey,
     },
     buttonContainer: {
       margin: 20,

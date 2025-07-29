@@ -1,5 +1,5 @@
 import {
-  IColorPallet,
+  IColorPalette,
   ITheme,
   createButtonsTheme,
   createChatTheme,
@@ -57,11 +57,11 @@ export class ThemeBuilder {
    * Note: This method is mostly a convenience method to set the color pallet for the theme.
    * The same can be achieved by directly modifying the theme object using the `withOverrides` method.
    *
-   * @param {IColorPallet} colorPalette - The color pallet to set for the theme.
+   * @param {IColorPalette} colorPalette - The color pallet to set for the theme.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
-  setColorPalette(colorPalette: IColorPallet): this {
-    this._theme.ColorPallet = colorPalette
+  setColorPalette(colorPalette: IColorPalette): this {
+    this._theme.ColorPalette = colorPalette
 
     return this
   }

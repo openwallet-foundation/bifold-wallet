@@ -17,14 +17,14 @@ interface ImageModalProps {
 const ImageModal: React.FC<ImageModalProps> = ({ uri, onDismissPressed }) => {
   const { height, width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
 
   const styles = StyleSheet.create({
     modalCenter: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.notification.popupOverlay,
+      backgroundColor: ColorPalette.notification.popupOverlay,
       minHeight: height,
       minWidth: width,
       paddingHorizontal: 20,
@@ -32,7 +32,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ uri, onDismissPressed }) => {
     },
     container: {
       flexShrink: 1,
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     image: {
       width: width - 40,
@@ -49,7 +49,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ uri, onDismissPressed }) => {
 
   const iconSize = 30
   const dismissIconName = 'clear'
-  const iconColor = ColorPallet.brand.primary
+  const iconColor = ColorPalette.brand.primary
 
   return (
     <SafeAreaModal transparent>

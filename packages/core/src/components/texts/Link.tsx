@@ -14,10 +14,10 @@ interface LinkProps {
 }
 
 const Link: React.FC<LinkProps> = ({ linkText, onPress, style = {}, testID, ...textProps }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     link: {
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
       textDecorationLine: 'underline',
       alignSelf: 'flex-start',
     },

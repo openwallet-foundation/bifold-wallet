@@ -32,24 +32,24 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
 }) => {
   const { height, width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const iconSize = 30
   const dismissIconName = 'clear'
-  const iconColor = ColorPallet.notification.infoIcon
+  const iconColor = ColorPalette.notification.infoIcon
 
   const styles = StyleSheet.create({
     modalCenter: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.notification.popupOverlay,
+      backgroundColor: ColorPalette.notification.popupOverlay,
       padding: 10,
       minHeight: height,
       minWidth: width,
     },
     container: {
-      backgroundColor: ColorPallet.notification.info,
-      borderColor: ColorPallet.notification.infoBorder,
+      backgroundColor: ColorPalette.notification.info,
+      borderColor: ColorPalette.notification.infoBorder,
       borderRadius: 5,
       borderWidth: 1,
       padding: 20,
@@ -66,12 +66,12 @@ const AppGuideModal: React.FC<AppGuideModalProps> = ({
     headerText: {
       alignSelf: 'flex-start',
       flexWrap: 'wrap',
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     bodyText: {
       flexShrink: 1,
       marginVertical: 16,
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
     dismissIcon: {
       alignSelf: 'center',

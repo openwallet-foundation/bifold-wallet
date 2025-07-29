@@ -26,11 +26,11 @@ type LockoutRowProps = AutoLockListItem & {
 const AutoLock: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
-  const { ColorPallet, SettingsTheme } = useTheme()
+  const { ColorPalette, SettingsTheme } = useTheme()
   const currentLockoutTime = store.preferences.autoLockTime ?? AutoLockTime.FiveMinutes
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       width: '100%',
     },
     section: {
@@ -45,7 +45,7 @@ const AutoLock: React.FC = () => {
     },
     itemSeparator: {
       borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomColor: ColorPalette.brand.primaryBackground,
       marginHorizontal: 25,
     },
     checkboxContainer: {
@@ -72,11 +72,11 @@ const AutoLock: React.FC = () => {
         <BouncyCheckbox
           accessibilityLabel={String(AutoLockTime.FiveMinutes)}
           disableText
-          fillColor={ColorPallet.brand.secondaryBackground}
-          unfillColor={ColorPallet.brand.secondaryBackground}
+          fillColor={ColorPalette.brand.secondaryBackground}
+          unfillColor={ColorPalette.brand.secondaryBackground}
           size={36}
-          innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
-          ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary} />}
+          innerIconStyle={{ borderColor: ColorPalette.brand.primary, borderWidth: 2 }}
+          ImageComponent={() => <Icon name="circle" size={18} color={ColorPalette.brand.primary} />}
           onPress={() => onPress(value)}
           isChecked={selected}
           disableBuiltInState

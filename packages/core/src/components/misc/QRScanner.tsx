@@ -50,7 +50,7 @@ const QRScanner: React.FC<Props> = ({
   const { agent } = useAgent()
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme, TabTheme } = useTheme()
+  const { ColorPalette, TextTheme, TabTheme } = useTheme()
   const [store] = useStore()
   const [{ showScanHelp, showScanButton, showScanErrorButton = true }] = useServices([TOKENS.CONFIG])
   const [firstTabActive, setFirstTabActive] = useState(!defaultToConnect)
@@ -69,7 +69,7 @@ const QRScanner: React.FC<Props> = ({
     },
     mainSafeArea: {
       flex: 1,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
     },
     bottomSafeArea: {
       flex: 0,
@@ -121,7 +121,7 @@ const QRScanner: React.FC<Props> = ({
     // no properties needed, this is just a helpful label
     bottomButtonsContainer: {},
     icon: {
-      color: ColorPallet.grayscale.white,
+      color: ColorPalette.grayscale.white,
       padding: 4,
     },
     textStyle: {

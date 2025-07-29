@@ -25,7 +25,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
   const { walletSecret } = useAuth()
   const { t } = useTranslation()
   const [store] = useStore()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
   const initializing = useRef(false)
   const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
@@ -35,7 +35,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
   })
 

@@ -27,7 +27,7 @@ const ToggleBiometry: React.FC = () => {
   const { commitWalletToKeychain, disableBiometrics } = useAuth()
   const [biometryEnabled, setBiometryEnabled] = useState(store.preferences.useBiometry)
   const [canSeeCheckPIN, setCanSeeCheckPIN] = useState<boolean>(false)
-  const { ColorPallet, NavigationTheme } = useTheme()
+  const { ColorPalette, NavigationTheme } = useTheme()
 
   const logHistoryRecord = useCallback(
     (type: HistoryCardType) => {
@@ -131,7 +131,7 @@ const ToggleBiometry: React.FC = () => {
   return (
     <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
       <SafeAreaModal
-        style={{ backgroundColor: ColorPallet.brand.primaryBackground }}
+        style={{ backgroundColor: ColorPalette.brand.primaryBackground }}
         visible={canSeeCheckPIN}
         transparent={false}
         animationType={'slide'}
