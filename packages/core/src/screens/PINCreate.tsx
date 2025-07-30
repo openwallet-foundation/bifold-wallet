@@ -118,7 +118,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   }, [])
 
   return explained ? (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader />
