@@ -18,6 +18,8 @@ import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { useTranslation } from 'react-i18next'
 import { BrandingOverlay } from '@bifold/oca'
 import { OpenIDCredentialType } from '../types'
+import { getListFromStatusListJWT, getStatusListFromJWT, StatusList } from '@sd-jwt/jwt-status-list'
+import { decode, encode } from 'base-64'
 
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
 
@@ -146,10 +148,83 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     return await agent?.w3cCredentials.getCredentialRecordById(id)
   }
 
+  const verifyCredential = async (credential: SdJwtVcRecord) => {
+    try {
+      const compactSdJwt = credential.compactSdJwtVc
+
+      console.log('===========> jwt', compactSdJwt)
+
+      // Step 2: Split JWT parts
+      const [headerB64, payloadB64, signatureB64, ...disclosures] = compactSdJwt.split('.')
+
+      console.log('===========> headerB64', headerB64)
+      console.log('===========> payloadB64', payloadB64)
+      console.log('===========> signatureB64', signatureB64)
+      console.log('===========> Decoding ...')
+
+      const header = JSON.parse(decode(headerB64))
+      const payload = JSON.parse(decode(payloadB64))
+
+      console.log('===========> header', header)
+      console.log('===========> payload', payload)
+
+      payload.status = {
+        status_list: {
+          idx: 0, // example index
+          uri: 'http://localhost:8080/statuslist.jwt',
+        },
+      }
+
+      const newPayloadB64 = encode(JSON.stringify(payload))
+      const newCompactJwt = [headerB64, newPayloadB64, signatureB64, ...disclosures].join('.')
+
+      console.log('===========> newPayloadB64', newPayloadB64)
+      console.log('===========> newCompactJwt', newCompactJwt)
+      console.log('===========>Verifying New JWT ========> ')
+
+      // const verifyResult = await agent?.sdJwtVc.verify({
+      //   compactSdJwtVc: credential.compactSdJwtVc,
+      // })
+      // console.log('===========> verifyResult', JSON.stringify(verifyResult))
+      const reference = getStatusListFromJWT(newCompactJwt)
+
+      console.log('===========> status list from new jwt', JSON.stringify(reference))
+
+      console.log('===========> List URI', JSON.stringify(reference.uri))
+
+      const response = await fetch(reference.uri)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch status list: ${response.statusText}`)
+      }
+
+      const jwt = await response.text()
+
+      console.log('===========> List JWT', jwt)
+
+      const statusList = getListFromStatusListJWT(jwt)
+
+      console.log('===========> statusList', JSON.stringify(statusList))
+
+      //get the status of a specific entry
+      const status = statusList.getStatus(reference.idx)
+
+      console.log('===========> status', status)
+    } catch (error) {
+      logger.error(` =>>>> [OpenIDCredentialRecordProvider] Error verifying credential: ${error}`)
+      throw error
+    }
+  }
+
   async function getSdJwtCredentialById(id: string): Promise<SdJwtVcRecord | undefined> {
     checkAgent()
-    return await agent?.sdJwtVc.getById(id)
+    const cred = await agent?.sdJwtVc.getById(id)
+    verifyCredential(cred)
+    return cred
   }
+
+  // async function verifySdJwtCredentialById(credential: SdJwtVcRecord): Promise<boolean | undefined> {
+  //   const presentation = await agent?.sdJwtVc.verify(credential)
+  // }
 
   async function getMdocCredentialById(id: string): Promise<MdocRecord | undefined> {
     checkAgent()
