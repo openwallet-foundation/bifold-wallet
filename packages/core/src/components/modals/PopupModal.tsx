@@ -25,13 +25,13 @@ const PopupModal: React.FC<PopupModalProps> = ({
   notificationType,
   onCallToActionLabel,
 }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     modalCenter: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: ColorPallet.notification.popupOverlay,
+      backgroundColor: ColorPalette.notification.popupOverlay,
       padding: 20,
     },
   })

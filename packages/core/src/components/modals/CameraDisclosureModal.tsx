@@ -24,19 +24,19 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
   const [modalVisible, setModalVisible] = useState(true)
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [requestInProgress, setRequestInProgress] = useState(false)
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       padding: 20,
     },
     messageText: {
       marginTop: 30,
     },
     controlsContainer: {
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       marginTop: 'auto',
       margin: 20,
     },
@@ -85,7 +85,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           onDismissPressed={onOpenSettingsDismissed}
         />
       )}
-      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
+      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
           <ThemedText variant="modalHeadingOne" testID={testIdWithKey('AllowCameraUse')} accessibilityRole="header">
             {t('CameraDisclosure.AllowCameraUse')}

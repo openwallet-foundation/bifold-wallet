@@ -1,5 +1,77 @@
 # Change Log
 
+## 2.4.0
+
+### Patch Changes
+
+- Updated dependencies [2ac4abc]
+- Updated dependencies [0d86620]
+- Updated dependencies [28dbede]
+  - @bifold/core@2.4.0
+
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
+### Patch Changes
+
+- Updated dependencies [da487bb]
+- Updated dependencies [84e7336]
+- Updated dependencies [85f21e2]
+  - @bifold/core@2.3.0
+
+## 2.2.1
+
+### Patch Changes
+
+- Updated dependencies [b25d47a]
+- Updated dependencies [4dd8198]
+- Updated dependencies [d7f53f9]
+- Updated dependencies [0716823]
+- Updated dependencies [242c7f8]
+  - @bifold/core@2.2.1
+
+## 2.2.0
+
+### Patch Changes
+
+- Updated dependencies [2983113]
+- Updated dependencies [5a0db59]
+- Updated dependencies [3eb208e]
+  - @bifold/core@2.2.0
+
+## 2.1.10
+
+### Patch Changes
+
+- Updated dependencies [7ce710c]
+  - @bifold/core@2.1.10
+
+## 2.1.9
+
+### Patch Changes
+
+- Updated dependencies [3cca189]
+  - @bifold/core@2.1.9
+
+## 2.1.8
+
+### Patch Changes
+
+- c4a8205: fixed issue with limited text input
+- Updated dependencies [c4a8205]
+  - @bifold/core@2.1.8
+
+## 2.1.7
+
+### Patch Changes
+
+- Updated dependencies [a6d2698]
+- Updated dependencies [877a83c]
+  - @bifold/core@2.1.7
+
 ## 2.1.6
 
 ### Patch Changes

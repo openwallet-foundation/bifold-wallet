@@ -51,12 +51,14 @@ export enum Screens {
   NameWallet = 'Name Wallet',
   RenameWallet = 'Rename Wallet',
   RenameContact = 'Rename Contact',
+  JSONDetails = 'JSON Details',
   ScanHelp = 'Scan Help',
   HistorySettings = 'History Settings',
   HistoryPage = 'History',
   HistoryDetails = 'History details',
   AutoLock = 'AutoLock',
   UpdateAvailable = 'Update Available',
+  ConfigureMediator = 'Configure Mediator',
 }
 
 export enum Stacks {
@@ -84,6 +86,7 @@ export type RootStackParams = {
   [Stacks.TabStack]: NavigatorScreenParams<TabStackParams>
   [Screens.Chat]: { connectionId: string }
   [Stacks.ConnectStack]: NavigatorScreenParams<ConnectStackParams>
+  [Stacks.ConnectionStack]: NavigatorScreenParams<DeliveryStackParams>
   [Stacks.SettingStack]: NavigatorScreenParams<SettingStackParams>
   [Stacks.ContactStack]: NavigatorScreenParams<ContactStackParams>
   [Stacks.ProofRequestsStack]: NavigatorScreenParams<ProofRequestsStackParams>
@@ -122,6 +125,7 @@ export type ContactStackParams = {
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequest]: { proofId: string }
+  [Screens.JSONDetails]: { jsonBlob: string }
 }
 
 export type ProofRequestsStackParams = {
@@ -141,6 +145,7 @@ export type ProofRequestsStackParams = {
 
 export type CredentialStackParams = {
   [Screens.Credentials]: undefined
+  [Screens.JSONDetails]: { jsonBlob: string }
 }
 
 export type HomeStackParams = {
@@ -168,6 +173,7 @@ export type SettingStackParams = {
   [Screens.TogglePushNotifications]: undefined
   [Screens.HistorySettings]: undefined
   [Screens.AutoLock]: undefined
+  [Screens.ConfigureMediator]: { scannedMediatorUri: string } | undefined
 }
 
 export type NotificationStackParams = {

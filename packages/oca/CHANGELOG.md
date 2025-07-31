@@ -1,5 +1,29 @@
 # Change Log
 
+## 2.4.0
+
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
+## 2.2.1
+
+## 2.2.0
+
+## 2.1.10
+
+## 2.1.9
+
+## 2.1.8
+
+### Patch Changes
+
+- c4a8205: fixed issue with limited text input
+
+## 2.1.7
+
 ## 2.1.6
 
 ## 2.1.5

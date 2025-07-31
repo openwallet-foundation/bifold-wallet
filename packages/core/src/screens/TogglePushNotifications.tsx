@@ -20,7 +20,7 @@ const TogglePushNotifications: React.FC = () => {
   const { t } = useTranslation()
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [{ enablePushNotifications }] = useServices([TOKENS.CONFIG])
   const [notificationState, setNotificationState] = useState<boolean>(store.preferences.usePushNotifications)
   const [notificationStatus, setNotificationStatus] = useState<'denied' | 'granted' | 'unknown'>('unknown')
@@ -97,9 +97,9 @@ const TogglePushNotifications: React.FC = () => {
               <View style={styles.toggleContainer}>
                 <ThemedText>{t('PushNotifications.ReceiveNotifications')}</ThemedText>
                 <Switch
-                  trackColor={{ false: ColorPallet.grayscale.lightGrey, true: ColorPallet.brand.primaryDisabled }}
-                  thumbColor={notificationState ? ColorPallet.brand.primary : ColorPallet.grayscale.mediumGrey}
-                  ios_backgroundColor={ColorPallet.grayscale.lightGrey}
+                  trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+                  thumbColor={notificationState ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+                  ios_backgroundColor={ColorPalette.grayscale.lightGrey}
                   onValueChange={toggleSwitch}
                   accessibilityLabel={t('PushNotifications.ReceiveNotifications')}
                   accessibilityRole="switch"

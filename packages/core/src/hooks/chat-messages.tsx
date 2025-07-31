@@ -75,7 +75,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [store] = useStore()
   const { t } = useTranslation()
-  const { ChatTheme: theme, ColorPallet } = useTheme()
+  const { ChatTheme: theme, ColorPalette } = useTheme()
   const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
   const basicMessages = useBasicMessagesByConnectionId(connection?.id)
   const credentials = useCredentialsByConnectionId(connection?.id)
@@ -111,7 +111,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
                   <ThemedText>{split}</ThemedText>
                   <ThemedText
                     onPress={() => handleLinkPress(link)}
-                    style={{ color: ColorPallet.brand.link, textDecorationLine: 'underline' }}
+                    style={{ color: ColorPalette.brand.link, textDecorationLine: 'underline' }}
                     accessibilityRole={'link'}
                   >
                     {link}
@@ -257,7 +257,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
         ? [...transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt), connectedMessage]
         : transformedMessages.sort((a: any, b: any) => b.createdAt - a.createdAt)
     )
-  }, [ColorPallet, basicMessages, theme, credentials, t, navigation, proofs, theirLabel, connection])
+  }, [ColorPalette, basicMessages, theme, credentials, t, navigation, proofs, theirLabel, connection])
 
   return messages
 }

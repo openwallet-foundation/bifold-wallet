@@ -16,13 +16,13 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: 'https://registry.npmjs.org/'
-        
+
     - name: Enable corepack and setup Yarn 4.9.2
       shell: bash
       run: |
         corepack enable
         corepack prepare yarn@4.9.2 --activate
-        
+
     - name: Node Version
       shell: bash
       run: |

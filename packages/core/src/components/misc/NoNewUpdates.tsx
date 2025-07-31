@@ -9,12 +9,12 @@ import { ThemedText } from '../texts/ThemedText'
 
 const NoNewUpdates: React.FC = () => {
   const { t } = useTranslation()
-  const { HomeTheme, ColorPallet } = useTheme()
+  const { HomeTheme, ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     noNewUpdatesContainer: {
       paddingHorizontal: 20,
       paddingVertical: 20,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
     },
     noNewUpdatesText: {
       ...HomeTheme.noNewUpdatesText,

@@ -104,4 +104,89 @@ describe('ContactDetails Screen', () => {
       expect(navigation.navigate).toHaveBeenCalledTimes(1)
     })
   })
+
+  test('JSON Detail button exists when dev mode is enabled', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+      },
+    }
+
+    const tree = render(
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <ContactDetails navigation={useNavigation()} route={{ params: { connectionId: connection.id } } as any} />
+        </StoreContext.Provider>
+      </BasicAppContext>
+    )
+    const jsonDetailsButton = tree.getByTestId(testIdWithKey('JSONDetails'))
+    expect(jsonDetailsButton).not.toBeNull()
+  })
+  test('JSON Details button does not exist when dev mode is disabled', async () => {
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: false,
+      },
+    }
+
+    const tree = render(
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <ContactDetails navigation={useNavigation()} route={{ params: { connectionId: connection.id } } as any} />
+        </StoreContext.Provider>
+      </BasicAppContext>
+    )
+    expect(() => tree.getByTestId(testIdWithKey('JSONDetails'))).toThrow()
+  })
+
+  test('JSON Details button navigates', async () => {
+    const navigation = useNavigation<StackNavigationProp<ContactStackParams, Screens.ContactDetails>>()
+    const customState = {
+      ...testDefaultState,
+      preferences: {
+        ...testDefaultState.preferences,
+        developerModeEnabled: true,
+      },
+    }
+
+    const tree = render(
+      <BasicAppContext>
+        <StoreContext.Provider
+          value={[
+            customState,
+            () => {
+              return
+            },
+          ]}
+        >
+          <ContactDetails navigation={navigation} route={{ params: { connectionId: connection.id } } as any} />
+        </StoreContext.Provider>
+      </BasicAppContext>
+    )
+    const jsonDetailsButton = tree.getByTestId(testIdWithKey('JSONDetails'))
+    await act(async () => {
+      fireEvent(jsonDetailsButton, 'press')
+      expect(navigation.navigate).toHaveBeenCalledWith(Screens.JSONDetails, {
+        jsonBlob: JSON.stringify(connection, null, 2),
+      })
+    })
+  })
 })

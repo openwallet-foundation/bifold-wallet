@@ -21,7 +21,7 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
   const goalCode = useOutOfBandByConnectionId(connectionId)?.outOfBandInvitation.goalCode
   const proofRecord = useProofById(proofId)
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
 
   if (!agent) {
@@ -31,7 +31,7 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.modalPrimaryBackground,
+      backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       padding: 20,
     },
     image: {
@@ -73,7 +73,7 @@ const MobileVerifierLoading: React.FC<MobileVerifierLoadingProps> = ({ navigatio
 
   return (
     <SafeAreaModal transparent animationType={'slide'}>
-      <SafeAreaView style={{ backgroundColor: ColorPallet.brand.modalPrimaryBackground }}>
+      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
             <ThemedText

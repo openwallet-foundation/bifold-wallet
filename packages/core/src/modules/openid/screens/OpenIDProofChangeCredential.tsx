@@ -1,8 +1,9 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import { DeliveryStackParams, Screens } from '../../../types/navigators'
-import ScreenLayout from '../../../layout/ScreenLayout'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+
+import { DeliveryStackParams, Screens } from '../../../types/navigators'
+import ScreenLayout from '../../../layout/ScreenLayout'
 import { useTheme } from '../../../contexts/theme'
 import { useEffect, useState } from 'react'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
@@ -26,7 +27,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
   const selectedCredentialID = route.params.selectedCredID
   const altCredentials = route.params.altCredIDs
   const onCredChange = route.params.onCredChange
-  const { ColorPallet, SelectedCredTheme } = useTheme()
+  const { ColorPalette, SelectedCredTheme } = useTheme()
   const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
 
   const { t } = useTranslation()
@@ -70,7 +71,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
       marginHorizontal: 20,
     },
     cardLoading: {
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
       flex: 1,
       flexGrow: 1,
       marginVertical: 35,
@@ -90,13 +91,13 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
 
   const listHeader = () => {
     return (
-      <View style={{ ...styles.pageMargin, marginVertical: 20 }}>
+      <View style={{ ...styles.pageMargin, marginTop: 40, marginBottom: 20 }}>
         {loading ? (
           <View style={styles.cardLoading}>
             <RecordLoading />
           </View>
         ) : (
-          <ThemedText>{t('ProofRequest.MultipleCredentials')}</ThemedText>
+          <ThemedText variant={'bold'}>{t('ProofRequest.AvailableCards')}</ThemedText>
         )}
       </View>
     )

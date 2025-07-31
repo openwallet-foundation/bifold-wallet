@@ -47,7 +47,9 @@
     "Remove": "Supprimer",
     "Close": "Fermer",
     "GotIt": "Got it (FR)",
-    "Send": "Envoyer"
+    "Send": "Envoyer",
+    "Reset": "Reset (FR)",
+    "ViewJSON": "View JSON Details (FR)"
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -271,7 +273,7 @@
     "BiometricsUnlock": "Déverrouiller avec la biométrie",
     "IncorrectPIN": "NIP erroné",
     "RepeatPIN": "Essayez votre NIP à nouveau",
-    "IncorrectPINTries": "PIN incorrect : {{tries}} essaie avant l'expiration du délai",
+    "IncorrectPINTries": "Incorrect PIN: {{tries}} tries before your app is temporarily locked (FR)",
     "LastTryBeforeTimeout": "PIN incorrect : dernier essai avant expiration du délai",
     "EnableBiometrics": "Vous devez activer la biométrie pour pouvoir charger le portefeuille.",
     "BiometricsNotProvided": "Biométrie non fournie, vous pouvez utiliser le NIP pour vous connecter au portefeuille.",
@@ -289,7 +291,10 @@
     "ChangeBiometricsHeader": "Change in biometrics (FR)",
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (FR)",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (FR)",
-    "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)"
+    "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)",
+    "ForgotPINLink": "Forgot your PIN? (FR)",
+    "ForgotPINModalTitle": "Forgot your PIN? (FR)",
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)"
   },
   "AttemptLockout": {
     "Title": "Votre portefeuille est temporairement verrouillé",
@@ -488,6 +493,7 @@
     "CredentialDetails": "Détails des attestations",
     "EmptyList": "Votre portefeuille est vide. Vos attestations acceptés seront ajoutés ici.",
     "IssuedBy": "Émis par",
+    "Issued": "Issued (FR)",
     "Credential": "attestation"
   },
   "PushNotifications": {
@@ -669,6 +675,7 @@
     "RejectThisProof?": "Rejeter cette preuve?",
     "AcceptingProof": "Acceptation de la preuve",
     "MultipleCredentials": "Vous avez le choix entre plusieurs attestations d'identification :",
+    "AvailableCards": "Available cards (FR)",
     "SuccessfullyAcceptedProof": "Preuve acceptée avec succès",
     "SensitiveInformation": "Cette requête contient des données sensibles.",
     "RejectingProof": "Rejet de la preuve",
@@ -729,7 +736,10 @@
     "ScanMyQR": "Scanner mon code QR",
     "Developer": "Options de développeur",
     "AutoLockTime": "Auto lock time (FR)",
-    "Logout": "Déconnexion"
+    "Logout": "Déconnexion",
+    "ConfigureMediator": "Configurer le médiateur",
+    "ChangeMediator": "Change mediator (FR)",
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (FR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (FR)",
@@ -753,6 +763,12 @@
   },
   "QRRender": {
     "GenerationError": "Impossible de générer le code QR"
+  },
+  "JSONDetails": {
+    "Share": "Share JSON (FR)",
+    "Copy": "Copy contents (FR)",
+    "CopiedSuccess": "Copied to clipboard (FR)",
+    "CopiedError": "Unable to copy to clipboard (FR)"
   },
   "Record": {
     "Hide": "Masquer",
@@ -793,6 +809,7 @@
     "ChangePIN": "Changer NIP",
     "CommonDecline": "Refuser",
     "ProofRequests": "Demandes de preuve",
+    "ChangeCard": "Change Card (FR)",
     "ProofRequestDetails": "Détails de la Demande de preuve",
     "SendProofRequest": "Envoyer une demande d'attestation",
     "ChooseProofRequest": "Choisissez une demande d'attestation",
@@ -809,7 +826,8 @@
     "HistorySettings": "History Settings FR)",
     "History": "History (FR)",
     "HistoryDetails": "History Details (FR)",
-    "UpdateAvailable": "Update Available (FR)"
+    "UpdateAvailable": "Update Available (FR)",
+    "JSONDetails": "JSON details (FR)"
   },
   "Loading": {
     "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
@@ -908,5 +926,8 @@
     "LearnMore": "Learn what's New (FR)",
     "UpdateNow": "Update the app (FR)",
     "UpdateLater": "Do this later (FR)"
+  },
+  "Banner": {
+    "AlertsLength": "You have {{ alerts }} alerts (FR)"
   }
 }

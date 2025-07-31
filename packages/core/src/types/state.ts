@@ -1,3 +1,5 @@
+import { BannerMessage } from '../components/views/Banner'
+
 export interface Onboarding {
   didSeePreface: boolean
   didCompleteTutorial: boolean
@@ -8,7 +10,6 @@ export interface Onboarding {
   didNameWallet: boolean
   onboardingVersion: number
   didCompleteOnboarding: boolean
-  postAuthScreens: string[]
 }
 
 export interface Migration {
@@ -33,6 +34,9 @@ export interface Preferences {
   alternateContactNames: Record<string, string>
   autoLockTime: number
   theme?: string
+  selectedMediator: string
+  availableMediators: string[]
+  bannerMessages: BannerMessage[]
 }
 
 export interface Tours {

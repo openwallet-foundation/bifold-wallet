@@ -32,7 +32,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
 
   // console.log('$$ ====> Credential Display', JSON.stringify(credentialDisplay))
   const { t } = useTranslation()
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
 
@@ -152,7 +152,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
             paddingHorizontal: paddingHorizontal,
             paddingVertical: paddingVertical,
             paddingBottom: paddingBottom,
-            backgroundColor: ColorPallet.brand.secondaryBackground,
+            backgroundColor: ColorPalette.brand.secondaryBackground,
           }}
         >
           {footerButton(

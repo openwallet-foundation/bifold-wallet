@@ -46,7 +46,9 @@
     "Close": "Fechar",
     "Remove": "Remover",
     "GotIt": "Got it (PT-BR)",
-    "Send": "Enviar"
+    "Send": "Enviar",
+    "Reset": "Reset (PT-BR)",
+    "ViewJSON": "View JSON Details (PT-BR)"
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -257,6 +259,7 @@
     "Or": "Ou",
     "BiometricsUnlock": "Destravar com Biometria",
     "IncorrectPIN": "PIN incorreto",
+    "IncorrectPINTries": "Incorrect PIN: {{tries}} tries before your app is temporarily locked (PT-BR)",
     "LockedOut": "You were locked out after {{ time }} minute(s) of inactivity. (PT-BR)",
     "ReEnterPIN": "Re-enter your wallet PIN (PT-BR)",
     "EnableBiometrics": "Você deve habilitar a biometria para poder carregar a carteira.",
@@ -270,7 +273,10 @@
     "ChangeBiometricsHeader": "Change in biometrics (PT-BR)",
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (PT-BR)",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (PT-BR)",
-    "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)"
+    "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
+    "ForgotPINLink": "Forgot your PIN? (PT-BR)",
+    "ForgotPINModalTitle": "Forgot your PIN? (PT-BR)",
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)"
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked (PT-BR)",
@@ -467,6 +473,7 @@
     "CredentialDetails": "Detalhes da Credencial",
     "EmptyList": "Sua carteira está vazia. Suas credenciais aceitas serão adicionadas aqui.",
     "IssuedBy": "Emitida por",
+    "Issued": "Issued (PT-BR)",
     "Credential": "credencial"
   },
   "PushNotifications": {
@@ -653,6 +660,7 @@
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
     "AcceptingProof": "Aceitando Prova",
     "MultipleCredentials": "Você tem múltiplas credenciais para escolher:",
+    "AvailableCards": "Available cards (PT-BR)",
     "SuccessfullyAcceptedProof": "Prova Aceita com Sucesso",
     "SensitiveInformation": "Esta requisição está solicitando informações sensíveis.",
     "ProofRequestNotFound": "Requisição de Prova não encontrada.",
@@ -714,7 +722,10 @@
     "ScanMyQR": "Scanear meu QR code",
     "Developer": "Opções de Desenvolvedor",
     "AutoLockTime": "Auto lock time (PT-BR)",
-    "Logout": "Sair"
+    "Logout": "Sair",
+    "ConfigureMediator": "Configurar Mediator",
+    "ChangeMediator": "Change mediator (PT-BR)",
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (PT-BR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (PT-BR)",
@@ -739,6 +750,12 @@
   "QRRender": {
     "GenerationError": "Não foi possível gerar o código QR"
   },
+  "JSONDetails": {
+    "Share": "Share JSON (PT-BR)",
+    "Copy": "Copy contents (PT-BR)",
+    "CopiedSuccess": "Copied to clipboard (PT-BR)",
+    "CopiedError": "Unable to copy to clipboard (PT-BR)"
+  },
   "Record": {
     "Hide": "Esconder",
     "Show": "Mostrar",
@@ -761,6 +778,7 @@
     "Notifications": "Notificações",
     "CredentialOffer": "Oferta de Credencial",
     "ProofRequest": "Requisição de Prova",
+    "ChangeCard": "Change Card (PT-BR)",
     "ProofChangeCredential": "Escolha uma credencial",
     "ProofRequestDetails": "Detalhes Da Solicitação De Comprovação",
     "ProofRequestAttributeDetails": "Atributos de Requisição de Prova",
@@ -786,7 +804,8 @@
     "HistorySettings": "History Settings (PT-BR)",
     "History": "History (PT-BR)",
     "HistoryDetails": "History Details (PT-BR)",
-    "UpdateAvailable": "Update Available (PT-BR)"
+    "UpdateAvailable": "Update Available (PT-BR)",
+    "JSONDetails": "JSON details (PT-BR)"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -885,5 +904,8 @@
     "LearnMore": "Learn what's New (PT-BR)",
     "UpdateNow": "Update the app (PT-BR)",
     "UpdateLater": "Do this later (PT-BR)"
+  },
+  "Banner": {
+    "AlertsLength": "You have {{ alerts }} alerts (PT-BR)"
   }
 }

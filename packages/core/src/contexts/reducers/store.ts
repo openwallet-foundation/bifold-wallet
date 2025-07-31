@@ -13,6 +13,7 @@ import {
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
 import { PersistentStorage } from '../../services/storage'
+import Config from 'react-native-config'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -27,7 +28,6 @@ enum OnboardingDispatchAction {
   DID_NAME_WALLET = 'onboarding/didNameWallet',
   DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
   ONBOARDING_VERSION = 'onboarding/onboardingVersion',
-  SET_POST_AUTH_SCREENS = 'onboarding/postAuthScreens',
 }
 
 enum MigrationDispatchAction {
@@ -60,6 +60,11 @@ enum PreferencesDispatchAction {
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
   AUTO_LOCK_TIME = 'preferences/autoLockTime',
   SET_THEME = 'preferences/setTheme',
+  SET_SELECTED_MEDIATOR = 'preferences/setSelectedMediator',
+  ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
+  RESET_MEDIATORS = 'preferences/resetMediators',
+  BANNER_MESSAGES = 'preferences/bannerMessages',
+  REMOVE_BANNER_MESSAGE = 'REMOVE_BANNER_MESSAGE',
 }
 
 enum ToursDispatchAction {
@@ -515,6 +520,79 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
     }
+    case PreferencesDispatchAction.SET_SELECTED_MEDIATOR: {
+      const selectedMediator = (action?.payload ?? []).pop() ?? state.preferences.selectedMediator
+      const preferences: Preferences = {
+        ...state.preferences,
+        selectedMediator,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+    case PreferencesDispatchAction.ADD_AVAILABLE_MEDIATOR: {
+      const mediatorToAdd = (action?.payload ?? []).pop() ?? ''
+      if (!state.preferences.availableMediators.includes(mediatorToAdd)) {
+        const updatedAvailableMediators = [...state.preferences.availableMediators, mediatorToAdd]
+        const preferences: Preferences = {
+          ...state.preferences,
+          availableMediators: updatedAvailableMediators,
+        }
+        PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+        return {
+          ...state,
+          preferences,
+        }
+      }
+      return state
+    }
+    case PreferencesDispatchAction.RESET_MEDIATORS: {
+      const preferences: Preferences = {
+        ...state.preferences,
+        availableMediators: [Config.MEDIATOR_URL as string],
+        selectedMediator: Config.MEDIATOR_URL as string,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
+    case PreferencesDispatchAction.BANNER_MESSAGES: {
+      const bannerMessageToAdd = action?.payload ?? []
+      const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
+      const uniqueBannerMessages = Array.from(new Set(newBannerMessages))
+
+      const preferences: Preferences = {
+        ...state.preferences,
+        bannerMessages: uniqueBannerMessages,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
+    case PreferencesDispatchAction.REMOVE_BANNER_MESSAGE: {
+      const keysToRemove = action?.payload ?? []
+      const newBannerMessages = state.preferences.bannerMessages.filter((msg) => !keysToRemove.includes(msg.id))
+      const preferences: Preferences = {
+        ...state.preferences,
+        bannerMessages: newBannerMessages,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
     case OnboardingDispatchAction.ONBOARDING_VERSION: {
       const version = (action?.payload || []).pop()
       const onboarding = {
@@ -630,18 +708,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, onboarding)
 
-      return newState
-    }
-    case OnboardingDispatchAction.SET_POST_AUTH_SCREENS: {
-      const value = (action?.payload || []).pop()
-      const onboarding = {
-        ...state.onboarding,
-        postAuthScreens: value,
-      }
-      const newState = {
-        ...state,
-        onboarding,
-      }
       return newState
     }
     case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {

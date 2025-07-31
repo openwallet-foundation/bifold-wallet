@@ -15,13 +15,13 @@ interface CredentialActionFooterProps {
 }
 
 const CredentialActionFooter = ({ onPress, text, testID, textColor }: CredentialActionFooterProps) => {
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const styles = StyleSheet.create({
     seperator: {
       width: '100%',
       height: 2,
       marginVertical: 10,
-      backgroundColor: ColorPallet.grayscale.lightGrey,
+      backgroundColor: ColorPalette.grayscale.lightGrey,
     },
     touchable: {
       display: 'flex',
@@ -32,7 +32,7 @@ const CredentialActionFooter = ({ onPress, text, testID, textColor }: Credential
     credActionText: {
       fontSize: 20,
       fontWeight: TextTheme.bold.fontWeight,
-      color: textColor ?? ColorPallet.brand.link,
+      color: textColor ?? ColorPalette.brand.link,
     },
   })
 

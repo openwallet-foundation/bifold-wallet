@@ -52,7 +52,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     ...useCredentialByState(CredentialState.CredentialReceived),
     ...useCredentialByState(CredentialState.Done),
   ].filter((credential) => credential.connectionId === connection?.id)
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
   const [store] = useStore()
   const { width } = useWindowDimensions()
   const contactImageHeight = width * CONTACT_IMG_PERCENTAGE
@@ -76,7 +76,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const styles = StyleSheet.create({
     contentContainer: {
       padding: 20,
-      backgroundColor: ColorPallet.brand.secondaryBackground,
+      backgroundColor: ColorPalette.brand.secondaryBackground,
     },
     contactContainer: {
       flexDirection: 'row',
@@ -216,6 +216,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
     navigation.navigate(Screens.RenameContact, { connectionId })
   }, [navigation, connectionId])
 
+  const callViewJSONDetails = useCallback(() => {
+    navigation.navigate(Screens.JSONDetails, { jsonBlob: JSON.stringify(connection, null, 2) })
+  }, [navigation, connection])
+
   const contactLabel = useMemo(
     () => getConnectionName(connection, store.preferences.alternateContactNames),
     [connection, store.preferences.alternateContactNames]
@@ -238,7 +242,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
                 fontSize: contactImageHeight,
                 lineHeight: contactImageHeight,
                 alignSelf: 'center',
-                color: ColorPallet.brand.primary,
+                color: ColorPalette.brand.primary,
               }}
             >
               {contactLabel.charAt(0).toUpperCase()}
@@ -267,14 +271,14 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         )}
         {contactDetailsOptions?.enableCredentialList && (
           <>
-            <View style={{ borderTopColor: ColorPallet.grayscale.lightGrey, borderWidth: 1, marginTop: 20 }}></View>
+            <View style={{ borderTopColor: ColorPalette.grayscale.lightGrey, borderWidth: 1, marginTop: 20 }}></View>
             <ThemedText variant="headingFour" style={{ marginVertical: 16 }}>
               {t('ContactDetails.Credentials')}
             </ThemedText>
             <FlatList
               ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
               ListEmptyComponent={() => (
-                <ThemedText style={{ color: ColorPallet.grayscale.lightGrey }}>
+                <ThemedText style={{ color: ColorPalette.grayscale.lightGrey }}>
                   {t('ContactDetails.NoCredentials')}
                 </ThemedText>
               )}
@@ -299,8 +303,21 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
             testID={testIdWithKey('RenameContact')}
             style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
           >
-            <Assets.svg.iconEdit width={20} height={20} color={ColorPallet.brand.text} />
+            <Assets.svg.iconEdit width={20} height={20} color={ColorPalette.brand.text} />
             <ThemedText>{t('Screens.RenameContact')}</ThemedText>
+          </TouchableOpacity>
+        )}
+        {/* JSON button on dev mode enabled */}
+        {store?.preferences.developerModeEnabled && (
+          <TouchableOpacity
+            onPress={callViewJSONDetails}
+            accessibilityLabel={t('Global.ViewJSON')}
+            accessibilityRole={'button'}
+            testID={testIdWithKey('JSONDetails')}
+            style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
+          >
+            <Assets.svg.iconCode width={20} height={20} color={ColorPalette.brand.text} />
+            <ThemedText>{t('Global.ViewJSON')}</ThemedText>
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -310,8 +327,8 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
           testID={testIdWithKey('RemoveFromWallet')}
           style={[styles.contentContainer, styles.actionContainer, { marginTop: 10 }]}
         >
-          <Assets.svg.iconDelete width={20} height={20} color={ColorPallet.semantic.error} />
-          <ThemedText style={{ color: ColorPallet.semantic.error }}>{t('ContactDetails.RemoveContact')}</ThemedText>
+          <Assets.svg.iconDelete width={20} height={20} color={ColorPalette.semantic.error} />
+          <ThemedText style={{ color: ColorPalette.semantic.error }}>{t('ContactDetails.RemoveContact')}</ThemedText>
         </TouchableOpacity>
       </View>
       <CommonRemoveModal

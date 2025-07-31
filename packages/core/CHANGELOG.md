@@ -1,5 +1,78 @@
 # @bifold/core
 
+## 2.4.0
+
+### Minor Changes
+
+- 2ac4abc: Added types for all missing theme properties.
+  Removed redundant types from theme.
+  Created a ThemeBuilder class to override existing theme styles.
+  Patched a couple places which were using incorrect styles.
+- 28dbede: Swapped references to ColorPallet -> ColorPalette
+
+### Patch Changes
+
+- 0d86620: Adds divider between notification banners
+
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
+### Patch Changes
+
+- 84e7336: Updated revoked credential styling
+- 85f21e2: react native gifted chat no longer uses redundant keyboard avoiding view padding on ios
+
+## 2.2.1
+
+### Patch Changes
+
+- b25d47a: App no longer resizes when software keyboard is open on Android
+  KeyboardView now takes optional prop to be keyboardavoiding
+  Keyboard avoidance added to pinenter, changebiometry, pinverify, pinchange, and chat.
+- 4dd8198: updated no interest toast to use banner instead
+- d7f53f9: Remove extra safearea from developer modal
+- 0716823: PIN automatically triggers unlock when minPINLength characters are entered
+- 242c7f8: Swapped credential_help_url for issuer_url in failed proof request
+
+## 2.2.0
+
+### Minor Changes
+
+- 3eb208e: Update OID proof request select card UI
+
+### Patch Changes
+
+- 2983113: feat: custom mediator added to developer mode
+- 5a0db59: use correct button styles from theme
+
+## 2.1.10
+
+### Patch Changes
+
+- 7ce710c: added json details button to proof request screen
+
+## 2.1.9
+
+### Patch Changes
+
+- 3cca189: added ability to view json details from credential and contact details screen in dev mode, added issued date to credential details screen in dev mode
+
+## 2.1.8
+
+### Patch Changes
+
+- c4a8205: fixed issue with limited text input
+
+## 2.1.7
+
+### Patch Changes
+
+- a6d2698: added Forgot your PIN link to PINEnter screen that displays a popup explaining that the PIN cannot be reset. added build number to bottom of PINEnter screen.
+- 877a83c: fix PINInput accessibility issues
+
 ## 2.1.6
 
 ### Patch Changes
