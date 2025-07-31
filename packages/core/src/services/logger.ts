@@ -2,6 +2,7 @@ import { BaseLogger } from '@credo-ts/core'
 import { consoleTransport, logger } from 'react-native-logs'
 
 import { BifoldError } from '../types/error'
+import { messageFormatter } from '../../../remote-logs/src/logger'
 
 export class BifoldLogger extends BaseLogger {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,32 +35,32 @@ export class BifoldLogger extends BaseLogger {
     this._log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
   }
 
-  public test(message: string, data?: object | undefined): void {
-    this._log?.test({ message, data })
+  public test(...msgs: unknown[]): void {
+    this._log?.test(...messageFormatter(...msgs))
   }
 
-  public trace(message: string, data?: object | undefined): void {
-    this._log?.trace({ message, data })
+  public trace(...msgs: unknown[]): void {
+    this._log?.trace(...messageFormatter(...msgs))
   }
 
-  public debug(message: string, data?: object | undefined): void {
-    this._log?.debug({ message, data })
+  public debug(...msgs: unknown[]): void {
+    this._log?.debug(...messageFormatter(...msgs))
   }
 
-  public info(message: string, data?: object | undefined): void {
-    this._log?.info({ message, data })
+  public info(...msgs: unknown[]): void {
+    this._log?.info(...messageFormatter(...msgs))
   }
 
-  public warn(message: string, data?: object | undefined): void {
-    this._log?.warn({ message, data })
+  public warn(...msgs: unknown[]): void {
+    this._log?.warn(...messageFormatter(...msgs))
   }
 
-  public error(message: string, data?: object | undefined): void {
-    this._log?.error({ message, data })
+  public error(...msgs: unknown[]): void {
+    this._log?.error(...messageFormatter(...msgs))
   }
 
-  public fatal(message: string, data?: object | undefined): void {
-    this._log?.fatal({ message, data })
+  public fatal(...msgs: unknown[]): void {
+    this._log?.fatal(...messageFormatter(...msgs))
   }
 
   public report(bifoldError: BifoldError): void {
