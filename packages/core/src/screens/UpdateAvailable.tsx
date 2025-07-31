@@ -20,7 +20,7 @@ type UpdateAvailableProps = {
 const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, googlePlayStoreUrl }) => {
   const { t } = useTranslation()
   const [, dispatch] = useStore()
-  const { ColorPallet, Assets, Spacing } = useTheme()
+  const { ColorPalette, Assets, Spacing } = useTheme()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   // Check if both store links are available
@@ -41,7 +41,7 @@ const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, goo
   }, [dispatch])
 
   const iconOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 130,
     width: 130,
   }

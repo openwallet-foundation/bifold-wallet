@@ -88,7 +88,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { agent } = useAgent()
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [action, setAction] = useState<any>()
@@ -104,13 +104,13 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [details, setDetails] = useState<DisplayDetails>(defaultDetails)
   const [styleConfig, setStyleConfig] = useState<StyleConfig>({
     containerStyle: {
-      backgroundColor: ColorPallet.notification.info,
-      borderColor: ColorPallet.notification.infoBorder,
+      backgroundColor: ColorPalette.notification.info,
+      borderColor: ColorPalette.notification.infoBorder,
     },
     textStyle: {
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
     },
-    iconColor: ColorPallet.notification.infoIcon,
+    iconColor: ColorPalette.notification.infoIcon,
     iconName: 'info',
   })
 
@@ -410,39 +410,39 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       case InfoBoxType.Success:
         setStyleConfig({
           containerStyle: {
-            backgroundColor: ColorPallet.notification.success,
-            borderColor: ColorPallet.notification.successBorder,
+            backgroundColor: ColorPalette.notification.success,
+            borderColor: ColorPalette.notification.successBorder,
           },
           textStyle: {
-            color: ColorPallet.notification.successText,
+            color: ColorPalette.notification.successText,
           },
-          iconColor: ColorPallet.notification.successIcon,
+          iconColor: ColorPalette.notification.successIcon,
           iconName: 'check-circle',
         })
         break
       case InfoBoxType.Warn:
         setStyleConfig({
           containerStyle: {
-            backgroundColor: ColorPallet.notification.warn,
-            borderColor: ColorPallet.notification.warnBorder,
+            backgroundColor: ColorPalette.notification.warn,
+            borderColor: ColorPalette.notification.warnBorder,
           },
           textStyle: {
-            color: ColorPallet.notification.warnText,
+            color: ColorPalette.notification.warnText,
           },
-          iconColor: ColorPallet.notification.warnIcon,
+          iconColor: ColorPalette.notification.warnIcon,
           iconName: 'warning',
         })
         break
       case InfoBoxType.Error:
         setStyleConfig({
           containerStyle: {
-            backgroundColor: ColorPallet.notification.error,
-            borderColor: ColorPallet.notification.errorBorder,
+            backgroundColor: ColorPalette.notification.error,
+            borderColor: ColorPalette.notification.errorBorder,
           },
           textStyle: {
-            color: ColorPallet.notification.errorText,
+            color: ColorPalette.notification.errorText,
           },
-          iconColor: ColorPallet.notification.errorIcon,
+          iconColor: ColorPalette.notification.errorIcon,
           iconName: 'error',
         })
         break
@@ -450,17 +450,17 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       default:
         setStyleConfig({
           containerStyle: {
-            backgroundColor: ColorPallet.notification.info,
-            borderColor: ColorPallet.notification.infoBorder,
+            backgroundColor: ColorPalette.notification.info,
+            borderColor: ColorPalette.notification.infoBorder,
           },
           textStyle: {
-            color: ColorPallet.notification.infoText,
+            color: ColorPalette.notification.infoText,
           },
-          iconColor: ColorPallet.notification.infoIcon,
+          iconColor: ColorPalette.notification.infoIcon,
           iconName: 'info',
         })
     }
-  }, [details, ColorPallet])
+  }, [details, ColorPalette])
 
   return (
     <View style={[styles.container, styleConfig.containerStyle]} testID={testIdWithKey('NotificationListItem')}>

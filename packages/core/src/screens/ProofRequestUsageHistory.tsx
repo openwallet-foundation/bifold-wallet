@@ -41,7 +41,7 @@ const getPresentationStateLabel = (record: ProofExchangeRecord) => {
 
 const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordProps> = ({ record, navigation }) => {
   const { t } = useTranslation()
-  const { ListItems, ColorPallet } = useTheme()
+  const { ListItems, ColorPalette } = useTheme()
   const [store] = useStore()
   const connection = useConnectionById(record.connectionId ?? '')
   const theirLabel = useMemo(
@@ -67,7 +67,7 @@ const ProofRequestUsageHistoryRecord: React.FC<ProofRequestUsageHistoryRecordPro
       marginVertical: 2,
     },
     valueLabel: {
-      color: ColorPallet.grayscale.black,
+      color: ColorPalette.grayscale.black,
     },
     valueText: {
       ...ListItems.requestTemplateTitle,

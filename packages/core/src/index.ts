@@ -63,6 +63,7 @@ import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import usePreventScreenCapture from './hooks/screen-capture'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
+import { ThemeBuilder } from './theme-builder'
 
 export * from './navigators'
 export * from './services/storage'
@@ -77,7 +78,7 @@ export { useDeepLinks } from './hooks/deep-links'
 export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
-export { ColorPallet } from './theme'
+export { ColorPalette } from './theme'
 export { animatedComponents } from './animated-components'
 export { bifoldTheme } from './theme'
 export { useAuth } from './contexts/auth'
@@ -115,7 +116,7 @@ export type {
   INotificationColors,
   IErrorColors,
   IGrayscaleColors,
-  IColorPallet,
+  IColorPalette,
   IAssets,
   ITheme,
 } from './theme'
@@ -226,5 +227,6 @@ export {
   tours,
   DefaultScreenOptionsDictionary,
   DefaultScreenLayoutOptions,
+  ThemeBuilder,
 }
 export type { IButton }

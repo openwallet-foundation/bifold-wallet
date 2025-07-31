@@ -23,10 +23,12 @@ export interface BannerSectionProps extends BannerMessage {
 }
 
 export const Banner: React.FC = () => {
+  const { t } = useTranslation()
+  const { ColorPalette } = useTheme()
   const [store, dispatch] = useStore()
   const [expanded, setExpanded] = useState(false)
+
   const bannerMessages = store.preferences.bannerMessages
-  const { t } = useTranslation()
   const alertMessage: BannerMessage = {
     id: 'alertMessage',
     title: t('Banner.AlertsLength', { alerts: bannerMessages.length }),
@@ -40,6 +42,7 @@ export const Banner: React.FC = () => {
       payload: [key],
     })
   }
+
   if (!bannerMessages || bannerMessages.length == 0) {
     return null
   }
@@ -72,15 +75,19 @@ export const Banner: React.FC = () => {
       />
       {expanded &&
         bannerMessages.map((message) => (
-          <BannerSection
-            id={message.id}
-            key={message.id}
-            title={message.title}
-            type={message.type}
-            variant="detail"
-            onDismiss={() => dismissBanner(message.id)}
-            dismissible={message.dismissible}
-          />
+          <React.Fragment key={message.id}>
+            {/* Render a divider between the banners when multiple banners exist */}
+            <View style={{ height: 2, backgroundColor: ColorPalette.brand.primaryBackground }} />
+            <BannerSection
+              id={message.id}
+              key={message.id}
+              title={message.title}
+              type={message.type}
+              variant="detail"
+              onDismiss={() => dismissBanner(message.id)}
+              dismissible={message.dismissible}
+            />
+          </React.Fragment>
         ))}
     </View>
   )
@@ -95,10 +102,10 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
   expanded,
   onToggle,
 }) => {
-  const { Spacing, ColorPallet } = useTheme()
+  const { Spacing, ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primary,
+      backgroundColor: ColorPalette.brand.primary,
       flexDirection: 'row',
       alignItems: 'center',
       padding: Spacing.md,
@@ -154,14 +161,14 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
       <Icon
         name={iconName(type)}
         size={24}
-        color={type === 'warning' ? ColorPallet.brand.secondaryBackground : ColorPallet.grayscale.white}
+        color={type === 'warning' ? ColorPalette.brand.secondaryBackground : ColorPalette.grayscale.white}
         style={styles.icon}
         testID={testIdWithKey(`icon-${type}`)}
       />
       <ThemedText
         variant={'bold'}
         style={{
-          color: type === 'warning' ? ColorPallet.brand.secondaryBackground : ColorPallet.grayscale.white,
+          color: type === 'warning' ? ColorPalette.brand.secondaryBackground : ColorPalette.grayscale.white,
           flex: 1,
         }}
         testID={testIdWithKey(`text-${type}`)}

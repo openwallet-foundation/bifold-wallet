@@ -18,11 +18,11 @@ interface Option {
 const Tours: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet, SettingsTheme } = useTheme()
+  const { ColorPalette, SettingsTheme } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       width: '100%',
     },
     section: {
@@ -37,7 +37,7 @@ const Tours: React.FC = () => {
     },
     itemSeparator: {
       borderBottomWidth: 1,
-      borderBottomColor: ColorPallet.brand.primaryBackground,
+      borderBottomColor: ColorPalette.brand.primaryBackground,
       marginHorizontal: 25,
     },
   })
@@ -71,8 +71,8 @@ const Tours: React.FC = () => {
                 fillColor="#FFFFFFFF"
                 unfillColor="#FFFFFFFF"
                 size={36}
-                innerIconStyle={{ borderColor: ColorPallet.brand.primary, borderWidth: 2 }}
-                ImageComponent={() => <Icon name="circle" size={18} color={ColorPallet.brand.primary}></Icon>}
+                innerIconStyle={{ borderColor: ColorPalette.brand.primary, borderWidth: 2 }}
+                ImageComponent={() => <Icon name="circle" size={18} color={ColorPalette.brand.primary}></Icon>}
                 onPress={async () => await handleSettingChange(bool)}
                 isChecked={store.tours.enableTours === bool}
                 disableBuiltInState

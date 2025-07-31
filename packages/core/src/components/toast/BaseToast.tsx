@@ -25,7 +25,7 @@ export enum ToastType {
 }
 
 const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress = () => null }) => {
-  const { TextTheme, borderRadius, borderWidth, ColorPallet } = useTheme()
+  const { TextTheme, borderRadius, borderWidth, ColorPalette } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 24
   let iconName = ''
@@ -61,34 +61,34 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
   switch (toastType) {
     case ToastType.Success:
       iconName = 'check-circle'
-      backgroundColor = ColorPallet.notification.success
-      borderColor = ColorPallet.notification.successBorder
-      iconColor = ColorPallet.notification.successIcon
-      textColor = ColorPallet.notification.successText
+      backgroundColor = ColorPalette.notification.success
+      borderColor = ColorPalette.notification.successBorder
+      iconColor = ColorPalette.notification.successIcon
+      textColor = ColorPalette.notification.successText
       break
 
     case ToastType.Info:
       iconName = 'info'
-      backgroundColor = ColorPallet.notification.info
-      borderColor = ColorPallet.notification.infoBorder
-      iconColor = ColorPallet.notification.infoIcon
-      textColor = ColorPallet.notification.infoText
+      backgroundColor = ColorPalette.notification.info
+      borderColor = ColorPalette.notification.infoBorder
+      iconColor = ColorPalette.notification.infoIcon
+      textColor = ColorPalette.notification.infoText
       break
 
     case ToastType.Warn:
       iconName = 'report-problem'
-      backgroundColor = ColorPallet.notification.warn
-      borderColor = ColorPallet.notification.warnBorder
-      iconColor = ColorPallet.notification.warnIcon
-      textColor = ColorPallet.notification.warnText
+      backgroundColor = ColorPalette.notification.warn
+      borderColor = ColorPalette.notification.warnBorder
+      iconColor = ColorPalette.notification.warnIcon
+      textColor = ColorPalette.notification.warnText
       break
 
     case ToastType.Error:
       iconName = 'error'
-      backgroundColor = ColorPallet.notification.error
-      borderColor = ColorPallet.notification.errorBorder
-      iconColor = ColorPallet.notification.errorIcon
-      textColor = ColorPallet.notification.errorText
+      backgroundColor = ColorPalette.notification.error
+      borderColor = ColorPalette.notification.errorBorder
+      iconColor = ColorPalette.notification.errorIcon
+      textColor = ColorPalette.notification.errorText
       break
 
     default:

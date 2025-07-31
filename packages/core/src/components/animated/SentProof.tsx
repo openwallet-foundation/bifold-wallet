@@ -15,7 +15,7 @@ const checkFadeTiming: Animated.TimingAnimationConfig = {
 }
 
 const SentProof: React.FC = () => {
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
   const ringFadeAnim = useRef(new Animated.Value(1))
   const checkFadeAnim = useRef(new Animated.Value(0))
   const style = StyleSheet.create({
@@ -35,12 +35,12 @@ const SentProof: React.FC = () => {
     },
   })
   const credentialInHandDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 130,
     width: 130,
   }
   const animatedCircleDisplayOptions = {
-    fill: ColorPallet.notification.infoText,
+    fill: ColorPalette.notification.infoText,
     height: 250,
     width: 250,
   }
