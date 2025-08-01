@@ -51,6 +51,8 @@ export class ThemeBuilder {
    * @returns {*} {T} Returns the merged object.
    */
   private _merge<T extends object>(target: T, source: DeepPartial<T>): T {
+    // note: without the empty object, lodash.merge will mutate the original theme overrides,
+    // and not properly update the nested properties
     return lodash.mergeWith({}, target, source, (objValue, srcValue, key, obj) => {
       // If source explicitly sets the value to undefined, keep it as undefined
       if (objValue !== srcValue && typeof srcValue === 'undefined') {
@@ -92,14 +94,12 @@ export class ThemeBuilder {
    *  Buttons: { critical: { padding: 0, margin: -1 } },
    * })) // => { Buttons: { critical: { padding: 0, margin: -1 } }}
    *
-   * @param {DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>) } themeOverrides A partial theme object to this._merge with the current theme or a callback function that receives the current theme and returns a partial theme object.
+   * @param {DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>) } themeOverrides A partial theme object to merge with the current theme or a callback function that receives the current theme and returns a partial theme object.
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
   withOverrides(themeOverrides: DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>)): this {
     const resolvedOverrides = typeof themeOverrides === 'function' ? themeOverrides(this._theme) : themeOverrides
 
-    // note: without the empty object, lodash.this._merge will mutate the original theme overrides,
-    // and not properly update the nested properties
     this._themeOverrides = this._merge(this._themeOverrides, resolvedOverrides)
 
     // Rebuild the theme with the new overrides so following chained calls will use the updated theme.
