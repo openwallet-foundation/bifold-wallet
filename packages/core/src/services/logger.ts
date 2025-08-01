@@ -2,7 +2,6 @@ import { BaseLogger } from '@credo-ts/core'
 import { consoleTransport, logger } from 'react-native-logs'
 
 import { BifoldError } from '../types/error'
-import { messageFormatter } from '../../../remote-logs/src/logger'
 
 export class BifoldLogger extends BaseLogger {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,32 +34,53 @@ export class BifoldLogger extends BaseLogger {
     this._log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
   }
 
+  protected messageFormatter(...msgs: unknown[]): unknown[] {
+    return msgs.map((msg) => {
+      if (msg instanceof Error) {
+        return JSON.stringify(
+          {
+            name: msg.name,
+            message: msg.message,
+            stack:
+              msg.stack
+                ?.split('\n')
+                .slice(1)
+                .map((line) => line.trim()) ?? [],
+          },
+          null,
+          2
+        )
+      }
+      return typeof msg === 'object' ? JSON.stringify(msg, null, 2) : msg
+    })
+  }
+
   public test(...msgs: unknown[]): void {
-    this._log?.test(...messageFormatter(...msgs))
+    this._log?.test(...this.messageFormatter(...msgs))
   }
 
   public trace(...msgs: unknown[]): void {
-    this._log?.trace(...messageFormatter(...msgs))
+    this._log?.trace(...this.messageFormatter(...msgs))
   }
 
   public debug(...msgs: unknown[]): void {
-    this._log?.debug(...messageFormatter(...msgs))
+    this._log?.debug(...this.messageFormatter(...msgs))
   }
 
   public info(...msgs: unknown[]): void {
-    this._log?.info(...messageFormatter(...msgs))
+    this._log?.info(...this.messageFormatter(...msgs))
   }
 
   public warn(...msgs: unknown[]): void {
-    this._log?.warn(...messageFormatter(...msgs))
+    this._log?.warn(...this.messageFormatter(...msgs))
   }
 
   public error(...msgs: unknown[]): void {
-    this._log?.error(...messageFormatter(...msgs))
+    this._log?.error(...this.messageFormatter(...msgs))
   }
 
   public fatal(...msgs: unknown[]): void {
-    this._log?.fatal(...messageFormatter(...msgs))
+    this._log?.fatal(...this.messageFormatter(...msgs))
   }
 
   public report(bifoldError: BifoldError): void {
