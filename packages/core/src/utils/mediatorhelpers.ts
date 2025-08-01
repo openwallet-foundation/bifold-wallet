@@ -14,7 +14,7 @@ export const isMediatorInvitation = async (agent: Agent, url: string): Promise<b
 
     return false
   } catch (error) {
-    agent.config.logger.error(`Invitation is not a mediator invitation: ${error}`)
+    agent.config.logger.error(`Invitation is not a mediator invitation.`, error as Error)
     return false
   }
 }
