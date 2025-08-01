@@ -34,32 +34,53 @@ export class BifoldLogger extends BaseLogger {
     this._log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
   }
 
-  public test(message: string, data?: object | undefined): void {
-    this._log?.test({ message, data })
+  protected messageFormatter(...msgs: unknown[]): unknown[] {
+    return msgs.map((msg) => {
+      if (msg instanceof Error) {
+        return JSON.stringify(
+          {
+            name: msg.name,
+            message: msg.message,
+            stack:
+              msg.stack
+                ?.split('\n')
+                .slice(1)
+                .map((line) => line.trim()) ?? [],
+          },
+          null,
+          2
+        )
+      }
+      return typeof msg === 'object' ? JSON.stringify(msg, null, 2) : msg
+    })
   }
 
-  public trace(message: string, data?: object | undefined): void {
-    this._log?.trace({ message, data })
+  public test(...msgs: unknown[]): void {
+    this._log?.test(...this.messageFormatter(...msgs))
   }
 
-  public debug(message: string, data?: object | undefined): void {
-    this._log?.debug({ message, data })
+  public trace(...msgs: unknown[]): void {
+    this._log?.trace(...this.messageFormatter(...msgs))
   }
 
-  public info(message: string, data?: object | undefined): void {
-    this._log?.info({ message, data })
+  public debug(...msgs: unknown[]): void {
+    this._log?.debug(...this.messageFormatter(...msgs))
   }
 
-  public warn(message: string, data?: object | undefined): void {
-    this._log?.warn({ message, data })
+  public info(...msgs: unknown[]): void {
+    this._log?.info(...this.messageFormatter(...msgs))
   }
 
-  public error(message: string, data?: object | undefined): void {
-    this._log?.error({ message, data })
+  public warn(...msgs: unknown[]): void {
+    this._log?.warn(...this.messageFormatter(...msgs))
   }
 
-  public fatal(message: string, data?: object | undefined): void {
-    this._log?.fatal({ message, data })
+  public error(...msgs: unknown[]): void {
+    this._log?.error(...this.messageFormatter(...msgs))
+  }
+
+  public fatal(...msgs: unknown[]): void {
+    this._log?.fatal(...this.messageFormatter(...msgs))
   }
 
   public report(bifoldError: BifoldError): void {
