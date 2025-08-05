@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 2.4.1
+
+### Patch Changes
+
+- dbf5cee: Allow explicit undefined values for ThemeBuilder
+- a60aefd: pincreate screen views no longer keyboard avoiding
+
 ## 2.4.0
 
 ### Minor Changes
