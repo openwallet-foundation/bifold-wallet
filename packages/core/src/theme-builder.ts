@@ -21,16 +21,7 @@ import lodash from 'lodash'
 /**
  * DeepPartial is a utility type that recursively makes all properties of a type optional.
  */
-type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object
-    ? T[P] extends (...args: any[]) => any
-      ? T[P] // keep functions as is
-      : // For object types, make all keys optional recursively:
-      Partial<T[P]> extends infer O
-      ? { [K in keyof O]?: DeepPartial<O[K]> }
-      : never
-    : T[P]
-}
+export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T
 
 /**
  * ThemeBuilder is a utility class to extend an existing theme with additional properties.
@@ -52,6 +43,25 @@ export class ThemeBuilder {
   }
 
   /**
+   * Extension of the lodash.merge function that merges two objects deeply,
+   * while preserving explicit undefined values in the source object.
+   *
+   * @param {T} target - The target object to merge into.
+   * @param {DeepPartial<T>} source - The source object to merge from.
+   * @returns {*} {T} Returns the merged object.
+   */
+  private _merge<T extends object>(target: T, source: DeepPartial<T>): T {
+    // note: without the empty object, lodash.merge will mutate the original theme overrides,
+    // and not properly update the nested properties
+    return lodash.mergeWith({}, target, source, (objValue, srcValue, key, obj) => {
+      // If source explicitly sets the value to undefined, keep it as undefined
+      if (objValue !== srcValue && typeof srcValue === 'undefined') {
+        obj[key] = undefined
+      }
+    })
+  }
+
+  /**
    * Sets the color pallet for the theme.
    *
    * Note: This method is mostly a convenience method to set the color pallet for the theme.
@@ -61,7 +71,9 @@ export class ThemeBuilder {
    * @returns {*} {ThemeBuilder} Returns the instance of ThemeBuilder for method chaining.
    */
   setColorPalette(colorPalette: IColorPalette): this {
-    this._theme.ColorPalette = colorPalette
+    this.withOverrides({
+      ColorPalette: colorPalette,
+    })
 
     return this
   }
@@ -88,9 +100,7 @@ export class ThemeBuilder {
   withOverrides(themeOverrides: DeepPartial<ITheme> | ((theme: ITheme) => DeepPartial<ITheme>)): this {
     const resolvedOverrides = typeof themeOverrides === 'function' ? themeOverrides(this._theme) : themeOverrides
 
-    // note: without the empty object, lodash.merge will mutate the original theme overrides,
-    // and not properly update the nested properties
-    this._themeOverrides = lodash.merge({}, this._themeOverrides, resolvedOverrides)
+    this._themeOverrides = this._merge(this._themeOverrides, resolvedOverrides)
 
     // Rebuild the theme with the new overrides so following chained calls will use the updated theme.
     this._theme = this.build()
@@ -106,7 +116,13 @@ export class ThemeBuilder {
    */
   build(): ITheme {
     // Step 1. Merge the theme overrides onto the original theme, producing the new base theme.
-    const baseTheme = lodash.merge({}, this._theme, this._themeOverrides)
+    const baseTheme = this._merge(this._theme, this._themeOverrides)
+
+    if (lodash.isEqual(baseTheme, this._theme)) {
+      // If the base theme is equal to the current theme, return the current theme
+      // This avoids unnecessary recomputation of dependent themes
+      return this._theme
+    }
 
     // Step 2. Generate computed properties that depend on the base theme
     const dependentThemes: Partial<ITheme> = {
@@ -133,7 +149,8 @@ export class ThemeBuilder {
      * Because the `dependentThemes` contain additional properties that may have
      * been modified by the overrides previously.
      */
-    this._theme = lodash.merge({}, baseTheme, dependentThemes, this._themeOverrides)
+    const newBaseTheme = this._merge(baseTheme, dependentThemes)
+    this._theme = this._merge(newBaseTheme, this._themeOverrides)
 
     return this._theme
   }
