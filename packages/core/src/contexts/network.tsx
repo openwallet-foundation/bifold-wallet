@@ -24,7 +24,7 @@ export const NetworkProvider = ({ children }: PropsWithChildren) => {
   const [isNetInfoModalDisplayed, setIsNetInfoModalDisplayed] = useState<boolean>(false)
   const { t } = useTranslation()
   const [hasShown, setHasShown] = useState(false)
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
 
   const displayNetInfoModal = useCallback(() => {
     setIsNetInfoModalDisplayed(true)
@@ -85,6 +85,12 @@ export const NetworkProvider = ({ children }: PropsWithChildren) => {
   }, [dispatch, t])
 
   useEffect(() => {
+    // This early return prevents the dispatches from overwriting
+    // the persisted state until the state is loaded from storage
+    if (!store.stateLoaded) {
+      return
+    }
+
     const internetReachable = assertInternetReachable()
     if (internetReachable) {
       setHasShown(false)
@@ -98,7 +104,7 @@ export const NetworkProvider = ({ children }: PropsWithChildren) => {
     if (internetReachable === false && !hasShown) {
       showNetworkWarning()
     }
-  }, [showNetworkWarning, assertInternetReachable, hasShown, dispatch])
+  }, [store.stateLoaded, showNetworkWarning, assertInternetReachable, hasShown, dispatch])
 
   return (
     <NetworkContext.Provider
