@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.4.2
+
+### Patch Changes
+
+- 1d56182: Prevent accidentally overwritten persisted state on load
+
 ## 2.4.1
 
 ### Patch Changes
