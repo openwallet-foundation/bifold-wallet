@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.4.3
+
+### Patch Changes
+
+- 69eff6c: fix credential card watermark and slice when in revoked state
+
 ## 2.4.2
 
 ### Patch Changes
