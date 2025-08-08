@@ -151,18 +151,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 
   const navigation = useNavigation()
 
-  const backgroundColorIfRevoked = (backgroundColor?: string) =>
-    credentialErrors.includes(CredentialErrors.Revoked) ? ColorPalette.notification.errorBorder : backgroundColor
-
   const fontColorWithHighContrast = () => {
     if (proof && brandingOverlayType === BrandingOverlayType.Branding10) {
       return ColorPalette.grayscale.mediumGrey
     }
 
-    const c =
-      backgroundColorIfRevoked(overlay.brandingOverlay?.primaryBackgroundColor) ?? ColorPalette.grayscale.lightGrey
+    const c = overlay.brandingOverlay?.primaryBackgroundColor ?? ColorPalette.grayscale.lightGrey
     const shade = shadeIsLightOrDark(c)
-
     return shade == Shade.Light ? ColorPalette.grayscale.darkGrey : ColorPalette.grayscale.lightGrey
   }
 
@@ -550,7 +545,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             }}
           />
         ) : (
-          !(Boolean(credentialErrors.length) || proof || getSecondaryBackgroundColor(overlay, proof)) && (
+          !(proof || getSecondaryBackgroundColor(overlay, proof)) && (
             <View
               style={[
                 {
