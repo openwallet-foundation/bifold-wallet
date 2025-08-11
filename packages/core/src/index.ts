@@ -12,6 +12,7 @@ import BulletPoint from './components/inputs/BulletPoint'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
 import ContentGradient from './components/misc/ContentGradient'
 import CredentialCard from './components/misc/CredentialCard'
+import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
@@ -64,6 +65,8 @@ import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import usePreventScreenCapture from './hooks/screen-capture'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import { DeepPartial, ThemeBuilder } from './theme-builder'
+import { BannerMessage } from './components/views/Banner'
+import { bifoldLoggerInstance } from './services/bifoldLogger'
 
 export * from './navigators'
 export * from './services/storage'
@@ -175,6 +178,8 @@ export {
   ButtonLocation,
   CheckBoxRow,
   CredentialCard,
+  ErrorBoundaryWrapper,
+  bifoldLoggerInstance,
   ContentGradient,
   ErrorModal,
   SafeAreaModal,
@@ -229,4 +234,4 @@ export {
   DefaultScreenLayoutOptions,
   ThemeBuilder,
 }
-export type { IButton, DeepPartial }
+export type { IButton, DeepPartial, BannerMessage }
