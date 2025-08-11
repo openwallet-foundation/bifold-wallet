@@ -22,15 +22,14 @@ interface ErrorBoundaryProps {
 interface ErrorBoundaryState {
   hasError: boolean
   error: Error | null
-  errorStack: string
   reported: boolean
 }
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false, error: null, reported: false, errorStack: '' }
+  state: ErrorBoundaryState = { hasError: false, error: null, reported: false }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error, reported: false, errorStack: '' }
+    return { hasError: true, error, reported: false }
   }
 
   onDismissModalTouched = () => {
