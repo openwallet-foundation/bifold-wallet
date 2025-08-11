@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.4.4
+
+### Patch Changes
+
+- d0a74bc: added error boundary to app
+
 ## 2.4.3
 
 ### Patch Changes
