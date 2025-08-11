@@ -219,6 +219,16 @@ export class MainContainer implements Container {
     })
 
     this._container.registerInstance(TOKENS.ONBOARDING, generateOnboardingWorkflowSteps)
+    this._container.registerInstance(TOKENS.SEPARATED_INPUT, true)
+    this._container.registerInstance(TOKENS.REMEMBER_PIN_MESSAGE, true)
+    this._container.registerInstance(TOKENS.HIDE_UNLOCK_BUTTON, true)
+    this._container.registerInstance(TOKENS.SHOW_HIDE_PIN_BUTTON, false)
+
+    /**
+     *   [TOKENS.SEPARATED_INPUT]: boolean,
+  [TOKENS.REMEMBER_PIN_MESSAGE]: boolean,
+  [TOKENS.HIDE_UNLOCK_BUTTON]: boolean,
+     */
 
     return this
   }

@@ -83,6 +83,8 @@ export const walletId = 'walletId'
 
 export const minPINLength = 6
 
+export const maxPINLength = 6
+
 export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
