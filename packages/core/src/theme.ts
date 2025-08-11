@@ -573,12 +573,12 @@ export function createButtonsTheme(theme: { ColorPalette: IColorPalette; TextThe
     critical: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPalette.brand.primary,
+      backgroundColor: theme.ColorPalette.semantic.error,
     },
     criticalDisabled: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPalette.brand.primaryDisabled,
+      backgroundColor: `rgba(216, 41, 47, ${lightOpacity})`,
     },
     primary: {
       padding: 16,
