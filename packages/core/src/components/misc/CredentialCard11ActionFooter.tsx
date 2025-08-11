@@ -32,7 +32,7 @@ const CredentialActionFooter = ({ onPress, text, testID, textColor }: Credential
     credActionText: {
       fontSize: 20,
       fontWeight: TextTheme.bold.fontWeight,
-      color: textColor ?? ColorPalette.brand.link,
+      color: textColor ?? ColorPalette.brand.credentialLink,
     },
   })
 
