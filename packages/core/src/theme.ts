@@ -254,7 +254,6 @@ const BrandColors = {
   secondaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
   tertiary: '#FFFFFFFF',
   tertiaryDisabled: `rgba(53, 130, 63, ${heavyOpacity})`,
-  errorDisabled: `rgba(216, 41, 47, ${lightOpacity})`,
   primaryLight: `rgba(53, 130, 63, ${lightOpacity})`,
   highlight: '#FCBA19',
   primaryBackground: '#000000',
@@ -579,7 +578,7 @@ export function createButtonsTheme(theme: { ColorPalette: IColorPalette; TextThe
     criticalDisabled: {
       padding: 16,
       borderRadius: 4,
-      backgroundColor: theme.ColorPalette.brand.errorDisabled,
+      backgroundColor: `rgba(216, 41, 47, ${lightOpacity})`,
     },
     primary: {
       padding: 16,

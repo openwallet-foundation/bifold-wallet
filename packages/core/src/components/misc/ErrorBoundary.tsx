@@ -105,7 +105,7 @@ const ErrorBoundaryInfoBox: React.FC<ErrorBoundaryInfoBoxProps> = ({
       borderWidth: 1,
       padding: 10,
       minWidth: width - 2 * 25,
-      height: 300,
+      height: 400,
     },
     headerContainer: {
       flexDirection: 'row',
@@ -146,30 +146,32 @@ const ErrorBoundaryInfoBox: React.FC<ErrorBoundaryInfoBoxProps> = ({
           <Icon name={'close'} size={iconSize} color={'black'} />
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Text style={styles.bodyText}>{description}</Text>
-        {onCallToActionLabel && (
-          <View style={{ marginBottom: 8 }}>
-            <Button buttonType={ButtonType.Critical} title={onCallToActionLabel} onPress={onCallToActionPressed} />
-          </View>
-        )}
-        {secondaryCallToActionTitle && (
-          <Button
-            buttonType={ButtonType.Critical}
-            title={secondaryCallToActionTitle}
-            onPress={secondaryCallToActionPressed}
-            disabled={secondaryCallToActionDisabled}
-          />
-        )}
-        {showVersionFooter ? (
-          <Text
-            style={{ flex: 1, marginTop: 8, textAlign: 'center', color: 'darkred' }}
-            testID={testIdWithKey('VersionNumber')}
-          >
-            {`${t('Settings.Version')} ${getVersion()} (${getBuildNumber()})`}
-          </Text>
-        ) : null}
-      </ScrollView>
+      <View style={{ maxHeight: 150, marginBottom: 8 }}>
+        <ScrollView>
+          <Text style={styles.bodyText}>{description}</Text>
+        </ScrollView>
+      </View>
+      {onCallToActionLabel && (
+        <View style={{ marginBottom: 8 }}>
+          <Button buttonType={ButtonType.Critical} title={onCallToActionLabel} onPress={onCallToActionPressed} />
+        </View>
+      )}
+      {secondaryCallToActionTitle && (
+        <Button
+          buttonType={ButtonType.Critical}
+          title={secondaryCallToActionTitle}
+          onPress={secondaryCallToActionPressed}
+          disabled={secondaryCallToActionDisabled}
+        />
+      )}
+      {showVersionFooter ? (
+        <Text
+          style={{ flex: 1, marginTop: 8, textAlign: 'center', color: 'darkred' }}
+          testID={testIdWithKey('VersionNumber')}
+        >
+          {`${t('Settings.Version')} ${getVersion()} (${getBuildNumber()})`}
+        </Text>
+      ) : null}
     </View>
   )
 }
