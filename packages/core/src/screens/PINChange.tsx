@@ -1,4 +1,4 @@
-import { ParamListBase, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,6 @@ import {
   View,
 } from 'react-native'
 
-// eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
@@ -29,11 +28,11 @@ import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { OnboardingStackParams, Screens } from '../types/navigators'
+import { OnboardingStackParams, Screens, SettingStackParams } from '../types/navigators'
 import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
 
-const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = () => {
+const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN>> = () => {
   const { agent } = useAppAgent()
   const { checkWalletPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
@@ -43,7 +42,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const [store] = useStore()
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
@@ -83,7 +82,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
       justifyContent: 'space-between',
     },
@@ -174,7 +173,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
   }, [inlineMessages, isLoading, PIN, PINTwo, PINOld])
 
   return (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />
@@ -185,6 +184,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             onPINChanged={(p: string) => {
               setPINOld(p)
             }}
+            onSubmitEditing={handleChangePinTap}
           />
           <PINInput
             label={t('PINChange.EnterPINTitle')}
@@ -202,6 +202,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             accessibilityLabel={t('PINCreate.EnterPIN')}
             autoFocus={false}
             inlineMessage={inlineMessageField1}
+            onSubmitEditing={handleChangePinTap}
           />
           <PINInput
             label={t('PINChange.ReenterPIN')}
@@ -220,6 +221,7 @@ const PINChange: React.FC<StackScreenProps<ParamListBase, Screens.ChangePIN>> = 
             autoFocus={false}
             ref={PINTwoInputRef}
             inlineMessage={inlineMessageField2}
+            onSubmitEditing={handleChangePinTap}
           />
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (

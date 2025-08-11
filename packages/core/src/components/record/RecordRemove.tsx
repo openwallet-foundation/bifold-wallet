@@ -15,7 +15,7 @@ interface RecordRemoveProps {
 
 const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) => {
   const { t } = useTranslation()
-  const { TextTheme, ColorPallet, Assets } = useTheme()
+  const { TextTheme, ColorPalette, Assets } = useTheme()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
       ...TextTheme.normal,
     },
     footerText: {
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
     },
     linkContainer: {
       minHeight: TextTheme.normal.fontSize,
@@ -39,7 +39,7 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
   return (
     <View
       style={{
-        backgroundColor: ColorPallet.brand.secondaryBackground,
+        backgroundColor: ColorPalette.brand.secondaryBackground,
         marginTop: 16,
         paddingHorizontal: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? 25 : 16,
         paddingVertical: 16,
@@ -54,8 +54,8 @@ const RecordRemove: React.FC<RecordRemoveProps> = ({ onRemove = () => null }) =>
         activeOpacity={1}
         onPress={onRemove}
       >
-        <Assets.svg.iconDelete width={20} height={20} color={ColorPallet.semantic.error} />
-        <ThemedText style={[styles.footerText, { color: ColorPallet.semantic.error }]}>
+        <Assets.svg.iconDelete width={20} height={20} color={ColorPalette.semantic.error} />
+        <ThemedText style={[styles.footerText, { color: ColorPalette.semantic.error }]}>
           {t('CredentialDetails.RemoveFromWallet')}
         </ThemedText>
       </TouchableOpacity>

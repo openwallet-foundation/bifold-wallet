@@ -26,14 +26,14 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
   style = {},
   textStyle = {},
 }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const styles = StyleSheet.create({
     container: {
       padding: 10,
       borderRadius: 5,
       borderWidth: 1,
-      backgroundColor: ColorPallet.notification.info,
-      borderColor: ColorPallet.notification.infoBorder,
+      backgroundColor: ColorPalette.notification.info,
+      borderColor: ColorPalette.notification.infoBorder,
       ...style,
     },
     row: {
@@ -45,7 +45,7 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
       alignSelf: 'center',
       flex: 1,
       flexWrap: 'wrap',
-      color: ColorPallet.notification.infoText,
+      color: ColorPalette.notification.infoText,
       ...textStyle,
     },
     iconContainer: {
@@ -56,7 +56,7 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
   })
 
   let iconName = 'info'
-  let iconColor = ColorPallet.notification.infoIcon
+  let iconColor = ColorPalette.notification.infoIcon
 
   switch (type) {
     case InfoBoxType.Info:
@@ -64,43 +64,43 @@ const InfoTextBox: React.FC<TextBoxProps> = ({
 
     case InfoBoxType.Success:
       iconName = 'check-circle'
-      iconColor = ColorPallet.notification.successIcon
+      iconColor = ColorPalette.notification.successIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.success,
-        borderColor: ColorPallet.notification.successBorder,
+        backgroundColor: ColorPalette.notification.success,
+        borderColor: ColorPalette.notification.successBorder,
       }
       styles.text = {
         ...styles.text,
-        color: ColorPallet.notification.successText,
+        color: ColorPalette.notification.successText,
       }
       break
 
     case InfoBoxType.Warn:
       iconName = 'warning'
-      iconColor = ColorPallet.notification.warnIcon
+      iconColor = ColorPalette.notification.warnIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.warn,
-        borderColor: ColorPallet.notification.warnBorder,
+        backgroundColor: ColorPalette.notification.warn,
+        borderColor: ColorPalette.notification.warnBorder,
       }
       styles.text = {
         ...styles.text,
-        color: ColorPallet.notification.warnText,
+        color: ColorPalette.notification.warnText,
       }
       break
 
     case InfoBoxType.Error:
       iconName = 'error'
-      iconColor = ColorPallet.notification.errorIcon
+      iconColor = ColorPalette.notification.errorIcon
       styles.container = {
         ...styles.container,
-        backgroundColor: ColorPallet.notification.error,
-        borderColor: ColorPallet.notification.errorBorder,
+        backgroundColor: ColorPalette.notification.error,
+        borderColor: ColorPalette.notification.errorBorder,
       }
       styles.text = {
         ...styles.text,
-        color: ColorPallet.notification.errorText,
+        color: ColorPalette.notification.errorText,
       }
       break
 

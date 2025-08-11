@@ -19,7 +19,6 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useDeveloperMode } from '../hooks/developer-mode'
 import { useLockout } from '../hooks/lockout'
-import { useGotoPostAuthScreens } from '../hooks/onboarding'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
@@ -41,7 +40,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [forgotPINModalVisible, setForgotPINModalVisible] = useState(false)
   const [devModalVisible, setDevModalVisible] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
-  const { ColorPallet, TextTheme } = useTheme()
+  const { ColorPalette, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [
     logger,
@@ -61,7 +60,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     setDevModalVisible(true)
   }
   const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
-  const gotoPostAuthScreens = useGotoPostAuthScreens()
   const isContinueDisabled = inlineMessages.enabled ? !continueEnabled : !continueEnabled || PIN.length < minPINLength
   usePreventScreenCapture(preventScreenCapture)
 
@@ -89,9 +87,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         payload: [{ loginAttempts: 0 }],
       })
       setAuthenticated(true)
-      gotoPostAuthScreens()
     }
-  }, [getWalletSecret, dispatch, setAuthenticated, gotoPostAuthScreens])
+  }, [getWalletSecret, dispatch, setAuthenticated])
 
   useEffect(() => {
     const handle = InteractionManager.runAfterInteractions(async () => {
@@ -189,7 +186,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           payload: [{ displayNotification: false }],
         })
         setAuthenticated(true)
-        gotoPostAuthScreens()
       } catch (err: unknown) {
         const error = new BifoldError(
           t('Error.Title1041'),
@@ -207,7 +203,6 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       getLockoutPenalty,
       dispatch,
       setAuthenticated,
-      gotoPostAuthScreens,
       t,
       attemptLockout,
       inlineMessages,
@@ -241,7 +236,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       height: '100%',
       padding: 20,
       justifyContent: 'space-between',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
     },
     buttonContainer: {
       width: '100%',
@@ -269,7 +264,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       marginBottom: 20,
     },
     forgotPINText: {
-      color: ColorPallet.brand.link,
+      color: ColorPalette.brand.link,
       fontSize: 20,
     },
     buildNumberText: {
@@ -316,7 +311,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ])
 
   return (
-    <KeyboardView>
+    <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View>
           <Pressable
@@ -333,12 +328,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
               setPIN(p)
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
+                onPINInputCompleted(p)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
             accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
             inlineMessage={inlineMessageField}
+            onSubmitEditing={() => {
+              onPINInputCompleted(PIN)
+            }}
           />
           <ThemedText
             variant="bold"

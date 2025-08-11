@@ -31,7 +31,7 @@ const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
   const { connectionId } = route.params
   const connection = useConnectionById(connectionId)
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const navigation = useNavigation()
   const [store, dispatch] = useStore()
   const [contactName, setContactName] = useState(getConnectionName(connection, store.preferences.alternateContactNames))
@@ -45,7 +45,7 @@ const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
   const styles = StyleSheet.create({
     screenContainer: {
       height: '100%',
-      backgroundColor: ColorPallet.brand.primaryBackground,
+      backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
       justifyContent: 'space-between',
     },

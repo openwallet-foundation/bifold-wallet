@@ -7,6 +7,7 @@ import { ITheme, OnboardingTheme } from '../theme'
 import { ScreenOptionsType, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import HeaderWithBanner from '../components/views/HeaderWithBanner'
 
 export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.Preface]: {
@@ -70,13 +71,13 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   },
 }
 
-export function useDefaultStackOptions({ ColorPallet }: ITheme): StackNavigationOptions {
+export function useDefaultStackOptions({ ColorPalette }: ITheme): StackNavigationOptions {
   const { t } = useTranslation()
   const [{ globalScreenOptions }] = useServices([TOKENS.CONFIG])
 
   return (
     globalScreenOptions ?? {
-      headerTintColor: ColorPallet.brand.headerIcon,
+      headerTintColor: ColorPalette.brand.headerIcon,
       headerShown: true,
       headerBackTitleVisible: false,
       headerTitleContainerStyle: {
@@ -88,12 +89,13 @@ export function useDefaultStackOptions({ ColorPallet }: ITheme): StackNavigation
         elevation: 0,
         shadowOffset: { width: 0, height: 6 },
         shadowRadius: 6,
-        shadowColor: ColorPallet.grayscale.black,
+        shadowColor: ColorPalette.grayscale.black,
         shadowOpacity: 0.15,
         borderBottomWidth: 0,
       },
       headerTitleAlign: 'center' as 'center' | 'left',
       headerTitle: (props: { children: React.ReactNode }) => <HeaderTitle {...props} />,
+      header: (props) => <HeaderWithBanner {...props} />,
       headerBackAccessibilityLabel: t('Global.Back'),
     }
   )

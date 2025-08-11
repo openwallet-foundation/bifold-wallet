@@ -50,7 +50,6 @@
     "Send": "Envoyer",
     "Reset": "Reset (FR)",
     "ViewJSON": "View JSON Details (FR)"
-
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -927,5 +926,8 @@
     "LearnMore": "Learn what's New (FR)",
     "UpdateNow": "Update the app (FR)",
     "UpdateLater": "Do this later (FR)"
+  },
+  "Banner": {
+    "AlertsLength": "You have {{ alerts }} alerts (FR)"
   }
 }

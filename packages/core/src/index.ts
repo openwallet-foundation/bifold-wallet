@@ -15,7 +15,6 @@ import CredentialCard from './components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
-import NetInfo from './components/network/NetInfo'
 import Record from './components/record/Record'
 import InfoTextBox from './components/texts/InfoTextBox'
 import Link from './components/texts/Link'
@@ -64,6 +63,7 @@ import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import usePreventScreenCapture from './hooks/screen-capture'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
+import { DeepPartial, ThemeBuilder } from './theme-builder'
 
 export * from './navigators'
 export * from './services/storage'
@@ -78,7 +78,7 @@ export { useDeepLinks } from './hooks/deep-links'
 export { Assets as ImageAssets } from './theme'
 export { ThemeProvider, useTheme } from './contexts/theme'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
-export { ColorPallet } from './theme'
+export { ColorPalette } from './theme'
 export { animatedComponents } from './animated-components'
 export { bifoldTheme } from './theme'
 export { useAuth } from './contexts/auth'
@@ -116,7 +116,7 @@ export type {
   INotificationColors,
   IErrorColors,
   IGrayscaleColors,
-  IColorPallet,
+  IColorPalette,
   IAssets,
   ITheme,
 } from './theme'
@@ -189,7 +189,6 @@ export {
   ToastType,
   toastConfig,
   NavContainer,
-  NetInfo,
   OnboardingPages,
   OpenIDCredentialRecordProvider,
   NotificationListItem,
@@ -228,5 +227,6 @@ export {
   tours,
   DefaultScreenOptionsDictionary,
   DefaultScreenLayoutOptions,
+  ThemeBuilder,
 }
-export type { IButton }
+export type { IButton, DeepPartial }

@@ -28,7 +28,6 @@ enum OnboardingDispatchAction {
   DID_NAME_WALLET = 'onboarding/didNameWallet',
   DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
   ONBOARDING_VERSION = 'onboarding/onboardingVersion',
-  SET_POST_AUTH_SCREENS = 'onboarding/postAuthScreens',
 }
 
 enum MigrationDispatchAction {
@@ -64,6 +63,8 @@ enum PreferencesDispatchAction {
   SET_SELECTED_MEDIATOR = 'preferences/setSelectedMediator',
   ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
   RESET_MEDIATORS = 'preferences/resetMediators',
+  BANNER_MESSAGES = 'preferences/bannerMessages',
+  REMOVE_BANNER_MESSAGE = 'REMOVE_BANNER_MESSAGE',
 }
 
 enum ToursDispatchAction {
@@ -561,6 +562,37 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       }
     }
 
+    case PreferencesDispatchAction.BANNER_MESSAGES: {
+      const bannerMessageToAdd = action?.payload ?? []
+      const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
+      const uniqueBannerMessages = Array.from(new Set(newBannerMessages))
+
+      const preferences: Preferences = {
+        ...state.preferences,
+        bannerMessages: uniqueBannerMessages,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
+    case PreferencesDispatchAction.REMOVE_BANNER_MESSAGE: {
+      const keysToRemove = action?.payload ?? []
+      const newBannerMessages = state.preferences.bannerMessages.filter((msg) => !keysToRemove.includes(msg.id))
+      const preferences: Preferences = {
+        ...state.preferences,
+        bannerMessages: newBannerMessages,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+      return {
+        ...state,
+        preferences,
+      }
+    }
+
     case OnboardingDispatchAction.ONBOARDING_VERSION: {
       const version = (action?.payload || []).pop()
       const onboarding = {
@@ -676,18 +708,6 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
 
       PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, onboarding)
 
-      return newState
-    }
-    case OnboardingDispatchAction.SET_POST_AUTH_SCREENS: {
-      const value = (action?.payload || []).pop()
-      const onboarding = {
-        ...state.onboarding,
-        postAuthScreens: value,
-      }
-      const newState = {
-        ...state,
-        onboarding,
-      }
       return newState
     }
     case MigrationDispatchAction.DID_MIGRATE_TO_ASKAR: {

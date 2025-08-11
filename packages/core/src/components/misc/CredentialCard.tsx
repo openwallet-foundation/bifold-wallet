@@ -46,7 +46,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
 }) => {
   // add ability to reference credential by ID, allows us to get past react hook restrictions
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { resolveBundleForCredential } = useOpenIDCredentials()
   const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<Attribute | undefined>()
@@ -85,7 +85,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       return (
         <CredentialCard11
           displayItems={displayItems}
-          style={isBranding10 ? { backgroundColor: ColorPallet.brand.secondaryBackground } : undefined}
+          style={isBranding10 ? { backgroundColor: ColorPalette.brand.secondaryBackground } : undefined}
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}

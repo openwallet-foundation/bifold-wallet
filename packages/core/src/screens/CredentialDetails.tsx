@@ -22,7 +22,7 @@ import { TOKENS, useServices } from '../container-api'
 import { useTheme } from '../contexts/theme'
 import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
-import { RootStackParams, Screens, Stacks } from '../types/navigators'
+import { ContactStackParams, NotificationStackParams, RootStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { credentialTextColor, getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
@@ -36,7 +36,10 @@ import CredentialDetailSecondaryHeader from '../components/views/CredentialDetai
 import { ThemedText } from '../components/texts/ThemedText'
 import CardWatermark from '../components/misc/CardWatermark'
 
-type CredentialDetailsProps = StackScreenProps<RootStackParams, Screens.CredentialDetails>
+type CredentialDetailsProps = StackScreenProps<
+  RootStackParams & ContactStackParams & NotificationStackParams,
+  Screens.CredentialDetails
+>
 
 const paddingHorizontal = 24
 const paddingVertical = 16
@@ -51,7 +54,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
-  const { ColorPallet, Assets } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
   const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.UTIL_LOGGER,
@@ -116,7 +119,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   })
 
   const icon = {
-    color: credentialTextColor(ColorPallet, containerBackgroundColor),
+    color: credentialTextColor(ColorPalette, containerBackgroundColor),
     width: 48,
     height: 48,
   }
@@ -320,7 +323,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               <CredentialCardLogo overlay={overlay} brandingOverlayType={bundleResolver.getBrandingOverlayType()} />
               <ThemedText
                 style={{
-                  color: credentialTextColor(ColorPallet, containerBackgroundColor),
+                  color: credentialTextColor(ColorPalette, containerBackgroundColor),
                   flexWrap: 'wrap',
                   maxWidth: '90%',
                 }}
@@ -331,7 +334,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             <Assets.svg.iconChevronRight {...icon} />
           </View>
         </TouchableOpacity>
-        <View style={{ backgroundColor: ColorPallet.brand.secondaryBackground }}>
+        <View style={{ backgroundColor: ColorPalette.brand.secondaryBackground }}>
           <CredentialDetailPrimaryHeader
             overlay={overlay}
             brandingOverlayType={bundleResolver.getBrandingOverlayType()}
@@ -359,7 +362,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               padding: paddingVertical,
-              backgroundColor: ColorPallet.brand.secondaryBackground,
+              backgroundColor: ColorPalette.brand.secondaryBackground,
               ...(isBranding11 && { paddingTop: 0 }),
             }}
           >
@@ -376,27 +379,27 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         {credentialConnectionLabel && isBranding10 ? (
           <View
             style={{
-              backgroundColor: ColorPallet.brand.secondaryBackground,
+              backgroundColor: ColorPalette.brand.secondaryBackground,
               marginTop: paddingVertical,
               paddingHorizontal,
               paddingVertical,
             }}
           >
             <ThemedText testID={testIdWithKey('IssuerName')}>
-              <ThemedText variant="title" style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
+              <ThemedText variant="title" style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
                 {t('CredentialDetails.IssuedBy') + ' '}
               </ThemedText>
-              <ThemedText style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
+              <ThemedText style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
                 {credentialConnectionLabel}
               </ThemedText>
             </ThemedText>
             {/* issued date if dev mode */}
             {store?.preferences.developerModeEnabled && credential?.createdAt ? (
               <ThemedText testID={testIdWithKey('IssuedDate')}>
-                <ThemedText variant="title" style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
+                <ThemedText variant="title" style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
                   {t('CredentialDetails.Issued') + ': '}
                 </ThemedText>
-                <ThemedText style={isRevoked && { color: ColorPallet.grayscale.mediumGrey }}>
+                <ThemedText style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
                   {formatTime(credential.createdAt, { format: 'YYYY-MM-DD HH:mm:ss [UTC]' })}
                 </ThemedText>
               </ThemedText>
@@ -406,7 +409,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         {store?.preferences.developerModeEnabled && (
           <View
             style={{
-              backgroundColor: ColorPallet.brand.secondaryBackground,
+              backgroundColor: ColorPalette.brand.secondaryBackground,
               marginTop: paddingVertical,
               paddingHorizontal,
               paddingVertical,
@@ -419,7 +422,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               testID={testIdWithKey('JSONDetails')}
               style={{ flexDirection: 'row', gap: 8 }}
             >
-              <Assets.svg.iconCode width={20} height={20} color={ColorPallet.brand.secondary} />
+              <Assets.svg.iconCode width={20} height={20} color={ColorPalette.brand.secondary} />
               <ThemedText>{t('Global.ViewJSON')}</ThemedText>
             </TouchableOpacity>
           </View>
@@ -427,20 +430,20 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         {isRevoked ? (
           <View
             style={{
-              backgroundColor: ColorPallet.notification.error,
+              backgroundColor: ColorPalette.notification.error,
               marginTop: paddingVertical,
               paddingHorizontal,
               paddingVertical,
             }}
           >
             <ThemedText testID={testIdWithKey('RevokedDate')}>
-              <ThemedText variant="title" style={{ color: ColorPallet.notification.errorText }}>
+              <ThemedText variant="title" style={{ color: ColorPalette.notification.errorText }}>
                 {t('CredentialDetails.Revoked') + ': '}
               </ThemedText>
-              <ThemedText style={{ color: ColorPallet.notification.errorText }}>{preciseRevocationDate}</ThemedText>
+              <ThemedText style={{ color: ColorPalette.notification.errorText }}>{preciseRevocationDate}</ThemedText>
             </ThemedText>
             <ThemedText
-              style={{ color: ColorPallet.notification.errorText, marginTop: paddingVertical }}
+              style={{ color: ColorPalette.notification.errorText, marginTop: paddingVertical }}
               testID={testIdWithKey('RevocationMessage')}
             >
               {credential?.revocationNotification?.comment

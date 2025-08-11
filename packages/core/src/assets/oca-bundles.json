@@ -21,7 +21,7 @@
         "description": "",
         "issuer": "",
         "issuer_description": "",
-        "issuer_url": ""
+        "issuer_url": "http://example.com/issue"
       },
       {
         "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
@@ -33,7 +33,7 @@
         "description": "",
         "issuer": "",
         "issuer_description": "",
-        "issuer_url": ""
+        "issuer_url": "http://example.com/issue"
       },
       {
         "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
@@ -88,7 +88,7 @@
         "description": "",
         "issuer": "",
         "issuer_description": "",
-        "issuer_url": ""
+        "issuer_url": "http://example.com/issue"
       },
       {
         "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",
@@ -100,7 +100,7 @@
         "description": "",
         "issuer": "",
         "issuer_description": "",
-        "issuer_url": ""
+        "issuer_url": "http://example.com/issue"
       },
       {
         "capture_base": "EfeQBz5tyC0gett-ETgkg4pkxBwwuQoeYsT-9Nt0cNsc",

@@ -61,7 +61,7 @@ const TabStack: React.FC = () => {
   const { t } = useTranslation()
   const Tab = createBottomTabNavigator<TabStackParams>()
   const { assertNetworkConnected } = useNetwork()
-  const { ColorPallet, TabTheme, TextTheme, Assets, NavigationTheme } = useTheme()
+  const { ColorPalette, TabTheme, TextTheme, Assets, NavigationTheme } = useTheme()
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [store, dispatch] = useStore()
   const { agent } = useAgent()
@@ -179,7 +179,7 @@ const TabStack: React.FC = () => {
             tabBarBadge: notifications.length || undefined,
             tabBarBadgeStyle: {
               marginLeft: leftMarginForDevice(),
-              backgroundColor: ColorPallet.semantic.error,
+              backgroundColor: ColorPalette.semantic.error,
               ...badgeFontSize,
             },
           }}

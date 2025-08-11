@@ -32,7 +32,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   onPress,
   iconTintColor,
 }) => {
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const style = StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -43,12 +43,14 @@ const IconButton: React.FC<IconButtonProps> = ({
       minHeight: defaultIconSize,
     },
     title: {
-      color: ColorPallet.brand.headerText,
+      color: ColorPalette.brand.headerText,
       marginRight: 4,
     },
   })
 
-  const myIcon = () => <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPallet.brand.headerIcon} />
+  const myIcon = () => (
+    <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPalette.brand.headerIcon} />
+  )
 
   const myText = () =>
     text ? (

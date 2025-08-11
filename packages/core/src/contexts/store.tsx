@@ -25,7 +25,6 @@ export const defaultState: State = {
     didNameWallet: false,
     onboardingVersion: 0,
     didCompleteOnboarding: false,
-    postAuthScreens: [],
   },
   authentication: {
     didAuthenticate: false,
@@ -60,6 +59,7 @@ export const defaultState: State = {
     autoLockTime: defaultAutoLockTime, // default wallets lockout time to 5 minutes
     availableMediators: [Config.MEDIATOR_URL ?? ''],
     selectedMediator: Config.MEDIATOR_URL ?? '',
+    bannerMessages: [],
   },
   tours: {
     seenToursPrompt: false,

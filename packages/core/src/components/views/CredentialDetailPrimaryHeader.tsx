@@ -26,7 +26,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   credential,
 }: CredentialDetailPrimaryHeaderProps) => {
   const { t } = useTranslation()
-  const { ColorPallet } = useTheme()
+  const { ColorPalette } = useTheme()
   const { width, height } = useWindowDimensions()
   const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
   const styles = StyleSheet.create({
@@ -38,8 +38,8 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
     textContainer: {
       color:
         brandingOverlayType === BrandingOverlayType.Branding10
-          ? credentialTextColor(ColorPallet, overlay.brandingOverlay?.primaryBackgroundColor)
-          : ColorPallet.brand.primary,
+          ? credentialTextColor(ColorPalette, overlay.brandingOverlay?.primaryBackgroundColor)
+          : ColorPalette.brand.primary,
     },
   })
 
@@ -92,7 +92,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
                 lineHeight: 24,
                 marginTop: 8,
                 fontSize: 14,
-                color: ColorPallet.grayscale.mediumGrey,
+                color: ColorPalette.grayscale.mediumGrey,
               },
             ]}
           >

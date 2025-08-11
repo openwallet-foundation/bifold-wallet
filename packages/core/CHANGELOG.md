@@ -1,5 +1,61 @@
 # @bifold/core
 
+## 2.4.3
+
+### Patch Changes
+
+- 69eff6c: fix credential card watermark and slice when in revoked state
+
+## 2.4.2
+
+### Patch Changes
+
+- 1d56182: Prevent accidentally overwritten persisted state on load
+
+## 2.4.1
+
+### Patch Changes
+
+- dbf5cee: Allow explicit undefined values for ThemeBuilder
+- a60aefd: pincreate screen views no longer keyboard avoiding
+
+## 2.4.0
+
+### Minor Changes
+
+- 2ac4abc: Added types for all missing theme properties.
+  Removed redundant types from theme.
+  Created a ThemeBuilder class to override existing theme styles.
+  Patched a couple places which were using incorrect styles.
+- 28dbede: Swapped references to ColorPallet -> ColorPalette
+
+### Patch Changes
+
+- 0d86620: Adds divider between notification banners
+
+## 2.3.0
+
+### Minor Changes
+
+- da487bb: Bump all dependency patch versions including React Native, some minor version bumps
+
+### Patch Changes
+
+- 84e7336: Updated revoked credential styling
+- 85f21e2: react native gifted chat no longer uses redundant keyboard avoiding view padding on ios
+
+## 2.2.1
+
+### Patch Changes
+
+- b25d47a: App no longer resizes when software keyboard is open on Android
+  KeyboardView now takes optional prop to be keyboardavoiding
+  Keyboard avoidance added to pinenter, changebiometry, pinverify, pinchange, and chat.
+- 4dd8198: updated no interest toast to use banner instead
+- d7f53f9: Remove extra safearea from developer modal
+- 0716823: PIN automatically triggers unlock when minPINLength characters are entered
+- 242c7f8: Swapped credential_help_url for issuer_url in failed proof request
+
 ## 2.2.0
 
 ### Minor Changes
