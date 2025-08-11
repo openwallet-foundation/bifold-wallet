@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 2.4.3
+
+### Patch Changes
+
+- 69eff6c: fix credential card watermark and slice when in revoked state
+
+## 2.4.2
+
+### Patch Changes
+
+- 1d56182: Prevent accidentally overwritten persisted state on load
+
 ## 2.4.1
 
 ### Patch Changes
