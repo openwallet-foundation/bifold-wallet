@@ -26,19 +26,19 @@ export enum IndyLedger {
   CANDY_PRODUCTION_NETWORK = 'cpn',
 }
 
-interface IndyLedgerConfig {
+export interface IndyLedgerConfig {
   ledgerId: IndyLedger
   isProduction: boolean
   doNotConnectOnStartup?: true
 }
 
-interface IndyLedgerJSON extends IndyVdrPoolConfig {
+export interface IndyLedgerJSON extends IndyVdrPoolConfig {
   // A human-readable identifier for the ledger, useful for identifing the ledger in the JSON file.
   // Note: This value will not be used downstream as the IndyVdrPoolConfig interface will exclude it.
   id: string
 }
 
-type IndyLedgersRecord = Record<
+export type IndyLedgersRecord = Record<
   IndyLedger,
   {
     name: string
@@ -87,9 +87,13 @@ export async function getIndyLedgers(indyLedgerConfigs: IndyLedgerConfig[]): Pro
       throw new Error(`${ERROR_TAG}: Ledger config for ${ledgerConfig.ledgerId} not found`)
     }
 
+    const ledgerId = indyLedger.name
+      .split(' ')
+      .filter((word) => !/\W+/im.test(word))
+      .join('')
+
     ledgers.push({
-      // Remove all whitespace to form the ledger ID
-      id: indyLedger.name.replace(/\s+/g, ''),
+      id: ledgerId,
       indyNamespace: indyLedger.indyNamespace,
       isProduction: ledgerConfig.isProduction,
       connectOnStartup: !ledgerConfig.doNotConnectOnStartup,
