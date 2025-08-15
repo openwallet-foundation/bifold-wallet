@@ -103,7 +103,9 @@ export {
 } from './utils/helpers'
 export { isValidAnonCredsCredential, getCredentialIdentifiers } from './utils/credential'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
+export { IndyLedger, getIndyLedgers, readIndyLedgersFromFile, writeIndyLedgersToFile } from './utils/ledger'
 
+export type { IndyLedgerConfig, IndyLedgerJSON, IndyLedgersRecord, IndyLedgerFileSystem } from './utils/ledger'
 export type { AnimatedComponents } from './animated-components'
 export type {
   ISVGAssets,
