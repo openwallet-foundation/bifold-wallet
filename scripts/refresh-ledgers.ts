@@ -1,5 +1,12 @@
 import { getIndyLedgers, IndyLedger, writeIndyLedgersToFile } from '../packages/core/src/utils/ledger'
 
+const LEDGERS_JSON_FILE = 'packages/core/src/configs/ledgers/indy/ledgers.json'
+
+/**
+ * Main function to refresh Indy ledgers and write them to a file.
+ *
+ * @returns {*} {Promise<void>}
+ */
 async function main() {
   const ledgers = await getIndyLedgers([
     { ledgerId: IndyLedger.BCOVRIN_TEST, isProduction: false },
@@ -11,7 +18,7 @@ async function main() {
     { ledgerId: IndyLedger.INDICO_TESTNET, isProduction: false },
   ])
 
-  writeIndyLedgersToFile('packages/core/src/configs/ledgers/indy/ledgers.json', ledgers)
+  writeIndyLedgersToFile(LEDGERS_JSON_FILE, ledgers)
 }
 
 main()
