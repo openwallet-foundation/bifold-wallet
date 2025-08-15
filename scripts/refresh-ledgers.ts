@@ -1,6 +1,18 @@
-import { getIndyLedgers, IndyLedger, writeIndyLedgersToFile } from '../packages/core/src/utils/ledger'
+import fs from 'fs'
+import {
+  getIndyLedgers,
+  IndyLedger,
+  IndyLedgerFileSystem,
+  writeIndyLedgersToFile,
+} from '../packages/core/src/utils/ledger'
 
 const LEDGERS_JSON_FILE = 'packages/core/src/configs/ledgers/indy/ledgers.json'
+
+const fileSystem: IndyLedgerFileSystem = {
+  writeFile: (filePath: string, data: string) => fs.writeFileSync(filePath, data, 'utf8'),
+  readFile: (filePath: string) => fs.readFileSync(filePath, 'utf8'),
+  fileExists: (filePath: string) => fs.existsSync(filePath),
+}
 
 /**
  * Main function to refresh Indy ledgers and write them to a file.
@@ -18,7 +30,7 @@ async function main() {
     { ledgerId: IndyLedger.INDICO_TESTNET, isProduction: false },
   ])
 
-  writeIndyLedgersToFile(LEDGERS_JSON_FILE, ledgers)
+  writeIndyLedgersToFile(fileSystem, LEDGERS_JSON_FILE, ledgers)
 }
 
 main()

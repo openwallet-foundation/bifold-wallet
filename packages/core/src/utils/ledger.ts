@@ -1,6 +1,5 @@
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import axios from 'axios'
-import fs from 'fs'
 import path from 'path'
 
 const INDY_NETWORK_URL =
@@ -46,6 +45,14 @@ export type IndyLedgersRecord = Record<
     genesisUrl: string
   }
 >
+
+// This interface allows us to abstract the file system operations,
+// preventing android from complaining about the use of the Node.js module 'fs'.
+export interface IndyLedgerFileSystem {
+  writeFile: (filePath: string, data: string) => void
+  readFile: (filePath: string) => string
+  fileExists: (filePath: string) => boolean
+}
 
 /**
  * Fetches the content from a given URL and returns it as a Promise.
@@ -120,18 +127,26 @@ export async function getIndyLedgers(indyLedgerConfigs: IndyLedgerConfig[]): Pro
  * Writes the provided Indy ledgers to a JSON file at the specified file path.
  *
  * @throws {Error} - Throws an error if writing to the file fails or if the file path is invalid.
+ * @param {IndyLedgerFileSystem} fileSystem - The file system interface to use for writing the file.
  * @param {string} filePath - The path to the JSON file where the ledgers should be written.
  * @param {IndyLedgerJSON[]} ledgers - The array of Indy ledgers to write to the file.
  * @returns {*} {void}
  */
-export function writeIndyLedgersToFile(filePath: string, ledgers: IndyLedgerJSON[]): void {
+export function writeIndyLedgersToFile(
+  fileSystem: IndyLedgerFileSystem,
+  filePath: string,
+  ledgers: IndyLedgerJSON[]
+): void {
   try {
     if (!filePath.endsWith('.json')) {
       throw new Error('File path must point to a JSON file')
     }
 
     // Skip writing to file if the new ledgers are the same
-    if (fs.existsSync(filePath) && JSON.stringify(readIndyLedgersFromFile(filePath)) === JSON.stringify(ledgers)) {
+    if (
+      fileSystem.fileExists(filePath) &&
+      JSON.stringify(readIndyLedgersFromFile(fileSystem, filePath)) === JSON.stringify(ledgers)
+    ) {
       return
     }
 
@@ -139,7 +154,7 @@ export function writeIndyLedgersToFile(filePath: string, ledgers: IndyLedgerJSON
 
     // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json
     const absoluteFilePath = path.resolve(filePath)
-    fs.writeFileSync(absoluteFilePath, jsonContent, 'utf8')
+    fileSystem.writeFile(absoluteFilePath, jsonContent)
   } catch (error: any) {
     throw new Error(`${ERROR_TAG}: Failed to write ledgers to file ${filePath}: ${error.message}`)
   }
@@ -149,10 +164,11 @@ export function writeIndyLedgersToFile(filePath: string, ledgers: IndyLedgerJSON
  * Reads and parses Indy ledgers from a JSON file at the specified file path.
  *
  * @throws {Error} - Throws an error if reading from the file fails, if the file path is invalid, or if parsing fails.
+ * @param {IndyLedgerFileSystem} fileSystem - The file system interface to use for reading the file.
  * @param {string} filePath - The path to the JSON file to read the ledgers from.
  * @returns {*} {IndyLedgerJSON[]} - An array of Indy ledgers read from the file.
  */
-export function readIndyLedgersFromFile(filePath: string): IndyLedgerJSON[] {
+export function readIndyLedgersFromFile(fileSystem: IndyLedgerFileSystem, filePath: string): IndyLedgerJSON[] {
   try {
     if (!filePath.endsWith('.json')) {
       throw new Error('File path must point to a JSON file')
@@ -160,7 +176,7 @@ export function readIndyLedgersFromFile(filePath: string): IndyLedgerJSON[] {
 
     // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json
     const absoluteFilePath = path.resolve(filePath)
-    const jsonContent = fs.readFileSync(absoluteFilePath, 'utf8')
+    const jsonContent = fileSystem.readFile(absoluteFilePath)
 
     return JSON.parse(jsonContent)
   } catch (error: any) {

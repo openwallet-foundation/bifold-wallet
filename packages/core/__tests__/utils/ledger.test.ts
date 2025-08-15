@@ -1,6 +1,12 @@
 import fs from 'fs'
 import axios from 'axios'
-import { getIndyLedgers, IndyLedger, readIndyLedgersFromFile, writeIndyLedgersToFile } from '../../src/utils/ledger'
+import {
+  getIndyLedgers,
+  IndyLedger,
+  IndyLedgerFileSystem,
+  readIndyLedgersFromFile,
+  writeIndyLedgersToFile,
+} from '../../src/utils/ledger'
 
 const INDY_LEDGER_RECORD = {
   smn: {
@@ -18,6 +24,12 @@ const INDY_LEDGER_RECORD = {
     indyNamespace: 'local:dev-linux',
     genesisUrl: 'LinuxLocalVonNetworkURL',
   },
+}
+
+const fileSystem: IndyLedgerFileSystem = {
+  writeFile: (filePath: string, data: string) => fs.writeFileSync(filePath, data, 'utf8'),
+  readFile: (filePath: string) => fs.readFileSync(filePath, 'utf8'),
+  fileExists: (filePath: string) => fs.existsSync(filePath),
 }
 
 jest.mock('axios')
@@ -95,7 +107,7 @@ describe('ledger utils', () => {
     it('should write ledgers to a JSON file', () => {
       const filePath = './test-ledgers.json'
 
-      writeIndyLedgersToFile(filePath, [
+      writeIndyLedgersToFile(fileSystem, filePath, [
         {
           id: 'SovrinMainNet',
           isProduction: false,
@@ -121,7 +133,7 @@ describe('ledger utils', () => {
     })
 
     it('should throw an error if the file path is invalid', () => {
-      expect(() => writeIndyLedgersToFile('./invalid-path/ledgers.txt', [])).toThrow(
+      expect(() => writeIndyLedgersToFile(fileSystem, './invalid-path/ledgers.txt', [])).toThrow(
         'File path must point to a JSON file'
       )
     })
@@ -143,7 +155,7 @@ describe('ledger utils', () => {
         'utf8'
       )
 
-      const readLedgers = readIndyLedgersFromFile(filePath)
+      const readLedgers = readIndyLedgersFromFile(fileSystem, filePath)
       expect(readLedgers).toStrictEqual([
         {
           id: 'SovrinMainNet',
@@ -171,16 +183,16 @@ describe('ledger utils', () => {
       ]
 
       // Write initial ledgers
-      writeIndyLedgersToFile(filePath, ledgers)
+      writeIndyLedgersToFile(fileSystem, filePath, ledgers)
 
       // Read from file
-      const readLedgers = readIndyLedgersFromFile(filePath)
+      const readLedgers = readIndyLedgersFromFile(fileSystem, filePath)
       expect(readLedgers).toStrictEqual(ledgers)
 
       const initialStats = fs.statSync(filePath)
 
       // Attempt to write the same ledgers again
-      writeIndyLedgersToFile(filePath, ledgers)
+      writeIndyLedgersToFile(fileSystem, filePath, ledgers)
 
       const finalStats = fs.statSync(filePath)
 
@@ -198,7 +210,9 @@ describe('ledger utils', () => {
     })
 
     it('should throw an error if the file path is invalid', () => {
-      expect(() => readIndyLedgersFromFile('./invalid-path/ledgers.txt')).toThrow('File path must point to a JSON file')
+      expect(() => readIndyLedgersFromFile(fileSystem, './invalid-path/ledgers.txt')).toThrow(
+        'File path must point to a JSON file'
+      )
     })
 
     it('should throw is malformed JSON is read', () => {
@@ -206,7 +220,7 @@ describe('ledger utils', () => {
       fs.writeFileSync(filePath, 'This is not JSON', 'utf8')
 
       try {
-        readIndyLedgersFromFile(filePath)
+        readIndyLedgersFromFile(fileSystem, filePath)
         expect(true).toBe(false)
       } catch (error) {
         expect((error as Error).message).toContain('Failed to read ledgers from file')
