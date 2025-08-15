@@ -130,6 +130,11 @@ export function writeIndyLedgersToFile(filePath: string, ledgers: IndyLedgerJSON
       throw new Error('File path must point to a JSON file')
     }
 
+    // Skip writing to file if the new ledgers are the same
+    if (fs.existsSync(filePath) && JSON.stringify(readIndyLedgersFromFile(filePath)) === JSON.stringify(ledgers)) {
+      return
+    }
+
     const jsonContent = JSON.stringify(ledgers, null, 2)
 
     // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json

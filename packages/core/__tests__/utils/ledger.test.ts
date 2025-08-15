@@ -60,7 +60,7 @@ describe('ledger utils', () => {
       })
 
       expect(ledgers[1]).toStrictEqual({
-        id: 'Localvon-network',
+        id: 'Local',
         connectOnStartup: false,
         isProduction: true,
         indyNamespace: 'local:dev-docker',
@@ -152,6 +152,44 @@ describe('ledger utils', () => {
           genesisTransactions: 'A',
         },
       ])
+
+      // Clean up
+      fs.unlinkSync(filePath)
+
+      expect(fs.existsSync(filePath)).toBe(false)
+    })
+
+    it('should skip writing to file if the new ledgers are the same', () => {
+      const filePath = './test-ledgers.json'
+      const ledgers = [
+        {
+          id: 'SovrinMainNet',
+          isProduction: false,
+          indyNamespace: 'sovrin',
+          genesisTransactions: 'A',
+        },
+      ]
+
+      // Write initial ledgers
+      writeIndyLedgersToFile(filePath, ledgers)
+
+      // Read from file
+      const readLedgers = readIndyLedgersFromFile(filePath)
+      expect(readLedgers).toStrictEqual(ledgers)
+
+      const initialStats = fs.statSync(filePath)
+
+      // Attempt to write the same ledgers again
+      writeIndyLedgersToFile(filePath, ledgers)
+
+      const finalStats = fs.statSync(filePath)
+
+      // Check that the modified time did not change
+      expect(finalStats.mtime).toEqual(initialStats.mtime)
+
+      // Check that the file was not modified
+      const writtenContent = fs.readFileSync(filePath, 'utf8')
+      expect(JSON.parse(writtenContent)).toStrictEqual(ledgers)
 
       // Clean up
       fs.unlinkSync(filePath)

@@ -23,7 +23,7 @@
     "typecheck": "yarn workspaces foreach --all --topological-dev -p run typecheck",
     "release": "yarn build && yarn changeset publish --no-git-tag",
     "changeset-version": "changeset version && yarn install --no-immutable",
-    "ledger": "ts-node ./scripts/make-blocks.ts"
+    "ledger": "ts-node ./scripts/refresh-ledgers.ts"
   },
   "devDependencies": {
     "@changesets/cli": "~2.29.5",
