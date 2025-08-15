@@ -1,9 +1,13 @@
+import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import axios from 'axios'
+import fs from 'fs'
+import path from 'path'
 
 const INDY_NETWORK_URL =
   'https://raw.githubusercontent.com/hyperledger/indy-node-monitor/main/fetch-validator-status/allHyperLedgers.json'
+const ERROR_TAG = 'LEDGER ERROR'
 
-enum INDY_LEDGER_ID {
+export enum INDY_LEDGER {
   SOVRIN_BUILDER_NET = 'sbn',
   SOVRIN_STAGING_NET = 'ssn',
   SOVERIN_MAIN_NET = 'smn',
@@ -21,22 +25,20 @@ enum INDY_LEDGER_ID {
   CANDY_PRODUCTION_NETWORK = 'cpn',
 }
 
-interface IIndyLedgerConfig {
-  id: INDY_LEDGER_ID
+interface IndyLedgerConfig {
+  ledgerId: INDY_LEDGER
   connectOnStartup: boolean
   isProduction: boolean
 }
 
-interface IIndyLedger {
+interface IndyLedger extends IndyVdrPoolConfig {
+  // A human-readable identifier for the ledger, useful for identifing the ledger in the JSON file.
+  // Note: This value will not be used downstream as the IndyVdrPoolConfig interface will exclude it.
   id: string
-  indyNamespace: string
-  isProduction: boolean
-  connectOnStartup: boolean
-  gennesisTransactions: string
 }
 
 type IndyLedgersRecord = Record<
-  INDY_LEDGER_ID,
+  INDY_LEDGER,
   {
     name: string
     indyNamespace: string
@@ -52,52 +54,132 @@ type IndyLedgersRecord = Record<
  * @param {string} url - The URL to fetch content from.
  * @returns {*} {Promise<T>} - A promise that resolves to the content fetched from the URL
  */
-async function _getUrlContent<T>(url: string): Promise<T> {
+async function _fetchUrlContent<T>(url: string): Promise<T> {
   try {
     const response = await axios.get<T>(url)
     return response.data
   } catch (error: any) {
-    throw new Error(`LEDGER ERROR: Failed to fetch content from URL ${url}: ${error.message}`)
+    throw new Error(`${ERROR_TAG}: Failed to fetch content from URL ${url}: ${error.message}`)
   }
 }
 
 /**
- * Filters and returns the ledgers based on the provided Indy ledger configurations.
+ * Fetches and returns a list of Indy ledgers based on the provided configurations.
  *
  * @throws {Error} - Throws an error if a network is not found in the IndyLedgersRecord.
- * @param {IIndyLedgerConfig[]} indyLedgerConfigs - The list of supported Indy ledger configurations.
- * @returns {Promise<IIndyLedger[]>} - A promise that resolves to an array of ledgers.
+ * @param {IndyLedgerConfig[]} indyLedgerConfigs - The list of supported Indy ledger configurations.
+ * @returns {*} {Promise<IndyLedger[]>} - A promise that resolves to an array of ledgers.
  */
-export async function getIndyLedgers(indyLedgerConfigs: IIndyLedgerConfig[]): Promise<IIndyLedger[]> {
-  // Fetch all hyperledgers from the provided URL
-  const allHyperLedgers = await _getUrlContent<IndyLedgersRecord>(INDY_NETWORK_URL)
+export async function getIndyLedgers(indyLedgerConfigs: IndyLedgerConfig[]): Promise<IndyLedger[]> {
+  const allIndyLedgers = await _fetchUrlContent<IndyLedgersRecord>(INDY_NETWORK_URL)
 
-  const ledgers: IIndyLedger[] = []
+  const ledgers: IndyLedger[] = []
   // Iterate through the supported networks and map them to the Indy ledgers
   for (const network of indyLedgerConfigs) {
-    const indyNetwork = allHyperLedgers[network.id]
+    const indyLedger = allIndyLedgers[network.ledgerId]
 
     ledgers.push({
       // Remove all whitespace to form the ledger ID
-      id: indyNetwork.name.replace(/\s+/g, ''),
-      indyNamespace: indyNetwork.indyNamespace,
+      // Note: This value is not used, but useful for viewing the ledger JSON file
+      id: indyLedger.name.replace(/\s+/g, ''),
+      indyNamespace: indyLedger.indyNamespace,
       isProduction: network.isProduction,
       connectOnStartup: network.connectOnStartup,
       // This url will need to be fetched to get the genesis transactions
-      gennesisTransactions: indyNetwork.genesisUrl,
+      genesisTransactions: indyLedger.genesisUrl,
     })
   }
 
   // Step 1: Collect all genesis transaction promises
-  const genesisPromises = ledgers.map((ledger) => _getUrlContent<string>(ledger.gennesisTransactions))
+  const genesisPromises = ledgers.map((ledger) => _fetchUrlContent<string>(ledger.genesisTransactions))
 
   // Step 2: Await all promises to resolve in parallel
   const genesisTransactions = await Promise.all(genesisPromises)
 
   // Step 3: Assign the fetched genesis transactions back to the ledgers
   genesisTransactions.forEach((transactions, index) => {
-    ledgers[index].gennesisTransactions = transactions.trim()
+    ledgers[index].genesisTransactions = transactions.trim()
   })
 
   return ledgers
 }
+
+/**
+ * Writes the provided Indy ledgers to a JSON file at the specified file path.
+ *
+ * @throws {Error} - Throws an error if writing to the file fails or if the file path is invalid.
+ * @param {string} filePath - The path to the JSON file where the ledgers should be written.
+ * @param {IndyLedger[]} ledgers - The array of Indy ledgers to write to the file.
+ * @returns {*} {void}
+ */
+export function writeIndyLedgersToFile(filePath: string, ledgers: IndyLedger[]): void {
+  try {
+    if (!filePath.endsWith('.json')) {
+      throw new Error('File path must point to a JSON file')
+    }
+
+    const jsonContent = JSON.stringify(ledgers, null, 2)
+
+    // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json
+    const absoluteFilePath = path.resolve(filePath)
+    fs.writeFileSync(absoluteFilePath, jsonContent, 'utf8')
+  } catch (error: any) {
+    throw new Error(`${ERROR_TAG}: Failed to write ledgers to file ${filePath}: ${error.message}`)
+  }
+}
+
+/**
+ * Reads and parses Indy ledgers from a JSON file at the specified file path.
+ *
+ * @throws {Error} - Throws an error if reading from the file fails, if the file path is invalid, or if parsing fails.
+ * @param {string} filePath - The path to the JSON file to read the ledgers from.
+ * @returns {*} {IndyLedger[]} - An array of Indy ledgers read from the file.
+ */
+export function readIndyLedgersFromFile(filePath: string): IndyLedger[] {
+  try {
+    if (!filePath.endsWith('.json')) {
+      throw new Error('File path must point to a JSON file')
+    }
+
+    // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json
+    const absoluteFilePath = path.resolve(filePath)
+    const jsonContent = fs.readFileSync(absoluteFilePath, 'utf8')
+
+    return JSON.parse(jsonContent)
+  } catch (error: any) {
+    throw new Error(`${ERROR_TAG}: Failed to read ledgers from file ${filePath}: ${error.message}`)
+  }
+}
+
+// function _mapConfigsToLedgers(ledgerConfigs: IndyLedgerConfig[], indyLedgersRecord: IndyLedgersRecord): IndyLedger[] {
+//   return ledgerConfigs.map((config) => {
+//     const indyLedger = indyLedgersRecord[config.ledgerId]
+//
+//     if (!indyLedger) {
+//       throw new Error(`${ERROR_TAG}: Network ${config.ledgerId} not found in Indy ledgers record`)
+//     }
+//
+//     return {
+//       id: indyLedger.name.replace(/\s+/g, ''),
+//       indyNamespace: indyLedger.indyNamespace,
+//       isProduction: config.isProduction,
+//       connectOnStartup: config.connectOnStartup,
+//       genesisTransactions: indyLedger.genesisUrl,
+//     }
+//   })
+// }
+//
+// async function _hydrateIndyLedgersGenesisTransactions(ledgers: IndyLedger[]): Promise<IndyLedger[]> {
+//   // Step 1: Collect all genesis transaction promises
+//   const genesisPromises = ledgers.map((ledger) => _fetchUrlContent<string>(ledger.genesisTransactions))
+//
+//   // Step 2: Await all promises to resolve in parallel
+//   const genesisTransactions = await Promise.all(genesisPromises)
+//
+//   // Step 3: Assign the fetched genesis transactions back to the ledgers
+//   genesisTransactions.forEach((transactions, index) => {
+//     ledgers[index].genesisTransactions = transactions.trim()
+//   })
+//
+//   return ledgers
+// }
