@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import axios from 'axios'
 import {
   getIndyLedgers,
@@ -30,6 +31,7 @@ const fileSystem: IndyLedgerFileSystem = {
   writeFile: (filePath: string, data: string) => fs.writeFileSync(filePath, data, 'utf8'),
   readFile: (filePath: string) => fs.readFileSync(filePath, 'utf8'),
   fileExists: (filePath: string) => fs.existsSync(filePath),
+  pathResolve: (filePath: string) => path.resolve(filePath),
 }
 
 jest.mock('axios')

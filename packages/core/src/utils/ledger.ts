@@ -1,6 +1,5 @@
 import { IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import axios from 'axios'
-import path from 'path'
 
 const INDY_NETWORK_URL =
   'https://raw.githubusercontent.com/hyperledger/indy-node-monitor/main/fetch-validator-status/networks.json'
@@ -49,9 +48,37 @@ export type IndyLedgersRecord = Record<
 // This interface allows us to abstract the file system operations,
 // preventing android from complaining about the use of the Node.js module 'fs'.
 export interface IndyLedgerFileSystem {
+  /**
+   * Writes data to a file at the specified file path.
+   *
+   * @param {string} filePath - The path to the file where data should be written.
+   * @param {*} {string} data - The data to write to the file.
+   * @returns {*} {void}
+   */
   writeFile: (filePath: string, data: string) => void
+  /**
+   * Reads and returns the content of a file at the specified file path.
+   *
+   * @param {string} filePath - The path to the file to read.
+   * @returns {*} {string} - The content of the file as a string.
+   */
   readFile: (filePath: string) => string
+  /**
+   * Checks if a file exists at the specified file path.
+   *
+   * @param {string} filePath - The path to the file to check.
+   * @returns {*} {boolean} - True if the file exists, false otherwise.
+   */
   fileExists: (filePath: string) => boolean
+  /**
+   * Resolves and returns the absolute path for a given file path.
+   *
+   * @example ./ledgers.json -> /Users/username/project/ledgers.json
+   *
+   * @param {string} filePath - The file path to resolve.
+   * @returns {*} {string} - The resolved absolute file path.
+   */
+  pathResolve: (filePath: string) => string
 }
 
 /**
@@ -153,7 +180,7 @@ export function writeIndyLedgersToFile(
     const jsonContent = JSON.stringify(ledgers, null, 2)
 
     // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json
-    const absoluteFilePath = path.resolve(filePath)
+    const absoluteFilePath = fileSystem.pathResolve(filePath)
     fileSystem.writeFile(absoluteFilePath, jsonContent)
   } catch (error: any) {
     throw new Error(`${ERROR_TAG}: Failed to write ledgers to file ${filePath}: ${error.message}`)
@@ -175,7 +202,7 @@ export function readIndyLedgersFromFile(fileSystem: IndyLedgerFileSystem, filePa
     }
 
     // Convert to absolute path ie: ./ledgers.json -> /Users/username/project/ledgers.json
-    const absoluteFilePath = path.resolve(filePath)
+    const absoluteFilePath = fileSystem.pathResolve(filePath)
     const jsonContent = fileSystem.readFile(absoluteFilePath)
 
     return JSON.parse(jsonContent)
