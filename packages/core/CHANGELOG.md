@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.4.5
+
+### Patch Changes
+
+- 502d616: Refactored ledgers API to be configurable
+
 ## 2.4.4
 
 ### Patch Changes
