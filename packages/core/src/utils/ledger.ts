@@ -113,7 +113,7 @@ export async function getIndyLedgers(indyLedgerConfigs: IndyLedgerConfig[]): Pro
   const allIndyLedgers = await _fetchUrlContent<IndyLedgersRecord>(INDY_NETWORK_URL)
 
   const ledgers: IndyLedgerJSON[] = []
-  // Iterate through the supported networks and map them to the Indy ledgers
+  // Iterate through the supported network configs and map them to the Indy ledgers
   for (const ledgerConfig of indyLedgerConfigs) {
     const indyLedger = allIndyLedgers[ledgerConfig.ledgerId]
 
