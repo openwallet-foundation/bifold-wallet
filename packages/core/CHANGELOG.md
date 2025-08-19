@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.4.6
+
+### Patch Changes
+
+- 9214b8c: added network info to json details screen
+
 ## 2.4.5
 
 ### Patch Changes
