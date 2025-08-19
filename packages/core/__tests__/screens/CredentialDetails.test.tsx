@@ -319,7 +319,7 @@ describe('CredentialDetails Screen', () => {
       fireEvent.press(jsonDetailsButton)
       expect(navigation.navigate).toHaveBeenCalledWith(Stacks.ContactStack, {
         screen: Screens.JSONDetails,
-        params: { jsonBlob: JSON.stringify(credential, null, 2) },
+        params: { jsonBlob: credential },
       })
     })
   })

@@ -125,7 +125,7 @@ export type ContactStackParams = {
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.JSONDetails]: { jsonBlob: string }
+  [Screens.JSONDetails]: { jsonBlob: any }
 }
 
 export type ProofRequestsStackParams = {

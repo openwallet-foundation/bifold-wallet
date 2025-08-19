@@ -217,7 +217,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   }, [navigation, connectionId])
 
   const callViewJSONDetails = useCallback(() => {
-    navigation.navigate(Screens.JSONDetails, { jsonBlob: JSON.stringify(connection, null, 2) })
+    navigation.navigate(Screens.JSONDetails, { jsonBlob: connection })
   }, [navigation, connection])
 
   const contactLabel = useMemo(
