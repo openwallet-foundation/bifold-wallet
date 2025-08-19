@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Clipboard from '@react-native-clipboard/clipboard'
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 type JSONDetailsProps = StackScreenProps<ContactStackParams, Screens.JSONDetails>
 
@@ -20,7 +21,8 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
   }
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
-  const { jsonBlob } = route.params
+  const netInfo = useNetInfo()
+  const jsonBlob = JSON.stringify({ caller_info: route.params.jsonBlob, network_info: netInfo }, null, 2)
   const styles = StyleSheet.create({
     container: {
       flex: 1,

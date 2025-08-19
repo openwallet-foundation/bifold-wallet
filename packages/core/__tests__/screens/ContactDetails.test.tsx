@@ -185,7 +185,7 @@ describe('ContactDetails Screen', () => {
     await act(async () => {
       fireEvent(jsonDetailsButton, 'press')
       expect(navigation.navigate).toHaveBeenCalledWith(Screens.JSONDetails, {
-        jsonBlob: JSON.stringify(connection, null, 2),
+        jsonBlob: connection,
       })
     })
   })

@@ -136,7 +136,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const callViewJSONDetails = useCallback(() => {
     navigation.navigate(Stacks.ContactStack, {
       screen: Screens.JSONDetails,
-      params: { jsonBlob: JSON.stringify(credential, null, 2) },
+      params: { jsonBlob: credential },
     })
   }, [navigation, credential])
 
