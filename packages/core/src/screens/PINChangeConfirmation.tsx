@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
+import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   AccessibilityInfo,
   DeviceEventEmitter,
   findNodeHandle,
-  Keyboard,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -28,16 +27,19 @@ import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { OnboardingStackParams, Screens, SettingStackParams } from '../types/navigators'
+import { OnboardingStackParams, Screens } from '../types/navigators'
 import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
 
-const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN>> = () => {
+type PINChangeConfirmationProps = {
+  PINOne: string
+  PINOld: string
+}
+
+const PINChangeConfirmation = ({ PINOne, PINOld }: PINChangeConfirmationProps) => {
   const { agent } = useAppAgent()
   const { checkWalletPIN, rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
-  const [PINTwo, setPINTwo] = useState('')
-  const [PINOld, setPINOld] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
   const [store] = useStore()
@@ -67,16 +69,8 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     TOKENS.CONFIG,
   ])
 
-  const {
-    PINValidations,
-    validatePINEntry,
-    inlineMessageField1,
-    inlineMessageField2,
-    modalState,
-    setModalState,
-    clearModal,
-    PINSecurity,
-  } = usePINValidation(PIN, PINTwo)
+  const { PINValidations, validatePINEntry, inlineMessageField1, modalState, setModalState, clearModal, PINSecurity } =
+    usePINValidation(PINOne, PIN)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -112,7 +106,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     try {
       if (!(agent && historyEnabled)) {
         logger.trace(
-          `[${PINChange.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined`
+          `[${PINChangeConfirmation.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined`
         )
         return
       }
@@ -126,14 +120,14 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
 
       historyManager.saveHistory(recordData)
     } catch (err: unknown) {
-      logger.error(`[${PINChange.name}]:[logHistoryRecord] Error saving history: ${err}`)
+      logger.error(`[${PINChangeConfirmation.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
   }, [agent, historyEnabled, logger, historyManagerCurried])
 
   const handleChangePinTap = async () => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(PIN, PINTwo, true)
+      const valid = validatePINEntry(PINOne, PIN, true)
       if (valid) {
         const oldPinValid = await checkOldPIN(PINOld)
         if (oldPinValid) {
@@ -168,24 +162,14 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     if (inlineMessages || isLoading) {
       return false
     }
-
-    return PIN === '' || PINTwo === '' || PINOld === '' || PIN.length < minPINLength || PINTwo.length < minPINLength
-  }, [inlineMessages, isLoading, PIN, PINTwo, PINOld])
+    return PIN === '' || PIN.length < minPINLength
+  }, [inlineMessages, isLoading, PIN])
 
   return (
     <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />
-          <PINInput
-            label={t('PINChange.EnterOldPINTitle')}
-            testID={testIdWithKey('EnterOldPIN')}
-            accessibilityLabel={t('PINChange.EnterOldPIN')}
-            onPINChanged={(p: string) => {
-              setPINOld(p)
-            }}
-            onSubmitEditing={handleChangePinTap}
-          />
           <PINInput
             label={t('PINChange.EnterPINTitle')}
             onPINChanged={(p: string) => {
@@ -202,25 +186,6 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
             accessibilityLabel={t('PINCreate.EnterPIN')}
             autoFocus={false}
             inlineMessage={inlineMessageField1}
-            onSubmitEditing={handleChangePinTap}
-          />
-          <PINInput
-            label={t('PINChange.ReenterPIN')}
-            onPINChanged={(p: string) => {
-              setPINTwo(p)
-              if (p.length === minPINLength) {
-                Keyboard.dismiss()
-                const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
-                if (reactTag) {
-                  AccessibilityInfo.setAccessibilityFocus(reactTag)
-                }
-              }
-            }}
-            testID={testIdWithKey('ReenterPIN')}
-            accessibilityLabel={t('PINChange.ReenterPIN')}
-            autoFocus={false}
-            ref={PINTwoInputRef}
-            inlineMessage={inlineMessageField2}
             onSubmitEditing={handleChangePinTap}
           />
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
@@ -246,4 +211,4 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   )
 }
 
-export default PINChange
+export default PINChangeConfirmation

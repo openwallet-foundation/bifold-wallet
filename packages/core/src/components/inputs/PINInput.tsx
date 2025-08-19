@@ -4,7 +4,7 @@ import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmation-code-field'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { hitSlop, minPINLength, maxPINLength } from '../../constants'
+import { hitSlop, minPINLength } from '../../constants'
 import { useServices, TOKENS } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
@@ -14,7 +14,7 @@ import { ThemedText } from '../texts/ThemedText'
 
 // adjusting for the spaces between numbers
 const cellCount = minPINLength * 2 - 1
-const separatedPINCellCount = maxPINLength
+const separatedPINCellCount = 6
 
 interface PINInputProps {
   label?: string
@@ -30,14 +30,14 @@ const PINInputComponent = (
   { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage, onSubmitEditing }: PINInputProps,
   ref: Ref<TextInput>
 ) => {
-  const [enableSeparatedInput, showHidePinButton] = useServices([TOKENS.SEPARATED_INPUT, TOKENS.SHOW_HIDE_PIN_BUTTON])
+  const [{ PINScreensConfig }] = useServices([TOKENS.CONFIG])
 
-  const { PINInputTheme, SeparatedPINInputTheme } = useTheme()
+  const { PINInputTheme, SeparatedPINInputTheme, ColorPalette } = useTheme()
 
-  const theme = enableSeparatedInput ? SeparatedPINInputTheme : PINInputTheme
+  const theme = PINScreensConfig.useNewPINDesign ? SeparatedPINInputTheme : PINInputTheme
 
   const [PIN, setPIN] = useState('')
-  const [showPIN, setShowPIN] = useState(showHidePinButton ? true : false)
+  const [showPIN, setShowPIN] = useState(PINScreensConfig.useNewPINDesign ? true : false)
   const { t } = useTranslation()
   const cellHeight = 48
 
@@ -46,11 +46,11 @@ const PINInputComponent = (
   // and to have the proper appearance when the PIN is masked
   const displayValue = useMemo(() => {
     if (showPIN) {
-      return PIN
+      return PINScreensConfig.useNewPINDesign ? PIN : PIN.split('').join(' ')
     } else {
-      return '●'.repeat(PIN.length)
+      return PINScreensConfig.useNewPINDesign ? '●'.repeat(PIN.length) : '●'.repeat(PIN.length).split('').join(' ')
     }
-  }, [PIN, showPIN])
+  }, [PIN, showPIN, PINScreensConfig])
 
   const onChangeText = (value: string) => {
     const cleanValue = value.replaceAll(' ', '')
@@ -85,25 +85,20 @@ const PINInputComponent = (
       marginBottom: 24,
     },
     codeFieldContainer: {
-      width: '100%',
+      flex: 1,
     },
     cell: {
-      height: cellHeight,
-      paddingHorizontal: 8,
-      backgroundColor: PINInputTheme.cell.backgroundColor,
-      borderColor: 'white',
-      borderWidth: 1,
-      flex: 1,
-      margin: 6,
-      borderRadius: 4,
+      ...theme.cell,
+      borderColor:
+        inlineMessage && PINScreensConfig.useNewPINDesign ? ColorPalette.semantic.error : theme.cell.borderColor,
     },
     cellText: {
-      color: PINInputTheme.cellText.color,
+      color: theme.cellText.color,
       textAlign: 'center',
       lineHeight: cellHeight,
     },
     hideIcon: {
-      paddingHorizontal: 10,
+      paddingLeft: PINScreensConfig.useNewPINDesign ? 2 : 10,
     },
   })
 
@@ -119,7 +114,7 @@ const PINInputComponent = (
           value={displayValue}
           rootStyle={theme.codeFieldRoot}
           onChangeText={onChangeText}
-          cellCount={enableSeparatedInput ? separatedPINCellCount : cellCount}
+          cellCount={PINScreensConfig.useNewPINDesign ? separatedPINCellCount : cellCount}
           keyboardType="number-pad"
           textContentType="password"
           renderCell={({ index, symbol, isFocused }) => {
@@ -143,25 +138,23 @@ const PINInputComponent = (
           onSubmitEditing={onSubmitEditing}
         />
       </View>
-      {showHidePinButton && (
-        <TouchableOpacity
-          style={style.hideIcon}
-          accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
-          accessibilityRole={'button'}
-          testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
-          onPress={() => setShowPIN(!showPIN)}
-          hitSlop={hitSlop}
-        >
-          <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30} />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        style={style.hideIcon}
+        accessibilityLabel={showPIN ? t('PINCreate.Hide') : t('PINCreate.Show')}
+        accessibilityRole={'button'}
+        testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
+        onPress={() => setShowPIN(!showPIN)}
+        hitSlop={hitSlop}
+      >
+        <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30} />
+      </TouchableOpacity>
     </View>
   )
 
   return (
     <View style={style.container}>
       {label && (
-        <ThemedText variant="label" style={{ marginBottom: 8 }}>
+        <ThemedText variant={PINScreensConfig.useNewPINDesign ? 'labelTitle' : 'label'} style={{ marginBottom: 8 }}>
           {label}
         </ThemedText>
       )}

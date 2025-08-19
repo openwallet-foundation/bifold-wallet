@@ -11,7 +11,9 @@ export enum Screens {
   Terms = 'Terms',
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
+  CreatePINConfirmation = 'Create PIN Confirmation',
   ChangePIN = 'Change PIN',
+  ChangePINConfirmation = 'Change PIN Confirmation',
   EnterPIN = 'Enter PIN',
   Home = 'Home',
   Scan = 'Scan',
@@ -109,6 +111,7 @@ export type OnboardingStackParams = {
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
   [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
+  [Screens.CreatePINConfirmation]: { setAuthenticated?: (status: boolean) => void; PIN: string } | undefined
   [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.Biometry]: undefined
   [Screens.NameWallet]: undefined
@@ -167,6 +170,7 @@ export type SettingStackParams = {
   [Screens.Tours]: undefined
   [Screens.ToggleBiometry]: undefined
   [Screens.ChangePIN]: undefined
+  [Screens.ChangePINConfirmation]: { PINOne: string; PINOld: string }
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined

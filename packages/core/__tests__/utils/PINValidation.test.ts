@@ -9,6 +9,8 @@ const defaultPINRules = {
   no_repetition_of_the_two_same_numbers: false,
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
+  most_used_pins: false,
+  nist_pin_length: 6,
 }
 
 const validPIN = '132465'

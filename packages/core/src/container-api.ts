@@ -147,11 +147,13 @@ export const CONFIG_TOKENS = {
   ONBOARDING: 'utility.onboarding',
 } as const
 
-export const PIN_ENTER_TOKENS = {
+export const PIN_SCREEN_TOKENS = {
   SEPARATED_INPUT: 'pin.separated-input',
   REMEMBER_PIN_MESSAGE: 'pin.remember-pin-message',
   HIDE_UNLOCK_BUTTON: 'pin.hide-unlock-button',
   SHOW_HIDE_PIN_BUTTON: 'pin.show-hide-pin-button',
+  NIST_PIN_REQUIREMENTS: 'pin.nist-pin-requirements',
+  SHOW_REMEMBER_PIN_ALERT_BOX: 'pin.show-remember-pin-alert-box',
 } as const
 
 export const TOKENS = {
@@ -171,7 +173,7 @@ export const TOKENS = {
   ...UTILITY_TOKENS,
   ...CONFIG_TOKENS,
   ...HISTORY_TOKENS,
-  ...PIN_ENTER_TOKENS,
+  ...PIN_SCREEN_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
@@ -234,10 +236,6 @@ export type TokenMapping = {
   [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
   [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionLabel?: string }>
-  [TOKENS.SEPARATED_INPUT]: boolean
-  [TOKENS.REMEMBER_PIN_MESSAGE]: boolean
-  [TOKENS.HIDE_UNLOCK_BUTTON]: boolean
-  [TOKENS.SHOW_HIDE_PIN_BUTTON]: boolean
 }
 
 export interface Container {

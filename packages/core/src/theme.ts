@@ -1131,8 +1131,10 @@ export function createPINInputTheme(theme: { ColorPalette: IColorPalette }): IPI
 
   const viewStyles = StyleSheet.create({
     cell: {
+      height: 48,
+      paddingHorizontal: 2,
       backgroundColor: theme.ColorPalette.brand.secondaryBackground,
-      borderColor: theme.ColorPalette.brand.secondary,
+      borderColor: theme.ColorPalette.brand.secondaryBackground,
       borderWidth: 1,
     },
     focussedCell: {
@@ -1176,9 +1178,15 @@ export function createSeparatedPINInputTheme(theme: { ColorPalette: IColorPalett
 
   const viewStyles = StyleSheet.create({
     cell: {
+      height: 48,
+      paddingHorizontal: 4,
       backgroundColor: theme.ColorPalette.brand.secondaryBackground,
       borderColor: theme.ColorPalette.brand.secondary,
       borderWidth: 1,
+      margin: 6,
+      borderRadius: 4,
+      flex: 1,
+      flexShrink: 0,
     },
     focussedCell: {
       borderColor: theme.ColorPalette.brand.headerIcon,
@@ -1189,7 +1197,7 @@ export function createSeparatedPINInputTheme(theme: { ColorPalette: IColorPalett
     },
     labelAndFieldContainer: {
       flexDirection: 'row',
-      paddingHorizontal: 12,
+      paddingHorizontal: 0,
       paddingVertical: 4,
       alignItems: 'center',
     },

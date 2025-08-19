@@ -200,6 +200,8 @@
     "OpenSettings": "Open settings"
   },
   "PINCreate": {
+    "Header": "Aries Bifold",
+    "Subheader": "Secure your Aries wallet",
     "Explainer": {
       "PrimaryHeading": "Secure your Wallet",
       "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN).",
@@ -209,6 +211,10 @@
         "ParagraphList1": "You can use your PIN instead of biometrics to open your wallet",
         "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet"
       }
+    },
+    "InfoBox": {
+      "title": "Remember your PIN",
+      "message": "Make sure you remember your PIN\nIf you forget it you will need to setup the wallet again and re-add your cards."
     },
     "Message": {
       "CrossPatternValidation": "A pattern of cross was detected in your PIN. Please try again.",
@@ -221,7 +227,8 @@
       "PINTooShortValidation": "Your PIN is too short. Please try again.",
       "PINTooLongValidation": "Your PIN is too long. Please try again.",
       "PINExpectedLengthValidation": "Your PIN must be {{num}} digits. Please try again.",
-      "OldPINIncorrect": "Your old pin is incorrect. Please try again."
+      "OldPINIncorrect": "Your old pin is incorrect. Please try again.",
+      "PINCommonlyUsed": "Your PIN uses a commonly used pattern. Please try again."
     },
     "Helper": {
       "CrossPatternValidation": "Does not contain a pattern of cross.",
@@ -234,6 +241,7 @@
       "PINTooShortValidation": "Your PIN must be more than {{num}} digits.",
       "PINTooLongValidation": "Your PIN must be less than {{num}} digits.",
       "PINExpectedLengthValidation": "Your PIN must be {{num}} digits.",
+      "PINCommonlyUsed": "Your PIN uses a commonly used pattern. Please try again.",
       "CheckIcon": "Criteria met",
       "ClearIcon": "Criteria not met"
     },
@@ -250,6 +258,9 @@
     "Hide": "Hide PIN",
     "Masked": "PIN Masked for privacy"
   },
+  "PINCreateConfirm": {
+    "PINInputLabel": "Re-enter your PIN to confirm it"
+  },
   "PINChange": {
     "PinChangeSuccessTitle": "Successfully changed your PIN",
     "PinChangeSuccessMessage": "Your PIN was successsfully changed. You can now log in with your new PIN.",
@@ -261,9 +272,10 @@
     "ChangePIN": "Change PIN"
   },
   "PINEnter": {
+    "AppTitle": "Aries Bifold",
     "Title": "Welcome back",
     "SubText": "Sign-in to access your wallet.",
-    "EnterPIN": "Enter your wallet PIN",
+    "EnterPIN": "Enter your wallet PIN to sign-in",
     "Unlock": "Unlock",
     "Or": "Or",
     "BiometricsUnlock": "Unlock with biometrics",
@@ -290,7 +302,7 @@
     "ChangeBiometricsInputLabelParenthesis": "(Required)",
     "ForgotPINLink": "Forgot your PIN?",
     "ForgotPINModalTitle": "Forgot your PIN?",
-    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again."
+    "ForgotPINModalDescription": "Forgot your PIN? You'll need to reinstall and setup your wallet again."
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",

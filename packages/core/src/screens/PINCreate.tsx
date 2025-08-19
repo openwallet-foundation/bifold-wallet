@@ -1,4 +1,4 @@
-import { ParamListBase } from '@react-navigation/native'
+import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,6 +19,7 @@ import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
+import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { EventTypes, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -31,6 +32,9 @@ import { usePINValidation } from '../hooks/usePINValidation'
 import { BifoldError } from '../types/error'
 import { Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
+import PINScreenTitleText from '../components/misc/PINScreenTitleText'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { OnboardingStackParams } from '../types/navigators'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   setAuthenticated: (status: boolean) => void
@@ -44,12 +48,19 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   const [isLoading, setIsLoading] = useState(false)
   const [, dispatch] = useStore()
   const { t } = useTranslation()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
 
   const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const PINTwoInputRef = useRef<TextInput>(null)
   const createPINButtonRef = useRef<TouchableOpacity>(null)
-  const [PINExplainer, PINHeader, { showPINExplainer, preventScreenCapture }, Button, inlineMessages] = useServices([
+  const [
+    PINExplainer,
+    PINHeader,
+    { showPINExplainer, preventScreenCapture, PINScreensConfig },
+    Button,
+    inlineMessages,
+  ] = useServices([
     TOKENS.SCREEN_PIN_EXPLAINER,
     TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.CONFIG,
@@ -73,6 +84,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     // below used as helpful labels for views, no properties needed atp
     contentContainer: {},
     controlsContainer: {},
+    infoBox: {
+      marginBottom: 24,
+    },
   })
 
   const passcodeCreate = useCallback(
@@ -98,9 +112,20 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     [setWalletPIN, setAuthenticated, dispatch, t]
   )
 
+  const handleConfirmPINFlow = useCallback(
+    async (pin: string) => {
+      setIsLoading(true)
+      if (PINScreensConfig.useNewPINDesign && validatePINEntry(pin, '', false)) {
+        navigation.navigate(Screens.CreatePINConfirmation, { PIN: pin })
+      }
+      setIsLoading(false)
+    },
+    [validatePINEntry, navigation, setIsLoading, PINScreensConfig.useNewPINDesign]
+  )
+
   const handleCreatePinTap = useCallback(async () => {
     setIsLoading(true)
-    if (validatePINEntry(PIN, PINTwo)) {
+    if (validatePINEntry(PIN, PINTwo, true)) {
       await passcodeCreate(PIN)
     }
     setIsLoading(false)
@@ -121,12 +146,27 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
     <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <PINHeader />
+          <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
+          {PINScreensConfig.useNewPINDesign ? (
+            <View style={style.infoBox}>
+              <InfoBox
+                title={t('PINCreate.InfoBox.title')}
+                message={t('PINCreate.InfoBox.message')}
+                notificationType={InfoBoxType.Info}
+                renderShowDetails
+              />
+            </View>
+          ) : (
+            <PINHeader />
+          )}
           <PINInput
             label={t('PINCreate.EnterPINTitle')}
-            onPINChanged={(p: string) => {
+            onPINChanged={async (p: string) => {
               setPIN(p)
-              if (p.length === minPINLength && PINTwoInputRef?.current) {
+              if (p.length === minPINLength && PINScreensConfig.useNewPINDesign) {
+                Keyboard.dismiss()
+                await handleConfirmPINFlow(p)
+              } else if (p.length === minPINLength && PINTwoInputRef?.current) {
                 PINTwoInputRef.current.focus()
                 const reactTag = findNodeHandle(PINTwoInputRef.current)
                 if (reactTag) {
@@ -139,42 +179,46 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             autoFocus={false}
             inlineMessage={inlineMessageField1}
           />
-          <PINInput
-            label={t('PINCreate.ReenterPIN')}
-            onPINChanged={(p: string) => {
-              setPINTwo(p)
-              if (p.length === minPINLength) {
-                Keyboard.dismiss()
-                const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
-                if (reactTag) {
-                  AccessibilityInfo.setAccessibilityFocus(reactTag)
+          {!PINScreensConfig.useNewPINDesign && (
+            <PINInput
+              label={t('PINCreate.ReenterPIN')}
+              onPINChanged={(p: string) => {
+                setPINTwo(p)
+                if (p.length === minPINLength) {
+                  Keyboard.dismiss()
+                  const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
+                  if (reactTag) {
+                    AccessibilityInfo.setAccessibilityFocus(reactTag)
+                  }
                 }
-              }
-            }}
-            testID={testIdWithKey('ReenterPIN')}
-            accessibilityLabel={t('PINCreate.ReenterPIN')}
-            autoFocus={false}
-            ref={PINTwoInputRef}
-            inlineMessage={inlineMessageField2}
-          />
+              }}
+              testID={testIdWithKey('ReenterPIN')}
+              accessibilityLabel={t('PINCreate.ReenterPIN')}
+              autoFocus={false}
+              ref={PINTwoInputRef}
+              inlineMessage={inlineMessageField2}
+            />
+          )}
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (
             <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
-        <View style={style.controlsContainer}>
-          <Button
-            title={t('PINCreate.CreatePIN')}
-            testID={testIdWithKey('CreatePIN')}
-            accessibilityLabel={t('PINCreate.CreatePIN')}
-            buttonType={ButtonType.Primary}
-            disabled={isContinueDisabled}
-            onPress={handleCreatePinTap}
-            ref={createPINButtonRef}
-          >
-            {isLoading ? <ButtonLoading /> : null}
-          </Button>
-        </View>
+        {!PINScreensConfig.useNewPINDesign && (
+          <View style={style.controlsContainer}>
+            <Button
+              title={t('PINCreate.CreatePIN')}
+              testID={testIdWithKey('CreatePIN')}
+              accessibilityLabel={t('PINCreate.CreatePIN')}
+              buttonType={ButtonType.Primary}
+              disabled={isContinueDisabled}
+              onPress={handleCreatePinTap}
+              ref={createPINButtonRef}
+            >
+              {isLoading ? <ButtonLoading /> : null}
+            </Button>
+          </View>
+        )}
       </View>
     </KeyboardView>
   ) : (
