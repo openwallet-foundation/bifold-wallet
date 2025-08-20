@@ -147,15 +147,6 @@ export const CONFIG_TOKENS = {
   ONBOARDING: 'utility.onboarding',
 } as const
 
-export const PIN_SCREEN_TOKENS = {
-  SEPARATED_INPUT: 'pin.separated-input',
-  REMEMBER_PIN_MESSAGE: 'pin.remember-pin-message',
-  HIDE_UNLOCK_BUTTON: 'pin.hide-unlock-button',
-  SHOW_HIDE_PIN_BUTTON: 'pin.show-hide-pin-button',
-  NIST_PIN_REQUIREMENTS: 'pin.nist-pin-requirements',
-  SHOW_REMEMBER_PIN_ALERT_BOX: 'pin.show-remember-pin-alert-box',
-} as const
-
 export const TOKENS = {
   ...PROOF_TOKENS,
   ...COMPONENT_TOKENS,
@@ -173,7 +164,6 @@ export const TOKENS = {
   ...UTILITY_TOKENS,
   ...CONFIG_TOKENS,
   ...HISTORY_TOKENS,
-  ...PIN_SCREEN_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager

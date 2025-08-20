@@ -11,6 +11,7 @@ export interface Onboarding {
   didNameWallet: boolean
   onboardingVersion: number
   didCompleteOnboarding: boolean
+  PIN: string | null
 }
 
 export interface Migration {

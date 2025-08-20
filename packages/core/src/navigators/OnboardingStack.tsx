@@ -52,6 +52,7 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
     UpdateAvailable,
     versionMonitor,
     generateOnboardingWorkflowSteps,
+
   ] = useServices([
     TOKENS.CONFIG,
     TOKENS.SCREEN_SPLASH,

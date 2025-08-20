@@ -1,17 +1,25 @@
 import { ParamListBase } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, Keyboard, StyleSheet, View } from 'react-native'
+import {
+  DeviceEventEmitter,
+  Keyboard,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 // eslint-disable-next-line import/no-named-as-default
+import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
 import PINScreenTitleText from '../components/misc/PINScreenTitleText'
-import { EventTypes, maxPINLength } from '../constants'
+import { EventTypes, maxPINLength, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
+import { useAnimatedComponents } from '../contexts/animated-components'
 import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -28,27 +36,26 @@ interface PINCreateConfirmationProps extends StackScreenProps<ParamListBase, Scr
   prevPIN: string
 }
 
-const PINCreateConfirmation: React.FC<PINCreateConfirmationProps> = ({
-  setAuthenticated,
-  explainedStatus,
-  prevPIN,
-}) => {
+const PINCreateConfirmation: React.FC<PINCreateConfirmationProps> = ({ setAuthenticated }) => {
   const { setPIN: setWalletPIN } = useAuth()
   const [PIN, setPIN] = useState('')
-  const [, dispatch] = useStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const [state, dispatch] = useStore()
   const { t } = useTranslation()
 
+  const prevPIN = state.onboarding.PIN !== null && state.onboarding.PIN || ''
+
   const { ColorPalette } = useTheme()
-  const [PINExplainer, { showPINExplainer, preventScreenCapture, PINScreensConfig }] = useServices([
-    TOKENS.SCREEN_PIN_EXPLAINER,
+  const { ButtonLoading } = useAnimatedComponents()
+  const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const [{ preventScreenCapture, PINScreensConfig }, Button, inlineMessages] = useServices([
     TOKENS.CONFIG,
+    TOKENS.COMP_BUTTON,
+    TOKENS.INLINE_ERRORS,
   ])
 
-  const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
-  const { PINValidations, validatePINEntry, inlineMessageField1, modalState, PINSecurity } = usePINValidation(
-    PIN,
-    prevPIN
-  )
+  const { PINValidations, validatePINEntry, inlineMessageField1, modalState, PINSecurity } =
+    usePINValidation(PIN, prevPIN)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -63,7 +70,7 @@ const PINCreateConfirmation: React.FC<PINCreateConfirmationProps> = ({
     controlsContainer: {},
     infoBox: {
       marginBottom: 20,
-    },
+    }
   })
 
   const passcodeCreate = useCallback(
@@ -73,7 +80,7 @@ const PINCreateConfirmation: React.FC<PINCreateConfirmationProps> = ({
         setAuthenticated(true)
         // this dispatch finishes this step of onboarding and will cause a navigation
         dispatch({
-          type: DispatchAction.DID_CREATE_PIN,
+          type: DispatchAction.DID_CONFIRM_PIN,
         })
       } catch (err: unknown) {
         const error = new BifoldError(
@@ -89,28 +96,33 @@ const PINCreateConfirmation: React.FC<PINCreateConfirmationProps> = ({
     [setWalletPIN, setAuthenticated, dispatch, t]
   )
 
-  const handleCreatePinTap = useCallback(async () => {
-    if (validatePINEntry(PIN, prevPIN, true)) {
-      await passcodeCreate(PIN)
+  const handleCreatePinTap = useCallback(async (p: string) => {
+    setIsLoading(true)
+    if (validatePINEntry(p, prevPIN)) {
+      await passcodeCreate(p)
     }
-  }, [PIN, prevPIN, passcodeCreate, validatePINEntry])
+    setIsLoading(false)
+  }, [prevPIN, passcodeCreate, validatePINEntry, setIsLoading])
 
-  const continueCreatePIN = useCallback(() => {
-    setExplained(true)
-  }, [])
+  const isContinueDisabled = useMemo((): boolean => {
+    if (inlineMessages.enabled) {
+      return false
+    }
+    return isLoading || PIN.length < minPINLength || prevPIN.length < minPINLength
+  }, [isLoading, PIN, inlineMessages])
 
-  return explained ? (
+  return (
     <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
-          <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
+          <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')}/>
           <PINInput
             label={t('PINCreateConfirm.PINInputLabel')}
             onPINChanged={async (p: string) => {
               setPIN(p)
               if (p.length === maxPINLength && PINScreensConfig.useNewPINDesign) {
                 Keyboard.dismiss()
-                await handleCreatePinTap()
+                await handleCreatePinTap(p)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
@@ -123,10 +135,21 @@ const PINCreateConfirmation: React.FC<PINCreateConfirmationProps> = ({
             <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
+        {!PINScreensConfig.useNewPINDesign && <View style={style.controlsContainer}>
+          <Button
+            title={t('PINCreate.CreatePIN')}
+            testID={testIdWithKey('CreatePIN')}
+            accessibilityLabel={t('PINCreate.CreatePIN')}
+            buttonType={ButtonType.Primary}
+            disabled={isContinueDisabled}
+            onPress={handleCreatePinTap}
+            ref={createPINButtonRef}
+          >
+            {isLoading ? <ButtonLoading /> : null}
+          </Button>
+        </View>}
       </View>
     </KeyboardView>
-  ) : (
-    <PINExplainer continueCreatePIN={continueCreatePIN} />
   )
 }
 

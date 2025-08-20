@@ -25,6 +25,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_CONFIRM_PIN = 'onboarding.didConfirmPIN',
   DID_NAME_WALLET = 'onboarding/didNameWallet',
   DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
   ONBOARDING_VERSION = 'onboarding/onboardingVersion',
@@ -664,9 +665,23 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case OnboardingDispatchAction.DID_CREATE_PIN: {
+      const PIN = (action?.payload || []).pop()
       const onboarding: OnboardingState = {
         ...state.onboarding,
         didCreatePIN: true,
+        PIN,
+      }
+      const newState = {
+        ...state,
+        onboarding,
+      }
+      return newState
+    }
+    case OnboardingDispatchAction.DID_CONFIRM_PIN: {
+      const onboarding: OnboardingState = {
+        ...state.onboarding,
+        didConfirmPIN: true,
+        PIN: null
       }
       // If the pin is created with this version (that includes Askar), we
       // we can assume that a wallet using Indy SDK was never created. This

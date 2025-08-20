@@ -10,6 +10,7 @@ const defaultPINRules = {
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
   most_used_pins: false,
+  use_nist_requirements: true,
   nist_pin_length: 6,
 }
 

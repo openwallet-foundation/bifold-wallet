@@ -55,7 +55,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     historyManagerCurried,
     historyEnabled,
     historyEventsLogger,
-    { preventScreenCapture },
+    { preventScreenCapture, PINScreensConfig },
   ] = useServices([
     TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.COMP_BUTTON,
@@ -133,7 +133,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const handleChangePinTap = async () => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(PIN, PINTwo, true)
+      const valid = validatePINEntry(PIN, PINTwo)
       if (valid) {
         const oldPinValid = await checkOldPIN(PINOld)
         if (oldPinValid) {

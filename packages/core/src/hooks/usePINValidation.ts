@@ -65,7 +65,7 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
   )
 
   const validatePINEntry = useCallback(
-    (PINOne: string, PINTwo: string, validatePINTwo: boolean): boolean => {
+    (PINOne: string, PINTwo: string): boolean => {
       for (const validation of PINValidations) {
         if (validation.isInvalid) {
           attentionMessage(
@@ -76,7 +76,7 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
           return false
         }
       }
-      if (PINOne !== PINTwo && validatePINTwo) {
+      if (PINOne !== PINTwo) {
         attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
         return false
       }

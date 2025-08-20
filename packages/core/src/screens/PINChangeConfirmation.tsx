@@ -127,7 +127,7 @@ const PINChangeConfirmation = ({ PINOne, PINOld }: PINChangeConfirmationProps) =
   const handleChangePinTap = async () => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(PINOne, PIN, true)
+      const valid = validatePINEntry(PINOne, PIN)
       if (valid) {
         const oldPinValid = await checkOldPIN(PINOld)
         if (oldPinValid) {

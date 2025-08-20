@@ -90,7 +90,7 @@ const PINInputComponent = (
     cell: {
       ...theme.cell,
       borderColor:
-        inlineMessage && PINScreensConfig.useNewPINDesign ? ColorPalette.semantic.error : theme.cell.borderColor,
+        (inlineMessage && PINScreensConfig.useNewPINDesign) ? ColorPalette.semantic.error : theme.cell.borderColor,
     },
     cellText: {
       color: theme.cellText.color,

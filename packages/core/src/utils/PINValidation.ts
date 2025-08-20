@@ -44,6 +44,19 @@ export interface PINValidationsType {
 export const createPINValidations = (PIN: string, PINRules: PINValidationRules) => {
   const PINValidations: PINValidationsType[] = []
 
+  if(PINRules.use_nist_requirements) {
+    PINValidations.push({
+      isInvalid: commonUsedPINs.includes(PIN),
+      errorName: PINError.PINCommonlyUsed,
+    } as PINValidationsType)
+    PINValidations.push({
+      isInvalid: PIN.length === 6,
+      errorName: PINError.PINIsExpectedLength,
+      errorTextAddition: { num: `${PINRules.nist_pin_length}` }
+    } as PINValidationsType)
+    return PINValidations
+  }
+
   if (PINRules.no_cross_pattern) {
     PINValidations.push({
       isInvalid: crossNumberPattern.includes(PIN),
