@@ -50,7 +50,7 @@
     "@react-navigation/devtools": "~6.0.27",
     "@react-navigation/native": "~6.0.16",
     "@react-navigation/stack": "~6.3.29",
-    "axios": "~1.4.0",
+    "axios": "~1.8.2",
     "base-64": "~1.0.0",
     "expo": "*",
     "expo-secure-store": "*",
