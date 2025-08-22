@@ -7,7 +7,6 @@
   "source": "src/index.ts",
   "react-native": "src/index.ts",
   "files": [
-    "src",
     "build"
   ],
   "repository": {
