@@ -15,7 +15,6 @@ import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
 import KeyboardView from '../components/views/KeyboardView'
-import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { maxPINLength, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -106,18 +105,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus }) => {
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
-          {PINScreensConfig.useNewPINDesign ? (
-            <View style={style.infoBox}>
-              <InfoBox
-                title={t('PINCreate.InfoBox.title')}
-                message={t('PINCreate.InfoBox.message')}
-                notificationType={InfoBoxType.Info}
-                renderShowDetails
-              />
-            </View>
-          ) : (
-            <PINHeader />
-          )}
+          <PINHeader />
           <PINInput
             label={t('PINCreate.EnterPINTitle')}
             onPINChanged={async (p: string) => {

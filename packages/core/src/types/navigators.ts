@@ -3,6 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenId4VPRequestRecord, OpenIDCredentialType } from '../modules/openid/types'
 import { LayoutProps } from '../layout/ScreenLayout'
+import { PINEntryUsage } from '../screens/PINVerify'
 
 export enum Screens {
   AttemptLockout = 'Temporarily Locked',
@@ -15,6 +16,7 @@ export enum Screens {
   ChangePIN = 'Change PIN',
   ChangePINConfirmation = 'Change PIN Confirmation',
   EnterPIN = 'Enter PIN',
+  VerifyPIN = 'Verify PIN',
   Home = 'Home',
   Scan = 'Scan',
   PasteUrl = 'Paste URL',
@@ -170,7 +172,7 @@ export type SettingStackParams = {
   [Screens.Tours]: undefined
   [Screens.ToggleBiometry]: undefined
   [Screens.ChangePIN]: undefined
-  [Screens.ChangePINConfirmation]: { PINOne: string; PINOld: string }
+  [Screens.ChangePINConfirmation]: { PINNew: string; PINOld: string }
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined

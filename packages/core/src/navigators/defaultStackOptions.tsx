@@ -34,6 +34,9 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.ChangePIN]: {
     headerBackTestID: testIdWithKey('Back'),
   },
+  [Screens.VerifyPIN]: {
+    headerBackTestID: testIdWithKey('Back'),
+  },
   [Screens.NameWallet]: {
     headerTintColor: OnboardingTheme.headerTintColor,
     headerBackTestID: testIdWithKey('Back'),

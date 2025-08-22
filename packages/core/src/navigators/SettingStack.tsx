@@ -20,6 +20,7 @@ import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
 import AutoLock from '../screens/AutoLock'
 import ConfigureMediator from '../screens/ConfigureMediator'
+import PINChangeConfirmation from '../screens/PINChangeConfirmation'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -118,7 +119,16 @@ const SettingStack: React.FC = () => {
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.ChangePIN],
         }}
-      ></Stack.Screen>
+      />
+      <Stack.Screen
+        name={Screens.ChangePINConfirmation}
+        component={PINChangeConfirmation}
+        options={{
+          title: t('Screens.ConfirmPIN'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.ChangePIN],
+        }}
+      />
       <Stack.Screen
         name={Screens.TogglePushNotifications}
         component={TogglePushNotifications}
