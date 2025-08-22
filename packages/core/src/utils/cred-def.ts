@@ -6,6 +6,10 @@ import { credentialSchema } from './schema'
 export function parseCredDefFromId(credDefId?: string, schemaId?: string): string {
   let name = 'Credential'
   if (credDefId) {
+    if (credDefId.startsWith('did:webvh:')) {
+      const resourcePath = credDefId.split(':').pop()
+      return resourcePath?.split('/').pop()?.split('.').shift() || 'Credential'
+    }
     const parseIndyCredDefId = parseIndyCredentialDefinitionId(credDefId)
     name = parseIndyCredDefId.tag
   }
