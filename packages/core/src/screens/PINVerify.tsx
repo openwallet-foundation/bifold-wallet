@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View } from 'react-native'
+
 import Button, { ButtonType } from '../components/buttons/Button'
 import { InlineMessageProps } from '../components/inputs/InlineErrorText'
 import PINInput from '../components/inputs/PINInput'
@@ -15,19 +16,21 @@ import { useAuth } from '../contexts/auth'
 import { useTheme } from '../contexts/theme'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { testIdWithKey } from '../utils/testable'
+import { InlineErrorType } from '../components/inputs/InlineErrorText'
 
-interface Props {
-  setAuthenticated: (status: boolean) => void
-  usage?: PINEntryUsage
-  onCancelAuth?: React.Dispatch<React.SetStateAction<boolean>>
+type PINVerifyProps = {
+  setAuthenticated: (...args: any[]) => void;
+  usage?: PINEntryUsage;
+  onCancelAuth?: React.Dispatch<React.SetStateAction<boolean>> | Function;
 }
 
 export enum PINEntryUsage {
   PINCheck,
   ChangeBiometrics,
+  ChangePIN,
 }
 
-const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PINCheck, onCancelAuth }) => {
+const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntryUsage.PINCheck, onCancelAuth }) => {
   const { t } = useTranslation()
   const { verifyPIN } = useAuth()
   const [PIN, setPIN] = useState<string>('')
@@ -37,7 +40,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
-  const [{ preventScreenCapture }] = useServices([TOKENS.CONFIG])
+  const [{ preventScreenCapture }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   usePreventScreenCapture(preventScreenCapture)
 
   useEffect(() => {
@@ -46,18 +49,25 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
 
   const clearAlertModal = useCallback(() => {
     setAlertModalVisible(false)
-    setAuthenticated(false)
+    usage !== PINEntryUsage.ChangePIN && setAuthenticated(false)
   }, [setAlertModalVisible, setAuthenticated])
 
-  const onPINInputCompleted = useCallback(async () => {
+  const onPINInputCompleted = useCallback(async (p?: string) => {
     Keyboard.dismiss()
     setLoading(true)
     setContinueDisabled(true)
-    const isPINVerified = await verifyPIN(PIN)
+    const isPINVerified = await verifyPIN(p ? p : PIN)
     if (isPINVerified) {
       setAuthenticated(true)
     } else {
-      setAlertModalVisible(true)
+      if (inlineMessages.enabled) {
+        setInlineMessageField({
+          message: t('PINEnter.IncorrectPIN'),
+          inlineType: InlineErrorType.error,
+          config: inlineMessages,
+        })
+      } 
+      else setAlertModalVisible(true)
     }
     setLoading(false)
     setContinueDisabled(false)
@@ -66,26 +76,31 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const inputLabelText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsInputLabel'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChangedEnterPIN'),
+    [PINEntryUsage.ChangePIN]: 'Enter your old PIN'
   }
 
   const inputTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'BiometricChangedEnterPIN',
     [PINEntryUsage.PINCheck]: 'AppSettingChangedEnterPIN',
+    [PINEntryUsage.ChangePIN]: 'PINChangedEnterPIN'
   }
 
   const primaryButtonText = {
     [PINEntryUsage.ChangeBiometrics]: t('Global.Continue'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
+    [PINEntryUsage.ChangePIN]: 'Continue'
   }
 
   const primaryButtonTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'Continue',
     [PINEntryUsage.PINCheck]: 'AppSettingSave',
+    [PINEntryUsage.ChangePIN]: 'Continue'
   }
 
   const helpText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsSubtext'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChanged'),
+    [PINEntryUsage.ChangePIN]: ''
   }
 
   const isContinueDisabled = continueDisabled || PIN.length < minPINLength
@@ -128,7 +143,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
               {t('PINEnter.ChangeBiometricsHeader')}
             </ThemedText>
           )}
-          <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>
+          {usage !== PINEntryUsage.ChangePIN && <ThemedText style={style.helpText}>{helpText[usage]}</ThemedText>}
           <ThemedText variant="bold" style={style.inputLabelText}>
             {inputLabelText[usage]}
             {usage === PINEntryUsage.ChangeBiometrics && (
@@ -139,10 +154,11 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
             )}
           </ThemedText>
           <PINInput
-            onPINChanged={(p: string) => {
+            onPINChanged={async (p: string) => {
               setPIN(p)
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
+                usage === PINEntryUsage.ChangePIN && await onPINInputCompleted(p)
               }
             }}
             testID={testIdWithKey(inputTestId[usage])}
@@ -154,7 +170,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
             }}
           />
         </View>
-        <View style={style.buttonContainer}>
+        {usage !== PINEntryUsage.ChangePIN && <View style={style.buttonContainer}>
           <Button
             title={primaryButtonText[usage]}
             buttonType={ButtonType.Primary}
@@ -167,7 +183,7 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
           >
             {loading && <ButtonLoading />}
           </Button>
-        </View>
+        </View>}
         {usage === PINEntryUsage.PINCheck && (
           <View style={[style.buttonContainer, { marginTop: 10 }]}>
             <Button

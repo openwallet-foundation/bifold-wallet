@@ -17,45 +17,53 @@ import KeyboardView from '../components/views/KeyboardView'
 import { EventTypes, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
+import { useAuth } from '../contexts/auth'
+import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
-import VerifyPINModal from '../modals/VerifyPINModal'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BifoldError } from '../types/error'
-import { OnboardingStackParams, Screens, SettingStackParams } from '../types/navigators'
+import { OnboardingStackParams, Screens } from '../types/navigators'
+import { useAppAgent } from '../utils/agent'
 import { testIdWithKey } from '../utils/testable'
-import { PINEntryUsage } from './PINVerify'
+import { SettingStackParams } from '../types/navigators'
 
-const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN>> = () => {
+type PINChangeConfirmationProps = StackScreenProps<SettingStackParams, Screens.ChangePINConfirmation>
+
+const PINChangeConfirmation: React.FC<PINChangeConfirmationProps> = ({ route }) => {
+  const { agent } = useAppAgent()
+  const { rekeyWallet } = useAuth()
   const [PIN, setPIN] = useState('')
-  const [PINOld, setPINOld] = useState('')
-  const [canSeeCheckPIN, setCanSeeCheckPIN] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
+  const [store] = useStore()
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
   const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const { PINNew, PINOld } = route?.params
 
   const [
-    PINHeader,
     Button,
     inlineMessages,
+    logger,
+    historyManagerCurried,
+    historyEnabled,
+    historyEventsLogger,
     { preventScreenCapture, PINScreensConfig },
   ] = useServices([
-    TOKENS.COMPONENT_PIN_HEADER,
     TOKENS.COMP_BUTTON,
     TOKENS.INLINE_ERRORS,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.FN_LOAD_HISTORY,
+    TOKENS.HISTORY_ENABLED,
+    TOKENS.HISTORY_EVENTS_LOGGER,
     TOKENS.CONFIG,
   ])
 
-  const {
-    PINValidations,
-    validatePINEntry,
-    inlineMessageField1,
-    modalState,
-    PINSecurity,
-  } = usePINValidation(PIN, PIN)
+  const { PINValidations, validatePINEntry, inlineMessageField1, modalState, setModalState, clearModal, PINSecurity } =
+    usePINValidation(PIN, PIN)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -63,32 +71,45 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
       height: '100%',
       backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
+      paddingTop: 40,
       justifyContent: 'space-between',
     },
-    // below used as helpful labels for views, no properties needed atp
-    contentContainer: {},
-    controlsContainer: {},
   })
 
-  const onBackPressed = useCallback(() => {
-    navigation.pop()
-  }, [navigation])
+  const logHistoryRecord = useCallback(() => {
+    try {
+      if (!(agent && historyEnabled)) {
+        logger.trace(
+          `[${PINChangeConfirmation.name}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined`
+        )
+        return
+      }
+      const historyManager = historyManagerCurried(agent)
+      /** Save history record for pin edited */
+      const recordData: HistoryRecord = {
+        type: HistoryCardType.PinChanged,
+        message: HistoryCardType.PinChanged,
+        createdAt: new Date(),
+      }
 
-  const onAuthenticationComplete = useCallback((pin: string) => {
-    setPINOld(pin)
-    setCanSeeCheckPIN(false)
-  }, [setPINOld, setCanSeeCheckPIN])
+      historyManager.saveHistory(recordData)
+    } catch (err: unknown) {
+      logger.error(`[${PINChangeConfirmation.name}]:[logHistoryRecord] Error saving history: ${err}`)
+    }
+  }, [agent, historyEnabled, logger, historyManagerCurried])
 
-  const onCancelAuth = useCallback(() => {
-    navigation.pop()
-  }, [navigation])
-
-  const handleChangePinTap = async () => {
+  const handleChangePin = async (p: string) => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(PIN, PIN)
+      const valid = validatePINEntry(PINNew, p)
       if (valid) {
-        navigation?.getParent()?.navigate(Screens.ChangePINConfirmation, { PIN, PINOld })
+        const success = await rekeyWallet(agent, PINOld, PINNew, store.preferences.useBiometry)
+        if (success) {
+          if (historyEventsLogger.logPinChanged) {
+            logHistoryRecord()
+          }
+          navigation.navigate(Screens.Settings as never)
+        }
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1049'), t('Error.Message1049'), (err as Error)?.message ?? err, 1049)
@@ -108,51 +129,38 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   return (
     <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
-        <View style={style.contentContainer}>
-          <PINHeader updatePin />
+        <View>
           <PINInput
-            label={t('PINChange.EnterPINTitle')}
+            label={t('PINCreateConfirm.PINInputLabel')}
             onPINChanged={async (p: string) => {
-              setPIN(p)
-              if (p.length === minPINLength && PINScreensConfig.useNewPINDesign) {
-                await handleChangePinTap()
-              }
+              if(p.length === minPINLength) await handleChangePin(p)
             }}
             testID={testIdWithKey('EnterPIN')}
             accessibilityLabel={t('PINCreate.EnterPIN')}
             autoFocus={false}
             inlineMessage={inlineMessageField1}
-            onSubmitEditing={handleChangePinTap}
           />
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
           {modalState.visible && (
             <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
-        {!PINScreensConfig.useNewPINDesign && <View style={style.controlsContainer}>
-          <Button
+        <View>
+          {!PINScreensConfig.useNewPINDesign && <Button
             title={t('PINChange.ChangePIN')}
             testID={testIdWithKey('ChangePIN')}
-            accessibilityLabel={t('Global.Continue')}
+            accessibilityLabel={t('PINChange.ChangePIN')}
             buttonType={ButtonType.Primary}
             disabled={isContinueDisabled}
-            onPress={handleChangePinTap}
+            onPress={handleChangePin}
             ref={createPINButtonRef}
           >
             {isLoading ? <ButtonLoading /> : null}
-          </Button>
-        </View>}
+          </Button>}
+        </View>
       </View>
-      <VerifyPINModal
-        onAuthenticationComplete={onAuthenticationComplete}
-        onBackPressed={onBackPressed}
-        onCancelAuth={onCancelAuth}
-        PINVerifyModalUsage={PINEntryUsage.ChangePIN}
-        title={t('Screens.EnterPIN')}
-        visible={canSeeCheckPIN}
-      />
     </KeyboardView>
   )
 }
 
-export default PINChange
+export default PINChangeConfirmation

@@ -61,8 +61,8 @@ export const walletTimeout = minute * 5
 export const attemptLockoutConfig: AttemptLockoutConfig = {
   baseRules: {
     5: minute,
-    10: 10 * minute,
-    15: hour,
+    10: minute,
+    15: minute,
   },
   thresholdRules: {
     threshold: 20,
@@ -83,15 +83,20 @@ export const walletId = 'walletId'
 
 export const minPINLength = 6
 
+export const maxPINLength = 6
+
 export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
   max_length: 6,
+  use_nist_requirements: true,
   no_repeated_numbers: 0,
   no_repetition_of_the_two_same_numbers: false,
   no_series_of_numbers: false,
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
+  most_used_pins: true,
+  nist_pin_length: 6,
 }
 
 export const domain = 'didcomm://invite'

@@ -84,6 +84,10 @@ export const defaultConfig: Config = {
     appleAppStoreUrl: 'https://example.com',
     googlePlayStoreUrl: 'https://example.com',
   },
+  PINScreensConfig: {
+    useNewPINDesign: true,
+    nistPINRequirements: true,
+  },
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {

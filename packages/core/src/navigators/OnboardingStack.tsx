@@ -16,6 +16,7 @@ import AttemptLockout from '../screens/AttemptLockout'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
+import PINCreateConfirmation from '../screens/PINCreateConfirmation'
 import PINEnter from '../screens/PINEnter'
 import PushNotifications from '../screens/PushNotifications'
 import { Config } from '../types/config'
@@ -51,6 +52,7 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
     UpdateAvailable,
     versionMonitor,
     generateOnboardingWorkflowSteps,
+
   ] = useServices([
     TOKENS.CONFIG,
     TOKENS.SCREEN_SPLASH,
@@ -135,6 +137,13 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
     [onAuthenticated]
   )
 
+  const CreatePINScreenConfirmation = useCallback(
+    (props: any) => {
+      return <PINCreateConfirmation setAuthenticated={onAuthenticated} {...props} />
+    },
+    [onAuthenticated]
+  )
+
   const EnterPINScreen = useCallback(
     (props: any) => {
       return <PINEnter setAuthenticated={onAuthenticated} {...props} />
@@ -173,11 +182,13 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
         AttemptLockout,
         OnboardingScreen,
         CreatePINScreen,
+        CreatePINScreenConfirmation,
         EnterPINScreen,
       }),
     [
       SplashScreen,
       CreatePINScreen,
+      CreatePINScreenConfirmation,
       EnterPINScreen,
       OnboardingScreen,
       Preface,

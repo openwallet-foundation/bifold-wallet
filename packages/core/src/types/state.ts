@@ -5,11 +5,13 @@ export interface Onboarding {
   didCompleteTutorial: boolean
   didAgreeToTerms: boolean | string
   didCreatePIN: boolean
+  didConfirmPIN: boolean
   didConsiderBiometry: boolean
   didConsiderPushNotifications: boolean
   didNameWallet: boolean
   onboardingVersion: number
   didCompleteOnboarding: boolean
+  PIN: string | null
 }
 
 export interface Migration {
