@@ -30,7 +30,7 @@ const AttemptLockout: React.FC = () => {
     container: {
       flex: 1,
       backgroundColor: ColorPalette.brand.primaryBackground,
-      paddingHorizontal: Spacing.lg,
+      paddingHorizontal: Spacing.md,
     },
     title: {
       textAlign: 'center',
@@ -118,7 +118,7 @@ const AttemptLockout: React.FC = () => {
               <ThemedText style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</ThemedText>
               <ThemedText variant="bold" style={styles.countDown}>
                 {time &&
-                  `${time?.hours} ${t('AttemptLockout.Hours')} ${time?.minutes} ${t('AttemptLockout.Minutes')}{' '}
+                  `${time?.hours} ${t('AttemptLockout.Hours')} ${time?.minutes} ${t('AttemptLockout.Minutes')}
                   ${time?.seconds} ${t('AttemptLockout.Seconds')}`}
               </ThemedText>
             </View>
