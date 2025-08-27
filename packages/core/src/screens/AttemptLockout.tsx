@@ -116,11 +116,12 @@ const AttemptLockout: React.FC = () => {
           ) : (
             <View>
               <ThemedText style={styles.tryAgain}>{t('AttemptLockout.TryAgain')}</ThemedText>
-              <ThemedText variant="bold" style={styles.countDown}>
-                {time &&
-                  `${time?.hours} ${t('AttemptLockout.Hours')} ${time?.minutes} ${t('AttemptLockout.Minutes')}
-                  ${time?.seconds} ${t('AttemptLockout.Seconds')}`}
-              </ThemedText>
+              {time && (
+                <ThemedText variant="bold" style={styles.countDown}>
+                  {time?.hours} {t('AttemptLockout.Hours')} {time?.minutes} {t('AttemptLockout.Minutes')}{' '}
+                  {time?.seconds} {t('AttemptLockout.Seconds')}
+                </ThemedText>
+              )}
             </View>
           )}
         </View>
