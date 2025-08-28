@@ -24,6 +24,10 @@ export const isPINCreationComplete = (didCreatePIN: boolean): OnboardingTask => 
   return { name: Screens.CreatePIN, completed: didCreatePIN }
 }
 
+export const isMnemonicSetComplete = (didSetMnemonic: boolean): OnboardingTask => {
+  return { name: Screens.SetMnemonics, completed: didSetMnemonic }
+}
+
 export const isBiometryComplete = (didConsiderBiometry: boolean): OnboardingTask => {
   return { name: Screens.Biometry, completed: didConsiderBiometry }
 }
@@ -65,6 +69,7 @@ export const generateOnboardingWorkflowSteps = (
     didCompleteTutorial,
     didAgreeToTerms,
     didCreatePIN,
+    didSetMnemonic,
     didConsiderBiometry,
     didConsiderPushNotifications,
     didNameWallet,
@@ -80,6 +85,7 @@ export const generateOnboardingWorkflowSteps = (
     isOnboardingTutorialComplete(didCompleteTutorial),
     isTermsComplete(Number(didAgreeToTerms), termsVersion),
     isPINCreationComplete(didCreatePIN),
+    isMnemonicSetComplete(didSetMnemonic),
     isBiometryComplete(didConsiderBiometry),
     isPushNotificationComplete(didConsiderPushNotifications, enablePushNotifications),
     isNameWalletComplete(didNameWallet, enableWalletNaming),

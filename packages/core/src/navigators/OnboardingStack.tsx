@@ -13,6 +13,7 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useOnboardingState } from '../hooks/useOnboardingState'
 import AttemptLockout from '../screens/AttemptLockout'
+import MnemonicSet from '../screens/MnemonicSet'
 import NameWallet from '../screens/NameWallet'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
@@ -173,6 +174,7 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
         AttemptLockout,
         OnboardingScreen,
         CreatePINScreen,
+        SetMnemonicsScreen: MnemonicSet,
         EnterPINScreen,
       }),
     [

@@ -40,6 +40,7 @@ import { NetworkProvider } from './contexts/network'
 import { useTour } from './contexts/tour/tour-context'
 import { TourProvider } from './contexts/tour/tour-provider'
 import AttemptLockout from './screens/AttemptLockout'
+import MnemonicSet from './screens/MnemonicSet'
 import Developer from './screens/Developer'
 import DeveloperModal from './components/modals/DeveloperModal'
 import { useDeveloperMode } from './hooks/developer-mode'
@@ -206,6 +207,7 @@ export {
   HomeFooterView as HomeContentView,
   Biometry,
   AttemptLockout,
+  MnemonicSet,
   Record,
   Scan,
   Onboarding,

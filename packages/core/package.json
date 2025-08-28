@@ -226,5 +226,8 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "@scure/bip39": "^2.0.0"
   }
 }

@@ -53,7 +53,9 @@ const config = {
   },
   resolver: {
     blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
-    extraNodeModules: extraNodeModules,
+    extraNodeModules: {
+      ...extraNodeModules,
+    },
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
   },

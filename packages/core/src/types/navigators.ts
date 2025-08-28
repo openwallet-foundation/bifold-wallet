@@ -59,6 +59,7 @@ export enum Screens {
   AutoLock = 'AutoLock',
   UpdateAvailable = 'Update Available',
   ConfigureMediator = 'Configure Mediator',
+  SetMnemonics = 'Set Mnemonics',
 }
 
 export enum Stacks {
@@ -113,6 +114,7 @@ export type OnboardingStackParams = {
   [Screens.Biometry]: undefined
   [Screens.NameWallet]: undefined
   [Screens.PushNotifications]: undefined
+  [Screens.SetMnemonics]: undefined
 }
 
 export type ContactStackParams = {

@@ -1,4 +1,4 @@
-import 'fast-text-encoding' // polyfill for TextEncoder and TextDecoder
+import 'react-native-get-random-values' // polyfill for @credo-ts framework
 import 'react-native-gesture-handler'
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'

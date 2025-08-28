@@ -6,6 +6,7 @@ export interface Onboarding {
   didAgreeToTerms: boolean | string
   didCreatePIN: boolean
   didConsiderBiometry: boolean
+  didSetMnemonic: boolean
   didConsiderPushNotifications: boolean
   didNameWallet: boolean
   onboardingVersion: number
