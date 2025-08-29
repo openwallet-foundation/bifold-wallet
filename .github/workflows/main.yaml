@@ -20,7 +20,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
 
@@ -35,6 +35,12 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           working-directory: ./samples/app
+
+      - name: What XCode are we using?
+        run: |
+          find /Applications -type d -maxdepth 1 -iname 'xcode*.app'
+          sudo xcode-select --switch /Applications/Xcode_16.2.app
+          sudo xcode-select -p
 
       - name: Cache pod dependencies
         id: pod-cache
