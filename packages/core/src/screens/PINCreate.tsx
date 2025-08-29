@@ -69,10 +69,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
       padding: 20,
       justifyContent: 'space-between',
     },
-
-    // below used as helpful labels for views, no properties needed atp
-    contentContainer: {},
-    controlsContainer: {},
   })
 
   const passcodeCreate = useCallback(
@@ -120,7 +116,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
   return explained ? (
     <KeyboardView keyboardAvoiding={false}>
       <View style={style.screenContainer}>
-        <View style={style.contentContainer}>
+        <View>
           <PINHeader />
           <PINInput
             label={t('PINCreate.EnterPINTitle')}
@@ -162,7 +158,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ setAuthenticated, explainedStatus
             <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
         </View>
-        <View style={style.controlsContainer}>
+        <View>
           <Button
             title={t('PINCreate.CreatePIN')}
             testID={testIdWithKey('CreatePIN')}
