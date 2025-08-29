@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.5.0
+
+### Minor Changes
+
+- eeeadd0: cleaned up autolock logic
+
 ## 2.4.6
 
 ## 2.4.5

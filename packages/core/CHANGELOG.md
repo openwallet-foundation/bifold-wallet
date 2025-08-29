@@ -1,5 +1,7 @@
 # @bifold/core
 
+## 2.5.0
+
 ## 2.4.6
 
 ### Patch Changes
