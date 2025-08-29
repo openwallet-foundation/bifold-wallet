@@ -1,12 +1,13 @@
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Link from '../components/texts/Link'
+import { ThemedText } from '../components/texts/ThemedText'
 import { useTheme } from '../contexts/theme'
 import { Screens, Stacks } from '../types/navigators'
-import { ThemedText } from '../components/texts/ThemedText'
 
 interface WhatAreContactsProps {
   navigation: NavigationProp<ParamListBase>
