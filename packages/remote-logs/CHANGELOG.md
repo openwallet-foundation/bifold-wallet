@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.5.0
+
+### Minor Changes
+
+- eeeadd0: cleaned up autolock logic
+
+### Patch Changes
+
+- @bifold/core@2.5.0
+
 ## 2.4.6
 
 ### Patch Changes
