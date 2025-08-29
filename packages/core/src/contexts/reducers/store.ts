@@ -1,19 +1,19 @@
+import Config from 'react-native-config'
 import { LocalStorageKeys } from '../../constants'
 import { storeLoginAttempt } from '../../services/keychain'
+import { PersistentStorage } from '../../services/storage'
 import {
-  Preferences as PreferencesState,
-  Tours as ToursState,
-  Onboarding as OnboardingState,
   Authentication as AuthenticationState,
   Lockout as LockoutState,
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
-  State,
+  Onboarding as OnboardingState,
   Preferences,
+  Preferences as PreferencesState,
+  State,
+  Tours as ToursState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
-import { PersistentStorage } from '../../services/storage'
-import Config from 'react-native-config'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -682,6 +682,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       // in the previous installation
       const loginAttempt: LoginAttemptState = {
         loginAttempts: 0,
+        lockoutDate: undefined,
         servedPenalty: true,
       }
 
