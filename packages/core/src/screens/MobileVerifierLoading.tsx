@@ -1,18 +1,19 @@
-import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import { isPresentationFailed, isPresentationReceived } from '@bifold/verifier'
+import { useAgent, useProofById } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import PresentationLoading from '../components/animated/PresentationLoading'
 import Button, { ButtonType } from '../components/buttons/Button'
 import SafeAreaModal from '../components/modals/SafeAreaModal'
+import { ThemedText } from '../components/texts/ThemedText'
 import { useTheme } from '../contexts/theme'
 import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { DeliveryStackParams, Screens } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
-import { ThemedText } from '../components/texts/ThemedText'
 
 type MobileVerifierLoadingProps = StackScreenProps<DeliveryStackParams, Screens.MobileVerifierLoading>
 
