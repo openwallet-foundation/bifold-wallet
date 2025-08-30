@@ -1,22 +1,35 @@
 import React, { useState, useCallback } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 
+import { ButtonType } from '../buttons/Button-api'
+import { TOKENS, useServices } from '../../container-api'
+import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useTheme } from '../../contexts/theme'
 import { validateMnemonicPhrase } from '../../utils/mnemonics'
+import { testIdWithKey } from '../../utils/testable'
 
 type MnemonicMode = 'generate' | 'import'
 
 interface MnemonicDisplayProps {
   mnemonicWords: string[]
-  onReveal?: () => void
-  onMnemonicSet?: (mnemonic: string) => void
+  generatedMnemonic: string
+  isLoading: boolean
+  onContinue: (mnemonic: string) => void
 }
 
-const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReveal, onMnemonicSet }) => {
+const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({
+  mnemonicWords,
+  generatedMnemonic,
+  isLoading,
+  onContinue,
+}) => {
   const { ColorPalette } = useTheme()
   const { t } = useTranslation()
+  const { ButtonLoading } = useAnimatedComponents()
+  const [Button] = useServices([TOKENS.COMP_BUTTON])
+
   const [mode, setMode] = useState<MnemonicMode>('generate')
   const [isRevealed, setIsRevealed] = useState(false)
   const [importedMnemonic, setImportedMnemonic] = useState('')
@@ -24,8 +37,7 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReve
 
   const handleReveal = useCallback(() => {
     setIsRevealed(true)
-    onReveal?.()
-  }, [onReveal])
+  }, [])
 
   const handleModeSwitch = useCallback((newMode: MnemonicMode) => {
     setMode(newMode)
@@ -34,21 +46,54 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReve
     setIsValidMnemonic(false)
   }, [])
 
-  const handleImportedMnemonicChange = useCallback(
-    (text: string) => {
-      setImportedMnemonic(text)
+  const handleImportedMnemonicChange = useCallback((text: string) => {
+    setImportedMnemonic(text)
+    const isValid = validateMnemonicPhrase(text)
+    setIsValidMnemonic(isValid)
+    if (isValid) {
+      setIsRevealed(true)
+    }
+  }, [])
 
-      // Use the proper validation function
-      const isValid = validateMnemonicPhrase(text)
-      setIsValidMnemonic(isValid)
+  const handleContinue = () => {
+    let mnemonicToValidate = ''
 
-      if (isValid) {
-        onMnemonicSet?.(text.trim())
-        onReveal?.()
+    if (mode === 'generate') {
+      if (!isRevealed) {
+        Alert.alert('Recovery Phrase Not Revealed', 'Please reveal your recovery phrase first.', [{ text: 'OK' }])
+        return
       }
-    },
-    [onMnemonicSet, onReveal]
-  )
+      mnemonicToValidate = generatedMnemonic
+    } else {
+      if (!isValidMnemonic || !importedMnemonic) {
+        Alert.alert('Invalid Recovery Phrase', 'Please enter a valid recovery phrase before continuing.', [
+          { text: 'OK' },
+        ])
+        return
+      }
+      mnemonicToValidate = importedMnemonic.trim()
+    }
+
+    // Show confirmation modal before proceeding
+    Alert.alert(
+      'Confirmation',
+      'Please ensure you have stored your recovery phrase somewhere safe. Do you wish to proceed?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          style: 'default',
+          onPress: () => {
+            onContinue(mnemonicToValidate)
+          },
+        },
+      ],
+      { cancelable: false }
+    )
+  }
 
   const getDisplayWords = useCallback(() => {
     if (mode === 'import' && importedMnemonic) {
@@ -175,6 +220,23 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReve
       marginBottom: 16,
       color: ColorPalette.grayscale.mediumGrey,
     },
+    continueSection: {
+      marginTop: 20,
+    },
+    warningContainer: {
+      backgroundColor: ColorPalette.notification.warn + '20',
+      borderRadius: 8,
+      padding: 16,
+      marginBottom: 16,
+      borderLeftWidth: 4,
+      borderLeftColor: ColorPalette.notification.warn,
+    },
+    warningContainerText: {
+      fontSize: 14,
+      color: ColorPalette.notification.warnText,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
   })
 
   return (
@@ -230,7 +292,7 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReve
         </View>
       ) : (
         <View style={styles.importContainer}>
-          <Text style={styles.importLabel}>Enter your 12 or 24 word recovery phrase:</Text>
+          <Text style={styles.importLabel}>Enter your 24 word recovery phrase:</Text>
           <TextInput
             style={[styles.importTextInput, isValidMnemonic && styles.importTextInputValid]}
             value={importedMnemonic}
@@ -247,7 +309,7 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReve
             <Text style={[styles.validationText, isValidMnemonic ? styles.validationSuccess : styles.validationError]}>
               {isValidMnemonic
                 ? `✓ Valid ${importedMnemonic.trim().split(/\s+/).length} word mnemonic`
-                : `❌ Please enter exactly 12 or 24 words (currently ${
+                : `❌ Please enter your 24 word recovery phrase (currently ${
                     importedMnemonic.trim().split(/\s+/).length
                   } words)`}
             </Text>
@@ -272,6 +334,26 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({ mnemonicWords, onReve
               ))}
             </View>
           )}
+        </View>
+      )}
+
+      {/* Warning and Continue Button - shown when mnemonic is ready */}
+      {isRevealed && (
+        <View style={styles.continueSection}>
+          <View style={styles.warningContainer}>
+            <Text style={styles.warningContainerText}>{t('Mnemonic.WriteDownWarning')}</Text>
+          </View>
+
+          <Button
+            title={isLoading ? 'Setting up...' : t('Global.Continue')}
+            testID={testIdWithKey('ContinueMnemonic')}
+            accessibilityLabel={t('Global.Continue')}
+            buttonType={ButtonType.Primary}
+            disabled={isLoading}
+            onPress={handleContinue}
+          >
+            {isLoading ? <ButtonLoading /> : null}
+          </Button>
         </View>
       )}
     </View>

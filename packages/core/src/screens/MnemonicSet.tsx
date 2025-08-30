@@ -1,53 +1,88 @@
-import React, { useState, useCallback } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
 import MnemonicDisplay from '../components/misc/MnemonicDisplay'
+import KeyboardView from '../components/views/KeyboardView'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useTheme } from '../contexts/theme'
+import { OnboardingStackParams, Screens } from '../types/navigators'
 import { generateMnemonicPhrase } from '../utils/mnemonics'
+import { storeMnemonic } from '../services/keychain'
 
 const MnemonicSet: React.FC = () => {
   const { ColorPalette } = useTheme()
   const { t } = useTranslation()
-  const [, dispatch] = useStore()
+  const [store, dispatch] = useStore()
+  const navigation = useNavigation<StackNavigationProp<OnboardingStackParams>>()
 
-  const [hasSeenMnemonic, setHasSeenMnemonic] = useState(false)
-  const [currentMnemonic, setCurrentMnemonic] = useState<string>('')
-  const [isRevealed, setIsRevealed] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Generate a new 24-word mnemonic on component load
   const [generatedMnemonic] = useState(() => generateMnemonicPhrase())
   const mnemonicWords = generatedMnemonic.split(' ')
 
-  const handleMnemonicRevealed = useCallback(() => {
-    setHasSeenMnemonic(true)
-    setIsRevealed(true)
-    if (!currentMnemonic) {
-      setCurrentMnemonic(generatedMnemonic)
+  const handleContinue = async (mnemonic: string) => {
+    setIsLoading(true)
+    try {
+      // Store mnemonic securely using the user's biometry preference
+      // After biometrics screen, user may have enabled or disabled biometrics
+      const useBiometry = store.preferences.useBiometry
+      const success = await storeMnemonic(mnemonic, useBiometry)
+
+      if (!success) {
+        throw new Error('Keychain storage returned false')
+      }
+
+      // Store the mnemonic completion status
+      dispatch({
+        type: DispatchAction.DID_SET_MNEMONIC,
+      })
+      // Navigate to next screen in onboarding flow
+      navigation.navigate(Screens.Onboarding)
+    } catch (error: any) {
+      // Create detailed debug information for the alert
+      const debugInfo = [
+        `Message: ${error.message || 'unknown'}`,
+        `Code: ${error.code || 'unknown'}`,
+        `Type: ${error.constructor?.name || 'unknown'}`,
+        `Stack: ${error.stack?.split('\n')[0] || 'unknown'}`,
+      ].join('\n')
+
+      let errorMessage = 'Failed to securely store your recovery phrase. Please try again.'
+
+      if (error.message.includes('UserCancel')) {
+        errorMessage = 'Authentication was cancelled. Your recovery phrase was not saved.'
+      } else if (error.message.includes('BiometryNotAvailable')) {
+        errorMessage =
+          'Biometric authentication is not available. Your recovery phrase was stored with device security.'
+      } else if (error.message.includes('BiometryNotEnrolled')) {
+        errorMessage = 'Biometric authentication is not set up. Your recovery phrase was stored with device security.'
+      } else if (error.message === 'Keychain storage returned false') {
+        errorMessage = 'Keychain storage failed. Please check your device security settings and try again.'
+      } else {
+        // For debugging - include the actual error message
+        errorMessage = `DEBUG INFO:\n${debugInfo}\n\nPlease share this with the developer.`
+      }
+
+      Alert.alert('Error', errorMessage)
+    } finally {
+      setIsLoading(false)
     }
-  }, [generatedMnemonic, currentMnemonic])
-
-  const handleMnemonicSet = useCallback((importedMnemonic: string) => {
-    setCurrentMnemonic(importedMnemonic)
-    setHasSeenMnemonic(true)
-    setIsRevealed(true)
-  }, [])
-
-  const handleContinue = useCallback(() => {
-    // Store the mnemonic (generated or imported) in the app state
-    dispatch({
-      type: DispatchAction.DID_SET_MNEMONIC,
-      payload: [{ didSetMnemonic: true, mnemonic: currentMnemonic }],
-    })
-  }, [dispatch, currentMnemonic])
+  }
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: ColorPalette.brand.primaryBackground,
       padding: 20,
+      justifyContent: 'space-between',
+    },
+    contentContainer: {
+      flex: 1,
     },
     title: {
       fontSize: 24,
@@ -69,49 +104,26 @@ const MnemonicSet: React.FC = () => {
       fontWeight: '500',
       textAlign: 'center',
     },
-    continueButton: {
-      backgroundColor: ColorPalette.brand.primary,
-      padding: 16,
-      borderRadius: 8,
+    controlsContainer: {
       marginTop: 20,
-    },
-    continueButtonDisabled: {
-      backgroundColor: ColorPalette.grayscale.mediumGrey,
-      opacity: 0.5,
-    },
-    continueButtonText: {
-      color: ColorPalette.grayscale.white,
-      fontSize: 16,
-      fontWeight: 'bold',
-      textAlign: 'center',
     },
   })
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('Screens.SetMnemonics')}</Text>
+    <KeyboardView keyboardAvoiding={false}>
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>{t('Screens.SetMnemonics')}</Text>
 
-      <MnemonicDisplay
-        mnemonicWords={mnemonicWords}
-        onReveal={handleMnemonicRevealed}
-        onMnemonicSet={handleMnemonicSet}
-      />
-
-      {isRevealed && (
-        <View style={styles.warningContainer}>
-          <Text style={styles.warningText}>{t('Mnemonic.WriteDownWarning')}</Text>
+          <MnemonicDisplay
+            mnemonicWords={mnemonicWords}
+            generatedMnemonic={generatedMnemonic}
+            isLoading={isLoading}
+            onContinue={handleContinue}
+          />
         </View>
-      )}
-
-      <TouchableOpacity
-        style={[styles.continueButton, !hasSeenMnemonic && styles.continueButtonDisabled]}
-        onPress={handleContinue}
-        activeOpacity={0.7}
-        disabled={!hasSeenMnemonic}
-      >
-        <Text style={styles.continueButtonText}>{t('Global.Continue')}</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </KeyboardView>
   )
 }
 

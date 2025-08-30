@@ -182,3 +182,113 @@ export const isBiometricsActive = async (): Promise<boolean> => {
   const result = await getSupportedBiometryType()
   return Boolean(result)
 }
+
+const mnemonicFauxUserName = 'WalletFauxMnemonicUserName'
+
+export interface WalletMnemonic {
+  mnemonic: string
+}
+
+export const storeMnemonic = async (mnemonic: string, useBiometrics = false): Promise<boolean> => {
+  const opts = optionsForKeychainAccess(KeychainServices.Mnemonic, useBiometrics)
+  const mnemonicData: WalletMnemonic = { mnemonic }
+  const secretAsString = JSON.stringify(mnemonicData)
+
+  try {
+    const result = await Keychain.setGenericPassword(mnemonicFauxUserName, secretAsString, opts)
+    return Boolean(result)
+  } catch (error: any) {
+    // If biometrics fail, try without biometrics
+    if (
+      useBiometrics &&
+      (error.message.includes('UserCancel') ||
+        error.message.includes('BiometryNotAvailable') ||
+        error.message.includes('BiometryNotEnrolled') ||
+        error.message.includes('AuthenticationFailed'))
+    ) {
+      return await storeMnemonic(mnemonic, false)
+    }
+
+    // Create a more detailed error message
+    const detailedError = new Error(`Keychain storage failed: ${error.message} (Code: ${error.code || 'unknown'})`)
+    detailedError.stack = error.stack
+    throw detailedError
+  }
+}
+
+export const loadMnemonic = async (title?: string, description?: string): Promise<string | undefined> => {
+  // Try loading with biometrics first (like wallet key access)
+  let opts: Keychain.Options = optionsForKeychainAccess(KeychainServices.Mnemonic, true)
+
+  if (title && description) {
+    opts = {
+      ...opts,
+      authenticationPrompt: {
+        title,
+        description,
+      },
+    }
+  }
+
+  try {
+    const result = await Keychain.getGenericPassword(opts)
+    if (result) {
+      const mnemonicData = JSON.parse(result.password) as WalletMnemonic
+      return mnemonicData.mnemonic
+    }
+  } catch (error: any) {
+    // If biometric access fails, try without biometrics (fallback like wallet key)
+    if (error.message.includes('UserCancel')) {
+      return undefined
+    } else if (
+      error.message.includes('BiometryNotAvailable') ||
+      error.message.includes('BiometryNotEnrolled') ||
+      error.message.includes('AuthenticationFailed')
+    ) {
+      // Fall back to non-biometric access
+      const fallbackOpts = optionsForKeychainAccess(KeychainServices.Mnemonic, false)
+
+      try {
+        const result = await Keychain.getGenericPassword(fallbackOpts)
+        if (result) {
+          const mnemonicData = JSON.parse(result.password) as WalletMnemonic
+          return mnemonicData.mnemonic
+        }
+      } catch (fallbackError) {
+        // Even fallback failed
+        return undefined
+      }
+    } else {
+      throw error
+    }
+  }
+
+  // No mnemonic found in either storage method
+  return undefined
+}
+
+export const hasMnemonic = async (): Promise<boolean> => {
+  try {
+    const result = await loadMnemonic()
+    return Boolean(result)
+  } catch {
+    return false
+  }
+}
+
+export const deleteMnemonic = async (): Promise<void> => {
+  // Clear both biometric and non-biometric storage (like wipeWalletKey does)
+  try {
+    const biometricOpts = optionsForKeychainAccess(KeychainServices.Mnemonic, true)
+    await Keychain.resetGenericPassword(biometricOpts)
+  } catch {
+    // Ignore biometric deletion errors
+  }
+
+  try {
+    const nonBiometricOpts = optionsForKeychainAccess(KeychainServices.Mnemonic, false)
+    await Keychain.resetGenericPassword(nonBiometricOpts)
+  } catch {
+    // Ignore non-biometric deletion errors
+  }
+}
