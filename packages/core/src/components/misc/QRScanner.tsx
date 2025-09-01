@@ -277,7 +277,11 @@ const QRScanner: React.FC<Props> = ({
                       accessibilityLabel={t('Scan.ScanNow')}
                       accessibilityRole={'button'}
                       testID={testIdWithKey('ScanNow')}
-                      onPress={toggleShowInfoBox}
+                      onPress={() => {
+                        handleCodeScan(
+                          'openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%20%22https%3A//2eb67b3dcd89.ngrok.app/tenant/f05e63cb-5361-47ec-9cdf-6042342c7530%22%2C%20%22credentials%22%3A%20%5B%22IDCard%22%5D%2C%20%22grants%22%3A%20%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%20%7B%22pre-authorized_code%22%3A%20%22jadLJJmm-du6Dv7Mz0wGuQ%22%2C%20%22user_pin_required%22%3A%20false%7D%7D%7D'
+                        ) // Trigger scan manually
+                      }}
                       style={styleForState}
                       hitSlop={hitSlop}
                     >
