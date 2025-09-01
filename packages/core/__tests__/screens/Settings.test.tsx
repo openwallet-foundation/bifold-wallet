@@ -109,7 +109,7 @@ describe('Settings Screen', () => {
       </StoreContext.Provider>
     )
 
-    const developerModeButton = tree.getByTestId(testIdWithKey('DeveloperOptions'))
+    const developerModeButton = await tree.findByTestId(testIdWithKey('DeveloperOptions'))
     expect(developerModeButton).not.toBeNull()
   })
 

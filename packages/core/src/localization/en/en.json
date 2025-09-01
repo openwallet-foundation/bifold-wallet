@@ -288,6 +288,9 @@
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN",
     "ChangeBiometricsInputLabelParenthesis": "(Required)",
+    "EnterPINToAccess": "Please enter your PIN to access your recovery phrase.",
+    "AccessSecureInfo": "Access to sensitive information requires authentication.",
+    "AccessRecoveryPhrase": "Access",
     "ForgotPINLink": "Forgot your PIN?",
     "ForgotPINModalTitle": "Forgot your PIN?",
     "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again."
@@ -853,6 +856,18 @@
     "StoreSecurely": "Store these words securely - anyone with access to them can control your wallet.",
     "RevealWarning": "Make sure no one is watching your screen",
     "RevealButton": "Reveal Recovery Phrase"
+  },
+  "RecoveryPhrase": {
+    "Title": "Recovery Phrase",
+    "RevealTitle": "View Your Recovery Phrase",
+    "YourRecoveryPhrase": "Your Recovery Phrase",
+    "SecurityWarning": "⚠️ Make sure no one is watching your screen before revealing your recovery phrase.",
+    "WriteDownWarning": "⚠️ Write this down on paper and store it safely. This is the only way to recover your wallet if you lose access to this device.",
+    "Instructions": "Tap the button below to reveal your recovery phrase. Keep it private and secure.",
+    "RevealButton": "Show Recovery Phrase",
+    "Error": "Error",
+    "NoMnemonicFound": "No recovery phrase found. Please set up your recovery phrase first.",
+    "LoadError": "Unable to load recovery phrase. Please try again."
   },
   "NameWallet": {
     "EnableWalletNaming": "Enable wallet naming?",

@@ -292,6 +292,9 @@
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (FR)",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (FR)",
     "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)",
+    "EnterPINToAccess": "Veuillez saisir votre NIP pour accéder à votre phrase de récupération.",
+    "AccessSecureInfo": "L'accès aux informations sensibles nécessite une authentification.",
+    "AccessRecoveryPhrase": "Accéder",
     "ForgotPINLink": "Forgot your PIN? (FR)",
     "ForgotPINModalTitle": "Forgot your PIN? (FR)",
     "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)"
@@ -827,7 +830,8 @@
     "History": "History (FR)",
     "HistoryDetails": "History Details (FR)",
     "UpdateAvailable": "Update Available (FR)",
-    "JSONDetails": "JSON details (FR)"
+    "JSONDetails": "JSON details (FR)",
+    "SetMnemonics": "Phrase de récupération"
   },
   "Loading": {
     "TakingTooLong": "Cela prend plus de temps que d'habitude. Vous pouvez retourner à l'accueil ou continuer à attendre.",
@@ -919,6 +923,24 @@
     "InvalidPredicateValueDetails": "Doit être un nombre",
     "ConnectionLessLabel": "Anonyme",
     "WaitingForResponse": "Waiting for response... (FR)"
+  },
+  "Mnemonic": {
+    "WriteDownWarning": "⚠️ Écrivez ceci sur papier et rangez-le en sécurité. C'est la seule façon de récupérer votre portefeuille si vous perdez l'accès à cet appareil.",
+    "StoreSecurely": "Stockez ces mots en sécurité - toute personne y ayant accès peut contrôler votre portefeuille.",
+    "RevealWarning": "Assurez-vous que personne ne regarde votre écran",
+    "RevealButton": "Révéler la phrase de récupération"
+  },
+  "RecoveryPhrase": {
+    "Title": "Phrase de récupération",
+    "RevealTitle": "Voir votre phrase de récupération",
+    "YourRecoveryPhrase": "Votre phrase de récupération",
+    "SecurityWarning": "⚠️ Assurez-vous que personne ne regarde votre écran avant de révéler votre phrase de récupération.",
+    "WriteDownWarning": "⚠️ Écrivez ceci sur papier et rangez-le en sécurité. C'est la seule façon de récupérer votre portefeuille si vous perdez l'accès à cet appareil.",
+    "Instructions": "Appuyez sur le bouton ci-dessous pour révéler votre phrase de récupération. Gardez-la privée et sécurisée.",
+    "RevealButton": "Afficher la phrase de récupération",
+    "Error": "Erreur",
+    "NoMnemonicFound": "Aucune phrase de récupération trouvée. Veuillez d'abord configurer votre phrase de récupération.",
+    "LoadError": "Impossible de charger la phrase de récupération. Veuillez réessayer."
   },
   "AppUpdate": {
     "Heading": "Update Bifold to the latest version (FR)",

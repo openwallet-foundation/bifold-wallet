@@ -6,6 +6,7 @@ import { useTheme } from '../contexts/theme'
 import HistorySettings from '../modules/history/ui/HistorySettings'
 import DataRetention from '../screens/DataRetention'
 import Language from '../screens/Language'
+import RecoveryPhrase from '../screens/RecoveryPhrase'
 import RenameWallet from '../screens/RenameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
@@ -119,6 +120,15 @@ const SettingStack: React.FC = () => {
           ...ScreenOptionsDictionary[Screens.ChangePIN],
         }}
       ></Stack.Screen>
+      <Stack.Screen
+        name={Screens.RecoveryPhrase}
+        component={RecoveryPhrase}
+        options={{
+          title: t('RecoveryPhrase.Title'),
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.RecoveryPhrase],
+        }}
+      />
       <Stack.Screen
         name={Screens.TogglePushNotifications}
         component={TogglePushNotifications}

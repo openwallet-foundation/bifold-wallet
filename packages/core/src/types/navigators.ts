@@ -60,6 +60,7 @@ export enum Screens {
   UpdateAvailable = 'Update Available',
   ConfigureMediator = 'Configure Mediator',
   SetMnemonics = 'Set Mnemonics',
+  RecoveryPhrase = 'Recovery Phrase',
 }
 
 export enum Stacks {
@@ -169,6 +170,7 @@ export type SettingStackParams = {
   [Screens.Tours]: undefined
   [Screens.ToggleBiometry]: undefined
   [Screens.ChangePIN]: undefined
+  [Screens.RecoveryPhrase]: undefined
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined

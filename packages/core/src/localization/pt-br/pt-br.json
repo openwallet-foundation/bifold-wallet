@@ -274,6 +274,9 @@
     "ChangeBiometricsSubtext": "Please enter your PIN to confirm a change in biometrics (PT-BR)",
     "ChangeBiometricsInputLabel": "Enter your wallet PIN (PT-BR)",
     "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
+    "EnterPINToAccess": "Por favor, digite seu PIN para acessar sua frase de recuperação.",
+    "AccessSecureInfo": "O acesso a informações sensíveis requer autenticação.",
+    "AccessRecoveryPhrase": "Acessar",
     "ForgotPINLink": "Forgot your PIN? (PT-BR)",
     "ForgotPINModalTitle": "Forgot your PIN? (PT-BR)",
     "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)"
@@ -805,7 +808,8 @@
     "History": "History (PT-BR)",
     "HistoryDetails": "History Details (PT-BR)",
     "UpdateAvailable": "Update Available (PT-BR)",
-    "JSONDetails": "JSON details (PT-BR)"
+    "JSONDetails": "JSON details (PT-BR)",
+    "SetMnemonics": "Frase de Recuperação"
   },
   "Loading": {
     "TakingTooLong": "Isso esta demorando mais que o normal. Você pode voltar para a home ou continuar esperando.",
@@ -897,6 +901,24 @@
     "InvalidPredicateValueDetails": "Deve ser um número",
     "ConnectionLessLabel": "Anônimo",
     "WaitingForResponse": "Waiting for response... (PT-BR)"
+  },
+  "Mnemonic": {
+    "WriteDownWarning": "⚠️ Escreva isso no papel e guarde com segurança. Esta é a única maneira de recuperar sua carteira se você perder o acesso a este dispositivo.",
+    "StoreSecurely": "Armazene essas palavras com segurança - qualquer pessoa com acesso a elas pode controlar sua carteira.",
+    "RevealWarning": "Certifique-se de que ninguém esteja observando sua tela",
+    "RevealButton": "Revelar Frase de Recuperação"
+  },
+  "RecoveryPhrase": {
+    "Title": "Frase de Recuperação",
+    "RevealTitle": "Ver Sua Frase de Recuperação",
+    "YourRecoveryPhrase": "Sua Frase de Recuperação",
+    "SecurityWarning": "⚠️ Certifique-se de que ninguém esteja observando sua tela antes de revelar sua frase de recuperação.",
+    "WriteDownWarning": "⚠️ Escreva isso no papel e guarde com segurança. Esta é a única maneira de recuperar sua carteira se você perder o acesso a este dispositivo.",
+    "Instructions": "Toque no botão abaixo para revelar sua frase de recuperação. Mantenha-a privada e segura.",
+    "RevealButton": "Mostrar Frase de Recuperação",
+    "Error": "Erro",
+    "NoMnemonicFound": "Nenhuma frase de recuperação encontrada. Por favor, configure sua frase de recuperação primeiro.",
+    "LoadError": "Não foi possível carregar a frase de recuperação. Tente novamente."
   },
   "AppUpdate": {
     "Heading": "Update Bifold to the latest version (PT-BR)",

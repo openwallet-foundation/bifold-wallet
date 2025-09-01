@@ -141,6 +141,13 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
           onPress: () => navigation.navigate(Screens.ChangePIN),
         },
         {
+          title: t('RecoveryPhrase.Title'),
+          value: undefined,
+          accessibilityLabel: t('RecoveryPhrase.Title'),
+          testID: testIdWithKey('Recovery Phrase'),
+          onPress: () => navigation.navigate(Screens.RecoveryPhrase),
+        },
+        {
           title: t('Settings.Language'),
           value: currentLanguage,
           accessibilityLabel: t('Settings.Language'),

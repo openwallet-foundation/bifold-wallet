@@ -25,6 +25,7 @@ interface Props {
 export enum PINEntryUsage {
   PINCheck,
   ChangeBiometrics,
+  AccessRecoveryPhrase,
 }
 
 const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PINCheck, onCancelAuth }) => {
@@ -66,26 +67,31 @@ const PINVerify: React.FC<Props> = ({ setAuthenticated, usage = PINEntryUsage.PI
   const inputLabelText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsInputLabel'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChangedEnterPIN'),
+    [PINEntryUsage.AccessRecoveryPhrase]: t('PINEnter.EnterPINToAccess'),
   }
 
   const inputTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'BiometricChangedEnterPIN',
     [PINEntryUsage.PINCheck]: 'AppSettingChangedEnterPIN',
+    [PINEntryUsage.AccessRecoveryPhrase]: 'AccessRecoveryPhraseEnterPIN',
   }
 
   const primaryButtonText = {
     [PINEntryUsage.ChangeBiometrics]: t('Global.Continue'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
+    [PINEntryUsage.AccessRecoveryPhrase]: t('PINEnter.AccessRecoveryPhrase'),
   }
 
   const primaryButtonTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'Continue',
     [PINEntryUsage.PINCheck]: 'AppSettingSave',
+    [PINEntryUsage.AccessRecoveryPhrase]: 'AccessRecoveryPhrase',
   }
 
   const helpText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsSubtext'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChanged'),
+    [PINEntryUsage.AccessRecoveryPhrase]: t('PINEnter.AccessSecureInfo'),
   }
 
   const isContinueDisabled = continueDisabled || PIN.length < minPINLength
