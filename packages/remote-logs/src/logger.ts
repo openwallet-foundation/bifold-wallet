@@ -1,8 +1,8 @@
 import { BifoldError, BifoldLogger } from '@bifold/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
-import { consoleTransport, logger } from 'react-native-logs'
+import { logger } from 'react-native-logs'
 
-import { RemoteLoggerOptions, lokiTransport } from './transports'
+import { RemoteLoggerOptions, lokiTransport, consoleTransport } from './transports'
 
 export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
@@ -129,37 +129,38 @@ export class RemoteLogger extends BifoldLogger {
     }, expirationInMinutes * 60000)
   }
 
-  public test(...msgs: unknown[]): void {
-    this._log?.test(...this.messageFormatter(...msgs))
+  public test(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.test({ message, data })
   }
 
-  public trace(...msgs: unknown[]): void {
-    this._log?.trace(...this.messageFormatter(...msgs))
+  public trace(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.trace({ message, data })
   }
 
-  public debug(...msgs: unknown[]): void {
-    this._log?.debug(...this.messageFormatter(...msgs))
+  public debug(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.debug({ message, data })
   }
 
-  public info(...msgs: unknown[]): void {
-    this._log?.info(...this.messageFormatter(...msgs))
+  public info(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.info({ message, data })
   }
 
-  public warn(...msgs: unknown[]): void {
-    this._log?.warn(...this.messageFormatter(...msgs))
+  public warn(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.warn({ message, data })
   }
 
-  public error(...msgs: unknown[]): void {
-    this._log?.error(...this.messageFormatter(...msgs))
+  public error(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.error({ message, data })
   }
 
-  public fatal(...msgs: unknown[]): void {
-    this._log?.fatal(...this.messageFormatter(...msgs))
+  public fatal(message: string, data?: Record<string, unknown> | Error): void {
+    this._log?.fatal({ message, data })
   }
 
   public report(bifoldError: BifoldError): void {
     this._log?.info({ message: 'Sending Loki report' })
     const { title, description, code, message } = bifoldError
+
     lokiTransport({
       msg: title,
       rawMsg: [{ message: title, data: { title, description, code, message } }],
