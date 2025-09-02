@@ -37,22 +37,27 @@ describe('CredentialOfferAccept Screen', () => {
 
   test('transitions to taking too delay message', async () => {
     jest.useFakeTimers()
-    const tree = render(
-      <BasicAppContext>
-        <CredentialOfferAccept visible={true} credentialId={credentialId} />
-      </BasicAppContext>
-    )
 
-    await act(async () => {
-      await jest.advanceTimersByTimeAsync(11000)
-    })
+    try {
+      const tree = render(
+        <BasicAppContext>
+          <CredentialOfferAccept visible={true} credentialId={credentialId} />
+        </BasicAppContext>
+      )
 
-    const backToHomeButton = tree.getByTestId(testIdWithKey('BackToHome'))
-    const doneButton = tree.queryByTestId(testIdWithKey('Done'))
+      await act(async () => {
+        await jest.advanceTimersByTimeAsync(11000)
+      })
 
-    expect(tree).toMatchSnapshot()
-    expect(backToHomeButton).not.toBeNull()
-    expect(doneButton).toBeNull()
+      const backToHomeButton = tree.getByTestId(testIdWithKey('BackToHome'))
+      const doneButton = tree.queryByTestId(testIdWithKey('Done'))
+
+      expect(tree).toMatchSnapshot()
+      expect(backToHomeButton).not.toBeNull()
+      expect(doneButton).toBeNull()
+    } finally {
+      jest.useRealTimers()
+    }
   })
 
   test('transitions to offer accepted', () => {
