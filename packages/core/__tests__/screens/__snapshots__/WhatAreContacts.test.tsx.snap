@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WhatAreContacts Screen Renders correctly 1`] = `
-<RCTSafeAreaView
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
   style={
     Object {
       "alignItems": "center",
@@ -272,5 +280,5 @@ exports[`WhatAreContacts Screen Renders correctly 1`] = `
       </Text>
     </View>
   </RCTScrollView>
-</RCTSafeAreaView>
+</RNCSafeAreaView>
 `;

@@ -16,7 +16,6 @@
     "bifold": "bin/bifold"
   },
   "files": [
-    "src",
     "lib",
     "!**/__tests__",
     "!**/__fixtures__",
