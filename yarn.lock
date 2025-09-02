@@ -2039,14 +2039,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bifold/core@npm:2.4.6, @bifold/core@workspace:packages/core":
+"@bifold/core@npm:2.5.0, @bifold/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
     "@babel/core": "npm:~7.22.20"
     "@babel/runtime": "npm:~7.23.9"
-    "@bifold/oca": "npm:2.4.6"
-    "@bifold/verifier": "npm:2.4.6"
+    "@bifold/oca": "npm:2.5.0"
+    "@bifold/verifier": "npm:2.5.0"
     "@commitlint/cli": "npm:~11.0.0"
     "@credo-ts/anoncreds": "npm:0.5.13"
     "@credo-ts/askar": "npm:0.5.13"
@@ -2230,7 +2230,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/oca@npm:2.4.6, @bifold/oca@workspace:packages/oca":
+"@bifold/oca@npm:2.5.0, @bifold/oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
@@ -2290,7 +2290,7 @@ __metadata:
   resolution: "@bifold/remote-logs@workspace:packages/remote-logs"
   dependencies:
     "@babel/runtime": "npm:~7.23.9"
-    "@bifold/core": "npm:2.4.6"
+    "@bifold/core": "npm:2.5.0"
     "@credo-ts/core": "npm:0.5.13"
     "@typescript-eslint/parser": "npm:~7.18.0"
     axios: "npm:~1.4.0"
@@ -2312,7 +2312,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/verifier@npm:2.4.6, @bifold/verifier@workspace:packages/verifier":
+"@bifold/verifier@npm:2.5.0, @bifold/verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
@@ -8501,8 +8501,8 @@ __metadata:
     "@babel/core": "npm:~7.22.20"
     "@babel/preset-env": "npm:~7.22.20"
     "@babel/runtime": "npm:~7.23.9"
-    "@bifold/core": "npm:2.4.6"
-    "@bifold/oca": "npm:2.4.6"
+    "@bifold/core": "npm:2.5.0"
+    "@bifold/oca": "npm:2.5.0"
     "@credo-ts/anoncreds": "npm:0.5.13"
     "@credo-ts/askar": "npm:0.5.13"
     "@credo-ts/core": "npm:0.5.13"
