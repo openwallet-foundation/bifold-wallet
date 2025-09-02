@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+
 ## 2.4.6
 
 ### Patch Changes
