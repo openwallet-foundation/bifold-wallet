@@ -6,7 +6,6 @@
   "types": "build/index.d.ts",
   "source": "src/index.ts",
   "files": [
-    "src",
     "build"
   ],
   "license": "Apache-2.0",
