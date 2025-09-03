@@ -1,5 +1,7 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 
+import { BrandingOverlay } from '@bifold/oca'
+import { BrandingOverlayType, CredentialOverlay, OCABundleResolveAllParams } from '@bifold/oca/build/legacy'
 import {
   ClaimFormat,
   MdocRecord,
@@ -11,12 +13,10 @@ import {
 } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { recordsAddedByType, recordsRemovedByType } from '@credo-ts/react-hooks/build/recordUtils'
-import { TOKENS, useServices } from '../../../container-api'
-import { getCredentialForDisplay } from '../display'
-import { BrandingOverlayType, CredentialOverlay, OCABundleResolveAllParams } from '@bifold/oca/build/legacy'
-import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { useTranslation } from 'react-i18next'
-import { BrandingOverlay } from '@bifold/oca'
+import { TOKENS, useServices } from '../../../container-api'
+import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
+import { getCredentialForDisplay } from '../display'
 import { OpenIDCredentialType } from '../types'
 
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined

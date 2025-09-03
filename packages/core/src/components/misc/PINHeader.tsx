@@ -1,6 +1,7 @@
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useTheme } from '../../contexts/theme'
 import { View } from 'react-native'
+import { useTheme } from '../../contexts/theme'
 import { ThemedText } from '../texts/ThemedText'
 
 export interface PINHeaderProps {
