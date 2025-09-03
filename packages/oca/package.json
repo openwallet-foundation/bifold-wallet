@@ -4,7 +4,7 @@
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "source": "src/index.ts",
+  "source": "build/index.js",
   "files": [
     "build"
   ],

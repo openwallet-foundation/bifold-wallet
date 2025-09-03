@@ -5,8 +5,8 @@
   "main": "build/commonjs/index.js",
   "module": "build/module/index.js",
   "types": "build/typescript/index.d.ts",
-  "source": "src/index.ts",
-  "react-native": "src/index.ts",
+  "source": "build/commonjs/index.js",
+  "react-native": "build/commonjs/index.js",
   "files": [
     "build",
     "ios",
