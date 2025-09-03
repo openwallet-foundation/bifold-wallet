@@ -1,10 +1,10 @@
 import { NetInfoStateType, useNetInfo } from '@react-native-community/netinfo'
-import { createContext, useContext, useState, useCallback, PropsWithChildren, useEffect } from 'react'
+import React, { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react'
 
-import NetInfoModal from '../components/modals/NetInfoModal'
 import { useTranslation } from 'react-i18next'
-import { useStore } from './store'
+import NetInfoModal from '../components/modals/NetInfoModal'
 import { DispatchAction } from './reducers/store'
+import { useStore } from './store'
 
 export interface NetworkContext {
   silentAssertConnectedNetwork: () => boolean | null

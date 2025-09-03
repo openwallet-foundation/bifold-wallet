@@ -4,7 +4,7 @@
   "description": "Remote logging for credo-ts agents",
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "source": "src/index.ts",
+  "source": "build/index.js",
   "files": [
     "build"
   ],

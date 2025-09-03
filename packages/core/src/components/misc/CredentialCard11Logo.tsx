@@ -1,12 +1,13 @@
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
+import React from 'react'
 import { Image, View } from 'react-native'
-import { toImageSource } from '../../utils/credential'
-import { useTheme } from '../../contexts/theme'
-import { testIdWithKey } from '../../utils/testable'
-import useCredentialCardStyles from '../../hooks/credential-card-styles'
-import { TOKENS, useServices } from '../../container-api'
 import { ThemedText } from '../../components/texts/ThemedText'
+import { TOKENS, useServices } from '../../container-api'
+import { useTheme } from '../../contexts/theme'
+import useCredentialCardStyles from '../../hooks/credential-card-styles'
+import { toImageSource } from '../../utils/credential'
+import { testIdWithKey } from '../../utils/testable'
 
 interface CredentialCardLogo {
   noLogoText: string

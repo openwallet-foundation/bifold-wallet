@@ -17,6 +17,7 @@ import CredentialCard from './components/misc/CredentialCard'
 import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import FauxHeader from './components/misc/FauxHeader'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
+import QRScannerTorch from "./components/misc/QRScannerTorch"
 import DeveloperModal from './components/modals/DeveloperModal'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
@@ -187,6 +188,7 @@ export {
   PINRules,
   Preface,
   proofRequestTourSteps,
+  QRScannerTorch,
   Record,
   SafeAreaModal,
   Scan,

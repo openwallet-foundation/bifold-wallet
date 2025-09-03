@@ -1,8 +1,8 @@
-import { createContext, useCallback, useContext, useMemo } from 'react'
+import React, { createContext, useCallback, useContext, useMemo } from 'react'
 
 import { bifoldTheme, ITheme } from '../theme'
-import { useStore } from './store'
 import { DispatchAction } from './reducers/store'
+import { useStore } from './store'
 
 export interface IThemeContext extends ITheme {
   setTheme: (themeName: string) => void
