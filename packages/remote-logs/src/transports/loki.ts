@@ -40,7 +40,11 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
   }
 
   const { lokiUrl, lokiLabels } = props.options
-  const { message, data } = props.rawMsg.pop()
+  // Get the last element without mutating the
+  // original array.
+  const lastMessage = props.rawMsg[props.rawMsg.length - 1]
+  const { message, data } = lastMessage
+
   const payload = {
     streams: [
       {
