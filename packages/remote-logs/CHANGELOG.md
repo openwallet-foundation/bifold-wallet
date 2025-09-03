@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+- eeeadd0: cleaned up autolock logic
+
+### Patch Changes
+
+- Updated dependencies [66bbd8d]
+  - @bifold/core@2.5.0
+
 ## 2.4.6
 
 ### Patch Changes
