@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.6.0
+
+### Minor Changes
+
+- f52bdd8: Fixed transports for local and loki logging
+- e6c4d63: fixed imports, fixed release builds, added export
+
+### Patch Changes
+
+- Updated dependencies [e6c4d63]
+  - @bifold/core@2.6.0
+
 ## 2.5.0
 
 ### Minor Changes

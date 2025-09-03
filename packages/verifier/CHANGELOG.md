@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.6.0
+
+### Minor Changes
+
+- e6c4d63: fixed imports, fixed release builds, added export
+
 ## 2.5.0
 
 ### Minor Changes
