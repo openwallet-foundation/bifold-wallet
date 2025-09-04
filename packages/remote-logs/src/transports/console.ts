@@ -75,7 +75,10 @@ export const consoleTransport: transportFunctionType = (props: ConsoleTransportP
   // Get the last element without mutating the
   // original array.
   const lastMessage = props.rawMsg[props.rawMsg.length - 1]
-  let { message, ...rest } = lastMessage
+  // Destructure the message and rest properties, allow
+  // ...rest to be `const`, message to be `let`.
+  let { message } = lastMessage
+  const { message: _, ...rest } = lastMessage
   let color
 
   if (
