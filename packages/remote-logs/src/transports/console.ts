@@ -63,18 +63,31 @@ const messageDataFormatter = (...msgs: unknown[]): unknown[] => {
       )
     }
 
-    return typeof msg === 'object' ? JSON.stringify(msg, null, 2) : msg
+    if (typeof msg === 'object' && msg !== null) {
+      try {
+        return JSON.stringify(msg, null, 2)
+      } catch (error) {
+        // Handle circular references
+        return '[Circular Reference]'
+      }
+    }
+
+    return msg
   })
 }
 
 export const consoleTransport: transportFunctionType = (props: ConsoleTransportProps) => {
-  if (!props) {
+  if (!props || !props.rawMsg || props.rawMsg.length === 0) {
     return
   }
 
   // Get the last element without mutating the
   // original array.
   const lastMessage = props.rawMsg[props.rawMsg.length - 1]
+  if (!lastMessage) {
+    return
+  }
+
   // Destructure the message and rest properties, allow
   // ...rest to be `const`, message to be `let`.
   let { message } = lastMessage
