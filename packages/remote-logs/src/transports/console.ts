@@ -78,6 +78,7 @@ export const consoleTransport: transportFunctionType = (props: ConsoleTransportP
   // Destructure the message and rest properties, allow
   // ...rest to be `const`, message to be `let`.
   let { message } = lastMessage
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { message: _, ...rest } = lastMessage
   let color
 
