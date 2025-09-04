@@ -77,7 +77,7 @@ const messageDataFormatter = (...msgs: unknown[]): unknown[] => {
 }
 
 export const consoleTransport: transportFunctionType = (props: ConsoleTransportProps) => {
-  if (!props || !props.rawMsg || props.rawMsg.length === 0) {
+  if (!props?.rawMsg?.length) {
     return
   }
 

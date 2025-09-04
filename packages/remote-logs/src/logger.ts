@@ -60,7 +60,7 @@ interface InternalLoggerInstance {
 }
 
 export class RemoteLogger {
-  private baseLogger: BifoldLogger
+  private readonly baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
   private _autoDisableRemoteLoggingIntervalInMinutes = 0

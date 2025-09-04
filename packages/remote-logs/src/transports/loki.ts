@@ -27,7 +27,7 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
   // however Date.now() only returns milliseconds precision.
   const timestampEndPadding = '000000'
 
-  if (!props.options) {
+  if (!props?.options) {
     throw Error('props.options is required')
   }
 
