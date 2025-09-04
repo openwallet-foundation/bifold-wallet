@@ -235,6 +235,7 @@ describe('lokiTransport', () => {
       const props = createMockProps({
         options: {
           lokiLabels: { app: 'test' },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       })
 
@@ -245,6 +246,7 @@ describe('lokiTransport', () => {
       const props = createMockProps({
         options: {
           lokiUrl: 'https://user:pass@loki.example.com/loki/api/v1/push',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       })
 

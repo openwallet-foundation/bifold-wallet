@@ -36,7 +36,9 @@ describe('consoleTransport', () => {
     })
 
     it('should return early if props is falsy', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       consoleTransport(null as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       consoleTransport(undefined as any)
 
       expect(mockConsoleLog).not.toHaveBeenCalled()
@@ -176,6 +178,7 @@ describe('consoleTransport', () => {
       const props = createMockProps({
         options: {
           colors: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             info: 'invalidColor' as any,
           },
         },
@@ -327,6 +330,7 @@ describe('consoleTransport', () => {
     })
 
     it('should handle circular references in objects', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const circularObj: any = { name: 'test' }
       circularObj.self = circularObj
 

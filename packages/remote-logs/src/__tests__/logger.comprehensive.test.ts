@@ -239,6 +239,7 @@ describe('RemoteLogger', () => {
 
   describe('logging methods', () => {
     let remoteLogger: RemoteLogger
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockLogInstance: any
 
     beforeEach(() => {
@@ -391,6 +392,7 @@ describe('RemoteLogger', () => {
 
   describe('report method', () => {
     let remoteLogger: RemoteLogger
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockLogInstance: any
 
     beforeEach(() => {

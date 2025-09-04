@@ -40,6 +40,7 @@ describe('RemoteLogger Module Integration', () => {
     })
 
     it('should export transport functions from transports module', () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { lokiTransport, consoleTransport } = require('../transports')
 
       expect(lokiTransport).toBeDefined()
@@ -52,6 +53,7 @@ describe('RemoteLogger Module Integration', () => {
   describe('Module Structure', () => {
     it('should provide consistent API surface', () => {
       // Verify the module exports what consumers expect
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const transportsModule = require('../transports')
 
       expect(transportsModule).toHaveProperty('lokiTransport')

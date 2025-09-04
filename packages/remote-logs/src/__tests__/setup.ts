@@ -3,6 +3,7 @@ import 'react-native-gesture-handler/jestSetup'
 // Global test setup for React Native testing environment
 
 // Mock React Native batched bridge for native module compatibility
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 ;(global as any).__fbBatchedBridgeConfig = {
   remoteModuleConfig: [],
   localModulesConfig: [],
@@ -66,6 +67,7 @@ beforeEach(() => {
 describe('Test Environment Setup', () => {
   it('should configure React Native mocks correctly', () => {
     expect(jest.isMockFunction(global.console.log)).toBe(false) // Console should not be mocked by default
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((global as any).__fbBatchedBridgeConfig).toBeDefined()
   })
 })

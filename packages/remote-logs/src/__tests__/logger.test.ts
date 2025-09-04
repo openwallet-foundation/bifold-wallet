@@ -24,6 +24,7 @@ jest.mock('../transports', () => ({
 
 describe('RemoteLogger', () => {
   let remoteLogger: RemoteLogger
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let mockLogger: any
   let mockCreateLogger: jest.MockedFunction<typeof logger.createLogger>
   let mockLokiTransport: jest.MockedFunction<typeof lokiTransport>
@@ -227,7 +228,8 @@ describe('RemoteLogger', () => {
     testCases.forEach(({ method, data }) => {
       describe(method, () => {
         it(`should call ${method} with message only`, () => {
-          ;(remoteLogger as any)[method]('test message')
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (remoteLogger as any)[method]('test message')
 
           expect(mockLogger[method]).toHaveBeenCalledWith({
             message: 'test message',
@@ -236,7 +238,8 @@ describe('RemoteLogger', () => {
         })
 
         it(`should call ${method} with message and data`, () => {
-          ;(remoteLogger as any)[method]('test message', data)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (remoteLogger as any)[method]('test message', data)
 
           expect(mockLogger[method]).toHaveBeenCalledWith({
             message: 'test message',
@@ -351,6 +354,7 @@ describe('RemoteLogger', () => {
         }
       })()
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       remoteLogger.report(bifoldError as any)
 
       expect(mockLogger.info).toHaveBeenCalledWith({
