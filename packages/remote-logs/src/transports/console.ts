@@ -67,8 +67,15 @@ const messageDataFormatter = (...msgs: unknown[]): unknown[] => {
       try {
         return JSON.stringify(msg, null, 2)
       } catch (error) {
-        // Handle circular references
-        return '[Circular Reference]'
+        // Handle JSON serialization errors (circular references, BigInt, etc.)
+        if (error instanceof TypeError && error.message.includes('circular')) {
+          return '[Circular Reference]'
+        }
+        if (error instanceof TypeError && error.message.includes('BigInt')) {
+          return '[BigInt value cannot be serialized]'
+        }
+        // Handle other JSON serialization errors
+        return `[Serialization Error: ${error instanceof Error ? error.message : 'Unknown error'}]`
       }
     }
 

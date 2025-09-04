@@ -338,8 +338,28 @@ describe('consoleTransport', () => {
         rawMsg: [{ message: 'circular test', data: circularObj }],
       })
 
-      // Should not throw an error, JSON.stringify will handle circular references
+      // Should not throw an error and should log the circular reference message
       expect(() => consoleTransport(props)).not.toThrow()
+      expect(mockConsoleLog).toHaveBeenCalledWith(expect.stringContaining('[Circular Reference]'))
+    })
+
+    it('should handle JSON serialization errors gracefully', () => {
+      // Create an object that will cause a JSON serialization error
+      const problematicObj = {
+        toJSON: () => {
+          throw new TypeError('Custom serialization error')
+        },
+      }
+
+      const props = createMockProps({
+        rawMsg: [{ message: 'error test', data: problematicObj }],
+      })
+
+      // Should not throw an error and should log the serialization error message
+      expect(() => consoleTransport(props)).not.toThrow()
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        expect.stringContaining('[Serialization Error: Custom serialization error]')
+      )
     })
   })
 })
