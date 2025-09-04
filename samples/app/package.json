@@ -29,7 +29,7 @@
     "@credo-ts/push-notifications": "0.7.0",
     "@credo-ts/question-answer": "0.5.13",
     "@credo-ts/react-hooks": "0.6.0",
-    "@credo-ts/react-native": "0.5.13",
+    "@credo-ts/react-native": "0.5.17",
     "@formatjs/intl-datetimeformat": "~4.2.6",
     "@formatjs/intl-displaynames": "~5.2.6",
     "@formatjs/intl-getcanonicallocales": "~1.7.3",
