@@ -8,6 +8,17 @@ export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
 }
 
+/**
+ * Standardized logging method interface with consistent overloads
+ * Supports all combinations of message, data, and error parameters
+ */
+interface LogMethod {
+  (message: string): void
+  (message: string, data: Record<string, unknown>): void
+  (message: string, error: Error): void
+  (message: string, data: Record<string, unknown>, error: Error): void
+}
+
 export class RemoteLogger {
   private baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
@@ -146,56 +157,52 @@ export class RemoteLogger {
     })
   }
 
-  // Delegate all logging methods to the base logger or custom implementation
-  public test(message: string, data?: Record<string, unknown>): void {
-    this._log?.test({ message, data })
+  // Standardized logging methods with consistent overloads
+  public test: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.test({ message, data, error: actualError })
   }
 
-  public trace(message: string, data?: Record<string, unknown>): void {
-    this._log?.trace({ message, data })
+  public trace: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.trace({ message, data, error: actualError })
   }
 
-  public debug(message: string, data?: Record<string, unknown>): void {
-    this._log?.debug({ message, data })
+  public debug: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.debug({ message, data, error: actualError })
   }
 
-  public info(message: string, data?: Record<string, unknown>): void {
-    this._log?.info({ message, data })
+  public info: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.info({ message, data, error: actualError })
   }
 
-  public warn(message: string, data?: Record<string, unknown>): void {
-    this._log?.warn({ message, data })
+  public warn: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.warn({ message, data, error: actualError })
   }
 
-  // Allow for overload signatures for error method, I think
-  // this makes the clearest API.
-  public error(message: string): void
-  public error(message: string, data: Record<string, unknown>): void
-  public error(message: string, error: Error): void
-  public error(message: string, data: Record<string, unknown>, error: Error): void
-  public error(message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void {
-    let data: Record<string, unknown> | undefined
-    let actualError: Error | undefined
-
-    if (dataOrError instanceof Error) {
-      // Second parameter is an Error, so no data
-      actualError = dataOrError
-    } else {
-      // Second parameter is data (or undefined)
-      data = dataOrError
-      actualError = error
-    }
-
+  public error: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.error({ message, data, error: actualError })
   }
 
-  // Allow for overload signatures for fatal method, I think
-  // this makes the clearest API.
-  public fatal(message: string): void
-  public fatal(message: string, data: Record<string, unknown>): void
-  public fatal(message: string, error: Error): void
-  public fatal(message: string, data: Record<string, unknown>, error: Error): void
-  public fatal(message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void {
+  public fatal: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.fatal({ message, data, error: actualError })
+  }
+
+  /**
+   * Helper method to parse logging arguments consistently across all log levels
+   * @param dataOrError - Either data object or Error instance
+   * @param error - Optional Error instance when first param is data
+   * @returns Parsed data and error objects
+   */
+  private parseLogArguments(
+    dataOrError?: Record<string, unknown> | Error,
+    error?: Error
+  ): { data: Record<string, unknown> | undefined; actualError: Error | undefined } {
     let data: Record<string, unknown> | undefined
     let actualError: Error | undefined
 
@@ -208,6 +215,6 @@ export class RemoteLogger {
       actualError = error
     }
 
-    this._log?.fatal({ message, data, error: actualError })
+    return { data, actualError }
   }
 }
