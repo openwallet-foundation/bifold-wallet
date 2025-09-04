@@ -523,6 +523,8 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       )
     }
 
+    console.log('## Styles Old:', JSON.stringify(styles))
+
     return (
       <View
         testID={testIdWithKey('CredentialCardSecondaryBody')}
