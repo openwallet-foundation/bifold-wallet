@@ -8,7 +8,8 @@ export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
 }
 
-export class RemoteLogger extends BifoldLogger {
+export class RemoteLogger {
+  private baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
   private _autoDisableRemoteLoggingIntervalInMinutes = 0
@@ -35,7 +36,7 @@ export class RemoteLogger extends BifoldLogger {
   }
 
   constructor(options: RemoteLoggerOptions) {
-    super()
+    this.baseLogger = new BifoldLogger()
 
     this.lokiUrl = options.lokiUrl ?? undefined
     this.lokiLabels = options.lokiLabels ?? {}
@@ -129,6 +130,23 @@ export class RemoteLogger extends BifoldLogger {
     }, expirationInMinutes * 60000)
   }
 
+  public report(bifoldError: BifoldError): void {
+    this._log?.info({ message: 'Sending Loki report' })
+    const { title, description, code, message } = bifoldError
+
+    lokiTransport({
+      msg: title,
+      rawMsg: [{ message: title, data: { title, description, code, message } }],
+      level: { severity: 3, text: 'error' },
+      options: {
+        lokiUrl: this.lokiUrl,
+        lokiLabels: this.lokiLabels,
+        job: 'incident-report',
+      },
+    })
+  }
+
+  // Delegate all logging methods to the base logger or custom implementation
   public test(message: string, data?: Record<string, unknown>): void {
     this._log?.test({ message, data })
   }
@@ -191,21 +209,5 @@ export class RemoteLogger extends BifoldLogger {
     }
 
     this._log?.fatal({ message, data, error: actualError })
-  }
-
-  public report(bifoldError: BifoldError): void {
-    this._log?.info({ message: 'Sending Loki report' })
-    const { title, description, code, message } = bifoldError
-
-    lokiTransport({
-      msg: title,
-      rawMsg: [{ message: title, data: { title, description, code, message } }],
-      level: { severity: 3, text: 'error' },
-      options: {
-        lokiUrl: this.lokiUrl,
-        lokiLabels: this.lokiLabels,
-        job: 'incident-report',
-      },
-    })
   }
 }
