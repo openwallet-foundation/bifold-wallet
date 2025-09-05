@@ -27,7 +27,7 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
   // however Date.now() only returns milliseconds precision.
   const timestampEndPadding = '000000'
 
-  if (!props.options) {
+  if (!props?.options) {
     throw Error('props.options is required')
   }
 
@@ -43,7 +43,7 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
   // Get the last element without mutating the
   // original array.
   const lastMessage = props.rawMsg[props.rawMsg.length - 1]
-  const { message, data } = lastMessage
+  const { message, data, error } = lastMessage
 
   const payload = {
     streams: [
@@ -53,7 +53,7 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
           level: props.level.text,
           ...lokiLabels,
         },
-        values: [[`${Date.now()}${timestampEndPadding}`, JSON.stringify({ message, data })]],
+        values: [[`${Date.now()}${timestampEndPadding}`, JSON.stringify({ message, data, error })]],
       },
     ],
   }

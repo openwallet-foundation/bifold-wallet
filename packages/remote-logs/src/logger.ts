@@ -8,7 +8,59 @@ export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
 }
 
-export class RemoteLogger extends BifoldLogger {
+/**
+ * Default logging configuration constants
+ */
+const DEFAULT_LOG_CONFIG = {
+  levels: {
+    test: 0,
+    trace: 0,
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+    fatal: 4,
+  },
+  severity: 'debug',
+  async: true,
+  dateFormat: 'time',
+  printDate: false,
+} as const
+
+/**
+ * Session ID generation constants
+ */
+const SESSION_ID_RANGE = {
+  MIN: 100000,
+  MAX: 999999,
+} as const
+
+/**
+ * Standardized logging method interface with consistent overloads
+ * Supports all combinations of message, data, and error parameters
+ */
+interface LogMethod {
+  (message: string): void
+  (message: string, data: Record<string, unknown>): void
+  (message: string, error: Error): void
+  (message: string, data: Record<string, unknown>, error: Error): void
+}
+
+/**
+ * Internal logger instance interface for type safety
+ */
+interface InternalLoggerInstance {
+  test?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+  trace?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+  debug?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+  info?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+  warn?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+  error?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+  fatal?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
+}
+
+export class RemoteLogger {
+  private readonly baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
   private _autoDisableRemoteLoggingIntervalInMinutes = 0
@@ -16,26 +68,11 @@ export class RemoteLogger extends BifoldLogger {
   private lokiLabels: Record<string, string>
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected _log: any
-  protected _config = {
-    levels: {
-      test: 0,
-      trace: 0,
-      debug: 0,
-      info: 1,
-      warn: 2,
-      error: 3,
-      fatal: 4,
-    },
-    severity: 'debug',
-    async: true,
-    dateFormat: 'time',
-    printDate: false,
-  }
+  protected _log: InternalLoggerInstance | null = null
+  protected _config = DEFAULT_LOG_CONFIG
 
   constructor(options: RemoteLoggerOptions) {
-    super()
+    this.baseLogger = new BifoldLogger()
 
     this.lokiUrl = options.lokiUrl ?? undefined
     this.lokiLabels = options.lokiLabels ?? {}
@@ -46,9 +83,10 @@ export class RemoteLogger extends BifoldLogger {
 
   get sessionId(): number {
     if (!this._sessionId) {
-      this._sessionId = Math.floor(100000 + Math.random() * 900000)
+      this._sessionId = Math.floor(
+        SESSION_ID_RANGE.MIN + Math.random() * (SESSION_ID_RANGE.MAX - SESSION_ID_RANGE.MIN + 1)
+      )
     }
-
     return this._sessionId
   }
 
@@ -129,36 +167,8 @@ export class RemoteLogger extends BifoldLogger {
     }, expirationInMinutes * 60000)
   }
 
-  public test(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.test({ message, data })
-  }
-
-  public trace(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.trace({ message, data })
-  }
-
-  public debug(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.debug({ message, data })
-  }
-
-  public info(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.info({ message, data })
-  }
-
-  public warn(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.warn({ message, data })
-  }
-
-  public error(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.error({ message, data })
-  }
-
-  public fatal(message: string, data?: Record<string, unknown> | Error): void {
-    this._log?.fatal({ message, data })
-  }
-
   public report(bifoldError: BifoldError): void {
-    this._log?.info({ message: 'Sending Loki report' })
+    this._log?.info?.({ message: 'Sending Loki report' })
     const { title, description, code, message } = bifoldError
 
     lokiTransport({
@@ -171,5 +181,66 @@ export class RemoteLogger extends BifoldLogger {
         job: 'incident-report',
       },
     })
+  }
+
+  // Standardized logging methods with consistent overloads
+  public test: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.test?.({ message, data, error: actualError })
+  }
+
+  public trace: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.trace?.({ message, data, error: actualError })
+  }
+
+  public debug: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.debug?.({ message, data, error: actualError })
+  }
+
+  public info: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.info?.({ message, data, error: actualError })
+  }
+
+  public warn: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.warn?.({ message, data, error: actualError })
+  }
+
+  public error: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.error?.({ message, data, error: actualError })
+  }
+
+  public fatal: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    const { data, actualError } = this.parseLogArguments(dataOrError, error)
+    this._log?.fatal?.({ message, data, error: actualError })
+  }
+
+  /**
+   * Helper method to parse logging arguments consistently across all log levels
+   * @param dataOrError - Either data object or Error instance
+   * @param error - Optional Error instance when first param is data
+   * @returns Parsed data and error objects
+   */
+  private parseLogArguments(
+    dataOrError?: Record<string, unknown> | Error,
+    error?: Error
+  ): { data: Record<string, unknown> | undefined; actualError: Error | undefined } {
+    let data: Record<string, unknown> | undefined
+    let actualError: Error | undefined
+
+    if (dataOrError instanceof Error) {
+      // Second parameter is an Error, so no data
+      actualError = dataOrError
+    } else {
+      // Second parameter is data (or undefined)
+      data = dataOrError
+      actualError = error
+    }
+
+    return { data, actualError }
   }
 }

@@ -1,0 +1,35 @@
+{
+  "preset": "react-native",
+  "modulePathIgnorePatterns": [
+    "<rootDir>/example/node_modules",
+    "<rootDir>/lib/"
+  ],
+  "setupFilesAfterEnv": [
+    "<rootDir>/src/__tests__/setup.ts"
+  ],
+  "transform": {
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+  },
+  "transformIgnorePatterns": [
+    "node_modules/(?!(react-native|@react-native|react-native-logs|@credo-ts|uuid|react-native-splash-screen|react-native-toast-message)/)"
+  ],
+  "testMatch": [
+    "**/__tests__/**/*.test.(ts|tsx|js)",
+    "**/*.test.(ts|tsx|js)",
+    "!**/__tests__/logger.test.ts"
+  ],
+  "collectCoverageFrom": [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/__tests__/**",
+    "!src/example/**"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 80,
+      "functions": 80,
+      "lines": 80,
+      "statements": 80
+    }
+  }
+}

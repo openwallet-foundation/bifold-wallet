@@ -63,19 +63,43 @@ const messageDataFormatter = (...msgs: unknown[]): unknown[] => {
       )
     }
 
-    return typeof msg === 'object' ? JSON.stringify(msg, null, 2) : msg
+    if (typeof msg === 'object' && msg !== null) {
+      try {
+        return JSON.stringify(msg, null, 2)
+      } catch (error) {
+        // Handle JSON serialization errors (circular references, BigInt, etc.)
+        if (error instanceof TypeError && error.message.includes('circular')) {
+          return '[Circular Reference]'
+        }
+        if (error instanceof TypeError && error.message.includes('BigInt')) {
+          return '[BigInt value cannot be serialized]'
+        }
+        // Handle other JSON serialization errors
+        return `[Serialization Error: ${error instanceof Error ? error.message : 'Unknown error'}]`
+      }
+    }
+
+    return msg
   })
 }
 
 export const consoleTransport: transportFunctionType = (props: ConsoleTransportProps) => {
-  if (!props) {
+  if (!props?.rawMsg?.length) {
     return
   }
 
   // Get the last element without mutating the
   // original array.
   const lastMessage = props.rawMsg[props.rawMsg.length - 1]
-  let { message, ...rest } = lastMessage
+  if (!lastMessage) {
+    return
+  }
+
+  // Destructure the message and rest properties, allow
+  // ...rest to be `const`, message to be `let`.
+  let { message } = lastMessage
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { message: _, ...rest } = lastMessage
   let color
 
   if (
