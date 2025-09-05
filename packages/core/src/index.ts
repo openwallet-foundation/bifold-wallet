@@ -17,7 +17,7 @@ import CredentialCard from './components/misc/CredentialCard'
 import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import FauxHeader from './components/misc/FauxHeader'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
-import QRScannerTorch from "./components/misc/QRScannerTorch"
+import QRScannerTorch from './components/misc/QRScannerTorch'
 import DeveloperModal from './components/modals/DeveloperModal'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
@@ -65,6 +65,7 @@ import UpdateAvailable from './screens/UpdateAvailable'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { isBiometricsActive, loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
+import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
@@ -91,7 +92,10 @@ export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
 export {
   connectFromScanOrDeepLink,
-  formatTime, getConnectionName, removeExistingInvitationsById, useCredentialConnectionLabel
+  formatTime,
+  getConnectionName,
+  removeExistingInvitationsById,
+  useCredentialConnectionLabel,
 } from './utils/helpers'
 export { getIndyLedgers, IndyLedger, readIndyLedgersFromFile, writeIndyLedgersToFile } from './utils/ledger'
 export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
@@ -103,14 +107,38 @@ export type { AnimatedComponents } from './animated-components'
 export type { ReducerAction } from './contexts/reducers/store'
 export type { RenderProps, TourStep } from './contexts/tour/tour-context'
 export type {
-  IAssets, IBrandColors, IColorPalette, IErrorColors, IFontAttributes, IGrayscaleColors, IInlineInputMessage, IInputAttributes, IInputs, INotificationColors, ISemanticColors, ISpacing, ISVGAssets, ITabTheme, ITextTheme, ITheme
+  IAssets,
+  IBrandColors,
+  IColorPalette,
+  IErrorColors,
+  IFontAttributes,
+  IGrayscaleColors,
+  IInlineInputMessage,
+  IInputAttributes,
+  IInputs,
+  INotificationColors,
+  ISemanticColors,
+  ISpacing,
+  ISVGAssets,
+  ITabTheme,
+  ITextTheme,
+  ITheme,
 } from './theme'
 export type { GenericFn } from './types/fn'
 export { BasicMessageMetadata, CredentialMetadata } from './types/metadata'
 export type { basicMessageCustomMetadata, credentialCustomMetadata } from './types/metadata'
 export type { ContactStackParams, NotificationStackParams, OnboardingStackParams } from './types/navigators'
 export type { WalletSecret } from './types/security'
-export type { LoginAttempt as LoginAttemptState, Migration as MigrationState, Onboarding as OnboardingState, PersistentState, Preferences as PreferencesState, State, Tours as ToursState, VersionInfo } from './types/state'
+export type {
+  LoginAttempt as LoginAttemptState,
+  Migration as MigrationState,
+  Onboarding as OnboardingState,
+  PersistentState,
+  Preferences as PreferencesState,
+  State,
+  Tours as ToursState,
+  VersionInfo,
+} from './types/state'
 export type { BifoldAgent } from './utils/agent'
 export type { IndyLedgerConfig, IndyLedgerFileSystem, IndyLedgerJSON, IndyLedgersRecord } from './utils/ledger'
 export type { OnboardingStyleSheet }
@@ -144,6 +172,7 @@ export {
   AutoLockTime,
   Banner,
   BannerSection,
+  AbstractBifoldLogger,
   BifoldLogger,
   bifoldLoggerInstance,
   Biometry,
@@ -210,7 +239,6 @@ export {
   useDeveloperMode,
   usePreventScreenCapture,
   useTour,
-  walletTimeout
+  walletTimeout,
 }
 export type { BannerMessage, DeepPartial, IButton }
-
