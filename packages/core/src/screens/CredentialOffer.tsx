@@ -28,7 +28,7 @@ import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
-import { parseCredDefFromId } from '../utils/cred-def'
+import { getCredentialName } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
@@ -170,7 +170,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
   const logHistoryRecord = useCallback(
-    (type: HistoryCardType) => {
+    async (type: HistoryCardType) => {
       try {
         if (!(agent && historyEnabled)) {
           logger.trace(
@@ -185,7 +185,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           return
         }
         const ids = getCredentialIdentifiers(credential)
-        const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+        const name = overlay.metaOverlay?.name ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {
@@ -214,7 +214,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
       if (historyEventsLogger.logAttestationAccepted) {
         const type = HistoryCardType.CardAccepted
-        logHistoryRecord(type)
+        await logHistoryRecord(type)
       }
     } catch (err: unknown) {
       setButtonsVisible(true)
@@ -242,7 +242,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       toggleDeclineModalVisible()
       if (historyEventsLogger.logAttestationRefused) {
         const type = HistoryCardType.CardDeclined
-        logHistoryRecord(type)
+        await logHistoryRecord(type)
       }
 
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
