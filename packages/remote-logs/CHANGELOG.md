@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.7.0
+
+### Minor Changes
+
+- 7cd5ad2: fixed logging interface to accept data and error
+
+### Patch Changes
+
+- Updated dependencies [7cd5ad2]
+  - @bifold/core@2.7.0
+
 ## 2.6.0
 
 ### Minor Changes
