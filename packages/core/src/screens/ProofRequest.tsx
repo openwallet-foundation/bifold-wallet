@@ -73,6 +73,7 @@ import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 type ProofRequestProps = {
   navigation: any
@@ -852,7 +853,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             <View>
               {loading || attestationLoading ? null : (
                 <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
-                  <CredentialCard
+                  <CredentialCardGen
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
                     schemaId={item.schemaId}

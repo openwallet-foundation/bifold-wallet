@@ -4,10 +4,14 @@ import { useTheme } from '../contexts/theme'
 import { StyleSheet, useWindowDimensions } from 'react-native'
 import { getSecondaryBackgroundColor } from '../utils/helpers'
 import { credentialTextColor } from '../utils/credential'
+import { BrandingType } from '../wallet/ui-types'
+
+type SimpleColors = { primaryBackgroundColor?: string; secondaryBackgroundColor?: string }
+type BrandingKind = BrandingOverlayType | BrandingType
 
 const useCredentialCardStyles = (
-  overlay: CredentialOverlay<BrandingOverlay>,
-  brandingOverlayType: BrandingOverlayType,
+  overlayOrColors: CredentialOverlay<BrandingOverlay> | SimpleColors,
+  brandingOverlayType?: BrandingKind,
   proof?: boolean
 ) => {
   const { ColorPalette, TextTheme, ListItems, CredentialCardShadowTheme } = useTheme()
@@ -16,9 +20,28 @@ const useCredentialCardStyles = (
   const logoHeight = width * 0.12
   const borderRadius = 10
 
+  const isOverlay = (o: any): o is CredentialOverlay<BrandingOverlay> =>
+    o && typeof o === 'object' && 'brandingOverlay' in o
+
+  const primaryBg = isOverlay(overlayOrColors)
+    ? overlayOrColors.brandingOverlay?.primaryBackgroundColor
+    : overlayOrColors.primaryBackgroundColor
+
+  // If we have a full overlay, preserve legacy fallback using helper.
+  // Otherwise, use provided secondary or fall back to primary.
+  const secondaryFromHelper = isOverlay(overlayOrColors)
+    ? getSecondaryBackgroundColor(overlayOrColors, proof)
+    : undefined
+
+  const secondaryBg =
+    secondaryFromHelper ??
+    (isOverlay(overlayOrColors)
+      ? overlayOrColors.brandingOverlay?.primaryBackgroundColor
+      : overlayOrColors.secondaryBackgroundColor ?? overlayOrColors.primaryBackgroundColor)
+
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: primaryBg,
       borderRadius: borderRadius,
       ...CredentialCardShadowTheme,
     },
@@ -30,25 +53,28 @@ const useCredentialCardStyles = (
       width: logoHeight,
       borderTopLeftRadius: borderRadius,
       borderBottomLeftRadius: borderRadius,
-      backgroundColor: getSecondaryBackgroundColor(overlay, proof) ?? overlay.brandingOverlay?.primaryBackgroundColor,
+      backgroundColor: secondaryBg,
     },
     primaryBodyContainer: {
       flex: 1,
       padding,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+      ...((brandingOverlayType === 'Branding11' || brandingOverlayType === BrandingOverlayType.Branding11) && {
         justifyContent: 'space-between',
       }),
       marginLeft:
-        brandingOverlayType === BrandingOverlayType.Branding10
+        brandingOverlayType === 'Branding10' || brandingOverlayType === BrandingOverlayType.Branding10
           ? -1 * logoHeight + padding
           : -1.3 * logoHeight + padding,
     },
     primaryBodyNameContainer: {
       flexDirection: 'row',
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+      ...((brandingOverlayType === 'Branding11' || brandingOverlayType === BrandingOverlayType.Branding11) && {
         minHeight: logoHeight,
         alignItems: 'center',
       }),
+    },
+    recordAttributeText: {
+      fontSize: ListItems.recordAttributeText.fontSize,
     },
     imageAttr: {
       height: 150,
@@ -89,11 +115,11 @@ const useCredentialCardStyles = (
     },
     textContainer: {
       color:
-        proof && brandingOverlayType === BrandingOverlayType.Branding10
+        proof && (brandingOverlayType === 'Branding10' || brandingOverlayType === BrandingOverlayType.Branding10)
           ? TextTheme.normal.color
-          : credentialTextColor(ColorPalette, overlay.brandingOverlay?.primaryBackgroundColor),
+          : credentialTextColor(ColorPalette, primaryBg),
       flexShrink: 1,
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+      ...((brandingOverlayType === 'Branding11' || brandingOverlayType === BrandingOverlayType.Branding11) && {
         fontSize: 16,
       }),
       lineHeight: 24,
@@ -101,7 +127,7 @@ const useCredentialCardStyles = (
     credentialName: {
       flex: 1,
       flexWrap: 'wrap',
-      ...(brandingOverlayType === BrandingOverlayType.Branding11 && {
+      ...((brandingOverlayType === 'Branding11' || brandingOverlayType === BrandingOverlayType.Branding11) && {
         lineHeight: 16,
         maxWidth: '85%',
         fontSize: 14,
