@@ -1,4 +1,5 @@
-import { BifoldError, BifoldLogger } from '@bifold/core'
+import { BifoldError, AbstractBifoldLogger, BifoldLogger } from '@bifold/core'
+import { LogLevel } from '@credo-ts/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
 import { logger } from 'react-native-logs'
 
@@ -59,7 +60,7 @@ interface InternalLoggerInstance {
   fatal?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
 }
 
-export class RemoteLogger {
+export class RemoteLogger extends AbstractBifoldLogger {
   private readonly baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
@@ -68,10 +69,9 @@ export class RemoteLogger {
   private lokiLabels: Record<string, string>
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
-  protected _log: InternalLoggerInstance | null = null
-  protected _config = DEFAULT_LOG_CONFIG
 
   constructor(options: RemoteLoggerOptions) {
+    super()
     this.baseLogger = new BifoldLogger()
 
     this.lokiUrl = options.lokiUrl ?? undefined

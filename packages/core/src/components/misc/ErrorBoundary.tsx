@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { getBuildNumber, getVersion } from 'react-native-device-info'
 import { testIdWithKey } from '../../utils/testable'
 import { BifoldError } from '../../types/error'
-import { BifoldLogger } from '../../services/logger'
+import { AbstractBifoldLogger } from '../../services/AbstractBifoldLogger'
 
 const iconSize = 30
 
@@ -16,7 +16,7 @@ interface ErrorBoundaryProps {
   children: ReactNode
   styles: ReturnType<typeof StyleSheet.create>
   t: (key: string) => string
-  logger: BifoldLogger
+  logger: AbstractBifoldLogger
 }
 
 interface ErrorBoundaryState {
@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     logger.error('ErrorBoundary caught an error:', error)
   }
 
-  reportError = (error: Error, logger: BifoldLogger) => {
+  reportError = (error: Error, logger: AbstractBifoldLogger) => {
     if (error) {
       this.setState({ reported: true })
       logger.report(error as BifoldError)
@@ -178,7 +178,7 @@ const ErrorBoundaryInfoBox: React.FC<ErrorBoundaryInfoBoxProps> = ({
 
 interface ErrorBoundaryWrapperProps {
   children: ReactNode
-  logger: BifoldLogger
+  logger: AbstractBifoldLogger
 }
 
 const ErrorBoundaryWrapper: React.FC<ErrorBoundaryWrapperProps> = ({ children, logger }) => {
