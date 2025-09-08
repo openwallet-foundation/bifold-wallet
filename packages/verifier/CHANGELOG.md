@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+
 ## 2.7.1
 
 ## 2.7.0
