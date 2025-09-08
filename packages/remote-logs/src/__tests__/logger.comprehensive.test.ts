@@ -23,15 +23,57 @@ jest.mock('react-native-logs', () => ({
   },
 }))
 
+jest.mock('@credo-ts/core', () => ({
+  LogLevel: {
+    test: 0,
+    trace: 1,
+    debug: 2,
+    info: 3,
+    warn: 4,
+    error: 5,
+    fatal: 6,
+    off: 7,
+  },
+}))
+
 jest.mock('@bifold/core', () => ({
   BifoldLogger: class BifoldLogger {},
+  AbstractBifoldLogger: class AbstractBifoldLogger {
+    public logLevel = 2 // LogLevel.debug
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    protected _log: any
+    protected _config = {
+      levels: {
+        test: 0,
+        trace: 0,
+        debug: 0,
+        info: 1,
+        warn: 2,
+        error: 3,
+        fatal: 4,
+      },
+      severity: 'debug',
+      async: true,
+      dateFormat: 'time',
+      printDate: false,
+    }
+
+    public isEnabled(logLevel: number): boolean {
+      return logLevel >= this.logLevel
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    public report(_bifoldError: any): void {
+      // Mock implementation
+    }
+  },
   BifoldError: class BifoldError {
     title: string
     description: string
-    code: string
+    code: number
     message: string
 
-    constructor(title: string, description: string, code: string, message: string) {
+    constructor(title: string, description: string, message: string, code: number) {
       this.title = title
       this.description = description
       this.code = code
@@ -407,7 +449,7 @@ describe('RemoteLogger', () => {
     })
 
     it('should send incident report to Loki', () => {
-      const bifoldError = new BifoldError('Error Title', 'Error Description', 'ERR001', 'Error Message')
+      const bifoldError = new BifoldError('Error Title', 'Error Description', 'Error Message', 1001)
 
       remoteLogger.report(bifoldError)
 
@@ -423,7 +465,7 @@ describe('RemoteLogger', () => {
             data: {
               title: 'Error Title',
               description: 'Error Description',
-              code: 'ERR001',
+              code: 1001,
               message: 'Error Message',
             },
           },

@@ -1,5 +1,22 @@
 # Change Log
 
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+- ef52d51: fix lint issues from previous pr
+- Updated dependencies [99dab08]
+  - @bifold/core@2.7.2
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+- Updated dependencies [84cb3cd]
+  - @bifold/core@2.7.1
+
 ## 2.7.0
 
 ### Minor Changes

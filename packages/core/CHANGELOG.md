@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+
 ## 2.7.0
 
 ### Minor Changes

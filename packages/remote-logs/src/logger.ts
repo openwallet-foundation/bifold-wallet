@@ -1,4 +1,4 @@
-import { BifoldError, BifoldLogger } from '@bifold/core'
+import { BifoldError, AbstractBifoldLogger, BifoldLogger } from '@bifold/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
 import { logger } from 'react-native-logs'
 
@@ -7,25 +7,6 @@ import { RemoteLoggerOptions, lokiTransport, consoleTransport } from './transpor
 export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
 }
-
-/**
- * Default logging configuration constants
- */
-const DEFAULT_LOG_CONFIG = {
-  levels: {
-    test: 0,
-    trace: 0,
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-    fatal: 4,
-  },
-  severity: 'debug',
-  async: true,
-  dateFormat: 'time',
-  printDate: false,
-} as const
 
 /**
  * Session ID generation constants
@@ -46,20 +27,7 @@ interface LogMethod {
   (message: string, data: Record<string, unknown>, error: Error): void
 }
 
-/**
- * Internal logger instance interface for type safety
- */
-interface InternalLoggerInstance {
-  test?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-  trace?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-  debug?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-  info?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-  warn?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-  error?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-  fatal?: (props: { message: string; data?: Record<string, unknown>; error?: Error }) => void
-}
-
-export class RemoteLogger {
+export class RemoteLogger extends AbstractBifoldLogger {
   private readonly baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
@@ -68,10 +36,9 @@ export class RemoteLogger {
   private lokiLabels: Record<string, string>
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
-  protected _log: InternalLoggerInstance | null = null
-  protected _config = DEFAULT_LOG_CONFIG
 
   constructor(options: RemoteLoggerOptions) {
+    super()
     this.baseLogger = new BifoldLogger()
 
     this.lokiUrl = options.lokiUrl ?? undefined
