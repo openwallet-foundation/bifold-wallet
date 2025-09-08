@@ -1,18 +1,18 @@
 import { StackScreenProps } from '@react-navigation/stack'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import { DeliveryStackParams, Screens } from '../../../types/navigators'
-import ScreenLayout from '../../../layout/ScreenLayout'
-import { useTheme } from '../../../contexts/theme'
-import { useEffect, useState } from 'react'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
-import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
-import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
+import React, { useEffect, useState } from 'react'
 import RecordLoading from '../../../components/animated/RecordLoading'
-import { ThemedText } from '../../../components/texts/ThemedText'
-import { testIdWithKey } from '../../../utils/testable'
 import { CredentialCard } from '../../../components/misc'
+import { ThemedText } from '../../../components/texts/ThemedText'
+import { useTheme } from '../../../contexts/theme'
+import ScreenLayout from '../../../layout/ScreenLayout'
+import { DeliveryStackParams, Screens } from '../../../types/navigators'
+import { testIdWithKey } from '../../../utils/testable'
+import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
+import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 
 type Props = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofCredentialSelect>
 type TypedCred = {
