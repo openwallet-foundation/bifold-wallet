@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+- Updated dependencies [84cb3cd]
+  - @bifold/core@2.7.1
+
 ## 2.7.0
 
 ### Minor Changes
