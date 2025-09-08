@@ -40,6 +40,7 @@ jest.mock('@bifold/core', () => ({
   BifoldLogger: class BifoldLogger {},
   AbstractBifoldLogger: class AbstractBifoldLogger {
     public logLevel = 2 // LogLevel.debug
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected _log: any
     protected _config = {
       levels: {
@@ -61,7 +62,8 @@ jest.mock('@bifold/core', () => ({
       return logLevel >= this.logLevel
     }
 
-    public report(bifoldError: any): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    public report(_bifoldError: any): void {
       // Mock implementation
     }
   },
