@@ -1,5 +1,5 @@
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../../constants'
 import { BifoldError } from '../../../types/error'
