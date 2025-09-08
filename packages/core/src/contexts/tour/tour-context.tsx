@@ -1,4 +1,4 @@
-import React, { createContext, ReactElement, useContext } from 'react'
+import { createContext, ReactElement, useContext } from 'react'
 import { LayoutRectangle } from 'react-native'
 
 import { BaseTourID, TourID } from '../../types/tour'
