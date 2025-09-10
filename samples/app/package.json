@@ -53,9 +53,9 @@
     "@sd-jwt/jwt-status-list": "^0.7.0",
     "axios": "~1.4.0",
     "base-64": "~1.0.0",
+    "buffer": "^6.0.3",
     "expo": "*",
     "expo-secure-store": "*",
-    "buffer": "^6.0.3",
     "fast-text-encoding": "~1.0.6",
     "i18next": "~21.6.16",
     "lodash.flatten": "~4.4.0",
@@ -95,6 +95,7 @@
     "react-native-vector-icons": "~10.0.3",
     "react-native-vision-camera": "~4.3.2",
     "react-native-webview": "~13.10.7",
+    "react-zlib-js": "^1.0.5",
     "tsyringe": "~4.8.0",
     "uuid": "~9.0.1"
   },

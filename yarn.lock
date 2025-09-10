@@ -2085,6 +2085,7 @@ __metadata:
     "@sd-jwt/jwt-status-list": "npm:^0.7.0"
     "@testing-library/jest-native": "npm:~5.4.3"
     "@testing-library/react-native": "npm:~12.3.3"
+    "@types/base-64": "npm:^1.0.2"
     "@types/jest": "npm:~29.5.14"
     "@types/lodash.flatten": "npm:~4.4.9"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -2097,7 +2098,6 @@ __metadata:
     babel-jest: "npm:~27.5.1"
     babel-plugin-module-resolver: "npm:~5.0.2"
     base-64: "npm:~1.0.0"
-    base64url: "npm:^3.0.1"
     buffer: "npm:^6.0.3"
     commitlint: "npm:~17.7.2"
     eslint: "npm:~8.57.1"
@@ -2152,6 +2152,7 @@ __metadata:
     react-native-vector-icons: "npm:~10.0.3"
     react-native-vision-camera: "npm:~4.3.2"
     react-test-renderer: "npm:~18.2.0"
+    react-zlib-js: "npm:^1.0.5"
     rimraf: "npm:~5.0.10"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
@@ -6601,6 +6602,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/base-64@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/base-64@npm:1.0.2"
+  checksum: 10c0/3ad69002bd9ca4e79c010f6d9a4c9d09967687153fa6bb98e9459c731219609a4ac76920451565784e9d98cbe3567429eb60bd1561918c3a6ea2436d894346af
+  languageName: node
+  linkType: hard
+
 "@types/body-parser@npm:*":
   version: 1.19.6
   resolution: "@types/body-parser@npm:1.19.6"
@@ -8548,7 +8556,6 @@ __metadata:
     axios: "npm:~1.4.0"
     babel-plugin-module-resolver: "npm:~5.0.2"
     base-64: "npm:~1.0.0"
-    base64url: "npm:^3.0.1"
     buffer: "npm:^6.0.3"
     eslint: "npm:~8.57.1"
     eslint-import-resolver-typescript: "npm:~3.6.3"
@@ -8597,6 +8604,7 @@ __metadata:
     react-native-vector-icons: "npm:~10.0.3"
     react-native-vision-camera: "npm:~4.3.2"
     react-native-webview: "npm:~13.10.7"
+    react-zlib-js: "npm:^1.0.5"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
@@ -18559,6 +18567,13 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/53dfada1da1e8dd0498a5601e9eea3dc6ca23c6c2694d1cab9712faea869c11e4ce1c9a618d674cb668a668b41fb6bcf9a7b0a078cd853b1922f002fa22f42c8
+  languageName: node
+  linkType: hard
+
+"react-zlib-js@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "react-zlib-js@npm:1.0.5"
+  checksum: 10c0/df87a703c2c12e3156007e06339db37490af5583e5cf88c0adeb579bb1a553a22b1264dd81c3793d52e656ef75f0dc94c158fa4d1e1e9c5d331cbd6ea4fa4d51
   languageName: node
   linkType: hard
 
