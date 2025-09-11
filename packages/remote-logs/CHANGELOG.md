@@ -1,5 +1,14 @@
 # Change Log
 
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+- Updated dependencies [29fd468]
+- Updated dependencies [c1cc972]
+  - @bifold/core@2.7.3
+
 ## 2.7.2
 
 ### Patch Changes
