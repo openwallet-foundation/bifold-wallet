@@ -3,7 +3,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ColorValue, Pressable, ScrollView, Share, StyleSheet, useWindowDimensions, View } from 'react-native'
+import { Pressable, ScrollView, Share, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -37,8 +37,6 @@ interface Props extends ConnectProps {
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
-
-const overlayTint: ColorValue = 'rgba(0, 0, 0, 0.4)'
 
 const QRScanner: React.FC<Props> = ({
   showTabs = false,
