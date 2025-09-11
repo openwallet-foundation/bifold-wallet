@@ -126,6 +126,11 @@ sequenceDiagram
   Note over Wallet: Later (e.g. on open/view or background check)
 
   Wallet->>StatusListService: Check SD-JWT credential status
+  alt Status list fetched successfully
+    %% (your existing valid/invalid branching stays)
+  else Network/error fetching status list
+    Note over Wallet: Mark status = "unknown", schedule retry with exponential backoff
+  end
   alt Status is valid
     Wallet->>Wallet: Use credential as normal
   else Status is invalid
@@ -137,17 +142,29 @@ sequenceDiagram
     AuthorizationServer->>DB: Validate refresh_token
     AuthorizationServer-->>Wallet: new access_token + (optional) new refresh_token
 
+    alt AuthorizationServer did not rotate refresh token
+      Note over Wallet: Keep existing refresh_token until expiry per AS policy
+    else AuthorizationServer rotated refresh token
+      Wallet->>DB: Replace stored refresh_token with new one
+    end
+
+    %% Refresh failure paths
+    opt Refresh token invalid/expired/revoked
+      AuthorizationServer-->>Wallet: error (invalid_grant / invalid_token)
+      Note over Wallet: Fall back to re-auth (authorization or pre-authorized code)
+    end
+
     Wallet->>DB: Update credential metadata with new tokens
 
-    Wallet->>CredentialIssuer: GET /nonce
-    CredentialIssuer-->>Wallet: nonce
+    %% Nonce retrieval is issuer-specific
+    Wallet->>CredentialIssuer: Obtain nonce (if required by issuer)
+    CredentialIssuer-->>Wallet: nonce (optional)
 
     Wallet->>CredentialIssuer: POST /credential
-    Note over Wallet, CredentialIssuer: Includes:<br/>- new access_token<br/>- DPoP JWT<br/>- credential proof (with nonce)
+    Note over Wallet, CredentialIssuer: Includes:<br/>- new access_token<br/>- (DPoP-bound via cnf.jkt)<br/>- DPoP JWT (same key as bound token)<br/>- credential proof (bound to nonce or other issuer constraint)
 
-    CredentialIssuer->>AuthorizationServer: POST /introspect
-    AuthorizationServer->>DB: Validate access_token, return jkt + attestation
-    AuthorizationServer-->>CredentialIssuer: token metadata
+    CredentialIssuer->>AuthorizationServer: Issuer validates access token (via introspection or JWT signature & claims).
+    AuthorizationServer-->>CredentialIssuer: token metadata incl. cnf.jkt
 
     CredentialIssuer-->>Wallet: New SD-JWT Credential
   end
@@ -200,7 +217,7 @@ There are two main options for storing this token in the wallet:
 
 ---
 
-### ✅ Option 1: Store Token in Credential Metadata (as JSON)
+### ✅ Store Token in Credential Metadata (as JSON)
 
 Using helper methods like the following:
 
@@ -233,31 +250,6 @@ export function setRefreshCredentialMetadata(
 - ✅ Flexible and accessible from credential context
 - 🟡 Security depends on wallet’s internal data protection mechanisms
 
----
-
-### 🔐 Option 2: Store Token in Secure Enclave (Keychain / Keystore)
-
-Use platform-secure storage backed by hardware security modules:
-
-- **iOS**: Secure Enclave via Keychain
-- **Android**: Keystore with BiometricPrompt
-
-#### ✅ Advantages:
-
-- ✅ Strongest protection using hardware-backed encryption
-- ✅ Access gated via biometrics or passcode
-- ✅ Token never exposed in app memory
-- ✅ Ideal for high-security scenarios
-
-#### ❌ Limitations:
-
-- ❌ Token cannot be accessed silently — requires user interaction
-- ❌ Not suitable for background refresh flows
-- ❌ Requires native modules or bridging
-- ❌ Complex implementation and platform-specific maintenance
-
----
-
 ## 🔄 SD-JWT Credential Status Verification
 
 ### ✅ Overview
@@ -282,8 +274,6 @@ sequenceDiagram
 
   Wallet->>Wallet: Parse SD-JWT (split into header, payload, signature, disclosures)
   Wallet->>Wallet: Decode payload JSON
-  Wallet->>Wallet: Inject status list URI and index into payload
-  Wallet->>Wallet: Re-encode payload and reassemble JWT
   Wallet->>StatusListServer: Fetch status list JWT (GET /statuslist.jwt)
   StatusListServer-->>Wallet: Return JWT with bitstring
   Wallet->>Wallet: Decode JWT and extract status bit array
