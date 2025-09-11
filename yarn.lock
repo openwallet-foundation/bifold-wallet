@@ -2358,7 +2358,6 @@ __metadata:
     "@react-native-async-storage/async-storage": "npm:~1.22.3"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
     "@react-native-community/netinfo": "npm:~11.3.3"
-    "@react-native-masked-view/masked-view": "npm:~0.3.2"
     "@react-native/babel-preset": "npm:~0.73.21"
     "@react-native/eslint-config": "npm:~0.73.2"
     "@react-native/eslint-plugin": "npm:~0.73.1"
@@ -2464,7 +2463,6 @@ __metadata:
     "@react-native-async-storage/async-storage": ~1.22.3
     "@react-native-clipboard/clipboard": ~1.16.3
     "@react-native-community/netinfo": ~11.3.3
-    "@react-native-masked-view/masked-view": ~0.3.2
     "@react-navigation/bottom-tabs": ~6.0.9
     "@react-navigation/core": ~6.1.0
     "@react-navigation/devtools": ~6.0.27
@@ -5580,16 +5578,6 @@ __metadata:
   peerDependencies:
     react-native: ">=0.59"
   checksum: 10c0/286dbdf857946c4da5703fd73c76fa6c018fa895fbff83699386d8baebc359848401e2dff643198f7a37503c65a9d9a49b1c8e57b571afc8df8b0bb484a5461a
-  languageName: node
-  linkType: hard
-
-"@react-native-masked-view/masked-view@npm:~0.3.2":
-  version: 0.3.2
-  resolution: "@react-native-masked-view/masked-view@npm:0.3.2"
-  peerDependencies:
-    react: ">=16"
-    react-native: ">=0.57"
-  checksum: 10c0/4ec84b7af2ded49dc21f17cc723a0ef341076cbe40cf758dd2daff8734bea63ba83e2fee7e63958984385314b8915b6804135997e07697abdd4141217c847fe9
   languageName: node
   linkType: hard
 
@@ -8833,7 +8821,6 @@ __metadata:
     "@react-native-async-storage/async-storage": "npm:~1.22.3"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
     "@react-native-community/netinfo": "npm:~11.3.3"
-    "@react-native-masked-view/masked-view": "npm:~0.3.2"
     "@react-native/babel-preset": "npm:~0.73.21"
     "@react-native/eslint-config": "npm:~0.73.2"
     "@react-native/metro-config": "npm:~0.73.5"
