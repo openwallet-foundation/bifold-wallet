@@ -72,7 +72,7 @@ flowchart TD
 ```mermaid
 flowchart TD
 
-  subgraph UI Development
+  subgraph UI_Development
     B1[App Status] --> B2[User Notification]
     B2 --> B3[Backgrounded]
     B2 --> B4[Foregrounded]
@@ -82,26 +82,32 @@ flowchart TD
     B6[Local PIN] --> B7[Home Screen Badges]
     B6 --> B8[Credential Badges]
 
-    %% Display Offers from status results (shared IDs from previous)
-    R1[Status List Valid\nNew Credential Available] --> D1[Display New Offer]
-    R2[Status List Invalid\nNew Credential Available] --> D2[Display New Offer]
-    R3[Status List Valid\nCredential Expired] --> D2
+    %% Display Offers from status results
+    R1["Status List Valid<br/>New Credential Available"] --> D1[Display New Offer]
+    R2["Status List Invalid<br/>New Credential Available"] --> D2[Display New Offer]
+    R3["Status List Valid<br/>Credential Expired"] --> D2
+
+    %% New shared outcomes
+    Result_Unknown["Status List Unknown"] --> D3["Show 'Status Unknown' badge<br/>+ Retry Info"]
+    Refresh_Failed["Refresh Failed"] --> D4["Prompt Re-Authenticate / Re-Authorize"]
 
     %% First path
     D1 --> U1[User Accept Offer] --> DEL1[Delete old credential]
-    D1 --> U2[User declines or no response] --> END[Leave old credential\nEnd]
+    D1 --> U2[User declines or no response] --> END[Leave old credential<br/>End]
 
     %% Second path
     D2 --> U3[User Accept Offer] --> DEL2[Delete old credential]
     D2 --> U4[User declines or no response] --> INV[Set old credential state as invalid]
   end
 
-  %% === Style shared status outcomes to match Core diagram ===
+  %% Style outcomes
   style R1 fill:#e0ffe0,stroke:#008000,stroke-width:2px,color:#004400
   style R2 fill:#fff4e0,stroke:#e69500,stroke-width:2px,color:#805500
   style R3 fill:#ffe0e0,stroke:#cc0000,stroke-width:2px,color:#990000
+  style Result_Unknown fill:#e6f0ff,stroke:#3355cc,stroke-width:2px,color:#1d2e6b
+  style Refresh_Failed fill:#fff4e0,stroke:#e69500,stroke-width:2px,color:#805500
 
-  %% === Optional styling for end actions ===
+  %% Style end actions
   style DEL1 fill:#d6f5d6,stroke:#008000,color:#003300
   style DEL2 fill:#d6f5d6,stroke:#008000,color:#003300
   style INV fill:#ffe6e6,stroke:#cc0000,color:#800000
