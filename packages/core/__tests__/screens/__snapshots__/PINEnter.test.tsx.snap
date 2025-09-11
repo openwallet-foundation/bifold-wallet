@@ -37,6 +37,24 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
         }
       >
         <View>
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginBottom": 24,
+                  "marginTop": 16,
+                },
+              ]
+            }
+          >
+            PINEnter.AppTitle
+          </Text>
           <View
             accessibilityState={
               Object {
@@ -80,7 +98,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   },
                   Object {
                     "alignSelf": "auto",
-                    "marginBottom": 16,
+                    "marginBottom": 24,
                     "textAlign": "left",
                   },
                 ]
@@ -94,7 +112,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "fontSize": 14,
+                    "fontSize": 18,
                     "fontWeight": "normal",
                   },
                   Object {
@@ -105,26 +123,9 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 ]
               }
             >
-              PINEnter.SubText
+              PINEnter.EnterPIN
             </Text>
           </View>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "marginBottom": 16,
-                },
-              ]
-            }
-          >
-            PINEnter.EnterPIN
-          </Text>
           <View
             style={
               Object {
@@ -137,12 +138,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#313132",
-                  "borderColor": "#FFFFFFFF",
-                  "borderRadius": 5,
-                  "borderWidth": 1,
                   "flexDirection": "row",
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 0,
                   "paddingVertical": 4,
                 }
               }
@@ -163,7 +160,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       },
                       Object {
                         "alignItems": "center",
-                        "justifyContent": "flex-start",
+                        "justifyContent": "space-between",
                       },
                     ]
                   }
@@ -173,8 +170,14 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -201,8 +204,14 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -229,8 +238,14 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -257,8 +272,14 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -285,8 +306,14 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -313,148 +340,14 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -477,7 +370,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     />
                   </View>
                   <TextInput
-                    accessibilityLabel="PINCreate.Masked"
+                    accessibilityLabel="PINEnter.EnterPIN"
                     accessibilityRole="text"
                     accessible={true}
                     autoCapitalize="characters"
@@ -488,7 +381,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     clearButtonMode="never"
                     disableFullscreenUI={true}
                     keyboardType="number-pad"
-                    maxLength={11}
+                    maxLength={6}
                     onBlur={[Function]}
                     onChangeText={[Function]}
                     onFocus={[Function]}
@@ -514,7 +407,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 </View>
               </View>
               <View
-                accessibilityLabel="PINCreate.Show"
+                accessibilityLabel="PINCreate.Hide"
                 accessibilityRole="button"
                 accessibilityState={
                   Object {
@@ -554,10 +447,10 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 2,
                   }
                 }
-                testID="com.ariesbifold:id/Show"
+                testID="com.ariesbifold:id/Hide"
               >
                 <Text
                   allowFontScaling={false}
@@ -578,120 +471,13 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
             </View>
           </View>
-          <Text
-            accessibilityLabel="PINEnter.ForgotPINLink"
-            accessibilityRole="link"
-            accessible={true}
-            maxFontSizeMultiplier={2}
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "color": "#42803E",
-                  "fontSize": 20,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/ForgotPINLink"
-          >
-            PINEnter.ForgotPINLink
-          </Text>
         </View>
         <View>
-          <View
-            style={
-              Object {
-                "width": "100%",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="PINEnter.Unlock"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": false,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                Object {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "opacity": 1,
-                  "padding": 16,
-                }
-              }
-              testID="com.ariesbifold:id/Enter"
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "normal",
-                      },
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 18,
-                          "fontWeight": "bold",
-                          "textAlign": "center",
-                        },
-                        false,
-                        false,
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                  PINEnter.Unlock
-                </Text>
-              </View>
-            </View>
-          </View>
           <Text
             maxFontSizeMultiplier={2}
             style={
@@ -757,6 +543,24 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
         }
       >
         <View>
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginBottom": 24,
+                  "marginTop": 16,
+                },
+              ]
+            }
+          >
+            PINEnter.AppTitle
+          </Text>
           <View
             accessibilityState={
               Object {
@@ -800,7 +604,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   },
                   Object {
                     "alignSelf": "auto",
-                    "marginBottom": 16,
+                    "marginBottom": 24,
                     "textAlign": "left",
                   },
                 ]
@@ -828,23 +632,6 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
               PINEnter.ReEnterPIN
             </Text>
           </View>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "marginBottom": 16,
-                },
-              ]
-            }
-          >
-            PINEnter.EnterPIN
-          </Text>
           <View
             style={
               Object {
@@ -857,12 +644,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#313132",
-                  "borderColor": "#FFFFFFFF",
-                  "borderRadius": 5,
-                  "borderWidth": 1,
                   "flexDirection": "row",
-                  "paddingHorizontal": 12,
+                  "paddingHorizontal": 0,
                   "paddingVertical": 4,
                 }
               }
@@ -883,7 +666,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       },
                       Object {
                         "alignItems": "center",
-                        "justifyContent": "flex-start",
+                        "justifyContent": "space-between",
                       },
                     ]
                   }
@@ -893,8 +676,14 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -921,8 +710,14 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -949,8 +744,14 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -977,8 +778,14 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -1005,8 +812,14 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -1033,148 +846,14 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#FFFFFFFF",
+                        "borderRadius": 4,
+                        "borderWidth": 1,
+                        "flex": 1,
+                        "flexShrink": 0,
                         "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={1}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 26,
-                            "fontWeight": "bold",
-                          },
-                          Object {
-                            "color": "#FFFFFF",
-                            "lineHeight": 48,
-                            "textAlign": "center",
-                          },
-                        ]
-                      }
-                    />
-                  </View>
-                  <View
-                    onLayout={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#313132",
-                        "height": 48,
-                        "paddingHorizontal": 2,
+                        "margin": 6,
+                        "paddingHorizontal": 4,
                       }
                     }
                   >
@@ -1197,7 +876,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     />
                   </View>
                   <TextInput
-                    accessibilityLabel="PINCreate.Masked"
+                    accessibilityLabel="PINEnter.EnterPIN"
                     accessibilityRole="text"
                     accessible={true}
                     autoCapitalize="characters"
@@ -1208,7 +887,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     clearButtonMode="never"
                     disableFullscreenUI={true}
                     keyboardType="number-pad"
-                    maxLength={11}
+                    maxLength={6}
                     onBlur={[Function]}
                     onChangeText={[Function]}
                     onFocus={[Function]}
@@ -1234,7 +913,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 </View>
               </View>
               <View
-                accessibilityLabel="PINCreate.Show"
+                accessibilityLabel="PINCreate.Hide"
                 accessibilityRole="button"
                 accessibilityState={
                   Object {
@@ -1274,10 +953,10 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 2,
                   }
                 }
-                testID="com.ariesbifold:id/Show"
+                testID="com.ariesbifold:id/Hide"
               >
                 <Text
                   allowFontScaling={false}
@@ -1298,120 +977,13 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
             </View>
           </View>
-          <Text
-            accessibilityLabel="PINEnter.ForgotPINLink"
-            accessibilityRole="link"
-            accessible={true}
-            maxFontSizeMultiplier={2}
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "color": "#42803E",
-                  "fontSize": 20,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/ForgotPINLink"
-          >
-            PINEnter.ForgotPINLink
-          </Text>
         </View>
         <View>
-          <View
-            style={
-              Object {
-                "width": "100%",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="PINEnter.Unlock"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": false,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                Object {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "opacity": 1,
-                  "padding": 16,
-                }
-              }
-              testID="com.ariesbifold:id/Enter"
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "normal",
-                      },
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 18,
-                          "fontWeight": "bold",
-                          "textAlign": "center",
-                        },
-                        false,
-                        false,
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                  PINEnter.Unlock
-                </Text>
-              </View>
-            </View>
-          </View>
           <Text
             maxFontSizeMultiplier={2}
             style={
