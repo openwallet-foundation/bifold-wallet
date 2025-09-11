@@ -62,13 +62,14 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
         return (
           <Rect
             x={centerX - cardWidth / 2}
-            y={centerY - cardHeight / 2}
+            y={centerY - cardHeight}
             width={cardWidth}
             height={cardHeight}
             rx={15}
             ry={15}
             fill="transparent"
             stroke={strokeColor}
+            strokeWidth={2}
           />
         )
       case MaskType.QR_CODE:
