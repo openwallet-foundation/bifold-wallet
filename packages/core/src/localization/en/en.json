@@ -271,6 +271,13 @@
     "RememberChangePIN": "Change your PIN to secure your wallet.",
     "ChangePIN": "Change PIN"
   },
+  "PINChangeSuccess": {
+    "InfoBox": {
+      "Title": "Your PIN has been changed",
+      "Description": "You can now log-in with your new PIN"
+    },
+    "PrimaryButton": "Go back to settings"
+  },
   "PINEnter": {
     "AppTitle": "Aries Bifold",
     "Title": "Welcome back",

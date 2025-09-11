@@ -23,7 +23,6 @@ interface ScreenComponents {
   AttemptLockout: React.FC
   OnboardingScreen: React.FC
   CreatePINScreen: React.FC
-  CreatePINScreenConfirmation: React.FC
   EnterPINScreen: React.FC
 }
 
@@ -88,16 +87,6 @@ export const getOnboardingScreens = (
       title: t('Screens.CreatePIN'),
       headerLeft: () => false,
       ...ScreenOptionsDictionary[Screens.CreatePIN],
-    }),
-  },
-  {
-    name: Screens.CreatePINConfirmation,
-    children: components.CreatePINScreenConfirmation,
-    initialParams: {},
-    options: () => ({
-      ...TransitionPresets.SlideFromRightIOS,
-      title: t('Screens.CreatePIN'),
-      ...ScreenOptionsDictionary[Screens.CreatePINConfirmation],
     }),
   },
   {

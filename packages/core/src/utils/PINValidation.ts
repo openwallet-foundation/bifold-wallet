@@ -17,8 +17,6 @@ const commonUsedPINs = [
   '112233',
   '147258',
   '654321',
-  '666666',
-  '555555',
 ]
 
 export enum PINError {
@@ -44,15 +42,15 @@ export interface PINValidationsType {
 export const createPINValidations = (PIN: string, PINRules: PINValidationRules) => {
   const PINValidations: PINValidationsType[] = []
 
-  if(PINRules.use_nist_requirements) {
+  if (PINRules.use_nist_requirements) {
     PINValidations.push({
       isInvalid: commonUsedPINs.includes(PIN),
       errorName: PINError.PINCommonlyUsed,
     } as PINValidationsType)
     PINValidations.push({
-      isInvalid: PIN.length === 6,
+      isInvalid: PIN.length < 6,
       errorName: PINError.PINIsExpectedLength,
-      errorTextAddition: { num: `${PINRules.nist_pin_length}` }
+      errorTextAddition: { num: `${PINRules.nist_pin_length}` },
     } as PINValidationsType)
     return PINValidations
   }

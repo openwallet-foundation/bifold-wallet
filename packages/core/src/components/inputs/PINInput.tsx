@@ -23,7 +23,7 @@ interface PINInputProps {
   accessibilityLabel?: string
   autoFocus?: boolean
   inlineMessage?: InlineMessageProps
-  onSubmitEditing?: () => void
+  onSubmitEditing?: (...args: any[]) => void
 }
 
 const PINInputComponent = (
@@ -90,7 +90,7 @@ const PINInputComponent = (
     cell: {
       ...theme.cell,
       borderColor:
-        (inlineMessage && PINScreensConfig.useNewPINDesign) ? ColorPalette.semantic.error : theme.cell.borderColor,
+        inlineMessage && PINScreensConfig.useNewPINDesign ? ColorPalette.semantic.error : theme.cell.borderColor,
     },
     cellText: {
       color: theme.cellText.color,

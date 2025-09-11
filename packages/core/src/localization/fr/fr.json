@@ -271,6 +271,23 @@
     "Continue": "Continuer",
     "EnterYourCurrentPIN": "Entrez votre NIP actuel"
   },
+  "PINChange": {
+    "PinChangeSuccessTitle": "Successfully changed your PIN (FR)",
+    "PinChangeSuccessMessage": "Your PIN was successsfully changed. You can now log in with your new PIN. (FR)",
+    "EnterOldPINTitle": "Enter your old PIN (FR)",
+    "EnterOldPIN": "Enter your old PIN (FR)",
+    "EnterPINTitle": "Enter a new 6 digit PIN (FR)",
+    "ReenterPIN": "Re-enter new PIN (FR)",
+    "RememberChangePIN": "Change your PIN to secure your wallet. (FR)",
+    "ChangePIN": "Change PIN (FR)"
+  },
+  "PINChangeSuccess": {
+    "InfoBox": {
+      "Title": "Your PIN has been changed (FR)",
+      "Description": "You can now log-in with your new PIN (FR)"
+    },
+    "PrimaryButton": "Go back to settings (FR)"
+  },
   "PINEnter": {
     "AppTitle": "Aries Bifold",
     "Title": "Content de te revoir",

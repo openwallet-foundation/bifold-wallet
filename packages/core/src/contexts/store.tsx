@@ -20,7 +20,6 @@ export const defaultState: State = {
     didAgreeToTerms: false,
     didCompleteTutorial: false,
     didCreatePIN: false,
-    didConfirmPIN: false,
     didConsiderPushNotifications: false,
     didConsiderBiometry: false,
     didNameWallet: false,

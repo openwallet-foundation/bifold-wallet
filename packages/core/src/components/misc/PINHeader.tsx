@@ -14,7 +14,7 @@ const PINHeader = ({ updatePin }: PINHeaderProps) => {
   const { TextTheme } = useTheme()
   const { t } = useTranslation()
   const [{ PINScreensConfig }] = useServices([TOKENS.CONFIG])
-  return PINScreensConfig.useNewPINDesign ?
+  return PINScreensConfig.useNewPINDesign ? (
     <View style={style.infoBox}>
       <InfoBox
         title={t('PINCreate.InfoBox.title')}
@@ -23,7 +23,7 @@ const PINHeader = ({ updatePin }: PINHeaderProps) => {
         renderShowDetails
       />
     </View>
-  :
+  ) : (
     <View>
       <ThemedText style={style.text}>
         <ThemedText style={{ fontWeight: TextTheme.bold.fontWeight }}>
@@ -32,6 +32,7 @@ const PINHeader = ({ updatePin }: PINHeaderProps) => {
         {t('PINCreate.PINDisclaimer')}
       </ThemedText>
     </View>
+  )
 }
 
 const style = StyleSheet.create({
@@ -40,7 +41,7 @@ const style = StyleSheet.create({
   },
   text: {
     marginBottom: 16,
-  }
+  },
 })
 
 export default PINHeader

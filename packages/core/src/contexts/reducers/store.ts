@@ -665,23 +665,9 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case OnboardingDispatchAction.DID_CREATE_PIN: {
-      const PIN = (action?.payload || []).pop()
       const onboarding: OnboardingState = {
         ...state.onboarding,
         didCreatePIN: true,
-        PIN,
-      }
-      const newState = {
-        ...state,
-        onboarding,
-      }
-      return newState
-    }
-    case OnboardingDispatchAction.DID_CONFIRM_PIN: {
-      const onboarding: OnboardingState = {
-        ...state.onboarding,
-        didConfirmPIN: true,
-        PIN: null
       }
       // If the pin is created with this version (that includes Askar), we
       // we can assume that a wallet using Indy SDK was never created. This
@@ -706,9 +692,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         migration,
         loginAttempt,
       }
+
       storeLoginAttempt(loginAttempt)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, newState.migration)
+
       return newState
     }
     case OnboardingDispatchAction.DID_NAME_WALLET: {

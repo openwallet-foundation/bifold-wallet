@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, InteractionManager, Keyboard, Pressable, StyleSheet, Vibration, View } from 'react-native'
+import { getBuildNumber, getVersion } from 'react-native-device-info'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
@@ -22,7 +23,6 @@ import { useLockout } from '../hooks/lockout'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
-import { getBuildNumber, getVersion } from 'react-native-device-info'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -350,8 +350,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
             inlineMessage={inlineMessageField}
-            onSubmitEditing={() => {
-              onPINInputCompleted(PIN)
+            onSubmitEditing={(p: string) => {
+              onPINInputCompleted(p)
             }}
           />
           {showForgotPINMessage && (

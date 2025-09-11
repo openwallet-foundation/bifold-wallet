@@ -34,8 +34,6 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
   )
 
   useEffect(() => {
-    setInlineMessageField1(undefined)
-    setInlineMessageField2(undefined)
     setPINValidations(createPINValidations(PIN, PINSecurity.rules))
   }, [PIN, PINTwo, PINSecurity.rules])
 
@@ -65,8 +63,11 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
   )
 
   const validatePINEntry = useCallback(
-    (PINOne: string, PINTwo: string): boolean => {
-      for (const validation of PINValidations) {
+    (pinOne: string, pinTwo: string): boolean => {
+      setInlineMessageField1(undefined)
+      setInlineMessageField2(undefined)
+      const PINValidation = createPINValidations(pinOne, PINSecurity.rules)
+      for (const validation of PINValidation) {
         if (validation.isInvalid) {
           attentionMessage(
             t('PINCreate.InvalidPIN'),
@@ -76,13 +77,13 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
           return false
         }
       }
-      if (PINOne !== PINTwo) {
+      if (pinOne !== pinTwo) {
         attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
         return false
       }
       return true
     },
-    [PINValidations, t, attentionMessage]
+    [t, attentionMessage, PINSecurity.rules]
   )
 
   return {

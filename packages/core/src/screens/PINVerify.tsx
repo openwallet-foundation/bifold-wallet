@@ -19,9 +19,9 @@ import { testIdWithKey } from '../utils/testable'
 import { InlineErrorType } from '../components/inputs/InlineErrorText'
 
 type PINVerifyProps = {
-  setAuthenticated: (...args: any[]) => void;
-  usage?: PINEntryUsage;
-  onCancelAuth?: React.Dispatch<React.SetStateAction<boolean>> | Function;
+  setAuthenticated: (...args: any[]) => void
+  usage?: PINEntryUsage
+  onCancelAuth?: React.Dispatch<React.SetStateAction<boolean>> | (() => void)
 }
 
 export enum PINEntryUsage {
@@ -50,57 +50,58 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const clearAlertModal = useCallback(() => {
     setAlertModalVisible(false)
     usage !== PINEntryUsage.ChangePIN && setAuthenticated(false)
-  }, [setAlertModalVisible, setAuthenticated])
+  }, [setAlertModalVisible, setAuthenticated, usage])
 
-  const onPINInputCompleted = useCallback(async (p?: string) => {
-    Keyboard.dismiss()
-    setLoading(true)
-    setContinueDisabled(true)
-    const isPINVerified = await verifyPIN(p ? p : PIN)
-    if (isPINVerified) {
-      setAuthenticated(true)
-    } else {
-      if (inlineMessages.enabled) {
-        setInlineMessageField({
-          message: t('PINEnter.IncorrectPIN'),
-          inlineType: InlineErrorType.error,
-          config: inlineMessages,
-        })
-      } 
-      else setAlertModalVisible(true)
-    }
-    setLoading(false)
-    setContinueDisabled(false)
-  }, [verifyPIN, setLoading, setAuthenticated, setContinueDisabled, PIN])
+  const onPINInputCompleted = useCallback(
+    async (p?: string) => {
+      setLoading(true)
+      setContinueDisabled(true)
+      const isPINVerified = await verifyPIN(p ? p : PIN)
+      if (isPINVerified) {
+        setAuthenticated(usage === PINEntryUsage.ChangePIN ? p : true)
+      } else {
+        if (inlineMessages.enabled) {
+          setInlineMessageField({
+            message: t('PINEnter.IncorrectPIN'),
+            inlineType: InlineErrorType.error,
+            config: inlineMessages,
+          })
+        } else setAlertModalVisible(true)
+      }
+      setLoading(false)
+      setContinueDisabled(false)
+    },
+    [verifyPIN, setLoading, setAuthenticated, setContinueDisabled, PIN, inlineMessages, t, usage]
+  )
 
   const inputLabelText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsInputLabel'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChangedEnterPIN'),
-    [PINEntryUsage.ChangePIN]: 'Enter your old PIN'
+    [PINEntryUsage.ChangePIN]: 'Enter your old PIN',
   }
 
   const inputTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'BiometricChangedEnterPIN',
     [PINEntryUsage.PINCheck]: 'AppSettingChangedEnterPIN',
-    [PINEntryUsage.ChangePIN]: 'PINChangedEnterPIN'
+    [PINEntryUsage.ChangePIN]: 'PINChangedEnterPIN',
   }
 
   const primaryButtonText = {
     [PINEntryUsage.ChangeBiometrics]: t('Global.Continue'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
-    [PINEntryUsage.ChangePIN]: 'Continue'
+    [PINEntryUsage.ChangePIN]: 'Continue',
   }
 
   const primaryButtonTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'Continue',
     [PINEntryUsage.PINCheck]: 'AppSettingSave',
-    [PINEntryUsage.ChangePIN]: 'Continue'
+    [PINEntryUsage.ChangePIN]: 'Continue',
   }
 
   const helpText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsSubtext'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChanged'),
-    [PINEntryUsage.ChangePIN]: ''
+    [PINEntryUsage.ChangePIN]: '',
   }
 
   const isContinueDisabled = continueDisabled || PIN.length < minPINLength
@@ -158,32 +159,34 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
               setPIN(p)
               if (p.length === minPINLength) {
                 Keyboard.dismiss()
-                usage === PINEntryUsage.ChangePIN && await onPINInputCompleted(p)
+                usage === PINEntryUsage.ChangePIN && (await onPINInputCompleted(p))
               }
             }}
             testID={testIdWithKey(inputTestId[usage])}
             accessibilityLabel={inputLabelText[usage]}
             autoFocus={true}
             inlineMessage={inlineMessageField}
-            onSubmitEditing={async () => {
-              await onPINInputCompleted()
+            onSubmitEditing={async (p) => {
+              await onPINInputCompleted(p)
             }}
           />
         </View>
-        {usage !== PINEntryUsage.ChangePIN && <View style={style.buttonContainer}>
-          <Button
-            title={primaryButtonText[usage]}
-            buttonType={ButtonType.Primary}
-            testID={testIdWithKey(primaryButtonTestId[usage])}
-            disabled={isContinueDisabled}
-            accessibilityLabel={primaryButtonText[usage]}
-            onPress={async () => {
-              await onPINInputCompleted()
-            }}
-          >
-            {loading && <ButtonLoading />}
-          </Button>
-        </View>}
+        {usage !== PINEntryUsage.ChangePIN && (
+          <View style={style.buttonContainer}>
+            <Button
+              title={primaryButtonText[usage]}
+              buttonType={ButtonType.Primary}
+              testID={testIdWithKey(primaryButtonTestId[usage])}
+              disabled={isContinueDisabled}
+              accessibilityLabel={primaryButtonText[usage]}
+              onPress={async () => {
+                await onPINInputCompleted()
+              }}
+            >
+              {loading && <ButtonLoading />}
+            </Button>
+          </View>
+        )}
         {usage === PINEntryUsage.PINCheck && (
           <View style={[style.buttonContainer, { marginTop: 10 }]}>
             <Button
