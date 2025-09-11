@@ -37,7 +37,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             cx={centerX}
             cy={centerY - 10}
             rx={screenWidth * 0.45}
-            ry={screenHeight * 0.3}
+            ry={screenHeight * 0.28}
             fill="transparent"
             stroke={strokeColor}
           />
