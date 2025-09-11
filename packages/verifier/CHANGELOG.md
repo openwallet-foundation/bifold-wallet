@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+
 ## 2.7.2
 
 ### Patch Changes

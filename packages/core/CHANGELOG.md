@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 2.7.3
+
+### Patch Changes
+
+- 29fd468: removed old package
+- c1cc972: Added new SVG Overlay for masking camera components
+
 ## 2.7.2
 
 ### Patch Changes
