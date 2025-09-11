@@ -43,7 +43,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
           />
         )
 
-      case MaskType.RECTANGLE:
+      case MaskType.RECTANGLE: {
         const rectSize = screenWidth * 0.8
         return (
           <Rect
@@ -54,8 +54,9 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             fill="transparent"
           />
         )
+      }
 
-      case MaskType.ID_CARD:
+      case MaskType.ID_CARD: {
         // ID card shape with rounded corners
         const cardWidth = screenWidth * 0.9
         const cardHeight = cardWidth / 1.6 // Common ID/ Credit card size ratio
@@ -72,7 +73,8 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             strokeWidth={2}
           />
         )
-      case MaskType.QR_CODE:
+      }
+      case MaskType.QR_CODE: {
         const qrSize = screenWidth * 0.9
         return (
           <Rect
@@ -85,6 +87,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             strokeWidth={2}
           />
         )
+      }
       case MaskType.CUSTOM:
         return customPath ? <Path d={customPath} fill="transparent" /> : null
 
