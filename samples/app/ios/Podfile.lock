@@ -1121,10 +1121,6 @@ PODS:
     - React-Core
   - RNCClipboard (1.16.3):
     - React-Core
-  - RNCMaskedView (0.3.2):
-    - glog
-    - RCT-Folly (= 2022.05.16.00)
-    - React-Core
   - RNDeviceInfo (8.7.1):
     - React-Core
   - RNFS (2.20.0):
@@ -1236,7 +1232,6 @@ DEPENDENCIES:
   - RNArgon2 (from `../node_modules/react-native-argon2`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
-  - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -1400,8 +1395,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
-  RNCMaskedView:
-    :path: "../node_modules/@react-native-masked-view/masked-view"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -1500,7 +1493,6 @@ SPEC CHECKSUMS:
   RNArgon2: 708e188b7a4d4ec8baf62463927c47abef453a94
   RNCAsyncStorage: 9350c2956f996b3ff1ac7cfdb50901c113a27640
   RNCClipboard: f6679d470d0da2bce2a37b0af7b9e0bf369ecda5
-  RNCMaskedView: 3f3c27b339db863b1fd5f39cc9660484ecfd46ee
   RNDeviceInfo: d3e91ffb33ee97a7982108476edb68cb3672efa6
   RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
   RNGestureHandler: 03a2c31aea5d46f51080f1c1b6659b76a9ac78c9
@@ -1513,7 +1505,7 @@ SPEC CHECKSUMS:
   SDWebImage: f29024626962457f3470184232766516dee8dfea
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: 6ad4b86176f6fea45e90e380d3d530bc5e1abff9
-  Yoga: 1f93d5925ea12fb0880b21efe3566677337cf2ed
+  Yoga: a813a6d82538ccba91c54406404e3ed80b48a692
 
 PODFILE CHECKSUM: 036865a022a22154f36d3be8ae5eba08e4fc99b2
 
