@@ -1,17 +1,17 @@
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../../constants'
 import { BifoldError } from '../../../types/error'
-import { useAgent } from '@credo-ts/react-hooks'
-import { useTranslation } from 'react-i18next'
-import { getCredentialsForProofRequest } from '../resolverProof'
-import { OpenId4VPRequestRecord } from '../types'
 import {
   acquirePreAuthorizedAccessToken,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
 } from '../offerResolve'
+import { getCredentialsForProofRequest } from '../resolverProof'
+import { OpenId4VPRequestRecord } from '../types'
 
 type OpenIDContextProps = {
   openIDUri?: string

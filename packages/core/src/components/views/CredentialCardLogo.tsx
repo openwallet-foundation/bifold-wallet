@@ -1,9 +1,9 @@
-import { Image, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
+import React, { useMemo } from 'react'
+import { Image, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import { toImageSource } from '../../utils/credential'
-import { useMemo } from 'react'
 import { ThemedText } from '../texts/ThemedText'
 
 type Props = {

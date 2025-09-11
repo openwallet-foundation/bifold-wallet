@@ -62,6 +62,7 @@ export default [
       'packages/remote-logs/build/',
       'packages/react-native-attestation/build/',
       'packages/core/lib/',
+      'packages/legacy/core/lib',
     ],
   },
   {

@@ -1,6 +1,6 @@
-import { BifoldLogger } from '../../src/services/logger'
+import { AbstractBifoldLogger } from '../../src/services/AbstractBifoldLogger'
 
-export class MockLogger extends BifoldLogger {
+export class MockLogger extends AbstractBifoldLogger {
   constructor() {
     super()
   }

@@ -1,13 +1,12 @@
 {
   "name": "@bifold/verifier",
-  "version": "2.4.0",
+  "version": "2.7.2",
   "main": "build/commonjs/index.js",
   "types": "build/typescript/index.d.ts",
   "module": "build/module/index.js",
-  "source": "src/index.ts",
-  "react-native": "src/index.ts",
+  "source": "build/commonjs/index.js",
+  "react-native": "build/commonjs/index.js",
   "files": [
-    "src",
     "build"
   ],
   "repository": {

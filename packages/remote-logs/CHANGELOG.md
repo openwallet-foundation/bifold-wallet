@@ -1,5 +1,100 @@
 # Change Log
 
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+- ef52d51: fix lint issues from previous pr
+- Updated dependencies [99dab08]
+  - @bifold/core@2.7.2
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+- Updated dependencies [84cb3cd]
+  - @bifold/core@2.7.1
+
+## 2.7.0
+
+### Minor Changes
+
+- 7cd5ad2: fixed logging interface to accept data and error
+
+### Patch Changes
+
+- Updated dependencies [7cd5ad2]
+  - @bifold/core@2.7.0
+
+## 2.6.0
+
+### Minor Changes
+
+- f52bdd8: Fixed transports for local and loki logging
+- e6c4d63: fixed imports, fixed release builds, added export
+
+### Patch Changes
+
+- Updated dependencies [e6c4d63]
+  - @bifold/core@2.6.0
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+- eeeadd0: cleaned up autolock logic
+
+### Patch Changes
+
+- Updated dependencies [66bbd8d]
+  - @bifold/core@2.5.0
+
+## 2.4.6
+
+### Patch Changes
+
+- Updated dependencies [9214b8c]
+  - @bifold/core@2.4.6
+
+## 2.4.5
+
+### Patch Changes
+
+- Updated dependencies [502d616]
+  - @bifold/core@2.4.5
+
+## 2.4.4
+
+### Patch Changes
+
+- Updated dependencies [d0a74bc]
+  - @bifold/core@2.4.4
+
+## 2.4.3
+
+### Patch Changes
+
+- Updated dependencies [69eff6c]
+  - @bifold/core@2.4.3
+
+## 2.4.2
+
+### Patch Changes
+
+- Updated dependencies [1d56182]
+  - @bifold/core@2.4.2
+
+## 2.4.1
+
+### Patch Changes
+
+- Updated dependencies [dbf5cee]
+- Updated dependencies [a60aefd]
+  - @bifold/core@2.4.1
+
 ## 2.4.0
 
 ### Patch Changes
