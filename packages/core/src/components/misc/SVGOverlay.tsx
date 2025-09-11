@@ -35,7 +35,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
         return (
           <Ellipse
             cx={centerX}
-            cy={centerY}
+            cy={centerY - 10}
             rx={screenWidth * 0.45}
             ry={screenHeight * 0.3}
             fill="transparent"
