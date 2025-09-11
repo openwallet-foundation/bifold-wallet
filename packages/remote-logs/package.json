@@ -48,7 +48,7 @@
     "typescript": "~5.5.4"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.5.13",
+    "@credo-ts/core": "0.5.17",
     "axios": "~1.4.0",
     "buffer": "~6.0.3",
     "react": "~18.3.1",
@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@bifold/core": "2.7.3",
-    "@credo-ts/core": "0.5.13",
+    "@credo-ts/core": "0.5.17",
     "axios": "~1.4.0",
     "buffer": "~6.0.3",
     "react": "~18.3.1",
