@@ -44,6 +44,146 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         ]
       }
     />
+    <RNSVGSvgView
+      bbHeight="1334"
+      bbWidth="750"
+      focusable={false}
+      height={1334}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "position": "absolute",
+          },
+          Object {
+            "flex": 0,
+            "height": 1334,
+            "width": 750,
+          },
+        ]
+      }
+      width={750}
+    >
+      <RNSVGGroup
+        fill={
+          Object {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGDefs>
+          <RNSVGMask
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            height="100%"
+            maskContentUnits={1}
+            maskUnits={0}
+            name="overlayMask"
+            width="100%"
+            x="0%"
+            y="0%"
+          >
+            <RNSVGRect
+              fill={
+                Object {
+                  "payload": 4294967295,
+                  "type": 0,
+                }
+              }
+              height="1334"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="750"
+              x="0"
+              y="0"
+            />
+            <RNSVGRect
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              height="675"
+              propList={
+                Array [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                ]
+              }
+              stroke={
+                Object {
+                  "payload": 4294967295,
+                  "type": 0,
+                }
+              }
+              strokeWidth="2"
+              width="675"
+              x="37.5"
+              y="217"
+            />
+          </RNSVGMask>
+        </RNSVGDefs>
+        <RNSVGRect
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          fillOpacity={0.6}
+          height="1334"
+          mask="overlayMask"
+          propList={
+            Array [
+              "fill",
+              "fillOpacity",
+            ]
+          }
+          width="750"
+          x="0"
+          y="0"
+        />
+        <RNSVGRect
+          fill={
+            Object {
+              "payload": 0,
+              "type": 0,
+            }
+          }
+          height="675"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+              "strokeWidth",
+            ]
+          }
+          stroke={
+            Object {
+              "payload": 4294967295,
+              "type": 0,
+            }
+          }
+          strokeWidth="2"
+          width="675"
+          x="37.5"
+          y="217"
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
     <View
       style={
         Object {
@@ -52,68 +192,6 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         }
       }
     >
-      <View
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 2,
-            }
-          }
-        />
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "height": 710,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
-              }
-            }
-          />
-          <View
-            style={
-              Object {
-                "borderColor": "rgba(255, 255, 255, 0.6)",
-                "borderWidth": 1,
-                "width": 710,
-              }
-            }
-          />
-          <View
-            style={
-              Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
-              }
-            }
-          />
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 3,
-            }
-          }
-        />
-      </View>
       <View
         style={
           Object {
@@ -1028,6 +1106,146 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         ]
       }
     />
+    <RNSVGSvgView
+      bbHeight="1334"
+      bbWidth="750"
+      focusable={false}
+      height={1334}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "position": "absolute",
+          },
+          Object {
+            "flex": 0,
+            "height": 1334,
+            "width": 750,
+          },
+        ]
+      }
+      width={750}
+    >
+      <RNSVGGroup
+        fill={
+          Object {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGDefs>
+          <RNSVGMask
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            height="100%"
+            maskContentUnits={1}
+            maskUnits={0}
+            name="overlayMask"
+            width="100%"
+            x="0%"
+            y="0%"
+          >
+            <RNSVGRect
+              fill={
+                Object {
+                  "payload": 4294967295,
+                  "type": 0,
+                }
+              }
+              height="1334"
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+              width="750"
+              x="0"
+              y="0"
+            />
+            <RNSVGRect
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              height="675"
+              propList={
+                Array [
+                  "fill",
+                  "stroke",
+                  "strokeWidth",
+                ]
+              }
+              stroke={
+                Object {
+                  "payload": 4294967295,
+                  "type": 0,
+                }
+              }
+              strokeWidth="2"
+              width="675"
+              x="37.5"
+              y="217"
+            />
+          </RNSVGMask>
+        </RNSVGDefs>
+        <RNSVGRect
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          fillOpacity={0.6}
+          height="1334"
+          mask="overlayMask"
+          propList={
+            Array [
+              "fill",
+              "fillOpacity",
+            ]
+          }
+          width="750"
+          x="0"
+          y="0"
+        />
+        <RNSVGRect
+          fill={
+            Object {
+              "payload": 0,
+              "type": 0,
+            }
+          }
+          height="675"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+              "strokeWidth",
+            ]
+          }
+          stroke={
+            Object {
+              "payload": 4294967295,
+              "type": 0,
+            }
+          }
+          strokeWidth="2"
+          width="675"
+          x="37.5"
+          y="217"
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
     <View
       style={
         Object {
@@ -1036,68 +1254,6 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         }
       }
     >
-      <View
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 2,
-            }
-          }
-        />
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "height": 710,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
-              }
-            }
-          />
-          <View
-            style={
-              Object {
-                "borderColor": "rgba(255, 255, 255, 0.6)",
-                "borderWidth": 1,
-                "width": 710,
-              }
-            }
-          />
-          <View
-            style={
-              Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
-              }
-            }
-          />
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 3,
-            }
-          }
-        />
-      </View>
       <View
         style={
           Object {

@@ -18,6 +18,7 @@ import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import FauxHeader from './components/misc/FauxHeader'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
 import QRScannerTorch from './components/misc/QRScannerTorch'
+import SVGOverlay, { MaskType } from './components/misc/SVGOverlay'
 import DeveloperModal from './components/modals/DeveloperModal'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
@@ -62,10 +63,10 @@ import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UpdateAvailable from './screens/UpdateAvailable'
+import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { isBiometricsActive, loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
-import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
@@ -162,6 +163,7 @@ export { BaseTourID } from './types/tour'
 export type { BannerSectionProps } from './components/views/Banner'
 
 export {
+  AbstractBifoldLogger,
   ActivityProvider,
   Agent,
   AgentProvider,
@@ -172,7 +174,6 @@ export {
   AutoLockTime,
   Banner,
   BannerSection,
-  AbstractBifoldLogger,
   BifoldLogger,
   bifoldLoggerInstance,
   Biometry,
@@ -208,6 +209,7 @@ export {
   LimitedTextInput,
   Link,
   loadLoginAttempt,
+  MaskType,
   NavContainer,
   NetworkProvider,
   NotificationListItem,
@@ -222,6 +224,7 @@ export {
   SafeAreaModal,
   Scan,
   Splash,
+  SVGOverlay,
   Terms,
   Text,
   ThemeBuilder,
