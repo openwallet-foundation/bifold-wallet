@@ -31,7 +31,7 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
       const result: AnonCredsSchema = await agent.modules.anoncreds.getSchema(agent.context, schemaId)
       name = result.name
     } catch {
-      // If the schema is not found, return the default name
+      agent.config.logger('parseWebVHCredDefId: Schema definition not found, using default name')
     }
   }
   return name || 'Credential'
