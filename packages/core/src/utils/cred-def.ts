@@ -22,7 +22,7 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
       const result: AnonCredsCredentialDefinition = await agent.modules.anoncreds.getCredentialDefinition(agent.context, credDefId)
       name = result.tag
     } catch {
-      // If the credential definition is not found, return the default name
+      agent.config.logger('parseWebVHCredDefId: Credential definition not found, using default name')
     }
   }
 
