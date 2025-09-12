@@ -1,4 +1,5 @@
-import { getCredentialName } from '../../src/utils/cred-def'
+import { getCredentialName, parsedCredDefName, parsedCredDefNameFromCredential } from '../../src/utils/cred-def'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 
 const mockSchemaId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
 const mockCredDefId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
@@ -114,5 +115,107 @@ describe('Cred Def Utils', () => {
     }
     const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
     expect(credDefName).toBe('non-default')
+  })
+
+  test('Returns default name for webvh when agent lacks anoncreds module', async () => {
+    const agent: any = {
+      context: {},
+      modules: {},
+    }
+    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
+    expect(credDefName).toBe('Credential')
+  })
+
+  test('Falls back to schema when webvh cred def fetch fails', async () => {
+    const agent: any = {
+      context: {},
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
+          getSchema: jest.fn().mockResolvedValue(mockSchemaResource.content),
+        },
+      },
+      config: { logger: { info: jest.fn() } },
+    }
+    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
+    expect(credDefName).toBe('CredoTest')
+  })
+
+  test('Returns default when both webvh cred def and schema fetch fail', async () => {
+    const agent: any = {
+      context: {},
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
+          getSchema: jest.fn().mockRejectedValue(new Error('not found')),
+        },
+      },
+      config: { logger: { info: jest.fn() } },
+    }
+    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
+    expect(credDefName).toBe('Credential')
+  })
+
+  test('Returns cred def tag when webvh cred def is non-default and schemaId not used', async () => {
+    const agent: any = {
+      context: {},
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn().mockResolvedValue({ ...mockCredDefResource.content, tag: 'default' }),
+          getSchema: jest.fn().mockResolvedValue(mockSchemaResource.content),
+        },
+      },
+    }
+    const credDefName = await getCredentialName(mockCredDefId, undefined, agent)
+    expect(credDefName).toBe('default')
+  })
+
+  test('Indy: returns tag when cred def tag is non-default', async () => {
+    const indyCredDefId = 'WgWxqztrNooG92RXvxSTWv:3:CL:20:custom'
+    const indySchemaId = 'WgWxqztrNooG92RXvxSTWv:2:BankingCredential:1.0'
+    const credDefName = await getCredentialName(indyCredDefId, indySchemaId)
+    expect(credDefName).toBe('custom')
+  })
+
+  test('Indy: returns schema name when cred def tag is default', async () => {
+    const indyCredDefId = 'WgWxqztrNooG92RXvxSTWv:3:CL:20:default'
+    const indySchemaId = 'WgWxqztrNooG92RXvxSTWv:2:BankingCredential:1.0'
+    const credDefName = await getCredentialName(indyCredDefId, indySchemaId)
+    expect(credDefName).toBe('BankingCredential')
+  })
+
+  test('Indy: returns schema name when no cred def id provided', async () => {
+    const indySchemaId = 'Th7MpTaRZVRYnPiabds81Y:2:employment_history:2.0'
+    const credDefName = await getCredentialName(undefined, indySchemaId)
+    expect(credDefName).toBe('employment_history')
+  })
+
+  test('Indy: returns default when neither cred def id nor schema id provided', async () => {
+    const credDefName = await getCredentialName(undefined, undefined)
+    expect(credDefName).toBe('Credential')
+  })
+
+  test('parsedCredDefNameFromCredential uses metadata ids to resolve name', async () => {
+    const indyCredDefId = 'WgWxqztrNooG92RXvxSTWv:3:CL:20:default'
+    const indySchemaId = 'WgWxqztrNooG92RXvxSTWv:2:BankingCredential:1.0'
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return { credentialDefinitionId: indyCredDefId, schemaId: indySchemaId }
+          }
+          return undefined
+        },
+      },
+    }
+    const credDefName = await parsedCredDefNameFromCredential(credential)
+    expect(credDefName).toBe('BankingCredential')
+  })
+
+  test('parsedCredDefName forwards ids directly', async () => {
+    const indyCredDefId = 'WgWxqztrNooG92RXvxSTWv:3:CL:20:custom'
+    const indySchemaId = 'WgWxqztrNooG92RXvxSTWv:2:BankingCredential:1.0'
+    const credDefName = await parsedCredDefName(indyCredDefId, indySchemaId)
+    expect(credDefName).toBe('custom')
   })
 })

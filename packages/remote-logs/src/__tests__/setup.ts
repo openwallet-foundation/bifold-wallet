@@ -2,7 +2,7 @@
 
 // Mock React Native batched bridge for native module compatibility
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(global as any).__fbBatchedBridgeConfig = {
+(global as any).__fbBatchedBridgeConfig = {
   remoteModuleConfig: [],
   localModulesConfig: [],
 }
