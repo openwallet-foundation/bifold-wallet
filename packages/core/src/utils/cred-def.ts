@@ -1,4 +1,10 @@
-import { AnonCredsCredentialMetadataKey, parseIndyCredentialDefinitionId, parseIndySchemaId, AnonCredsCredentialDefinition, AnonCredsSchema } from '@credo-ts/anoncreds'
+import {
+  AnonCredsCredentialMetadataKey,
+  parseIndyCredentialDefinitionId,
+  parseIndySchemaId,
+  AnonCredsCredentialDefinition,
+  AnonCredsSchema,
+} from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
 import type { Agent } from '@credo-ts/core'
 
@@ -19,19 +25,22 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
   }
   if (credDefId) {
     try {
-      const result: AnonCredsCredentialDefinition = await agent.modules.anoncreds.getCredentialDefinition(agent.context, credDefId)
+      const result: AnonCredsCredentialDefinition = await agent.modules.anoncreds.getCredentialDefinition(
+        agent.context,
+        credDefId
+      )
       name = result.tag
     } catch {
-      agent.config.logger('parseWebVHCredDefId: Credential definition not found, using default name')
+      agent.config.logger.info('parseWebVHCredDefId: Credential definition not found, using default name')
     }
   }
 
-  if ((name.toLocaleLowerCase() === 'default' || name.toLowerCase() === 'credential') && schemaId) {
+  if ((name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') && schemaId) {
     try {
       const result: AnonCredsSchema = await agent.modules.anoncreds.getSchema(agent.context, schemaId)
       name = result.name
     } catch {
-      agent.config.logger('parseWebVHCredDefId: Schema definition not found, using default name')
+      agent.config.logger.info('parseWebVHCredDefId: Schema definition not found, using default name')
     }
   }
   return name || 'Credential'
@@ -43,7 +52,7 @@ function parseIndyCredDefId(credDefId?: string, schemaId?: string): string {
     const parseIndyCredDefId = parseIndyCredentialDefinitionId(credDefId)
     name = parseIndyCredDefId.tag
   }
-  if (name.toLocaleLowerCase() === 'default' || name.toLowerCase() === 'credential') {
+  if (name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') {
     if (schemaId) {
       const parseIndySchema = parseIndySchemaId(schemaId)
       name = parseIndySchema.schemaName
@@ -62,6 +71,10 @@ export async function parsedCredDefNameFromCredential(credential: CredentialReco
   return getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent)
 }
 
-export async function parsedCredDefName(credentialDefinitionId: string, schemaId: string, agent?: Agent): Promise<string> {
+export async function parsedCredDefName(
+  credentialDefinitionId: string,
+  schemaId: string,
+  agent?: Agent
+): Promise<string> {
   return getCredentialName(credentialDefinitionId, schemaId, agent)
 }
