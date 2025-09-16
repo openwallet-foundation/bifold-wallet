@@ -77,19 +77,19 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const inputLabelText = {
     [PINEntryUsage.ChangeBiometrics]: t('PINEnter.ChangeBiometricsInputLabel'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingChangedEnterPIN'),
-    [PINEntryUsage.ChangePIN]: 'Enter your old PIN',
+    [PINEntryUsage.ChangePIN]: t('PINChange.EnterOldPIN'),
   }
 
   const inputTestId = {
     [PINEntryUsage.ChangeBiometrics]: 'BiometricChangedEnterPIN',
     [PINEntryUsage.PINCheck]: 'AppSettingChangedEnterPIN',
-    [PINEntryUsage.ChangePIN]: 'PINChangedEnterPIN',
+    [PINEntryUsage.ChangePIN]: 'EnterOldPIN',
   }
 
   const primaryButtonText = {
     [PINEntryUsage.ChangeBiometrics]: t('Global.Continue'),
     [PINEntryUsage.PINCheck]: t('PINEnter.AppSettingSave'),
-    [PINEntryUsage.ChangePIN]: 'Continue',
+    [PINEntryUsage.ChangePIN]: t('Global.Continue'),
   }
 
   const primaryButtonTestId = {

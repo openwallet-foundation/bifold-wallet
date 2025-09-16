@@ -27,7 +27,15 @@ interface PINInputProps {
 }
 
 const PINInputComponent = (
-  { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage, onSubmitEditing }: PINInputProps,
+  {
+    label,
+    onPINChanged,
+    testID,
+    accessibilityLabel,
+    autoFocus = false,
+    inlineMessage,
+    onSubmitEditing = () => {},
+  }: PINInputProps,
   ref: Ref<TextInput>
 ) => {
   const [{ PINScreensConfig }] = useServices([TOKENS.CONFIG])
@@ -135,7 +143,9 @@ const PINInputComponent = (
           }}
           autoFocus={autoFocus}
           ref={ref}
-          onSubmitEditing={onSubmitEditing}
+          onSubmitEditing={(e) => {
+            onSubmitEditing(e?.nativeEvent?.text ?? '')
+          }}
         />
       </View>
       <TouchableOpacity

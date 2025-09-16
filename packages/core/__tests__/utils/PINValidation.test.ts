@@ -10,7 +10,7 @@ const defaultPINRules = {
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
   most_used_pins: false,
-  use_nist_requirements: true,
+  use_nist_requirements: false,
   nist_pin_length: 6,
 }
 
@@ -294,6 +294,38 @@ describe('PIN validations', () => {
     }
 
     const PINValidations = createPINValidations(validPIN, PINRulesWithNoCrossPattern)
+
+    for (const PINValidation of PINValidations) {
+      if (PINValidation.errorName === 'CrossPatternValidation') {
+        expect(PINValidation.isInvalid).toBe(false)
+      }
+    }
+  })
+  test('Commonly used PIN with nist requirements enabled should return false', async () => {
+    const PINRulesWithNistRequirements = {
+      ...defaultPINRules,
+      use_nist_requirements: true,
+    }
+
+    const commonlyUsedPIN = '111111'
+
+    const PINValidations = createPINValidations(commonlyUsedPIN, PINRulesWithNistRequirements)
+
+    for (const PINValidation of PINValidations) {
+      if (PINValidation.errorName === 'CrossPatternValidation') {
+        expect(PINValidation.isInvalid).toBe(false)
+      }
+    }
+  })
+  test('Not commonly used PIN with nist requirements enabled should return true', async () => {
+    const PINRulesWithNistRequirements = {
+      ...defaultPINRules,
+      use_nist_requirements: true,
+    }
+
+    const PIN = '102030'
+
+    const PINValidations = createPINValidations(PIN, PINRulesWithNistRequirements)
 
     for (const PINValidation of PINValidations) {
       if (PINValidation.errorName === 'CrossPatternValidation') {

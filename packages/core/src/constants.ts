@@ -89,13 +89,13 @@ export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
   max_length: 6,
-  use_nist_requirements: true,
+  use_nist_requirements: false,
   no_repeated_numbers: 0,
   no_repetition_of_the_two_same_numbers: false,
   no_series_of_numbers: false,
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
-  most_used_pins: true,
+  most_used_pins: false,
   nist_pin_length: 6,
 }
 

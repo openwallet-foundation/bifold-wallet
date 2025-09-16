@@ -37,6 +37,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [displayLockoutWarning, setDisplayLockoutWarning] = useState(false)
   const [biometricsErr, setBiometricsErr] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState(false)
+  const [forgotPINModalVisible, setForgotPINModalVisible] = useState(false)
   const [devModalVisible, setDevModalVisible] = useState(false)
   const [showForgotPINMessage, setShowForgotPINMessage] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
@@ -354,7 +355,20 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
               onPINInputCompleted(p)
             }}
           />
-          {showForgotPINMessage && (
+          {!PINScreensConfig.useNewPINDesign && (
+            <ThemedText
+              variant="bold"
+              style={style.forgotPINText}
+              onPress={() => setForgotPINModalVisible(true)}
+              testID={testIdWithKey('ForgotPINLink')}
+              accessible={true}
+              accessibilityRole="link"
+              accessibilityLabel={t('PINEnter.ForgotPINLink')}
+            >
+              {t('PINEnter.ForgotPINLink')}
+            </ThemedText>
+          )}
+          {showForgotPINMessage && PINScreensConfig.useNewPINDesign && (
             <ThemedText
               variant="normal"
               style={style.forgotPINText}
@@ -368,7 +382,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           )}
         </View>
         <View>
-          {!PINScreensConfig?.useNewPINDesign && (
+          {!PINScreensConfig.useNewPINDesign && (
             <View style={style.buttonContainer}>
               <Button
                 title={t('PINEnter.Unlock')}
@@ -423,6 +437,23 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
           }
           onCallToActionLabel={t('Global.Okay')}
           onCallToActionPressed={clearAlertModal}
+        />
+      ) : null}
+      {forgotPINModalVisible ? (
+        <PopupModal
+          notificationType={InfoBoxType.Info}
+          title={t('PINEnter.ForgotPINModalTitle')}
+          bodyContent={
+            <ThemedText
+              variant="popupModalText"
+              style={style.modalText}
+              testID={testIdWithKey('ForgotPINModalDescription')}
+            >
+              {t('PINEnter.ForgotPINModalDescription')}
+            </ThemedText>
+          }
+          onCallToActionLabel={t('Global.Okay')}
+          onCallToActionPressed={() => setForgotPINModalVisible(false)}
         />
       ) : null}
       {devModalVisible ? <DeveloperModal onBackPressed={onBackPressed} /> : null}
