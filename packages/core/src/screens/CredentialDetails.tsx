@@ -29,7 +29,7 @@ import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { parseCredDefFromId } from '../utils/cred-def'
+import { getCredentialName } from '../utils/cred-def'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
@@ -192,7 +192,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsRemoveModalDisplayed(true)
   }, [])
 
-  const logHistoryRecord = useCallback(() => {
+  const logHistoryRecord = useCallback(async () => {
     try {
       if (!(agent && historyEnabled)) {
         logger.trace(
@@ -208,7 +208,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       const historyManager = historyManagerCurried(agent)
 
       const ids = getCredentialIdentifiers(credential)
-      const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+      const name =
+        overlay.metaOverlay?.name ??
+        (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
 
       /** Save history record for credential removed */
       const recordData: HistoryRecord = {
@@ -219,7 +221,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         correspondenceName: credentialConnectionLabel,
       }
 
-      historyManager.saveHistory(recordData)
+      await historyManager.saveHistory(recordData)
     } catch (err: unknown) {
       logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
@@ -241,7 +243,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       }
 
       if (historyEventsLogger.logAttestationRemoved) {
-        logHistoryRecord()
+        await logHistoryRecord()
       }
 
       await agent.credentials.deleteById(credential.id)
