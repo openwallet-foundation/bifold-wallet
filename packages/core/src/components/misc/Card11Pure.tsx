@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Image, ImageBackground, FlatList, TouchableOpacity, Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { WalletCredentialCardData, CardAttribute } from '../../wallet/ui-types'

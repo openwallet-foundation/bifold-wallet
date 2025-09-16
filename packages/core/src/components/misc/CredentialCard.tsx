@@ -154,8 +154,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
       />
     )
   } else {
-    const gg = bundleResolver.getBrandingOverlayType()
-    console.log('#### Branding type gg:', gg)
     return getCredOverlayType(bundleResolver.getBrandingOverlayType())
   }
 }

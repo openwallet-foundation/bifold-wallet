@@ -219,10 +219,11 @@ const QRScanner: React.FC<Props> = ({
   const styleForState = ({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.2 : 1 }]
 
   const toggleShowInfoBox = () => {
-    // setShowInfoBox(!showInfoBox)
-    handleCodeScan(
-      'https://ws.dev.issuer-agent1.lab.di.gov.on.ca/?oob=eyJAdHlwZSI6ICJodHRwczovL2RpZGNvbW0ub3JnL291dC1vZi1iYW5kLzEuMS9pbnZpdGF0aW9uIiwgIkBpZCI6ICJlNWY5MTY4Yi0wMzVhLTQ3NTEtODg2OS03MTVjMDhiZDAzNzQiLCAibGFiZWwiOiAiT250YXJpbyBwcml2YXRlIGJldGEiLCAiaW1hZ2VVcmwiOiAiaHR0cHM6Ly93d3cub250YXJpby5jYS9pbWcvb250YXJpb0AyeC5wbmciLCAiaGFuZHNoYWtlX3Byb3RvY29scyI6IFsiaHR0cHM6Ly9kaWRjb21tLm9yZy9jb25uZWN0aW9ucy8xLjAiXSwgInNlcnZpY2VzIjogW3siaWQiOiAiI2lubGluZSIsICJ0eXBlIjogImRpZC1jb21tdW5pY2F0aW9uIiwgInJlY2lwaWVudEtleXMiOiBbImRpZDprZXk6ejZNa3JrcGJWUFgyWGVYY0F1OGY3eVN4YlJHckdxa1pjcmJ3NGpvOXVKcUpuNTVII3o2TWtya3BiVlBYMlhlWGNBdThmN3lTeGJSR3JHcWtaY3JidzRqbzl1SnFKbjU1SCJdLCAic2VydmljZUVuZHBvaW50IjogImh0dHBzOi8vd3MuZGV2Lmlzc3Vlci1hZ2VudDEubGFiLmRpLmdvdi5vbi5jYSJ9XSwgImdvYWxfY29kZSI6ICJhcmllcy52Yy52ZXJpZnkiLCAiZ29hbCI6ICJWZXJpZnkgQ3JlZGVudGlhbCJ9'
-    )
+    setShowInfoBox(!showInfoBox)
+    // For testing purposes only, to simulate a scan
+    // handleCodeScan(
+    //   'openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%20%22https%3A//ws.dev.issuer-agent1.lab.di.gov.on.ca/oid4vci%22%2C%20%22credentials%22%3A%20%5B%22OntarioTestBusinessRegistration_sdjwt%22%5D%2C%20%22grants%22%3A%20%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%20%7B%22pre-authorized_code%22%3A%20%225bSSaZ6T319w4grkoGd1QA%22%2C%20%22user_pin_required%22%3A%20false%7D%7D%7D'
+    // )
   }
 
   return (

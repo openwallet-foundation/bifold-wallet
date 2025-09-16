@@ -80,6 +80,8 @@ const ListCredentials: React.FC = () => {
     return stop
   }, [stop])
 
+  // Rendering legacy card flow
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
     return (
       <CredentialCard
