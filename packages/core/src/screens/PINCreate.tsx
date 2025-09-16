@@ -81,7 +81,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
     controlsContainer: {},
     infoBox: {
       marginBottom: 24,
-    },
+    }
   })
 
   const handleConfirmPINFlow = useCallback(

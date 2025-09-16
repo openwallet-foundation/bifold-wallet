@@ -12,7 +12,7 @@ export function parseCredDefFromId(credDefId?: string, schemaId?: string): strin
         .join(' ')
     }
   }
-  if (name.toLocaleLowerCase() === 'default' || name.toLowerCase() === 'credential') {
+  if (name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') {
     name = parseSchemaFromId(schemaId).name
   }
   return name

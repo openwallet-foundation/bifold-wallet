@@ -21,6 +21,8 @@ import { TourProvider } from './contexts/tour/tour-provider'
 import { initStoredLanguage } from './localization'
 import RootStack from './navigators/RootStack'
 import { bifoldTheme, themes } from './theme'
+import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
+import { bifoldLoggerInstance } from './services/bifoldLogger'
 
 const createApp = (container: Container): React.FC => {
   const AppComponent: React.FC = () => {
@@ -41,31 +43,33 @@ const createApp = (container: Container): React.FC => {
     }
 
     return (
-      <ContainerProvider value={container}>
-        <StoreProvider>
-          <ThemeProvider themes={themes} defaultThemeName={bifoldTheme.themeName}>
-            <NavContainer navigationRef={navigationRef}>
-              <AnimatedComponentsProvider value={animatedComponents}>
-                <AuthProvider>
-                  <NetworkProvider>
-                    <StatusBar
-                      hidden={false}
-                      barStyle="light-content"
-                      backgroundColor={bifoldTheme.ColorPalette.brand.primary}
-                      translucent={false}
-                    />
-                    <ErrorModal />
-                    <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
-                      <RootStack />
-                    </TourProvider>
-                    <Toast topOffset={15} config={toastConfig} />
-                  </NetworkProvider>
-                </AuthProvider>
-              </AnimatedComponentsProvider>
-            </NavContainer>
-          </ThemeProvider>
-        </StoreProvider>
-      </ContainerProvider>
+      <ErrorBoundaryWrapper logger={bifoldLoggerInstance}>
+        <ContainerProvider value={container}>
+          <StoreProvider>
+            <ThemeProvider themes={themes} defaultThemeName={bifoldTheme.themeName}>
+              <NavContainer navigationRef={navigationRef}>
+                <AnimatedComponentsProvider value={animatedComponents}>
+                  <AuthProvider>
+                    <NetworkProvider>
+                      <StatusBar
+                        hidden={false}
+                        barStyle="light-content"
+                        backgroundColor={bifoldTheme.ColorPalette.brand.primary}
+                        translucent={false}
+                      />
+                      <ErrorModal />
+                      <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
+                        <RootStack />
+                      </TourProvider>
+                      <Toast topOffset={15} config={toastConfig} />
+                    </NetworkProvider>
+                  </AuthProvider>
+                </AnimatedComponentsProvider>
+              </NavContainer>
+            </ThemeProvider>
+          </StoreProvider>
+        </ContainerProvider>
+      </ErrorBoundaryWrapper>
     )
   }
 

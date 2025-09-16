@@ -1,3 +1,4 @@
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
