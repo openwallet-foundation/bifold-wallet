@@ -61,8 +61,8 @@ export const walletTimeout = minute * 5
 export const attemptLockoutConfig: AttemptLockoutConfig = {
   baseRules: {
     5: minute,
-    10: minute,
-    15: minute,
+    10: 10 * minute,
+    15: hour,
   },
   thresholdRules: {
     threshold: 20,

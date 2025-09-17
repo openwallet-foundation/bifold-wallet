@@ -1,3 +1,4 @@
+import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FauxHeader from '../../components/misc/FauxHeader'
 import SafeAreaModal from '../../components/modals/SafeAreaModal'
