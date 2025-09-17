@@ -1,10 +1,10 @@
 diff --git a/package.json b/package.json
-index 760a5a5c6674c1dedb9eb24d11c1b3365d81982b..37580cca6993cf881636dbbedb53ac78a6d3827c 100644
+index becc91ce9fd93bb8ec6d6fc401fa208274c5b0a7..b881d21b40012126fb1901b1e5940fafecce90dc 100644
 --- a/package.json
 +++ b/package.json
-@@ -68,7 +68,6 @@
-     "printWidth": 150
-   },
+@@ -20,7 +20,6 @@
+     "DIF"
+   ],
    "scripts": {
 -    "preinstall": "npx only-allow pnpm",
      "build": "run-s build:*",

@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, Ref, useMemo } from 'react'
+import React, { forwardRef, Ref, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmation-code-field'
@@ -6,10 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop, minPINLength } from '../../constants'
 import { useTheme } from '../../contexts/theme'
-import { testIdWithKey } from '../../utils/testable'
-import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
 import { InlineErrorPosition } from '../../types/error'
+import { testIdWithKey } from '../../utils/testable'
 import { ThemedText } from '../texts/ThemedText'
+import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
 
 // adjusting for the spaces between numbers
 const cellCount = minPINLength * 2 - 1
@@ -45,23 +45,26 @@ const PINInputComponent = (
     }
   }, [PIN, showPIN])
 
-  const onChangeText = (value: string) => {
-    const cleanValue = value.replaceAll(' ', '')
-    // typed new characters
-    if (cleanValue.length > PIN.length) {
-      // add new characters to the actual PIN
-      const newChars = cleanValue.slice(PIN.length)
-      const newPIN = PIN + newChars.replace(/●/g, '')
-      setPIN(newPIN)
-      onPINChanged && onPINChanged(newPIN)
-      // characters were removed
-    } else if (cleanValue.length < displayValue.replaceAll(' ', '').length) {
-      // remove same number of characters from actual PIN
-      const newPIN = PIN.slice(0, cleanValue.length)
-      setPIN(newPIN)
-      onPINChanged && onPINChanged(newPIN)
-    }
-  }
+  const onChangeText = useCallback(
+    (value: string) => {
+      const cleanValue = value.replaceAll(' ', '')
+      // typed new characters
+      if (cleanValue.length > PIN.length) {
+        // add new characters to the actual PIN
+        const newChars = cleanValue.slice(PIN.length)
+        const newPIN = PIN + newChars.replace(/●/g, '')
+        setPIN(newPIN)
+        onPINChanged && onPINChanged(newPIN)
+        // characters were removed
+      } else if (cleanValue.length < displayValue.replaceAll(' ', '').length) {
+        // remove same number of characters from actual PIN
+        const newPIN = PIN.slice(0, cleanValue.length)
+        setPIN(newPIN)
+        onPINChanged && onPINChanged(newPIN)
+      }
+    },
+    [PIN, displayValue, onPINChanged]
+  )
 
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value: displayValue,

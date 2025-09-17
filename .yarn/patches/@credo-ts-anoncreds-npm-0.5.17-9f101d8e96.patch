@@ -1,0 +1,40 @@
+diff --git a/build/utils/proofRequest.js b/build/utils/proofRequest.js
+index f4ce51a890f0ac41ed1d9806f0350a2114890625..10d02bd809b4e6311618664b0ec4ad0ada8034dc 100644
+--- a/build/utils/proofRequest.js
++++ b/build/utils/proofRequest.js
+@@ -7,12 +7,27 @@ function proofRequestUsesUnqualifiedIdentifiers(proofRequest) {
+     return [
+         ...Object.values(proofRequest.requested_attributes),
+         ...Object.values(proofRequest.requested_predicates),
+-    ].some((attribute) => attribute.restrictions?.some((restriction) => (restriction.cred_def_id && (0, indyIdentifiers_1.isUnqualifiedCredentialDefinitionId)(restriction.cred_def_id)) ||
+-        (restriction.schema_id && (0, indyIdentifiers_1.isUnqualifiedSchemaId)(restriction.schema_id)) ||
+-        (restriction.issuer_did && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.issuer_did)) ||
+-        (restriction.issuer_id && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.issuer_id)) ||
+-        (restriction.schema_issuer_did && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.schema_issuer_did)) ||
+-        (restriction.schema_issuer_id && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.schema_issuer_id)) ||
+-        (restriction.rev_reg_id && (0, indyIdentifiers_1.isUnqualifiedRevocationRegistryId)(restriction.rev_reg_id))));
++    ].some((attribute) => {
++        var _a;
++        return (_a = attribute.restrictions) === null || _a === void 0 ? void 0 : _a.some((restriction) => (
++            // no qualified identifiers
++            !restriction.cred_def_id &&
++            !restriction.schema_id &&
++            !restriction.issuer_did &&
++            !restriction.issuer_id &&
++            !restriction.schema_issuer_did &&
++            !restriction.schema_issuer_id &&
++            !restriction.rev_reg_id
++        ) ||
++            // any unqualified identifiers
++            (restriction.cred_def_id && (0, indyIdentifiers_1.isUnqualifiedCredentialDefinitionId)(restriction.cred_def_id)) ||
++            (restriction.schema_id && (0, indyIdentifiers_1.isUnqualifiedSchemaId)(restriction.schema_id)) ||
++            (restriction.issuer_did && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.issuer_did)) ||
++            (restriction.issuer_id && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.issuer_id)) ||
++            (restriction.schema_issuer_did && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.schema_issuer_did)) ||
++            (restriction.schema_issuer_id && (0, indyIdentifiers_1.isUnqualifiedIndyDid)(restriction.schema_issuer_id)) ||
++            (restriction.rev_reg_id && (0, indyIdentifiers_1.isUnqualifiedRevocationRegistryId)(restriction.rev_reg_id))
++        )
++    })
+ }
+ //# sourceMappingURL=proofRequest.js.map
+\ No newline at end of file
