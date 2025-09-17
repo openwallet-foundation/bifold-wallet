@@ -8,7 +8,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
-import VerifyPINModal from '../modals/VerifyPINModal'
+import VerifyPINModal from '../components/modals/VerifyPINModal'
 import { PINEntryUsage } from './PINVerify'
 
 const ToggleBiometry: React.FC = () => {

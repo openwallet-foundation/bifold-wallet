@@ -1,8 +1,8 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
-import FauxHeader from '../components/misc/FauxHeader'
-import SafeAreaModal from '../components/modals/SafeAreaModal'
-import { useTheme } from '../contexts/theme'
-import PINVerify, { PINEntryUsage } from '../screens/PINVerify'
+import FauxHeader from '../../components/misc/FauxHeader'
+import SafeAreaModal from '../../components/modals/SafeAreaModal'
+import { useTheme } from '../../contexts/theme'
+import PINVerify, { PINEntryUsage } from '../../screens/PINVerify'
 
 interface VerifyPINModalProps {
   title: string

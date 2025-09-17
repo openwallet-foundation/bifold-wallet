@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { useNavigation } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 
 import KeyboardView from '../components/views/KeyboardView'
@@ -14,11 +14,12 @@ import { testIdWithKey } from '../utils/testable'
 import { Screens } from '../types/navigators'
 import { SettingStackParams } from '../types/navigators'
 
-const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePINSuccess>> = () => {
+const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePINSuccess>> = ({
+  navigation,
+}) => {
   const { ColorPalette } = useTheme()
   const { t } = useTranslation()
   const [{ preventScreenCapture }, Button] = useServices([TOKENS.CONFIG, TOKENS.COMP_BUTTON])
-  const navigation = useNavigation()
 
   usePreventScreenCapture(preventScreenCapture)
 
@@ -31,7 +32,7 @@ const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Scre
   })
 
   const onPressContinue = useCallback(() => {
-    navigation?.getParent()?.navigate(Screens.Settings)
+    navigation?.navigate(Screens.Settings)
   }, [navigation])
 
   return (

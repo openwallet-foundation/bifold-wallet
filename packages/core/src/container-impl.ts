@@ -85,8 +85,8 @@ export const defaultConfig: Config = {
     googlePlayStoreUrl: 'https://example.com',
   },
   PINScreensConfig: {
-    useNewPINDesign: false,
-    nistPINRequirements: false,
+    useNewPINDesign: true,
+    nistPINRequirements: true,
   },
 }
 

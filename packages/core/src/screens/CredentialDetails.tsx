@@ -209,8 +209,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
       const ids = getCredentialIdentifiers(credential)
       const name =
-        overlay.metaOverlay?.name ??
-        (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
+        overlay.metaOverlay?.name ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
 
       /** Save history record for credential removed */
       const recordData: HistoryRecord = {

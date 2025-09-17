@@ -32,7 +32,7 @@ import { testIdWithKey } from '../utils/testable'
 import PINScreenTitleText from '../components/misc/PINScreenTitleText'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import ConfirmPINModal, { ConfirmPINModalUsage } from '../modals/ConfirmPINModal'
+import ConfirmPINModal, { ConfirmPINModalUsage } from '../components/modals/ConfirmPINModal'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   explainedStatus: boolean
@@ -81,7 +81,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
     controlsContainer: {},
     infoBox: {
       marginBottom: 24,
-    }
+    },
   })
 
   const handleConfirmPINFlow = useCallback(

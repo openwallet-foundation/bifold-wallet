@@ -5,19 +5,8 @@ const evenNumberSeries = new RegExp('(13579)')
 const oddNumberSeries = new RegExp('(02468)')
 const isNumber = new RegExp('^[0-9]+$')
 const crossNumberPattern = ['159753', '159357', '951357', '951753', '357159', '357951', '753159', '753951']
-const commonUsedPINs = [
-  '123456',
-  '111111',
-  '000000',
-  '123123',
-  '321654',
-  '123321',
-  '520131',
-  '520520',
-  '112233',
-  '147258',
-  '654321',
-]
+const commonUsedPINs = ['123456', '111111', '000000', '123123']
+const nistPinLength = 6
 
 export enum PINError {
   CrossPatternValidation = 'CrossPatternValidation',
@@ -48,7 +37,7 @@ export const createPINValidations = (PIN: string, PINRules: PINValidationRules) 
       errorName: PINError.PINCommonlyUsed,
     } as PINValidationsType)
     PINValidations.push({
-      isInvalid: PIN.length < 6,
+      isInvalid: PIN.length < nistPinLength,
       errorName: PINError.PINIsExpectedLength,
       errorTextAddition: { num: `${PINRules.nist_pin_length}` },
     } as PINValidationsType)
