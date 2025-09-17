@@ -6254,6 +6254,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sphereon/pex@patch:@sphereon/pex@npm%3A5.0.0-unstable.24#~/.yarn/patches/@sphereon-pex-npm-5.0.0-unstable.24-921df3a8ac.patch":
+  version: 5.0.0-unstable.24
+  resolution: "@sphereon/pex@patch:@sphereon/pex@npm%3A5.0.0-unstable.24#~/.yarn/patches/@sphereon-pex-npm-5.0.0-unstable.24-921df3a8ac.patch::version=5.0.0-unstable.24&hash=ba031b"
+  dependencies:
+    "@astronautlabs/jsonpath": "npm:^1.1.2"
+    "@sd-jwt/decode": "npm:^0.7.2"
+    "@sd-jwt/present": "npm:^0.7.2"
+    "@sd-jwt/types": "npm:^0.7.2"
+    "@sphereon/pex-models": "npm:^2.3.1"
+    "@sphereon/ssi-types": "npm:0.30.2-next.129"
+    ajv: "npm:^8.12.0"
+    ajv-formats: "npm:^2.1.1"
+    jwt-decode: "npm:^3.1.2"
+    nanoid: "npm:^3.3.7"
+    uint8arrays: "npm:^3.1.1"
+  checksum: 10c0/c2dc48e7841011cfee3f76548c047f9b323dc7b1c2f60778764015619b5dbc67668f6ef44958731127a37cdbf1af857f59e561bfe8d51506d84a5fe527be54d5
+  languageName: node
+  linkType: hard
+
 "@sphereon/ssi-sdk-ext.did-utils@npm:0.24.1-unstable.130+bf9a4b6":
   version: 0.24.1-unstable.130
   resolution: "@sphereon/ssi-sdk-ext.did-utils@npm:0.24.1-unstable.130"
