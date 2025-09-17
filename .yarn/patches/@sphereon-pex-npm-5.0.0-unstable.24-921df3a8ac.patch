@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 9ab8d81ceb3728acd0e38a00af46881f93e68584..935b51ac44ad3a641c4e3b5006b681994d456143 100644
+--- a/package.json
++++ b/package.json
+@@ -67,7 +67,6 @@
+     "printWidth": 150
+   },
+   "scripts": {
+-    "preinstall": "npx only-allow pnpm",
+     "build": "run-s build:*",
+     "build:generateFieldv1Schema": "ts-json-schema-generator -p resources/schema-generator-interfaces/filterV1.ts > resources/FilterV1.schema.json",
+     "build:generateFieldv2Schema": "ts-json-schema-generator -p resources/schema-generator-interfaces/filterV2.ts > resources/FilterV2.schema.json",
