@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- cfd61c6: enhance credential definition parsing for webvh DID format
+- 7acaa5d: patch out silly preinstall script from pex library
+- Updated dependencies [6a6beb3]
+- Updated dependencies [cfd61c6]
+- Updated dependencies [7acaa5d]
+  - @bifold/core@2.7.4
+
 ## 2.7.3
 
 ### Patch Changes
