@@ -64,6 +64,7 @@
     "expo-secure-store": "~12.8.1",
     "nanoid": "3.3.7",
     "react": "18.3.1",
+    "tslib": "2.6.2",
     "react-native": "0.73.11",
     "@types/react": "18.2.79",
     "@credo-ts/anoncreds@npm:0.5.17": "patch:@credo-ts/anoncreds@npm%3A0.5.17#~/.yarn/patches/@credo-ts-anoncreds-npm-0.5.17-9f101d8e96.patch",
