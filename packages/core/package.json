@@ -3,9 +3,17 @@
   "version": "2.7.4",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
-  "react-native": "lib/commonjs/index.js",
-  "source": "lib/commonjs/index.js",
   "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "exports": {
+    ".": {
+      "react-native": "./src/index.ts",
+      "import": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js",
+      "types": "./lib/typescript/src/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
