@@ -37,6 +37,24 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
         }
       >
         <View>
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginBottom": 24,
+                  "marginTop": 16,
+                },
+              ]
+            }
+          >
+            PINEnter.AppTitle
+          </Text>
           <View
             accessibilityState={
               Object {
@@ -80,7 +98,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   },
                   Object {
                     "alignSelf": "auto",
-                    "marginBottom": 16,
+                    "marginBottom": 24,
                     "textAlign": "left",
                   },
                 ]
@@ -94,7 +112,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 Array [
                   Object {
                     "color": "#FFFFFF",
-                    "fontSize": 14,
+                    "fontSize": 18,
                     "fontWeight": "normal",
                   },
                   Object {
@@ -105,26 +123,9 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 ]
               }
             >
-              PINEnter.SubText
+              PINEnter.EnterPIN
             </Text>
           </View>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "marginBottom": 16,
-                },
-              ]
-            }
-          >
-            PINEnter.EnterPIN
-          </Text>
           <View
             style={
               Object {
@@ -173,6 +174,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -201,6 +204,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -229,6 +234,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -257,6 +264,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -285,6 +294,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -313,6 +324,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -341,6 +354,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -369,6 +384,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -397,6 +414,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -425,6 +444,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -453,6 +474,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -554,7 +577,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 10,
                   }
                 }
                 testID="com.ariesbifold:id/Show"
@@ -597,8 +620,8 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   "fontWeight": "bold",
                 },
                 Object {
-                  "color": "#42803E",
-                  "fontSize": 20,
+                  "fontSize": 16,
+                  "textAlign": "center",
                 },
               ]
             }
@@ -757,6 +780,24 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
         }
       >
         <View>
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginBottom": 24,
+                  "marginTop": 16,
+                },
+              ]
+            }
+          >
+            PINEnter.AppTitle
+          </Text>
           <View
             accessibilityState={
               Object {
@@ -800,7 +841,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   },
                   Object {
                     "alignSelf": "auto",
-                    "marginBottom": 16,
+                    "marginBottom": 24,
                     "textAlign": "left",
                   },
                 ]
@@ -828,23 +869,6 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
               PINEnter.ReEnterPIN
             </Text>
           </View>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                },
-                Object {
-                  "marginBottom": 16,
-                },
-              ]
-            }
-          >
-            PINEnter.EnterPIN
-          </Text>
           <View
             style={
               Object {
@@ -893,6 +917,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -921,6 +947,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -949,6 +977,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -977,6 +1007,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1005,6 +1037,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1033,6 +1067,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1061,6 +1097,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1089,6 +1127,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1117,6 +1157,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1145,6 +1187,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1173,6 +1217,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1274,7 +1320,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 10,
                   }
                 }
                 testID="com.ariesbifold:id/Show"
@@ -1317,8 +1363,8 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   "fontWeight": "bold",
                 },
                 Object {
-                  "color": "#42803E",
-                  "fontSize": 20,
+                  "fontSize": 16,
+                  "textAlign": "center",
                 },
               ]
             }

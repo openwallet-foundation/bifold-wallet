@@ -1,8 +1,10 @@
 import { getCredentialName, parsedCredDefName, parsedCredDefNameFromCredential } from '../../src/utils/cred-def'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 
-const mockSchemaId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
-const mockCredDefId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
+const mockSchemaId =
+  'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
+const mockCredDefId =
+  'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
 
 const mockSchemaResource = {
   '@context': ['https://opsecid.github.io/attested-resource/v1', 'https://w3id.org/security/data-integrity/v2'],
@@ -85,8 +87,6 @@ const mockCredDefResource = {
       'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01#z6MkukEa8GPVCEPy7EzRSbeHPXD1vsuPy3eD13CkDKQsoCGS',
   },
 }
-
-
 
 describe('Cred Def Utils', () => {
   test('The correct schema name is returned for a webvh cred def id with tag default', async () => {

@@ -185,7 +185,8 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           return
         }
         const ids = getCredentialIdentifiers(credential)
-        const name = overlay.metaOverlay?.name ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
+        const name =
+          overlay.metaOverlay?.name ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {
