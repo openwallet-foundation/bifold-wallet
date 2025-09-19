@@ -1,6 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, InteractionManager, Keyboard, Pressable, StyleSheet, Vibration, View } from 'react-native'
+import {
+  AppState,
+  DeviceEventEmitter,
+  InteractionManager,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Vibration,
+  View,
+} from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
@@ -91,12 +100,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   }, [getWalletSecret, dispatch, setAuthenticated])
 
   useEffect(() => {
-    const handle = InteractionManager.runAfterInteractions(async () => {
+    const checkBiometrics = async () => {
+      // only check biometrics if user has it enabled
       if (!store.preferences.useBiometry) {
         return
       }
+
       try {
+        logger.debug('Checking biometrics availability')
         const active = await isBiometricsActive()
+
         if (!active) {
           // biometry state has changed, display message and disable biometry
           setBiometricsEnrollmentChange(true)
@@ -110,9 +123,21 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       } catch (error) {
         logger.error(`error checking biometrics / loading credentials: ${JSON.stringify(error)}`)
       }
+    }
+
+    let afterInteractionsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
+
+    // add listener for app state changes to check biometrics when app comes into foreground
+    const appStateListener = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        afterInteractionsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
+      }
     })
 
-    return handle.cancel
+    return () => {
+      afterInteractionsHandler.cancel()
+      appStateListener.remove()
+    }
   }, [store.preferences.useBiometry, isBiometricsActive, disableBiometrics, dispatch, loadWalletCredentials, logger])
 
   useEffect(() => {
