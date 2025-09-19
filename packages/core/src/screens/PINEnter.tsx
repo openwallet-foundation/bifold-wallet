@@ -100,14 +100,13 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   }, [getWalletSecret, dispatch, setAuthenticated])
 
   useEffect(() => {
-    const checkBiometrics = async () => {
-      // only check biometrics if user has it enabled
-      if (!store.preferences.useBiometry) {
-        return
-      }
+    // Only check biometrics if user has it enabled
+    if (!store.preferences.useBiometry) {
+      return
+    }
 
+    const checkBiometrics = async () => {
       try {
-        logger.debug('Checking biometrics availability')
         const active = await isBiometricsActive()
 
         if (!active) {
@@ -119,23 +118,28 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             payload: [false],
           })
         }
+
         await loadWalletCredentials()
       } catch (error) {
-        logger.error(`error checking biometrics / loading credentials: ${JSON.stringify(error)}`)
+        logger.error('error checking biometrics / loading credentials', error as Error)
       }
     }
 
-    let afterInteractionsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
+    // On mount, check biometrics after interactions complete
+    let afterInteractionsBiometricsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
 
-    // add listener for app state changes to check biometrics when app comes into foreground
+    // Re-check biometrics when app transitions from background (inactive) to foreground (active)
     const appStateListener = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active') {
-        afterInteractionsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
+        // Cancel any existing interaction handler before scheduling a new one
+        afterInteractionsBiometricsHandler.cancel()
+        afterInteractionsBiometricsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
       }
     })
 
     return () => {
-      afterInteractionsHandler.cancel()
+      // Cleanup listeners and handlers on unmount
+      afterInteractionsBiometricsHandler.cancel()
       appStateListener.remove()
     }
   }, [store.preferences.useBiometry, isBiometricsActive, disableBiometrics, dispatch, loadWalletCredentials, logger])
