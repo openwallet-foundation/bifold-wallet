@@ -1,10 +1,8 @@
-import 'react-native-gesture-handler/jestSetup'
-
 // Global test setup for React Native testing environment
 
 // Mock React Native batched bridge for native module compatibility
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(global as any).__fbBatchedBridgeConfig = {
+(global as any).__fbBatchedBridgeConfig = {
   remoteModuleConfig: [],
   localModulesConfig: [],
 }
@@ -28,23 +26,35 @@ jest.mock('react-native', () => ({
 }))
 
 // Mock React Native third-party modules
-jest.mock('react-native-splash-screen', () => ({
-  default: {
-    hide: jest.fn(),
-    show: jest.fn(),
-  },
-}))
+jest.mock(
+  'react-native-splash-screen',
+  () => ({
+    default: {
+      hide: jest.fn(),
+      show: jest.fn(),
+    },
+  }),
+  { virtual: true }
+)
 
-jest.mock('react-native-toast-message', () => ({
-  default: {
-    show: jest.fn(),
-    hide: jest.fn(),
-  },
-}))
+jest.mock(
+  'react-native-toast-message',
+  () => ({
+    default: {
+      show: jest.fn(),
+      hide: jest.fn(),
+    },
+  }),
+  { virtual: true }
+)
 
-jest.mock('react-native-config', () => ({
-  default: {},
-}))
+jest.mock(
+  'react-native-config',
+  () => ({
+    default: {},
+  }),
+  { virtual: true }
+)
 
 // Silence React Native animations for testing
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')

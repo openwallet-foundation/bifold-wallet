@@ -3,7 +3,7 @@ import { useAgent } from '@credo-ts/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Pressable, StyleSheet, useWindowDimensions, Share, ScrollView, ColorValue } from 'react-native'
+import { Pressable, ScrollView, Share, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -17,16 +17,17 @@ import { createConnectionInvitation } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import LoadingIndicator from '../animated/LoadingIndicator'
 import IconButton, { ButtonLocation } from '../buttons/IconButton'
-import InfoBox, { InfoBoxType } from './InfoBox'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 import SafeAreaModal from '../modals/SafeAreaModal'
+import InfoBox, { InfoBoxType } from './InfoBox'
 
+import { TOKENS, useServices } from '../../container-api'
+import { ThemedText } from '../texts/ThemedText'
 import QRRenderer from './QRRenderer'
 import QRScannerTorch from './QRScannerTorch'
 import ScanCamera from './ScanCamera'
-import { TOKENS, useServices } from '../../container-api'
-import { ThemedText } from '../texts/ThemedText'
 import ScanTab from './ScanTab'
+import SVGOverlay, { MaskType } from './SVGOverlay'
 
 type ConnectProps = StackScreenProps<ConnectStackParams>
 interface Props extends ConnectProps {
@@ -36,8 +37,6 @@ interface Props extends ConnectProps {
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
 }
-
-const overlayTint: ColorValue = 'rgba(0, 0, 0, 0.4)'
 
 const QRScanner: React.FC<Props> = ({
   showTabs = false,
@@ -78,38 +77,6 @@ const QRScanner: React.FC<Props> = ({
     cameraViewContainer: {
       flex: 1,
       justifyContent: 'space-between',
-    },
-    overlayContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-    overlayTop: {
-      flex: 2,
-      backgroundColor: overlayTint,
-    },
-    overlayCenterRow: {
-      flexDirection: 'row',
-      height: qrSize,
-    },
-    overlayLeft: {
-      flex: 1,
-      backgroundColor: overlayTint,
-    },
-    overlayOpening: {
-      width: qrSize,
-      borderColor: 'rgba(255, 255, 255, 0.6)',
-      borderWidth: 1,
-    },
-    overlayRight: {
-      flex: 1,
-      backgroundColor: overlayTint,
-    },
-    overlayBottom: {
-      flex: 3,
-      backgroundColor: overlayTint,
     },
     messageContainer: {
       marginHorizontal: 40,
@@ -232,16 +199,8 @@ const QRScanner: React.FC<Props> = ({
               enableCameraOnError={enableCameraOnError}
               torchActive={torchActive}
             />
+            <SVGOverlay maskType={MaskType.QR_CODE} strokeColor={ColorPalette.grayscale.white} />
             <View style={styles.cameraViewContainer}>
-              <View style={styles.overlayContainer}>
-                <View style={styles.overlayTop} />
-                <View style={styles.overlayCenterRow}>
-                  <View style={styles.overlayLeft} />
-                  <View style={styles.overlayOpening} />
-                  <View style={styles.overlayRight} />
-                </View>
-                <View style={styles.overlayBottom} />
-              </View>
               <View style={styles.messageContainer}>
                 {error ? (
                   <>
@@ -305,6 +264,7 @@ const QRScanner: React.FC<Props> = ({
                 </View>
               </View>
             </View>
+
             <SafeAreaModal visible={showInfoBox} animationType="fade" transparent>
               <View
                 style={{

@@ -1,6 +1,6 @@
 {
   "name": "@bifold/remote-logs",
-  "version": "2.7.2",
+  "version": "2.7.4",
   "description": "Remote logging for credo-ts agents",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -48,7 +48,7 @@
     "typescript": "~5.5.4"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.5.13",
+    "@credo-ts/core": "0.5.17",
     "axios": "~1.4.0",
     "buffer": "~6.0.3",
     "react": "~18.3.1",
@@ -59,8 +59,8 @@
     "hoistingLimits": "workspaces"
   },
   "dependencies": {
-    "@bifold/core": "2.7.2",
-    "@credo-ts/core": "0.5.13",
+    "@bifold/core": "2.7.4",
+    "@credo-ts/core": "0.5.17",
     "axios": "~1.4.0",
     "buffer": "~6.0.3",
     "react": "~18.3.1",

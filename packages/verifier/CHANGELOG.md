@@ -1,5 +1,18 @@
 # @bifold/verifier
 
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- 7acaa5d: patch out silly preinstall script from pex library
+
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+
 ## 2.7.2
 
 ### Patch Changes
