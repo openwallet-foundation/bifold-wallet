@@ -14,6 +14,8 @@ import {
   Tours as ToursState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
+import lodash from 'lodash'
+import { BannerMessage } from 'components/views/Banner'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -563,9 +565,14 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
 
     case PreferencesDispatchAction.BANNER_MESSAGES: {
-      const bannerMessageToAdd = action?.payload ?? []
-      const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
-      const uniqueBannerMessages = Array.from(new Set(newBannerMessages))
+      const newBannerMessages = action?.payload ?? []
+      const allBannerMessages = [...state.preferences.bannerMessages, ...newBannerMessages]
+      const uniqueBannerMessages = lodash.uniqBy<BannerMessage>(allBannerMessages, 'id')
+
+      // If there were no new unique messages, don't update state to avoid re-renders
+      if (allBannerMessages.length !== uniqueBannerMessages.length) {
+        return state
+      }
 
       const preferences: Preferences = {
         ...state.preferences,
