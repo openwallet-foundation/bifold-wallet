@@ -162,6 +162,7 @@ export type { OnboardingStackProps } from './navigators/OnboardingStack'
 export type { SplashProps } from './screens/Splash'
 export { BaseTourID } from './types/tour'
 
+export type { ScanCameraProps } from './components/misc/ScanCamera'
 export type { BannerSectionProps } from './components/views/Banner'
 
 export {
