@@ -2386,7 +2386,7 @@ __metadata:
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
     "@credo-ts/openid4vc": "npm:0.5.17"
-    "@credo-ts/push-notifications": "npm:0.7.0"
+    "@credo-ts/push-notifications": "npm:0.7.1"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.17"
@@ -2491,7 +2491,7 @@ __metadata:
     "@credo-ts/indy-sdk-to-askar-migration": 0.5.17
     "@credo-ts/indy-vdr": 0.5.17
     "@credo-ts/openid4vc": 0.5.17
-    "@credo-ts/push-notifications": 0.7.0
+    "@credo-ts/push-notifications": 0.7.1
     "@credo-ts/question-answer": 0.5.17
     "@credo-ts/react-hooks": 0.6.1
     "@credo-ts/react-native": 0.5.17
@@ -3485,16 +3485,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/push-notifications@npm:0.7.0":
-  version: 0.7.0
-  resolution: "@credo-ts/push-notifications@npm:0.7.0"
+"@credo-ts/push-notifications@npm:0.7.1":
+  version: 0.7.1
+  resolution: "@credo-ts/push-notifications@npm:0.7.1"
   dependencies:
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.1"
     tsyringe: "npm:^4.6.0"
   peerDependencies:
     "@credo-ts/core": ^0.5.0
-  checksum: 10c0/86933c34abed5fa27f634f152fa84008777876f57e041049c0a07d392a2d5bcbdd54353b66e9e50fe35c79fe80e93eace0d6c114ae039c5006e98c25a350bfac
+  checksum: 10c0/cf227b6d243c868f8ac178c91d5680ff6c807a59aa3be1fd574998a6a89353e9b89128486c9a6e9eece961974a3b28d25b4e3a2f29561856db44e09def776ea1
   languageName: node
   linkType: hard
 
@@ -8796,7 +8796,7 @@ __metadata:
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
     "@credo-ts/openid4vc": "npm:0.5.17"
-    "@credo-ts/push-notifications": "npm:0.7.0"
+    "@credo-ts/push-notifications": "npm:0.7.1"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.17"
