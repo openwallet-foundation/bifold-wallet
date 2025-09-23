@@ -10,12 +10,24 @@ import type { Agent } from '@credo-ts/core'
 
 import { credentialSchema } from './schema'
 
+// Normalize incoming identifiers by trimming whitespace and converting empty strings to undefined
+function normalizeId(id?: string): string | undefined {
+  if (typeof id !== 'string') return undefined
+  const trimmed = id.trim()
+  return trimmed.length > 0 ? trimmed : undefined
+}
+
 export async function getCredentialName(credDefId?: string, schemaId?: string, agent?: Agent): Promise<string> {
-  const isWebvh = !!(credDefId?.startsWith('did:webvh:') || schemaId?.startsWith('did:webvh:'))
+  const normalizedCredDefId = normalizeId(credDefId)
+  const normalizedSchemaId = normalizeId(schemaId)
+  const isWebvh = !!(
+    normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
+    normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
+  )
   if (isWebvh) {
-    return parseWebVHCredDefId(credDefId, schemaId, agent)
+    return parseWebVHCredDefId(normalizedCredDefId, normalizedSchemaId, agent)
   }
-  return parseIndyCredDefId(credDefId, schemaId)
+  return parseIndyCredDefId(normalizedCredDefId, normalizedSchemaId)
 }
 
 async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?: Agent): Promise<string> {
@@ -25,22 +37,19 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
   }
   if (credDefId) {
     try {
-      const result: AnonCredsCredentialDefinition = await agent.modules.anoncreds.getCredentialDefinition(
-        agent.context,
-        credDefId
-      )
-      name = result.tag
+      const result: AnonCredsCredentialDefinition = await agent.modules.anoncreds.getCredentialDefinition(credDefId)
+      name = result?.tag ?? name
     } catch {
-      agent.config.logger.info('parseWebVHCredDefId: Credential definition not found, using default name')
+      agent?.config?.logger?.info('parseWebVHCredDefId: Credential definition not found, using default name')
     }
   }
 
   if ((name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') && schemaId) {
     try {
-      const result: AnonCredsSchema = await agent.modules.anoncreds.getSchema(agent.context, schemaId)
-      name = result.name
+      const result: AnonCredsSchema = await agent.modules.anoncreds.getSchema(schemaId)
+      name = result?.name ?? name
     } catch {
-      agent.config.logger.info('parseWebVHCredDefId: Schema definition not found, using default name')
+      agent?.config?.logger?.info('parseWebVHCredDefId: Schema definition not found, using default name')
     }
   }
   return name || 'Credential'
@@ -49,13 +58,22 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
 function parseIndyCredDefId(credDefId?: string, schemaId?: string): string {
   let name = 'Credential'
   if (credDefId) {
-    const parseIndyCredDefId = parseIndyCredentialDefinitionId(credDefId)
-    name = parseIndyCredDefId.tag
+    try {
+      const parsedCredDef = parseIndyCredentialDefinitionId(credDefId)
+      name = parsedCredDef?.tag ?? name
+    } catch {
+      // If parsing fails, keep the default name
+    }
   }
   if (name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') {
     if (schemaId) {
-      const parseIndySchema = parseIndySchemaId(schemaId)
-      name = parseIndySchema.schemaName
+      try {
+        const parsedSchema = parseIndySchemaId(schemaId)
+        name = parsedSchema?.schemaName ?? name
+      } catch {
+        // If parsing fails, keep the default name
+        name = 'Credential'
+      }
     } else {
       name = 'Credential'
     }
