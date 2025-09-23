@@ -66,7 +66,7 @@ export const buildFieldsFromW3cCredsCredential = (
 ): Array<Field> => {
   return (
     Object.entries(display.attributes)
-      .filter(([key]) => key !== 'id')
+      .filter(([key]) => key !== 'id' && key !== 'sub')
       .map(([key]) => getAttributeField(display, key))
       .filter((field) => field !== undefined)
       .filter((field: FieldExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
