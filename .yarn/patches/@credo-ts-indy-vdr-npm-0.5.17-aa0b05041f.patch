@@ -1,0 +1,13 @@
+diff --git a/build/pool/IndyVdrPool.js b/build/pool/IndyVdrPool.js
+index 7c157d6754dcba7526100f67dbed3c86b335b0cc..56437364edcb3d16e998fb4766d7b14cae63430f 100644
+--- a/build/pool/IndyVdrPool.js
++++ b/build/pool/IndyVdrPool.js
+@@ -17,7 +17,7 @@ class IndyVdrPool {
+     }
+     connect() {
+         if (this._pool) {
+-            throw new error_1.IndyVdrError('Cannot connect to pool, already connected.');
++            return;
+         }
+         this._pool = new indy_vdr_shared_1.PoolCreate({
+             parameters: {

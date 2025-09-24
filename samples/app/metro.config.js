@@ -53,11 +53,12 @@ const config = {
   },
   resolver: {
     blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
-    extraNodeModules: {
-      ...extraNodeModules,
-    },
+    extraNodeModules: extraNodeModules,
+    tslib: path.join(__dirname, 'node_modules/tslib'),
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
+    unstable_enablePackageExports: true,
+    unstable_conditionNames: ['react-native', 'browser', 'import', 'require'],
   },
   watchFolders,
 }

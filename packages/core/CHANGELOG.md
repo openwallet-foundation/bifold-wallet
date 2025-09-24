@@ -1,5 +1,87 @@
 # @bifold/core
 
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- cfd61c6: enhance credential definition parsing for webvh DID format
+- 7acaa5d: patch out silly preinstall script from pex library
+
+## 2.7.3
+
+### Patch Changes
+
+- 29fd468: removed old package
+- c1cc972: Added new SVG Overlay for masking camera components
+
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+
+## 2.7.0
+
+### Minor Changes
+
+- 7cd5ad2: fixed logging interface to accept data and error
+
+## 2.6.0
+
+### Minor Changes
+
+- e6c4d63: fixed imports, fixed release builds, added export
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+
+## 2.4.6
+
+### Patch Changes
+
+- 9214b8c: added network info to json details screen
+
+## 2.4.5
+
+### Patch Changes
+
+- 502d616: Refactored ledgers API to be configurable
+
+## 2.4.4
+
+### Patch Changes
+
+- d0a74bc: added error boundary to app
+
+## 2.4.3
+
+### Patch Changes
+
+- 69eff6c: fix credential card watermark and slice when in revoked state
+
+## 2.4.2
+
+### Patch Changes
+
+- 1d56182: Prevent accidentally overwritten persisted state on load
+
+## 2.4.1
+
+### Patch Changes
+
+- dbf5cee: Allow explicit undefined values for ThemeBuilder
+- a60aefd: pincreate screen views no longer keyboard avoiding
+
 ## 2.4.0
 
 ### Minor Changes

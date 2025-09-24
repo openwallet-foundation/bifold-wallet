@@ -1,5 +1,48 @@
 # @bifold/react-native-attestation
 
+## 2.7.4
+
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+
+## 2.7.1
+
+## 2.7.0
+
+## 2.6.0
+
+### Minor Changes
+
+- e6c4d63: fixed imports, fixed release builds, added export
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+- eeeadd0: cleaned up autolock logic
+
+## 2.4.6
+
+## 2.4.5
+
+## 2.4.4
+
+## 2.4.3
+
+## 2.4.2
+
+## 2.4.1
+
 ## 2.4.0
 
 ## 2.3.0

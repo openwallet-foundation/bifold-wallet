@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import moment from 'moment'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { second, minute, hour } from '../constants'
+import InfoTextBox from '../components/texts/InfoTextBox'
+import { ThemedText } from '../components/texts/ThemedText'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
-import { ThemedText } from '../components/texts/ThemedText'
-import InfoTextBox from '../components/texts/InfoTextBox'
 
 interface Timer {
   hours: number
@@ -24,11 +24,13 @@ const AttemptLockout: React.FC = () => {
   const [state, dispatch] = useStore()
   const [time, setTime] = useState<Timer>()
   const [timeoutDone, setTimeoutDone] = useState<boolean>(false)
+  const lockoutDate = useRef(state.loginAttempt.lockoutDate)
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: ColorPalette.brand.primaryBackground,
-      paddingHorizontal: Spacing.lg,
+      paddingHorizontal: Spacing.md,
     },
     title: {
       textAlign: 'center',
@@ -55,51 +57,37 @@ const AttemptLockout: React.FC = () => {
     },
   })
 
-  // update the countdown timer. Return true if the lockout penalty time is over
-  const updateTimeRemaining = useCallback((): boolean => {
-    let penaltyServed = true
-    const penalty = state.loginAttempt.lockoutDate
-    const currDate = Date.now()
-    if (penalty) {
-      let diff = penalty - currDate
-      if (diff > 0) {
-        penaltyServed = false
-        const hoursLeft = Math.floor(diff / hour)
-        diff = diff - hoursLeft * hour
+  const getTimeRemaining = () => {
+    const timeDifference = moment(lockoutDate.current).diff(moment())
+    const duration = moment.duration(timeDifference)
 
-        const minutesLeft = Math.floor(diff / minute)
-        diff = diff - minutesLeft * minute
+    if (timeDifference > 0) {
+      const hours = Math.floor(duration.asHours())
+      const minutes = duration.minutes()
+      const seconds = duration.seconds()
 
-        const secondsLeft = Math.floor(diff / second)
-        const timer: Timer = {
-          hours: hoursLeft,
-          minutes: minutesLeft,
-          seconds: secondsLeft,
-        }
-
-        setTime(timer)
-      }
+      setTime({ hours, minutes, seconds })
+    } else {
+      setTimeoutDone(true)
     }
+  }
 
-    return penaltyServed
-  }, [state.loginAttempt.lockoutDate])
-
-  // run once immediately at screen initialization
+  // Initialize hours, minutes and seconds before time starts
   useEffect(() => {
-    setTimeoutDone(updateTimeRemaining())
-  }, [updateTimeRemaining])
+    getTimeRemaining()
+  }, [])
 
   // make sure set timeout only runs once
   useEffect(() => {
     const updateTimer = setTimeout(() => {
       // calculate time remaining
-      const timerDone = updateTimeRemaining()
-      setTimeoutDone(timerDone)
-      if (timerDone) {
+      getTimeRemaining()
+      if (timeoutDone) {
         clearInterval(updateTimer)
       }
     }, 1000)
-  })
+    return () => clearInterval(updateTimer)
+  }, [timeoutDone, time])
 
   const unlock = useCallback(async () => {
     dispatch({

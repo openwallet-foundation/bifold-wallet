@@ -44,6 +44,7 @@ import ToggleBiometry from './screens/ToggleBiometry'
 import UpdateAvailable from './screens/UpdateAvailable'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
+import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { PersistentStorage } from './services/storage'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { InlineErrorPosition } from './types/error'
@@ -139,7 +140,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.CRED_HELP_ACTION_OVERRIDES, [])
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
-    this._container.registerInstance(TOKENS.UTIL_LOGGER, new BifoldLogger())
+    this._container.registerInstance(TOKENS.UTIL_LOGGER, bifoldLoggerInstance)
     this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)

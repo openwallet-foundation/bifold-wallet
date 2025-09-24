@@ -1,14 +1,13 @@
 {
   "name": "@bifold/react-native-attestation",
-  "version": "2.4.0",
+  "version": "2.7.4",
   "description": "Mobile app attestation",
   "main": "build/commonjs/index.js",
   "module": "build/module/index.js",
   "types": "build/typescript/index.d.ts",
-  "source": "src/index.ts",
-  "react-native": "src/index.ts",
+  "source": "build/commonjs/index.js",
+  "react-native": "build/commonjs/index.js",
   "files": [
-    "src",
     "build",
     "ios",
     "android",
