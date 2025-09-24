@@ -37,7 +37,8 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
   }
   if (credDefId) {
     try {
-      const result: AnonCredsCredentialDefinition = await agent.modules.anoncreds.getCredentialDefinition(credDefId)
+      const { credentialDefinition: result }: { credentialDefinition: AnonCredsCredentialDefinition } =
+        await agent.modules.anoncreds.getCredentialDefinition(credDefId)
       name = result?.tag ?? name
     } catch {
       agent?.config?.logger?.info('parseWebVHCredDefId: Credential definition not found, using default name')
@@ -46,7 +47,7 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
 
   if ((name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') && schemaId) {
     try {
-      const result: AnonCredsSchema = await agent.modules.anoncreds.getSchema(schemaId)
+      const { schema: result }: { schema: AnonCredsSchema } = await agent.modules.anoncreds.getSchema(schemaId)
       name = result?.name ?? name
     } catch {
       agent?.config?.logger?.info('parseWebVHCredDefId: Schema definition not found, using default name')
