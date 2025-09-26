@@ -1,4 +1,5 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import { LegacyBrandingOverlay } from '@bifold/oca'
 import { CredentialOverlay } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
@@ -24,6 +25,7 @@ import {
   toImageSource,
 } from '../../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../../utils/helpers'
+import { getCredentialName } from '../../utils/cred-def'
 import { buildFieldsFromAnonCredsCredential } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
 
@@ -84,6 +86,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
+  const { agent } = useAgent()
 
   const styles = StyleSheet.create({
     container: {
@@ -143,23 +146,33 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       return
     }
 
-    const params = {
-      identifiers: getCredentialIdentifiers(credential),
-      attributes: buildFieldsFromAnonCredsCredential(credential),
-      meta: {
-        credConnectionId: credential?.connectionId,
-        alias: credentialConnectionLabel,
-      },
-      language: i18n.language,
-    }
-    bundleResolver.resolveAllBundles(params).then((bundle) => {
+    (async () => {
+      const identifiers = getCredentialIdentifiers(credential)
+      const attributes = buildFieldsFromAnonCredsCredential(credential)
+      const credName = await getCredentialName(
+        identifiers.credentialDefinitionId,
+        identifiers.schemaId,
+        agent
+      )
+      agent?.config?.logger?.info('credName!! ' + credName)
+      const params = {
+        identifiers,
+        attributes,
+        meta: {
+          credConnectionId: credential?.connectionId,
+          alias: credentialConnectionLabel,
+          credName,
+        },
+        language: i18n.language,
+      }
+      const bundle = await bundleResolver.resolveAllBundles(params)
       setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as LegacyBrandingOverlay,
       }))
-    })
-  }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])
+    })()
+  }, [credential, credentialConnectionLabel, i18n.language, bundleResolver, agent])
 
   useEffect(() => {
     setIsRevoked(credential.revocationNotification !== undefined)
