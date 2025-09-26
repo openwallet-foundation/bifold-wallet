@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import startCase from 'lodash.startcase'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, Image, ImageBackground, Linking, View, ViewStyle, TouchableOpacity, ColorValue } from 'react-native'
+import { FlatList, Image, ImageBackground, Linking, View, ViewStyle, ColorValue, Pressable } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { TOKENS, useServices } from '../../container-api'
@@ -670,12 +670,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         setDimensions({ cardHeight: event.nativeEvent.layout.height, cardWidth: event.nativeEvent.layout.width })
       }}
     >
-      <TouchableOpacity
+      <Pressable
         accessible={false}
         accessibilityLabel={typeof onPress === 'undefined' ? undefined : t('Credentials.CredentialDetails')}
         disabled={typeof onPress === 'undefined' ? true : false}
         onPress={onPress}
-        style={[styles.container, style]}
+        style={({ pressed }) => 
+          [
+            styles.container,
+            style,
+            {
+              opacity: pressed ? 0.8 : 1,
+            }
+          ]
+        }
         testID={testIdWithKey('ShowCredentialDetails')}
       >
         <View testID={testIdWithKey('CredentialCard')} style={{ overflow: 'hidden' }}>
@@ -693,7 +701,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
             status={getCredentialStatus()}
           />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   ) : null
 }
