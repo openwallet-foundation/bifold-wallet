@@ -871,8 +871,10 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   }
                   accessible={false}
                   collapsable={false}
-                  focusable={false}
+                  focusable={true}
+                  onBlur={[Function]}
                   onClick={[Function]}
+                  onFocus={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -880,17 +882,22 @@ exports[`Connection Screen Valid goal code aries.vc.issue extracted, show to off
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   style={
-                    Object {
-                      "backgroundColor": "#602809",
-                      "borderRadius": 10,
-                      "opacity": 1,
-                      "shadowColor": "#000",
-                      "shadowOffset": Object {
-                        "height": 1,
-                        "width": 1,
+                    Array [
+                      Object {
+                        "backgroundColor": "#602809",
+                        "borderRadius": 10,
+                        "shadowColor": "#000",
+                        "shadowOffset": Object {
+                          "height": 1,
+                          "width": 1,
+                        },
+                        "shadowOpacity": 0.3,
                       },
-                      "shadowOpacity": 0.3,
-                    }
+                      Object {},
+                      Object {
+                        "opacity": 1,
+                      },
+                    ]
                   }
                   testID="com.ariesbifold:id/ShowCredentialDetails"
                 >
