@@ -142,7 +142,17 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     const resolvePresentationFields = async () => {
       const identifiers = getCredentialIdentifiers(credential)
       const attributes = buildFieldsFromAnonCredsCredential(credential)
-      const bundle = await bundleResolver.resolveAllBundles({ identifiers, attributes, language: i18n.language })
+      const credName = await getCredentialName(
+        identifiers.credentialDefinitionId as string,
+        identifiers.schemaId as string,
+        agent
+      )
+      const bundle = await bundleResolver.resolveAllBundles({
+        identifiers,
+        attributes,
+        meta: { credName },
+        language: i18n.language,
+      })
       const fields = bundle?.presentationFields ?? []
       const metaOverlay = bundle?.metaOverlay ?? {}
 

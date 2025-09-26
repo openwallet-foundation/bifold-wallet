@@ -161,24 +161,32 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       setPreciseRevocationDate(formatTime(date, { includeHour: true }))
     }
 
-    const params = {
-      identifiers: getCredentialIdentifiers(credential),
-      meta: {
-        alias: credentialConnectionLabel,
-        credConnectionId: credential.connectionId,
-      },
-      attributes: buildFieldsFromAnonCredsCredential(credential),
-      language: i18n.language,
-    }
+    (async () => {
+      const ids = getCredentialIdentifiers(credential)
+      const credName = await getCredentialName(
+        ids.credentialDefinitionId as string,
+        ids.schemaId as string,
+        agent
+      )
+      const params = {
+        identifiers: ids,
+        meta: {
+          alias: credentialConnectionLabel,
+          credConnectionId: credential.connectionId,
+          credName,
+        },
+        attributes: buildFieldsFromAnonCredsCredential(credential),
+        language: i18n.language,
+      }
 
-    bundleResolver.resolveAllBundles(params).then((bundle) => {
+      const bundle = await bundleResolver.resolveAllBundles(params)
       setOverlay((o) => ({
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
       }))
-    })
-  }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
+    })()
+  }, [credential, credentialConnectionLabel, bundleResolver, i18n.language, agent])
 
   useEffect(() => {
     if (credential?.revocationNotification) {

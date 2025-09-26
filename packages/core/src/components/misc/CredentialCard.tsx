@@ -1,4 +1,5 @@
 import { CredentialExchangeRecord, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import { Attribute, BrandingOverlayType, CredentialOverlay, Predicate } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { ViewStyle } from 'react-native'
@@ -14,6 +15,8 @@ import { BrandingOverlay } from '@bifold/oca'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../../modules/openid/display'
 import { getAttributeField } from '../../utils/oca'
+import { getCredentialIdentifiers } from '../../utils/credential'
+import { getCredentialName } from '../../utils/cred-def'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -50,6 +53,10 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { resolveBundleForCredential } = useOpenIDCredentials()
   const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<Attribute | undefined>()
+  const { agent } = useAgent()
+  const [resolvedCredDefId, setResolvedCredDefId] = useState<string | undefined>(credDefId)
+  const [resolvedSchemaId, setResolvedSchemaId] = useState<string | undefined>(schemaId)
+  const [resolvedCredName, setResolvedCredName] = useState<string | undefined>(credName)
 
   useEffect(() => {
     if (brandingOverlay) {
@@ -79,6 +86,39 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
   }, [credential, brandingOverlay, resolveBundleForCredential])
 
+  // Resolve identifiers and name (supports webvh via agent) for anoncreds credentials
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      // Prefer explicitly provided IDs; otherwise derive from credential
+      let nextCredDefId = credDefId
+      let nextSchemaId = schemaId
+
+      if (!nextCredDefId || !nextSchemaId) {
+        if (credential && credential instanceof CredentialExchangeRecord) {
+          const identifiers = getCredentialIdentifiers(credential)
+          nextCredDefId = nextCredDefId ?? identifiers.credentialDefinitionId
+          nextSchemaId = nextSchemaId ?? identifiers.schemaId
+        }
+      }
+
+      // Compute name if not provided, using agent-aware helper for webvh and indy
+      let nextCredName = credName
+      if (!nextCredName) {
+        nextCredName = await getCredentialName(nextCredDefId, nextSchemaId, agent)
+      }
+
+      if (isMounted) {
+        setResolvedCredDefId(nextCredDefId)
+        setResolvedSchemaId(nextSchemaId)
+        setResolvedCredName(nextCredName)
+      }
+    })()
+    return () => {
+      isMounted = false
+    }
+  }, [credential, credDefId, schemaId, credName, agent])
+
   const getCredOverlayType = (type: BrandingOverlayType) => {
     const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
     if (proof) {
@@ -86,9 +126,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         <CredentialCard11
           displayItems={displayItems}
           style={isBranding10 ? { backgroundColor: ColorPalette.brand.secondaryBackground } : undefined}
-          credName={credName}
-          credDefId={credDefId}
-          schemaId={schemaId}
+          credName={resolvedCredName}
+          credDefId={resolvedCredDefId}
+          schemaId={resolvedSchemaId}
           credential={credential as CredentialExchangeRecord}
           handleAltCredChange={handleAltCredChange}
           hasAltCredentials={hasAltCredentials}
@@ -108,6 +148,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           <CredentialCard11
             credential={credential as CredentialExchangeRecord}
             style={style}
+            credName={resolvedCredName}
+            credDefId={resolvedCredDefId}
+            schemaId={resolvedSchemaId}
             onPress={onPress}
             credentialErrors={credentialErrors ?? []}
             brandingOverlayType={bundleResolver.getBrandingOverlayType()}
@@ -118,9 +161,9 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     } else {
       return (
         <CredentialCard11
-          credDefId={credDefId}
-          schemaId={schemaId}
-          credName={credName}
+          credDefId={resolvedCredDefId}
+          schemaId={resolvedSchemaId}
+          credName={resolvedCredName}
           displayItems={displayItems}
           style={style}
           onPress={onPress}
