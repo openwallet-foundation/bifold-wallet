@@ -15,6 +15,7 @@ import {
   JwkDidCreateOptions,
   KeyBackend,
   KeyDidCreateOptions,
+  KeyType,
   Mdoc,
   MdocRecord,
   SdJwtVcRecord,
@@ -23,6 +24,8 @@ import {
   W3cJwtVerifiableCredential,
 } from '@credo-ts/core'
 import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+import { generateDeterministicPasskey } from '../../utils/bip39-passkeys'
+import { loadMnemonic } from '../../services/keychain'
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -126,10 +129,41 @@ export const customCredentialBindingResolver = async ({
     throw new Error('keyType is required!')
   }
 
-  const key = await agent.wallet.createKey({
-    keyType,
-    keyBackend: shouldKeyBeHardwareBacked ? KeyBackend.SecureElement : KeyBackend.Software,
-  })
+  let key: import('@credo-ts/core').Key
+
+  // Use deterministic passkeys for P-256 keys (SD-JWT VC and mDoc credentials)
+  if (keyType === KeyType.P256) {
+    try {
+      // Load stored mnemonic from keychain
+      const storedMnemonic = await loadMnemonic()
+      if (!storedMnemonic) {
+        throw new Error('No mnemonic found in storage - required for deterministic passkey generation')
+      }
+
+      // Hardcoded values for initial implementation
+      const userHandle = 'rocca-wallet-user'
+      const origin = 'https://rocca-wallet.algorand.foundation'
+
+      // Generate deterministic P-256 passkey
+      key = await generateDeterministicPasskey({
+        mnemonic: storedMnemonic,
+        userHandle,
+        origin,
+      })
+    } catch (error) {
+      // Fallback to standard key generation if deterministic passkey generation fails
+      key = await agent.wallet.createKey({
+        keyType,
+        keyBackend: shouldKeyBeHardwareBacked ? KeyBackend.SecureElement : KeyBackend.Software,
+      })
+    }
+  } else {
+    // Use standard key generation for non-P256 keys (Ed25519, etc.)
+    key = await agent.wallet.createKey({
+      keyType,
+      keyBackend: shouldKeyBeHardwareBacked ? KeyBackend.SecureElement : KeyBackend.Software,
+    })
+  }
 
   if (didMethod) {
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({

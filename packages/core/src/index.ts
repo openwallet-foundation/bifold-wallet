@@ -91,6 +91,14 @@ export { BifoldError } from './types/error'
 export { Screens, Stacks, TabStacks } from './types/navigators'
 export * from './types/version-check'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
+export {
+  BIP39PasskeyWallet,
+  enhanceAgentWithPasskeys,
+  generateDeterministicPasskey,
+  validateMnemonic,
+  generateDeterministicUserHandle,
+  type PasskeyGenerationOptions,
+} from './utils/bip39-passkeys'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
 export {
   connectFromScanOrDeepLink,
