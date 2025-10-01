@@ -79,7 +79,7 @@
     "react-native-localize": "~2.2.6",
     "react-native-logs": "~5.1.0",
     "react-native-orientation-locker": "~1.6.0",
-    "react-native-permissions": "~5.4.1",
+    "react-native-permissions": "~5.4.2",
     "react-native-qrcode-svg": "~6.2.0",
     "react-native-safe-area-context": "~4.8.2",
     "react-native-scalable-image": "~1.1.0",
