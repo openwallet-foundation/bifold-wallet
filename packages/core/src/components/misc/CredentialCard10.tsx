@@ -154,7 +154,6 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
         identifiers.schemaId,
         agent
       )
-      agent?.config?.logger?.info('credName!! ' + credName)
       const params = {
         identifiers,
         attributes,
