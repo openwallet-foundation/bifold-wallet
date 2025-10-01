@@ -67,7 +67,7 @@
     "react-native-argon2": "~2.0.1",
     "react-native-bouncy-checkbox": "~3.0.7",
     "react-native-collapsible": "~1.6.2",
-    "react-native-config": "~1.5.5",
+    "react-native-config": "~1.5.9",
     "react-native-confirmation-code-field": "~7.3.2",
     "react-native-device-info": "~8.7.1",
     "react-native-encrypted-storage": "~4.0.3",
