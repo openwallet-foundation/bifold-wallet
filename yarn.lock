@@ -2385,7 +2385,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
-    "@credo-ts/openid4vc": "npm:0.5.17"
+    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch"
     "@credo-ts/push-notifications": "npm:0.7.0"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
@@ -3482,6 +3482,23 @@ __metadata:
     class-transformer: "npm:^0.5.1"
     rxjs: "npm:^7.8.0"
   checksum: 10c0/e7324856e81f21cfe9840cbb983091e8ce84bc4eb1f57e95c11663ce64c45db6b136265c2576499b56000276b288709f30698fec97d11dd8926a92259eabc309
+  languageName: node
+  linkType: hard
+
+"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch":
+  version: 0.5.17
+  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=df2780"
+  dependencies:
+    "@credo-ts/core": "npm:0.5.17"
+    "@sphereon/did-auth-siop": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vc-common": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-client": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-common": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-issuer": "npm:0.16.1-fix.173"
+    "@sphereon/ssi-types": "npm:0.30.2-next.135"
+    class-transformer: "npm:^0.5.1"
+    rxjs: "npm:^7.8.0"
+  checksum: 10c0/fee2280b6dc66d34416585876156ef2966c7f291c152073b49ab938ac91af17b22af2b9d685d41c4fe2c007d5c562e7c75e2c5ca27185761a3727d9848f8ebd9
   languageName: node
   linkType: hard
 
@@ -8795,7 +8812,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
-    "@credo-ts/openid4vc": "npm:0.5.17"
+    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch"
     "@credo-ts/push-notifications": "npm:0.7.0"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
