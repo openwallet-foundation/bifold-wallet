@@ -1,5 +1,6 @@
 import { AnonCredsProof, AnonCredsProofRequest } from '@credo-ts/anoncreds'
-import { Agent, ProofExchangeRecord, ProofState } from '@credo-ts/core'
+import { Agent } from '@credo-ts/core'
+import { DidCommProofExchangeRecord, DidCommProofState } from '@credo-ts/didcomm'
 
 import { BifoldAgent } from '../types/agent'
 import { ProofMetadata } from '../types/metadata'
@@ -129,7 +130,7 @@ export const groupSharedProofDataByCredential = (data: ParsedAnonCredsProof): Gr
  * Retrieve proof details from Credo record
  * */
 export const getProofData = async (agent: BifoldAgent, recordId: string): Promise<ParsedAnonCredsProof | undefined> => {
-  const data = await agent.proofs.getFormatData(recordId)
+  const data = await agent.modules.proofs.getFormatData(recordId)
   if (data.request?.anoncreds && data.presentation?.anoncreds) {
     return parseAnonCredsProof(data.request.anoncreds, data.presentation.anoncreds)
   } else if (data.request?.indy && data.presentation?.indy) {
@@ -142,32 +143,32 @@ export const getProofData = async (agent: BifoldAgent, recordId: string): Promis
 /*
  * Check if a presentation received
  * */
-export const isPresentationReceived = (record: ProofExchangeRecord) => {
-  return record.state === ProofState.PresentationReceived || record.state === ProofState.Done
+export const isPresentationReceived = (record: DidCommProofExchangeRecord) => {
+  return record.state === DidCommProofState.PresentationReceived || record.state === DidCommProofState.Done
 }
 
 /*
  * Check if a presentation failed
  * */
-export const isPresentationFailed = (record: ProofExchangeRecord) => {
-  return record.state === ProofState.Abandoned
+export const isPresentationFailed = (record: DidCommProofExchangeRecord) => {
+  return record.state === DidCommProofState.Abandoned
 }
 
 /*
  * Mark Proof record as viewed
  * */
-export const markProofAsViewed = async (agent: Agent, record: ProofExchangeRecord) => {
+export const markProofAsViewed = async (agent: Agent, record: DidCommProofExchangeRecord) => {
   record.metadata.set(ProofMetadata.customMetadata, { ...record.metadata.data.customMetadata, details_seen: true })
-  return agent.proofs.update(record)
+  return agent.modules.proofs.update(record)
 }
 
 /*
  * Add template reference to Proof Exchange record
  * */
-export const linkProofWithTemplate = async (agent: Agent, record: ProofExchangeRecord, templateId: string) => {
+export const linkProofWithTemplate = async (agent: Agent, record: DidCommProofExchangeRecord, templateId: string) => {
   record.metadata.set(ProofMetadata.customMetadata, {
     ...record.metadata.data.customMetadata,
     proof_request_template_id: templateId,
   })
-  return agent.proofs.update(record)
+  return agent.modules.proofs.update(record)
 }
