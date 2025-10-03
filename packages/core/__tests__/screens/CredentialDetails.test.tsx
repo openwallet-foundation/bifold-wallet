@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord, DidCommCredentialRole, DidCommCredentialState } from '@credo-ts/didcomm'
 import { useAgent, useCredentialById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native'
@@ -13,11 +13,11 @@ import { testDefaultState } from '../contexts/store'
 import { testIdWithKey } from '../../src/utils/testable'
 
 const buildCredentialExchangeRecord = () => {
-  const testOpenVPCredentialRecord = new CredentialExchangeRecord({
-    role: CredentialRole.Holder,
+  const testOpenVPCredentialRecord = new DidCommCredentialExchangeRecord({
+    role: DidCommCredentialRole.Holder,
     protocolVersion: 'v1',
     threadId: '1',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     createdAt: new Date('2020-01-01T00:00:00'),
     credentialAttributes: [
       {
