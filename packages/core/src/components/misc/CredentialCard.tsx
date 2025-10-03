@@ -1,7 +1,8 @@
-import { CredentialExchangeRecord, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { Attribute, BrandingOverlayType, CredentialOverlay, Predicate } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
 import { ViewStyle } from 'react-native'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
@@ -89,7 +90,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
           credName={credName}
           credDefId={credDefId}
           schemaId={schemaId}
-          credential={credential as CredentialExchangeRecord}
+          credential={credential as DidCommCredentialExchangeRecord}
           handleAltCredChange={handleAltCredChange}
           hasAltCredentials={hasAltCredentials}
           proof
@@ -102,11 +103,11 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
 
     if (credential) {
       if (type === BrandingOverlayType.Branding01) {
-        return <CredentialCard10 credential={credential as CredentialExchangeRecord} style={style} onPress={onPress} />
+        return <CredentialCard10 credential={credential as DidCommCredentialExchangeRecord} style={style} onPress={onPress} />
       } else {
         return (
           <CredentialCard11
-            credential={credential as CredentialExchangeRecord}
+            credential={credential as DidCommCredentialExchangeRecord}
             style={style}
             onPress={onPress}
             credentialErrors={credentialErrors ?? []}

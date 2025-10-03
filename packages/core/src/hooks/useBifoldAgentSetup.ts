@@ -1,5 +1,6 @@
-import { Agent, HttpOutboundTransport, WsOutboundTransport } from '@credo-ts/core'
-import { IndyVdrPoolService } from '@credo-ts/indy-vdr/build/pool'
+import { Agent } from '@credo-ts/core'
+import { DidCommHttpOutboundTransport, DidCommWsOutboundTransport } from '@credo-ts/didcomm'
+import { IndyVdrPoolService } from '@credo-ts/indy-vdr'
 import { agentDependencies } from '@credo-ts/react-native'
 import { GetCredentialDefinitionRequest, GetSchemaRequest } from '@hyperledger/indy-vdr-shared'
 import { useCallback, useRef, useState } from 'react'
@@ -32,7 +33,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
   const restartExistingAgent = useCallback(
     async (agent: Agent, walletSecret: WalletSecret): Promise<Agent | undefined> => {
       try {
-        await agent.wallet.open({
+        await agent.modules.wallet.open({
           id: walletSecret.id,
           key: walletSecret.key,
         })
@@ -53,11 +54,11 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
     async (walletSecret: WalletSecret, mediatorUrl: string): Promise<Agent> => {
       const newAgent = new Agent({
         config: {
-          label: store.preferences.walletName || 'Aries Bifold',
-          walletConfig: {
-            id: walletSecret.id,
-            key: walletSecret.key,
-          },
+          //label: store.preferences.walletName || 'Aries Bifold',
+          // walletConfig: {
+          //   id: walletSecret.id,
+          //   key: walletSecret.key,
+          // },
           logger,
           autoUpdateStorageOnStartup: true,
         },
@@ -72,11 +73,11 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
           },
         }),
       })
-      const wsTransport = new WsOutboundTransport()
-      const httpTransport = new HttpOutboundTransport()
+      const wsTransport = new DidCommWsOutboundTransport()
+      const httpTransport = new DidCommHttpOutboundTransport()
 
-      newAgent.registerOutboundTransport(wsTransport)
-      newAgent.registerOutboundTransport(httpTransport)
+      newAgent.modules.didcomm.registerOutboundTransport(wsTransport)
+      newAgent.modules.didcomm.registerOutboundTransport(httpTransport)
 
       return newAgent
     },
@@ -99,7 +100,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
 
   const warmUpCache = useCallback(
     async (newAgent: Agent) => {
-      const poolService = newAgent.dependencyManager.resolve(IndyVdrPoolService)
+      const poolService: IndyVdrPoolService = newAgent.dependencyManager.resolve(IndyVdrPoolService) // Maybe should resolve differently
       cacheCredDefs.forEach(async ({ did, id }) => {
         const pool = await poolService.getPoolForDid(newAgent.context, did)
         const credDefRequest = new GetCredentialDefinitionRequest({ credentialDefinitionId: id })

@@ -1,23 +1,29 @@
 import {
-  AnonCredsCredentialFormatService,
+  AnonCredsDidCommCredentialFormat,
   AnonCredsModule,
-  AnonCredsProofFormatService,
-  DataIntegrityCredentialFormatService,
-  LegacyIndyCredentialFormatService,
-  LegacyIndyProofFormatService,
-  V1CredentialProtocol,
-  V1ProofProtocol,
+  AnonCredsDidCommProofFormatService,
+  DataIntegrityDidCommCredentialFormatService,
+  LegacyIndyDidCommCredentialFormatService,
+  LegacyIndyDidCommProofFormatService,
+  DidCommCredentialV1Protocol,
+  DidCommProofV1Protocol,
+  AnonCredsDidCommCredentialFormatService,
 } from '@credo-ts/anoncreds'
+
 import {
-  Agent,
-  ConnectionsModule,
-  CredentialsModule,
-  DifPresentationExchangeProofFormatService,
-  MediationRecipientModule,
-  ProofsModule,
-  V2CredentialProtocol,
-  V2ProofProtocol,
+  Agent
 } from '@credo-ts/core'
+
+import {
+  DidCommConnectionsModule,
+  DidCommCredentialsModule,
+  DidCommDifPresentationExchangeProofFormatService,
+  DidCommMediationRecipientModule,
+  DidCommProofsModule,
+  DidCommCredentialV2Protocol,
+  DidCommProofV2Protocol,
+  DidCommOutOfBandModule
+} from '@credo-ts/didcomm'
 
 function getAgentModules() {
   return null as unknown as {
@@ -25,28 +31,29 @@ function getAgentModules() {
     //anoncredsRs: AnonCredsRsModule
     anoncreds: AnonCredsModule
     //indyVdr: IndyVdrModule
-    connections: ConnectionsModule
-    credentials: CredentialsModule<
+    oob: DidCommOutOfBandModule
+    connections: DidCommConnectionsModule
+    credentials: DidCommCredentialsModule<
       (
-        | V1CredentialProtocol
-        | V2CredentialProtocol<
+        | DidCommCredentialV1Protocol
+        | DidCommCredentialV2Protocol<
             (
-              | LegacyIndyCredentialFormatService
-              | AnonCredsCredentialFormatService
-              | DataIntegrityCredentialFormatService
+              | LegacyIndyDidCommCredentialFormatService
+              | AnonCredsDidCommCredentialFormatService
+              | DataIntegrityDidCommCredentialFormatService
             )[]
           >
       )[]
     >
-    proofs: ProofsModule<
+    proofs: DidCommProofsModule<
       (
-        | V1ProofProtocol
-        | V2ProofProtocol<
-            (LegacyIndyProofFormatService | AnonCredsProofFormatService | DifPresentationExchangeProofFormatService)[]
+        | DidCommProofV1Protocol
+        | DidCommProofV2Protocol<
+            (LegacyIndyDidCommProofFormatService | AnonCredsDidCommProofFormatService | DidCommDifPresentationExchangeProofFormatService)[]
           >
       )[]
     >
-    mediationRecipient: MediationRecipientModule
+    mediationRecipient: DidCommMediationRecipientModule
   }
 }
 

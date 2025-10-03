@@ -2,12 +2,14 @@ import {
   AnonCredsRequestedAttribute,
   AnonCredsRequestedPredicate,
   LegacyIndyProofRequest,
-  V1RequestPresentationMessage,
+  DidCommRequestPresentationV1Message,
 } from '@credo-ts/anoncreds'
-import { Agent, AgentMessage, AutoAcceptProof, ProofExchangeRecord } from '@credo-ts/core'
+import { Agent } from '@credo-ts/core'
 
 import { BifoldAgent } from '../types/agent'
 import { ProofRequestTemplate, ProofRequestType } from '../types/proof-reqeust-template'
+
+import { DidCommMessage, DidCommAutoAcceptProof, DidCommProofExchangeRecord } from '@credo-ts/didcomm'
 
 const protocolVersion = 'v2'
 const domain = 'http://aries-mobile-agent.com'
@@ -19,8 +21,8 @@ export const findProofRequestMessage = async (
   agent: Agent,
   id: string
 ): Promise<LegacyIndyProofRequest | undefined> => {
-  const message = await agent.proofs.findRequestMessage(id)
-  if (message && message instanceof V1RequestPresentationMessage && message.indyProofRequest) {
+  const message = await agent.modules.proofs.findRequestMessage(id)
+  if (message && message instanceof DidCommRequestPresentationV1Message && message.indyProofRequest) {
     return message.indyProofRequest
   } else {
     return undefined
@@ -87,9 +89,9 @@ export const buildProofRequestDataForTemplate = (
 }
 
 export interface CreateProofRequestInvitationResult {
-  request: AgentMessage
-  proofRecord: ProofExchangeRecord
-  invitation: AgentMessage
+  request: DidCommMessage
+  proofRecord: DidCommProofExchangeRecord
+  invitation: DidCommMessage
   invitationUrl: string
 }
 
@@ -105,12 +107,12 @@ export const createConnectionlessProofRequestInvitation = async (
   if (!proofFormats) {
     return undefined
   }
-  const { message: request, proofRecord } = await agent.proofs.createRequest({
+  const { message: request, proofRecord } = await agent.modules.proofs.createRequest({
     protocolVersion,
-    autoAcceptProof: AutoAcceptProof.Always,
+    autoAcceptProof: DidCommAutoAcceptProof.Always,
     proofFormats,
   })
-  const { message: invitation, invitationUrl } = await agent.oob.createLegacyConnectionlessInvitation({
+  const { message: invitation, invitationUrl } = await agent.modules.oob.createLegacyConnectionlessInvitation({
     recordId: proofRecord.id,
     message: request,
     domain,
@@ -124,7 +126,7 @@ export const createConnectionlessProofRequestInvitation = async (
 }
 
 export interface SendProofRequestResult {
-  proofRecord: ProofExchangeRecord
+  proofRecord: DidCommProofExchangeRecord
 }
 
 /*
@@ -140,7 +142,7 @@ export const sendProofRequest = async (
   if (!proofFormats) {
     return undefined
   }
-  const proofRecord = await agent.proofs.requestProof({
+  const proofRecord = await agent.modules.proofs.requestProof({
     protocolVersion,
     connectionId,
     proofFormats,

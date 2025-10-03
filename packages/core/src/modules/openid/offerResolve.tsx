@@ -10,10 +10,8 @@ import {
   Agent,
   DidJwk,
   DidKey,
-  getJwkFromKey,
-  JwaSignatureAlgorithm,
+  getPublicJwkFromVerificationMethod,
   JwkDidCreateOptions,
-  KeyBackend,
   KeyDidCreateOptions,
   Mdoc,
   MdocRecord,
@@ -22,7 +20,25 @@ import {
   W3cJsonLdVerifiableCredential,
   W3cJwtVerifiableCredential,
 } from '@credo-ts/core'
+import { KeyBackend } from '@hyperledger/aries-askar-react-native'
 import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+
+const KnownJwaSignatureAlgorithms = {
+  HS256: 'HS256',
+  HS384: 'HS384',
+  HS512: 'HS512',
+  RS256: 'RS256',
+  RS384: 'RS384',
+  RS512: 'RS512',
+  ES256: 'ES256',
+  ES384: 'ES384',
+  ES512: 'ES512',
+  PS256: 'PS256',
+  PS384: 'PS384',
+  PS512: 'PS512',
+  EdDSA: 'EdDSA',
+  ES256K: 'ES256K'
+}
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -126,7 +142,7 @@ export const customCredentialBindingResolver = async ({
     throw new Error('keyType is required!')
   }
 
-  const key = await agent.wallet.createKey({
+  const key = await agent.modules.wallet.createKey({
     keyType,
     keyBackend: shouldKeyBeHardwareBacked ? KeyBackend.SecureElement : KeyBackend.Software,
   })
@@ -135,7 +151,7 @@ export const customCredentialBindingResolver = async ({
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({
       method: didMethod,
       options: {
-        key,
+        keyId: key.keyId,
       },
     })
 
@@ -149,7 +165,7 @@ export const customCredentialBindingResolver = async ({
       verificationMethodId = didJwk.verificationMethodId
     } else {
       const didKey = DidKey.fromDid(didResult.didState.did)
-      verificationMethodId = `${didKey.did}#${didKey.key.fingerprint}`
+      verificationMethodId = `${didKey.did}#${didKey.publicJwk.fingerprint}`
     }
 
     return {
@@ -166,7 +182,7 @@ export const customCredentialBindingResolver = async ({
   ) {
     return {
       method: 'jwk',
-      jwk: getJwkFromKey(key),
+      jwk: '' //getJwkFromKey(key),
     }
   }
 
@@ -214,8 +230,8 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
       // NOTE: MATTR launchpad for JFF MUST use EdDSA. So it is important that the default (first allowed one)
       // is EdDSA. The list is ordered by preference, so if no suites are defined by the issuer, the first one
       // will be used
-      JwaSignatureAlgorithm.EdDSA,
-      JwaSignatureAlgorithm.ES256,
+      KnownJwaSignatureAlgorithms.EdDSA,
+      KnownJwaSignatureAlgorithms.ES256,
     ],
     credentialBindingResolver: async ({
       supportedDidMethods,

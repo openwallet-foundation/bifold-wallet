@@ -1,30 +1,35 @@
 import {
-  AnonCredsCredentialFormatService,
+  AnonCredsDidCommCredentialFormatService,
   AnonCredsModule,
-  AnonCredsProofFormatService,
-  DataIntegrityCredentialFormatService,
-  LegacyIndyCredentialFormatService,
-  LegacyIndyProofFormatService,
-  V1CredentialProtocol,
-  V1ProofProtocol,
+  AnonCredsDidCommProofFormatService,
+  DataIntegrityDidCommCredentialFormatService,
+  LegacyIndyDidCommCredentialFormatService,
+  LegacyIndyDidCommProofFormatService,
+  DidCommCredentialV1Protocol,
+  DidCommProofV1Protocol,
 } from '@credo-ts/anoncreds'
 import { AskarModule } from '@credo-ts/askar'
 import {
-  Agent,
-  AutoAcceptCredential,
-  AutoAcceptProof,
-  ConnectionsModule,
-  CredentialsModule,
-  DifPresentationExchangeProofFormatService,
-  MediationRecipientModule,
-  MediatorPickupStrategy,
-  ProofsModule,
-  V2CredentialProtocol,
-  V2ProofProtocol,
+  Agent
 } from '@credo-ts/core'
+
+import { 
+  DidCommAutoAcceptCredential, 
+  DidCommAutoAcceptProof, 
+  DidCommConnectionsModule, 
+  DidCommCredentialsModule,
+  DidCommMediationRecipientModule,
+  DidCommMediatorPickupStrategy,
+  DidCommProofsModule,
+  DidCommCredentialV2Protocol,
+  DidCommProofV2Protocol, 
+  DidCommDifPresentationExchangeProofFormatService,
+  DidCommModule,
+  DidCommOutOfBandModule} from '@credo-ts/didcomm'
+
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
-import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+// import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
@@ -46,8 +51,8 @@ export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
  * @returns modules to be used in agent setup
  */
 export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache }: GetAgentModulesOptions) {
-  const indyCredentialFormat = new LegacyIndyCredentialFormatService()
-  const indyProofFormat = new LegacyIndyProofFormatService()
+  const indyCredentialFormat = new LegacyIndyDidCommCredentialFormatService()
+  const indyProofFormat = new LegacyIndyDidCommProofFormatService()
 
   if (txnCache) {
     indyVdr.setLedgerTxnCache({
@@ -69,42 +74,44 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       indyVdr,
       networks: indyNetworks as [IndyVdrPoolConfig],
     }),
-    connections: new ConnectionsModule({
+    connections: new DidCommConnectionsModule({
       autoAcceptConnections: true,
     }),
-    credentials: new CredentialsModule({
-      autoAcceptCredentials: AutoAcceptCredential.ContentApproved,
+    credentials: new DidCommCredentialsModule({
+      autoAcceptCredentials: DidCommAutoAcceptCredential.ContentApproved,
       credentialProtocols: [
-        new V1CredentialProtocol({ indyCredentialFormat }),
-        new V2CredentialProtocol({
+        new DidCommCredentialV1Protocol({ indyCredentialFormat }),
+        new DidCommCredentialV2Protocol({
           credentialFormats: [
             indyCredentialFormat,
-            new AnonCredsCredentialFormatService(),
-            new DataIntegrityCredentialFormatService(),
+            new AnonCredsDidCommCredentialFormatService(),
+            new DataIntegrityDidCommCredentialFormatService(),
           ],
         }),
       ],
     }),
-    proofs: new ProofsModule({
-      autoAcceptProofs: AutoAcceptProof.ContentApproved,
+    proofs: new DidCommProofsModule({
+      autoAcceptProofs: DidCommAutoAcceptProof.ContentApproved,
       proofProtocols: [
-        new V1ProofProtocol({ indyProofFormat }),
-        new V2ProofProtocol({
+        new DidCommProofV1Protocol({ indyProofFormat }),
+        new DidCommProofV2Protocol({
           proofFormats: [
             indyProofFormat,
-            new AnonCredsProofFormatService(),
-            new DifPresentationExchangeProofFormatService(),
+            new AnonCredsDidCommProofFormatService(),
+            new DidCommDifPresentationExchangeProofFormatService(),
           ],
         }),
       ],
     }),
-    mediationRecipient: new MediationRecipientModule({
+    mediationRecipient: new DidCommMediationRecipientModule({
       mediatorInvitationUrl: mediatorInvitationUrl,
-      mediatorPickupStrategy: MediatorPickupStrategy.Implicit,
+      mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
     }),
-    pushNotificationsFcm: new PushNotificationsFcmModule(),
-    pushNotificationsApns: new PushNotificationsApnsModule(),
+    //pushNotificationsFcm: new PushNotificationsFcmModule(),
+    //pushNotificationsApns: new PushNotificationsApnsModule(),
+    didcomm: new DidCommModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
+    oob: new DidCommOutOfBandModule()
   }
 }
 

@@ -1,6 +1,6 @@
 import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
 import { useAgent, useProofByState } from '@credo-ts/react-hooks'
-import { ProofState } from '@credo-ts/core'
+import { DidCommProofState} from '@credo-ts/didcomm'
 import { CardStyleInterpolators, StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack'
 import React, { useEffect, useMemo } from 'react'
 import { View } from 'react-native'
@@ -39,7 +39,7 @@ const MainStack: React.FC = () => {
     TOKENS.CUSTOM_NAV_STACK_1,
     TOKENS.OBJECT_SCREEN_CONFIG,
   ])
-  const declinedProofs = useProofByState([ProofState.Declined, ProofState.Abandoned])
+  const declinedProofs = useProofByState([DidCommProofState.Declined, DidCommProofState.Abandoned])
   useDeepLinks()
 
   // remove connection on mobile verifier proofs if proof is rejected
@@ -47,7 +47,7 @@ const MainStack: React.FC = () => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
-        agent?.connections.deleteById(proof?.connectionId ?? '').catch(() => null)
+        agent?.modules.connections.deleteById(proof?.connectionId ?? '').catch(() => null)
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })

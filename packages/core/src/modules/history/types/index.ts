@@ -1,4 +1,4 @@
-import { GenericRecord } from '@credo-ts/core/build/modules/generic-records/repository/GenericRecord'
+import { GenericRecord } from '@credo-ts/core'
 import { Moment } from 'moment'
 
 export interface IHistoryManager {

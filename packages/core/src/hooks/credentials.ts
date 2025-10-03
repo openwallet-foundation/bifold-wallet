@@ -1,11 +1,12 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { useCredentials } from '@credo-ts/react-hooks'
 import { useMemo } from 'react'
 
-export const useCredentialsByConnectionId = (connectionId: string): CredentialExchangeRecord[] => {
+export const useCredentialsByConnectionId = (connectionId: string): DidCommCredentialExchangeRecord[] => {
   const { records: credentials } = useCredentials()
   return useMemo(
-    () => credentials.filter((credential: CredentialExchangeRecord) => credential.connectionId === connectionId),
+    () => credentials.filter((credential: DidCommCredentialExchangeRecord) => credential.connectionId === connectionId),
     [credentials, connectionId]
   )
 }

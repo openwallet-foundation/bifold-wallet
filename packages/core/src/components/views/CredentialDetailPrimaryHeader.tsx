@@ -7,6 +7,9 @@ import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import CardWatermark from '../../components/misc/CardWatermark'
 import { useTheme } from '../../contexts/theme'
 import { credentialTextColor } from '../../utils/credential'
+import { testIdWithKey } from '../../utils/testable'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
+import { useTranslation } from 'react-i18next'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
 import { ThemedText } from '../texts/ThemedText'
@@ -14,7 +17,7 @@ import { ThemedText } from '../texts/ThemedText'
 type CredentialDetailPrimaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
   brandingOverlayType?: BrandingOverlayType
-  credential?: CredentialExchangeRecord
+  credential?: DidCommCredentialExchangeRecord
 }
 
 const paddingHorizontal = 24

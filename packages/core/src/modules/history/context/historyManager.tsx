@@ -19,8 +19,7 @@
  * 
  */
 
-import { Agent } from '@credo-ts/core'
-import { GenericRecord, GenericRecordTags } from '@credo-ts/core/build/modules/generic-records/repository/GenericRecord'
+import { Agent, GenericRecord, GenericRecordTags } from '@credo-ts/core'
 import moment from 'moment'
 
 import { i18n } from '../../../localization/index'

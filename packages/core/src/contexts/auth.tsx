@@ -4,7 +4,8 @@ import '@hyperledger/aries-askar-react-native'
 import 'reflect-metadata'
 import { DeviceEventEmitter } from 'react-native'
 import { AskarWallet } from '@credo-ts/askar'
-import { Agent, ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
+import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
+import { } from '@credo-ts/didcomm'
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -110,17 +111,18 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
         // NOTE: We create an instance of AskarWallet, which is the underlying wallet that powers the app
         // we then open that instance with the provided id and key to verify their integrity
-        const askarWallet = new AskarWallet(
-          new ConsoleLogger(LogLevel.off),
-          new agentDependencies.FileSystem(),
-          new SigningProviderRegistry([])
-        )
-        await askarWallet.open({
-          id: secret.id,
-          key: hash,
-        })
+        // const askarWallet = new AskarWallet(
+        //   new ConsoleLogger(LogLevel.off),
+        //   new agentDependencies.FileSystem(),
+        //   new SigningProviderRegistry([])
+        // )
+        // await askarWallet.open({
+        //   id: secret.id,
+        //   key: hash,
+        // })
 
-        await askarWallet.close()
+        // await askarWallet.close()
+        //await agent
 
         setWalletSecret({ id: secret.id, key: hash, salt: secret.salt })
         return true
@@ -174,9 +176,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           return false
         }
 
-        await agent.wallet.close()
+        await agent.modules.askar.close()
         // wallet.rotateKey calls open under the hood
-        await agent.wallet.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
+        await agent.modules.askar.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
 
         await storeWalletSecret(newSecret, useBiometry)
         setWalletSecret(newSecret)

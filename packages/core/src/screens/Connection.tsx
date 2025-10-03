@@ -1,11 +1,13 @@
 import {
-  BasicMessageRecord,
-  CredentialExchangeRecord,
   MdocRecord,
-  ProofExchangeRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
 } from '@credo-ts/core'
+import {
+  DidCommBasicMessage,
+  DidCommCredentialExchangeRecord,
+  DidCommProofExchangeRecord
+} from '@credo-ts/didcomm'
 import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useReducer } from 'react'
@@ -28,12 +30,13 @@ import { ToastType } from '../components/toast/BaseToast'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useAppAgent } from '../utils/agent'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { BaseDidCommMessage } from '@credo-ts/didcomm/BaseDidCommMessage'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
 
-type NotCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+type NotCustomNotification = DidCommBasicMessage | DidCommCredentialExchangeRecord | DidCommProofExchangeRecord
 
 type LocalState = {
   inProgress: boolean
@@ -324,13 +327,13 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     for (const notification of notifications) {
       // no action taken for BasicMessageRecords
-      if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
-        logger?.info('Connection: BasicMessageRecord, skipping')
+      if ((notification as unknown as BaseDidCommMessage).type === 'DidCommBasicMessage') {
+        logger?.info('Connection: DidCommBasicMessage, skipping')
         continue
       }
 
       if (
-        (connection && (notification as NotCustomNotification).connectionId === connection.id) ||
+        (connection && (notification as NotCustomNotification).id === connection.id) ||
         oobRecord
           ?.getTags()
           ?.invitationRequestsThreadIds?.includes((notification as NotCustomNotification)?.threadId ?? '')

@@ -6,13 +6,14 @@ import type {
   W3cCredentialDisplay,
   W3cCredentialJson,
 } from './types'
-import { JwkJson, Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord } from '@credo-ts/core'
+import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord } from '@credo-ts/core'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'
 import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
 import { CredentialForDisplayId } from './types'
 import { detectImageMimeType, formatDate, getHostNameFromUrl, isDateString, sanitizeString } from './utils/utils'
 import { getOpenId4VcCredentialMetadata } from './metadata'
+import { Jwk } from '@credo-ts/core/modules/kms'
 
 function findDisplay<Display extends { locale?: string }>(display?: Display[]): Display | undefined {
   if (!display) return undefined
@@ -263,7 +264,7 @@ export interface CredentialMetadata {
   issuedAt?: string
 }
 
-function safeCalculateJwkThumbprint(jwk: JwkJson): string | undefined {
+function safeCalculateJwkThumbprint(jwk: Jwk): string | undefined {
   try {
     const thumbprint = TypedArrayEncoder.toBase64URL(
       Hasher.hash(
@@ -291,7 +292,7 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { _sd_alg, _sd_hash, iss, vct, cnf, iat, exp, nbf, ...visibleProperties } = sdJwtVcPayload as SdJwtVcPayload
 
-  const holder = cnf.kid ?? cnf.jwk ? safeCalculateJwkThumbprint(cnf.jwk as JwkJson) : undefined
+  const holder = cnf.kid ?? cnf.jwk ? safeCalculateJwkThumbprint(cnf.jwk as Jwk) : undefined
   const credentialMetadata: CredentialMetadata = {
     type: vct,
     issuer: iss,
@@ -348,7 +349,7 @@ export function getCredentialForDisplay(
       },
       attributes: mapped.visibleProperties,
       metadata: mapped.metadata,
-      claimFormat: ClaimFormat.SdJwtVc,
+      claimFormat: ClaimFormat.SdJwtW3cVc,
       validUntil: mapped.raw.validUntil,
       validFrom: mapped.raw.validFrom,
       credentialSubject: openId4VcMetadata?.credential.credential_subject,

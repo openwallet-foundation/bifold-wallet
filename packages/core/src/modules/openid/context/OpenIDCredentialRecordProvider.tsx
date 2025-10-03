@@ -244,27 +244,27 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         //This handler will return ANY creds added to the wallet even DidComm
         //Sounds like a bug in the hooks package
         //This check will safe guard the flow untill a fix goes to the hooks
-        if (isW3CCredentialRecord(record)) {
-          setState(addW3cRecord(record, state))
+        if (isW3CCredentialRecord(record as W3cCredentialRecord)) {
+          setState(addW3cRecord(record as W3cCredentialRecord, state))
         }
       })
 
       const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
-        setState(removeW3cRecord(record, state))
+        setState(removeW3cRecord(record as W3cCredentialRecord, state))
       })
 
       const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
         //This handler will return ANY creds added to the wallet even DidComm
         //Sounds like a bug in the hooks package
         //This check will safe guard the flow untill a fix goes to the hooks
-        setState(addSdJwtRecord(record, state))
+        setState(addSdJwtRecord(record as SdJwtVcRecord, state))
         // if (isW3CCredentialRecord(record)) {
         //   setState(addW3cRecord(record, state))
         // }
       })
 
       const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
-        setState(removeSdJwtRecord(record, state))
+        setState(removeSdJwtRecord(record as SdJwtVcRecord, state))
       })
 
       return () => {
