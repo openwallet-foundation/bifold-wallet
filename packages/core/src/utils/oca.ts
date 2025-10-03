@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { AnonCredsProofRequestTemplatePayloadData, CredentialSharedProofData } from '@bifold/verifier'
 import {
   Attribute,
@@ -74,7 +74,7 @@ export const buildFieldsFromW3cCredsCredential = (
   )
 }
 
-export const buildFieldsFromAnonCredsCredential = (credential: CredentialExchangeRecord): Array<Field> => {
+export const buildFieldsFromAnonCredsCredential = (credential: DidCommCredentialExchangeRecord): Array<Field> => {
   return credential?.credentialAttributes?.map((attr) => new Attribute(attr)) || []
 }
 

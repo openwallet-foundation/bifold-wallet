@@ -1,15 +1,14 @@
-import { BasicMessageRecord, ConnectionRecord, CredentialExchangeRecord, ProofExchangeRecord } from '@credo-ts/core'
-
+import { DidCommBasicMessageRecord, DidCommConnectionRecord, DidCommCredentialExchangeRecord, DidCommProofExchangeRecord } from '@credo-ts/didcomm'
 import { BifoldAgent } from './agent'
 
 interface ConnectionWithMessages {
-  conn: ConnectionRecord
-  msgs: (BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord)[]
+  conn: DidCommConnectionRecord
+  msgs: (DidCommBasicMessageRecord | DidCommCredentialExchangeRecord | DidCommProofExchangeRecord)[]
 }
 
 interface ConnectionWithLatestMessage {
-  conn: ConnectionRecord
-  latestMsg: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+  conn: DidCommConnectionRecord
+  latestMsg: DidCommBasicMessageRecord | DidCommCredentialExchangeRecord | DidCommProofExchangeRecord
 }
 
 /**
@@ -19,16 +18,16 @@ interface ConnectionWithLatestMessage {
  */
 export const fetchContactsByLatestMessage = async (
   agent: BifoldAgent,
-  connections: ConnectionRecord[]
-): Promise<ConnectionRecord[]> => {
+  connections: DidCommConnectionRecord[]
+): Promise<DidCommConnectionRecord[]> => {
   const connectionsWithMessages = await Promise.all<ConnectionWithMessages>(
     connections.map(
-      async (conn: ConnectionRecord): Promise<ConnectionWithMessages> => ({
+      async (conn: DidCommConnectionRecord): Promise<ConnectionWithMessages> => ({
         conn,
         msgs: [
-          ...(await agent.basicMessages.findAllByQuery({ connectionId: conn.id })),
-          ...(await agent.proofs.findAllByQuery({ connectionId: conn.id })),
-          ...(await agent.credentials.findAllByQuery({ connectionId: conn.id })),
+          ...(await agent.modules.basicMessages.findAllByQuery({ connectionId: conn.id })),
+          ...(await agent.modules.proofs.findAllByQuery({ connectionId: conn.id })),
+          ...(await agent.modules.credentials.findAllByQuery({ connectionId: conn.id })),
         ],
       })
     )
@@ -44,7 +43,7 @@ export const fetchContactsByLatestMessage = async (
           return accDate > curDate ? acc : cur
         },
         // Initial value if no messages exist for this connection is a placeholder with the date the connection was created
-        { createdAt: pair.conn.createdAt } as BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+        { createdAt: pair.conn.createdAt } as DidCommBasicMessageRecord | DidCommCredentialExchangeRecord | DidCommProofExchangeRecord
       ),
     }
   })

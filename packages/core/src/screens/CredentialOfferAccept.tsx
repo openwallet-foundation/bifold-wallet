@@ -1,5 +1,5 @@
-import { CredentialState } from '@credo-ts/core'
 import { useCredentialById, useAgent } from '@bifold/react-hooks'
+import { DidCommCredentialState } from '@credo-ts/didcomm'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -74,7 +74,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     if (!credential) {
       return
     }
-    if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
+    if (credential.state === DidCommCredentialState.CredentialReceived || credential.state === DidCommCredentialState.Done) {
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
 

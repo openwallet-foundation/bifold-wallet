@@ -15,11 +15,10 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
     agent ??
     new Agent({
       config: {
-        label: 'Aries Bifold',
-        walletConfig: {
-          id: walletId,
-          key,
-        },
+        // walletConfig: {
+        //   id: walletId,
+        //   key,
+        // },
         logger: new ConsoleLogger(LogLevel.trace),
         autoUpdateStorageOnStartup: false,
       },
