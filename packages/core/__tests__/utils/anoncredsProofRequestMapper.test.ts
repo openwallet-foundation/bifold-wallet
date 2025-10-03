@@ -30,7 +30,7 @@ describe('getDescriptorMetadata', () => {
           needsCount: 1,
           rule: 'all',
           submissionEntry: [
-            { inputDescriptorId: '0', verifiableCredentials: [{ credentialRecord: record1, type: ClaimFormat.LdpVc }] },
+            { inputDescriptorId: '0', verifiableCredentials: [{ credentialRecord: record1, claimFormat: ClaimFormat.LdpVc }] },
           ],
         },
         {
@@ -38,7 +38,7 @@ describe('getDescriptorMetadata', () => {
           needsCount: 1,
           rule: 'all',
           submissionEntry: [
-            { inputDescriptorId: '1', verifiableCredentials: [{ credentialRecord: record2, type: ClaimFormat.LdpVc }] },
+            { inputDescriptorId: '1', verifiableCredentials: [{ credentialRecord: record2, claimFormat: ClaimFormat.LdpVc }] },
           ],
         },
         {
@@ -49,8 +49,8 @@ describe('getDescriptorMetadata', () => {
             {
               inputDescriptorId: '2',
               verifiableCredentials: [
-                { credentialRecord: record1, type: ClaimFormat.LdpVc },
-                { credentialRecord: record2, type: ClaimFormat.LdpVc },
+                { credentialRecord: record1, claimFormat: ClaimFormat.LdpVc },
+                { credentialRecord: record2, claimFormat: ClaimFormat.LdpVc },
               ],
             },
           ],

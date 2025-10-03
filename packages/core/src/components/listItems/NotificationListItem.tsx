@@ -1,4 +1,4 @@
-import { AnonCredsProofRequest, DidCommRequestPresentationV1Message } from '@credo-ts/anoncreds'
+import { AnonCredsProofRequest } from '@credo-ts/anoncreds'
 import {
   Agent,
   CredoError,
@@ -74,7 +74,7 @@ type StyleConfig = {
 const markMessageAsSeen = async (agent: Agent, record: DidCommBasicMessageRecord) => {
   const meta = record.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
   record.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
-  const basicMessageRepository = agent.context.dependencyManager.resolve(DidCommBasicMessageRepository)
+  const basicMessageRepository: DidCommBasicMessageRepository = agent.context.dependencyManager.resolve(DidCommBasicMessageRepository)
   await basicMessageRepository.update(agent.context, record)
 }
 
@@ -276,7 +276,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           break
         case NotificationType.ProofRequest: {
           const proofId = (notification as DidCommProofExchangeRecord).id
-          let message: DidCommRequestPresentationV2Message | DidCommRequestPresentationV1Message | null | undefined
+          let message: DidCommRequestPresentationV2Message | null | undefined
           try {
             message = await agent?.modules.proofs.findRequestMessage(proofId)
           } catch (error) {
@@ -286,9 +286,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           // message.comment is the common fallback title for both v1 and v2 proof requests
           let body: string = message?.comment ?? ''
 
-          if (message instanceof DidCommRequestPresentationV1Message) {
-            body = message.indyProofRequest?.name ?? body
-          }
+          // if (message instanceof DidCommRequestPresentationV1Message) {
+          //   body = message.indyProofRequest?.name ?? body
+          // }
 
           if (message instanceof DidCommRequestPresentationV2Message) {
             // workaround for getting proof request name in v2 proof request

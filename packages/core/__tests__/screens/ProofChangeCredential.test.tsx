@@ -1,14 +1,15 @@
-import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
-import {
-  CredentialExchangeRecord,
-  CredentialRole,
-  CredentialState,
-  ProofExchangeRecord,
-  ProofRole,
-  ProofState,
-} from '@credo-ts/core'
-import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+import { INDY_PROOF_REQUEST_ATTACHMENT_ID, DidCommRequestPresentationV1Message } from '@credo-ts/anoncreds'
 import { useAgent, useProofById } from '@bifold/react-hooks'
+import {
+  DidCommCredentialExchangeRecord,
+  DidCommCredentialRole,
+  DidCommCredentialState,
+  DidCommProofExchangeRecord,
+  DidCommProofRole,
+  DidCommProofState,
+  DidCommAttachment,
+  DidCommAttachmentData
+} from '@credo-ts/didcomm'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native'
@@ -33,13 +34,13 @@ describe('ProofChangeCredential Screen', () => {
   const testTime2 = '2023-02-11 20:00:18.180718'
   const testAge2 = '17'
 
-  const { id: presentationMessageId } = new V1RequestPresentationMessage({
+  const { id: presentationMessageId } = new DidCommRequestPresentationV1Message({
     comment: 'some comment',
     requestAttachments: [
-      new Attachment({
+      new DidCommAttachment({
         id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
         mimeType: 'application/json',
-        data: new AttachmentData({
+        data: new DidCommAttachmentData({
           json: {
             name: 'test proof request',
             version: '1.0.0',
@@ -72,11 +73,11 @@ describe('ProofChangeCredential Screen', () => {
     toJSON: jest.fn(),
   }
 
-  const testProofRequest = new ProofExchangeRecord({
-    role: ProofRole.Prover,
+  const testProofRequest = new DidCommProofExchangeRecord({
+    role: DidCommProofRole.Prover,
     connectionId: '',
     threadId: presentationMessageId,
-    state: ProofState.RequestReceived,
+    state: DidCommProofState.RequestReceived,
     protocolVersion: 'V1',
   })
 
@@ -113,10 +114,10 @@ describe('ProofChangeCredential Screen', () => {
     },
   }
 
-  const { id: credentialId } = new CredentialExchangeRecord({
-    role: CredentialRole.Holder,
+  const { id: credentialId } = new DidCommCredentialExchangeRecord({
+    role: DidCommCredentialRole.Holder,
     threadId: '1',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     credentialAttributes: [
       {
         name: 'email',
@@ -136,10 +137,10 @@ describe('ProofChangeCredential Screen', () => {
     ],
     protocolVersion: 'v1',
   })
-  const { id: credentialId2 } = new CredentialExchangeRecord({
-    role: CredentialRole.Holder,
+  const { id: credentialId2 } = new DidCommCredentialExchangeRecord({
+    role: DidCommCredentialRole.Holder,
     threadId: '1',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     credentialAttributes: [
       {
         name: 'email',

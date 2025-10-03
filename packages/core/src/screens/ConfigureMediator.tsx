@@ -1,5 +1,5 @@
-import { MediationRecipientService } from '@credo-ts/core'
 import { useAgent } from '@bifold/react-hooks'
+import { AgentContext } from '@credo-ts/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,15 +12,8 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { useTheme } from '../contexts/theme'
 import { ThemedText } from '../components/texts/ThemedText'
 import { testIdWithKey } from '../utils/testable'
-import { useEffect, useState } from 'react'
 import { LockoutReason, useAuth } from '../contexts/auth'
-import { useAgent } from '@credo-ts/react-hooks'
 import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
-import { ThemedText } from '../components/texts/ThemedText'
-import { LockoutReason, useAuth } from '../contexts/auth'
-import { DispatchAction } from '../contexts/reducers/store'
-import { useStore } from '../contexts/store'
-import { useTheme } from '../contexts/theme'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { setMediationToDefault } from '../utils/mediatorhelpers'
 import { DidCommMediationRecipientService } from '@credo-ts/didcomm'
@@ -84,7 +77,7 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
   const confirmMediatorChange = async () => {
     if (!pendingMediatorId || !agent) return
 
-    await agent.context.dependencyManager.resolve<DidCommMediationRecipientService>(DidCommMediationRecipientService).clearDefaultMediator(agent.context)
+    await agent.context.dependencyManager.resolve<DidCommMediationRecipientService>(DidCommMediationRecipientService).clearDefaultMediator(agent.context as AgentContext)
     agent.config.logger.info(`successfully cleared default mediator`)
     await setMediationToDefault(agent, pendingMediatorId)
     dispatch({

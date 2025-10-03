@@ -1,14 +1,13 @@
 import { AnonCredsCredentialsForProofRequest, getCredentialsForAnonCredsProofRequest } from '@credo-ts/anoncreds'
-import {
-  ClaimFormat,
-  CredentialExchangeRecord,
-  CredentialRole,
-  CredentialState,
-  ProofExchangeRecord,
-  ProofRole,
-  ProofState,
-} from '@credo-ts/core'
 import { useAgent, useProofById } from '@bifold/react-hooks'
+import {
+  DidCommCredentialExchangeRecord,
+  DidCommCredentialRole,
+  DidCommCredentialState,
+  DidCommProofExchangeRecord,
+  DidCommProofRole,
+  DidCommProofState,
+} from '@credo-ts/didcomm'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native'
@@ -29,6 +28,7 @@ import {
 import { useCredentials } from '../../__mocks__/@bifold/react-hooks'
 import { BasicAppContext } from '../helpers/app'
 import * as Helpers from '../../src/utils/helpers'
+import { ClaimFormat } from '@credo-ts/core'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
@@ -67,12 +67,12 @@ describe('displays a proof request screen', () => {
     const testTime = '2022-02-11 20:00:18.180718'
     const testAge = '16'
 
-    const credExRecord = new CredentialExchangeRecord({
-      createdAt: new Date('2024-02-11T20:00:18.180Z'),
+    const credExRecord = new DidCommCredentialExchangeRecord({
+      createdAt: new Date('2024-02-11 20:00:18.180718'),
       id: '8eba4449-8a85-4954-b11c-e0590f39cbdb',
-      role: CredentialRole.Holder,
+      role: DidCommCredentialRole.Holder,
       threadId: '1',
-      state: CredentialState.Done,
+      state: DidCommCredentialState.Done,
       credentialAttributes: [
         {
           name: 'email',
@@ -95,10 +95,10 @@ describe('displays a proof request screen', () => {
 
     const { id: credentialId } = credExRecord
 
-    const testProofRequest = new ProofExchangeRecord({
+    const testProofRequest = new DidCommProofExchangeRecord({
       connectionId: '',
-      state: ProofState.RequestReceived,
-      role: ProofRole.Prover,
+      state: DidCommProofState.RequestReceived,
+      role: DidCommProofRole.Prover,
       threadId: '4f5659a4-1aea-4f42-8c22-9a9985b35e38',
       protocolVersion: 'v1',
     })
@@ -189,12 +189,12 @@ describe('displays a proof request screen', () => {
       const testTime2 = '2023-02-11 20:00:18.180718'
       const testAge2 = '17'
 
-      const { id: credentialId2 } = new CredentialExchangeRecord({
-        createdAt: new Date('2024-02-11T20:00:18.180Z'),
+      const { id: credentialId2 } = new DidCommCredentialExchangeRecord({
+        createdAt: new Date('2024-02-11 20:00:18.180718'),
         id: '8eba4449-8a85-4954-b11c-e0590f39cbdc',
-        role: CredentialRole.Holder,
+        role: DidCommCredentialRole.Holder,
         threadId: '1',
-        state: CredentialState.Done,
+        state: DidCommCredentialState.Done,
         credentialAttributes: [
           {
             name: 'email',
