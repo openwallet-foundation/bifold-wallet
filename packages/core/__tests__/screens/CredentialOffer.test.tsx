@@ -1,5 +1,5 @@
-import { ConnectionRecord, CredentialExchangeRecord } from '@credo-ts/core'
 import { useConnectionById, useCredentialById } from '@bifold/react-hooks'
+import { DidCommConnectionRecord, DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import { act, fireEvent, render } from '@testing-library/react-native'
@@ -26,8 +26,8 @@ const connectionPath = path.join(__dirname, '../fixtures/faber-connection.json')
 const connection = JSON.parse(fs.readFileSync(connectionPath, 'utf8'))
 const credentialPath = path.join(__dirname, '../fixtures/degree-credential.json')
 const credential = JSON.parse(fs.readFileSync(credentialPath, 'utf8'))
-const connectionRecord = new ConnectionRecord(connection)
-const credentialRecord = new CredentialExchangeRecord(credential)
+const connectionRecord = new DidCommConnectionRecord(connection)
+const credentialRecord = new DidCommCredentialExchangeRecord(credential)
 credentialRecord.credentials.push({
   credentialRecordType: 'anoncreds',
   credentialRecordId: '',

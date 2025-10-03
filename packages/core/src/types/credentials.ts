@@ -1,4 +1,5 @@
-import { CredentialExchangeRecord, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 
 export enum CredentialErrors {
   Revoked, // Credential has been revoked
@@ -7,7 +8,7 @@ export enum CredentialErrors {
 }
 
 export type GenericCredentialExchangeRecord =
-  | CredentialExchangeRecord
+  | DidCommCredentialExchangeRecord
   | W3cCredentialRecord
   | SdJwtVcRecord
   | MdocRecord
