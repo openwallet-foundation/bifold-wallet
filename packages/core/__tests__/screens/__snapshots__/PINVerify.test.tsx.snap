@@ -157,6 +157,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -185,6 +187,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -213,6 +217,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -241,6 +247,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -269,6 +277,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -297,6 +307,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -325,6 +337,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -353,6 +367,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -381,6 +397,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -409,6 +427,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -437,6 +457,8 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -538,7 +560,7 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 10,
                   }
                 }
                 testID="com.ariesbifold:id/Show"
@@ -786,6 +808,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -814,6 +838,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -842,6 +868,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -870,6 +898,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -898,6 +928,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -926,6 +958,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -954,6 +988,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -982,6 +1018,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1010,6 +1048,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1038,6 +1078,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1066,6 +1108,8 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1167,7 +1211,7 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 10,
                   }
                 }
                 testID="com.ariesbifold:id/Show"
@@ -1539,6 +1583,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1567,6 +1613,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1595,6 +1643,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1623,6 +1673,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1651,6 +1703,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1679,6 +1733,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1707,6 +1763,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1735,6 +1793,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1763,6 +1823,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1791,6 +1853,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1819,6 +1883,8 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                     style={
                       Object {
                         "backgroundColor": "#313132",
+                        "borderColor": "#313132",
+                        "borderWidth": 1,
                         "height": 48,
                         "paddingHorizontal": 2,
                       }
@@ -1920,7 +1986,7 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                 style={
                   Object {
                     "opacity": 1,
-                    "paddingHorizontal": 10,
+                    "paddingLeft": 10,
                   }
                 }
                 testID="com.ariesbifold:id/Show"

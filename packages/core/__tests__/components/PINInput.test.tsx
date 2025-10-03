@@ -2,6 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
 import PINInput from '../../src/components/inputs/PINInput'
 import { testIdWithKey } from '../../src/utils/testable'
+import { BasicAppContext } from '../helpers/app'
 
 describe('PINInput Component', () => {
   const defaultProps = {
@@ -17,24 +18,40 @@ describe('PINInput Component', () => {
 
   describe('Basic Rendering', () => {
     it('renders correctly with label', () => {
-      const tree = render(<PINInput {...defaultProps} />)
+      const tree = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
       expect(tree.getByText('Enter PIN')).toBeTruthy()
       expect(tree).toMatchSnapshot()
     })
 
     it('renders without label when not provided', () => {
-      const tree = render(<PINInput onPINChanged={jest.fn()} />)
+      const tree = render(
+        <BasicAppContext>
+          <PINInput onPINChanged={jest.fn()} />
+        </BasicAppContext>
+      )
       expect(tree.queryByText('Enter PIN')).toBeNull()
       expect(tree).toMatchSnapshot()
     })
 
     it('renders show/hide toggle button', () => {
-      const { getByLabelText } = render(<PINInput {...defaultProps} />)
+      const { getByLabelText } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
       expect(getByLabelText('PINCreate.Show')).toBeTruthy()
     })
 
     it('test ID exists', () => {
-      const { getByTestId } = render(<PINInput {...defaultProps} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
       const pinInput = getByTestId('code-field')
       expect(pinInput).toBeTruthy()
     })
@@ -43,7 +60,11 @@ describe('PINInput Component', () => {
   describe('PIN Input Functionality', () => {
     it('calls onPINChanged when PIN is entered', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       // Simulate entering a PIN on the TextInput
       const pinInput = getByTestId('code-field')
@@ -54,7 +75,11 @@ describe('PINInput Component', () => {
 
     it('handles multiple digit entry correctly', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -66,7 +91,11 @@ describe('PINInput Component', () => {
 
     it('handles pasted PIN', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -78,7 +107,11 @@ describe('PINInput Component', () => {
 
     it('handles backspace correctly', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -91,7 +124,11 @@ describe('PINInput Component', () => {
 
     it('maintains separate PIN state from display value when hidden', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -106,7 +143,11 @@ describe('PINInput Component', () => {
 
     it('correctly handles new character input when PIN is masked', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -121,7 +162,11 @@ describe('PINInput Component', () => {
 
     it('handles gradual PIN deletion correctly', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -146,7 +191,11 @@ describe('PINInput Component', () => {
 
   describe('Show/Hide PIN Functionality', () => {
     it('toggles PIN visibility when show/hide button is pressed', () => {
-      const { getByLabelText } = render(<PINInput {...defaultProps} />)
+      const { getByLabelText } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
 
       const toggleButton = getByLabelText('PINCreate.Show')
       fireEvent.press(toggleButton)
@@ -155,7 +204,11 @@ describe('PINInput Component', () => {
     })
 
     it('shows masked characters when PIN is hidden', () => {
-      const { getByTestId, getByLabelText } = render(<PINInput {...defaultProps} />)
+      const { getByTestId, getByLabelText } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
       fireEvent(pinInput, 'onChangeText', '1 2 3 4')
@@ -169,7 +222,11 @@ describe('PINInput Component', () => {
     })
 
     it('shows actual PIN when visibility is toggled on', () => {
-      const { getByTestId, getByLabelText } = render(<PINInput {...defaultProps} />)
+      const { getByTestId, getByLabelText } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
       fireEvent(pinInput, 'onChangeText', '1 2 3 4')
@@ -184,7 +241,11 @@ describe('PINInput Component', () => {
 
   describe('Accessibility', () => {
     it('has correct accessibility label when PIN is masked', () => {
-      const { getByTestId } = render(<PINInput {...defaultProps} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
       fireEvent(pinInput, 'onChangeText', '1 2 3 4')
@@ -194,7 +255,11 @@ describe('PINInput Component', () => {
     })
 
     it('updates accessibility labels when show/hide is toggled', () => {
-      const { getByLabelText } = render(<PINInput {...defaultProps} />)
+      const { getByLabelText } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
 
       // Initially should show "PINCreate.Show"
       expect(getByLabelText('PINCreate.Show')).toBeTruthy()
@@ -205,7 +270,11 @@ describe('PINInput Component', () => {
     })
 
     it('maintains accessibility when PIN value changes', () => {
-      const { getByTestId } = render(<PINInput {...defaultProps} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -221,7 +290,11 @@ describe('PINInput Component', () => {
   describe('Input Validation and Edge Cases', () => {
     it('handles empty input correctly', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
       fireEvent(pinInput, 'onChangeText', '')
@@ -233,7 +306,11 @@ describe('PINInput Component', () => {
 
     it('handles spaces in input correctly', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
       fireEvent(pinInput, 'onChangeText', '1 2 3 4')
@@ -244,7 +321,11 @@ describe('PINInput Component', () => {
 
     it('handles masked characters in input correctly', () => {
       const onPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput {...defaultProps} onPINChanged={onPINChanged} />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} onPINChanged={onPINChanged} />
+        </BasicAppContext>
+      )
 
       const pinInput = getByTestId('code-field')
 
@@ -260,7 +341,11 @@ describe('PINInput Component', () => {
 
     it('handles backspace correctly when going from 1 character to 0 characters', async () => {
       const mockOnPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput onPINChanged={mockOnPINChanged} testID="test-pin-input" />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput onPINChanged={mockOnPINChanged} testID="test-pin-input" />
+        </BasicAppContext>
+      )
 
       const textInput = getByTestId('test-pin-input')
 
@@ -281,7 +366,11 @@ describe('PINInput Component', () => {
 
     it('handles backspace correctly when showPIN is true', async () => {
       const mockOnPINChanged = jest.fn()
-      const { getByTestId } = render(<PINInput onPINChanged={mockOnPINChanged} testID="test-pin-input" />)
+      const { getByTestId } = render(
+        <BasicAppContext>
+          <PINInput onPINChanged={mockOnPINChanged} testID="test-pin-input" />
+        </BasicAppContext>
+      )
 
       const textInput = getByTestId('test-pin-input')
       const showHideButton = getByTestId(testIdWithKey('Show'))
@@ -313,7 +402,11 @@ describe('PINInput Component', () => {
         config: { enabled: true, position: 0 }, // InlineErrorPosition.Above
       }
 
-      const tree = render(<PINInput {...defaultProps} inlineMessage={inlineMessage} />)
+      const tree = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} inlineMessage={inlineMessage} />
+        </BasicAppContext>
+      )
 
       expect(tree.getByText('Invalid PIN')).toBeTruthy()
       expect(tree).toMatchSnapshot()
@@ -326,7 +419,11 @@ describe('PINInput Component', () => {
         config: { enabled: true, position: 1 }, // InlineErrorPosition.Below
       }
 
-      const tree = render(<PINInput {...defaultProps} inlineMessage={inlineMessage} />)
+      const tree = render(
+        <BasicAppContext>
+          <PINInput {...defaultProps} inlineMessage={inlineMessage} />
+        </BasicAppContext>
+      )
 
       expect(tree.getByText('PIN too short')).toBeTruthy()
       expect(tree).toMatchSnapshot()
