@@ -1,7 +1,7 @@
-import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@bifold/oca'
-import { CredentialOverlay } from '@bifold/oca/build/legacy'
-import { CredentialExchangeRecord } from '@credo-ts/core'
-import React, { useMemo } from 'react'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
+import { useTheme } from '../../contexts/theme'
+import { TouchableOpacity, View, StyleSheet } from 'react-native'
+import { useBranding } from '../../hooks/bundle-resolver'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
@@ -11,7 +11,7 @@ import { useCredentialConnectionLabel } from '../../utils/helpers'
 import { ThemedText } from '../texts/ThemedText'
 
 export type ContactCredentialListItemProps = {
-  credential: CredentialExchangeRecord
+  credential: DidCommCredentialExchangeRecord
   onPress: () => void
 }
 

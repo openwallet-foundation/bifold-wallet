@@ -1,11 +1,11 @@
 import {
-  BasicMessageRecord,
-  ConnectionRecord,
-  CredentialExchangeRecord,
-  CredentialState,
-  ProofExchangeRecord,
-  ProofState,
-} from '@credo-ts/core'
+ DidCommBasicMessageRecord,
+ DidCommConnectionRecord,
+ DidCommCredentialExchangeRecord,
+ DidCommCredentialState, 
+ DidCommProofExchangeRecord,
+ DidCommProofState
+} from '@credo-ts/didcomm'
 import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
 import { isPresentationReceived } from '@bifold/verifier'
 import { useNavigation } from '@react-navigation/native'
@@ -37,28 +37,28 @@ import { ThemedText } from '../components/texts/ThemedText'
  *
  * eg. 'View offer' -> opens the credential offer screen
  *
- * @param {CredentialExchangeRecord | ProofExchangeRecord} record - The record to determine the callback type for.
+ * @param {DidCommCredentialExchangeRecord | DidCommProofExchangeRecord} record - The record to determine the callback type for.
  * @returns {CallbackType} The callback type for the given record.
  */
-const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchangeRecord) => {
+const callbackTypeForMessage = (record: DidCommCredentialExchangeRecord | DidCommProofExchangeRecord) => {
   if (
-    record instanceof CredentialExchangeRecord &&
-    (record.state === CredentialState.Done || record.state === CredentialState.OfferReceived)
+    record instanceof DidCommCredentialExchangeRecord &&
+    (record.state === DidCommCredentialState.Done || record.state === DidCommCredentialState.OfferReceived)
   ) {
     return CallbackType.CredentialOffer
   }
 
   if (
-    (record instanceof ProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
-    record.state === ProofState.RequestReceived ||
-    (record.state === ProofState.Done && record.isVerified === undefined)
+    (record instanceof DidCommProofExchangeRecord && isPresentationReceived(record) && record.isVerified !== undefined) ||
+    record.state === DidCommProofState.RequestReceived ||
+    (record.state === DidCommProofState.Done && record.isVerified === undefined)
   ) {
     return CallbackType.ProofRequest
   }
 
   if (
-    record instanceof ProofExchangeRecord &&
-    (record.state === ProofState.PresentationSent || record.state === ProofState.Done)
+    record instanceof DidCommProofExchangeRecord &&
+    (record.state === DidCommProofState.PresentationSent || record.state === DidCommProofState.Done)
   ) {
     return CallbackType.PresentationSent
   }
@@ -71,7 +71,7 @@ const callbackTypeForMessage = (record: CredentialExchangeRecord | ProofExchange
  * @param {ConnectionRecord} connection - The connection to retrieve chat messages for.
  * @returns {ExtendedChatMessage[]} The chat messages for the given connection.
  */
-export const useChatMessagesByConnection = (connection: ConnectionRecord): ExtendedChatMessage[] => {
+export const useChatMessagesByConnection = (connection: DidCommConnectionRecord): ExtendedChatMessage[] => {
   const [messages, setMessages] = useState<Array<ExtendedChatMessage>>([])
   const [store] = useStore()
   const { t } = useTranslation()
@@ -88,7 +88,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
   }, [connection, store.preferences.alternateContactNames])
 
   useEffect(() => {
-    const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: BasicMessageRecord) => {
+    const transformedMessages: Array<ExtendedChatMessage> = basicMessages.map((record: DidCommBasicMessageRecord) => {
       const role = getMessageEventRole(record)
       // eslint-disable-next-line
       const linkRegex = /(?:https?\:\/\/\w+(?:\.\w+)+\S*)|(?:[\w\d\.\_\-]+@\w+(?:\.\w+)+)/gim
@@ -135,7 +135,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
     })
 
     transformedMessages.push(
-      ...credentials.map((record: CredentialExchangeRecord) => {
+      ...credentials.map((record: DidCommCredentialExchangeRecord) => {
         const role = getCredentialEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getCredentialEventLabel(record) as any)
@@ -149,14 +149,14 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
           user: { _id: role },
           messageOpensCallbackType: callbackTypeForMessage(record),
           onDetails: () => {
-            const navMap: { [key in CredentialState]?: () => void } = {
-              [CredentialState.Done]: () => {
+            const navMap: { [key in DidCommCredentialState]?: () => void } = {
+              [DidCommCredentialState.Done]: () => {
                 navigation.navigate(Stacks.ContactStack as any, {
                   screen: Screens.CredentialDetails,
                   params: { credentialId: record.id },
                 })
               },
-              [CredentialState.OfferReceived]: () => {
+              [DidCommCredentialState.OfferReceived]: () => {
                 // if we are in the contact stack, use the parent navigator
                 if (navigation.getParent()) {
                   navigation.getParent()?.navigate(Stacks.ConnectionStack, {
@@ -182,7 +182,7 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
     )
 
     transformedMessages.push(
-      ...proofs.map((record: ProofExchangeRecord) => {
+      ...proofs.map((record: DidCommProofExchangeRecord) => {
         const role = getProofEventRole(record)
         const userLabel = role === Role.me ? t('Chat.UserYou') : theirLabel
         const actionLabel = t(getProofEventLabel(record) as any)
@@ -203,16 +203,16 @@ export const useChatMessagesByConnection = (connection: ConnectionRecord): Exten
                   recordId: record.id,
                   isHistory: true,
                   senderReview:
-                    record.state === ProofState.PresentationSent ||
-                    (record.state === ProofState.Done && record.isVerified === undefined),
+                    record.state === DidCommProofState.PresentationSent ||
+                    (record.state === DidCommProofState.Done && record.isVerified === undefined),
                 },
               })
             }
-            const navMap: { [key in ProofState]?: () => void } = {
-              [ProofState.Done]: toProofDetails,
-              [ProofState.PresentationSent]: toProofDetails,
-              [ProofState.PresentationReceived]: toProofDetails,
-              [ProofState.RequestReceived]: () => {
+            const navMap: { [key in DidCommProofState]?: () => void } = {
+              [DidCommProofState.Done]: toProofDetails,
+              [DidCommProofState.PresentationSent]: toProofDetails,
+              [DidCommProofState.PresentationReceived]: toProofDetails,
+              [DidCommProofState.RequestReceived]: () => {
                 // if we are in the contact stack, use the parent navigator
                 if (navigation.getParent()) {
                   navigation.getParent()?.navigate(Stacks.ConnectionStack, {

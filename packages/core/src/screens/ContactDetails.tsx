@@ -1,4 +1,4 @@
-import { CredentialState } from '@credo-ts/core'
+import { DidCommCredentialState } from '@credo-ts/didcomm'
 import { useAgent, useConnectionById, useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
@@ -49,8 +49,8 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
   const contactImageUrl = useConnectionImageUrl(connectionId)
   // FIXME: This should be exposed via a react hook that allows to filter credentials by connection id
   const connectionCredentials = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
+    ...useCredentialByState(DidCommCredentialState.CredentialReceived),
+    ...useCredentialByState(DidCommCredentialState.Done),
   ].filter((credential) => credential.connectionId === connection?.id)
   const { ColorPalette, Assets } = useTheme()
   const [store] = useStore()
@@ -161,11 +161,11 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         logHistoryRecord()
       }
 
-      const basicMessages = await agent.basicMessages.findAllByQuery({ connectionId: connection.id })
-      const proofs = await agent.proofs.findAllByQuery({ connectionId: connection.id })
-      const offers = await agent.credentials.findAllByQuery({
+      const basicMessages = await agent.modules.basicMessages.findAllByQuery({ connectionId: connection.id })
+      const proofs = await agent.modules.proofs.findAllByQuery({ connectionId: connection.id })
+      const offers = await agent.modules.credentials.findAllByQuery({
         connectionId: connection.id,
-        state: CredentialState.OfferReceived,
+        state: DidCommCredentialState.OfferReceived,
       })
 
       logger.info(
@@ -173,10 +173,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       )
 
       const results = await Promise.allSettled([
-        ...proofs.map((proof) => agent.proofs.deleteById(proof.id)),
-        ...offers.map((offer) => agent.credentials.deleteById(offer.id)),
-        ...basicMessages.map((msg) => agent.basicMessages.deleteById(msg.id)),
-        agent.connections.deleteById(connection.id),
+        ...proofs.map((proof: any) => agent.modules.proofs.deleteById(proof.id)),
+        ...offers.map((offer: any) => agent.modules.credentials.deleteById(offer.id)),
+        ...basicMessages.map((msg: any) => agent.modules.basicMessages.deleteById(msg.id)),
+        agent.modules.connections.deleteById(connection.id),
       ])
 
       const failed = results.filter((result) => result.status === 'rejected')
