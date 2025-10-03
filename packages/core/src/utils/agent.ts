@@ -1,13 +1,14 @@
 import {
   AnonCredsDidCommCredentialFormatService,
-  AnonCredsModule,
   AnonCredsDidCommProofFormatService,
+  AnonCredsModule,
   DataIntegrityDidCommCredentialFormatService,
-  LegacyIndyDidCommCredentialFormatService,
-  LegacyIndyDidCommProofFormatService,
   DidCommCredentialV1Protocol,
   DidCommProofV1Protocol,
+  LegacyIndyDidCommCredentialFormatService,
+  LegacyIndyDidCommProofFormatService,
 } from '@credo-ts/anoncreds'
+
 import { AskarModule } from '@credo-ts/askar'
 import {
   Agent
@@ -25,7 +26,8 @@ import {
   DidCommProofV2Protocol, 
   DidCommDifPresentationExchangeProofFormatService,
   DidCommModule,
-  DidCommOutOfBandModule} from '@credo-ts/didcomm'
+  DidCommOutOfBandModule,
+  DidCommBasicMessagesModule} from '@credo-ts/didcomm'
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
@@ -111,7 +113,8 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     //pushNotificationsApns: new PushNotificationsApnsModule(),
     didcomm: new DidCommModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
-    oob: new DidCommOutOfBandModule()
+    oob: new DidCommOutOfBandModule(),
+    basicMessages: new DidCommBasicMessagesModule()
   }
 }
 

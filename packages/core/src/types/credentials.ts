@@ -1,7 +1,8 @@
-import { CredentialExchangeRecord, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 
 export type GenericCredentialExchangeRecord =
-  | CredentialExchangeRecord
+  | DidCommCredentialExchangeRecord
   | W3cCredentialRecord
   | SdJwtVcRecord
   | MdocRecord

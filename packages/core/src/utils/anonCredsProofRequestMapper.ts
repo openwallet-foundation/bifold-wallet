@@ -30,7 +30,7 @@ export interface DifPexAnonCredsProofRequest extends AnonCredsProofRequest {
 
 type FieldV2 = NonNullable<
   DifPresentationExchangeDefinitionV2['input_descriptors'][number]['constraints']['fields']
->[number]
+>[number] // This type seems to be a bit broken now for some reason
 
 const getPredicateTypeAndValues = (predicateFilter: NonNullable<FieldV2['filter']>) => {
   const predicates: {
@@ -50,7 +50,7 @@ const getPredicateTypeAndValues = (predicateFilter: NonNullable<FieldV2['filter'
 
     const predicateType = supportedJsonSchemaNumericRangeProperties[key]
     if (!predicateType) throw new Error(`Unsupported predicate filter property '${key}'`)
-    predicates.push({ predicateType, predicateValue: value })
+    predicates.push({ predicateType, predicateValue: value as number })
   }
 
   return predicates
@@ -59,10 +59,10 @@ const getPredicateTypeAndValues = (predicateFilter: NonNullable<FieldV2['filter'
 const getClaimNameForField = (field: FieldV2) => {
   if (!field.path) throw new Error('Field path is required')
   const baseClaimPath = '$.credentialSubject.'
-  const claimPaths = field.path.filter((path) => path.startsWith(baseClaimPath))
+  const claimPaths = field.path.filter((path: string) => path.startsWith(baseClaimPath))
   if (claimPaths.length === 0) return undefined
 
-  const claimNames = claimPaths.map((path) => path.slice(baseClaimPath.length))
+  const claimNames = claimPaths.map((path: string) => path.slice(baseClaimPath.length))
   const propertyName = claimNames[0]
 
   return propertyName
@@ -152,8 +152,8 @@ export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsFo
       const inputDescriptorId = entry.inputDescriptorId
 
       const recordsWithMetadata = entry.verifiableCredentials.map((submissionEntryCredential) => {
-        if (submissionEntryCredential.type !== ClaimFormat.LdpVc) {
-          throw new Error(`Unsupported credential type. ${submissionEntryCredential.type}`)
+        if (submissionEntryCredential.claimFormat !== ClaimFormat.LdpVc) {
+          throw new Error(`Unsupported credential type. ${submissionEntryCredential.claimFormat}`)
         }
         const record = submissionEntryCredential.credentialRecord
         const anonCredsTags = getAnonCredsTagsFromRecord(record as W3cCredentialRecord)

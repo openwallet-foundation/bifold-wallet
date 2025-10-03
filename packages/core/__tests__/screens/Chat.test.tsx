@@ -1,10 +1,10 @@
-import {
-  BasicMessageRecord,
-  BasicMessageRole,
-  ConnectionRecord,
-  DidExchangeRole,
-  DidExchangeState,
-} from '@credo-ts/core'
+import { 
+  DidCommBasicMessageRecord,
+  DidCommBasicMessageRole,
+  DidCommConnectionRecord,
+  DidCommDidExchangeRole,
+  DidCommDidExchangeState
+} from '@credo-ts/didcomm'
 import { useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
@@ -21,19 +21,19 @@ jest.mock('@react-navigation/elements', () => ({
 
 const props = { params: { connectionId: '1' } }
 
-const connection = new ConnectionRecord({
+const connection = new DidCommConnectionRecord({
   id: '1',
   createdAt: new Date(2024, 1, 1),
-  state: DidExchangeState.Completed,
-  role: DidExchangeRole.Requester,
+  state: DidCommDidExchangeState.Completed,
+  role: DidCommDidExchangeRole.Requester,
   theirDid: 'did:example:123',
   theirLabel: 'Alice',
 })
 
-const unseenMessage = new BasicMessageRecord({
+const unseenMessage = new DidCommBasicMessageRecord({
   threadId: '1',
   connectionId: '1',
-  role: BasicMessageRole.Receiver,
+  role: DidCommBasicMessageRole.Receiver,
   content: 'Hello',
   sentTime: '20200303',
 })
@@ -51,10 +51,10 @@ unseenMessage.metadata = {
   },
 }
 
-const seenMessage = new BasicMessageRecord({
+const seenMessage = new DidCommBasicMessageRecord({
   threadId: '2',
   connectionId: '1',
-  role: BasicMessageRole.Receiver,
+  role: DidCommBasicMessageRole.Receiver,
   content: 'Hi',
   sentTime: '20200303',
 })
@@ -72,7 +72,7 @@ seenMessage.metadata = {
   },
 }
 
-const testBasicMessages: BasicMessageRecord[] = [unseenMessage, seenMessage]
+const testBasicMessages: DidCommBasicMessageRecord[] = [unseenMessage, seenMessage]
 
 describe('Chat Screen', () => {
   beforeEach(() => {

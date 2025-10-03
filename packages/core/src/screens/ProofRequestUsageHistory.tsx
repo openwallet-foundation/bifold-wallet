@@ -1,4 +1,4 @@
-import { ProofExchangeRecord, ProofState } from '@credo-ts/core'
+import { DidCommProofExchangeRecord, DidCommProofState } from '@credo-ts/didcomm'
 import { useConnectionById } from '@credo-ts/react-hooks'
 import { isPresentationReceived, useProofsByTemplateId } from '@bifold/verifier'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
@@ -20,19 +20,19 @@ type ProofRequestUsageHistoryProps = StackScreenProps<ProofRequestsStackParams, 
 
 interface ProofRequestUsageHistoryRecordProps {
   navigation: StackNavigationProp<ProofRequestsStackParams>
-  record: ProofExchangeRecord
+  record: DidCommProofExchangeRecord
 }
 
-const getPresentationStateLabel = (record: ProofExchangeRecord) => {
+const getPresentationStateLabel = (record: DidCommProofExchangeRecord) => {
   switch (record.state) {
-    case ProofState.RequestSent:
+    case DidCommProofState.RequestSent:
       return 'Verifier.RequestSent'
-    case ProofState.PresentationReceived:
+    case DidCommProofState.PresentationReceived:
       return 'Verifier.PresentationReceived'
-    case ProofState.Declined:
-    case ProofState.Abandoned:
+    case DidCommProofState.Declined:
+    case DidCommProofState.Abandoned:
       return 'Verifier.ProofRequestRejected'
-    case ProofState.Done:
+    case DidCommProofState.Done:
       return record.isVerified ? 'Verifier.PresentationReceived' : 'Verifier.PresentationFailed'
     default:
       return ''

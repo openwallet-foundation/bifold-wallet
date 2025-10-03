@@ -1,14 +1,15 @@
-import { INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
+import { INDY_PROOF_REQUEST_ATTACHMENT_ID, DidCommRequestPresentationV1Message } from '@credo-ts/anoncreds'
 import {
-  ConnectionRecord,
-  DidExchangeRole,
-  DidExchangeState,
-  OutOfBandInvitation,
-  ProofExchangeRecord,
-  ProofRole,
-  ProofState,
-} from '@credo-ts/core'
-import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
+  DidCommConnectionRecord,
+  DidCommDidExchangeRole,
+  DidCommDidExchangeState,
+  DidCommOutOfBandInvitation,
+  DidCommProofExchangeRecord,
+  DidCommProofRole,
+  DidCommProofState,
+  DidCommAttachment,
+  DidCommAttachmentData
+} from '@credo-ts/didcomm'
 import { useConnections } from '@credo-ts/react-hooks'
 import * as verifier from '@bifold/verifier'
 import { getProofRequestTemplates } from '@bifold/verifier'
@@ -53,27 +54,27 @@ const proof_request = {
   },
 }
 
-const requestPresentationMessage = new V1RequestPresentationMessage({
+const requestPresentationMessage = new DidCommRequestPresentationV1Message({
   comment: 'some comment',
   requestAttachments: [
-    new Attachment({
+    new DidCommAttachment({
       id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
       mimeType: 'application/json',
-      data: new AttachmentData({
+      data: new DidCommAttachmentData({
         json: proof_request,
       }),
     }),
   ],
 })
-const proofRecord = new ProofExchangeRecord({
+const proofRecord = new DidCommProofExchangeRecord({
   connectionId: undefined,
   threadId: requestPresentationMessage.id,
-  state: ProofState.RequestSent,
+  state: DidCommProofState.RequestSent,
   protocolVersion: 'V1',
   isVerified: true,
-  role: ProofRole.Prover,
+  role: DidCommProofRole.Prover,
 })
-const invitation = new OutOfBandInvitation({
+const invitation = new DidCommOutOfBandInvitation({
   id: 'test',
   label: 'Test Invitation',
   services: [],
@@ -88,24 +89,24 @@ const data = {
 }
 
 describe('ProofRequesting Component', () => {
-  const testContactRecord1 = new ConnectionRecord({
+  const testContactRecord1 = new DidCommConnectionRecord({
     id: '1',
     did: '9gtPKWtaUKxJir5YG2VPxX',
     theirLabel: 'Faber',
-    role: DidExchangeRole.Responder,
+    role: DidCommDidExchangeRole.Responder,
     theirDid: '2SBuq9fpLT8qUiQKr2RgBe',
     threadId: '1',
-    state: DidExchangeState.Completed,
+    state: DidCommDidExchangeState.Completed,
     createdAt: new Date('2020-01-01T00:00:00.000Z'),
   })
-  const testContactRecord2 = new ConnectionRecord({
+  const testContactRecord2 = new DidCommConnectionRecord({
     id: '2',
     did: '2SBuq9fpLT8qUiQKr2RgBe',
-    role: DidExchangeRole.Requester,
+    role: DidCommDidExchangeRole.Requester,
     theirLabel: 'Bob',
     theirDid: '9gtPKWtaUKxJir5YG2VPxX',
     threadId: '1',
-    state: DidExchangeState.Completed,
+    state: DidCommDidExchangeState.Completed,
     createdAt: new Date('2020-01-01T00:00:00.000Z'),
   })
   afterEach(() => {

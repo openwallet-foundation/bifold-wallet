@@ -1,4 +1,4 @@
-import { ProofState } from '@credo-ts/core'
+import { DidCommProofState } from '@credo-ts/didcomm'
 import { useProofById } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ export interface ProofRequestAcceptProps {
 
 const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofId, confirmationOnly }) => {
   const { t } = useTranslation()
-  const [proofDeliveryStatus, setProofDeliveryStatus] = useState<ProofState>(ProofState.RequestReceived)
+  const [proofDeliveryStatus, setProofDeliveryStatus] = useState<DidCommProofState>(DidCommProofState.RequestReceived)
   const proof = useProofById(proofId)
   const navigation = useNavigation()
   const { ColorPalette, TextTheme } = useTheme()
@@ -65,7 +65,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
   useEffect(() => {
     if (confirmationOnly) {
-      setProofDeliveryStatus(ProofState.PresentationSent)
+      setProofDeliveryStatus(DidCommProofState.PresentationSent)
       return
     }
 
@@ -75,7 +75,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       return
     }
 
-    if (proof.state === ProofState.Done || proof.state === ProofState.PresentationSent) {
+    if (proof.state === DidCommProofState.Done || proof.state === DidCommProofState.PresentationSent) {
       setProofDeliveryStatus(proof.state)
     }
   }, [proof, proofDeliveryStatus, confirmationOnly])
@@ -85,7 +85,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
         <ScrollView style={styles.container}>
           <View style={styles.messageContainer}>
-            {proofDeliveryStatus === ProofState.RequestReceived && (
+            {proofDeliveryStatus === DidCommProofState.RequestReceived && (
               <ThemedText
                 variant="modalHeadingThree"
                 style={styles.messageText}
@@ -95,7 +95,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
               </ThemedText>
             )}
 
-            {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+            {(proofDeliveryStatus === DidCommProofState.PresentationSent || proofDeliveryStatus === DidCommProofState.Done) && (
               <ThemedText
                 variant="modalHeadingThree"
                 style={styles.messageText}
@@ -107,8 +107,8 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
           </View>
 
           <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-            {proofDeliveryStatus === ProofState.RequestReceived && <SendingProof />}
-            {(proofDeliveryStatus === ProofState.PresentationSent || proofDeliveryStatus === ProofState.Done) && (
+            {proofDeliveryStatus === DidCommProofState.RequestReceived && <SendingProof />}
+            {(proofDeliveryStatus === DidCommProofState.PresentationSent || proofDeliveryStatus === DidCommProofState.Done) && (
               <SentProof />
             )}
           </View>

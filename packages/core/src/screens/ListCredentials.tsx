@@ -1,12 +1,12 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialState, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
-
+import { DidCommCredentialExchangeRecord, DidCommCredentialState } from '@credo-ts/didcomm'
 import CredentialCard from '../components/misc/CredentialCard'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
@@ -45,8 +45,8 @@ const ListCredentials: React.FC = () => {
   } = useOpenIDCredentials()
 
   let credentials: GenericCredentialExchangeRecord[] = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
+    ...useCredentialByState(DidCommCredentialState.CredentialReceived),
+    ...useCredentialByState(DidCommCredentialState.Done),
     ...w3cCredentialRecords,
     ...sdJwtVcRecords,
   ]
@@ -82,9 +82,9 @@ const ListCredentials: React.FC = () => {
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
     return (
       <CredentialCard
-        credential={cred as CredentialExchangeRecord}
+        credential={cred as DidCommCredentialExchangeRecord}
         credentialErrors={
-          (cred as CredentialExchangeRecord).revocationNotification?.revocationDate && [CredentialErrors.Revoked]
+          (cred as DidCommCredentialExchangeRecord).revocationNotification?.revocationDate && [CredentialErrors.Revoked]
         }
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {

@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialState } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord as CredentialRecord, DidCommCredentialState } from '@credo-ts/didcomm'
 import { useCredentialById } from '@credo-ts/react-hooks'
 import { act, render } from '@testing-library/react-native'
 import fs from 'fs'
@@ -56,7 +56,7 @@ describe('CredentialOfferAccept Screen', () => {
   })
 
   test('transitions to offer accepted', () => {
-    credentialRecord.state = CredentialState.CredentialReceived
+    credentialRecord.state = DidCommCredentialState.CredentialReceived
 
     const tree = render(
       <BasicAppContext>

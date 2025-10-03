@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord, DidCommCredentialRole, DidCommCredentialState } from '@credo-ts/didcomm'
 import { useCredentialByState } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
@@ -13,7 +13,7 @@ import { BasicAppContext } from '../helpers/app'
 
 interface CredentialContextInterface {
   loading: boolean
-  credentials: CredentialExchangeRecord[]
+  credentials: DidCommCredentialExchangeRecord[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -22,10 +22,10 @@ jest.mock('react-native-localize', () => {})
 const credentialDefinitionId = 'xxxxxxxxxxxxxxxxxx:3:CL:11111:default'
 
 describe('CredentialList Screen', () => {
-  const testOpenVPCredentialRecord = new CredentialExchangeRecord({
-    role: CredentialRole.Holder,
+  const testOpenVPCredentialRecord = new DidCommCredentialExchangeRecord({
+    role: DidCommCredentialRole.Holder,
     threadId: '1',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     createdAt: new Date('2020-01-01T00:00:00'),
     protocolVersion: 'v1',
   })
@@ -37,17 +37,17 @@ describe('CredentialList Screen', () => {
     credentialRecordType: 'anoncreds',
     credentialRecordId: '',
   })
-  const testCredential1 = new CredentialExchangeRecord({
-    role: CredentialRole.Holder,
+  const testCredential1 = new DidCommCredentialExchangeRecord({
+    role: DidCommCredentialRole.Holder,
     threadId: '2',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     createdAt: new Date('2020-01-01T00:01:00'),
     protocolVersion: 'v1',
   })
-  const testCredential2 = new CredentialExchangeRecord({
-    role: CredentialRole.Holder,
+  const testCredential2 = new DidCommCredentialExchangeRecord({
+    role: DidCommCredentialRole.Holder,
     threadId: '3',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     createdAt: new Date('2020-01-02T00:00:00'),
     protocolVersion: 'v1',
   })
