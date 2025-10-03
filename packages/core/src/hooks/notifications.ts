@@ -1,14 +1,16 @@
 import {
-  BasicMessageRecord,
-  CredentialExchangeRecord as CredentialRecord,
-  CredentialState,
   MdocRecord,
-  ProofExchangeRecord,
-  ProofState,
   SdJwtVcRecord,
   W3cCredentialRecord,
 } from '@credo-ts/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@bifold/react-hooks'
+import {
+  DidCommBasicMessageRecord,
+  DidCommCredentialExchangeRecord as CredentialRecord,
+  DidCommCredentialState,
+  DidCommProofExchangeRecord,
+  DidCommProofState,
+} from '@credo-ts/didcomm'
 import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -29,9 +31,9 @@ export type NotificationsInputProps = {
 }
 
 export type NotificationItemType =
-  | BasicMessageRecord
+  | DidCommBasicMessageRecord
   | CredentialRecord
-  | ProofExchangeRecord
+  | DidCommProofExchangeRecord
   | CustomNotification
   | SdJwtVcRecord
   | W3cCredentialRecord
@@ -44,27 +46,27 @@ export const useNotifications = ({
   openIDUri,
   openIDPresentationUri,
 }: NotificationsInputProps): NotificationReturnType => {
-  const doneStates = useMemo(() => [ProofState.Done, ProofState.PresentationReceived] as ProofState[], [])
+  const doneStates = useMemo(() => [DidCommProofState.Done, DidCommProofState.PresentationReceived] as DidCommProofState[], [])
 
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
   const { records: basicMessages } = useBasicMessages()
-  const offers = useCredentialByState(CredentialState.OfferReceived)
-  const proofsRequested = useProofByState(ProofState.RequestReceived)
-  const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
-  const credsDone = useCredentialByState(CredentialState.Done)
+  const offers = useCredentialByState(DidCommCredentialState.OfferReceived)
+  const proofsRequested = useProofByState(DidCommProofState.RequestReceived)
+  const credsReceived = useCredentialByState(DidCommCredentialState.CredentialReceived)
+  const credsDone = useCredentialByState(DidCommCredentialState.Done)
   const proofsDone = useProofByState(doneStates)
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const openIDExpiredNotifs = useExpiredNotifications()
   useEffect(() => {
     // get all unseen messages
-    const unseenMessages: BasicMessageRecord[] = basicMessages.filter((msg) => {
+    const unseenMessages: DidCommBasicMessageRecord[] = basicMessages.filter((msg) => {
       const meta = msg.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
       return !meta?.seen
     })
 
     // add one unseen message per contact to notifications
     const contactsWithUnseenMessages: string[] = []
-    const messagesToShow: BasicMessageRecord[] = []
+    const messagesToShow: DidCommBasicMessageRecord[] = []
 
     unseenMessages.forEach((msg) => {
       if (!contactsWithUnseenMessages.includes(msg.connectionId)) {
@@ -73,7 +75,7 @@ export const useNotifications = ({
       }
     })
 
-    const validProofsDone = proofsDone.filter((proof: ProofExchangeRecord) => {
+    const validProofsDone = proofsDone.filter((proof: DidCommProofExchangeRecord) => {
       if (proof.isVerified === undefined) {
         return false
       }

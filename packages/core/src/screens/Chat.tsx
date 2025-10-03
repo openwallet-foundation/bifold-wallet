@@ -1,5 +1,5 @@
-import { BasicMessageRepository, ConnectionRecord } from '@credo-ts/core'
 import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@bifold/react-hooks'
+import { DidCommBasicMessageRepository, DidCommConnectionRecord } from '@credo-ts/didcomm'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { useHeaderHeight } from '@react-navigation/elements'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
@@ -35,7 +35,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   const { t } = useTranslation()
   const { agent } = useAgent()
   const navigation = useNavigation<StackNavigationProp<RootStackParams | ContactStackParams>>()
-  const connection = useConnectionById(connectionId) as ConnectionRecord
+  const connection = useConnectionById(connectionId) as DidCommConnectionRecord
   const basicMessages = useBasicMessagesByConnectionId(connectionId)
   const chatMessages = useChatMessagesByConnection(connection)
   const isFocused = useIsFocused()
@@ -67,7 +67,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       const meta = msg.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
       if (agent && !meta?.seen) {
         msg.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
-        const basicMessageRepository = agent.context.dependencyManager.resolve(BasicMessageRepository)
+        const basicMessageRepository: DidCommBasicMessageRepository = agent.context.dependencyManager.resolve(DidCommBasicMessageRepository) // Should maybe be resolved differently
         basicMessageRepository.update(agent.context, msg)
       }
     })
@@ -75,7 +75,7 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
 
   const onSend = useCallback(
     async (messages: IMessage[]) => {
-      await agent?.basicMessages.sendMessage(connectionId, messages[0].text)
+      await agent?.modules.basicMessages.sendMessage(connectionId, messages[0].text)
     },
     [agent, connectionId]
   )

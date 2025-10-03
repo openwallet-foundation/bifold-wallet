@@ -146,17 +146,17 @@ export const extractCertificateFromAuthorizationRequest = async ({
 }
 
 export async function withTrustedCertificate<T>(
-  agent: Agent,
+  agent: Agent, //This should maybe be AgentContext instead
   certificate: string | null,
   method: () => Promise<T> | T
 ): Promise<T> {
-  const x509ModuleConfig = agent.dependencyManager.resolve(X509ModuleConfig)
+  const x509ModuleConfig = agent.modules.dependencyManager.resolve(X509ModuleConfig)
   const currentTrustedCertificates = x509ModuleConfig.trustedCertificates
     ? [...x509ModuleConfig.trustedCertificates]
     : []
 
   try {
-    if (certificate) agent.x509.addTrustedCertificate(certificate)
+    if (certificate) agent.modules.x509.addTrustedCertificate(certificate)
     return await method()
   } finally {
     if (certificate) x509ModuleConfig.setTrustedCertificates(currentTrustedCertificates as [string])

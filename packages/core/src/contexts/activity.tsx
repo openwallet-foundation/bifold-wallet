@@ -75,7 +75,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
         // remove timeout when backgrounded as timeout refs can be lost when app is backgrounded
         clearInactivityTimeoutIfExists()
         try {
-          await agent.mediationRecipient.stopMessagePickup()
+          await agent.modules.mediationRecipient.stopMessagePickup()
           logger.info('Stopped agent message pickup')
         } catch (err) {
           logger.error(`Error stopping agent message pickup, ${err}`)
@@ -94,7 +94,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
         } else {
           // otherwise restart message pickup
           try {
-            await agent.mediationRecipient.initiateMessagePickup()
+            await agent.modules.mediationRecipient.initiateMessagePickup()
             logger.info('Restarted agent message pickup')
           } catch (err) {
             logger.error(`Error restarting agent message pickup, ${err}`)

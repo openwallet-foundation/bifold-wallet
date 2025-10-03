@@ -1,4 +1,4 @@
-import type { ConnectionRecord } from '@credo-ts/core'
+import type { DidCommConnectionRecord } from '@credo-ts/didcomm'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'
@@ -14,7 +14,7 @@ import { TOKENS, useServices } from '../../container-api'
 import { ThemedText } from '../texts/ThemedText'
 
 export interface ContactListItemProps {
-  contact: ConnectionRecord
+  contact: DidCommConnectionRecord
   navigation: StackNavigationProp<ContactStackParams, Screens.Contacts>
 }
 

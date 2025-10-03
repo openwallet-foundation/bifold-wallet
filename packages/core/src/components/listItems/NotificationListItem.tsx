@@ -1,15 +1,17 @@
-import { AnonCredsProofRequest, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
+import { AnonCredsProofRequest, DidCommRequestPresentationV1Message } from '@credo-ts/anoncreds'
 import {
   Agent,
-  BasicMessageRecord,
-  BasicMessageRepository,
-  CredentialExchangeRecord,
   CredoError,
-  ProofExchangeRecord,
-  ProofState,
-  V2RequestPresentationMessage,
 } from '@credo-ts/core'
 import { useAgent, useConnectionById } from '@bifold/react-hooks'
+import { 
+  DidCommBasicMessageRecord,
+  DidCommBasicMessageRepository,
+  DidCommProofExchangeRecord,
+  DidCommProofState,
+  DidCommRequestPresentationV2Message,
+  DidCommCredentialExchangeRecord
+} from '@credo-ts/didcomm'
 import { markProofAsViewed } from '@bifold/verifier'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -51,7 +53,7 @@ export enum NotificationType {
 
 export interface NotificationListItemProps {
   notificationType: NotificationType
-  notification: BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord | CustomNotificationRecord
+  notification: DidCommBasicMessageRecord | DidCommCredentialExchangeRecord | DidCommProofExchangeRecord | CustomNotificationRecord
   customNotification?: CustomNotification
 }
 
@@ -69,10 +71,10 @@ type StyleConfig = {
   iconName: string
 }
 
-const markMessageAsSeen = async (agent: Agent, record: BasicMessageRecord) => {
+const markMessageAsSeen = async (agent: Agent, record: DidCommBasicMessageRecord) => {
   const meta = record.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
   record.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
-  const basicMessageRepository = agent.context.dependencyManager.resolve(BasicMessageRepository)
+  const basicMessageRepository = agent.context.dependencyManager.resolve(DidCommBasicMessageRepository)
   await basicMessageRepository.update(agent.context, record)
 }
 
@@ -100,9 +102,9 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const [closeAction, setCloseAction] = useState<any>()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const connectionId =
-    notification instanceof BasicMessageRecord ||
-    notification instanceof CredentialExchangeRecord ||
-    notification instanceof ProofExchangeRecord
+    notification instanceof DidCommBasicMessageRecord ||
+    notification instanceof DidCommCredentialExchangeRecord ||
+    notification instanceof DidCommProofExchangeRecord
       ? notification.connectionId ?? ''
       : ''
   const connection = useConnectionById(connectionId)
@@ -156,8 +158,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const isReceivedProof = useMemo(() => {
     return (
       notificationType === NotificationType.ProofRequest &&
-      ((notification as ProofExchangeRecord).state === ProofState.Done ||
-        (notification as ProofExchangeRecord).state === ProofState.PresentationSent)
+      ((notification as DidCommProofExchangeRecord).state === DidCommProofState.Done ||
+        (notification as DidCommProofExchangeRecord).state === DidCommProofState.PresentationSent)
     )
   }, [notificationType, notification])
 
@@ -165,20 +167,20 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
   const declineProofRequest = useCallback(async () => {
     try {
-      const proofRecord = notification as ProofExchangeRecord
+      const proofRecord = notification as DidCommProofExchangeRecord
 
       if (agent && proofRecord) {
         const connectionId = proofRecord.connectionId ?? ''
-        const connection = await agent.connections.findById(connectionId)
+        const connection = await agent.modules.connections.findById(connectionId)
 
         if (connection) {
-          await agent.proofs.sendProblemReport({
+          await agent.modules.proofs.sendProblemReport({
             proofRecordId: proofRecord.id,
             description: t('ProofRequest.Declined'),
           })
         }
 
-        await agent.proofs.declineRequest({ proofRecordId: proofRecord.id })
+        await agent.modules.proofs.declineRequest({ proofRecordId: proofRecord.id })
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
@@ -190,21 +192,21 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
   const dismissProofRequest = useCallback(async () => {
     if (agent && notificationType === NotificationType.ProofRequest) {
-      markProofAsViewed(agent, notification as ProofExchangeRecord)
+      markProofAsViewed(agent, notification as DidCommProofExchangeRecord)
     }
   }, [agent, notification, notificationType])
 
   const dismissBasicMessage = useCallback(async () => {
     if (agent && notificationType === NotificationType.BasicMessage) {
-      markMessageAsSeen(agent, notification as BasicMessageRecord)
+      markMessageAsSeen(agent, notification as DidCommBasicMessageRecord)
     }
   }, [agent, notification, notificationType])
 
   const declineCredentialOffer = useCallback(async () => {
     try {
-      const credentialId = (notification as CredentialExchangeRecord).id
+      const credentialId = (notification as DidCommCredentialExchangeRecord).id
       if (agent) {
-        await agent.credentials.declineOffer(credentialId)
+        await agent.modules.credentials.declineOffer(credentialId)
       }
     } catch (err: unknown) {
       const error = new BifoldError(t('Error.Title1028'), t('Error.Message1028'), (err as Error)?.message ?? err, 1028)
@@ -225,7 +227,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
     if (notificationType === NotificationType.ProofRequest) {
       usage = ModalUsage.ProofRequestDecline
-      if ((notification as ProofExchangeRecord).state === ProofState.Done) {
+      if ((notification as DidCommProofExchangeRecord).state === DidCommProofState.Done) {
         onSubmit = dismissProofRequest
       } else {
         onSubmit = declineProofRequest
@@ -252,7 +254,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
   useEffect(() => {
     const getDetails = async () => {
-      const { name, version } = parsedSchema(notification as CredentialExchangeRecord)
+      const { name, version } = parsedSchema(notification as DidCommCredentialExchangeRecord)
       const theirLabel = getConnectionName(connection, store.preferences.alternateContactNames)
       let details
       switch (notificationType) {
@@ -273,10 +275,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           }
           break
         case NotificationType.ProofRequest: {
-          const proofId = (notification as ProofExchangeRecord).id
-          let message: V2RequestPresentationMessage | V1RequestPresentationMessage | null | undefined
+          const proofId = (notification as DidCommProofExchangeRecord).id
+          let message: DidCommRequestPresentationV2Message | DidCommRequestPresentationV1Message | null | undefined
           try {
-            message = await agent?.proofs.findRequestMessage(proofId)
+            message = await agent?.modules.proofs.findRequestMessage(proofId)
           } catch (error) {
             logger.error('Error finding request message:', error as CredoError)
           }
@@ -284,11 +286,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           // message.comment is the common fallback title for both v1 and v2 proof requests
           let body: string = message?.comment ?? ''
 
-          if (message instanceof V1RequestPresentationMessage) {
+          if (message instanceof DidCommRequestPresentationV1Message) {
             body = message.indyProofRequest?.name ?? body
           }
 
-          if (message instanceof V2RequestPresentationMessage) {
+          if (message instanceof DidCommRequestPresentationV2Message) {
             // workaround for getting proof request name in v2 proof request
             // https://github.com/openwallet-foundation/credo-ts/blob/5f08bc67e3d1cc0ab98e7cce7747fedd2bf71ec1/packages/core/src/modules/proofs/protocol/v2/messages/V2RequestPresentationMessage.ts#L78
             const attachment = message.requestAttachments.find((attachment) => attachment.id === 'indy')
@@ -348,7 +350,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         onPress = () => {
           navigation.getParent()?.navigate(Stacks.ContactStack, {
             screen: Screens.Chat,
-            params: { connectionId: (notification as BasicMessageRecord).connectionId },
+            params: { connectionId: (notification as DidCommBasicMessageRecord).connectionId },
           })
         }
         onClose = dismissBasicMessage
@@ -364,8 +366,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.ProofRequest:
         if (
-          (notification as ProofExchangeRecord).state === ProofState.Done ||
-          (notification as ProofExchangeRecord).state === ProofState.PresentationReceived
+          (notification as DidCommProofExchangeRecord).state === DidCommProofState.Done ||
+          (notification as DidCommProofExchangeRecord).state === DidCommProofState.PresentationReceived
         ) {
           onPress = () => {
             navigation.getParent()?.navigate(Stacks.ContactStack, {
@@ -377,7 +379,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           onPress = () => {
             navigation.getParent()?.navigate(Stacks.ConnectionStack, {
               screen: Screens.Connection,
-              params: { proofId: (notification as ProofExchangeRecord).id },
+              params: { proofId: (notification as DidCommProofExchangeRecord).id },
             })
           }
         }

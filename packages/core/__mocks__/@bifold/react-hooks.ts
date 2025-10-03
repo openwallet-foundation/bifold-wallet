@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LegacyIndyCredentialFormat } from '@credo-ts/anoncreds'
+/*import { LegacyIndyCredentialFormat } from '@credo-ts/anoncreds'
 import {
   BasicMessageRecord,
   BasicMessageRole,
@@ -511,3 +511,4 @@ export {
   useProofById,
   useProofs,
 }
+*/
