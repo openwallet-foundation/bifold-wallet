@@ -86,7 +86,7 @@
     "react-native-screenguard": "^1.0.8-beta3",
     "react-native-screens": "4.4.0",
     "react-native-splash-screen": "^3.3.0",
-    "react-native-svg": "^15.0.0",
+    "react-native-svg": "~15.0.0",
     "react-native-tcp-socket": "^6.0.6",
     "react-native-toast-message": "^2.1.6",
     "react-native-uuid": "^2.0.1",

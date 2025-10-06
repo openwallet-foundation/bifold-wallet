@@ -66,7 +66,7 @@
     "react-native-screenguard": "1.0.8-beta3",
     "react": "^18.2.0",
     "typescript": "^5.0.4",
-    "react-native": "0.73.6",
+    "react-native": "0.73.11",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.0.24",
     "@react-navigation/core": "6.1.0",
