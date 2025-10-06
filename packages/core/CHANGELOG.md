@@ -1,5 +1,16 @@
 # @bifold/core
 
+## 2.7.5
+
+### Patch Changes
+
+- 83d6ce9: improve credential definition ID normalization and error handling in parsing functions
+- eaffaec: exporting more components
+- 56d9fb3: Update bcovrin leger config
+- 53169b9: fix: biometrics not triggering after app is backgrounded
+- 07ea6be: fix: unique banner messages
+- c4b153a: destructure results in credential definition and schema retrieval
+
 ## 2.7.4
 
 ### Patch Changes
