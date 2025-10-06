@@ -30,7 +30,6 @@ import { ToastType } from '../components/toast/BaseToast'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useAppAgent } from '../utils/agent'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { BaseDidCommMessage } from '@credo-ts/didcomm/BaseDidCommMessage'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
@@ -327,7 +326,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     for (const notification of notifications) {
       // no action taken for BasicMessageRecords
-      if ((notification as unknown as BaseDidCommMessage).type === 'DidCommBasicMessage') {
+      if ((notification as unknown as DidCommBasicMessage).type === 'DidCommBasicMessage') {
         logger?.info('Connection: DidCommBasicMessage, skipping')
         continue
       }

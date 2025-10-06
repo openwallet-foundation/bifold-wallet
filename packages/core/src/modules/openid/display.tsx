@@ -13,7 +13,7 @@ import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
 import { CredentialForDisplayId } from './types'
 import { detectImageMimeType, formatDate, getHostNameFromUrl, isDateString, sanitizeString } from './utils/utils'
 import { getOpenId4VcCredentialMetadata } from './metadata'
-import { Jwk } from '@credo-ts/core/modules/kms'
+import { Jwk } from '@credo-ts/core/build/modules/kms'
 
 function findDisplay<Display extends { locale?: string }>(display?: Display[]): Display | undefined {
   if (!display) return undefined
