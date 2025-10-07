@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Vibration, View, useWindowDimensions } from 'react-native'
-import { useOrientationChange, OrientationType } from 'react-native-orientation-locker'
+import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
 import { QrCodeScanError } from '../../types/error'
 
-interface Props {
+export interface ScanCameraProps {
   handleCodeScan: (value: string) => Promise<void>
   error?: QrCodeScanError | null
   enableCameraOnError?: boolean
   torchActive?: boolean
 }
-const ScanCamera: React.FC<Props> = ({ handleCodeScan, error, enableCameraOnError, torchActive }) => {
+const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCameraOnError, torchActive }) => {
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [cameraActive, setCameraActive] = useState(true)
   const orientationDegrees: { [key: string]: string } = {
