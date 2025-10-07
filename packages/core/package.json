@@ -48,7 +48,7 @@
     "@credo-ts/core": "0.5.17",
     "@credo-ts/indy-sdk-to-askar-migration": "0.5.17",
     "@credo-ts/indy-vdr": "0.5.17",
-    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch",
+    "@credo-ts/openid4vc": "0.5.17",
     "@credo-ts/push-notifications": "0.7.0",
     "@credo-ts/question-answer": "0.5.17",
     "@credo-ts/react-hooks": "0.6.1",
