@@ -53,12 +53,12 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   }, [setAlertModalVisible, setAuthenticated, usage])
 
   const onPINInputCompleted = useCallback(
-    async (p?: string) => {
+    async (userPinInput?: string) => {
       setLoading(true)
       setContinueDisabled(true)
-      const isPINVerified = await verifyPIN(p ? p : PIN)
+      const isPINVerified = await verifyPIN(userPinInput ? userPinInput : PIN)
       if (isPINVerified) {
-        setAuthenticated(usage === PINEntryUsage.ChangePIN ? p : true)
+        setAuthenticated(usage === PINEntryUsage.ChangePIN ? userPinInput : true)
       } else {
         if (inlineMessages.enabled) {
           setInlineMessageField({
@@ -136,7 +136,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   })
 
   return (
-    <KeyboardView keyboardAvoiding={false}>
+    <KeyboardView keyboardAvoiding={true}>
       <View style={style.screenContainer}>
         <View>
           {usage === PINEntryUsage.ChangeBiometrics && (
@@ -155,19 +155,19 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
             )}
           </ThemedText>
           <PINInput
-            onPINChanged={async (p: string) => {
-              setPIN(p)
-              if (p.length === minPINLength) {
+            onPINChanged={async (userPinInput: string) => {
+              setPIN(userPinInput)
+              if (userPinInput.length === minPINLength) {
                 Keyboard.dismiss()
-                usage === PINEntryUsage.ChangePIN && (await onPINInputCompleted(p))
+                usage === PINEntryUsage.ChangePIN && (await onPINInputCompleted(userPinInput))
               }
             }}
             testID={testIdWithKey(inputTestId[usage])}
             accessibilityLabel={inputLabelText[usage]}
             autoFocus={true}
             inlineMessage={inlineMessageField}
-            onSubmitEditing={async (p) => {
-              await onPINInputCompleted(p)
+            onSubmitEditing={async (userPinInput) => {
+              await onPINInputCompleted(userPinInput)
             }}
           />
         </View>

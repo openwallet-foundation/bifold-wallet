@@ -45,7 +45,7 @@ const PINInputComponent = (
   const theme = PINScreensConfig.useNewPINDesign ? SeparatedPINInputTheme : PINInputTheme
 
   const [PIN, setPIN] = useState('')
-  const [showPIN, setShowPIN] = useState(PINScreensConfig.useNewPINDesign ? true : false)
+  const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
   const cellHeight = 48
 

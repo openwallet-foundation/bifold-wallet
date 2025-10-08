@@ -96,7 +96,6 @@ export const PINRules: PINValidationRules = {
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
   most_used_pins: false,
-  nist_pin_length: 6,
 }
 
 export const domain = 'didcomm://invite'

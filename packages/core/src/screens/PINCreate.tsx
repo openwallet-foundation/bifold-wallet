@@ -148,7 +148,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   }, [])
 
   return explained ? (
-    <KeyboardView keyboardAvoiding={false}>
+    <KeyboardView keyboardAvoiding={true}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
@@ -176,9 +176,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           {!PINScreensConfig.useNewPINDesign && (
             <PINInput
               label={t('PINCreate.ReenterPIN')}
-              onPINChanged={(p: string) => {
-                setPINTwo(p)
-                if (p.length === minPINLength) {
+              onPINChanged={(userPinInput: string) => {
+                setPINTwo(userPinInput)
+                if (userPinInput.length === minPINLength) {
                   Keyboard.dismiss()
                   const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
                   if (reactTag) {
@@ -221,6 +221,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           PINOne={PIN}
           title={t('Screens.CreatePIN')}
           visible={PINConfirmModalVisible}
+          isLoading={isLoading}
         />
       </View>
     </KeyboardView>

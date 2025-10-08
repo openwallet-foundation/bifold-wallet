@@ -86,7 +86,6 @@ export const defaultConfig: Config = {
   },
   PINScreensConfig: {
     useNewPINDesign: false,
-    nistPINRequirements: false,
   },
 }
 

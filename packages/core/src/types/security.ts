@@ -26,7 +26,6 @@ export interface PINValidationRules {
   no_even_or_odd_series_of_numbers: boolean
   no_cross_pattern: boolean
   most_used_pins: boolean
-  nist_pin_length: number
 }
 
 export interface PINSecurityParams {

@@ -15,6 +15,7 @@ describe('ConfirmPINModal Component', () => {
           onConfirmPIN={jest.fn()}
           title="Title"
           visible={true}
+          isLoading={false}
         />
       </BasicAppContext>
     )
@@ -30,6 +31,7 @@ describe('ConfirmPINModal Component', () => {
           onConfirmPIN={jest.fn()}
           title="Title"
           visible={true}
+          isLoading={false}
         />
       </BasicAppContext>
     )

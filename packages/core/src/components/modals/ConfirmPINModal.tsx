@@ -11,19 +11,21 @@ import PINScreenTitleText from '../../components/misc/PINScreenTitleText'
 import { InlineMessageProps } from '../../components/inputs/InlineErrorText'
 import PINInput from '../../components/inputs/PINInput'
 import usePreventScreenCapture from '../../hooks/screen-capture'
+import { useAnimatedComponents } from '../../contexts/animated-components'
 import { usePINValidation } from '../../hooks/usePINValidation'
 import { useTheme } from '../../contexts/theme'
 import { TOKENS, useServices } from '../../container-api'
 import { testIdWithKey } from '../../utils/testable'
 
 interface ConfirmPINModalProps {
-  errorMessage: InlineMessageProps | undefined
+  errorMessage?: InlineMessageProps
   modalUsage: ConfirmPINModalUsage
   onBackPressed: () => void
   onConfirmPIN: (...args: any[]) => void
   PINOne?: string
   title: string
   visible: boolean
+  isLoading: boolean
 }
 
 export enum ConfirmPINModalUsage {
@@ -39,19 +41,26 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
   PINOne = '',
   title = '',
   visible = false,
+  isLoading = false,
 }: ConfirmPINModalProps) => {
   const { ColorPalette, NavigationTheme } = useTheme()
   const [PINTwo, setPINTwo] = useState('')
   const { t } = useTranslation()
   const [PINHeader, { preventScreenCapture }] = useServices([TOKENS.COMPONENT_PIN_HEADER, TOKENS.CONFIG])
-  const { modalState } = usePINValidation(PINOne, PINTwo)
   usePreventScreenCapture(preventScreenCapture)
+  const { modalState } = usePINValidation(PINOne, PINTwo)
+  const { ButtonLoading } = useAnimatedComponents()
 
   const style = StyleSheet.create({
     container: {
       flex: 1,
       padding: 20,
       backgroundColor: ColorPalette.brand.primaryBackground,
+    },
+    loadingContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
     },
   })
 
@@ -73,11 +82,11 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
         <PINHeader />
         <PINInput
           label={t('PINCreateConfirm.PINInputLabel')}
-          onPINChanged={async (pinTwo: string) => {
-            setPINTwo(pinTwo)
-            if (pinTwo.length === PINOne.length) {
+          onPINChanged={async (userInputtedPIN: string) => {
+            setPINTwo(userInputtedPIN)
+            if (userInputtedPIN.length === PINOne.length) {
               Keyboard.dismiss()
-              await onConfirmPIN(PINOne, pinTwo)
+              await onConfirmPIN(userInputtedPIN)
             }
           }}
           testID={testIdWithKey('EnterPIN')}
@@ -85,6 +94,11 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
           autoFocus={false}
           inlineMessage={errorMessage}
         />
+        {isLoading && (
+          <View style={style.loadingContainer}>
+            <ButtonLoading size={50} />
+          </View>
+        )}
         {modalState.visible && (
           <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
         )}

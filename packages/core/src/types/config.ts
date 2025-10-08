@@ -52,7 +52,6 @@ export interface Config {
 }
 
 export interface PINScreensConfig {
-  nistPINRequirements: boolean
   useNewPINDesign: boolean
 }
 

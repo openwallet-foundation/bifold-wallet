@@ -8,6 +8,17 @@ interface PINScreenTitleTextProps {
 }
 
 const PINScreenTitleText = ({ header, subheader }: PINScreenTitleTextProps) => {
+  const style = StyleSheet.create({
+    container: {
+      paddingTop: 16,
+      paddingBottom: 32,
+    },
+    header: {
+      marginBottom: 16,
+    },
+    subheader: {},
+  })
+
   return (
     <View style={style.container}>
       <ThemedText variant="bold" style={style.header}>
@@ -19,16 +30,5 @@ const PINScreenTitleText = ({ header, subheader }: PINScreenTitleTextProps) => {
     </View>
   )
 }
-
-const style = StyleSheet.create({
-  container: {
-    paddingTop: 16,
-    paddingBottom: 32,
-  },
-  header: {
-    marginBottom: 16,
-  },
-  subheader: {},
-})
 
 export default PINScreenTitleText

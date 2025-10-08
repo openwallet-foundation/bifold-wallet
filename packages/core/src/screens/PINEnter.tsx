@@ -315,6 +315,10 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       marginTop: 16,
       marginBottom: 24,
     },
+    loadingContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   })
 
   const HelpText = useMemo(() => {
@@ -356,7 +360,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ])
 
   return (
-    <KeyboardView keyboardAvoiding={false}>
+    <KeyboardView keyboardAvoiding={true}>
       <View style={style.screenContainer}>
         <View>
           <ThemedText variant="bold" style={style.appTitle}>
@@ -369,19 +373,19 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             {HelpText}
           </Pressable>
           <PINInput
-            onPINChanged={(p: string) => {
-              setPIN(p)
-              if (p.length === minPINLength) {
+            onPINChanged={(userPinInput: string) => {
+              setPIN(userPinInput)
+              if (userPinInput.length === minPINLength) {
                 Keyboard.dismiss()
-                onPINInputCompleted(p)
+                onPINInputCompleted(userPinInput)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
             accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
             inlineMessage={inlineMessageField}
-            onSubmitEditing={(p: string) => {
-              onPINInputCompleted(p)
+            onSubmitEditing={(userPinInput: string) => {
+              onPINInputCompleted(userPinInput)
             }}
           />
           {!PINScreensConfig.useNewPINDesign && (
@@ -410,6 +414,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             </ThemedText>
           )}
         </View>
+        {PINScreensConfig.useNewPINDesign && !continueEnabled && (
+          <View style={style.loadingContainer}>
+            <ButtonLoading size={50} />
+          </View>
+        )}
         <View>
           {!PINScreensConfig.useNewPINDesign && (
             <View style={style.buttonContainer}>

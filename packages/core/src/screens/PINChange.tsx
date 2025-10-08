@@ -58,7 +58,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     TOKENS.COMPONENT_PIN_HEADER,
   ])
 
-  const [verifyPINModalVisible, setverifyPINModalVisible] = useState(PINScreensConfig.useNewPINDesign)
+  const [verifyPINModalVisible, setVerifyPINModalVisible] = useState(PINScreensConfig.useNewPINDesign)
   const [confirmPINModalVisible, setPINConfirmModalVisible] = useState(false)
 
   const {
@@ -70,7 +70,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     PINSecurity,
     clearModal,
     setModalState,
-  } = usePINValidation(PIN, PIN)
+  } = usePINValidation(PIN, PINTwo)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -83,6 +83,10 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     // below used as helpful labels for views, no properties needed atp
     contentContainer: {},
     controlsContainer: {},
+    loadingContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   })
 
   const onVerifyPINModalBackPressed = useCallback(() => {
@@ -96,9 +100,9 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const onAuthenticationComplete = useCallback(
     (pin: string) => {
       setPINOld(pin)
-      setverifyPINModalVisible(false)
+      setVerifyPINModalVisible(false)
     },
-    [setPINOld, setverifyPINModalVisible]
+    [setPINOld, setVerifyPINModalVisible]
   )
 
   const onCancelAuth = useCallback(() => {
@@ -191,10 +195,10 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     }
   }
 
-  const handleConfirmPIN = async (pinTwo: string) => {
+  const handleConfirmPIN = async (userPinInput: string) => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(PIN, pinTwo)
+      const valid = validatePINEntry(PIN, userPinInput)
       if (valid) {
         const success = await rekeyWallet(agent, PINOld, PIN, store.preferences.useBiometry)
         if (success) {
@@ -225,7 +229,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   }, [inlineMessages, isLoading, PIN])
 
   return (
-    <KeyboardView keyboardAvoiding={false}>
+    <KeyboardView keyboardAvoiding={true}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />
@@ -242,10 +246,10 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
           )}
           <PINInput
             label={t('PINChange.EnterPINTitle')}
-            onPINChanged={async (p: string) => {
-              setPIN(p)
-              if (p.length === minPINLength && PINScreensConfig.useNewPINDesign) {
-                await handleConfirmPINModal(p)
+            onPINChanged={async (userPinInput: string) => {
+              setPIN(userPinInput)
+              if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
+                await handleConfirmPINModal(userPinInput)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
@@ -257,8 +261,8 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
           {!PINScreensConfig.useNewPINDesign && (
             <PINInput
               label={t('PINCreateConfirm.PINInputLabel')}
-              onPINChanged={async (p: string) => {
-                setPINTwo(p)
+              onPINChanged={async (userPinInput: string) => {
+                setPINTwo(userPinInput)
               }}
               testID={testIdWithKey('ConfirmPIN')}
               accessibilityLabel={t('PINCreateConfirm.PINInputLabel')}
@@ -298,6 +302,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
       />
       <ConfirmPINModal
         errorMessage={inlineMessageField2}
+        isLoading={isLoading}
         modalUsage={ConfirmPINModalUsage.PIN_CHANGE}
         onBackPressed={onConfirmPINModalBackPressed}
         onConfirmPIN={handleConfirmPIN}
