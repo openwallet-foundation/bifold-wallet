@@ -3,7 +3,7 @@ import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
-import { OpenId4VcSiopVerifiedAuthorizationRequest } from '@credo-ts/openid4vc'
+import { OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
 import { Linking } from 'react-native'
 
 function handleTextResponse(text: string): ParseInvitationResult {
@@ -229,7 +229,7 @@ export const shareProof = async ({
   allowUntrustedCertificate = false,
 }: {
   agent: Agent
-  authorizationRequest: OpenId4VcSiopVerifiedAuthorizationRequest
+  authorizationRequest: OpenId4VpAuthorizationRequestPayload
   credentialsForRequest: DifPexCredentialsForRequest
   selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
   allowUntrustedCertificate?: boolean
@@ -256,12 +256,14 @@ export const shareProof = async ({
 
   try {
     // Temp solution to add and remove the trusted certicaite
-    const certificate =
-      authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest.jwt) : null
+    // const certificate =
+    //   authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest) : null
 
-    const result = await withTrustedCertificate(agent, certificate, () =>
-      agent.modules.openId4VcHolder.acceptSiopAuthorizationRequest({
-        authorizationRequest,
+    // Need to figure out how to include this certificate, does not seem like the JWT is included in the authorizationRequest any more.
+
+    const result = await withTrustedCertificate(agent, null, () =>
+      agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
+        authorizationRequest: authorizationRequest,
         presentationExchange: {
           credentials,
         },

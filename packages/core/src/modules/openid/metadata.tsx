@@ -1,28 +1,32 @@
 import type { W3cCredentialRecord, SdJwtVcRecord, MdocRecord } from '@credo-ts/core'
-import type { OpenId4VciCredentialSupported, OpenId4VciIssuerMetadataDisplay } from '@credo-ts/openid4vc'
-import type { MetadataDisplay } from '@sphereon/oid4vci-common'
-import { CredentialSubjectRecord } from './types'
+import type { OpenId4VciCredentialConfigurationSupported, OpenId4VciCredentialIssuerMetadataDisplay } from '@credo-ts/openid4vc'
+import { CredentialDisplay, CredentialSubjectRecord } from './types'
 
 export interface OpenId4VcCredentialMetadata {
   credential: {
-    display?: OpenId4VciCredentialSupported['display']
-    order?: OpenId4VciCredentialSupported['order']
+    display?: CredentialDisplay[]
+    order?: unknown
     credential_subject?: CredentialSubjectRecord
   }
   issuer: {
-    display?: OpenId4VciIssuerMetadataDisplay[]
+    display?: OpenId4VciCredentialIssuerMetadataDisplay[]
     id: string
   }
 }
 
+type CredentialSupported = {
+  display: CredentialDisplay[],
+  order?: unknown,
+}
+
 export type OpenId4VcCredentialMetadataExtended = Partial<
-  OpenId4VciCredentialSupported & { credential_subject: CredentialSubjectRecord }
+  CredentialSupported & { credential_subject: CredentialSubjectRecord }
 >
 const openId4VcCredentialMetadataKey = '_bifold/openId4VcCredentialMetadata'
 
 export function extractOpenId4VcCredentialMetadata(
-  credentialMetadata: Partial<OpenId4VciCredentialSupported & { credential_subject: CredentialSubjectRecord }>,
-  serverMetadata: { display?: MetadataDisplay[]; id: string }
+  credentialMetadata: Partial<CredentialSupported & { credential_subject: CredentialSubjectRecord }>,
+  serverMetadata: { display?: OpenId4VciCredentialIssuerMetadataDisplay[]; id: string }
 ): OpenId4VcCredentialMetadata {
   return {
     credential: {

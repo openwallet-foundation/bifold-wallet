@@ -37,7 +37,7 @@ function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetada
 
       if (openidIssuerDisplay.logo) {
         issuerDisplay.logo = {
-          url: openidIssuerDisplay.logo?.url,
+          uri: openidIssuerDisplay.logo?.uri,
           altText: openidIssuerDisplay.logo?.alt_text,
         }
       }
@@ -47,8 +47,8 @@ function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetada
     const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
     if (openidCredentialDisplay && !issuerDisplay.logo && openidCredentialDisplay.logo) {
       issuerDisplay.logo = {
-        url: openidCredentialDisplay.logo?.url,
-        altText: openidCredentialDisplay.logo?.alt_text,
+        uri: openidCredentialDisplay.logo?.uri,
+        altText: openidCredentialDisplay.logo?.altText,
       }
     }
   }
@@ -75,7 +75,7 @@ function getIssuerDisplay(metadata: OpenId4VcCredentialMetadata | null | undefin
   issuerDisplay.name = openidIssuerDisplay?.name
   issuerDisplay.logo = openidIssuerDisplay?.logo
     ? {
-        url: openidIssuerDisplay.logo?.url,
+        uri: openidIssuerDisplay.logo?.uri,
         altText: openidIssuerDisplay.logo?.alt_text,
       }
     : undefined
@@ -84,8 +84,8 @@ function getIssuerDisplay(metadata: OpenId4VcCredentialMetadata | null | undefin
   const openidCredentialDisplay = findDisplay(metadata?.credential.display)
   if (openidCredentialDisplay && !issuerDisplay.logo && openidCredentialDisplay.logo) {
     issuerDisplay.logo = {
-      url: openidCredentialDisplay.logo?.url,
-      altText: openidCredentialDisplay.logo?.alt_text,
+      uri: openidCredentialDisplay.logo?.uri,
+      altText: openidCredentialDisplay.logo?.altText,
     }
   }
 
@@ -118,11 +118,11 @@ function getW3cIssuerDisplay(
   const issuerJson = typeof jffCredential.issuer === 'string' ? undefined : jffCredential.issuer
 
   // Issuer Display from JFF
-  if (!issuerDisplay.logo || !issuerDisplay.logo.url) {
+  if (!issuerDisplay.logo || !issuerDisplay.logo.uri) {
     issuerDisplay.logo = issuerJson?.logoUrl
-      ? { url: issuerJson?.logoUrl }
+      ? { uri: issuerJson?.logoUrl }
       : issuerJson?.image
-      ? { url: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
+      ? { uri: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
       : undefined
   }
 
@@ -144,12 +144,12 @@ function getCredentialDisplay(
     const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
     credentialDisplay.name = openidCredentialDisplay?.name
     credentialDisplay.description = openidCredentialDisplay?.description
-    credentialDisplay.textColor = openidCredentialDisplay?.text_color
-    credentialDisplay.backgroundColor = openidCredentialDisplay?.background_color
-    credentialDisplay.backgroundImage = openidCredentialDisplay?.background_image
+    credentialDisplay.textColor = openidCredentialDisplay?.textColor
+    credentialDisplay.backgroundColor = openidCredentialDisplay?.backgroundColor
+    credentialDisplay.backgroundImage = openidCredentialDisplay?.backgroundImage
       ? {
-          url: openidCredentialDisplay.background_image.url,
-          altText: openidCredentialDisplay.background_image.alt_text,
+          uri: openidCredentialDisplay.backgroundImage.uri,
+          altText: openidCredentialDisplay.backgroundImage.altText,
         }
       : undefined
     credentialDisplay.logo = openidCredentialDisplay?.logo
@@ -221,13 +221,13 @@ function getMdocCredentialDisplay(
     if (openidCredentialDisplay) {
       credentialDisplay.name = openidCredentialDisplay.name
       credentialDisplay.description = openidCredentialDisplay.description
-      credentialDisplay.textColor = openidCredentialDisplay.text_color
-      credentialDisplay.backgroundColor = openidCredentialDisplay.background_color
+      credentialDisplay.textColor = openidCredentialDisplay.textColor
+      credentialDisplay.backgroundColor = openidCredentialDisplay.backgroundColor
 
-      if (openidCredentialDisplay.background_image) {
+      if (openidCredentialDisplay.backgroundImage) {
         credentialDisplay.backgroundImage = {
-          url: openidCredentialDisplay.background_image.url,
-          altText: openidCredentialDisplay.background_image.alt_text,
+          uri: openidCredentialDisplay.backgroundImage.uri,
+          altText: openidCredentialDisplay.backgroundImage.altText,
         }
       }
 

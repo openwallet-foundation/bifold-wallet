@@ -34,7 +34,7 @@ import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
 // import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
-import { ariesAskar } from '@hyperledger/aries-askar-react-native'
+import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
 
 interface GetAgentModulesOptions {
@@ -64,10 +64,9 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     })
   }
 
+  const askarStoreValue = 'bifoldAskar';
+
   return {
-    askar: new AskarModule({
-      ariesAskar,
-    }),
     anoncreds: new AnonCredsModule({
       anoncreds,
       registries: [new IndyVdrAnonCredsRegistry()],
@@ -105,16 +104,20 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
         }),
       ],
     }),
-    mediationRecipient: new DidCommMediationRecipientModule({
-      mediatorInvitationUrl: mediatorInvitationUrl,
-      mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
-    }),
+    // mediationRecipient: new DidCommMediationRecipientModule({
+    //   mediatorInvitationUrl: mediatorInvitationUrl,
+    //   mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
+    // }),
     //pushNotificationsFcm: new PushNotificationsFcmModule(),
     //pushNotificationsApns: new PushNotificationsApnsModule(),
     didcomm: new DidCommModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
     oob: new DidCommOutOfBandModule(),
-    basicMessages: new DidCommBasicMessagesModule()
+    basicMessages: new DidCommBasicMessagesModule(),
+    askar: new AskarModule({
+      askar,
+      store: { id: askarStoreValue, key: askarStoreValue },
+    }),
   }
 }
 

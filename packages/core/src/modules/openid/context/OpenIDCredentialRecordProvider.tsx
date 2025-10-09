@@ -207,8 +207,8 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       capture_base: 'none',
       type: BrandingOverlayType.Branding10,
       primary_background_color: credentialDisplay.display.backgroundColor,
-      background_image: credentialDisplay.display.backgroundImage?.url,
-      logo: credentialDisplay.display.logo?.url,
+      background_image: credentialDisplay.display.backgroundImage?.uri,
+      logo: credentialDisplay.display.logo?.uri,
     })
     const ocaBundle: CredentialOverlay<BrandingOverlay> = {
       ..._bundle,
