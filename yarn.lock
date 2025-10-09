@@ -1977,6 +1977,7 @@ __metadata:
     "@hyperledger/indy-vdr-react-native": "npm:0.2.3"
     "@hyperledger/indy-vdr-shared": "npm:0.2.3"
     "@openwallet-foundation/askar-react-native": "npm:0.5.0-alpha-20260121132554"
+    "@openwallet-foundation/askar-shared": "npm:^0.4.2"
     "@react-native-async-storage/async-storage": "npm:~2.2.0"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
     "@react-native-community/netinfo": "npm:~11.4.1"

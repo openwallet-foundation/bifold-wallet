@@ -2,7 +2,6 @@ import {
   OpenId4VcCredentialHolderBinding,
   OpenId4VciCredentialBindingOptions,
   OpenId4VciCredentialFormatProfile,
-  OpenId4VciCredentialSupportedWithId,
   OpenId4VciRequestTokenResponse,
   OpenId4VciResolvedCredentialOffer,
 } from '@credo-ts/openid4vc'
@@ -12,6 +11,7 @@ import {
   DidKey,
   JwkDidCreateOptions,
   KeyDidCreateOptions,
+  Kms,
   Mdoc,
   MdocRecord,
   SdJwtVcRecord,
@@ -24,7 +24,6 @@ import {
   setOpenId4VcCredentialMetadata,
   temporaryMetaVanillaObject,
 } from './metadata'
-import { KeyBackend } from '@hyperledger/aries-askar-react-native'
 
 const KnownJwaSignatureAlgorithms = {
   HS256: 'HS256',
@@ -99,13 +98,13 @@ export async function acquirePreAuthorizedAccessToken({
 export const customCredentialBindingResolver = async ({
   agent,
   supportedDidMethods,
-  keyType,
   supportsAllDidMethods,
   supportsJwk,
   credentialFormat,
-  supportedCredentialId,
   resolvedCredentialOffer,
   pidSchemes,
+  credentialConfigurationId,
+  proofTypes
 }: Partial<OpenId4VciCredentialBindingOptions> & {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
@@ -127,28 +126,10 @@ export const customCredentialBindingResolver = async ({
     didMethod = 'key'
   }
 
-  const offeredCredentialConfiguration = supportedCredentialId
-    ? resolvedCredentialOffer.offeredCredentialConfigurations[supportedCredentialId]
-    : undefined
-
-  const shouldKeyBeHardwareBackedForMsoMdoc =
-    offeredCredentialConfiguration?.format === OpenId4VciCredentialFormatProfile.MsoMdoc &&
-    pidSchemes?.msoMdocDoctypes.includes(offeredCredentialConfiguration.doctype)
-
-  const shouldKeyBeHardwareBackedForSdJwtVc =
-    offeredCredentialConfiguration?.format === 'vc+sd-jwt' &&
-    pidSchemes?.sdJwtVcVcts.includes(offeredCredentialConfiguration.vct)
-
-  const shouldKeyBeHardwareBacked = shouldKeyBeHardwareBackedForSdJwtVc || shouldKeyBeHardwareBackedForMsoMdoc
-
-  if (!keyType) {
-    throw new Error('keyType is required!')
-  }
-
-  const key = await agent.modules.wallet.createKey({
-    keyType,
-    keyBackend: shouldKeyBeHardwareBacked ? KeyBackend.SecureElement : KeyBackend.Software,
+  const key = await agent.kms.createKeyForSignatureAlgorithm({
+    algorithm: proofTypes?.jwt?.supportedSignatureAlgorithms[0] ?? 'EdDSA',
   })
+  const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk);
 
   if (didMethod) {
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({
@@ -172,7 +153,7 @@ export const customCredentialBindingResolver = async ({
     }
 
     return {
-      didUrl: verificationMethodId,
+      didUrls: [verificationMethodId],
       method: 'did',
     }
   }
@@ -185,7 +166,7 @@ export const customCredentialBindingResolver = async ({
   ) {
     return {
       method: 'jwk',
-      jwk: '' //getJwkFromKey(key),
+      keys: [publicJwk] // Need to replace getJwkFromKey here
     }
   }
 
@@ -212,10 +193,10 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   pidSchemes?: { sdJwtVcVcts: Array<string>; msoMdocDoctypes: Array<string> }
 }) => {
   const offeredCredentialsToRequest = credentialConfigurationIdsToRequest
-    ? resolvedCredentialOffer.offeredCredentials.filter((offered) =>
-        credentialConfigurationIdsToRequest.includes(offered.id)
+    ? Object.entries(resolvedCredentialOffer.offeredCredentialConfigurations).filter(([k,v]) =>
+        credentialConfigurationIdsToRequest.includes(k)
       )
-    : [resolvedCredentialOffer.offeredCredentials[0]]
+    : [Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0]]
 
   if (offeredCredentialsToRequest.length === 0) {
     throw new Error(
@@ -223,7 +204,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
     )
   }
 
-  const credentials = await agent.modules.openId4VcHolder.requestCredentials({
+  const credentials = await agent.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
     ...tokenResponse,
     clientId,
@@ -238,20 +219,20 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
     ],
     credentialBindingResolver: async ({
       supportedDidMethods,
-      keyType,
+      proofTypes,
       supportsAllDidMethods,
       supportsJwk,
       credentialFormat,
-      supportedCredentialId,
+      credentialConfigurationId,
     }: OpenId4VciCredentialBindingOptions) => {
       return customCredentialBindingResolver({
         agent,
         supportedDidMethods,
-        keyType,
+        proofTypes,
         supportsAllDidMethods,
         supportsJwk,
         credentialFormat,
-        supportedCredentialId,
+        credentialConfigurationId,
         resolvedCredentialOffer,
         pidSchemes,
       })
@@ -293,10 +274,10 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
-    resolvedCredentialOffer.offeredCredentials[0] as OpenId4VciCredentialSupportedWithId,
+    Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0] as any,
     {
-      id: resolvedCredentialOffer.metadata.issuer,
-      display: resolvedCredentialOffer.metadata.credentialIssuerMetadata.display,
+      id: resolvedCredentialOffer.metadata.credentialIssuer.credential_issuer, // This might not be correct
+      display: resolvedCredentialOffer.metadata.credentialIssuer.display,
     }
   )
 
