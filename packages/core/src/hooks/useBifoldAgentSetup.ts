@@ -1,4 +1,4 @@
-import { Agent } from '@credo-ts/core'
+import { Agent, CredoError } from '@credo-ts/core'
 import { DidCommHttpOutboundTransport, DidCommWsOutboundTransport } from '@credo-ts/didcomm'
 import { IndyVdrPoolService } from '@credo-ts/indy-vdr'
 import { agentDependencies } from '@credo-ts/react-native'
@@ -61,6 +61,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
           //   id: walletSecret.id,
           //   key: walletSecret.key,
           // },
+          // FORK TODO: This config appears to be deprecated, but it's not obvious what the new equivalent is. 
           logger,
           autoUpdateStorageOnStartup: true,
         },
@@ -138,8 +139,17 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       logger.info('Migrating if required...')
       await migrateIfRequired(newAgent, walletSecret)
 
-      logger.info('Initializing agent...')
-      await newAgent.initialize()
+      try {
+        logger.info('Initializing agent...')
+        await newAgent.initialize()
+      } catch (e: any) {
+        logger.error('Stack: ' + (e as CredoError).stack)
+        logger.error('Message: ' + (e as CredoError).message)
+        logger.error((e as CredoError).cause?.stack ?? 'No cause stack');
+        logger.error((e as CredoError).cause?.message ?? 'No cause message');
+        throw e;
+      }
+      
 
       logger.info('Creating link secret if required...')
       await createLinkSecretIfRequired(newAgent)

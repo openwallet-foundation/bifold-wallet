@@ -81,6 +81,8 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     })
   }
 
+  const askarStoreValue = 'bifoldAskar';
+
   return {
     askar: new AskarModule({
       ariesAskar: askar,
@@ -122,10 +124,10 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
         }),
       ],
     }),
-    mediationRecipient: new DidCommMediationRecipientModule({
-      mediatorInvitationUrl: mediatorInvitationUrl,
-      mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
-    }),
+    // mediationRecipient: new DidCommMediationRecipientModule({
+    //   mediatorInvitationUrl: mediatorInvitationUrl,
+    //   mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
+    // }),
     //pushNotificationsFcm: new PushNotificationsFcmModule(),
     //pushNotificationsApns: new PushNotificationsApnsModule(),
     didcomm: new DidCommModule(),
@@ -140,7 +142,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       ],
     }),
     oob: new DidCommOutOfBandModule(),
-    basicMessages: new DidCommBasicMessagesModule()
+    basicMessages: new DidCommBasicMessagesModule(),
   }
 }
 

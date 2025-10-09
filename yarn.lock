@@ -1840,6 +1840,7 @@ __metadata:
     "@hyperledger/indy-vdr-react-native": "npm:0.2.3"
     "@hyperledger/indy-vdr-shared": "npm:0.2.3"
     "@openwallet-foundation/askar-react-native": "npm:0.4.3"
+    "@openwallet-foundation/askar-shared": "npm:^0.4.2"
     "@react-native-async-storage/async-storage": "npm:~2.2.0"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
     "@react-native-community/netinfo": "npm:~11.4.1"
@@ -19386,7 +19387,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.12.1, ws@npm:^8.13.0":
+"ws@npm:^8.12.1":
+  version: 8.18.3
+  resolution: "ws@npm:8.18.3"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10c0/eac918213de265ef7cb3d4ca348b891a51a520d839aa51cdb8ca93d4fa7ff9f6ccb339ccee89e4075324097f0a55157c89fa3f7147bde9d8d7e90335dc087b53
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.13.0":
   version: 8.19.0
   resolution: "ws@npm:8.19.0"
   peerDependencies:
