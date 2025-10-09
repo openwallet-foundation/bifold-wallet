@@ -84,7 +84,7 @@ const config = mergeConfig(defaultConfig, {
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
     unstable_enablePackageExports: false,
-    unstable_conditionNames: ['react-native', 'require', 'browser'],
+    unstable_conditionNames: ['react-native', 'browser', 'import', 'require'],
   },
   watchFolders: combinedWatchFolders,
 })
