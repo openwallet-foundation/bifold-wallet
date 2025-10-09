@@ -309,7 +309,8 @@
     "ChangeBiometricsInputLabelParenthesis": "(Required)",
     "ForgotPINLink": "Forgot your PIN?",
     "ForgotPINModalTitle": "Forgot your PIN?",
-    "ForgotPINModalDescription": "Forgot your PIN? You'll need to reinstall and setup your wallet again."
+    "ForgotPINModalDescription": "Forgot your PIN? You'll need to reinstall and setup your wallet again.",
+    "Loading": "Logging in"
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked",

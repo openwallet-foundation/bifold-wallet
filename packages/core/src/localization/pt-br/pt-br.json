@@ -291,7 +291,8 @@
     "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
     "ForgotPINLink": "Forgot your PIN? (PT-BR)",
     "ForgotPINModalTitle": "Forgot your PIN? (PT-BR)",
-    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)"
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)",
+    "Loading": "Logging in (PT-BR)"
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked (PT-BR)",

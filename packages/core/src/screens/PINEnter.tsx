@@ -285,7 +285,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     helpText: {
       alignSelf: 'auto',
       textAlign: 'left',
-      marginBottom: 24,
+      marginBottom: PINScreensConfig.useNewPINDesign ? 24 : 16,
     },
     helpTextSubtitle: {
       alignSelf: 'auto',
@@ -302,8 +302,9 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       marginBottom: 20,
     },
     forgotPINText: {
-      fontSize: 16,
-      textAlign: 'center',
+      fontSize: PINScreensConfig.useNewPINDesign ? 16 : 20,
+      textAlign: PINScreensConfig.useNewPINDesign ? 'center' : 'left',
+      color: PINScreensConfig.useNewPINDesign ? '' : ColorPalette.brand.link,
     },
     buildNumberText: {
       fontSize: 14,
@@ -324,7 +325,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const HelpText = useMemo(() => {
     const showHelpText = store.lockout.displayNotification || biometricsEnrollmentChange || biometricsErr
     let header = t('PINEnter.Title')
-    let subheader = t('PINEnter.EnterPIN')
+    let subheader = t('PINEnter.SubText')
     if (store.lockout.displayNotification) {
       header = t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })
       subheader = t('PINEnter.ReEnterPIN')
@@ -339,14 +340,18 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     }
     return (
       <>
-        <ThemedText variant={showHelpText ? 'normal' : 'headingThree'} style={style.helpText}>
+        <ThemedText
+          variant={showHelpText ? 'normal' : 'headingThree'}
+          style={PINScreensConfig.useNewPINDesign ? style.helpText : style.helpTextSubtitle}
+        >
           {header}
         </ThemedText>
-        {
-          <ThemedText variant={'normal'} style={style.helpTextSubtitle}>
-            {subheader}
-          </ThemedText>
-        }
+        <ThemedText
+          variant={PINScreensConfig.useNewPINDesign ? 'normal' : 'labelSubtitle'}
+          style={PINScreensConfig.useNewPINDesign ? style.helpTextSubtitle : style.helpText}
+        >
+          {subheader}
+        </ThemedText>
       </>
     )
   }, [
@@ -357,21 +362,29 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     biometricsErr,
     store.preferences.autoLockTime,
     style.helpTextSubtitle,
+    PINScreensConfig.useNewPINDesign,
   ])
 
   return (
     <KeyboardView keyboardAvoiding={true}>
       <View style={style.screenContainer}>
         <View>
-          <ThemedText variant="bold" style={style.appTitle}>
-            {t('PINEnter.AppTitle')}
-          </ThemedText>
+          {PINScreensConfig.useNewPINDesign && (
+            <ThemedText variant="bold" style={style.appTitle}>
+              {t('PINEnter.AppTitle')}
+            </ThemedText>
+          )}
           <Pressable
             onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}}
             testID={testIdWithKey('DeveloperCounter')}
           >
             {HelpText}
           </Pressable>
+          {!PINScreensConfig.useNewPINDesign && (
+            <ThemedText variant="bold" style={style.inputLabel}>
+              {t('PINEnter.EnterPIN')}
+            </ThemedText>
+          )}
           <PINInput
             onPINChanged={(userPinInput: string) => {
               setPIN(userPinInput)
@@ -417,6 +430,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         {PINScreensConfig.useNewPINDesign && !continueEnabled && (
           <View style={style.loadingContainer}>
             <ButtonLoading size={50} />
+            <ThemedText variant="normal">{t('PINEnter.Loading')}</ThemedText>
           </View>
         )}
         <View>

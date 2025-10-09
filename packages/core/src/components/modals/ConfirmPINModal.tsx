@@ -82,11 +82,11 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
         <PINHeader />
         <PINInput
           label={t('PINCreateConfirm.PINInputLabel')}
-          onPINChanged={async (userInputtedPIN: string) => {
-            setPINTwo(userInputtedPIN)
-            if (userInputtedPIN.length === PINOne.length) {
+          onPINChanged={async (userPinInput: string) => {
+            setPINTwo(userPinInput)
+            if (userPinInput.length === PINOne.length) {
               Keyboard.dismiss()
-              await onConfirmPIN(userInputtedPIN)
+              await onConfirmPIN(userPinInput)
             }
           }}
           testID={testIdWithKey('EnterPIN')}

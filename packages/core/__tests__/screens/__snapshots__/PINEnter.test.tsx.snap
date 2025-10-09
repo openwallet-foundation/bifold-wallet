@@ -50,24 +50,6 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
           }
         >
           <View>
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "marginBottom": 24,
-                    "marginTop": 16,
-                  },
-                ]
-              }
-            >
-              PINEnter.AppTitle
-            </Text>
             <View
               accessibilityState={
                 Object {
@@ -111,7 +93,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     },
                     Object {
                       "alignSelf": "auto",
-                      "marginBottom": 24,
+                      "marginBottom": 16,
                       "textAlign": "left",
                     },
                   ]
@@ -125,7 +107,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   Array [
                     Object {
                       "color": "#FFFFFF",
-                      "fontSize": 18,
+                      "fontSize": 14,
                       "fontWeight": "normal",
                     },
                     Object {
@@ -136,9 +118,26 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                   ]
                 }
               >
-                PINEnter.EnterPIN
+                PINEnter.SubText
               </Text>
             </View>
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "marginBottom": 16,
+                  },
+                ]
+              }
+            >
+              PINEnter.EnterPIN
+            </Text>
             <View
               style={
                 Object {
@@ -633,8 +632,9 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                     "fontWeight": "bold",
                   },
                   Object {
-                    "fontSize": 16,
-                    "textAlign": "center",
+                    "color": "#42803E",
+                    "fontSize": 20,
+                    "textAlign": "left",
                   },
                 ]
               }
@@ -807,24 +807,6 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
           }
         >
           <View>
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "marginBottom": 24,
-                    "marginTop": 16,
-                  },
-                ]
-              }
-            >
-              PINEnter.AppTitle
-            </Text>
             <View
               accessibilityState={
                 Object {
@@ -868,7 +850,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     },
                     Object {
                       "alignSelf": "auto",
-                      "marginBottom": 24,
+                      "marginBottom": 16,
                       "textAlign": "left",
                     },
                   ]
@@ -882,7 +864,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                   Array [
                     Object {
                       "color": "#FFFFFF",
-                      "fontSize": 18,
+                      "fontSize": 14,
                       "fontWeight": "normal",
                     },
                     Object {
@@ -896,6 +878,23 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 PINEnter.ReEnterPIN
               </Text>
             </View>
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "marginBottom": 16,
+                  },
+                ]
+              }
+            >
+              PINEnter.EnterPIN
+            </Text>
             <View
               style={
                 Object {
@@ -1390,8 +1389,9 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                     "fontWeight": "bold",
                   },
                   Object {
-                    "fontSize": 16,
-                    "textAlign": "center",
+                    "color": "#42803E",
+                    "fontSize": 20,
+                    "textAlign": "left",
                   },
                 ]
               }
