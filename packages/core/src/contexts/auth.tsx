@@ -1,14 +1,12 @@
-// Dont remove the following import line or the pin check will fail when opening askar wallet
-import { askar } from '@openwallet-foundation/askar-react-native'
-
+// Dont remove the following import line or the pin check will fail when opening askar waller
+import '@openwallet-foundation/askar-react-native'
 import 'reflect-metadata'
 import { DeviceEventEmitter } from 'react-native'
-import { AskarWallet } from '@credo-ts/askar'
 import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
-import { } from '@credo-ts/didcomm'
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { askar } from '@openwallet-foundation/askar-react-native'
 
 import { DispatchAction } from './reducers/store'
 import { useStore } from './store'
@@ -25,7 +23,7 @@ import { migrateToAskar } from '../utils/migration'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { useServices, TOKENS } from '../container-api'
-import { AskarModuleConfig } from '@credo-ts/askar/build/AskarModuleConfig'
+import { AskarModuleConfig, AskarStoreManager } from '@credo-ts/askar'
 
 export interface AuthContext {
   lockOutUser: (reason: LockoutReason) => void
@@ -101,6 +99,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       try {
         const secret = await loadWalletSalt()
 
+
         if (!secret?.salt) {
           return false
         }
@@ -129,8 +128,19 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         //   key: hash,
         // })
 
+        // const storeManager = new AskarStoreManager(
+        //   new agentDependencies.FileSystem(),
+        //   new AskarModuleConfig({
+        //     askar,
+        //     store: { id: 'bifoldAskar', key: 'bifoldAskar'}
+        //   })
+        // );
+
+        // await storeManager.openStore();
+
         // await askarWallet.close()
-        //await agent
+
+        //FORK TODO: Looks like you can't just spawn an AskarWallet anymore. Does this need to use agent.kms instead?
 
         setWalletSecret({ id: secret.id, key: hash, salt: secret.salt })
         return true

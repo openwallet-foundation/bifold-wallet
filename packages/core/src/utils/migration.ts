@@ -24,7 +24,8 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
       },
       modules: {
         askar: new AskarModule({
-          ariesAskar: askar,
+          askar,
+          store: { id: 'askarMigration', key: 'askarMigration' }
         }),
       },
       dependencies: agentDependencies,
