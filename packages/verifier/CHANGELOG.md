@@ -1,5 +1,9 @@
 # @bifold/verifier
 
+## 2.8.0
+
+## 2.7.5
+
 ## 2.7.4
 
 ### Patch Changes

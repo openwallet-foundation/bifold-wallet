@@ -1,12 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  ScrollView,
   StyleSheet,
-  View,
   TouchableOpacity,
   TouchableWithoutFeedback,
   useWindowDimensions,
-  ScrollView,
+  View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -18,7 +18,7 @@ import Button, { ButtonType } from '../buttons/Button'
 import { ThemedText } from '../texts/ThemedText'
 import SafeAreaModal from './SafeAreaModal'
 
-interface DismissiblePopupModalProps {
+export interface DismissiblePopupModalProps {
   title: string
   description?: string
   onCallToActionPressed?: GenericFn
