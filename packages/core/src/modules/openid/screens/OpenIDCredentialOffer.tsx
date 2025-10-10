@@ -20,6 +20,7 @@ import { testIdWithKey } from '../../../utils/testable'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
+import { useOpenId4VciNotifications } from '../notification'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -34,6 +35,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
+  const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -87,6 +89,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     }
     try {
       await storeCredential(credential)
+      // await sendOpenId4VciNotification({ metadata: credential.metadata, accessToken:  })
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
