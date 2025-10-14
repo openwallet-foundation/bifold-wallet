@@ -12,6 +12,7 @@ import {
 } from '../offerResolve'
 import { getCredentialsForProofRequest } from '../resolverProof'
 import { OpenId4VPRequestRecord } from '../types'
+import { setRefreshCredentialMetadata } from '../refresh/refreshMetadata'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -40,13 +41,39 @@ export const useOpenID = ({
           uri: uri,
         })
 
+        // console.log('$$ Resolved credential offer: ', JSON.stringify(resolvedCredentialOffer)) //--- IGNORE ---
+        const authServer = resolvedCredentialOffer.metadata.token_endpoint
+        console.log('$$ Auth server: ', authServer) //--- IGNORE ---
+
         const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
 
-        return await receiveCredentialFromOpenId4VciOffer({
+        // console.log('$$ Token response: ', JSON.stringify(tokenResponse)) //--- IGNORE ---
+        const refreshToken = tokenResponse.refreshToken
+        const accessToken = tokenResponse.accessToken
+        if (refreshToken) {
+          console.log('$$ Refresh token: ', refreshToken) //--- IGNORE ---
+        }
+
+        const credential = await receiveCredentialFromOpenId4VciOffer({
           agent,
           resolvedCredentialOffer,
           accessToken: tokenResponse,
         })
+
+        console.log('$$ Received credential: ', JSON.stringify(credential)) //--- IGNORE ---
+
+        if (refreshToken && authServer) {
+          setRefreshCredentialMetadata(credential, {
+            authServer: authServer,
+            refreshToken: refreshToken,
+            //TODO: support DPoP
+            // dpop: tokenResponse.dpop
+            //   ? { alg: accessToken.dpop.alg, jwk: accessToken.dpop.jwk.toJson() }
+            //   : undefined,
+          })
+        }
+
+        return credential
       } catch (err: unknown) {
         //TODO: Sppecify different error
         const error = new BifoldError(

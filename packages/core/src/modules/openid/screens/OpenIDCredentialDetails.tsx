@@ -25,6 +25,7 @@ import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 import ScreenLayout from '../../../layout/ScreenLayout'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import { getRefreshCredentialMetadata } from '../refresh/refreshMetadata'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -94,12 +95,22 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     fetchCredential()
   }, [credentialId, type, getSdJwtCredentialById, getW3CCredentialById, agent, t, credentialRemoved])
 
+  async function getNewAccessToken() {
+    if (!credential) {
+      return
+    }
+
+    console.log(' $$$$ =>>>>>> Getting credential refresh metadata')
+    const refreshMetadata = getRefreshCredentialMetadata(credential)
+    console.log(' $$$$ =>>>>>> Got credential refresh metadata: ', refreshMetadata)
+  }
   useEffect(() => {
     if (!credential) return
 
     try {
       const credDisplay = getCredentialForDisplay(credential)
       setCredentialDisplay(credDisplay)
+      getNewAccessToken()
     } catch (error) {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,

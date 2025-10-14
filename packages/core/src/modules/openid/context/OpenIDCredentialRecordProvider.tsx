@@ -158,6 +158,8 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 
   async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord): Promise<void> {
     checkAgent()
+    console.log('$$ Storing Type: ', cred.type) //--- IGNORE ---
+    console.log('$$ Storing W3C: ', JSON.stringify(cred)) //--- IGNORE ---
     if (cred instanceof W3cCredentialRecord) {
       await agent?.dependencyManager.resolve(W3cCredentialRepository).save(agent.context, cred)
     } else if (cred instanceof SdJwtVcRecord) {
