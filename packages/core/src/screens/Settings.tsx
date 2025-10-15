@@ -135,7 +135,6 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         },
         {
           title: t('Settings.ChangePin'),
-          value: undefined,
           accessibilityLabel: t('Settings.ChangePin'),
           testID: testIdWithKey('Change Pin'),
           onPress: () => navigation.navigate(Screens.ChangePIN),

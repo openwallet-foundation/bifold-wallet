@@ -194,6 +194,8 @@
     "OpenSettings": "Abrir as configurações"
   },
   "PINCreate": {
+    "Header": "Aries Bifold (PT-BR)",
+    "Subheader": "Secure your Aries wallet (PT-BR)",
     "Explainer": {
       "PrimaryHeading": "Secure your Wallet (PT-BR)",
       "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN). (PT-BR)",
@@ -204,6 +206,10 @@
         "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet (PT-BR)"
       }
     },
+    "InfoBox": {
+      "title": "Remember your PIN (PT-BR)",
+      "message": "Make sure you remember your PIN\n- If you forget it you will need to setup the wallet again and re-add your cards (PT-BR)"
+    },
     "Message": {
       "CrossPatternValidation": "Um padrão de X foi detectado no seu PIN. Favor tentar novamente.",
       "OddOrEvenSequenceValidation": "Uma sequencia de números pares ou ímpares foi detectada em seu PIN. Favor tentar novamente.",
@@ -213,7 +219,8 @@
       "NoSeriesOfNumbersValidation": "Uma sequência foi detectada em seu PIN. Favor tentar novamente.",
       "PINOnlyContainDigitsValidation": "Seu PIN deve conter apenas números. Favor tentar novamente.",
       "PINTooShortValidation": "Seu PIN é muito curto. Favor tentar novamente.",
-      "PINTooLongValidation": "Seu PIN é muito longo. Favor tentar novamente."
+      "PINTooLongValidation": "Seu PIN é muito longo. Favor tentar novamente.",
+      "PINCommonlyUsed": "Your PIN uses a commonly used pattern. Please try again. (PT-BR)"
     },
     "Helper": {
       "CrossPatternValidation": "Não contém um padrão de X.",
@@ -252,7 +259,15 @@
     "RememberChangePIN": "Altere seu PIN para assegurar sua carteira.",
     "ChangePIN": "Alterar PIN"
   },
+  "PINChangeSuccess": {
+    "InfoBox": {
+      "Title": "Your PIN has been changed",
+      "Description": "You can now log-in with your new PIN"
+    },
+    "PrimaryButton": "Go back to settings"
+  },
   "PINEnter": {
+    "AppTitle": "Aries Bifold",
     "EnterPIN": "Digitar PIN",
     "SubText": "Faça login para acessar sua carteira.",
     "Unlock": "Destravar",
@@ -276,7 +291,8 @@
     "ChangeBiometricsInputLabelParenthesis": "(Required) (PT-BR)",
     "ForgotPINLink": "Forgot your PIN? (PT-BR)",
     "ForgotPINModalTitle": "Forgot your PIN? (PT-BR)",
-    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)"
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)",
+    "Loading": "Logging in (PT-BR)"
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked (PT-BR)",

@@ -1,844 +1,229 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
-<RNCSafeAreaView
-  edges={
-    Object {
-      "bottom": "additive",
-      "left": "additive",
-      "right": "additive",
-      "top": "off",
-    }
-  }
+exports[`ConfirmPINModal Component Renders correctly for PIN change 1`] = `
+<Modal
+  animationType="none"
+  hardwareAccelerated={false}
+  presentationStyle="fullScreen"
+  statusBarTranslucent={true}
   style={
     Object {
       "backgroundColor": "#000000",
-      "flex": 1,
     }
   }
+  transparent={false}
+  visible={true}
 >
-  <View
-    onLayout={[Function]}
+  <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "off",
+        "left": "off",
+        "right": "off",
+        "top": "additive",
+      }
+    }
     style={
-      Array [
-        Object {
-          "flex": 1,
+      Object {
+        "backgroundColor": "#42803E",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "backgroundColor": "#42803E",
+        "borderWidth": 0,
+        "elevation": 0,
+        "flexDirection": "row",
+        "minHeight": 44,
+        "shadowColor": "#000000",
+        "shadowOffset": Object {
+          "height": 6,
+          "width": 0,
         },
-        Object {
-          "paddingBottom": 0,
-        },
-      ]
+        "shadowOpacity": 0.15,
+        "shadowRadius": 6,
+        "zIndex": 2,
+      }
     }
   >
-    <RCTScrollView
-      contentContainerStyle={
+    <View
+      style={
         Object {
-          "flexGrow": 1,
+          "alignItems": "flex-start",
+          "justifyContent": "center",
         }
       }
-      keyboardShouldPersistTaps="handled"
     >
-      <View>
+      <View
+        accessibilityLabel="Global.Back"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="com.ariesbifold:id/BackButton"
+      >
         <View
           style={
             Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "justifyContent": "space-between",
-              "padding": 20,
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": 15,
+              "marginRight": 0,
+              "minHeight": 26,
+              "minWidth": 26,
             }
           }
         >
-          <View>
-            <View
-              accessibilityState={
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
                 Object {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": undefined,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
+                  "color": "#FFFFFF",
+                  "fontSize": 26,
+                },
+                undefined,
                 Object {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              testID="com.ariesbifold:id/DeveloperCounter"
-            >
-              <Text
-                maxFontSizeMultiplier={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 26,
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "alignSelf": "auto",
-                      "marginBottom": 16,
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              >
-                PINEnter.Title
-              </Text>
-              <Text
-                maxFontSizeMultiplier={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 14,
-                      "fontWeight": "normal",
-                    },
-                    Object {
-                      "alignSelf": "auto",
-                      "marginBottom": 16,
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              >
-                PINEnter.SubText
-              </Text>
-            </View>
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "marginBottom": 16,
-                  },
-                ]
-              }
-            >
-              PINEnter.EnterPIN
-            </Text>
-            <View
-              style={
-                Object {
-                  "flexDirection": "column",
-                  "marginBottom": 24,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#313132",
-                    "borderColor": "#FFFFFFFF",
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                    "flexDirection": "row",
-                    "paddingHorizontal": 12,
-                    "paddingVertical": 4,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "flex": 1,
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        Object {
-                          "flexDirection": "row",
-                          "justifyContent": "space-between",
-                        },
-                        Object {
-                          "alignItems": "center",
-                          "justifyContent": "flex-start",
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <View
-                      onLayout={[Function]}
-                      style={
-                        Object {
-                          "backgroundColor": "#313132",
-                          "borderColor": "#313132",
-                          "borderWidth": 1,
-                          "height": 48,
-                          "paddingHorizontal": 2,
-                        }
-                      }
-                    >
-                      <Text
-                        maxFontSizeMultiplier={1}
-                        style={
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "fontSize": 26,
-                              "fontWeight": "bold",
-                            },
-                            Object {
-                              "color": "#FFFFFF",
-                              "lineHeight": 48,
-                              "textAlign": "center",
-                            },
-                          ]
-                        }
-                      />
-                    </View>
-                    <TextInput
-                      accessibilityLabel="PINCreate.Masked"
-                      accessibilityRole="text"
-                      accessible={true}
-                      autoCapitalize="characters"
-                      autoCorrect={false}
-                      autoFocus={true}
-                      blurOnSubmit={false}
-                      caretHidden={true}
-                      clearButtonMode="never"
-                      disableFullscreenUI={true}
-                      keyboardType="number-pad"
-                      maxLength={11}
-                      onBlur={[Function]}
-                      onChangeText={[Function]}
-                      onFocus={[Function]}
-                      onPressOut={[Function]}
-                      onSubmitEditing={[Function]}
-                      spellCheck={false}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "fontSize": 1,
-                          "left": 0,
-                          "opacity": 0.015,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
-                      testID="com.ariesbifold:id/EnterPIN"
-                      textContentType="password"
-                      underlineColorAndroid="transparent"
-                      value=""
-                    />
-                  </View>
-                </View>
-                <View
-                  accessibilityLabel="PINCreate.Show"
-                  accessibilityRole="button"
-                  accessibilityState={
-                    Object {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": undefined,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessibilityValue={
-                    Object {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={true}
-                  hitSlop={
-                    Object {
-                      "bottom": 44,
-                      "left": 44,
-                      "right": 44,
-                      "top": 44,
-                    }
-                  }
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    Object {
-                      "opacity": 1,
-                      "paddingLeft": 10,
-                    }
-                  }
-                  testID="com.ariesbifold:id/Show"
-                >
-                  <Text
-                    allowFontScaling={false}
-                    selectable={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 30,
-                        },
-                        undefined,
-                        Object {
-                          "fontFamily": "Material Icons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <Text
-              accessibilityLabel="PINEnter.ForgotPINLink"
-              accessibilityRole="link"
-              accessible={true}
-              maxFontSizeMultiplier={2}
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "color": "#42803E",
-                    "fontSize": 20,
-                    "textAlign": "left",
-                  },
-                ]
-              }
-              testID="com.ariesbifold:id/ForgotPINLink"
-            >
-              PINEnter.ForgotPINLink
-            </Text>
-          </View>
-          <View>
-            <View
-              style={
-                Object {
-                  "width": "100%",
-                }
-              }
-            >
-              <View
-                accessibilityLabel="PINEnter.Unlock"
-                accessibilityRole="button"
-                accessibilityState={
-                  Object {
-                    "busy": undefined,
-                    "checked": undefined,
-                    "disabled": false,
-                    "expanded": undefined,
-                    "selected": undefined,
-                  }
-                }
-                accessibilityValue={
-                  Object {
-                    "max": undefined,
-                    "min": undefined,
-                    "now": undefined,
-                    "text": undefined,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "#42803E",
-                    "borderRadius": 4,
-                    "opacity": 1,
-                    "padding": 16,
-                  }
-                }
-                testID="com.ariesbifold:id/Enter"
-              >
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
-                    }
-                  }
-                >
-                  <Text
-                    maxFontSizeMultiplier={2}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 18,
-                          "fontWeight": "normal",
-                        },
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 18,
-                            "fontWeight": "bold",
-                            "textAlign": "center",
-                          },
-                          false,
-                          false,
-                          false,
-                        ],
-                      ]
-                    }
-                  >
-                    PINEnter.Unlock
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 14,
-                    "marginTop": 20,
-                    "textAlign": "center",
-                  },
-                ]
-              }
-              testID="com.ariesbifold:id/Version"
-            >
-              Settings.Version 1 Settings.Build (1)
-            </Text>
-          </View>
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰅁
+          </Text>
         </View>
       </View>
-    </RCTScrollView>
-  </View>
-</RNCSafeAreaView>
-`;
-
-exports[`PINEnter Screen PIN Enter renders correctly when logged out message is present 1`] = `
-<RNCSafeAreaView
-  edges={
-    Object {
-      "bottom": "additive",
-      "left": "additive",
-      "right": "additive",
-      "top": "off",
-    }
-  }
-  style={
-    Object {
-      "backgroundColor": "#000000",
-      "flex": 1,
-    }
-  }
->
-  <View
-    onLayout={[Function]}
-    style={
-      Array [
+    </View>
+    <View
+      style={
         Object {
-          "flex": 1,
-        },
-        Object {
-          "paddingBottom": 0,
-        },
-      ]
-    }
-  >
-    <RCTScrollView
-      contentContainerStyle={
-        Object {
-          "flexGrow": 1,
+          "alignItems": "center",
+          "flexShrink": 1,
+          "justifyContent": "center",
+          "marginHorizontal": 16,
+          "maxWidth": "68%",
+          "width": "100%",
         }
       }
-      keyboardShouldPersistTaps="handled"
     >
-      <View>
-        <View
-          style={
+      <Text
+        ellipsizeMode="tail"
+        maxFontSizeMultiplier={2}
+        numberOfLines={1}
+        style={
+          Array [
             Object {
-              "backgroundColor": "#000000",
-              "height": "100%",
-              "justifyContent": "space-between",
-              "padding": 20,
-            }
+              "color": "#FFFFFF",
+              "fontSize": 28,
+              "fontWeight": "bold",
+            },
+            Object {
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Title
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "justifyContent": "center",
+        }
+      }
+    />
+  </View>
+  <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "paddingBottom": 0,
+          },
+        ]
+      }
+    >
+      <RCTScrollView
+        contentContainerStyle={
+          Object {
+            "flexGrow": 1,
           }
-        >
-          <View>
-            <View
-              accessibilityState={
-                Object {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": undefined,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
+        }
+        keyboardShouldPersistTaps="handled"
+      >
+        <View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#000000",
+                "flex": 1,
+                "padding": 20,
               }
-              accessibilityValue={
-                Object {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              testID="com.ariesbifold:id/DeveloperCounter"
-            >
+            }
+          >
+            <View>
               <Text
                 maxFontSizeMultiplier={2}
                 style={
@@ -849,52 +234,32 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       "fontWeight": "normal",
                     },
                     Object {
-                      "alignSelf": "auto",
                       "marginBottom": 16,
-                      "textAlign": "left",
                     },
                   ]
                 }
               >
-                PINEnter.LockedOut
-              </Text>
-              <Text
-                maxFontSizeMultiplier={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 14,
-                      "fontWeight": "normal",
-                    },
-                    Object {
-                      "alignSelf": "auto",
-                      "marginBottom": 16,
-                      "textAlign": "left",
-                    },
-                  ]
-                }
-              >
-                PINEnter.ReEnterPIN
+                <Text
+                  maxFontSizeMultiplier={2}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "fontWeight": "bold",
+                      },
+                    ]
+                  }
+                >
+                  PINCreate.RememberPIN
+                </Text>
+                 
+                PINCreate.PINDisclaimer
               </Text>
             </View>
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "marginBottom": 16,
-                  },
-                ]
-              }
-            >
-              PINEnter.EnterPIN
-            </Text>
             <View
               style={
                 Object {
@@ -903,6 +268,23 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 }
               }
             >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                PINCreateConfirm.PINInputLabel
+              </Text>
               <View
                 style={
                   Object {
@@ -1274,7 +656,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       accessible={true}
                       autoCapitalize="characters"
                       autoCorrect={false}
-                      autoFocus={true}
+                      autoFocus={false}
                       blurOnSubmit={false}
                       caretHidden={true}
                       clearButtonMode="never"
@@ -1375,141 +757,816 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                 </View>
               </View>
             </View>
-            <Text
-              accessibilityLabel="PINEnter.ForgotPINLink"
-              accessibilityRole="link"
-              accessible={true}
-              maxFontSizeMultiplier={2}
-              onPress={[Function]}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "color": "#42803E",
-                    "fontSize": 20,
-                    "textAlign": "left",
-                  },
-                ]
-              }
-              testID="com.ariesbifold:id/ForgotPINLink"
-            >
-              PINEnter.ForgotPINLink
-            </Text>
           </View>
-          <View>
+        </View>
+      </RCTScrollView>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;
+
+exports[`ConfirmPINModal Component Renders correctly for PIN create 1`] = `
+<Modal
+  animationType="none"
+  hardwareAccelerated={false}
+  presentationStyle="fullScreen"
+  statusBarTranslucent={true}
+  style={
+    Object {
+      "backgroundColor": "#000000",
+    }
+  }
+  transparent={false}
+  visible={true}
+>
+  <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "off",
+        "left": "off",
+        "right": "off",
+        "top": "additive",
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "#42803E",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "backgroundColor": "#42803E",
+        "borderWidth": 0,
+        "elevation": 0,
+        "flexDirection": "row",
+        "minHeight": 44,
+        "shadowColor": "#000000",
+        "shadowOffset": Object {
+          "height": 6,
+          "width": 0,
+        },
+        "shadowOpacity": 0.15,
+        "shadowRadius": 6,
+        "zIndex": 2,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "flex-start",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        accessibilityLabel="Global.Back"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="com.ariesbifold:id/BackButton"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": 15,
+              "marginRight": 0,
+              "minHeight": 26,
+              "minWidth": 26,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 26,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰅁
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexShrink": 1,
+          "justifyContent": "center",
+          "marginHorizontal": 16,
+          "maxWidth": "68%",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        ellipsizeMode="tail"
+        maxFontSizeMultiplier={2}
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 28,
+              "fontWeight": "bold",
+            },
+            Object {
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Title
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "justifyContent": "center",
+        }
+      }
+    />
+  </View>
+  <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "paddingBottom": 0,
+          },
+        ]
+      }
+    >
+      <RCTScrollView
+        contentContainerStyle={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+        keyboardShouldPersistTaps="handled"
+      >
+        <View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#000000",
+                "flex": 1,
+                "padding": 20,
+              }
+            }
+          >
             <View
               style={
                 Object {
-                  "width": "100%",
+                  "paddingBottom": 32,
+                  "paddingTop": 16,
                 }
               }
             >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "marginBottom": 16,
+                    },
+                  ]
+                }
+              >
+                PINCreate.Header
+              </Text>
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 28,
+                      "fontWeight": "bold",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                PINCreate.Subheader
+              </Text>
+            </View>
+            <View>
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "marginBottom": 16,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  maxFontSizeMultiplier={2}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Object {
+                        "fontWeight": "bold",
+                      },
+                    ]
+                  }
+                >
+                  PINCreate.RememberPIN
+                </Text>
+                 
+                PINCreate.PINDisclaimer
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flexDirection": "column",
+                  "marginBottom": 24,
+                }
+              }
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                PINCreateConfirm.PINInputLabel
+              </Text>
               <View
-                accessibilityLabel="PINEnter.Unlock"
-                accessibilityRole="button"
-                accessibilityState={
-                  Object {
-                    "busy": undefined,
-                    "checked": undefined,
-                    "disabled": false,
-                    "expanded": undefined,
-                    "selected": undefined,
-                  }
-                }
-                accessibilityValue={
-                  Object {
-                    "max": undefined,
-                    "min": undefined,
-                    "now": undefined,
-                    "text": undefined,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "#42803E",
-                    "borderRadius": 4,
-                    "opacity": 1,
-                    "padding": 16,
+                    "alignItems": "center",
+                    "backgroundColor": "#313132",
+                    "borderColor": "#FFFFFFFF",
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                    "flexDirection": "row",
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 4,
                   }
                 }
-                testID="com.ariesbifold:id/Enter"
               >
                 <View
                   style={
                     Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
+                      "flex": 1,
                     }
                   }
                 >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                        },
+                        Object {
+                          "alignItems": "center",
+                          "justifyContent": "flex-start",
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#313132",
+                          "borderColor": "#313132",
+                          "borderWidth": 1,
+                          "height": 48,
+                          "paddingHorizontal": 2,
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 26,
+                              "fontWeight": "bold",
+                            },
+                            Object {
+                              "color": "#FFFFFF",
+                              "lineHeight": 48,
+                              "textAlign": "center",
+                            },
+                          ]
+                        }
+                      />
+                    </View>
+                    <TextInput
+                      accessibilityLabel="PINCreate.Masked"
+                      accessibilityRole="text"
+                      accessible={true}
+                      autoCapitalize="characters"
+                      autoCorrect={false}
+                      autoFocus={false}
+                      blurOnSubmit={false}
+                      caretHidden={true}
+                      clearButtonMode="never"
+                      disableFullscreenUI={true}
+                      keyboardType="number-pad"
+                      maxLength={11}
+                      onBlur={[Function]}
+                      onChangeText={[Function]}
+                      onFocus={[Function]}
+                      onPressOut={[Function]}
+                      onSubmitEditing={[Function]}
+                      spellCheck={false}
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "fontSize": 1,
+                          "left": 0,
+                          "opacity": 0.015,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="com.ariesbifold:id/EnterPIN"
+                      textContentType="password"
+                      underlineColorAndroid="transparent"
+                      value=""
+                    />
+                  </View>
+                </View>
+                <View
+                  accessibilityLabel="PINCreate.Show"
+                  accessibilityRole="button"
+                  accessibilityState={
+                    Object {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    Object {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  hitSlop={
+                    Object {
+                      "bottom": 44,
+                      "left": 44,
+                      "right": 44,
+                      "top": 44,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Object {
+                      "opacity": 1,
+                      "paddingLeft": 10,
+                    }
+                  }
+                  testID="com.ariesbifold:id/Show"
+                >
                   <Text
-                    maxFontSizeMultiplier={2}
+                    allowFontScaling={false}
+                    selectable={false}
                     style={
                       Array [
                         Object {
                           "color": "#FFFFFF",
-                          "fontSize": 18,
+                          "fontSize": 30,
+                        },
+                        undefined,
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
                           "fontWeight": "normal",
                         },
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 18,
-                            "fontWeight": "bold",
-                            "textAlign": "center",
-                          },
-                          false,
-                          false,
-                          false,
-                        ],
+                        Object {},
                       ]
                     }
                   >
-                    PINEnter.Unlock
+                    
                   </Text>
                 </View>
               </View>
             </View>
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 14,
-                    "marginTop": 20,
-                    "textAlign": "center",
-                  },
-                ]
-              }
-              testID="com.ariesbifold:id/Version"
-            >
-              Settings.Version 1 Settings.Build (1)
-            </Text>
           </View>
         </View>
-      </View>
-    </RCTScrollView>
-  </View>
-</RNCSafeAreaView>
+      </RCTScrollView>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
 `;

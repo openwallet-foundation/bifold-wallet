@@ -5,6 +5,7 @@ import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmatio
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop, minPINLength } from '../../constants'
+import { useServices, TOKENS } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { InlineErrorPosition } from '../../types/error'
 import { testIdWithKey } from '../../utils/testable'
@@ -13,6 +14,7 @@ import InlineErrorText, { InlineMessageProps } from './InlineErrorText'
 
 // adjusting for the spaces between numbers
 const cellCount = minPINLength * 2 - 1
+const separatedPINCellCount = 6
 
 interface PINInputProps {
   label?: string
@@ -21,17 +23,30 @@ interface PINInputProps {
   accessibilityLabel?: string
   autoFocus?: boolean
   inlineMessage?: InlineMessageProps
-  onSubmitEditing?: () => void
+  onSubmitEditing?: (...args: any[]) => void
 }
 
 const PINInputComponent = (
-  { label, onPINChanged, testID, accessibilityLabel, autoFocus = false, inlineMessage, onSubmitEditing }: PINInputProps,
+  {
+    label,
+    onPINChanged,
+    testID,
+    accessibilityLabel,
+    autoFocus = false,
+    inlineMessage,
+    onSubmitEditing = () => {},
+  }: PINInputProps,
   ref: Ref<TextInput>
 ) => {
+  const [{ PINScreensConfig }] = useServices([TOKENS.CONFIG])
+
+  const { PINInputTheme, SeparatedPINInputTheme, ColorPalette } = useTheme()
+
+  const theme = PINScreensConfig.useNewPINDesign ? SeparatedPINInputTheme : PINInputTheme
+
   const [PIN, setPIN] = useState('')
   const [showPIN, setShowPIN] = useState(false)
   const { t } = useTranslation()
-  const { PINInputTheme } = useTheme()
   const cellHeight = 48
 
   // including spaces to prevent screen reader from reading the PIN as a single number
@@ -39,11 +54,11 @@ const PINInputComponent = (
   // and to have the proper appearance when the PIN is masked
   const displayValue = useMemo(() => {
     if (showPIN) {
-      return PIN.split('').join(' ')
+      return PINScreensConfig.useNewPINDesign ? PIN : PIN.split('').join(' ')
     } else {
-      return '●'.repeat(PIN.length).split('').join(' ')
+      return PINScreensConfig.useNewPINDesign ? '●'.repeat(PIN.length) : '●'.repeat(PIN.length).split('').join(' ')
     }
-  }, [PIN, showPIN])
+  }, [PIN, showPIN, PINScreensConfig])
 
   const onChangeText = useCallback(
     (value: string) => {
@@ -84,22 +99,22 @@ const PINInputComponent = (
       flex: 1,
     },
     cell: {
-      height: cellHeight,
-      paddingHorizontal: 2,
-      backgroundColor: PINInputTheme.cell.backgroundColor,
+      ...theme.cell,
+      borderColor:
+        inlineMessage && PINScreensConfig.useNewPINDesign ? ColorPalette.semantic.error : theme.cell.borderColor,
     },
     cellText: {
-      color: PINInputTheme.cellText.color,
+      color: theme.cellText.color,
       textAlign: 'center',
       lineHeight: cellHeight,
     },
     hideIcon: {
-      paddingHorizontal: 10,
+      paddingLeft: PINScreensConfig.useNewPINDesign ? 2 : 10,
     },
   })
 
   const content = () => (
-    <View style={PINInputTheme.labelAndFieldContainer}>
+    <View style={theme.labelAndFieldContainer}>
       <View style={style.codeFieldContainer}>
         <CodeField
           {...props}
@@ -108,9 +123,9 @@ const PINInputComponent = (
           accessibilityRole={'text'}
           accessible
           value={displayValue}
-          rootStyle={PINInputTheme.codeFieldRoot}
+          rootStyle={theme.codeFieldRoot}
           onChangeText={onChangeText}
-          cellCount={cellCount}
+          cellCount={PINScreensConfig.useNewPINDesign ? separatedPINCellCount : cellCount}
           keyboardType="number-pad"
           textContentType="password"
           renderCell={({ index, symbol, isFocused }) => {
@@ -131,7 +146,9 @@ const PINInputComponent = (
           }}
           autoFocus={autoFocus}
           ref={ref}
-          onSubmitEditing={onSubmitEditing}
+          onSubmitEditing={(e) => {
+            onSubmitEditing(e?.nativeEvent?.text ?? '')
+          }}
         />
       </View>
       <TouchableOpacity
@@ -150,7 +167,7 @@ const PINInputComponent = (
   return (
     <View style={style.container}>
       {label && (
-        <ThemedText variant="label" style={{ marginBottom: 8 }}>
+        <ThemedText variant={PINScreensConfig.useNewPINDesign ? 'labelTitle' : 'label'} style={{ marginBottom: 8 }}>
           {label}
         </ThemedText>
       )}

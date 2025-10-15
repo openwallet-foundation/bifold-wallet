@@ -1,4 +1,4 @@
-import ButtonLoading from './components/animated/ButtonLoading'
+import ButtonLoading, { ButtonLoadingProps } from './components/animated/ButtonLoading'
 import ConnectionLoading from './components/animated/ConnectionLoading'
 import CredentialAdded from './components/animated/CredentialAdded'
 import CredentialPending from './components/animated/CredentialPending'
@@ -8,7 +8,7 @@ import SendingProof from './components/animated/SendingProof'
 import SentProof from './components/animated/SentProof'
 
 export interface AnimatedComponents {
-  ButtonLoading: React.FC
+  ButtonLoading: React.FC<ButtonLoadingProps>
   ConnectionLoading: React.FC
   CredentialAdded: React.FC
   CredentialPending: React.FC
