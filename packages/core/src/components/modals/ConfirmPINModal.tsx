@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
 
+import KeyboardView from '../../components/views/KeyboardView'
 import FauxHeader from '../../components/misc/FauxHeader'
 import SafeAreaModal from '../../components/modals/SafeAreaModal'
 import AlertModal from '../../components/modals/AlertModal'
@@ -75,34 +76,36 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
     >
       <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }} />
       <FauxHeader title={title} onBackPressed={onBackPressed} showBackButton />
-      <View style={style.container}>
-        {modalUsage === ConfirmPINModalUsage.PIN_CREATE && (
-          <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
-        )}
-        <PINHeader />
-        <PINInput
-          label={t('PINCreateConfirm.PINInputLabel')}
-          onPINChanged={async (userPinInput: string) => {
-            setPINTwo(userPinInput)
-            if (userPinInput.length === PINOne.length) {
-              Keyboard.dismiss()
-              await onConfirmPIN(userPinInput)
-            }
-          }}
-          testID={testIdWithKey('EnterPIN')}
-          accessibilityLabel={t('PINCreate.EnterPIN')}
-          autoFocus={false}
-          inlineMessage={errorMessage}
-        />
-        {isLoading && (
-          <View style={style.loadingContainer}>
-            <ButtonLoading size={50} />
-          </View>
-        )}
-        {modalState.visible && (
-          <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
-        )}
-      </View>
+      <KeyboardView keyboardAvoiding={true}>
+        <View style={style.container}>
+          {modalUsage === ConfirmPINModalUsage.PIN_CREATE && (
+            <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
+          )}
+          <PINHeader />
+          <PINInput
+            label={t('PINCreateConfirm.PINInputLabel')}
+            onPINChanged={async (userPinInput: string) => {
+              setPINTwo(userPinInput)
+              if (userPinInput.length === PINOne.length) {
+                Keyboard.dismiss()
+                await onConfirmPIN(PINOne, userPinInput)
+              }
+            }}
+            testID={testIdWithKey('EnterPIN')}
+            accessibilityLabel={t('PINCreate.EnterPIN')}
+            autoFocus={false}
+            inlineMessage={errorMessage}
+          />
+          {isLoading && (
+            <View style={style.loadingContainer}>
+              <ButtonLoading size={50} />
+            </View>
+          )}
+          {modalState.visible && (
+            <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
+          )}
+        </View>
+      </KeyboardView>
     </SafeAreaModal>
   )
 }
