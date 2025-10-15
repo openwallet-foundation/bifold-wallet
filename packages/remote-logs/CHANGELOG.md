@@ -1,5 +1,25 @@
 # Change Log
 
+## 2.8.0
+
+### Patch Changes
+
+- Updated dependencies [00ed384]
+- Updated dependencies [f4d46be]
+  - @bifold/core@2.8.0
+
+## 2.7.5
+
+### Patch Changes
+
+- Updated dependencies [83d6ce9]
+- Updated dependencies [eaffaec]
+- Updated dependencies [56d9fb3]
+- Updated dependencies [53169b9]
+- Updated dependencies [07ea6be]
+- Updated dependencies [c4b153a]
+  - @bifold/core@2.7.5
+
 ## 2.7.4
 
 ### Patch Changes
