@@ -200,6 +200,8 @@
     "OpenSettings": "Ouvrir les paramètres"
   },
   "PINCreate": {
+    "Header": "Aries Bifold (FR)",
+    "Subheader": "Secure your Aries wallet (FR)",
     "Explainer": {
       "PrimaryHeading": "Secure your Wallet (FR)",
       "PINReminder": "On the following screen you will be asked to set up a strong <b>personal identification number</b> (PIN). (FR)",
@@ -210,6 +212,10 @@
         "ParagraphList2": "Or use your biometrics to open your wallet, and if your biometrics change change on your device you will need to use the PIN to authenticate your wallet (FR)"
       }
     },
+    "InfoBox": {
+      "title": "Remember your PIN (FR)",
+      "message": "Make sure you remember your PIN\n- If you forget it you will need to setup the wallet again and re-add your cards (FR)"
+    },
     "Message": {
       "CrossPatternValidation": "Un patron de croix a été détecté dans votre NIP. Veuillez saisir un NIP différent.",
       "OddOrEvenSequenceValidation": "Une séquence impaire ou paire a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
@@ -219,7 +225,8 @@
       "NoSeriesOfNumbersValidation": "Une suite a été détectée dans votre NIP. Veuillez saisir un NIP différent.",
       "PINOnlyContainDigitsValidation": "Votre NIP doit contenir que des chiffres. Veuillez saisir un NIP différent.",
       "PINTooShortValidation": "Votre NIP est trop court. Veuillez saisir un NIP différent.",
-      "PINTooLongValidation": "Votre NIP est trop long. Veuillez saisir un NIP différent."
+      "PINTooLongValidation": "Votre NIP est trop long. Veuillez saisir un NIP différent.",
+      "PINCommonlyUsed": "Your PIN uses a commonly used pattern. Please try again. (FR)"
     },
     "Helper": {
       "CrossPatternValidation": "Ne doit pas contenir un patron de croix.",
@@ -264,7 +271,25 @@
     "Continue": "Continuer",
     "EnterYourCurrentPIN": "Entrez votre NIP actuel"
   },
+  "PINChange": {
+    "PinChangeSuccessTitle": "Successfully changed your PIN (FR)",
+    "PinChangeSuccessMessage": "Your PIN was successsfully changed. You can now log in with your new PIN. (FR)",
+    "EnterOldPINTitle": "Enter your old PIN (FR)",
+    "EnterOldPIN": "Enter your old PIN (FR)",
+    "EnterPINTitle": "Enter a new 6 digit PIN (FR)",
+    "ReenterPIN": "Re-enter new PIN (FR)",
+    "RememberChangePIN": "Change your PIN to secure your wallet. (FR)",
+    "ChangePIN": "Change PIN (FR)"
+  },
+  "PINChangeSuccess": {
+    "InfoBox": {
+      "Title": "Your PIN has been changed (FR)",
+      "Description": "You can now log-in with your new PIN (FR)"
+    },
+    "PrimaryButton": "Go back to settings (FR)"
+  },
   "PINEnter": {
+    "AppTitle": "Aries Bifold",
     "Title": "Content de te revoir",
     "SubText": "Connectez-vous pour accéder à votre portefeuille.",
     "EnterPIN": "Veuillez saisir votre NIP",
@@ -294,7 +319,8 @@
     "ChangeBiometricsInputLabelParenthesis": "(Required) (FR)",
     "ForgotPINLink": "Forgot your PIN? (FR)",
     "ForgotPINModalTitle": "Forgot your PIN? (FR)",
-    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)"
+    "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)",
+    "Loading": "Logging in (FR)"
   },
   "AttemptLockout": {
     "Title": "Votre portefeuille est temporairement verrouillé",

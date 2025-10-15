@@ -110,7 +110,7 @@
     "node_modules",
     "build",
     "**/*.test.ts",
-    "**/*.test.tsx", 
+    "**/*.test.tsx",
     "**/__tests__/**/*",
     "**/examples/**/*",
     "jest.config.json",
