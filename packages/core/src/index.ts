@@ -17,9 +17,12 @@ import CredentialCard from './components/misc/CredentialCard'
 import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import FauxHeader from './components/misc/FauxHeader'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
+import QRRenderer from './components/misc/QRRenderer'
 import QRScannerTorch from './components/misc/QRScannerTorch'
+import ScanCamera from './components/misc/ScanCamera'
 import SVGOverlay, { MaskType } from './components/misc/SVGOverlay'
 import DeveloperModal from './components/modals/DeveloperModal'
+import DismissiblePopupModal from './components/modals/DismissiblePopupModal'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
 import Record from './components/record/Record'
@@ -70,6 +73,7 @@ import { BifoldLogger } from './services/logger'
 import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
+import { QrCodeScanError } from './types/error'
 
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
@@ -160,6 +164,8 @@ export type { OnboardingStackProps } from './navigators/OnboardingStack'
 export type { SplashProps } from './screens/Splash'
 export { BaseTourID } from './types/tour'
 
+export type { ScanCameraProps } from './components/misc/ScanCamera'
+export type { DismissiblePopupModalProps } from './components/modals/DismissiblePopupModal'
 export type { BannerSectionProps } from './components/views/Banner'
 
 export {
@@ -195,6 +201,7 @@ export {
   DefaultScreenOptionsDictionary,
   Developer,
   DeveloperModal,
+  DismissiblePopupModal,
   ErrorBoundaryWrapper,
   ErrorModal,
   FauxHeader,
@@ -219,10 +226,13 @@ export {
   PINRules,
   Preface,
   proofRequestTourSteps,
+  QrCodeScanError,
+  QRRenderer,
   QRScannerTorch,
   Record,
   SafeAreaModal,
   Scan,
+  ScanCamera,
   Splash,
   SVGOverlay,
   Terms,
