@@ -4,5 +4,7 @@ module.exports = {
     '@babel/preset-typescript',
     ['@babel/preset-flow', { all: true }],
   ],
-  plugins: ['@babel/plugin-transform-runtime'],
-}
+  plugins: [
+    '@babel/plugin-transform-runtime',
+  ],
+};
