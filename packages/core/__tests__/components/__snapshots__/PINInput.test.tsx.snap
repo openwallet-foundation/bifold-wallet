@@ -66,6 +66,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -94,6 +96,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -122,6 +126,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -150,6 +156,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -178,6 +186,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -206,6 +216,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -234,6 +246,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -262,6 +276,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -290,6 +306,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -318,6 +336,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -346,6 +366,8 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -386,6 +408,7 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
           onChangeText={[Function]}
           onFocus={[Function]}
           onPressOut={[Function]}
+          onSubmitEditing={[Function]}
           spellCheck={false}
           style={
             Object {
@@ -446,7 +469,7 @@ exports[`PINInput Component Basic Rendering renders correctly with label 1`] = `
       style={
         Object {
           "opacity": 1,
-          "paddingHorizontal": 10,
+          "paddingLeft": 10,
         }
       }
       testID="com.ariesbifold:id/Show"
@@ -526,6 +549,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -554,6 +579,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -582,6 +609,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -610,6 +639,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -638,6 +669,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -666,6 +699,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -694,6 +729,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -722,6 +759,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -750,6 +789,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -778,6 +819,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -806,6 +849,8 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -846,6 +891,7 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
           onChangeText={[Function]}
           onFocus={[Function]}
           onPressOut={[Function]}
+          onSubmitEditing={[Function]}
           spellCheck={false}
           style={
             Object {
@@ -905,7 +951,7 @@ exports[`PINInput Component Basic Rendering renders without label when not provi
       style={
         Object {
           "opacity": 1,
-          "paddingHorizontal": 10,
+          "paddingLeft": 10,
         }
       }
       testID="com.ariesbifold:id/Show"
@@ -1038,6 +1084,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1066,6 +1114,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1094,6 +1144,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1122,6 +1174,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1150,6 +1204,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1178,6 +1234,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1206,6 +1264,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1234,6 +1294,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1262,6 +1324,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1290,6 +1354,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1318,6 +1384,8 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1358,6 +1426,7 @@ exports[`PINInput Component Error Messages renders inline error message above wh
           onChangeText={[Function]}
           onFocus={[Function]}
           onPressOut={[Function]}
+          onSubmitEditing={[Function]}
           spellCheck={false}
           style={
             Object {
@@ -1418,7 +1487,7 @@ exports[`PINInput Component Error Messages renders inline error message above wh
       style={
         Object {
           "opacity": 1,
-          "paddingHorizontal": 10,
+          "paddingLeft": 10,
         }
       }
       testID="com.ariesbifold:id/Show"
@@ -1515,6 +1584,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1543,6 +1614,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1571,6 +1644,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1599,6 +1674,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1627,6 +1704,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1655,6 +1734,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1683,6 +1764,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1711,6 +1794,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1739,6 +1824,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1767,6 +1854,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1795,6 +1884,8 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           style={
             Object {
               "backgroundColor": "#313132",
+              "borderColor": "#313132",
+              "borderWidth": 1,
               "height": 48,
               "paddingHorizontal": 2,
             }
@@ -1835,6 +1926,7 @@ exports[`PINInput Component Error Messages renders inline error message below wh
           onChangeText={[Function]}
           onFocus={[Function]}
           onPressOut={[Function]}
+          onSubmitEditing={[Function]}
           spellCheck={false}
           style={
             Object {
@@ -1895,7 +1987,7 @@ exports[`PINInput Component Error Messages renders inline error message below wh
       style={
         Object {
           "opacity": 1,
-          "paddingHorizontal": 10,
+          "paddingLeft": 10,
         }
       }
       testID="com.ariesbifold:id/Show"
