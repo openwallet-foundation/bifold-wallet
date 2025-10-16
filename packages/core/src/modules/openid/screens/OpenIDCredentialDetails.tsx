@@ -44,8 +44,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const { t, i18n } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById, checkNewCredentialForRecord } =
-    useOpenIDCredentials()
+  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
@@ -82,9 +81,6 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         } else {
           record = await getW3CCredentialById(credentialId)
         }
-        if (record) {
-          checkNewCredentialForRecord(record)
-        }
 
         setCredential(record)
       } catch (error) {
@@ -96,16 +92,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       }
     }
     fetchCredential()
-  }, [
-    credentialId,
-    type,
-    getSdJwtCredentialById,
-    getW3CCredentialById,
-    agent,
-    t,
-    credentialRemoved,
-    checkNewCredentialForRecord,
-  ])
+  }, [credentialId, type, getSdJwtCredentialById, getW3CCredentialById, agent, t, credentialRemoved])
 
   useEffect(() => {
     if (!credential) return
