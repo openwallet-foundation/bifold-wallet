@@ -326,7 +326,10 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-const credNameFromRestriction = async (queries?: AnonCredsProofRequestRestriction[], agent?: Agent): Promise<string> => {
+const credNameFromRestriction = async (
+  queries?: AnonCredsProofRequestRestriction[],
+  agent?: Agent
+): Promise<string> => {
   let schema_name = ''
   let cred_def_id = ''
   let schema_id = ''
@@ -539,7 +542,11 @@ export const processProofAttributes = async (
 
     // No credentials satisfy proof request, process attribute errors
     if (credentialList.length <= 0) {
-      const missingAttributes = await addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [], agent)
+      const missingAttributes = await addMissingDisplayAttributes(
+        requestedProofAttributes[key],
+        credentialRecords ?? [],
+        agent
+      )
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
         processedAttributes[missingCredGroupKey] = missingAttributes
@@ -909,7 +916,14 @@ export const retrieveCredentialsForProof = async (
     const proofRequest = format.request?.anoncreds ?? format.request?.indy
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = await processProofAttributes(t, proofRequest, proofFormat, fullCredentials, groupByReferent, agent)
+    const attributes = await processProofAttributes(
+      t,
+      proofRequest,
+      proofFormat,
+      fullCredentials,
+      groupByReferent,
+      agent
+    )
     const predicates = await processProofPredicates(proofRequest, proofFormat, fullCredentials, groupByReferent, agent)
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
 

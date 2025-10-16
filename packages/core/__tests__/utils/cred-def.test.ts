@@ -1,8 +1,10 @@
 import { getCredentialName, parsedCredDefName, parsedCredDefNameFromCredential } from '../../src/utils/cred-def'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 
-const mockSchemaId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
-const mockCredDefId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
+const mockSchemaId =
+  'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
+const mockCredDefId =
+  'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
 
 const mockSchemaResource = {
   '@context': ['https://opsecid.github.io/attested-resource/v1', 'https://w3id.org/security/data-integrity/v2'],
@@ -86,16 +88,14 @@ const mockCredDefResource = {
   },
 }
 
-
-
 describe('Cred Def Utils', () => {
   test('The correct schema name is returned for a webvh cred def id with tag default', async () => {
     const agent: any = {
       context: {},
       modules: {
         anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({credentialDefinition: mockCredDefResource.content}),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: mockCredDefResource.content }),
+          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
         },
       },
     }
@@ -108,8 +108,10 @@ describe('Cred Def Utils', () => {
       context: {},
       modules: {
         anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'non-default' } }),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+          getCredentialDefinition: jest
+            .fn()
+            .mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'non-default' } }),
+          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
         },
       },
     }
@@ -132,7 +134,7 @@ describe('Cred Def Utils', () => {
       modules: {
         anoncreds: {
           getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
         },
       },
       config: { logger: { info: jest.fn() } },
@@ -161,8 +163,10 @@ describe('Cred Def Utils', () => {
       context: {},
       modules: {
         anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'default' } }),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+          getCredentialDefinition: jest
+            .fn()
+            .mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'default' } }),
+          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
         },
       },
     }
