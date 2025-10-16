@@ -25,7 +25,6 @@ import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 import ScreenLayout from '../../../layout/ScreenLayout'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
-import { getRefreshCredentialMetadata } from '../refresh/refreshMetadata'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -45,7 +44,8 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const { t, i18n } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
+  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById, checkNewCredentialForRecord } =
+    useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
@@ -82,6 +82,9 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         } else {
           record = await getW3CCredentialById(credentialId)
         }
+        if (record) {
+          checkNewCredentialForRecord(record)
+        }
 
         setCredential(record)
       } catch (error) {
@@ -93,24 +96,23 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       }
     }
     fetchCredential()
-  }, [credentialId, type, getSdJwtCredentialById, getW3CCredentialById, agent, t, credentialRemoved])
+  }, [
+    credentialId,
+    type,
+    getSdJwtCredentialById,
+    getW3CCredentialById,
+    agent,
+    t,
+    credentialRemoved,
+    checkNewCredentialForRecord,
+  ])
 
-  async function getNewAccessToken() {
-    if (!credential) {
-      return
-    }
-
-    console.log(' $$$$ =>>>>>> Getting credential refresh metadata')
-    const refreshMetadata = getRefreshCredentialMetadata(credential)
-    console.log(' $$$$ =>>>>>> Got credential refresh metadata: ', refreshMetadata)
-  }
   useEffect(() => {
     if (!credential) return
 
     try {
       const credDisplay = getCredentialForDisplay(credential)
       setCredentialDisplay(credDisplay)
-      getNewAccessToken()
     } catch (error) {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,

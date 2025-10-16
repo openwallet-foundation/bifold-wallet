@@ -17,7 +17,8 @@ import { useTranslation } from 'react-i18next'
 import { TOKENS, useServices } from '../../../container-api'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { getCredentialForDisplay } from '../display'
-import { OpenIDCredentialType } from '../types'
+import { OpenIDCredentialType, RefreshResponse } from '../types'
+import { getRefreshCredentialMetadata, setRefreshCredentialMetadata } from '../refresh/refreshMetadata'
 
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
 
@@ -34,6 +35,9 @@ export type OpenIDCredentialContext = {
   resolveBundleForCredential: (
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   ) => Promise<CredentialOverlay<BrandingOverlay>>
+  checkNewCredentialForRecord: (
+    cred: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
+  ) => Promise<RefreshResponse | undefined>
 }
 
 export type OpenIDCredentialRecordState = {
@@ -158,8 +162,6 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 
   async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord): Promise<void> {
     checkAgent()
-    console.log('$$ Storing Type: ', cred.type) //--- IGNORE ---
-    console.log('$$ Storing W3C: ', JSON.stringify(cred)) //--- IGNORE ---
     if (cred instanceof W3cCredentialRecord) {
       await agent?.dependencyManager.resolve(W3cCredentialRepository).save(agent.context, cred)
     } else if (cred instanceof SdJwtVcRecord) {
@@ -177,6 +179,84 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       await agent?.sdJwtVc.deleteById(cred.id)
     } else if (type === OpenIDCredentialType.Mdoc) {
       await agent?.mdoc.deleteById(cred.id)
+    }
+  }
+
+  async function checkNewCredentialForRecord(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) {
+    logger.info(`[OpenIDCredentialRecordProvider] Checking new credential for record: ${cred.id}`)
+    const refreshMetaData = getRefreshCredentialMetadata(cred)
+    if (!refreshMetaData) {
+      logger.error(`[OpenIDCredentialRecordProvider] No refresh metadata found for credential: ${cred.id}`)
+      return
+    }
+
+    logger.info(`[OpenIDCredentialRecordProvider] Found refresh metadata for credential: ${cred.id}`)
+    const { refreshToken, authServer } = refreshMetaData
+
+    try {
+      if (!authServer) {
+        throw new Error('No authorization server found in the credential offer metadata')
+      }
+
+      logger.info(`[OpenIDCredentialRecordProvider] Found auth server for credential: ${cred.id}: ${authServer}`)
+
+      // Build token endpoint: <AS>/token?force=false
+      // React-Native-safe URL build
+      const tokenUrl = (authServer.endsWith('/') ? authServer.slice(0, -1) : authServer) + '/token?force=false'
+      // const tokenUrl = new URL('token', authServer)
+      // tokenUrl.searchParams.set('force', 'false')
+
+      const body = new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        // these are accepted by some ASs that share the same endpoint with pre-auth:
+        pre_authorized_code: '',
+        pre_authorized_code_alt: '',
+        user_pin: '',
+      })
+
+      const res = await fetch(tokenUrl.toString(), {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body.toString(),
+      })
+
+      if (!res.ok) {
+        const errText = await res.text()
+        throw new Error(`Refresh failed ${res.status}: ${errText}`)
+      }
+
+      const data: RefreshResponse = await res.json()
+      logger.info(`[OpenIDCredentialRecordProvider] New access token acquired: ${JSON.stringify(data)}`)
+
+      // If refresh token rotated, persist it
+      if (data.refresh_token && data.refresh_token !== refreshToken) {
+        logger.info(`[OpenIDCredentialRecordProvider] Refresh token rotated; saving new one`)
+        setRefreshCredentialMetadata(cred, {
+          authServer: authServer,
+          refreshToken: data.refresh_token,
+        })
+      }
+
+      // If you want to immediately request a fresh credential using the new token:
+      // await receiveCredentialFromOpenId4VciOffer({
+      //   agent,
+      //   resolvedCredentialOffer,
+      //   accessToken: {
+      //     accessToken: data.access_token,
+      //     cNonce: data.c_nonce,
+      //     accessTokenResponse: data as any,
+      //   },
+      // })
+
+      // Return tokens so caller can proceed (e.g., to requestCredentials)
+      return data
+    } catch (error) {
+      logger.error(`[OpenIDCredentialRecordProvider] Error getting new token: ${error}`)
+      return
     }
   }
 
@@ -288,6 +368,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         getSdJwtCredentialById: getSdJwtCredentialById,
         getMdocCredentialById: getMdocCredentialById,
         resolveBundleForCredential: resolveBundleForCredential,
+        checkNewCredentialForRecord: checkNewCredentialForRecord,
       }}
     >
       {children}

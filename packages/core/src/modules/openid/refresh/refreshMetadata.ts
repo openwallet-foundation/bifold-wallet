@@ -26,6 +26,5 @@ export function setRefreshCredentialMetadata(
   credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord,
   metadata: RefreshCredentialMetadata
 ) {
-  console.log('$$ Setting refresh metadata: ', JSON.stringify(metadata)) //--- IGNORE ---
   credentialRecord.metadata.set(refreshCredentialMetadataKey, metadata)
 }
