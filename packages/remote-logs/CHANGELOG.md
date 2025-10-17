@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+- Updated dependencies [2319500]
+- Updated dependencies [fe7a7bc]
+- Updated dependencies [aa3286d]
+- Updated dependencies [c5cc3e7]
+  - @bifold/core@2.9.0
+
 ## 2.8.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+
 ## 2.8.0
 
 ## 2.7.5
