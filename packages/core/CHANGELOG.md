@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.10.0
+
+### Minor Changes
+
+- 165cb53: Added Credo WebVH package with DID resolver and AnonCreds registry support
+
 ## 2.9.0
 
 ### Minor Changes
