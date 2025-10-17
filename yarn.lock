@@ -2390,6 +2390,7 @@ __metadata:
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.17"
+    "@credo-ts/webvh": "npm:0.5.17"
     "@formatjs/intl-datetimeformat": "npm:~4.2.6"
     "@formatjs/intl-displaynames": "npm:~5.2.6"
     "@formatjs/intl-getcanonicallocales": "npm:~1.7.3"
@@ -3552,6 +3553,21 @@ __metadata:
     react-native-fs: ^2.20.0
     react-native-get-random-values: ^1.8.0
   checksum: 10c0/69e686bb6c1ed2616db29bac3ca70104286a10f811eb89692e65ae18429c02abf536017fff0865f875aad090b05a9167f4c93e4d5c642a230434d0d214e9835c
+  languageName: node
+  linkType: hard
+
+"@credo-ts/webvh@npm:0.5.17":
+  version: 0.5.17
+  resolution: "@credo-ts/webvh@npm:0.5.17"
+  dependencies:
+    "@credo-ts/anoncreds": "npm:0.5.17"
+    "@credo-ts/core": "npm:0.5.17"
+    class-transformer: "npm:^0.5.1"
+    class-validator: "npm:0.14.1"
+    didwebvh-ts: "npm:^2.5.3"
+    json-canonicalize: "npm:^1.2.0"
+    tsyringe: "npm:^4.8.0"
+  checksum: 10c0/c39a3fb302a36a5cad28df3cee3c8b1c575e8f0dc35b4f3fd94a9608f117cb0a944af74327aec20caf7c37e82f67e1784ae0bc205063b8e3831a797f242eb89f
   languageName: node
   linkType: hard
 
@@ -5136,7 +5152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:1.8.0, @noble/hashes@npm:^1.3.0, @noble/hashes@npm:^1.4.0, @noble/hashes@npm:^1.5.0":
+"@noble/hashes@npm:1.8.0, @noble/hashes@npm:^1.3.0, @noble/hashes@npm:^1.4.0, @noble/hashes@npm:^1.5.0, @noble/hashes@npm:^1.8.0":
   version: 1.8.0
   resolution: "@noble/hashes@npm:1.8.0"
   checksum: 10c0/06a0b52c81a6fa7f04d67762e08b2c476a00285858150caeaaff4037356dd5e119f45b2a530f638b77a5eeca013168ec1b655db41bae3236cb2e9d511484fc77
@@ -8817,6 +8833,7 @@ __metadata:
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.17"
+    "@credo-ts/webvh": "npm:0.5.17"
     "@formatjs/intl-datetimeformat": "npm:~4.2.6"
     "@formatjs/intl-displaynames": "npm:~5.2.6"
     "@formatjs/intl-getcanonicallocales": "npm:~1.7.3"
@@ -10773,6 +10790,18 @@ __metadata:
   version: 4.1.0
   resolution: "did-resolver@npm:4.1.0"
   checksum: 10c0/3ccb21c85958a2e47122e90b7c3bfdf738360a85745eb5dbe556b6bd33d2d7c2bc080d9b12da1a5de3491934a17329dd1cdc99854afb850699d6af3765102dbc
+  languageName: node
+  linkType: hard
+
+"didwebvh-ts@npm:^2.5.3":
+  version: 2.5.5
+  resolution: "didwebvh-ts@npm:2.5.5"
+  dependencies:
+    "@noble/hashes": "npm:^1.8.0"
+    json-canonicalize: "npm:^1.0.6"
+  bin:
+    didwebvh: dist/cli/didwebvh.js
+  checksum: 10c0/ab6685878c1e9a34ee7c33421e81d6983b81ec384968c1086d8eff5fe989530e6127a1dadd602fcbb3a8db3b1c3b47f7c9bc19361e7e27bc8cd0c6c75c99bf54
   languageName: node
   linkType: hard
 
@@ -15145,6 +15174,13 @@ __metadata:
   version: 3.0.1
   resolution: "json-buffer@npm:3.0.1"
   checksum: 10c0/0d1c91569d9588e7eef2b49b59851f297f3ab93c7b35c7c221e288099322be6b562767d11e4821da500f3219542b9afd2e54c5dc573107c1126ed1080f8e96d7
+  languageName: node
+  linkType: hard
+
+"json-canonicalize@npm:^1.0.6, json-canonicalize@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "json-canonicalize@npm:1.2.0"
+  checksum: 10c0/98b031dbd8d8d5d2cfb826d226e23ea126e6caf8c80edc95814c547343d82bae4657fc2816915022ba2a7cffca64f3b9353096d90d3dbd1279a7767060124690
   languageName: node
   linkType: hard
 
