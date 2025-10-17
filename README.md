@@ -20,6 +20,16 @@ The Bifold Wallet is an open-source project designed to enhance the way we inter
 
 Currently, we're updating Bifold's architecture to make it easier to maintain and customize for various use cases. Check out our [design roadmap issue](https://github.com/openwallet-foundation/bifold-wallet/issues/754) for more information, and we welcome your feedback.
 
+## Architecture & Credential Lifecycle (OpenID4VC)
+
+For a deeper look into how Bifold manages credential validity, refresh, and lifecycle automation, check out the [OpenID Credential Refresh Lifecycle Architecture](./docs/cred-lifecycle-arc.md).  
+This document contains diagrams and explanations of wallet-side flows such as:
+
+- Status list verification for SD-JWT credentials
+- Automated refresh with stored refresh tokens
+- User and background triggers
+- UX integration and fallback strategies
+
 ## Contributing
 
 We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide][contributor-guide].
@@ -61,7 +71,7 @@ The setup for Bifold is similar to other React Native projects. The following se
 [Android Studio](https://developer.android.com/studio)
 [Apple Xcode](https://developer.apple.com/xcode/)
 
-Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited 
+Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited
 
 ## Suggested Setup
 
@@ -159,7 +169,7 @@ Since this is a mobile development project, this project is primarily developed 
 
 **ProTip 🤓**
 
-You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run 
+You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run
 
 ```sh
 mise install
@@ -240,7 +250,7 @@ For more detailed information how to setup android SDK in react native, please r
 
 #### OpenJDK17
 
-You will need to have OpenJDK 17 installed. You can install it using your package manager. 
+You will need to have OpenJDK 17 installed. You can install it using your package manager.
 
 ##### Manual Installation
 
