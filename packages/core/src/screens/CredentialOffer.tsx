@@ -28,7 +28,7 @@ import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
-import { getCredentialName } from '../utils/cred-def'
+import { getCredentialName, getSchemaName } from '../utils/cred-def'
 import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
 import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
@@ -128,10 +128,30 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const offerData = offer?.anoncreds ?? offer?.indy
 
       if (offerData) {
-        credential.metadata.add(AnonCredsCredentialMetadataKey, {
+        // Resolve schema object from schemaId
+        let schema = null
+        if (offerData.schema_id && agent.modules.anoncreds) {
+          try {
+            const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(offerData.schema_id)
+            schema = resolvedSchema
+          } catch (error) {
+            logger.warn('Failed to resolve schema', { error: error as Error })
+          }
+        }
+
+        const metadataToStore = {
           schemaId: offerData.schema_id,
           credentialDefinitionId: offerData.cred_def_id,
+          schemaName: schema?.name,
+        }
+
+        logger.debug('Storing schema metadata for credential offer', {
+          credentialId: credential.id,
+          metadataKey: AnonCredsCredentialMetadataKey,
+          metadata: metadataToStore,
         })
+
+        credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
       }
 
       if (offerAttributes) {
@@ -165,7 +185,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         })
         setLoading(false)
       })
-  }, [credential, agent, bundleResolver, i18n.language])
+  }, [credential, agent, bundleResolver, i18n.language, logger])
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
@@ -185,8 +205,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           return
         }
         const ids = getCredentialIdentifiers(credential)
+        const overlayName = overlay.metaOverlay?.name
+        const cachedSchemaName = getSchemaName(credential)
+
+        // Only compute fallback if we don't have overlay or cached name
         const name =
-          overlay.metaOverlay?.name ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
+          overlayName ?? cachedSchemaName ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {

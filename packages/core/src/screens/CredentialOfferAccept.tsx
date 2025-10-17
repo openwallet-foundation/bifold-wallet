@@ -1,5 +1,5 @@
 import { CredentialState } from '@credo-ts/core'
-import { useCredentialById } from '@credo-ts/react-hooks'
+import { useCredentialById, useAgent } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +13,7 @@ import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { ThemedText } from '../components/texts/ThemedText'
 
 enum DeliveryStatus {
@@ -29,6 +30,7 @@ export interface CredentialOfferAcceptProps {
 
 const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, credentialId, confirmationOnly }) => {
   const { t } = useTranslation()
+  const { agent } = useAgent()
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [credentialDeliveryStatus, setCredentialDeliveryStatus] = useState<DeliveryStatus>(DeliveryStatus.Pending)
   const [timerDidFire, setTimerDidFire] = useState<boolean>(false)
@@ -37,7 +39,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const navigation = useNavigation()
   const { ListItems } = useTheme()
   const { CredentialAdded, CredentialPending } = useAnimatedComponents()
-  const [{ connectionTimerDelay }] = useServices([TOKENS.CONFIG])
+  const [{ connectionTimerDelay }, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
     container: {
@@ -84,8 +86,78 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
+
+      // Check if accepted credential has cached schema name
+      const existingMetadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
+
+      if (existingMetadata?.schemaName) {
+        logger.debug('Accepted credential already has cached schema name', {
+          credentialId: credential.id,
+          schemaName: existingMetadata.schemaName,
+        })
+      } else {
+        logger.warn('Accepted credential missing cached schema name', {
+          credentialId: credential.id,
+          hasMetadata: !!existingMetadata,
+          schemaId: existingMetadata?.schemaId,
+        })
+
+        // Try to restore schema name from format data if available
+        const restoreSchemaMetadata = async () => {
+          try {
+            if (!agent?.credentials) {
+              return
+            }
+            const { offer } = await agent.credentials.getFormatData(credential.id)
+            const offerData = offer?.anoncreds ?? offer?.indy
+
+            if (
+              offerData &&
+              typeof offerData === 'object' &&
+              'schema_id' in offerData &&
+              offerData.schema_id &&
+              agent?.modules?.anoncreds
+            ) {
+              try {
+                const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(offerData.schema_id)
+
+                if (resolvedSchema?.name) {
+                  logger.info('Restoring schema metadata for accepted credential', {
+                    credentialId: credential.id,
+                    schemaName: resolvedSchema.name,
+                    schemaId: offerData.schema_id,
+                  })
+
+                  // Store schema metadata
+                  const metadataToStore = {
+                    schemaId: offerData.schema_id,
+                    credentialDefinitionId: 'cred_def_id' in offerData ? offerData.cred_def_id : undefined,
+                    schemaName: resolvedSchema.name,
+                  }
+
+                  credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
+
+                  // Update the credential record
+                  await agent?.credentials.update(credential)
+
+                  logger.info('Schema metadata restored successfully for accepted credential', {
+                    credentialId: credential.id,
+                    schemaName: resolvedSchema.name,
+                  })
+                }
+              } catch (error) {
+                logger.warn('Failed to resolve schema during restoration', { error: error as Error })
+              }
+            }
+          } catch (error) {
+            logger.warn('Failed to get format data during restoration', { error: error as Error })
+          }
+        }
+
+        restoreSchemaMetadata()
+      }
     }
-  }, [credential, timer])
+  }, [credential, timer, agent, logger])
 
   useEffect(() => {
     if (confirmationOnly) {

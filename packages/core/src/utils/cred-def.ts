@@ -86,8 +86,23 @@ function credentialDefinition(credential: CredentialRecord): string | undefined 
   return credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId
 }
 
+export function getSchemaName(credential: CredentialRecord): string | undefined {
+  const metadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
+  const schemaName = metadata?.schemaName
+  return schemaName
+}
+
 export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent): Promise<string> {
-  return getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent)
+  // Check if we have a cached schemaName in the credential metadata
+  const cachedSchemaName = getSchemaName(credential)
+
+  if (cachedSchemaName) {
+    return cachedSchemaName
+  }
+
+  // Fallback to the original logic
+  const fallbackName = await getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent)
+  return fallbackName
 }
 
 export async function parsedCredDefName(

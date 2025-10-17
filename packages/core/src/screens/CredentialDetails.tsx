@@ -28,6 +28,8 @@ import { credentialTextColor, getCredentialIdentifiers, isValidAnonCredsCredenti
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
+import { getSchemaName } from '../utils/cred-def'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { getCredentialName } from '../utils/cred-def'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
@@ -172,13 +174,67 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     bundleResolver.resolveAllBundles(params).then((bundle) => {
+      // Use cached schema name as fallback if no specific overlay name is found
+      const cachedSchemaName = getSchemaName(credential)
+      // Check if OCA name is meaningful (not just "Credential" or empty)
+      const ocaName = bundle.metaOverlay?.name
+      const hasMeaningfulOcaName = ocaName && ocaName !== 'Credential' && ocaName.trim() !== ''
+
+      const effectiveName = hasMeaningfulOcaName ? ocaName : cachedSchemaName || ocaName
+
       setOverlay((o) => ({
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
       }))
+
+      // Update the overlay name after setting the overlay
+      if (effectiveName && effectiveName !== ocaName && bundle.metaOverlay) {
+        setOverlay((o) => {
+          const updatedOverlay = {
+            ...o,
+            metaOverlay: {
+              ...o.metaOverlay,
+              name: effectiveName,
+            } as any,
+          }
+          return updatedOverlay
+        })
+      }
     })
   }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
+
+  // Check if credential has cached schema name
+  useEffect(() => {
+    if (!credential || !isValidAnonCredsCredential(credential)) {
+      return
+    }
+
+    const existingMetadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
+
+    if (existingMetadata?.schemaName) {
+      logger.debug('Credential has cached schema name', {
+        credentialId: credential.id,
+        schemaName: existingMetadata.schemaName,
+      })
+    } else {
+      logger.warn('Credential missing cached schema name', {
+        credentialId: credential.id,
+        metadataKey: AnonCredsCredentialMetadataKey,
+        hasMetadata: !!existingMetadata,
+        schemaId: existingMetadata?.schemaId,
+        fullMetadata: existingMetadata,
+        allMetadataKeys: credential.metadata.keys,
+        // Check all metadata entries
+        allMetadataEntries: credential.metadata.keys.map((key) => ({
+          key,
+          value: credential.metadata.get(key),
+        })),
+        // Specifically check the _anoncreds/credential metadata
+        anoncredsCredentialMetadata: credential.metadata.get('_anoncreds/credential'),
+      })
+    }
+  }, [credential, logger])
 
   useEffect(() => {
     if (credential?.revocationNotification) {
@@ -297,7 +353,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         <>
           <CredentialDetailSecondaryHeader overlay={overlay} />
           <CredentialCardLogo overlay={overlay} />
-          <CredentialDetailPrimaryHeader overlay={overlay} />
+          <CredentialDetailPrimaryHeader overlay={overlay} credential={credential} />
         </>
       )
     }
