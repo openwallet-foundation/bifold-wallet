@@ -109,3 +109,37 @@ export enum OpenIDCredentialType {
   SdJwtVc,
   Mdoc,
 }
+
+export interface RefreshResponse {
+  /** New access token to use for credential requests */
+  access_token: string
+
+  /** New refresh token (may rotate on every call) */
+  refresh_token?: string
+
+  /** Type of the access token — usually "Bearer" */
+  token_type?: 'Bearer' | string
+
+  /** Lifetime of the access token in seconds */
+  expires_in?: number
+
+  /** Server-provided challenge for proof-of-possession */
+  c_nonce?: string
+
+  /** Time (seconds) the c_nonce remains valid */
+  c_nonce_expires_in?: number
+
+  /** Optional scope string from AS */
+  scope?: string
+
+  /** Optional authorization details (OID4VCI-specific) */
+  authorization_details?: Array<{
+    type: string
+    credential_configuration_id?: string
+    [key: string]: unknown
+  }>
+
+  /** Some ASs return a DPoP nonce (different naming conventions) */
+  dpop_nonce?: string
+  dpopNonce?: string
+}
