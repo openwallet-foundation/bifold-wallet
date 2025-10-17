@@ -9,6 +9,7 @@ import { useTheme } from '../../contexts/theme'
 import { credentialTextColor } from '../../utils/credential'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
+import { getSchemaName } from '../../utils/cred-def'
 import { ThemedText } from '../texts/ThemedText'
 
 type CredentialDetailPrimaryHeaderProps = {
@@ -30,6 +31,14 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   const { ColorPalette } = useTheme()
   const { width, height } = useWindowDimensions()
   const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
+
+  // Use cached schema name as fallback if no specific overlay name is found
+  const cachedSchemaName = credential ? getSchemaName(credential) : undefined
+  const ocaName = overlay.metaOverlay?.name
+  const hasMeaningfulOcaName = ocaName && ocaName !== 'Credential' && ocaName.trim() !== ''
+
+  const effectiveName = hasMeaningfulOcaName ? ocaName : cachedSchemaName || ocaName
+
   const styles = StyleSheet.create({
     primaryHeaderContainer: {
       paddingHorizontal: isBranding11 ? 16 : paddingHorizontal,
@@ -73,7 +82,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
           </ThemedText>
         )}
         <ThemedText
-          accessibilityLabel={`${overlay.metaOverlay?.name} ${t('Credentials.Credential')}`}
+          accessibilityLabel={`${effectiveName} ${t('Credentials.Credential')}`}
           testID={testIdWithKey('CredentialName')}
           style={[
             styles.textContainer,
@@ -82,7 +91,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
             },
           ]}
         >
-          {overlay.metaOverlay?.name}
+          {effectiveName}
         </ThemedText>
         {brandingOverlayType === BrandingOverlayType.Branding11 && credential && (
           <ThemedText
