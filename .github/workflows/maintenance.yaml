@@ -15,7 +15,7 @@ jobs:
     name: Issue and PR
     steps:
       - name: Prune stale issues
-        uses: actions/stale@v9
+        uses: actions/stale@v10
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           days-before-stale: 375 # 1 year
