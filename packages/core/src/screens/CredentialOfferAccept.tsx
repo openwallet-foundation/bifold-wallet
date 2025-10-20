@@ -13,8 +13,8 @@ import { useTheme } from '../contexts/theme'
 import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
-import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { ThemedText } from '../components/texts/ThemedText'
+import { ensureCredentialMetadata } from '../utils/credential'
 
 enum DeliveryStatus {
   Pending,
@@ -87,75 +87,13 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
 
-      // Check if accepted credential has cached schema name
-      const existingMetadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
-
-      if (existingMetadata?.schemaName) {
-        logger.debug('Accepted credential already has cached schema name', {
-          credentialId: credential.id,
-          schemaName: existingMetadata.schemaName,
-        })
-      } else {
-        logger.warn('Accepted credential missing cached schema name', {
-          credentialId: credential.id,
-          hasMetadata: !!existingMetadata,
-          schemaId: existingMetadata?.schemaId,
-        })
-
-        // Try to restore schema name from format data if available
-        const restoreSchemaMetadata = async () => {
-          try {
-            if (!agent?.credentials) {
-              return
-            }
-            const { offer } = await agent.credentials.getFormatData(credential.id)
-            const offerData = offer?.anoncreds ?? offer?.indy
-
-            if (
-              offerData &&
-              typeof offerData === 'object' &&
-              'schema_id' in offerData &&
-              offerData.schema_id &&
-              agent?.modules?.anoncreds
-            ) {
-              try {
-                const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(offerData.schema_id)
-
-                if (resolvedSchema?.name) {
-                  logger.info('Restoring schema metadata for accepted credential', {
-                    credentialId: credential.id,
-                    schemaName: resolvedSchema.name,
-                    schemaId: offerData.schema_id,
-                  })
-
-                  // Store schema metadata
-                  const metadataToStore = {
-                    schemaId: offerData.schema_id,
-                    credentialDefinitionId: 'cred_def_id' in offerData ? offerData.cred_def_id : undefined,
-                    schemaName: resolvedSchema.name,
-                  }
-
-                  credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
-
-                  // Update the credential record
-                  await agent?.credentials.update(credential)
-
-                  logger.info('Schema metadata restored successfully for accepted credential', {
-                    credentialId: credential.id,
-                    schemaName: resolvedSchema.name,
-                  })
-                }
-              } catch (error) {
-                logger.warn('Failed to resolve schema during restoration', { error: error as Error })
-              }
-            }
-          } catch (error) {
-            logger.warn('Failed to get format data during restoration', { error: error as Error })
-          }
+      // Ensure credential has all required metadata (function checks what's missing)
+      const restoreMetadata = async () => {
+        if (agent) {
+          await ensureCredentialMetadata(credential, agent)
         }
-
-        restoreSchemaMetadata()
       }
+      restoreMetadata()
     }
   }, [credential, timer, agent, logger])
 

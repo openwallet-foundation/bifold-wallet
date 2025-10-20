@@ -26,7 +26,7 @@ import {
 import { formatTime, useCredentialConnectionLabel } from '../../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../../utils/oca'
 import { testIdWithKey } from '../../utils/testable'
-import { getSchemaName } from '../../utils/cred-def'
+import { getEffectiveCredentialName } from '../../utils/credential'
 
 import CardWatermark from './CardWatermark'
 
@@ -154,33 +154,22 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      // Use cached schema name as fallback if no specific overlay name is found
-      const cachedSchemaName = getSchemaName(credential)
-      // Check if OCA name is meaningful (not just "Credential" or empty)
-      const ocaName = bundle.metaOverlay?.name
-      const hasMeaningfulOcaName = ocaName && ocaName !== 'Credential' && ocaName.trim() !== ''
-
-      const effectiveName = hasMeaningfulOcaName ? ocaName : cachedSchemaName || ocaName
+      const effectiveName = getEffectiveCredentialName(credential, bundle.metaOverlay?.name)
 
       setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as LegacyBrandingOverlay,
+        // Apply effective name if different from OCA name
+        ...(effectiveName && effectiveName !== bundle.metaOverlay?.name && bundle.metaOverlay
+          ? {
+              metaOverlay: {
+                ...bundle.metaOverlay,
+                name: effectiveName,
+              } as any,
+            }
+          : {}),
       }))
-
-      // Update the overlay name after setting the overlay
-      if (effectiveName && effectiveName !== ocaName && bundle.metaOverlay) {
-        setOverlay((o) => {
-          const updatedOverlay = {
-            ...o,
-            metaOverlay: {
-              ...o.metaOverlay,
-              name: effectiveName,
-            } as any,
-          }
-          return updatedOverlay
-        })
-      }
     })
   }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])
 

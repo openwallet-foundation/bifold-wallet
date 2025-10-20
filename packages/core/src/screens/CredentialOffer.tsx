@@ -28,8 +28,7 @@ import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
-import { getCredentialName, getSchemaName } from '../utils/cred-def'
-import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
+import { getCredentialIdentifiers, isValidAnonCredsCredential, ensureCredentialMetadata, getEffectiveCredentialName } from '../utils/credential'
 import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
@@ -128,30 +127,11 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const offerData = offer?.anoncreds ?? offer?.indy
 
       if (offerData) {
-        // Resolve schema object from schemaId
-        let schema = null
-        if (offerData.schema_id && agent.modules.anoncreds) {
-          try {
-            const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(offerData.schema_id)
-            schema = resolvedSchema
-          } catch (error) {
-            logger.warn('Failed to resolve schema', { error: error as Error })
-          }
-        }
-
-        const metadataToStore = {
-          schemaId: offerData.schema_id,
-          credentialDefinitionId: offerData.cred_def_id,
-          schemaName: schema?.name,
-        }
-
-        logger.debug('Storing schema metadata for credential offer', {
-          credentialId: credential.id,
-          metadataKey: AnonCredsCredentialMetadataKey,
-          metadata: metadataToStore,
+        // Ensure credential has all required metadata
+        await ensureCredentialMetadata(credential, agent, {
+          schema_id: offerData.schema_id,
+          cred_def_id: offerData.cred_def_id,
         })
-
-        credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
       }
 
       if (offerAttributes) {
@@ -204,13 +184,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
           return
         }
-        const ids = getCredentialIdentifiers(credential)
-        const overlayName = overlay.metaOverlay?.name
-        const cachedSchemaName = getSchemaName(credential)
-
-        // Only compute fallback if we don't have overlay or cached name
-        const name =
-          overlayName ?? cachedSchemaName ?? (await getCredentialName(ids.credentialDefinitionId, ids.schemaId, agent))
+        const name = getEffectiveCredentialName(credential, overlay.metaOverlay?.name)
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {

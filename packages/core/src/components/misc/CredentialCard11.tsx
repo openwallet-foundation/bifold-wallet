@@ -21,7 +21,7 @@ import {
 } from '../../utils/helpers'
 import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
-import { getSchemaName } from '../../utils/cred-def'
+import { getEffectiveCredentialName } from '../../utils/credential'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
@@ -237,32 +237,22 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         }
       }
 
-      // Use cached schema name as fallback if no specific overlay name is found
-      const cachedSchemaName = credential ? getSchemaName(credential) : undefined
-      const ocaName = bundle.metaOverlay?.name
-      const hasMeaningfulOcaName = ocaName && ocaName !== 'Credential' && ocaName.trim() !== ''
-
-      const effectiveName = hasMeaningfulOcaName ? ocaName : cachedSchemaName || ocaName
+      const effectiveName = credential ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name) : undefined
 
       setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
+        // Apply effective name if different from OCA name
+        ...(effectiveName && effectiveName !== bundle.metaOverlay?.name && bundle.metaOverlay
+          ? {
+              metaOverlay: {
+                ...bundle.metaOverlay,
+                name: effectiveName,
+              } as any,
+            }
+          : {}),
       }))
-
-      // Update the overlay name after setting the overlay
-      if (effectiveName && effectiveName !== ocaName && bundle.metaOverlay) {
-        setOverlay((o) => {
-          const updatedOverlay = {
-            ...o,
-            metaOverlay: {
-              ...o.metaOverlay,
-              name: effectiveName,
-            } as any,
-          }
-          return updatedOverlay
-        })
-      }
     })
   }, [
     credential,

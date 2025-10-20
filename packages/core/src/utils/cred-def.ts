@@ -10,6 +10,12 @@ import type { Agent } from '@credo-ts/core'
 
 import { credentialSchema } from './schema'
 
+// Fallback default credential name when no other name is available
+export const fallbackDefaultCredentialNameValue = 'Credential'
+
+// Default credential definition tag value
+export const defaultCredDefTag = 'default'
+
 // Normalize incoming identifiers by trimming whitespace and converting empty strings to undefined
 function normalizeId(id?: string): string | undefined {
   if (typeof id !== 'string') return undefined
@@ -31,7 +37,7 @@ export async function getCredentialName(credDefId?: string, schemaId?: string, a
 }
 
 async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?: Agent): Promise<string> {
-  let name = 'Credential'
+  let name = fallbackDefaultCredentialNameValue
   if (!agent?.modules?.anoncreds) {
     return name
   }
@@ -45,7 +51,7 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
     }
   }
 
-  if ((name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') && schemaId) {
+  if ((name.toLowerCase() === defaultCredDefTag || name.toLowerCase() === fallbackDefaultCredentialNameValue.toLowerCase()) && schemaId) {
     try {
       const { schema: result }: { schema: AnonCredsSchema } = await agent.modules.anoncreds.getSchema(schemaId)
       name = result?.name ?? name
@@ -53,11 +59,11 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
       agent?.config?.logger?.info('parseWebVHCredDefId: Schema definition not found, using default name')
     }
   }
-  return name || 'Credential'
+  return name || fallbackDefaultCredentialNameValue
 }
 
 function parseIndyCredDefId(credDefId?: string, schemaId?: string): string {
-  let name = 'Credential'
+  let name = fallbackDefaultCredentialNameValue
   if (credDefId) {
     try {
       const parsedCredDef = parseIndyCredentialDefinitionId(credDefId)
@@ -66,17 +72,17 @@ function parseIndyCredDefId(credDefId?: string, schemaId?: string): string {
       // If parsing fails, keep the default name
     }
   }
-  if (name.toLowerCase() === 'default' || name.toLowerCase() === 'credential') {
+  if (name.toLowerCase() === defaultCredDefTag || name.toLowerCase() === fallbackDefaultCredentialNameValue.toLowerCase()) {
     if (schemaId) {
       try {
         const parsedSchema = parseIndySchemaId(schemaId)
         name = parsedSchema?.schemaName ?? name
       } catch {
         // If parsing fails, keep the default name
-        name = 'Credential'
+        name = fallbackDefaultCredentialNameValue
       }
     } else {
-      name = 'Credential'
+      name = fallbackDefaultCredentialNameValue
     }
   }
   return name
@@ -90,6 +96,12 @@ export function getSchemaName(credential: CredentialRecord): string | undefined 
   const metadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
   const schemaName = metadata?.schemaName
   return schemaName
+}
+
+export function getCredDefTag(credential: CredentialRecord): string | undefined {
+  const metadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
+  const credDefTag = metadata?.credDefTag
+  return credDefTag
 }
 
 export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent): Promise<string> {

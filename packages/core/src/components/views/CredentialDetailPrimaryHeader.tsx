@@ -9,7 +9,7 @@ import { useTheme } from '../../contexts/theme'
 import { credentialTextColor } from '../../utils/credential'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import { getSchemaName } from '../../utils/cred-def'
+import { getEffectiveCredentialName } from '../../utils/credential'
 import { ThemedText } from '../texts/ThemedText'
 
 type CredentialDetailPrimaryHeaderProps = {
@@ -33,11 +33,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
 
   // Use cached schema name as fallback if no specific overlay name is found
-  const cachedSchemaName = credential ? getSchemaName(credential) : undefined
-  const ocaName = overlay.metaOverlay?.name
-  const hasMeaningfulOcaName = ocaName && ocaName !== 'Credential' && ocaName.trim() !== ''
-
-  const effectiveName = hasMeaningfulOcaName ? ocaName : cachedSchemaName || ocaName
+  const effectiveName = credential ? getEffectiveCredentialName(credential, overlay.metaOverlay?.name) : overlay.metaOverlay?.name
 
   const styles = StyleSheet.create({
     primaryHeaderContainer: {
