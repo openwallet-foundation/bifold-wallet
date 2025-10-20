@@ -1,4 +1,5 @@
 import { getCredentialName, parsedCredDefName, parsedCredDefNameFromCredential } from '../../src/utils/cred-def'
+import { getEffectiveCredentialName, ensureCredentialMetadata } from '../../src/utils/credential'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 
 const mockSchemaId =
@@ -217,5 +218,153 @@ describe('Cred Def Utils', () => {
     const indySchemaId = 'WgWxqztrNooG92RXvxSTWv:2:BankingCredential:1.0'
     const credDefName = await parsedCredDefName(indyCredDefId, indySchemaId)
     expect(credDefName).toBe('custom')
+  })
+
+  test('getEffectiveCredentialName: prioritizes OCA name over others', () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return { 
+              schemaName: 'SchemaName',
+              credDefTag: 'TagName'
+            }
+          }
+          return undefined
+        },
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential, 'OCAName')
+    expect(effectiveName).toBe('OCAName')
+  })
+
+  test('getEffectiveCredentialName: uses credDefTag when OCA name not available', () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return { 
+              schemaName: 'SchemaName',
+              credDefTag: 'CustomTag'
+            }
+          }
+          return undefined
+        },
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential)
+    expect(effectiveName).toBe('CustomTag')
+  })
+
+  test('getEffectiveCredentialName: skips default credDefTag and uses schemaName', () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return { 
+              schemaName: 'SchemaName',
+              credDefTag: 'default'
+            }
+          }
+          return undefined
+        },
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential)
+    expect(effectiveName).toBe('SchemaName')
+  })
+
+  test('getEffectiveCredentialName: falls back to default when no metadata available', () => {
+    const credential: any = {
+      metadata: {
+        get: () => undefined,
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential)
+    expect(effectiveName).toBe('Credential')
+  })
+
+  test('ensureCredentialMetadata: caches schemaName and credDefTag when not present', async () => {
+    let cachedMetadata: any = {
+      credentialDefinitionId: mockCredDefId,
+      schemaId: mockSchemaId
+    }
+
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return cachedMetadata
+          }
+          return undefined
+        },
+        set: (key: string, value: any) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            cachedMetadata = value
+          }
+        },
+        add: (key: string, value: any) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            cachedMetadata = { ...cachedMetadata, ...value }
+          }
+        }
+      },
+    }
+
+    const agent: any = {
+      context: {},
+      config: { logger: { debug: jest.fn(), warn: jest.fn(), info: jest.fn() } },
+      credentials: {
+        update: jest.fn().mockResolvedValue(undefined),
+      },
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: mockCredDefResource.content }),
+          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
+        },
+      },
+    }
+
+    await ensureCredentialMetadata(credential, agent)
+
+    expect(cachedMetadata.schemaName).toBe('CredoTest')
+    expect(cachedMetadata.credDefTag).toBe('default')
+  })
+
+  test('ensureCredentialMetadata: does not overwrite existing cached metadata', async () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return { 
+              credentialDefinitionId: mockCredDefId,
+              schemaId: mockSchemaId,
+              schemaName: 'ExistingSchemaName',
+              credDefTag: 'ExistingTag'
+            }
+          }
+          return undefined
+        },
+        set: jest.fn()
+      },
+    }
+
+    const agent: any = {
+      context: {},
+      config: { logger: { debug: jest.fn(), warn: jest.fn(), info: jest.fn() } },
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn(),
+          getSchema: jest.fn(),
+        },
+      },
+    }
+
+    await ensureCredentialMetadata(credential, agent)
+
+    // Should not call set since metadata already exists
+    expect(credential.metadata.set).not.toHaveBeenCalled()
+    expect(agent.modules.anoncreds.getCredentialDefinition).not.toHaveBeenCalled()
+    expect(agent.modules.anoncreds.getSchema).not.toHaveBeenCalled()
   })
 })
