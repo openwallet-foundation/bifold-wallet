@@ -9,6 +9,7 @@ import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
 import type { Agent } from '@credo-ts/core'
 
 import { credentialSchema } from './schema'
+import { ensureCredentialMetadata, getEffectiveCredentialName } from './credential'
 
 // Fallback default credential name when no other name is available
 export const fallbackDefaultCredentialNameValue = 'Credential'
@@ -105,14 +106,20 @@ export function getCredDefTag(credential: CredentialRecord): string | undefined 
 }
 
 export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent): Promise<string> {
-  // Check if we have a cached schemaName in the credential metadata
-  const cachedSchemaName = getSchemaName(credential)
-
-  if (cachedSchemaName) {
-    return cachedSchemaName
+  // Ensure metadata is cached if agent is provided
+  if (agent) {
+    await ensureCredentialMetadata(credential, agent)
   }
 
-  // Fallback to the original logic
+  // Check if we have cached metadata
+  const cachedSchemaName = getSchemaName(credential)
+  
+  if (cachedSchemaName) {
+    // Use the priority waterfall logic (OCA name > credDefTag > schemaName > fallback)
+    return getEffectiveCredentialName(credential)
+  }
+
+  // Fallback: parse the IDs if metadata is not cached and no agent to resolve
   const fallbackName = await getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent)
   return fallbackName
 }
