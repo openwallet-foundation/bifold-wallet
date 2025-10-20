@@ -94,8 +94,8 @@ describe('Cred Def Utils', () => {
       context: {},
       modules: {
         anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: mockCredDefResource.content }),
-          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
+          getCredentialDefinition: jest.fn().mockResolvedValue({credentialDefinition: mockCredDefResource.content}),
+          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
         },
       },
     }
@@ -108,10 +108,8 @@ describe('Cred Def Utils', () => {
       context: {},
       modules: {
         anoncreds: {
-          getCredentialDefinition: jest
-            .fn()
-            .mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'non-default' } }),
-          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
+          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'non-default' } }),
+          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
         },
       },
     }
@@ -134,7 +132,7 @@ describe('Cred Def Utils', () => {
       modules: {
         anoncreds: {
           getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
-          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
+          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
         },
       },
       config: { logger: { info: jest.fn() } },
@@ -163,10 +161,8 @@ describe('Cred Def Utils', () => {
       context: {},
       modules: {
         anoncreds: {
-          getCredentialDefinition: jest
-            .fn()
-            .mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'default' } }),
-          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
+          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'default' } }),
+          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
         },
       },
     }
