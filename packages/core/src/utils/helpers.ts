@@ -55,7 +55,7 @@ import {
   filterInvalidProofRequestMatches,
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
-import { getCredentialName, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
+import { fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
 import { getEffectiveCredentialName } from './credential'
 import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 import { isMediatorInvitation } from './mediatorhelpers'
