@@ -112,7 +112,7 @@ export async function parsedCredDefNameFromCredential(credential: CredentialReco
       await ensureCredentialMetadata(credential, agent)
     } catch (error) {
       // If metadata restoration fails, we'll fall back to parsing IDs or default name
-      console.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential:', error)
+      agent?.config.logger?.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential', { error: error as Error })
     }
   }
 

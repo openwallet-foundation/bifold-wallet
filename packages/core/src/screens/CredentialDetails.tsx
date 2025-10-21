@@ -29,7 +29,6 @@ import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 import { getEffectiveCredentialName, ensureCredentialMetadata } from '../utils/credential'
-import { fallbackDefaultCredentialNameValue } from '../utils/cred-def'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
@@ -197,7 +196,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         await ensureCredentialMetadata(credential, agent)
       } catch (error) {
         // If metadata restoration fails, we'll fall back to default credential name
-        console.warn('Failed to restore credential metadata:', error)
+        agent?.config.logger?.warn('Failed to restore credential metadata', { error: error as Error })
       }
     }
     restoreMetadata()

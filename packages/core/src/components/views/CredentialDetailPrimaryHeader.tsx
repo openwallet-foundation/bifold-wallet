@@ -32,7 +32,6 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   const { width, height } = useWindowDimensions()
   const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
 
-  // Use cached schema name as fallback if no specific overlay name is found
   const effectiveName = credential ? getEffectiveCredentialName(credential, overlay.metaOverlay?.name) : overlay.metaOverlay?.name
 
   const styles = StyleSheet.create({
