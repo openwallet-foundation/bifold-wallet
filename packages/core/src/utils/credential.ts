@@ -1,4 +1,4 @@
-import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
+import { AnonCredsCredentialMetadataKey, AnonCredsCredentialOffer } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import type { Agent } from '@credo-ts/core'
 import { ImageSourcePropType } from 'react-native'
@@ -66,10 +66,10 @@ export async function ensureCredentialMetadata(
   if (!schemaId || !credDefId) {
     try {
       const { offer } = await agent.credentials.getFormatData(credential.id)
-      const formatOfferData = offer?.anoncreds ?? offer?.indy
-      if (formatOfferData && typeof formatOfferData === 'object') {
-        schemaId = schemaId || (formatOfferData as any).schema_id
-        credDefId = credDefId || (formatOfferData as any).cred_def_id
+      const formatOfferData = (offer?.anoncreds ?? offer?.indy) as AnonCredsCredentialOffer | undefined
+      if (formatOfferData) {
+        schemaId = schemaId || formatOfferData?.schema_id
+        credDefId = credDefId || formatOfferData?.cred_def_id
       }
     } catch (error) {
       agent.config.logger?.warn('Failed to get format data', { error: error as Error })
