@@ -1,6 +1,6 @@
 ---
-'@bifold/core': minor
+'@bifold/core': patch
 ---
 
-Added AnonCreds metadata caching for schema name
+Added AnonCreds metadata caching for schema name and improved error handling
 
