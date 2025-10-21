@@ -1,5 +1,15 @@
 # @bifold/core
 
+## 2.8.0
+
+### Minor Changes
+
+- f4d46be: Patch credo-ts expose refreshToken
+
+### Patch Changes
+
+- 00ed384: fixed pacakge for packed release
+
 ## 2.7.5
 
 ### Patch Changes
