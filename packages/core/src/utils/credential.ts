@@ -147,35 +147,31 @@ export async function ensureCredentialMetadata(
  * @returns The effective name to use for display
  */
 export function getEffectiveCredentialName(credential: CredentialExchangeRecord, ocaName?: string): string {
+  // Helper function to validate a name
+  const isValidName = (name: string | undefined): boolean => {
+    return !!(
+      name &&
+      name !== defaultCredDefTag &&
+      name !== fallbackDefaultCredentialNameValue &&
+      name.trim() !== ''
+    )
+  }
+
   // 1. Try OCA Bundle name
-  if (
-    ocaName &&
-    ocaName !== defaultCredDefTag &&
-    ocaName !== fallbackDefaultCredentialNameValue &&
-    ocaName.trim() !== ''
-  ) {
-    return ocaName
+  if (isValidName(ocaName)) {
+    return ocaName!
   }
   
   // 2. Try credential definition tag
   const credDefTag = getCredDefTag(credential)
-  if (
-    credDefTag &&
-    credDefTag.toLowerCase() !== defaultCredDefTag &&
-    credDefTag !== fallbackDefaultCredentialNameValue &&
-    credDefTag.trim() !== ''
-  ) {
-    return credDefTag
+  if (isValidName(credDefTag)) {
+    return credDefTag!
   }
   
   // 3. Try schema name
   const schemaName = getSchemaName(credential)
-  if (
-    schemaName &&
-    schemaName !== fallbackDefaultCredentialNameValue &&
-    schemaName.trim() !== ''
-  ) {
-    return schemaName
+  if (isValidName(schemaName)) {
+    return schemaName!
   }
   
   // 4. Return default fallback

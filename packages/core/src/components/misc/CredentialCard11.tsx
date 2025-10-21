@@ -237,21 +237,17 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         }
       }
 
-      const effectiveName = credential ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name) : undefined
-
       setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
-        // Apply effective name if different from OCA name
-        ...(effectiveName && effectiveName !== bundle.metaOverlay?.name && bundle.metaOverlay
-          ? {
-              metaOverlay: {
-                ...bundle.metaOverlay,
-                name: effectiveName,
-              } as any,
-            }
-          : {}),
+        // Apply effective name
+        ...(bundle.metaOverlay && {
+          metaOverlay: {
+            ...bundle.metaOverlay,
+            name: credential ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name) : bundle.metaOverlay?.name,
+          } as any,
+        }),
       }))
     })
   }, [

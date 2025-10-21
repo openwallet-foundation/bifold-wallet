@@ -154,21 +154,15 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
       language: i18n.language,
     }
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      const effectiveName = getEffectiveCredentialName(credential, bundle.metaOverlay?.name)
-
       setOverlay((o) => ({
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as LegacyBrandingOverlay,
-        // Apply effective name if different from OCA name
-        ...(effectiveName && effectiveName !== bundle.metaOverlay?.name && bundle.metaOverlay
-          ? {
-              metaOverlay: {
-                ...bundle.metaOverlay,
-                name: effectiveName,
-              } as any,
-            }
-          : {}),
+        // Apply effective name
+        metaOverlay: {
+          ...bundle.metaOverlay,
+          name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
+        } as any,
       }))
     })
   }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])

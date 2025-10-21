@@ -172,21 +172,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     }
 
     bundleResolver.resolveAllBundles(params).then((bundle) => {
-      const effectiveName = getEffectiveCredentialName(credential, bundle.metaOverlay?.name)
-
       setOverlay((o) => ({
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
-        // Apply effective name if different from OCA name
-        ...(effectiveName && effectiveName !== bundle.metaOverlay?.name && bundle.metaOverlay
-          ? {
-              metaOverlay: {
-                ...bundle.metaOverlay,
-                name: effectiveName,
-              } as any,
-            }
-          : {}),
+        // Apply effective name
+        metaOverlay: {
+          ...bundle.metaOverlay,
+          name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
+        } as any,
       }))
     })
   }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
