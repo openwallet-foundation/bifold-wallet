@@ -1,16 +1,18 @@
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { View, StyleSheet, Share } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { useTheme } from '../contexts/theme'
-import { ThemedText } from '../components/texts/ThemedText'
-import { StackScreenProps } from '@react-navigation/stack'
-import { ContactStackParams, Screens } from '../types/navigators'
-import Button, { ButtonType } from '../components/buttons/Button'
-import { testIdWithKey } from '../utils/testable'
-import { ScrollView } from 'react-native-gesture-handler'
 import Clipboard from '@react-native-clipboard/clipboard'
+import { useNetInfo } from '@react-native-community/netinfo'
+import { StackScreenProps } from '@react-navigation/stack'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { Share, StyleSheet, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
+import Button, { ButtonType } from '../components/buttons/Button'
+import { ThemedText } from '../components/texts/ThemedText'
 import { ToastType } from '../components/toast/BaseToast'
+import { useTheme } from '../contexts/theme'
+import { ContactStackParams, Screens } from '../types/navigators'
+import { testIdWithKey } from '../utils/testable'
 
 type JSONDetailsProps = StackScreenProps<ContactStackParams, Screens.JSONDetails>
 
@@ -20,7 +22,8 @@ const JSONDetails = ({ route }: JSONDetailsProps) => {
   }
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
-  const { jsonBlob } = route.params
+  const netInfo = useNetInfo()
+  const jsonBlob = JSON.stringify({ caller_info: route.params.jsonBlob, network_info: netInfo }, null, 2)
   const styles = StyleSheet.create({
     container: {
       flex: 1,

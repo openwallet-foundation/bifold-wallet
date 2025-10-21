@@ -13,13 +13,14 @@ import PINChange from '../screens/PINChange'
 import TogglePushNotifications from '../screens/TogglePushNotifications'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
+import AutoLock from '../screens/AutoLock'
+import ConfigureMediator from '../screens/ConfigureMediator'
+import PINChangeSuccessScreen from '../screens/PINChangeSuccess'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
-import AutoLock from '../screens/AutoLock'
-import ConfigureMediator from '../screens/ConfigureMediator'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -118,7 +119,17 @@ const SettingStack: React.FC = () => {
           headerBackTestID: testIdWithKey('Back'),
           ...ScreenOptionsDictionary[Screens.ChangePIN],
         }}
-      ></Stack.Screen>
+      />
+      <Stack.Screen
+        name={Screens.ChangePINSuccess}
+        component={PINChangeSuccessScreen}
+        options={{
+          title: t('Screens.ConfirmPIN'),
+          headerBackTestID: testIdWithKey('Back'),
+          headerLeft: () => null,
+          ...ScreenOptionsDictionary[Screens.ChangePINSuccess],
+        }}
+      />
       <Stack.Screen
         name={Screens.TogglePushNotifications}
         component={TogglePushNotifications}

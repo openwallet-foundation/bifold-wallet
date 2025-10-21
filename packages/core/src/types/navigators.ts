@@ -12,7 +12,10 @@ export enum Screens {
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
   ChangePIN = 'Change PIN',
+  ChangePINConfirmation = 'Change PIN Confirmation',
+  ChangePINSuccess = 'Change PIN Success',
   EnterPIN = 'Enter PIN',
+  VerifyPIN = 'Verify PIN',
   Home = 'Home',
   Scan = 'Scan',
   PasteUrl = 'Paste URL',
@@ -125,7 +128,7 @@ export type ContactStackParams = {
   [Screens.CredentialOffer]: { credentialId: string }
   [Screens.ProofDetails]: { recordId: string; isHistory?: boolean }
   [Screens.ProofRequest]: { proofId: string }
-  [Screens.JSONDetails]: { jsonBlob: string }
+  [Screens.JSONDetails]: { jsonBlob: any }
 }
 
 export type ProofRequestsStackParams = {
@@ -167,6 +170,7 @@ export type SettingStackParams = {
   [Screens.Tours]: undefined
   [Screens.ToggleBiometry]: undefined
   [Screens.ChangePIN]: undefined
+  [Screens.ChangePINSuccess]: undefined
   [Screens.Terms]: undefined
   [Screens.Onboarding]: undefined
   [Screens.Developer]: undefined

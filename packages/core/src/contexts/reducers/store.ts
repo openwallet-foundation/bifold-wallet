@@ -1,19 +1,21 @@
+import Config from 'react-native-config'
 import { LocalStorageKeys } from '../../constants'
 import { storeLoginAttempt } from '../../services/keychain'
+import { PersistentStorage } from '../../services/storage'
 import {
-  Preferences as PreferencesState,
-  Tours as ToursState,
-  Onboarding as OnboardingState,
   Authentication as AuthenticationState,
   Lockout as LockoutState,
   LoginAttempt as LoginAttemptState,
   Migration as MigrationState,
-  State,
+  Onboarding as OnboardingState,
   Preferences,
+  Preferences as PreferencesState,
+  State,
+  Tours as ToursState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
-import { PersistentStorage } from '../../services/storage'
-import Config from 'react-native-config'
+import lodash from 'lodash'
+import { BannerMessage } from 'components/views/Banner'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -25,6 +27,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_CONFIRM_PIN = 'onboarding.didConfirmPIN',
   DID_NAME_WALLET = 'onboarding/didNameWallet',
   DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
   ONBOARDING_VERSION = 'onboarding/onboardingVersion',
@@ -563,9 +566,14 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
 
     case PreferencesDispatchAction.BANNER_MESSAGES: {
-      const bannerMessageToAdd = action?.payload ?? []
-      const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
-      const uniqueBannerMessages = Array.from(new Set(newBannerMessages))
+      const newBannerMessages = action?.payload ?? []
+      const allBannerMessages = [...state.preferences.bannerMessages, ...newBannerMessages]
+      const uniqueBannerMessages = lodash.uniqBy<BannerMessage>(allBannerMessages, 'id')
+
+      // If there were no new unique messages, don't update state to avoid re-renders
+      if (allBannerMessages.length !== uniqueBannerMessages.length) {
+        return state
+      }
 
       const preferences: Preferences = {
         ...state.preferences,
@@ -682,6 +690,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       // in the previous installation
       const loginAttempt: LoginAttemptState = {
         loginAttempts: 0,
+        lockoutDate: undefined,
         servedPenalty: true,
       }
 
@@ -691,9 +700,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         migration,
         loginAttempt,
       }
+
       storeLoginAttempt(loginAttempt)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, newState.migration)
+
       return newState
     }
     case OnboardingDispatchAction.DID_NAME_WALLET: {

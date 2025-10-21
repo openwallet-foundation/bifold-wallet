@@ -10,7 +10,11 @@ const timing: Animated.TimingAnimationConfig = {
   useNativeDriver: true,
 }
 
-const ButtonLoading: React.FC = () => {
+export interface ButtonLoadingProps {
+  size?: number
+}
+
+const ButtonLoading: React.FC<ButtonLoadingProps> = ({ size = 25 }) => {
   const { ColorPalette } = useTheme()
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
@@ -24,7 +28,7 @@ const ButtonLoading: React.FC = () => {
 
   return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-      <Icon style={{ color: ColorPalette.brand.icon }} size={25} name="refresh" />
+      <Icon style={{ color: ColorPalette.brand.icon }} size={size} name="refresh" />
     </Animated.View>
   )
 }

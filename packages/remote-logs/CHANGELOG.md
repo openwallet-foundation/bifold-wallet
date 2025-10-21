@@ -1,5 +1,123 @@
 # Change Log
 
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+- Updated dependencies [2319500]
+- Updated dependencies [fe7a7bc]
+- Updated dependencies [aa3286d]
+- Updated dependencies [c5cc3e7]
+  - @bifold/core@2.9.0
+
+## 2.8.0
+
+### Patch Changes
+
+- Updated dependencies [00ed384]
+- Updated dependencies [f4d46be]
+  - @bifold/core@2.8.0
+
+## 2.7.5
+
+### Patch Changes
+
+- Updated dependencies [83d6ce9]
+- Updated dependencies [eaffaec]
+- Updated dependencies [56d9fb3]
+- Updated dependencies [53169b9]
+- Updated dependencies [07ea6be]
+- Updated dependencies [c4b153a]
+  - @bifold/core@2.7.5
+
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- cfd61c6: enhance credential definition parsing for webvh DID format
+- 7acaa5d: patch out silly preinstall script from pex library
+- Updated dependencies [6a6beb3]
+- Updated dependencies [cfd61c6]
+- Updated dependencies [7acaa5d]
+  - @bifold/core@2.7.4
+
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+- Updated dependencies [29fd468]
+- Updated dependencies [c1cc972]
+  - @bifold/core@2.7.3
+
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+- ef52d51: fix lint issues from previous pr
+- Updated dependencies [99dab08]
+  - @bifold/core@2.7.2
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+- Updated dependencies [84cb3cd]
+  - @bifold/core@2.7.1
+
+## 2.7.0
+
+### Minor Changes
+
+- 7cd5ad2: fixed logging interface to accept data and error
+
+### Patch Changes
+
+- Updated dependencies [7cd5ad2]
+  - @bifold/core@2.7.0
+
+## 2.6.0
+
+### Minor Changes
+
+- f52bdd8: Fixed transports for local and loki logging
+- e6c4d63: fixed imports, fixed release builds, added export
+
+### Patch Changes
+
+- Updated dependencies [e6c4d63]
+  - @bifold/core@2.6.0
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+- eeeadd0: cleaned up autolock logic
+
+### Patch Changes
+
+- Updated dependencies [66bbd8d]
+  - @bifold/core@2.5.0
+
+## 2.4.6
+
+### Patch Changes
+
+- Updated dependencies [9214b8c]
+  - @bifold/core@2.4.6
+
+## 2.4.5
+
+### Patch Changes
+
+- Updated dependencies [502d616]
+  - @bifold/core@2.4.5
+
 ## 2.4.4
 
 ### Patch Changes

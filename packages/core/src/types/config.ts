@@ -48,6 +48,11 @@ export interface Config {
   attemptLockoutConfig?: AttemptLockoutConfig
   appUpdateConfig?: AppUpdateConfig
   preventScreenCapture?: boolean
+  PINScreensConfig: PINScreensConfig
+}
+
+export interface PINScreensConfig {
+  useNewPINDesign: boolean
 }
 
 export interface HistoryEventsLoggerConfig {

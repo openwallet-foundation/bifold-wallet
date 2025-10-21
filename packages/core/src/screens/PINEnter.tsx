@@ -1,6 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, InteractionManager, Keyboard, Pressable, StyleSheet, Vibration, View } from 'react-native'
+import { getBuildNumber, getVersion } from 'react-native-device-info'
+import {
+  AppState,
+  DeviceEventEmitter,
+  InteractionManager,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Vibration,
+  View,
+} from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import { InlineErrorType, InlineMessageProps } from '../components/inputs/InlineErrorText'
@@ -22,7 +32,6 @@ import { useLockout } from '../hooks/lockout'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
-import { getBuildNumber, getVersion } from 'react-native-device-info'
 
 interface PINEnterProps {
   setAuthenticated: (status: boolean) => void
@@ -39,6 +48,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [alertModalVisible, setAlertModalVisible] = useState(false)
   const [forgotPINModalVisible, setForgotPINModalVisible] = useState(false)
   const [devModalVisible, setDevModalVisible] = useState(false)
+  const [showForgotPINMessage, setShowForgotPINMessage] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPalette, TextTheme } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
@@ -48,10 +58,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       preventScreenCapture,
       enableHiddenDevModeTrigger,
       attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig,
+      PINScreensConfig,
     },
-  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+    inlineMessages,
+  ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
-  const [inlineMessages] = useServices([TOKENS.INLINE_ERRORS])
   const [alertModalMessage, setAlertModalMessage] = useState('')
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
   const onBackPressed = () => setDevModalVisible(false)
@@ -91,12 +102,15 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   }, [getWalletSecret, dispatch, setAuthenticated])
 
   useEffect(() => {
-    const handle = InteractionManager.runAfterInteractions(async () => {
-      if (!store.preferences.useBiometry) {
-        return
-      }
+    // Only check biometrics if user has it enabled
+    if (!store.preferences.useBiometry) {
+      return
+    }
+
+    const checkBiometrics = async () => {
       try {
         const active = await isBiometricsActive()
+
         if (!active) {
           // biometry state has changed, display message and disable biometry
           setBiometricsEnrollmentChange(true)
@@ -106,13 +120,30 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             payload: [false],
           })
         }
+
         await loadWalletCredentials()
       } catch (error) {
-        logger.error(`error checking biometrics / loading credentials: ${JSON.stringify(error)}`)
+        logger.error('error checking biometrics / loading credentials', error as Error)
+      }
+    }
+
+    // On mount, check biometrics after interactions complete
+    let afterInteractionsBiometricsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
+
+    // Re-check biometrics when app transitions from background (inactive) to foreground (active)
+    const appStateListener = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        // Cancel any existing interaction handler before scheduling a new one
+        afterInteractionsBiometricsHandler.cancel()
+        afterInteractionsBiometricsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
       }
     })
 
-    return handle.cancel
+    return () => {
+      // Cleanup listeners and handlers on unmount
+      afterInteractionsBiometricsHandler.cancel()
+      appStateListener.remove()
+    }
   }, [store.preferences.useBiometry, isBiometricsActive, disableBiometrics, dispatch, loadWalletCredentials, logger])
 
   useEffect(() => {
@@ -159,12 +190,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
             return
           }
           if (inlineMessages.enabled) {
+            setShowForgotPINMessage(true)
             setInlineMessageField({
               message,
               inlineType: InlineErrorType.error,
               config: inlineMessages,
             })
           } else {
+            setShowForgotPINMessage(true)
             setAlertModalMessage(message)
           }
           setContinueEnabled(true)
@@ -252,6 +285,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     helpText: {
       alignSelf: 'auto',
       textAlign: 'left',
+      marginBottom: PINScreensConfig.useNewPINDesign ? 24 : 16,
+    },
+    helpTextSubtitle: {
+      alignSelf: 'auto',
+      textAlign: 'left',
       marginBottom: 16,
     },
     inputLabel: {
@@ -264,14 +302,23 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       marginBottom: 20,
     },
     forgotPINText: {
-      color: ColorPalette.brand.link,
-      fontSize: 20,
+      fontSize: PINScreensConfig.useNewPINDesign ? 16 : 20,
+      textAlign: PINScreensConfig.useNewPINDesign ? 'center' : 'left',
+      color: PINScreensConfig.useNewPINDesign ? '' : ColorPalette.brand.link,
     },
     buildNumberText: {
       fontSize: 14,
       color: TextTheme.labelSubtitle.color,
       textAlign: 'center',
       marginTop: 20,
+    },
+    appTitle: {
+      marginTop: 16,
+      marginBottom: 24,
+    },
+    loadingContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   })
 
@@ -293,10 +340,16 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     }
     return (
       <>
-        <ThemedText variant={showHelpText ? 'normal' : 'headingThree'} style={style.helpText}>
+        <ThemedText
+          variant={showHelpText ? 'normal' : 'headingThree'}
+          style={PINScreensConfig.useNewPINDesign ? style.helpText : style.helpTextSubtitle}
+        >
           {header}
         </ThemedText>
-        <ThemedText variant={showHelpText ? 'normal' : 'labelSubtitle'} style={style.helpText}>
+        <ThemedText
+          variant={PINScreensConfig.useNewPINDesign ? 'normal' : 'labelSubtitle'}
+          style={PINScreensConfig.useNewPINDesign ? style.helpTextSubtitle : style.helpText}
+        >
           {subheader}
         </ThemedText>
       </>
@@ -308,65 +361,96 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     biometricsEnrollmentChange,
     biometricsErr,
     store.preferences.autoLockTime,
+    style.helpTextSubtitle,
+    PINScreensConfig.useNewPINDesign,
   ])
 
   return (
-    <KeyboardView keyboardAvoiding={false}>
+    <KeyboardView keyboardAvoiding={true}>
       <View style={style.screenContainer}>
         <View>
+          {PINScreensConfig.useNewPINDesign && (
+            <ThemedText variant="bold" style={style.appTitle}>
+              {t('PINEnter.AppTitle')}
+            </ThemedText>
+          )}
           <Pressable
             onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}}
             testID={testIdWithKey('DeveloperCounter')}
           >
             {HelpText}
           </Pressable>
-          <ThemedText variant="bold" style={style.inputLabel}>
-            {t('PINEnter.EnterPIN')}
-          </ThemedText>
+          {!PINScreensConfig.useNewPINDesign && (
+            <ThemedText variant="bold" style={style.inputLabel}>
+              {t('PINEnter.EnterPIN')}
+            </ThemedText>
+          )}
           <PINInput
-            onPINChanged={(p: string) => {
-              setPIN(p)
-              if (p.length === minPINLength) {
+            onPINChanged={(userPinInput: string) => {
+              setPIN(userPinInput)
+              if (userPinInput.length === minPINLength) {
                 Keyboard.dismiss()
-                onPINInputCompleted(p)
+                onPINInputCompleted(userPinInput)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
             accessibilityLabel={t('PINEnter.EnterPIN')}
             autoFocus={true}
             inlineMessage={inlineMessageField}
-            onSubmitEditing={() => {
-              onPINInputCompleted(PIN)
+            onSubmitEditing={(userPinInput: string) => {
+              onPINInputCompleted(userPinInput)
             }}
           />
-          <ThemedText
-            variant="bold"
-            style={style.forgotPINText}
-            onPress={() => setForgotPINModalVisible(true)}
-            testID={testIdWithKey('ForgotPINLink')}
-            accessible={true}
-            accessibilityRole="link"
-            accessibilityLabel={t('PINEnter.ForgotPINLink')}
-          >
-            {t('PINEnter.ForgotPINLink')}
-          </ThemedText>
-        </View>
-        <View>
-          <View style={style.buttonContainer}>
-            <Button
-              title={t('PINEnter.Unlock')}
-              buttonType={ButtonType.Primary}
-              testID={testIdWithKey('Enter')}
-              disabled={isContinueDisabled}
-              accessibilityLabel={t('PINEnter.Unlock')}
-              onPress={() => {
-                Keyboard.dismiss()
-                onPINInputCompleted(PIN)
-              }}
+          {!PINScreensConfig.useNewPINDesign && (
+            <ThemedText
+              variant="bold"
+              style={style.forgotPINText}
+              onPress={() => setForgotPINModalVisible(true)}
+              testID={testIdWithKey('ForgotPINLink')}
+              accessible={true}
+              accessibilityRole="link"
+              accessibilityLabel={t('PINEnter.ForgotPINLink')}
             >
-              {!continueEnabled && <ButtonLoading />}
-            </Button>
+              {t('PINEnter.ForgotPINLink')}
+            </ThemedText>
+          )}
+          {showForgotPINMessage && PINScreensConfig.useNewPINDesign && (
+            <ThemedText
+              variant="normal"
+              style={style.forgotPINText}
+              testID={testIdWithKey('ForgotPINDescription')}
+              accessible={true}
+              accessibilityRole="text"
+              accessibilityLabel={t('PINEnter.ForgotPINModalDescription')}
+            >
+              {t('PINEnter.ForgotPINModalDescription')}
+            </ThemedText>
+          )}
+        </View>
+        {PINScreensConfig.useNewPINDesign && !continueEnabled && (
+          <View style={style.loadingContainer}>
+            <ButtonLoading size={50} />
+            <ThemedText variant="normal">{t('PINEnter.Loading')}</ThemedText>
           </View>
+        )}
+        <View>
+          {!PINScreensConfig.useNewPINDesign && (
+            <View style={style.buttonContainer}>
+              <Button
+                title={t('PINEnter.Unlock')}
+                buttonType={ButtonType.Primary}
+                testID={testIdWithKey('Enter')}
+                disabled={isContinueDisabled}
+                accessibilityLabel={t('PINEnter.Unlock')}
+                onPress={() => {
+                  Keyboard.dismiss()
+                  onPINInputCompleted(PIN)
+                }}
+              >
+                {!continueEnabled && <ButtonLoading />}
+              </Button>
+            </View>
+          )}
           {store.preferences.useBiometry && (
             <>
               <ThemedText style={style.biometricsText}>{t('PINEnter.Or')}</ThemedText>

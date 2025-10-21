@@ -15,9 +15,13 @@ import {
   AutoAcceptProof,
   ConnectionsModule,
   CredentialsModule,
+  DidsModule,
   DifPresentationExchangeProofFormatService,
+  JwkDidResolver,
+  KeyDidResolver,
   MediationRecipientModule,
   MediatorPickupStrategy,
+  PeerDidResolver,
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
@@ -25,6 +29,7 @@ import {
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
 import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { ariesAskar } from '@hyperledger/aries-askar-react-native'
@@ -63,7 +68,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     }),
     anoncreds: new AnonCredsModule({
       anoncreds,
-      registries: [new IndyVdrAnonCredsRegistry()],
+      registries: [new IndyVdrAnonCredsRegistry(), new WebVhAnonCredsRegistry()],
     }),
     indyVdr: new IndyVdrModule({
       indyVdr,
@@ -105,6 +110,9 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     pushNotificationsFcm: new PushNotificationsFcmModule(),
     pushNotificationsApns: new PushNotificationsApnsModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
+    dids: new DidsModule({
+      resolvers: [new WebvhDidResolver(), new JwkDidResolver(), new KeyDidResolver(), new PeerDidResolver()],
+    }),
   }
 }
 

@@ -1,17 +1,18 @@
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
 import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../../constants'
 import { BifoldError } from '../../../types/error'
-import { useAgent } from '@credo-ts/react-hooks'
-import { useTranslation } from 'react-i18next'
-import { getCredentialsForProofRequest } from '../resolverProof'
-import { OpenId4VPRequestRecord } from '../types'
 import {
   acquirePreAuthorizedAccessToken,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
 } from '../offerResolve'
+import { getCredentialsForProofRequest } from '../resolverProof'
+import { OpenId4VPRequestRecord } from '../types'
+import { setRefreshCredentialMetadata } from '../refresh/refreshMetadata'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -40,13 +41,25 @@ export const useOpenID = ({
           uri: uri,
         })
 
+        const authServer = resolvedCredentialOffer.metadata.credentialIssuerMetadata.authorization_servers?.[0]
         const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
 
-        return await receiveCredentialFromOpenId4VciOffer({
+        const refreshToken = tokenResponse.refreshToken
+
+        const credential = await receiveCredentialFromOpenId4VciOffer({
           agent,
           resolvedCredentialOffer,
-          accessToken: tokenResponse,
+          tokenResponse: tokenResponse,
         })
+
+        if (refreshToken && authServer) {
+          setRefreshCredentialMetadata(credential, {
+            authServer: authServer,
+            refreshToken: refreshToken,
+          })
+        }
+
+        return credential
       } catch (err: unknown) {
         //TODO: Sppecify different error
         const error = new BifoldError(

@@ -1,5 +1,95 @@
 # @bifold/core
 
+## 2.9.0
+
+### Minor Changes
+
+- 2319500: Updated PIN screen design and functionality
+- aa3286d: Refresh token lifecycle
+
+### Patch Changes
+
+- fe7a7bc: Filter sub field out of sd jwt credential display
+- c5cc3e7: updated pr template
+
+## 2.8.0
+
+### Minor Changes
+
+- f4d46be: Patch credo-ts expose refreshToken
+
+### Patch Changes
+
+- 00ed384: fixed pacakge for packed release
+
+## 2.7.5
+
+### Patch Changes
+
+- 83d6ce9: improve credential definition ID normalization and error handling in parsing functions
+- eaffaec: exporting more components
+- 56d9fb3: Update bcovrin leger config
+- 53169b9: fix: biometrics not triggering after app is backgrounded
+- 07ea6be: fix: unique banner messages
+- c4b153a: destructure results in credential definition and schema retrieval
+
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- cfd61c6: enhance credential definition parsing for webvh DID format
+- 7acaa5d: patch out silly preinstall script from pex library
+
+## 2.7.3
+
+### Patch Changes
+
+- 29fd468: removed old package
+- c1cc972: Added new SVG Overlay for masking camera components
+
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+
+## 2.7.0
+
+### Minor Changes
+
+- 7cd5ad2: fixed logging interface to accept data and error
+
+## 2.6.0
+
+### Minor Changes
+
+- e6c4d63: fixed imports, fixed release builds, added export
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+
+## 2.4.6
+
+### Patch Changes
+
+- 9214b8c: added network info to json details screen
+
+## 2.4.5
+
+### Patch Changes
+
+- 502d616: Refactored ledgers API to be configurable
+
 ## 2.4.4
 
 ### Patch Changes
