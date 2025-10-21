@@ -1,6 +1,6 @@
 import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 
-import { getEffectiveCredentialName } from '../../src/utils/credential'
+import { getEffectiveCredentialName, isValidCredentialName } from '../../src/utils/credential'
 import { fallbackDefaultCredentialNameValue, defaultCredDefTag } from '../../src/utils/cred-def'
 
 // Mock credential record for testing
@@ -22,6 +22,46 @@ const createMockCredential = (overrides: Partial<CredentialExchangeRecord> = {})
     ...overrides,
   } as unknown as CredentialExchangeRecord
 }
+
+describe('isValidCredentialName', () => {
+  test('returns true for valid, meaningful names', () => {
+    expect(isValidCredentialName('Valid Credential Name')).toBe(true)
+    expect(isValidCredentialName('Driver License')).toBe(true)
+    expect(isValidCredentialName('My Custom Name')).toBe(true)
+  })
+
+  test('returns false for undefined', () => {
+    expect(isValidCredentialName(undefined)).toBe(false)
+  })
+
+  test('returns false for empty string', () => {
+    expect(isValidCredentialName('')).toBe(false)
+  })
+
+  test('returns false for whitespace-only strings', () => {
+    expect(isValidCredentialName('   ')).toBe(false)
+    expect(isValidCredentialName('\t')).toBe(false)
+    expect(isValidCredentialName('\n')).toBe(false)
+  })
+
+  test('returns false for default credential def tag', () => {
+    expect(isValidCredentialName(defaultCredDefTag)).toBe(false)
+  })
+
+  test('returns false for fallback default credential name', () => {
+    expect(isValidCredentialName(fallbackDefaultCredentialNameValue)).toBe(false)
+  })
+
+  test('returns true for names with leading/trailing spaces that trim to valid', () => {
+    expect(isValidCredentialName('  Valid Name  ')).toBe(true)
+  })
+
+  test('returns false for case variations of reserved names', () => {
+    // The function checks exact match, so these should return true
+    expect(isValidCredentialName('DEFAULT')).toBe(true)
+    expect(isValidCredentialName('credential')).toBe(true)
+  })
+})
 
 describe('getEffectiveCredentialName', () => {
   test('returns OCA name when valid', () => {
@@ -67,7 +107,7 @@ describe('getEffectiveCredentialName', () => {
     expect(result).toBe(fallbackDefaultCredentialNameValue)
   })
 
-  test('uses isValidName helper function correctly', () => {
+  test('uses isValidCredentialName helper function correctly', () => {
     const credential = createMockCredential()
     
     // Test various invalid names

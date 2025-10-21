@@ -108,7 +108,12 @@ export function getCredDefTag(credential: CredentialRecord): string | undefined 
 export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent): Promise<string> {
   // Ensure metadata is cached if agent is provided
   if (agent) {
-    await ensureCredentialMetadata(credential, agent)
+    try {
+      await ensureCredentialMetadata(credential, agent)
+    } catch (error) {
+      // If metadata restoration fails, we'll fall back to parsing IDs or default name
+      console.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential:', error)
+    }
   }
 
   // Check if we have cached metadata

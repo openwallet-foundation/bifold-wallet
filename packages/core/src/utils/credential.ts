@@ -68,8 +68,8 @@ export async function ensureCredentialMetadata(
       const { offer } = await agent.credentials.getFormatData(credential.id)
       const formatOfferData = offer?.anoncreds ?? offer?.indy
       if (formatOfferData && typeof formatOfferData === 'object') {
-        schemaId = schemaId || ('schema_id' in formatOfferData ? formatOfferData.schema_id : undefined)
-        credDefId = credDefId || ('cred_def_id' in formatOfferData ? formatOfferData.cred_def_id : undefined)
+        schemaId = schemaId || (formatOfferData as any).schema_id
+        credDefId = credDefId || (formatOfferData as any).cred_def_id
       }
     } catch (error) {
       agent.config.logger?.warn('Failed to get format data', { error: error as Error })
@@ -136,6 +136,22 @@ export async function ensureCredentialMetadata(
 }
 
 /**
+ * Validates whether a credential name is meaningful and should be used for display.
+ * Returns false for undefined, empty, whitespace-only, or default placeholder names.
+ * 
+ * @param name - The name to validate
+ * @returns true if the name is valid and meaningful, false otherwise
+ */
+export function isValidCredentialName(name: string | undefined): boolean {
+  return !!(
+    name &&
+    name !== defaultCredDefTag &&
+    name !== fallbackDefaultCredentialNameValue &&
+    name.trim() !== ''
+  )
+}
+
+/**
  * Determines the effective credential name using a priority waterfall:
  * 1. OCA Bundle name (if present and meaningful)
  * 2. Credential definition tag (if present)
@@ -147,30 +163,20 @@ export async function ensureCredentialMetadata(
  * @returns The effective name to use for display
  */
 export function getEffectiveCredentialName(credential: CredentialExchangeRecord, ocaName?: string): string {
-  // Helper function to validate a name
-  const isValidName = (name: string | undefined): boolean => {
-    return !!(
-      name &&
-      name !== defaultCredDefTag &&
-      name !== fallbackDefaultCredentialNameValue &&
-      name.trim() !== ''
-    )
-  }
-
   // 1. Try OCA Bundle name
-  if (isValidName(ocaName)) {
+  if (isValidCredentialName(ocaName)) {
     return ocaName!
   }
   
   // 2. Try credential definition tag
   const credDefTag = getCredDefTag(credential)
-  if (isValidName(credDefTag)) {
+  if (isValidCredentialName(credDefTag)) {
     return credDefTag!
   }
   
   // 3. Try schema name
   const schemaName = getSchemaName(credential)
-  if (isValidName(schemaName)) {
+  if (isValidCredentialName(schemaName)) {
     return schemaName!
   }
   

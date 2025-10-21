@@ -126,7 +126,6 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const offerData = offer?.anoncreds ?? offer?.indy
 
       if (offerData) {
-        // Ensure credential has all required metadata
         await ensureCredentialMetadata(credential, agent, {
           schema_id: offerData.schema_id,
           cred_def_id: offerData.cred_def_id,

@@ -15,6 +15,7 @@ import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import { ThemedText } from '../components/texts/ThemedText'
 import { ensureCredentialMetadata } from '../utils/credential'
+import { fallbackDefaultCredentialNameValue } from '../utils/cred-def'
 
 enum DeliveryStatus {
   Pending,
@@ -87,10 +88,13 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
 
-      // Ensure credential has all required metadata (function checks what's missing)
       const restoreMetadata = async () => {
         if (agent) {
-          await ensureCredentialMetadata(credential, agent)
+          try {
+            await ensureCredentialMetadata(credential, agent)
+          } catch (error) {
+            console.warn('Failed to restore credential metadata:', error)
+          }
         }
       }
       restoreMetadata()
