@@ -89,7 +89,14 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     }
     try {
       await storeCredential(credential)
-      // await sendOpenId4VciNotification({ metadata: credential.metadata, accessToken:  })
+      // options:
+      // metadata: any ---- issuer metadata
+      // notificationId: string ---- from credential
+      // accessToken: OpenId4VciRequestTokenResponse["accessToken"]
+      // notificationEvent: NotificationEventType 
+      // dpop?: OpenId4VciRequestTokenResponse["dpop"] ---- not needed just optional
+
+      // await sendOpenId4VciNotification(options)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
