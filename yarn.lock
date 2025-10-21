@@ -2414,8 +2414,10 @@ __metadata:
     "@react-navigation/devtools": "npm:~6.0.27"
     "@react-navigation/native": "npm:~6.0.16"
     "@react-navigation/stack": "npm:~6.3.29"
+    "@sd-jwt/jwt-status-list": "npm:^0.7.0"
     "@testing-library/jest-native": "npm:~5.4.3"
     "@testing-library/react-native": "npm:~12.3.3"
+    "@types/base-64": "npm:^1.0.2"
     "@types/jest": "npm:~29.5.14"
     "@types/lodash.flatten": "npm:~4.4.9"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -2428,6 +2430,7 @@ __metadata:
     babel-jest: "npm:~27.5.1"
     babel-plugin-module-resolver: "npm:~5.0.2"
     base-64: "npm:~1.0.0"
+    buffer: "npm:^6.0.3"
     commitlint: "npm:~17.7.2"
     eslint: "npm:~8.57.1"
     eslint-import-resolver-typescript: "npm:~3.6.3"
@@ -2481,6 +2484,7 @@ __metadata:
     react-native-vector-icons: "npm:~10.0.3"
     react-native-vision-camera: "npm:~4.3.2"
     react-test-renderer: "npm:~18.2.0"
+    react-zlib-js: "npm:^1.0.5"
     rimraf: "npm:~5.0.10"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
@@ -6906,6 +6910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/base-64@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/base-64@npm:1.0.2"
+  checksum: 10c0/3ad69002bd9ca4e79c010f6d9a4c9d09967687153fa6bb98e9459c731219609a4ac76920451565784e9d98cbe3567429eb60bd1561918c3a6ea2436d894346af
+  languageName: node
+  linkType: hard
+
 "@types/body-parser@npm:*":
   version: 1.19.6
   resolution: "@types/body-parser@npm:1.19.6"
@@ -8857,6 +8868,7 @@ __metadata:
     "@react-navigation/devtools": "npm:~6.0.27"
     "@react-navigation/native": "npm:~6.0.16"
     "@react-navigation/stack": "npm:~6.3.29"
+    "@sd-jwt/jwt-status-list": "npm:^0.7.0"
     "@types/lodash.flatten": "npm:~4.4.9"
     "@types/lodash.merge": "npm:~4.6.9"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -8864,6 +8876,7 @@ __metadata:
     axios: "npm:~1.4.0"
     babel-plugin-module-resolver: "npm:~5.0.2"
     base-64: "npm:~1.0.0"
+    buffer: "npm:^6.0.3"
     eslint: "npm:~8.57.1"
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
@@ -8911,6 +8924,7 @@ __metadata:
     react-native-vector-icons: "npm:~10.0.3"
     react-native-vision-camera: "npm:~4.3.2"
     react-native-webview: "npm:~13.10.7"
+    react-zlib-js: "npm:^1.0.5"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
@@ -18940,6 +18954,13 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/c633558ef9af33bc68f0c4dbb5163a004c4fb9eade7bd0a7cfc0355fb367f36bd9d96533c90b7e85a146be6c525113a15f58683d269e0177ad77e2b04d4fe51c
+  languageName: node
+  linkType: hard
+
+"react-zlib-js@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "react-zlib-js@npm:1.0.5"
+  checksum: 10c0/df87a703c2c12e3156007e06339db37490af5583e5cf88c0adeb579bb1a553a22b1264dd81c3793d52e656ef75f0dc94c158fa4d1e1e9c5d331cbd6ea4fa4d51
   languageName: node
   linkType: hard
 

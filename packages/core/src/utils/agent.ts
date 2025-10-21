@@ -17,8 +17,11 @@ import {
   CredentialsModule,
   DidsModule,
   DifPresentationExchangeProofFormatService,
+  JwkDidResolver,
+  KeyDidResolver,
   MediationRecipientModule,
   MediatorPickupStrategy,
+  PeerDidResolver,
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
@@ -108,7 +111,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     pushNotificationsApns: new PushNotificationsApnsModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
     dids: new DidsModule({
-      resolvers: [new WebvhDidResolver()],
+      resolvers: [new WebvhDidResolver(), new JwkDidResolver(), new KeyDidResolver(), new PeerDidResolver()],
     }),
   }
 }
