@@ -341,6 +341,14 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     }
     return (
       <>
+        {PINScreensConfig.useNewPINDesign && store.lockout.displayNotification && (
+          <ThemedText
+            variant={'headingTwo'}
+            style={style.helpText}
+          >
+            {t('PINEnter.Title')}
+          </ThemedText>
+        )}
         <ThemedText
           variant={showHelpText ? 'normal' : 'headingThree'}
           style={PINScreensConfig.useNewPINDesign ? style.helpText : style.helpTextSubtitle}
