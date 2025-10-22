@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getBuildNumber, getVersion } from 'react-native-device-info'
 import {
@@ -64,6 +64,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [alertModalMessage, setAlertModalMessage] = useState('')
+  const appState = useRef(AppState.currentState);
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
   const onBackPressed = () => setDevModalVisible(false)
   const onDevModeTriggered = () => {
@@ -132,7 +133,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
 
     // Re-check biometrics when app transitions from background (inactive) to foreground (active)
     const appStateListener = AppState.addEventListener('change', (nextAppState) => {
-      if (nextAppState === 'active') {
+      if (nextAppState === 'active' && appState.current.match(/background/)) {
         // Cancel any existing interaction handler before scheduling a new one
         afterInteractionsBiometricsHandler.cancel()
         afterInteractionsBiometricsHandler = InteractionManager.runAfterInteractions(checkBiometrics)

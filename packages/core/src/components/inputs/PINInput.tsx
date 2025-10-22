@@ -157,7 +157,7 @@ const PINInputComponent = (
         accessibilityRole={'button'}
         testID={showPIN ? testIdWithKey('Hide') : testIdWithKey('Show')}
         onPress={() => setShowPIN(!showPIN)}
-        hitSlop={hitSlop}
+        hitSlop={PINScreensConfig.useNewPINDesign ? { ...hitSlop, left: 10 } : hitSlop}
       >
         <Icon color={PINInputTheme.icon.color} name={showPIN ? 'visibility-off' : 'visibility'} size={30} />
       </TouchableOpacity>

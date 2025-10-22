@@ -88,7 +88,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
               setPINTwo(userPinInput)
               if (userPinInput.length === PINOne.length) {
                 Keyboard.dismiss()
-                await onConfirmPIN(PINOne, userPinInput)
+                await onConfirmPIN(userPinInput)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
