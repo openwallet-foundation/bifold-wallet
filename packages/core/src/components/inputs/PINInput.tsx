@@ -53,12 +53,16 @@ const PINInputComponent = (
   // filling with bullets when masked to prevent screen reader from reading the actual PIN
   // and to have the proper appearance when the PIN is masked
   const displayValue = useMemo(() => {
+    const trailingPINLength = PIN.length === 0 ? 0 : PIN.length - 1
     if (showPIN) {
       return PINScreensConfig.useNewPINDesign ? PIN : PIN.split('').join(' ')
     } else {
-      return PINScreensConfig.useNewPINDesign ? '●'.repeat(PIN.length) : '●'.repeat(PIN.length).split('').join(' ')
+      return PINScreensConfig.useNewPINDesign
+        ? `${'●'.repeat(trailingPINLength)}${PIN.charAt(PIN.length - 1)}`
+        : '●'.repeat(PIN.length).split('').join(' ')
     }
   }, [PIN, showPIN, PINScreensConfig])
+  //
 
   const onChangeText = useCallback(
     (value: string) => {

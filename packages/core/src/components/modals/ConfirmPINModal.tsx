@@ -22,7 +22,7 @@ interface ConfirmPINModalProps {
   errorMessage?: InlineMessageProps
   modalUsage: ConfirmPINModalUsage
   onBackPressed: () => void
-  onConfirmPIN: (...args: any[]) => void
+  onConfirmPIN: (pin: string) => void
   PINOne?: string
   title: string
   visible: boolean
