@@ -116,12 +116,14 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   )
 
   const onConfirmPIN = useCallback(
-    async (pinOne: string, pinTwo: string) => {
-      if (validatePINEntry(pinOne, pinTwo)) {
-        await passcodeCreate(pinOne)
+    async (pinTwo: string) => {
+      setIsLoading(true)
+      if (validatePINEntry(PIN, pinTwo)) {
+        await passcodeCreate(PIN)
       }
+      setIsLoading(false)
     },
-    [passcodeCreate, validatePINEntry]
+    [passcodeCreate, validatePINEntry, PIN, setIsLoading]
   )
 
   const onCreatePIN = useCallback(async () => {
@@ -155,12 +157,16 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           <PINHeader />
           <PINInput
             label={t('PINCreate.EnterPINTitle')}
-            onPINChanged={async (p: string) => {
-              setPIN(() => p)
-              if (p.length === minPINLength && PINScreensConfig.useNewPINDesign) {
+            onPINChanged={async (userPinInput: string) => {
+              setPIN(() => userPinInput)
+              if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
                 Keyboard.dismiss()
-                await handleConfirmPINFlow(p)
-              } else if (!PINScreensConfig.useNewPINDesign && p.length === minPINLength && PINTwoInputRef?.current) {
+                await handleConfirmPINFlow(userPinInput)
+              } else if (
+                !PINScreensConfig.useNewPINDesign &&
+                userPinInput.length === minPINLength &&
+                PINTwoInputRef?.current
+              ) {
                 PINTwoInputRef.current.focus()
                 const reactTag = findNodeHandle(PINTwoInputRef.current)
                 if (reactTag) {
