@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.10.0
+
+### Patch Changes
+
+- Updated dependencies [165cb53]
+- Updated dependencies [a667312]
+  - @bifold/core@2.10.0
+
 ## 2.9.0
 
 ### Patch Changes
