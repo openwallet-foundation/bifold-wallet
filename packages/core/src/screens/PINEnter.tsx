@@ -64,7 +64,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [alertModalMessage, setAlertModalMessage] = useState('')
-  const appState = useRef(AppState.currentState);
+  const appState = useRef(AppState.currentState)
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
   const onBackPressed = () => setDevModalVisible(false)
   const onDevModeTriggered = () => {
@@ -342,10 +342,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     return (
       <>
         {PINScreensConfig.useNewPINDesign && store.lockout.displayNotification && (
-          <ThemedText
-            variant={'headingTwo'}
-            style={style.helpText}
-          >
+          <ThemedText variant={'headingTwo'} style={style.helpText}>
             {t('PINEnter.Title')}
           </ThemedText>
         )}
