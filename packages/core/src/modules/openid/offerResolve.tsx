@@ -57,6 +57,12 @@ export const resolveOpenId4VciOffer = async ({
     uri: offerUri,
   })
 
+  // TODO: We need to have a trusted certificate loaded here before we are able to accept an mdoc offer from the issuer.
+  //   agent.x509.setTrustedCertificates([
+  //     `-----BEGIN CERTIFICATE-----
+  // -----END CERTIFICATE-----`
+  //   ])
+
   const resolvedCredentialOffer = await agent.modules.openId4VcHolder.resolveCredentialOffer(offerUri)
 
   if (authorization) {

@@ -93,6 +93,29 @@ const removeSdJwtRecord = (record: SdJwtVcRecord, state: OpenIDCredentialRecordS
   }
 }
 
+const addMdocRecord = (record: MdocRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.mdocVcRecords]
+  newRecordsState.unshift(record)
+
+  return {
+    ...state,
+    mdocVcRecords: newRecordsState,
+  }
+}
+
+const removeMdocRecord = (record: MdocRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.mdocVcRecords]
+  const index = newRecordsState.findIndex((r) => r.id === record.id)
+  if (index > -1) {
+    newRecordsState.splice(index, 1)
+  }
+
+  return {
+    ...state,
+    mdocVcRecords: newRecordsState,
+  }
+}
+
 const defaultState: OpenIDCredentialRecordState = {
   openIDCredentialRecords: [],
   w3cCredentialRecords: [],
@@ -115,12 +138,20 @@ const isSdJwtCredentialRecord = (record: SdJwtVcRecord) => {
   return 'compactSdJwtVc' in record
 }
 
+const isMdocCredentialRecord = (record: MdocRecord) => {
+  return record['_tags'].docType != null
+}
+
 const filterW3CCredentialsOnly = (credentials: W3cCredentialRecord[]) => {
   return credentials.filter((r) => isW3CCredentialRecord(r))
 }
 
 const filterSdJwtCredentialsOnly = (credentials: SdJwtVcRecord[]) => {
   return credentials.filter((r) => isSdJwtCredentialRecord(r))
+}
+
+const filterMdocCredentialsOnly = (credentials: MdocRecord[]) => {
+  return credentials.filter((r) => isMdocCredentialRecord(r))
 }
 
 // eslint-disable-next-line react/prop-types
@@ -234,6 +265,14 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         isLoading: false,
       }))
     })
+
+    agent.mdoc.getAll().then((creds) => {
+      setState((prev) => ({
+        ...prev,
+        mdocVcRecords: filterMdocCredentialsOnly(creds),
+        isLoading: false,
+      }))
+    })
   }, [agent])
 
   useEffect(() => {
@@ -267,11 +306,27 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       setState(removeSdJwtRecord(record, state))
     })
 
+    const mdoc_credentialAdded$ = recordsAddedByType(agent, MdocRecord).subscribe((record) => {
+        //This handler will return ANY creds added to the wallet even DidComm
+        //Sounds like a bug in the hooks package
+        //This check will safe guard the flow untill a fix goes to the hooks
+        setState(addMdocRecord(record, state))
+        // if (isW3CCredentialRecord(record)) {
+        //   setState(addW3cRecord(record, state))
+        // }
+      })
+
+    const mdoc_credentialRemoved$ = recordsRemovedByType(agent, MdocRecord).subscribe((record) => {
+      setState(removeMdocRecord(record, state))
+    })
+
     return () => {
       w3c_credentialAdded$.unsubscribe()
       w3c_credentialRemoved$.unsubscribe()
       sdjwt_credentialAdded$.unsubscribe()
       sdjwt_credentialRemoved$.unsubscribe()
+      mdoc_credentialAdded$.unsubscribe()
+      mdoc_credentialRemoved$.unsubscribe()
     }
   }, [state, agent])
 
