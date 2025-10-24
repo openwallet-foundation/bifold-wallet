@@ -129,7 +129,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         await ensureCredentialMetadata(credential, agent, {
           schema_id: offerData.schema_id,
           cred_def_id: offerData.cred_def_id,
-        })
+        }, logger)
       }
 
       if (offerAttributes) {

@@ -90,9 +90,9 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       const restoreMetadata = async () => {
         if (agent) {
           try {
-            await ensureCredentialMetadata(credential, agent)
+            await ensureCredentialMetadata(credential, agent, undefined, logger)
           } catch (error) {
-            agent.config.logger?.warn('Failed to restore credential metadata', { error: error as Error })
+            logger?.warn('Failed to restore credential metadata', { error: error as Error })
           }
         }
       }

@@ -193,14 +193,14 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
     const restoreMetadata = async () => {
       try {
-        await ensureCredentialMetadata(credential, agent)
+        await ensureCredentialMetadata(credential, agent, undefined, logger)
       } catch (error) {
         // If metadata restoration fails, we'll fall back to default credential name
-        agent?.config.logger?.warn('Failed to restore credential metadata', { error: error as Error })
+        logger?.warn('Failed to restore credential metadata', { error: error as Error })
       }
     }
     restoreMetadata()
-  }, [credential, agent])
+  }, [credential, agent, logger])
 
   useEffect(() => {
     if (credential?.revocationNotification) {

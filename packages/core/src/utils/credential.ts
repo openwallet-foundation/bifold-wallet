@@ -5,6 +5,7 @@ import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
 import { getSchemaName, getCredDefTag, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
+import { BifoldLogger } from '../services/logger'
 
 export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord) => {
   return (
@@ -45,12 +46,14 @@ export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) =
  * @param credential - The credential record to ensure metadata for
  * @param agent - The agent instance for resolving schema/credDef
  * @param offerData - Optional offer data containing schema_id and cred_def_id
+ * @param logger - Optional logger instance for logging
  * @returns Promise<boolean> - Returns true if metadata was updated, false otherwise
  */
 export async function ensureCredentialMetadata(
   credential: CredentialExchangeRecord,
   agent: Agent,
-  offerData?: { schema_id?: string; cred_def_id?: string }
+  offerData?: { schema_id?: string; cred_def_id?: string },
+  logger?: BifoldLogger
 ): Promise<boolean> {
   if (!agent?.modules?.anoncreds) {
     return false
@@ -72,7 +75,7 @@ export async function ensureCredentialMetadata(
         credDefId = credDefId || formatOfferData?.cred_def_id
       }
     } catch (error) {
-      agent.config.logger?.warn('Failed to get format data', { error: error as Error })
+      logger?.error('Failed to get format data', { error: error as Error })
     }
   }
 
@@ -93,9 +96,9 @@ export async function ensureCredentialMetadata(
     try {
       const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(schemaId)
       schemaName = resolvedSchema?.name
-      agent.config.logger?.debug('Resolved schema name', { schemaId, schemaName })
+      logger?.debug('Resolved schema name', { schemaId, schemaName })
     } catch (error) {
-      agent.config.logger?.warn('Failed to resolve schema', { error: error as Error, schemaId })
+      logger?.warn('Failed to resolve schema', { error: error as Error, schemaId })
     }
   }
 
@@ -103,9 +106,9 @@ export async function ensureCredentialMetadata(
     try {
       const { credentialDefinition: resolvedCredDef } = await agent.modules.anoncreds.getCredentialDefinition(credDefId)
       credDefTag = resolvedCredDef?.tag
-      agent.config.logger?.debug('Resolved credential definition tag', { credDefId, credDefTag })
+      logger?.debug('Resolved credential definition tag', { credDefId, credDefTag })
     } catch (error) {
-      agent.config.logger?.warn('Failed to resolve credential definition', { error: error as Error, credDefId })
+      logger?.warn('Failed to resolve credential definition', { error: error as Error, credDefId })
     }
   }
 
@@ -122,7 +125,7 @@ export async function ensureCredentialMetadata(
     credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
     await agent.credentials.update(credential)
 
-    agent.config.logger?.info('Credential metadata ensured', {
+    logger?.info('Credential metadata ensured', {
       credentialId: credential.id,
       schemaName,
       credDefTag,

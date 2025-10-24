@@ -327,6 +327,38 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
+const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Promise<string | undefined> => {
+  if (cred_def_id && agent?.modules?.anoncreds) {
+    try {
+      const { credentialDefinition } = await agent.modules.anoncreds.getCredentialDefinition(cred_def_id)
+      if (
+        credentialDefinition?.tag &&
+        credentialDefinition.tag.toLowerCase() !== defaultCredDefTag &&
+        credentialDefinition.tag !== fallbackDefaultCredentialNameValue
+      ) {
+        return credentialDefinition.tag
+      }
+    } catch (error) {
+      // Failed to resolve, return undefined
+    }
+  }
+  return undefined
+}
+
+const resolveSchemaName = async (schema_id: string, agent?: Agent): Promise<string | undefined> => {
+  if (schema_id && agent?.modules?.anoncreds) {
+    try {
+      const { schema } = await agent.modules.anoncreds.getSchema(schema_id)
+      if (schema?.name && schema.name !== fallbackDefaultCredentialNameValue) {
+        return schema.name
+      }
+    } catch (error) {
+      // Failed to resolve, return undefined
+    }
+  }
+  return undefined
+}
+
 const credNameFromRestriction = async (
   queries?: AnonCredsProofRequestRestriction[],
   agent?: Agent
@@ -350,31 +382,15 @@ const credNameFromRestriction = async (
   }
 
   // Priority 2: Try to resolve credential definition tag
-  if (cred_def_id && agent?.modules?.anoncreds) {
-    try {
-      const { credentialDefinition } = await agent.modules.anoncreds.getCredentialDefinition(cred_def_id)
-      if (
-        credentialDefinition?.tag &&
-        credentialDefinition.tag.toLowerCase() !== defaultCredDefTag &&
-        credentialDefinition.tag !== fallbackDefaultCredentialNameValue
-      ) {
-        return credentialDefinition.tag
-      }
-    } catch (error) {
-      // Failed to resolve, continue to next priority
-    }
+  const credDefTag = await resolveCredDefTag(cred_def_id, agent)
+  if (credDefTag) {
+    return credDefTag
   }
 
   // Priority 3: Try to resolve schema name
-  if (schema_id && agent?.modules?.anoncreds) {
-    try {
-      const { schema } = await agent.modules.anoncreds.getSchema(schema_id)
-      if (schema?.name && schema.name !== fallbackDefaultCredentialNameValue) {
-        return schema.name
-      }
-    } catch (error) {
-      // Failed to resolve, continue to fallback
-    }
+  const schemaName = await resolveSchemaName(schema_id, agent)
+  if (schemaName) {
+    return schemaName
   }
 
   // Priority 4: Return default fallback

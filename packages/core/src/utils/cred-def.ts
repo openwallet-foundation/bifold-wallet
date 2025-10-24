@@ -10,6 +10,7 @@ import type { Agent } from '@credo-ts/core'
 
 import { credentialSchema } from './schema'
 import { ensureCredentialMetadata, getEffectiveCredentialName } from './credential'
+import { BifoldLogger } from '../services/logger'
 
 // Fallback default credential name when no other name is available
 export const fallbackDefaultCredentialNameValue = 'Credential'
@@ -24,7 +25,7 @@ function normalizeId(id?: string): string | undefined {
   return trimmed.length > 0 ? trimmed : undefined
 }
 
-export async function getCredentialName(credDefId?: string, schemaId?: string, agent?: Agent): Promise<string> {
+export async function getCredentialName(credDefId?: string, schemaId?: string, agent?: Agent, logger?: BifoldLogger): Promise<string> {
   const normalizedCredDefId = normalizeId(credDefId)
   const normalizedSchemaId = normalizeId(schemaId)
   const isWebvh = !!(
@@ -32,12 +33,12 @@ export async function getCredentialName(credDefId?: string, schemaId?: string, a
     normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
   )
   if (isWebvh) {
-    return parseWebVHCredDefId(normalizedCredDefId, normalizedSchemaId, agent)
+    return parseWebVHCredDefId(normalizedCredDefId, normalizedSchemaId, agent, logger)
   }
   return parseIndyCredDefId(normalizedCredDefId, normalizedSchemaId)
 }
 
-async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?: Agent): Promise<string> {
+async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?: Agent, logger?: BifoldLogger): Promise<string> {
   let name = fallbackDefaultCredentialNameValue
   if (!agent?.modules?.anoncreds) {
     return name
@@ -48,7 +49,7 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
         await agent.modules.anoncreds.getCredentialDefinition(credDefId)
       name = result?.tag ?? name
     } catch {
-      agent?.config?.logger?.info('parseWebVHCredDefId: Credential definition not found, using default name')
+      logger?.info('parseWebVHCredDefId: Credential definition not found, using default name')
     }
   }
 
@@ -57,7 +58,7 @@ async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?
       const { schema: result }: { schema: AnonCredsSchema } = await agent.modules.anoncreds.getSchema(schemaId)
       name = result?.name ?? name
     } catch {
-      agent?.config?.logger?.info('parseWebVHCredDefId: Schema definition not found, using default name')
+      logger?.info('parseWebVHCredDefId: Schema definition not found, using default name')
     }
   }
   return name || fallbackDefaultCredentialNameValue
@@ -105,14 +106,14 @@ export function getCredDefTag(credential: CredentialRecord): string | undefined 
   return credDefTag
 }
 
-export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent): Promise<string> {
+export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent, logger?: BifoldLogger): Promise<string> {
   // Ensure metadata is cached if agent is provided
   if (agent) {
     try {
-      await ensureCredentialMetadata(credential, agent)
+      await ensureCredentialMetadata(credential, agent, undefined, logger)
     } catch (error) {
       // If metadata restoration fails, we'll fall back to parsing IDs or default name
-      agent?.config.logger?.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential', { error: error as Error })
+      logger?.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential', { error: error as Error })
     }
   }
 
@@ -125,14 +126,15 @@ export async function parsedCredDefNameFromCredential(credential: CredentialReco
   }
 
   // Fallback: parse the IDs if metadata is not cached and no agent to resolve
-  const fallbackName = await getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent)
+  const fallbackName = await getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent, logger)
   return fallbackName
 }
 
 export async function parsedCredDefName(
   credentialDefinitionId: string,
   schemaId: string,
-  agent?: Agent
+  agent?: Agent,
+  logger?: BifoldLogger
 ): Promise<string> {
-  return getCredentialName(credentialDefinitionId, schemaId, agent)
+  return getCredentialName(credentialDefinitionId, schemaId, agent, logger)
 }
