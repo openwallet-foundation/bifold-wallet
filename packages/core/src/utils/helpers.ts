@@ -1039,8 +1039,9 @@ export const sortCredentialsForAutoSelect = (
  * received invitations exist
  * @param agent an Agent instance
  * @param invitationId specifically a *received* invitation id
+ * @param logger optional logger instance
  */
-export const removeExistingInvitationsById = async (agent: Agent | undefined, invitationId: string): Promise<void> => {
+export const removeExistingInvitationsById = async (agent: Agent | undefined, invitationId: string, logger?: BifoldLogger): Promise<void> => {
   // This is implemented just as findByReceivedInvitationId is
   // in Credo only this is able to return multiple if they exist
   const oobRecords =
@@ -1051,7 +1052,7 @@ export const removeExistingInvitationsById = async (agent: Agent | undefined, in
 
   for (const r of oobRecords) {
     await agent?.oob.deleteById(r.id)
-    agent?.config.logger.info('Successfully removed an existing oob invitation')
+    logger?.info('Successfully removed an existing oob invitation')
   }
 }
 
