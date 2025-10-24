@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.10.1
+
+### Patch Changes
+
+- 374a412: Bug fixes for new pin design, and fix for biometrics issue
+
 ## 2.10.0
 
 ### Minor Changes
