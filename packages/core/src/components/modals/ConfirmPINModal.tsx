@@ -22,7 +22,7 @@ interface ConfirmPINModalProps {
   errorMessage?: InlineMessageProps
   modalUsage: ConfirmPINModalUsage
   onBackPressed: () => void
-  onConfirmPIN: (...args: any[]) => void
+  onConfirmPIN: (pin: string) => void
   PINOne?: string
   title: string
   visible: boolean
@@ -88,7 +88,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
               setPINTwo(userPinInput)
               if (userPinInput.length === PINOne.length) {
                 Keyboard.dismiss()
-                await onConfirmPIN(PINOne, userPinInput)
+                await onConfirmPIN(userPinInput)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
