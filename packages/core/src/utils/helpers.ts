@@ -327,7 +327,7 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Promise<string | undefined> => {
+export const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Promise<string | undefined> => {
   if (cred_def_id && agent?.modules?.anoncreds) {
     try {
       const { credentialDefinition } = await agent.modules.anoncreds.getCredentialDefinition(cred_def_id)
@@ -345,7 +345,7 @@ const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Promise<st
   return undefined
 }
 
-const resolveSchemaName = async (schema_id: string, agent?: Agent): Promise<string | undefined> => {
+export const resolveSchemaName = async (schema_id: string, agent?: Agent): Promise<string | undefined> => {
   if (schema_id && agent?.modules?.anoncreds) {
     try {
       const { schema } = await agent.modules.anoncreds.getSchema(schema_id)
@@ -359,7 +359,7 @@ const resolveSchemaName = async (schema_id: string, agent?: Agent): Promise<stri
   return undefined
 }
 
-const credNameFromRestriction = async (
+export const credNameFromRestriction = async (
   queries?: AnonCredsProofRequestRestriction[],
   agent?: Agent
 ): Promise<string> => {

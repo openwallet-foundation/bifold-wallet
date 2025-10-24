@@ -25,43 +25,10 @@ function normalizeId(id?: string): string | undefined {
   return trimmed.length > 0 ? trimmed : undefined
 }
 
-export async function getCredentialName(credDefId?: string, schemaId?: string, agent?: Agent, logger?: BifoldLogger): Promise<string> {
+export async function getCredentialName(credDefId?: string, schemaId?: string): Promise<string> {
   const normalizedCredDefId = normalizeId(credDefId)
   const normalizedSchemaId = normalizeId(schemaId)
-  const isWebvh = !!(
-    normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
-    normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
-  )
-  if (isWebvh) {
-    return parseWebVHCredDefId(normalizedCredDefId, normalizedSchemaId, agent, logger)
-  }
   return parseIndyCredDefId(normalizedCredDefId, normalizedSchemaId)
-}
-
-async function parseWebVHCredDefId(credDefId?: string, schemaId?: string, agent?: Agent, logger?: BifoldLogger): Promise<string> {
-  let name = fallbackDefaultCredentialNameValue
-  if (!agent?.modules?.anoncreds) {
-    return name
-  }
-  if (credDefId) {
-    try {
-      const { credentialDefinition: result }: { credentialDefinition: AnonCredsCredentialDefinition } =
-        await agent.modules.anoncreds.getCredentialDefinition(credDefId)
-      name = result?.tag ?? name
-    } catch {
-      logger?.info('parseWebVHCredDefId: Credential definition not found, using default name')
-    }
-  }
-
-  if ((name.toLowerCase() === defaultCredDefTag || name.toLowerCase() === fallbackDefaultCredentialNameValue.toLowerCase()) && schemaId) {
-    try {
-      const { schema: result }: { schema: AnonCredsSchema } = await agent.modules.anoncreds.getSchema(schemaId)
-      name = result?.name ?? name
-    } catch {
-      logger?.info('parseWebVHCredDefId: Schema definition not found, using default name')
-    }
-  }
-  return name || fallbackDefaultCredentialNameValue
 }
 
 function parseIndyCredDefId(credDefId?: string, schemaId?: string): string {
@@ -126,15 +93,13 @@ export async function parsedCredDefNameFromCredential(credential: CredentialReco
   }
 
   // Fallback: parse the IDs if metadata is not cached and no agent to resolve
-  const fallbackName = await getCredentialName(credentialDefinition(credential), credentialSchema(credential), agent, logger)
+  const fallbackName = await getCredentialName(credentialDefinition(credential), credentialSchema(credential))
   return fallbackName
 }
 
 export async function parsedCredDefName(
   credentialDefinitionId: string,
-  schemaId: string,
-  agent?: Agent,
-  logger?: BifoldLogger
+  schemaId: string
 ): Promise<string> {
-  return getCredentialName(credentialDefinitionId, schemaId, agent, logger)
+  return getCredentialName(credentialDefinitionId, schemaId)
 }
