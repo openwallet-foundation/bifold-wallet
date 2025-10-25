@@ -746,6 +746,15 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request. (FR)",
     "PleaseAddress": " Please address them before continuing. (FR)"
   },
+  "UnsatisfiedProofRequest": {
+    "Title": "Information Request (FR)",
+    "InfoBox": {
+      "Title": "You do not have a card for this request (FR)",
+      "Subtitle": "Check with {{verifierName}} for accepted cards. (FR)"
+    },
+    "VerifierDetail": "Received an information request from: (FR)",
+    "RequestPurpose": " • {{requestPurpose}} (FR)"
+  },
   "Settings": {
     "Version": "Version",
     "VersionString": "0.0.0-0",

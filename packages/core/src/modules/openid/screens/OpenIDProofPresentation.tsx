@@ -8,6 +8,7 @@ import { Attribute } from '@bifold/oca/build/legacy'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
+import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
 import { CredentialCard } from '../../../components/misc'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { EventTypes } from '../../../constants'
@@ -86,7 +87,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       flexShrink: 1,
     },
     footerButton: {
-      paddingTop: 10,
+      paddingVertical: 10,
     },
     cardContainer: {
       paddingHorizontal: 25,
@@ -138,7 +139,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   useEffect(() => {
     async function fetchCreds() {
       if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries) return
-
       const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
 
       for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
@@ -149,7 +149,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           } else if (isSdJwtProofRequest(claimFormat)) {
             credential = await getSdJwtCredentialById(id)
           }
-
           if (credential && inputDescriptorID) {
             creds.push(credential)
           }
@@ -251,6 +250,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   )
 
   const renderHeader = () => {
+    if (!selectedCredentialsSubmission) return
     return (
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
@@ -287,16 +287,25 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const renderBody = () => {
-    if (!selectedCredentialsSubmission || !submission) return null
+    if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries)
+      return (
+        <OpenIDUnsatisfiedProofRequest
+          credentialName={submission?.name}
+          requestPurpose={submission?.purpose}
+          verifierName={verifierName}
+        />
+      )
+
+    if (!selectedCredentialsSubmission || !submission) return
 
     return (
       <View style={styles.credentialsList}>
         {Object.entries(selectedCredentialsSubmission).map(([inputDescriptorId, credentialSimplified], i) => {
           //TODO: Support multiplae credentials
 
-          const globalSubmissionName = submission.name
-          const globalSubmissionPurpose = submission.purpose
-          const correspondingSubmission = submission.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
+          const globalSubmissionName = submission?.name
+          const globalSubmissionPurpose = submission?.purpose
+          const correspondingSubmission = submission?.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
           const submissionName = correspondingSubmission?.name
           const submissionPurpose = correspondingSubmission?.purpose
           const isSatisfied = correspondingSubmission?.isSatisfied
@@ -318,15 +327,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                       <Text style={TextTheme.labelTitle}>{purpose}</Text>
                     </View>
                   )}
-                  {isSatisfied && requestedAttributes ? (
-                    renderCard(
-                      correspondingSubmission,
-                      credentialSubmittion,
-                      correspondingSubmission.credentials.length > 1
-                    )
-                  ) : (
-                    <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
-                  )}
+                  {isSatisfied && requestedAttributes
+                    ? renderCard(
+                        correspondingSubmission,
+                        credentialSubmittion,
+                        correspondingSubmission.credentials.length > 1
+                      )
+                    : null}
                 </View>
               </View>
             </View>
