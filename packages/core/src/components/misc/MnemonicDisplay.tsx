@@ -7,7 +7,7 @@ import { ButtonType } from '../buttons/Button-api'
 import { TOKENS, useServices } from '../../container-api'
 import { useAnimatedComponents } from '../../contexts/animated-components'
 import { useTheme } from '../../contexts/theme'
-import { validateMnemonicPhrase } from '../../utils/mnemonics'
+import { validateMnemonic } from '../../modules/hd-wallet/bip39Utils'
 import { testIdWithKey } from '../../utils/testable'
 
 type MnemonicMode = 'generate' | 'import'
@@ -48,7 +48,7 @@ const MnemonicDisplay: React.FC<MnemonicDisplayProps> = ({
 
   const handleImportedMnemonicChange = useCallback((text: string) => {
     setImportedMnemonic(text)
-    const isValid = validateMnemonicPhrase(text)
+    const isValid = validateMnemonic(text)
     setIsValidMnemonic(isValid)
     if (isValid) {
       setIsRevealed(true)

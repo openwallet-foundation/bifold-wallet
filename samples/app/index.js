@@ -1,3 +1,10 @@
+// Polyfill TextEncoder for bip39
+if (typeof global.TextEncoder === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  global.TextEncoder = require('text-encoding').TextEncoder
+}
+import { Buffer } from '@craftzdog/react-native-buffer'
+global.Buffer = Buffer
 import 'react-native-get-random-values' // polyfill for @credo-ts framework
 import 'react-native-gesture-handler'
 import '@formatjs/intl-getcanonicallocales/polyfill'
@@ -16,6 +23,13 @@ import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
 import 'reflect-metadata'
+
+// Polyfills for hmd2v-xhd-wallet-api
+import 'react-native-get-random-values'
+// import 'hmd2v-xhd-wallet-api/polyfills'
+
+// Import new wallet API
+import 'hmd2v-xhd-wallet-api'
 
 //Used to decode base64 in sub-modules like openID4Vp, or any other decoder
 import { decode, encode } from 'base-64'

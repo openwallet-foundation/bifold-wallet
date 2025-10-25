@@ -92,6 +92,9 @@ export { Screens, Stacks, TabStacks } from './types/navigators'
 export * from './types/version-check'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
+export * from './modules/hd-wallet/hdWalletUtils'
+export * from './services/hdWalletKeychain'
+export * from './services/algorandHDWallet'
 export {
   connectFromScanOrDeepLink,
   formatTime,

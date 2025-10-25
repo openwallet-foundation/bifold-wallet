@@ -10,8 +10,9 @@ import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useTheme } from '../contexts/theme'
 import { OnboardingStackParams, Screens } from '../types/navigators'
-import { generateMnemonicPhrase } from '../utils/mnemonics'
+import { generateMnemonic } from '../modules/hd-wallet/bip39Utils'
 import { storeMnemonic } from '../services/keychain'
+import { generateAndStoreHDWalletKey } from '../services/hdWalletKeychain'
 
 const MnemonicSet: React.FC = () => {
   const { ColorPalette } = useTheme()
@@ -22,7 +23,7 @@ const MnemonicSet: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   // Generate a new 24-word mnemonic on component load
-  const [generatedMnemonic] = useState(() => generateMnemonicPhrase())
+  const [generatedMnemonic] = useState(() => generateMnemonic())
   const mnemonicWords = generatedMnemonic.split(' ')
 
   const handleContinue = async (mnemonic: string) => {
@@ -35,6 +36,13 @@ const MnemonicSet: React.FC = () => {
 
       if (!success) {
         throw new Error('Keychain storage returned false')
+      }
+
+      // Generate and store HD wallet root key from the mnemonic
+      const hdKeySuccess = await generateAndStoreHDWalletKey(mnemonic, '', useBiometry)
+
+      if (!hdKeySuccess) {
+        throw new Error('HD wallet key generation failed')
       }
 
       // Store the mnemonic completion status

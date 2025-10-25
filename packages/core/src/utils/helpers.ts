@@ -28,8 +28,8 @@ import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/Ba
 import { useConnectionById } from '@credo-ts/react-hooks'
 import { BrandingOverlay, CaptureBaseAttributeType } from '@bifold/oca'
 import { Attribute, CredentialOverlay, Predicate } from '@bifold/oca/build/legacy'
-import { Buffer } from 'buffer'
 import moment from 'moment'
+import { toBase64, fromBase64 } from './base64'
 import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
 import { TFunction } from 'react-i18next'
@@ -214,28 +214,15 @@ export function formatTime(
 
 // need to use rolling b64 encode/decode to prevent hermes from 2048 byte truncation
 export function b64encode(inp: string) {
-  return (
-    inp
-      .match(/.{1,3}/g)
-      ?.map((chunk) => {
-        return Buffer.from(chunk).toString('base64')
-      })
-      .join('') ?? ''
-  )
+  // Encode string to base64 using toBase64 utility
+  const encoder = new TextEncoder()
+  return toBase64(encoder.encode(inp))
 }
 
 export function b64decode(b64: string) {
-  return (
-    b64
-      .match(/.{1,4}/g)
-      ?.map((chunk) => {
-        if (chunk.length < 4) {
-          chunk += '='.repeat(4 - chunk.length)
-        }
-        return Buffer.from(chunk, 'base64').toString()
-      })
-      .join('') ?? ''
-  )
+  // Decode base64 to string using fromBase64 utility
+  const decoder = new TextDecoder()
+  return decoder.decode(fromBase64(b64))
 }
 
 export function formatIfDate(format: string | undefined, value: string | number | null) {

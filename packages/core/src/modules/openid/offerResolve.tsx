@@ -23,6 +23,7 @@ import {
   W3cJwtVerifiableCredential,
 } from '@credo-ts/core'
 import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+import { createDeterministicKeyFromContext } from './deterministicKeyUtils'
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -92,6 +93,9 @@ export const customCredentialBindingResolver = async ({
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   pidSchemes?: { sdJwtVcVcts: Array<string>; msoMdocDoctypes: Array<string> }
 }): Promise<OpenId4VcCredentialHolderBinding> => {
+  agent.config.logger.debug(
+    `[OpenID4VC] Credential binding resolver called for keyType: ${keyType}, format: ${credentialFormat}`
+  )
   // First, we try to pick a did method
   // Prefer did:jwk, otherwise use did:key, otherwise use undefined
   let didMethod: 'key' | 'jwk' | undefined =
@@ -122,14 +126,34 @@ export const customCredentialBindingResolver = async ({
 
   const shouldKeyBeHardwareBacked = shouldKeyBeHardwareBackedForSdJwtVc || shouldKeyBeHardwareBackedForMsoMdoc
 
+  // Log the key backing decision
+  agent.config.logger.debug(
+    `[OpenID4VC] Key backing decision analysis - Format: ${
+      offeredCredentialConfiguration?.format || 'unknown'
+    }, Doctype/VCT: ${offeredCredentialConfiguration?.doctype || offeredCredentialConfiguration?.vct || 'unknown'}`
+  )
+  agent.config.logger.info(
+    `[OpenID4VC] Using ${
+      shouldKeyBeHardwareBacked ? 'hardware-backed' : 'software deterministic'
+    } key for credential binding`
+  )
+
   if (!keyType) {
     throw new Error('keyType is required!')
   }
 
-  const key = await agent.wallet.createKey({
-    keyType,
-    keyBackend: shouldKeyBeHardwareBacked ? KeyBackend.SecureElement : KeyBackend.Software,
-  })
+  const key = shouldKeyBeHardwareBacked
+    ? await agent.wallet.createKey({
+        keyType,
+        keyBackend: KeyBackend.SecureElement,
+      })
+    : await createDeterministicKeyFromContext(agent, resolvedCredentialOffer, keyType, 0)
+
+  agent.config.logger.info(
+    `[OpenID4VC] Successfully created ${
+      shouldKeyBeHardwareBacked ? 'hardware-backed' : 'software deterministic'
+    } key for credential binding`
+  )
 
   if (didMethod) {
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({

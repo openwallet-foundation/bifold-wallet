@@ -82,13 +82,16 @@
     "@types/lodash.flatten": "~4.4.9",
     "@types/lodash.startcase": "~4.4.9",
     "@types/react": "~18.2.79",
+    "@types/react-native-crypto-js": "^1",
     "@types/react-native-vector-icons": "~6.4.18",
     "@types/react-test-renderer": "~18.0.7",
+    "@types/text-encoding": "^0",
     "@typescript-eslint/eslint-plugin": "~7.18.0",
     "@typescript-eslint/parser": "~7.18.0",
     "axios": "~1.4.0",
     "babel-jest": "~27.5.1",
     "babel-plugin-module-resolver": "~5.0.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "base-64": "~1.0.0",
     "commitlint": "~17.7.2",
     "eslint": "~8.57.1",
@@ -233,6 +236,16 @@
     ]
   },
   "dependencies": {
-    "@scure/bip39": "^2.0.0"
+    "@algorandfoundation/dp256": "^1.0.1",
+    "@craftzdog/react-native-buffer": "^6.1.1",
+    "@dreson4/react-native-quick-bip39": "^0.0.7",
+    "assert": "^2.1.0",
+    "hmd2v-xhd-wallet-api": "^1.0.0",
+    "react-native-bip39": "^2.3.0",
+    "react-native-buffer": "^6.0.4",
+    "react-native-crypto-js": "^1.0.0",
+    "stream": "^0.0.3",
+    "stream-browserify": "^3.0.0",
+    "text-encoding": "^0.7.0"
   }
 }

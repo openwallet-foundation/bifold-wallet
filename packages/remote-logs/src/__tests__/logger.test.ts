@@ -228,7 +228,7 @@ describe('RemoteLogger', () => {
     testCases.forEach(({ method, data }) => {
       describe(method, () => {
         it(`should call ${method} with message only`, () => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-extra-semi
           ;(remoteLogger as any)[method]('test message')
 
           expect(mockLogger[method]).toHaveBeenCalledWith({
@@ -238,7 +238,7 @@ describe('RemoteLogger', () => {
         })
 
         it(`should call ${method} with message and data`, () => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-extra-semi
           ;(remoteLogger as any)[method]('test message', data)
 
           expect(mockLogger[method]).toHaveBeenCalledWith({
