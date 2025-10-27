@@ -33,7 +33,6 @@ import PINScreenTitleText from '../components/misc/PINScreenTitleText'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import ConfirmPINModal, { ConfirmPINModalUsage } from '../components/modals/ConfirmPINModal'
-import LoadingSpinner from 'components/animated/LoadingSpinner'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   explainedStatus: boolean
