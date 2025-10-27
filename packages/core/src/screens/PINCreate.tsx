@@ -33,6 +33,7 @@ import PINScreenTitleText from '../components/misc/PINScreenTitleText'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import ConfirmPINModal, { ConfirmPINModalUsage } from '../components/modals/ConfirmPINModal'
+import LoadingSpinner from 'components/animated/LoadingSpinner'
 
 interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
   explainedStatus: boolean
@@ -48,7 +49,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const [isLoading, setIsLoading] = useState(false)
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
+  const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const [
     PINExplainer,
@@ -200,6 +201,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
             />
           )}
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
+          {PINScreensConfig.useNewPINDesign && isLoading && (
+            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+          )}
           {modalState.visible && (
             <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
