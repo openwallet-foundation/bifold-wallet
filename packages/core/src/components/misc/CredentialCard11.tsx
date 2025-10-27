@@ -11,7 +11,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  toImageSource,
+  getEffectiveCredentialName,
+} from '../../utils/credential'
 import {
   formatIfDate,
   useCredentialConnectionLabel,
@@ -21,7 +26,6 @@ import {
 } from '../../utils/helpers'
 import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
-import { getEffectiveCredentialName } from '../../utils/credential'
 
 import CardWatermark from './CardWatermark'
 import CredentialActionFooter from './CredentialCard11ActionFooter'
@@ -240,13 +244,13 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
       setOverlay((o) => ({
         ...o,
         ...bundle,
-        brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
+        brandingOverlay: bundle.brandingOverlay,
         // Apply effective name
         ...(bundle.metaOverlay && {
           metaOverlay: {
             ...bundle.metaOverlay,
             name: credential ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name) : bundle.metaOverlay?.name,
-          } as any,
+          },
         }),
       }))
     })

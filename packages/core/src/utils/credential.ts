@@ -40,6 +40,120 @@ export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) =
 }
 
 /**
+ * Attempts to resolve schema and credDef IDs from credential format data.
+ */
+async function resolveIdsFromFormatData(
+  credential: CredentialExchangeRecord,
+  agent: Agent,
+  logger?: BifoldLogger
+): Promise<{ schemaId?: string; credDefId?: string }> {
+  try {
+    const { offer } = await agent.credentials.getFormatData(credential.id)
+    const formatOfferData = (offer?.anoncreds ?? offer?.indy) as AnonCredsCredentialOffer | undefined
+    return {
+      schemaId: formatOfferData?.schema_id,
+      credDefId: formatOfferData?.cred_def_id,
+    }
+  } catch (error) {
+    logger?.error('Failed to get format data', { error: error as Error })
+    return {}
+  }
+}
+
+/**
+ * Resolves schema name from the given schema ID.
+ */
+async function resolveSchemaName(
+  schemaId: string,
+  agent: Agent,
+  logger?: BifoldLogger
+): Promise<string | undefined> {
+  try {
+    const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(schemaId)
+    const schemaName = resolvedSchema?.name
+    logger?.debug('Resolved schema name', { schemaId, schemaName })
+    return schemaName
+  } catch (error) {
+    logger?.warn('Failed to resolve schema', { error: error as Error, schemaId })
+    return undefined
+  }
+}
+
+/**
+ * Resolves credential definition tag from the given cred def ID.
+ */
+async function resolveCredDefTag(
+  credDefId: string,
+  agent: Agent,
+  logger?: BifoldLogger
+): Promise<string | undefined> {
+  try {
+    const { credentialDefinition: resolvedCredDef } = await agent.modules.anoncreds.getCredentialDefinition(credDefId)
+    const credDefTag = resolvedCredDef?.tag
+    logger?.debug('Resolved credential definition tag', { credDefId, credDefTag })
+    return credDefTag
+  } catch (error) {
+    logger?.warn('Failed to resolve credential definition', { error: error as Error, credDefId })
+    return undefined
+  }
+}
+
+/**
+ * Determines the IDs to use for resolution, preferring offer data over existing metadata.
+ */
+async function determineSchemaAndCredDefIds(
+  credential: CredentialExchangeRecord,
+  agent: Agent,
+  offerData: { schema_id?: string; cred_def_id?: string } | undefined,
+  existingMetadata: any,
+  logger?: BifoldLogger
+): Promise<{ schemaId?: string; credDefId?: string }> {
+  let schemaId = offerData?.schema_id || existingMetadata?.schemaId
+  let credDefId = offerData?.cred_def_id || existingMetadata?.credentialDefinitionId
+
+  const needsResolution = !schemaId || !credDefId
+  if (needsResolution) {
+    const resolvedIds = await resolveIdsFromFormatData(credential, agent, logger)
+    schemaId = schemaId || resolvedIds.schemaId
+    credDefId = credDefId || resolvedIds.credDefId
+  }
+
+  return { schemaId, credDefId }
+}
+
+/**
+ * Updates credential metadata with resolved schema name and cred def tag.
+ */
+async function updateCredentialMetadata(
+  credential: CredentialExchangeRecord,
+  agent: Agent,
+  existingMetadata: any,
+  schemaId: string | undefined,
+  credDefId: string | undefined,
+  schemaName: string | undefined,
+  credDefTag: string | undefined,
+  logger?: BifoldLogger
+): Promise<void> {
+  const metadataToStore = {
+    ...existingMetadata,
+    schemaId,
+    credentialDefinitionId: credDefId,
+    schemaName,
+    credDefTag,
+  }
+
+  credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
+  await agent.credentials.update(credential)
+
+  logger?.info('Credential metadata ensured', {
+    credentialId: credential.id,
+    schemaName,
+    credDefTag,
+    wasUpdated: true,
+  })
+}
+
+/**
  * Ensures credential has all required metadata cached. If any metadata is missing,
  * it will be resolved and added to the credential.
  * 
@@ -61,81 +175,44 @@ export async function ensureCredentialMetadata(
 
   const existingMetadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
   
-  // Determine schemaId and credDefId
-  let schemaId = offerData?.schema_id || existingMetadata?.schemaId
-  let credDefId = offerData?.cred_def_id || existingMetadata?.credentialDefinitionId
-
-  // If we still don't have IDs, try to get them from format data
-  if (!schemaId || !credDefId) {
-    try {
-      const { offer } = await agent.credentials.getFormatData(credential.id)
-      const formatOfferData = (offer?.anoncreds ?? offer?.indy) as AnonCredsCredentialOffer | undefined
-      if (formatOfferData) {
-        schemaId = schemaId || formatOfferData?.schema_id
-        credDefId = credDefId || formatOfferData?.cred_def_id
-      }
-    } catch (error) {
-      logger?.error('Failed to get format data', { error: error as Error })
-    }
-  }
+  const { schemaId, credDefId } = await determineSchemaAndCredDefIds(
+    credential,
+    agent,
+    offerData,
+    existingMetadata,
+    logger
+  )
 
   // Check what's missing
   const needsSchemaName = !existingMetadata?.schemaName && schemaId
   const needsCredDefTag = !existingMetadata?.credDefTag && credDefId
 
-  if (!needsSchemaName && !needsCredDefTag) {
-    // All metadata already present
+  const hasAllMetadata = !needsSchemaName && !needsCredDefTag
+  if (hasAllMetadata) {
     return false
   }
 
   // Resolve missing metadata
-  let schemaName = existingMetadata?.schemaName
-  let credDefTag = existingMetadata?.credDefTag
+  const schemaName = needsSchemaName && schemaId 
+    ? await resolveSchemaName(schemaId, agent, logger) 
+    : existingMetadata?.schemaName
 
-  if (needsSchemaName && schemaId) {
-    try {
-      const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(schemaId)
-      schemaName = resolvedSchema?.name
-      logger?.debug('Resolved schema name', { schemaId, schemaName })
-    } catch (error) {
-      logger?.warn('Failed to resolve schema', { error: error as Error, schemaId })
-    }
-  }
+  const credDefTag = needsCredDefTag && credDefId
+    ? await resolveCredDefTag(credDefId, agent, logger)
+    : existingMetadata?.credDefTag
 
-  if (needsCredDefTag && credDefId) {
-    try {
-      const { credentialDefinition: resolvedCredDef } = await agent.modules.anoncreds.getCredentialDefinition(credDefId)
-      credDefTag = resolvedCredDef?.tag
-      logger?.debug('Resolved credential definition tag', { credDefId, credDefTag })
-    } catch (error) {
-      logger?.warn('Failed to resolve credential definition', { error: error as Error, credDefId })
-    }
-  }
+  await updateCredentialMetadata(
+    credential,
+    agent,
+    existingMetadata,
+    schemaId,
+    credDefId,
+    schemaName,
+    credDefTag,
+    logger
+  )
 
-  // Update metadata if we resolved anything new
-  if (needsSchemaName || needsCredDefTag) {
-    const metadataToStore = {
-      ...existingMetadata,
-      schemaId,
-      credentialDefinitionId: credDefId,
-      schemaName,
-      credDefTag,
-    }
-
-    credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
-    await agent.credentials.update(credential)
-
-    logger?.info('Credential metadata ensured', {
-      credentialId: credential.id,
-      schemaName,
-      credDefTag,
-      wasUpdated: true,
-    })
-
-    return true
-  }
-
-  return false
+  return true
 }
 
 /**

@@ -24,11 +24,16 @@ import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
 import { ContactStackParams, NotificationStackParams, RootStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { credentialTextColor, getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  isValidAnonCredsCredential,
+  getEffectiveCredentialName,
+  ensureCredentialMetadata,
+} from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
-import { getEffectiveCredentialName, ensureCredentialMetadata } from '../utils/credential'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
@@ -180,7 +185,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         metaOverlay: {
           ...bundle.metaOverlay,
           name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
-        } as any,
+        },
       }))
     })
   }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])

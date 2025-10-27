@@ -6,10 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import CardWatermark from '../../components/misc/CardWatermark'
 import { useTheme } from '../../contexts/theme'
-import { credentialTextColor } from '../../utils/credential'
+import { credentialTextColor, getEffectiveCredentialName } from '../../utils/credential'
 import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
-import { getEffectiveCredentialName } from '../../utils/credential'
 import { ThemedText } from '../texts/ThemedText'
 
 type CredentialDetailPrimaryHeaderProps = {
