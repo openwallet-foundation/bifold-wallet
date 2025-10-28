@@ -216,7 +216,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 
     const params: OCABundleResolveAllParams = {
       identifiers: {
-        schemaId: '',
+        schemaId: credentialDisplay.schemaId,
         credentialDefinitionId: credentialDisplay.id,
       },
       meta: {
@@ -239,9 +239,9 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       logo: credentialDisplay.display.logo?.url,
     })
     const ocaBundle: CredentialOverlay<BrandingOverlay> = {
-      ..._bundle,
       presentationFields: bundle.presentationFields,
       brandingOverlay: brandingOverlay,
+      ..._bundle,
     }
 
     return ocaBundle
@@ -268,7 +268,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       }))
     })
 
-    agent.mdoc.getAll().then((creds) => {
+    agent.mdoc?.getAll().then((creds) => {
       setState((prev) => ({
         ...prev,
         mdocVcRecords: filterMdocCredentialsOnly(creds),
