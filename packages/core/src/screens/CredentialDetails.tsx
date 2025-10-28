@@ -185,7 +185,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         metaOverlay: {
           ...bundle.metaOverlay,
           name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
-        },
+        } as any,
       }))
     })
   }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])

@@ -162,7 +162,7 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
         metaOverlay: {
           ...bundle.metaOverlay,
           name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
-        },
+        } as any,
       }))
     })
   }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])
