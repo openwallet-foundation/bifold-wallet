@@ -287,7 +287,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const renderBody = () => {
-    if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries)
+
+    if (!selectedCredentialsSubmission || !submission) {
       return (
         <OpenIDUnsatisfiedProofRequest
           credentialName={submission?.name}
@@ -295,17 +296,16 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           verifierName={verifierName}
         />
       )
-
-    if (!selectedCredentialsSubmission || !submission) return
+    }
 
     return (
       <View style={styles.credentialsList}>
         {Object.entries(selectedCredentialsSubmission).map(([inputDescriptorId, credentialSimplified], i) => {
           //TODO: Support multiplae credentials
 
-          const globalSubmissionName = submission?.name
-          const globalSubmissionPurpose = submission?.purpose
-          const correspondingSubmission = submission?.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
+          const globalSubmissionName = submission.name
+          const globalSubmissionPurpose = submission.purpose
+          const correspondingSubmission = submission.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
           const submissionName = correspondingSubmission?.name
           const submissionPurpose = correspondingSubmission?.purpose
           const isSatisfied = correspondingSubmission?.isSatisfied
@@ -333,7 +333,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                         credentialSubmittion,
                         correspondingSubmission.credentials.length > 1
                       )
-                    : null}
+                    : (
+                      <OpenIDUnsatisfiedProofRequest
+                        credentialName={submission?.name}
+                        requestPurpose={submission?.purpose}
+                        verifierName={verifierName}
+                      />
+                    )}
                 </View>
               </View>
             </View>
