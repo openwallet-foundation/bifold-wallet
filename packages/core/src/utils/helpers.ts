@@ -341,6 +341,7 @@ export const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Pro
     } catch (error) {
       // Failed to resolve credential definition, return undefined
       // This is expected when the credential definition doesn't exist or isn't accessible
+      console.debug('Failed to resolve credential definition tag', { cred_def_id, error })
       return undefined
     }
   }
@@ -357,6 +358,7 @@ export const resolveSchemaName = async (schema_id: string, agent?: Agent): Promi
     } catch (error) {
       // Failed to resolve schema, return undefined
       // This is expected when the schema doesn't exist or isn't accessible
+      console.debug('Failed to resolve schema name', { schema_id, error })
       return undefined
     }
   }
