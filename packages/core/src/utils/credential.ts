@@ -49,15 +49,26 @@ async function resolveIdsFromFormatData(
 ): Promise<{ schemaId?: string; credDefId?: string }> {
   try {
     const { offer } = await agent.credentials.getFormatData(credential.id)
-    const formatOfferData = (offer?.anoncreds ?? offer?.indy) as AnonCredsCredentialOffer | undefined
-    return {
-      schemaId: formatOfferData?.schema_id,
-      credDefId: formatOfferData?.cred_def_id,
+    const formatOfferData = (offer?.anoncreds ?? offer?.indy)
+    
+    // Type guard to check if formatOfferData has the expected structure
+    if (
+      formatOfferData &&
+      typeof formatOfferData === 'object' &&
+      'schema_id' in formatOfferData &&
+      typeof formatOfferData.schema_id === 'string'
+    ) {
+      return {
+        schemaId: formatOfferData.schema_id,
+        credDefId: 'cred_def_id' in formatOfferData && typeof formatOfferData.cred_def_id === 'string'
+          ? formatOfferData.cred_def_id
+          : undefined,
+      }
     }
   } catch (error) {
     logger?.error('Failed to get format data', { error: error as Error })
-    return {}
   }
+  return {}
 }
 
 /**
@@ -124,16 +135,18 @@ async function determineSchemaAndCredDefIds(
 /**
  * Updates credential metadata with resolved schema name and cred def tag.
  */
-async function updateCredentialMetadata(
-  credential: CredentialExchangeRecord,
-  agent: Agent,
-  existingMetadata: any,
-  schemaId: string | undefined,
-  credDefId: string | undefined,
-  schemaName: string | undefined,
-  credDefTag: string | undefined,
+async function updateCredentialMetadata(params: {
+  credential: CredentialExchangeRecord
+  agent: Agent
+  existingMetadata: any
+  schemaId: string | undefined
+  credDefId: string | undefined
+  schemaName: string | undefined
+  credDefTag: string | undefined
   logger?: BifoldLogger
-): Promise<void> {
+}): Promise<void> {
+  const { credential, agent, existingMetadata, schemaId, credDefId, schemaName, credDefTag, logger } = params
+  
   const metadataToStore = {
     ...existingMetadata,
     schemaId,
@@ -201,7 +214,7 @@ export async function ensureCredentialMetadata(
     ? await resolveCredDefTag(credDefId, agent, logger)
     : existingMetadata?.credDefTag
 
-  await updateCredentialMetadata(
+  await updateCredentialMetadata({
     credential,
     agent,
     existingMetadata,
@@ -209,8 +222,8 @@ export async function ensureCredentialMetadata(
     credDefId,
     schemaName,
     credDefTag,
-    logger
-  )
+    logger,
+  })
 
   return true
 }
