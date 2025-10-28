@@ -8927,7 +8927,7 @@ __metadata:
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
     expo-secure-store: "npm:*"
-    hmd2v-xhd-wallet-api: "npm:^1.0.0"
+    hmd2v-xhd-wallet-api: "npm:^1.0.2"
     i18next: "npm:~21.6.16"
     lodash.flatten: "npm:~4.4.0"
     lodash.startcase: "npm:~4.4.0"
@@ -13549,6 +13549,30 @@ __metadata:
     react-native-get-random-values:
       optional: true
   checksum: 10c0/768d37a105a4ffd990831fc902268ea8a5bbf20087016a63913758836ee11b379730b679443a7a10d40fc7c6a7c012a25d8b0e88c342ac8e894063e3d1c8c476
+  languageName: node
+  linkType: hard
+
+"hmd2v-xhd-wallet-api@npm:^1.0.2":
+  version: 1.1.0
+  resolution: "hmd2v-xhd-wallet-api@npm:1.1.0"
+  dependencies:
+    "@noble/ciphers": "npm:^2.0.0"
+    "@noble/curves": "npm:^2.0.0"
+    "@noble/hashes": "npm:^2.0.0"
+    ajv: "npm:^8.17.1"
+    algo-msgpack-with-bigint: "npm:^2.1.1"
+    big-integer: "npm:^1.6.52"
+    bn.js: "npm:^5.2.2"
+    buffer: "npm:^6.0.3"
+  peerDependencies:
+    react-native-bigint: ^0.0.0
+    react-native-get-random-values: ^1.11.0
+  peerDependenciesMeta:
+    react-native-bigint:
+      optional: true
+    react-native-get-random-values:
+      optional: true
+  checksum: 10c0/1e9acd52c2b379818ee94f4c4ac9a7262f7ad6e70242e68459231f86dc6f67f3090401f20803a752c5423079d1dd5a8029868df913a5fb610a8e42f263371563
   languageName: node
   linkType: hard
 
