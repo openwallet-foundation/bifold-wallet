@@ -230,6 +230,13 @@ function getMdocCredentialDisplay(
         }
       }
 
+      if(openidCredentialDisplay.logo) {
+        credentialDisplay.logo = {
+          url: openidCredentialDisplay.logo.url,
+          altText: openidCredentialDisplay.logo.alt_text,
+        }
+      }
+
       // NOTE: logo is used in issuer display (not sure if that's right though)
     }
   }
@@ -369,6 +376,7 @@ export function getCredentialForDisplay(
 
     return {
       id: `mdoc-${credentialRecord.id}` satisfies CredentialForDisplayId,
+      schemaId: openId4VcMetadata?.credential.id, // NOTE: Unsure whether this is a suitable way to set a 'schemaId' for an OpenID VC, may not be unique enough.
       createdAt: credentialRecord.createdAt,
       display: {
         ...credentialDisplay,

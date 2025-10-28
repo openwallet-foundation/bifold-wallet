@@ -1,4 +1,4 @@
-import { DefaultOCABundleResolver } from '@bifold/oca/build/legacy'
+import { BrandingOverlayType, DefaultOCABundleResolver, RemoteOCABundleResolver } from '@bifold/oca/build/legacy'
 import { getProofRequestTemplates } from '@bifold/verifier'
 import { Agent } from '@credo-ts/core'
 import React, { createContext, useContext } from 'react'
@@ -60,6 +60,7 @@ import {
   Tours as ToursState,
 } from './types/state'
 import { hashPIN } from './utils/crypto'
+import { Config as ReactConfig } from 'react-native-config'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -150,7 +151,10 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
     this._container.registerInstance(TOKENS.UTIL_LOGGER, bifoldLoggerInstance)
-    this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
+    this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new RemoteOCABundleResolver(ReactConfig.OCA_URL ?? '', {
+      brandingOverlayType: BrandingOverlayType.Branding10,
+      verifyCacheIntegrity: true,
+    }))
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
