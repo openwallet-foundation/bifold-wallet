@@ -1,7 +1,13 @@
 import React, { forwardRef, Ref, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import { CodeField, Cursor, useClearByFocusCell } from 'react-native-confirmation-code-field'
+import {
+  CodeField,
+  Cursor,
+  useClearByFocusCell,
+  MaskSymbol,
+  isLastFilledCell,
+} from 'react-native-confirmation-code-field'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { hitSlop, minPINLength } from '../../constants'
@@ -53,16 +59,12 @@ const PINInputComponent = (
   // filling with bullets when masked to prevent screen reader from reading the actual PIN
   // and to have the proper appearance when the PIN is masked
   const displayValue = useMemo(() => {
-    const trailingPINLength = PIN.length === 0 ? 0 : PIN.length - 1
     if (showPIN) {
-      return PINScreensConfig.useNewPINDesign ? PIN : PIN.split('').join(' ')
+      return PIN.split('').join(' ')
     } else {
-      return PINScreensConfig.useNewPINDesign
-        ? `${'●'.repeat(trailingPINLength)}${PIN.charAt(PIN.length - 1)}`
-        : '●'.repeat(PIN.length).split('').join(' ')
+      return '●'.repeat(PIN.length).split('').join(' ')
     }
-  }, [PIN, showPIN, PINScreensConfig])
-  //
+  }, [PIN, showPIN])
 
   const onChangeText = useCallback(
     (value: string) => {
@@ -126,7 +128,7 @@ const PINInputComponent = (
           accessibilityLabel={allyLabel}
           accessibilityRole={'text'}
           accessible
-          value={displayValue}
+          value={PINScreensConfig.useNewPINDesign ? PIN : displayValue}
           rootStyle={theme.codeFieldRoot}
           onChangeText={onChangeText}
           cellCount={PINScreensConfig.useNewPINDesign ? separatedPINCellCount : cellCount}
@@ -136,7 +138,17 @@ const PINInputComponent = (
             let child: React.ReactNode | string = ''
             // skip spaces
             if (symbol && symbol !== ' ') {
-              child = symbol
+              if (PINScreensConfig.useNewPINDesign) {
+                child = showPIN ? (
+                  symbol
+                ) : (
+                  <MaskSymbol maskSymbol="●" isLastFilledCell={isLastFilledCell({ index, value: displayValue })}>
+                    {symbol}
+                  </MaskSymbol>
+                )
+              } else {
+                child = symbol
+              }
             } else if (isFocused) {
               child = <Cursor />
             }
