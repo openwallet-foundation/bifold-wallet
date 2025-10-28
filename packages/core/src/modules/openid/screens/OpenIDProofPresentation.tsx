@@ -166,8 +166,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const creds = Object.entries(satistfiedCredentialsSubmission).reduce(
       (acc: SelectedCredentialsFormat, [inputDescriptorId, credentials]) => {
         acc[inputDescriptorId] = {
-          id: credentials[0].id,
-          claimFormat: credentials[0].claimFormat,
+          id: credentials[0]?.id,
+          claimFormat: credentials?.[0]?.claimFormat,
         }
         return acc
       },
@@ -288,7 +288,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const renderBody = () => {
 
-    if (!selectedCredentialsSubmission || !submission) {
+    if(submission && !submission.areAllSatisfied) {
       return (
         <OpenIDUnsatisfiedProofRequest
           credentialName={submission?.name}
@@ -297,6 +297,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         />
       )
     }
+
+    if (!selectedCredentialsSubmission || !submission) return
 
     return (
       <View style={styles.credentialsList}>
@@ -334,11 +336,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                         correspondingSubmission.credentials.length > 1
                       )
                     : (
-                      <OpenIDUnsatisfiedProofRequest
-                        credentialName={submission?.name}
-                        requestPurpose={submission?.purpose}
-                        verifierName={verifierName}
-                      />
+                      null
                     )}
                 </View>
               </View>
