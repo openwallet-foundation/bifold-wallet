@@ -38,7 +38,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const [loading, setLoading] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const { ColorPalette } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
+  const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [{ preventScreenCapture }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   usePreventScreenCapture(preventScreenCapture)
@@ -133,6 +133,11 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
       marginTop: 0,
       marginBottom: 40,
     },
+    loadingContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    },
   })
 
   return (
@@ -171,6 +176,11 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
             }}
           />
         </View>
+        {usage === PINEntryUsage.ChangePIN && loading && (
+          <View style={style.loadingContainer}>
+            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+          </View>
+        )}
         {usage !== PINEntryUsage.ChangePIN && (
           <View style={style.buttonContainer}>
             <Button
