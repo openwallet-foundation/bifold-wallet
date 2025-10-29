@@ -51,26 +51,20 @@ export const getBip39PhraseFromSecureStorage = async (agent: Agent): Promise<str
  * Extracts origin domain from credential offer for deterministic key generation
  */
 export const extractOriginFromCredentialOffer = (
-  resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer,
-  logger?: { info: (msg: string) => void; warn: (msg: string) => void; debug: (msg: string) => void }
+  resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
 ): string => {
-  logger?.debug('[DP256] Extracting origin from credential offer')
-
   let issuerUrl: string | undefined
 
   if (resolvedCredentialOffer.metadata?.issuer) {
     issuerUrl = resolvedCredentialOffer.metadata.issuer
-    logger?.debug(`[DP256] Found issuer URL in metadata.issuer: ${issuerUrl}`)
   } else if (resolvedCredentialOffer.metadata?.credentialIssuerMetadata) {
     const issuerMetadata = resolvedCredentialOffer.metadata.credentialIssuerMetadata
     issuerUrl = (issuerMetadata as any).credential_issuer || (issuerMetadata as any).issuer
-    logger?.debug(`[DP256] Found issuer URL in credentialIssuerMetadata: ${issuerUrl}`)
   } else if ((resolvedCredentialOffer as any).originalOfferUri) {
     const offerUri = (resolvedCredentialOffer as any).originalOfferUri
     const urlMatch = offerUri.match(/https?:\/\/[^/]+/)
     if (urlMatch) {
       issuerUrl = urlMatch[0]
-      logger?.debug(`[DP256] Found issuer URL in originalOfferUri: ${issuerUrl}`)
     }
   }
 
@@ -79,7 +73,6 @@ export const extractOriginFromCredentialOffer = (
     const urlMatches = offerString.match(/https?:\/\/[^\s"]+/g)
     if (urlMatches?.length) {
       issuerUrl = urlMatches[0]
-      logger?.debug(`[DP256] Found issuer URL via regex search: ${issuerUrl}`)
     }
   }
 
@@ -87,10 +80,8 @@ export const extractOriginFromCredentialOffer = (
     try {
       const url = new URL(issuerUrl)
       const origin = `${url.protocol}//${url.host}`
-      logger?.debug(`[DP256] Extracted origin: ${origin}`)
       return origin
     } catch {
-      logger?.warn(`[DP256] Invalid URL format: ${issuerUrl}, falling back to generated domain`)
       // Invalid URL, continue to fallback
     }
   }
@@ -102,7 +93,6 @@ export const extractOriginFromCredentialOffer = (
   const domainSuffix = Math.abs(hashCode).toString(36).slice(0, 8)
   const fallbackOrigin = `https://issuer-${domainSuffix}.credential-provider.com`
 
-  logger?.info(`[DP256] No issuer URL found, using fallback origin: ${fallbackOrigin}`)
   return fallbackOrigin
 }
 
@@ -164,37 +154,26 @@ export const createDeterministicSoftwareKey = async ({
   origin,
   userHandle,
   counter = 0,
-  logger,
 }: {
   keyType: KeyType
   bip39Phrase: string
   origin: string
   userHandle: string
   counter?: number
-  logger?: { info: (msg: string) => void; error: (msg: string) => void; debug: (msg: string) => void }
 }): Promise<Key> => {
-  logger?.debug(
-    `[DP256] Creating deterministic ${keyType} key with origin: ${origin}, userHandle: ${userHandle}, counter: ${counter}`
-  )
-
   if (keyType !== KeyType.P256) {
-    logger?.error(`[DP256] Unsupported key type: ${keyType}`)
     throw new Error('Deterministic keys currently only support P256 curve')
   }
 
   const dp256 = new DeterministicP256()
   const derivedMainKey = await dp256.genDerivedMainKeyWithBIP39(bip39Phrase)
-  logger?.debug('[DP256] Derived main key from BIP39 phrase')
 
   const dp256PrivateKey = await dp256.genDomainSpecificKeyPair(derivedMainKey, origin, userHandle, counter)
-  logger?.debug('[DP256] Generated domain-specific key pair')
 
   const dp256PublicKey = dp256.getPurePKBytes(dp256PrivateKey)
-  logger?.debug(`[DP256] Extracted public key bytes (${dp256PublicKey.length} bytes)`)
 
   // Create Credo Key from dp256 public key
   const credoKey = Key.fromPublicKey(dp256PublicKey, keyType)
-  logger?.info('[DP256] Created deterministic software key successfully')
 
   return credoKey
 }
@@ -208,15 +187,9 @@ export const createDeterministicKeyFromContext = async (
   keyType: KeyType,
   counter = 0
 ): Promise<Key> => {
-  agent.config.logger.info('[DP256] Starting deterministic software key generation from context')
-
   const bip39Phrase = await getBip39PhraseFromSecureStorage(agent)
-  const origin = extractOriginFromCredentialOffer(resolvedCredentialOffer, agent.config.logger)
+  const origin = extractOriginFromCredentialOffer(resolvedCredentialOffer)
   const userHandle = await getUserHandleFromAgent(agent)
-
-  agent.config.logger.debug(
-    `[DP256] Key generation inputs - Type: ${keyType}, Origin: ${origin}, UserHandle: ${userHandle}, Counter: ${counter}`
-  )
 
   const key = await createDeterministicSoftwareKey({
     keyType,
@@ -224,9 +197,7 @@ export const createDeterministicKeyFromContext = async (
     origin,
     userHandle,
     counter,
-    logger: agent.config.logger,
   })
 
-  agent.config.logger.info('[DP256] Deterministic software key generation completed successfully')
   return key
 }

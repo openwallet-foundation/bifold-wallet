@@ -55,7 +55,7 @@ import usePreventScreenCapture from './hooks/screen-capture'
 import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
-import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
+import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
 import Biometry from './screens/Biometry'
 import Onboarding from './screens/Onboarding'
 import OnboardingPages from './screens/OnboardingPages'
@@ -243,7 +243,6 @@ export {
   UpdateAvailable,
   useActivity,
   useBifoldAgentSetup,
-  useDefaultStackOptions,
   useDeveloperMode,
   usePreventScreenCapture,
   useTour,

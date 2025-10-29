@@ -1,7 +1,6 @@
 import * as bip39 from '@scure/bip39'
 import { wordlist } from '@scure/bip39/wordlists/english'
-import { fromSeed } from 'hmd2v-xhd-wallet-api'
-import { XHDWalletAPI, KeyContext, BIP32DerivationType } from 'hmd2v-xhd-wallet-api'
+import { fromSeed, XHDWalletAPI, KeyContext, BIP32DerivationType } from 'hmd2v-xhd-wallet-api'
 
 /**
  * HD Wallet utilities for Algorand key derivation using xHD-Wallet-API
@@ -18,7 +17,7 @@ export const createRootKeyFromMnemonicAsync = async (
   passphrase: string = ''
 ): Promise<Uint8Array> => {
   const seed = await bip39.mnemonicToSeed(mnemonic, passphrase)
-  return fromSeed(seed)
+  return fromSeed(Buffer.from(seed))
 }
 
 /**

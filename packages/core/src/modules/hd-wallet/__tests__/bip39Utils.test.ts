@@ -33,22 +33,22 @@ describe('BIP39 Utilities', () => {
   })
 
   describe('mnemonicToSeed', () => {
-    it('should convert mnemonic to 64-byte seed', () => {
-      const seed = mnemonicToSeed(testMnemonic)
+    it('should convert mnemonic to 64-byte seed', async () => {
+      const seed = await mnemonicToSeed(testMnemonic)
       expect(seed).toBeInstanceOf(Uint8Array)
       expect(seed).toHaveLength(64)
     })
 
-    it('should produce different seeds with different passphrases', () => {
-      const seed1 = mnemonicToSeed(testMnemonic, '')
-      const seed2 = mnemonicToSeed(testMnemonic, 'passphrase')
+    it('should produce different seeds with different passphrases', async () => {
+      const seed1 = await mnemonicToSeed(testMnemonic, '')
+      const seed2 = await mnemonicToSeed(testMnemonic, 'passphrase')
 
       expect(seed1).not.toEqual(seed2)
     })
 
-    it('should produce consistent seeds for same mnemonic and passphrase', () => {
-      const seed1 = mnemonicToSeed(testMnemonic, 'test')
-      const seed2 = mnemonicToSeed(testMnemonic, 'test')
+    it('should produce consistent seeds for same mnemonic and passphrase', async () => {
+      const seed1 = await mnemonicToSeed(testMnemonic, 'test')
+      const seed2 = await mnemonicToSeed(testMnemonic, 'test')
 
       expect(seed1).toEqual(seed2)
     })
