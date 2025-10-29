@@ -51,7 +51,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [showForgotPINMessage, setShowForgotPINMessage] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPalette, TextTheme } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
+  const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const [
     logger,
     {
@@ -435,7 +435,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         </View>
         {PINScreensConfig.useNewPINDesign && !continueEnabled && (
           <View style={style.loadingContainer}>
-            <ButtonLoading size={50} />
+            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
             <ThemedText variant="normal">{t('PINEnter.Loading')}</ThemedText>
           </View>
         )}
