@@ -287,8 +287,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const renderBody = () => {
-
-    if(submission && !submission.areAllSatisfied) {
+    if (submission && !submission.areAllSatisfied) {
       return (
         <OpenIDUnsatisfiedProofRequest
           credentialName={submission?.name}
@@ -335,9 +334,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                         credentialSubmittion,
                         correspondingSubmission.credentials.length > 1
                       )
-                    : (
-                      null
-                    )}
+                    : null}
                 </View>
               </View>
             </View>
@@ -369,6 +366,27 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const footer = () => {
+    if (submission && !submission.areAllSatisfied) {
+      return (
+        <View
+          style={{
+            paddingHorizontal: 25,
+            paddingVertical: 16,
+            paddingBottom: 26,
+            backgroundColor: ColorPalette.brand.secondaryBackground,
+          }}
+        >
+          {footerButton(
+            t('Global.Dismiss'),
+            handleDismiss,
+            ButtonType.Primary,
+            testIdWithKey('DismissCredentialOffer'),
+            t('Global.Dismiss')
+          )}
+        </View>
+      )
+    }
+
     return (
       <View
         style={{
