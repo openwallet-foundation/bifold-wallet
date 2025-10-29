@@ -8,6 +8,7 @@ import { Attribute } from '@bifold/oca/build/legacy'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
+import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
 import { CredentialCard } from '../../../components/misc'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { EventTypes } from '../../../constants'
@@ -86,7 +87,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       flexShrink: 1,
     },
     footerButton: {
-      paddingTop: 10,
+      paddingVertical: 10,
     },
     cardContainer: {
       paddingHorizontal: 25,
@@ -138,7 +139,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   useEffect(() => {
     async function fetchCreds() {
       if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries) return
-
       const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
 
       for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
@@ -149,7 +149,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           } else if (isSdJwtProofRequest(claimFormat)) {
             credential = await getSdJwtCredentialById(id)
           }
-
           if (credential && inputDescriptorID) {
             creds.push(credential)
           }
@@ -167,8 +166,8 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const creds = Object.entries(satistfiedCredentialsSubmission).reduce(
       (acc: SelectedCredentialsFormat, [inputDescriptorId, credentials]) => {
         acc[inputDescriptorId] = {
-          id: credentials[0].id,
-          claimFormat: credentials[0].claimFormat,
+          id: credentials[0]?.id,
+          claimFormat: credentials?.[0]?.claimFormat,
         }
         return acc
       },
@@ -251,6 +250,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   )
 
   const renderHeader = () => {
+    if (!selectedCredentialsSubmission) return
     return (
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
@@ -287,7 +287,17 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const renderBody = () => {
-    if (!selectedCredentialsSubmission || !submission) return null
+    if (submission && !submission.areAllSatisfied) {
+      return (
+        <OpenIDUnsatisfiedProofRequest
+          credentialName={submission?.name}
+          requestPurpose={submission?.purpose}
+          verifierName={verifierName}
+        />
+      )
+    }
+
+    if (!selectedCredentialsSubmission || !submission) return
 
     return (
       <View style={styles.credentialsList}>
@@ -318,15 +328,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
                       <Text style={TextTheme.labelTitle}>{purpose}</Text>
                     </View>
                   )}
-                  {isSatisfied && requestedAttributes ? (
-                    renderCard(
-                      correspondingSubmission,
-                      credentialSubmittion,
-                      correspondingSubmission.credentials.length > 1
-                    )
-                  ) : (
-                    <Text style={TextTheme.normal}>{t('ProofRequest.CredentialNotInWallet')}</Text>
-                  )}
+                  {isSatisfied && requestedAttributes
+                    ? renderCard(
+                        correspondingSubmission,
+                        credentialSubmittion,
+                        correspondingSubmission.credentials.length > 1
+                      )
+                    : null}
                 </View>
               </View>
             </View>
@@ -358,6 +366,27 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const footer = () => {
+    if (submission && !submission.areAllSatisfied) {
+      return (
+        <View
+          style={{
+            paddingHorizontal: 25,
+            paddingVertical: 16,
+            paddingBottom: 26,
+            backgroundColor: ColorPalette.brand.secondaryBackground,
+          }}
+        >
+          {footerButton(
+            t('Global.Dismiss'),
+            handleDismiss,
+            ButtonType.Primary,
+            testIdWithKey('DismissCredentialOffer'),
+            t('Global.Dismiss')
+          )}
+        </View>
+      )
+    }
+
     return (
       <View
         style={{
