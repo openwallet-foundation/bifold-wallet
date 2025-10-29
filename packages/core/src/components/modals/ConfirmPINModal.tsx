@@ -50,7 +50,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
   const [PINHeader, { preventScreenCapture }] = useServices([TOKENS.COMPONENT_PIN_HEADER, TOKENS.CONFIG])
   usePreventScreenCapture(preventScreenCapture)
   const { modalState } = usePINValidation(PINOne, PINTwo)
-  const { ButtonLoading } = useAnimatedComponents()
+  const { LoadingSpinner } = useAnimatedComponents()
 
   const style = StyleSheet.create({
     container: {
@@ -98,7 +98,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
           />
           {isLoading && (
             <View style={style.loadingContainer}>
-              <ButtonLoading size={50} />
+              <LoadingSpinner size={50} color={ColorPalette.brand.primary}/>
             </View>
           )}
           {modalState.visible && (
