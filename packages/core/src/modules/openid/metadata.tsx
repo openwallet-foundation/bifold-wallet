@@ -1,5 +1,5 @@
 import type { W3cCredentialRecord, SdJwtVcRecord, MdocRecord } from '@credo-ts/core'
-import type { OpenId4VciCredentialSupported, OpenId4VciIssuerMetadataDisplay } from '@credo-ts/openid4vc'
+import type { OpenId4VciCredentialSupported, OpenId4VciIssuerMetadataDisplay, OpenId4VciRequestTokenResponse, OpenId4VciNotificationMetadata} from '@credo-ts/openid4vc'
 import type { MetadataDisplay } from '@sphereon/oid4vci-common'
 import { CredentialSubjectRecord } from './types'
 
@@ -13,7 +13,8 @@ export interface OpenId4VcCredentialMetadata {
     display?: OpenId4VciIssuerMetadataDisplay[]
     id: string
   }
-  notificationMetadata?: any
+  notificationMetadata?: OpenId4VciNotificationMetadata
+  tokenResponse?: OpenId4VciRequestTokenResponse
 }
 
 export type OpenId4VcCredentialMetadataExtended = Partial<

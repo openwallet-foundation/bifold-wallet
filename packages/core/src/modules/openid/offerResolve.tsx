@@ -241,7 +241,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
 
   // We only support one credential for now
   const [firstCredential] = credentials
-  console.log(firstCredential.notificationMetadata)
+
   if (!firstCredential)
     throw new Error('Error retrieving credential using pre authorized flow: firstCredential undefined!.')
 
@@ -278,7 +278,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
     }
   )
 
-  setOpenId4VcCredentialMetadata(record, { ...openId4VcMetadata, notificationMetadata })
+  setOpenId4VcCredentialMetadata(record, { ...openId4VcMetadata, notificationMetadata, tokenResponse })
 
   return record
 }
