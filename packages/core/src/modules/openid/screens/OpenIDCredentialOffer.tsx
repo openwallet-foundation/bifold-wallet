@@ -20,7 +20,7 @@ import { testIdWithKey } from '../../../utils/testable'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
-import { useOpenId4VciNotifications } from '../notification'
+import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -88,6 +88,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       return
     }
     try {
+      const credentialMetadata = credential.metadata.get('_bifold/openId4VcCredentialMetadata')
       await storeCredential(credential)
       // options:
       // metadata: any ---- issuer metadata
@@ -95,8 +96,12 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       // accessToken: OpenId4VciRequestTokenResponse["accessToken"]
       // notificationEvent: NotificationEventType 
       // dpop?: OpenId4VciRequestTokenResponse["dpop"] ---- not needed just optional
-
-      // await sendOpenId4VciNotification(options)
+      await sendOpenId4VciNotification({ 
+        metadata: credential.metadata,
+        accessToken: 'accessToken',
+        notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
+        notificationId: credentialMetadata?.notificationMetadata?.notificationId 
+      })
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)

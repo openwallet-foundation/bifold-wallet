@@ -13,6 +13,7 @@ export interface OpenId4VcCredentialMetadata {
     display?: OpenId4VciIssuerMetadataDisplay[]
     id: string
   }
+  notificationMetadata?: any
 }
 
 export type OpenId4VcCredentialMetadataExtended = Partial<
