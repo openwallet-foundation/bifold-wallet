@@ -22,6 +22,7 @@ import {
   setOpenId4VcCredentialMetadata,
   setRefreshCredentialMetadata,
 } from '../metadata'
+import { RefreshStatus } from './types'
 
 type ReissueWithAccessTokenInput = {
   agent: Agent
@@ -127,6 +128,8 @@ export async function reissueCredentialWithAccessToken({
   setRefreshCredentialMetadata(newRecord, {
     ...refreshMetaData,
     refreshToken: tokenResponse.refresh_token || refreshMetaData.refreshToken,
+    lastCheckedAt: Date.now(),
+    lastCheckResult: RefreshStatus.Valid,
   })
 
   return newRecord
