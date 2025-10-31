@@ -22,12 +22,19 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
   const [agent, setAgent] = useState<Agent | null>(null)
   const agentInstanceRef = useRef<Agent | null>(null)
   const [store, dispatch] = useStore()
-  const [cacheSchemas, cacheCredDefs, logger, indyLedgers] = useServices([
+  const [cacheSchemas, cacheCredDefs, logger, indyLedgers, bridge] = useServices([
     TOKENS.CACHE_SCHEMAS,
     TOKENS.CACHE_CRED_DEFS,
     TOKENS.UTIL_LOGGER,
     TOKENS.UTIL_LEDGERS,
+    TOKENS.UTIL_AGENT_BRIDGE,
+    TOKENS.UTIL_REFRESH_ORCHESTRATOR,
   ])
+
+  //Leave here to re-configure orchestrator if needed in future
+  // useMemo(() => {
+  //   orchestrator.configure({ autoStart: true, intervalMs: 1 * 60 * 1000 })
+  // }, [orchestrator])
 
   const restartExistingAgent = useCallback(
     async (agent: Agent, walletSecret: WalletSecret): Promise<Agent | undefined> => {
@@ -147,8 +154,17 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       logger.info('Agent initialized successfully')
       agentInstanceRef.current = newAgent
       setAgent(newAgent)
+      bridge.setAgent(newAgent)
     },
-    [logger, restartExistingAgent, createNewAgent, migrateIfRequired, warmUpCache, store.preferences.selectedMediator]
+    [
+      logger,
+      restartExistingAgent,
+      createNewAgent,
+      migrateIfRequired,
+      warmUpCache,
+      store.preferences.selectedMediator,
+      bridge,
+    ]
   )
 
   const shutdownAndClearAgentIfExists = useCallback(async () => {
@@ -158,10 +174,11 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       } catch (error) {
         logger.error(`Error shutting down agent with shutdownAndClearAgentIfExists: ${error}`)
       } finally {
+        bridge.clearAgent()
         setAgent(null)
       }
     }
-  }, [agent, logger])
+  }, [agent, logger, bridge])
 
   return { agent, initializeAgent, shutdownAndClearAgentIfExists }
 }

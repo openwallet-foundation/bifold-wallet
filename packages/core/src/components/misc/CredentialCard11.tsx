@@ -28,12 +28,7 @@ import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialIssuerBody from './CredentialCard11Issuer'
 import { ThemedText } from '../texts/ThemedText'
-
-export enum CredentialErrors {
-  Revoked, // Credential has been revoked
-  NotInWallet, // Credential requested for proof does not exists in users wallet
-  PredicateError, // Credential requested for proof contains a predicate match that is not satisfied
-}
+import { CredentialErrors } from '../../types/credentials'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord

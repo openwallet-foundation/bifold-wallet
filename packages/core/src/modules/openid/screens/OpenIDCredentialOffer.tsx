@@ -20,12 +20,16 @@ import { testIdWithKey } from '../../../utils/testable'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
+import { useAcceptReplacement } from '../hooks/useAcceptReplacement'
+import { useDeclineReplacement } from '../hooks/useDeclineReplacement'
+import { TOKENS, useServices } from '../../../container-api'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
 const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
   // FIXME: change params to accept credential id to avoid 'non-serializable' warnings
   const { credential } = route.params
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
 
@@ -33,11 +37,13 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { t } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
+  const { resolveBundleForCredential } = useOpenIDCredentials()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+  const { acceptNewCredential } = useAcceptReplacement()
+  const { declineByNewId } = useDeclineReplacement({ logger: logger })
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -77,6 +83,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
 
   const handleDeclineTouched = async () => {
+    await declineByNewId(credential.id)
     toggleDeclineModalVisible()
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
@@ -86,7 +93,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       return
     }
     try {
-      await storeCredential(credential)
+      await acceptNewCredential(credential)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)

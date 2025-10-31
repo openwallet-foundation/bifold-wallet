@@ -202,13 +202,9 @@ export const getCredentialsForProofRequest = async ({
       return agent.modules.openId4VcHolder.resolveSiopAuthorizationRequest(requestUri)
     })
 
-    console.log('$$Resolved', JSON.stringify(resolved))
-
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
     }
-
-    console.log('$$Resolved OpenID4VC SIOP Authorization Request:', JSON.stringify(resolved))
 
     return {
       ...resolved.presentationExchange,

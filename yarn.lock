@@ -2414,7 +2414,7 @@ __metadata:
     "@react-navigation/devtools": "npm:~6.0.27"
     "@react-navigation/native": "npm:~6.0.16"
     "@react-navigation/stack": "npm:~6.3.29"
-    "@sd-jwt/jwt-status-list": "npm:^0.7.0"
+    "@sd-jwt/jwt-status-list": "npm:^0.17.0"
     "@testing-library/jest-native": "npm:~5.4.3"
     "@testing-library/react-native": "npm:~12.3.3"
     "@types/base-64": "npm:^1.0.2"
@@ -2489,6 +2489,7 @@ __metadata:
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
+    zustand: "npm:^4.5.2"
   peerDependencies:
     "@credo-ts/anoncreds": 0.5.17
     "@credo-ts/askar": 0.5.17
@@ -6033,6 +6034,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sd-jwt/jwt-status-list@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "@sd-jwt/jwt-status-list@npm:0.17.0"
+  dependencies:
+    "@sd-jwt/types": "npm:0.17.0"
+    "@sd-jwt/utils": "npm:0.17.0"
+    pako: "npm:^2.1.0"
+  checksum: 10c0/bb1a7b2cb74a77223b1c78976d2810b15f02044a11b2b6c4c8ee40b3a5c1618be30ee6b6d5d37ea79eec2850cf50fdffe2f6c1f8ccb8ba225ef2ba4c232b64a2
+  languageName: node
+  linkType: hard
+
 "@sd-jwt/present@npm:0.7.2, @sd-jwt/present@npm:^0.7.2":
   version: 0.7.2
   resolution: "@sd-jwt/present@npm:0.7.2"
@@ -6055,6 +6067,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sd-jwt/types@npm:0.17.0":
+  version: 0.17.0
+  resolution: "@sd-jwt/types@npm:0.17.0"
+  checksum: 10c0/6fe3f4b3dec1ea3d3482f0722eefcd850f14dcda9cdf00d4899acf9c41583a6421016d1922472fcf44ec72c4851a4a6ea7453f5cca192df07430a6245d36e756
+  languageName: node
+  linkType: hard
+
 "@sd-jwt/types@npm:0.6.1":
   version: 0.6.1
   resolution: "@sd-jwt/types@npm:0.6.1"
@@ -6066,6 +6085,16 @@ __metadata:
   version: 0.7.2
   resolution: "@sd-jwt/types@npm:0.7.2"
   checksum: 10c0/3679d0db6cae0cc86bfc2c76acd7e7ad90219fc10f17bd41293aea438aa9d707f729ceca953d3196f2481a71ed9f4e4512f0233ba69d62cadcb7921ba4df9a09
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/utils@npm:0.17.0":
+  version: 0.17.0
+  resolution: "@sd-jwt/utils@npm:0.17.0"
+  dependencies:
+    "@sd-jwt/types": "npm:0.17.0"
+    js-base64: "npm:^3.7.8"
+  checksum: 10c0/97806cf379598f6be1dff53b3bd2b690cc2ebab1eb9361e8a9b9dfb8cd7981f33ddc4b77c7818db6eb8446bf69217e2fd8146ef5269a40733d09377eb9e5c7ce
   languageName: node
   linkType: hard
 
@@ -8868,7 +8897,7 @@ __metadata:
     "@react-navigation/devtools": "npm:~6.0.27"
     "@react-navigation/native": "npm:~6.0.16"
     "@react-navigation/stack": "npm:~6.3.29"
-    "@sd-jwt/jwt-status-list": "npm:^0.7.0"
+    "@sd-jwt/jwt-status-list": "npm:^0.17.0"
     "@types/lodash.flatten": "npm:~4.4.9"
     "@types/lodash.merge": "npm:~4.6.9"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -8928,6 +8957,7 @@ __metadata:
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
+    zustand: "npm:^4.5.2"
   languageName: unknown
   linkType: soft
 
@@ -14942,6 +14972,13 @@ __metadata:
   version: 3.7.7
   resolution: "js-base64@npm:3.7.7"
   checksum: 10c0/3c905a7e78b601e4751b5e710edd0d6d045ce2d23eb84c9df03515371e1b291edc72808dc91e081cb9855aef6758292a2407006f4608ec3705373dd8baf2f80f
+  languageName: node
+  linkType: hard
+
+"js-base64@npm:^3.7.8":
+  version: 3.7.8
+  resolution: "js-base64@npm:3.7.8"
+  checksum: 10c0/a4452a7e7f32b0ef568a344157efec00c14593bbb1cf0c113f008dddff7ec515b35147af0cd70a7735adb69a2a2bdee921adffea2ea465e2c856ba50d649b11e
   languageName: node
   linkType: hard
 
@@ -21614,6 +21651,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:^1.2.2":
+  version: 1.6.0
+  resolution: "use-sync-external-store@npm:1.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/35e1179f872a53227bdf8a827f7911da4c37c0f4091c29b76b1e32473d1670ebe7bcd880b808b7549ba9a5605c233350f800ffab963ee4a4ee346ee983b6019b
+  languageName: node
+  linkType: hard
+
 "utf8@npm:^3.0.0":
   version: 3.0.0
   resolution: "utf8@npm:3.0.0"
@@ -22374,5 +22420,25 @@ __metadata:
   bin:
     z-schema: bin/z-schema
   checksum: 10c0/e4c812cfe6468c19b2a21d07d4ff8fb70359062d33400b45f89017eaa3efe9d51e85963f2b115eaaa99a16b451782249bf9b1fa8b31d35cc473e7becb3e44264
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.5.2":
+  version: 4.5.7
+  resolution: "zustand@npm:4.5.7"
+  dependencies:
+    use-sync-external-store: "npm:^1.2.2"
+  peerDependencies:
+    "@types/react": ">=16.8"
+    immer: ">=9.0.6"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/55559e37a82f0c06cadc61cb08f08314c0fe05d6a93815e41e3376130c13db22a5017cbb0cd1f018c82f2dad0051afe3592561d40f980bd4082e32005e8a950c
   languageName: node
   linkType: hard

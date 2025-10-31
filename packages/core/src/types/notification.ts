@@ -8,6 +8,10 @@ export interface CustomNotification {
   description: string
   buttonTitle: string
   pageTitle: string
+  //TODO: to be refactored later in a notifications specific PR
+  type?: string
+  createdAt?: Date
+  onPressAction?: () => void
   additionalStackItems?: [
     {
       component: React.FC
@@ -15,6 +19,7 @@ export interface CustomNotification {
       stackOptions?: StackNavigationOptions
     }
   ]
+  metadata?: Record<string, unknown>
 }
 
 export interface CustomNotificationRecord {
