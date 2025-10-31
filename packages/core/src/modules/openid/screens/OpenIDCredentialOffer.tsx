@@ -93,7 +93,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       await storeCredential(credential)
       if(credentialMetadata?.notificationMetadata?.notificationId && credentialMetadata?.tokenResponse?.accessToken)
         await sendOpenId4VciNotification({
-          metadata: credentialMetadata,
+          metadata: credentialMetadata.issuer,
           accessToken: credentialMetadata.tokenResponse?.accessToken,
           notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
           notificationId: credentialMetadata.notificationMetadata.notificationId 

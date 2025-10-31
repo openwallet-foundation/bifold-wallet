@@ -269,6 +269,8 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   }
 
   const notificationMetadata = { ...firstCredential.notificationMetadata }
+  console.log(firstCredential)
+  // const issuerMetadata = { ...firstCredential }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
     resolvedCredentialOffer.offeredCredentials[0] as OpenId4VciCredentialSupportedWithId,

@@ -14,7 +14,7 @@ export enum NotificationEventType {
 
 //TODO: ADD TYPE SAFETY
 interface sendOpenId4VciNotificationOptions {
-  metadata: any
+  metadata: OpenId4VciIssuerMetadata
   notificationId: string
   accessToken: OpenId4VciRequestTokenResponse["accessToken"]
   notificationEvent: NotificationEventType
