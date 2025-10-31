@@ -1,5 +1,5 @@
 import { CredentialState } from '@credo-ts/core'
-import { useCredentialById } from '@credo-ts/react-hooks'
+import { useCredentialById, useAgent } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +14,7 @@ import { Screens, TabStacks } from '../types/navigators'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import { ThemedText } from '../components/texts/ThemedText'
+import { ensureCredentialMetadata } from '../utils/credential'
 
 enum DeliveryStatus {
   Pending,
@@ -29,6 +30,7 @@ export interface CredentialOfferAcceptProps {
 
 const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, credentialId, confirmationOnly }) => {
   const { t } = useTranslation()
+  const { agent } = useAgent()
   const [shouldShowDelayMessage, setShouldShowDelayMessage] = useState<boolean>(false)
   const [credentialDeliveryStatus, setCredentialDeliveryStatus] = useState<DeliveryStatus>(DeliveryStatus.Pending)
   const [timerDidFire, setTimerDidFire] = useState<boolean>(false)
@@ -37,7 +39,7 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const navigation = useNavigation()
   const { ListItems } = useTheme()
   const { CredentialAdded, CredentialPending } = useAnimatedComponents()
-  const [{ connectionTimerDelay }] = useServices([TOKENS.CONFIG])
+  const [{ connectionTimerDelay }, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
     container: {
@@ -84,8 +86,19 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     if (credential.state === CredentialState.CredentialReceived || credential.state === CredentialState.Done) {
       timer && clearTimeout(timer)
       setCredentialDeliveryStatus(DeliveryStatus.Completed)
+
+      const restoreMetadata = async () => {
+        if (agent) {
+          try {
+            await ensureCredentialMetadata(credential, agent, undefined, logger)
+          } catch (error) {
+            logger?.warn('Failed to restore credential metadata', { error: error as Error })
+          }
+        }
+      }
+      restoreMetadata()
     }
-  }, [credential, timer])
+  }, [credential, timer, agent, logger])
 
   useEffect(() => {
     if (confirmationOnly) {
