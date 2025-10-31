@@ -51,7 +51,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
           NPM_CONFIG_ACCESS: public
-          NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
 
       - name: Get current package version
         id: get_version

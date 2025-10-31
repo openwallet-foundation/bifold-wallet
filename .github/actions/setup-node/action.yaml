@@ -16,6 +16,8 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: 'https://registry.npmjs.org/'
+        always-auth: true
+        scope: '@bifold'
 
     - name: Enable corepack and setup Yarn 4.9.2
       shell: bash
