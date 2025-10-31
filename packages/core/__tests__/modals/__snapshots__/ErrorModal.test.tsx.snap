@@ -2,4 +2,324 @@
 
 exports[`ErrorModal Component Dismiss on demand 1`] = `null`;
 
-exports[`ErrorModal Component Renders correctly 1`] = `null`;
+exports[`ErrorModal Component Renders correctly 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "additive",
+      }
+    }
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#000000",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "minHeight": 1334,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#313132",
+          "borderColor": "#D8292F",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "minWidth": 700,
+          "padding": 10,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "paddingHorizontal": 5,
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignSelf": "center",
+                "marginRight": 10,
+              },
+              Object {
+                "flexDirection": "row",
+              },
+            ]
+          }
+        >
+          <Text
+            accessible={false}
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#D8292F",
+                  "fontSize": 30,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "alignSelf": "center",
+                  "color": "#FFFFFF",
+                  "flexShrink": 1,
+                  "marginLeft": 7,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/HeaderText"
+          >
+            title
+          </Text>
+        </View>
+      </View>
+      <RCTScrollView
+        style={
+          Object {
+            "flexDirection": "column",
+            "flexGrow": 0,
+            "marginLeft": 40,
+            "paddingBottom": 5,
+            "paddingHorizontal": 5,
+          }
+        }
+      >
+        <View>
+          <View
+            accessibilityLabel="Global.ShowDetails"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "marginVertical": 14,
+                "opacity": 1,
+              }
+            }
+            testID="com.ariesbifold:id/ShowDetails"
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "color": "#42803E",
+                      "fontWeight": "normal",
+                    },
+                  ]
+                }
+              >
+                Global.ShowDetails
+                 
+              </Text>
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#42803E",
+                      "fontSize": 30,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Material Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "paddingTop": 10,
+              }
+            }
+          >
+            <View
+              accessibilityLabel="Global.Okay"
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                Object {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#42803E",
+                  "borderRadius": 4,
+                  "opacity": 1,
+                  "padding": 16,
+                }
+              }
+              testID="com.ariesbifold:id/Okay"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  maxFontSizeMultiplier={2}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "normal",
+                      },
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        },
+                        false,
+                        false,
+                        false,
+                      ],
+                    ]
+                  }
+                >
+                  Global.Okay
+                </Text>
+              </View>
+            </View>
+          </View>
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                },
+                Object {
+                  "flex": 1,
+                  "marginTop": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/VersionNumber"
+          >
+            Settings.Version 1 (1)
+          </Text>
+        </View>
+      </RCTScrollView>
+    </View>
+  </RNCSafeAreaView>
+</Modal>
+`;

@@ -1,6 +1,261 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProofDetails Screen renders correctly with an unverified proof Unverified proof view should be rendered correctly 1`] = `null`;
+exports[`ProofDetails Screen renders correctly with an unverified proof Unverified proof view should be rendered correctly 1`] = `
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+    testID="com.ariesbifold:id/UnverifiedProofView"
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 30,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+              "marginTop": 70,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 32,
+                  "fontWeight": "normal",
+                },
+              ]
+            }
+          >
+            Verifier.ProofVerificationFailed
+          </Text>
+        </View>
+        <
+          height={200}
+          style={
+            Object {
+              "alignSelf": "center",
+              "marginTop": 20,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "margin": 20,
+            "marginTop": "auto",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "marginBottom": 10,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Verifier.GenerateNewQR"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/GenerateNewQR"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Array [
+                      Object {
+                        "color": "#FFFFFF",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
+                  ]
+                }
+              >
+                Verifier.GenerateNewQR
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "marginBottom": 10,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Verifier.BackToList"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderColor": "#42803E",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "opacity": 1,
+                "padding": 16,
+              }
+            }
+            testID="com.ariesbifold:id/BackToList"
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Array [
+                      Object {
+                        "color": "#42803E",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                        "textAlign": "center",
+                      },
+                      false,
+                      false,
+                      false,
+                    ],
+                  ]
+                }
+              >
+                Verifier.BackToList
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
 
 exports[`ProofDetails Screen with a verified proof record renders correctly when history is false 1`] = `
 <RNCSafeAreaView
@@ -651,4 +906,452 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
 </RNCSafeAreaView>
 `;
 
-exports[`ProofDetails Screen with a verified proof record renders correctly when history is true 1`] = `null`;
+exports[`ProofDetails Screen with a verified proof record renders correctly when history is true 1`] = `
+<RNCSafeAreaView
+  edges={
+    Object {
+      "bottom": "off",
+      "left": "additive",
+      "right": "additive",
+      "top": "off",
+    }
+  }
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+    testID="com.ariesbifold:id/ProofDetailsHistoryView"
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "marginHorizontal": 30,
+              "marginVertical": 30,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "normal",
+                },
+                undefined,
+              ]
+            }
+          >
+            <Text
+              maxFontSizeMultiplier={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "normal",
+                  },
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Verifier.ConnectionLessLabel
+            </Text>
+             
+            ProofRequest.ShareFollowingInformation
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginHorizontal": 30,
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  Object {
+                    "marginBottom": 15,
+                  }
+                }
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#5f0f7b",
+                        "borderRadius": 10,
+                        "shadowColor": "#000",
+                        "shadowOffset": Object {
+                          "height": 1,
+                          "width": 1,
+                        },
+                        "shadowOpacity": 0.3,
+                      },
+                      Object {
+                        "backgroundColor": "#313132",
+                      },
+                      Object {
+                        "elevation": 5,
+                        "overflow": "visible",
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                      }
+                    }
+                    testID="com.ariesbifold:id/CredentialCard"
+                  >
+                    <View
+                      accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Latest Credentials.Credential. first_name, Aries, second_name, Bifold"
+                      accessible={true}
+                      style={
+                        Object {
+                          "flexDirection": "row",
+                          "minHeight": 247.5,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "backgroundColor": "#5f0f7b",
+                            "borderBottomLeftRadius": 10,
+                            "borderTopLeftRadius": 10,
+                            "width": 90,
+                          }
+                        }
+                        testID="com.ariesbifold:id/CredentialCardSecondaryBody"
+                      />
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#ffffff",
+                              "borderRadius": 8,
+                              "height": 108,
+                              "justifyContent": "center",
+                              "left": -52.5,
+                              "shadowColor": "#000",
+                              "shadowOffset": Object {
+                                "height": 1,
+                                "width": 1,
+                              },
+                              "shadowOpacity": 0.3,
+                              "top": 37.5,
+                              "width": 108,
+                            },
+                            Object {
+                              "elevation": 5,
+                            },
+                          ]
+                        }
+                      >
+                        <Text
+                          maxFontSizeMultiplier={2}
+                          style={
+                            Array [
+                              Object {
+                                "color": "#FFFFFF",
+                                "fontSize": 18,
+                                "fontWeight": "bold",
+                              },
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 18,
+                                  "fontWeight": "bold",
+                                },
+                                Object {
+                                  "alignSelf": "center",
+                                  "color": "#000",
+                                  "fontSize": 45,
+                                },
+                              ],
+                            ]
+                          }
+                          testID="com.ariesbifold:id/NoLogoText"
+                        >
+                          L
+                        </Text>
+                      </View>
+                      <View
+                        style={
+                          Object {
+                            "flex": 1,
+                            "marginLeft": -52.5,
+                            "padding": 37.5,
+                          }
+                        }
+                        testID="com.ariesbifold:id/CredentialCardPrimaryBody"
+                      >
+                        <View>
+                          <View
+                            style={
+                              Object {
+                                "flexDirection": "row",
+                              }
+                            }
+                          >
+                            <Text
+                              maxFontSizeMultiplier={2}
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "fontSize": 18,
+                                    "fontWeight": "bold",
+                                  },
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                      "flexWrap": "wrap",
+                                    },
+                                  ],
+                                ]
+                              }
+                              testID="com.ariesbifold:id/CredentialName"
+                            >
+                              Latest
+                            </Text>
+                          </View>
+                        </View>
+                        <RCTScrollView
+                          data={
+                            Array [
+                              Attribute {
+                                "credentialId": undefined,
+                                "encoding": undefined,
+                                "format": undefined,
+                                "hasError": undefined,
+                                "label": undefined,
+                                "mimeType": undefined,
+                                "name": "first_name",
+                                "nonRevoked": undefined,
+                                "restrictions": undefined,
+                                "revealed": undefined,
+                                "revoked": undefined,
+                                "type": undefined,
+                                "value": "Aries",
+                              },
+                              Attribute {
+                                "credentialId": undefined,
+                                "encoding": undefined,
+                                "format": undefined,
+                                "hasError": undefined,
+                                "label": undefined,
+                                "mimeType": undefined,
+                                "name": "second_name",
+                                "nonRevoked": undefined,
+                                "restrictions": undefined,
+                                "revealed": undefined,
+                                "revoked": undefined,
+                                "type": undefined,
+                                "value": "Bifold",
+                              },
+                            ]
+                          }
+                          getItem={[Function]}
+                          getItemCount={[Function]}
+                          initialNumToRender={2}
+                          keyExtractor={[Function]}
+                          onContentSizeChange={[Function]}
+                          onLayout={[Function]}
+                          onMomentumScrollBegin={[Function]}
+                          onMomentumScrollEnd={[Function]}
+                          onScroll={[Function]}
+                          onScrollBeginDrag={[Function]}
+                          onScrollEndDrag={[Function]}
+                          removeClippedSubviews={false}
+                          renderItem={[Function]}
+                          scrollEnabled={false}
+                          scrollEventThrottle={0.0001}
+                          stickyHeaderIndices={Array []}
+                          viewabilityConfigCallbackPairs={Array []}
+                        >
+                          <View>
+                            <View
+                              onFocusCapture={[Function]}
+                              onLayout={[Function]}
+                              style={null}
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "gap": 4,
+                                    "marginVertical": 16,
+                                  }
+                                }
+                              >
+                                <View>
+                                  <Text
+                                    maxFontSizeMultiplier={2}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "fontSize": 14,
+                                          "fontWeight": "normal",
+                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                    testID="com.ariesbifold:id/AttributeName"
+                                  >
+                                    First Name
+                                  </Text>
+                                  <View>
+                                    <Text
+                                      maxFontSizeMultiplier={2}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 18,
+                                            "fontWeight": "bold",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeValue"
+                                    >
+                                      Aries
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              onFocusCapture={[Function]}
+                              onLayout={[Function]}
+                              style={null}
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "gap": 4,
+                                    "marginVertical": 16,
+                                  }
+                                }
+                              >
+                                <View>
+                                  <Text
+                                    maxFontSizeMultiplier={2}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#FFFFFF",
+                                          "fontSize": 14,
+                                          "fontWeight": "normal",
+                                        },
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                          Object {
+                                            "lineHeight": 19,
+                                            "opacity": 0.8,
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                    testID="com.ariesbifold:id/AttributeName"
+                                  >
+                                    Second Name
+                                  </Text>
+                                  <View>
+                                    <Text
+                                      maxFontSizeMultiplier={2}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontSize": 18,
+                                            "fontWeight": "bold",
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "flexShrink": 1,
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                      testID="com.ariesbifold:id/AttributeValue"
+                                    >
+                                      Bifold
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </RCTScrollView>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
