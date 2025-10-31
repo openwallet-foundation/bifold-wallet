@@ -74,6 +74,8 @@ import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { QrCodeScanError } from './types/error'
+import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
+import { AgentBridge } from './services/AgentBridge'
 
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
@@ -167,6 +169,7 @@ export { BaseTourID } from './types/tour'
 export type { ScanCameraProps } from './components/misc/ScanCamera'
 export type { DismissiblePopupModalProps } from './components/modals/DismissiblePopupModal'
 export type { BannerSectionProps } from './components/views/Banner'
+export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
 
 export {
   AbstractBifoldLogger,
@@ -253,5 +256,7 @@ export {
   usePreventScreenCapture,
   useTour,
   walletTimeout,
+  RefreshOrchestrator,
+  AgentBridge,
 }
 export type { BannerMessage, DeepPartial, IButton }
