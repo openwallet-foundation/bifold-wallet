@@ -2484,7 +2484,6 @@ __metadata:
     react-native-vector-icons: "npm:~10.0.3"
     react-native-vision-camera: "npm:~4.3.2"
     react-test-renderer: "npm:~18.2.0"
-    react-zlib-js: "npm:^1.0.5"
     rimraf: "npm:~5.0.10"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
@@ -8953,7 +8952,6 @@ __metadata:
     react-native-vector-icons: "npm:~10.0.3"
     react-native-vision-camera: "npm:~4.3.2"
     react-native-webview: "npm:~13.10.7"
-    react-zlib-js: "npm:^1.0.5"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
@@ -18991,13 +18989,6 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/c633558ef9af33bc68f0c4dbb5163a004c4fb9eade7bd0a7cfc0355fb367f36bd9d96533c90b7e85a146be6c525113a15f58683d269e0177ad77e2b04d4fe51c
-  languageName: node
-  linkType: hard
-
-"react-zlib-js@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "react-zlib-js@npm:1.0.5"
-  checksum: 10c0/df87a703c2c12e3156007e06339db37490af5583e5cf88c0adeb579bb1a553a22b1264dd81c3793d52e656ef75f0dc94c158fa4d1e1e9c5d331cbd6ea4fa4d51
   languageName: node
   linkType: hard
 

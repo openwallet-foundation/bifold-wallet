@@ -25,9 +25,6 @@ import {
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
-  JwkDidResolver,
-  KeyDidResolver,
-  PeerDidResolver,
 } from '@credo-ts/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
