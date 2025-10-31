@@ -4,16 +4,17 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/main.yaml'
-      - '.github/workflows/publish.yaml'
-      - '.github/actions/setup-node/action.yaml'
-      - 'packages/**'
-      - 'package.json'
-      - 'yarn.lock'
+      - ".github/workflows/main.yaml"
+      - ".github/workflows/publish.yaml"
+      - ".github/actions/setup-node/action.yaml"
+      - "packages/**"
+      - "package.json"
+      - "yarn.lock"
 
 permissions:
   pull-requests: write
   contents: write
+  id-token: write
 
 jobs:
   release:
@@ -25,7 +26,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -42,21 +43,20 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          title: 'chore(release): new version'
-          commit: 'chore(release): new version'
+          title: "chore(release): new version"
+          commit: "chore(release): new version"
           publish: yarn release
           version: yarn changeset-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Get current package version
         id: get_version
-        run: echo "CURRENT_PACKAGE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
+        run: echo "version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Create GitHub release
-        if: "startsWith(github.event.head_commit.message, 'chore(release): new version')"
+        if: startsWith(github.event.head_commit.message, 'chore(release)&#58; new version')
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.CURRENT_PACKAGE_VERSION }}
+          tag_name: v${{ steps.get_version.outputs.version }}

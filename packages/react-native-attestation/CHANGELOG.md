@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.10.2
+
+## 2.10.1
+
+## 2.10.0
+
 ## 2.9.0
 
 ### Patch Changes

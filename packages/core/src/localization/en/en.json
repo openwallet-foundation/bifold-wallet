@@ -757,6 +757,15 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request.",
     "PleaseAddress": " Please address them before continuing."
   },
+  "UnsatisfiedProofRequest": {
+    "Title": "Information Request",
+    "InfoBox": {
+      "Title": "You do not have a card for this request",
+      "Subtitle": "Check with {{verifierName}} for accepted cards."
+    },
+    "VerifierDetail": "Received an information request from: ",
+    "RequestPurpose": " • {{requestPurpose}}"
+  },
   "Settings": {
     "Version": "Version",
     "VersionString": "0.0.0-0",
@@ -836,6 +845,7 @@
     "CredentialOffer": "Credential Offer",
     "ProofChangeCredential": "Choose a credential",
     "ProofRequest": "Proof Request",
+    "UnsatisfiedProofRequest": "Unsatisfied Proof Request",
     "ChangeCard": "Change Card",
     "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",

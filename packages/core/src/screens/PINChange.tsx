@@ -147,10 +147,10 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     }
   }, [agent, historyEnabled, logger, historyManagerCurried])
 
-  const handleConfirmPINModal = async (p: string) => {
+  const handleConfirmPINModal = async (userPinInput: string) => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(p, p)
+      const valid = validatePINEntry(userPinInput, userPinInput)
       if (valid) {
         setPINConfirmModalVisible(true)
       }
@@ -174,7 +174,6 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
             if (historyEventsLogger.logPinChanged) {
               logHistoryRecord()
             }
-
             setModalState({
               visible: true,
               title: t('PINChange.PinChangeSuccessTitle'),
