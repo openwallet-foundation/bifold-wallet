@@ -217,11 +217,20 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }
 
   useEffect(() => {
-    Promise.all([agent.w3cCredentials?.getAllCredentialRecords(), agent.sdJwtVc?.getAll()]).then(([w3c, sdjwt]) => {
+    if (!agent) return
+
+    agent.w3cCredentials?.getAllCredentialRecords().then((w3cCredentialRecords) => {
       setState((prev) => ({
         ...prev,
-        w3cCredentialRecords: filterW3CCredentialsOnly(w3c ?? []),
-        sdJwtVcRecords: filterSdJwtCredentialsOnly(sdjwt ?? []),
+        w3cCredentialRecords: filterW3CCredentialsOnly(w3cCredentialRecords),
+        isLoading: false,
+      }))
+    })
+
+    agent.sdJwtVc?.getAll().then((creds) => {
+      setState((prev) => ({
+        ...prev,
+        sdJwtVcRecords: filterSdJwtCredentialsOnly(creds),
         isLoading: false,
       }))
     })
