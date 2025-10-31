@@ -39,6 +39,10 @@ jobs:
         run: |
           yarn husky uninstall
 
+      - name: Upgrade npm for Trusted Publishers support
+        run: |
+          npm install -g npm@^11
+
       - name: Update release PR or publish to npm
         id: changesets
         uses: changesets/action@v1
@@ -50,7 +54,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
-          NPM_CONFIG_ACCESS: public
 
       - name: Get current package version
         id: get_version
