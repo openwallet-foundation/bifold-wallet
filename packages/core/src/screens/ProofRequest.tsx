@@ -69,10 +69,10 @@ import { testIdWithKey } from '../utils/testable'
 import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 
 import ProofRequestAccept from './ProofRequestAccept'
-import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
+import { CredentialErrors } from '../types/credentials'
 
 type ProofRequestProps = {
   navigation: any

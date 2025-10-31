@@ -1,8 +1,8 @@
 module.exports = {
   preset: 'react-native',
   testTimeout: 12000,
-  setupFiles: ['<rootDir>/jestSetup.js'],
-  setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
+  setupFiles: [],
+  setupFilesAfterEnv: ['<rootDir>/jestSetup.js', '@testing-library/jest-native/extend-expect'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':

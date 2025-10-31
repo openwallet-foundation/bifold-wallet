@@ -61,7 +61,7 @@ The setup for Bifold is similar to other React Native projects. The following se
 [Android Studio](https://developer.android.com/studio)
 [Apple Xcode](https://developer.apple.com/xcode/)
 
-Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited 
+Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited
 
 ## Suggested Setup
 
@@ -159,7 +159,7 @@ Since this is a mobile development project, this project is primarily developed 
 
 **ProTip 🤓**
 
-You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run 
+You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run
 
 ```sh
 mise install
@@ -240,7 +240,7 @@ For more detailed information how to setup android SDK in react native, please r
 
 #### OpenJDK17
 
-You will need to have OpenJDK 17 installed. You can install it using your package manager. 
+You will need to have OpenJDK 17 installed. You can install it using your package manager.
 
 ##### Manual Installation
 
@@ -336,6 +336,17 @@ open samples/app/ios/AriesBifold.xcworkspace
 cd samples/app
 yarn start
 ```
+
+## OpenID Credentials Refresh Lifecycle
+
+Bifold now supports an **automated OpenID4VCI + SD-JWT credential refresh lifecycle**, enabling wallets to:
+
+- Periodically check credential **status lists**.
+- Automatically use stored **refresh tokens** to obtain a new access token.
+- Request and replace credentials seamlessly when a credential becomes invalid or revoked.
+
+For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see  
+👉 [docs/openid-refresh.md](docs/openid-refresh.md)
 
 # Success Stories
 

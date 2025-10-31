@@ -48,7 +48,14 @@
     "GotIt": "Got it (PT-BR)",
     "Send": "Enviar",
     "Reset": "Reset (PT-BR)",
-    "ViewJSON": "View JSON Details (PT-BR)"
+    "ViewJSON": "View JSON Details (PT-BR)",
+    "RefreshCredentials": "Refresh Credentials (PT-BR)"
+  },
+  "Toast": {
+    "OpenIDCredRefreshing": {
+      "Title": "Refreshing credentials (PT-BR)",
+      "Message": "Your OpenID credentials are being refreshed in the background. (PT-BR)"
+    }
   },
   "Date": {
     "ShortFormat": "D MMM",
