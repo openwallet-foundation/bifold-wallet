@@ -4,12 +4,12 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/main.yaml"
-      - ".github/workflows/publish.yaml"
-      - ".github/actions/setup-node/action.yaml"
-      - "packages/**"
-      - "package.json"
-      - "yarn.lock"
+      - '.github/workflows/main.yaml'
+      - '.github/workflows/publish.yaml'
+      - '.github/actions/setup-node/action.yaml'
+      - 'packages/**'
+      - 'package.json'
+      - 'yarn.lock'
 
 permissions:
   pull-requests: write
@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
 
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
@@ -43,13 +43,15 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          title: "chore(release): new version"
-          commit: "chore(release): new version"
+          title: 'chore(release): new version'
+          commit: 'chore(release): new version'
           publish: yarn release
           version: yarn changeset-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
+          NPM_CONFIG_ACCESS: public
+          NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
 
       - name: Get current package version
         id: get_version
