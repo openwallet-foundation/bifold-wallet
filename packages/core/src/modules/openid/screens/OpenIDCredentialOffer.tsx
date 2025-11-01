@@ -20,6 +20,8 @@ import { testIdWithKey } from '../../../utils/testable'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
+import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
+import { temporaryMetaVanillaObject } from '../metadata'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -34,6 +36,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
+  const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -87,6 +90,20 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     }
     try {
       await storeCredential(credential)
+      if (
+        temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+        temporaryMetaVanillaObject.tokenResponse?.accessToken
+      ) {
+        await sendOpenId4VciNotification({
+          accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
+          notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
+          notificationMetadata: {
+            ...temporaryMetaVanillaObject.notificationMetadata,
+            notificationId: temporaryMetaVanillaObject.notificationMetadata?.notificationId,
+            notificationEndpoint: temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint,
+          },
+        })
+      }
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
