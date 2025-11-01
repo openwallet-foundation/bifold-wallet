@@ -13,6 +13,7 @@ import {
 import { getCredentialsForProofRequest } from '../resolverProof'
 import { OpenId4VPRequestRecord } from '../types'
 import { setRefreshCredentialMetadata } from '../refresh/refreshMetadata'
+import { temporaryMetaVanillaObject } from '../metadata'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -43,6 +44,9 @@ export const useOpenID = ({
 
         const authServer = resolvedCredentialOffer.metadata.credentialIssuerMetadata.authorization_servers?.[0]
         const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
+
+        //[Temporary] Set notification metadata
+        temporaryMetaVanillaObject.tokenResponse = tokenResponse
 
         const refreshToken = tokenResponse.refreshToken
 

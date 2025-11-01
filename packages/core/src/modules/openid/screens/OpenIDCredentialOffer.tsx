@@ -21,7 +21,7 @@ import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
 import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
-import { getOpenId4VcCredentialMetadata } from '../metadata'
+import { temporaryMetaVanillaObject } from '../metadata'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -89,15 +89,21 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       return
     }
     try {
-      const credentialMetadata = getOpenId4VcCredentialMetadata(credential)
       await storeCredential(credential)
-      if(credentialMetadata?.notificationMetadata?.notificationId && credentialMetadata?.tokenResponse?.accessToken)
+      if (
+        temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+        temporaryMetaVanillaObject.tokenResponse?.accessToken
+      ) {
         await sendOpenId4VciNotification({
-          metadata: credentialMetadata.issuer,
-          accessToken: credentialMetadata.tokenResponse?.accessToken,
+          accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
           notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
-          notificationId: credentialMetadata.notificationMetadata.notificationId 
+          notificationMetadata: {
+            ...temporaryMetaVanillaObject.notificationMetadata,
+            notificationId: temporaryMetaVanillaObject.notificationMetadata?.notificationId,
+            notificationEndpoint: temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint,
+          },
         })
+      }
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)

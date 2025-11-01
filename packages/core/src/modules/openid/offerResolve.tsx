@@ -22,7 +22,11 @@ import {
   W3cJsonLdVerifiableCredential,
   W3cJwtVerifiableCredential,
 } from '@credo-ts/core'
-import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+import {
+  extractOpenId4VcCredentialMetadata,
+  setOpenId4VcCredentialMetadata,
+  temporaryMetaVanillaObject,
+} from './metadata'
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -269,8 +273,9 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   }
 
   const notificationMetadata = { ...firstCredential.notificationMetadata }
-  console.log(firstCredential)
-  // const issuerMetadata = { ...firstCredential }
+  if (notificationMetadata) {
+    temporaryMetaVanillaObject.notificationMetadata = notificationMetadata
+  }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
     resolvedCredentialOffer.offeredCredentials[0] as OpenId4VciCredentialSupportedWithId,
@@ -280,7 +285,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
     }
   )
 
-  setOpenId4VcCredentialMetadata(record, { ...openId4VcMetadata, notificationMetadata, tokenResponse })
+  setOpenId4VcCredentialMetadata(record, openId4VcMetadata)
 
   return record
 }
