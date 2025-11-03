@@ -11,7 +11,7 @@ export class AgentBridge {
   // one-shot listeners (cleared after first setAgent)
   private readyOnce: ReadyListener[] = []
   // persistent listeners (fire on every setAgent)
-  private readyPersistent = new Set<ReadyListener>()
+  private readonly readyPersistent = new Set<ReadyListener>()
 
   private closedListeners: ClosedListener[] = []
   private changeListeners: ChangeListener[] = []

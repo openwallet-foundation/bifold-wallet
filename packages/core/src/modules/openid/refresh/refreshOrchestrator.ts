@@ -29,9 +29,9 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
   private runningOnce = false // a run is in progress?
   private opts: Required<RefreshOrchestratorOpts>
   private agent?: Agent
-  private recentlyIssued = new Map<string, AnyCred>()
+  private readonly recentlyIssued = new Map<string, AnyCred>()
 
-  public constructor(private logger: BifoldLogger, bridge: AgentBridge, opts?: RefreshOrchestratorOpts) {
+  public constructor(private readonly logger: BifoldLogger, bridge: AgentBridge, opts?: RefreshOrchestratorOpts) {
     this.opts = {
       intervalMs: 15 * 60 * 1000,
       autoStart: true,
@@ -136,7 +136,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
       this.logger.warn('⚠️ [RefreshOrchestrator] runOnce skipped: already running')
       return
     }
-    if (!this.agent || !this.agent.isInitialized) {
+    if (!this.agent || !this.agent?.isInitialized) {
       this.logger.warn('⚠️ [RefreshOrchestrator] runOnce skipped: agent not ready')
       return
     }
@@ -165,36 +165,11 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
     }
   }
 
-  public setIntervalEnabled(enabled: boolean) {
-    if (enabled) this.start()
-    else this.stop()
-  }
-
   public setIntervalMs(intervalMs: number | null) {
     this.configure({ intervalMs })
   }
 
   public resolveFull(id: string): AnyCred | undefined {
-    // if (!this.agent) return this.recentlyIssued.get(lite.id)
-
-    // // Try repo first (preferred & durable)
-    // try {
-    //   if (lite.format === ClaimFormat.SdJwtVc) {
-    //     const r = await this.agent.sdJwtVc.getById(lite.id).catch(() => undefined)
-    //     if (r) return r
-    //   } else if (lite.format === ClaimFormat.JwtVc) {
-    //     const r = await this.agent.w3cCredentials.getCredentialRecordById(lite.id).catch(() => undefined)
-    //     if (r) return r
-    //   } else {
-    //     // optional: mdoc
-    //     const r = await this.agent.mdoc.getById(lite.id).catch(() => undefined)
-    //     if (r) return r
-    //   }
-    // } catch {
-    //   // swallow, fall back to cache
-    // }
-
-    // Fallback: the in-memory cache (e.g., if immediate UI taps before repo is ready)
     return this.recentlyIssued.get(id)
   }
 

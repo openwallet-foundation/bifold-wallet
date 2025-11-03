@@ -164,7 +164,7 @@ const Home: React.FC<HomeProps> = () => {
 
       // Run once after 4 seconds
       refreshTimerRef.current = setTimeout(() => {
-        void orchestrator.runOnce('developer-menu')
+        orchestrator.runOnce('developer-menu')
       }, 4000)
     })
 

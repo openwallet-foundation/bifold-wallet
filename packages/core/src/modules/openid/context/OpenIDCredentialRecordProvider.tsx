@@ -238,7 +238,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 
   useEffect(() => {
     if (state.isLoading) return
-    if (!agent || !(agent as any).events || !(agent as any).events.observable) return
+    if (!agent || !agent?.events || !agent?.events?.observable) return
 
     const w3c_credentialAdded$ = recordsAddedByType(agent, W3cCredentialRecord).subscribe((record) => {
       //This handler will return ANY creds added to the wallet even DidComm

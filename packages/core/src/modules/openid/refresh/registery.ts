@@ -2,21 +2,19 @@
 import { ClaimFormat } from '@credo-ts/core'
 import { createStore } from 'zustand/vanilla'
 
-export type CredId = string
-
 export interface OpenIDCredentialLite {
-  id: CredId
+  id: string
   format: ClaimFormat
   createdAt?: string
   issuer?: string
 }
 
 export interface ReplacementMap {
-  [oldId: CredId]: OpenIDCredentialLite // the new “offer”/replacement
+  [oldId: string]: OpenIDCredentialLite // the new “offer”/replacement
 }
 
 export interface RefreshingMap {
-  [id: CredId]: true
+  [id: string]: true
 }
 
 /** Permanent (until unblocked) blocks so the orchestrator won’t retry this cred again this session */
@@ -30,15 +28,15 @@ export interface BlockEntry {
 
 export interface RegistryState {
   // source of truth for creds you care about
-  byId: Record<CredId, OpenIDCredentialLite>
+  byId: Record<string, OpenIDCredentialLite>
   // expired/invalid originals that have a replacement available
-  expired: CredId[]
+  expired: string[]
   // mapping old -> new
   replacements: ReplacementMap
   // marker to avoid parallel refresh of same cred
   refreshing: RefreshingMap
   // creds that should no longer be refreshed (either success or failed previously)
-  blocked: Record<CredId, BlockEntry>
+  blocked: Record<string, BlockEntry>
   // last run timestamps (optional, helps UI)
   lastSweepAt?: string
 }
@@ -46,29 +44,29 @@ export interface RegistryState {
 export interface RegistryActions {
   upsert: (cred: OpenIDCredentialLite) => void
 
-  markRefreshing: (id: CredId) => void
-  clearRefreshing: (id: CredId) => void
+  markRefreshing: (id: string) => void
+  clearRefreshing: (id: string) => void
 
   /** Old cred `oldId` has a replacement available (offer or reissued record) */
-  markExpiredWithReplacement: (oldId: CredId, replacement: OpenIDCredentialLite) => void
+  markExpiredWithReplacement: (oldId: string, replacement: OpenIDCredentialLite) => void
 
   /** Accept the queued replacement for oldId → promotes replacement to byId and clears expired state */
-  acceptReplacement: (oldId: CredId) => void
+  acceptReplacement: (oldId: string) => void
 
   /** Clear “expired” tag for a cred (e.g., verifier says valid again) */
-  clearExpired: (id: CredId) => void
+  clearExpired: (id: string) => void
 
   /** Mark this cred permanently blocked due to success (no more attempts needed) */
-  blockAsSucceeded: (id: CredId) => void
+  blockAsSucceeded: (id: string) => void
 
   /** Mark this cred permanently blocked due to failure (don’t hammer issuer again) */
-  blockAsFailed: (id: CredId, error?: string) => void
+  blockAsFailed: (id: string, error?: string) => void
 
   /** Remove any block for this cred (e.g., debug/manual override) */
-  unblock: (id: CredId) => void
+  unblock: (id: string) => void
 
   /** Central gate used by the orchestrator to decide whether to skip */
-  shouldSkip: (id: CredId) => boolean
+  shouldSkip: (id: string) => boolean
 
   setLastSweep: (iso: string) => void
   reset: () => void
