@@ -1,5 +1,19 @@
 # @bifold/core
 
+## 2.10.2
+
+### Patch Changes
+
+- a2323ee: update loading indicator for new pin designs
+- 7c7d27f: Add unsatisfied proof request UI for OpenID
+- 84cf1b0: fix pin masking on new pin design
+
+## 2.10.1
+
+### Patch Changes
+
+- 374a412: Bug fixes for new pin design, and fix for biometrics issue
+
 ## 2.10.0
 
 ### Minor Changes
