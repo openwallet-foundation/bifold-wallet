@@ -30,6 +30,8 @@ import { InlineErrorConfig } from './types/error'
 import { BifoldLogger } from './services/logger'
 import { AgentSetupReturnType } from './hooks/useBifoldAgentSetup'
 import { OnboardingStackProps } from './navigators/OnboardingStack'
+import { AgentBridge } from './services/AgentBridge'
+import { IRefreshOrchestrator } from './modules/openid/refresh/types'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -139,6 +141,8 @@ export const UTILITY_TOKENS = {
   UTIL_PROOF_TEMPLATE: 'utility.proof-template',
   UTIL_ATTESTATION_MONITOR: 'utility.attestation-monitor',
   UTIL_APP_VERSION_MONITOR: 'utility.app-version-monitor',
+  UTIL_AGENT_BRIDGE: 'utility.agent-bridge',
+  UTIL_REFRESH_ORCHESTRATOR: 'utility.refresh-orchestrator',
 } as const
 
 export const CONFIG_TOKENS = {
@@ -226,6 +230,8 @@ export type TokenMapping = {
   [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
   [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionLabel?: string }>
+  [TOKENS.UTIL_AGENT_BRIDGE]: AgentBridge
+  [TOKENS.UTIL_REFRESH_ORCHESTRATOR]: IRefreshOrchestrator
 }
 
 export interface Container {

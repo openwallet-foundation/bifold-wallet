@@ -24,3 +24,17 @@ jest.mock('react-native-permissions', () => require('react-native-permissions/mo
 jest.mock('react-native-vision-camera', () => {
   return require('./__mocks__/custom/react-native-camera')
 })
+
+// Fix timezone issues in tests
+process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed
+// Freeze "now" without enabling fake timers (prevents act() overlaps)
+const FIXED_NOW = new Date('2024-01-01T00:00:00Z').valueOf()
+let dateNowSpy
+
+beforeAll(() => {
+  dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => FIXED_NOW)
+})
+
+afterAll(() => {
+  if (dateNowSpy) dateNowSpy.mockRestore()
+})

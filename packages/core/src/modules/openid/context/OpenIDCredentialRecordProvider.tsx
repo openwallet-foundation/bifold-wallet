@@ -17,8 +17,7 @@ import { useTranslation } from 'react-i18next'
 import { TOKENS, useServices } from '../../../container-api'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { getCredentialForDisplay } from '../display'
-import { OpenIDCredentialType, RefreshResponse } from '../types'
-import { getRefreshCredentialMetadata, setRefreshCredentialMetadata } from '../refresh/refreshMetadata'
+import { OpenIDCredentialType } from '../types'
 
 type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
 
@@ -35,9 +34,6 @@ export type OpenIDCredentialContext = {
   resolveBundleForCredential: (
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   ) => Promise<CredentialOverlay<BrandingOverlay>>
-  checkNewCredentialForRecord: (
-    cred: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
-  ) => Promise<RefreshResponse | undefined>
 }
 
 export type OpenIDCredentialRecordState = {
@@ -182,84 +178,6 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     }
   }
 
-  async function checkNewCredentialForRecord(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) {
-    logger.info(`[OpenIDCredentialRecordProvider] Checking new credential for record: ${cred.id}`)
-    const refreshMetaData = getRefreshCredentialMetadata(cred)
-    if (!refreshMetaData) {
-      logger.error(`[OpenIDCredentialRecordProvider] No refresh metadata found for credential: ${cred.id}`)
-      return
-    }
-
-    logger.info(`[OpenIDCredentialRecordProvider] Found refresh metadata for credential: ${cred.id}`)
-    const { refreshToken, authServer } = refreshMetaData
-
-    try {
-      if (!authServer) {
-        throw new Error('No authorization server found in the credential offer metadata')
-      }
-
-      logger.info(`[OpenIDCredentialRecordProvider] Found auth server for credential: ${cred.id}: ${authServer}`)
-
-      // Build token endpoint: <AS>/token?force=false
-      // React-Native-safe URL build
-      const tokenUrl = (authServer.endsWith('/') ? authServer.slice(0, -1) : authServer) + '/token?force=false'
-      // const tokenUrl = new URL('token', authServer)
-      // tokenUrl.searchParams.set('force', 'false')
-
-      const body = new URLSearchParams({
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-        // these are accepted by some ASs that share the same endpoint with pre-auth:
-        pre_authorized_code: '',
-        pre_authorized_code_alt: '',
-        user_pin: '',
-      })
-
-      const res = await fetch(tokenUrl.toString(), {
-        method: 'POST',
-        headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: body.toString(),
-      })
-
-      if (!res.ok) {
-        const errText = await res.text()
-        throw new Error(`Refresh failed ${res.status}: ${errText}`)
-      }
-
-      const data: RefreshResponse = await res.json()
-      logger.info(`[OpenIDCredentialRecordProvider] New access token acquired: ${JSON.stringify(data)}`)
-
-      // If refresh token rotated, persist it
-      if (data.refresh_token && data.refresh_token !== refreshToken) {
-        logger.info(`[OpenIDCredentialRecordProvider] Refresh token rotated; saving new one`)
-        setRefreshCredentialMetadata(cred, {
-          authServer: authServer,
-          refreshToken: data.refresh_token,
-        })
-      }
-
-      // If you want to immediately request a fresh credential using the new token:
-      // await receiveCredentialFromOpenId4VciOffer({
-      //   agent,
-      //   resolvedCredentialOffer,
-      //   accessToken: {
-      //     accessToken: data.access_token,
-      //     cNonce: data.c_nonce,
-      //     accessTokenResponse: data as any,
-      //   },
-      // })
-
-      // Return tokens so caller can proceed (e.g., to requestCredentials)
-      return data
-    } catch (error) {
-      logger.error(`[OpenIDCredentialRecordProvider] Error getting new token: ${error}`)
-      return
-    }
-  }
-
   const resolveBundleForCredential = async (
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   ): Promise<CredentialOverlay<BrandingOverlay>> => {
@@ -299,9 +217,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }
 
   useEffect(() => {
-    if (!agent) {
-      return
-    }
+    if (!agent) return
 
     agent.w3cCredentials?.getAllCredentialRecords().then((w3cCredentialRecords) => {
       setState((prev) => ({
@@ -321,40 +237,41 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }, [agent])
 
   useEffect(() => {
-    if (!state.isLoading && agent) {
-      const w3c_credentialAdded$ = recordsAddedByType(agent, W3cCredentialRecord).subscribe((record) => {
-        //This handler will return ANY creds added to the wallet even DidComm
-        //Sounds like a bug in the hooks package
-        //This check will safe guard the flow untill a fix goes to the hooks
-        if (isW3CCredentialRecord(record)) {
-          setState(addW3cRecord(record, state))
-        }
-      })
+    if (state.isLoading) return
+    if (!agent?.events?.observable) return
 
-      const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
-        setState(removeW3cRecord(record, state))
-      })
-
-      const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
-        //This handler will return ANY creds added to the wallet even DidComm
-        //Sounds like a bug in the hooks package
-        //This check will safe guard the flow untill a fix goes to the hooks
-        setState(addSdJwtRecord(record, state))
-        // if (isW3CCredentialRecord(record)) {
-        //   setState(addW3cRecord(record, state))
-        // }
-      })
-
-      const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
-        setState(removeSdJwtRecord(record, state))
-      })
-
-      return () => {
-        w3c_credentialAdded$.unsubscribe()
-        w3c_credentialRemoved$.unsubscribe()
-        sdjwt_credentialAdded$.unsubscribe()
-        sdjwt_credentialRemoved$.unsubscribe()
+    const w3c_credentialAdded$ = recordsAddedByType(agent, W3cCredentialRecord).subscribe((record) => {
+      //This handler will return ANY creds added to the wallet even DidComm
+      //Sounds like a bug in the hooks package
+      //This check will safe guard the flow untill a fix goes to the hooks
+      if (isW3CCredentialRecord(record)) {
+        setState(addW3cRecord(record, state))
       }
+    })
+
+    const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
+      setState(removeW3cRecord(record, state))
+    })
+
+    const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
+      //This handler will return ANY creds added to the wallet even DidComm
+      //Sounds like a bug in the hooks package
+      //This check will safe guard the flow untill a fix goes to the hooks
+      setState(addSdJwtRecord(record, state))
+      // if (isW3CCredentialRecord(record)) {
+      //   setState(addW3cRecord(record, state))
+      // }
+    })
+
+    const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
+      setState(removeSdJwtRecord(record, state))
+    })
+
+    return () => {
+      w3c_credentialAdded$.unsubscribe()
+      w3c_credentialRemoved$.unsubscribe()
+      sdjwt_credentialAdded$.unsubscribe()
+      sdjwt_credentialRemoved$.unsubscribe()
     }
   }, [state, agent])
 
@@ -368,7 +285,6 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         getSdJwtCredentialById: getSdJwtCredentialById,
         getMdocCredentialById: getMdocCredentialById,
         resolveBundleForCredential: resolveBundleForCredential,
-        checkNewCredentialForRecord: checkNewCredentialForRecord,
       }}
     >
       {children}
