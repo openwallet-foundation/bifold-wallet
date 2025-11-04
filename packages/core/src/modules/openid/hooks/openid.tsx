@@ -72,10 +72,7 @@ export const useOpenID = ({
           tokenResponse: tokenResponse,
         })
 
-        // console.log(' #### [useOpenID] Received credential from OpenID4VCI offer:', JSON.stringify(credential))
-
         if (refreshToken && authServer) {
-          // console.log(' #### [useOpenID] Setting refresh metadata for credential:', JSON.stringify(gg))
           setRefreshCredentialMetadata(credential, {
             authServer: authServer,
             tokenEndpoint: tokenEndpoint,
@@ -98,7 +95,6 @@ export const useOpenID = ({
 
         return credential
       } catch (err: unknown) {
-        //TODO: Sppecify different error
         const error = new BifoldError(
           t('Error.Title1024'),
           t('Error.Message1024'),
