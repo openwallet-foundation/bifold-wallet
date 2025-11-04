@@ -80,7 +80,24 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
 
   const handleDeclineTouched = async () => {
-    toggleDeclineModalVisible()
+      try {
+        if (
+          temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+          temporaryMetaVanillaObject.tokenResponse?.accessToken
+        ) {
+            await sendOpenId4VciNotification({
+              accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
+              notificationEvent: NotificationEventType.CREDENTIAL_DELETED,
+              notificationMetadata: {
+                notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
+                notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
+              },
+            })
+            toggleDeclineModalVisible()
+          }
+      } catch (err) {
+        toggleDeclineModalVisible()
+      }
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
@@ -90,19 +107,22 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     }
     try {
       await storeCredential(credential)
-      if (
-        temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
-        temporaryMetaVanillaObject.tokenResponse?.accessToken
-      ) {
-        await sendOpenId4VciNotification({
-          accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
-          notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
-          notificationMetadata: {
-            ...temporaryMetaVanillaObject.notificationMetadata,
-            notificationId: temporaryMetaVanillaObject.notificationMetadata?.notificationId,
-            notificationEndpoint: temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint,
-          },
-        })
+      try {
+        if (
+          temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+          temporaryMetaVanillaObject.tokenResponse?.accessToken
+        ) {
+          await sendOpenId4VciNotification({
+            accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
+            notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
+            notificationMetadata: {
+              notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
+              notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
+            },
+          })
+      }
+      } catch (err) {
+        console.log(err)
       }
       setAcceptModalVisible(true)
     } catch (err: unknown) {

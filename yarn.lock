@@ -2385,7 +2385,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
-    "@credo-ts/openid4vc": "npm:0.5.17"
+    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch"
     "@credo-ts/push-notifications": "npm:0.7.0"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
@@ -3488,7 +3488,7 @@ __metadata:
 
 "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch":
   version: 0.5.17
-  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=ffc58d"
+  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=eea9f8"
   dependencies:
     "@credo-ts/core": "npm:0.5.17"
     "@sphereon/did-auth-siop": "npm:0.16.1-fix.173"
@@ -3499,7 +3499,7 @@ __metadata:
     "@sphereon/ssi-types": "npm:0.30.2-next.135"
     class-transformer: "npm:^0.5.1"
     rxjs: "npm:^7.8.0"
-  checksum: 10c0/bd38e1b53cc89b96adeda0e023dd73f0ca722813566c032e07641ebe7b4d99f86d900fec22a4c96d6aeff5baf10432963e5a201e60cb11d2849c7d1cb1144171
+  checksum: 10c0/9fd68b5f9cd1b94bcd302c3a241be812260284407d61faa06d46351c4c6a995b780664334fb4ade6c3ee540e628046138656dedf1a56687458965b6c986d2f0e
   languageName: node
   linkType: hard
 
@@ -8828,7 +8828,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
-    "@credo-ts/openid4vc": "npm:0.5.17"
+    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch"
     "@credo-ts/push-notifications": "npm:0.7.0"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
