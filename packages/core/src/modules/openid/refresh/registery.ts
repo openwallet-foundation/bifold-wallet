@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ClaimFormat } from '@credo-ts/core'
 import { createStore } from 'zustand/vanilla'
 
@@ -88,6 +87,7 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
 
   clearRefreshing: (id) =>
     set((s) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [id]: _drop, ...rest } = s.refreshing
       return { refreshing: rest }
     }),
@@ -105,6 +105,7 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
       const byId = { ...s.byId }
       delete byId[oldId]
       byId[repl.id] = repl
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [oldId]: _drop, ...restRepl } = s.replacements
       return {
         byId,
@@ -132,6 +133,7 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
 
   unblock: (id) =>
     set((s) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [id]: _drop, ...rest } = s.blocked
       return { blocked: rest }
     }),

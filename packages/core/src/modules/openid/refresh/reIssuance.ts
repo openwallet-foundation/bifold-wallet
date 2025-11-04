@@ -43,12 +43,6 @@ export async function reissueCredentialWithAccessToken({
   clientId,
   pidSchemes,
 }: ReissueWithAccessTokenInput): Promise<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined> {
-  // 1) From your saved metadata on the original record
-
-  //Leave for testing
-  //   const rr = new SdJwtVcRecord({ compactSdJwtVc: mockCompactSdjwt })
-  //   return rr
-
   if (!record) {
     throw new Error('No credential record provided for re-issuance.')
   }
@@ -63,15 +57,12 @@ export async function reissueCredentialWithAccessToken({
     throw new Error('No resolved credential offer found in the refresh metadata for re-issuance.')
   }
 
-  //Keep for later optimization of the resolvedOffer object
-  //const resolvedOffer: OpenId4VciResolvedCredentialOffer = buildResolvedOfferFromMeta(refreshMetaData)
-
   if (!tokenResponse.access_token) {
     throw new Error('No access token found in the token response for re-issuance.')
   }
 
   logger.info('*** Starting to get new credential via re-issuance flow ***')
-  // 4) Request a **new** credential using the *existing* configuration id
+  // Request a **new** credential using the *existing* configuration id
   const creds = await agent.modules.openId4VcHolder.requestCredentials({
     resolvedCredentialOffer,
     accessToken: tokenResponse.access_token,
@@ -97,7 +88,7 @@ export async function reissueCredentialWithAccessToken({
 
   logger.info('*** New credential received via re-issuance flow ***.')
 
-  // 5) Normalize to your local record types
+  // Normalize to your local record types
   const [firstCredential] = creds
   if (!firstCredential || typeof firstCredential === 'string') {
     throw new Error('Issuer returned empty or malformed credential on re-issuance.')

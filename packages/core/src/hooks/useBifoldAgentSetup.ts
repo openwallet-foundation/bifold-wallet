@@ -31,11 +31,6 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
     TOKENS.UTIL_REFRESH_ORCHESTRATOR,
   ])
 
-  //Leave here to re-configure orchestrator if needed in future
-  // useMemo(() => {
-  //   orchestrator.configure({ autoStart: true, intervalMs: 1 * 60 * 1000 })
-  // }, [orchestrator])
-
   const restartExistingAgent = useCallback(
     async (agent: Agent, walletSecret: WalletSecret): Promise<Agent | undefined> => {
       try {

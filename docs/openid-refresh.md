@@ -279,3 +279,13 @@ useEffect(() => {
 
 - On Lock → AgentBridge.clearAgent() clears the active agent and stops orchestrator work.
 - On Unlock → AgentBridge.setAgent(newAgent) fires again, and the orchestrator reattaches to the new live agent instance.
+
+### Reconfiguring Orcestrator
+
+To re-configure the orcestrator on wallet initialization, best place is to use the `useBifoldAgentSetup`
+
+```ts
+useMemo(() => {
+  orchestrator.configure({ autoStart: true, intervalMs: 1 * 60 * 1000 })
+}, [orchestrator])
+```

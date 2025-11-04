@@ -255,7 +255,6 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
         const msg = `re-issue returned no record`
         this.logger.warn(`⚠️ [Refresh] ${msg} for ${id}`)
         blockAsFailed(id, msg)
-        //Mark invalid
         await markOpenIDCredentialStatus({
           credential: rec,
           status: RefreshStatus.Invalid,
