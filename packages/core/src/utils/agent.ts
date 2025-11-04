@@ -25,6 +25,7 @@ import {
   JwkDidResolver,
   KeyDidResolver,
   PeerDidResolver,
+  WebDidResolver,
 } from '@credo-ts/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
@@ -111,7 +112,13 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     pushNotificationsApns: new PushNotificationsApnsModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
     dids: new DidsModule({
-      resolvers: [new WebvhDidResolver(), new JwkDidResolver(), new KeyDidResolver(), new PeerDidResolver()],
+      resolvers: [
+        new WebvhDidResolver(),
+        new WebDidResolver(),
+        new JwkDidResolver(),
+        new KeyDidResolver(),
+        new PeerDidResolver(),
+      ],
     }),
   }
 }
