@@ -17,14 +17,14 @@ import {
   CredentialsModule,
   DidsModule,
   DifPresentationExchangeProofFormatService,
+  JwkDidResolver,
+  KeyDidResolver,
   MediationRecipientModule,
   MediatorPickupStrategy,
+  PeerDidResolver,
   ProofsModule,
   V2CredentialProtocol,
   V2ProofProtocol,
-  JwkDidResolver,
-  KeyDidResolver,
-  PeerDidResolver,
   WebDidResolver,
 } from '@credo-ts/core'
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'

@@ -49,7 +49,14 @@
     "GotIt": "Got it (FR)",
     "Send": "Envoyer",
     "Reset": "Reset (FR)",
-    "ViewJSON": "View JSON Details (FR)"
+    "ViewJSON": "View JSON Details (FR)",
+    "RefreshCredentials": "Refresh Credentials (FR)"
+  },
+  "Toast": {
+    "OpenIDCredRefreshing": {
+      "Title": "Refreshing credentials (FR)",
+      "Message": "Your OpenID credentials are being refreshed in the background. (FR)"
+    }
   },
   "Date": {
     "ShortFormat": "D MMM",

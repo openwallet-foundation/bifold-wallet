@@ -77,6 +77,7 @@
     "@react-navigation/devtools": "~6.0.27",
     "@react-navigation/native": "~6.0.16",
     "@react-navigation/stack": "~6.3.29",
+    "@sd-jwt/jwt-status-list": "^0.17.0",
     "@testing-library/jest-native": "~5.4.3",
     "@testing-library/react-native": "~12.3.3",
     "@types/jest": "~29.5.14",
@@ -91,6 +92,7 @@
     "babel-jest": "~27.5.1",
     "babel-plugin-module-resolver": "~5.0.2",
     "base-64": "~1.0.0",
+    "buffer": "^6.0.3",
     "commitlint": "~17.7.2",
     "eslint": "~8.57.1",
     "eslint-import-resolver-typescript": "~3.6.3",
@@ -147,7 +149,8 @@
     "rimraf": "~5.0.10",
     "tsyringe": "~4.8.0",
     "typescript": "~5.5.4",
-    "uuid": "~9.0.1"
+    "uuid": "~9.0.1",
+    "zustand": "^4.5.2"
   },
   "peerDependencies": {
     "@credo-ts/anoncreds": "0.5.17",
@@ -232,5 +235,8 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "@types/base-64": "^1.0.2"
   }
 }
