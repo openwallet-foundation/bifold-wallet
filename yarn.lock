@@ -2385,7 +2385,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
-    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch"
+    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch"
     "@credo-ts/push-notifications": "npm:0.7.0"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
@@ -3486,9 +3486,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch":
+"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=ffc58d":
   version: 0.5.17
-  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=eea9f8"
+  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=ffc58d"
   dependencies:
     "@credo-ts/core": "npm:0.5.17"
     "@sphereon/did-auth-siop": "npm:0.16.1-fix.173"
@@ -3499,7 +3499,24 @@ __metadata:
     "@sphereon/ssi-types": "npm:0.30.2-next.135"
     class-transformer: "npm:^0.5.1"
     rxjs: "npm:^7.8.0"
-  checksum: 10c0/9fd68b5f9cd1b94bcd302c3a241be812260284407d61faa06d46351c4c6a995b780664334fb4ade6c3ee540e628046138656dedf1a56687458965b6c986d2f0e
+  checksum: 10c0/bd38e1b53cc89b96adeda0e023dd73f0ca722813566c032e07641ebe7b4d99f86d900fec22a4c96d6aeff5baf10432963e5a201e60cb11d2849c7d1cb1144171
+  languageName: node
+  linkType: hard
+
+"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch":
+  version: 0.5.17
+  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch::version=0.5.17&hash=21cd31"
+  dependencies:
+    "@credo-ts/core": "npm:0.5.17"
+    "@sphereon/did-auth-siop": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vc-common": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-client": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-common": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-issuer": "npm:0.16.1-fix.173"
+    "@sphereon/ssi-types": "npm:0.30.2-next.135"
+    class-transformer: "npm:^0.5.1"
+    rxjs: "npm:^7.8.0"
+  checksum: 10c0/c28085895317d1257acecabc1876cd850e05572a8ad321914b9b8f69df659d734efbb26f81755e9565e0a1d319f5bd880fe0bd0ec2e27f3472aca45602368174
   languageName: node
   linkType: hard
 
@@ -8828,7 +8845,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@credo-ts/indy-sdk-to-askar-migration": "npm:0.5.17"
     "@credo-ts/indy-vdr": "npm:0.5.17"
-    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch"
+    "@credo-ts/openid4vc": "patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch"
     "@credo-ts/push-notifications": "npm:0.7.0"
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
