@@ -1,8 +1,4 @@
-import {
-  AnonCredsCredentialMetadataKey,
-  parseIndyCredentialDefinitionId,
-  parseIndySchemaId,
-} from '@credo-ts/anoncreds'
+import { AnonCredsCredentialMetadataKey, parseIndyCredentialDefinitionId, parseIndySchemaId } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
 import type { Agent } from '@credo-ts/core'
 
@@ -39,7 +35,10 @@ function parseIndyCredDefId(credDefId?: string, schemaId?: string): string {
       // If parsing fails, keep the default name
     }
   }
-  if (name.toLowerCase() === defaultCredDefTag || name.toLowerCase() === fallbackDefaultCredentialNameValue.toLowerCase()) {
+  if (
+    name.toLowerCase() === defaultCredDefTag ||
+    name.toLowerCase() === fallbackDefaultCredentialNameValue.toLowerCase()
+  ) {
     if (schemaId) {
       try {
         const parsedSchema = parseIndySchemaId(schemaId)
@@ -71,20 +70,26 @@ export function getCredDefTag(credential: CredentialRecord): string | undefined 
   return credDefTag
 }
 
-export async function parsedCredDefNameFromCredential(credential: CredentialRecord, agent?: Agent, logger?: BifoldLogger): Promise<string> {
+export async function parsedCredDefNameFromCredential(
+  credential: CredentialRecord,
+  agent?: Agent,
+  logger?: BifoldLogger
+): Promise<string> {
   // Ensure metadata is cached if agent is provided
   if (agent) {
     try {
       await ensureCredentialMetadata(credential, agent, undefined, logger)
     } catch (error) {
       // If metadata restoration fails, we'll fall back to parsing IDs or default name
-      logger?.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential', { error: error as Error })
+      logger?.warn('Failed to restore credential metadata in parsedCredDefNameFromCredential', {
+        error: error as Error,
+      })
     }
   }
 
   // Check if we have cached metadata
   const cachedSchemaName = getSchemaName(credential)
-  
+
   if (cachedSchemaName) {
     // Use the priority waterfall logic (OCA name > credDefTag > schemaName > fallback)
     return getEffectiveCredentialName(credential)
@@ -95,9 +100,6 @@ export async function parsedCredDefNameFromCredential(credential: CredentialReco
   return fallbackName
 }
 
-export async function parsedCredDefName(
-  credentialDefinitionId: string,
-  schemaId: string
-): Promise<string> {
+export async function parsedCredDefName(credentialDefinitionId: string, schemaId: string): Promise<string> {
   return getCredentialName(credentialDefinitionId, schemaId)
 }

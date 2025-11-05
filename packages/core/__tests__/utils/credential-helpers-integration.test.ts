@@ -27,31 +27,29 @@ describe('getEffectiveCredentialName integration in helpers', () => {
   test('returns consistent name when used in processProofAttributes context', () => {
     const credential = createMockCredential()
     const ocaName = 'Test Credential Name'
-    
+
     // Simulate the usage pattern from processProofAttributes
     const credName = credential ? getEffectiveCredentialName(credential, ocaName) : 'fallback-key'
-    
+
     expect(credName).toBe(ocaName)
   })
 
   test('returns fallback when credential is null in helpers context', () => {
     const credential = null
     const key = 'fallback-key'
-    
+
     // Simulate the usage pattern from processProofAttributes
     const credName = credential ? getEffectiveCredentialName(credential, undefined) : key
-    
+
     expect(credName).toBe(key)
   })
 
   test('handles undefined ocaName in helpers context', () => {
     const credential = createMockCredential()
-    
+
     // Simulate the usage pattern from processProofPredicates
-    const credName = credential
-      ? getEffectiveCredentialName(credential, undefined)
-      : 'fallback-key'
-    
+    const credName = credential ? getEffectiveCredentialName(credential, undefined) : 'fallback-key'
+
     expect(credName).toBe(fallbackDefaultCredentialNameValue)
   })
 
@@ -59,12 +57,10 @@ describe('getEffectiveCredentialName integration in helpers', () => {
     const credential = createMockCredential()
     const credNameRestriction = 'Restriction Name'
     const key = 'fallback-key'
-    
+
     // Simulate the exact pattern from processProofPredicates
-    const credName = credential
-      ? getEffectiveCredentialName(credential, undefined)
-      : credNameRestriction ?? key
-    
+    const credName = credential ? getEffectiveCredentialName(credential, undefined) : credNameRestriction ?? key
+
     expect(credName).toBe(fallbackDefaultCredentialNameValue)
   })
 
@@ -72,12 +68,10 @@ describe('getEffectiveCredentialName integration in helpers', () => {
     const credential = null
     const credNameRestriction = 'Restriction Name'
     const key = 'fallback-key'
-    
+
     // Simulate the exact pattern from processProofPredicates
-    const credName = credential
-      ? getEffectiveCredentialName(credential, undefined)
-      : credNameRestriction ?? key
-    
+    const credName = credential ? getEffectiveCredentialName(credential, undefined) : credNameRestriction ?? key
+
     expect(credName).toBe(credNameRestriction)
   })
 
@@ -85,12 +79,10 @@ describe('getEffectiveCredentialName integration in helpers', () => {
     const credential = null
     const credNameRestriction = null
     const key = 'fallback-key'
-    
+
     // Simulate the exact pattern from processProofPredicates
-    const credName = credential
-      ? getEffectiveCredentialName(credential, undefined)
-      : credNameRestriction ?? key
-    
+    const credName = credential ? getEffectiveCredentialName(credential, undefined) : credNameRestriction ?? key
+
     expect(credName).toBe(key)
   })
 })

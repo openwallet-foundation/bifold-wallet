@@ -1,0 +1,18 @@
+diff --git a/build/openid4vc-holder/OpenId4VciHolderService.js b/build/openid4vc-holder/OpenId4VciHolderService.js
+index b982dc983b5b48332871e5ed9171ecccd93fceb1..687f759f6824639dbd56b232b2879fa17d85756c 100644
+--- a/build/openid4vc-holder/OpenId4VciHolderService.js
++++ b/build/openid4vc-holder/OpenId4VciHolderService.js
+@@ -154,11 +154,11 @@ let OpenId4VciHolderService = class OpenId4VciHolderService {
+     async sendNotification(options) {
+         const { notificationMetadata, notificationEvent } = options;
+         const { notificationId, notificationEndpoint } = notificationMetadata;
+-        const response = await (0, oid4vci_common_1.post)(notificationEndpoint, { notification_id: notificationId, event: notificationEvent }, {
++        const response = await (0, oid4vci_common_1.post)(notificationEndpoint, JSON.stringify({ notification_id: notificationId, event: notificationEvent }), {
+             bearerToken: options.accessToken,
+             contentType: 'application/json',
+         });
+-        if (!response.successBody) {
++        if (response.error) {
+             throw new core_1.CredoError(`Failed to send notification event '${notificationId}' to '${notificationEndpoint}'`);
+         }
+     }

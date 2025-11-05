@@ -49,8 +49,8 @@ async function resolveIdsFromFormatData(
 ): Promise<{ schemaId?: string; credDefId?: string }> {
   try {
     const { offer } = await agent.credentials.getFormatData(credential.id)
-    const formatOfferData = (offer?.anoncreds ?? offer?.indy)
-    
+    const formatOfferData = offer?.anoncreds ?? offer?.indy
+
     // Type guard to check if formatOfferData has the expected structure
     if (
       formatOfferData &&
@@ -60,9 +60,10 @@ async function resolveIdsFromFormatData(
     ) {
       return {
         schemaId: formatOfferData.schema_id,
-        credDefId: 'cred_def_id' in formatOfferData && typeof formatOfferData.cred_def_id === 'string'
-          ? formatOfferData.cred_def_id
-          : undefined,
+        credDefId:
+          'cred_def_id' in formatOfferData && typeof formatOfferData.cred_def_id === 'string'
+            ? formatOfferData.cred_def_id
+            : undefined,
       }
     }
   } catch (error) {
@@ -74,11 +75,7 @@ async function resolveIdsFromFormatData(
 /**
  * Resolves schema name from the given schema ID.
  */
-async function resolveSchemaName(
-  schemaId: string,
-  agent: Agent,
-  logger?: BifoldLogger
-): Promise<string | undefined> {
+async function resolveSchemaName(schemaId: string, agent: Agent, logger?: BifoldLogger): Promise<string | undefined> {
   try {
     const { schema: resolvedSchema } = await agent.modules.anoncreds.getSchema(schemaId)
     const schemaName = resolvedSchema?.name
@@ -93,11 +90,7 @@ async function resolveSchemaName(
 /**
  * Resolves credential definition tag from the given cred def ID.
  */
-async function resolveCredDefTag(
-  credDefId: string,
-  agent: Agent,
-  logger?: BifoldLogger
-): Promise<string | undefined> {
+async function resolveCredDefTag(credDefId: string, agent: Agent, logger?: BifoldLogger): Promise<string | undefined> {
   try {
     const { credentialDefinition: resolvedCredDef } = await agent.modules.anoncreds.getCredentialDefinition(credDefId)
     const credDefTag = resolvedCredDef?.tag
@@ -146,7 +139,7 @@ async function updateCredentialMetadata(params: {
   logger?: BifoldLogger
 }): Promise<void> {
   const { credential, agent, existingMetadata, schemaId, credDefId, schemaName, credDefTag, logger } = params
-  
+
   const metadataToStore = {
     ...existingMetadata,
     schemaId,
@@ -169,7 +162,7 @@ async function updateCredentialMetadata(params: {
 /**
  * Ensures credential has all required metadata cached. If any metadata is missing,
  * it will be resolved and added to the credential.
- * 
+ *
  * @param credential - The credential record to ensure metadata for
  * @param agent - The agent instance for resolving schema/credDef
  * @param offerData - Optional offer data containing schema_id and cred_def_id
@@ -187,7 +180,7 @@ export async function ensureCredentialMetadata(
   }
 
   const existingMetadata = credential.metadata.get(AnonCredsCredentialMetadataKey)
-  
+
   const { schemaId, credDefId } = await determineSchemaAndCredDefIds(
     credential,
     agent,
@@ -206,13 +199,11 @@ export async function ensureCredentialMetadata(
   }
 
   // Resolve missing metadata
-  const schemaName = needsSchemaName && schemaId 
-    ? await resolveSchemaName(schemaId, agent, logger) 
-    : existingMetadata?.schemaName
+  const schemaName =
+    needsSchemaName && schemaId ? await resolveSchemaName(schemaId, agent, logger) : existingMetadata?.schemaName
 
-  const credDefTag = needsCredDefTag && credDefId
-    ? await resolveCredDefTag(credDefId, agent, logger)
-    : existingMetadata?.credDefTag
+  const credDefTag =
+    needsCredDefTag && credDefId ? await resolveCredDefTag(credDefId, agent, logger) : existingMetadata?.credDefTag
 
   await updateCredentialMetadata({
     credential,
@@ -231,17 +222,12 @@ export async function ensureCredentialMetadata(
 /**
  * Validates whether a credential name is meaningful and should be used for display.
  * Returns false for undefined, empty, whitespace-only, or default placeholder names.
- * 
+ *
  * @param name - The name to validate
  * @returns true if the name is valid and meaningful, false otherwise
  */
 export function isValidCredentialName(name: string | undefined): boolean {
-  return !!(
-    name &&
-    name !== defaultCredDefTag &&
-    name !== fallbackDefaultCredentialNameValue &&
-    name.trim() !== ''
-  )
+  return !!(name && name !== defaultCredDefTag && name !== fallbackDefaultCredentialNameValue && name.trim() !== '')
 }
 
 /**
@@ -250,7 +236,7 @@ export function isValidCredentialName(name: string | undefined): boolean {
  * 2. Credential definition tag (if present)
  * 3. Schema name (if present)
  * 4. Default fallback name
- * 
+ *
  * @param credential - The credential record
  * @param ocaName - The name from OCA meta overlay
  * @returns The effective name to use for display
@@ -260,19 +246,19 @@ export function getEffectiveCredentialName(credential: CredentialExchangeRecord,
   if (isValidCredentialName(ocaName)) {
     return ocaName!
   }
-  
+
   // 2. Try credential definition tag
   const credDefTag = getCredDefTag(credential)
   if (isValidCredentialName(credDefTag)) {
     return credDefTag!
   }
-  
+
   // 3. Try schema name
   const schemaName = getSchemaName(credential)
   if (isValidCredentialName(schemaName)) {
     return schemaName!
   }
-  
+
   // 4. Return default fallback
   return fallbackDefaultCredentialNameValue
 }

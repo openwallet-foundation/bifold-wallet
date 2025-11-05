@@ -766,9 +766,7 @@ export const processProofPredicates = async (
       const credNameRestriction = await credNameFromRestriction(requestedProofPredicates[key]?.restrictions, agent)
 
       // Use cached metadata if we have the credential record
-      const credName = credExchangeRecord
-        ? getEffectiveCredentialName(credExchangeRecord)
-        : credNameRestriction ?? key
+      const credName = credExchangeRecord ? getEffectiveCredentialName(credExchangeRecord) : credNameRestriction ?? key
       if (!processedPredicates[credential.credentialId]) {
         processedPredicates[credential.credentialId] = {
           altCredentials,
@@ -1049,7 +1047,11 @@ export const sortCredentialsForAutoSelect = (
  * @param invitationId specifically a *received* invitation id
  * @param logger optional logger instance
  */
-export const removeExistingInvitationsById = async (agent: Agent | undefined, invitationId: string, logger?: BifoldLogger): Promise<void> => {
+export const removeExistingInvitationsById = async (
+  agent: Agent | undefined,
+  invitationId: string,
+  logger?: BifoldLogger
+): Promise<void> => {
   // This is implemented just as findByReceivedInvitationId is
   // in Credo only this is able to return multiple if they exist
   const oobRecords =

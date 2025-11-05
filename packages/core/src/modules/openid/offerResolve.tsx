@@ -22,7 +22,11 @@ import {
   W3cJsonLdVerifiableCredential,
   W3cJwtVerifiableCredential,
 } from '@credo-ts/core'
-import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+import {
+  extractOpenId4VcCredentialMetadata,
+  setOpenId4VcCredentialMetadata,
+  temporaryMetaVanillaObject,
+} from './metadata'
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -241,6 +245,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
 
   // We only support one credential for now
   const [firstCredential] = credentials
+
   if (!firstCredential)
     throw new Error('Error retrieving credential using pre authorized flow: firstCredential undefined!.')
 
@@ -265,6 +270,11 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
       // We don't support expanded types right now, but would become problem when we support JSON-LD
       tags: {},
     })
+  }
+
+  const notificationMetadata = { ...firstCredential.notificationMetadata }
+  if (notificationMetadata) {
+    temporaryMetaVanillaObject.notificationMetadata = notificationMetadata
   }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(

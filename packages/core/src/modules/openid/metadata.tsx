@@ -7,7 +7,12 @@ import {
   SdJwtVcRepository,
   MdocRepository,
 } from '@credo-ts/core'
-import type { OpenId4VciCredentialSupported, OpenId4VciIssuerMetadataDisplay } from '@credo-ts/openid4vc'
+import type {
+  OpenId4VciCredentialSupported,
+  OpenId4VciIssuerMetadataDisplay,
+  OpenId4VciRequestTokenResponse,
+  OpenId4VciNotificationMetadata,
+} from '@credo-ts/openid4vc'
 import type { MetadataDisplay } from '@sphereon/oid4vci-common'
 import { CredentialSubjectRecord } from './types'
 import { RefreshCredentialMetadata, RefreshStatus } from './refresh/types'
@@ -29,6 +34,11 @@ export interface OpenId4VcCredentialMetadata {
 export type OpenId4VcCredentialMetadataExtended = Partial<
   OpenId4VciCredentialSupported & { credential_subject: CredentialSubjectRecord }
 >
+
+export type OpenIDCredentialNotificationMetadata = {
+  notificationMetadata?: OpenId4VciNotificationMetadata
+  tokenResponse?: OpenId4VciRequestTokenResponse
+}
 
 export function extractOpenId4VcCredentialMetadata(
   credentialMetadata: Partial<OpenId4VciCredentialSupported & { credential_subject: CredentialSubjectRecord }>,
@@ -128,4 +138,9 @@ export async function markOpenIDCredentialStatus({
 
   // Persist the updated credential record
   await persistCredentialRecord(agentContext, credential)
+}
+
+export const temporaryMetaVanillaObject: OpenIDCredentialNotificationMetadata = {
+  notificationMetadata: undefined,
+  tokenResponse: undefined,
 }

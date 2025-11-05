@@ -244,7 +244,9 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         ...(bundle.metaOverlay && {
           metaOverlay: {
             ...bundle.metaOverlay,
-            name: credential ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name) : bundle.metaOverlay?.name,
+            name: credential
+              ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name)
+              : bundle.metaOverlay?.name,
           },
         }),
       }))
