@@ -199,7 +199,9 @@ const QRScanner: React.FC<Props> = ({
               enableCameraOnError={enableCameraOnError}
               torchActive={torchActive}
             />
-            <SVGOverlay maskType={MaskType.QR_CODE} strokeColor={ColorPalette.grayscale.white} />
+            <View style={StyleSheet.absoluteFill} pointerEvents="none">
+              <SVGOverlay maskType={MaskType.QR_CODE} strokeColor={ColorPalette.grayscale.white} />
+            </View>
             <View style={styles.cameraViewContainer}>
               <View style={styles.messageContainer}>
                 {error ? (
