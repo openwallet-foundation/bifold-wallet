@@ -80,41 +80,21 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
 
   const handleDeclineTouched = async () => {
-      try {
-        if (
-          temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
-          temporaryMetaVanillaObject.tokenResponse?.accessToken
-        ) {
-            await sendOpenId4VciNotification({
-              accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
-              notificationEvent: NotificationEventType.CREDENTIAL_DELETED,
-              notificationMetadata: {
-                notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
-                notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
-              },
-            })
-            toggleDeclineModalVisible()
-          }
-      } catch (err) {
-        toggleDeclineModalVisible()
-      }
+    await handleSendNotification(NotificationEventType.CREDENTIAL_DELETED)
+    toggleDeclineModalVisible()
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
-  const handleAcceptTouched = async () => {
-    if (!agent) {
-      return
-    }
+  const handleSendNotification = async (notificationEventType: NotificationEventType) => {
     try {
-      await storeCredential(credential)
-      try {
         if (
           temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+          temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint &&
           temporaryMetaVanillaObject.tokenResponse?.accessToken
         ) {
           await sendOpenId4VciNotification({
             accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
-            notificationEvent: NotificationEventType.CREDENTIAL_ACCEPTED,
+            notificationEvent: notificationEventType,
             notificationMetadata: {
               notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
               notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
@@ -124,6 +104,15 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       } catch (err) {
         console.log(err)
       }
+  }
+
+  const handleAcceptTouched = async () => {
+    if (!agent) {
+      return
+    }
+    try {
+      await storeCredential(credential)
+      await handleSendNotification(NotificationEventType.CREDENTIAL_ACCEPTED)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)
