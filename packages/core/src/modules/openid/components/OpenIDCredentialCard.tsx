@@ -23,6 +23,8 @@ import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
 import { Attribute } from '@bifold/oca/build/legacy'
 import { getAttributeField } from '../../../utils/oca'
+import { useCredentialErrorsFromRegistry } from '../hooks/useCredentialErrorsFromRegistry'
+import { CredentialErrors } from '../../../types/credentials'
 
 interface CredentialCardProps {
   credentialDisplay?: W3cCredentialDisplay
@@ -37,6 +39,34 @@ const transparent = 'rgba(0,0,0,0)'
 const borderRadius = 15
 const borderPadding = 8
 
+const InvalidBadge: React.FC<{ isInvalid: boolean }> = ({ isInvalid }) => {
+  const { ColorPalette, TextTheme } = useTheme()
+
+  const styles = StyleSheet.create({
+    badgeWrap: {
+      position: 'absolute',
+      top: 8,
+      right: 8,
+      backgroundColor: ColorPalette.notification.error,
+      borderRadius: 999,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+    },
+    badgeText: {
+      ...TextTheme.label,
+      color: '#fff',
+      fontWeight: '700',
+      fontSize: 12,
+    },
+  })
+  if (!isInvalid) return null
+  return (
+    <View style={styles.badgeWrap} testID={testIdWithKey('CredentialInvalidBadge')}>
+      <Text style={styles.badgeText}>Invalid</Text>
+    </View>
+  )
+}
+
 const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   credentialDisplay,
   credentialRecord,
@@ -45,6 +75,11 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
 }) => {
   const { t } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
+
+  const computedErrors = useCredentialErrorsFromRegistry(credentialRecord, [])
+  const isInvalid = useMemo(() => {
+    return computedErrors.includes(CredentialErrors.Revoked)
+  }, [computedErrors])
 
   const display = useMemo((): CredentialDisplay | undefined => {
     if (credentialDisplay) return credentialDisplay.display
@@ -178,6 +213,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   const CardHeader: React.FC = () => {
     return (
       <View style={[styles.outerHeaderContainer]}>
+        <InvalidBadge isInvalid={isInvalid} />
         <View testID={testIdWithKey('CredentialCardHeader')} style={[styles.innerHeaderContainer]}>
           <View style={styles.innerHeaderContainerCredLogo}>{logoContaineter(display?.logo)}</View>
           <View style={styles.innerHeaderCredInfoContainer}>

@@ -23,12 +23,15 @@ import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
 import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
 import { temporaryMetaVanillaObject } from '../metadata'
+import { useAcceptReplacement } from '../hooks/useAcceptReplacement'
+import { useDeclineReplacement } from '../hooks/useDeclineReplacement'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
 const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
   // FIXME: change params to accept credential id to avoid 'non-serializable' warnings
   const { credential } = route.params
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
 
@@ -36,15 +39,14 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { t } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const [
-    logger,
-  ] = useServices([TOKENS.UTIL_LOGGER])
-  const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
+  const { resolveBundleForCredential } = useOpenIDCredentials()
   const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+  const { acceptNewCredential } = useAcceptReplacement()
+  const { declineByNewId } = useDeclineReplacement({ logger: logger })
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -85,29 +87,30 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
 
   const handleDeclineTouched = async () => {
     await handleSendNotification(NotificationEventType.CREDENTIAL_DELETED)
+    await declineByNewId(credential.id)
     toggleDeclineModalVisible()
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
   const handleSendNotification = async (notificationEventType: NotificationEventType) => {
     try {
-        if (
-          temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
-          temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint &&
-          temporaryMetaVanillaObject.tokenResponse?.accessToken
-        ) {
-          await sendOpenId4VciNotification({
-            accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
-            notificationEvent: notificationEventType,
-            notificationMetadata: {
-              notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
-              notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
-            },
-          })
-        }
-      } catch (err) {
-        logger.error('[Credential Offer] error sending notification')
+      if (
+        temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+        temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint &&
+        temporaryMetaVanillaObject.tokenResponse?.accessToken
+      ) {
+        await sendOpenId4VciNotification({
+          accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
+          notificationEvent: notificationEventType,
+          notificationMetadata: {
+            notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
+            notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
+          },
+        })
       }
+    } catch (err) {
+      logger.error('[Credential Offer] error sending notification')
+    }
   }
 
   const handleAcceptTouched = async () => {
@@ -115,7 +118,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       return
     }
     try {
-      await storeCredential(credential)
+      await acceptNewCredential(credential)
       await handleSendNotification(NotificationEventType.CREDENTIAL_ACCEPTED)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
