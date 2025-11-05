@@ -46,7 +46,6 @@ export const useOpenID = ({
         const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
 
         //[Temporary] Set notification metadata
-        console.log(tokenResponse)
         temporaryMetaVanillaObject.tokenResponse = tokenResponse
 
         const refreshToken = tokenResponse.refreshToken

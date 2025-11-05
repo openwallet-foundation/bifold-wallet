@@ -11,6 +11,7 @@ import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import Record from '../../../components/record/Record'
 import { EventTypes } from '../../../constants'
 import { useTheme } from '../../../contexts/theme'
+import { TOKENS, useServices } from '../../../container-api'
 import ScreenLayout from '../../../layout/ScreenLayout'
 import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 import { BifoldError } from '../../../types/error'
@@ -35,6 +36,9 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { t } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
+  const [
+    logger,
+  ] = useServices([TOKENS.UTIL_LOGGER])
   const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
   const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
 
@@ -100,9 +104,9 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
               notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
             },
           })
-      }
+        }
       } catch (err) {
-        console.log(err)
+        logger.error('[Credential Offer] error sending notification')
       }
   }
 
