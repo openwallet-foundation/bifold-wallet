@@ -67,33 +67,33 @@ describe('getEffectiveCredentialName', () => {
   test('returns OCA name when valid', () => {
     const credential = createMockCredential()
     const ocaName = 'Valid OCA Name'
-    
+
     const result = getEffectiveCredentialName(credential, ocaName)
-    
+
     expect(result).toBe(ocaName)
   })
 
   test('ignores OCA name when it matches default credential def tag', () => {
     const credential = createMockCredential()
     const ocaName = defaultCredDefTag
-    
+
     const result = getEffectiveCredentialName(credential, ocaName)
-    
+
     expect(result).toBe(fallbackDefaultCredentialNameValue)
   })
 
   test('ignores OCA name when it matches fallback default name', () => {
     const credential = createMockCredential()
     const ocaName = fallbackDefaultCredentialNameValue
-    
+
     const result = getEffectiveCredentialName(credential, ocaName)
-    
+
     expect(result).toBe(fallbackDefaultCredentialNameValue)
   })
 
   test('ignores OCA name when empty or whitespace', () => {
     const credential = createMockCredential()
-    
+
     expect(getEffectiveCredentialName(credential, '')).toBe(fallbackDefaultCredentialNameValue)
     expect(getEffectiveCredentialName(credential, '   ')).toBe(fallbackDefaultCredentialNameValue)
     expect(getEffectiveCredentialName(credential, undefined)).toBe(fallbackDefaultCredentialNameValue)
@@ -101,29 +101,23 @@ describe('getEffectiveCredentialName', () => {
 
   test('returns fallback when no valid name is found', () => {
     const credential = createMockCredential()
-    
+
     const result = getEffectiveCredentialName(credential)
-    
+
     expect(result).toBe(fallbackDefaultCredentialNameValue)
   })
 
   test('uses isValidCredentialName helper function correctly', () => {
     const credential = createMockCredential()
-    
+
     // Test various invalid names
-    const invalidNames = [
-      defaultCredDefTag,
-      fallbackDefaultCredentialNameValue,
-      '',
-      '   ',
-      undefined,
-    ]
-    
-    invalidNames.forEach(invalidName => {
+    const invalidNames = [defaultCredDefTag, fallbackDefaultCredentialNameValue, '', '   ', undefined]
+
+    invalidNames.forEach((invalidName) => {
       const result = getEffectiveCredentialName(credential, invalidName as string)
       expect(result).toBe(fallbackDefaultCredentialNameValue)
     })
-    
+
     // Test valid name
     const validName = 'Valid Credential Name'
     const result = getEffectiveCredentialName(credential, validName)

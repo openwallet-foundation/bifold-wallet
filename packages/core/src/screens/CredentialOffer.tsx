@@ -27,7 +27,12 @@ import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
-import { getCredentialIdentifiers, isValidAnonCredsCredential, ensureCredentialMetadata, getEffectiveCredentialName } from '../utils/credential'
+import {
+  getCredentialIdentifiers,
+  isValidAnonCredsCredential,
+  ensureCredentialMetadata,
+  getEffectiveCredentialName,
+} from '../utils/credential'
 import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
@@ -126,10 +131,15 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const offerData = offer?.anoncreds ?? offer?.indy
 
       if (offerData) {
-        await ensureCredentialMetadata(credential, agent, {
-          schema_id: offerData.schema_id,
-          cred_def_id: offerData.cred_def_id,
-        }, logger)
+        await ensureCredentialMetadata(
+          credential,
+          agent,
+          {
+            schema_id: offerData.schema_id,
+            cred_def_id: offerData.cred_def_id,
+          },
+          logger
+        )
       }
 
       if (offerAttributes) {

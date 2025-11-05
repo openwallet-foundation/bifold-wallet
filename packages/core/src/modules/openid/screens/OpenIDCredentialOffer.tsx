@@ -11,6 +11,7 @@ import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import Record from '../../../components/record/Record'
 import { EventTypes } from '../../../constants'
 import { useTheme } from '../../../contexts/theme'
+import { TOKENS, useServices } from '../../../container-api'
 import ScreenLayout from '../../../layout/ScreenLayout'
 import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
 import { BifoldError } from '../../../types/error'
@@ -20,9 +21,10 @@ import { testIdWithKey } from '../../../utils/testable'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
+import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
+import { temporaryMetaVanillaObject } from '../metadata'
 import { useAcceptReplacement } from '../hooks/useAcceptReplacement'
 import { useDeclineReplacement } from '../hooks/useDeclineReplacement'
-import { TOKENS, useServices } from '../../../container-api'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -38,6 +40,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
   const { resolveBundleForCredential } = useOpenIDCredentials()
+  const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
@@ -83,9 +86,31 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
 
   const handleDeclineTouched = async () => {
+    await handleSendNotification(NotificationEventType.CREDENTIAL_DELETED)
     await declineByNewId(credential.id)
     toggleDeclineModalVisible()
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
+  const handleSendNotification = async (notificationEventType: NotificationEventType) => {
+    try {
+      if (
+        temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+        temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint &&
+        temporaryMetaVanillaObject.tokenResponse?.accessToken
+      ) {
+        await sendOpenId4VciNotification({
+          accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
+          notificationEvent: notificationEventType,
+          notificationMetadata: {
+            notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
+            notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
+          },
+        })
+      }
+    } catch (err) {
+      logger.error('[Credential Offer] error sending notification')
+    }
   }
 
   const handleAcceptTouched = async () => {
@@ -94,6 +119,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
     }
     try {
       await acceptNewCredential(credential)
+      await handleSendNotification(NotificationEventType.CREDENTIAL_ACCEPTED)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)

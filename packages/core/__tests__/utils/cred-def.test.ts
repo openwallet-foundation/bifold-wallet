@@ -97,7 +97,7 @@ describe('Cred Def Utils', () => {
         modules: {
           anoncreds: {
             getCredentialDefinition: jest.fn().mockResolvedValue({
-              credentialDefinition: { ...mockCredDefResource.content, tag: 'CustomTag' }
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'CustomTag' },
             }),
           },
         },
@@ -111,7 +111,7 @@ describe('Cred Def Utils', () => {
         modules: {
           anoncreds: {
             getCredentialDefinition: jest.fn().mockResolvedValue({
-              credentialDefinition: { ...mockCredDefResource.content, tag: 'default' }
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'default' },
             }),
           },
         },
@@ -137,7 +137,7 @@ describe('Cred Def Utils', () => {
         modules: {
           anoncreds: {
             getSchema: jest.fn().mockResolvedValue({
-              schema: mockSchemaResource.content
+              schema: mockSchemaResource.content,
             }),
           },
         },
@@ -169,7 +169,7 @@ describe('Cred Def Utils', () => {
         modules: {
           anoncreds: {
             getCredentialDefinition: jest.fn().mockResolvedValue({
-              credentialDefinition: { ...mockCredDefResource.content, tag: 'BankingCred' }
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'BankingCred' },
             }),
           },
         },
@@ -184,10 +184,10 @@ describe('Cred Def Utils', () => {
         modules: {
           anoncreds: {
             getCredentialDefinition: jest.fn().mockResolvedValue({
-              credentialDefinition: { ...mockCredDefResource.content, tag: 'default' }
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'default' },
             }),
             getSchema: jest.fn().mockResolvedValue({
-              schema: mockSchemaResource.content
+              schema: mockSchemaResource.content,
             }),
           },
         },
@@ -271,9 +271,9 @@ describe('Cred Def Utils', () => {
       metadata: {
         get: (key: string) => {
           if (key === AnonCredsCredentialMetadataKey) {
-            return { 
+            return {
               schemaName: 'SchemaName',
-              credDefTag: 'TagName'
+              credDefTag: 'TagName',
             }
           }
           return undefined
@@ -289,9 +289,9 @@ describe('Cred Def Utils', () => {
       metadata: {
         get: (key: string) => {
           if (key === AnonCredsCredentialMetadataKey) {
-            return { 
+            return {
               schemaName: 'SchemaName',
-              credDefTag: 'CustomTag'
+              credDefTag: 'CustomTag',
             }
           }
           return undefined
@@ -307,9 +307,9 @@ describe('Cred Def Utils', () => {
       metadata: {
         get: (key: string) => {
           if (key === AnonCredsCredentialMetadataKey) {
-            return { 
+            return {
               schemaName: 'SchemaName',
-              credDefTag: 'default'
+              credDefTag: 'default',
             }
           }
           return undefined
@@ -333,7 +333,7 @@ describe('Cred Def Utils', () => {
   test('ensureCredentialMetadata: caches schemaName and credDefTag when not present', async () => {
     let cachedMetadata: any = {
       credentialDefinitionId: mockCredDefId,
-      schemaId: mockSchemaId
+      schemaId: mockSchemaId,
     }
 
     const credential: any = {
@@ -353,7 +353,7 @@ describe('Cred Def Utils', () => {
           if (key === AnonCredsCredentialMetadataKey) {
             cachedMetadata = { ...cachedMetadata, ...value }
           }
-        }
+        },
       },
     }
 
@@ -382,16 +382,16 @@ describe('Cred Def Utils', () => {
       metadata: {
         get: (key: string) => {
           if (key === AnonCredsCredentialMetadataKey) {
-            return { 
+            return {
               credentialDefinitionId: mockCredDefId,
               schemaId: mockSchemaId,
               schemaName: 'ExistingSchemaName',
-              credDefTag: 'ExistingTag'
+              credDefTag: 'ExistingTag',
             }
           }
           return undefined
         },
-        set: jest.fn()
+        set: jest.fn(),
       },
     }
 

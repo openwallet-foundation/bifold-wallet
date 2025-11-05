@@ -31,7 +31,9 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   const { width, height } = useWindowDimensions()
   const isBranding11 = brandingOverlayType === BrandingOverlayType.Branding11
 
-  const effectiveName = credential ? getEffectiveCredentialName(credential, overlay.metaOverlay?.name) : overlay.metaOverlay?.name
+  const effectiveName = credential
+    ? getEffectiveCredentialName(credential, overlay.metaOverlay?.name)
+    : overlay.metaOverlay?.name
 
   const styles = StyleSheet.create({
     primaryHeaderContainer: {

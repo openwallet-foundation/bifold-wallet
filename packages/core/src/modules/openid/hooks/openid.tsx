@@ -15,6 +15,7 @@ import { OpenId4VPRequestRecord } from '../types'
 import { getCredentialConfigurationIds } from '../utils/utils'
 import { setRefreshCredentialMetadata } from '../metadata'
 import { RefreshStatus } from '../refresh/types'
+import { temporaryMetaVanillaObject } from '../metadata'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -63,8 +64,9 @@ export const useOpenID = ({
         }
 
         const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
-
         const refreshToken = tokenResponse.refreshToken
+
+        temporaryMetaVanillaObject.tokenResponse = tokenResponse
 
         const credential = await receiveCredentialFromOpenId4VciOffer({
           agent,
