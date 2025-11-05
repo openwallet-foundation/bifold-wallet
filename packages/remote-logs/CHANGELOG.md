@@ -1,5 +1,70 @@
 # Change Log
 
+## 2.11.0
+
+### Patch Changes
+
+- Updated dependencies [1d6c2f3]
+- Updated dependencies [6f1cb40]
+- Updated dependencies [00c2ea3]
+- Updated dependencies [0362ba3]
+  - @bifold/core@2.11.0
+
+## 2.10.2
+
+### Patch Changes
+
+- Updated dependencies [a2323ee]
+- Updated dependencies [7c7d27f]
+- Updated dependencies [84cf1b0]
+  - @bifold/core@2.10.2
+
+## 2.10.1
+
+### Patch Changes
+
+- Updated dependencies [374a412]
+  - @bifold/core@2.10.1
+
+## 2.10.0
+
+### Patch Changes
+
+- Updated dependencies [165cb53]
+- Updated dependencies [a667312]
+  - @bifold/core@2.10.0
+
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+- Updated dependencies [2319500]
+- Updated dependencies [fe7a7bc]
+- Updated dependencies [aa3286d]
+- Updated dependencies [c5cc3e7]
+  - @bifold/core@2.9.0
+
+## 2.8.0
+
+### Patch Changes
+
+- Updated dependencies [00ed384]
+- Updated dependencies [f4d46be]
+  - @bifold/core@2.8.0
+
+## 2.7.5
+
+### Patch Changes
+
+- Updated dependencies [83d6ce9]
+- Updated dependencies [eaffaec]
+- Updated dependencies [56d9fb3]
+- Updated dependencies [53169b9]
+- Updated dependencies [07ea6be]
+- Updated dependencies [c4b153a]
+  - @bifold/core@2.7.5
+
 ## 2.7.4
 
 ### Patch Changes

@@ -11,7 +11,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
-import { credentialTextColor, getCredentialIdentifiers, toImageSource } from '../../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  toImageSource,
+  getEffectiveCredentialName,
+} from '../../utils/credential'
 import {
   formatIfDate,
   useCredentialConnectionLabel,
@@ -28,12 +33,7 @@ import CredentialCard11Logo from './CredentialCard11Logo'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CredentialIssuerBody from './CredentialCard11Issuer'
 import { ThemedText } from '../texts/ThemedText'
-
-export enum CredentialErrors {
-  Revoked, // Credential has been revoked
-  NotInWallet, // Credential requested for proof does not exists in users wallet
-  PredicateError, // Credential requested for proof contains a predicate match that is not satisfied
-}
+import { CredentialErrors } from '../../types/credentials'
 
 interface CredentialCard11Props {
   credential?: CredentialExchangeRecord
@@ -235,10 +235,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           })
         }
       }
+
       setOverlay((o) => ({
         ...o,
         ...bundle,
-        brandingOverlay: bundle.brandingOverlay as BrandingOverlay,
+        brandingOverlay: bundle.brandingOverlay,
+        // Apply effective name
+        ...(bundle.metaOverlay && {
+          metaOverlay: {
+            ...bundle.metaOverlay,
+            name: credential
+              ? getEffectiveCredentialName(credential, bundle.metaOverlay?.name)
+              : bundle.metaOverlay?.name,
+          },
+        }),
       }))
     })
   }, [

@@ -68,6 +68,7 @@
     "react-native": "0.73.11",
     "@types/react": "18.2.79",
     "@credo-ts/anoncreds@npm:0.5.17": "patch:@credo-ts/anoncreds@npm%3A0.5.17#~/.yarn/patches/@credo-ts-anoncreds-npm-0.5.17-9f101d8e96.patch",
+    "@credo-ts/openid4vc@npm:0.5.17": "patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch",
     "@credo-ts/core@npm:0.5.17": "patch:@credo-ts/core@npm%3A0.5.17#~/.yarn/patches/@credo-ts-core-npm-0.5.17-c528a69dd8.patch",
     "@credo-ts/indy-vdr@0npm:0.5.17": "patch:@credo-ts/indy-vdr@npm%3A0.5.17#~/.yarn/patches/@credo-ts-indy-vdr-npm-0.5.17-aa0b05041f.patch",
     "@hyperledger/indy-vdr-react-native@0.2.2": "patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.2#./.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.2-627d424b96.patch",

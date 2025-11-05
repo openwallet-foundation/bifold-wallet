@@ -1,5 +1,71 @@
 # @bifold/core
 
+## 2.11.0
+
+### Minor Changes
+
+- 6f1cb40: Notifications endpoint
+- 00c2ea3: OpenID Cred Refresh
+
+### Patch Changes
+
+- 1d6c2f3: Added AnonCreds metadata caching for schema name and improved error handling
+- 0362ba3: Add did:web resolver
+
+## 2.10.2
+
+### Patch Changes
+
+- a2323ee: update loading indicator for new pin designs
+- 7c7d27f: Add unsatisfied proof request UI for OpenID
+- 84cf1b0: fix pin masking on new pin design
+
+## 2.10.1
+
+### Patch Changes
+
+- 374a412: Bug fixes for new pin design, and fix for biometrics issue
+
+## 2.10.0
+
+### Minor Changes
+
+- 165cb53: Added Credo WebVH package with DID resolver and AnonCreds registry support
+- a667312: Did resolvers
+
+## 2.9.0
+
+### Minor Changes
+
+- 2319500: Updated PIN screen design and functionality
+- aa3286d: Refresh token lifecycle
+
+### Patch Changes
+
+- fe7a7bc: Filter sub field out of sd jwt credential display
+- c5cc3e7: updated pr template
+
+## 2.8.0
+
+### Minor Changes
+
+- f4d46be: Patch credo-ts expose refreshToken
+
+### Patch Changes
+
+- 00ed384: fixed pacakge for packed release
+
+## 2.7.5
+
+### Patch Changes
+
+- 83d6ce9: improve credential definition ID normalization and error handling in parsing functions
+- eaffaec: exporting more components
+- 56d9fb3: Update bcovrin leger config
+- 53169b9: fix: biometrics not triggering after app is backgrounded
+- 07ea6be: fix: unique banner messages
+- c4b153a: destructure results in credential definition and schema retrieval
+
 ## 2.7.4
 
 ### Patch Changes

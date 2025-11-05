@@ -56,6 +56,9 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+import { AgentBridge } from './services/AgentBridge'
+import { IRefreshOrchestrator } from './modules/openid/refresh/types'
+import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -83,6 +86,9 @@ export const defaultConfig: Config = {
   appUpdateConfig: {
     appleAppStoreUrl: 'https://example.com',
     googlePlayStoreUrl: 'https://example.com',
+  },
+  PINScreensConfig: {
+    useNewPINDesign: false,
   },
 }
 
@@ -220,6 +226,29 @@ export class MainContainer implements Container {
     })
 
     this._container.registerInstance(TOKENS.ONBOARDING, generateOnboardingWorkflowSteps)
+
+    this._container.registerInstance(TOKENS.UTIL_AGENT_BRIDGE, new AgentBridge())
+
+    // Register OpenID Credentials Refresh Orchestrator
+    const orchestrator: IRefreshOrchestrator = new RefreshOrchestrator(
+      this._container.resolve(TOKENS.UTIL_LOGGER),
+      this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge,
+      {
+        autoStart: false,
+        intervalMs: undefined,
+        listRecords: async () => {
+          const agent = (this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge).current
+          if (!agent) return []
+          const [w3c, sdjwt] = await Promise.all([
+            agent.w3cCredentials.getAllCredentialRecords(),
+            agent.sdJwtVc.getAll(),
+          ])
+          return [...w3c, ...sdjwt]
+        },
+      }
+    )
+
+    this._container.registerInstance(TOKENS.UTIL_REFRESH_ORCHESTRATOR, orchestrator)
 
     return this
   }

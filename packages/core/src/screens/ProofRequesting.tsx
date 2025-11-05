@@ -1,10 +1,9 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
+import { ProofCustomMetadata, ProofMetadata, linkProofWithTemplate, sendProofRequest } from '@bifold/verifier'
 import { DidExchangeState, ProofState } from '@credo-ts/core'
 import { useAgent, useProofById } from '@credo-ts/react-hooks'
-import { ProofCustomMetadata, ProofMetadata, linkProofWithTemplate, sendProofRequest } from '@bifold/verifier'
-import { TOKENS, useServices } from '../container-api'
-import { useIsFocused, useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect, useIsFocused } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -19,11 +18,13 @@ import {
 } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { TOKENS, useServices } from '../container-api'
 
 import LoadingIndicator from '../components/animated/LoadingIndicator'
 import Button, { ButtonType } from '../components/buttons/Button'
 import IconButton, { ButtonLocation } from '../components/buttons/IconButton'
 import QRRenderer from '../components/misc/QRRenderer'
+import { ThemedText } from '../components/texts/ThemedText'
 import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -33,7 +34,6 @@ import { BifoldError } from '../types/error'
 import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { createTempConnectionInvitation } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import { ThemedText } from '../components/texts/ThemedText'
 
 type ProofRequestingProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofRequesting>
 

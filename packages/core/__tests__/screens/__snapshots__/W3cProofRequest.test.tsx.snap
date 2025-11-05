@@ -895,7 +895,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                   "threadId": "1",
                 },
                 "credId": "8eba4449-8a85-4954-b11c-e0590f39cbdb",
-                "credName": "latest",
+                "credName": "Credential",
                 "schemaId": "did:indy:bcovrin:test:TfuPA6whW681GfU6fj1e3k/anoncreds/v0/SCHEMA/Identity Schemaaf92af92-524d-41b6-bee8-00fb45e8eb6c/1.0.0",
               },
             ]
@@ -968,7 +968,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                     style={
                       Array [
                         Object {
-                          "backgroundColor": "#5f0f7b",
+                          "backgroundColor": "#781e4b",
                           "borderRadius": 10,
                           "shadowColor": "#000",
                           "shadowOffset": Object {
@@ -1049,7 +1049,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                         testID="com.ariesbifold:id/CredentialCard"
                       >
                         <View
-                          accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Latest Credentials.Credential. email, test@email.com, time, 2022-02-11 20:00:18.180718"
+                          accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Credential Credentials.Credential. email, test@email.com, time, 2022-02-11 20:00:18.180718"
                           accessible={true}
                           style={
                             Object {
@@ -1062,13 +1062,13 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                             style={
                               Array [
                                 Object {
-                                  "backgroundColor": "#5f0f7b",
+                                  "backgroundColor": "#781e4b",
                                   "borderBottomLeftRadius": 10,
                                   "borderTopLeftRadius": 10,
                                   "width": 90,
                                 },
                                 Object {
-                                  "backgroundColor": "#5f0f7b",
+                                  "backgroundColor": "#781e4b",
                                   "overflow": "hidden",
                                 },
                               ]
@@ -1125,7 +1125,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                               }
                               testID="com.ariesbifold:id/NoLogoText"
                             >
-                              L
+                              C
                             </Text>
                           </View>
                           <View
@@ -1172,7 +1172,7 @@ exports[`displays a proof request screen ProofRequest Screen, W3C displays a pro
                                 }
                                 testID="com.ariesbifold:id/CredentialName"
                               >
-                                Latest
+                                Credential
                               </Text>
                             </View>
                             <View

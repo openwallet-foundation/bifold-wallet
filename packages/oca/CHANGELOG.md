@@ -1,5 +1,23 @@
 # Change Log
 
+## 2.11.0
+
+## 2.10.2
+
+## 2.10.1
+
+## 2.10.0
+
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+
+## 2.8.0
+
+## 2.7.5
+
 ## 2.7.4
 
 ### Patch Changes
