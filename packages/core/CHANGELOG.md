@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 2.11.0
+
+### Minor Changes
+
+- 6f1cb40: Notifications endpoint
+- 00c2ea3: OpenID Cred Refresh
+
+### Patch Changes
+
+- 1d6c2f3: Added AnonCreds metadata caching for schema name and improved error handling
+- 0362ba3: Add did:web resolver
+
 ## 2.10.2
 
 ### Patch Changes
