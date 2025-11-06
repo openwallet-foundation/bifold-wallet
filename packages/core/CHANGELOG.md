@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.1
+
+### Patch Changes
+
+- ec19ffc: make scrollview props available through keyboardview prop
+
 ## 2.11.0
 
 ### Minor Changes
