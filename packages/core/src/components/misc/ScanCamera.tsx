@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet, Vibration, View, useWindowDimensions, Pressable } from 'react-native'
+import { StyleSheet, Vibration, View, useWindowDimensions, Pressable, GestureResponderEvent, Animated } from 'react-native'
 import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
@@ -12,6 +12,18 @@ export interface ScanCameraProps {
   torchActive?: boolean
 }
 
+const styles = StyleSheet.create({
+  focusIndicator: {
+    position: 'absolute',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    backgroundColor: 'transparent',
+  },
+})
+
 const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCameraOnError, torchActive }) => {
   const [orientation, setOrientation] = useState(OrientationType.PORTRAIT)
   const [cameraActive, setCameraActive] = useState(true)
@@ -22,6 +34,9 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     [OrientationType['LANDSCAPE-RIGHT']]: '90deg',
   }
   const [invalidQrCodes, setInvalidQrCodes] = useState(new Set<string>())
+  const [focusPoint, setFocusPoint] = useState<{ x: number; y: number } | null>(null)
+  const focusOpacity = useRef(new Animated.Value(0)).current
+  const focusScale = useRef(new Animated.Value(1)).current
   const device = useCameraDevice('back')
   const screenAspectRatio = useWindowDimensions().scale
   const format = useCameraFormat(device, [
@@ -59,10 +74,50 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
   )
 
   const camera = useRef<Camera>(null)
+  const dimensions = useWindowDimensions()
+  console.log('Element Dimensions:', dimensions);
+  console.log('Camera dimensions', camera.current?.width, device?.photoHeight);
 
-  const screenToCameraSpace = (point: { x: number; y: number }) => {
-    //coordinate transformation
+  const screenToCameraSpace = (point: { x: number; y: number }): { x: number; y: number } => {
+    //coordinate transformation if necessary
     return point
+  }
+
+  const drawFocusTap = async (point: { x: number; y: number }): Promise<void> => {
+    // Draw a focus tap indicator on the camera preview
+    setFocusPoint(point)
+    
+    focusOpacity.setValue(1)
+    focusScale.setValue(1.5)
+    
+    Animated.parallel([
+      Animated.timing(focusOpacity, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.spring(focusScale, {
+        toValue: 1,
+        friction: 5,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      setFocusPoint(null)
+    })
+  }
+
+  const handleFocusTap = (e: GestureResponderEvent): void => {
+    if (!device?.supportsFocus) {
+      return
+    }
+    const { locationX: x, locationY: y } = e.nativeEvent
+    const tapPoint = { x, y }
+    const focusPoint = screenToCameraSpace(tapPoint)
+    // focus indicator is in screen space
+    drawFocusTap(tapPoint)
+    console.log('Tapped at:', x, y)
+    focus(focusPoint)
   }
 
   const focus = useCallback((point: { x: number; y: number }) => {
@@ -84,8 +139,6 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     codeTypes: ['qr'],
     onCodeScanned: onCodeScanned,
   })
-  // log device info
-  console.log('Camera Device Info:', JSON.stringify(device, null, 2))
 
   return (
     <View style={[StyleSheet.absoluteFill, { transform: [{ rotate: orientationDegrees[orientation] ?? '0deg' }] }]}>
@@ -104,15 +157,23 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
             style={StyleSheet.absoluteFill}
             onPressIn={
               (e) => {
-                if (!device?.supportsFocus) {
-                  return
-                }
-                const { locationX: x, locationY: y } = e.nativeEvent
-                console.log('Tapped at:', x, y)
-                focus({ x, y })
+                handleFocusTap(e)
               }
             }
           />
+          {focusPoint && (
+            <Animated.View
+              style={[
+                styles.focusIndicator,
+                {
+                  left: focusPoint.x - 40,
+                  top: focusPoint.y - 40,
+                  opacity: focusOpacity,
+                  transform: [{ scale: focusScale }],
+                },
+              ]}
+            />
+          )}
         </>
       )}
     </View>
