@@ -46,6 +46,8 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     { photoAspectRatio: screenAspectRatio },
     { photoResolution: 'max' },
   ])
+  const camera = useRef<Camera>(null)
+  const dimensions = useWindowDimensions()
   useOrientationChange((orientationType) => {
     setOrientation(orientationType)
   })
@@ -73,16 +75,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     [invalidQrCodes, error, enableCameraOnError, cameraActive, handleCodeScan]
   )
 
-  const camera = useRef<Camera>(null)
-  const dimensions = useWindowDimensions()
-  console.log('Element Dimensions:', dimensions);
-  console.log('Camera dimensions', camera.current?.width, device?.photoHeight);
-
-  const screenToCameraSpace = (point: { x: number; y: number }): { x: number; y: number } => {
-    //coordinate transformation if necessary
-    return point
-  }
-
+  
   const drawFocusTap = async (point: { x: number; y: number }): Promise<void> => {
     // Draw a focus tap indicator on the camera preview
     setFocusPoint(point)
@@ -106,6 +99,28 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
       setFocusPoint(null)
     })
   }
+  
+  const screenToCameraSpace = useCallback((camera: Camera | null, point: { x: number; y: number }): { x: number; y: number } => {
+    // transforms point from screen space to camera space based on camera and view dimensions
+    // camera and view both define the top left as (0,0) so this is a simple scaling operation
+    if (!camera) {
+      return point
+    }
+    const frameWidth = camera.props.format?.videoWidth
+    const frameHeight = camera.props.format?.videoHeight
+    const viewWidth = dimensions.width
+    const viewHeight = dimensions.height
+
+    if (!frameWidth || !frameHeight) {
+      // If video frame dimensions are undefined, return the original point
+      return point
+    }
+
+    return {
+      x: (point.x / viewWidth) * frameWidth,
+      y: (point.y / viewHeight) * frameHeight,
+    }
+  }, [dimensions])
 
   const handleFocusTap = (e: GestureResponderEvent): void => {
     if (!device?.supportsFocus) {
@@ -113,21 +128,17 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     }
     const { locationX: x, locationY: y } = e.nativeEvent
     const tapPoint = { x, y }
-    const focusPoint = screenToCameraSpace(tapPoint)
-    // focus indicator is in screen space
+    const focusPoint = screenToCameraSpace(camera.current, tapPoint)
     drawFocusTap(tapPoint)
-    console.log('Tapped at:', x, y)
     focus(focusPoint)
   }
 
   const focus = useCallback((point: { x: number; y: number }) => {
     const c = camera.current
     if (c) {
-      console.log('Focusing at:', point)
-      // need to transform point from screen space to camera space
-      c.focus(screenToCameraSpace(point))
+      c.focus(screenToCameraSpace(c, point))
     }
-  }, [])
+  }, [screenToCameraSpace])
 
   useEffect(() => {
     if (error?.data && enableCameraOnError) {
@@ -146,7 +157,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
         <>
           <Camera
             ref={camera}
-            style={StyleSheet.absoluteFill}
+            style={StyleSheet.absoluteFillObject}
             device={device}
             torch={torchActive ? 'on' : 'off'}
             isActive={cameraActive}
