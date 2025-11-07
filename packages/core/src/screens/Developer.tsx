@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Pressable, Switch, StyleSheet, ScrollView } from 'react-native'
+import { View, Pressable, Switch, StyleSheet, ScrollView, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { DispatchAction } from '../contexts/reducers/store'
@@ -8,6 +8,11 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
+import Button, { ButtonType } from '../components/buttons/Button'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { HomeStackParams, Screens, Stacks } from '../types/navigators'
+import { EventTypes } from '../constants'
 
 const Developer: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -22,6 +27,7 @@ const Developer: React.FC = () => {
   const [enableWalletNaming, setEnableWalletNaming] = useState(!!store.preferences.enableWalletNaming)
   const [enableShareableLink, setEnableShareableLink] = useState(!!store.preferences.enableShareableLink)
   const [preventAutoLock, setPreventAutoLock] = useState(!!store.preferences.preventAutoLock)
+  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
 
   const styles = StyleSheet.create({
     container: {
@@ -115,6 +121,13 @@ const Developer: React.FC = () => {
       payload: [!enableShareableLink],
     })
     setEnableShareableLink((previousState) => !previousState)
+  }
+
+  const onRunRefreshCycleTouched = () => {
+    navigation.getParent()?.navigate(Stacks.TabStack, { screen: Screens.Home })
+    setTimeout(() => {
+      DeviceEventEmitter.emit(EventTypes.OPENID_REFRESH_REQUEST)
+    }, 50)
   }
 
   return (
@@ -280,6 +293,17 @@ const Developer: React.FC = () => {
               value={enableShareableLink}
             />
           </Pressable>
+        </View>
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <Button
+              title={t('Global.RefreshCredentials')}
+              accessibilityLabel={t('Global.RefreshCredentials')}
+              testID={testIdWithKey('Refresh Credentials')}
+              onPress={onRunRefreshCycleTouched}
+              buttonType={ButtonType.ModalPrimary}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
