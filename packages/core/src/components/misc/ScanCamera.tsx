@@ -1,5 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet, Vibration, View, useWindowDimensions, Pressable, GestureResponderEvent, Animated } from 'react-native'
+import {
+  StyleSheet,
+  Vibration,
+  View,
+  useWindowDimensions,
+  Pressable,
+  GestureResponderEvent,
+  Animated,
+} from 'react-native'
 import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
@@ -75,14 +83,13 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     [invalidQrCodes, error, enableCameraOnError, cameraActive, handleCodeScan]
   )
 
-  
   const drawFocusTap = async (point: { x: number; y: number }): Promise<void> => {
     // Draw a focus tap indicator on the camera preview
     setFocusPoint(point)
-    
+
     focusOpacity.setValue(1)
     focusScale.setValue(1.5)
-    
+
     Animated.parallel([
       Animated.timing(focusOpacity, {
         toValue: 0,
@@ -99,28 +106,41 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
       setFocusPoint(null)
     })
   }
-  
-  const screenToCameraSpace = useCallback((camera: Camera | null, point: { x: number; y: number }): { x: number; y: number } => {
-    // transforms point from screen space to camera space based on camera and view dimensions
-    // camera and view both define the top left as (0,0) so this is a simple scaling operation
-    if (!camera) {
-      return point
-    }
-    const frameWidth = camera.props.format?.videoWidth
-    const frameHeight = camera.props.format?.videoHeight
-    const viewWidth = dimensions.width
-    const viewHeight = dimensions.height
 
-    if (!frameWidth || !frameHeight) {
-      // If video frame dimensions are undefined, return the original point
-      return point
-    }
+  const screenToCameraSpace = useCallback(
+    (camera: Camera | null, point: { x: number; y: number }): { x: number; y: number } => {
+      // transforms point from screen space to camera space based on camera and view dimensions
+      // camera and view both define the top left as (0,0) so this is a simple scaling operation
+      if (!camera) {
+        return point
+      }
+      const frameWidth = camera.props.format?.videoWidth
+      const frameHeight = camera.props.format?.videoHeight
+      const viewWidth = dimensions.width
+      const viewHeight = dimensions.height
 
-    return {
-      x: (point.x / viewWidth) * frameWidth,
-      y: (point.y / viewHeight) * frameHeight,
-    }
-  }, [dimensions])
+      if (!frameWidth || !frameHeight) {
+        // If video frame dimensions are undefined, return the original point
+        return point
+      }
+
+      return {
+        x: (point.x / viewWidth) * frameWidth,
+        y: (point.y / viewHeight) * frameHeight,
+      }
+    },
+    [dimensions]
+  )
+
+  const focus = useCallback(
+    (point: { x: number; y: number }) => {
+      const c = camera.current
+      if (c) {
+        c.focus(screenToCameraSpace(c, point))
+      }
+    },
+    [screenToCameraSpace]
+  )
 
   const handleFocusTap = (e: GestureResponderEvent): void => {
     if (!device?.supportsFocus) {
@@ -132,13 +152,6 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     drawFocusTap(tapPoint)
     focus(focusPoint)
   }
-
-  const focus = useCallback((point: { x: number; y: number }) => {
-    const c = camera.current
-    if (c) {
-      c.focus(screenToCameraSpace(c, point))
-    }
-  }, [screenToCameraSpace])
 
   useEffect(() => {
     if (error?.data && enableCameraOnError) {
@@ -166,11 +179,9 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
           />
           <Pressable
             style={StyleSheet.absoluteFill}
-            onPressIn={
-              (e) => {
-                handleFocusTap(e)
-              }
-            }
+            onPressIn={(e) => {
+              handleFocusTap(e)
+            }}
           />
           {focusPoint && (
             <Animated.View
