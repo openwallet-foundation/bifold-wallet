@@ -12,6 +12,7 @@ import { OrientationType, useOrientationChange } from 'react-native-orientation-
 import { Camera, Code, useCameraDevice, useCameraFormat, useCodeScanner } from 'react-native-vision-camera'
 
 import { QrCodeScanError } from '../../types/error'
+import { testIdWithKey } from '../../utils/testable'
 
 export interface ScanCameraProps {
   handleCodeScan: (value: string) => Promise<void>
@@ -178,6 +179,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
             format={format}
           />
           <Pressable
+            testID={testIdWithKey('ScanCameraTapArea')}
             style={StyleSheet.absoluteFill}
             onPressIn={(e) => {
               handleFocusTap(e)
@@ -185,6 +187,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
           />
           {focusPoint && (
             <Animated.View
+              testID={testIdWithKey('FocusIndicator')}
               style={[
                 styles.focusIndicator,
                 {

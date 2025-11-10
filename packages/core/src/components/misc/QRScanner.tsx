@@ -189,7 +189,7 @@ const QRScanner: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
-      <SafeAreaView edges={['left', 'right']} style={styles.mainSafeArea}>
+      <SafeAreaView edges={['left', 'right']} style={styles.mainSafeArea} testID={testIdWithKey('QRScanner')}>
         {/* Decide to show camera content or connection invitation content */}
         {!showTabs || firstTabActive ? (
           <>
@@ -199,7 +199,7 @@ const QRScanner: React.FC<Props> = ({
               enableCameraOnError={enableCameraOnError}
               torchActive={torchActive}
             />
-            <View style={StyleSheet.absoluteFill} pointerEvents="none">
+            <View style={StyleSheet.absoluteFill} pointerEvents="none" testID={testIdWithKey('ScanOverlay')}>
               <SVGOverlay maskType={MaskType.QR_CODE} strokeColor={ColorPalette.grayscale.white} />
             </View>
             <View style={styles.cameraViewContainer}>
