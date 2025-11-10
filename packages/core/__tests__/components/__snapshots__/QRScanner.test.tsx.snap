@@ -44,7 +44,78 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
           },
         ]
       }
-    />
+    >
+      <Camera
+        codeScanner={
+          Object {
+            "codeTypes": Array [
+              "qr",
+            ],
+            "onCodeScanned": [Function],
+          }
+        }
+        device={
+          Object {
+            "id": "mock-camera",
+            "position": "back",
+            "supportsFocus": true,
+          }
+        }
+        format={Object {}}
+        isActive={true}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        torch="off"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="com.ariesbifold:id/ScanCameraTapArea"
+      />
+    </View>
     <View
       pointerEvents="none"
       style={
@@ -547,6 +618,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         "flex": 1,
       }
     }
+    testID="com.ariesbifold:id/QRScanner"
   >
     <View
       style={
@@ -567,7 +639,78 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
           },
         ]
       }
-    />
+    >
+      <Camera
+        codeScanner={
+          Object {
+            "codeTypes": Array [
+              "qr",
+            ],
+            "onCodeScanned": [Function],
+          }
+        }
+        device={
+          Object {
+            "id": "mock-camera",
+            "position": "back",
+            "supportsFocus": true,
+          }
+        }
+        format={Object {}}
+        isActive={true}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        torch="off"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="com.ariesbifold:id/ScanCameraTapArea"
+      />
+    </View>
     <View
       pointerEvents="none"
       style={
@@ -1231,6 +1374,7 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
         "flex": 1,
       }
     }
+    testID="com.ariesbifold:id/QRScanner"
   >
     <RCTScrollView>
       <View>
@@ -1623,6 +1767,7 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         "flex": 1,
       }
     }
+    testID="com.ariesbifold:id/QRScanner"
   >
     <View
       style={
@@ -1643,7 +1788,78 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
           },
         ]
       }
-    />
+    >
+      <Camera
+        codeScanner={
+          Object {
+            "codeTypes": Array [
+              "qr",
+            ],
+            "onCodeScanned": [Function],
+          }
+        }
+        device={
+          Object {
+            "id": "mock-camera",
+            "position": "back",
+            "supportsFocus": true,
+          }
+        }
+        format={Object {}}
+        isActive={true}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        torch="off"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="com.ariesbifold:id/ScanCameraTapArea"
+      />
+    </View>
     <View
       pointerEvents="none"
       style={
