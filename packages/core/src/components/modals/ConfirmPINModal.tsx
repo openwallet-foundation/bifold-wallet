@@ -24,6 +24,8 @@ interface ConfirmPINModalProps {
   onBackPressed: () => void
   onConfirmPIN: (pin: string) => void
   PINOne?: string
+  PINTwo?: string
+  setPINTwo?: (pin: string) => void
   title: string
   visible: boolean
   isLoading: boolean
@@ -40,12 +42,13 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
   onBackPressed = () => {},
   onConfirmPIN = () => {},
   PINOne = '',
+  PINTwo = '',
+  setPINTwo = () => {},
   title = '',
   visible = false,
   isLoading = false,
 }: ConfirmPINModalProps) => {
   const { ColorPalette, NavigationTheme } = useTheme()
-  const [PINTwo, setPINTwo] = useState('')
   const { t } = useTranslation()
   const [PINHeader, { preventScreenCapture }] = useServices([TOKENS.COMPONENT_PIN_HEADER, TOKENS.CONFIG])
   usePreventScreenCapture(preventScreenCapture)

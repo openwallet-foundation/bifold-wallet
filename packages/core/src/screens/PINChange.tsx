@@ -306,7 +306,9 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
         onBackPressed={onConfirmPINModalBackPressed}
         onConfirmPIN={handleConfirmPIN}
         PINOne={PIN}
-        title="Confirm PIN"
+        PINTwo={PINTwo}
+        setPINTwo={setPINTwo}
+        title={t('Screens.ConfirmPIN')}
         visible={confirmPINModalVisible}
       />
     </KeyboardView>

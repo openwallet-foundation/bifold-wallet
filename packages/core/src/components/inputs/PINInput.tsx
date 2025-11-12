@@ -72,8 +72,9 @@ const PINInputComponent = (
       // typed new characters
       if (cleanValue.length > PIN.length) {
         // add new characters to the actual PIN
+        // only allow numbers
         const newChars = cleanValue.slice(PIN.length)
-        const newPIN = PIN + newChars.replace(/●/g, '')
+        const newPIN = PIN + newChars.replace(/●/g, '').replace(/\D/g, "")
         setPIN(newPIN)
         onPINChanged && onPINChanged(newPIN)
         // characters were removed
@@ -88,7 +89,7 @@ const PINInputComponent = (
   )
 
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value: displayValue,
+    value: PINScreensConfig.useNewPINDesign ? PIN : displayValue,
     setValue: onChangeText,
   })
 

@@ -64,8 +64,6 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
 
   const validatePINEntry = useCallback(
     (pinOne: string, pinTwo: string): boolean => {
-      setInlineMessageField1(undefined)
-      setInlineMessageField2(undefined)
       const PINValidation = createPINValidations(pinOne, PINSecurity.rules)
       for (const validation of PINValidation) {
         if (validation.isInvalid) {
