@@ -16,7 +16,7 @@
     "ios:setup": "bundle install && cd ios && bundle exec pod install",
     "ios": "react-native run-ios --scheme AriesBifold",
     "setup": "yarn android:setup && yarn ios:setup",
-    "start": "react-native start --reset-cache"
+    "start": "react-native start --reset-cache --experimental-debugger"
   },
   "dependencies": {
     "@bifold/core": "2.8.0",
