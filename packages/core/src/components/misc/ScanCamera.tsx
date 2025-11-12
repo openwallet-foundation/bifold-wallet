@@ -56,7 +56,6 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     { photoResolution: 'max' },
   ])
   const camera = useRef<Camera>(null)
-  const dimensions = useWindowDimensions()
   useOrientationChange((orientationType) => {
     setOrientation(orientationType)
   })
@@ -108,40 +107,12 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     })
   }
 
-  const screenToCameraSpace = useCallback(
-    (camera: Camera | null, point: { x: number; y: number }): { x: number; y: number } => {
-      // transforms point from screen space to camera space based on camera and view dimensions
-      // camera and view both define the top left as (0,0) so this is a simple scaling operation
-      if (!camera) {
-        return point
-      }
-      const frameWidth = camera.props.format?.videoWidth
-      const frameHeight = camera.props.format?.videoHeight
-      const viewWidth = dimensions.width
-      const viewHeight = dimensions.height
-
-      if (!frameWidth || !frameHeight) {
-        // If video frame dimensions are undefined, return the original point
-        return point
-      }
-
-      return {
-        x: (point.x / viewWidth) * frameWidth,
-        y: (point.y / viewHeight) * frameHeight,
-      }
-    },
-    [dimensions]
-  )
-
-  const focus = useCallback(
-    (point: { x: number; y: number }) => {
-      const c = camera.current
-      if (c) {
-        c.focus(screenToCameraSpace(c, point))
-      }
-    },
-    [screenToCameraSpace]
-  )
+  const focus = useCallback((point: { x: number; y: number }) => {
+    const c = camera.current
+    if (c) {
+      c.focus(point)
+    }
+  }, [])
 
   const handleFocusTap = (e: GestureResponderEvent): void => {
     if (!device?.supportsFocus) {
@@ -149,9 +120,8 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     }
     const { locationX: x, locationY: y } = e.nativeEvent
     const tapPoint = { x, y }
-    const focusPoint = screenToCameraSpace(camera.current, tapPoint)
     drawFocusTap(tapPoint)
-    focus(focusPoint)
+    focus(tapPoint)
   }
 
   useEffect(() => {
