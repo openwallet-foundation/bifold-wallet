@@ -19,8 +19,8 @@
     "start": "react-native start --reset-cache"
   },
   "dependencies": {
-    "@bifold/core": "2.11.1",
-    "@bifold/oca": "2.11.1",
+    "@bifold/core": "2.11.2",
+    "@bifold/oca": "2.11.2",
     "@credo-ts/anoncreds": "0.5.17",
     "@credo-ts/askar": "0.5.17",
     "@credo-ts/core": "0.5.17",
