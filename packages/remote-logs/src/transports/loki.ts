@@ -2,12 +2,14 @@
 import axios from 'axios'
 import { Buffer } from 'buffer'
 import { transportFunctionType } from 'react-native-logs'
+import { LogLevel } from '@credo-ts/core'
 
 export interface RemoteLoggerOptions {
   lokiUrl?: string
   lokiLabels?: Record<string, string>
   autoDisableRemoteLoggingIntervalInMinutes?: number
   job?: string
+  logLevel?: LogLevel
 }
 
 export type LokiTransportProps = {
