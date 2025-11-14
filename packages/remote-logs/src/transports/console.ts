@@ -130,6 +130,10 @@ export const consoleTransport: transportFunctionType = (props: ConsoleTransportP
     logMessage = `${logMessage} ${formattedData}`
   }
 
+  // Prepend level for clarity.
+  const levelTag = `[${props.level.text.toUpperCase()}]`
+  logMessage = `${levelTag} ${logMessage}`
+
   if (props.options?.consoleFunc) {
     props.options.consoleFunc(logMessage)
   } else {
