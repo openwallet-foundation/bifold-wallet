@@ -94,11 +94,10 @@ export const isPlayIntegrityAvailable = async (): Promise<boolean> => {
   return Attestation.isPlayIntegrityAvailable();
 };
 
-export const getAppStoreReceipt = async (): Promise<string | undefined> => {
+export const getAppStoreReceipt = async (): Promise<string | null> => {
   if (Platform.OS !== 'ios') {
     throw new Error('getAppStoreReceipt is only available on iOS');
   }
 
-  const result = await Attestation.getAppStoreReceipt();
-  return result ?? undefined;
+  return await Attestation.getAppStoreReceipt();
 };
