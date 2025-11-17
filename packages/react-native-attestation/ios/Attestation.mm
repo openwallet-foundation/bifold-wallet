@@ -268,6 +268,26 @@ RCT_EXPORT_METHOD(appleAttestation:(NSString *)keyId
     }];
 }
 
+RCT_EXPORT_METHOD(getAppStoreReceipt:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    NSURL *appStoreReceiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    
+    if (appStoreReceiptURL && [[NSFileManager defaultManager] fileExistsAtPath:[appStoreReceiptURL path]]) {
+        NSError *error;
+        NSData *receiptData = [NSData dataWithContentsOfURL:appStoreReceiptURL 
+                                                   options:NSDataReadingMappedIfSafe 
+                                                     error:&error];
+        if (receiptData && !error) {
+            NSString *receiptString = [receiptData base64EncodedStringWithOptions:0];
+            resolve(receiptString);
+        } else {
+            reject(@"receipt_error", @"Failed to read App Store receipt", error);
+        }
+    } else {
+        resolve([NSNull null]); // No receipt available
+    }
+}
+
 // Don't compile this code when we build for the old architecture.
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:

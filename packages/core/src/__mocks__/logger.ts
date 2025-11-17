@@ -1,4 +1,4 @@
-import { AbstractBifoldLogger } from '../../src/services/AbstractBifoldLogger'
+import { AbstractBifoldLogger } from '../services/AbstractBifoldLogger'
 
 export class MockLogger extends AbstractBifoldLogger {
   constructor() {
