@@ -70,6 +70,7 @@ import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { isBiometricsActive, loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
+import { MockLogger } from '../__tests__/helpers/logger'
 import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
@@ -220,6 +221,7 @@ export {
   Link,
   loadLoginAttempt,
   MaskType,
+  MockLogger,
   NavContainer,
   NetworkProvider,
   NotificationListItem,
