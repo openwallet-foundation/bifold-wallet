@@ -130,13 +130,44 @@ export const consoleTransport: transportFunctionType = (props: ConsoleTransportP
     logMessage = `${logMessage} ${formattedData}`
   }
 
-  // Prepend level for clarity.
-  const levelTag = `[${props.level.text.toUpperCase()}]`
-  logMessage = `${levelTag} ${logMessage}`
+  // Only prepend a tag for test logs.
+  const levelText = props.level.text.toLowerCase()
+  if (levelText === 'test') {
+    const levelTag = `[${props.level.text.toUpperCase()}]`
+    logMessage = `${levelTag} ${logMessage}`
+  }
 
   if (props.options?.consoleFunc) {
     props.options.consoleFunc(logMessage)
   } else {
-    console.log(logMessage)
+    // Use appropriate console method based on log level
+    switch (props.level.text.toLowerCase()) {
+      case 'trace':
+        // console.trace prints a stack; we only want the message. Provide a wrapper.
+        // Some environments always include stack; if so this remains acceptable.
+        console.trace(logMessage)
+        break
+      case 'debug':
+        // Prefer console.debug for debug level; fallback to console.log if unavailable
+        if (typeof console.debug === 'function') {
+          console.debug(logMessage)
+        } else {
+          console.log(logMessage)
+        }
+        break
+      case 'warn':
+        console.warn(logMessage)
+        break
+      case 'error':
+      case 'fatal':
+        console.error(logMessage)
+        break
+      case 'info':
+        console.info(logMessage)
+        break
+      default:
+        console.log(logMessage)
+        break
+    }
   }
 }
