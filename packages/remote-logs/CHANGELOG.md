@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.3
+
+### Patch Changes
+
+- @bifold/core@2.11.3
+
 ## 2.11.2
 
 ### Patch Changes
