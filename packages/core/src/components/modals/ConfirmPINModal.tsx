@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet, Keyboard } from 'react-native'
-import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
 
@@ -9,22 +8,22 @@ import FauxHeader from '../../components/misc/FauxHeader'
 import SafeAreaModal from '../../components/modals/SafeAreaModal'
 import AlertModal from '../../components/modals/AlertModal'
 import PINScreenTitleText from '../../components/misc/PINScreenTitleText'
-import { InlineMessageProps } from '../../components/inputs/InlineErrorText'
 import PINInput from '../../components/inputs/PINInput'
 import usePreventScreenCapture from '../../hooks/screen-capture'
 import { useAnimatedComponents } from '../../contexts/animated-components'
-import { usePINValidation } from '../../hooks/usePINValidation'
+import { usePINValidation, ModalState } from '../../hooks/usePINValidation'
+import { InlineErrorType } from '../../components/inputs/InlineErrorText'
 import { useTheme } from '../../contexts/theme'
 import { TOKENS, useServices } from '../../container-api'
 import { testIdWithKey } from '../../utils/testable'
+import { InlineErrorConfig } from '../../types/error'
 
 interface ConfirmPINModalProps {
-  errorMessage?: InlineMessageProps
+  errorModalState?: ModalState
   modalUsage: ConfirmPINModalUsage
   onBackPressed: () => void
   onConfirmPIN: (pin: string) => void
   PINOne?: string
-  PINTwo?: string
   setPINTwo?: (pin: string) => void
   title: string
   visible: boolean
@@ -36,13 +35,18 @@ export enum ConfirmPINModalUsage {
   PIN_CHANGE,
 }
 
+interface ErrorMessage {
+  message: string
+  inlineType: InlineErrorType
+  config: InlineErrorConfig
+}
+
 const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
-  errorMessage,
+  errorModalState,
   modalUsage = ConfirmPINModalUsage.PIN_CREATE,
   onBackPressed = () => {},
   onConfirmPIN = () => {},
   PINOne = '',
-  PINTwo = '',
   setPINTwo = () => {},
   title = '',
   visible = false,
@@ -50,9 +54,20 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
 }: ConfirmPINModalProps) => {
   const { ColorPalette, NavigationTheme } = useTheme()
   const { t } = useTranslation()
-  const [PINHeader, { preventScreenCapture }] = useServices([TOKENS.COMPONENT_PIN_HEADER, TOKENS.CONFIG])
+  const [PINHeader, { preventScreenCapture }, inlineMessages] = useServices([
+    TOKENS.COMPONENT_PIN_HEADER,
+    TOKENS.CONFIG,
+    TOKENS.INLINE_ERRORS,
+  ])
   usePreventScreenCapture(preventScreenCapture)
-  const { modalState } = usePINValidation(PINOne, PINTwo)
+  const { comparePINEntries } = usePINValidation(PINOne)
+
+  const customErrorMessage = {
+    message: t('PINCreate.PINsDoNotMatch'),
+    inlineType: InlineErrorType.error,
+    config: inlineMessages,
+  }
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage | undefined>(undefined)
   const { LoadingSpinner } = useAnimatedComponents()
 
   const style = StyleSheet.create({
@@ -89,9 +104,11 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
             label={t('PINCreateConfirm.PINInputLabel')}
             onPINChanged={async (userPinInput: string) => {
               setPINTwo(userPinInput)
+              setErrorMessage(undefined)
               if (userPinInput.length === PINOne.length) {
                 Keyboard.dismiss()
-                await onConfirmPIN(userPinInput)
+                if (!comparePINEntries(PINOne, userPinInput)) setErrorMessage(customErrorMessage)
+                else await onConfirmPIN(userPinInput)
               }
             }}
             testID={testIdWithKey('EnterPIN')}
@@ -101,11 +118,15 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
           />
           {isLoading && (
             <View style={style.loadingContainer}>
-              <LoadingSpinner size={50} color={ColorPalette.brand.primary}/>
+              <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
             </View>
           )}
-          {modalState.visible && (
-            <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
+          {errorModalState?.visible && (
+            <AlertModal
+              title={errorModalState?.title}
+              message={errorModalState?.message}
+              submit={errorModalState?.onModalDismiss}
+            />
           )}
         </View>
       </KeyboardView>

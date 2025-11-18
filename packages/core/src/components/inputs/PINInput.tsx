@@ -74,7 +74,7 @@ const PINInputComponent = (
         // add new characters to the actual PIN
         // only allow numbers
         const newChars = cleanValue.slice(PIN.length)
-        const newPIN = PIN + newChars.replace(/●/g, '').replace(/\D/g, "")
+        const newPIN = PIN + newChars.replace(/●/g, '').replace(/\D/g, '')
         setPIN(newPIN)
         onPINChanged && onPINChanged(newPIN)
         // characters were removed

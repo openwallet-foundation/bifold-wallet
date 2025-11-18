@@ -66,7 +66,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const [PINConfirmModalVisible, setPINConfirmModalVisible] = useState(false)
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
   const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity } =
-    usePINValidation(PIN, PINTwo)
+    usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -223,7 +223,6 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           </View>
         )}
         <ConfirmPINModal
-          errorMessage={inlineMessageField2}
           modalUsage={ConfirmPINModalUsage.PIN_CREATE}
           onBackPressed={modalBackButtonPressed}
           onConfirmPIN={onConfirmPIN}

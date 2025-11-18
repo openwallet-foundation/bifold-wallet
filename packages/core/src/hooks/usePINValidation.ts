@@ -5,7 +5,7 @@ import { InlineErrorType, InlineMessageProps } from '../components/inputs/Inline
 import { TOKENS, useServices } from '../container-api'
 import { createPINValidations, PINValidationsType } from '../utils/PINValidation'
 
-interface ModalState {
+export interface ModalState {
   visible: boolean
   title: string
   message: string
@@ -18,7 +18,7 @@ const initialModalState: ModalState = {
   message: '',
 }
 
-export const usePINValidation = (PIN: string, PINTwo: string) => {
+export const usePINValidation = (PIN: string) => {
   const { t } = useTranslation()
   const [{ PINSecurity }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   const [inlineMessageField1, setInlineMessageField1] = useState<InlineMessageProps>()
@@ -35,7 +35,7 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
 
   useEffect(() => {
     setPINValidations(createPINValidations(PIN, PINSecurity.rules))
-  }, [PIN, PINTwo, PINSecurity.rules])
+  }, [PIN, PINSecurity.rules])
 
   const attentionMessage = useCallback(
     (title: string, message: string, pinOne: boolean) => {
@@ -84,6 +84,17 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
     [t, attentionMessage, PINSecurity.rules]
   )
 
+  const comparePINEntries = useCallback(
+    (pinOne: string, pinTwo: string) => {
+      if (pinOne !== pinTwo) {
+        attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
+        return false
+      }
+      return true
+    },
+    [attentionMessage, t]
+  )
+
   return {
     PINValidations,
     validatePINEntry,
@@ -93,5 +104,6 @@ export const usePINValidation = (PIN: string, PINTwo: string) => {
     setModalState,
     clearModal,
     PINSecurity,
+    comparePINEntries,
   }
 }
