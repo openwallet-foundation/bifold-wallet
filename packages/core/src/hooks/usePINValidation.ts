@@ -62,6 +62,17 @@ export const usePINValidation = (PIN: string) => {
     [inlineMessages, clearModal]
   )
 
+  const comparePINEntries = useCallback(
+    (pinOne: string, pinTwo: string) => {
+      if (pinOne !== pinTwo) {
+        attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
+        return false
+      }
+      return true
+    },
+    [attentionMessage, t]
+  )
+
   const validatePINEntry = useCallback(
     (pinOne: string, pinTwo: string): boolean => {
       const PINValidation = createPINValidations(pinOne, PINSecurity.rules)
@@ -75,24 +86,9 @@ export const usePINValidation = (PIN: string) => {
           return false
         }
       }
-      if (pinOne !== pinTwo) {
-        attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
-        return false
-      }
-      return true
+      return comparePINEntries(pinOne, pinTwo)
     },
-    [t, attentionMessage, PINSecurity.rules]
-  )
-
-  const comparePINEntries = useCallback(
-    (pinOne: string, pinTwo: string) => {
-      if (pinOne !== pinTwo) {
-        attentionMessage(t('PINCreate.InvalidPIN'), t('PINCreate.PINsDoNotMatch'), false)
-        return false
-      }
-      return true
-    },
-    [attentionMessage, t]
+    [t, attentionMessage, PINSecurity.rules, comparePINEntries]
   )
 
   return {
@@ -105,5 +101,7 @@ export const usePINValidation = (PIN: string) => {
     clearModal,
     PINSecurity,
     comparePINEntries,
+    setInlineMessageField1,
+    setInlineMessageField2,
   }
 }

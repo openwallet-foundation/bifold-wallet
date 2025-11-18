@@ -71,6 +71,8 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     clearModal,
     setModalState,
     comparePINEntries,
+    setInlineMessageField1,
+    setInlineMessageField2,
   } = usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
 
@@ -247,6 +249,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
           <PINInput
             label={t('PINChange.EnterPINTitle')}
             onPINChanged={async (userPinInput: string) => {
+              setInlineMessageField1(undefined)
               setPIN(userPinInput)
               if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
                 await handleConfirmPINModal(userPinInput)
@@ -262,6 +265,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
             <PINInput
               label={t('PINCreateConfirm.PINInputLabel')}
               onPINChanged={async (userPinInput: string) => {
+                setInlineMessageField2(undefined)
                 setPINTwo(userPinInput)
               }}
               testID={testIdWithKey('ConfirmPIN')}
