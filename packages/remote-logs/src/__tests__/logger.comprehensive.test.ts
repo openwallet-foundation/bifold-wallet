@@ -136,31 +136,32 @@ describe('RemoteLogger', () => {
   })
 
   describe('Session ID Management', () => {
-    it('should generate a 6-digit session ID when first accessed', () => {
+    it('should return 0 before remote logging is enabled', () => {
       const remoteLogger = new RemoteLogger({})
+      expect(remoteLogger.sessionId).toBe(0)
+    })
 
+    it('should generate a 6-digit session ID when remote logging first enabled', () => {
+      const remoteLogger = new RemoteLogger({})
+      remoteLogger.remoteLoggingEnabled = true
       const sessionId = remoteLogger.sessionId
-
       expect(sessionId).toBeGreaterThanOrEqual(100000)
       expect(sessionId).toBeLessThanOrEqual(999999)
       expect(Number.isInteger(sessionId)).toBe(true)
     })
 
-    it('should return the same session ID on subsequent accesses', () => {
+    it('should persist the session ID while remote logging remains enabled', () => {
       const remoteLogger = new RemoteLogger({})
-
+      remoteLogger.remoteLoggingEnabled = true
       const sessionId1 = remoteLogger.sessionId
       const sessionId2 = remoteLogger.sessionId
-
       expect(sessionId1).toBe(sessionId2)
     })
 
     it('should allow setting a custom session ID and reconfigure logger', () => {
       const remoteLogger = new RemoteLogger({})
       const customSessionId = 123456
-
       remoteLogger.sessionId = customSessionId
-
       expect(remoteLogger.sessionId).toBe(customSessionId)
       expect(mockCreateLogger).toHaveBeenCalledTimes(2) // Constructor + setter
     })
@@ -184,16 +185,12 @@ describe('RemoteLogger', () => {
       expect(mockCreateLogger).toHaveBeenCalledTimes(2) // Once in constructor, once when enabling
     })
 
-    it('should clear sessionId when disabled', () => {
+    it('should clear sessionId when disabled (returning 0)', () => {
       const remoteLogger = new RemoteLogger({})
-      const originalSessionId = remoteLogger.sessionId
-
       remoteLogger.remoteLoggingEnabled = true
+      expect(remoteLogger.sessionId).toBeGreaterThanOrEqual(100000)
       remoteLogger.remoteLoggingEnabled = false
-
-      // SessionId should be cleared, so a new one should be generated
-      const newSessionId = remoteLogger.sessionId
-      expect(newSessionId).not.toBe(originalSessionId)
+      expect(remoteLogger.sessionId).toBe(0)
     })
 
     it('should set up auto-disable timer when enabled with interval', (done) => {
@@ -483,32 +480,23 @@ describe('RemoteLogger', () => {
   describe('configuration', () => {
     it('should configure logger with console transport only when remote logging disabled', () => {
       new RemoteLogger({})
-
       expect(mockCreateLogger).toHaveBeenCalledWith(
         expect.objectContaining({
-          transport: [expect.any(Function)], // consoleTransport
-          transportOptions: {},
+          transport: [expect.any(Function)],
+          transportOptions: {}, // current implementation provides empty transportOptions
         })
       )
     })
 
     it('should configure logger with both transports when remote logging enabled', () => {
-      const remoteLogger = new RemoteLogger({
-        lokiUrl: 'http://localhost:3100',
-        lokiLabels: { app: 'test' },
-      })
-
+      const remoteLogger = new RemoteLogger({ lokiUrl: 'http://localhost:3100', lokiLabels: { app: 'test' } })
       remoteLogger.remoteLoggingEnabled = true
-
       expect(mockCreateLogger).toHaveBeenLastCalledWith(
         expect.objectContaining({
-          transport: [expect.any(Function), expect.any(Function)], // console + loki
+          transport: [expect.any(Function), expect.any(Function)],
           transportOptions: {
             lokiUrl: 'http://localhost:3100',
-            lokiLabels: {
-              app: 'test',
-              session_id: expect.any(String),
-            },
+            lokiLabels: { app: 'test', session_id: expect.any(String) },
           },
         })
       )
