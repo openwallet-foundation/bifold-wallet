@@ -27,6 +27,7 @@ const Developer: React.FC = () => {
   const [enableWalletNaming, setEnableWalletNaming] = useState(!!store.preferences.enableWalletNaming)
   const [enableShareableLink, setEnableShareableLink] = useState(!!store.preferences.enableShareableLink)
   const [preventAutoLock, setPreventAutoLock] = useState(!!store.preferences.preventAutoLock)
+  const [enableGenericErrorMessages, setEnableGenericErrorMessages] = useState(!!store.preferences.genericErrorMessages)
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
 
   const styles = StyleSheet.create({
@@ -121,6 +122,14 @@ const Developer: React.FC = () => {
       payload: [!enableShareableLink],
     })
     setEnableShareableLink((previousState) => !previousState)
+  }
+
+  const toggleGenericErrorMessages = () => {
+    dispatch({
+      type: DispatchAction.GENERIC_ERROR_MESSAGES,
+      payload: [!enableGenericErrorMessages],
+    })
+    setEnableGenericErrorMessages((previousState) => !previousState)
   }
 
   const onRunRefreshCycleTouched = () => {
@@ -291,6 +300,28 @@ const Developer: React.FC = () => {
               onValueChange={toggleShareableLinkSwitch}
               testID={testIdWithKey('ShareableLinkSwitchElement')}
               value={enableShareableLink}
+            />
+          </Pressable>
+        </View>
+        <View style={styles.settingContainer}>
+          <View style={{ flex: 1 }}>
+            <ThemedText variant="bold" style={styles.settingLabelText}>
+              {t("Settings.GenericErrorMessages")}
+            </ThemedText>
+          </View>
+          <Pressable
+            style={styles.settingSwitchContainer}
+            accessibilityLabel={t("Settings.GenericErrorMessages")}
+            accessibilityRole={'switch'}
+            testID={testIdWithKey('ToggleUseGenericErrorMessages')}
+          >
+            <Switch
+              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+              thumbColor={enableShareableLink ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
+              onValueChange={toggleGenericErrorMessages}
+              testID={testIdWithKey('GenericErrorMessagesSwitchElement')}
+              value={enableGenericErrorMessages}
             />
           </Pressable>
         </View>

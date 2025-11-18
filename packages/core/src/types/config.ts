@@ -49,6 +49,8 @@ export interface Config {
   appUpdateConfig?: AppUpdateConfig
   preventScreenCapture?: boolean
   PINScreensConfig: PINScreensConfig
+  showGenericErrors?: boolean
+  simplifiedErrorModal?: boolean
 }
 
 export interface PINScreensConfig {

@@ -50,7 +50,8 @@
     "Send": "Send",
     "Reset": "Reset",
     "ViewJSON": "View JSON Details",
-    "RefreshCredentials": "Refresh Credentials"
+    "RefreshCredentials": "Refresh Credentials",
+    "AppName": "Aries Bifold"
   },
   "Toast": {
     "OpenIDCredRefreshing": {
@@ -157,7 +158,11 @@
     "Title1048": "Proof request problems.",
     "Message1048": "There was a problem with the proof request.",
     "Title1049": "Unable to change PIN.",
-    "Message1049": "There was a problem while attempting to change your PIN."
+    "Message1049": "There was a problem while attempting to change your PIN.",
+    "GenericError": {
+      "Title": "Something went wrong",
+      "Message": "There was an unexpected error, please try again later."
+    }
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -788,7 +793,8 @@
     "Logout": "Log out",
     "ConfigureMediator": "Configure Mediator",
     "ChangeMediator": "Change Mediator",
-    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue?"
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue?",
+    "GenericErrorMessages": "Generic error messages"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes",
@@ -985,5 +991,8 @@
   },
   "Banner": {
     "AlertsLength": "You have {{ alerts }} alerts"
+  },
+  "GenericErrorModal": {
+    "PrimaryCTA": "Go back to home"
   }
 }

@@ -90,6 +90,8 @@ export const defaultConfig: Config = {
   PINScreensConfig: {
     useNewPINDesign: false,
   },
+  showGenericErrors: true,
+  simplifiedErrorModal: true,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
@@ -249,6 +251,8 @@ export class MainContainer implements Container {
     )
 
     this._container.registerInstance(TOKENS.UTIL_REFRESH_ORCHESTRATOR, orchestrator)
+
+    this._container.registerInstance(TOKENS.SIMPLIFIED_ERROR_SCREEN, true)
 
     return this
   }

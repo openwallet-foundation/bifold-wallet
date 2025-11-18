@@ -149,6 +149,7 @@ export const CONFIG_TOKENS = {
   CONFIG: 'config',
   INLINE_ERRORS: 'errors.inline',
   ONBOARDING: 'utility.onboarding',
+  SIMPLIFIED_ERROR_SCREEN: 'errors.simplified-error-screen'
 } as const
 
 export const TOKENS = {
@@ -232,6 +233,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionLabel?: string }>
   [TOKENS.UTIL_AGENT_BRIDGE]: AgentBridge
   [TOKENS.UTIL_REFRESH_ORCHESTRATOR]: IRefreshOrchestrator
+  [TOKENS.SIMPLIFIED_ERROR_SCREEN]: boolean
 }
 
 export interface Container {

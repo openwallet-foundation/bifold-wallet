@@ -37,6 +37,7 @@ export interface Preferences {
   selectedMediator: string
   availableMediators: string[]
   bannerMessages: BannerMessage[]
+  genericErrorMessages: boolean
 }
 
 export interface Tours {
