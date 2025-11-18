@@ -227,6 +227,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           onBackPressed={modalBackButtonPressed}
           onConfirmPIN={onConfirmPIN}
           PINOne={PIN}
+          setPINTwo={setPINTwo}
           title={t('Screens.CreatePIN')}
           visible={PINConfirmModalVisible}
           isLoading={isLoading}
