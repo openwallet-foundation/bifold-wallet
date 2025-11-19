@@ -1,5 +1,17 @@
 # @bifold/react-native-attestation
 
+## 2.11.4
+
+## 2.11.3
+
+### Patch Changes
+
+- 538a3a6: added app store receipt checking method to attestation lib
+
+## 2.11.2
+
+## 2.11.1
+
 ## 2.11.0
 
 ## 2.10.2

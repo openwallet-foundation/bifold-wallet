@@ -1,5 +1,25 @@
 # @bifold/core
 
+## 2.11.4
+
+### Patch Changes
+
+- 615c1f6: more new pin screen ui bug fixes
+
+## 2.11.3
+
+## 2.11.2
+
+### Patch Changes
+
+- 3246436: Added tap to focus functionality for the ScanCamera component
+
+## 2.11.1
+
+### Patch Changes
+
+- ec19ffc: make scrollview props available through keyboardview prop
+
 ## 2.11.0
 
 ### Minor Changes
