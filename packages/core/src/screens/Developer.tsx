@@ -317,7 +317,7 @@ const Developer: React.FC = () => {
           >
             <Switch
               trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={enableShareableLink ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+              thumbColor={enableGenericErrorMessages ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
               ios_backgroundColor={ColorPalette.grayscale.lightGrey}
               onValueChange={toggleGenericErrorMessages}
               testID={testIdWithKey('GenericErrorMessagesSwitchElement')}

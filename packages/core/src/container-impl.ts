@@ -91,7 +91,7 @@ export const defaultConfig: Config = {
     useNewPINDesign: false,
   },
   showGenericErrors: true,
-  simplifiedErrorModal: true,
+  enableFullScreenErrorModal: false,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
