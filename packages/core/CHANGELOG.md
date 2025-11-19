@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.4
+
+### Patch Changes
+
+- 615c1f6: more new pin screen ui bug fixes
+
 ## 2.11.3
 
 ## 2.11.2
