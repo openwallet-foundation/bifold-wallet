@@ -498,7 +498,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			shellScript = "echo \"### [Start Packager] Script running...\"\necho \"### [Start Packager] SRCROOT = $SRCROOT\"\necho \"### [Start Packager] PWD (before cd) = $(pwd)\"\n\n# SRCROOT = .../aries-mobile-agent-react-native/samples/app/ios\n# Go to repo root: samples/app/ios -> samples/app -> samples -> repo root\ncd \"$SRCROOT/../../..\" || {\n  echo \"### [Start Packager] cd to repo root (SRCROOT/../../..) FAILED\"\n  exit 1\n}\n\necho \"### [Start Packager] PWD (repo root) = $(pwd)\"\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"### [Start Packager] Using port ${RCT_METRO_PORT}\"\n\n# Try to find corepack\nCOREPACK_BIN=$(command -v corepack || echo \"\")\n\n# Fallback to common locations if Xcode's PATH is weird\nif [ -z \"$COREPACK_BIN\" ]; then\n  for p in /usr/local/bin/corepack /opt/homebrew/bin/corepack; do\n    if [ -x \"$p\" ]; then\n      COREPACK_BIN=\"$p\"\n      break\n    fi\n  done\nfi\n\nif [ -z \"$COREPACK_BIN\" ]; then\n  echo \"### [Start Packager] ERROR: 'corepack' not found in PATH or common locations.\"\n  echo \"### [Start Packager] Make sure Node 16.9+ / 18+ / 20+ is installed and 'corepack enable' has been run.\"\n  exit 1\nfi\n\necho \"### [Start Packager] Using corepack at: $COREPACK_BIN\"\n\n# If something already on the port, don't start another\nif lsof -i:${RCT_METRO_PORT} -t >/dev/null 2>&1; then\n  echo \"### [Start Packager] Metro (or something) already running on port ${RCT_METRO_PORT}\"\nelse\n  echo \"### [Start Packager] cd into samples/app and start Metro via 'corepack yarn'...\"\n  cd samples/app || {\n    echo \"### [Start Packager] cd to samples/app FAILED\"\n    exit 1\n  }\n  echo \"### [Start Packager] PWD (before starting Metro) = $(pwd)\"\n\n  # Fully detach Metro so Xcode doesn't hang on build\n  echo \"### [Start Packager] Starting Metro (detached)...\"\n  nohup \"$COREPACK_BIN\" yarn start -- --port ${RCT_METRO_PORT} >/dev/null 2>&1 &\n  disown || true\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -736,10 +736,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -806,10 +803,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
