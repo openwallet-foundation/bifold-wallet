@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.11.4
+
+### Patch Changes
+
+- 17e72a0: simplify logger configuration and improve output clarity
+- Updated dependencies [615c1f6]
+  - @bifold/core@2.11.4
+
 ## 2.11.3
 
 ### Patch Changes
