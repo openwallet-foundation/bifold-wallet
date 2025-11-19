@@ -60,7 +60,7 @@ export const defaultState: State = {
     availableMediators: [Config.MEDIATOR_URL ?? ''],
     selectedMediator: Config.MEDIATOR_URL ?? '',
     bannerMessages: [],
-    genericErrorMessages: false,
+    genericErrorMessages: true,
   },
   tours: {
     seenToursPrompt: false,

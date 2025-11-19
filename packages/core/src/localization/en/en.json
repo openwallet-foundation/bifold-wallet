@@ -992,7 +992,7 @@
   "Banner": {
     "AlertsLength": "You have {{ alerts }} alerts"
   },
-  "GenericErrorModal": {
+  "FullScreenErrorModal": {
     "PrimaryCTA": "Go back to home"
   }
 }

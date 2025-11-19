@@ -3,26 +3,26 @@ import { View, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
 
-import FauxHeader from '../../components/misc/FauxHeader'
-import SafeAreaModal from '../../components/modals/SafeAreaModal'
-import InfoBox, { InfoBoxType } from '../../components/misc/InfoBox'
-import Button, { ButtonType } from '../../components/buttons/Button'
+import FauxHeader from '../misc/FauxHeader'
+import SafeAreaModal from './SafeAreaModal'
+import InfoBox, { InfoBoxType } from '../misc/InfoBox'
+import Button, { ButtonType } from '../buttons/Button'
 import { useTheme } from '../../contexts/theme'
 import { useStore } from '../../contexts/store'
 
-interface GenericErrorModalProps {
+interface FullScreenErrorModalProps {
   errorTitle: string
   errorDescription: string
   visible: boolean
   onPressCTA: () => void
 }
 
-const GenericErrorModal: React.FC<GenericErrorModalProps> = ({
+const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
   errorTitle = '',
   errorDescription = '',
   visible = false,
   onPressCTA = () => {},
-}: GenericErrorModalProps) => {
+}: FullScreenErrorModalProps) => {
   const { ColorPalette, NavigationTheme } = useTheme()
   const { t } = useTranslation()
   const [ store ] = useStore()
@@ -62,7 +62,7 @@ const GenericErrorModal: React.FC<GenericErrorModalProps> = ({
           />
           <View style={style.buttonContainer}>
             <Button
-              title={t('GenericErrorModal.PrimaryCTA')}
+              title={t('FullScreenErrorModal.PrimaryCTA')}
               buttonType={ButtonType.Primary}
               onPress={onPressCTA}
             />
@@ -72,4 +72,4 @@ const GenericErrorModal: React.FC<GenericErrorModalProps> = ({
   )
 }
 
-export default GenericErrorModal
+export default FullScreenErrorModal

@@ -11,7 +11,7 @@ import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import SafeAreaModal from './SafeAreaModal'
-import GenericErrorModal from './GenericErrorModal'
+import GenericErrorModal from './FullScreenErrorModal'
 import { Screens, TabStacks } from '../../types/navigators'
 
 interface ErrorModalProps {
@@ -24,7 +24,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [error, setError] = useState<BifoldError>()
   const [reported, setReported] = useState(false)
-  const [logger, config] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
+  const [logger, { enableFullScreenErrorModal }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const { ColorPalette } = useTheme()
   const navigation = useNavigation()
 
@@ -94,7 +94,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   )
 
   return (
-    config.simplifiedErrorModal ?
+    enableFullScreenErrorModal ?
       <GenericErrorModal 
         errorTitle={error ? error.title : t('Error.Unknown')}
         errorDescription={error ? error.description : t('Error.Problem')}

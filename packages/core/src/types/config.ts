@@ -50,7 +50,7 @@ export interface Config {
   preventScreenCapture?: boolean
   PINScreensConfig: PINScreensConfig
   showGenericErrors?: boolean
-  simplifiedErrorModal?: boolean
+  enableFullScreenErrorModal?: boolean
 }
 
 export interface PINScreensConfig {
