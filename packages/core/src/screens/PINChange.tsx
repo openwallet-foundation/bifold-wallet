@@ -29,7 +29,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const { checkWalletPIN, rekeyWallet } = useAuth()
   const { agent } = useAppAgent()
   const [PIN, setPIN] = useState('')
-  const [PINTwo, setPINTwo] = useState('')
+  const [PINTwo, setPINTwo] = useState<string>('')
   const [PINOld, setPINOld] = useState('')
   const [store] = useStore()
   const [isLoading, setIsLoading] = useState(false)
@@ -70,7 +70,10 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     PINSecurity,
     clearModal,
     setModalState,
-  } = usePINValidation(PIN, PINTwo)
+    comparePINEntries,
+    setInlineMessageField1,
+    setInlineMessageField2,
+  } = usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -197,7 +200,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const handleConfirmPIN = async (userPinInput: string) => {
     try {
       setIsLoading(true)
-      const valid = validatePINEntry(PIN, userPinInput)
+      const valid = comparePINEntries(PIN, userPinInput)
       if (valid) {
         const success = await rekeyWallet(agent, PINOld, PIN, store.preferences.useBiometry)
         if (success) {
@@ -246,6 +249,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
           <PINInput
             label={t('PINChange.EnterPINTitle')}
             onPINChanged={async (userPinInput: string) => {
+              setInlineMessageField1(undefined)
               setPIN(userPinInput)
               if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
                 await handleConfirmPINModal(userPinInput)
@@ -261,6 +265,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
             <PINInput
               label={t('PINCreateConfirm.PINInputLabel')}
               onPINChanged={async (userPinInput: string) => {
+                setInlineMessageField2(undefined)
                 setPINTwo(userPinInput)
               }}
               testID={testIdWithKey('ConfirmPIN')}
@@ -300,13 +305,14 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
         visible={verifyPINModalVisible}
       />
       <ConfirmPINModal
-        errorMessage={inlineMessageField2}
+        errorModalState={modalState}
         isLoading={isLoading}
         modalUsage={ConfirmPINModalUsage.PIN_CHANGE}
         onBackPressed={onConfirmPINModalBackPressed}
         onConfirmPIN={handleConfirmPIN}
         PINOne={PIN}
-        title="Confirm PIN"
+        setPINTwo={setPINTwo}
+        title={t('Screens.ConfirmPIN')}
         visible={confirmPINModalVisible}
       />
     </KeyboardView>
