@@ -11,7 +11,7 @@ import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import SafeAreaModal from './SafeAreaModal'
-import GenericErrorModal from './FullScreenErrorModal'
+import FullScreenErrorModal from './FullScreenErrorModal'
 import { Screens, TabStacks } from '../../types/navigators'
 
 interface ErrorModalProps {
@@ -95,30 +95,30 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
 
   return (
     enableFullScreenErrorModal ?
-      <GenericErrorModal 
+      <FullScreenErrorModal 
         errorTitle={error ? error.title : t('Error.Unknown')}
         errorDescription={error ? error.description : t('Error.Problem')}
         onPressCTA={onPressSimplifiedErrorModalCTA}
         visible={modalVisible}
       />
     :
-    <SafeAreaModal visible={modalVisible} transparent={true}>
-      <StatusBar hidden={true} />
-      <SafeAreaView style={styles.container}>
-        <InfoBox
-          notificationType={InfoBoxType.Error}
-          title={error ? error.title : t('Error.Unknown')}
-          description={error ? error.description : t('Error.Problem')}
-          message={formattedMessageForError(error ?? null)}
-          onCallToActionPressed={onDismissModalTouched}
-          secondaryCallToActionTitle={reported ? t('Error.Reported') : t('Error.ReportThisProblem')}
-          secondaryCallToActionDisabled={reported}
-          secondaryCallToActionIcon={secondaryCallToActionIcon}
-          secondaryCallToActionPressed={enableReport && error ? report : undefined}
-          showVersionFooter
-        />
-      </SafeAreaView>
-    </SafeAreaModal>
+      <SafeAreaModal visible={modalVisible} transparent={true}>
+        <StatusBar hidden={true} />
+        <SafeAreaView style={styles.container}>
+          <InfoBox
+            notificationType={InfoBoxType.Error}
+            title={error ? error.title : t('Error.Unknown')}
+            description={error ? error.description : t('Error.Problem')}
+            message={formattedMessageForError(error ?? null)}
+            onCallToActionPressed={onDismissModalTouched}
+            secondaryCallToActionTitle={reported ? t('Error.Reported') : t('Error.ReportThisProblem')}
+            secondaryCallToActionDisabled={reported}
+            secondaryCallToActionIcon={secondaryCallToActionIcon}
+            secondaryCallToActionPressed={enableReport && error ? report : undefined}
+            showVersionFooter
+          />
+        </SafeAreaView>
+      </SafeAreaModal>
   )
 }
 
