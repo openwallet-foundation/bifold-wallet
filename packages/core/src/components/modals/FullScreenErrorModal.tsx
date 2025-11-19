@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
