@@ -852,6 +852,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
             <View>
               {loading || attestationLoading ? null : (
                 <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
+                  {/*  Use for new arch CredentialCardGen */}
                   <CredentialCard
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
