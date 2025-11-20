@@ -67,6 +67,7 @@ enum PreferencesDispatchAction {
   ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
   RESET_MEDIATORS = 'preferences/resetMediators',
   BANNER_MESSAGES = 'preferences/bannerMessages',
+  GENERIC_ERROR_MESSAGES = 'preferences/genericErrorMessages',
   REMOVE_BANNER_MESSAGE = 'REMOVE_BANNER_MESSAGE',
 }
 
@@ -237,6 +238,21 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const preferences = {
         ...state.preferences,
         acceptDevCredentials: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+
+      return newState
+    }
+    case PreferencesDispatchAction.GENERIC_ERROR_MESSAGES: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        genericErrorMessages: choice,
       }
       const newState = {
         ...state,
