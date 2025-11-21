@@ -49,6 +49,8 @@ export interface RegistryActions {
   /** Old cred `oldId` has a replacement available (offer or reissued record) */
   markExpiredWithReplacement: (oldId: string, replacement: OpenIDCredentialLite) => void
 
+  markInvalid: (id: string) => void // <— NEW
+
   /** Accept the queued replacement for oldId → promotes replacement to byId and clears expired state */
   acceptReplacement: (oldId: string) => void
 
@@ -96,6 +98,11 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
     set((s) => ({
       expired: s.expired.includes(oldId) ? s.expired : [...s.expired, oldId],
       replacements: { ...s.replacements, [oldId]: replacement },
+    })),
+
+  markInvalid: (id) =>
+    set((s) => ({
+      expired: s.expired.includes(id) ? s.expired : [...s.expired, id],
     })),
 
   acceptReplacement: (oldId) =>

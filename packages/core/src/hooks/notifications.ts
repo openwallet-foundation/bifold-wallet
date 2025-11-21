@@ -22,6 +22,7 @@ import { useOpenID } from '../modules/openid/hooks/openid'
 import { CustomNotification } from '../types/notification'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useReplacementNotifications } from '../modules/openid/hooks/useReplacementNotifications'
+import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
 
 export type NotificationsInputProps = {
   openIDUri?: string
@@ -53,6 +54,7 @@ export const useNotifications = ({
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const replacementNotifs = useReplacementNotifications()
+  const openIDExpiredNotifs = useExpiredNotifications()
 
   useEffect(() => {
     // get all unseen messages
@@ -103,6 +105,7 @@ export const useNotifications = ({
       ...revoked,
       ...openIDCreds,
       ...replacementNotifs,
+      ...openIDExpiredNotifs,
     ].sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime())
 
     setNotifications(notif)
@@ -115,6 +118,7 @@ export const useNotifications = ({
     credsDone,
     openIDCredRecieved,
     replacementNotifs,
+    openIDExpiredNotifs,
   ])
 
   return notifications
