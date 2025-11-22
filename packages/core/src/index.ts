@@ -78,6 +78,13 @@ import { QrCodeScanError } from './types/error'
 import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
 import { AgentBridge } from './services/AgentBridge'
 
+import { useOnboardingState } from './hooks/useOnboardingState'
+import PINCreate from './screens/PINCreate'
+import PINEnter from './screens/PINEnter'
+import PushNotifications from './screens/PushNotifications'
+import NameWallet from './screens/NameWallet'
+import { getOnboardingScreens } from './navigators/OnboardingScreens'
+
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
@@ -260,5 +267,11 @@ export {
   walletTimeout,
   RefreshOrchestrator,
   AgentBridge,
+  useOnboardingState,
+  PINCreate,
+  PINEnter,
+  PushNotifications,
+  NameWallet,
+  getOnboardingScreens,
 }
 export type { BannerMessage, DeepPartial, IButton }
