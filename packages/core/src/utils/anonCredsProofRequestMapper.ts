@@ -58,14 +58,17 @@ const getPredicateTypeAndValues = (predicateFilter: NonNullable<FieldV2['filter'
 
 const getClaimNameForField = (field: FieldV2) => {
   if (!field.path) throw new Error('Field path is required')
-  const baseClaimPath = '$.credentialSubject.'
-  const claimPaths = field.path.filter((path) => path.startsWith(baseClaimPath))
-  if (claimPaths.length === 0) return undefined
+  const baseClaimPaths = ['$.vc.credentialSubject.', '$.credentialSubject.']
 
-  const claimNames = claimPaths.map((path) => path.slice(baseClaimPath.length))
-  const propertyName = claimNames[0]
+  for (const baseClaimPath of baseClaimPaths) {
+    const claimPaths = field.path.filter((path) => path.startsWith(baseClaimPath))
+    if (claimPaths.length > 0) {
+      const claimNames = claimPaths.map((path) => path.slice(baseClaimPath.length))
+      return claimNames[0]
+    }
+  }
 
-  return propertyName
+  return undefined
 }
 
 export type ProcessedAttributes = { [key: string]: ProofCredentialAttributes }
@@ -92,15 +95,17 @@ export const createAnonCredsProofRequest = (
 
     const fields = descriptor.constraints?.fields
     if (!fields) throw new Error('Unclear mapping of constraint with no fields.')
-
-    // Setting `requiresRevocationStatus` to `false` returns all
-    // credentials even if they are revokable (and revoked). We need this to
-    // be able to show why a proof cannot be satisfied. Otherwise we can only
-    // show failure.
     const requiresRevocationStatus = false
 
     const credentialMeta = descriptorMetadata[descriptor.id]
+
     const restrictions: AnonCredsProofRequestRestriction[] = credentialMeta.map((credentialMeta) => {
+      if (credentialMeta.anonCredsTags.anonCredsMethodName === 'w3c') {
+        return {
+          schema_name: credentialMeta.anonCredsTags.anonCredsSchemaName,
+        } as AnonCredsProofRequestRestriction
+      }
+
       return {
         cred_def_id: credentialMeta.anonCredsTags.anonCredsCredentialDefinitionId,
         schema_id: credentialMeta.anonCredsTags.anonCredsSchemaId,
@@ -152,12 +157,34 @@ export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsFo
       const inputDescriptorId = entry.inputDescriptorId
 
       const recordsWithMetadata = entry.verifiableCredentials.map((submissionEntryCredential) => {
-        if (submissionEntryCredential.type !== ClaimFormat.LdpVc) {
+        if (
+          submissionEntryCredential.type !== ClaimFormat.LdpVc &&
+          submissionEntryCredential.type !== ClaimFormat.JwtVc
+        ) {
           throw new Error(`Unsupported credential type. ${submissionEntryCredential.type}`)
         }
-        const record = submissionEntryCredential.credentialRecord
-        const anonCredsTags = getAnonCredsTagsFromRecord(record as W3cCredentialRecord)
-        if (!anonCredsTags) throw new Error('Missing AnonCreds tags from credential record')
+
+        const record = submissionEntryCredential.credentialRecord as W3cCredentialRecord
+        const types = record.getTags().types
+        const credentialType =
+          Array.isArray(types) && types.length > 1 ? types[1] : Array.isArray(types) ? types[0] : types
+        const anonCredsTags = getAnonCredsTagsFromRecord(record)
+
+        if (!anonCredsTags) {
+          // For non-AnonCreds W3C credentials, create synthetic tags using credential type
+          const typeString = typeof credentialType === 'string' ? credentialType : String(credentialType)
+          const syntheticTags: AnonCredsCredentialTags = {
+            anonCredsCredentialDefinitionId: typeString, // Use type as identifier
+            anonCredsSchemaId: typeString,
+            anonCredsLinkSecretId: 'synthetic',
+            anonCredsMethodName: 'w3c',
+            anonCredsSchemaName: typeString,
+            anonCredsSchemaVersion: '1.0',
+            anonCredsSchemaIssuerId: 'unknown',
+          }
+          return { record, anonCredsTags: syntheticTags }
+        }
+
         return { record, anonCredsTags }
       })
 
@@ -172,6 +199,92 @@ export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsFo
   }
 
   return descriptorMetadata
+}
+
+/**
+ * Create AnonCreds credentials for proof request directly from descriptor metadata
+ * This is used for W3C credentials that don't have AnonCreds backing
+ */
+export const createAnonCredsCredentialsFromDescriptorMetadata = (
+  anonCredsProofRequest: DifPexAnonCredsProofRequest,
+  descriptorMetadata: DescriptorMetadata,
+  fullCredentials: any[]
+): AnonCredsCredentialsForProofRequest => {
+  const attributes: AnonCredsCredentialsForProofRequest['attributes'] = {}
+  const predicates: AnonCredsCredentialsForProofRequest['predicates'] = {}
+
+  const w3cRecordToExchangeRecord = new Map<string, any>()
+  fullCredentials.forEach((credExRecord) => {
+    credExRecord.credentials.forEach((binding: any) => {
+      w3cRecordToExchangeRecord.set(binding.credentialRecordId, credExRecord)
+    })
+  })
+
+  for (const [referent, requestedAttribute] of Object.entries(anonCredsProofRequest.requested_attributes)) {
+    const descriptorId = requestedAttribute.descriptorId
+    if (!descriptorId) continue
+
+    const credentialsForDescriptor = descriptorMetadata[descriptorId] || []
+
+    attributes[referent] = credentialsForDescriptor.map((credMeta) => {
+      const exchangeRecord = w3cRecordToExchangeRecord.get(credMeta.record.id)
+      const credentialId = exchangeRecord?.id || credMeta.record.id
+      let attributes = credMeta.record.credential.credentialSubject as any
+      if (attributes?.claims && typeof attributes.claims === 'object') {
+        attributes = attributes.claims
+      }
+
+      return {
+        credentialId: credentialId,
+        revealed: true,
+        credentialInfo: {
+          credentialId: credentialId,
+          attributes: attributes as Record<string, string>,
+          schemaId: credMeta.anonCredsTags.anonCredsSchemaId,
+          credentialDefinitionId: credMeta.anonCredsTags.anonCredsCredentialDefinitionId,
+          revocationRegistryId: credMeta.anonCredsTags.anonCredsRevocationRegistryId ?? null,
+          credentialRevocationId: credMeta.anonCredsTags.anonCredsCredentialRevocationId ?? null,
+          methodName: credMeta.anonCredsTags.anonCredsMethodName,
+          linkSecretId: credMeta.anonCredsTags.anonCredsLinkSecretId,
+          createdAt: credMeta.record.createdAt ?? new Date(),
+          updatedAt: credMeta.record.updatedAt ?? new Date(),
+        },
+      }
+    })
+  }
+  for (const [referent, requestedPredicate] of Object.entries(anonCredsProofRequest.requested_predicates)) {
+    const descriptorId = requestedPredicate.descriptorId
+    if (!descriptorId) continue
+
+    const credentialsForDescriptor = descriptorMetadata[descriptorId] || []
+
+    predicates[referent] = credentialsForDescriptor.map((credMeta) => {
+      const exchangeRecord = w3cRecordToExchangeRecord.get(credMeta.record.id)
+      const credentialId = exchangeRecord?.id || credMeta.record.id
+      let attributes = credMeta.record.credential.credentialSubject as any
+      if (attributes?.claims && typeof attributes.claims === 'object') {
+        attributes = attributes.claims
+      }
+
+      return {
+        credentialId: credentialId,
+        credentialInfo: {
+          credentialId: credentialId,
+          attributes: attributes as Record<string, string>,
+          schemaId: credMeta.anonCredsTags.anonCredsSchemaId,
+          credentialDefinitionId: credMeta.anonCredsTags.anonCredsCredentialDefinitionId,
+          revocationRegistryId: credMeta.anonCredsTags.anonCredsRevocationRegistryId ?? null,
+          credentialRevocationId: credMeta.anonCredsTags.anonCredsCredentialRevocationId ?? null,
+          methodName: credMeta.anonCredsTags.anonCredsMethodName,
+          linkSecretId: credMeta.anonCredsTags.anonCredsLinkSecretId,
+          createdAt: credMeta.record.createdAt ?? new Date(),
+          updatedAt: credMeta.record.updatedAt ?? new Date(),
+        },
+      }
+    })
+  }
+
+  return { attributes, predicates }
 }
 
 /**

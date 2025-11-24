@@ -20,6 +20,13 @@ function normalizeId(id?: string): string | undefined {
 export async function getCredentialName(credDefId?: string, schemaId?: string, agent?: Agent): Promise<string> {
   const normalizedCredDefId = normalizeId(credDefId)
   const normalizedSchemaId = normalizeId(schemaId)
+
+  if (normalizedCredDefId && normalizedSchemaId && normalizedCredDefId === normalizedSchemaId) {
+    if (!normalizedCredDefId.includes(':')) {
+      return normalizedSchemaId
+    }
+  }
+
   const isWebvh = !!(
     normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
     normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
