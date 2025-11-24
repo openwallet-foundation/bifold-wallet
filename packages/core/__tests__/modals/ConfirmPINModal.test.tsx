@@ -9,7 +9,6 @@ describe('ConfirmPINModal Component', () => {
     const tree = render(
       <BasicAppContext>
         <ConfirmPINModal
-          errorMessage={undefined}
           modalUsage={ConfirmPINModalUsage.PIN_CHANGE}
           onBackPressed={jest.fn()}
           onConfirmPIN={jest.fn()}
@@ -25,7 +24,6 @@ describe('ConfirmPINModal Component', () => {
     const tree = render(
       <BasicAppContext>
         <ConfirmPINModal
-          errorMessage={undefined}
           modalUsage={ConfirmPINModalUsage.PIN_CREATE}
           onBackPressed={jest.fn()}
           onConfirmPIN={jest.fn()}
