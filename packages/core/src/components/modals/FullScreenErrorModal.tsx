@@ -25,7 +25,7 @@ const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
 }: FullScreenErrorModalProps) => {
   const { ColorPalette, NavigationTheme } = useTheme()
   const { t } = useTranslation()
-  const [ store ] = useStore()
+  const [store] = useStore()
 
   const useGenericErrorMessage = store.preferences.genericErrorMessages
 
@@ -39,7 +39,7 @@ const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
     },
     buttonContainer: {
       paddingBottom: 20,
-    }
+    },
   })
 
   return (
@@ -52,22 +52,18 @@ const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
       statusBarTranslucent={true}
     >
       <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }} />
-      <FauxHeader title={t('Global.AppName')} />
-        <View style={style.container}>
-          <InfoBox
-            title={useGenericErrorMessage ? t('Error.GenericError.Title') : errorTitle}
-            message={useGenericErrorMessage ? t('Error.GenericError.Message') : errorDescription}
-            notificationType={InfoBoxType.Error}
-            renderShowDetails
-          />
-          <View style={style.buttonContainer}>
-            <Button
-              title={t('FullScreenErrorModal.PrimaryCTA')}
-              buttonType={ButtonType.Primary}
-              onPress={onPressCTA}
-            />
-          </View>
+      <FauxHeader title={t('Global.AppName')} onBackPressed={onPressCTA} />
+      <View style={style.container}>
+        <InfoBox
+          title={useGenericErrorMessage ? t('Error.GenericError.Title') : errorTitle}
+          message={useGenericErrorMessage ? t('Error.GenericError.Message') : errorDescription}
+          notificationType={InfoBoxType.Error}
+          renderShowDetails
+        />
+        <View style={style.buttonContainer}>
+          <Button title={t('FullScreenErrorModal.PrimaryCTA')} buttonType={ButtonType.Primary} onPress={onPressCTA} />
         </View>
+      </View>
     </SafeAreaModal>
   )
 }
