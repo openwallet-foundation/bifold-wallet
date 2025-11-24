@@ -9,6 +9,7 @@ import {
 } from '@credo-ts/anoncreds'
 import {
   ClaimFormat,
+  CredentialExchangeRecord,
   DifPexCredentialsForRequest,
   DifPresentationExchangeDefinition,
   DifPresentationExchangeDefinitionV2,
@@ -172,6 +173,92 @@ export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsFo
   }
 
   return descriptorMetadata
+}
+
+/**
+ * Create AnonCreds credentials for proof request directly from descriptor metadata
+ * This is used for W3C credentials that don't have AnonCreds backing
+ */
+export const createAnonCredsCredentialsFromDescriptorMetadata = (
+  anonCredsProofRequest: DifPexAnonCredsProofRequest,
+  descriptorMetadata: DescriptorMetadata,
+  fullCredentials: CredentialExchangeRecord[]
+): AnonCredsCredentialsForProofRequest => {
+  const attributes: AnonCredsCredentialsForProofRequest['attributes'] = {}
+  const predicates: AnonCredsCredentialsForProofRequest['predicates'] = {}
+
+  const w3cRecordToExchangeRecord = new Map<string, CredentialExchangeRecord>()
+  fullCredentials.forEach((credExRecord) => {
+    credExRecord.credentials.forEach((binding: any) => {
+      w3cRecordToExchangeRecord.set(binding.credentialRecordId, credExRecord)
+    })
+  })
+
+  for (const [referent, requestedAttribute] of Object.entries(anonCredsProofRequest.requested_attributes)) {
+    const descriptorId = requestedAttribute.descriptorId
+    if (!descriptorId) continue
+
+    const credentialsForDescriptor = descriptorMetadata[descriptorId] || []
+
+    attributes[referent] = credentialsForDescriptor.map((credMeta) => {
+      const exchangeRecord = w3cRecordToExchangeRecord.get(credMeta.record.id)
+      const credentialId = exchangeRecord?.id || credMeta.record.id
+      let attributes = credMeta.record.credential.credentialSubject as any
+      if (attributes?.claims && typeof attributes.claims === 'object') {
+        attributes = attributes.claims
+      }
+
+      return {
+        credentialId: credentialId,
+        revealed: true,
+        credentialInfo: {
+          credentialId: credentialId,
+          attributes: attributes as Record<string, string>,
+          schemaId: credMeta.anonCredsTags.anonCredsSchemaId,
+          credentialDefinitionId: credMeta.anonCredsTags.anonCredsCredentialDefinitionId,
+          revocationRegistryId: credMeta.anonCredsTags.anonCredsRevocationRegistryId ?? null,
+          credentialRevocationId: credMeta.anonCredsTags.anonCredsCredentialRevocationId ?? null,
+          methodName: credMeta.anonCredsTags.anonCredsMethodName,
+          linkSecretId: credMeta.anonCredsTags.anonCredsLinkSecretId,
+          createdAt: credMeta.record.createdAt ?? new Date(),
+          updatedAt: credMeta.record.updatedAt ?? new Date(),
+        },
+      }
+    })
+  }
+  for (const [referent, requestedPredicate] of Object.entries(anonCredsProofRequest.requested_predicates)) {
+    const descriptorId = requestedPredicate.descriptorId
+    if (!descriptorId) continue
+
+    const credentialsForDescriptor = descriptorMetadata[descriptorId] || []
+
+    predicates[referent] = credentialsForDescriptor.map((credMeta) => {
+      const exchangeRecord = w3cRecordToExchangeRecord.get(credMeta.record.id)
+      const credentialId = exchangeRecord?.id || credMeta.record.id
+      let attributes = credMeta.record.credential.credentialSubject as any
+      if (attributes?.claims && typeof attributes.claims === 'object') {
+        attributes = attributes.claims
+      }
+
+      return {
+        credentialId: credentialId,
+        credentialInfo: {
+          credentialId: credentialId,
+          attributes: attributes as Record<string, string>,
+          schemaId: credMeta.anonCredsTags.anonCredsSchemaId,
+          credentialDefinitionId: credMeta.anonCredsTags.anonCredsCredentialDefinitionId,
+          revocationRegistryId: credMeta.anonCredsTags.anonCredsRevocationRegistryId ?? null,
+          credentialRevocationId: credMeta.anonCredsTags.anonCredsCredentialRevocationId ?? null,
+          methodName: credMeta.anonCredsTags.anonCredsMethodName,
+          linkSecretId: credMeta.anonCredsTags.anonCredsLinkSecretId,
+          createdAt: credMeta.record.createdAt ?? new Date(),
+          updatedAt: credMeta.record.updatedAt ?? new Date(),
+        },
+      }
+    })
+  }
+
+  return { attributes, predicates }
 }
 
 /**
