@@ -7673,15 +7673,15 @@ __metadata:
 
 "@unimodules/core@file:./noop::locator=bifold-wallet-root%40workspace%3A.":
   version: 1.0.0
-  resolution: "@unimodules/core@file:./noop#./noop::hash=8b1a91&locator=bifold-wallet-root%40workspace%3A."
-  checksum: 10c0/be38d7766a460fa78a65144214f740c881f89c4c173fb7a5b659aed77471bfe58a266f1926525bb0f387e83d647d156f09e69eba816ab5ca8a768bd10696bd45
+  resolution: "@unimodules/core@file:./noop#./noop::hash=08da70&locator=bifold-wallet-root%40workspace%3A."
+  checksum: 10c0/e7a3061c158a19ea058c642d3ff32668e3b4df5aecf97e2496307fa90e42315f31158e4e3820c933e877f3a9b2f2143418e505aa3210aa5c6d275f4e6988987b
   languageName: node
   linkType: hard
 
 "@unimodules/react-native-adapter@file:./noop::locator=bifold-wallet-root%40workspace%3A.":
   version: 1.0.0
-  resolution: "@unimodules/react-native-adapter@file:./noop#./noop::hash=aa92a0&locator=bifold-wallet-root%40workspace%3A."
-  checksum: 10c0/596e6436fb9ac84203c7349bf088968717e3a567aa97ed926a0ec38898fe626aca4a19ffea343ec3f825400ba1038cbde5425554d284788a3ae038fe23f89b6a
+  resolution: "@unimodules/react-native-adapter@file:./noop#./noop::hash=54c074&locator=bifold-wallet-root%40workspace%3A."
+  checksum: 10c0/9b8d172c38672e5c33a01574603a5ae02cf931d901637223f978cae5252199ebb6944085a30c669fe326a89db66b52ba8cd1e91fff8c798126eaa6f8f3bc2942
   languageName: node
   linkType: hard
 

@@ -880,12 +880,6 @@ export const retrieveCredentialsForProof = async (
 
       const presentationDefinition = presentationExchange.presentation_definition
       const descriptorMetadata = getDescriptorMetadata(difPexCredentialsForRequest)
-      const w3cToExchangeRecordMap = new Map<string, CredentialExchangeRecord>()
-      fullCredentials.forEach((credExRecord) => {
-        credExRecord.credentials.forEach((binding) => {
-          w3cToExchangeRecordMap.set(binding.credentialRecordId, credExRecord)
-        })
-      })
 
       const anonCredsProofRequest = createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
       const anonCredsCredentialsForRequest = createAnonCredsCredentialsFromDescriptorMetadata(
