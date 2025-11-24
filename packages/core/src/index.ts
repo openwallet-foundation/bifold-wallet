@@ -75,6 +75,13 @@ import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { QrCodeScanError } from './types/error'
 
+import { useOnboardingState } from './hooks/useOnboardingState'
+import PINCreate from './screens/PINCreate'
+import PINEnter from './screens/PINEnter'
+import PushNotifications from './screens/PushNotifications'
+import NameWallet from './screens/NameWallet'
+import { getOnboardingScreens } from './navigators/OnboardingScreens'
+
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
@@ -253,5 +260,11 @@ export {
   usePreventScreenCapture,
   useTour,
   walletTimeout,
+  useOnboardingState,
+  PINCreate,
+  PINEnter,
+  PushNotifications,
+  NameWallet,
+  getOnboardingScreens,
 }
 export type { BannerMessage, DeepPartial, IButton }
