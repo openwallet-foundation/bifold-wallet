@@ -951,6 +951,7 @@ export const retrieveCredentialsForProof = async (
 
       const presentationDefinition = presentationExchange.presentation_definition
       const descriptorMetadata = getDescriptorMetadata(difPexCredentialsForRequest)
+
       const anonCredsProofRequest = createAnonCredsProofRequest(presentationDefinition, descriptorMetadata)
       const anonCredsCredentialsForRequest = await getCredentialsForAnonCredsProofRequest(
         agent.context,
