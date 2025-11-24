@@ -55,13 +55,9 @@ export const resolveOpenId4VciOffer = async ({
     uri: offerUri,
   })
 
-  if(Config.ISSUER_CERT_B64) {
-    
-    const issuerCert = CredoBuffer.from(String(Config.ISSUER_CERT_B64), 'base64').toString('utf-8');
-    agent.x509.setTrustedCertificates([
-      issuerCert
-    ]);
-
+  if (Config.ISSUER_CERT_B64) {
+    const issuerCert = CredoBuffer.from(String(Config.ISSUER_CERT_B64), 'base64').toString('utf-8')
+    agent.x509.setTrustedCertificates([issuerCert])
   }
 
   const resolvedCredentialOffer = await agent.modules.openId4VcHolder.resolveCredentialOffer(offerUri)

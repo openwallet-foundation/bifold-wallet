@@ -371,9 +371,28 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           .map((fullCredential: CredentialExchangeRecord) => getCredentialDefinitionIdForRecord(fullCredential))
           .filter((id) => id !== null)
       )
+
+      const credentialRecordIds = new Set(fullCredentials.map((cred) => cred.id))
+      fullCredentials.forEach((cred) => {
+        cred.credentials.forEach((c) => {
+          credentialRecordIds.add(c.credentialRecordId)
+        })
+      })
+
+      if (descriptorMetadata) {
+        Object.values(descriptorMetadata).forEach((metaArray) => {
+          metaArray.forEach((meta) => {
+            credentialRecordIds.add(meta.record.id)
+          })
+        })
+      }
+
       activeCreds.forEach((cred) => {
-        const isMissing = !schemaIds.has(cred.schemaId ?? '') && !credDefIds.has(cred.credDefId ?? '')
-        const isUserCredential = schemaIds.has(cred.schemaId ?? '') || credDefIds.has(cred.credDefId ?? '')
+        const hasCredentialRecord = cred.credExchangeRecord || credentialRecordIds.has(cred.credId)
+        const hasSchemaOrCredDef = schemaIds.has(cred.schemaId ?? '') || credDefIds.has(cred.credDefId ?? '')
+
+        const isMissing = !hasSchemaOrCredDef && !hasCredentialRecord
+        const isUserCredential = hasSchemaOrCredDef || hasCredentialRecord
 
         if (isMissing && !cred.credExchangeRecord) {
           missingCredentials.push(cred)
