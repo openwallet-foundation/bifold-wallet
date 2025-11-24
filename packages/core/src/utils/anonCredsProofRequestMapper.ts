@@ -9,6 +9,7 @@ import {
 } from '@credo-ts/anoncreds'
 import {
   ClaimFormat,
+  CredentialExchangeRecord,
   DifPexCredentialsForRequest,
   DifPresentationExchangeDefinition,
   DifPresentationExchangeDefinitionV2,
@@ -208,12 +209,12 @@ export const getDescriptorMetadata = (credentialsForRequest: DifPexCredentialsFo
 export const createAnonCredsCredentialsFromDescriptorMetadata = (
   anonCredsProofRequest: DifPexAnonCredsProofRequest,
   descriptorMetadata: DescriptorMetadata,
-  fullCredentials: any[]
+  fullCredentials: CredentialExchangeRecord[]
 ): AnonCredsCredentialsForProofRequest => {
   const attributes: AnonCredsCredentialsForProofRequest['attributes'] = {}
   const predicates: AnonCredsCredentialsForProofRequest['predicates'] = {}
 
-  const w3cRecordToExchangeRecord = new Map<string, any>()
+  const w3cRecordToExchangeRecord = new Map<string, CredentialExchangeRecord>()
   fullCredentials.forEach((credExRecord) => {
     credExRecord.credentials.forEach((binding: any) => {
       w3cRecordToExchangeRecord.set(binding.credentialRecordId, credExRecord)
