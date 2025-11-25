@@ -25,6 +25,20 @@ jest.mock('react-native-vision-camera', () => {
   return require('./__mocks__/custom/react-native-camera')
 })
 
+/* -------------------------------------------------------------------------- */
+/* MOCK REFRESH ORCHESTRATOR (AVOID TIMERS / LOGS DURING TESTS)            */
+/* -------------------------------------------------------------------------- */
+jest.mock('./src/modules/openid/refresh/RefreshOrchestrator', () => {
+  return {
+    RefreshOrchestrator: jest.fn().mockImplementation(() => ({
+      configure: jest.fn(),
+      start: jest.fn(),
+      stop: jest.fn(),
+      runOnce: jest.fn(),
+    })),
+  }
+})
+
 // Fix timezone issues in tests
 process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed
 // Freeze "now" without enabling fake timers (prevents act() overlaps)
