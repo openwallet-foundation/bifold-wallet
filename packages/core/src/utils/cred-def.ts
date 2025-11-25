@@ -22,11 +22,9 @@ export async function getCredentialName(credDefId?: string, schemaId?: string, a
   const normalizedSchemaId = normalizeId(schemaId)
 
   if (normalizedCredDefId && normalizedSchemaId && normalizedCredDefId === normalizedSchemaId) {
-    if (!normalizedCredDefId.includes(':')) {
-      return normalizedSchemaId
-    }
+    // Identifiers are equal, return one of them
+    return normalizedCredDefId
   }
-
   const isWebvh = !!(
     normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
     normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
