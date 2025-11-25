@@ -28,7 +28,7 @@ export async function getCredentialName(credDefId?: string, schemaId?: string): 
     return normalizedCredDefId
   }
   // TODO: Was some support for WebVH removed here? The parseWebVHCredDefId function is gone.
-  
+
   // const isWebvh = !!(
   //   normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
   //   normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
