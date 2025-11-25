@@ -13,25 +13,27 @@ export const useExpiredNotifications = (): CustomNotification[] => {
 
   const build = useCallback(
     (s: RegistryStore): CustomNotification[] =>
-      s.expired.map((oldId) => {
-        const lite = s.byId[oldId]
-        const n: CustomNotification = {
-          type: OpenIDCustomNotificationType.CredentialExpired,
-          title: 'Credential expired',
-          pageTitle: 'Credential Expired',
-          buttonTitle: 'Review',
-          description: 'This credential is no longer valid. You can attempt to obtain an updated version.',
-          createdAt: new Date(),
-          onPressAction: () => {},
-          onCloseAction: () => declineByOldId(oldId),
-          component: () => null,
-          metadata: {
-            oldId,
-            format: lite?.format,
-          },
-        }
-        return n
-      }),
+      s.expired
+        .filter((oldId) => s.checked.includes(oldId))
+        .map((oldId) => {
+          const lite = s.byId[oldId]
+          const n: CustomNotification = {
+            type: OpenIDCustomNotificationType.CredentialExpired,
+            title: 'Credential expired',
+            pageTitle: 'Credential Expired',
+            buttonTitle: 'Review',
+            description: 'This credential is no longer valid. You can attempt to obtain an updated version.',
+            createdAt: new Date(),
+            onPressAction: () => {},
+            onCloseAction: () => declineByOldId(oldId),
+            component: () => null,
+            metadata: {
+              oldId,
+              format: lite?.format,
+            },
+          }
+          return n
+        }),
     [declineByOldId]
   )
 

@@ -30,6 +30,7 @@ export interface RegistryState {
   byId: Record<string, OpenIDCredentialLite>
   // expired/invalid originals that have a replacement available
   expired: string[]
+  checked: string[]
   // mapping old -> new
   replacements: ReplacementMap
   // marker to avoid parallel refresh of same cred
@@ -78,6 +79,7 @@ export type RegistryStore = RegistryState & RegistryActions
 export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
   byId: {},
   expired: [],
+  checked: [],
   replacements: {},
   refreshing: {},
   blocked: {},
@@ -97,12 +99,14 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
   markExpiredWithReplacement: (oldId, replacement) =>
     set((s) => ({
       expired: s.expired.includes(oldId) ? s.expired : [...s.expired, oldId],
+      checked: s.checked.includes(oldId) ? s.checked : [...s.checked, oldId],
       replacements: { ...s.replacements, [oldId]: replacement },
     })),
 
   markInvalid: (id) =>
     set((s) => ({
       expired: s.expired.includes(id) ? s.expired : [...s.expired, id],
+      checked: s.checked.includes(id) ? s.checked : [...s.checked, id],
     })),
 
   acceptReplacement: (oldId) =>
@@ -159,6 +163,7 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
     set({
       byId: {},
       expired: [],
+      checked: [],
       replacements: {},
       refreshing: {},
       blocked: {},
