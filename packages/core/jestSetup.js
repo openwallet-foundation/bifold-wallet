@@ -28,7 +28,10 @@ jest.mock('react-native-vision-camera', () => {
 /* -------------------------------------------------------------------------- */
 /* MOCK REFRESH ORCHESTRATOR (AVOID TIMERS / LOGS DURING TESTS)            */
 /* -------------------------------------------------------------------------- */
-jest.mock('./src/modules/openid/refresh/RefreshOrchestrator', () => {
+
+const refreshOrchestratorPath = path.resolve(__dirname, 'src/modules/openid/refresh/RefreshOrchestrator')
+
+jest.mock(refreshOrchestratorPath, () => {
   return {
     RefreshOrchestrator: jest.fn().mockImplementation(() => ({
       configure: jest.fn(),
