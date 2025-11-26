@@ -252,8 +252,6 @@ export class MainContainer implements Container {
 
     this._container.registerInstance(TOKENS.UTIL_REFRESH_ORCHESTRATOR, orchestrator)
 
-    this._container.registerInstance(TOKENS.SIMPLIFIED_ERROR_SCREEN, true)
-
     return this
   }
 
