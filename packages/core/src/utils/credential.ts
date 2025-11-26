@@ -1,11 +1,11 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import type { Agent } from '@credo-ts/core'
 import { ImageSourcePropType } from 'react-native'
-
 import { luminanceForHexColor } from './luminance'
 import { getSchemaName, getCredDefTag, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
 import { BifoldLogger } from '../services/logger'
+import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '@credo-ts/core'
+import { getCredentialForDisplay } from '../modules/openid/display'
 
 export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord) => {
   return (
@@ -32,7 +32,17 @@ export const toImageSource = (source: unknown): ImageSourcePropType => {
   return source as ImageSourcePropType
 }
 
-export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) => {
+export const getCredentialIdentifiers = (credential: CredentialExchangeRecord | W3cCredentialRecord) => {
+  if (credential instanceof W3cCredentialRecord) {
+    const credentialDisplay = getCredentialForDisplay(credential)
+    const credentialType =
+      credentialDisplay.credential?.type?.find((t) => t !== 'VerifiableCredential') || credentialDisplay.id
+    return {
+      credentialDefinitionId: credentialType,
+      schemaId: undefined,
+    }
+  }
+
   return {
     credentialDefinitionId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId,
     schemaId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.schemaId,
