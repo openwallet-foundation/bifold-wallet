@@ -53,15 +53,21 @@ import { TourProvider } from './contexts/tour/tour-provider'
 import { useDeveloperMode } from './hooks/developer-mode'
 import usePreventScreenCapture from './hooks/screen-capture'
 import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
+import { useOnboardingState } from './hooks/useOnboardingState'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
+import { getOnboardingScreens } from './navigators/OnboardingScreens'
 import AttemptLockout from './screens/AttemptLockout'
 import Biometry from './screens/Biometry'
 import Developer from './screens/Developer'
+import NameWallet from './screens/NameWallet'
 import Onboarding from './screens/Onboarding'
 import OnboardingPages from './screens/OnboardingPages'
+import PINCreate from './screens/PINCreate'
+import PINEnter from './screens/PINEnter'
 import Preface from './screens/Preface'
+import PushNotifications from './screens/PushNotifications'
 import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
@@ -74,13 +80,6 @@ import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { QrCodeScanError } from './types/error'
-
-import { useOnboardingState } from './hooks/useOnboardingState'
-import PINCreate from './screens/PINCreate'
-import PINEnter from './screens/PINEnter'
-import PushNotifications from './screens/PushNotifications'
-import NameWallet from './screens/NameWallet'
-import { getOnboardingScreens } from './navigators/OnboardingScreens'
 
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
@@ -212,6 +211,7 @@ export {
   ErrorBoundaryWrapper,
   ErrorModal,
   FauxHeader,
+  getOnboardingScreens,
   HomeFooterView as HomeContentView,
   homeTourSteps,
   IconButton,
@@ -224,15 +224,19 @@ export {
   Link,
   loadLoginAttempt,
   MaskType,
+  NameWallet,
   NavContainer,
   NetworkProvider,
   NotificationListItem,
   Onboarding,
   OnboardingPages,
   OpenIDCredentialRecordProvider,
+  PINCreate,
+  PINEnter,
   PINRules,
   Preface,
   proofRequestTourSteps,
+  PushNotifications,
   QrCodeScanError,
   QRRenderer,
   QRScannerTorch,
@@ -257,14 +261,9 @@ export {
   useBifoldAgentSetup,
   useDefaultStackOptions,
   useDeveloperMode,
+  useOnboardingState,
   usePreventScreenCapture,
   useTour,
   walletTimeout,
-  useOnboardingState,
-  PINCreate,
-  PINEnter,
-  PushNotifications,
-  NameWallet,
-  getOnboardingScreens,
 }
 export type { BannerMessage, DeepPartial, IButton }
