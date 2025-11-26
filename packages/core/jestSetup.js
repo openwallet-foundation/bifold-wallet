@@ -25,6 +25,13 @@ jest.mock('react-native-vision-camera', () => {
   return require('./__mocks__/custom/react-native-camera')
 })
 
+jest.mock('react-native-keyboard-aware-scroll-view', () => {
+  const { ScrollView } = jest.requireActual('react-native')
+  return {
+    KeyboardAwareScrollView: ScrollView,
+  }
+})
+
 // Fix timezone issues in tests
 process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed
 // Freeze "now" without enabling fake timers (prevents act() overlaps)
