@@ -8,7 +8,7 @@ import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import { ThemedText } from '../components/texts/ThemedText'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -141,7 +141,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   })
 
   return (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View>
           {usage === PINEntryUsage.ChangeBiometrics && (
@@ -217,7 +217,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
           onCallToActionPressed={clearAlertModal}
         />
       )}
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

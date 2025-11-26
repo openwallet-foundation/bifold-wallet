@@ -7,7 +7,7 @@ import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { EventTypes, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -231,7 +231,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   }, [inlineMessages, isLoading, PIN])
 
   return (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />
@@ -315,7 +315,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
         title={t('Screens.ConfirmPIN')}
         visible={confirmPINModalVisible}
       />
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

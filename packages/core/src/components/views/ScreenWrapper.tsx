@@ -90,10 +90,12 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   // KeyboardView has its own SafeAreaView, so we don't need to double-wrap
   if (keyboardActive) {
     return (
-      <KeyboardView style={[styles.container, style]} edges={edges}>
-        <View style={scrollStyle}>{children}</View>
-        {controls && <View style={[controlsStyle, { marginTop: 'auto' }]}>{controls}</View>}
-      </KeyboardView>
+      <SafeAreaView style={[styles.container, style]} edges={edges}>
+        <KeyboardView>
+          <View style={scrollStyle}>{children}</View>
+          {controls && <View style={[controlsStyle, { marginTop: 'auto' }]}>{controls}</View>}
+        </KeyboardView>
+      </SafeAreaView>
     )
   }
 

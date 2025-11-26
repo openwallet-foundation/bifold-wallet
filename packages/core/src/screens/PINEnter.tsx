@@ -19,7 +19,7 @@ import { InfoBoxType } from '../components/misc/InfoBox'
 import DeveloperModal from '../components/modals/DeveloperModal'
 import PopupModal from '../components/modals/PopupModal'
 import { ThemedText } from '../components/texts/ThemedText'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { EventTypes, attemptLockoutConfig, defaultAutoLockTime, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -372,7 +372,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ])
 
   return (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View>
           {PINScreensConfig.useNewPINDesign && (
@@ -515,7 +515,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         />
       ) : null}
       {devModalVisible ? <DeveloperModal onBackPressed={onBackPressed} /> : null}
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

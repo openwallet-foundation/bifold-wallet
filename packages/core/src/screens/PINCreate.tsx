@@ -18,7 +18,7 @@ import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { EventTypes, minPINLength } from '../constants'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
@@ -150,7 +150,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   }, [])
 
   return explained ? (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
@@ -233,7 +233,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           isLoading={isLoading}
         />
       </View>
-    </KeyboardView>
+    </ScreenWrapper>
   ) : (
     <PINExplainer continueCreatePIN={continueCreatePIN} />
   )

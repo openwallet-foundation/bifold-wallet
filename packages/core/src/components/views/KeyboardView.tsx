@@ -1,6 +1,5 @@
 import React from 'react'
-import { KeyboardAvoidingView, ScrollViewProps, StyleProp, ViewStyle } from 'react-native'
-import { Edges, SafeAreaView } from 'react-native-safe-area-context'
+import { KeyboardAvoidingView, ScrollViewProps } from 'react-native'
 import { useHeaderHeight } from '@react-navigation/elements'
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -21,30 +20,25 @@ const useSafeHeaderHeight = (): number => {
  * screen content that may contain input fields or other interactive elements.
  *
  * @param children - The content to render inside the keyboard view
- * @param edges - The edges to apply the safe area insets to
  * @param scrollViewProps - Additional props to pass to the internal KeyboardAwareScrollView component
  */
 const KeyboardView: React.FC<{
   children: React.ReactNode
-  edges?: Edges
-  style?: StyleProp<ViewStyle>
   scrollViewProps?: ScrollViewProps
-}> = ({ children, scrollViewProps, edges = ['bottom', 'left', 'right'], style }) => {
+}> = ({ children, scrollViewProps }) => {
   const safeHeaderHeight = useSafeHeaderHeight()
 
   return (
-    <SafeAreaView style={style} edges={edges}>
-      <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={safeHeaderHeight} behavior="padding">
-        <KeyboardAwareScrollView
-          keyboardShouldPersistTaps={'handled'}
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          {...scrollViewProps}
-        >
-          {children}
-        </KeyboardAwareScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={safeHeaderHeight} behavior="padding">
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps={'handled'}
+        contentContainerStyle={[{ flexGrow: 1 }, scrollViewProps?.contentContainerStyle]}
+        showsVerticalScrollIndicator={false}
+        {...scrollViewProps}
+      >
+        {children}
+      </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   )
 }
 
