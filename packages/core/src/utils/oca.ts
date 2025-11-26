@@ -21,6 +21,7 @@ type AttributeFieldValue = string | number | null
 export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FieldExt | undefined => {
   let attributeName: string = 'Unknown'
   let attributeValue: AttributeFieldValue = 'Unknown'
+  let displayLabel: string | undefined
 
   for (const [key, value] of Object.entries(display.attributes)) {
     let formattedValue: AttributeFieldValue
@@ -46,16 +47,19 @@ export const getAttributeField = (display: W3cCredentialDisplay, searchKey: stri
       if (key !== searchKey || !value) continue
       const { display } = value
       const { name } = display[0]
-      attributeName = name
+      displayLabel = name
     }
   }
 
+  const field = new Attribute({
+    name: attributeName,
+    label: displayLabel,
+    value: attributeValue,
+    mimeType: typeof attributeValue === 'number' ? 'text/number' : 'text/plain',
+  })
+
   return {
-    field: new Attribute({
-      name: attributeName,
-      value: attributeValue,
-      mimeType: typeof attributeValue === 'number' ? 'text/number' : 'text/plain',
-    }),
+    field,
     attribute_name: searchKey,
   }
 }
@@ -150,10 +154,13 @@ export const buildOverlayFromW3cCredential = async ({
   language: string
   resolver: OCABundleResolverType
 }): Promise<CredentialOverlay<BrandingOverlay>> => {
+  const credentialType =
+    credentialDisplay.credential?.type?.find((t) => t !== 'VerifiableCredential') || credentialDisplay.id
+
   const params: OCABundleResolveAllParams = {
     identifiers: {
       schemaId: '',
-      credentialDefinitionId: credentialDisplay.id,
+      credentialDefinitionId: credentialType,
     },
     meta: {
       alias: credentialDisplay.display.issuer.name,
