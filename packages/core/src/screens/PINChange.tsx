@@ -231,7 +231,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   }, [inlineMessages, isLoading, PIN])
 
   return (
-    <KeyboardView keyboardAvoiding={true}>
+    <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />

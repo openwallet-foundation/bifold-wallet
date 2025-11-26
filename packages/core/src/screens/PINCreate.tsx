@@ -150,7 +150,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   }, [])
 
   return explained ? (
-    <KeyboardView keyboardAvoiding={true}>
+    <KeyboardView>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />

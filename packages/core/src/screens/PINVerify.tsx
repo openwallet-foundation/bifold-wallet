@@ -141,7 +141,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   })
 
   return (
-    <KeyboardView keyboardAvoiding={true}>
+    <KeyboardView>
       <View style={style.screenContainer}>
         <View>
           {usage === PINEntryUsage.ChangeBiometrics && (

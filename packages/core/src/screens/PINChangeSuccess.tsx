@@ -36,7 +36,7 @@ const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Scre
   }, [navigation])
 
   return (
-    <KeyboardView keyboardAvoiding={false}>
+    <KeyboardView>
       <View style={style.container}>
         <View style={{ marginTop: 10, marginBottom: 30 }}>
           <InfoBox

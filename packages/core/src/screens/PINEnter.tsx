@@ -372,7 +372,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ])
 
   return (
-    <KeyboardView keyboardAvoiding={true}>
+    <KeyboardView>
       <View style={style.screenContainer}>
         <View>
           {PINScreensConfig.useNewPINDesign && (

@@ -94,7 +94,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
     >
       <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }} />
       <FauxHeader title={title} onBackPressed={onBackPressed} showBackButton />
-      <KeyboardView keyboardAvoiding={true}>
+      <KeyboardView>
         <View style={style.container}>
           {modalUsage === ConfirmPINModalUsage.PIN_CREATE && (
             <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
