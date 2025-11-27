@@ -4,7 +4,6 @@ import { View, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { StackScreenProps } from '@react-navigation/stack'
 
-import KeyboardView from '../components/views/KeyboardView'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import { ButtonType } from '../components/buttons/Button-api'
 import usePreventScreenCapture from '../hooks/screen-capture'
@@ -13,6 +12,7 @@ import { TOKENS, useServices } from '../container-api'
 import { testIdWithKey } from '../utils/testable'
 import { Screens } from '../types/navigators'
 import { SettingStackParams } from '../types/navigators'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 
 const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePINSuccess>> = ({
   navigation,
@@ -36,7 +36,7 @@ const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Scre
   }, [navigation])
 
   return (
-    <KeyboardView keyboardAvoiding={false}>
+    <ScreenWrapper keyboardActive>
       <View style={style.container}>
         <View style={{ marginTop: 10, marginBottom: 30 }}>
           <InfoBox
@@ -54,7 +54,7 @@ const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Scre
           onPress={onPressContinue}
         />
       </View>
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

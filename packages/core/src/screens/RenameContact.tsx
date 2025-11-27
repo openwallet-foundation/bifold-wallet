@@ -10,7 +10,7 @@ import Button, { ButtonType } from '../components/buttons/Button'
 import LimitedTextInput from '../components/inputs/LimitedTextInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -100,7 +100,7 @@ const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
   }
 
   return (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={styles.screenContainer}>
         <View style={styles.contentContainer}>
           <ThemedText style={{ width: '100%', marginBottom: 16 }}>{t('RenameContact.ThisContactName')}</ThemedText>
@@ -148,7 +148,7 @@ const RenameContact: React.FC<RenameContactProps> = ({ route }) => {
           description={errorState.description}
         />
       )}
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 
