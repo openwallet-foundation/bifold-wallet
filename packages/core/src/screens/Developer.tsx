@@ -14,10 +14,43 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { EventTypes } from '../constants'
 
+type DeveloperToggleRowProps = {
+  label: string
+  value: boolean
+  onToggle: () => void
+  accessibilityLabel: string
+  pressableTestId: string
+  switchTestId: string
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 10,
+    paddingHorizontal: 10,
+  },
+  settingContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    marginHorizontal: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  settingLabelText: {
+    marginRight: 10,
+    textAlign: 'left',
+  },
+  settingSwitchContainer: {
+    justifyContent: 'center',
+  },
+})
+
 const Developer: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
+  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
+
   const [useVerifierCapability, setUseVerifierCapability] = useState(!!store.preferences.useVerifierCapability)
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
@@ -28,29 +61,38 @@ const Developer: React.FC = () => {
   const [enableShareableLink, setEnableShareableLink] = useState(!!store.preferences.enableShareableLink)
   const [preventAutoLock, setPreventAutoLock] = useState(!!store.preferences.preventAutoLock)
   const [enableGenericErrorMessages, setEnableGenericErrorMessages] = useState(!!store.preferences.genericErrorMessages)
-  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: 10,
-      paddingHorizontal: 10,
-    },
-    settingContainer: {
-      flexDirection: 'row',
-      marginVertical: 10,
-      marginHorizontal: 10,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    settingLabelText: {
-      marginRight: 10,
-      textAlign: 'left',
-    },
-    settingSwitchContainer: {
-      justifyContent: 'center',
-    },
-  })
+  const DeveloperToggleRow: React.FC<DeveloperToggleRowProps> = ({
+    label,
+    value,
+    onToggle,
+    accessibilityLabel,
+    pressableTestId,
+    switchTestId,
+  }) => (
+    <View style={styles.settingContainer}>
+      <View style={{ flex: 1 }}>
+        <ThemedText variant="bold" style={styles.settingLabelText}>
+          {label}
+        </ThemedText>
+      </View>
+      <Pressable
+        style={styles.settingSwitchContainer}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole="switch"
+        testID={pressableTestId}
+      >
+        <Switch
+          trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
+          thumbColor={value ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
+          ios_backgroundColor={ColorPalette.grayscale.lightGrey}
+          onValueChange={onToggle}
+          testID={switchTestId}
+          value={value}
+        />
+      </Pressable>
+    </View>
+  )
 
   const toggleVerifierCapabilitySwitch = () => {
     // if verifier feature is switched off then also turn off the dev templates
@@ -145,186 +187,81 @@ const Developer: React.FC = () => {
         <ThemedText style={{ margin: 10 }}>
           Place content here you would like to make available to developers when developer mode is enabled.
         </ThemedText>
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" accessible={false} style={styles.settingLabelText}>
-              {t('Verifier.UseVerifierCapability')}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t('Verifier.Toggle')}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleVerifierCapability')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={useVerifierCapability ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={toggleVerifierCapabilitySwitch}
-              testID={testIdWithKey('VerifierCapabilitySwitchElement')}
-              value={useVerifierCapability}
-            />
-          </Pressable>
-        </View>
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" accessible={false} style={styles.settingLabelText}>
-              {t('Verifier.AcceptDevCredentials')}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t('Verifier.Toggle')}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleAcceptDevCredentials')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={acceptDevCredentials ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={toggleAcceptDevCredentialsSwitch}
-              testID={testIdWithKey('AcceptDevCredentialsSwitchElement')}
-              value={acceptDevCredentials}
-            />
-          </Pressable>
-        </View>
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" style={styles.settingLabelText}>
-              {t('Connection.UseConnectionInviterCapability')}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t('Connection.Toggle')}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={
-                useConnectionInviterCapability ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey
-              }
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={toggleConnectionInviterCapabilitySwitch}
-              testID={testIdWithKey('ConnectionInviterCapabilitySwitchElement')}
-              value={useConnectionInviterCapability}
-            />
-          </Pressable>
-        </View>
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" style={styles.settingLabelText}>
-              {t('Verifier.UseDevVerifierTemplates')}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t('Verifier.ToggleDevTemplates')}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleDevVerifierTemplatesSwitch')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={useDevVerifierTemplates ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={toggleDevVerifierTemplatesSwitch}
-              testID={testIdWithKey('DevVerifierTemplatesSwitchElement')}
-              value={useDevVerifierTemplates}
-            />
-          </Pressable>
-        </View>
+
+        <DeveloperToggleRow
+          label={t('Verifier.UseVerifierCapability')}
+          value={useVerifierCapability}
+          onToggle={toggleVerifierCapabilitySwitch}
+          accessibilityLabel={t('Verifier.Toggle')}
+          pressableTestId={testIdWithKey('ToggleVerifierCapability')}
+          switchTestId={testIdWithKey('VerifierCapabilitySwitchElement')}
+        />
+
+        <DeveloperToggleRow
+          label={t('Verifier.AcceptDevCredentials')}
+          value={acceptDevCredentials}
+          onToggle={toggleAcceptDevCredentialsSwitch}
+          accessibilityLabel={t('Verifier.Toggle')}
+          pressableTestId={testIdWithKey('ToggleAcceptDevCredentials')}
+          switchTestId={testIdWithKey('AcceptDevCredentialsSwitchElement')}
+        />
+
+        <DeveloperToggleRow
+          label={t('Connection.UseConnectionInviterCapability')}
+          value={useConnectionInviterCapability}
+          onToggle={toggleConnectionInviterCapabilitySwitch}
+          accessibilityLabel={t('Connection.Toggle')}
+          pressableTestId={testIdWithKey('ToggleConnectionInviterCapabilitySwitch')}
+          switchTestId={testIdWithKey('ConnectionInviterCapabilitySwitchElement')}
+        />
+
+        <DeveloperToggleRow
+          label={t('Verifier.UseDevVerifierTemplates')}
+          value={useDevVerifierTemplates}
+          onToggle={toggleDevVerifierTemplatesSwitch}
+          accessibilityLabel={t('Verifier.ToggleDevTemplates')}
+          pressableTestId={testIdWithKey('ToggleDevVerifierTemplatesSwitch')}
+          switchTestId={testIdWithKey('DevVerifierTemplatesSwitchElement')}
+        />
+
         {!store.onboarding.didCreatePIN && (
-          <View style={styles.settingContainer}>
-            <View style={{ flex: 1 }}>
-              <ThemedText variant="bold" style={styles.settingLabelText}>
-                {t('NameWallet.EnableWalletNaming')}
-              </ThemedText>
-            </View>
-            <Pressable
-              style={styles.settingSwitchContainer}
-              accessibilityLabel={t('NameWallet.ToggleWalletNaming')}
-              accessibilityRole={'switch'}
-              testID={testIdWithKey('ToggleEnableWalletNamingSwitch')}
-            >
-              <Switch
-                trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-                thumbColor={enableWalletNaming ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-                ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-                onValueChange={toggleWalletNamingSwitch}
-                testID={testIdWithKey('EnableWalletNamingSwitchElement')}
-                value={enableWalletNaming}
-              />
-            </Pressable>
-          </View>
+          <DeveloperToggleRow
+            label={t('NameWallet.EnableWalletNaming')}
+            value={enableWalletNaming}
+            onToggle={toggleWalletNamingSwitch}
+            accessibilityLabel={t('NameWallet.ToggleWalletNaming')}
+            pressableTestId={testIdWithKey('ToggleEnableWalletNamingSwitch')}
+            switchTestId={testIdWithKey('EnableWalletNamingSwitchElement')}
+          />
         )}
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" style={styles.settingLabelText}>
-              {t('Settings.PreventAutoLock')}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t('Settings.TogglePreventAutoLock')}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('TogglePreventAutoLockSwitch')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={preventAutoLock ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={togglePreventAutoLockSwitch}
-              testID={testIdWithKey('PreventAutoLockSwitchElement')}
-              value={preventAutoLock}
-            />
-          </Pressable>
-        </View>
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" style={styles.settingLabelText}>
-              {t('PasteUrl.UseShareableLink')}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t('PasteUrl.UseShareableLink')}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleUseShareableLink')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={enableShareableLink ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={toggleShareableLinkSwitch}
-              testID={testIdWithKey('ShareableLinkSwitchElement')}
-              value={enableShareableLink}
-            />
-          </Pressable>
-        </View>
-        <View style={styles.settingContainer}>
-          <View style={{ flex: 1 }}>
-            <ThemedText variant="bold" style={styles.settingLabelText}>
-              {t("Settings.GenericErrorMessages")}
-            </ThemedText>
-          </View>
-          <Pressable
-            style={styles.settingSwitchContainer}
-            accessibilityLabel={t("Settings.GenericErrorMessages")}
-            accessibilityRole={'switch'}
-            testID={testIdWithKey('ToggleUseGenericErrorMessages')}
-          >
-            <Switch
-              trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-              thumbColor={enableGenericErrorMessages ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-              ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-              onValueChange={toggleGenericErrorMessages}
-              testID={testIdWithKey('GenericErrorMessagesSwitchElement')}
-              value={enableGenericErrorMessages}
-            />
-          </Pressable>
-        </View>
+
+        <DeveloperToggleRow
+          label={t('Settings.PreventAutoLock')}
+          value={preventAutoLock}
+          onToggle={togglePreventAutoLockSwitch}
+          accessibilityLabel={t('Settings.TogglePreventAutoLock')}
+          pressableTestId={testIdWithKey('TogglePreventAutoLockSwitch')}
+          switchTestId={testIdWithKey('PreventAutoLockSwitchElement')}
+        />
+
+        <DeveloperToggleRow
+          label={t('PasteUrl.UseShareableLink')}
+          value={enableShareableLink}
+          onToggle={toggleShareableLinkSwitch}
+          accessibilityLabel={t('PasteUrl.UseShareableLink')}
+          pressableTestId={testIdWithKey('ToggleUseShareableLink')}
+          switchTestId={testIdWithKey('ShareableLinkSwitchElement')}
+        />
+
+        <DeveloperToggleRow
+          label={t('Settings.GenericErrorMessages')}
+          value={enableGenericErrorMessages}
+          onToggle={toggleGenericErrorMessages}
+          accessibilityLabel={t('Settings.GenericErrorMessages')}
+          pressableTestId={testIdWithKey('ToggleUseGenericErrorMessages')}
+          switchTestId={testIdWithKey('GenericErrorMessagesSwitchElement')}
+        />
+
         <View style={styles.settingContainer}>
           <View style={{ flex: 1 }}>
             <Button

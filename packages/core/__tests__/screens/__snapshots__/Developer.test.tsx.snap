@@ -62,7 +62,6 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -164,7 +163,6 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -1016,7 +1014,6 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -1118,7 +1115,6 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -1970,7 +1966,6 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -2072,7 +2067,6 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -2924,7 +2918,6 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -3026,7 +3019,6 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -3878,7 +3870,6 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -3980,7 +3971,6 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -4832,7 +4822,6 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -4934,7 +4923,6 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -5786,7 +5774,6 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -5888,7 +5875,6 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
