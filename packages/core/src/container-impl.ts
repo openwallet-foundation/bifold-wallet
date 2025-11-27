@@ -90,7 +90,7 @@ export const defaultConfig: Config = {
   PINScreensConfig: {
     useNewPINDesign: false,
   },
-  showGenericErrors: true,
+  showGenericErrors: false,
   enableFullScreenErrorModal: false,
 }
 

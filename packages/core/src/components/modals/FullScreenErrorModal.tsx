@@ -9,6 +9,7 @@ import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import Button, { ButtonType } from '../buttons/Button'
 import { useTheme } from '../../contexts/theme'
 import { useStore } from '../../contexts/store'
+import { useServices, TOKENS } from '../../container-api'
 
 interface FullScreenErrorModalProps {
   errorTitle: string
@@ -26,8 +27,9 @@ const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
   const { ColorPalette, NavigationTheme } = useTheme()
   const { t } = useTranslation()
   const [store] = useStore()
+  const [{ showGenericErrors }] = useServices([TOKENS.CONFIG])
 
-  const useGenericErrorMessage = store.preferences.genericErrorMessages
+  const showGenericErrorMessage = (store.preferences.genericErrorMessages || showGenericErrors)
 
   const style = StyleSheet.create({
     container: {
@@ -55,8 +57,8 @@ const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
       <FauxHeader title={t('Global.AppName')} onBackPressed={onPressCTA} />
       <View style={style.container}>
         <InfoBox
-          title={useGenericErrorMessage ? t('Error.GenericError.Title') : errorTitle}
-          message={useGenericErrorMessage ? t('Error.GenericError.Message') : errorDescription}
+          title={showGenericErrorMessage ? t('Error.GenericError.Title') : errorTitle}
+          message={showGenericErrorMessage ? t('Error.GenericError.Message') : errorDescription}
           notificationType={InfoBoxType.Error}
           renderShowDetails
         />
