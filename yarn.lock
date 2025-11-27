@@ -2465,6 +2465,7 @@ __metadata:
     react-native-gesture-handler: "npm:~2.18.1"
     react-native-get-random-values: "npm:~1.8.0"
     react-native-gifted-chat: "npm:~2.4.1"
+    react-native-keyboard-aware-scroll-view: "npm:~0.9.5"
     react-native-keychain: "npm:~8.1.3"
     react-native-localize: "npm:~2.2.6"
     react-native-logs: "npm:~5.1.0"
@@ -8950,6 +8951,7 @@ __metadata:
     react-native-gesture-handler: "npm:~2.18.1"
     react-native-get-random-values: "npm:~1.8.0"
     react-native-gifted-chat: "npm:~2.4.1"
+    react-native-keyboard-aware-scroll-view: "npm:~0.9.5"
     react-native-keychain: "npm:~8.1.3"
     react-native-localize: "npm:~2.2.6"
     react-native-logs: "npm:~5.1.0"
@@ -18148,7 +18150,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -18616,12 +18618,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-iphone-x-helper@npm:1.3.1":
+"react-native-iphone-x-helper@npm:1.3.1, react-native-iphone-x-helper@npm:^1.0.3":
   version: 1.3.1
   resolution: "react-native-iphone-x-helper@npm:1.3.1"
   peerDependencies:
     react-native: ">=0.42.0"
   checksum: 10c0/f2e01cb30ebdba54cbadc7bcb584ef7491c24aa2d221312f084c6e7b1031b77c2d538f7bf778ee16959245dbbe4f7784bbead02448368b7d0cbe8dd8c808693f
+  languageName: node
+  linkType: hard
+
+"react-native-keyboard-aware-scroll-view@npm:~0.9.5":
+  version: 0.9.5
+  resolution: "react-native-keyboard-aware-scroll-view@npm:0.9.5"
+  dependencies:
+    prop-types: "npm:^15.6.2"
+    react-native-iphone-x-helper: "npm:^1.0.3"
+  peerDependencies:
+    react-native: ">=0.48.4"
+  checksum: 10c0/932c724f86ba355f1a1db938123eef67844550dd6e2d117222eff0012a47c6a293ad79c965e16930e5eb14adb58a5c340c00e03eeabbe3d78229236125b8a6aa
   languageName: node
   linkType: hard
 
