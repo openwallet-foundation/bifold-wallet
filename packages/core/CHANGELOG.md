@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.5
+
+### Patch Changes
+
+- 7a0ccbb: add screen wrapper component
+
 ## 2.11.4
 
 ### Patch Changes
