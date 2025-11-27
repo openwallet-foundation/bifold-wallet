@@ -13,7 +13,7 @@ import { EventTypes } from '../../../constants'
 import { useAgent } from '@credo-ts/react-hooks'
 import RecordRemove from '../../../components/record/RecordRemove'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { CredentialOverlay } from '@bifold/oca/build/legacy'
+import { CredentialOverlay, BrandingOverlayType } from '@bifold/oca/build/legacy'
 import { OpenIDCredentialType, W3cCredentialDisplay } from '../types'
 import { TOKENS, useServices } from '../../../container-api'
 import { BrandingOverlay } from '@bifold/oca'
@@ -24,7 +24,7 @@ import CredentialDetailSecondaryHeader from '../../../components/views/Credentia
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 import ScreenLayout from '../../../layout/ScreenLayout'
-import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import CredentialCard from '../../../components/misc/CredentialCard'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -177,13 +177,16 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     )
   }
 
-  const renderOpenIdCard = () => {
-    if (!credentialDisplay) return null
-    return <OpenIDCredentialCard credentialDisplay={credentialDisplay} credentialRecord={credential} />
-  }
-
   const header = () => {
-    return <View style={styles.cardContainer}>{renderOpenIdCard()}</View>
+    return bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? (
+      <View>{credential && overlay.bundle && <CredentialCard credential={credential} style={{ margin: 16 }} />}</View>
+    ) : (
+      <View style={styles.container}>
+        <CredentialDetailSecondaryHeader overlay={overlay} />
+        <CredentialCardLogo overlay={overlay} />
+        <CredentialDetailPrimaryHeader overlay={overlay} />
+      </View>
+    )
   }
 
   const footer = () => {

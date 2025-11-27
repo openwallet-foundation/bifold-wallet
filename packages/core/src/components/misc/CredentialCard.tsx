@@ -131,11 +131,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
   }
 
-  if (
-    credential instanceof W3cCredentialRecord ||
-    credential instanceof SdJwtVcRecord ||
-    credential instanceof MdocRecord
-  ) {
+  if (credential instanceof SdJwtVcRecord || credential instanceof MdocRecord) {
     return (
       <CredentialCard11
         credential={undefined}
@@ -147,6 +143,23 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         elevated={proof}
         displayItems={displayItems}
         hideSlice={true}
+        hasAltCredentials={hasAltCredentials}
+        handleAltCredChange={handleAltCredChange}
+        extraOverlayParameter={extraOverlayAttribute}
+        brandingOverlayType={bundleResolver.getBrandingOverlayType()}
+      />
+    )
+  } else if (credential instanceof W3cCredentialRecord) {
+    return (
+      <CredentialCard11
+        credential={credential as any}
+        style={style}
+        onPress={onPress}
+        brandingOverlay={overlay}
+        credentialErrors={credentialErrors ?? []}
+        proof={proof}
+        elevated={proof}
+        displayItems={displayItems}
         hasAltCredentials={hasAltCredentials}
         handleAltCredChange={handleAltCredChange}
         extraOverlayParameter={extraOverlayAttribute}
