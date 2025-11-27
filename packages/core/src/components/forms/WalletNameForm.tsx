@@ -13,7 +13,7 @@ import LimitedTextInput from '../inputs/LimitedTextInput'
 import { InfoBoxType } from '../misc/InfoBox'
 import PopupModal from '../modals/PopupModal'
 import { ThemedText } from '../texts/ThemedText'
-import KeyboardView from '../views/KeyboardView'
+import ScreenWrapper from '../views/ScreenWrapper'
 
 type ErrorState = {
   visible: boolean
@@ -90,7 +90,7 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
   }
 
   return (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={styles.screenContainer}>
         <View style={styles.contentContainer}>
           <Assets.svg.contactBook height={100} style={{ marginVertical: Spacing.md }} />
@@ -141,7 +141,7 @@ const NameWalletForm: React.FC<NameWalletProps> = ({ isRenaming, onSubmitSuccess
           description={errorState.description}
         />
       )}
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

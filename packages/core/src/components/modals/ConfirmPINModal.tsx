@@ -3,7 +3,6 @@ import { View, StyleSheet, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
 
-import KeyboardView from '../../components/views/KeyboardView'
 import FauxHeader from '../../components/misc/FauxHeader'
 import SafeAreaModal from '../../components/modals/SafeAreaModal'
 import AlertModal from '../../components/modals/AlertModal'
@@ -17,6 +16,7 @@ import { useTheme } from '../../contexts/theme'
 import { TOKENS, useServices } from '../../container-api'
 import { testIdWithKey } from '../../utils/testable'
 import { InlineErrorConfig } from '../../types/error'
+import ScreenWrapper from '../views/ScreenWrapper'
 
 interface ConfirmPINModalProps {
   errorModalState?: ModalState
@@ -94,7 +94,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
     >
       <SafeAreaView edges={['top']} style={{ backgroundColor: NavigationTheme.colors.primary }} />
       <FauxHeader title={title} onBackPressed={onBackPressed} showBackButton />
-      <KeyboardView keyboardAvoiding={true}>
+      <ScreenWrapper keyboardActive>
         <View style={style.container}>
           {modalUsage === ConfirmPINModalUsage.PIN_CREATE && (
             <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
@@ -129,7 +129,7 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
             />
           )}
         </View>
-      </KeyboardView>
+      </ScreenWrapper>
     </SafeAreaModal>
   )
 }

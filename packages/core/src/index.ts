@@ -41,6 +41,7 @@ import { TourBox } from './components/tour/TourBox'
 import { Banner, BannerMessage, BannerSection } from './components/views/Banner'
 import HomeFooterView from './components/views/HomeFooterView'
 import KeyboardView from './components/views/KeyboardView'
+import ScreenWrapper from './components/views/ScreenWrapper'
 import { attemptLockoutConfig, PINRules, tours, walletTimeout } from './constants'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import * as contexts from './contexts'
@@ -238,6 +239,7 @@ export {
   SafeAreaModal,
   Scan,
   ScanCamera,
+  ScreenWrapper,
   Splash,
   SVGOverlay,
   Terms,

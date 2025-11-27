@@ -11,10 +11,13 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
     }
   }
   style={
-    Object {
-      "backgroundColor": "#000000",
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
 >
   <View
@@ -32,194 +35,84 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
   >
     <RCTScrollView
       contentContainerStyle={
-        Object {
-          "flexGrow": 1,
-        }
+        Array [
+          Object {
+            "flexGrow": 1,
+          },
+          undefined,
+        ]
       }
       keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
     >
       <View>
         <View
           style={
-            Object {
-              "backgroundColor": "#000000",
-              "flex": 1,
-              "justifyContent": "space-between",
-              "padding": 16,
-            }
+            Array [
+              Object {
+                "padding": 16,
+              },
+              undefined,
+            ]
           }
         >
           <View
             style={
               Object {
-                "alignItems": "center",
-                "justifyContent": "center",
-                "width": "100%",
+                "backgroundColor": "#000000",
+                "flex": 1,
+                "justifyContent": "space-between",
+                "padding": 16,
               }
             }
           >
-            <
-              height={100}
-              style={
-                Object {
-                  "marginVertical": 16,
-                }
-              }
-            />
-            <Text
-              maxFontSizeMultiplier={2}
-              style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "marginBottom": 16,
-                    "width": "100%",
-                  },
-                ]
-              }
-            >
-              NameWallet.ThisIsTheName
-            </Text>
             <View
               style={
                 Object {
+                  "alignItems": "center",
+                  "justifyContent": "center",
                   "width": "100%",
                 }
               }
             >
-              <View
+              <
+                height={100}
                 style={
                   Object {
-                    "marginVertical": 10,
-                    "width": "100%",
+                    "marginVertical": 16,
                   }
+                }
+              />
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "marginBottom": 16,
+                      "width": "100%",
+                    },
+                  ]
                 }
               >
-                <Text
-                  maxFontSizeMultiplier={2}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "normal",
-                      },
-                      Object {
-                        "marginBottom": 5,
-                      },
-                    ]
-                  }
-                >
-                  NameWallet.NameYourWallet
-                </Text>
-                <TextInput
-                  accessibilityLabel="NameWallet.NameYourWallet"
-                  defaultValue="test-wallet"
-                  maxFontSizeMultiplier={2}
-                  maxLength={50}
-                  onBlur={[Function]}
-                  onChangeText={[Function]}
-                  onFocus={[Function]}
-                  selectionColor="#42803E"
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "#000000",
-                        "borderColor": "#FFFFFFFF",
-                        "borderRadius": 4,
-                        "borderWidth": 2,
-                        "color": "#FFFFFF",
-                        "fontSize": 16,
-                        "padding": 10,
-                      },
-                      false,
-                    ]
-                  }
-                  testID="com.ariesbifold:id/NameInput"
-                />
-                <Text
-                  maxFontSizeMultiplier={2}
-                  style={
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "normal",
-                      },
-                      Object {
-                        "alignSelf": "flex-end",
-                        "color": "#FFFFFF",
-                      },
-                    ]
-                  }
-                >
-                  11
-                  /
-                  50
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View
-            style={Object {}}
-          >
-            <View
-              style={
-                Object {
-                  "width": "100%",
-                }
-              }
-            >
+                NameWallet.ThisIsTheName
+              </Text>
               <View
-                accessibilityLabel="Global.Save"
-                accessibilityRole="button"
-                accessibilityState={
-                  Object {
-                    "busy": undefined,
-                    "checked": undefined,
-                    "disabled": false,
-                    "expanded": undefined,
-                    "selected": undefined,
-                  }
-                }
-                accessibilityValue={
-                  Object {
-                    "max": undefined,
-                    "min": undefined,
-                    "now": undefined,
-                    "text": undefined,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={true}
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "#42803E",
-                    "borderRadius": 4,
-                    "opacity": 1,
-                    "padding": 16,
+                    "width": "100%",
                   }
                 }
-                testID="com.ariesbifold:id/Save"
               >
                 <View
                   style={
                     Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "center",
+                      "marginVertical": 10,
+                      "width": "100%",
                     }
                   }
                 >
@@ -232,33 +125,74 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                           "fontSize": 18,
                           "fontWeight": "normal",
                         },
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
-                            "fontSize": 18,
-                            "fontWeight": "bold",
-                            "textAlign": "center",
-                          },
-                          false,
-                          false,
-                          false,
-                        ],
+                        Object {
+                          "marginBottom": 5,
+                        },
                       ]
                     }
                   >
-                    Global.Save
+                    NameWallet.NameYourWallet
+                  </Text>
+                  <TextInput
+                    accessibilityLabel="NameWallet.NameYourWallet"
+                    defaultValue="test-wallet"
+                    maxFontSizeMultiplier={2}
+                    maxLength={50}
+                    onBlur={[Function]}
+                    onChangeText={[Function]}
+                    onFocus={[Function]}
+                    selectionColor="#42803E"
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#000000",
+                          "borderColor": "#FFFFFFFF",
+                          "borderRadius": 4,
+                          "borderWidth": 2,
+                          "color": "#FFFFFF",
+                          "fontSize": 16,
+                          "padding": 10,
+                        },
+                        false,
+                      ]
+                    }
+                    testID="com.ariesbifold:id/NameInput"
+                  />
+                  <Text
+                    maxFontSizeMultiplier={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        Object {
+                          "alignSelf": "flex-end",
+                          "color": "#FFFFFF",
+                        },
+                      ]
+                    }
+                  >
+                    11
+                    /
+                    50
                   </Text>
                 </View>
               </View>
+            </View>
+            <View
+              style={Object {}}
+            >
               <View
                 style={
                   Object {
-                    "marginTop": 8,
+                    "width": "100%",
                   }
                 }
               >
                 <View
-                  accessibilityLabel="Global.Cancel"
+                  accessibilityLabel="Global.Save"
                   accessibilityRole="button"
                   accessibilityState={
                     Object {
@@ -289,14 +223,13 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                   onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "borderColor": "#42803E",
+                      "backgroundColor": "#42803E",
                       "borderRadius": 4,
-                      "borderWidth": 2,
                       "opacity": 1,
                       "padding": 16,
                     }
                   }
-                  testID="com.ariesbifold:id/Cancel"
+                  testID="com.ariesbifold:id/Save"
                 >
                   <View
                     style={
@@ -318,7 +251,7 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                           },
                           Array [
                             Object {
-                              "color": "#42803E",
+                              "color": "#FFFFFF",
                               "fontSize": 18,
                               "fontWeight": "bold",
                               "textAlign": "center",
@@ -330,8 +263,93 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                         ]
                       }
                     >
-                      Global.Cancel
+                      Global.Save
                     </Text>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "marginTop": 8,
+                    }
+                  }
+                >
+                  <View
+                    accessibilityLabel="Global.Cancel"
+                    accessibilityRole="button"
+                    accessibilityState={
+                      Object {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": false,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessibilityValue={
+                      Object {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
+                    accessible={true}
+                    collapsable={false}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "borderColor": "#42803E",
+                        "borderRadius": 4,
+                        "borderWidth": 2,
+                        "opacity": 1,
+                        "padding": 16,
+                      }
+                    }
+                    testID="com.ariesbifold:id/Cancel"
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                        }
+                      }
+                    >
+                      <Text
+                        maxFontSizeMultiplier={2}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#FFFFFF",
+                              "fontSize": 18,
+                              "fontWeight": "normal",
+                            },
+                            Array [
+                              Object {
+                                "color": "#42803E",
+                                "fontSize": 18,
+                                "fontWeight": "bold",
+                                "textAlign": "center",
+                              },
+                              false,
+                              false,
+                              false,
+                            ],
+                          ]
+                        }
+                      >
+                        Global.Cancel
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
