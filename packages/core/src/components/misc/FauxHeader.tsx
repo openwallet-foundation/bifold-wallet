@@ -9,12 +9,12 @@ import { ThemedText } from '../texts/ThemedText'
 
 interface FauxHeaderProps {
   title: string
-  onBackPressed: () => void
+  onBackPressed?: () => void
   showBackButton?: boolean
 }
 
 // Used for modals that we want to look like regular screens
-const FauxHeader: React.FC<FauxHeaderProps> = ({ title, onBackPressed, showBackButton = true }) => {
+const FauxHeader: React.FC<FauxHeaderProps> = ({ title, onBackPressed = () => {}, showBackButton = true }) => {
   const { ColorPalette, Spacing, NavigationTheme } = useTheme()
   const { t } = useTranslation()
   const styles = StyleSheet.create({
