@@ -62,7 +62,6 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -164,7 +163,6 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -749,6 +747,107 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
@@ -915,7 +1014,6 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -1017,7 +1115,6 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -1602,6 +1699,107 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
@@ -1768,7 +1966,6 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -1870,7 +2067,6 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -2455,6 +2651,107 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
@@ -2621,7 +2918,6 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -2723,7 +3019,6 @@ exports[`Developer Screen screen renders correctly 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -3308,6 +3603,107 @@ exports[`Developer Screen screen renders correctly 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
@@ -3474,7 +3870,6 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -3576,7 +3971,6 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -4161,6 +4555,107 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
@@ -4327,7 +4822,6 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -4429,7 +4923,6 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -5014,6 +5507,107 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
@@ -5180,7 +5774,6 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -5282,7 +5875,6 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
           }
         >
           <Text
-            accessible={false}
             maxFontSizeMultiplier={2}
             style={
               Array [
@@ -5867,6 +6459,107 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
             thumbTintColor="#606060"
             tintColor="#D3D3D3"
             value={false}
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginHorizontal": 10,
+            "marginVertical": 10,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            maxFontSizeMultiplier={2}
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "marginRight": 10,
+                  "textAlign": "left",
+                },
+              ]
+            }
+          >
+            Settings.GenericErrorMessages
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Settings.GenericErrorMessages"
+          accessibilityRole="switch"
+          accessibilityState={
+            Object {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "justifyContent": "center",
+            }
+          }
+          testID="com.ariesbifold:id/ToggleUseGenericErrorMessages"
+        >
+          <RCTSwitch
+            accessibilityRole="switch"
+            onChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTintColor="rgba(53, 130, 63, 0.35)"
+            style={
+              Array [
+                Object {
+                  "height": 31,
+                  "width": 51,
+                },
+                Object {
+                  "backgroundColor": "#D3D3D3",
+                  "borderRadius": 16,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/GenericErrorMessagesSwitchElement"
+            thumbTintColor="#42803E"
+            tintColor="#D3D3D3"
+            value={true}
           />
         </View>
       </View>
