@@ -1,27 +1,18 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Pressable, Switch, StyleSheet, ScrollView, DeviceEventEmitter } from 'react-native'
+import { View, StyleSheet, ScrollView, DeviceEventEmitter } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
-import { useTheme } from '../contexts/theme'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
 import Button, { ButtonType } from '../components/buttons/Button'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
+import DeveloperToggleRow from '../components/inputs/DeveloperToggleRow'
 import { HomeStackParams, Screens, Stacks } from '../types/navigators'
 import { EventTypes } from '../constants'
-
-type DeveloperToggleRowProps = {
-  label: string
-  value: boolean
-  onToggle: () => void
-  accessibilityLabel: string
-  pressableTestId: string
-  switchTestId: string
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -36,21 +27,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  settingLabelText: {
-    marginRight: 10,
-    textAlign: 'left',
-  },
-  settingSwitchContainer: {
-    justifyContent: 'center',
-  },
 })
 
 const Developer: React.FC = () => {
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const { ColorPalette } = useTheme()
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
-
   const [useVerifierCapability, setUseVerifierCapability] = useState(!!store.preferences.useVerifierCapability)
   const [useConnectionInviterCapability, setConnectionInviterCapability] = useState(
     !!store.preferences.useConnectionInviterCapability
@@ -61,38 +43,6 @@ const Developer: React.FC = () => {
   const [enableShareableLink, setEnableShareableLink] = useState(!!store.preferences.enableShareableLink)
   const [preventAutoLock, setPreventAutoLock] = useState(!!store.preferences.preventAutoLock)
   const [enableGenericErrorMessages, setEnableGenericErrorMessages] = useState(!!store.preferences.genericErrorMessages)
-
-  const DeveloperToggleRow: React.FC<DeveloperToggleRowProps> = ({
-    label,
-    value,
-    onToggle,
-    accessibilityLabel,
-    pressableTestId,
-    switchTestId,
-  }) => (
-    <View style={styles.settingContainer}>
-      <View style={{ flex: 1 }}>
-        <ThemedText variant="bold" style={styles.settingLabelText}>
-          {label}
-        </ThemedText>
-      </View>
-      <Pressable
-        style={styles.settingSwitchContainer}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="switch"
-        testID={pressableTestId}
-      >
-        <Switch
-          trackColor={{ false: ColorPalette.grayscale.lightGrey, true: ColorPalette.brand.primaryDisabled }}
-          thumbColor={value ? ColorPalette.brand.primary : ColorPalette.grayscale.mediumGrey}
-          ios_backgroundColor={ColorPalette.grayscale.lightGrey}
-          onValueChange={onToggle}
-          testID={switchTestId}
-          value={value}
-        />
-      </Pressable>
-    </View>
-  )
 
   const toggleVerifierCapabilitySwitch = () => {
     // if verifier feature is switched off then also turn off the dev templates
