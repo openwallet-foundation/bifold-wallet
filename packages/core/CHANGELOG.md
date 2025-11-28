@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.6
+
+### Patch Changes
+
+- fc9d6fe: Added generic full screen error modal
+
 ## 2.11.5
 
 ### Patch Changes
