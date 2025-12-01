@@ -66,6 +66,11 @@ export class PersistentStorage<T> {
         await this.load()
       }
 
+      // If state isn't readdy leave early
+      if (!this._state) {
+        return undefined
+      }
+
       // @ts-expect-error Fix complicated type error.
       const data = this._state[key]
 
