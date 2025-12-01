@@ -75,7 +75,7 @@ export class PersistentStorage<T> {
       const data = this._state[key]
 
       // don't attempt to type cast this undefined value
-      if (!data) {
+      if (data === undefined || data === null) {
         return undefined
       }
 
