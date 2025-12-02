@@ -86,5 +86,25 @@ target 'AriesBifold' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
+
+    # Fix deployment target for all pods to match the platform version
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
+      end
+
+      # Fix CatCrypto/RNArgon2 module dependencies issue
+      # CatCrypto provides internal modules (Argon2, MD6, SHA3) via modulemaps
+      # RNArgon2 needs access to these when building
+      if target.name == 'RNArgon2'
+        target.build_configurations.each do |config|
+          catcrypto_src = "$(PODS_ROOT)/CatCrypto/Sources/ModuleMaps"
+          existing_paths = config.build_settings['SWIFT_INCLUDE_PATHS'] || '$(inherited)'
+          config.build_settings['SWIFT_INCLUDE_PATHS'] = "#{existing_paths} #{catcrypto_src}/Argon2 #{catcrypto_src}/MD6 #{catcrypto_src}/SHA3"
+          config.build_settings['HEADER_SEARCH_PATHS'] ||= '$(inherited)'
+          config.build_settings['HEADER_SEARCH_PATHS'] += " #{catcrypto_src}/Argon2 #{catcrypto_src}/MD6 #{catcrypto_src}/SHA3"
+        end
+      end
+    end
   end
 end

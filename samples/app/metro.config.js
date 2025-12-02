@@ -3,7 +3,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
 const escape = require('escape-string-regexp')
-const exclusionList = require('metro-config/src/defaults/exclusionList')
 const path = require('path')
 
 const packageDirs = [
@@ -33,7 +32,14 @@ for (const packageDir of packageDirs) {
 
 const {
   resolver: { sourceExts, assetExts },
-} = getDefaultConfig()
+} = getDefaultConfig(__dirname)
+
+// Create a combined blockList regex from the exclusion patterns
+const createBlockList = (patterns) => {
+  if (patterns.length === 0) return undefined
+  const combined = patterns.map((m) => `(^${escape(m)}\\/.*$)`).join('|')
+  return new RegExp(combined)
+}
 
 /**
  * Metro configuration
@@ -52,8 +58,7 @@ const config = {
     }),
   },
   resolver: {
-    // blacklistRE renamed to blockList in newer Metro versions
-    blockList: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
+    blockList: createBlockList(extraExclusionlist),
     extraNodeModules: extraNodeModules,
     tslib: path.join(__dirname, 'node_modules/tslib'),
     assetExts: assetExts.filter((ext) => ext !== 'svg'),

@@ -105,6 +105,7 @@
     "@babel/core": "~7.22.20",
     "@babel/preset-env": "~7.22.20",
     "@babel/runtime": "~7.23.9",
+    "@react-native-community/cli": "^20.0.2",
     "@react-native/babel-preset": "~0.81.0",
     "@react-native/eslint-config": "~0.81.0",
     "@react-native/metro-config": "~0.81.0",
