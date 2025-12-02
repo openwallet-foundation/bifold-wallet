@@ -48,7 +48,6 @@ export default [
   },
   {
     ignores: [
-      'commitlint.config.js',
       'eslint.config.mjs',
       '.eslintrc-common.js',
       '**/.eslintrc.js',
