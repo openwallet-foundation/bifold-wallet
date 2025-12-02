@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, type JSX } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import { getVersion, getBuildNumber } from 'react-native-device-info'

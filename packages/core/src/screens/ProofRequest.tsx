@@ -16,7 +16,7 @@ import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, type JSX } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   DeviceEventEmitter,

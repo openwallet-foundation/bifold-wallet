@@ -50,7 +50,7 @@ exports[`Splash Screen Renders default correctly 1`] = `
           "position": "absolute",
           "transform": Array [
             Object {
-              "rotate": "360deg",
+              "rotate": "0deg",
             },
           ],
         }

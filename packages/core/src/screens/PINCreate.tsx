@@ -8,7 +8,6 @@ import {
   Keyboard,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   View,
   findNodeHandle,
 } from 'react-native'
@@ -49,7 +48,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
-  const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const createPINButtonRef = useRef<View>(null)
   const [
     PINExplainer,
     PINHeader,

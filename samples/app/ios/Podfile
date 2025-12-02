@@ -11,7 +11,8 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-platform :ios, min_ios_version_supported
+# RN 0.81 requires iOS 15.1+
+platform :ios, '15.1'
 prepare_react_native_project!
 
 # uncomment wanted permissions (also from RNP docs linked above)
@@ -38,16 +39,7 @@ setup_permissions([
   # 'StoreKit',
 ])
 
-# If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
-# because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
-#
-# To fix this you can also exclude `react-native-flipper` using a `react-native.config.js`
-# ```js
-# module.exports = {
-#   dependencies: {
-#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
-# ```
-flipper_config = FlipperConfiguration.disabled
+# Flipper is deprecated and removed in RN 0.81+
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil

@@ -156,7 +156,7 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -375,7 +375,7 @@ exports[`ProofRequesting Component renders correctly 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

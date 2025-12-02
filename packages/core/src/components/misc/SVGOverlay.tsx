@@ -103,7 +103,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
           {/* White background - visible area */}
           <Rect width={screenWidth} height={screenHeight} fill="white" />
           {/* Cutout  - transparent area */}
-          {React.cloneElement(renderCutOutShape() as React.ReactElement, { fill: 'black' })}
+          {React.cloneElement(renderCutOutShape() as React.ReactElement<any>, { fill: 'black' })}
         </Mask>
       </Defs>
 

@@ -63,6 +63,11 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
         }
         format={Object {}}
         isActive={true}
+        ref={
+          Object {
+            "current": null,
+          }
+        }
         style={
           Object {
             "bottom": 0,
@@ -658,6 +663,11 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         }
         format={Object {}}
         isActive={true}
+        ref={
+          Object {
+            "current": null,
+          }
+        }
         style={
           Object {
             "bottom": 0,
@@ -1424,7 +1434,7 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
                     "position": "absolute",
                     "transform": Array [
                       Object {
-                        "rotate": "360deg",
+                        "rotate": "0deg",
                       },
                     ],
                   }
@@ -1807,6 +1817,11 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         }
         format={Object {}}
         isActive={true}
+        ref={
+          Object {
+            "current": null,
+          }
+        }
         style={
           Object {
             "bottom": 0,
