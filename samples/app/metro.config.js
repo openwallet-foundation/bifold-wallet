@@ -63,8 +63,10 @@ const config = {
     tslib: path.join(__dirname, 'node_modules/tslib'),
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
+    // Enable package exports with CommonJS prioritized for @babel/runtime compatibility
     unstable_enablePackageExports: true,
-    unstable_conditionNames: ['react-native', 'browser', 'import', 'require'],
+    // Order matters: require before import to get CommonJS versions of @babel/runtime helpers
+    unstable_conditionNames: ['react-native', 'browser', 'require', 'default'],
   },
   watchFolders,
 }

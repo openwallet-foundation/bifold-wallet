@@ -1,7 +1,8 @@
 #import <RCTAppDelegate.h>
-#import <Expo/Expo.h>
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : EXAppDelegateWrapper
+// Temporarily using RCTAppDelegate directly to debug Metro connection issue
+// Was: @interface AppDelegate : EXAppDelegateWrapper
+@interface AppDelegate : RCTAppDelegate
 
 @end
