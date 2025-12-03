@@ -19,7 +19,7 @@ export class PersistentStorage<T> {
 
       return JSON.parse(value)
     } catch (error) {
-      log?.error(`Error loading state for key ${key}, ${error as Error}`)
+      log?.error(`Error fetching state for key ${key}, ${error as Error}`)
     }
   }
 
@@ -28,7 +28,7 @@ export class PersistentStorage<T> {
       const serializedState = JSON.stringify(value)
       return AsyncStorage.setItem(key, serializedState)
     } catch (error) {
-      log?.error(`Error loading state for key ${key}, ${error as Error}`)
+      log?.error(`Error storing state for key ${key}, ${error as Error}`)
 
       throw error
     }
@@ -66,8 +66,20 @@ export class PersistentStorage<T> {
         await this.load()
       }
 
+      // If state isn't readdy leave early
+      if (!this._state) {
+        return undefined
+      }
+
       // @ts-expect-error Fix complicated type error.
-      return this._state[key] as Partial<T>
+      const data = this._state[key]
+
+      // don't attempt to type cast this undefined value
+      if (data === undefined || data === null) {
+        return undefined
+      }
+
+      return data as Partial<T>
     } catch (error) {
       this.log?.error(`Error loading state for key ${key}, ${error as Error}`)
     }
