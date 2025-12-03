@@ -60,7 +60,7 @@ export const getOnboardingScreens = (
   },
   {
     name: Screens.Onboarding,
-    children: components.OnboardingScreen,
+    component: components.OnboardingScreen,
     options: () => ({
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.Onboarding'),
@@ -80,7 +80,7 @@ export const getOnboardingScreens = (
   },
   {
     name: Screens.CreatePIN,
-    children: components.CreatePINScreen,
+    component: components.CreatePINScreen,
     initialParams: {},
     options: () => ({
       ...TransitionPresets.SlideFromRightIOS,
@@ -120,7 +120,7 @@ export const getOnboardingScreens = (
   },
   {
     name: Screens.EnterPIN,
-    children: components.EnterPINScreen,
+    component: components.EnterPINScreen,
     options: () => ({
       title: t('Screens.EnterPIN'),
       headerShown: true,

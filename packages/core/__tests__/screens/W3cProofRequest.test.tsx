@@ -30,9 +30,7 @@ import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
 import { BasicAppContext } from '../helpers/app'
 import * as Helpers from '../../src/utils/helpers'
 
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@credo-ts/anoncreds', () => {
   return {
     ...jest.requireActual('@credo-ts/anoncreds'),

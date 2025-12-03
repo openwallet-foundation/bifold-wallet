@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-
+#import "RNSplashScreen.h"
 #import <React/RCTBundleURLProvider.h>
 #import "Orientation.h"
 
@@ -12,15 +12,21 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  BOOL success = [super application:application didFinishLaunchingWithOptions:launchOptions];
+
+  // Note: RNSplashScreen is incompatible with RN 0.81 + EXAppDelegateWrapper
+  // The splash screen will be hidden by SplashScreen.hide() in JS when ready
+  // [RNSplashScreen show];
+
+  return success;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
-  return [self getBundleURL];
+  return [self bundleURL];
 }
- 
-- (NSURL *)getBundleURL
+
+- (NSURL *)bundleURL
 {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];

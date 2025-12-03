@@ -3,7 +3,7 @@ import React from 'react'
 import { useTheme } from './theme'
 
 export interface NavContainerProps extends React.PropsWithChildren {
-  navigationRef: React.RefObject<NavigationContainerRef<any>> | null
+  navigationRef: React.RefObject<NavigationContainerRef<any> | null> | null
 }
 
 const NavContainer = ({ navigationRef, children }: NavContainerProps) => {

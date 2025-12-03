@@ -13,9 +13,61 @@ mockRNDeviceInfo.getBuildNumber = jest.fn(() => '1')
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext)
 jest.mock('react-native-device-info', () => mockRNDeviceInfo)
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
+
+// Mock Animated native helper - path changed in RN 0.81+
+jest.mock('react-native', () => {
+  const RN = jest.requireActual('react-native')
+  RN.NativeModules.NativeAnimatedModule = {
+    startOperationBatch: jest.fn(),
+    finishOperationBatch: jest.fn(),
+    createAnimatedNode: jest.fn(),
+    updateAnimatedNodeConfig: jest.fn(),
+    getValue: jest.fn(),
+    startListeningToAnimatedNodeValue: jest.fn(),
+    stopListeningToAnimatedNodeValue: jest.fn(),
+    connectAnimatedNodes: jest.fn(),
+    disconnectAnimatedNodes: jest.fn(),
+    startAnimatingNode: jest.fn(),
+    stopAnimation: jest.fn(),
+    setAnimatedNodeValue: jest.fn(),
+    setAnimatedNodeOffset: jest.fn(),
+    flattenAnimatedNodeOffset: jest.fn(),
+    extractAnimatedNodeOffset: jest.fn(),
+    connectAnimatedNodeToView: jest.fn(),
+    disconnectAnimatedNodeFromView: jest.fn(),
+    restoreDefaultValues: jest.fn(),
+    dropAnimatedNode: jest.fn(),
+    addAnimatedEventToView: jest.fn(),
+    removeAnimatedEventFromView: jest.fn(),
+    addListener: jest.fn(),
+    removeListeners: jest.fn(),
+  }
+  return RN
+})
 jest.mock('react-native-localize', () => mockRNLocalize)
+jest.mock('react-native-orientation-locker', () => ({
+  useOrientationChange: jest.fn(),
+  OrientationType: {
+    PORTRAIT: 'PORTRAIT',
+    'PORTRAIT-UPSIDEDOWN': 'PORTRAIT-UPSIDEDOWN',
+    'LANDSCAPE-LEFT': 'LANDSCAPE-LEFT',
+    'LANDSCAPE-RIGHT': 'LANDSCAPE-RIGHT',
+    FACE_UP: 'FACE-UP',
+    FACE_DOWN: 'FACE-DOWN',
+    UNKNOWN: 'UNKNOWN',
+  },
+  lockToPortrait: jest.fn(),
+  lockToLandscape: jest.fn(),
+  lockToLandscapeLeft: jest.fn(),
+  lockToLandscapeRight: jest.fn(),
+  unlockAllOrientations: jest.fn(),
+  getOrientation: jest.fn(),
+  getDeviceOrientation: jest.fn(),
+  addOrientationListener: jest.fn(),
+  removeOrientationListener: jest.fn(),
+  addDeviceOrientationListener: jest.fn(),
+  removeDeviceOrientationListener: jest.fn(),
+}))
 jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@hyperledger/aries-askar-react-native', () => ({}))

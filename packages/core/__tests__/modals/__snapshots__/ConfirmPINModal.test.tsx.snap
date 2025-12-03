@@ -3,7 +3,6 @@
 exports[`ConfirmPINModal Component Renders correctly for PIN change 1`] = `
 <Modal
   animationType="none"
-  hardwareAccelerated={false}
   presentationStyle="fullScreen"
   statusBarTranslucent={true}
   style={
@@ -786,7 +785,6 @@ exports[`ConfirmPINModal Component Renders correctly for PIN change 1`] = `
 exports[`ConfirmPINModal Component Renders correctly for PIN create 1`] = `
 <Modal
   animationType="none"
-  hardwareAccelerated={false}
   presentationStyle="fullScreen"
   statusBarTranslucent={true}
   style={
