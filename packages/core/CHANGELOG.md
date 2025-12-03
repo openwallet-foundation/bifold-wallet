@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 2.11.6
+
+### Patch Changes
+
+- 0f05f73: fixed issue with load state
+- fc9d6fe: Added generic full screen error modal
+- a08da5f: remove preinstall hook, git hooks, and replace tagged gha versions with commit sha versions
+
 ## 2.11.5
 
 ### Patch Changes
