@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { StyleSheet, Pressable, View } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { ThemedText } from '../texts/ThemedText'
+import { TOKENS, useServices } from '../../container-api'
 
 const defaultIconSize = 26
 
@@ -33,6 +34,8 @@ const IconButton: React.FC<IconButtonProps> = ({
   iconTintColor,
 }) => {
   const { ColorPalette } = useTheme()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+
   const style = StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -48,9 +51,23 @@ const IconButton: React.FC<IconButtonProps> = ({
     },
   })
 
-  const myIcon = () => (
-    <Icon name={icon} size={defaultIconSize} color={iconTintColor ?? ColorPalette.brand.headerIcon} />
-  )
+  const myIcon = useCallback(() => {
+    const iconColor = iconTintColor ?? ColorPalette.brand.headerIcon
+
+    // First, check if the icon exists in MaterialCommunityIcons
+    if (MaterialCommunityIcon.hasIcon(icon)) {
+      return <MaterialCommunityIcon name={icon} size={defaultIconSize} color={iconColor} />
+    }
+
+    // Next, check if the icon exists in MaterialIcons
+    if (MaterialIcon.hasIcon(icon)) {
+      return <MaterialIcon name={icon} size={defaultIconSize} color={iconColor} />
+    }
+
+    // Otherwise, render default icon (?) and log a warning
+    logger.warn(`IconButton: Icon "${icon}" not found in MaterialIcons or MaterialCommunityIcons. Defaulting to (?).`)
+    return <MaterialIcon name={'question-mark'} size={defaultIconSize} color={iconColor} />
+  }, [ColorPalette.brand.headerIcon, icon, iconTintColor, logger])
 
   const myText = () =>
     text ? (
