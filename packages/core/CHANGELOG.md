@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.7
+
+### Patch Changes
+
+- 8630ecd: fix: added full material ui icon support for materialicons
+
 ## 2.11.6
 
 ### Patch Changes
