@@ -31,12 +31,15 @@ export function useDeclineReplacement(opts: Options = {}) {
     async (oldId: string) => {
       credentialRegistry.setState((prev) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { [oldId]: _drop, ...restRepl } = prev.replacements
+        const { [oldId]: _dropRepl, ...restRepl } = prev.replacements
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [oldId]: _dropRef, ...restRefreshing } = prev.refreshing
         return {
           ...prev,
-          expired: prev.expired.filter((x) => x !== oldId),
+          expired: prev.expired,
+          checked: prev.checked.filter((id) => id !== oldId),
           replacements: restRepl,
-          refreshing: Object.fromEntries(Object.entries(prev.refreshing).filter(([k]) => k !== oldId)),
+          refreshing: restRefreshing,
         }
       })
       logger?.info(`🧹 [Decline] Cleared replacement notification for oldId=${oldId}`)
