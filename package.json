@@ -60,7 +60,6 @@
     "tslib": "2.6.2",
     "react-native": "0.79.7",
     "@types/react": "~18.3.0",
-    "react-test-renderer": "19.0.0",
     "@credo-ts/anoncreds@npm:0.5.17": "patch:@credo-ts/anoncreds@npm%3A0.5.17#~/.yarn/patches/@credo-ts-anoncreds-npm-0.5.17-9f101d8e96.patch",
     "@credo-ts/openid4vc@npm:0.5.17": "patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch",
     "@credo-ts/core@npm:0.5.17": "patch:@credo-ts/core@npm%3A0.5.17#~/.yarn/patches/@credo-ts-core-npm-0.5.17-c528a69dd8.patch",
@@ -70,23 +69,6 @@
     "@hyperledger/anoncreds-react-native@0.2.4": "patch:@hyperledger/anoncreds-react-native@npm%3A0.2.4#./.yarn/patches/@hyperledger-anoncreds-react-native-npm-0.2.4-644cafe308.patch",
     "@hyperledger/aries-askar-react-native@0.2.3": "patch:@hyperledger/aries-askar-react-native@npm%3A0.2.3#./.yarn/patches/@hyperledger-aries-askar-react-native-npm-0.2.3-3207b51eab.patch",
     "@animo-id/pex@npm:4.1.1-alpha.0": "patch:@animo-id/pex@npm%3A4.1.1-alpha.0#~/.yarn/patches/@animo-id-pex-npm-4.1.1-alpha.0-f29edfffa2.patch",
-    "@sphereon/pex@npm:5.0.0-unstable.24": "patch:@sphereon/pex@npm%3A5.0.0-unstable.24#~/.yarn/patches/@sphereon-pex-npm-5.0.0-unstable.24-921df3a8ac.patch",
-    "react-native-safe-area-context": "~5.4.0",
-    "react-native-svg": "~15.11.0",
-    "react-native-svg-transformer": "~1.5.0",
-    "react-native-screens": "~4.11.0",
-    "react-native-gesture-handler": "~2.24.0",
-    "react-native-vision-camera": "~4.6.0",
-    "react-native-webview": "~13.16.0",
-    "@react-native/babel-preset": "0.79.7",
-    "@react-native/metro-config": "0.79.7",
-    "@react-native/typescript-config": "0.79.0",
-    "metro": "0.82.0",
-    "metro-config": "0.82.0",
-    "metro-core": "0.82.0",
-    "metro-resolver": "0.82.0",
-    "metro-runtime": "0.82.0",
-    "metro-transform-plugins": "0.82.0",
-    "metro-transform-worker": "0.82.0"
+    "@sphereon/pex@npm:5.0.0-unstable.24": "patch:@sphereon/pex@npm%3A5.0.0-unstable.24#~/.yarn/patches/@sphereon-pex-npm-5.0.0-unstable.24-921df3a8ac.patch"
   }
 }
