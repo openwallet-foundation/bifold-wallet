@@ -20,6 +20,16 @@ The Bifold Wallet is an open-source project designed to enhance the way we inter
 
 Currently, we're updating Bifold's architecture to make it easier to maintain and customize for various use cases. Check out our [design roadmap issue](https://github.com/openwallet-foundation/bifold-wallet/issues/754) for more information, and we welcome your feedback.
 
+## Architecture & Credential Lifecycle (OpenID4VC)
+
+For a deeper look into how Bifold manages credential validity, refresh, and lifecycle automation, check out the [OpenID Credential Refresh Lifecycle Architecture](./docs/cred-lifecycle-arc.md).  
+This document contains diagrams and explanations of wallet-side flows such as:
+
+- Status list verification for SD-JWT credentials
+- Automated refresh with stored refresh tokens
+- User and background triggers
+- UX integration and fallback strategies
+
 ## Contributing
 
 We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide][contributor-guide].
@@ -365,8 +375,10 @@ Bifold now supports an **automated OpenID4VCI + SD-JWT credential refresh lifecy
 - Automatically use stored **refresh tokens** to obtain a new access token.
 - Request and replace credentials seamlessly when a credential becomes invalid or revoked.
 
-For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see  
-👉 [docs/openid-refresh.md](docs/openid-refresh.md)
+For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see
+
+- [Cred Refresh Lifecycle Overview](docs/openid-refresh.md)
+- [Technical Diagram](docs/cred-lifecycle-arc.md)
 
 # Success Stories
 
