@@ -375,8 +375,10 @@ Bifold now supports an **automated OpenID4VCI + SD-JWT credential refresh lifecy
 - Automatically use stored **refresh tokens** to obtain a new access token.
 - Request and replace credentials seamlessly when a credential becomes invalid or revoked.
 
-For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see  
-👉 [docs/openid-refresh.md](docs/openid-refresh.md)
+For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see
+
+- [Cred Refresh Lifecycle Overview](docs/openid-refresh.md)
+- [Technical Diagram](docs/cred-lifecycle-arc.md)
 
 # Success Stories
 
