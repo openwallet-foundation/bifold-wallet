@@ -1,5 +1,5 @@
 import { useAgent, useConnections } from '@credo-ts/react-hooks'
-import { act, render } from '@testing-library/react-native'
+import { act, render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
 import QRScanner from '../../src/components/misc/QRScanner'
@@ -11,6 +11,17 @@ import { BasicAppContext } from '../helpers/app'
 jest.mock('react-native-orientation-locker', () => {
   return require('../../__mocks__/custom/react-native-orientation-locker')
 })
+
+jest.mock('react-native-vision-camera', () => ({
+  useCameraDevice: jest.fn(() => ({
+    id: 'mock-camera',
+    position: 'back',
+    supportsFocus: true,
+  })),
+  useCameraFormat: jest.fn(() => ({})),
+  useCodeScanner: jest.fn((config) => config),
+  Camera: 'Camera',
+}))
 
 describe('QRScanner Component', () => {
   beforeAll(() => {
@@ -47,6 +58,71 @@ describe('QRScanner Component', () => {
     })
 
     expect(tree).toMatchSnapshot()
+  })
+
+  test('Focus animation does not render before tapping', async () => {
+    const tree = render(
+      <BasicAppContext>
+        <QRScanner
+          showTabs={false}
+          defaultToConnect={false}
+          handleCodeScan={() => Promise.resolve()}
+          navigation={navigation as any}
+          route={{} as any}
+        />
+      </BasicAppContext>
+    )
+    await act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(tree).toMatchSnapshot()
+
+    const { getByTestId, queryByTestId } = tree
+    const scanner = getByTestId(testIdWithKey('QRScanner'))
+    const focusIndicator = queryByTestId(testIdWithKey('FocusIndicator'))
+    expect(scanner).toBeTruthy()
+    expect(focusIndicator).toBeNull()
+  })
+
+  test('Tap on focus area renders animation', async () => {
+    const { getByTestId, queryByTestId } = render(
+      <BasicAppContext>
+        <QRScanner
+          showTabs={false}
+          defaultToConnect={false}
+          handleCodeScan={() => Promise.resolve()}
+          navigation={navigation as any}
+          route={{} as any}
+        />
+      </BasicAppContext>
+    )
+    await act(() => {
+      jest.runAllTimers()
+    })
+
+    const tapArea = getByTestId(testIdWithKey('ScanCameraTapArea'))
+
+    // focus indicator should not be present before tap
+    expect(queryByTestId(testIdWithKey('FocusIndicator'))).toBeNull()
+
+    // tap
+    await act(async () => {
+      fireEvent(tapArea, 'pressIn', {
+        nativeEvent: { locationX: 100, locationY: 100 },
+      })
+    })
+
+    // focus animation should be present now
+    const focusIndicator = queryByTestId(testIdWithKey('FocusIndicator'))
+    expect(focusIndicator).toBeTruthy()
+
+    await act(() => {
+      jest.runAllTimers()
+    })
+
+    // focus animation should be gone now
+    expect(queryByTestId(testIdWithKey('FocusIndicator'))).toBeNull()
   })
 
   test('Renders correctly on first tab', async () => {

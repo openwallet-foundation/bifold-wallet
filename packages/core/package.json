@@ -1,10 +1,10 @@
 {
   "name": "@bifold/core",
-  "version": "2.7.4",
+  "version": "2.11.7",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
-  "react-native": "src/index.ts",
+  "react-native": "./lib/commonjs/index.js",
   "source": "src/index.ts",
   "exports": {
     ".": {
@@ -40,9 +40,8 @@
   "devDependencies": {
     "@babel/core": "~7.22.20",
     "@babel/runtime": "~7.23.9",
-    "@bifold/oca": "2.7.4",
-    "@bifold/verifier": "2.7.4",
-    "@commitlint/cli": "~11.0.0",
+    "@bifold/oca": "2.11.7",
+    "@bifold/verifier": "2.11.7",
     "@credo-ts/anoncreds": "0.5.17",
     "@credo-ts/askar": "0.5.17",
     "@credo-ts/core": "0.5.17",
@@ -53,6 +52,7 @@
     "@credo-ts/question-answer": "0.5.17",
     "@credo-ts/react-hooks": "0.6.1",
     "@credo-ts/react-native": "0.5.17",
+    "@credo-ts/webvh": "0.5.17",
     "@formatjs/intl-datetimeformat": "~4.2.6",
     "@formatjs/intl-displaynames": "~5.2.6",
     "@formatjs/intl-getcanonicallocales": "~1.7.3",
@@ -76,6 +76,7 @@
     "@react-navigation/devtools": "~6.0.27",
     "@react-navigation/native": "~6.0.16",
     "@react-navigation/stack": "~6.3.29",
+    "@sd-jwt/jwt-status-list": "^0.17.0",
     "@testing-library/jest-native": "~5.4.3",
     "@testing-library/react-native": "~12.3.3",
     "@types/jest": "~29.5.14",
@@ -90,14 +91,13 @@
     "babel-jest": "~27.5.1",
     "babel-plugin-module-resolver": "~5.0.2",
     "base-64": "~1.0.0",
-    "commitlint": "~17.7.2",
+    "buffer": "^6.0.3",
     "eslint": "~8.57.1",
     "eslint-import-resolver-typescript": "~3.6.3",
     "eslint-plugin-import": "~2.29.1",
     "eslint-plugin-prettier": "~5.2.6",
     "expo": "*",
     "expo-secure-store": "*",
-    "husky": "~7.0.4",
     "i18next": "~21.6.16",
     "install-peerdeps": "~3.0.7",
     "jest": "~29.6.4",
@@ -124,6 +124,7 @@
     "react-native-gesture-handler": "~2.18.1",
     "react-native-get-random-values": "~1.8.0",
     "react-native-gifted-chat": "~2.4.1",
+    "react-native-keyboard-aware-scroll-view": "~0.9.5",
     "react-native-keychain": "~8.1.3",
     "react-native-localize": "~2.2.6",
     "react-native-logs": "~5.1.0",
@@ -146,7 +147,8 @@
     "rimraf": "~5.0.10",
     "tsyringe": "~4.8.0",
     "typescript": "~5.5.4",
-    "uuid": "~9.0.1"
+    "uuid": "~9.0.1",
+    "zustand": "^4.5.2"
   },
   "peerDependencies": {
     "@credo-ts/anoncreds": "0.5.17",
@@ -231,5 +233,8 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "@types/base-64": "^1.0.2"
   }
 }

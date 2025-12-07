@@ -17,9 +17,12 @@ import CredentialCard from './components/misc/CredentialCard'
 import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import FauxHeader from './components/misc/FauxHeader'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
+import QRRenderer from './components/misc/QRRenderer'
 import QRScannerTorch from './components/misc/QRScannerTorch'
+import ScanCamera from './components/misc/ScanCamera'
 import SVGOverlay, { MaskType } from './components/misc/SVGOverlay'
 import DeveloperModal from './components/modals/DeveloperModal'
+import DismissiblePopupModal from './components/modals/DismissiblePopupModal'
 import ErrorModal from './components/modals/ErrorModal'
 import SafeAreaModal from './components/modals/SafeAreaModal'
 import Record from './components/record/Record'
@@ -38,6 +41,7 @@ import { TourBox } from './components/tour/TourBox'
 import { Banner, BannerMessage, BannerSection } from './components/views/Banner'
 import HomeFooterView from './components/views/HomeFooterView'
 import KeyboardView from './components/views/KeyboardView'
+import ScreenWrapper from './components/views/ScreenWrapper'
 import { attemptLockoutConfig, PINRules, tours, walletTimeout } from './constants'
 import { defaultConfig, defaultHistoryEventsLogger } from './container-impl'
 import * as contexts from './contexts'
@@ -67,9 +71,13 @@ import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { isBiometricsActive, loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
+import { MockLogger } from './testing/MockLogger'
 import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
+import { QrCodeScanError } from './types/error'
+import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
+import { AgentBridge } from './services/AgentBridge'
 
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
@@ -160,7 +168,10 @@ export type { OnboardingStackProps } from './navigators/OnboardingStack'
 export type { SplashProps } from './screens/Splash'
 export { BaseTourID } from './types/tour'
 
+export type { ScanCameraProps } from './components/misc/ScanCamera'
+export type { DismissiblePopupModalProps } from './components/modals/DismissiblePopupModal'
 export type { BannerSectionProps } from './components/views/Banner'
+export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
 
 export {
   AbstractBifoldLogger,
@@ -195,6 +206,7 @@ export {
   DefaultScreenOptionsDictionary,
   Developer,
   DeveloperModal,
+  DismissiblePopupModal,
   ErrorBoundaryWrapper,
   ErrorModal,
   FauxHeader,
@@ -210,6 +222,7 @@ export {
   Link,
   loadLoginAttempt,
   MaskType,
+  MockLogger,
   NavContainer,
   NetworkProvider,
   NotificationListItem,
@@ -219,10 +232,14 @@ export {
   PINRules,
   Preface,
   proofRequestTourSteps,
+  QrCodeScanError,
+  QRRenderer,
   QRScannerTorch,
   Record,
   SafeAreaModal,
   Scan,
+  ScanCamera,
+  ScreenWrapper,
   Splash,
   SVGOverlay,
   Terms,
@@ -243,5 +260,7 @@ export {
   usePreventScreenCapture,
   useTour,
   walletTimeout,
+  RefreshOrchestrator,
+  AgentBridge,
 }
 export type { BannerMessage, DeepPartial, IButton }
