@@ -1,9 +1,9 @@
 diff --git a/android/CMakeLists.txt b/android/CMakeLists.txt
-index c84556e989cd95a18c5a8296931c8d97671a3c5c..449646fb49a23833643ad54152ea3c6ba8ef8283 100644
+index 74b6aff9c7cf062724475a58b9030f655a939e18..f02cff967ab4bf6adfbb3dc36bf908d4954a4de4 100644
 --- a/android/CMakeLists.txt
 +++ b/android/CMakeLists.txt
-@@ -6,7 +6,7 @@ set (LIB_NAME "indyvdr")
- file (GLOB LIBINDY_VDR_DIR "${CMAKE_SOURCE_DIR}/../native/mobile/android/${ANDROID_ABI}")
+@@ -6,7 +6,7 @@ set (LIB_NAME "ariesaskar")
+ file (GLOB LIBASKAR_DIR "${CMAKE_SOURCE_DIR}/../native/mobile/android/${ANDROID_ABI}")
  
  set(CMAKE_VERBOSE_MAKEFILE ON)
 -set(CMAKE_CXX_STANDARD 14)
@@ -32,12 +32,12 @@ diff --git a/android/build.gradle b/android/build.gradle
 index 1234567890abcdef..abcdef1234567890 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
-@@ -81,7 +81,7 @@ android {
+@@ -84,7 +84,7 @@ android {
    }
    
    defaultConfig {
--    minSdkVersion 21 
-+    minSdkVersion 24
+-    minSdkVersion getExtWithFallback('minSdkVersion', 21) 
++    minSdkVersion getExtWithFallback('minSdkVersion', 24)
      targetSdkVersion getExt('targetSdkVersion')
      
      externalNativeBuild {
