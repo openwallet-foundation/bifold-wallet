@@ -107,7 +107,6 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
         hasAltCredentials={hasAltCredentials}
         onChangeAlt={handleAltCredChange}
         elevated={!!proof}
-        hideSlice={!!proof}
       />
     )
   }
@@ -119,7 +118,6 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
       hasAltCredentials={hasAltCredentials}
       onChangeAlt={handleAltCredChange}
       elevated={cardData.brandingType === 'Branding10' || !!proof}
-      hideSlice={!!proof}
     />
   )
 }

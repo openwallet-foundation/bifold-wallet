@@ -13,7 +13,6 @@ type Props = {
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
   elevated?: boolean
-  hideSlice?: boolean
 }
 
 /**
@@ -21,8 +20,8 @@ type Props = {
  * - Passes 'Branding10' to the style hook for layout differences.
  * - No OCA resolution or overlay usage at render time.
  */
-const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hideSlice, hasAltCredentials, onChangeAlt }) => {
-  const { branding } = data
+const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
+  const { branding, hideSlice } = data
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(
     { primaryBackgroundColor: branding.primaryBg, secondaryBackgroundColor: branding.secondaryBg },
     'Branding10',

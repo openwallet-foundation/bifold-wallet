@@ -7,6 +7,8 @@ import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CardWatermark from './CardWatermark'
 import CredentialCardGenLogo from './CredentialCardGenLogo'
+import startCase from 'lodash.startcase'
+import { toImageSource } from '../../utils/credential'
 
 type Props = {
   data: WalletCredentialCardData
@@ -14,13 +16,12 @@ type Props = {
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
   elevated?: boolean
-  hideSlice?: boolean
 }
 
-const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hideSlice, hasAltCredentials, onChangeAlt }) => {
+const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
-  const { branding, proofContext } = data
+  const { branding, proofContext, hideSlice } = data
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(
     // NEW: pass simple colors (no overlay object)
     { primaryBackgroundColor: branding.primaryBg, secondaryBackgroundColor: branding.secondaryBg },
@@ -196,6 +197,20 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hideSlice, hasAl
           </ThemedText>
         </View>
 
+        {data.extraOverlayParameter && !proofContext && (
+          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+            <ThemedText
+              variant="caption"
+              style={{
+                color: styles.textContainer.color,
+              }}
+            >
+              {data.extraOverlayParameter.label ?? startCase(data.extraOverlayParameter.label || '')}:{' '}
+              {data.extraOverlayParameter.value}
+            </ThemedText>
+          </View>
+        )}
+
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {data.revoked && !proofContext && (
             <>
@@ -271,7 +286,7 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hideSlice, hasAl
             />
           )}
           {branding.backgroundFullUri && hideSlice ? (
-            <ImageBackground source={{ uri: branding.backgroundFullUri }}>
+            <ImageBackground source={toImageSource(branding.backgroundFullUri)}>
               <Main />
             </ImageBackground>
           ) : (

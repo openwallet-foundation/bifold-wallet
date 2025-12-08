@@ -20,7 +20,7 @@ import {
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@bifold/oca'
 import { CredentialErrors, GenericCredentialExchangeRecord } from '../types/credentials'
 import { getCredentialForDisplay } from '../modules/openid/display'
-import { buildFieldsFromW3cCredsCredential } from '../utils/oca'
+import { buildFieldsFromW3cCredsCredential, getAttributeField } from '../utils/oca'
 import { i18n } from '../localization'
 import { getCredentialIdentifiers } from '../utils/credential'
 import { IColorPalette } from '../theme'
@@ -195,7 +195,11 @@ export function mapW3CToCard(input: W3CInput, id: string): WalletCredentialCardD
     revoked: false,
     notInWallet: false,
     allPI,
+    extraOverlayParameter: input.primary_overlay_attribute
+      ? mapItemToCardAttr(input.primary_overlay_attribute, input.labels, input.formats, input.piiKeys)
+      : undefined,
     helpActionUrl: input.helpActionUrl,
+    hideSlice: true,
     status: undefined,
   }
 }
@@ -250,6 +254,9 @@ const mapW3CCredToCard = (
   brandingOverlayTypeString: string
 ): WalletCredentialCardData => {
   const credentialDisplay = getCredentialForDisplay(w3cCred)
+  const extraAttributeValue = credentialDisplay.display.primary_overlay_attribute
+    ? getAttributeField(credentialDisplay, credentialDisplay.display.primary_overlay_attribute)?.field
+    : undefined
 
   const input = {
     vc: {
@@ -269,6 +276,7 @@ const mapW3CCredToCard = (
       watermark: brandingOverlay?.metaOverlay?.watermark,
     },
     labels: brandingOverlay?.bundle?.labelOverlay?.attributeLabels,
+    primary_overlay_attribute: extraAttributeValue,
     helpActionUrl:
       (brandingOverlay as any)?.bundle?.bundle?.metadata?.issuerUrl?.en ??
       (brandingOverlay as any)?.bundle?.bundle?.metadata?.issuerUrl?.['en-US'] ??

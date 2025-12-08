@@ -9,7 +9,6 @@ type Props = {
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
   elevated?: boolean
-  hideSlice?: boolean
 }
 
 const WalletCredentialCard: React.FC<Props> = (props) => {

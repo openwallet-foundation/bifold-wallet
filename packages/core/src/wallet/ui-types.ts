@@ -55,6 +55,7 @@ export interface W3CInput {
   formats?: Record<string, AttrFormat>
   piiKeys?: string[]
   helpActionUrl?: string
+  primary_overlay_attribute?: Attribute
 }
 
 export interface WalletCredentialCardData {
@@ -67,6 +68,7 @@ export interface WalletCredentialCardData {
   items: CardAttribute[]
   primaryAttributeKey?: string
   secondaryAttributeKey?: string
+  extraOverlayParameter?: CardAttribute
 
   brandingType: BrandingType
   proofContext?: boolean
@@ -74,8 +76,8 @@ export interface WalletCredentialCardData {
   notInWallet?: boolean
   allPI?: boolean
   helpActionUrl?: string
-
   status?: CardStatus
+  hideSlice?: boolean
 }
 
 export type MapOpts = {
