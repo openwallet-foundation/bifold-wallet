@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter, StyleSheet, View } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, TouchableOpacityProps, View } from 'react-native'
 
 import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
@@ -36,7 +36,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const createPINButtonRef = useRef<View>(null)
+  const createPINButtonRef = useRef<TouchableOpacityProps>(null)
 
   const [
     Button,

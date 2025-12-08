@@ -8,6 +8,7 @@ import {
   Keyboard,
   StyleSheet,
   TextInput,
+  TouchableOpacityProps,
   View,
   findNodeHandle,
 } from 'react-native'
@@ -48,7 +49,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
-  const createPINButtonRef = useRef<View>(null)
+  const createPINButtonRef = useRef<TouchableOpacityProps>(null)
   const [
     PINExplainer,
     PINHeader,
@@ -185,7 +186,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
                 setPINTwo(userPinInput)
                 if (userPinInput.length === minPINLength) {
                   Keyboard.dismiss()
-                  const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
+                  const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current as any)
                   if (reactTag) {
                     AccessibilityInfo.setAccessibilityFocus(reactTag)
                   }

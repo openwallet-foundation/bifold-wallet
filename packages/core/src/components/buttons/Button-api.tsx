@@ -1,4 +1,4 @@
-import { type View } from 'react-native'
+import { TouchableOpacityProps } from "react-native"
 
 export enum ButtonType {
   Critical,
@@ -43,4 +43,4 @@ const styles: stylesType = StyleSheet.create({
   [ButtonType.ModalSecondary]: {},
 })
 */
-export type Button = React.FC<ButtonProps & React.RefAttributes<View>>
+export type Button = React.FC<ButtonProps & React.RefAttributes<TouchableOpacityProps>>
