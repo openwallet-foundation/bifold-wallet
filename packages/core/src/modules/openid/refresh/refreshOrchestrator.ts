@@ -3,11 +3,16 @@ import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } fr
 import { BifoldLogger } from '../../../services/logger'
 import { refreshAccessToken } from './refreshToken'
 import { reissueCredentialWithAccessToken } from './reIssuance'
-import { IRefreshOrchestrator, RefreshOrchestratorOpts, RefreshStatus } from './types'
+import { IRefreshOrchestrator, RefreshCredentialMetadata, RefreshOrchestratorOpts, RefreshStatus } from './types'
 import { AgentBridge } from '../../../services/AgentBridge'
-import { credentialRegistry } from './registery'
+import { credentialRegistry } from './registry'
 import { verifyCredentialStatus } from './verifyCredentialStatus'
-import { markOpenIDCredentialStatus } from '../metadata'
+import {
+  getRefreshCredentialMetadata,
+  markOpenIDCredentialStatus,
+  persistCredentialRecord,
+  setRefreshCredentialMetadata,
+} from '../metadata'
 
 type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord
 
@@ -30,6 +35,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
   private opts: Required<RefreshOrchestratorOpts>
   private agent?: Agent
   private readonly recentlyIssued = new Map<string, AnyCred>()
+  private readonly checkStatusOnly = true
 
   public constructor(private readonly logger: BifoldLogger, bridge: AgentBridge, opts?: RefreshOrchestratorOpts) {
     this.opts = {
@@ -150,7 +156,8 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
       for (const rec of records as AnyCred[]) {
         // don’t block whole batch if one fails
         try {
-          await this.refreshRecord(rec)
+          await this.checkRecordStatus(rec)
+          // await this.refreshRecord(rec)
         } catch (e) {
           this.logger.error(`💥 [Refresh] record ${rec.id} failed: ${String(e)}`)
           this.opts.onError?.(e)
@@ -174,6 +181,56 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
   }
 
   // ---- internals ----
+  private async checkRecordStatus(rec: AnyCred) {
+    const { shouldSkip, markRefreshing, clearRefreshing, upsert, markInvalid, setLastSweep } =
+      credentialRegistry.getState()
+
+    const id = rec.id
+
+    if (!this.agent) {
+      this.logger.error(`💥 [Refresh] Agent not initialized, cannot refresh credential ${id}`)
+      return
+    }
+
+    // 0) fast exit if this cred is already handled or in-flight
+    if (shouldSkip(id)) {
+      this.logger.info(`⏭️ [Refresh] skip credential ${id} (blocked/expired/in-flight)`)
+      return
+    }
+
+    // 1) ensure a lite copy exists in registry (handy for UI/debug)
+    upsert(this.opts.toLite(rec))
+
+    // 2) mark in-flight
+    markRefreshing(id)
+    this.logger.info(`🧭 [Refresh] check credential ${id}`)
+
+    try {
+      // 3) verification
+      const isValid = await verifyCredentialStatus(rec, this.logger)
+      const now = Date.now()
+
+      const meta = getRefreshCredentialMetadata(rec) ?? ({} as RefreshCredentialMetadata)
+      meta.lastCheckResult = isValid ? RefreshStatus.Valid : RefreshStatus.Invalid
+      meta.lastCheckedAt = now
+      meta.attemptCount = (meta.attemptCount ?? 0) + 1
+      setRefreshCredentialMetadata(rec, meta)
+      await persistCredentialRecord(this.agent.context, rec)
+
+      if (isValid) {
+        this.logger.info(`✅ [Refresh] valid → ${id}`)
+      } else {
+        this.logger.info(`❌ [Refresh] invalid → ${id}`)
+        markInvalid(id) // <-- key change: we only flag invalid here
+      }
+      setLastSweep(new Date(now).toISOString())
+    } catch (error) {
+      this.logger.error(`💥 [Refresh] error checking ${id}: ${String(error)}`)
+      this.opts.onError?.(error)
+    } finally {
+      clearRefreshing(id)
+    }
+  }
 
   private async refreshRecord(rec: AnyCred) {
     const {

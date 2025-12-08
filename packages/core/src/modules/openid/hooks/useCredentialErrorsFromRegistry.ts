@@ -1,6 +1,6 @@
 // hooks/useCredentialErrorsFromRegistry.ts
 import { useEffect, useMemo, useState } from 'react'
-import { credentialRegistry, RegistryStore } from '../refresh/registery'
+import { credentialRegistry, RegistryStore } from '../refresh/registry'
 import { getRefreshCredentialMetadata } from '../metadata'
 import { RefreshStatus } from '../refresh/types'
 import { CredentialErrors, GenericCredentialExchangeRecord } from '../../../types/credentials'
