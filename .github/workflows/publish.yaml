@@ -37,6 +37,7 @@ jobs:
 
       - name: Upgrade npm for Trusted Publishers support
         run: |
+          yarn husky uninstall
           npm install -g npm@^11
 
       - name: Update release PR or publish to npm

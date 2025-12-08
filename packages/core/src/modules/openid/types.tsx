@@ -78,6 +78,7 @@ export interface CredentialIssuerDisplay {
 
 export interface W3cCredentialDisplay {
   id: string
+  schemaId?: string
   createdAt: Date
   display: CredentialDisplay
   credential?: W3cCredentialJson

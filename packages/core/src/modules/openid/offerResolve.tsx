@@ -21,12 +21,14 @@ import {
   W3cCredentialRecord,
   W3cJsonLdVerifiableCredential,
   W3cJwtVerifiableCredential,
+  Buffer as CredoBuffer,
 } from '@credo-ts/core'
 import {
   extractOpenId4VcCredentialMetadata,
   setOpenId4VcCredentialMetadata,
   temporaryMetaVanillaObject,
 } from './metadata'
+import Config from 'react-native-config'
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -56,6 +58,11 @@ export const resolveOpenId4VciOffer = async ({
     data: data,
     uri: offerUri,
   })
+
+  if (Config.ISSUER_CERT_B64) {
+    const issuerCert = CredoBuffer.from(String(Config.ISSUER_CERT_B64), 'base64').toString('utf-8')
+    agent.x509.setTrustedCertificates([issuerCert])
+  }
 
   const resolvedCredentialOffer = await agent.modules.openId4VcHolder.resolveCredentialOffer(offerUri)
 

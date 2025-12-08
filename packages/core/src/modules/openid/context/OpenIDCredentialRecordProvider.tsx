@@ -93,6 +93,29 @@ const removeSdJwtRecord = (record: SdJwtVcRecord, state: OpenIDCredentialRecordS
   }
 }
 
+const addMdocRecord = (record: MdocRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.mdocVcRecords]
+  newRecordsState.unshift(record)
+
+  return {
+    ...state,
+    mdocVcRecords: newRecordsState,
+  }
+}
+
+const removeMdocRecord = (record: MdocRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.mdocVcRecords]
+  const index = newRecordsState.findIndex((r) => r.id === record.id)
+  if (index > -1) {
+    newRecordsState.splice(index, 1)
+  }
+
+  return {
+    ...state,
+    mdocVcRecords: newRecordsState,
+  }
+}
+
 const defaultState: OpenIDCredentialRecordState = {
   openIDCredentialRecords: [],
   w3cCredentialRecords: [],
@@ -115,12 +138,20 @@ const isSdJwtCredentialRecord = (record: SdJwtVcRecord) => {
   return 'compactSdJwtVc' in record
 }
 
+const isMdocCredentialRecord = (record: MdocRecord) => {
+  return record['_tags'].docType != null
+}
+
 const filterW3CCredentialsOnly = (credentials: W3cCredentialRecord[]) => {
   return credentials.filter((r) => isW3CCredentialRecord(r))
 }
 
 const filterSdJwtCredentialsOnly = (credentials: SdJwtVcRecord[]) => {
   return credentials.filter((r) => isSdJwtCredentialRecord(r))
+}
+
+const filterMdocCredentialsOnly = (credentials: MdocRecord[]) => {
+  return credentials.filter((r) => isMdocCredentialRecord(r))
 }
 
 // eslint-disable-next-line react/prop-types
@@ -182,35 +213,41 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
   ): Promise<CredentialOverlay<BrandingOverlay>> => {
     const credentialDisplay = getCredentialForDisplay(credential)
+    const credentialType =
+      credentialDisplay.credential?.type?.find((t) => t !== 'VerifiableCredential') || credentialDisplay.id
+
+    const presentationFields = buildFieldsFromW3cCredsCredential(credentialDisplay)
 
     const params: OCABundleResolveAllParams = {
       identifiers: {
-        schemaId: '',
-        credentialDefinitionId: credentialDisplay.id,
+        schemaId: credentialDisplay.schemaId,
+        credentialDefinitionId: credentialType,
       },
       meta: {
         alias: credentialDisplay.display.issuer.name,
         credConnectionId: undefined,
         credName: credentialDisplay.display.name,
       },
-      attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
+      attributes: presentationFields,
       language: i18n.language,
     }
 
     const bundle = await bundleResolver.resolveAllBundles(params)
     const _bundle = bundle as CredentialOverlay<BrandingOverlay>
 
-    const brandingOverlay: BrandingOverlay = new BrandingOverlay('none', {
-      capture_base: 'none',
-      type: BrandingOverlayType.Branding10,
-      primary_background_color: credentialDisplay.display.backgroundColor,
-      background_image: credentialDisplay.display.backgroundImage?.url,
-      logo: credentialDisplay.display.logo?.url,
-    })
+    const brandingOverlay: BrandingOverlay =
+      _bundle.brandingOverlay ||
+      new BrandingOverlay('none', {
+        capture_base: 'none',
+        type: BrandingOverlayType.Branding10,
+        primary_background_color: credentialDisplay.display.backgroundColor,
+        background_image: credentialDisplay.display.backgroundImage?.url,
+        logo: credentialDisplay.display.logo?.url,
+      })
     const ocaBundle: CredentialOverlay<BrandingOverlay> = {
-      ..._bundle,
-      presentationFields: bundle.presentationFields,
+      presentationFields: presentationFields,
       brandingOverlay: brandingOverlay,
+      ..._bundle,
     }
 
     return ocaBundle
@@ -231,6 +268,14 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       setState((prev) => ({
         ...prev,
         sdJwtVcRecords: filterSdJwtCredentialsOnly(creds),
+        isLoading: false,
+      }))
+    })
+
+    agent.mdoc?.getAll().then((creds) => {
+      setState((prev) => ({
+        ...prev,
+        mdocVcRecords: filterMdocCredentialsOnly(creds),
         isLoading: false,
       }))
     })
@@ -267,11 +312,27 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       setState(removeSdJwtRecord(record, state))
     })
 
+    const mdoc_credentialAdded$ = recordsAddedByType(agent, MdocRecord).subscribe((record) => {
+      //This handler will return ANY creds added to the wallet even DidComm
+      //Sounds like a bug in the hooks package
+      //This check will safe guard the flow untill a fix goes to the hooks
+      setState(addMdocRecord(record, state))
+      // if (isW3CCredentialRecord(record)) {
+      //   setState(addW3cRecord(record, state))
+      // }
+    })
+
+    const mdoc_credentialRemoved$ = recordsRemovedByType(agent, MdocRecord).subscribe((record) => {
+      setState(removeMdocRecord(record, state))
+    })
+
     return () => {
       w3c_credentialAdded$.unsubscribe()
       w3c_credentialRemoved$.unsubscribe()
       sdjwt_credentialAdded$.unsubscribe()
       sdjwt_credentialRemoved$.unsubscribe()
+      mdoc_credentialAdded$.unsubscribe()
+      mdoc_credentialRemoved$.unsubscribe()
     }
   }, [state, agent])
 

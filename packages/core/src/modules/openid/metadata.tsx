@@ -24,6 +24,7 @@ export interface OpenId4VcCredentialMetadata {
     display?: OpenId4VciCredentialSupported['display']
     order?: OpenId4VciCredentialSupported['order']
     credential_subject?: CredentialSubjectRecord
+    id?: string
   }
   issuer: {
     display?: OpenId4VciIssuerMetadataDisplay[]
@@ -49,6 +50,7 @@ export function extractOpenId4VcCredentialMetadata(
       display: credentialMetadata.display,
       order: credentialMetadata.order,
       credential_subject: credentialMetadata.credential_subject,
+      id: credentialMetadata.id,
     },
     issuer: {
       display: serverMetadata.display,
