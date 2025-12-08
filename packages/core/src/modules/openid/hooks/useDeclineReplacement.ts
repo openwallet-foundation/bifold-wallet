@@ -1,6 +1,6 @@
 // modules/openid/hooks/useDeclineReplacement.ts
 import { useCallback } from 'react'
-import { credentialRegistry } from '../refresh/registery'
+import { credentialRegistry } from '../refresh/registry'
 import type { BifoldLogger } from '../../../services/logger'
 import type { CustomNotification } from '../../../types/notification'
 

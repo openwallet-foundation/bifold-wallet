@@ -5,7 +5,7 @@ import { refreshAccessToken } from './refreshToken'
 import { reissueCredentialWithAccessToken } from './reIssuance'
 import { IRefreshOrchestrator, RefreshCredentialMetadata, RefreshOrchestratorOpts, RefreshStatus } from './types'
 import { AgentBridge } from '../../../services/AgentBridge'
-import { credentialRegistry } from './registery'
+import { credentialRegistry } from './registry'
 import { verifyCredentialStatus } from './verifyCredentialStatus'
 import {
   getRefreshCredentialMetadata,

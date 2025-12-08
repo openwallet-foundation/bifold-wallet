@@ -1,6 +1,6 @@
 // modules/openid/hooks/useExpiredNotifications.ts
 import { useCallback, useEffect, useState } from 'react'
-import { credentialRegistry, RegistryStore } from '../refresh/registery'
+import { credentialRegistry, RegistryStore } from '../refresh/registry'
 import { CustomNotification } from '../../../types/notification'
 import { OpenIDCustomNotificationType } from '../refresh/types'
 import { TOKENS, useServices } from '../../../container-api'

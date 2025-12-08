@@ -7,7 +7,7 @@ import { RootStackParams, Screens, Stacks } from '../../../types/navigators'
 import { refreshAccessToken } from '../refresh/refreshToken'
 import { reissueCredentialWithAccessToken } from '../refresh/reIssuance'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { credentialRegistry } from '../refresh/registery'
+import { credentialRegistry } from '../refresh/registry'
 import { TOKENS, useServices } from '../../../container-api'
 
 export const useUpgradeExpiredCredential = () => {
