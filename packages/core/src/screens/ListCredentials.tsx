@@ -20,7 +20,7 @@ import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredential
 import { CredentialErrors, GenericCredentialExchangeRecord } from '../types/credentials'
 import { BaseTourID } from '../types/tour'
 import { OpenIDCredentialType } from '../modules/openid/types'
-// import CredentialCardGen from '../components/misc/CredentialCardGen'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -109,7 +109,7 @@ const ListCredentials: React.FC = () => {
 
   const renderCardItemGen = (cred: GenericCredentialExchangeRecord) => {
     return (
-      <CredentialCard
+      <CredentialCardGen
         credential={cred}
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {
