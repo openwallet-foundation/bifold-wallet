@@ -26,13 +26,13 @@ export async function getCredentialName(credDefId?: string, schemaId?: string): 
   if (normalizedCredDefId && normalizedSchemaId && normalizedCredDefId === normalizedSchemaId) {
     return normalizedCredDefId
   }
-  const isWebvh = !!(
-    normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
-    normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
-  )
-  if (isWebvh) {
-    return parseWebVHCredDefId(normalizedCredDefId, normalizedSchemaId, agent)
-  }
+  // const isWebvh = !!(
+  //   normalizedCredDefId?.toLowerCase().startsWith('did:webvh:') ||
+  //   normalizedSchemaId?.toLowerCase().startsWith('did:webvh:')
+  // )
+  // if (isWebvh) {
+  //   return parseWebVHCredDefId(normalizedCredDefId, normalizedSchemaId, agent)
+  // }
   return parseIndyCredDefId(normalizedCredDefId, normalizedSchemaId)
 }
 
