@@ -71,4 +71,5 @@ export interface IRefreshOrchestrator {
 
 export enum OpenIDCustomNotificationType {
   CredentialReplacementAvailable = 'CustomNotificationOpenIDCredential',
+  CredentialExpired = 'CredentialExpired',
 }
