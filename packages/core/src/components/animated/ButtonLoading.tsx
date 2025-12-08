@@ -5,9 +5,7 @@ import { useTheme } from '../../contexts/theme'
 const ButtonLoading: React.FC = () => {
   const { ColorPalette } = useTheme()
 
-  return (
-    <LoadingSpinner size={25} color={ColorPalette.brand.icon} />
-  )
+  return <LoadingSpinner size={25} color={ColorPalette.brand.icon} />
 }
 
 export default ButtonLoading

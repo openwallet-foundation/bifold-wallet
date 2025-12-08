@@ -29,7 +29,7 @@ const FullScreenErrorModal: React.FC<FullScreenErrorModalProps> = ({
   const [store] = useStore()
   const [{ showGenericErrors }] = useServices([TOKENS.CONFIG])
 
-  const showGenericErrorMessage = (store.preferences.genericErrorMessages || showGenericErrors)
+  const showGenericErrorMessage = store.preferences.genericErrorMessages || showGenericErrors
 
   const style = StyleSheet.create({
     container: {

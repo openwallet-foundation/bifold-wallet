@@ -6,13 +6,16 @@ import InfoBox, { InfoBoxType } from '../../../components/misc/InfoBox'
 import { ThemedText } from '../../../components/texts/ThemedText'
 
 type OpenIDUnsatisfiedProofRequestProps = {
-  verifierName?: string,
-  credentialName?: string,
-  requestPurpose?: string,
+  verifierName?: string
+  credentialName?: string
+  requestPurpose?: string
 }
 
-const OpenIDUnsatisfiedProofRequest: React.FC<OpenIDUnsatisfiedProofRequestProps> = ({ verifierName, credentialName, requestPurpose }) => {
-
+const OpenIDUnsatisfiedProofRequest: React.FC<OpenIDUnsatisfiedProofRequestProps> = ({
+  verifierName,
+  credentialName,
+  requestPurpose,
+}) => {
   const { t } = useTranslation()
 
   const styles = StyleSheet.create({
@@ -20,21 +23,21 @@ const OpenIDUnsatisfiedProofRequest: React.FC<OpenIDUnsatisfiedProofRequestProps
       flex: 1,
       justifyContent: 'space-between',
       paddingTop: 30,
-      paddingHorizontal: 16
+      paddingHorizontal: 16,
     },
     textContainer: {
       flex: 1,
       paddingHorizontal: 8,
     },
     verifierDetailsText: {
-      marginTop: 30
+      marginTop: 30,
     },
     verifierNameText: {
       marginTop: 8,
-      marginBottom: 30
+      marginBottom: 30,
     },
     credentialDetailsText: {
-      marginTop: 8
+      marginTop: 8,
     },
   })
 
@@ -47,17 +50,15 @@ const OpenIDUnsatisfiedProofRequest: React.FC<OpenIDUnsatisfiedProofRequestProps
         renderShowDetails
       />
       <View style={styles.textContainer}>
-        <ThemedText variant='normal' style={styles.verifierDetailsText}>
-          {t("UnsatisfiedProofRequest.VerifierDetail")}
+        <ThemedText variant="normal" style={styles.verifierDetailsText}>
+          {t('UnsatisfiedProofRequest.VerifierDetail')}
         </ThemedText>
-        <ThemedText variant='bold' style={styles.verifierNameText}>
+        <ThemedText variant="bold" style={styles.verifierNameText}>
           {verifierName}
         </ThemedText>
-        <ThemedText variant='bold'>
-          {credentialName}
-        </ThemedText>
-        <ThemedText variant='normal' style={styles.credentialDetailsText}>
-          {t("UnsatisfiedProofRequest.RequestPurpose", { requestPurpose })}
+        <ThemedText variant="bold">{credentialName}</ThemedText>
+        <ThemedText variant="normal" style={styles.credentialDetailsText}>
+          {t('UnsatisfiedProofRequest.RequestPurpose', { requestPurpose })}
         </ThemedText>
       </View>
     </View>
