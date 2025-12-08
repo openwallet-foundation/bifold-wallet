@@ -254,9 +254,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }
 
   useEffect(() => {
-    if (!agent) {
-      return
-    }
+    if (!agent) return
 
     agent.w3cCredentials?.getAllCredentialRecords().then((w3cCredentialRecords) => {
       setState((prev) => ({
@@ -284,56 +282,57 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }, [agent])
 
   useEffect(() => {
-    if (!state.isLoading && agent) {
-      const w3c_credentialAdded$ = recordsAddedByType(agent, W3cCredentialRecord).subscribe((record) => {
-        //This handler will return ANY creds added to the wallet even DidComm
-        //Sounds like a bug in the hooks package
-        //This check will safe guard the flow untill a fix goes to the hooks
-        if (isW3CCredentialRecord(record)) {
-          setState(addW3cRecord(record, state))
-        }
-      })
+    if (state.isLoading) return
+    if (!agent?.events?.observable) return
 
-      const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
-        setState(removeW3cRecord(record, state))
-      })
-
-      const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
-        //This handler will return ANY creds added to the wallet even DidComm
-        //Sounds like a bug in the hooks package
-        //This check will safe guard the flow untill a fix goes to the hooks
-        setState(addSdJwtRecord(record, state))
-        // if (isW3CCredentialRecord(record)) {
-        //   setState(addW3cRecord(record, state))
-        // }
-      })
-
-      const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
-        setState(removeSdJwtRecord(record, state))
-      })
-
-      const mdoc_credentialAdded$ = recordsAddedByType(agent, MdocRecord).subscribe((record) => {
-        //This handler will return ANY creds added to the wallet even DidComm
-        //Sounds like a bug in the hooks package
-        //This check will safe guard the flow untill a fix goes to the hooks
-        setState(addMdocRecord(record, state))
-        // if (isW3CCredentialRecord(record)) {
-        //   setState(addW3cRecord(record, state))
-        // }
-      })
-
-      const mdoc_credentialRemoved$ = recordsRemovedByType(agent, MdocRecord).subscribe((record) => {
-        setState(removeMdocRecord(record, state))
-      })
-
-      return () => {
-        w3c_credentialAdded$.unsubscribe()
-        w3c_credentialRemoved$.unsubscribe()
-        sdjwt_credentialAdded$.unsubscribe()
-        sdjwt_credentialRemoved$.unsubscribe()
-        mdoc_credentialAdded$.unsubscribe()
-        mdoc_credentialRemoved$.unsubscribe()
+    const w3c_credentialAdded$ = recordsAddedByType(agent, W3cCredentialRecord).subscribe((record) => {
+      //This handler will return ANY creds added to the wallet even DidComm
+      //Sounds like a bug in the hooks package
+      //This check will safe guard the flow untill a fix goes to the hooks
+      if (isW3CCredentialRecord(record)) {
+        setState(addW3cRecord(record, state))
       }
+    })
+
+    const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
+      setState(removeW3cRecord(record, state))
+    })
+
+    const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
+      //This handler will return ANY creds added to the wallet even DidComm
+      //Sounds like a bug in the hooks package
+      //This check will safe guard the flow untill a fix goes to the hooks
+      setState(addSdJwtRecord(record, state))
+      // if (isW3CCredentialRecord(record)) {
+      //   setState(addW3cRecord(record, state))
+      // }
+    })
+
+    const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
+      setState(removeSdJwtRecord(record, state))
+    })
+
+    const mdoc_credentialAdded$ = recordsAddedByType(agent, MdocRecord).subscribe((record) => {
+      //This handler will return ANY creds added to the wallet even DidComm
+      //Sounds like a bug in the hooks package
+      //This check will safe guard the flow untill a fix goes to the hooks
+      setState(addMdocRecord(record, state))
+      // if (isW3CCredentialRecord(record)) {
+      //   setState(addW3cRecord(record, state))
+      // }
+    })
+
+    const mdoc_credentialRemoved$ = recordsRemovedByType(agent, MdocRecord).subscribe((record) => {
+      setState(removeMdocRecord(record, state))
+    })
+
+    return () => {
+      w3c_credentialAdded$.unsubscribe()
+      w3c_credentialRemoved$.unsubscribe()
+      sdjwt_credentialAdded$.unsubscribe()
+      sdjwt_credentialRemoved$.unsubscribe()
+      mdoc_credentialAdded$.unsubscribe()
+      mdoc_credentialRemoved$.unsubscribe()
     }
   }, [state, agent])
 

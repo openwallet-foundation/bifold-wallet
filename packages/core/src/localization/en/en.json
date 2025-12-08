@@ -49,7 +49,15 @@
     "GotIt": "Got it",
     "Send": "Send",
     "Reset": "Reset",
-    "ViewJSON": "View JSON Details"
+    "ViewJSON": "View JSON Details",
+    "RefreshCredentials": "Refresh Credentials",
+    "AppName": "Aries Bifold"
+  },
+  "Toast": {
+    "OpenIDCredRefreshing": {
+      "Title": "Refreshing credentials",
+      "Message": "Your OpenID credentials are being refreshed in the background."
+    }
   },
   "Date": {
     "ShortFormat": "MMM D",
@@ -150,7 +158,11 @@
     "Title1048": "Proof request problems.",
     "Message1048": "There was a problem with the proof request.",
     "Title1049": "Unable to change PIN.",
-    "Message1049": "There was a problem while attempting to change your PIN."
+    "Message1049": "There was a problem while attempting to change your PIN.",
+    "GenericError": {
+      "Title": "Something went wrong",
+      "Message": "There was an unexpected error, please try again later."
+    }
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -750,6 +762,15 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request.",
     "PleaseAddress": " Please address them before continuing."
   },
+  "UnsatisfiedProofRequest": {
+    "Title": "Information Request",
+    "InfoBox": {
+      "Title": "You do not have a card for this request",
+      "Subtitle": "Check with {{verifierName}} for accepted cards."
+    },
+    "VerifierDetail": "Received an information request from: ",
+    "RequestPurpose": " • {{requestPurpose}}"
+  },
   "Settings": {
     "Version": "Version",
     "VersionString": "0.0.0-0",
@@ -772,7 +793,8 @@
     "Logout": "Log out",
     "ConfigureMediator": "Configure Mediator",
     "ChangeMediator": "Change Mediator",
-    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue?"
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue?",
+    "GenericErrorMessages": "Generic error messages"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes",
@@ -829,6 +851,7 @@
     "CredentialOffer": "Credential Offer",
     "ProofChangeCredential": "Choose a credential",
     "ProofRequest": "Proof Request",
+    "UnsatisfiedProofRequest": "Unsatisfied Proof Request",
     "ChangeCard": "Change Card",
     "ProofRequestDetails": "Proof Request Details",
     "ProofRequestAttributeDetails": "Proof Request Attribute Details",
@@ -968,5 +991,8 @@
   },
   "Banner": {
     "AlertsLength": "You have {{ alerts }} alerts"
+  },
+  "FullScreenErrorModal": {
+    "PrimaryCTA": "Go back to home"
   }
 }

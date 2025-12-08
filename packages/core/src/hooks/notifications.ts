@@ -21,13 +21,14 @@ import {
 import { useOpenID } from '../modules/openid/hooks/openid'
 import { CustomNotification } from '../types/notification'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
+import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
 
 export type NotificationsInputProps = {
   openIDUri?: string
   openIDPresentationUri?: string
 }
 
-export type NotificationReturnType = Array<
+export type NotificationItemType =
   | BasicMessageRecord
   | CredentialRecord
   | ProofExchangeRecord
@@ -36,7 +37,8 @@ export type NotificationReturnType = Array<
   | W3cCredentialRecord
   | MdocRecord
   | OpenId4VPRequestRecord
->
+
+export type NotificationReturnType = Array<NotificationItemType>
 
 export const useNotifications = ({
   openIDUri,
@@ -50,6 +52,7 @@ export const useNotifications = ({
   const credsDone = useCredentialByState(CredentialState.Done)
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
+  const openIDExpiredNotifs = useExpiredNotifications()
 
   useEffect(() => {
     // get all unseen messages
@@ -99,10 +102,20 @@ export const useNotifications = ({
       ...validProofsDone,
       ...revoked,
       ...openIDCreds,
-    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      ...openIDExpiredNotifs,
+    ].sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime())
 
     setNotifications(notif)
-  }, [basicMessages, credsReceived, proofsDone, proofsRequested, offers, credsDone, openIDCredRecieved])
+  }, [
+    basicMessages,
+    credsReceived,
+    proofsDone,
+    proofsRequested,
+    offers,
+    credsDone,
+    openIDCredRecieved,
+    openIDExpiredNotifs,
+  ])
 
   return notifications
 }

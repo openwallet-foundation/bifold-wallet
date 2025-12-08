@@ -18,7 +18,7 @@ import { ButtonType } from '../components/buttons/Button-api'
 import PINInput from '../components/inputs/PINInput'
 import PINValidationHelper from '../components/misc/PINValidationHelper'
 import AlertModal from '../components/modals/AlertModal'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { EventTypes, minPINLength } from '../constants'
 import usePreventScreenCapture from '../hooks/screen-capture'
 import { usePINValidation } from '../hooks/usePINValidation'
@@ -48,7 +48,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const [isLoading, setIsLoading] = useState(false)
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
+  const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const createPINButtonRef = useRef<TouchableOpacity>(null)
   const [
     PINExplainer,
@@ -66,7 +66,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const [PINConfirmModalVisible, setPINConfirmModalVisible] = useState(false)
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
   const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity } =
-    usePINValidation(PIN, PINTwo)
+    usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
 
   const style = StyleSheet.create({
@@ -116,12 +116,14 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   )
 
   const onConfirmPIN = useCallback(
-    async (pinOne: string, pinTwo: string) => {
-      if (validatePINEntry(pinOne, pinTwo)) {
-        await passcodeCreate(pinOne)
+    async (pinTwo: string) => {
+      setIsLoading(true)
+      if (validatePINEntry(PIN, pinTwo)) {
+        await passcodeCreate(PIN)
       }
+      setIsLoading(false)
     },
-    [passcodeCreate, validatePINEntry]
+    [passcodeCreate, validatePINEntry, PIN, setIsLoading]
   )
 
   const onCreatePIN = useCallback(async () => {
@@ -148,19 +150,23 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   }, [])
 
   return explained ? (
-    <KeyboardView keyboardAvoiding={true}>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
           <PINHeader />
           <PINInput
             label={t('PINCreate.EnterPINTitle')}
-            onPINChanged={async (p: string) => {
-              setPIN(() => p)
-              if (p.length === minPINLength && PINScreensConfig.useNewPINDesign) {
+            onPINChanged={async (userPinInput: string) => {
+              setPIN(() => userPinInput)
+              if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
                 Keyboard.dismiss()
-                await handleConfirmPINFlow(p)
-              } else if (!PINScreensConfig.useNewPINDesign && p.length === minPINLength && PINTwoInputRef?.current) {
+                await handleConfirmPINFlow(userPinInput)
+              } else if (
+                !PINScreensConfig.useNewPINDesign &&
+                userPinInput.length === minPINLength &&
+                PINTwoInputRef?.current
+              ) {
                 PINTwoInputRef.current.focus()
                 const reactTag = findNodeHandle(PINTwoInputRef.current)
                 if (reactTag) {
@@ -194,6 +200,9 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
             />
           )}
           {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
+          {PINScreensConfig.useNewPINDesign && isLoading && (
+            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+          )}
           {modalState.visible && (
             <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
           )}
@@ -214,17 +223,17 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           </View>
         )}
         <ConfirmPINModal
-          errorMessage={inlineMessageField2}
           modalUsage={ConfirmPINModalUsage.PIN_CREATE}
           onBackPressed={modalBackButtonPressed}
           onConfirmPIN={onConfirmPIN}
           PINOne={PIN}
+          setPINTwo={setPINTwo}
           title={t('Screens.CreatePIN')}
           visible={PINConfirmModalVisible}
           isLoading={isLoading}
         />
       </View>
-    </KeyboardView>
+    </ScreenWrapper>
   ) : (
     <PINExplainer continueCreatePIN={continueCreatePIN} />
   )

@@ -2371,14 +2371,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bifold/core@npm:2.8.0, @bifold/core@workspace:packages/core":
+"@bifold/core@npm:2.11.7, @bifold/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
     "@babel/core": "npm:~7.22.20"
     "@babel/runtime": "npm:~7.23.9"
-    "@bifold/oca": "npm:2.8.0"
-    "@bifold/verifier": "npm:2.8.0"
+    "@bifold/oca": "npm:2.11.7"
+    "@bifold/verifier": "npm:2.11.7"
     "@credo-ts/anoncreds": "npm:0.5.17"
     "@credo-ts/askar": "npm:0.5.17"
     "@credo-ts/core": "npm:0.5.17"
@@ -2389,6 +2389,7 @@ __metadata:
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.17"
+    "@credo-ts/webvh": "npm:0.5.17"
     "@formatjs/intl-datetimeformat": "npm:~4.2.6"
     "@formatjs/intl-displaynames": "npm:~5.2.6"
     "@formatjs/intl-getcanonicallocales": "npm:~1.7.3"
@@ -2412,8 +2413,10 @@ __metadata:
     "@react-navigation/devtools": "npm:~6.0.27"
     "@react-navigation/native": "npm:~6.0.16"
     "@react-navigation/stack": "npm:~6.3.29"
+    "@sd-jwt/jwt-status-list": "npm:^0.17.0"
     "@testing-library/jest-native": "npm:~5.4.3"
     "@testing-library/react-native": "npm:~12.3.3"
+    "@types/base-64": "npm:^1.0.2"
     "@types/jest": "npm:~29.5.14"
     "@types/lodash.flatten": "npm:~4.4.9"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -2459,6 +2462,7 @@ __metadata:
     react-native-gesture-handler: "npm:~2.18.1"
     react-native-get-random-values: "npm:~1.8.0"
     react-native-gifted-chat: "npm:~2.4.1"
+    react-native-keyboard-aware-scroll-view: "npm:~0.9.5"
     react-native-keychain: "npm:~8.1.3"
     react-native-localize: "npm:~2.2.6"
     react-native-logs: "npm:~5.1.0"
@@ -2482,6 +2486,7 @@ __metadata:
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
+    zustand: "npm:^4.5.2"
   peerDependencies:
     "@credo-ts/anoncreds": 0.5.17
     "@credo-ts/askar": 0.5.17
@@ -2558,7 +2563,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/oca@npm:2.8.0, @bifold/oca@workspace:packages/oca":
+"@bifold/oca@npm:2.11.7, @bifold/oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
@@ -2623,7 +2628,7 @@ __metadata:
     "@babel/preset-flow": "npm:~7.24.7"
     "@babel/preset-typescript": "npm:~7.24.7"
     "@babel/runtime": "npm:~7.23.9"
-    "@bifold/core": "npm:2.8.0"
+    "@bifold/core": "npm:2.11.7"
     "@credo-ts/core": "npm:0.5.17"
     "@types/jest": "npm:~29.5.12"
     "@typescript-eslint/parser": "npm:~7.18.0"
@@ -2649,7 +2654,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/verifier@npm:2.8.0, @bifold/verifier@workspace:packages/verifier":
+"@bifold/verifier@npm:2.11.7, @bifold/verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
@@ -3322,7 +3327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch":
+"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=ffc58d":
   version: 0.5.17
   resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@npm%3A0.5.17#~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch::version=0.5.17&hash=ffc58d"
   dependencies:
@@ -3336,6 +3341,23 @@ __metadata:
     class-transformer: "npm:^0.5.1"
     rxjs: "npm:^7.8.0"
   checksum: 10c0/bd38e1b53cc89b96adeda0e023dd73f0ca722813566c032e07641ebe7b4d99f86d900fec22a4c96d6aeff5baf10432963e5a201e60cb11d2849c7d1cb1144171
+  languageName: node
+  linkType: hard
+
+"@credo-ts/openid4vc@patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch":
+  version: 0.5.17
+  resolution: "@credo-ts/openid4vc@patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch::version=0.5.17&hash=21cd31"
+  dependencies:
+    "@credo-ts/core": "npm:0.5.17"
+    "@sphereon/did-auth-siop": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vc-common": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-client": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-common": "npm:0.16.1-fix.173"
+    "@sphereon/oid4vci-issuer": "npm:0.16.1-fix.173"
+    "@sphereon/ssi-types": "npm:0.30.2-next.135"
+    class-transformer: "npm:^0.5.1"
+    rxjs: "npm:^7.8.0"
+  checksum: 10c0/c28085895317d1257acecabc1876cd850e05572a8ad321914b9b8f69df659d734efbb26f81755e9565e0a1d319f5bd880fe0bd0ec2e27f3472aca45602368174
   languageName: node
   linkType: hard
 
@@ -3389,6 +3411,21 @@ __metadata:
     react-native-fs: ^2.20.0
     react-native-get-random-values: ^1.8.0
   checksum: 10c0/69e686bb6c1ed2616db29bac3ca70104286a10f811eb89692e65ae18429c02abf536017fff0865f875aad090b05a9167f4c93e4d5c642a230434d0d214e9835c
+  languageName: node
+  linkType: hard
+
+"@credo-ts/webvh@npm:0.5.17":
+  version: 0.5.17
+  resolution: "@credo-ts/webvh@npm:0.5.17"
+  dependencies:
+    "@credo-ts/anoncreds": "npm:0.5.17"
+    "@credo-ts/core": "npm:0.5.17"
+    class-transformer: "npm:^0.5.1"
+    class-validator: "npm:0.14.1"
+    didwebvh-ts: "npm:^2.5.3"
+    json-canonicalize: "npm:^1.2.0"
+    tsyringe: "npm:^4.8.0"
+  checksum: 10c0/c39a3fb302a36a5cad28df3cee3c8b1c575e8f0dc35b4f3fd94a9608f117cb0a944af74327aec20caf7c37e82f67e1784ae0bc205063b8e3831a797f242eb89f
   languageName: node
   linkType: hard
 
@@ -4973,7 +5010,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:1.8.0, @noble/hashes@npm:^1.3.0, @noble/hashes@npm:^1.4.0, @noble/hashes@npm:^1.5.0":
+"@noble/hashes@npm:1.8.0, @noble/hashes@npm:^1.3.0, @noble/hashes@npm:^1.4.0, @noble/hashes@npm:^1.5.0, @noble/hashes@npm:^1.8.0":
   version: 1.8.0
   resolution: "@noble/hashes@npm:1.8.0"
   checksum: 10c0/06a0b52c81a6fa7f04d67762e08b2c476a00285858150caeaaff4037356dd5e119f45b2a530f638b77a5eeca013168ec1b655db41bae3236cb2e9d511484fc77
@@ -5850,6 +5887,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sd-jwt/jwt-status-list@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "@sd-jwt/jwt-status-list@npm:0.17.0"
+  dependencies:
+    "@sd-jwt/types": "npm:0.17.0"
+    "@sd-jwt/utils": "npm:0.17.0"
+    pako: "npm:^2.1.0"
+  checksum: 10c0/bb1a7b2cb74a77223b1c78976d2810b15f02044a11b2b6c4c8ee40b3a5c1618be30ee6b6d5d37ea79eec2850cf50fdffe2f6c1f8ccb8ba225ef2ba4c232b64a2
+  languageName: node
+  linkType: hard
+
 "@sd-jwt/present@npm:0.7.2, @sd-jwt/present@npm:^0.7.2":
   version: 0.7.2
   resolution: "@sd-jwt/present@npm:0.7.2"
@@ -5872,6 +5920,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sd-jwt/types@npm:0.17.0":
+  version: 0.17.0
+  resolution: "@sd-jwt/types@npm:0.17.0"
+  checksum: 10c0/6fe3f4b3dec1ea3d3482f0722eefcd850f14dcda9cdf00d4899acf9c41583a6421016d1922472fcf44ec72c4851a4a6ea7453f5cca192df07430a6245d36e756
+  languageName: node
+  linkType: hard
+
 "@sd-jwt/types@npm:0.6.1":
   version: 0.6.1
   resolution: "@sd-jwt/types@npm:0.6.1"
@@ -5883,6 +5938,16 @@ __metadata:
   version: 0.7.2
   resolution: "@sd-jwt/types@npm:0.7.2"
   checksum: 10c0/3679d0db6cae0cc86bfc2c76acd7e7ad90219fc10f17bd41293aea438aa9d707f729ceca953d3196f2481a71ed9f4e4512f0233ba69d62cadcb7921ba4df9a09
+  languageName: node
+  linkType: hard
+
+"@sd-jwt/utils@npm:0.17.0":
+  version: 0.17.0
+  resolution: "@sd-jwt/utils@npm:0.17.0"
+  dependencies:
+    "@sd-jwt/types": "npm:0.17.0"
+    js-base64: "npm:^3.7.8"
+  checksum: 10c0/97806cf379598f6be1dff53b3bd2b690cc2ebab1eb9361e8a9b9dfb8cd7981f33ddc4b77c7818db6eb8446bf69217e2fd8146ef5269a40733d09377eb9e5c7ce
   languageName: node
   linkType: hard
 
@@ -6724,6 +6789,13 @@ __metadata:
   dependencies:
     "@babel/types": "npm:^7.20.7"
   checksum: 10c0/5386f0af44f8746b063b87418f06129a814e16bb2686965a575e9d7376b360b088b89177778d8c426012abc43dd1a2d8ec3218bfc382280c898682746ce2ffbd
+  languageName: node
+  linkType: hard
+
+"@types/base-64@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/base-64@npm:1.0.2"
+  checksum: 10c0/3ad69002bd9ca4e79c010f6d9a4c9d09967687153fa6bb98e9459c731219609a4ac76920451565784e9d98cbe3567429eb60bd1561918c3a6ea2436d894346af
   languageName: node
   linkType: hard
 
@@ -8569,8 +8641,8 @@ __metadata:
     "@babel/core": "npm:~7.22.20"
     "@babel/preset-env": "npm:~7.22.20"
     "@babel/runtime": "npm:~7.23.9"
-    "@bifold/core": "npm:2.8.0"
-    "@bifold/oca": "npm:2.8.0"
+    "@bifold/core": "npm:2.11.7"
+    "@bifold/oca": "npm:2.11.7"
     "@credo-ts/anoncreds": "npm:0.5.17"
     "@credo-ts/askar": "npm:0.5.17"
     "@credo-ts/core": "npm:0.5.17"
@@ -8581,6 +8653,7 @@ __metadata:
     "@credo-ts/question-answer": "npm:0.5.17"
     "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.17"
+    "@credo-ts/webvh": "npm:0.5.17"
     "@formatjs/intl-datetimeformat": "npm:~4.2.6"
     "@formatjs/intl-displaynames": "npm:~5.2.6"
     "@formatjs/intl-getcanonicallocales": "npm:~1.7.3"
@@ -8604,6 +8677,7 @@ __metadata:
     "@react-navigation/devtools": "npm:~6.0.27"
     "@react-navigation/native": "npm:~6.0.16"
     "@react-navigation/stack": "npm:~6.3.29"
+    "@sd-jwt/jwt-status-list": "npm:^0.17.0"
     "@types/lodash.flatten": "npm:~4.4.9"
     "@types/lodash.merge": "npm:~4.6.9"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -8611,6 +8685,7 @@ __metadata:
     axios: "npm:~1.4.0"
     babel-plugin-module-resolver: "npm:~5.0.2"
     base-64: "npm:~1.0.0"
+    buffer: "npm:^6.0.3"
     eslint: "npm:~8.57.1"
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
@@ -8639,6 +8714,7 @@ __metadata:
     react-native-gesture-handler: "npm:~2.18.1"
     react-native-get-random-values: "npm:~1.8.0"
     react-native-gifted-chat: "npm:~2.4.1"
+    react-native-keyboard-aware-scroll-view: "npm:~0.9.5"
     react-native-keychain: "npm:~8.1.3"
     react-native-localize: "npm:~2.2.6"
     react-native-logs: "npm:~5.1.0"
@@ -8661,6 +8737,7 @@ __metadata:
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
+    zustand: "npm:^4.5.2"
   languageName: unknown
   linkType: soft
 
@@ -10400,6 +10477,18 @@ __metadata:
   version: 4.1.0
   resolution: "did-resolver@npm:4.1.0"
   checksum: 10c0/3ccb21c85958a2e47122e90b7c3bfdf738360a85745eb5dbe556b6bd33d2d7c2bc080d9b12da1a5de3491934a17329dd1cdc99854afb850699d6af3765102dbc
+  languageName: node
+  linkType: hard
+
+"didwebvh-ts@npm:^2.5.3":
+  version: 2.5.5
+  resolution: "didwebvh-ts@npm:2.5.5"
+  dependencies:
+    "@noble/hashes": "npm:^1.8.0"
+    json-canonicalize: "npm:^1.0.6"
+  bin:
+    didwebvh: dist/cli/didwebvh.js
+  checksum: 10c0/ab6685878c1e9a34ee7c33421e81d6983b81ec384968c1086d8eff5fe989530e6127a1dadd602fcbb3a8db3b1c3b47f7c9bc19361e7e27bc8cd0c6c75c99bf54
   languageName: node
   linkType: hard
 
@@ -14419,6 +14508,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-base64@npm:^3.7.8":
+  version: 3.7.8
+  resolution: "js-base64@npm:3.7.8"
+  checksum: 10c0/a4452a7e7f32b0ef568a344157efec00c14593bbb1cf0c113f008dddff7ec515b35147af0cd70a7735adb69a2a2bdee921adffea2ea465e2c856ba50d649b11e
+  languageName: node
+  linkType: hard
+
 "js-crypto-aes@npm:^1.0.6":
   version: 1.0.6
   resolution: "js-crypto-aes@npm:1.0.6"
@@ -14662,6 +14758,13 @@ __metadata:
   version: 3.0.1
   resolution: "json-buffer@npm:3.0.1"
   checksum: 10c0/0d1c91569d9588e7eef2b49b59851f297f3ab93c7b35c7c221e288099322be6b562767d11e4821da500f3219542b9afd2e54c5dc573107c1126ed1080f8e96d7
+  languageName: node
+  linkType: hard
+
+"json-canonicalize@npm:^1.0.6, json-canonicalize@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "json-canonicalize@npm:1.2.0"
+  checksum: 10c0/98b031dbd8d8d5d2cfb826d226e23ea126e6caf8c80edc95814c547343d82bae4657fc2816915022ba2a7cffca64f3b9353096d90d3dbd1279a7767060124690
   languageName: node
   linkType: hard
 
@@ -17438,7 +17541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.7.x, prop-types@npm:^15.8.0, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -17906,12 +18009,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-iphone-x-helper@npm:1.3.1":
+"react-native-iphone-x-helper@npm:1.3.1, react-native-iphone-x-helper@npm:^1.0.3":
   version: 1.3.1
   resolution: "react-native-iphone-x-helper@npm:1.3.1"
   peerDependencies:
     react-native: ">=0.42.0"
   checksum: 10c0/f2e01cb30ebdba54cbadc7bcb584ef7491c24aa2d221312f084c6e7b1031b77c2d538f7bf778ee16959245dbbe4f7784bbead02448368b7d0cbe8dd8c808693f
+  languageName: node
+  linkType: hard
+
+"react-native-keyboard-aware-scroll-view@npm:~0.9.5":
+  version: 0.9.5
+  resolution: "react-native-keyboard-aware-scroll-view@npm:0.9.5"
+  dependencies:
+    prop-types: "npm:^15.6.2"
+    react-native-iphone-x-helper: "npm:^1.0.3"
+  peerDependencies:
+    react-native: ">=0.48.4"
+  checksum: 10c0/932c724f86ba355f1a1db938123eef67844550dd6e2d117222eff0012a47c6a293ad79c965e16930e5eb14adb58a5c340c00e03eeabbe3d78229236125b8a6aa
   languageName: node
   linkType: hard
 
@@ -20880,6 +20995,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:^1.2.2":
+  version: 1.6.0
+  resolution: "use-sync-external-store@npm:1.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/35e1179f872a53227bdf8a827f7911da4c37c0f4091c29b76b1e32473d1670ebe7bcd880b808b7549ba9a5605c233350f800ffab963ee4a4ee346ee983b6019b
+  languageName: node
+  linkType: hard
+
 "utf8@npm:^3.0.0":
   version: 3.0.0
   resolution: "utf8@npm:3.0.0"
@@ -21629,5 +21753,25 @@ __metadata:
   bin:
     z-schema: bin/z-schema
   checksum: 10c0/e4c812cfe6468c19b2a21d07d4ff8fb70359062d33400b45f89017eaa3efe9d51e85963f2b115eaaa99a16b451782249bf9b1fa8b31d35cc473e7becb3e44264
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.5.2":
+  version: 4.5.7
+  resolution: "zustand@npm:4.5.7"
+  dependencies:
+    use-sync-external-store: "npm:^1.2.2"
+  peerDependencies:
+    "@types/react": ">=16.8"
+    immer: ">=9.0.6"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/55559e37a82f0c06cadc61cb08f08314c0fe05d6a93815e41e3376130c13db22a5017cbb0cd1f018c82f2dad0051afe3592561d40f980bd4082e32005e8a950c
   languageName: node
   linkType: hard

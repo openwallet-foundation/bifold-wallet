@@ -1,8 +1,8 @@
 import { useIsFocused } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { FlatList, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 
 import { NotificationType } from '../components/listItems/NotificationListItem'
 import AppGuideModal from '../components/modals/AppGuideModal'
@@ -13,6 +13,10 @@ import { useTheme } from '../contexts/theme'
 import { useTour } from '../contexts/tour/tour-context'
 import { HomeStackParams, Screens } from '../types/navigators'
 import { BaseTourID } from '../types/tour'
+import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
+import { EventTypes } from '../constants'
+import Toast from 'react-native-toast-message'
+import { ToastType } from '../components/toast/BaseToast'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -24,6 +28,7 @@ const Home: React.FC<HomeProps> = () => {
     { enableTours: enableToursConfig },
     { customNotificationConfig: customNotification, useNotifications },
     NotificationListItem,
+    orchestrator,
   ] = useServices([
     TOKENS.COMPONENT_HOME_HEADER,
     TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST,
@@ -31,6 +36,7 @@ const Home: React.FC<HomeProps> = () => {
     TOKENS.CONFIG,
     TOKENS.NOTIFICATIONS,
     TOKENS.NOTIFICATIONS_LIST_ITEM,
+    TOKENS.UTIL_REFRESH_ORCHESTRATOR,
   ])
   const notifications = useNotifications({})
   const { t } = useTranslation()
@@ -39,6 +45,7 @@ const Home: React.FC<HomeProps> = () => {
   const { start, stop } = useTour()
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
+  const refreshTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   const styles = StyleSheet.create({
     flatlist: {
@@ -63,6 +70,14 @@ const Home: React.FC<HomeProps> = () => {
             notificationType={NotificationType.Custom}
             notification={item}
             customNotification={customNotification}
+          />
+        )
+      } else if (item.type === OpenIDCustomNotificationType.CredentialExpired) {
+        component = (
+          <NotificationListItem
+            notificationType={NotificationType.Custom}
+            notification={item}
+            customNotification={item}
           />
         )
       } else {
@@ -129,6 +144,35 @@ const Home: React.FC<HomeProps> = () => {
   useEffect(() => {
     return stop
   }, [stop])
+
+  //Run OpenID refresh when requested via DeviceEventEmitter
+  useEffect(() => {
+    const sub = DeviceEventEmitter.addListener(EventTypes.OPENID_REFRESH_REQUEST, () => {
+      // Optional: only refresh when Home is actually visible
+      if (!screenIsFocused) return
+
+      // Clear any pending timer to avoid stacking
+      if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current)
+
+      Toast.show({
+        type: ToastType.Info,
+        text1: t('Toast.OpenIDCredRefreshing.Title'),
+        text2: t('Toast.OpenIDCredRefreshing.Message'),
+        visibilityTime: 4000,
+        position: 'bottom',
+      })
+
+      // Run once after 4 seconds
+      refreshTimerRef.current = setTimeout(() => {
+        orchestrator.runOnce('developer-menu')
+      }, 4000)
+    })
+
+    return () => {
+      sub.remove()
+      if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current)
+    }
+  }, [screenIsFocused, orchestrator, t])
 
   return (
     <>

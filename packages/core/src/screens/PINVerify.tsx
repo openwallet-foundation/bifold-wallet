@@ -8,7 +8,7 @@ import PINInput from '../components/inputs/PINInput'
 import { InfoBoxType } from '../components/misc/InfoBox'
 import PopupModal from '../components/modals/PopupModal'
 import { ThemedText } from '../components/texts/ThemedText'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -38,7 +38,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const [loading, setLoading] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
   const { ColorPalette } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
+  const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [{ preventScreenCapture }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   usePreventScreenCapture(preventScreenCapture)
@@ -133,10 +133,15 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
       marginTop: 0,
       marginBottom: 40,
     },
+    loadingContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    },
   })
 
   return (
-    <KeyboardView keyboardAvoiding={true}>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View>
           {usage === PINEntryUsage.ChangeBiometrics && (
@@ -171,6 +176,11 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
             }}
           />
         </View>
+        {usage === PINEntryUsage.ChangePIN && loading && (
+          <View style={style.loadingContainer}>
+            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+          </View>
+        )}
         {usage !== PINEntryUsage.ChangePIN && (
           <View style={style.buttonContainer}>
             <Button
@@ -207,7 +217,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
           onCallToActionPressed={clearAlertModal}
         />
       )}
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

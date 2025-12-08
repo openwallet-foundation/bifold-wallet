@@ -20,6 +20,16 @@ The Bifold Wallet is an open-source project designed to enhance the way we inter
 
 Currently, we're updating Bifold's architecture to make it easier to maintain and customize for various use cases. Check out our [design roadmap issue](https://github.com/openwallet-foundation/bifold-wallet/issues/754) for more information, and we welcome your feedback.
 
+## Architecture & Credential Lifecycle (OpenID4VC)
+
+For a deeper look into how Bifold manages credential validity, refresh, and lifecycle automation, check out the [OpenID Credential Refresh Lifecycle Architecture](./docs/cred-lifecycle-arc.md).  
+This document contains diagrams and explanations of wallet-side flows such as:
+
+- Status list verification for SD-JWT credentials
+- Automated refresh with stored refresh tokens
+- User and background triggers
+- UX integration and fallback strategies
+
 ## Contributing
 
 We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide][contributor-guide].
@@ -52,6 +62,26 @@ Key points to note:
 - Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
 - Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
 
+### Registering DID Method Resolvers
+
+When creating a themed wallet based on Bifold, you need to explicitly register DID method resolvers in your agent configuration. While Credo core provides resolvers for several DID methods (such as `did:web`, `did:key`, `did:jwk`, and `did:peer`), they must be explicitly registered in the `DidsModule` configuration. Any additional DID methods from other Credo packages (such as `did:webvh`) must also be explicitly registered.
+
+This configuration is done in the `getAgentModules` function, typically located in `packages/core/src/utils/agent.ts`:
+
+```typescript
+dids: new DidsModule({
+  resolvers: [
+    new WebvhDidResolver(),  // From @credo-ts/webvh package
+    new WebDidResolver(),     // Core resolver
+    new JwkDidResolver(),     // Core resolver
+    new KeyDidResolver(),     // Core resolver
+    new PeerDidResolver(),    // Core resolver
+  ],
+}),
+```
+
+**Important:** When new DID method resolvers are added to Credo packages, they must be explicitly registered in themed wallets. This ensures that your wallet can resolve DIDs using those methods. Keep track of new DID methods added to Credo and update your resolver configuration accordingly.
+
 ## Setup
 
 The setup for Bifold is similar to other React Native projects. The following sections will walk you through the process of setting up your development environment, installing dependencies, and running the app in an emulator.
@@ -61,7 +91,7 @@ The setup for Bifold is similar to other React Native projects. The following se
 [Android Studio](https://developer.android.com/studio)
 [Apple Xcode](https://developer.apple.com/xcode/)
 
-Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited 
+Since this is a mobile development project, this project is primarily developed on MacOS, support for Windows/Linux is quite limited
 
 ## Suggested Setup
 
@@ -159,7 +189,7 @@ Since this is a mobile development project, this project is primarily developed 
 
 **ProTip 🤓**
 
-You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run 
+You can use [mise-en-place](https://mise.jdx.dev/getting-started.html) to easily configure the development tools for this project. Once mise is setup simply run
 
 ```sh
 mise install
@@ -240,7 +270,7 @@ For more detailed information how to setup android SDK in react native, please r
 
 #### OpenJDK17
 
-You will need to have OpenJDK 17 installed. You can install it using your package manager. 
+You will need to have OpenJDK 17 installed. You can install it using your package manager.
 
 ##### Manual Installation
 
@@ -336,6 +366,19 @@ open samples/app/ios/AriesBifold.xcworkspace
 cd samples/app
 yarn start
 ```
+
+## OpenID Credentials Refresh Lifecycle
+
+Bifold now supports an **automated OpenID4VCI + SD-JWT credential refresh lifecycle**, enabling wallets to:
+
+- Periodically check credential **status lists**.
+- Automatically use stored **refresh tokens** to obtain a new access token.
+- Request and replace credentials seamlessly when a credential becomes invalid or revoked.
+
+For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see
+
+- [Cred Refresh Lifecycle Overview](docs/openid-refresh.md)
+- [Technical Diagram](docs/cred-lifecycle-arc.md)
 
 # Success Stories
 

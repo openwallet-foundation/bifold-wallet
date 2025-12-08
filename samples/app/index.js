@@ -28,6 +28,12 @@ if (!global.atob) {
   global.atob = decode
 }
 
+import { Buffer } from 'buffer'
+
+if (typeof global.Buffer === 'undefined') {
+  global.Buffer = Buffer
+}
+
 import { initLanguages, translationResources, createApp, MainContainer } from '@bifold/core'
 import { AppRegistry, LogBox } from 'react-native'
 import { container } from 'tsyringe'
