@@ -12,10 +12,12 @@ runs:
   using: composite
   steps:
     - name: Setup node v${{ inputs.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: 'https://registry.npmjs.org/'
+        always-auth: true
+        scope: '@bifold'
 
     - name: Enable corepack and setup Yarn 4.9.2
       shell: bash

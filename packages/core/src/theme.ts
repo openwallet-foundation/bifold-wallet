@@ -65,6 +65,7 @@ import {
   IDialogTheme,
   ILoadingTheme,
   IPINInputTheme,
+  ISeparatedPINInputTheme,
   IInlineInputMessage,
   IButtons,
   IListItems,
@@ -1131,8 +1132,10 @@ export function createPINInputTheme(theme: { ColorPalette: IColorPalette }): IPI
 
   const viewStyles = StyleSheet.create({
     cell: {
+      height: 48,
+      paddingHorizontal: 2,
       backgroundColor: theme.ColorPalette.brand.secondaryBackground,
-      borderColor: theme.ColorPalette.brand.secondary,
+      borderColor: theme.ColorPalette.brand.secondaryBackground,
       borderWidth: 1,
     },
     focussedCell: {
@@ -1157,6 +1160,53 @@ export function createPINInputTheme(theme: { ColorPalette: IColorPalette }): IPI
   return { ...textStyles, ...viewStyles }
 }
 export const PINInputTheme = createPINInputTheme({ ColorPalette })
+
+/**
+ * Creates a theme for a separated PIN input based on the provided color pallet.
+ *
+ * @param {{ ColorPalette: IColorPalette }} theme - The theme object containing the color pallet
+ * @returns {*} {ISeparatedPINInputTheme} - The created  PIN input theme
+ */
+export function createSeparatedPINInputTheme(theme: { ColorPalette: IColorPalette }): ISeparatedPINInputTheme {
+  const textStyles = StyleSheet.create({
+    cellText: {
+      color: theme.ColorPalette.brand.text,
+    },
+    icon: {
+      color: theme.ColorPalette.brand.headerIcon,
+    },
+  })
+
+  const viewStyles = StyleSheet.create({
+    cell: {
+      height: 48,
+      paddingHorizontal: 4,
+      backgroundColor: theme.ColorPalette.brand.secondaryBackground,
+      borderColor: theme.ColorPalette.brand.secondary,
+      borderWidth: 1,
+      margin: 6,
+      borderRadius: 4,
+      flex: 1,
+      flexShrink: 0,
+    },
+    focussedCell: {
+      borderColor: theme.ColorPalette.brand.headerIcon,
+    },
+    codeFieldRoot: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    labelAndFieldContainer: {
+      flexDirection: 'row',
+      paddingHorizontal: 0,
+      paddingVertical: 4,
+      alignItems: 'center',
+    },
+  })
+
+  return { ...textStyles, ...viewStyles }
+}
+export const SeparatedPINInputTheme = createSeparatedPINInputTheme({ ColorPalette })
 
 const CredentialCardShadowTheme = {
   shadowColor: '#000',
@@ -1289,6 +1339,7 @@ export interface ITheme {
   LoadingTheme: ILoadingTheme
   PINEnterTheme: IPINEnterTheme
   PINInputTheme: IPINInputTheme
+  SeparatedPINInputTheme: ISeparatedPINInputTheme
   CredentialCardShadowTheme: ViewStyle
   SelectedCredTheme: ViewStyle
   heavyOpacity: typeof heavyOpacity
@@ -1317,6 +1368,7 @@ export const bifoldTheme: ITheme = {
   LoadingTheme,
   PINEnterTheme,
   PINInputTheme,
+  SeparatedPINInputTheme,
   CredentialCardShadowTheme,
   SelectedCredTheme,
   heavyOpacity,
@@ -1343,4 +1395,5 @@ export type {
   IDialogTheme,
   ILoadingTheme,
   IPINInputTheme,
+  ISeparatedPINInputTheme,
 } from './theme.interface'

@@ -2,12 +2,14 @@
 import axios from 'axios'
 import { Buffer } from 'buffer'
 import { transportFunctionType } from 'react-native-logs'
+import { LogLevel } from '@credo-ts/core'
 
 export interface RemoteLoggerOptions {
   lokiUrl?: string
   lokiLabels?: Record<string, string>
   autoDisableRemoteLoggingIntervalInMinutes?: number
   job?: string
+  logLevel?: LogLevel
 }
 
 export type LokiTransportProps = {
@@ -27,7 +29,7 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
   // however Date.now() only returns milliseconds precision.
   const timestampEndPadding = '000000'
 
-  if (!props.options) {
+  if (!props?.options) {
     throw Error('props.options is required')
   }
 
@@ -40,7 +42,11 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
   }
 
   const { lokiUrl, lokiLabels } = props.options
-  const { message, data } = props.rawMsg.pop()
+  // Get the last element without mutating the
+  // original array.
+  const lastMessage = props.rawMsg[props.rawMsg.length - 1]
+  const { message, data, error } = lastMessage
+
   const payload = {
     streams: [
       {
@@ -49,7 +55,7 @@ export const lokiTransport: transportFunctionType = (props: LokiTransportProps) 
           level: props.level.text,
           ...lokiLabels,
         },
-        values: [[`${Date.now()}${timestampEndPadding}`, JSON.stringify({ message, data })]],
+        values: [[`${Date.now()}${timestampEndPadding}`, JSON.stringify({ message, data, error })]],
       },
     ],
   }

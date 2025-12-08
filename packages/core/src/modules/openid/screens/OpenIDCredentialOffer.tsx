@@ -1,32 +1,37 @@
-import React, { useEffect } from 'react'
-import { StackScreenProps } from '@react-navigation/stack'
-import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
-import { getCredentialForDisplay } from '../display'
-import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
-import { ModalUsage } from '../../../types/remove'
-import { useState } from 'react'
-import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import Button, { ButtonType } from '../../../components/buttons/Button'
-import { testIdWithKey } from '../../../utils/testable'
-import { useTheme } from '../../../contexts/theme'
-import { BifoldError } from '../../../types/error'
-import { EventTypes } from '../../../constants'
-import { useAgent } from '@credo-ts/react-hooks'
-import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
-import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { CredentialOverlay } from '@bifold/oca/build/legacy'
 import { BrandingOverlay } from '@bifold/oca'
-import Record from '../../../components/record/Record'
-import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import { CredentialOverlay } from '@bifold/oca/build/legacy'
 import { W3cCredentialRecord } from '@credo-ts/core'
+import { useAgent } from '@credo-ts/react-hooks'
+import { StackScreenProps } from '@react-navigation/stack'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
+import Button, { ButtonType } from '../../../components/buttons/Button'
+import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
+import Record from '../../../components/record/Record'
+import { EventTypes } from '../../../constants'
+import { useTheme } from '../../../contexts/theme'
+import { TOKENS, useServices } from '../../../container-api'
 import ScreenLayout from '../../../layout/ScreenLayout'
+import CredentialOfferAccept from '../../../screens/CredentialOfferAccept'
+import { BifoldError } from '../../../types/error'
+import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
+import { ModalUsage } from '../../../types/remove'
+import { testIdWithKey } from '../../../utils/testable'
+import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
+import { getCredentialForDisplay } from '../display'
+import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
+import { temporaryMetaVanillaObject } from '../metadata'
+import { useAcceptReplacement } from '../hooks/useAcceptReplacement'
+import { useDeclineReplacement } from '../hooks/useDeclineReplacement'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
 const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
   // FIXME: change params to accept credential id to avoid 'non-serializable' warnings
   const { credential } = route.params
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const credentialDisplay = getCredentialForDisplay(credential)
   const { display } = credentialDisplay
 
@@ -34,11 +39,14 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { t } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { storeCredential, resolveBundleForCredential } = useOpenIDCredentials()
+  const { resolveBundleForCredential } = useOpenIDCredentials()
+  const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
+  const { acceptNewCredential } = useAcceptReplacement()
+  const { declineByNewId } = useDeclineReplacement({ logger: logger })
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -78,8 +86,31 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const toggleDeclineModalVisible = () => setIsRemoveModalDisplayed(!isRemoveModalDisplayed)
 
   const handleDeclineTouched = async () => {
+    await handleSendNotification(NotificationEventType.CREDENTIAL_DELETED)
+    await declineByNewId(credential.id)
     toggleDeclineModalVisible()
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+  }
+
+  const handleSendNotification = async (notificationEventType: NotificationEventType) => {
+    try {
+      if (
+        temporaryMetaVanillaObject.notificationMetadata?.notificationId &&
+        temporaryMetaVanillaObject.notificationMetadata?.notificationEndpoint &&
+        temporaryMetaVanillaObject.tokenResponse?.accessToken
+      ) {
+        await sendOpenId4VciNotification({
+          accessToken: temporaryMetaVanillaObject.tokenResponse?.accessToken,
+          notificationEvent: notificationEventType,
+          notificationMetadata: {
+            notificationId: temporaryMetaVanillaObject?.notificationMetadata?.notificationId,
+            notificationEndpoint: temporaryMetaVanillaObject?.notificationMetadata?.notificationEndpoint,
+          },
+        })
+      }
+    } catch (err) {
+      logger.error('[Credential Offer] error sending notification')
+    }
   }
 
   const handleAcceptTouched = async () => {
@@ -87,7 +118,8 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
       return
     }
     try {
-      await storeCredential(credential)
+      await acceptNewCredential(credential)
+      await handleSendNotification(NotificationEventType.CREDENTIAL_ACCEPTED)
       setAcceptModalVisible(true)
     } catch (err: unknown) {
       setButtonsVisible(true)

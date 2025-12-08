@@ -1,5 +1,74 @@
 # Change Log
 
+## 2.11.7
+
+## 2.11.6
+
+## 2.11.5
+
+## 2.11.4
+
+## 2.11.3
+
+## 2.11.2
+
+## 2.11.1
+
+## 2.11.0
+
+## 2.10.2
+
+## 2.10.1
+
+## 2.10.0
+
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+
+## 2.8.0
+
+## 2.7.5
+
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- cfd61c6: enhance credential definition parsing for webvh DID format
+- 7acaa5d: patch out silly preinstall script from pex library
+
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+
+## 2.7.1
+
+## 2.7.0
+
+## 2.6.0
+
+### Minor Changes
+
+- e6c4d63: fixed imports, fixed release builds, added export
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+- eeeadd0: cleaned up autolock logic
+
 ## 2.4.6
 
 ## 2.4.5

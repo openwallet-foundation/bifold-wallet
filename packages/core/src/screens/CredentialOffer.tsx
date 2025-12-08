@@ -1,4 +1,3 @@
-import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialPreviewAttribute } from '@credo-ts/core'
 import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay, MetaOverlay } from '@bifold/oca'
@@ -28,8 +27,12 @@ import { BifoldError } from '../types/error'
 import { Screens, TabStacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
-import { parseCredDefFromId } from '../utils/cred-def'
-import { getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
+import {
+  getCredentialIdentifiers,
+  isValidAnonCredsCredential,
+  ensureCredentialMetadata,
+  getEffectiveCredentialName,
+} from '../utils/credential'
 import { useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
@@ -128,10 +131,15 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       const offerData = offer?.anoncreds ?? offer?.indy
 
       if (offerData) {
-        credential.metadata.add(AnonCredsCredentialMetadataKey, {
-          schemaId: offerData.schema_id,
-          credentialDefinitionId: offerData.cred_def_id,
-        })
+        await ensureCredentialMetadata(
+          credential,
+          agent,
+          {
+            schema_id: offerData.schema_id,
+            cred_def_id: offerData.cred_def_id,
+          },
+          logger
+        )
       }
 
       if (offerAttributes) {
@@ -165,12 +173,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         })
         setLoading(false)
       })
-  }, [credential, agent, bundleResolver, i18n.language])
+  }, [credential, agent, bundleResolver, i18n.language, logger])
 
   const toggleDeclineModalVisible = useCallback(() => setDeclineModalVisible((prev) => !prev), [])
 
   const logHistoryRecord = useCallback(
-    (type: HistoryCardType) => {
+    async (type: HistoryCardType) => {
       try {
         if (!(agent && historyEnabled)) {
           logger.trace(
@@ -184,8 +192,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
           logger.error(`[${CredentialOffer.name}]:[logHistoryRecord] Cannot save history, credential undefined!`)
           return
         }
-        const ids = getCredentialIdentifiers(credential)
-        const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+        const name = getEffectiveCredentialName(credential, overlay.metaOverlay?.name)
 
         /** Save history record for card accepted */
         const recordData: HistoryRecord = {
@@ -214,7 +221,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
       if (historyEventsLogger.logAttestationAccepted) {
         const type = HistoryCardType.CardAccepted
-        logHistoryRecord(type)
+        await logHistoryRecord(type)
       }
     } catch (err: unknown) {
       setButtonsVisible(true)
@@ -242,7 +249,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       toggleDeclineModalVisible()
       if (historyEventsLogger.logAttestationRefused) {
         const type = HistoryCardType.CardDeclined
-        logHistoryRecord(type)
+        await logHistoryRecord(type)
       }
 
       navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })

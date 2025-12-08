@@ -1,4 +1,5 @@
-import { Image, StyleSheet, Text, useWindowDimensions, View, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import { useTheme } from '../../../contexts/theme'
 
 interface CredentialRowCardProps {

@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native'
 
 // eslint-disable-next-line import/no-named-as-default
 import { ButtonType } from '../../../components/buttons/Button-api'
-import KeyboardView from '../../../components/views/KeyboardView'
+import ScreenWrapper from '../../../components/views/ScreenWrapper'
 import { TOKENS, useServices } from '../../../container-api'
 import { useAnimatedComponents } from '../../../contexts/animated-components'
 import { useTheme } from '../../../contexts/theme'
@@ -136,7 +136,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
   }, [historyManager, logger])
 
   return (
-    <KeyboardView>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <View>
@@ -176,7 +176,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
           </Button>
         </View>
       </View>
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 

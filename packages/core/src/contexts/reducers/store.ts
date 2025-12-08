@@ -14,6 +14,8 @@ import {
   Tours as ToursState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
+import lodash from 'lodash'
+import { BannerMessage } from 'components/views/Banner'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -25,6 +27,7 @@ enum OnboardingDispatchAction {
   DID_COMPLETE_TUTORIAL = 'onboarding/didCompleteTutorial',
   DID_AGREE_TO_TERMS = 'onboarding/didAgreeToTerms',
   DID_CREATE_PIN = 'onboarding/didCreatePIN',
+  DID_CONFIRM_PIN = 'onboarding.didConfirmPIN',
   DID_NAME_WALLET = 'onboarding/didNameWallet',
   DID_COMPLETE_ONBOARDING = 'onboarding/didCompleteOnboarding',
   ONBOARDING_VERSION = 'onboarding/onboardingVersion',
@@ -64,6 +67,7 @@ enum PreferencesDispatchAction {
   ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
   RESET_MEDIATORS = 'preferences/resetMediators',
   BANNER_MESSAGES = 'preferences/bannerMessages',
+  GENERIC_ERROR_MESSAGES = 'preferences/genericErrorMessages',
   REMOVE_BANNER_MESSAGE = 'REMOVE_BANNER_MESSAGE',
 }
 
@@ -234,6 +238,21 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const preferences = {
         ...state.preferences,
         acceptDevCredentials: choice,
+      }
+      const newState = {
+        ...state,
+        preferences,
+      }
+
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+
+      return newState
+    }
+    case PreferencesDispatchAction.GENERIC_ERROR_MESSAGES: {
+      const choice = (action?.payload ?? []).pop() ?? false
+      const preferences = {
+        ...state.preferences,
+        genericErrorMessages: choice,
       }
       const newState = {
         ...state,
@@ -563,9 +582,14 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
     }
 
     case PreferencesDispatchAction.BANNER_MESSAGES: {
-      const bannerMessageToAdd = action?.payload ?? []
-      const newBannerMessages = [...state.preferences.bannerMessages, ...bannerMessageToAdd]
-      const uniqueBannerMessages = Array.from(new Set(newBannerMessages))
+      const newBannerMessages = action?.payload ?? []
+      const allBannerMessages = [...state.preferences.bannerMessages, ...newBannerMessages]
+      const uniqueBannerMessages = lodash.uniqBy<BannerMessage>(allBannerMessages, 'id')
+
+      // If there were no new unique messages, don't update state to avoid re-renders
+      if (allBannerMessages.length !== uniqueBannerMessages.length) {
+        return state
+      }
 
       const preferences: Preferences = {
         ...state.preferences,
@@ -692,9 +716,11 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         migration,
         loginAttempt,
       }
+
       storeLoginAttempt(loginAttempt)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Onboarding, newState.onboarding)
       PersistentStorage.storeValueForKey(LocalStorageKeys.Migration, newState.migration)
+
       return newState
     }
     case OnboardingDispatchAction.DID_NAME_WALLET: {

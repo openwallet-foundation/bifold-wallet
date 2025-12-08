@@ -24,12 +24,17 @@ import { BifoldError } from '../types/error'
 import { CredentialMetadata, credentialCustomMetadata } from '../types/metadata'
 import { ContactStackParams, NotificationStackParams, RootStackParams, Screens, Stacks } from '../types/navigators'
 import { ModalUsage } from '../types/remove'
-import { credentialTextColor, getCredentialIdentifiers, isValidAnonCredsCredential } from '../utils/credential'
+import {
+  credentialTextColor,
+  getCredentialIdentifiers,
+  isValidAnonCredsCredential,
+  getEffectiveCredentialName,
+  ensureCredentialMetadata,
+} from '../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../utils/oca'
 import { testIdWithKey } from '../utils/testable'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { parseCredDefFromId } from '../utils/cred-def'
 import CredentialCardLogo from '../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailPrimaryHeader'
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
@@ -176,9 +181,31 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         ...o,
         ...(bundle as CredentialOverlay<BrandingOverlay>),
         presentationFields: bundle.presentationFields?.filter((field) => (field as Attribute).value),
+        // Apply effective name
+        metaOverlay: {
+          ...bundle.metaOverlay,
+          name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
+        } as any,
       }))
     })
   }, [credential, credentialConnectionLabel, bundleResolver, i18n.language])
+
+  // Ensure credential has all required metadata
+  useEffect(() => {
+    if (!credential || !isValidAnonCredsCredential(credential) || !agent) {
+      return
+    }
+
+    const restoreMetadata = async () => {
+      try {
+        await ensureCredentialMetadata(credential, agent, undefined, logger)
+      } catch (error) {
+        // If metadata restoration fails, we'll fall back to default credential name
+        logger?.warn('Failed to restore credential metadata', { error: error as Error })
+      }
+    }
+    restoreMetadata()
+  }, [credential, agent, logger])
 
   useEffect(() => {
     if (credential?.revocationNotification) {
@@ -192,7 +219,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     setIsRemoveModalDisplayed(true)
   }, [])
 
-  const logHistoryRecord = useCallback(() => {
+  const logHistoryRecord = useCallback(async () => {
     try {
       if (!(agent && historyEnabled)) {
         logger.trace(
@@ -207,8 +234,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       }
       const historyManager = historyManagerCurried(agent)
 
-      const ids = getCredentialIdentifiers(credential)
-      const name = overlay.metaOverlay?.name ?? parseCredDefFromId(ids.credentialDefinitionId, ids.schemaId)
+      const name = getEffectiveCredentialName(credential, overlay.metaOverlay?.name)
 
       /** Save history record for credential removed */
       const recordData: HistoryRecord = {
@@ -219,7 +245,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         correspondenceName: credentialConnectionLabel,
       }
 
-      historyManager.saveHistory(recordData)
+      await historyManager.saveHistory(recordData)
     } catch (err: unknown) {
       logger.error(`[${CredentialDetails.name}]:[logHistoryRecord] Error saving history: ${err}`)
     }
@@ -241,7 +267,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       }
 
       if (historyEventsLogger.logAttestationRemoved) {
-        logHistoryRecord()
+        await logHistoryRecord()
       }
 
       await agent.credentials.deleteById(credential.id)
@@ -296,7 +322,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         <>
           <CredentialDetailSecondaryHeader overlay={overlay} />
           <CredentialCardLogo overlay={overlay} />
-          <CredentialDetailPrimaryHeader overlay={overlay} />
+          <CredentialDetailPrimaryHeader overlay={overlay} credential={credential} />
         </>
       )
     }

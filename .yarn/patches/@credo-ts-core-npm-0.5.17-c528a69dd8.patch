@@ -1,0 +1,24 @@
+diff --git a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
+index f1723e774dc337b8ceae11cf5765d222fd07ea24..556fcef6877b0248134182551e6b46ebe9a758e4 100644
+--- a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
++++ b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
+@@ -177,7 +177,18 @@ let DifPresentationExchangeService = class DifPresentationExchangeService {
+             presentationSubmission.descriptor_map.push(...descriptorMap);
+         });
+         return {
+-            verifiablePresentations: verifiablePresentationResultsWithFormat.flatMap((resultWithFormat) => resultWithFormat.verifiablePresentationResult.verifiablePresentations.map((vp) => (0, utils_2.getVerifiablePresentationFromEncoded)(agentContext, vp))),
++            verifiablePresentations: verifiablePresentationResultsWithFormat.flatMap((resultWithFormat) => {
++                if (resultWithFormat.verifiablePresentationResult.verifiablePresentations) {
++                    return resultWithFormat.verifiablePresentationResult.verifiablePresentations.map((vp) =>
++                        (0, utils_2.getVerifiablePresentationFromEncoded)(agentContext, vp)
++                    )
++                } else {
++                return (0, utils_2.getVerifiablePresentationFromEncoded)(
++                    agentContext,
++                    resultWithFormat.verifiablePresentationResult.verifiablePresentation
++                )
++                }
++            }),
+             presentationSubmission,
+             presentationSubmissionLocation: verifiablePresentationResultsWithFormat[0].verifiablePresentationResult.presentationSubmissionLocation,
+         };

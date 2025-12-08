@@ -1,2 +1,2 @@
 export * from './logger'
-export { RemoteLoggerOptions } from './transports'
+export * from './transports'

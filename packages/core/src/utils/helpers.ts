@@ -55,7 +55,8 @@ import {
   filterInvalidProofRequestMatches,
   getDescriptorMetadata,
 } from './anonCredsProofRequestMapper'
-import { parseCredDefFromId } from './cred-def'
+import { fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
+import { getEffectiveCredentialName } from './credential'
 import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 import { isMediatorInvitation } from './mediatorhelpers'
 
@@ -326,7 +327,50 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-const credNameFromRestriction = (queries?: AnonCredsProofRequestRestriction[]): string => {
+export const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Promise<string | undefined> => {
+  if (cred_def_id && agent?.modules?.anoncreds) {
+    try {
+      const { credentialDefinition } = await agent.modules.anoncreds.getCredentialDefinition(cred_def_id)
+      if (
+        credentialDefinition?.tag &&
+        credentialDefinition.tag.toLowerCase() !== defaultCredDefTag &&
+        credentialDefinition.tag !== fallbackDefaultCredentialNameValue
+      ) {
+        return credentialDefinition.tag
+      }
+    } catch (error) {
+      // Failed to resolve credential definition, return undefined
+      // This is expected when the credential definition doesn't exist or isn't accessible
+      // eslint-disable-next-line no-console
+      console.debug('Failed to resolve credential definition tag', { cred_def_id, error })
+      return undefined
+    }
+  }
+  return undefined
+}
+
+export const resolveSchemaName = async (schema_id: string, agent?: Agent): Promise<string | undefined> => {
+  if (schema_id && agent?.modules?.anoncreds) {
+    try {
+      const { schema } = await agent.modules.anoncreds.getSchema(schema_id)
+      if (schema?.name && schema.name !== fallbackDefaultCredentialNameValue) {
+        return schema.name
+      }
+    } catch (error) {
+      // Failed to resolve schema, return undefined
+      // This is expected when the schema doesn't exist or isn't accessible
+      // eslint-disable-next-line no-console
+      console.debug('Failed to resolve schema name', { schema_id, error })
+      return undefined
+    }
+  }
+  return undefined
+}
+
+export const credNameFromRestriction = async (
+  queries?: AnonCredsProofRequestRestriction[],
+  agent?: Agent
+): Promise<string> => {
   let schema_name = ''
   let cred_def_id = ''
   let schema_id = ''
@@ -335,11 +379,30 @@ const credNameFromRestriction = (queries?: AnonCredsProofRequestRestriction[]): 
     cred_def_id = (query?.cred_def_id as string) ?? cred_def_id
     schema_id = (query?.schema_id as string) ?? schema_id
   })
-  if (schema_name && (schema_name.toLowerCase() !== 'default' || schema_name.toLowerCase() !== 'credential')) {
+
+  // Priority 1: Provided restriction schema name (from schema_name in restriction if meaningful)
+  if (
+    schema_name &&
+    schema_name.toLowerCase() !== defaultCredDefTag &&
+    schema_name.toLowerCase() !== fallbackDefaultCredentialNameValue.toLowerCase()
+  ) {
     return schema_name
-  } else {
-    return parseCredDefFromId(cred_def_id, schema_id)
   }
+
+  // Priority 2: Try to resolve credential definition tag
+  const credDefTag = await resolveCredDefTag(cred_def_id, agent)
+  if (credDefTag) {
+    return credDefTag
+  }
+
+  // Priority 3: Try to resolve schema name
+  const schemaName = await resolveSchemaName(schema_id, agent)
+  if (schemaName) {
+    return schemaName
+  }
+
+  // Priority 4: Return default fallback
+  return fallbackDefaultCredentialNameValue
 }
 
 export const credDefIdFromRestrictions = (queries?: AnonCredsProofRequestRestriction[]): string => {
@@ -443,12 +506,13 @@ export const evaluatePredicates =
 // scans through requested attributes and records
 // Builds and returns label: value attributes
 // Flagging any attribute not found in wallet credentials
-const addMissingDisplayAttributes = (
+const addMissingDisplayAttributes = async (
   attrReq: AnonCredsRequestedAttribute,
-  records: CredentialExchangeRecord[]
-): ProofCredentialAttributes => {
+  records: CredentialExchangeRecord[],
+  agent?: Agent
+): Promise<ProofCredentialAttributes> => {
   const { name, names, restrictions } = attrReq
-  const credName = credNameFromRestriction(restrictions)
+  const credName = await credNameFromRestriction(restrictions, agent)
   const credDefId = credDefIdFromRestrictions(restrictions)
   const schemaId = schemaIdFromRestrictions(restrictions)
 
@@ -506,13 +570,14 @@ const addMissingDisplayAttributes = (
   }
   return processedAttributes
 }
-export const processProofAttributes = (
+export const processProofAttributes = async (
   t: TFunction<'translation', undefined>,
   request?: AnonCredsProofRequest,
   credentials?: AnonCredsCredentialsForProofRequest, // credentials that 100% validate the proof request
   credentialRecords?: CredentialExchangeRecord[], // all the credentials in the wallet
-  groupByReferent?: boolean
-): { [key: string]: ProofCredentialAttributes } => {
+  groupByReferent?: boolean,
+  agent?: Agent
+): Promise<{ [key: string]: ProofCredentialAttributes }> => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
   const requestedProofAttributes = request?.requested_attributes
   const retrievedCredentialAttributes = credentials?.attributes
@@ -537,7 +602,11 @@ export const processProofAttributes = (
 
     // No credentials satisfy proof request, process attribute errors
     if (credentialList.length <= 0) {
-      const missingAttributes = addMissingDisplayAttributes(requestedProofAttributes[key], credentialRecords ?? [])
+      const missingAttributes = await addMissingDisplayAttributes(
+        requestedProofAttributes[key],
+        credentialRecords ?? [],
+        agent
+      )
       const missingCredGroupKey = groupByReferent ? key : missingAttributes.credName
       if (!processedAttributes[missingCredGroupKey]) {
         processedAttributes[missingCredGroupKey] = missingAttributes
@@ -547,13 +616,6 @@ export const processProofAttributes = (
     }
     //iterate over all credentials that satisfy the proof
     for (const credential of credentialList) {
-      let credName = key
-      if (credential?.credentialInfo?.credentialDefinitionId || credential?.credentialInfo?.schemaId) {
-        credName = parseCredDefFromId(
-          credential?.credentialInfo?.credentialDefinitionId,
-          credential?.credentialInfo?.schemaId
-        )
-      }
       let revoked = false
       let credExchangeRecord = undefined
       if (credential) {
@@ -566,6 +628,9 @@ export const processProofAttributes = (
       } else {
         continue
       }
+
+      // Use cached metadata if we have the credential record
+      const credName = credExchangeRecord ? getEffectiveCredentialName(credExchangeRecord) : key
       for (const attributeName of [...(names ?? (name && [name]) ?? [])]) {
         if (!processedAttributes[credential.credentialId]) {
           // init processedAttributes object
@@ -618,10 +683,10 @@ export const mergeAttributesAndPredicates = (
   return merged
 }
 
-const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
+const addMissingDisplayPredicates = async (predReq: AnonCredsRequestedPredicate, agent?: Agent) => {
   const { name, p_type: pType, p_value: pValue, restrictions } = predReq
 
-  const credName = credNameFromRestriction(restrictions)
+  const credName = await credNameFromRestriction(restrictions, agent)
   const credDefId = credDefIdFromRestrictions(restrictions)
   const schemaId = schemaIdFromRestrictions(restrictions)
 
@@ -647,12 +712,13 @@ const addMissingDisplayPredicates = (predReq: AnonCredsRequestedPredicate) => {
   )
   return processedPredicates
 }
-export const processProofPredicates = (
+export const processProofPredicates = async (
   request?: AnonCredsProofRequest,
   credentials?: AnonCredsCredentialsForProofRequest,
   credentialRecords?: CredentialExchangeRecord[],
-  groupByReferent?: boolean
-): { [key: string]: ProofCredentialPredicates } => {
+  groupByReferent?: boolean,
+  agent?: Agent
+): Promise<{ [key: string]: ProofCredentialPredicates }> => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
   const requestedProofPredicates = request?.requested_predicates
   const retrievedCredentialPredicates = credentials?.predicates
@@ -673,7 +739,7 @@ export const processProofPredicates = (
     const proofSchemaId = schemaIdFromRestrictions(restrictions)
 
     if (credentialList.length <= 0) {
-      const missingPredicates = addMissingDisplayPredicates(requestedProofPredicates[key])
+      const missingPredicates = await addMissingDisplayPredicates(requestedProofPredicates[key], agent)
       const missingCredGroupKey = groupByReferent ? key : missingPredicates.credName
       if (!processedPredicates[missingCredGroupKey]) {
         processedPredicates[missingCredGroupKey] = missingPredicates
@@ -697,15 +763,10 @@ export const processProofPredicates = (
       }
       const { credentialDefinitionId, schemaId } = { ...credential, ...credential?.credentialInfo }
 
-      const credNameRestriction = credNameFromRestriction(requestedProofPredicates[key]?.restrictions)
+      const credNameRestriction = await credNameFromRestriction(requestedProofPredicates[key]?.restrictions, agent)
 
-      let credName = credNameRestriction ?? key
-      if (credential?.credentialInfo?.credentialDefinitionId || credential?.credentialInfo?.schemaId) {
-        credName = parseCredDefFromId(
-          credential?.credentialInfo?.credentialDefinitionId,
-          credential?.credentialInfo?.schemaId
-        )
-      }
+      // Use cached metadata if we have the credential record
+      const credName = credExchangeRecord ? getEffectiveCredentialName(credExchangeRecord) : credNameRestriction ?? key
       if (!processedPredicates[credential.credentialId]) {
         processedPredicates[credential.credentialId] = {
           altCredentials,
@@ -876,18 +937,20 @@ export const retrieveCredentialsForProof = async (
       )
 
       const filtered = filterInvalidProofRequestMatches(anonCredsCredentialsForRequest, descriptorMetadata)
-      const processedAttributes = processProofAttributes(
+      const processedAttributes = await processProofAttributes(
         t,
         anonCredsProofRequest,
         filtered,
         fullCredentials,
-        groupByReferent
+        groupByReferent,
+        agent
       )
-      const processedPredicates = processProofPredicates(
+      const processedPredicates = await processProofPredicates(
         anonCredsProofRequest,
         filtered,
         fullCredentials,
-        groupByReferent
+        groupByReferent,
+        agent
       )
       const groupedProof = Object.values(mergeAttributesAndPredicates(processedAttributes, processedPredicates))
 
@@ -902,8 +965,15 @@ export const retrieveCredentialsForProof = async (
     const proofRequest = format.request?.anoncreds ?? format.request?.indy
     const proofFormat = credentials.proofFormats.anoncreds ?? credentials.proofFormats.indy
 
-    const attributes = processProofAttributes(t, proofRequest, proofFormat, fullCredentials, groupByReferent)
-    const predicates = processProofPredicates(proofRequest, proofFormat, fullCredentials, groupByReferent)
+    const attributes = await processProofAttributes(
+      t,
+      proofRequest,
+      proofFormat,
+      fullCredentials,
+      groupByReferent,
+      agent
+    )
+    const predicates = await processProofPredicates(proofRequest, proofFormat, fullCredentials, groupByReferent, agent)
     const groupedProof = Object.values(mergeAttributesAndPredicates(attributes, predicates))
 
     return { groupedProof, retrievedCredentials: proofFormat, fullCredentials }
@@ -975,8 +1045,13 @@ export const sortCredentialsForAutoSelect = (
  * received invitations exist
  * @param agent an Agent instance
  * @param invitationId specifically a *received* invitation id
+ * @param logger optional logger instance
  */
-export const removeExistingInvitationsById = async (agent: Agent | undefined, invitationId: string): Promise<void> => {
+export const removeExistingInvitationsById = async (
+  agent: Agent | undefined,
+  invitationId: string,
+  logger?: BifoldLogger
+): Promise<void> => {
   // This is implemented just as findByReceivedInvitationId is
   // in Credo only this is able to return multiple if they exist
   const oobRecords =
@@ -987,7 +1062,7 @@ export const removeExistingInvitationsById = async (agent: Agent | undefined, in
 
   for (const r of oobRecords) {
     await agent?.oob.deleteById(r.id)
-    agent?.config.logger.info('Successfully removed an existing oob invitation')
+    logger?.info('Successfully removed an existing oob invitation')
   }
 }
 

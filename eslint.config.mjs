@@ -48,7 +48,6 @@ export default [
   },
   {
     ignores: [
-      'commitlint.config.js',
       'eslint.config.mjs',
       '.eslintrc-common.js',
       '**/.eslintrc.js',
@@ -62,6 +61,7 @@ export default [
       'packages/remote-logs/build/',
       'packages/react-native-attestation/build/',
       'packages/core/lib/',
+      'packages/legacy/core/lib',
     ],
   },
   {

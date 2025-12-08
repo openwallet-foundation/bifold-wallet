@@ -1,5 +1,194 @@
 # Change Log
 
+## 2.11.7
+
+### Patch Changes
+
+- Updated dependencies [8630ecd]
+  - @bifold/core@2.11.7
+
+## 2.11.6
+
+### Patch Changes
+
+- Updated dependencies [0f05f73]
+- Updated dependencies [fc9d6fe]
+- Updated dependencies [a08da5f]
+  - @bifold/core@2.11.6
+
+## 2.11.5
+
+### Patch Changes
+
+- Updated dependencies [7a0ccbb]
+  - @bifold/core@2.11.5
+
+## 2.11.4
+
+### Patch Changes
+
+- 17e72a0: simplify logger configuration and improve output clarity
+- Updated dependencies [615c1f6]
+  - @bifold/core@2.11.4
+
+## 2.11.3
+
+### Patch Changes
+
+- @bifold/core@2.11.3
+
+## 2.11.2
+
+### Patch Changes
+
+- Updated dependencies [3246436]
+  - @bifold/core@2.11.2
+
+## 2.11.1
+
+### Patch Changes
+
+- Updated dependencies [ec19ffc]
+  - @bifold/core@2.11.1
+
+## 2.11.0
+
+### Patch Changes
+
+- Updated dependencies [1d6c2f3]
+- Updated dependencies [6f1cb40]
+- Updated dependencies [00c2ea3]
+- Updated dependencies [0362ba3]
+  - @bifold/core@2.11.0
+
+## 2.10.2
+
+### Patch Changes
+
+- Updated dependencies [a2323ee]
+- Updated dependencies [7c7d27f]
+- Updated dependencies [84cf1b0]
+  - @bifold/core@2.10.2
+
+## 2.10.1
+
+### Patch Changes
+
+- Updated dependencies [374a412]
+  - @bifold/core@2.10.1
+
+## 2.10.0
+
+### Patch Changes
+
+- Updated dependencies [165cb53]
+- Updated dependencies [a667312]
+  - @bifold/core@2.10.0
+
+## 2.9.0
+
+### Patch Changes
+
+- c5cc3e7: updated pr template
+- Updated dependencies [2319500]
+- Updated dependencies [fe7a7bc]
+- Updated dependencies [aa3286d]
+- Updated dependencies [c5cc3e7]
+  - @bifold/core@2.9.0
+
+## 2.8.0
+
+### Patch Changes
+
+- Updated dependencies [00ed384]
+- Updated dependencies [f4d46be]
+  - @bifold/core@2.8.0
+
+## 2.7.5
+
+### Patch Changes
+
+- Updated dependencies [83d6ce9]
+- Updated dependencies [eaffaec]
+- Updated dependencies [56d9fb3]
+- Updated dependencies [53169b9]
+- Updated dependencies [07ea6be]
+- Updated dependencies [c4b153a]
+  - @bifold/core@2.7.5
+
+## 2.7.4
+
+### Patch Changes
+
+- 6a6beb3: upgrade to credo 0.5.17
+- cfd61c6: enhance credential definition parsing for webvh DID format
+- 7acaa5d: patch out silly preinstall script from pex library
+- Updated dependencies [6a6beb3]
+- Updated dependencies [cfd61c6]
+- Updated dependencies [7acaa5d]
+  - @bifold/core@2.7.4
+
+## 2.7.3
+
+### Patch Changes
+
+- c1cc972: Added new SVG Overlay for masking camera components
+- Updated dependencies [29fd468]
+- Updated dependencies [c1cc972]
+  - @bifold/core@2.7.3
+
+## 2.7.2
+
+### Patch Changes
+
+- 99dab08: added missing react imports
+- ef52d51: fix lint issues from previous pr
+- Updated dependencies [99dab08]
+  - @bifold/core@2.7.2
+
+## 2.7.1
+
+### Patch Changes
+
+- 84cb3cd: fix issues with class relations
+- Updated dependencies [84cb3cd]
+  - @bifold/core@2.7.1
+
+## 2.7.0
+
+### Minor Changes
+
+- 7cd5ad2: fixed logging interface to accept data and error
+
+### Patch Changes
+
+- Updated dependencies [7cd5ad2]
+  - @bifold/core@2.7.0
+
+## 2.6.0
+
+### Minor Changes
+
+- f52bdd8: Fixed transports for local and loki logging
+- e6c4d63: fixed imports, fixed release builds, added export
+
+### Patch Changes
+
+- Updated dependencies [e6c4d63]
+  - @bifold/core@2.6.0
+
+## 2.5.0
+
+### Minor Changes
+
+- 66bbd8d: removed src files from bifold release
+- eeeadd0: cleaned up autolock logic
+
+### Patch Changes
+
+- Updated dependencies [66bbd8d]
+  - @bifold/core@2.5.0
+
 ## 2.4.6
 
 ### Patch Changes

@@ -1,5 +1,600 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`QRScanner Component Focus animation does not render before tapping 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaView
+    edges={
+      Object {
+        "bottom": "off",
+        "left": "additive",
+        "right": "additive",
+        "top": "off",
+      }
+    }
+    style={
+      Object {
+        "backgroundColor": "#313132",
+        "flex": 1,
+      }
+    }
+    testID="com.ariesbifold:id/QRScanner"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "transform": Array [
+              Object {
+                "rotate": "0deg",
+              },
+            ],
+          },
+        ]
+      }
+    >
+      <Camera
+        codeScanner={
+          Object {
+            "codeTypes": Array [
+              "qr",
+            ],
+            "onCodeScanned": [Function],
+          }
+        }
+        device={
+          Object {
+            "id": "mock-camera",
+            "position": "back",
+            "supportsFocus": true,
+          }
+        }
+        format={Object {}}
+        isActive={true}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        torch="off"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="com.ariesbifold:id/ScanCameraTapArea"
+      />
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="com.ariesbifold:id/ScanOverlay"
+    >
+      <RNSVGSvgView
+        bbHeight="1334"
+        bbWidth="750"
+        focusable={false}
+        height={1334}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "position": "absolute",
+            },
+            Object {
+              "flex": 0,
+              "height": 1334,
+              "width": 750,
+            },
+          ]
+        }
+        width={750}
+      >
+        <RNSVGGroup
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        >
+          <RNSVGDefs>
+            <RNSVGMask
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              height="100%"
+              maskContentUnits={1}
+              maskUnits={0}
+              name="overlayMask"
+              width="100%"
+              x="0%"
+              y="0%"
+            >
+              <RNSVGRect
+                fill={
+                  Object {
+                    "payload": 4294967295,
+                    "type": 0,
+                  }
+                }
+                height="1334"
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+                width="750"
+                x="0"
+                y="0"
+              />
+              <RNSVGRect
+                fill={
+                  Object {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                height="675"
+                propList={
+                  Array [
+                    "fill",
+                    "stroke",
+                    "strokeWidth",
+                  ]
+                }
+                stroke={
+                  Object {
+                    "payload": 4294967295,
+                    "type": 0,
+                  }
+                }
+                strokeWidth="2"
+                width="675"
+                x="37.5"
+                y="217"
+              />
+            </RNSVGMask>
+          </RNSVGDefs>
+          <RNSVGRect
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            fillOpacity={0.6}
+            height="1334"
+            mask="overlayMask"
+            propList={
+              Array [
+                "fill",
+                "fillOpacity",
+              ]
+            }
+            width="750"
+            x="0"
+            y="0"
+          />
+          <RNSVGRect
+            fill={
+              Object {
+                "payload": 0,
+                "type": 0,
+              }
+            }
+            height="675"
+            propList={
+              Array [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
+              Object {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            strokeWidth="2"
+            width="675"
+            x="37.5"
+            y="217"
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "alignSelf": "center",
+            "flexDirection": "row",
+            "marginHorizontal": 40,
+            "paddingTop": 30,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": undefined,
+                "fontSize": 40,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "padding": 4,
+              },
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          󰐳
+        </Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "bold",
+              },
+              Object {
+                "color": "white",
+                "marginHorizontal": 10,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Scan.WillScanAutomatically
+        </Text>
+      </View>
+      <View
+        style={Object {}}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Scan.ScanNow"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/ScanNow"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 60,
+                  },
+                  Object {
+                    "color": "white",
+                    "marginBottom": -15,
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              󰝦
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "height": 24,
+              "marginBottom": 60,
+              "marginHorizontal": 24,
+            }
+          }
+        >
+          <View
+            accessibilityLabel="Scan.ScanHelp"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "opacity": 1,
+                },
+              ]
+            }
+            testID="com.ariesbifold:id/ScanHelp"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": undefined,
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "color": "white",
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              󰋗
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginLeft": "auto",
+                "width": 10,
+              }
+            }
+          />
+          <View
+            accessibilityLabel="Scan.TorchOff"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              Object {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 44,
+                "left": 44,
+                "right": 44,
+                "top": 44,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": undefined,
+                "borderColor": "#FFFFFF",
+                "borderRadius": 24,
+                "borderWidth": 1,
+                "height": 24,
+                "justifyContent": "center",
+                "marginBottom": 50,
+                "opacity": 1,
+                "width": 24,
+              }
+            }
+            testID="com.ariesbifold:id/ScanTorch"
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "alignItems": "center",
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</View>
+`;
+
 exports[`QRScanner Component Renders correctly on first tab 1`] = `
 <View
   style={
@@ -23,6 +618,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         "flex": 1,
       }
     }
+    testID="com.ariesbifold:id/QRScanner"
   >
     <View
       style={
@@ -43,16 +639,25 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
           },
         ]
       }
-    />
-    <View
-      style={
-        Object {
-          "flex": 1,
-          "justifyContent": "space-between",
-        }
-      }
     >
-      <View
+      <Camera
+        codeScanner={
+          Object {
+            "codeTypes": Array [
+              "qr",
+            ],
+            "onCodeScanned": [Function],
+          }
+        }
+        device={
+          Object {
+            "id": "mock-camera",
+            "position": "back",
+            "supportsFocus": true,
+          }
+        }
+        format={Object {}}
+        isActive={true}
         style={
           Object {
             "bottom": 0,
@@ -62,58 +667,212 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 2,
-            }
+        torch="off"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
-        />
-        <View
-          style={
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="com.ariesbifold:id/ScanCameraTapArea"
+      />
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="com.ariesbifold:id/ScanOverlay"
+    >
+      <RNSVGSvgView
+        bbHeight="1334"
+        bbWidth="750"
+        focusable={false}
+        height={1334}
+        style={
+          Array [
             Object {
-              "flexDirection": "row",
-              "height": 710,
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "position": "absolute",
+            },
+            Object {
+              "flex": 0,
+              "height": 1334,
+              "width": 750,
+            },
+          ]
+        }
+        width={750}
+      >
+        <RNSVGGroup
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
             }
           }
         >
-          <View
-            style={
+          <RNSVGDefs>
+            <RNSVGMask
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              height="100%"
+              maskContentUnits={1}
+              maskUnits={0}
+              name="overlayMask"
+              width="100%"
+              x="0%"
+              y="0%"
+            >
+              <RNSVGRect
+                fill={
+                  Object {
+                    "payload": 4294967295,
+                    "type": 0,
+                  }
+                }
+                height="1334"
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+                width="750"
+                x="0"
+                y="0"
+              />
+              <RNSVGRect
+                fill={
+                  Object {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                height="675"
+                propList={
+                  Array [
+                    "fill",
+                    "stroke",
+                    "strokeWidth",
+                  ]
+                }
+                stroke={
+                  Object {
+                    "payload": 4294967295,
+                    "type": 0,
+                  }
+                }
+                strokeWidth="2"
+                width="675"
+                x="37.5"
+                y="217"
+              />
+            </RNSVGMask>
+          </RNSVGDefs>
+          <RNSVGRect
+            fill={
               Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
+                "payload": 4278190080,
+                "type": 0,
               }
             }
+            fillOpacity={0.6}
+            height="1334"
+            mask="overlayMask"
+            propList={
+              Array [
+                "fill",
+                "fillOpacity",
+              ]
+            }
+            width="750"
+            x="0"
+            y="0"
           />
-          <View
-            style={
+          <RNSVGRect
+            fill={
               Object {
-                "borderColor": "rgba(255, 255, 255, 0.6)",
-                "borderWidth": 1,
-                "width": 710,
+                "payload": 0,
+                "type": 0,
               }
             }
-          />
-          <View
-            style={
+            height="675"
+            propList={
+              Array [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
               Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
+                "payload": 4294967295,
+                "type": 0,
               }
             }
+            strokeWidth="2"
+            width="675"
+            x="37.5"
+            y="217"
           />
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 3,
-            }
-          }
-        />
-      </View>
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "space-between",
+        }
+      }
+    >
       <View
         style={
           Object {
@@ -615,6 +1374,7 @@ exports[`QRScanner Component Renders correctly on second tab 1`] = `
         "flex": 1,
       }
     }
+    testID="com.ariesbifold:id/QRScanner"
   >
     <RCTScrollView>
       <View>
@@ -1007,6 +1767,7 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         "flex": 1,
       }
     }
+    testID="com.ariesbifold:id/QRScanner"
   >
     <View
       style={
@@ -1027,16 +1788,25 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
           },
         ]
       }
-    />
-    <View
-      style={
-        Object {
-          "flex": 1,
-          "justifyContent": "space-between",
-        }
-      }
     >
-      <View
+      <Camera
+        codeScanner={
+          Object {
+            "codeTypes": Array [
+              "qr",
+            ],
+            "onCodeScanned": [Function],
+          }
+        }
+        device={
+          Object {
+            "id": "mock-camera",
+            "position": "back",
+            "supportsFocus": true,
+          }
+        }
+        format={Object {}}
+        isActive={true}
         style={
           Object {
             "bottom": 0,
@@ -1046,58 +1816,212 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
             "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 2,
-            }
+        torch="off"
+      />
+      <View
+        accessibilityState={
+          Object {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
           }
-        />
-        <View
-          style={
+        }
+        accessibilityValue={
+          Object {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+        testID="com.ariesbifold:id/ScanCameraTapArea"
+      />
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="com.ariesbifold:id/ScanOverlay"
+    >
+      <RNSVGSvgView
+        bbHeight="1334"
+        bbWidth="750"
+        focusable={false}
+        height={1334}
+        style={
+          Array [
             Object {
-              "flexDirection": "row",
-              "height": 710,
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "position": "absolute",
+            },
+            Object {
+              "flex": 0,
+              "height": 1334,
+              "width": 750,
+            },
+          ]
+        }
+        width={750}
+      >
+        <RNSVGGroup
+          fill={
+            Object {
+              "payload": 4278190080,
+              "type": 0,
             }
           }
         >
-          <View
-            style={
+          <RNSVGDefs>
+            <RNSVGMask
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              height="100%"
+              maskContentUnits={1}
+              maskUnits={0}
+              name="overlayMask"
+              width="100%"
+              x="0%"
+              y="0%"
+            >
+              <RNSVGRect
+                fill={
+                  Object {
+                    "payload": 4294967295,
+                    "type": 0,
+                  }
+                }
+                height="1334"
+                propList={
+                  Array [
+                    "fill",
+                  ]
+                }
+                width="750"
+                x="0"
+                y="0"
+              />
+              <RNSVGRect
+                fill={
+                  Object {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                height="675"
+                propList={
+                  Array [
+                    "fill",
+                    "stroke",
+                    "strokeWidth",
+                  ]
+                }
+                stroke={
+                  Object {
+                    "payload": 4294967295,
+                    "type": 0,
+                  }
+                }
+                strokeWidth="2"
+                width="675"
+                x="37.5"
+                y="217"
+              />
+            </RNSVGMask>
+          </RNSVGDefs>
+          <RNSVGRect
+            fill={
               Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
+                "payload": 4278190080,
+                "type": 0,
               }
             }
+            fillOpacity={0.6}
+            height="1334"
+            mask="overlayMask"
+            propList={
+              Array [
+                "fill",
+                "fillOpacity",
+              ]
+            }
+            width="750"
+            x="0"
+            y="0"
           />
-          <View
-            style={
+          <RNSVGRect
+            fill={
               Object {
-                "borderColor": "rgba(255, 255, 255, 0.6)",
-                "borderWidth": 1,
-                "width": 710,
+                "payload": 0,
+                "type": 0,
               }
             }
-          />
-          <View
-            style={
+            height="675"
+            propList={
+              Array [
+                "fill",
+                "stroke",
+                "strokeWidth",
+              ]
+            }
+            stroke={
               Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.4)",
-                "flex": 1,
+                "payload": 4294967295,
+                "type": 0,
               }
             }
+            strokeWidth="2"
+            width="675"
+            x="37.5"
+            y="217"
           />
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.4)",
-              "flex": 3,
-            }
-          }
-        />
-      </View>
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "justifyContent": "space-between",
+        }
+      }
+    >
       <View
         style={
           Object {
