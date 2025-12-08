@@ -18,12 +18,11 @@ import {
   Predicate,
 } from '@bifold/oca/build/legacy'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@bifold/oca'
-import { GenericCredentialExchangeRecord } from '../types/credentials'
+import { CredentialErrors, GenericCredentialExchangeRecord } from '../types/credentials'
 import { getCredentialForDisplay } from '../modules/openid/display'
 import { buildFieldsFromW3cCredsCredential } from '../utils/oca'
 import { i18n } from '../localization'
 import { getCredentialIdentifiers } from '../utils/credential'
-import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { IColorPalette } from '../theme'
 
 const isDataUrl = (v: unknown) => typeof v === 'string' && /^data:image\/[a-zA-Z]+;base64,/.test(v)

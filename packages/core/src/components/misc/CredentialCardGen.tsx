@@ -8,7 +8,7 @@ import { Attribute, BrandingOverlayType, CredentialOverlay, Predicate } from '@b
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import type { GenericFn } from '../../types/fn'
-import type { GenericCredentialExchangeRecord } from '../../types/credentials'
+import type { CredentialErrors, GenericCredentialExchangeRecord } from '../../types/credentials'
 
 // unified wallet-model imports
 import WalletCredentialCard from '../../wallet/CardPresenter'
@@ -17,7 +17,6 @@ import { brandingOverlayTypeString, mapCredentialTypeToCard } from '../../wallet
 
 import { useTranslation } from 'react-i18next'
 import { useCredentialConnectionLabel } from '../../utils/helpers'
-import { CredentialErrors } from './CredentialCard11'
 
 export interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
