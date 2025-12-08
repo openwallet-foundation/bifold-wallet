@@ -107,6 +107,7 @@ const ListCredentials: React.FC = () => {
     )
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderCardItemGen = (cred: GenericCredentialExchangeRecord) => {
     return (
       <CredentialCardGen
@@ -145,7 +146,8 @@ const ListCredentials: React.FC = () => {
                 marginBottom: index === credentials.length - 1 ? 45 : 0,
               }}
             >
-              {renderCardItemGen(credential)}
+              {/* use renderCardItemGen to render new card with abstracted types  */}
+              {renderCardItem(credential)}
             </View>
           )
         }}
