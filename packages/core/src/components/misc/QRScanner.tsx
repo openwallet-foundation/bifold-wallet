@@ -185,13 +185,7 @@ const QRScanner: React.FC<Props> = ({
 
   const styleForState = ({ pressed }: { pressed: boolean }) => [{ opacity: pressed ? 0.2 : 1 }]
 
-  const toggleShowInfoBox = () => {
-    setShowInfoBox(!showInfoBox)
-    // For testing purposes only, to simulate a scan
-    // handleCodeScan(
-    //   'openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%20%22https%3A//ws.dev.issuer-agent1.lab.di.gov.on.ca/oid4vci%22%2C%20%22credentials%22%3A%20%5B%22OntarioTestBusinessRegistration_sdjwt%22%5D%2C%20%22grants%22%3A%20%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%20%7B%22pre-authorized_code%22%3A%20%225bSSaZ6T319w4grkoGd1QA%22%2C%20%22user_pin_required%22%3A%20false%7D%7D%7D'
-    // )
-  }
+  const toggleShowInfoBox = () => setShowInfoBox(!showInfoBox)
 
   return (
     <View style={styles.container}>
