@@ -1,7 +1,8 @@
+import { ImageSourcePropType } from 'react-native'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '@credo-ts/core'
+
 import type { Agent } from '@credo-ts/core'
-import { ImageSourcePropType } from 'react-native'
 
 import { getSchemaName, getCredDefTag, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
 import { luminanceForHexColor } from './luminance'

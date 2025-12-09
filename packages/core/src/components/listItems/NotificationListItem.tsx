@@ -36,6 +36,7 @@ import CommonRemoveModal from '../modals/CommonRemoveModal'
 import { ThemedText } from '../texts/ThemedText'
 import { OpenIDCustomNotificationType } from '../../modules/openid/refresh/types'
 import { useOpenIdReplacementNavigation } from '../../modules/openid/hooks/useOpenIdReplacementNavigation'
+import { useUpgradeExpiredCredential } from '../../modules/openid/hooks/useUpgradeExpiredCredential'
 
 const iconSize = 30
 
@@ -89,6 +90,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const openReplacementOffer = useOpenIdReplacementNavigation()
+  const { upgrade } = useUpgradeExpiredCredential()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
@@ -397,8 +399,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.Custom:
         onPress = () => {
-          if (customNotification?.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
-            openReplacementOffer(customNotification)
+          if (
+            customNotification?.type === OpenIDCustomNotificationType.CredentialExpired &&
+            customNotification.metadata &&
+            typeof customNotification.metadata.oldId === 'string'
+          ) {
+            upgrade(customNotification.metadata.oldId)
             return
           }
           customNotification?.onPressAction
@@ -422,6 +428,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     dismissBasicMessage,
     customNotification,
     openReplacementOffer,
+    upgrade,
   ])
 
   useEffect(() => {

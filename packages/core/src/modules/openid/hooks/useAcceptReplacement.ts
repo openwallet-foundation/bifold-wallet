@@ -3,7 +3,7 @@ import { SdJwtVcRecord, W3cCredentialRecord, MdocRecord } from '@credo-ts/core'
 import { useCallback } from 'react'
 import { TOKENS, useServices } from '../../../container-api'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { credentialRegistry, selectOldIdByReplacementId } from '../refresh/registery'
+import { credentialRegistry, selectOldIdByReplacementId } from '../refresh/registry'
 import { OpenIDCredentialType } from '../types'
 
 type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord

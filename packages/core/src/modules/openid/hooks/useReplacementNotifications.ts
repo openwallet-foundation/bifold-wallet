@@ -1,6 +1,6 @@
 // modules/openid/ui/useReplacementNotifications.ts
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { credentialRegistry, RegistryStore, OpenIDCredentialLite } from '../refresh/registery'
+import { credentialRegistry, RegistryStore, OpenIDCredentialLite } from '../refresh/registry'
 import { CustomNotification } from '../../../types/notification'
 import { OpenIDCustomNotificationType } from '../refresh/types'
 import { useDeclineReplacement } from './useDeclineReplacement'
