@@ -1,5 +1,90 @@
 # @bifold/core
 
+## 2.11.7
+
+### Patch Changes
+
+- 8630ecd: fix: added full material ui icon support for materialicons
+
+## 2.11.6
+
+### Patch Changes
+
+- 0f05f73: fixed issue with load state
+- fc9d6fe: Added generic full screen error modal
+- a08da5f: remove preinstall hook, git hooks, and replace tagged gha versions with commit sha versions
+
+## 2.11.5
+
+### Patch Changes
+
+- 7a0ccbb: add screen wrapper component
+
+## 2.11.4
+
+### Patch Changes
+
+- 615c1f6: more new pin screen ui bug fixes
+
+## 2.11.3
+
+## 2.11.2
+
+### Patch Changes
+
+- 3246436: Added tap to focus functionality for the ScanCamera component
+
+## 2.11.1
+
+### Patch Changes
+
+- ec19ffc: make scrollview props available through keyboardview prop
+
+## 2.11.0
+
+### Minor Changes
+
+- 6f1cb40: Notifications endpoint
+- 00c2ea3: OpenID Cred Refresh
+
+### Patch Changes
+
+- 1d6c2f3: Added AnonCreds metadata caching for schema name and improved error handling
+- 0362ba3: Add did:web resolver
+
+## 2.10.2
+
+### Patch Changes
+
+- a2323ee: update loading indicator for new pin designs
+- 7c7d27f: Add unsatisfied proof request UI for OpenID
+- 84cf1b0: fix pin masking on new pin design
+
+## 2.10.1
+
+### Patch Changes
+
+- 374a412: Bug fixes for new pin design, and fix for biometrics issue
+
+## 2.10.0
+
+### Minor Changes
+
+- 165cb53: Added Credo WebVH package with DID resolver and AnonCreds registry support
+- a667312: Did resolvers
+
+## 2.9.0
+
+### Minor Changes
+
+- 2319500: Updated PIN screen design and functionality
+- aa3286d: Refresh token lifecycle
+
+### Patch Changes
+
+- fe7a7bc: Filter sub field out of sd jwt credential display
+- c5cc3e7: updated pr template
+
 ## 2.8.0
 
 ### Minor Changes

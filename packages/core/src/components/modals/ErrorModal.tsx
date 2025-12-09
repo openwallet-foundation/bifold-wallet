@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, StatusBar, DeviceEventEmitter, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useNavigation } from '@react-navigation/native'
 
 import { EventTypes } from '../../constants'
 import { TOKENS, useServices } from '../../container-api'
@@ -10,6 +11,8 @@ import { useTheme } from '../../contexts/theme'
 import { BifoldError } from '../../types/error'
 import InfoBox, { InfoBoxType } from '../misc/InfoBox'
 import SafeAreaModal from './SafeAreaModal'
+import FullScreenErrorModal from './FullScreenErrorModal'
+import { Screens, TabStacks } from '../../types/navigators'
 
 interface ErrorModalProps {
   enableReport?: boolean
@@ -21,8 +24,10 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [error, setError] = useState<BifoldError>()
   const [reported, setReported] = useState(false)
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  const [logger, { enableFullScreenErrorModal }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG])
   const { ColorPalette } = useTheme()
+  const navigation = useNavigation()
+
   const styles = StyleSheet.create({
     container: {
       minHeight: height,
@@ -36,6 +41,11 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
   const onDismissModalTouched = useCallback(() => {
     setModalVisible(false)
   }, [])
+
+  const onPressSimplifiedErrorModalCTA = useCallback(() => {
+    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+    setModalVisible(false)
+  }, [navigation])
 
   const report = useCallback(() => {
     if (error) {
@@ -83,7 +93,14 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ enableReport }) => {
     [reported, ColorPalette.semantic.success]
   )
 
-  return (
+  return enableFullScreenErrorModal ? (
+    <FullScreenErrorModal
+      errorTitle={error ? error.title : t('Error.Unknown')}
+      errorDescription={error ? error.description : t('Error.Problem')}
+      onPressCTA={onPressSimplifiedErrorModalCTA}
+      visible={modalVisible}
+    />
+  ) : (
     <SafeAreaModal visible={modalVisible} transparent={true}>
       <StatusBar hidden={true} />
       <SafeAreaView style={styles.container}>

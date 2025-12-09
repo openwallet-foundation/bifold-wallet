@@ -49,7 +49,15 @@
     "GotIt": "Got it (FR)",
     "Send": "Envoyer",
     "Reset": "Reset (FR)",
-    "ViewJSON": "View JSON Details (FR)"
+    "ViewJSON": "View JSON Details (FR)",
+    "RefreshCredentials": "Refresh Credentials (FR)",
+    "AppName": "Aries Bifold (FR)"
+  },
+  "Toast": {
+    "OpenIDCredRefreshing": {
+      "Title": "Refreshing credentials (FR)",
+      "Message": "Your OpenID credentials are being refreshed in the background. (FR)"
+    }
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -150,7 +158,11 @@
     "Title1048": "Proof request problems. (FR)",
     "Message1048": "There was a problem with the proof request. (FR)",
     "Title1049": "Unable to change PIN. (FR)",
-    "Message1049": "There was a problem while attempting to change your PIN. (FR)"
+    "Message1049": "There was a problem while attempting to change your PIN. (FR)",
+    "GenericError": {
+      "Title": "Something went wrong (FR)",
+      "Message": "There was an unexpected error, please try again later. (FR)"
+    }
   },
   "SelectionAxs": {
     "RadioChecked": "checked(fr)",
@@ -746,6 +758,15 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request. (FR)",
     "PleaseAddress": " Please address them before continuing. (FR)"
   },
+  "UnsatisfiedProofRequest": {
+    "Title": "Information Request (FR)",
+    "InfoBox": {
+      "Title": "You do not have a card for this request (FR)",
+      "Subtitle": "Check with {{verifierName}} for accepted cards. (FR)"
+    },
+    "VerifierDetail": "Received an information request from: (FR)",
+    "RequestPurpose": " • {{requestPurpose}} (FR)"
+  },
   "Settings": {
     "Version": "Version",
     "VersionString": "0.0.0-0",
@@ -765,7 +786,8 @@
     "Logout": "Déconnexion",
     "ConfigureMediator": "Configurer le médiateur",
     "ChangeMediator": "Change mediator (FR)",
-    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (FR)"
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (FR)",
+    "GenericErrorMessages": "Generic error messages (FR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (FR)",
@@ -955,5 +977,8 @@
   },
   "Banner": {
     "AlertsLength": "You have {{ alerts }} alerts (FR)"
+  },
+  "FullScreenErrorModal": {
+    "PrimaryCTA": "Go back to home (FR)"
   }
 }

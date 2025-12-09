@@ -48,7 +48,15 @@
     "GotIt": "Got it (PT-BR)",
     "Send": "Enviar",
     "Reset": "Reset (PT-BR)",
-    "ViewJSON": "View JSON Details (PT-BR)"
+    "ViewJSON": "View JSON Details (PT-BR)",
+    "RefreshCredentials": "Refresh Credentials (PT-BR)",
+    "AppName": "Aries Bifold (PT-BR)"
+  },
+  "Toast": {
+    "OpenIDCredRefreshing": {
+      "Title": "Refreshing credentials (PT-BR)",
+      "Message": "Your OpenID credentials are being refreshed in the background. (PT-BR)"
+    }
   },
   "Date": {
     "ShortFormat": "D MMM",
@@ -149,7 +157,11 @@
     "Title1048": "Proof request problems. (PT-BR)",
     "Message1048": "There was a problem with the proof request. (PT-BR)",
     "Title1049": "Unable to change PIN. (PT-BR)",
-    "Message1049": "There was a problem while attempting to change your PIN. (PT-BR)"
+    "Message1049": "There was a problem while attempting to change your PIN. (PT-BR)",
+    "GenericError": {
+      "Title": "Something went wrong (PT-BR)",
+      "Message": "There was an unexpected error, please try again later. (PT-BR)"
+    }
   },
   "SelectionAxs": {
     "RadioChecked": "checked",
@@ -723,6 +735,15 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request. (PT-BR)",
     "PleaseAddress": " Please address them before continuing. (PT-BR)"
   },
+  "UnsatisfiedProofRequest": {
+    "Title": "Information Request (PT-BR)",
+    "InfoBox": {
+      "Title": "You do not have a card for this request (PT-BR)",
+      "Subtitle": "Check with {{verifierName}} for accepted cards. (PT-BR)"
+    },
+    "VerifierDetail": "Received an information request from: (PT-BR)",
+    "RequestPurpose": " • {{requestPurpose}} (PT-BR)"
+  },
   "Settings": {
     "Version": "Versão",
     "VersionString": "0.0.0-0",
@@ -741,7 +762,8 @@
     "Logout": "Sair",
     "ConfigureMediator": "Configurar Mediator",
     "ChangeMediator": "Change mediator (PT-BR)",
-    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (PT-BR)"
+    "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (PT-BR)",
+    "GenericErrorMessages": "Generic error messages (PT-BR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (PT-BR)",
@@ -923,5 +945,8 @@
   },
   "Banner": {
     "AlertsLength": "You have {{ alerts }} alerts (PT-BR)"
+  },
+  "FullScreenErrorModal": {
+    "PrimaryCTA": "Go back to home (PT-BR)"
   }
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getBuildNumber, getVersion } from 'react-native-device-info'
 import {
@@ -19,7 +19,7 @@ import { InfoBoxType } from '../components/misc/InfoBox'
 import DeveloperModal from '../components/modals/DeveloperModal'
 import PopupModal from '../components/modals/PopupModal'
 import { ThemedText } from '../components/texts/ThemedText'
-import KeyboardView from '../components/views/KeyboardView'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 import { EventTypes, attemptLockoutConfig, defaultAutoLockTime, minPINLength } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
@@ -51,7 +51,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   const [showForgotPINMessage, setShowForgotPINMessage] = useState(false)
   const [biometricsEnrollmentChange, setBiometricsEnrollmentChange] = useState(false)
   const { ColorPalette, TextTheme } = useTheme()
-  const { ButtonLoading } = useAnimatedComponents()
+  const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const [
     logger,
     {
@@ -64,6 +64,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [alertModalMessage, setAlertModalMessage] = useState('')
+  const appState = useRef(AppState.currentState)
   const { getLockoutPenalty, attemptLockout, unMarkServedPenalty } = useLockout()
   const onBackPressed = () => setDevModalVisible(false)
   const onDevModeTriggered = () => {
@@ -132,7 +133,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
 
     // Re-check biometrics when app transitions from background (inactive) to foreground (active)
     const appStateListener = AppState.addEventListener('change', (nextAppState) => {
-      if (nextAppState === 'active') {
+      if (nextAppState === 'active' && appState.current.match(/background/)) {
         // Cancel any existing interaction handler before scheduling a new one
         afterInteractionsBiometricsHandler.cancel()
         afterInteractionsBiometricsHandler = InteractionManager.runAfterInteractions(checkBiometrics)
@@ -340,6 +341,11 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     }
     return (
       <>
+        {PINScreensConfig.useNewPINDesign && store.lockout.displayNotification && (
+          <ThemedText variant={'headingTwo'} style={style.helpText}>
+            {t('PINEnter.Title')}
+          </ThemedText>
+        )}
         <ThemedText
           variant={showHelpText ? 'normal' : 'headingThree'}
           style={PINScreensConfig.useNewPINDesign ? style.helpText : style.helpTextSubtitle}
@@ -366,7 +372,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   ])
 
   return (
-    <KeyboardView keyboardAvoiding={true}>
+    <ScreenWrapper keyboardActive>
       <View style={style.screenContainer}>
         <View>
           {PINScreensConfig.useNewPINDesign && (
@@ -429,7 +435,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         </View>
         {PINScreensConfig.useNewPINDesign && !continueEnabled && (
           <View style={style.loadingContainer}>
-            <ButtonLoading size={50} />
+            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
             <ThemedText variant="normal">{t('PINEnter.Loading')}</ThemedText>
           </View>
         )}
@@ -509,7 +515,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         />
       ) : null}
       {devModalVisible ? <DeveloperModal onBackPressed={onBackPressed} /> : null}
-    </KeyboardView>
+    </ScreenWrapper>
   )
 }
 
