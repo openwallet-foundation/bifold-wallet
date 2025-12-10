@@ -116,6 +116,8 @@ jobs:
         compile-sdk: [33]
         build-tools: [33.0.2]
         sdk-tools: [4333796]
+    env:
+      GRADLE_USER_HOME: /mnt/gradle-cache
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
@@ -162,10 +164,35 @@ jobs:
           node -v && yarn -v && yarn install --immutable && \
           git status
 
+      - name: Free up disk space
+        run: |
+          echo "=== Disk space before cleanup ==="
+          df -h
+          echo "Removing unnecessary system files to free disk space..."
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /opt/microsoft
+          sudo rm -rf /opt/google
+          sudo rm -rf /opt/az
+          sudo rm -rf /usr/local/julia*
+          sudo docker image prune --all --force || true
+          sudo docker system prune -af || true
+          sudo docker builder prune -af || true
+          sudo apt-get clean
+          echo "=== Disk space after cleanup ==="
+          df -h
+
       - name: Build Workspace
         run: |
           yarn build
 
       - name: Android Release Build
         working-directory: ./samples/app/android
-        run: ./gradlew --no-daemon bundleRelease
+        run: |
+          # Fix permissions for gradle cache
+          sudo mkdir -p /mnt/gradle-cache
+          sudo chown -R $USER:$USER /mnt/gradle-cache
+
+          # Run the release build
+          ./gradlew --no-daemon bundleRelease
