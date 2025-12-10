@@ -172,7 +172,8 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
           sudo rm -rf /opt/hostedtoolcache/CodeQL
-          sudo rm -rf /opt/microsoft /opt/google
+          sudo rm -rf /opt/microsoft
+          sudo rm -rf /opt/google
           sudo rm -rf /opt/az
           sudo rm -rf /usr/local/julia*
           sudo docker image prune --all --force || true
