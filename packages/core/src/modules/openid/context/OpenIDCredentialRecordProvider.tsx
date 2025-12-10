@@ -143,7 +143,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 
   async function getW3CCredentialById(id: string): Promise<W3cCredentialRecord | undefined> {
     checkAgent()
-    return await agent?.w3cCredentials.getCredentialRecordById(id)
+    return await agent?.w3cCredentials.getById(id)
   }
 
   async function getSdJwtCredentialById(id: string): Promise<SdJwtVcRecord | undefined> {
@@ -173,7 +173,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord, type: OpenIDCredentialType) {
     checkAgent()
     if (type === OpenIDCredentialType.W3cCredential) {
-      await agent?.w3cCredentials.removeCredentialRecord(cred.id)
+      await agent?.w3cCredentials.deleteById(cred.id)
     } else if (type === OpenIDCredentialType.SdJwtVc) {
       await agent?.sdJwtVc.deleteById(cred.id)
     } else if (type === OpenIDCredentialType.Mdoc) {
@@ -222,7 +222,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   useEffect(() => {
     if (!agent) return
 
-    agent.w3cCredentials?.getAllCredentialRecords().then((w3cCredentialRecords) => {
+    agent.w3cCredentials?.getAll().then((w3cCredentialRecords) => {
       setState((prev) => ({
         ...prev,
         w3cCredentialRecords: filterW3CCredentialsOnly(w3cCredentialRecords),
