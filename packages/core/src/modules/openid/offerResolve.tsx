@@ -1,5 +1,6 @@
 import {
   OpenId4VcCredentialHolderBinding,
+  OpenId4VcHolderApi,
   OpenId4VciCredentialBindingOptions,
   OpenId4VciCredentialFormatProfile,
   OpenId4VciRequestTokenResponse,
@@ -12,31 +13,8 @@ import {
   JwkDidCreateOptions,
   KeyDidCreateOptions,
   Kms,
-  Mdoc,
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-  W3cJsonLdVerifiableCredential,
-  W3cJwtVerifiableCredential,
 } from '@credo-ts/core'
 import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
-
-const KnownJwaSignatureAlgorithms = {
-  HS256: 'HS256',
-  HS384: 'HS384',
-  HS512: 'HS512',
-  RS256: 'RS256',
-  RS384: 'RS384',
-  RS512: 'RS512',
-  ES256: 'ES256',
-  ES384: 'ES384',
-  ES512: 'ES512',
-  PS256: 'PS256',
-  PS384: 'PS384',
-  PS512: 'PS512',
-  EdDSA: 'EdDSA',
-  ES256K: 'ES256K'
-}
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -200,18 +178,18 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
     )
   }
 
-  const credentials = await agent.openid4vc.holder.requestCredentials({
+  const credentials = await (agent.openid4vc.holder as OpenId4VcHolderApi).requestCredentials({
     resolvedCredentialOffer,
     ...accessToken,
     clientId,
-    credentialsToRequest: credentialConfigurationIdsToRequest,
+    credentialConfigurationIds: credentialConfigurationIdsToRequest,
     verifyCredentialStatus: false,
     allowedProofOfPossessionSignatureAlgorithms: [
       // NOTE: MATTR launchpad for JFF MUST use EdDSA. So it is important that the default (first allowed one)
       // is EdDSA. The list is ordered by preference, so if no suites are defined by the issuer, the first one
       // will be used
-      KnownJwaSignatureAlgorithms.EdDSA,
-      KnownJwaSignatureAlgorithms.ES256,
+      "EdDSA",
+      "ES256",
     ],
     credentialBindingResolver: async ({
       supportedDidMethods,
@@ -236,32 +214,34 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   })
 
   // We only support one credential for now
-  const [firstCredential] = credentials
+  const [firstCredential] = credentials.credentials
   if (!firstCredential)
     throw new Error('Error retrieving credential using pre authorized flow: firstCredential undefined!.')
-
-  let record: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
 
   if (typeof firstCredential === 'string') {
     throw new Error('Error retrieving credential using pre authorized flow: firstCredential is string.')
   }
 
-  if ('compact' in firstCredential.credential) {
-    // TODO: add claimFormat to SdJwtVc
-    record = new SdJwtVcRecord({
-      compactSdJwtVc: firstCredential.credential.compact,
-    })
-  } else if (firstCredential.credential instanceof Mdoc) {
-    record = new MdocRecord({
-      mdoc: firstCredential.credential,
-    })
-  } else {
-    record = new W3cCredentialRecord({
-      credential: firstCredential.credential as W3cJwtVerifiableCredential | W3cJsonLdVerifiableCredential,
-      // We don't support expanded types right now, but would become problem when we support JSON-LD
-      tags: {},
-    })
-  }
+  const record = firstCredential.record
+
+  // This block likely not necessary anymore? The record seems to be defined on this object already.
+
+  // if ('compact' in firstCredential.) {
+  //   // TODO: add claimFormat to SdJwtVc
+  //   record = new SdJwtVcRecord({
+  //     credentialInstances: firstCredential.credential.compact,
+  //   })
+  // } else if (firstCredential.credential instanceof Mdoc) {
+  //   record = new MdocRecord({
+  //     mdoc: firstCredential.credential,
+  //   })
+  // } else {
+  //   record = new W3cCredentialRecord({
+  //     credential: firstCredential.credential as W3cJwtVerifiableCredential | W3cJsonLdVerifiableCredential,
+  //     // We don't support expanded types right now, but would become problem when we support JSON-LD
+  //     tags: {},
+  //   })
+  // }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
     Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0] as any,

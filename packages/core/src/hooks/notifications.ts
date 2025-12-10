@@ -2,6 +2,7 @@ import {
   MdocRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
+  W3cV2CredentialRecord,
 } from '@credo-ts/core'
 import {
   DidCommBasicMessageRecord,
@@ -89,7 +90,7 @@ export const useNotifications = ({
       }
     })
 
-    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord> = []
+    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord> = []
     if (openIDCredRecieved) {
       openIDCreds.push(openIDCredRecieved)
     }

@@ -1,4 +1,4 @@
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,9 +21,9 @@ type OpenIDContextProps = {
 export const useOpenID = ({
   openIDUri,
   openIDPresentationUri,
-}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | undefined => {
+}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord | undefined => {
   const [openIdRecord, setOpenIdRecord] = useState<
-    SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord
+    SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord
   >()
 
   const { agent } = useAgent()
