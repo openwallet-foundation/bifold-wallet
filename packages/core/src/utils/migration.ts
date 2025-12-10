@@ -1,6 +1,5 @@
 import { AskarModule } from '@credo-ts/askar'
 import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
-import { IndySdkToAskarMigrationUpdater } from '@credo-ts/indy-sdk-to-askar-migration'
 import { agentDependencies } from '@credo-ts/react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { Platform } from 'react-native'
@@ -31,10 +30,10 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
       dependencies: agentDependencies,
     })
 
-  const updater = await IndySdkToAskarMigrationUpdater.initialize({
-    dbPath,
-    agent: aAgent,
-  })
+  // const updater = await IndySdkToAskarMigrationUpdater.initialize({
+  //   dbPath,
+  //   agent: aAgent,
+  // })
 
-  await updater.update()
+  // await updater.update()
 }

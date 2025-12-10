@@ -2,20 +2,18 @@ import {
   W3cCredentialRecord,
   SdJwtVcRecord,
   MdocRecord,
+  W3cV2CredentialRecord,
   AgentContext,
   W3cCredentialRepository,
   SdJwtVcRepository,
   MdocRepository,
 } from '@credo-ts/core'
 import type {
-  OpenId4VciCredentialSupported,
-  OpenId4VciIssuerMetadataDisplay,
+  OpenId4VciCredentialIssuerMetadataDisplay,
   OpenId4VciRequestTokenResponse,
   OpenId4VciNotificationMetadata,
 } from '@credo-ts/openid4vc'
-import type { MetadataDisplay } from '@sphereon/oid4vci-common'
 import { RefreshCredentialMetadata, RefreshStatus } from './refresh/types'
-import type { OpenId4VciCredentialConfigurationSupported, OpenId4VciCredentialIssuerMetadataDisplay } from '@credo-ts/openid4vc'
 import { CredentialDisplay, CredentialSubjectRecord } from './types'
 
 export const openId4VcCredentialMetadataKey = '_bifold/openId4VcCredentialMetadata'
@@ -78,7 +76,7 @@ export function getOpenId4VcCredentialMetadata(
  * NOTE: this does not save the record.
  */
 export function setOpenId4VcCredentialMetadata(
-  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord,
+  credentialRecord: SdJwtVcRecord | MdocRecord | W3cCredentialRecord | W3cV2CredentialRecord,
   metadata: OpenId4VcCredentialMetadata
 ) {
   credentialRecord.metadata.set(openId4VcCredentialMetadataKey, metadata)
