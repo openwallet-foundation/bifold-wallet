@@ -11,7 +11,7 @@ plugins {
     id("com.facebook.react.settings")
 }
 
-extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+extensions.configure(com.facebook.react.ReactSettingsExtension) { ex -> ex.autolinkLibrariesFromCommand() }
 
 rootProject.name = 'Aries-Bifold'
 include ':app'
