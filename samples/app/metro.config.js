@@ -65,7 +65,7 @@ const config = {
     sourceExts: [...sourceExts, 'svg', 'cjs'],
     // Enable package exports with CommonJS prioritized for @babel/runtime compatibility
     unstable_enablePackageExports: true,
-    // Order matters: require before import to get CommonJS versions of @babel/runtime helpers
+    // Order matters: 'react-native', 'browser', 'require', and 'default' (in this order) to prioritize CommonJS versions of @babel/runtime helpers
     unstable_conditionNames: ['react-native', 'browser', 'require', 'default'],
   },
   watchFolders,
