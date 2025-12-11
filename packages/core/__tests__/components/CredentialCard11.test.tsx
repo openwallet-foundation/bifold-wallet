@@ -14,9 +14,7 @@ import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import timeTravel from '../helpers/timetravel'
 import { CredentialErrors } from '../../src/types/credentials'
 
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 
