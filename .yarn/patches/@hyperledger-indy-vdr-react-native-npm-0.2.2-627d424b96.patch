@@ -37,7 +37,7 @@ index 1234567890abcdef..abcdef1234567890 100644
    
    defaultConfig {
 -    minSdkVersion 21 
-+    minSdkVersion 24
++    minSdkVersion getExtWithFallback('minSdkVersion', 24)
      targetSdkVersion getExt('targetSdkVersion')
      
      externalNativeBuild {
