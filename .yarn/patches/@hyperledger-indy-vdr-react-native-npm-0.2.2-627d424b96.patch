@@ -32,7 +32,19 @@ diff --git a/android/build.gradle b/android/build.gradle
 index 1234567890abcdef..abcdef1234567890 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
-@@ -81,7 +81,7 @@ android {
+@@ -35,6 +35,11 @@ def REACT_NATIVE_VERSION = reactProperties.getProperty("VERSION_NAME").split("\\
+ apply plugin: 'com.android.library'
+ apply plugin: 'de.undercouch.download'
+ 
++// Helper to read from rootProject.ext with fallback
++def getExtWithFallback(prop, fallback) {
++  return rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
++}
++
+ def getExt(name) {
+   return rootProject.ext.get(name)
+ }
+@@ -61,7 +66,7 @@ android {
    }
    
    defaultConfig {
