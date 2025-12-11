@@ -12,7 +12,8 @@ import path from 'path'
 mockRNDeviceInfo.getVersion = jest.fn(() => '1')
 mockRNDeviceInfo.getBuildNumber = jest.fn(() => '1')
 
-// Mock Animated native helper - path changed in RN 0.79+
+// Mock Animated native helper (prevents native warnings in tests) - path changed in RN 0.79+
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper', () => ({}))
 jest.mock('react-native', () => jest.requireActual('react-native')) 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo)
 jest.mock('react-native-localize', () => mockRNLocalize)
