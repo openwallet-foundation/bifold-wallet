@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import "RNSplashScreen.h"
 #import <React/RCTBundleURLProvider.h>
 #import "Orientation.h"
 
