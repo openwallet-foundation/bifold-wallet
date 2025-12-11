@@ -1,12 +1,12 @@
-import { ImageSourcePropType } from 'react-native'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialState, W3cCredentialRecord } from '@credo-ts/core'
+import { ImageSourcePropType } from 'react-native'
 
+import { luminanceForHexColor } from './luminance'
+import { getCredentialForDisplay } from '../modules/openid/display'
 import type { Agent } from '@credo-ts/core'
 
 import { getSchemaName, getCredDefTag, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
-import { luminanceForHexColor } from './luminance'
-import { getCredentialForDisplay } from '../modules/openid/display'
 import { BifoldLogger } from '../services/logger'
 
 export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord) => {
