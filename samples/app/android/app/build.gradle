@@ -50,7 +50,7 @@ react {
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
     
-    // RN 0.81+ autolinking
+    // RN 0.79+ autolinking
     autolinkLibrariesWithApp()
 }
 
@@ -62,7 +62,7 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
  */
 def enableProguardInReleaseBuilds = false
 
-// JSC is removed in RN 0.81+ - Hermes is the only JS engine
+// JSC is removed in RN 0.79+ - Hermes is the only JS engine
 
 
 /**
@@ -138,7 +138,7 @@ dependencies {
 
     implementation 'com.google.mlkit:barcode-scanning:17.2.0'
 
-    // Hermes is the only JS engine in RN 0.81+
+    // Hermes is the only JS engine in RN 0.79+
     implementation("com.facebook.react:hermes-android")
 }
 

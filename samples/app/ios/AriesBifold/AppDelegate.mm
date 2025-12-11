@@ -14,7 +14,7 @@
 
   BOOL success = [super application:application didFinishLaunchingWithOptions:launchOptions];
 
-  // Note: RNSplashScreen is incompatible with RN 0.81 + EXAppDelegateWrapper
+  // Note: RNSplashScreen is incompatible with RN 0.79 + EXAppDelegateWrapper
   // The splash screen will be hidden by SplashScreen.hide() in JS when ready
   // [RNSplashScreen show];
 

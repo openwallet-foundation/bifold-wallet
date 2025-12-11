@@ -11,7 +11,7 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-# RN 0.81 requires iOS 15.1+
+# RN 0.79 requires iOS 15.1+
 platform :ios, '15.1'
 prepare_react_native_project!
 
@@ -39,7 +39,7 @@ setup_permissions([
   # 'StoreKit',
 ])
 
-# Flipper is deprecated and removed in RN 0.81+
+# Flipper is deprecated and removed in RN 0.79+
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil

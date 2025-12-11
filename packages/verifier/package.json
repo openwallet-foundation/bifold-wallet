@@ -28,7 +28,7 @@
     "@credo-ts/core": "0.5.17",
     "@credo-ts/react-hooks": "0.6.1",
     "@hyperledger/anoncreds-shared": "0.2.4",
-    "@react-native/babel-preset": "~0.81.0",
+    "@react-native/babel-preset": "~0.79.0",
     "@types/jest": "~29.5.14",
     "@types/react": "~19.1.0",
     "babel-jest": "~27.5.1",
