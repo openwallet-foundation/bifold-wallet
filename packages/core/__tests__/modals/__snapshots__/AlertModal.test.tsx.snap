@@ -20,7 +20,9 @@ exports[`AlertModal Component Renders correctly 1`] = `
   }
 >
   <Modal
+    hardwareAccelerated={false}
     transparent={true}
+    visible={true}
   >
     <View
       style={

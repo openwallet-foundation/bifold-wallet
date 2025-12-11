@@ -2,7 +2,9 @@
 
 exports[`ImageModal component Renders correctly 1`] = `
 <Modal
+  hardwareAccelerated={false}
   transparent={true}
+  visible={true}
 >
   <View
     accessibilityState={

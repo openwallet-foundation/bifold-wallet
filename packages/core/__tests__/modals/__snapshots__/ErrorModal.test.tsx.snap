@@ -4,6 +4,7 @@ exports[`ErrorModal Component Dismiss on demand 1`] = `null`;
 
 exports[`ErrorModal Component Renders correctly 1`] = `
 <Modal
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >

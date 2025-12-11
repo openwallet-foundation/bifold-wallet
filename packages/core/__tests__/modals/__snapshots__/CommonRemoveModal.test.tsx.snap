@@ -3,6 +3,7 @@
 exports[`CommonRemoveModal Component Credential offer decline renders correctly 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -280,8 +281,8 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -464,6 +465,7 @@ exports[`CommonRemoveModal Component Credential offer decline renders correctly 
 exports[`CommonRemoveModal Component Custom notification decline renders correctly 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -744,8 +746,8 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -928,6 +930,7 @@ exports[`CommonRemoveModal Component Custom notification decline renders correct
 exports[`CommonRemoveModal Component Proof request decline renders correctly 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -1218,8 +1221,8 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -1402,6 +1405,7 @@ exports[`CommonRemoveModal Component Proof request decline renders correctly 1`]
 exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -1955,8 +1959,8 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -2139,6 +2143,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly 1`] = `
 exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -2402,8 +2407,8 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -2586,6 +2591,7 @@ exports[`CommonRemoveModal Component Remove contact renders correctly2 1`] = `
 exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -2858,7 +2864,12 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                 <View
                   collapsable={false}
                   onLayout={[Function]}
-                  style={Object {}}
+                  style={
+                    Array [
+                      undefined,
+                      Object {},
+                    ]
+                  }
                 >
                   <View
                     style={
@@ -3067,7 +3078,12 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                 <View
                   collapsable={false}
                   onLayout={[Function]}
-                  style={Object {}}
+                  style={
+                    Array [
+                      undefined,
+                      Object {},
+                    ]
+                  }
                 >
                   <View
                     style={
@@ -3220,8 +3236,8 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>
@@ -3404,6 +3420,7 @@ exports[`CommonRemoveModal Component Remove credential renders correctly 1`] = `
 exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = `
 <Modal
   animationType="slide"
+  hardwareAccelerated={false}
   transparent={true}
   visible={true}
 >
@@ -3957,8 +3974,8 @@ exports[`CommonRemoveModal Component Rerenders correctly when not visible 1`] = 
                   ]
                 }
                 width="100%"
-                x="0"
-                y="0"
+                x={0}
+                y={0}
               />
             </RNSVGGroup>
           </RNSVGSvgView>

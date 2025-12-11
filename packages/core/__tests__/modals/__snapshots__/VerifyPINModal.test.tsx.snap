@@ -3,6 +3,7 @@
 exports[`VerifyPINModal Component Renders correctly 1`] = `
 <Modal
   animationType="none"
+  hardwareAccelerated={false}
   presentationStyle="fullScreen"
   statusBarTranslucent={true}
   style={

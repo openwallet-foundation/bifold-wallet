@@ -232,7 +232,23 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       "paddingVertical": 4,
                     }
                   }
-                />
+                >
+                  <Text
+                    maxFontSizeMultiplier={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Sep 4, 2024
+                  </Text>
+                </View>
               </View>
               <View />
             </View>
@@ -379,7 +395,23 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       "paddingVertical": 4,
                     }
                   }
-                />
+                >
+                  <Text
+                    maxFontSizeMultiplier={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Sep 4, 2024
+                  </Text>
+                </View>
               </View>
               <View />
             </View>
@@ -526,7 +558,23 @@ exports[`ListContacts Screen Renders correctly 1`] = `
                       "paddingVertical": 4,
                     }
                   }
-                />
+                >
+                  <Text
+                    maxFontSizeMultiplier={2}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "normal",
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    Sep 4, 2024
+                  </Text>
+                </View>
               </View>
               <View />
             </View>
