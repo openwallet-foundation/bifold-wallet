@@ -93,7 +93,6 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
-  usePBKDF2HashingAlgorithm: true,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {

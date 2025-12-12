@@ -51,7 +51,6 @@ export interface Config {
   PINScreensConfig: PINScreensConfig
   showGenericErrors?: boolean
   enableFullScreenErrorModal?: boolean
-  usePBKDF2HashingAlgorithm: boolean
 }
 
 export interface PINScreensConfig {
