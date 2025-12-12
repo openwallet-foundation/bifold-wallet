@@ -2632,7 +2632,7 @@ __metadata:
     "@credo-ts/core": "npm:0.5.17"
     "@types/jest": "npm:~29.5.12"
     "@typescript-eslint/parser": "npm:~7.18.0"
-    axios: "npm:~1.4.0"
+    axios: "npm:~1.13.2"
     babel-jest: "npm:~29.7.0"
     buffer: "npm:~6.0.3"
     eslint: "npm:~8.57.1"
@@ -2646,7 +2646,7 @@ __metadata:
     typescript: "npm:~5.5.4"
   peerDependencies:
     "@credo-ts/core": 0.5.17
-    axios: ~1.4.0
+    axios: ~1.13.2
     buffer: ~6.0.3
     react: ~18.3.1
     react-native: 0.73.11
