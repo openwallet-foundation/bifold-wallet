@@ -59,6 +59,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+import { hashPIN } from './utils/crypto'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -92,6 +93,7 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
+  usePBKDF2HashingAlgorithm: true,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
@@ -250,6 +252,10 @@ export class MainContainer implements Container {
     )
 
     this._container.registerInstance(TOKENS.UTIL_REFRESH_ORCHESTRATOR, orchestrator)
+
+    this._container.registerInstance(TOKENS.FN_PIN_HASH_ALGORITHM, (PIN: string, salt: string) => {
+      return hashPIN(PIN, salt)
+    })
 
     return this
   }

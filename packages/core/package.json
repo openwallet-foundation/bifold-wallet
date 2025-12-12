@@ -79,6 +79,7 @@
     "@sd-jwt/jwt-status-list": "^0.17.0",
     "@testing-library/jest-native": "~5.4.3",
     "@testing-library/react-native": "~12.3.3",
+    "@types/base-64": "^1.0.2",
     "@types/jest": "~29.5.14",
     "@types/lodash.flatten": "~4.4.9",
     "@types/lodash.startcase": "~4.4.9",

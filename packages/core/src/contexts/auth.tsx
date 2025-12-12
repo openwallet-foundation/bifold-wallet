@@ -20,10 +20,10 @@ import {
   wipeWalletKey,
 } from '../services/keychain'
 import { WalletSecret } from '../types/security'
-import { hashPIN } from '../utils/crypto'
 import { migrateToAskar } from '../utils/migration'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
+import { useServices, TOKENS } from '../container-api'
 
 export interface AuthContext {
   lockOutUser: (reason: LockoutReason) => void
@@ -49,9 +49,14 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
+  const [
+    hashPIN
+  ] = useServices([
+    TOKENS.FN_PIN_HASH_ALGORITHM,
+  ])
 
   const setPIN = useCallback(async (PIN: string): Promise<void> => {
-    const secret = await secretForPIN(PIN)
+    const secret = await secretForPIN(PIN, hashPIN)
     await storeWalletSecret(secret)
   }, [])
 
@@ -168,7 +173,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         }
 
         const oldHash = await hashPIN(oldPin, secret.salt)
-        const newSecret = await secretForPIN(newPin)
+        const newSecret = await secretForPIN(newPin, hashPIN)
         const newHash = await hashPIN(newPin, newSecret.salt)
         if (!newSecret.key) {
           return false
@@ -195,7 +200,6 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         if (!credentials) {
           throw new Error('Get wallet credentials error')
         }
-
         const key = await hashPIN(PIN, credentials.salt)
         if (credentials.key !== key) {
           return false
