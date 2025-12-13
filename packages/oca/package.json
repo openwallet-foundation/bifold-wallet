@@ -45,7 +45,7 @@
   "dependencies": {
     "@credo-ts/anoncreds": "0.5.17",
     "@credo-ts/core": "0.5.17",
-    "axios": "~1.4.0",
+    "axios": "~1.13.2",
     "lodash.startcase": "~4.4.0",
     "react-native-fs": "~2.20.0"
   }
