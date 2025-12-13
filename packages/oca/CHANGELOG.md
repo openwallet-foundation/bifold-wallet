@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.11.8
+
+### Patch Changes
+
+- cf1badc: bumps axios version 1.4.0->1.13.2
+
 ## 2.11.7
 
 ## 2.11.6
