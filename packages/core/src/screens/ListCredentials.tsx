@@ -20,6 +20,7 @@ import { useOpenIDCredentials } from '../modules/openid/context/OpenIDCredential
 import { CredentialErrors, GenericCredentialExchangeRecord } from '../types/credentials'
 import { BaseTourID } from '../types/tour'
 import { OpenIDCredentialType } from '../modules/openid/types'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 const ListCredentials: React.FC = () => {
   const { t } = useTranslation()
@@ -78,13 +79,39 @@ const ListCredentials: React.FC = () => {
     return stop
   }, [stop])
 
+  // Rendering legacy card flow
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderCardItem = (cred: GenericCredentialExchangeRecord) => {
     return (
       <CredentialCard
-        credential={cred as CredentialExchangeRecord}
+        credential={cred}
         credentialErrors={
-          (cred as CredentialExchangeRecord).revocationNotification?.revocationDate && [CredentialErrors.Revoked]
+          (cred as CredentialExchangeRecord)?.revocationNotification?.revocationDate && [CredentialErrors.Revoked]
         }
+        onPress={() => {
+          if (cred instanceof W3cCredentialRecord) {
+            navigation.navigate(Screens.OpenIDCredentialDetails, {
+              credentialId: cred.id,
+              type: OpenIDCredentialType.W3cCredential,
+            })
+          } else if (cred instanceof SdJwtVcRecord) {
+            navigation.navigate(Screens.OpenIDCredentialDetails, {
+              credentialId: cred.id,
+              type: OpenIDCredentialType.SdJwtVc,
+            })
+          } else {
+            navigation.navigate(Screens.CredentialDetails, { credentialId: cred.id })
+          }
+        }}
+      />
+    )
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const renderCardItemGen = (cred: GenericCredentialExchangeRecord) => {
+    return (
+      <CredentialCardGen
+        credential={cred}
         onPress={() => {
           if (cred instanceof W3cCredentialRecord) {
             navigation.navigate(Screens.OpenIDCredentialDetails, {
@@ -119,6 +146,7 @@ const ListCredentials: React.FC = () => {
                 marginBottom: index === credentials.length - 1 ? 45 : 0,
               }}
             >
+              {/* use renderCardItemGen to render new card with abstracted types  */}
               {renderCardItem(credential)}
             </View>
           )
