@@ -55,7 +55,7 @@ import TabThreeFocusedIcon from './assets/img/wallet-icon.svg'
 import TabThreeIcon from './assets/img/wallet-icon-outline.svg'
 import CredentialRevoked from './assets/img/credential-revoked.svg'
 import CredentialNotAvailable from './assets/img/credential-not-available.svg'
-import React, { SVGProps } from 'react'
+import React from 'react'
 import {
   IChatTheme,
   IHomeTheme,
