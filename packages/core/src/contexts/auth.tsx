@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const setPIN = useCallback(async (PIN: string): Promise<void> => {
     const secret = await secretForPIN(PIN, hashPIN)
     await storeWalletSecret(secret)
-  }, [])
+  }, [hashPIN])
 
   const getWalletSecret = useCallback(async (): Promise<WalletSecret | undefined> => {
     if (walletSecret) {
@@ -133,7 +133,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         return false
       }
     },
-    [dispatch, store.migration.didMigrateToAskar]
+    [dispatch, store.migration.didMigrateToAskar, hashPIN]
   )
 
   const removeSavedWalletSecret = useCallback(() => {
@@ -190,7 +190,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       }
       return true
     },
-    []
+    [hashPIN]
   )
 
   const verifyPIN = useCallback(
@@ -217,7 +217,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         return false
       }
     },
-    [getWalletSecret, t]
+    [getWalletSecret, t, hashPIN]
   )
 
   return (
