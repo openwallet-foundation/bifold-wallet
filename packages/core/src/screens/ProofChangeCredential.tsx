@@ -19,8 +19,8 @@ import { ProofRequestsStackParams, Screens } from '../types/navigators'
 import { ProofCredentialItems } from '../types/proof-items'
 import { Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import { CredentialErrors } from '../components/misc/CredentialCard11'
 import { ThemedText } from '../components/texts/ThemedText'
+import { CredentialErrors } from '../types/credentials'
 
 type ProofChangeProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofChangeCredential>
 

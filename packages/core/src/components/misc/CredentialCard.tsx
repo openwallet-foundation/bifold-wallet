@@ -9,12 +9,13 @@ import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 
 import CredentialCard10 from './CredentialCard10'
-import CredentialCard11, { CredentialErrors } from './CredentialCard11'
-import { GenericCredentialExchangeRecord } from '../../types/credentials'
+import CredentialCard11 from './CredentialCard11'
+import { CredentialErrors, GenericCredentialExchangeRecord } from '../../types/credentials'
 import { BrandingOverlay } from '@bifold/oca'
 import { useOpenIDCredentials } from '../../modules/openid/context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../../modules/openid/display'
 import { getAttributeField } from '../../utils/oca'
+import { useCredentialErrorsFromRegistry } from '../../modules/openid/hooks/useCredentialErrorsFromRegistry'
 
 interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -51,6 +52,7 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { resolveBundleForCredential } = useOpenIDCredentials()
   const [extraOverlayAttribute, setExtraOverlayAttribute] = useState<Attribute | undefined>()
+  const computedErrors = useCredentialErrorsFromRegistry(credential, credentialErrors)
 
   useEffect(() => {
     if (brandingOverlay) {
@@ -132,14 +134,28 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
     }
   }
 
-  if (
-    credential instanceof W3cCredentialRecord ||
-    credential instanceof SdJwtVcRecord ||
-    credential instanceof MdocRecord
-  ) {
+  if (credential instanceof SdJwtVcRecord || credential instanceof MdocRecord) {
     return (
       <CredentialCard11
         credential={undefined}
+        style={style}
+        onPress={onPress}
+        brandingOverlay={overlay}
+        credentialErrors={computedErrors}
+        proof={proof}
+        elevated={proof}
+        displayItems={displayItems}
+        hideSlice={true}
+        hasAltCredentials={hasAltCredentials}
+        handleAltCredChange={handleAltCredChange}
+        extraOverlayParameter={extraOverlayAttribute}
+        brandingOverlayType={bundleResolver.getBrandingOverlayType()}
+      />
+    )
+  } else if (credential instanceof W3cCredentialRecord) {
+    return (
+      <CredentialCard11
+        credential={credential as any}
         style={style}
         onPress={onPress}
         brandingOverlay={overlay}
@@ -147,7 +163,6 @@ const CredentialCard: React.FC<CredentialCardProps> = ({
         proof={proof}
         elevated={proof}
         displayItems={displayItems}
-        hideSlice={true}
         hasAltCredentials={hasAltCredentials}
         handleAltCredChange={handleAltCredChange}
         extraOverlayParameter={extraOverlayAttribute}

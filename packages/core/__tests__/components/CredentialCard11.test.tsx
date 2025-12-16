@@ -6,16 +6,15 @@ import fs from 'fs'
 import path from 'path'
 import React from 'react'
 
-import CredentialCard11, { CredentialErrors } from '../../src/components/misc/CredentialCard11'
+import CredentialCard11 from '../../src/components/misc/CredentialCard11'
 import { testIdWithKey } from '../../src/utils/testable'
 import { Linking } from 'react-native'
 import { BasicAppContext } from '../helpers/app'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import timeTravel from '../helpers/timetravel'
+import { CredentialErrors } from '../../src/types/credentials'
 
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 

@@ -310,9 +310,9 @@ const ProofDetails: React.FC<ProofDetailsProps> = ({ route, navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      BackHandler.addEventListener('hardwareBackPress', onBackPressed)
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPressed)
 
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPressed)
+      return () => subscription.remove()
     }, [onBackPressed])
   )
 

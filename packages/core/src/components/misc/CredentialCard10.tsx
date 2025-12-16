@@ -22,6 +22,7 @@ import {
   getCredentialIdentifiers,
   isValidAnonCredsCredential,
   toImageSource,
+  getEffectiveCredentialName,
 } from '../../utils/credential'
 import { formatTime, useCredentialConnectionLabel } from '../../utils/helpers'
 import { buildFieldsFromAnonCredsCredential } from '../../utils/oca'
@@ -157,6 +158,11 @@ const CredentialCard10: React.FC<CredentialCard10Props> = ({ credential, style =
         ...o,
         ...bundle,
         brandingOverlay: bundle.brandingOverlay as LegacyBrandingOverlay,
+        // Apply effective name
+        metaOverlay: {
+          ...bundle.metaOverlay,
+          name: getEffectiveCredentialName(credential, bundle.metaOverlay?.name),
+        } as any,
       }))
     })
   }, [credential, credentialConnectionLabel, i18n.language, bundleResolver])

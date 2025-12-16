@@ -1,0 +1,43 @@
+diff --git a/android/CMakeLists.txt b/android/CMakeLists.txt
+index 5cc55c5ee3d05cbe9a7b92b0d1b031e0166c7456..8d19df4a3cc4fe5cdbfe55445ccb72007e568644 100644
+--- a/android/CMakeLists.txt
++++ b/android/CMakeLists.txt
+@@ -6,7 +6,7 @@ set (LIB_NAME "anoncreds")
+ file (GLOB LIBANONCREDS_DIR "${CMAKE_SOURCE_DIR}/../native/mobile/android/${ANDROID_ABI}")
+ 
+ set(CMAKE_VERBOSE_MAKEFILE ON)
+-set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD 17)
+ 
+ set (BUILD_DIR ${CMAKE_SOURCE_DIR}/build)
+ if(${REACT_NATIVE_VERSION} GREATER_EQUAL 71)
+@@ -87,7 +87,15 @@ if(${REACT_NATIVE_VERSION} LESS 71)
+   )
+ endif()
+ 
+-if(${REACT_NATIVE_VERSION} GREATER_EQUAL 71)
++# RN 0.79+ renamed reactnativejni to reactnative
++if(${REACT_NATIVE_VERSION} GREATER_EQUAL 79)
++  target_link_libraries(
++    ${PACKAGE_NAME}
++    ReactAndroid::jsi
++    ReactAndroid::reactnative
++    fbjni::fbjni
++  )
++elseif(${REACT_NATIVE_VERSION} GREATER_EQUAL 71)
+   target_link_libraries(
+     ${PACKAGE_NAME}
+     ReactAndroid::jsi
+diff --git a/android/build.gradle b/android/build.gradle
+index 1234567890abcdef..abcdef1234567890 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -84,7 +84,7 @@ android {
+   }
+   
+   defaultConfig {
+-    minSdkVersion getExtWithFallback('minSdkVersion', '21') 
++    minSdkVersion getExtWithFallback('minSdkVersion', '24')
+     targetSdkVersion getExt('targetSdkVersion')
+     
+     externalNativeBuild {

@@ -13,8 +13,20 @@ import {
   JwkDidCreateOptions,
   KeyDidCreateOptions,
   Kms,
+  Mdoc,
+  MdocRecord,
+  SdJwtVcRecord,
+  W3cCredentialRecord,
+  W3cJsonLdVerifiableCredential,
+  W3cJwtVerifiableCredential,
+  Buffer as CredoBuffer,
 } from '@credo-ts/core'
-import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+import {
+  extractOpenId4VcCredentialMetadata,
+  setOpenId4VcCredentialMetadata,
+  temporaryMetaVanillaObject,
+} from './metadata'
+import Config from 'react-native-config'
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -45,6 +57,12 @@ export const resolveOpenId4VciOffer = async ({
     uri: offerUri,
   })
 
+  // TODO: setTrustedCertificates no longer works here.
+  // if (Config.ISSUER_CERT_B64) {
+  //   const issuerCert = CredoBuffer.from(String(Config.ISSUER_CERT_B64), 'base64').toString('utf-8')
+  //   agent.x509.setTrustedCertificates([issuerCert])
+  // }
+
   const resolvedCredentialOffer = await agent.modules.openId4VcHolder.resolveCredentialOffer(offerUri)
 
   if (authorization) {
@@ -62,7 +80,7 @@ export async function acquirePreAuthorizedAccessToken({
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
-}) {
+}): Promise<OpenId4VciRequestTokenResponse> {
   return await agent.modules.openId4VcHolder.requestToken({
     resolvedCredentialOffer,
     txCode,
@@ -154,14 +172,14 @@ export const customCredentialBindingResolver = async ({
 export const receiveCredentialFromOpenId4VciOffer = async ({
   agent,
   resolvedCredentialOffer,
-  accessToken,
+  tokenResponse,
   credentialConfigurationIdsToRequest,
   clientId,
   pidSchemes,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
-  accessToken: OpenId4VciRequestTokenResponse
+  tokenResponse: OpenId4VciRequestTokenResponse
   credentialConfigurationIdsToRequest?: string[]
   clientId?: string
   pidSchemes?: { sdJwtVcVcts: Array<string>; msoMdocDoctypes: Array<string> }
@@ -180,7 +198,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
 
   const credentials = await (agent.openid4vc.holder as OpenId4VcHolderApi).requestCredentials({
     resolvedCredentialOffer,
-    ...accessToken,
+    ...tokenResponse,
     clientId,
     credentialConfigurationIds: credentialConfigurationIdsToRequest,
     verifyCredentialStatus: false,
@@ -224,7 +242,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
 
   const record = firstCredential.record
 
-  // This block likely not necessary anymore? The record seems to be defined on this object already.
+  // TODO: This block likely not necessary anymore? The record seems to be defined on this object already.
 
   // if ('compact' in firstCredential.) {
   //   // TODO: add claimFormat to SdJwtVc
@@ -241,6 +259,13 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   //     // We don't support expanded types right now, but would become problem when we support JSON-LD
   //     tags: {},
   //   })
+  // }
+
+
+  // TODO: Are notifications even supported here? If so the interface has clearly changed.
+  // const notificationMetadata = { ...firstCredential.notificationMetadata }
+  // if (notificationMetadata) {
+  //   temporaryMetaVanillaObject.notificationMetadata = notificationMetadata
   // }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(

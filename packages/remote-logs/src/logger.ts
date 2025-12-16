@@ -1,4 +1,5 @@
-import { BifoldError, AbstractBifoldLogger, BifoldLogger } from '@bifold/core'
+import { BifoldError, AbstractBifoldLogger } from '@bifold/core'
+import { LogLevel } from '@credo-ts/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
 import { logger } from 'react-native-logs'
 
@@ -28,7 +29,6 @@ interface LogMethod {
 }
 
 export class RemoteLogger extends AbstractBifoldLogger {
-  private readonly baseLogger: BifoldLogger
   private _remoteLoggingEnabled = false
   private _sessionId: number | undefined
   private _autoDisableRemoteLoggingIntervalInMinutes = 0
@@ -36,25 +36,26 @@ export class RemoteLogger extends AbstractBifoldLogger {
   private lokiLabels: Record<string, string>
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
+  private _baseLogLevel: LogLevel = LogLevel.debug
 
   constructor(options: RemoteLoggerOptions) {
     super()
-    this.baseLogger = new BifoldLogger()
 
     this.lokiUrl = options.lokiUrl ?? undefined
     this.lokiLabels = options.lokiLabels ?? {}
     this._autoDisableRemoteLoggingIntervalInMinutes = options.autoDisableRemoteLoggingIntervalInMinutes ?? 0
 
+    if (options.logLevel !== undefined) {
+      this.logLevel = options.logLevel
+    }
+    this._baseLogLevel = this.logLevel
+
     this.configureLogger()
   }
 
   get sessionId(): number {
-    if (!this._sessionId) {
-      this._sessionId = Math.floor(
-        SESSION_ID_RANGE.MIN + Math.random() * (SESSION_ID_RANGE.MAX - SESSION_ID_RANGE.MIN + 1)
-      )
-    }
-    return this._sessionId
+    // When remote logging is disabled this will be 0; enabled path guarantees initialization
+    return this._sessionId ?? 0
   }
 
   set sessionId(value: number) {
@@ -74,8 +75,23 @@ export class RemoteLogger extends AbstractBifoldLogger {
   set remoteLoggingEnabled(value: boolean) {
     this._remoteLoggingEnabled = value
 
-    if (value === false) {
+    if (value) {
+      // Generate a new session id on first enable
+      if (!this._sessionId) {
+        this._sessionId = Math.floor(
+          SESSION_ID_RANGE.MIN + Math.random() * (SESSION_ID_RANGE.MAX - SESSION_ID_RANGE.MIN + 1)
+        )
+      }
+      // Override to most verbose when remote logging active
+      this.logLevel = LogLevel.debug
+    } else {
       this._sessionId = undefined
+      if (this.remoteLoggingAutoDisableTimer) {
+        clearTimeout(this.remoteLoggingAutoDisableTimer)
+        this.remoteLoggingAutoDisableTimer = undefined
+      }
+      // Restore base level after deactivation
+      this.logLevel = this._baseLogLevel
     }
 
     this.configureLogger()
@@ -84,10 +100,14 @@ export class RemoteLogger extends AbstractBifoldLogger {
   private configureLogger() {
     const transportOptions = {}
     const transport = [consoleTransport]
+    // We rely on per-method isEnabled() gating and keep transport severity at lowest (debug)
+    // so react-native-logs does not perform an additional filter layer.
+    const severity = 'debug'
     const config = {
       ...this._config,
       transport,
       transportOptions,
+      severity,
     }
 
     if (this.remoteLoggingEnabled && this.lokiUrl) {
@@ -110,6 +130,17 @@ export class RemoteLogger extends AbstractBifoldLogger {
     this._log = logger.createLogger<'test' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'>(config)
   }
 
+  /** Update minimum log level and reconfigure underlying transport */
+  public setLogLevel(level: LogLevel) {
+    this._baseLogLevel = level
+    // Only apply immediately if remote logging isn't forcing
+    // debug
+    if (!this._remoteLoggingEnabled) {
+      this.logLevel = level
+    }
+    this.configureLogger()
+  }
+
   public startEventListeners() {
     this.eventListener = DeviceEventEmitter.addListener(RemoteLoggerEventTypes.ENABLE_REMOTE_LOGGING, (value) => {
       this.remoteLoggingEnabled = value
@@ -117,6 +148,7 @@ export class RemoteLogger extends AbstractBifoldLogger {
   }
 
   public stopEventListeners() {
+    this.eventListener?.remove()
     this.eventListener = undefined
   }
 
@@ -152,36 +184,43 @@ export class RemoteLogger extends AbstractBifoldLogger {
 
   // Standardized logging methods with consistent overloads
   public test: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.debug)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.test?.({ message, data, error: actualError })
   }
 
   public trace: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.debug)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.trace?.({ message, data, error: actualError })
   }
 
   public debug: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.debug)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.debug?.({ message, data, error: actualError })
   }
 
   public info: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.info)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.info?.({ message, data, error: actualError })
   }
 
   public warn: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.warn)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.warn?.({ message, data, error: actualError })
   }
 
   public error: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.error)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.error?.({ message, data, error: actualError })
   }
 
   public fatal: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
+    if (!this.isEnabled(LogLevel.fatal)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.fatal?.({ message, data, error: actualError })
   }
@@ -209,5 +248,15 @@ export class RemoteLogger extends AbstractBifoldLogger {
     }
 
     return { data, actualError }
+  }
+
+  /** Dispose of timers and listeners, disable remote logging */
+  public dispose() {
+    this.stopEventListeners()
+    this.remoteLoggingEnabled = false
+    if (this.remoteLoggingAutoDisableTimer) {
+      clearTimeout(this.remoteLoggingAutoDisableTimer)
+      this.remoteLoggingAutoDisableTimer = undefined
+    }
   }
 }

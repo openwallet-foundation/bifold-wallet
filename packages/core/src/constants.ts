@@ -40,6 +40,7 @@ export enum EventTypes {
   BIOMETRY_UPDATE = 'BiometryUpdate',
   BIOMETRY_ERROR = 'BiometryError',
   DID_COMPLETE_ONBOARDING = 'DidCompleteOnboarding',
+  OPENID_REFRESH_REQUEST = 'OPENID_REFRESH_REQUEST',
 }
 
 export const second = 1000
@@ -83,15 +84,19 @@ export const walletId = 'walletId'
 
 export const minPINLength = 6
 
+export const maxPINLength = 6
+
 export const PINRules: PINValidationRules = {
   only_numbers: true,
   min_length: 6,
   max_length: 6,
+  use_nist_requirements: false,
   no_repeated_numbers: 0,
   no_repetition_of_the_two_same_numbers: false,
   no_series_of_numbers: false,
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
+  most_used_pins: false,
 }
 
 export const domain = 'didcomm://invite'

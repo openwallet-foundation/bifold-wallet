@@ -26,9 +26,7 @@ import * as Helpers from '../../src/utils/helpers'
 import { StoreContext } from '../../src'
 import { testDefaultState } from '../contexts/store'
 
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 

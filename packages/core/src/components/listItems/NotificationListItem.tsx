@@ -36,6 +36,9 @@ import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
 import CommonRemoveModal from '../modals/CommonRemoveModal'
 import { ThemedText } from '../texts/ThemedText'
+import { OpenIDCustomNotificationType } from '../../modules/openid/refresh/types'
+import { useOpenIdReplacementNavigation } from '../../modules/openid/hooks/useOpenIdReplacementNavigation'
+import { useUpgradeExpiredCredential } from '../../modules/openid/hooks/useUpgradeExpiredCredential'
 
 const iconSize = 30
 
@@ -88,6 +91,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   customNotification,
 }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
+  const openReplacementOffer = useOpenIdReplacementNavigation()
+  const { upgrade } = useUpgradeExpiredCredential()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
@@ -309,14 +314,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
             buttonTitle: undefined,
           }
           break
-        case NotificationType.Custom:
-          details = {
-            type: InfoBoxType.Info,
-            title: t(customNotification?.title as any),
-            body: t(customNotification?.description as any),
-            buttonTitle: t(customNotification?.buttonTitle as any),
-          }
-          break
         default:
           throw new Error('NotificationType was not set correctly.')
       }
@@ -324,7 +321,16 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       setDetails(details ?? defaultDetails)
     }
 
-    getDetails()
+    if (notificationType === NotificationType.Custom && customNotification) {
+      setDetails({
+        type: InfoBoxType.Info,
+        title: t(customNotification?.title as any),
+        body: t(customNotification?.description as any),
+        buttonTitle: t(customNotification?.buttonTitle as any),
+      })
+    } else {
+      getDetails()
+    }
   }, [
     notification,
     notificationType,
@@ -394,10 +400,21 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           })
         break
       case NotificationType.Custom:
-        onPress = () =>
-          navigation.getParent()?.navigate(Stacks.NotificationStack, {
-            screen: Screens.CustomNotification,
-          })
+        onPress = () => {
+          if (
+            customNotification?.type === OpenIDCustomNotificationType.CredentialExpired &&
+            customNotification.metadata &&
+            typeof customNotification.metadata.oldId === 'string'
+          ) {
+            upgrade(customNotification.metadata.oldId)
+            return
+          }
+          customNotification?.onPressAction
+            ? customNotification.onPressAction()
+            : navigation.getParent()?.navigate(Stacks.NotificationStack, {
+                screen: Screens.CustomNotification,
+              })
+        }
         onClose = toggleDeclineModalVisible
         break
       default:
@@ -405,7 +422,16 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     }
     setAction(() => onPress)
     setCloseAction(() => onClose)
-  }, [navigation, notification, notificationType, toggleDeclineModalVisible, dismissBasicMessage])
+  }, [
+    navigation,
+    notification,
+    notificationType,
+    toggleDeclineModalVisible,
+    dismissBasicMessage,
+    customNotification,
+    openReplacementOffer,
+    upgrade,
+  ])
 
   useEffect(() => {
     switch (details.type) {

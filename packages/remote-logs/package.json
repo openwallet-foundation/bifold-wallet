@@ -1,6 +1,6 @@
 {
   "name": "@bifold/remote-logs",
-  "version": "2.7.4",
+  "version": "2.11.7",
   "description": "Remote logging for credo-ts agents",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -42,20 +42,20 @@
     "@credo-ts/core": "0.5.17",
     "axios": "~1.4.0",
     "buffer": "~6.0.3",
-    "react": "~18.3.1",
-    "react-native": "0.73.11",
+    "react": "~19.1.0",
+    "react-native": "0.79.0",
     "react-native-logs": "~5.1.0"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"
   },
   "dependencies": {
-    "@bifold/core": "2.7.4",
+    "@bifold/core": "2.11.7",
     "@credo-ts/core": "0.5.17",
     "axios": "~1.4.0",
     "buffer": "~6.0.3",
-    "react": "~18.3.1",
-    "react-native": "~0.73.11",
+    "react": "~19.1.0",
+    "react-native": "~0.79.0",
     "react-native-logs": "~5.1.0"
   }
 }

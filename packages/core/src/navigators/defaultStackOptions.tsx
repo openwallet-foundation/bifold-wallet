@@ -28,7 +28,13 @@ export const DefaultScreenOptionsDictionary: ScreenOptionsType = {
   [Screens.CreatePIN]: {
     headerBackTestID: testIdWithKey('Back'),
   },
+  [Screens.ChangePINSuccess]: {
+    headerBackTestID: testIdWithKey('Back'),
+  },
   [Screens.ChangePIN]: {
+    headerBackTestID: testIdWithKey('Back'),
+  },
+  [Screens.VerifyPIN]: {
     headerBackTestID: testIdWithKey('Back'),
   },
   [Screens.NameWallet]: {

@@ -1,10 +1,9 @@
-import { DefaultOCABundleResolver } from '@bifold/oca/build/legacy'
+import { BrandingOverlayType, RemoteOCABundleResolver } from '@bifold/oca/build/legacy'
 import { getProofRequestTemplates } from '@bifold/verifier'
 import { Agent } from '@credo-ts/core'
-import { createContext, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
-import * as bundle from './assets/oca-bundles.json'
 import Button from './components/buttons/Button'
 import ContactCredentialListItem from './components/listItems/ContactCredentialListItem'
 import ContactListItem from './components/listItems/ContactListItem'
@@ -14,8 +13,8 @@ import EmptyList from './components/misc/EmptyList'
 import NoNewUpdates from './components/misc/NoNewUpdates'
 import PINHeader from './components/misc/PINHeader'
 import Record from './components/record/Record'
-import HomeFooterView from './components/views/HomeFooterView'
 import { Banner } from './components/views/Banner'
+import HomeFooterView from './components/views/HomeFooterView'
 import HomeHeaderView from './components/views/HomeHeaderView'
 import defaultIndyLedgers from './configs/ledgers/indy'
 import { LocalStorageKeys, PINRules } from './constants'
@@ -27,6 +26,8 @@ import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import { Locales } from './localization'
 import { IHistoryManager } from './modules/history'
 import HistoryManager from './modules/history/context/historyManager'
+import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
+import { IRefreshOrchestrator } from './modules/openid/refresh/types'
 import OnboardingStack from './navigators/OnboardingStack'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
@@ -42,9 +43,10 @@ import Splash from './screens/Splash'
 import ScreenTerms, { TermsVersion } from './screens/Terms'
 import ToggleBiometry from './screens/ToggleBiometry'
 import UpdateAvailable from './screens/UpdateAvailable'
+import { AgentBridge } from './services/AgentBridge'
+import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
-import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { PersistentStorage } from './services/storage'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { InlineErrorPosition } from './types/error'
@@ -56,6 +58,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+import { Config as ReactConfig } from 'react-native-config'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -84,6 +87,11 @@ export const defaultConfig: Config = {
     appleAppStoreUrl: 'https://example.com',
     googlePlayStoreUrl: 'https://example.com',
   },
+  PINScreensConfig: {
+    useNewPINDesign: false,
+  },
+  showGenericErrors: false,
+  enableFullScreenErrorModal: false,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
@@ -141,7 +149,13 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.OBJECT_SCREEN_CONFIG, DefaultScreenOptionsDictionary)
     this._container.registerInstance(TOKENS.OBJECT_LAYOUT_CONFIG, DefaultScreenLayoutOptions)
     this._container.registerInstance(TOKENS.UTIL_LOGGER, bifoldLoggerInstance)
-    this._container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, new DefaultOCABundleResolver(bundle))
+    this._container.registerInstance(
+      TOKENS.UTIL_OCA_RESOLVER,
+      new RemoteOCABundleResolver(ReactConfig.OCA_URL ?? '', {
+        brandingOverlayType: BrandingOverlayType.Branding10,
+        verifyCacheIntegrity: true,
+      })
+    )
     this._container.registerInstance(TOKENS.UTIL_LEDGERS, defaultIndyLedgers)
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
@@ -185,8 +199,7 @@ export class MainContainer implements Container {
       const loadState = async <Type>(key: LocalStorageKeys, updateVal: (newVal: Type) => void) => {
         const data = await this.storage.getValueForKey(key)
         if (data) {
-          // @ts-expect-error Fix complicated type error
-          updateVal(data)
+          updateVal(data as Type)
         }
       }
 
@@ -220,6 +233,29 @@ export class MainContainer implements Container {
     })
 
     this._container.registerInstance(TOKENS.ONBOARDING, generateOnboardingWorkflowSteps)
+
+    this._container.registerInstance(TOKENS.UTIL_AGENT_BRIDGE, new AgentBridge())
+
+    // Register OpenID Credentials Refresh Orchestrator
+    const orchestrator: IRefreshOrchestrator = new RefreshOrchestrator(
+      this._container.resolve(TOKENS.UTIL_LOGGER),
+      this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge,
+      {
+        autoStart: false,
+        intervalMs: undefined,
+        listRecords: async () => {
+          const agent = (this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge).current
+          if (!agent) return []
+          const [w3c, sdjwt] = await Promise.all([
+            agent.w3cCredentials.getAll(),
+            agent.sdJwtVc.getAll(),
+          ])
+          return [...w3c, ...sdjwt]
+        },
+      }
+    )
+
+    this._container.registerInstance(TOKENS.UTIL_REFRESH_ORCHESTRATOR, orchestrator)
 
     return this
   }

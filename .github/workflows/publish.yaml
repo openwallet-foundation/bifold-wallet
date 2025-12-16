@@ -14,6 +14,7 @@ on:
 permissions:
   pull-requests: write
   contents: write
+  id-token: write
 
 jobs:
   release:
@@ -21,9 +22,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout bifold-wallet
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.11'
 
@@ -34,13 +35,14 @@ jobs:
         run: |
           yarn install --immutable
 
-      - name: Disable husky hooks
+      - name: Upgrade npm for Trusted Publishers support
         run: |
           yarn husky uninstall
+          npm install -g npm@^11
 
       - name: Update release PR or publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         with:
           title: 'chore(release): new version'
           commit: 'chore(release): new version'
@@ -48,15 +50,14 @@ jobs:
           version: yarn changeset-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Get current package version
         id: get_version
-        run: echo "CURRENT_PACKAGE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
+        run: echo "version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Create GitHub release
         if: "startsWith(github.event.head_commit.message, 'chore(release): new version')"
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
         with:
-          tag_name: v${{ env.CURRENT_PACKAGE_VERSION }}
+          tag_name: v${{ steps.get_version.outputs.version }}

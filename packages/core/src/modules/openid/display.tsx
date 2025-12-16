@@ -6,7 +6,7 @@ import type {
   W3cCredentialDisplay,
   W3cCredentialJson,
 } from './types'
-import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord } from '@credo-ts/core'
+import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'
 import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
@@ -232,6 +232,13 @@ function getMdocCredentialDisplay(
         }
       }
 
+      if (openidCredentialDisplay.logo) {
+        credentialDisplay.logo = {
+          uri: openidCredentialDisplay.logo.uri,
+          altText: openidCredentialDisplay.logo.altText,
+        }
+      }
+
       // NOTE: logo is used in issuer display (not sure if that's right though)
     }
   }
@@ -324,7 +331,7 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
 }
 
 export function getCredentialForDisplay(
-  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 ): W3cCredentialDisplay {
   if (credentialRecord instanceof SdJwtVcRecord) {
     // FIXME: we should probably add a decode method on the SdJwtVcRecord
@@ -371,6 +378,7 @@ export function getCredentialForDisplay(
 
     return {
       id: `mdoc-${credentialRecord.id}` satisfies CredentialForDisplayId,
+      schemaId: openId4VcMetadata?.credential.id, // NOTE: Unsure whether this is a suitable way to set a 'schemaId' for an OpenID VC, may not be unique enough.
       createdAt: credentialRecord.createdAt,
       display: {
         ...credentialDisplay,
@@ -415,21 +423,21 @@ export function getCredentialForDisplay(
     credential,
     attributes: credentialAttributes,
     metadata: {
-      holder: credentialRecord.firstCredential.credentialSubjectIds[0],
-      issuer: credentialRecord.firstCredential.issuerId,
-      type: credentialRecord.firstCredential.type[credentialRecord.firstCredential.type.length - 1],
-      issuedAt: formatDate(new Date(credentialRecord.firstCredential.issuanceDate)),
-      validUntil: credentialRecord.firstCredential.expirationDate
-        ? formatDate(new Date(credentialRecord.firstCredential.expirationDate))
+      holder: openId4VcMetadata?.credential.id,
+      issuer: openId4VcMetadata?.issuer.id ?? '',
+      type: credentialRecord.firstCredential.claimFormat,
+      issuedAt: formatDate(new Date(credential.issuanceDate)),
+      validUntil: credential.expiryDate
+        ? formatDate(new Date(credential.expiryDate))
         : undefined,
       validFrom: undefined,
     } satisfies CredentialMetadata,
     claimFormat: credentialRecord.firstCredential.claimFormat,
-    validUntil: credentialRecord.firstCredential.expirationDate
-      ? new Date(credentialRecord.firstCredential.expirationDate)
+    validUntil: credential.expiryDate
+      ? new Date(credential.expiryDate)
       : undefined,
-    validFrom: credentialRecord.firstCredential.issuanceDate
-      ? new Date(credentialRecord.firstCredential.issuanceDate)
+    validFrom: credential.issuanceDate
+      ? new Date(credential.issuanceDate)
       : undefined,
     credentialSubject: openId4VcMetadata?.credential.credential_subject,
   }

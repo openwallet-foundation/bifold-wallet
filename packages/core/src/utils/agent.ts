@@ -11,7 +11,12 @@ import {
 
 import { AskarModule } from '@credo-ts/askar'
 import {
-  Agent
+  Agent,
+  DidsModule,
+  JwkDidResolver,
+  KeyDidResolver,
+  PeerDidResolver,
+  WebDidResolver,
 } from '@credo-ts/core'
 
 import { 
@@ -31,7 +36,8 @@ import {
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
-// import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
@@ -69,7 +75,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
   return {
     anoncreds: new AnonCredsModule({
       anoncreds,
-      registries: [new IndyVdrAnonCredsRegistry()],
+      registries: [new IndyVdrAnonCredsRegistry(), new WebVhAnonCredsRegistry()],
     }),
     indyVdr: new IndyVdrModule({
       indyVdr,
@@ -117,6 +123,15 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     askar: new AskarModule({
       askar,
       store: { id: askarStoreValue, key: askarStoreValue },
+    }),
+    dids: new DidsModule({
+      resolvers: [
+        new WebvhDidResolver(),
+        new WebDidResolver(),
+        new JwkDidResolver(),
+        new KeyDidResolver(),
+        new PeerDidResolver(),
+      ],
     }),
   }
 }

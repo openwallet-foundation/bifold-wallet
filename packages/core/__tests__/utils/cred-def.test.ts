@@ -1,8 +1,12 @@
 import { getCredentialName, parsedCredDefName, parsedCredDefNameFromCredential } from '../../src/utils/cred-def'
+import { getEffectiveCredentialName, ensureCredentialMetadata } from '../../src/utils/credential'
+import { resolveCredDefTag, resolveSchemaName, credNameFromRestriction } from '../../src/utils/helpers'
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 
-const mockSchemaId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
-const mockCredDefId = 'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
+const mockSchemaId =
+  'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmSmhgCkiknv5HpLWiiNjgcurgQvwhUqiu8MSGMDVJt3xK'
+const mockCredDefId =
+  'did:webvh:QmXysm9EF3kPH4fdCWf48YqCzREgiAe5nFXG3RCXaCShFX:id.test-suite.app:credo:01/resources/zQmedeFDzpfN3o3vmWBKWygVYg4uB74qwYPhU3TNW1bh1uq'
 
 const mockSchemaResource = {
   '@context': ['https://opsecid.github.io/attested-resource/v1', 'https://w3id.org/security/data-integrity/v2'],
@@ -86,88 +90,131 @@ const mockCredDefResource = {
   },
 }
 
-
-
 describe('Cred Def Utils', () => {
-  test('The correct schema name is returned for a webvh cred def id with tag default', async () => {
-    const agent: any = {
-      context: {},
-      modules: {
-        anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({credentialDefinition: mockCredDefResource.content}),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+  describe('WebVH credential name resolution', () => {
+    test('resolveCredDefTag: returns tag for WebVH cred def with non-default tag', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getCredentialDefinition: jest.fn().mockResolvedValue({
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'CustomTag' },
+            }),
+          },
         },
-      },
-    }
-    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
-    expect(credDefName).toBe('CredoTest')
-  })
+      }
+      const tag = await resolveCredDefTag(mockCredDefId, agent)
+      expect(tag).toBe('CustomTag')
+    })
 
-  test('The correct cred def tag is returned for a webvh cred def id with tag non-default', async () => {
-    const agent: any = {
-      context: {},
-      modules: {
-        anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'non-default' } }),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+    test('resolveCredDefTag: returns undefined for default tag', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getCredentialDefinition: jest.fn().mockResolvedValue({
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'default' },
+            }),
+          },
         },
-      },
-    }
-    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
-    expect(credDefName).toBe('non-default')
-  })
+      }
+      const tag = await resolveCredDefTag(mockCredDefId, agent)
+      expect(tag).toBeUndefined()
+    })
 
-  test('Returns default name for webvh when agent lacks anoncreds module', async () => {
-    const agent: any = {
-      context: {},
-      modules: {},
-    }
-    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
-    expect(credDefName).toBe('Credential')
-  })
-
-  test('Falls back to schema when webvh cred def fetch fails', async () => {
-    const agent: any = {
-      context: {},
-      modules: {
-        anoncreds: {
-          getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+    test('resolveCredDefTag: returns undefined when cred def fetch fails', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
+          },
         },
-      },
-      config: { logger: { info: jest.fn() } },
-    }
-    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
-    expect(credDefName).toBe('CredoTest')
-  })
+      }
+      const tag = await resolveCredDefTag(mockCredDefId, agent)
+      expect(tag).toBeUndefined()
+    })
 
-  test('Returns default when both webvh cred def and schema fetch fail', async () => {
-    const agent: any = {
-      context: {},
-      modules: {
-        anoncreds: {
-          getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
-          getSchema: jest.fn().mockRejectedValue(new Error('not found')),
+    test('resolveSchemaName: returns schema name for WebVH schema', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getSchema: jest.fn().mockResolvedValue({
+              schema: mockSchemaResource.content,
+            }),
+          },
         },
-      },
-      config: { logger: { info: jest.fn() } },
-    }
-    const credDefName = await getCredentialName(mockCredDefId, mockSchemaId, agent)
-    expect(credDefName).toBe('Credential')
-  })
+      }
+      const name = await resolveSchemaName(mockSchemaId, agent)
+      expect(name).toBe('CredoTest')
+    })
 
-  test('Returns cred def tag when webvh cred def is non-default and schemaId not used', async () => {
-    const agent: any = {
-      context: {},
-      modules: {
-        anoncreds: {
-          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: { ...mockCredDefResource.content, tag: 'default' } }),
-          getSchema: jest.fn().mockResolvedValue({schema: mockSchemaResource.content}),
+    test('resolveSchemaName: returns undefined when schema fetch fails', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getSchema: jest.fn().mockRejectedValue(new Error('not found')),
+          },
         },
-      },
-    }
-    const credDefName = await getCredentialName(mockCredDefId, undefined, agent)
-    expect(credDefName).toBe('default')
+      }
+      const name = await resolveSchemaName(mockSchemaId, agent)
+      expect(name).toBeUndefined()
+    })
+
+    test('credNameFromRestriction: uses restriction schema_name when provided and meaningful', async () => {
+      const restrictions = [{ schema_name: 'MeaningfulName' }]
+      const name = await credNameFromRestriction(restrictions)
+      expect(name).toBe('MeaningfulName')
+    })
+
+    test('credNameFromRestriction: ignores default schema_name and resolves from cred def tag', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getCredentialDefinition: jest.fn().mockResolvedValue({
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'BankingCred' },
+            }),
+          },
+        },
+      }
+      const restrictions = [{ schema_name: 'default', cred_def_id: mockCredDefId }]
+      const name = await credNameFromRestriction(restrictions, agent)
+      expect(name).toBe('BankingCred')
+    })
+
+    test('credNameFromRestriction: falls back to schema name when cred def tag is default', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getCredentialDefinition: jest.fn().mockResolvedValue({
+              credentialDefinition: { ...mockCredDefResource.content, tag: 'default' },
+            }),
+            getSchema: jest.fn().mockResolvedValue({
+              schema: mockSchemaResource.content,
+            }),
+          },
+        },
+      }
+      const restrictions = [{ cred_def_id: mockCredDefId, schema_id: mockSchemaId }]
+      const name = await credNameFromRestriction(restrictions, agent)
+      expect(name).toBe('CredoTest')
+    })
+
+    test('credNameFromRestriction: returns default when all resolutions fail', async () => {
+      const agent: any = {
+        modules: {
+          anoncreds: {
+            getCredentialDefinition: jest.fn().mockRejectedValue(new Error('not found')),
+            getSchema: jest.fn().mockRejectedValue(new Error('not found')),
+          },
+        },
+      }
+      const restrictions = [{ cred_def_id: mockCredDefId, schema_id: mockSchemaId }]
+      const name = await credNameFromRestriction(restrictions, agent)
+      expect(name).toBe('Credential')
+    })
+
+    test('credNameFromRestriction: returns default when no restrictions provided', async () => {
+      const name = await credNameFromRestriction(undefined)
+      expect(name).toBe('Credential')
+    })
   })
 
   test('Indy: returns tag when cred def tag is non-default', async () => {
@@ -217,5 +264,153 @@ describe('Cred Def Utils', () => {
     const indySchemaId = 'WgWxqztrNooG92RXvxSTWv:2:BankingCredential:1.0'
     const credDefName = await parsedCredDefName(indyCredDefId, indySchemaId)
     expect(credDefName).toBe('custom')
+  })
+
+  test('getEffectiveCredentialName: prioritizes OCA name over others', () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return {
+              schemaName: 'SchemaName',
+              credDefTag: 'TagName',
+            }
+          }
+          return undefined
+        },
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential, 'OCAName')
+    expect(effectiveName).toBe('OCAName')
+  })
+
+  test('getEffectiveCredentialName: uses credDefTag when OCA name not available', () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return {
+              schemaName: 'SchemaName',
+              credDefTag: 'CustomTag',
+            }
+          }
+          return undefined
+        },
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential)
+    expect(effectiveName).toBe('CustomTag')
+  })
+
+  test('getEffectiveCredentialName: skips default credDefTag and uses schemaName', () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return {
+              schemaName: 'SchemaName',
+              credDefTag: 'default',
+            }
+          }
+          return undefined
+        },
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential)
+    expect(effectiveName).toBe('SchemaName')
+  })
+
+  test('getEffectiveCredentialName: falls back to default when no metadata available', () => {
+    const credential: any = {
+      metadata: {
+        get: () => undefined,
+      },
+    }
+    const effectiveName = getEffectiveCredentialName(credential)
+    expect(effectiveName).toBe('Credential')
+  })
+
+  test('ensureCredentialMetadata: caches schemaName and credDefTag when not present', async () => {
+    let cachedMetadata: any = {
+      credentialDefinitionId: mockCredDefId,
+      schemaId: mockSchemaId,
+    }
+
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return cachedMetadata
+          }
+          return undefined
+        },
+        set: (key: string, value: any) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            cachedMetadata = value
+          }
+        },
+        add: (key: string, value: any) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            cachedMetadata = { ...cachedMetadata, ...value }
+          }
+        },
+      },
+    }
+
+    const agent: any = {
+      context: {},
+      config: { logger: { debug: jest.fn(), warn: jest.fn(), info: jest.fn() } },
+      credentials: {
+        update: jest.fn().mockResolvedValue(undefined),
+      },
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn().mockResolvedValue({ credentialDefinition: mockCredDefResource.content }),
+          getSchema: jest.fn().mockResolvedValue({ schema: mockSchemaResource.content }),
+        },
+      },
+    }
+
+    await ensureCredentialMetadata(credential, agent)
+
+    expect(cachedMetadata.schemaName).toBe('CredoTest')
+    expect(cachedMetadata.credDefTag).toBe('default')
+  })
+
+  test('ensureCredentialMetadata: does not overwrite existing cached metadata', async () => {
+    const credential: any = {
+      metadata: {
+        get: (key: string) => {
+          if (key === AnonCredsCredentialMetadataKey) {
+            return {
+              credentialDefinitionId: mockCredDefId,
+              schemaId: mockSchemaId,
+              schemaName: 'ExistingSchemaName',
+              credDefTag: 'ExistingTag',
+            }
+          }
+          return undefined
+        },
+        set: jest.fn(),
+      },
+    }
+
+    const agent: any = {
+      context: {},
+      config: { logger: { debug: jest.fn(), warn: jest.fn(), info: jest.fn() } },
+      modules: {
+        anoncreds: {
+          getCredentialDefinition: jest.fn(),
+          getSchema: jest.fn(),
+        },
+      },
+    }
+
+    await ensureCredentialMetadata(credential, agent)
+
+    // Should not call set since metadata already exists
+    expect(credential.metadata.set).not.toHaveBeenCalled()
+    expect(agent.modules.anoncreds.getCredentialDefinition).not.toHaveBeenCalled()
+    expect(agent.modules.anoncreds.getSchema).not.toHaveBeenCalled()
   })
 })

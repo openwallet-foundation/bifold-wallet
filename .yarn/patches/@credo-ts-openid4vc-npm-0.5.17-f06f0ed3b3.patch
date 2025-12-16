@@ -1,0 +1,40 @@
+diff --git a/build/openid4vc-holder/OpenId4VcHolderApi.js b/build/openid4vc-holder/OpenId4VcHolderApi.js
+index 424685229a55086d101bc30a4444d473b9902fb9..cdbde442353a9eea5d3fc7385ff8024fbcc389b0 100644
+--- a/build/openid4vc-holder/OpenId4VcHolderApi.js
++++ b/build/openid4vc-holder/OpenId4VcHolderApi.js
+@@ -119,8 +119,8 @@ let OpenId4VcHolderApi = class OpenId4VcHolderApi {
+      * @param options.code The authorization code obtained via the authorization request URI
+      */
+     async requestToken(options) {
+-        const { access_token: accessToken, c_nonce: cNonce, dpop, } = await this.openId4VciHolderService.requestAccessToken(this.agentContext, options);
+-        return { accessToken, cNonce, dpop };
++        const { access_token: accessToken, c_nonce: cNonce, dpop, refresh_token: refreshToken, fullResponse } = await this.openId4VciHolderService.requestAccessToken(this.agentContext, options);
++        return { accessToken, cNonce, dpop, refreshToken: refreshToken, fullResponse };
+     }
+     /**
+      * Request a credential. Can be used with both the pre-authorized code flow and the authorization code flow.
+diff --git a/build/openid4vc-holder/OpenId4VciHolderService.js b/build/openid4vc-holder/OpenId4VciHolderService.js
+index 2d0149b8b4e2bd63ec7f52bd419ec6ac3db689ea..b982dc983b5b48332871e5ed9171ecccd93fceb1 100644
+--- a/build/openid4vc-holder/OpenId4VciHolderService.js
++++ b/build/openid4vc-holder/OpenId4VciHolderService.js
+@@ -229,6 +229,7 @@ let OpenId4VciHolderService = class OpenId4VciHolderService {
+         return {
+             ...accessTokenResponse.successBody,
+             ...(dpopJwk && { dpop: { jwk: dpopJwk, nonce: accessTokenResponse.params?.dpop?.dpopNonce } }),
++            fullResponse: accessTokenResponse,
+         };
+     }
+     async acceptCredentialOffer(agentContext, options) {
+diff --git a/build/openid4vc-holder/OpenId4VciHolderServiceOptions.d.ts b/build/openid4vc-holder/OpenId4VciHolderServiceOptions.d.ts
+index 333489a880b8b85862ab2b2ce281a931e523eaff..0d15690e6c5fb025bf62de8f0687f47694f530b0 100644
+--- a/build/openid4vc-holder/OpenId4VciHolderServiceOptions.d.ts
++++ b/build/openid4vc-holder/OpenId4VciHolderServiceOptions.d.ts
+@@ -18,6 +18,8 @@ export type OpenId4VciNotificationEvent = 'credential_accepted' | 'credential_fa
+ export type OpenId4VciTokenResponse = Pick<AccessTokenResponse, 'access_token' | 'c_nonce'>;
+ export type OpenId4VciRequestTokenResponse = {
+     accessToken: string;
++    refreshToken?: string;
++    fullResponse?: AccessTokenResponse;
+     cNonce?: string;
+     dpop?: {
+         jwk: Jwk;

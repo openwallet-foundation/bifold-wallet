@@ -13,18 +13,18 @@ import { EventTypes } from '../../../constants'
 import { useAgent } from '@credo-ts/react-hooks'
 import RecordRemove from '../../../components/record/RecordRemove'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
-import { CredentialOverlay } from '@bifold/oca/build/legacy'
+import { CredentialOverlay, BrandingOverlayType } from '@bifold/oca/build/legacy'
 import { OpenIDCredentialType, W3cCredentialDisplay } from '../types'
 import { TOKENS, useServices } from '../../../container-api'
 import { BrandingOverlay } from '@bifold/oca'
 import Record from '../../../components/record/Record'
-import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { SdJwtVcRecord, W3cCredentialRecord, MdocRecord } from '@credo-ts/core'
 import { buildOverlayFromW3cCredential } from '../../../utils/oca'
 import CredentialDetailSecondaryHeader from '../../../components/views/CredentialDetailSecondaryHeader'
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 import ScreenLayout from '../../../layout/ScreenLayout'
-import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import CredentialCard from '../../../components/misc/CredentialCard'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -39,12 +39,13 @@ const paddingVertical = 16
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
   const { credentialId, type } = route.params
 
-  const [credential, setCredential] = useState<W3cCredentialRecord | SdJwtVcRecord | undefined>(undefined)
+  const [credential, setCredential] = useState<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
+  const { removeCredential, getW3CCredentialById, getSdJwtCredentialById, getMdocCredentialById } =
+    useOpenIDCredentials()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
@@ -74,12 +75,14 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     const fetchCredential = async () => {
       if (credentialRemoved) return
       try {
-        let record: SdJwtVcRecord | W3cCredentialRecord | undefined
+        let record: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | undefined
 
         if (type === OpenIDCredentialType.SdJwtVc) {
           record = await getSdJwtCredentialById(credentialId)
-        } else {
+        } else if (type == OpenIDCredentialType.W3cCredential) {
           record = await getW3CCredentialById(credentialId)
+        } else {
+          record = await getMdocCredentialById(credentialId)
         }
 
         setCredential(record)
@@ -92,7 +95,16 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       }
     }
     fetchCredential()
-  }, [credentialId, type, getSdJwtCredentialById, getW3CCredentialById, agent, t, credentialRemoved])
+  }, [
+    credentialId,
+    type,
+    getSdJwtCredentialById,
+    getW3CCredentialById,
+    getMdocCredentialById,
+    agent,
+    t,
+    credentialRemoved,
+  ])
 
   useEffect(() => {
     if (!credential) return
@@ -165,13 +177,16 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     )
   }
 
-  const renderOpenIdCard = () => {
-    if (!credentialDisplay) return null
-    return <OpenIDCredentialCard credentialDisplay={credentialDisplay} credentialRecord={credential} />
-  }
-
   const header = () => {
-    return <View style={styles.cardContainer}>{renderOpenIdCard()}</View>
+    return bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? (
+      <View>{credential && overlay.bundle && <CredentialCard credential={credential} style={{ margin: 16 }} />}</View>
+    ) : (
+      <View style={styles.container}>
+        <CredentialDetailSecondaryHeader overlay={overlay} />
+        <CredentialCardLogo overlay={overlay} />
+        <CredentialDetailPrimaryHeader overlay={overlay} />
+      </View>
+    )
   }
 
   const footer = () => {
