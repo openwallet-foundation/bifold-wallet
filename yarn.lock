@@ -7528,7 +7528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base64-js@npm:^1.2.3, base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
+"base64-js@npm:^1.2.3, base64-js@npm:^1.3.0, base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 10c0/f23823513b63173a001030fae4f2dabe283b99a9d324ade3ad3d148e218134676f1ee8568c877cd79ec1c53158dcf2d2ba527a97c606618928ba99dd930102bf
@@ -7619,6 +7619,7 @@ __metadata:
     eslint: "npm:~8.57.1"
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
+    expo-crypto: "npm:~14.1.5"
     expo-secure-store: "npm:*"
     fast-text-encoding: "npm:~1.0.6"
     i18next: "npm:~21.6.16"
@@ -10189,6 +10190,17 @@ __metadata:
     expo: "*"
     react-native: "*"
   checksum: 10c0/84ef3b9de11aa7b55cf5867213b7211bcee982eda0a630a657e22671be2d85bed7f3f092acdecc5bb6bc940c611212657532a6e53f62b384414988d988e96a26
+  languageName: node
+  linkType: hard
+
+"expo-crypto@npm:~14.1.5":
+  version: 14.1.5
+  resolution: "expo-crypto@npm:14.1.5"
+  dependencies:
+    base64-js: "npm:^1.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/f49cdbdbe6875bd4c81d43160b727c3e82fbd0ad8a4b2e0a8dde175c86ea970c36fd40dbb904272a41c8130c112473929bd9205c10a12002910991d9a89e65ab
   languageName: node
   linkType: hard
 
