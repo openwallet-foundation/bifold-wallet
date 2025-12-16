@@ -63,11 +63,12 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
   const indyProofFormat = new LegacyIndyDidCommProofFormatService()
 
   if (txnCache) {
-    indyVdr.setLedgerTxnCache({
-      capacity: txnCache.capacity,
-      expiry_offset_ms: txnCache.expiryOffsetMs,
-      path: txnCache.path,
-    })
+    // TODO: Not a function?
+    // indyVdr.setLedgerTxnCache({
+    //   capacity: txnCache.capacity,
+    //   expiry_offset_ms: txnCache.expiryOffsetMs,
+    //   path: txnCache.path,
+    // })
   }
 
   const askarStoreValue = 'bifoldAskar';
