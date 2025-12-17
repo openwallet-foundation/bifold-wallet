@@ -53,6 +53,8 @@ import TabOneIcon from './assets/img/message-text-icon-outline.svg'
 import TabTwoIcon from './assets/img/qrcode-scan-icon.svg'
 import TabThreeFocusedIcon from './assets/img/wallet-icon.svg'
 import TabThreeIcon from './assets/img/wallet-icon-outline.svg'
+import CredentialRevoked from './assets/img/credential-revoked.svg'
+import CredentialNotAvailable from './assets/img/credential-not-available.svg'
 import React from 'react'
 import {
   IChatTheme,
@@ -132,6 +134,8 @@ export interface ISVGAssets {
   tabTwoIcon: React.FC<SvgProps>
   tabThreeIcon: React.FC<SvgProps>
   tabThreeFocusedIcon: React.FC<SvgProps>
+  credentialRevoked: React.FC<SvgProps>
+  credentialNotAvailable: React.FC<SvgProps>
 }
 
 export interface ISpacing {
@@ -200,6 +204,11 @@ export interface IGrayscaleColors {
 export interface IErrorColors {
   error: string
   warning: string
+}
+
+export interface IIconColors {
+  credentialRevoked: string,
+  credentialNotAvailable: string,
 }
 
 export interface IColorPalette {
@@ -1285,6 +1294,8 @@ export const Assets = {
     tabTwoIcon: TabTwoIcon,
     tabThreeIcon: TabThreeIcon,
     tabThreeFocusedIcon: TabThreeFocusedIcon,
+    credentialRevoked: CredentialRevoked,
+    credentialNotAvailable: CredentialNotAvailable,
   },
   img: {
     logoPrimary: {

@@ -103,7 +103,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
 }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
   const { i18n, t } = useTranslation()
-  const { ColorPalette, ListItems } = useTheme()
+  const { ColorPalette, ListItems, Assets } = useTheme()
   const [flaggedAttributes, setFlaggedAttributes] = useState<string[]>()
   const [allPI, setAllPI] = useState<boolean>()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential)
@@ -459,7 +459,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {credentialErrors.includes(CredentialErrors.Revoked) && Boolean(proof) && (
             <>
-              <Icon style={styles.errorIcon} name="close" size={30} />
+              <Assets.svg.credentialRevoked height={30} width={30} />
               <ThemedText style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')} numberOfLines={1}>
                 {t('CredentialDetails.Revoked')}
               </ThemedText>
@@ -467,7 +467,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
           )}
           {credentialErrors.includes(CredentialErrors.NotInWallet) && (
             <>
-              <Icon style={styles.errorIcon} name="close" size={30} />
+              <Assets.svg.credentialNotAvailable height={30} width={30} />
               <ThemedText style={styles.errorText} testID={testIdWithKey('RevokedOrNotAvailable')}>
                 {t('ProofRequest.NotAvailableInYourWallet')}
               </ThemedText>
