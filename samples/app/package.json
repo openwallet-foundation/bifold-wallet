@@ -19,8 +19,8 @@
     "start": "react-native start --reset-cache"
   },
   "dependencies": {
-    "@bifold/core": "2.11.7",
-    "@bifold/oca": "2.11.7",
+    "@bifold/core": "2.11.8",
+    "@bifold/oca": "2.11.8",
     "@credo-ts/anoncreds": "0.5.17",
     "@credo-ts/askar": "0.5.17",
     "@credo-ts/core": "0.5.17",
@@ -52,7 +52,7 @@
     "@react-navigation/native": "~6.0.16",
     "@react-navigation/stack": "~6.3.29",
     "@sd-jwt/jwt-status-list": "^0.17.0",
-    "axios": "~1.4.0",
+    "axios": "~1.13.2",
     "base-64": "~1.0.0",
     "buffer": "^6.0.3",
     "expo": "*",
