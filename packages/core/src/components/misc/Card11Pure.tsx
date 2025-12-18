@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
+import { View, ImageBackground, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { WalletCredentialCardData } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
@@ -9,9 +9,8 @@ import CardWatermark from './CardWatermark'
 import CredentialCardGenLogo from './CredentialCardGenLogo'
 import startCase from 'lodash.startcase'
 import { toImageSource } from '../../utils/credential'
-import { CredentialAttributeRow } from './AttributeRow'
-import CredentialCardActionLink from './CredentialCardActionLink'
 import CredentialCardStatusBadge from './CredentialCardStatusBadge'
+import CredentialCardAttributeList from './CredentialCardAttributeList'
 
 type Props = {
   data: WalletCredentialCardData
@@ -144,28 +143,15 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
         </View>
 
         {proofContext && (
-          <FlatList
-            data={list}
-            scrollEnabled={false}
-            initialNumToRender={list.length}
-            keyExtractor={(i) => i.key}
-            renderItem={({ item }) => (
-              <CredentialAttributeRow
-                item={item}
-                textColor={textColor}
-                showPiiWarning={!!data.proofContext}
-                isNotInWallet={data.notInWallet}
-                styles={styles}
-              />
-            )}
-            ListFooterComponent={
-              <CredentialCardActionLink
-                hasAltCredentials={hasAltCredentials}
-                onChangeAlt={onChangeAlt}
-                helpActionUrl={data.helpActionUrl}
-                textStyle={styles.textContainer}
-              />
-            }
+          <CredentialCardAttributeList
+            list={list}
+            textColor={textColor}
+            showPiiWarning={!!data.proofContext}
+            isNotInWallet={data.notInWallet}
+            hasAltCredentials={hasAltCredentials}
+            onChangeAlt={onChangeAlt}
+            helpActionUrl={data.helpActionUrl}
+            styles={styles}
           />
         )}
       </View>

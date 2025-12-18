@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react'
-import { View, Image, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
+import { View, Image, ImageBackground, TouchableOpacity } from 'react-native'
 import { WalletCredentialCardData, CardAttribute } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CardWatermark from '../misc/CardWatermark'
-import { CredentialAttributeRow } from './AttributeRow'
-import CredentialCardActionLink from './CredentialCardActionLink'
 import CredentialCardStatusBadge from './CredentialCardStatusBadge'
+import CredentialCardAttributeList from './CredentialCardAttributeList'
 
 type Props = {
   data: WalletCredentialCardData
@@ -47,9 +46,8 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
 
   const issuerAccessibilityLabel = data.issuerName ? `Issued by ${data.issuerName}` : ''
-  const accessibilityLabel =
-    `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
-    list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
+  const dataLabels = list.map((f) => `${f.label}, ${f.value ?? ''}`).join(', ')
+  const accessibilityLabel = `${issuerAccessibilityLabel}, ${data.credentialName}, ${dataLabels}`
 
   const SecondaryBody = () => {
     if (hideSlice) {
@@ -99,28 +97,15 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const PrimaryBody = () => (
     <View testID={testIdWithKey('CredentialCardPrimaryBody')} style={styles.primaryBodyContainer}>
       <Header />
-      <FlatList
-        data={list}
-        scrollEnabled={false}
-        initialNumToRender={list.length}
-        keyExtractor={(i) => i.key}
-        renderItem={({ item }) => (
-          <CredentialAttributeRow
-            item={item}
-            textColor={textColor}
-            showPiiWarning={!!data.proofContext}
-            isNotInWallet={data.notInWallet}
-            styles={styles}
-          />
-        )}
-        ListFooterComponent={
-          <CredentialCardActionLink
-            hasAltCredentials={hasAltCredentials}
-            onChangeAlt={onChangeAlt}
-            helpActionUrl={data.helpActionUrl}
-            textStyle={styles.textContainer}
-          />
-        }
+      <CredentialCardAttributeList
+        list={list}
+        textColor={textColor}
+        showPiiWarning={!!data.proofContext}
+        isNotInWallet={data.notInWallet}
+        hasAltCredentials={hasAltCredentials}
+        onChangeAlt={onChangeAlt}
+        helpActionUrl={data.helpActionUrl}
+        styles={styles}
       />
     </View>
   )
