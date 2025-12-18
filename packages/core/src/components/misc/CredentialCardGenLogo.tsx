@@ -1,8 +1,6 @@
-import { Image, View, ViewStyle } from 'react-native'
-import { toImageSource } from '../../utils/credential'
+import { ViewStyle } from 'react-native'
 import { useTheme } from '../../contexts/theme'
-import { testIdWithKey } from '../../utils/testable'
-import { ThemedText } from '../../components/texts/ThemedText'
+import LogoOrLetter from './LogoOrLetter'
 
 interface CredentialCardLogo {
   noLogoText: string
@@ -30,35 +28,16 @@ const CredentialCardGenLogo: React.FC<CredentialCardLogo> = ({
     secondaryBackgroundColor && secondaryBackgroundColor !== '' ? secondaryBackgroundColor : primaryBackgroundColor
 
   return (
-    <View style={[containerStyle, { elevation: elevated ? 5 : 0 }]}>
-      {logo ? (
-        <Image
-          source={toImageSource(logo)}
-          style={{
-            resizeMode: 'cover',
-            width: logoHeight,
-            height: logoHeight,
-            borderRadius: 8,
-          }}
-          testID={testIdWithKey('Logo')}
-        />
-      ) : (
-        <ThemedText
-          variant="bold"
-          style={[
-            TextTheme.bold,
-            {
-              fontSize: 0.5 * logoHeight,
-              alignSelf: 'center',
-              color: isBranding11 ? textColor : '#000',
-            },
-          ]}
-          testID={testIdWithKey('NoLogoText')}
-        >
-          {noLogoText.charAt(0).toUpperCase()}
-        </ThemedText>
-      )}
-    </View>
+    <LogoOrLetter
+      containerStyle={containerStyle}
+      elevated={elevated}
+      logo={logo}
+      logoHeight={logoHeight}
+      letter={noLogoText}
+      letterVariant="bold"
+      letterStyle={TextTheme.bold}
+      letterColor={isBranding11 ? textColor : '#000'}
+    />
   )
 }
 

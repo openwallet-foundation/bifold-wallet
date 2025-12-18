@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import { View, Image, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import { WalletCredentialCardData, CardAttribute } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
