@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { View, Image, ImageBackground, FlatList, TouchableOpacity, Linking } from 'react-native'
+import { View, Image, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { WalletCredentialCardData, CardAttribute } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
@@ -7,6 +7,8 @@ import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CardWatermark from '../misc/CardWatermark'
 import { CredentialAttributeRow } from './AttributeRow'
+import CredentialCardActionLink from './CredentialCardActionLink'
+import CredentialCardStatusBadge from './CredentialCardStatusBadge'
 
 type Props = {
   data: WalletCredentialCardData
@@ -50,21 +52,6 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
     `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
     list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
 
-  const StatusBadge = () => (
-    <View
-      testID={testIdWithKey('CredentialCardStatus')}
-      style={[styles.statusContainer, { position: 'absolute', right: 0, top: 0 }]}
-    >
-      {data.status ? (
-        <View style={[styles.statusContainer, { backgroundColor: data.status === 'error' ? '#FDECEA' : '#FFF8E1' }]}>
-          <Icon size={0.7 * logoHeight} name={data.status} />
-        </View>
-      ) : (
-        <View style={styles.statusContainer} />
-      )}
-    </View>
-  )
-
   const SecondaryBody = () => {
     if (hideSlice) {
       return (
@@ -89,28 +76,6 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
         ) : null}
       </View>
     )
-  }
-
-  const HelpOrAlt = () => {
-    if (hasAltCredentials && onChangeAlt) {
-      return (
-        <TouchableOpacity onPress={onChangeAlt} accessibilityLabel="Change credential">
-          <ThemedText variant="bold" style={[styles.textContainer]}>
-            Change credential
-          </ThemedText>
-        </TouchableOpacity>
-      )
-    }
-    if (data.helpActionUrl) {
-      return (
-        <TouchableOpacity onPress={() => Linking.openURL(data.helpActionUrl!)} accessibilityLabel="Get this credential">
-          <ThemedText variant="bold" style={[styles.textContainer]}>
-            Get this credential
-          </ThemedText>
-        </TouchableOpacity>
-      )
-    }
-    return null
   }
 
   const Header = () => (
@@ -149,7 +114,14 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
             styles={styles}
           />
         )}
-        ListFooterComponent={<HelpOrAlt />}
+        ListFooterComponent={
+          <CredentialCardActionLink
+            hasAltCredentials={hasAltCredentials}
+            onChangeAlt={onChangeAlt}
+            helpActionUrl={data.helpActionUrl}
+            textStyle={styles.textContainer}
+          />
+        }
       />
     </View>
   )
@@ -159,7 +131,7 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
       <SecondaryBody />
       {/* Card10 places everything in the main body after a slim slice */}
       <PrimaryBody />
-      <StatusBadge />
+      <CredentialCardStatusBadge status={data.status} logoHeight={logoHeight} containerStyle={styles.statusContainer} />
     </View>
   )
 
