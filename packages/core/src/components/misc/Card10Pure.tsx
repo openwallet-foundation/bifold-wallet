@@ -6,6 +6,7 @@ import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CardWatermark from '../misc/CardWatermark'
+import { CredentialAttributeRow } from './AttributeRow'
 
 type Props = {
   data: WalletCredentialCardData
@@ -48,59 +49,6 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const accessibilityLabel =
     `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
     list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
-
-  const AttributeRow = ({ item }: { item: CardAttribute }) => {
-    const warn = data.proofContext && (item.isPII ?? false) && !item.predicate?.present
-
-    if (data.notInWallet || item.hasError || (item.predicate?.present && item.predicate.satisfied === false)) {
-      const errorText = data.notInWallet
-        ? 'Not available in your wallet'
-        : item.predicate?.present
-        ? 'Predicate not satisfied'
-        : 'Missing attribute'
-      return (
-        <View style={styles.cardAttributeContainer}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon
-              style={{ paddingTop: 2, paddingHorizontal: 2 }}
-              name="close"
-              size={styles.recordAttributeText.fontSize}
-            />
-            <ThemedText variant="labelSubtitle" style={[styles.textContainer, { opacity: 0.8 }]}>
-              {item.label}
-            </ThemedText>
-          </View>
-          <ThemedText variant="labelSubtitle" style={[styles.textContainer, { opacity: 0.8 }]}>
-            {errorText}
-          </ThemedText>
-        </View>
-      )
-    }
-
-    return (
-      <View style={styles.cardAttributeContainer}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {warn && (
-            <Icon
-              style={{ paddingTop: 2, paddingHorizontal: 2 }}
-              name="warning"
-              size={styles.recordAttributeText.fontSize}
-            />
-          )}
-          <ThemedText variant="labelSubtitle" style={[styles.textContainer, { lineHeight: 19, opacity: 0.8 }]}>
-            {item.label}
-          </ThemedText>
-        </View>
-        {typeof item.value === 'string' && /^data:image\//.test(item.value) ? (
-          <Image style={styles.imageAttr} source={{ uri: item.value }} />
-        ) : (
-          <ThemedText variant="bold" style={[styles.textContainer, { color: textColor }]}>
-            {item.value as any}
-          </ThemedText>
-        )}
-      </View>
-    )
-  }
 
   const StatusBadge = () => (
     <View
@@ -192,7 +140,15 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
         scrollEnabled={false}
         initialNumToRender={list.length}
         keyExtractor={(i) => i.key}
-        renderItem={({ item }) => <AttributeRow item={item} />}
+        renderItem={({ item }) => (
+          <CredentialAttributeRow
+            item={item}
+            textColor={textColor}
+            showPiiWarning={!!data.proofContext}
+            isNotInWallet={data.notInWallet}
+            styles={styles}
+          />
+        )}
         ListFooterComponent={<HelpOrAlt />}
       />
     </View>
