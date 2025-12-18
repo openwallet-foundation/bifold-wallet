@@ -7,6 +7,7 @@ import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CardWatermark from '../misc/CardWatermark'
 import CredentialCardStatusBadge from './CredentialCardStatusBadge'
 import CredentialCardAttributeList from './CredentialCardAttributeList'
+import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
 
 type Props = {
   data: WalletCredentialCardData
@@ -49,32 +50,6 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const dataLabels = list.map((f) => `${f.label}, ${f.value ?? ''}`).join(', ')
   const accessibilityLabel = `${issuerAccessibilityLabel}, ${data.credentialName}, ${dataLabels}`
 
-  const SecondaryBody = () => {
-    if (hideSlice) {
-      return (
-        <View
-          testID={testIdWithKey('CredentialCardSecondaryBody')}
-          style={[styles.secondaryBodyContainer, { backgroundColor: 'transparent', overflow: 'hidden' }]}
-        />
-      )
-    }
-    const bg = branding.secondaryBg ?? styles.secondaryBodyContainer.backgroundColor ?? 'transparent'
-    return (
-      <View
-        testID={testIdWithKey('CredentialCardSecondaryBody')}
-        style={[styles.secondaryBodyContainer, { backgroundColor: bg, overflow: 'hidden' }]}
-      >
-        {branding.backgroundSliceUri ? (
-          <ImageBackground
-            source={{ uri: branding.backgroundSliceUri }}
-            style={{ flexGrow: 1 }}
-            imageStyle={{ borderTopLeftRadius: borderRadius, borderBottomLeftRadius: borderRadius }}
-          />
-        ) : null}
-      </View>
-    )
-  }
-
   const Header = () => (
     <View style={[styles.primaryBodyNameContainer, { flexDirection: 'row', alignItems: 'center' }]}>
       {/* Card10 shows issuer and name side-by-side in the header row */}
@@ -112,7 +87,13 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
 
   const Main = () => (
     <View style={styles.cardContainer} accessible accessibilityLabel={accessibilityLabel}>
-      <SecondaryBody />
+      <CredentialCardSecondaryBody
+        hideSlice={hideSlice}
+        secondaryBg={branding.secondaryBg}
+        backgroundSliceUri={branding.backgroundSliceUri}
+        borderRadius={borderRadius}
+        containerStyle={styles.secondaryBodyContainer}
+      />
       {/* Card10 places everything in the main body after a slim slice */}
       <PrimaryBody />
       <CredentialCardStatusBadge status={data.status} logoHeight={logoHeight} containerStyle={styles.statusContainer} />

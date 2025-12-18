@@ -11,6 +11,7 @@ import startCase from 'lodash.startcase'
 import { toImageSource } from '../../utils/credential'
 import CredentialCardStatusBadge from './CredentialCardStatusBadge'
 import CredentialCardAttributeList from './CredentialCardAttributeList'
+import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
 
 type Props = {
   data: WalletCredentialCardData
@@ -37,47 +38,6 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const accessibilityLabel =
     `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
     list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
-
-  const SecondaryBody = () => {
-    if (hideSlice) {
-      return (
-        <View
-          testID={testIdWithKey('CredentialCardSecondaryBody')}
-          style={[styles.secondaryBodyContainer, { backgroundColor: 'transparent', overflow: 'hidden' }]}
-        />
-      )
-    }
-    const bg = branding.secondaryBg ?? styles.secondaryBodyContainer.backgroundColor ?? 'transparent'
-    return (
-      <View
-        testID={testIdWithKey('CredentialCardSecondaryBody')}
-        style={[styles.secondaryBodyContainer, { backgroundColor: bg, overflow: 'hidden' }]}
-      >
-        {branding.backgroundSliceUri ? (
-          <ImageBackground
-            source={{ uri: branding.backgroundSliceUri }}
-            style={{ flexGrow: 1 }}
-            imageStyle={{ borderTopLeftRadius: borderRadius, borderBottomLeftRadius: borderRadius }}
-          />
-        ) : (
-          !(proofContext || branding.secondaryBg) && (
-            <View
-              style={[
-                {
-                  position: 'absolute',
-                  width: logoHeight,
-                  height: '100%',
-                  borderTopLeftRadius: borderRadius,
-                  borderBottomLeftRadius: borderRadius,
-                  backgroundColor: 'rgba(0,0,0,0.24)',
-                },
-              ]}
-            />
-          )
-        )}
-      </View>
-    )
-  }
 
   const PrimaryBody = () => {
     return (
@@ -160,7 +120,13 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
 
   const Main = () => (
     <View style={styles.cardContainer} accessible accessibilityLabel={accessibilityLabel}>
-      <SecondaryBody />
+      <CredentialCardSecondaryBody
+        hideSlice={hideSlice}
+        secondaryBg={branding.secondaryBg}
+        backgroundSliceUri={branding.backgroundSliceUri}
+        borderRadius={borderRadius}
+        containerStyle={styles.secondaryBodyContainer}
+      />
       <CredentialCardGenLogo
         noLogoText={branding.logoText ?? 'U'}
         logo={branding.logo1x1Uri}
