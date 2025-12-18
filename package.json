@@ -58,6 +58,8 @@
     "react": "18.3.1",
     "tslib": "2.6.2",
     "react-native": "0.73.11",
+    "sha.js": "2.4.12",
+    "elliptic": "6.6.1",
     "@types/react": "18.2.79",
     "@credo-ts/anoncreds@npm:0.5.17": "patch:@credo-ts/anoncreds@npm%3A0.5.17#~/.yarn/patches/@credo-ts-anoncreds-npm-0.5.17-9f101d8e96.patch",
     "@credo-ts/openid4vc@npm:0.5.17": "patch:@credo-ts/openid4vc@patch%3A@credo-ts/openid4vc@npm%253A0.5.17%23~/.yarn/patches/@credo-ts-openid4vc-npm-0.5.17-f06f0ed3b3.patch%3A%3Aversion=0.5.17&hash=ffc58d#~/.yarn/patches/@credo-ts-openid4vc-patch-d8a39b8db7.patch",
