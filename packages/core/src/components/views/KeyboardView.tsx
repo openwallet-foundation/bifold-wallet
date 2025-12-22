@@ -1,8 +1,7 @@
 import React from 'react'
-import { KeyboardAvoidingView, ScrollViewProps } from 'react-native'
+import { Platform, KeyboardAvoidingView, ScrollViewProps } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
 import { useHeaderHeight } from '@react-navigation/elements'
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const useSafeHeaderHeight = (): number => {
   try {
@@ -29,9 +28,13 @@ const KeyboardView: React.FC<{
   const safeHeaderHeight = useSafeHeaderHeight()
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={safeHeaderHeight} behavior="padding">
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={safeHeaderHeight}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <KeyboardAwareScrollView
-        keyboardShouldPersistTaps={'handled'}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={[{ flexGrow: 1 }, scrollViewProps?.contentContainerStyle]}
         showsVerticalScrollIndicator={false}
         {...scrollViewProps}
