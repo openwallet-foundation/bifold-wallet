@@ -12,7 +12,7 @@ const useSafeHeaderHeight = (): number => {
 }
 
 /**
- * A wrapper component that provides keyboard-aware scrolling and safe area handling.
+ * A wrapper component that provides keyboard-aware scrolling and safe area handling
  *
  * This component creates a full-screen container with safe area insets and optional
  * keyboard avoidance behavior. It's designed to be used as a top-level wrapper for
