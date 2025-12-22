@@ -65,7 +65,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   ])
   const [PINConfirmModalVisible, setPINConfirmModalVisible] = useState(false)
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
-  const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity } =
+  const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity, setInlineMessageField1, setInlineMessageField2 } =
     usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
 
@@ -158,6 +158,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
           <PINInput
             label={t('PINCreate.EnterPINTitle')}
             onPINChanged={async (userPinInput: string) => {
+              setInlineMessageField1(undefined)
               setPIN(() => userPinInput)
               if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
                 Keyboard.dismiss()
@@ -183,6 +184,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
             <PINInput
               label={t('PINCreate.ReenterPIN')}
               onPINChanged={(userPinInput: string) => {
+                setInlineMessageField2(undefined)
                 setPINTwo(userPinInput)
                 if (userPinInput.length === minPINLength) {
                   Keyboard.dismiss()
