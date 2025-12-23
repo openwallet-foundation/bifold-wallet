@@ -1,13 +1,10 @@
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import React from 'react'
-import { Image, View } from 'react-native'
-import { ThemedText } from '../../components/texts/ThemedText'
 import { TOKENS, useServices } from '../../container-api'
 import { useTheme } from '../../contexts/theme'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
-import { toImageSource } from '../../utils/credential'
-import { testIdWithKey } from '../../utils/testable'
+import LogoOrLetter from './LogoOrLetter'
 
 interface CredentialCardLogo {
   noLogoText: string
@@ -27,35 +24,16 @@ const CredentialCard11Logo: React.FC<CredentialCardLogo> = ({ noLogoText, overla
   const { styles, logoHeight } = useCredentialCardStyles(overlay, bundleResolver.getBrandingOverlayType())
 
   return (
-    <View style={[styles.logoContainer, { elevation: elevated ? 5 : 0 }]}>
-      {overlay.brandingOverlay?.logo ? (
-        <Image
-          source={toImageSource(overlay.brandingOverlay?.logo)}
-          style={{
-            resizeMode: 'cover',
-            width: logoHeight,
-            height: logoHeight,
-            borderRadius: 8,
-          }}
-          testID={testIdWithKey('Logo')}
-        />
-      ) : (
-        <ThemedText
-          variant="bold"
-          style={[
-            TextTheme.bold,
-            {
-              fontSize: 0.5 * logoHeight,
-              alignSelf: 'center',
-              color: isBranding11 ? textColor : '#000',
-            },
-          ]}
-          testID={testIdWithKey('NoLogoText')}
-        >
-          {noLogoText.charAt(0).toUpperCase()}
-        </ThemedText>
-      )}
-    </View>
+    <LogoOrLetter
+      containerStyle={styles.logoContainer}
+      elevated={elevated}
+      logo={overlay.brandingOverlay?.logo}
+      logoHeight={logoHeight}
+      letter={noLogoText}
+      letterVariant="bold"
+      letterStyle={TextTheme.bold}
+      letterColor={isBranding11 ? textColor ?? '#000' : '#000'}
+    />
   )
 }
 

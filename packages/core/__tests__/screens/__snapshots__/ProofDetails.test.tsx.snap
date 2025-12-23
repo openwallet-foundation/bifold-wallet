@@ -464,6 +464,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                         }
                       >
                         <Text
+                          accessible={false}
                           maxFontSizeMultiplier={2}
                           style={
                             Array [
@@ -474,14 +475,14 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               },
                               Array [
                                 Object {
-                                  "color": "#FFFFFF",
-                                  "fontSize": 18,
-                                  "fontWeight": "bold",
-                                },
-                                Object {
                                   "alignSelf": "center",
                                   "color": "#000",
                                   "fontSize": 45,
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 18,
+                                  "fontWeight": "bold",
                                 },
                               ],
                             ]
@@ -1083,6 +1084,7 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                         }
                       >
                         <Text
+                          accessible={false}
                           maxFontSizeMultiplier={2}
                           style={
                             Array [
@@ -1093,14 +1095,14 @@ exports[`ProofDetails Screen with a verified proof record renders correctly when
                               },
                               Array [
                                 Object {
-                                  "color": "#FFFFFF",
-                                  "fontSize": 18,
-                                  "fontWeight": "bold",
-                                },
-                                Object {
                                   "alignSelf": "center",
                                   "color": "#000",
                                   "fontSize": 45,
+                                },
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 18,
+                                  "fontWeight": "bold",
                                 },
                               ],
                             ]
