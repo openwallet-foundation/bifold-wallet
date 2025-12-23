@@ -155,6 +155,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                 }
               >
                 <Text
+                  accessible={false}
                   maxFontSizeMultiplier={2}
                   style={
                     Array [
@@ -165,14 +166,14 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       },
                       Array [
                         Object {
-                          "color": "#FFFFFF",
-                          "fontSize": 18,
-                          "fontWeight": "bold",
-                        },
-                        Object {
                           "alignSelf": "center",
                           "color": "#000",
                           "fontSize": 45,
+                        },
+                        Object {
+                          "color": "#FFFFFF",
+                          "fontSize": 18,
+                          "fontWeight": "bold",
                         },
                       ],
                     ]
