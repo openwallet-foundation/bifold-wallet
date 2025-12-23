@@ -86,7 +86,7 @@ export const usePINValidation = (PIN: string) => {
           return false
         }
       }
-      return comparePINEntries(pinOne, pinTwo)
+      return pinTwo ? comparePINEntries(pinOne, pinTwo) : true
     },
     [t, attentionMessage, PINSecurity.rules, comparePINEntries]
   )
