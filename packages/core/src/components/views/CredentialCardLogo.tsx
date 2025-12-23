@@ -1,10 +1,9 @@
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import React, { useMemo } from 'react'
-import { Image, StyleSheet, useWindowDimensions, View } from 'react-native'
+import { StyleSheet, useWindowDimensions } from 'react-native'
 import { useTheme } from '../../contexts/theme'
-import { toImageSource } from '../../utils/credential'
-import { ThemedText } from '../texts/ThemedText'
+import LogoOrLetter from '../../components/misc/LogoOrLetter'
 
 type Props = {
   overlay: CredentialOverlay<BrandingOverlay>
@@ -50,27 +49,15 @@ const CredentialCardLogo: React.FC<Props> = ({
   })
 
   return (
-    <View style={styles.logoContainer}>
-      {overlay.brandingOverlay?.logo ? (
-        <Image
-          source={toImageSource(overlay.brandingOverlay?.logo)}
-          style={{
-            resizeMode: 'cover',
-            width: logoHeight,
-            height: logoHeight,
-            borderRadius: 8,
-          }}
-        />
-      ) : (
-        <ThemedText
-          variant="title"
-          style={{ fontSize: 0.5 * logoHeight, color: isBranding11 ? textColor : '#000' }}
-          accessible={false}
-        >
-          {logoText}
-        </ThemedText>
-      )}
-    </View>
+    <LogoOrLetter
+      containerStyle={styles.logoContainer}
+      logo={overlay.brandingOverlay?.logo}
+      logoHeight={logoHeight}
+      letter={logoText}
+      letterVariant="title"
+      letterColor={isBranding11 ? textColor ?? '#000' : '#000'}
+      showTestIds={false} // this one didn’t have testIDs before
+    />
   )
 }
 
