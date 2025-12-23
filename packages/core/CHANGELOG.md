@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 2.11.9
+
+### Patch Changes
+
+- 57a071d: Fix for PIN error not clearing
+- f4b8a77: Add card status icons to theme for customization purposes
+- 414b3c0: added resolutions to use patched versions of elliptic and sha.js
+
 ## 2.11.8
 
 ### Patch Changes

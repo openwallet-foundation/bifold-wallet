@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.11.9
+
+### Patch Changes
+
+- 414b3c0: added resolutions to use patched versions of elliptic and sha.js
+
 ## 2.11.8
 
 ## 2.11.7
