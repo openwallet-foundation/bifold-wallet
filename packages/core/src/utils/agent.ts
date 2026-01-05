@@ -24,8 +24,8 @@ import {
   DidCommAutoAcceptProof, 
   DidCommConnectionsModule, 
   DidCommCredentialsModule,
-  DidCommMediationRecipientModule,
-  DidCommMediatorPickupStrategy,
+  // DidCommMediationRecipientModule,
+  // DidCommMediatorPickupStrategy,
   DidCommProofsModule,
   DidCommCredentialV2Protocol,
   DidCommProofV2Protocol, 
@@ -36,8 +36,8 @@ import {
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
-import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
-import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
+// import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
@@ -127,7 +127,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     }),
     dids: new DidsModule({
       resolvers: [
-        new WebvhDidResolver(),
+        new WebVhDidResolver(),
         new WebDidResolver(),
         new JwkDidResolver(),
         new KeyDidResolver(),
