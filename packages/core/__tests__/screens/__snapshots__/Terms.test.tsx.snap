@@ -233,7 +233,6 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "flex": 1,
                 "flexDirection": "row",
                 "margin": 10,
               }
@@ -747,7 +746,6 @@ exports[`Terms Screen Renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "flex": 1,
                 "flexDirection": "row",
                 "margin": 10,
               }
