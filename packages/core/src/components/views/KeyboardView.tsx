@@ -34,7 +34,7 @@ const KeyboardView: React.FC<{
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={[{ flexGrow: 1 }, scrollViewProps?.contentContainerStyle]}
         showsVerticalScrollIndicator={false}
         {...scrollViewProps}
