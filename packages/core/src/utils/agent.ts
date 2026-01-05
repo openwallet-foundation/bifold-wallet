@@ -24,8 +24,8 @@ import {
   DidCommAutoAcceptProof, 
   DidCommConnectionsModule, 
   DidCommCredentialsModule,
-  DidCommMediationRecipientModule,
-  DidCommMediatorPickupStrategy,
+  // DidCommMediationRecipientModule,
+  // DidCommMediatorPickupStrategy,
   DidCommProofsModule,
   DidCommCredentialV2Protocol,
   DidCommProofV2Protocol, 
@@ -37,8 +37,13 @@ import {
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
 import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
+<<<<<<< HEAD
 import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@bifold/react-hooks'
+=======
+import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
+import { useAgent } from '@credo-ts/react-hooks'
+>>>>>>> 2e46196f (fix: askar module loading error)
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
@@ -124,7 +129,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     openId4VcHolder: new OpenId4VcHolderModule(),
     dids: new DidsModule({
       resolvers: [
-        new WebvhDidResolver(),
+        new WebVhDidResolver(),
         new WebDidResolver(),
         new JwkDidResolver(),
         new KeyDidResolver(),
