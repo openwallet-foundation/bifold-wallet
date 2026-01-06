@@ -28,7 +28,6 @@ const CheckBoxRow: React.FC<Props> = ({
   const { Inputs } = useTheme()
   const style = StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: reverse ? 'row-reverse' : 'row',
       alignItems: 'center',
       margin: 10,

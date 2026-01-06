@@ -87,7 +87,6 @@ exports[`Preface Screen Button enabled by checkbox being checked 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "flex": 1,
                 "flexDirection": "row-reverse",
                 "margin": 10,
               }
@@ -366,7 +365,6 @@ exports[`Preface Screen Renders correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "flex": 1,
                 "flexDirection": "row-reverse",
                 "margin": 10,
               }

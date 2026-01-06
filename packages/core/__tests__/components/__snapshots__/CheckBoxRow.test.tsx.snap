@@ -5,7 +5,6 @@ exports[`CheckBoxRow Component Renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "flex": 1,
       "flexDirection": "row",
       "margin": 10,
     }

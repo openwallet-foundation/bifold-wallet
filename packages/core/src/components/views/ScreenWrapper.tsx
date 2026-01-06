@@ -87,7 +87,8 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
     )
   }
 
-  // KeyboardView has its own SafeAreaView, so we don't need to double-wrap
+  // KeyboardView uses KeyboardAwareScrollView from react-native-keyboard-controller
+  // which handles both keyboard avoidance and scrolling
   if (keyboardActive) {
     return (
       <SafeAreaView style={[styles.container, style]} edges={edges}>
