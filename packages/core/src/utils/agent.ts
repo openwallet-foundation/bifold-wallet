@@ -21,18 +21,14 @@ import {
 
 import { 
   DidCommAutoAcceptCredential, 
-  DidCommAutoAcceptProof, 
-  DidCommConnectionsModule, 
-  DidCommCredentialsModule,
-  // DidCommMediationRecipientModule,
-  // DidCommMediatorPickupStrategy,
-  DidCommProofsModule,
+  DidCommAutoAcceptProof,
   DidCommCredentialV2Protocol,
   DidCommProofV2Protocol, 
   DidCommDifPresentationExchangeProofFormatService,
   DidCommModule,
   DidCommOutOfBandModule,
-  DidCommBasicMessagesModule} from '@credo-ts/didcomm'
+  DidCommBasicMessagesModule,
+  DidCommMediatorPickupStrategy} from '@credo-ts/didcomm'
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
@@ -80,7 +76,8 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
 
   return {
     askar: new AskarModule({
-      ariesAskar: askar,
+      askar,
+      store: { id: askarStoreValue, key: askarStoreValue },
     }),
     anoncreds: new AnonCredsModule({
       anoncreds,
@@ -90,43 +87,44 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       indyVdr,
       networks: indyNetworks as [IndyVdrPoolConfig],
     }),
-    connections: new DidCommConnectionsModule({
-      autoAcceptConnections: true,
+    didcomm: new DidCommModule({
+      connections: {
+        autoAcceptConnections: true,
+      },
+      credentials: {
+        autoAcceptCredentials: DidCommAutoAcceptCredential.ContentApproved,
+        credentialProtocols: [
+          new DidCommCredentialV1Protocol({ indyCredentialFormat }),
+          new DidCommCredentialV2Protocol({
+            credentialFormats: [
+              indyCredentialFormat,
+              new AnonCredsDidCommCredentialFormatService(),
+              new DataIntegrityDidCommCredentialFormatService(),
+            ],
+          }),
+        ],
+      },
+      proofs: {
+        autoAcceptProofs: DidCommAutoAcceptProof.ContentApproved,
+        proofProtocols: [
+          new DidCommProofV1Protocol({ indyProofFormat }),
+          new DidCommProofV2Protocol({
+            proofFormats: [
+              indyProofFormat,
+              new AnonCredsDidCommProofFormatService(),
+              new DidCommDifPresentationExchangeProofFormatService(),
+            ],
+          }),
+        ],
+      },
+      mediationRecipient: {
+        mediatorInvitationUrl: mediatorInvitationUrl,
+        mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
+      },
     }),
-    credentials: new DidCommCredentialsModule({
-      autoAcceptCredentials: DidCommAutoAcceptCredential.ContentApproved,
-      credentialProtocols: [
-        new DidCommCredentialV1Protocol({ indyCredentialFormat }),
-        new DidCommCredentialV2Protocol({
-          credentialFormats: [
-            indyCredentialFormat,
-            new AnonCredsDidCommCredentialFormatService(),
-            new DataIntegrityDidCommCredentialFormatService(),
-          ],
-        }),
-      ],
-    }),
-    proofs: new DidCommProofsModule({
-      autoAcceptProofs: DidCommAutoAcceptProof.ContentApproved,
-      proofProtocols: [
-        new DidCommProofV1Protocol({ indyProofFormat }),
-        new DidCommProofV2Protocol({
-          proofFormats: [
-            indyProofFormat,
-            new AnonCredsDidCommProofFormatService(),
-            new DidCommDifPresentationExchangeProofFormatService(),
-          ],
-        }),
-      ],
-    }),
-    // mediationRecipient: new DidCommMediationRecipientModule({
-    //   mediatorInvitationUrl: mediatorInvitationUrl,
-    //   mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
-    // }),
-    //pushNotificationsFcm: new PushNotificationsFcmModule(),
-    //pushNotificationsApns: new PushNotificationsApnsModule(),
-    didcomm: new DidCommModule(),
     openId4VcHolder: new OpenId4VcHolderModule(),
+    // oob: new DidCommOutOfBandModule(),
+    // basicMessages: new DidCommBasicMessagesModule(),
     dids: new DidsModule({
       resolvers: [
         new WebVhDidResolver(),
