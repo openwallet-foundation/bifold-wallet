@@ -12,6 +12,11 @@
       "import": "./lib/module/index.js",
       "require": "./lib/commonjs/index.js",
       "types": "./lib/typescript/src/index.d.ts"
+    },
+    "./utils/ledger": {
+      "import": "./lib/module/utils/ledger.js",
+      "require": "./lib/commonjs/utils/ledger.js",
+      "types": "./lib/typescript/src/utils/ledger.d.ts"
     }
   },
   "repository": {
