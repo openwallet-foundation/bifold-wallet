@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.11.10
+
+### Patch Changes
+
+- a16e341: ledger export
+- Updated dependencies [a16e341]
+  - @bifold/core@2.11.10
+
 ## 2.11.9
 
 ### Patch Changes
