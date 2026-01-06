@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.11.10
+
+### Patch Changes
+
+- a16e341: ledger export
+
 ## 2.11.9
 
 ### Patch Changes
