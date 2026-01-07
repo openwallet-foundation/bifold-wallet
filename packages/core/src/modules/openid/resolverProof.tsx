@@ -199,7 +199,7 @@ export const getCredentialsForProofRequest = async ({
 
     // Temp solution to add and remove the trusted certificate
     const resolved = await withTrustedCertificate(agent, certificate, () => {
-      return agent.modules.openId4VcHolder.resolveSiopAuthorizationRequest(requestUri)
+      return agent.modules.openid4vc.holder.resolveSiopAuthorizationRequest(requestUri)
     })
 
     if (!resolved.presentationExchange) {
