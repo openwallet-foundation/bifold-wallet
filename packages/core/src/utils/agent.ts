@@ -33,13 +33,10 @@ import {
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
 import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
-<<<<<<< HEAD
-import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
-import { useAgent } from '@bifold/react-hooks'
-=======
 import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
-import { useAgent } from '@credo-ts/react-hooks'
->>>>>>> 2e46196f (fix: askar module loading error)
+import { useAgent } from '@bifold/react-hooks'
+import { OpenId4VcModule } from '@credo-ts/openid4vc'
+// import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
@@ -117,12 +114,12 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
           }),
         ],
       },
-      mediationRecipient: {
-        mediatorInvitationUrl: mediatorInvitationUrl,
-        mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
-      },
+      // mediationRecipient: {
+      //   mediatorInvitationUrl: mediatorInvitationUrl,
+      //   mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
+      // },
     }),
-    openId4VcHolder: new OpenId4VcHolderModule(),
+    openid4vc: new OpenId4VcModule(),
     // oob: new DidCommOutOfBandModule(),
     // basicMessages: new DidCommBasicMessagesModule(),
     dids: new DidsModule({

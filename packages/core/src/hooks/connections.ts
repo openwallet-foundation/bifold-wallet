@@ -12,7 +12,7 @@ export const useOutOfBandById = (oobId: string): DidCommOutOfBandRecord | undefi
       return
     }
 
-    agent.oob
+    agent.modules.didcomm.oob
       .findById(oobId)
       .then((res) => {
         setOob(res ?? undefined)

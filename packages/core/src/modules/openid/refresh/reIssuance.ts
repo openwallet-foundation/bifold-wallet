@@ -11,7 +11,10 @@ import {
 import { RefreshResponse } from '../types'
 import {
   OpenId4VciCredentialBindingOptions,
+  OpenId4VciCredentialResponse,
   OpenId4VciCredentialSupportedWithId,
+  OpenId4VciDeferredCredentialResponse,
+  OpenId4VciDpopRequestOptions,
   OpenId4VciResolvedCredentialOffer,
 } from '@credo-ts/openid4vc'
 import { customCredentialBindingResolver } from '../offerResolve'
@@ -63,7 +66,14 @@ export async function reissueCredentialWithAccessToken({
 
   logger.info('*** Starting to get new credential via re-issuance flow ***')
   // Request a **new** credential using the *existing* configuration id
-  const creds = await agent.modules.openId4VcHolder.requestCredentials({
+  type credsRet = {
+    credentials: OpenId4VciCredentialResponse[]
+    deferredCredentials: OpenId4VciDeferredCredentialResponse[]
+    dpop?: OpenId4VciDpopRequestOptions
+    cNonce?: string
+  }
+
+  const creds: credsRet = await agent.modules.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
     accessToken: tokenResponse.access_token,
     tokenType: tokenResponse.token_type || 'Bearer',
