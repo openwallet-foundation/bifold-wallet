@@ -29,7 +29,7 @@ export const useOpenId4VciNotifications = () => {
       logger.error(`[OpenIDCredentialNotification] ${error}`)
       throw new Error(error)
     }
-    await agent.modules.openId4VcHolder.sendNotification({
+    await agent.modules.openid4vc.holder.sendNotification({
       //notificationMetadata: options?.notificationMetadata, TODO: Not sure we have metadata here anymore.
       accessToken: options?.accessToken,
       notificationEvent: options?.notificationEvent,

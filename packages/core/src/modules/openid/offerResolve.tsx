@@ -57,13 +57,14 @@ export const resolveOpenId4VciOffer = async ({
     uri: offerUri,
   })
 
-  // TODO: setTrustedCertificates no longer works here.
-  // if (Config.ISSUER_CERT_B64) {
-  //   const issuerCert = CredoBuffer.from(String(Config.ISSUER_CERT_B64), 'base64').toString('utf-8')
-  //   agent.x509.setTrustedCertificates([issuerCert])
-  // }
+  if (Config.ISSUER_CERT_B64) {
+    const issuerCert = CredoBuffer.from(String(Config.ISSUER_CERT_B64), 'base64').toString('utf-8')
+    agent.x509.config.setTrustedCertificates([issuerCert])
+    console.log('Now listing certificates:')
+    console.log(JSON.stringify(agent.x509.config.trustedCertificates))
+  }
 
-  const resolvedCredentialOffer = await agent.modules.openId4VcHolder.resolveCredentialOffer(offerUri)
+  const resolvedCredentialOffer = await agent.openid4vc.holder.resolveCredentialOffer(offerUri)
 
   if (authorization) {
     throw new Error('Authorization flow is not supported yet as of Credo 0.5.13')
@@ -81,7 +82,7 @@ export async function acquirePreAuthorizedAccessToken({
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
 }): Promise<OpenId4VciRequestTokenResponse> {
-  return await agent.modules.openId4VcHolder.requestToken({
+  return await agent.modules.openid4vc.holder.requestToken({
     resolvedCredentialOffer,
     txCode,
   })

@@ -7,7 +7,7 @@ export const useOutOfBandById = (oobId: string): DidCommOutOfBandRecord | undefi
   const { agent } = useAgent()
   const [oob, setOob] = useState<DidCommOutOfBandRecord | undefined>(undefined)
   if (!oob) {
-    (agent?.modules.oob as DidCommOutOfBandApi).findById(oobId).then((res) => {
+    (agent?.modules.didcomm.oob as DidCommOutOfBandApi).findById(oobId).then((res) => {
       if (res) {
         setOob(res)
       }

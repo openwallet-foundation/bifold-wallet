@@ -31,7 +31,7 @@ import {
   DidCommMediatorPickupStrategy} from '@credo-ts/didcomm'
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
-import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
+import { OpenId4VcHolderModule, OpenId4VcModule } from '@credo-ts/openid4vc'
 // import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@credo-ts/react-hooks'
@@ -108,12 +108,12 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
           }),
         ],
       },
-      mediationRecipient: {
-        mediatorInvitationUrl: mediatorInvitationUrl,
-        mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
-      },
+      // mediationRecipient: {
+      //   mediatorInvitationUrl: mediatorInvitationUrl,
+      //   mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
+      // },
     }),
-    openId4VcHolder: new OpenId4VcHolderModule(),
+    openid4vc: new OpenId4VcModule(),
     // oob: new DidCommOutOfBandModule(),
     // basicMessages: new DidCommBasicMessagesModule(),
     askar: new AskarModule({

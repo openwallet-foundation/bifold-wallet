@@ -73,7 +73,7 @@ export async function reissueCredentialWithAccessToken({
     cNonce?: string
   }
 
-  const creds: credsRet = await agent.modules.openId4VcHolder.requestCredentials({
+  const creds: credsRet = await agent.modules.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
     accessToken: tokenResponse.access_token,
     tokenType: tokenResponse.token_type || 'Bearer',
