@@ -49,7 +49,7 @@ export const resolveOpenId4VciOffer = async ({
     uri: offerUri,
   })
 
-  const resolvedCredentialOffer = await agent.modules.openId4VcHolder.resolveCredentialOffer(offerUri)
+  const resolvedCredentialOffer = await agent.openid4vc.holder.resolveCredentialOffer(offerUri)
 
   if (authorization) {
     throw new Error('Authorization flow is not supported yet as of Credo 0.5.13')
@@ -67,7 +67,7 @@ export async function acquirePreAuthorizedAccessToken({
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
 }): Promise<OpenId4VciRequestTokenResponse> {
-  return await agent.modules.openId4VcHolder.requestToken({
+  return await agent.modules.openid4vc.holder.requestToken({
     resolvedCredentialOffer,
     txCode,
   })
