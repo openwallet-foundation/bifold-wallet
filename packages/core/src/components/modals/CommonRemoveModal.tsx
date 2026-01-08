@@ -84,14 +84,14 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10,
+      flex: 1,
     },
     container: {
-      height: '100%',
+      flexGrow: 1,
       paddingTop: 10,
       paddingHorizontal: 20,
     },
     controlsContainer: {
-      marginTop: 'auto',
       marginHorizontal: 20,
       marginBottom: 10,
       position: 'relative',
@@ -99,7 +99,6 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
     overlay: {
       flex: 1,
       backgroundColor: 'rgba(0,0,0,0.5)',
-      paddingTop: 65,
     },
     headerView: {
       alignItems: 'flex-end',
@@ -286,7 +285,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
   return (
     <SafeAreaModal transparent={true} visible={visible} animationType="slide">
       <View style={styles.overlay}>
-        <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeAreaView}>
+        <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeAreaView}>
           <View style={styles.headerView}>
             <TouchableOpacity
               accessibilityLabel={t('Global.Close')}
@@ -298,35 +297,36 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               <Icon name={'close'} size={42} color={ColorPalette.brand.modalIcon} />
             </TouchableOpacity>
           </View>
-          <ScrollView style={styles.container}>
+          <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
             <>
               {headerImageForType()}
               {contentForType()}
             </>
+            <View style={{ flex: 1 }} />
+            <View style={styles.controlsContainer}>
+              <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
+              <View style={{ paddingTop: 10 }}>
+                <Button
+                  title={titleForConfirmButton()}
+                  accessibilityLabel={labelForConfirmButton()}
+                  testID={testIdForConfirmButton()}
+                  onPress={onSubmit}
+                  buttonType={
+                    usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
+                  }
+                />
+              </View>
+              <View style={{ paddingTop: 10 }}>
+                <Button
+                  title={t('Global.Cancel')}
+                  accessibilityLabel={t('Global.Cancel')}
+                  testID={testIdForCancelButton()}
+                  onPress={onCancel}
+                  buttonType={ButtonType.ModalSecondary}
+                />
+              </View>
+            </View>
           </ScrollView>
-          <View style={styles.controlsContainer}>
-            <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
-            <View style={{ paddingTop: 10 }}>
-              <Button
-                title={titleForConfirmButton()}
-                accessibilityLabel={labelForConfirmButton()}
-                testID={testIdForConfirmButton()}
-                onPress={onSubmit}
-                buttonType={
-                  usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
-                }
-              />
-            </View>
-            <View style={{ paddingTop: 10 }}>
-              <Button
-                title={t('Global.Cancel')}
-                accessibilityLabel={t('Global.Cancel')}
-                testID={testIdForCancelButton()}
-                onPress={onCancel}
-                buttonType={ButtonType.ModalSecondary}
-              />
-            </View>
-          </View>
         </SafeAreaView>
       </View>
     </SafeAreaModal>

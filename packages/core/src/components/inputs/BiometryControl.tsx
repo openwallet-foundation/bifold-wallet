@@ -137,7 +137,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   }, [onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t, onBiometryToggle])
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom', 'top']}>
       {settingsPopupConfig && (
         <DismissiblePopupModal
           title={settingsPopupConfig.title}
@@ -147,7 +147,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
           onDismissPressed={onOpenSettingsDismissed}
         />
       )}
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ alignItems: 'center' }}>
           <Assets.svg.biometrics style={styles.image} />
         </View>
@@ -181,8 +181,9 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
             />
           </View>
         </View>
+        <View style={{ flex: 1 }} />
+        {children}
       </ScrollView>
-      {children}
     </SafeAreaView>
   )
 }

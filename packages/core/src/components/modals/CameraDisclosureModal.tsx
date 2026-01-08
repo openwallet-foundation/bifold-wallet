@@ -28,7 +28,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
 
   const styles = StyleSheet.create({
     container: {
-      height: '100%',
+      flexGrow: 1,
       backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       padding: 20,
     },
@@ -37,7 +37,6 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
     },
     controlsContainer: {
       backgroundColor: ColorPalette.brand.modalPrimaryBackground,
-      marginTop: 'auto',
       margin: 20,
     },
     buttonContainer: {
@@ -85,8 +84,8 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           onDismissPressed={onOpenSettingsDismissed}
         />
       )}
-      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
-        <ScrollView style={styles.container}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: ColorPalette.brand.modalPrimaryBackground }} edges={['top', 'left', 'right', 'bottom']}>
+        <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
           <ThemedText variant="modalHeadingOne" testID={testIdWithKey('AllowCameraUse')} accessibilityRole="header">
             {t('CameraDisclosure.AllowCameraUse')}
           </ThemedText>
@@ -96,28 +95,29 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           <ThemedText variant="modalNormal" style={[styles.messageText, { marginBottom: 20 }]}>
             {t('CameraDisclosure.ToContinueUsing')}
           </ThemedText>
+          <View style={{ flex: 1 }} />
+          <View style={styles.controlsContainer}>
+            <View style={styles.buttonContainer}>
+              <Button
+                title={t('Global.Continue')}
+                accessibilityLabel={t('Global.Continue')}
+                testID={testIdWithKey('Continue')}
+                onPress={onContinueTouched}
+                buttonType={ButtonType.ModalPrimary}
+                disabled={requestInProgress}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title={t('Global.NotNow')}
+                accessibilityLabel={t('Global.NotNow')}
+                testID={testIdWithKey('NotNow')}
+                onPress={onNotNowTouched}
+                buttonType={ButtonType.ModalSecondary}
+              />
+            </View>
+          </View>
         </ScrollView>
-        <View style={styles.controlsContainer}>
-          <View style={styles.buttonContainer}>
-            <Button
-              title={t('Global.Continue')}
-              accessibilityLabel={t('Global.Continue')}
-              testID={testIdWithKey('Continue')}
-              onPress={onContinueTouched}
-              buttonType={ButtonType.ModalPrimary}
-              disabled={requestInProgress}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button
-              title={t('Global.NotNow')}
-              accessibilityLabel={t('Global.NotNow')}
-              testID={testIdWithKey('NotNow')}
-              onPress={onNotNowTouched}
-              buttonType={ButtonType.ModalSecondary}
-            />
-          </View>
-        </View>
       </SafeAreaView>
     </SafeAreaModal>
   )

@@ -7,6 +7,7 @@ import { DeviceEventEmitter } from 'react-native'
 import { Attribute } from '@bifold/oca/build/legacy'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
 import { CredentialCard } from '../../../components/misc'
@@ -67,6 +68,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const { ColorPalette, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
   const { agent } = useAgent()
+  const insets = useSafeAreaInsets()
 
   const toggleDeclineModalVisible = () => setDeclineModalVisible(!declineModalVisible)
 
@@ -398,7 +400,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           style={{
             paddingHorizontal: 25,
             paddingVertical: 16,
-            paddingBottom: 26,
+            paddingBottom: 26 + insets.bottom,
             backgroundColor: ColorPalette.brand.secondaryBackground,
           }}
         >
@@ -418,7 +420,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
         style={{
           paddingHorizontal: 25,
           paddingVertical: 16,
-          paddingBottom: 26,
+          paddingBottom: 32 + insets.bottom,
           backgroundColor: ColorPalette.brand.secondaryBackground,
         }}
       >

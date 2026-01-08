@@ -30,7 +30,7 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
   const styles = StyleSheet.create({
     container: {
-      height: '100%',
+      flexGrow: 1,
       backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       padding: 20,
     },
@@ -46,7 +46,6 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
       marginTop: 30,
     },
     controlsContainer: {
-      marginTop: 'auto',
       margin: 20,
     },
     delayMessageText: {
@@ -82,8 +81,8 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
 
   return (
     <SafeAreaModal visible={visible} transparent={true} animationType={'none'}>
-      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
-        <ScrollView style={styles.container}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: ColorPalette.brand.modalPrimaryBackground }} edges={['top', 'left', 'right', 'bottom']}>
+        <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.messageContainer}>
             {proofDeliveryStatus === DidCommProofState.RequestReceived && (
               <ThemedText
@@ -112,19 +111,21 @@ const ProofRequestAccept: React.FC<ProofRequestAcceptProps> = ({ visible, proofI
               <SentProof />
             )}
           </View>
-        </ScrollView>
 
-        <View style={styles.controlsContainer}>
-          <View>
-            <Button
-              title={t('Loading.BackToHome')}
-              accessibilityLabel={t('Loading.BackToHome')}
-              testID={testIdWithKey('BackToHome')}
-              onPress={onBackToHomeTouched}
-              buttonType={ButtonType.ModalSecondary}
-            />
+          <View style={{ flex: 1 }} />
+
+          <View style={styles.controlsContainer}>
+            <View>
+              <Button
+                title={t('Loading.BackToHome')}
+                accessibilityLabel={t('Loading.BackToHome')}
+                testID={testIdWithKey('BackToHome')}
+                onPress={onBackToHomeTouched}
+                buttonType={ButtonType.ModalSecondary}
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaModal>
   )
