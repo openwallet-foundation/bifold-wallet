@@ -2608,7 +2608,7 @@ __metadata:
     react-native-localize: "npm:~2.2.6"
     react-native-logs: "npm:~5.1.0"
     react-native-orientation-locker: "npm:~1.6.0"
-    react-native-permissions: "npm:~5.4.1"
+    react-native-permissions: "npm:~5.4.4"
     react-native-qrcode-svg: "npm:~6.2.0"
     react-native-reanimated: "npm:~3.15.5"
     react-native-safe-area-context: "npm:~4.8.2"
@@ -2686,7 +2686,7 @@ __metadata:
     react-native-localize: ~2.2.6
     react-native-logs: ~5.1.0
     react-native-orientation-locker: "*"
-    react-native-permissions: ~5.4.1
+    react-native-permissions: ~5.4.4
     react-native-qrcode-svg: ~6.2.0
     react-native-safe-area-context: ~4.8.2
     react-native-screenguard: "*"
@@ -8861,7 +8861,7 @@ __metadata:
     react-native-localize: "npm:~2.2.6"
     react-native-logs: "npm:~5.1.0"
     react-native-orientation-locker: "npm:~1.6.0"
-    react-native-permissions: "npm:~5.4.1"
+    react-native-permissions: "npm:~5.4.4"
     react-native-qrcode-svg: "npm:~6.2.0"
     react-native-reanimated: "npm:~3.15.5"
     react-native-safe-area-context: "npm:~4.8.2"
@@ -18224,9 +18224,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-permissions@npm:~5.4.1":
-  version: 5.4.1
-  resolution: "react-native-permissions@npm:5.4.1"
+"react-native-permissions@npm:~5.4.4":
+  version: 5.4.4
+  resolution: "react-native-permissions@npm:5.4.4"
   peerDependencies:
     react: ">=18.1.0"
     react-native: ">=0.70.0"
@@ -18234,7 +18234,7 @@ __metadata:
   peerDependenciesMeta:
     react-native-windows:
       optional: true
-  checksum: 10c0/9b56261eeb22ac57fe5e30a65bab0c06306fb022170fdddc5227979495002c2468671e74b74f75e8c97b7c3015e5c54cf6f1b3edd1abf922fda5b6a654bd5c88
+  checksum: 10c0/9a4fa223053db242a66c18303a525e7552e849876e927427485b0e799f46131ccbbd1ad85e6dfac146d12af942a77a95caa8649b9f4ebcfbb7f2ff6dd8fece04
   languageName: node
   linkType: hard
 
