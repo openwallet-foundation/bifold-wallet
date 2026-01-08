@@ -23,12 +23,13 @@ import { testIdWithKey } from '../../../utils/testable'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
 import {
+  formatDcqlCredentialsForRequest,
   formatDifPexCredentialsForRequest,
   FormattedSelectedCredentialEntry,
   FormattedSubmissionEntry,
 } from '../displayProof'
 import { shareProof } from '../resolverProof'
-import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
+import { isMdocProofRequest, isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -61,7 +62,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [satistfiedCredentialsSubmission, setSatistfiedCredentialsSubmission] = useState<SatisfiedCredentialsFormat>()
   const [selectedCredentialsSubmission, setSelectedCredentialsSubmission] = useState<SelectedCredentialsFormat>()
 
-  const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
+  const { getW3CCredentialById, getSdJwtCredentialById, getMdocCredentialById } = useOpenIDCredentials()
 
   const { ColorPalette, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -115,10 +116,15 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   })
 
   const submission = useMemo(
-    () =>
-      credential && credential.credentialsForRequest
-        ? formatDifPexCredentialsForRequest(credential.credentialsForRequest)
-        : undefined,
+    () => {
+      if (credential?.credentialsForRequest) {
+        return formatDifPexCredentialsForRequest(credential.credentialsForRequest)
+      } else if (credential?.dcqlCredentialsForRequest) {
+        return formatDcqlCredentialsForRequest(credential.dcqlCredentialsForRequest)
+      } else {
+        return undefined
+      }
+    },
     [credential]
   )
 
@@ -138,26 +144,42 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   //Fetch all credentials satisfying the proof
   useEffect(() => {
     async function fetchCreds() {
-      if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries) return
-      const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
+      try {
+        console.log('fetchCreds called with:', satistfiedCredentialsSubmission)
+        if (!satistfiedCredentialsSubmission || Object.keys(satistfiedCredentialsSubmission).length === 0) {
+          console.log('Early return: no satisfied credentials')
+          return
+        }
+        const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
 
-      for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
-        for (const { id, claimFormat } of credIDs) {
-          let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
-          if (isW3CProofRequest(claimFormat)) {
-            credential = await getW3CCredentialById(id)
-          } else if (isSdJwtProofRequest(claimFormat)) {
-            credential = await getSdJwtCredentialById(id)
-          }
-          if (credential && inputDescriptorID) {
-            creds.push(credential)
+        for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
+          console.log('Processing inputDescriptorID:', inputDescriptorID, 'with credIDs:', credIDs)
+          for (const { id, claimFormat } of credIDs) {
+            console.log('Fetching credential:', id, 'with format:', claimFormat)
+            let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
+            if (isW3CProofRequest(claimFormat)) {
+              credential = await getW3CCredentialById(id)
+            } else if (isSdJwtProofRequest(claimFormat)) {
+              credential = await getSdJwtCredentialById(id)
+            } else if (isMdocProofRequest(claimFormat)) {
+              credential = await getMdocCredentialById(id)
+            }
+            if (credential && inputDescriptorID) {
+              creds.push(credential)
+              console.log('Added credential to creds array')
+            } else {
+              console.log('Credential not found or invalid inputDescriptorID')
+            }
           }
         }
+        setCredentialsRequested(creds)
+        console.log('Fetched credentials for proof request:', creds)
+      } catch (error) {
+        console.error('Error in fetchCreds:', error)
       }
-      setCredentialsRequested(creds)
     }
     fetchCreds()
-  }, [satistfiedCredentialsSubmission, getW3CCredentialById, getSdJwtCredentialById])
+  }, [satistfiedCredentialsSubmission, getW3CCredentialById, getSdJwtCredentialById, getMdocCredentialById])
 
   //Once satisfied credentials are set and all credentials fetched, we select the first one of each submission to display on screen
   useEffect(() => {
@@ -182,11 +204,15 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const handleAcceptTouched = async () => {
     try {
-      if (!agent || !credential.credentialsForRequest || !selectedCredentialsSubmission) {
+      if (!credential.credentialsForRequest && !credential.dcqlCredentialsForRequest) {
+        return
+      }
+      if (!agent || !selectedCredentialsSubmission) {
         return
       }
       await shareProof({
         agent,
+        requestRecord: credential,
         authorizationRequest: credential.authorizationRequestPayload,
         credentialsForRequest: credential.credentialsForRequest,
         selectedCredentials: selectedCredentialsSubmission,

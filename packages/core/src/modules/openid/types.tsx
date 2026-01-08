@@ -6,7 +6,7 @@ import {
   OpenId4VpResolvedAuthorizationRequest,
 } from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
-import { ClaimFormat, DifPexCredentialsForRequest, DifPresentationExchangeDefinition } from '@credo-ts/core'
+import { ClaimFormat, DcqlCredentialsForRequest, DifPexCredentialsForRequest, DifPresentationExchangeDefinition } from '@credo-ts/core'
 
 export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}` | `mdoc-${string}`
 export interface OpenId4VcCredentialMetadata {
@@ -93,10 +93,11 @@ export interface W3cCredentialDisplay {
 }
 
 export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {
-  definition: DifPresentationExchangeDefinition
+  definition?: DifPresentationExchangeDefinition
   verifierHostName: string | undefined
   createdAt: string | Date
   credentialsForRequest: DifPexCredentialsForRequest | undefined
+  dcqlCredentialsForRequest?: DcqlCredentialsForRequest | undefined
   type: string
 }
 

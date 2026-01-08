@@ -3,8 +3,9 @@ import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
-import { OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
+import { OpenId4VcApi, OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
 import { Linking } from 'react-native'
+import Config from 'react-native-config'
 
 function handleTextResponse(text: string): ParseInvitationResult {
   // If the text starts with 'ey' we assume it's a JWT and thus an OpenID authorization request
@@ -197,24 +198,33 @@ export const getCredentialsForProofRequest = async ({
 
     agent.config.logger.info(`$$Receiving openid uri ${requestUri}`)
 
-    // Temp solution to add and remove the trusted certificate
-    const resolved = await withTrustedCertificate(agent, certificate, () => {
-      return agent.modules.openid4vc.holder.resolveSiopAuthorizationRequest(requestUri)
-    })
+    const resolved = await (agent.modules.openid4vc as OpenId4VcApi).holder.resolveOpenId4VpAuthorizationRequest(requestUri as string)
 
-    if (!resolved.presentationExchange) {
-      throw new Error('No presentation exchange found in authorization request.')
+    if (!resolved.presentationExchange && !resolved.dcql) {
+      throw new Error('No presentation exchange or DCQL found in authorization request.')
     }
 
-    return {
-      ...resolved.presentationExchange,
-      authorizationRequest: resolved.authorizationRequest,
-      verifierHostName: resolved.authorizationRequest.responseURI
-        ? getHostNameFromUrl(resolved.authorizationRequest.responseURI)
+    let dcqlCredentialsForRequest;
+    if (resolved.dcql?.queryResult) {
+      dcqlCredentialsForRequest = (agent.modules.openid4vc as OpenId4VcApi).holder.selectCredentialsForDcqlRequest(
+        resolved.dcql.queryResult
+      )
+    }
+    
+    const requestRecord: OpenId4VPRequestRecord = {
+      ...resolved,
+      definition: resolved.presentationExchange?.definition,
+      credentialsForRequest: resolved.presentationExchange?.credentialsForRequest,
+      dcqlCredentialsForRequest: dcqlCredentialsForRequest,
+      authorizationRequestPayload: resolved.authorizationRequestPayload,
+      verifierHostName: resolved.authorizationRequestPayload.response_uri
+        ? getHostNameFromUrl(resolved.authorizationRequestPayload.response_uri as string)
         : undefined,
       createdAt: new Date(),
       type: 'OpenId4VPRequestRecord',
     }
+
+    return requestRecord;
   } catch (err) {
     agent.config.logger.error(`Parsing presentation request:  ${(err as Error)?.message ?? err}`)
     throw err
@@ -223,61 +233,73 @@ export const getCredentialsForProofRequest = async ({
 
 export const shareProof = async ({
   agent,
+  requestRecord,
   authorizationRequest,
   credentialsForRequest,
   selectedCredentials,
   allowUntrustedCertificate = false,
 }: {
   agent: Agent
+  requestRecord: OpenId4VPRequestRecord
   authorizationRequest: OpenId4VpAuthorizationRequestPayload
-  credentialsForRequest: DifPexCredentialsForRequest
+  credentialsForRequest: DifPexCredentialsForRequest | undefined
   selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
   allowUntrustedCertificate?: boolean
 }) => {
-  if (!credentialsForRequest.areRequirementsSatisfied) {
-    throw new Error('Requirements from proof request are not satisfied')
-  }
+  // if (!credentialsForRequest.areRequirementsSatisfied) {
+  //   throw new Error('Requirements from proof request are not satisfied')
+  // }
 
   // Map all requirements and entries to a credential record. If a credential record for an
   // input descriptor has been provided in `selectedCredentials` we will use that. Otherwise
   // it will pick the first available credential.
-  const credentials = Object.fromEntries(
-    credentialsForRequest.requirements.flatMap((requirement) =>
-      requirement.submissionEntry.map((entry) => {
-        const credentialId = selectedCredentials[entry.inputDescriptorId].id
-        const credential =
-          entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
-          entry.verifiableCredentials[0]
+  // const credentials = Object.fromEntries(
+  //   credentialsForRequest.requirements.flatMap((requirement) =>
+  //     requirement.submissionEntry.map((entry) => {
+  //       const credentialId = selectedCredentials[entry.inputDescriptorId].id
+  //       const credential =
+  //         entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
+  //         entry.verifiableCredentials[0]
 
-        return [entry.inputDescriptorId, [credential.credentialRecord]]
-      })
-    )
-  )
+  //       return [entry.inputDescriptorId, [credential.credentialRecord]]
+  //     })
+  //   )
+  // )
 
   try {
+    // FORK TODO: Clean up all this stuff
     // Temp solution to add and remove the trusted certicaite
     // const certificate =
     //   authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest) : null
 
     // Need to figure out how to include this certificate, does not seem like the JWT is included in the authorizationRequest any more.
-
-    const result = await withTrustedCertificate(agent, null, () =>
-      agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
-        authorizationRequest: authorizationRequest,
-        presentationExchange: {
-          credentials,
-        },
-      })
-    )
+    if (Config.ISSUER_CERT_B64) {
+      agent.x509.config.setTrustedCertificates([Config.ISSUER_CERT_B64])
+    }
+    
+    // is withTrustedCertificate needed here?
+    const result = await (agent.openid4vc as OpenId4VcApi).holder.acceptOpenId4VpAuthorizationRequest({
+      authorizationRequestPayload: authorizationRequest,
+      presentationExchange: requestRecord.presentationExchange ? {
+        credentials: (agent.openid4vc as OpenId4VcApi).holder.selectCredentialsForPresentationExchangeRequest(
+          requestRecord.presentationExchange?.credentialsForRequest
+        ),
+      } : undefined,
+      dcql: requestRecord.dcql ? {
+        credentials: (agent.openid4vc as OpenId4VcApi).holder.selectCredentialsForDcqlRequest(
+          requestRecord.dcql.queryResult
+        )
+      } : undefined
+    })
 
     // if redirect_uri is provided, open it in the browser
     // Even if the response returned an error, we must open this uri
-    if (typeof result.serverResponse.body === 'object' && typeof result.serverResponse.body.redirect_uri === 'string') {
-      await Linking.openURL(result.serverResponse.body.redirect_uri)
+    if (typeof result.redirectUri === 'string') {
+      await Linking.openURL(result.redirectUri)
     }
 
-    if (result.serverResponse.status < 200 || result.serverResponse.status > 299) {
-      throw new Error(`Error while accepting authorization request. ${result.serverResponse.body as string}`)
+    if (result.serverResponse == null || result.serverResponse.status < 200 || result.serverResponse.status > 299) {
+      throw new Error(`Error while accepting authorization request. ${result.serverResponse?.body as string}`)
     }
 
     return result

@@ -1,4 +1,4 @@
-import { ClaimFormat, type DifPexCredentialsForRequest } from '@credo-ts/core'
+import { ClaimFormat, type DcqlCredentialsForRequest, type DifPexCredentialsForRequest } from '@credo-ts/core'
 
 import { type CredentialMetadata, type DisplayImage, filterAndMapSdJwtKeys, getCredentialForDisplay } from './display'
 
@@ -32,6 +32,52 @@ export interface FormattedSubmissionEntry {
   description?: string
 
   credentials: Array<FormattedSelectedCredentialEntry>
+}
+
+export function formatDcqlCredentialsForRequest(
+  dcqlCredentialsForRequest: DcqlCredentialsForRequest
+): FormattedSubmission {
+  const entries: FormattedSubmissionEntry[] = Object.entries(dcqlCredentialsForRequest).map(([queryId, credentials]) => {
+    return {
+      inputDescriptorId: queryId,
+      name: queryId,
+      isSatisfied: credentials.length >= 1,
+      credentials: credentials.map((selectedCredential) => {
+        const { display, attributes, metadata, claimFormat } = getCredentialForDisplay(
+          selectedCredential.credentialRecord
+        )
+
+        let disclosedPayload = attributes
+        if (selectedCredential.claimFormat === ClaimFormat.SdJwtDc) {
+          disclosedPayload = filterAndMapSdJwtKeys(selectedCredential.disclosedPayload).visibleProperties
+        } else if (selectedCredential.claimFormat === ClaimFormat.MsoMdoc) {
+          disclosedPayload = Object.fromEntries(
+            Object.values(selectedCredential.disclosedPayload).flatMap((entry) => Object.entries(entry))
+          )
+        }
+
+        return {
+          id: selectedCredential.credentialRecord.id,
+          credentialName: display.name,
+          issuerName: display.issuer.name,
+          requestedAttributes: [...Object.keys(disclosedPayload)],
+          disclosedPayload,
+          metadata,
+          backgroundColor: display.backgroundColor,
+          textColor: display.textColor,
+          backgroundImage: display.backgroundImage,
+          claimFormat,
+        }
+      }),
+    }
+  })
+
+  return {
+    areAllSatisfied: entries.every((entry) => entry.isSatisfied),
+    name: 'DCQL Query',
+    purpose: 'DCQL Purpose',
+    entries,
+  }
 }
 
 export function formatDifPexCredentialsForRequest(

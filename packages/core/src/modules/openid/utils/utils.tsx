@@ -120,6 +120,13 @@ export function isSdJwtProofRequest(type: string): boolean {
   return false
 }
 
+export function isMdocProofRequest(type: string): boolean {
+  if (type === 'mso_mdoc') {
+    return true
+  }
+  return false
+}
+
 export function getCredentialConfigurationIds(resolved: OpenId4VciResolvedCredentialOffer): string[] {
   const fromOffered = (resolved.credentialOfferPayload.credential_configuration_ids ?? []).filter((x): x is string => !!x)
 
