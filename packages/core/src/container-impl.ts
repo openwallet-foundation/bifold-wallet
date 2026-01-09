@@ -59,6 +59,7 @@ import {
   Onboarding as StoreOnboardingState,
   Tours as ToursState,
 } from './types/state'
+import { hashPIN } from './utils/crypto'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -250,6 +251,10 @@ export class MainContainer implements Container {
     )
 
     this._container.registerInstance(TOKENS.UTIL_REFRESH_ORCHESTRATOR, orchestrator)
+
+    this._container.registerInstance(TOKENS.FN_PIN_HASH_ALGORITHM, (PIN: string, salt: string) => {
+      return hashPIN(PIN, salt)
+    })
 
     return this
   }

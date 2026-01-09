@@ -5,7 +5,6 @@ import uuid from 'react-native-uuid'
 import { walletId, KeychainServices } from '../constants'
 import { WalletSecret } from '../types/security'
 import { LoginAttempt } from '../types/state'
-import { hashPIN } from '../utils/crypto'
 
 const keyFauxUserName = 'WalletFauxPINUserName'
 const saltFauxUserName = 'WalletFauxSaltUserName'
@@ -42,9 +41,9 @@ export const optionsForKeychainAccess = (service: KeychainServices, useBiometric
   return opts
 }
 
-export const secretForPIN = async (PIN: string, salt?: string): Promise<WalletSecret> => {
+export const secretForPIN = async (PIN: string, hashAlgorithm: (PIN: string, salt: string) => Promise<string>, salt?: string): Promise<WalletSecret> => {
   const mySalt = salt ?? uuid.v4().toString()
-  const myKey = await hashPIN(PIN, mySalt)
+  const myKey = await hashAlgorithm(PIN, mySalt)
   const secret: WalletSecret = {
     id: walletId,
     key: myKey,

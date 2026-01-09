@@ -48,6 +48,7 @@ PODS:
     - React-callinvoker
     - React-Core
   - libevent (2.1.12)
+  - OpenSSL-Universal (3.3.3001)
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -933,6 +934,12 @@ PODS:
     - React-Core
   - react-native-orientation-locker (1.6.0):
     - React-Core
+  - react-native-quick-crypto (0.7.17):
+    - glog
+    - OpenSSL-Universal
+    - RCT-Folly (= 2022.05.16.00)
+    - React
+    - React-Core
   - react-native-safe-area-context (4.8.2):
     - React-Core
   - react-native-screenguard (1.1.0):
@@ -1224,6 +1231,7 @@ DEPENDENCIES:
   - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
+  - react-native-quick-crypto (from `../node_modules/react-native-quick-crypto`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screenguard (from `../node_modules/react-native-screenguard`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -1271,6 +1279,7 @@ SPEC REPOS:
     - CocoaAsyncSocket
     - fmt
     - libevent
+    - OpenSSL-Universal
     - SDWebImage
     - SocketRocket
 
@@ -1362,6 +1371,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-orientation-locker:
     :path: "../node_modules/react-native-orientation-locker"
+  react-native-quick-crypto:
+    :path: "../node_modules/react-native-quick-crypto"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-screenguard:
@@ -1464,6 +1475,7 @@ SPEC CHECKSUMS:
   hermes-engine: d992945b77c506e5164e6a9a77510c9d57472c59
   indy-vdr: aada31078a9ed270dd618fadb4cf69bcdc333d68
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   RCT-Folly: cd21f1661364f975ae76b3308167ad66b09f53f5
   RCTRequired: 415e56f7c33799a6483e41e4dce607f3daf1e69b
   RCTTypeSafety: e984a88e713281c2d8c2309a1a6d2775af0107ae
@@ -1491,6 +1503,7 @@ SPEC CHECKSUMS:
   react-native-keyboard-controller: cd466e02cb8a59b505d7aa02e01050a1d24a6069
   react-native-netinfo: 28c2462c85067fe653615f6f595673bdca93a287
   react-native-orientation-locker: ee8bb2177365ca74f51dc1e11218fe544634d523
+  react-native-quick-crypto: 4a239789a4e5b1a1f0f3b022c21c6f44dd5ae3ce
   react-native-safe-area-context: bf9d9d58f0f6726d4a6257088044c2595017579d
   react-native-screenguard: 38cf6d55781c6225f33be32afeb13cb2a0e154ee
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
@@ -1532,8 +1545,8 @@ SPEC CHECKSUMS:
   SDWebImage: f29024626962457f3470184232766516dee8dfea
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   VisionCamera: 6ad4b86176f6fea45e90e380d3d530bc5e1abff9
-  Yoga: 1f93d5925ea12fb0880b21efe3566677337cf2ed
+  Yoga: a813a6d82538ccba91c54406404e3ed80b48a692
 
 PODFILE CHECKSUM: 036865a022a22154f36d3be8ae5eba08e4fc99b2
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
