@@ -45,7 +45,7 @@ export const createPINValidations = (PIN: string, PINRules: PINValidationRules) 
 
   if (PINRules.use_nist_requirements) {
     PINValidations.push({
-      isInvalid: commonUsedPINs.includes(PIN),
+      isInvalid: PINRules.unacceptable_pin_list.includes(PIN),
       errorName: PINError.PINCommonlyUsed,
     } as PINValidationsType)
     PINValidations.push({
