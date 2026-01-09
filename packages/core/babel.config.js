@@ -4,7 +4,7 @@ const plugins = [
     'module-resolver',
     {
       root: ['.'],
-      extensions: ['.tsx', 'ts'],
+      extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
     },
   ],
 ]
