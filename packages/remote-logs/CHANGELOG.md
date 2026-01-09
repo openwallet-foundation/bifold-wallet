@@ -1,5 +1,24 @@
 # Change Log
 
+## 2.11.10
+
+### Patch Changes
+
+- a16e341: ledger export
+- Updated dependencies [a16e341]
+  - @bifold/core@2.11.10
+
+## 2.11.9
+
+### Patch Changes
+
+- 414b3c0: added resolutions to use patched versions of elliptic and sha.js
+- Updated dependencies [bc3bea3]
+- Updated dependencies [57a071d]
+- Updated dependencies [f4b8a77]
+- Updated dependencies [414b3c0]
+  - @bifold/core@2.11.9
+
 ## 2.11.8
 
 ### Patch Changes

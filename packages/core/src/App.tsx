@@ -23,6 +23,7 @@ import RootStack from './navigators/RootStack'
 import { bifoldTheme, themes } from './theme'
 import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
+import { KeyboardProvider } from 'react-native-keyboard-controller'
 
 const createApp = (container: Container): React.FC => {
   const AppComponent: React.FC = () => {
@@ -59,7 +60,9 @@ const createApp = (container: Container): React.FC => {
                       />
                       <ErrorModal />
                       <TourProvider tours={tours} overlayColor={'gray'} overlayOpacity={0.7}>
-                        <RootStack />
+                        <KeyboardProvider statusBarTranslucent={true} navigationBarTranslucent={true}>
+                          <RootStack />
+                        </KeyboardProvider>
                       </TourProvider>
                       <Toast topOffset={15} config={toastConfig} />
                     </NetworkProvider>
