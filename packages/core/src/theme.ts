@@ -856,6 +856,13 @@ export function createNavigationTheme(theme: { ColorPalette: IColorPalette }) {
       border: theme.ColorPalette.grayscale.white,
       notification: theme.ColorPalette.grayscale.white,
     },
+    header: {
+      shadowOffset: { width: 0, height: 6 },
+      shadowRadius: 6,
+      shadowColor: ColorPalette.grayscale.black,
+      shadowOpacity: 0.15,
+      elevation: 0,
+    }
   }
 }
 export type INavigationTheme = ReturnType<typeof createNavigationTheme>

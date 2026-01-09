@@ -82,7 +82,7 @@ export function useDefaultStackOptions({ ColorPalette }: ITheme): StackNavigatio
   const [{ globalScreenOptions }] = useServices([TOKENS.CONFIG])
 
   return (
-    globalScreenOptions ?? {
+    {
       headerTintColor: ColorPalette.brand.headerIcon,
       headerShown: true,
       headerBackTitleVisible: false,
@@ -103,6 +103,7 @@ export function useDefaultStackOptions({ ColorPalette }: ITheme): StackNavigatio
       headerTitle: (props: { children: React.ReactNode }) => <HeaderTitle {...props} />,
       header: (props) => <HeaderWithBanner {...props} />,
       headerBackAccessibilityLabel: t('Global.Back'),
+      ...globalScreenOptions,
     }
   )
 }
