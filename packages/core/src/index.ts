@@ -13,7 +13,6 @@ import CheckBoxRow from './components/inputs/CheckBoxRow'
 import LimitedTextInput from './components/inputs/LimitedTextInput'
 import NotificationListItem from './components/listItems/NotificationListItem'
 import ContentGradient from './components/misc/ContentGradient'
-import CredentialCard from './components/misc/CredentialCard'
 import ErrorBoundaryWrapper from './components/misc/ErrorBoundary'
 import FauxHeader from './components/misc/FauxHeader'
 import InfoBox, { InfoBoxType } from './components/misc/InfoBox'
@@ -197,7 +196,6 @@ export {
   ContentGradient,
   contexts,
   createApp,
-  CredentialCard,
   credentialOfferTourSteps,
   credentialsTourSteps,
   defaultConfig,

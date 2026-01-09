@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import CredentialCard from '../../src/components/misc/CredentialCard'
 import { StoreProvider, defaultState } from '../../src/contexts/store'
 import ListCredentials from '../../src/screens/ListCredentials'
 import { ReactTestInstance } from 'react-test-renderer'
 import { BasicAppContext } from '../helpers/app'
+import CredentialCardGen from '../../src/components/misc/CredentialCardGen'
 
 interface CredentialContextInterface {
   loading: boolean
@@ -114,7 +114,7 @@ describe('CredentialList Screen', () => {
       </BasicAppContext>
     )
     await act(async () => {
-      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCardGen)
 
       expect(credentialCards).toHaveLength(3)
 
@@ -143,7 +143,7 @@ describe('CredentialList Screen', () => {
       </StoreProvider>
     )
     await act(async () => {
-      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCardGen)
 
       expect(credentialCards).toHaveLength(3)
     })
@@ -166,7 +166,7 @@ describe('CredentialList Screen', () => {
       </StoreProvider>
     )
     await act(async () => {
-      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCardGen)
 
       expect(credentialCards).toHaveLength(3)
     })
