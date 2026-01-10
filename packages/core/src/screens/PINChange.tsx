@@ -36,7 +36,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const createPINButtonRef = useRef<React.ComponentRef<typeof TouchableOpacity>>(null)
 
   const [
     Button,

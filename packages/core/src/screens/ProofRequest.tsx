@@ -80,8 +80,8 @@ type ProofRequestProps = {
 }
 
 type CredentialListProps = {
-  header?: JSX.Element
-  footer?: JSX.Element
+  header?: React.ReactElement | null
+  footer?: React.ReactElement | null
   items: ProofCredentialItems[]
   missing: boolean
 }

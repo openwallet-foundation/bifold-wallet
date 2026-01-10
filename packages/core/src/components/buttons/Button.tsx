@@ -15,10 +15,10 @@ const ButtonImplComponent = (
     testID,
     onPress,
     disabled = false,
-    maxfontSizeMultiplier,
-    children,
+  maxfontSizeMultiplier,
+  children,
   }: ButtonProps,
-  ref: React.LegacyRef<TouchableOpacity>
+  ref: React.ForwardedRef<React.ComponentRef<typeof TouchableOpacity>>
 ) => {
   const { Buttons, heavyOpacity } = useTheme()
   const buttonStyles = {
@@ -119,7 +119,7 @@ const ButtonImplComponent = (
   )
 }
 
-const ButtonImpl = forwardRef<TouchableOpacity, ButtonProps>(ButtonImplComponent)
+const ButtonImpl = forwardRef<React.ElementRef<typeof TouchableOpacity>, ButtonProps>(ButtonImplComponent)
 export default ButtonImpl
 export { ButtonType, ButtonImpl }
 export type { Button, ButtonProps }

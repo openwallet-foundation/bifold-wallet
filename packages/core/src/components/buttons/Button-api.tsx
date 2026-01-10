@@ -43,4 +43,4 @@ const styles: stylesType = StyleSheet.create({
   [ButtonType.ModalSecondary]: {},
 })
 */
-export type Button = React.FC<ButtonProps & React.RefAttributes<TouchableOpacity>>
+export type Button = React.FC<ButtonProps & React.RefAttributes<React.ComponentRef<typeof TouchableOpacity>>>

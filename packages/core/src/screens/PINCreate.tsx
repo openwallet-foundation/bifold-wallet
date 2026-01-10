@@ -49,7 +49,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
-  const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const createPINButtonRef = useRef<React.ComponentRef<typeof TouchableOpacity>>(null)
   const [
     PINExplainer,
     PINHeader,
