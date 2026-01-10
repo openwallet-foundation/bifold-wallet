@@ -1,5 +1,7 @@
 # @bifold/verifier
 
+## 2.11.11
+
 ## 2.11.10
 
 ### Patch Changes

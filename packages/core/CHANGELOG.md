@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.11
+
+### Patch Changes
+
+- 7d51e3d: Make hashing function injectable while still maintaining previous implementation
+
 ## 2.11.10
 
 ### Patch Changes
