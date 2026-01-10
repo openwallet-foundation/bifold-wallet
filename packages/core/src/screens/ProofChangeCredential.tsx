@@ -10,7 +10,6 @@ import { DeviceEventEmitter, FlatList, StyleSheet, TouchableOpacity, View } from
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import RecordLoading from '../components/animated/RecordLoading'
-import { CredentialCard } from '../components/misc'
 import { EventTypes } from '../constants'
 import { useTheme } from '../contexts/theme'
 import { useAllCredentialsForProof } from '../hooks/proofs'
@@ -21,6 +20,7 @@ import { Fields, evaluatePredicates } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 import { ThemedText } from '../components/texts/ThemedText'
 import { CredentialErrors } from '../types/credentials'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 type ProofChangeProps = StackScreenProps<ProofRequestsStackParams, Screens.ProofChangeCredential>
 
@@ -155,7 +155,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                 onPress={() => changeCred(item.credId ?? '')}
                 style={[item.credId === selectedCred ? SelectedCredTheme : undefined, { marginBottom: 10 }]}
               >
-                <CredentialCard
+                <CredentialCardGen
                   credential={item.credExchangeRecord}
                   credDefId={item.credDefId}
                   schemaId={item.schemaId}
@@ -166,7 +166,7 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                   credName={item.credName}
                   proof
                   credentialErrors={errors}
-                ></CredentialCard>
+                ></CredentialCardGen>
               </TouchableOpacity>
             </View>
           )
