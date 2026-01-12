@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const appJson = require('./app.json')
 const pkg = require('./package.json')
 
