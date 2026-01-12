@@ -1152,7 +1152,7 @@ export const connectFromScanOrDeepLink = async (
   try {
     if (isOpenIdCredentialOffer(uri)) {
       navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
+        screen: Screens.OpenIDConnection,
         params: { oobRecordId: '', openIDUri: uri },
       })
 
@@ -1161,7 +1161,7 @@ export const connectFromScanOrDeepLink = async (
 
     if (isOpenIdPresentationRequest(uri)) {
       navigation.navigate(Stacks.ConnectionStack as any, {
-        screen: Screens.Connection,
+        screen: Screens.OpenIDConnection,
         params: { oobRecordId: '', openIDPresentationUri: uri },
       })
 
