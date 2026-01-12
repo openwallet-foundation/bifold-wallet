@@ -662,9 +662,10 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return newState
     }
     case OnboardingDispatchAction.DID_COMPLETE_TUTORIAL: {
+      const payload = (action?.payload ?? [])?.pop()
       const onboarding = {
         ...state.onboarding,
-        didCompleteTutorial: true,
+        didCompleteTutorial: payload?.DidCompleteTutorial ?? true,
       }
       const newState = {
         ...state,
