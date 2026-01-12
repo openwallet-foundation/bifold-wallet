@@ -57,6 +57,7 @@
     "expo-secure-store": "~15.0.8",
     "nanoid": "3.3.7",
     "react": "19.1.0",
+    "react-test-renderer": "19.1.0",
     "tslib": "2.6.2",
     "react-native": "0.81.5",
     "sha.js": "2.4.12",
