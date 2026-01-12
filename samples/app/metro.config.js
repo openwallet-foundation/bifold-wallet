@@ -2,9 +2,27 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
-const escape = require('escape-string-regexp')
-const exclusionList = require('metro-config/src/defaults/exclusionList')
 const path = require('path')
+const escape = require('escape-string-regexp')
+
+const exclusionList = (additionalExclusions = []) => {
+  const defaults = [/\/__tests__\/.*/]
+
+  const escapeRegExp = (pattern) => {
+    if (pattern instanceof RegExp) {
+      return pattern.source.replace(/\/|\\\//g, `\\${path.sep}`)
+    }
+    if (typeof pattern === 'string') {
+      const escaped = pattern.replace(/[\-\[\]\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
+      return escaped.replaceAll('/', `\\${path.sep}`)
+    }
+    throw new Error(
+      `Expected exclusionList to be called with RegExp or string, got: ${typeof pattern}`
+    )
+  }
+
+  return new RegExp(`(${additionalExclusions.concat(defaults).map(escapeRegExp).join('|')})$`)
+}
 
 const packageDirs = [
   path.resolve(__dirname, '../../packages/core'),
@@ -14,7 +32,7 @@ const packageDirs = [
 
 const watchFolders = [...packageDirs]
 
-const extraExclusionlist = []
+const extraExclusionList = []
 const extraNodeModules = {}
 
 for (const packageDir of packageDirs) {
@@ -23,7 +41,7 @@ for (const packageDir of packageDirs) {
     ...pak.peerDependencies,
     ...pak.devDependencies,
   })
-  extraExclusionlist.push(...modules.map((m) => path.join(packageDir, 'node_modules', m)))
+  extraExclusionList.push(...modules.map((m) => path.join(packageDir, 'node_modules', m)))
 
   modules.reduce((acc, name) => {
     acc[name] = path.join(__dirname, 'node_modules', name)
@@ -31,18 +49,24 @@ for (const packageDir of packageDirs) {
   }, extraNodeModules)
 }
 
+const defaultConfig = getDefaultConfig(__dirname)
 const {
   resolver: { sourceExts, assetExts },
-} = getDefaultConfig()
+} = defaultConfig
 
 /**
  * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
+ * https://reactnative.dev/docs/metro
  *
- * @type {import('metro-config').MetroConfig}
+ * @type {import('@react-native/metro-config').MetroConfig}
  */
-const config = {
+const combinedWatchFolders = Array.from(
+  new Set([...(defaultConfig.watchFolders || []), ...watchFolders])
+)
+
+const config = mergeConfig(defaultConfig, {
   transformer: {
+    ...defaultConfig.transformer,
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
     getTransformOptions: async () => ({
       transform: {
@@ -52,15 +76,19 @@ const config = {
     }),
   },
   resolver: {
-    blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
-    extraNodeModules: extraNodeModules,
+    ...defaultConfig.resolver,
+    blockList: exclusionList(extraExclusionList.map((m) => new RegExp(`^${escape(m)}[/\\\\].*$`))),
+    extraNodeModules: {
+      ...(defaultConfig.resolver.extraNodeModules || {}),
+      ...extraNodeModules,
+    },
     tslib: path.join(__dirname, 'node_modules/tslib'),
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
     unstable_enablePackageExports: true,
-    unstable_conditionNames: ['react-native', 'browser', 'import', 'require'],
+    unstable_conditionNames: ['react-native', 'require', 'browser'],
   },
-  watchFolders,
-}
+  watchFolders: combinedWatchFolders,
+})
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config)
+module.exports = config

@@ -171,3 +171,41 @@ index 084a7146e124e07cd3860819b9211be7d2369806..b911f8c6c360caea06946a3076e5148d
      "host": "https://github.com/hyperledger/indy-vdr/releases/download/",
      "package_name": "library-ios-android.tar.gz"
    },
+diff --git a/android/CMakeLists.txt b/android/CMakeLists.txt
+index e8a0a5efb3f3b6a9d2c65b4a4fbde74e1e1f17e0..8e7c8b3b61d9ecaa27cfb3e44d285fd3f737aa48 100644
+--- a/android/CMakeLists.txt
++++ b/android/CMakeLists.txt
+@@ -5,6 +5,6 @@ set (LIB_NAME "indyvdr")
+ file (GLOB LIBINDY_VDR_DIR "${CMAKE_SOURCE_DIR}/../native/mobile/android/${ANDROID_ABI}")
+ 
+ set(CMAKE_VERBOSE_MAKEFILE ON)
+-set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD 17)
+ 
+ set (BUILD_DIR ${CMAKE_SOURCE_DIR}/build)
+@@ -12,6 +12,13 @@ set (BUILD_DIR ${CMAKE_SOURCE_DIR}/build)
+ if(${REACT_NATIVE_VERSION} GREATER_EQUAL 71)
+   find_package(fbjni REQUIRED CONFIG)
+   find_package(ReactAndroid REQUIRED CONFIG)
++  if(NOT TARGET ReactAndroid::reactnativejni)
++    if(TARGET ReactAndroid::reactnative)
++      add_library(ReactAndroid::reactnativejni ALIAS ReactAndroid::reactnative)
++    else()
++      message(FATAL_ERROR "ReactAndroid::reactnativejni (or reactnative) target not found")
++    endif()
++  endif()
+ else()
+   set (RN_SO_DIR ${NODE_MODULES_DIR}/react-native/ReactAndroid/src/main/jni/first-party/react/jni)
+ endif()
+diff --git a/android/build.gradle b/android/build.gradle
+index 0d68cb1e3b0a82d371828ad378e3a51645ab2e4d..211ecdf418c18d0685dde2997ff6b340bdfd73be 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -110,6 +110,7 @@ android {
+     excludes = ["**/libc++_shared.so", 
+                 "**/libfbjni.so", 
+                 "**/libjsi.so", 
++                "**/libreactnative.so",
+                 "**/libreactnativejni.so", 
+                 "**/libjscexecutor.so", 
+     ]

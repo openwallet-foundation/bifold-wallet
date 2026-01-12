@@ -1,0 +1,38 @@
+diff --git a/android/CMakeLists.txt b/android/CMakeLists.txt
+index 5cc55c5ee3d05cbe9a7b92b0d1b031e0166c7456..42a0a95ec5dee0ace63953704f5e82a1645c4d2c 100644
+--- a/android/CMakeLists.txt
++++ b/android/CMakeLists.txt
+@@ -5,6 +5,6 @@ set (LIB_NAME "anoncreds")
+ file (GLOB LIBANONCREDS_DIR "${CMAKE_SOURCE_DIR}/../native/mobile/android/${ANDROID_ABI}")
+ 
+ set(CMAKE_VERBOSE_MAKEFILE ON)
+-set(CMAKE_CXX_STANDARD 14)
++set(CMAKE_CXX_STANDARD 17)
+ 
+ set (BUILD_DIR ${CMAKE_SOURCE_DIR}/build)
+@@ -12,6 +12,13 @@ set (BUILD_DIR ${CMAKE_SOURCE_DIR}/build)
+ if(${REACT_NATIVE_VERSION} GREATER_EQUAL 71)
+   find_package(fbjni REQUIRED CONFIG)
+   find_package(ReactAndroid REQUIRED CONFIG)
++  if(NOT TARGET ReactAndroid::reactnativejni)
++    if(TARGET ReactAndroid::reactnative)
++      add_library(ReactAndroid::reactnativejni ALIAS ReactAndroid::reactnative)
++    else()
++      message(FATAL_ERROR "ReactAndroid::reactnativejni (or reactnative) target not found")
++    endif()
++  endif()
+ else()
+   set (RN_SO_DIR ${NODE_MODULES_DIR}/react-native/ReactAndroid/src/main/jni/first-party/react/jni)
+ endif()
+diff --git a/android/build.gradle b/android/build.gradle
+index 6694eb5313d8eceee206063838fcff6625cc3d74..8e7c8b6a4cc0e62ad8b2f52c2ccbc07b9c7f0e6b 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -110,6 +110,7 @@ android {
+     excludes = ["**/libc++_shared.so", 
+                 "**/libfbjni.so", 
+                 "**/libjsi.so", 
++                "**/libreactnative.so",
+                 "**/libreactnativejni.so", 
+                 "**/libjscexecutor.so", 
+     ]

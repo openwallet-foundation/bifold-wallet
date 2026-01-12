@@ -1,0 +1,83 @@
+diff --git a/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt b/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt
+index 75e3f1d48dd660155fc08c1da95023507963435c..439badf6e63b3d6e2b9e66401ecc96c9726fb9bb 100644
+--- a/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt
++++ b/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt
+@@ -89,7 +89,8 @@ class CameraSession(internal val context: Context, internal val callback: Callba
+     }
+   }
+
+-  override fun getLifecycle(): Lifecycle = lifecycleRegistry
++  override val lifecycle: Lifecycle
++    get() = lifecycleRegistry
+
+   /**
+    * Configures the [CameraSession] with new values in one batch.
+diff --git a/android/src/main/java/com/mrousavy/camera/react/CameraViewManager.kt b/android/src/main/java/com/mrousavy/camera/react/CameraViewManager.kt
+index e078f6c07f682252ec27cc6d3ea90cff36d55261..b2783b2efca4ba6b69744c2d9ba5482cda81a28f 100644
+--- a/android/src/main/java/com/mrousavy/camera/react/CameraViewManager.kt
++++ b/android/src/main/java/com/mrousavy/camera/react/CameraViewManager.kt
+@@ -27,8 +27,8 @@ class CameraViewManager : ViewGroupManager<CameraView>() {
+     view.update()
+   }
+
+-  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any>? =
+-    MapBuilder.builder<String, Any>()
++  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> =
++    MapBuilder.builder<String, Any>()
+       .put("cameraViewReady", MapBuilder.of("registrationName", "onViewReady"))
+       .put("cameraInitialized", MapBuilder.of("registrationName", "onInitialized"))
+       .put("cameraStarted", MapBuilder.of("registrationName", "onStarted"))
+@@ -40,7 +40,7 @@ class CameraViewManager : ViewGroupManager<CameraView>() {
+       .put("averageFpsChanged", MapBuilder.of("registrationName", "onAverageFpsChanged"))
+       .put("cameraError", MapBuilder.of("registrationName", "onError"))
+       .put("cameraCodeScanned", MapBuilder.of("registrationName", "onCodeScanned"))
+-      .build()
++      .build().toMutableMap()
+
+   override fun getName(): String = TAG
+
+diff --git a/android/src/main/java/com/mrousavy/camera/react/CameraViewModule.kt b/android/src/main/java/com/mrousavy/camera/react/CameraViewModule.kt
+index 6e0206555cc6158af1da91cc4ea19991961ac6b1..afc0a1c9c25ec4374e304cd8a7530e2ffc870cb0 100644
+--- a/android/src/main/java/com/mrousavy/camera/react/CameraViewModule.kt
++++ b/android/src/main/java/com/mrousavy/camera/react/CameraViewModule.kt
+@@ -189,7 +189,7 @@ class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBase
+   }
+
+   private fun canRequestPermission(permission: String): Boolean {
+-    val activity = currentActivity as? PermissionAwareActivity
++    val activity = reactApplicationContext.currentActivity as? PermissionAwareActivity
+     return activity?.shouldShowRequestPermissionRationale(permission) ?: false
+   }
+
+diff --git a/android/CMakeLists.txt b/android/CMakeLists.txt
+index 8b6428c9a10df7b83e0e8c5dad60d1d7de746d2b..55ba9b0e38baa2ce29f5f2ec9f16e705c88f0249 100644
+--- a/android/CMakeLists.txt
++++ b/android/CMakeLists.txt
+@@ -12,6 +12,14 @@ set(CMAKE_CXX_STANDARD 17)
+ find_package(ReactAndroid REQUIRED CONFIG)
+ find_package(fbjni REQUIRED CONFIG)
+ find_library(LOG_LIB log)
++
++if(NOT TARGET ReactAndroid::reactnativejni)
++    if(TARGET ReactAndroid::reactnative)
++        add_library(ReactAndroid::reactnativejni ALIAS ReactAndroid::reactnative)
++    else()
++        message(FATAL_ERROR "ReactAndroid::reactnativejni (or reactnative) target not found")
++    endif()
++endif()
+
+ # Enables OpenGL/EGL HardwareBuffer and EGLImageKHR APIs
+ add_definitions(-DEGL_EGLEXT_PROTOTYPES)
+diff --git a/android/build.gradle b/android/build.gradle
+index 560cdf91addf990e03cebd90d93fbc2b54ec98dc..014dd27f174c1d00b66095c4b29432b227966d5e 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -168,7 +168,8 @@ android {
+             "**/libglog.so",
+             "**/libhermes.so",
+             "**/libhermes-executor-debug.so",
+             "**/libhermes_executor.so",
++            "**/libreactnative.so",
+             "**/libreactnativejni.so",
+             "**/libturbomodulejsijni.so",
+             "**/libreact_nativemodule_core.so",
