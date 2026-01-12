@@ -3,7 +3,6 @@
 exports[`CameraDisclosureModal Component Renders correctly 1`] = `
 <Modal
   animationType="slide"
-  hardwareAccelerated={false}
   supportedOrientations={
     Array [
       "portrait",
