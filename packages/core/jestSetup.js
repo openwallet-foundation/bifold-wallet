@@ -51,6 +51,21 @@ jest.mock('react-native-keyboard-controller', () => {
   }
 })
 
+// Mock Keyboard to fix KeyboardAvoidingView cleanup issues in tests
+// React Native 0.81+ exports Keyboard as .default
+const mockKeyboard = {
+  addListener: jest.fn(() => ({ remove: jest.fn() })),
+  removeListener: jest.fn(),
+  dismiss: jest.fn(),
+  scheduleLayoutAnimation: jest.fn(),
+  isVisible: jest.fn(() => false),
+  metrics: jest.fn(() => null),
+}
+jest.mock('react-native/Libraries/Components/Keyboard/Keyboard', () => ({
+  default: mockKeyboard,
+  ...mockKeyboard,
+}))
+
 // Fix timezone issues in tests
 process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed
 // Freeze "now" without enabling fake timers (prevents act() overlaps)
