@@ -49,9 +49,7 @@ exports[`PINChange Screen PIN change renders correctly 1`] = `
         <View
           style={
             Array [
-              Object {
-                "padding": 16,
-              },
+              false,
               undefined,
             ]
           }
@@ -62,7 +60,7 @@ exports[`PINChange Screen PIN change renders correctly 1`] = `
                 "backgroundColor": "#000000",
                 "height": "100%",
                 "justifyContent": "space-between",
-                "padding": 20,
+                "padding": 16,
               }
             }
           >

@@ -11,54 +11,77 @@ exports[`PushNotifications Screen Push notification screen renders correctly in 
     }
   }
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#000000",
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
 >
   <RCTScrollView
     contentContainerStyle={
-      Object {
-        "flexGrow": 1,
-      }
+      Array [
+        Object {
+          "padding": 16,
+        },
+        undefined,
+      ]
     }
+    showsVerticalScrollIndicator={false}
   >
     <View>
       <View
         style={
           Object {
-            "flex": 1,
-            "padding": 30,
+            "height": 200,
+            "marginBottom": 20,
           }
         }
       >
-        <View
-          style={
+        < />
+      </View>
+      <Text
+        maxFontSizeMultiplier={2}
+        style={
+          Array [
             Object {
-              "height": 200,
+              "color": "#FFFFFF",
+              "fontSize": 26,
+              "fontWeight": "bold",
+            },
+            Object {
               "marginBottom": 20,
-            }
+            },
+          ]
+        }
+      >
+        PushNotifications.EnableNotifications
+      </Text>
+      <Text
+        maxFontSizeMultiplier={2}
+        style={
+          Array [
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 18,
+              "fontWeight": "normal",
+            },
+            undefined,
+          ]
+        }
+      >
+        PushNotifications.BeNotified
+      </Text>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginTop": 20,
           }
-        >
-          < />
-        </View>
-        <Text
-          maxFontSizeMultiplier={2}
-          style={
-            Array [
-              Object {
-                "color": "#FFFFFF",
-                "fontSize": 26,
-                "fontWeight": "bold",
-              },
-              Object {
-                "marginBottom": 20,
-              },
-            ]
-          }
-        >
-          PushNotifications.EnableNotifications
-        </Text>
+        }
+      >
         <Text
           maxFontSizeMultiplier={2}
           style={
@@ -72,274 +95,257 @@ exports[`PushNotifications Screen Push notification screen renders correctly in 
             ]
           }
         >
-          PushNotifications.BeNotified
+          •
         </Text>
-        <View
+        <Text
+          maxFontSizeMultiplier={2}
           style={
-            Object {
-              "flexDirection": "row",
-              "marginTop": 20,
-            }
-          }
-        >
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                undefined,
-              ]
-            }
-          >
-            •
-          </Text>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "paddingLeft": 5,
-                },
-              ]
-            }
-          >
-            PushNotifications.BulletOne
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "marginTop": 20,
-            }
-          }
-        >
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                undefined,
-              ]
-            }
-          >
-            •
-          </Text>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "paddingLeft": 5,
-                },
-              ]
-            }
-          >
-            PushNotifications.BulletTwo
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "marginTop": 20,
-            }
-          }
-        >
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                undefined,
-              ]
-            }
-          >
-            •
-          </Text>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "paddingLeft": 5,
-                },
-              ]
-            }
-          >
-            PushNotifications.BulletThree
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-              "marginTop": 20,
-            }
-          }
-        >
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                undefined,
-              ]
-            }
-          >
-            •
-          </Text>
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                Object {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "paddingLeft": 5,
-                },
-              ]
-            }
-          >
-            PushNotifications.BulletFour
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "marginTop": "auto",
-            }
-          }
-        >
-          <View
-            accessibilityLabel="Global.Continue"
-            accessibilityRole="button"
-            accessibilityState={
+            Array [
               Object {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
               Object {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "paddingLeft": 5,
+              },
+            ]
+          }
+        >
+          PushNotifications.BulletOne
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginTop": 20,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
               Object {
-                "backgroundColor": "#42803E",
-                "borderRadius": 4,
-                "opacity": 1,
-                "padding": 16,
-              }
-            }
-            testID="com.ariesbifold:id/PushNotificationContinue"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                }
-              }
-            >
-              <Text
-                maxFontSizeMultiplier={2}
-                style={
-                  Array [
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontSize": 18,
-                      "fontWeight": "normal",
-                    },
-                    Array [
-                      Object {
-                        "color": "#FFFFFF",
-                        "fontSize": 18,
-                        "fontWeight": "bold",
-                        "textAlign": "center",
-                      },
-                      false,
-                      false,
-                      false,
-                    ],
-                  ]
-                }
-              >
-                Global.Continue
-              </Text>
-            </View>
-          </View>
-        </View>
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
+          •
+        </Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "paddingLeft": 5,
+              },
+            ]
+          }
+        >
+          PushNotifications.BulletTwo
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginTop": 20,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
+          •
+        </Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "paddingLeft": 5,
+              },
+            ]
+          }
+        >
+          PushNotifications.BulletThree
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginTop": 20,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
+          •
+        </Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "paddingLeft": 5,
+              },
+            ]
+          }
+        >
+          PushNotifications.BulletFour
+        </Text>
       </View>
     </View>
   </RCTScrollView>
+  <View
+    style={
+      Array [
+        Object {
+          "gap": 16,
+        },
+        Object {
+          "paddingBottom": 16,
+          "paddingHorizontal": 16,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityLabel="Global.Continue"
+      accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#42803E",
+          "borderRadius": 4,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+      testID="com.ariesbifold:id/PushNotificationContinue"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                },
+                false,
+                false,
+                false,
+              ],
+            ]
+          }
+        >
+          Global.Continue
+        </Text>
+      </View>
+    </View>
+  </View>
 </RNCSafeAreaView>
 `;

@@ -16,7 +16,7 @@ exports[`Biometry Screen renders correctly when biometry available 1`] = `
       Object {
         "backgroundColor": "#000000",
         "height": "100%",
-        "padding": 20,
+        "padding": 16,
       }
     }
   >
@@ -41,7 +41,7 @@ exports[`Biometry Screen renders correctly when biometry available 1`] = `
       <View
         style={
           Object {
-            "rowGap": 20,
+            "rowGap": 16,
           }
         }
       >
@@ -330,7 +330,7 @@ exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
       Object {
         "backgroundColor": "#000000",
         "height": "100%",
-        "padding": 20,
+        "padding": 16,
       }
     }
   >
@@ -355,7 +355,7 @@ exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
       <View
         style={
           Object {
-            "rowGap": 20,
+            "rowGap": 16,
           }
         }
       >

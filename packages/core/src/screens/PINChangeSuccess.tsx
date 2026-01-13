@@ -17,7 +17,7 @@ import ScreenWrapper from '../components/views/ScreenWrapper'
 const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePINSuccess>> = ({
   navigation,
 }) => {
-  const { ColorPalette } = useTheme()
+  const { ColorPalette, Spacing } = useTheme()
   const { t } = useTranslation()
   const [{ preventScreenCapture }, Button] = useServices([TOKENS.CONFIG, TOKENS.COMP_BUTTON])
 
@@ -26,7 +26,7 @@ const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Scre
   const style = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
+      padding: Spacing.md,
       backgroundColor: ColorPalette.brand.primaryBackground,
     },
   })
@@ -36,7 +36,7 @@ const ChangePINSuccessScreen: React.FC<StackScreenProps<SettingStackParams, Scre
   }, [navigation])
 
   return (
-    <ScreenWrapper keyboardActive>
+    <ScreenWrapper keyboardActive padded={false}>
       <View style={style.container}>
         <View style={{ marginTop: 10, marginBottom: 30 }}>
           <InfoBox

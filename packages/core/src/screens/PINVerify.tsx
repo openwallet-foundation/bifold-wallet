@@ -37,7 +37,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const [continueDisabled, setContinueDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
   const [alertModalVisible, setAlertModalVisible] = useState<boolean>(false)
-  const { ColorPalette } = useTheme()
+  const { ColorPalette, Spacing } = useTheme()
   const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [{ preventScreenCapture }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
@@ -109,7 +109,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const style = StyleSheet.create({
     screenContainer: {
       flex: 1,
-      padding: 20,
+      padding: Spacing.md,
       backgroundColor: ColorPalette.brand.primaryBackground,
       justifyContent: 'space-between',
     },
@@ -131,7 +131,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
     },
     changeBiometricsHeader: {
       marginTop: 0,
-      marginBottom: 40,
+      marginBottom: Spacing.xl,
     },
     loadingContainer: {
       justifyContent: 'center',
@@ -141,11 +141,11 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   })
 
   return (
-    <ScreenWrapper keyboardActive>
+    <ScreenWrapper padded={false} keyboardActive>
       <View style={style.screenContainer}>
         <View>
           {usage === PINEntryUsage.ChangeBiometrics && (
-            <ThemedText variant="headingTwo" style={style.changeBiometricsHeader}>
+            <ThemedText variant="headingThree" style={style.changeBiometricsHeader}>
               {t('PINEnter.ChangeBiometricsHeader')}
             </ThemedText>
           )}

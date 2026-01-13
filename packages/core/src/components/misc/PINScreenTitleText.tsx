@@ -16,7 +16,6 @@ const PINScreenTitleText = ({ header, subheader }: PINScreenTitleTextProps) => {
     header: {
       marginBottom: 16,
     },
-    subheader: {},
   })
 
   return (
@@ -24,9 +23,7 @@ const PINScreenTitleText = ({ header, subheader }: PINScreenTitleTextProps) => {
       <ThemedText variant="bold" style={style.header}>
         {header}
       </ThemedText>
-      <ThemedText variant="headerTitle" style={style.subheader}>
-        {subheader}
-      </ThemedText>
+      <ThemedText variant="bold">{subheader}</ThemedText>
     </View>
   )
 }
