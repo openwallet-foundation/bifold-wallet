@@ -65,13 +65,21 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
   const { styles, borderRadius } = useCredentialCardStyles(overlay, brandingOverlayType, isBranding10)
 
   const attributeTypes = overlay.bundle?.captureBase.attributes
-  const attributeFormats: Record<string, string | undefined> = (overlay.bundle as any)?.bundle.attributes
-    .map((attr: any) => {
-      return { name: attr.name, format: attr.format }
-    })
-    .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
+  const attributeFormats: Record<string, string | undefined> = React.useMemo(() => {
+    const overlayBundle = ((overlay.bundle as any)?.bundle ?? overlay.bundle) as any
+    const attributes = overlayBundle?.attributes
+
+    if (!Array.isArray(attributes)) {
+      return {}
+    }
+
+    return attributes.reduce((prev: Record<string, string | undefined>, curr: { name?: string; format?: string }) => {
+      if (!curr?.name) {
+        return prev
+      }
       return { ...prev, [curr.name]: curr.format }
     }, {})
+  }, [overlay.bundle])
 
   const getCardWatermarkTextColor = (background?: string) => {
     if (isBranding10) return ColorPalette.grayscale.mediumGrey

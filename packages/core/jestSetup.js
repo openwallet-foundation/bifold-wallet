@@ -8,6 +8,10 @@ import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
 import path from 'path'
 
+// React 18+/19: enable proper act() behavior in tests
+globalThis.IS_REACT_ACT_ENVIRONMENT = true
+global.IS_REACT_ACT_ENVIRONMENT = true
+
 mockRNDeviceInfo.getVersion = jest.fn(() => '1')
 mockRNDeviceInfo.getBuildNumber = jest.fn(() => '1')
 

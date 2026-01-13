@@ -7,18 +7,15 @@ import { MainContainer } from '../../src/container-impl'
 import { container } from 'tsyringe'
 import { OpenIDCredentialRecordProvider } from '../../src/modules/openid/context/OpenIDCredentialRecordProvider'
 import { MockLogger } from '../../src/testing/MockLogger'
-
-// BrandingOverlayType.Branding10 value from @bifold/oca
-const BRANDING_OVERLAY_TYPE_10 = 'oca/branding/1.0'
+import startCase from 'lodash.startcase'
+import { BrandingOverlayType } from '@bifold/oca/build/legacy'
 
 /**
- * Helper to convert snake_case to Title Case
+ * Normalizes attribute names for display in tests.
  */
-const toTitleCase = (str: string): string => {
-  return str
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ')
+const labelForAttribute = (name: string): string => {
+  const normalized = name.replace(/^student_/, '')
+  return startCase(normalized)
 }
 
 /**
@@ -28,26 +25,68 @@ const toTitleCase = (str: string): string => {
 const createMockOCABundleResolver = () => ({
   resolve: jest.fn().mockResolvedValue(undefined),
   resolveDefaultBundle: jest.fn().mockResolvedValue({}),
-  presentationFields: jest.fn().mockResolvedValue([]),
-  getBrandingOverlayType: jest.fn().mockReturnValue(BRANDING_OVERLAY_TYPE_10),
-  resolveAllBundles: jest.fn().mockImplementation((params: { identifiers?: { schemaId?: string }; meta?: { credName?: string; alias?: string } }) => {
+  presentationFields: jest.fn().mockImplementation(({ attributes }: { attributes?: any[] }) => {
+    return Promise.resolve(attributes ?? [])
+  }),
+  getBrandingOverlayType: jest.fn().mockReturnValue(BrandingOverlayType.Branding10),
+  resolveAllBundles: jest.fn().mockImplementation((params: {
+    identifiers?: { schemaId?: string; credentialDefinitionId?: string }
+    meta?: { credName?: string; alias?: string }
+    attributes?: any[]
+  }) => {
     // Extract schema name from schemaId if available (format: "did:2:name:version")
     let credName = params.meta?.credName || 'Credential'
     if (params.identifiers?.schemaId) {
-      const parts = params.identifiers.schemaId.split(':')
-      if (parts.length >= 3) {
-        credName = toTitleCase(parts[2]) // e.g., "unverified_person" -> "Unverified Person"
+      const schemaId = params.identifiers.schemaId
+      // Some verifier templates use a credential definition id in the `schema` field
+      if (schemaId.includes(':3:CL:')) {
+        const lastSegment = schemaId.split(':').pop() ?? schemaId
+        const trimmed = lastSegment.replace(/(?:\\s+Card|_card)$/i, '')
+        credName = startCase(trimmed)
+      } else {
+        const parts = schemaId.split(':')
+        if (parts.length >= 3) {
+          credName = startCase(parts[2]) // e.g., "unverified_person" -> "Unverified Person"
+        }
+      }
+    } else if (params.identifiers?.credentialDefinitionId) {
+      const lastSegment = params.identifiers.credentialDefinitionId.split(':').pop()
+      if (lastSegment) {
+        credName = startCase(lastSegment)
       }
     }
+
+    const presentationFields = [...(params.attributes ?? [])]
+
+    const attributeLabels = (params.attributes ?? []).reduce<Record<string, string>>((prev, field) => {
+      if (!field?.name) return prev
+      return { ...prev, [field.name]: labelForAttribute(field.name) }
+    }, {})
+
+    const attributes = (params.attributes ?? []).map((field) => ({
+      name: field?.name,
+      format: field?.format,
+    }))
+
+    const shouldApplyKnownBranding =
+      params.identifiers?.schemaId?.includes('unverified_person') ||
+      params.identifiers?.credentialDefinitionId?.includes('unverified_person')
+
     return Promise.resolve({
       bundle: {
-        captureBase: { attributes: {}, classification: '', flagged_attributes: [] },
+        captureBase: { attributes: {}, classification: '', flaggedAttributes: [], flagged_attributes: [] },
         metaOverlay: { name: credName, issuer: params.meta?.alias || 'Unknown Contact' },
-        labelOverlay: { attributeLabels: {} },
+        labelOverlay: { attributeLabels },
+        attributes,
+        flaggedAttributes: [],
+        metadata: {
+          issuerUrl: { en: 'http://example.com/issue' },
+          credentialSupportUrl: { en: 'http://example.com/help' },
+        },
       },
-      presentationFields: [],
+      presentationFields,
       metaOverlay: { name: credName, issuer: params.meta?.alias || 'Unknown Contact' },
-      brandingOverlay: { primaryBackgroundColor: '#FFFFFF' },
+      brandingOverlay: shouldApplyKnownBranding ? { primaryBackgroundColor: '#6c4637' } : {},
     })
   }),
 })
@@ -75,10 +114,18 @@ interface CustomBasicAppContextProps extends PropsWithChildren {
   container: Container
 }
 export const CustomBasicAppContext: React.FC<CustomBasicAppContextProps> = ({ children, container }) => {
-  const context = container
+  const context = useMemo(() => {
+    // Align custom containers with the default test container setup
+    container.resolve(TOKENS.UTIL_LOGGER)
+    container.container.registerInstance(TOKENS.UTIL_LOGGER, new MockLogger())
+    container.container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, createMockOCABundleResolver())
+    return container
+  }, [container])
   return (
     <ContainerProvider value={context}>
-      <NetworkContext.Provider value={networkContext}>{children}</NetworkContext.Provider>
+      <OpenIDCredentialRecordProvider>
+        <NetworkContext.Provider value={networkContext}>{children}</NetworkContext.Provider>
+      </OpenIDCredentialRecordProvider>
     </ContainerProvider>
   )
 }

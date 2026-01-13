@@ -84,18 +84,16 @@ describe('CredentialList Screen', () => {
         </BasicAppContext>
       )
 
-      await act(async () => {
-        const credentialItemInstances = await findAllByText('Person', { exact: false })
+      const credentialItemInstances = await findAllByText('Person', { exact: false })
 
-        expect(credentialItemInstances).toHaveLength(1)
+      expect(credentialItemInstances).toHaveLength(1)
 
-        const credentialItemInstance = credentialItemInstances[0]
+      const credentialItemInstance = credentialItemInstances[0]
 
-        fireEvent(credentialItemInstance, 'press')
+      fireEvent(credentialItemInstance, 'press')
 
-        expect(navigation.navigate).toBeCalledWith('Credential Details', {
-          credentialId: testOpenVPCredentialRecord.id,
-        })
+      expect(navigation.navigate).toBeCalledWith('Credential Details', {
+        credentialId: testOpenVPCredentialRecord.id,
       })
     })
   })

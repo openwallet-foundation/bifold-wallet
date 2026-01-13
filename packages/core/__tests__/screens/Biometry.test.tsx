@@ -257,7 +257,9 @@ describe('Biometry Screen', () => {
       fireEvent(toggleButton, 'press')
     })
     expect(mockedRequest).toHaveBeenCalledTimes(1)
-    expect(toggleButton.props.accessibilityState.checked).toBe(true)
+    await waitFor(() => {
+      expect(toggleButton.props.accessibilityState.checked).toBe(true)
+    })
   })
 
   test('requests permission when biometrics is available but permission is DENIED and toggle stays off when permission becomes BLOCKED', async () => {

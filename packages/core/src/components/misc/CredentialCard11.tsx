@@ -116,14 +116,20 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType, proof)
   const attributeFormats: Record<string, string | undefined> = useMemo(() => {
-    return (overlay.bundle as any)?.bundle.attributes
-      .map((attr: any) => {
-        return { name: attr.name, format: attr.format }
-      })
-      .reduce((prev: { [key: string]: string }, curr: { name: string; format?: string }) => {
-        return { ...prev, [curr.name]: curr.format }
-      }, {})
-  }, [overlay])
+    const overlayBundle = ((overlay.bundle as any)?.bundle ?? overlay.bundle) as any
+    const attributes = overlayBundle?.attributes
+
+    if (!Array.isArray(attributes)) {
+      return {}
+    }
+
+    return attributes.reduce((prev: Record<string, string | undefined>, curr: { name?: string; format?: string }) => {
+      if (!curr?.name) {
+        return prev
+      }
+      return { ...prev, [curr.name]: curr.format }
+    }, {})
+  }, [overlay.bundle])
 
   const logoText = useMemo(() => {
     if (isBranding11) {
@@ -214,10 +220,19 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
     }
     bundleResolver.resolveAllBundles(params).then((bundle: any) => {
       if (proof) {
-        setFlaggedAttributes((bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name))
-        const issuerUrl =
-          (bundle as any).bundle.bundle.metadata.issuerUrl[params.language] ??
-          Object.values((bundle as any).bundle.bundle.metadata.issuerUrl)?.[0]
+        const resolvedBundle = bundle?.bundle
+        const overlayBundle = resolvedBundle?.bundle ?? resolvedBundle
+        const flagged = overlayBundle?.flaggedAttributes ?? resolvedBundle?.captureBase?.flaggedAttributes
+        const flaggedNames =
+          Array.isArray(flagged) && flagged.every((item: unknown) => typeof item === 'string')
+            ? (flagged as string[])
+            : Array.isArray(flagged)
+              ? flagged.map((attr: any) => attr?.name).filter(Boolean)
+              : []
+        setFlaggedAttributes(flaggedNames)
+
+        const issuerUrls = overlayBundle?.metadata?.issuerUrl
+        const issuerUrl = issuerUrls?.[params.language] ?? Object.values(issuerUrls ?? {})?.[0]
 
         // Check if there is a help action override for this credential
         const override = credHelpActionOverrides?.find(
