@@ -70,6 +70,18 @@ jest.mock('react-native/Libraries/Components/Keyboard/Keyboard', () => ({
   ...mockKeyboard,
 }))
 
+// Mock BackHandler to return subscription with remove() method
+// This covers the new subscription-based API used in React Native 0.81+
+const mockBackHandler = {
+  addEventListener: jest.fn(() => ({ remove: jest.fn() })),
+  removeEventListener: jest.fn(),
+  exitApp: jest.fn(),
+}
+jest.mock('react-native/Libraries/Utilities/BackHandler', () => ({
+  default: mockBackHandler,
+  ...mockBackHandler,
+}))
+
 // Fix timezone issues in tests
 process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed
 // Freeze "now" without enabling fake timers (prevents act() overlaps)

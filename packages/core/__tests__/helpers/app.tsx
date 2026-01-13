@@ -72,13 +72,22 @@ const createMockOCABundleResolver = () => ({
       params.identifiers?.schemaId?.includes('unverified_person') ||
       params.identifiers?.credentialDefinitionId?.includes('unverified_person')
 
+    // Vary flaggedAttributes format to test defensive parsing:
+    // - For student_card schema: use object format [{name: 'field'}]
+    // - For others: use string format ['field'] or empty
+    const isStudentCard = params.identifiers?.schemaId?.includes('student_card') ||
+      params.identifiers?.credentialDefinitionId?.includes('Student Card')
+    const flaggedAttributes = isStudentCard
+      ? [{ name: 'student_id' }, { name: 'birthdate' }]
+      : ['email', 'phone']
+
     return Promise.resolve({
       bundle: {
-        captureBase: { attributes: {}, classification: '', flaggedAttributes: [], flagged_attributes: [] },
+        captureBase: { attributes: {}, classification: '', flaggedAttributes, flagged_attributes: [] },
         metaOverlay: { name: credName, issuer: params.meta?.alias || 'Unknown Contact' },
         labelOverlay: { attributeLabels },
         attributes,
-        flaggedAttributes: [],
+        flaggedAttributes,
         metadata: {
           issuerUrl: { en: 'http://example.com/issue' },
           credentialSupportUrl: { en: 'http://example.com/help' },
