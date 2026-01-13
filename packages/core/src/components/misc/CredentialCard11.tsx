@@ -19,10 +19,11 @@ import {
 } from '../../utils/credential'
 import {
   formatIfDate,
-  useCredentialConnectionLabel,
+  getAttributeFormats,
+  getSecondaryBackgroundColor,
   isDataUrl,
   pTypeToText,
-  getSecondaryBackgroundColor,
+  useCredentialConnectionLabel,
 } from '../../utils/helpers'
 import { shadeIsLightOrDark, Shade } from '../../utils/luminance'
 import { testIdWithKey } from '../../utils/testable'
@@ -115,21 +116,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
   const [helpAction, setHelpAction] = useState<GenericFn>()
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({})
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(overlay, brandingOverlayType, proof)
-  const attributeFormats: Record<string, string | undefined> = useMemo(() => {
-    const overlayBundle = ((overlay.bundle as any)?.bundle ?? overlay.bundle) as any
-    const attributes = overlayBundle?.attributes
-
-    if (!Array.isArray(attributes)) {
-      return {}
-    }
-
-    return attributes.reduce((prev: Record<string, string | undefined>, curr: { name?: string; format?: string }) => {
-      if (!curr?.name) {
-        return prev
-      }
-      return { ...prev, [curr.name]: curr.format }
-    }, {})
-  }, [overlay.bundle])
+  const attributeFormats = useMemo(() => getAttributeFormats(overlay.bundle), [overlay.bundle])
 
   const logoText = useMemo(() => {
     if (isBranding11) {

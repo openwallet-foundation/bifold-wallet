@@ -254,6 +254,26 @@ export function formatIfDate(format: string | undefined, value: string | number 
   return value
 }
 
+/**
+ * Extracts attribute formats from an overlay bundle.
+ * Used by credential card components to get format information for attributes.
+ */
+export const getAttributeFormats = (bundle: any): Record<string, string | undefined> => {
+  const overlayBundle = (bundle?.bundle ?? bundle) as any
+  const attributes = overlayBundle?.attributes
+
+  if (!Array.isArray(attributes)) {
+    return {}
+  }
+
+  return attributes.reduce((prev: Record<string, string | undefined>, curr: { name?: string; format?: string }) => {
+    if (!curr?.name) {
+      return prev
+    }
+    return { ...prev, [curr.name]: curr.format }
+  }, {})
+}
+
 export function getConnectionName(
   connection: ConnectionRecord | undefined,
   alternateContactNames: Record<string, string>
