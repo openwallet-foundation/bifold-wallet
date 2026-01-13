@@ -37,7 +37,7 @@ interface ScreenWrapperProps {
   controlsContainerStyle?: StyleProp<ViewStyle>
   /**
    * Apply standard padding (Spacing.md) to content and controls
-   * @default false
+   * @default true
    */
   padded?: boolean
 }
