@@ -18,7 +18,7 @@ import { Screens, Stacks } from '../../src/types/navigators'
 
 import ProofRequest from '../../src/screens/ProofRequest'
 import { testIdWithKey } from '../../src/utils/testable'
-import timeTravel from '../helpers/timetravel'
+// import timeTravel from '../helpers/timetravel'
 import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
 import { BasicAppContext } from '../helpers/app'
 import * as Helpers from '../../src/utils/helpers'
@@ -496,7 +496,7 @@ describe('displays a proof request screen', () => {
         },
       })
 
-      const { getByText, getByTestId, findByText } = render(
+      const { getByTestId, findByText } = render(
         <BasicAppContext>
           <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
