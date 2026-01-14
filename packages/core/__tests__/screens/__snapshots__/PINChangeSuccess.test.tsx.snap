@@ -49,9 +49,7 @@ exports[`ChangePINSuccess Screen Renders correctly 1`] = `
         <View
           style={
             Array [
-              Object {
-                "padding": 16,
-              },
+              false,
               undefined,
             ]
           }
@@ -61,7 +59,7 @@ exports[`ChangePINSuccess Screen Renders correctly 1`] = `
               Object {
                 "backgroundColor": "#000000",
                 "flex": 1,
-                "padding": 20,
+                "padding": 16,
               }
             }
           >

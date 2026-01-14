@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View, Platform, Linking } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet, View, Platform, Linking } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import Link from '../components/texts/Link'
@@ -11,6 +10,7 @@ import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 
 type UpdateAvailableProps = {
   appleAppStoreUrl?: string
@@ -47,72 +47,58 @@ const UpdateAvailable: React.FC<UpdateAvailableProps> = ({ appleAppStoreUrl, goo
   }
 
   const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      padding: 20,
-    },
     image: {
-      marginTop: 20,
+      marginTop: Spacing.md,
     },
     imageContainer: {
       alignItems: 'center',
-      marginBottom: 24,
+      marginBottom: Spacing.lg,
     },
     messageText: {
       textAlign: 'center',
-      marginTop: 30,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      margin: 20,
+      marginTop: Spacing.lg,
     },
     delayMessageText: {
       textAlign: 'center',
-      marginTop: 20,
-    },
-    buttonContainer: {
-      justifyContent: 'flex-end',
-      flex: 1,
+      marginTop: Spacing.md,
     },
   })
 
+  const controls = (
+    <>
+      {hasStoreLinks && (
+        <Button
+          title={t('AppUpdate.UpdateNow')}
+          accessibilityLabel={t('AppUpdate.UpdateNow')}
+          testID={testIdWithKey('UpdateNow')}
+          buttonType={ButtonType.Primary}
+          onPress={onPressWhatIsNew}
+        />
+      )}
+      <Button
+        title={t('AppUpdate.UpdateLater')}
+        accessibilityLabel={t('AppUpdate.UpdateLater')}
+        testID={testIdWithKey('UpdateLater')}
+        buttonType={ButtonType.Secondary}
+        onPress={onPressLater}
+      />
+    </>
+  )
+
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={['bottom', 'left', 'right']}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.imageContainer}>
-          <Assets.svg.updateAvailable {...iconOptions} />
-        </View>
-        <ThemedText variant="headingTwo" style={{ marginBottom: Spacing.lg }}>
-          {t('AppUpdate.Heading')}
-        </ThemedText>
-        <ThemedText>{t('AppUpdate.Body')}</ThemedText>
+    <ScreenWrapper controls={controls} padded>
+      <View style={styles.imageContainer}>
+        <Assets.svg.updateAvailable {...iconOptions} />
+      </View>
+      <ThemedText variant="headingTwo" style={{ marginBottom: Spacing.lg }}>
+        {t('AppUpdate.Heading')}
+      </ThemedText>
+      <ThemedText>{t('AppUpdate.Body')}</ThemedText>
 
-        {hasStoreLinks && (
-          <Link style={{ marginVertical: 24 }} onPress={onPressWhatIsNew} linkText={t('AppUpdate.LearnMore')} />
-        )}
-
-        <View style={styles.buttonContainer}>
-          {hasStoreLinks && (
-            <View style={{ marginBottom: 15 }}>
-              <Button
-                title={t('AppUpdate.UpdateNow')}
-                accessibilityLabel={t('AppUpdate.UpdateNow')}
-                testID={testIdWithKey('UpdateNow')}
-                buttonType={ButtonType.Primary}
-                onPress={onPressWhatIsNew}
-              />
-            </View>
-          )}
-          <Button
-            title={t('AppUpdate.UpdateLater')}
-            accessibilityLabel={t('AppUpdate.UpdateLater')}
-            testID={testIdWithKey('UpdateLater')}
-            buttonType={ButtonType.Secondary}
-            onPress={onPressLater}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      {hasStoreLinks && (
+        <Link style={{ marginVertical: Spacing.lg }} onPress={onPressWhatIsNew} linkText={t('AppUpdate.LearnMore')} />
+      )}
+    </ScreenWrapper>
   )
 }
 
