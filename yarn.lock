@@ -2153,8 +2153,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
-    "@credo-ts/anoncreds": "npm:0.5.19"
-    "@credo-ts/core": "npm:0.5.19"
+    "@credo-ts/anoncreds": "npm:0.6.1"
+    "@credo-ts/core": "npm:0.6.1"
+    "@credo-ts/didcomm": "npm:0.6.1"
     "@testing-library/jest-native": "npm:~5.4.3"
     "@types/jest": "npm:~29.5.14"
     "@types/lodash.startcase": "npm:~4.4.9"
@@ -2268,8 +2269,9 @@ __metadata:
   dependencies:
     "@babel/core": "npm:~7.28.6"
     "@bifold/react-hooks": "npm:2.12.8"
-    "@credo-ts/anoncreds": "npm:0.5.19"
-    "@credo-ts/core": "npm:0.5.19"
+    "@credo-ts/anoncreds": "npm:0.6.1"
+    "@credo-ts/core": "npm:0.6.1"
+    "@credo-ts/didcomm": "npm:0.6.1"
     "@hyperledger/anoncreds-shared": "npm:0.3.4"
     "@react-native/babel-preset": "npm:~0.81.5"
     "@types/jest": "npm:~29.5.14"
@@ -2283,8 +2285,8 @@ __metadata:
     typescript: "npm:~5.9.2"
   peerDependencies:
     "@bifold/react-hooks": 2.12.8
-    "@credo-ts/anoncreds": 0.5.19
-    "@credo-ts/core": 0.5.19
+    "@credo-ts/anoncreds": 0.6.1
+    "@credo-ts/core": 0.6.1
     "@hyperledger/anoncreds-shared": 0.3.4
     react: ~19.1.4
   languageName: unknown
