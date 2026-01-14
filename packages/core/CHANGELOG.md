@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.11.12
+
+### Patch Changes
+
+- 7fe30c1: styling fixes, better ScreenWrapper usage
+
 ## 2.11.11
 
 ### Patch Changes
