@@ -25,9 +25,9 @@ export const fetchContactsByLatestMessage = async (
       async (conn: DidCommConnectionRecord): Promise<ConnectionWithMessages> => ({
         conn,
         msgs: [
-          ...(await agent.modules.basicMessages.findAllByQuery({ connectionId: conn.id })),
-          ...(await agent.modules.proofs.findAllByQuery({ connectionId: conn.id })),
-          ...(await agent.modules.credentials.findAllByQuery({ connectionId: conn.id })),
+          ...(await agent.modules.didcomm.basicMessages.findAllByQuery({ connectionId: conn.id })),
+          ...(await agent.modules.didcomm.proofs.findAllByQuery({ connectionId: conn.id })),
+          ...(await agent.modules.didcomm.credentials.findAllByQuery({ connectionId: conn.id })),
         ],
       })
     )
