@@ -813,13 +813,13 @@ export const retrieveCredentialsForProof = async (
   }
 
   try {
-    const format = await agent.modules.proofs.getFormatData(proof.id)
+    const format = await agent.modules.didcomm.proofs.getFormatData(proof.id)
     const hasPresentationExchange = format.request?.presentationExchange !== undefined
     const hasAnonCreds = format.request?.anoncreds !== undefined
     const hasIndy = format.request?.indy !== undefined
 
     // Will fail if credential not in state 'request-received'
-    const credentialsAsPromise = agent.modules.proofs.getCredentialsForRequest({
+    const credentialsAsPromise = agent.modules.didcomm.proofs.getCredentialsForRequest({
       proofExchangeRecordId: proof.id,
       proofFormats: {
         // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
@@ -851,7 +851,7 @@ export const retrieveCredentialsForProof = async (
     })
 
     // Will fail if credential not in state 'request-received'
-    const credentialsWithRevokedAsPromise = agent.modules.proofs.getCredentialsForRequest({
+    const credentialsWithRevokedAsPromise = agent.modules.didcomm.proofs.getCredentialsForRequest({
       proofExchangeRecordId: proof.id,
       proofFormats: {
         // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)

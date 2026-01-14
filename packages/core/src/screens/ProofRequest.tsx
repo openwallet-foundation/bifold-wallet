@@ -479,7 +479,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
 
         let message: DidCommRequestPresentationV2Message | DidCommRequestPresentationV1Message | null | undefined
         try {
-          message = await agent?.modules.proofs.findRequestMessage(proofId)
+          message = await agent?.modules.didcomm.proofs.findRequestMessage(proofId)
         } catch (error) {
           logger.error('Error finding request message:', error as CredoError)
         }
@@ -510,7 +510,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       if (!retrievedCredentials) {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
-      const format = await agent.modules.proofs.getFormatData(proof.id)
+      const format = await agent.modules.didcomm.proofs.getFormatData(proof.id)
 
       if (format.request?.presentationExchange) {
         if (!descriptorMetadata) throw new Error(t('ProofRequest.PresentationMetadataNotFound'))
@@ -530,13 +530,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           })
         )
 
-        await agent.modules.proofs.acceptRequest({
+        await agent.modules.didcomm.proofs.acceptRequest({
           proofExchangeRecordId: proof.id,
           proofFormats: { presentationExchange: { credentials: selectedCredentials } },
         })
 
         if (proof.connectionId && goalCode?.endsWith('verify.once')) {
-          agent.modules.connections.deleteById(proof.connectionId)
+          agent.modules.didcomm.connections.deleteById(proof.connectionId)
         }
         return
       }
@@ -577,12 +577,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
       }
 
-      await agent.modules.proofs.acceptRequest({
+      await agent.modules.didcomm.proofs.acceptRequest({
         proofExchangeRecordId: proof.id,
         proofFormats: automaticRequestedCreds.proofFormats,
       })
       if (proof.connectionId && goalCode?.endsWith('verify.once')) {
-        agent.modules.connections.deleteById(proof.connectionId)
+        agent.modules.didcomm.connections.deleteById(proof.connectionId)
       }
 
       if (historyEventsLogger.logInformationSent) {
@@ -610,16 +610,16 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     try {
       if (agent && proof) {
         const connectionId = proof.connectionId ?? ''
-        const connection = await agent.modules.connections.findById(connectionId)
+        const connection = await agent.modules.didcomm.connections.findById(connectionId)
 
         if (connection) {
-          await agent.modules.proofs.sendProblemReport({ proofExchangeRecordId: proof.id, description: t('ProofRequest.Declined') })
+          await agent.modules.didcomm.proofs.sendProblemReport({ proofExchangeRecordId: proof.id, description: t('ProofRequest.Declined') })
         }
 
-        await agent.modules.proofs.declineRequest({ proofExchangeRecordId: proof.id })
+        await agent.modules.didcomm.proofs.declineRequest({ proofExchangeRecordId: proof.id })
 
         if (connectionId && goalCode?.endsWith('verify.once')) {
-          agent.modules.connections.deleteById(connectionId)
+          agent.modules.didcomm.connections.deleteById(connectionId)
         }
       }
     } catch (err: unknown) {
@@ -649,11 +649,11 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       toggleCancelModalVisible()
 
       if (agent && proof) {
-        await agent.modules.proofs.sendProblemReport({ proofExchangeRecordId: proof.id, description: t('ProofRequest.Declined') })
-        await agent.modules.proofs.declineRequest({ proofExchangeRecordId: proof.id })
+        await agent.modules.didcomm.proofs.sendProblemReport({ proofExchangeRecordId: proof.id, description: t('ProofRequest.Declined') })
+        await agent.modules.didcomm.proofs.declineRequest({ proofExchangeRecordId: proof.id })
 
         if (proof.connectionId && goalCode?.endsWith('verify.once')) {
-          agent.modules.connections.deleteById(proof.connectionId)
+          agent.modules.didcomm.connections.deleteById(proof.connectionId)
         }
       }
     } catch (err: unknown) {

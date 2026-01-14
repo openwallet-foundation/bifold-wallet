@@ -127,7 +127,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     }
 
     const updateCredentialPreview = async () => {
-      const { ...formatData } = await agent.modules.credentials.getFormatData(credential.id)
+      const { ...formatData } = await agent.modules.didcomm.credentials.getFormatData(credential.id)
       const { offer, offerAttributes } = formatData
       const offerData = offer?.anoncreds ?? offer?.indy
 
@@ -219,7 +219,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
 
       setAcceptModalVisible(true)
 
-      await agent.modules.credentials.acceptOffer({ credentialExchangeRecordId: credential.id })
+      await agent.modules.didcomm.credentials.acceptOffer({ credentialExchangeRecordId: credential.id })
       if (historyEventsLogger.logAttestationAccepted) {
         const type = HistoryCardType.CardAccepted
         await logHistoryRecord(type)
@@ -235,12 +235,12 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     try {
       if (agent && credential) {
         const connectionId = credential.connectionId ?? ''
-        const connection = await agent.modules.connections.findById(connectionId)
+        const connection = await agent.modules.didcomm.connections.findById(connectionId)
 
-        await agent.modules.credentials.declineOffer(credential.id)
+        await agent.modules.didcomm.credentials.declineOffer(credential.id)
 
         if (connection) {
-          await agent.modules.credentials.sendProblemReport({
+          await agent.modules.didcomm.credentials.sendProblemReport({
             credentialExchangeRecordId: credential.id,
             description: t('CredentialOffer.Declined'),
           })

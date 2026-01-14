@@ -24,9 +24,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@credo-ts/anoncreds": "0.5.13",
-    "@credo-ts/core": "0.5.13",
-    "@credo-ts/didcomm": "0.5.13",
+    "@credo-ts/anoncreds": "0.6.1",
+    "@credo-ts/core": "0.6.1",
+    "@credo-ts/didcomm": "0.6.1",
     "@credo-ts/react-hooks": "0.6.0",
     "@hyperledger/anoncreds-shared": "0.2.4",
     "@react-native/babel-preset": "~0.79.0",
@@ -41,8 +41,8 @@
     "typescript": "~5.5.4"
   },
   "peerDependencies": {
-    "@credo-ts/anoncreds": "0.5.17",
-    "@credo-ts/core": "0.5.17",
+    "@credo-ts/anoncreds": "0.6.1",
+    "@credo-ts/core": "0.6.1",
     "@credo-ts/react-hooks": "0.6.1",
     "@hyperledger/anoncreds-shared": "0.2.4",
     "react": "~19.1.0"

@@ -2365,14 +2365,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
-    "@credo-ts/anoncreds": "npm:0.5.13"
-    "@credo-ts/core": "npm:0.5.13"
-    "@credo-ts/didcomm": "npm:0.5.13"
+    "@credo-ts/anoncreds": "npm:0.6.1"
+    "@credo-ts/core": "npm:0.6.1"
+    "@credo-ts/didcomm": "npm:0.6.1"
     "@testing-library/jest-native": "npm:5.4.3"
     "@types/jest": "npm:29.5.5"
     "@types/lodash.startcase": "npm:^4.4.7"
     "@typescript-eslint/parser": "npm:^6.6.0"
-    axios: "npm:^1.4.0"
+    axios: "npm:~1.4.0"
     eslint: "npm:^8.48.0"
     eslint-import-resolver-typescript: "npm:^2.5.0"
     jest: "npm:29.6.4"
@@ -2449,9 +2449,9 @@ __metadata:
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
     "@babel/core": "npm:^7.20.0"
-    "@credo-ts/anoncreds": "npm:0.5.13"
-    "@credo-ts/core": "npm:0.5.13"
-    "@credo-ts/didcomm": "npm:0.5.13"
+    "@credo-ts/anoncreds": "npm:0.6.1"
+    "@credo-ts/core": "npm:0.6.1"
+    "@credo-ts/didcomm": "npm:0.6.1"
     "@credo-ts/react-hooks": "npm:0.6.0"
     "@hyperledger/anoncreds-shared": "npm:0.2.4"
     "@react-native/babel-preset": "npm:~0.79.0"
@@ -2465,8 +2465,8 @@ __metadata:
     rimraf: "npm:^6.0.1"
     typescript: "npm:~5.5.4"
   peerDependencies:
-    "@credo-ts/anoncreds": 0.5.17
-    "@credo-ts/core": 0.5.17
+    "@credo-ts/anoncreds": 0.6.1
+    "@credo-ts/core": 0.6.1
     "@credo-ts/react-hooks": 0.6.1
     "@hyperledger/anoncreds-shared": 0.2.4
     react: ~19.1.0
@@ -7206,17 +7206,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.4.0":
-  version: 1.12.2
-  resolution: "axios@npm:1.12.2"
-  dependencies:
-    follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.4"
-    proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/80b063e318cf05cd33a4d991cea0162f3573481946f9129efb7766f38fde4c061c34f41a93a9f9521f02b7c9565ccbc197c099b0186543ac84a24580017adfed
-  languageName: node
-  linkType: hard
-
 "axios@npm:~1.4.0":
   version: 1.4.0
   resolution: "axios@npm:1.4.0"
@@ -10563,7 +10552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0, follow-redirects@npm:^1.15.6":
+"follow-redirects@npm:^1.15.0":
   version: 1.15.11
   resolution: "follow-redirects@npm:1.15.11"
   peerDependenciesMeta:
@@ -10599,7 +10588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.0, form-data@npm:^4.0.4":
+"form-data@npm:^4.0.0":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
   dependencies:
