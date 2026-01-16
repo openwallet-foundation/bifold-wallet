@@ -1052,10 +1052,10 @@ exports[`ConfirmPINModal Component Renders correctly for PIN create 1`] = `
                     Array [
                       Object {
                         "color": "#FFFFFF",
-                        "fontSize": 28,
+                        "fontSize": 18,
                         "fontWeight": "bold",
                       },
-                      Object {},
+                      undefined,
                     ]
                   }
                 >

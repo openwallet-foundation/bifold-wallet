@@ -12,6 +12,7 @@ const defaultPINRules = {
   most_used_pins: false,
   use_nist_requirements: false,
   nist_pin_length: 6,
+  unacceptable_pin_list: []
 }
 
 const validPIN = '132465'

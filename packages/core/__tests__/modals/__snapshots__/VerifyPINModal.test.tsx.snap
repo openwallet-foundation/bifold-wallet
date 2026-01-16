@@ -223,9 +223,7 @@ exports[`VerifyPINModal Component Renders correctly 1`] = `
           <View
             style={
               Array [
-                Object {
-                  "padding": 16,
-                },
+                false,
                 undefined,
               ]
             }
@@ -236,7 +234,7 @@ exports[`VerifyPINModal Component Renders correctly 1`] = `
                   "backgroundColor": "#000000",
                   "flex": 1,
                   "justifyContent": "space-between",
-                  "padding": 20,
+                  "padding": 16,
                 }
               }
             >
