@@ -24,6 +24,7 @@ exports[`CameraDisclosureModal Component Renders correctly 1`] = `
     style={
       Object {
         "backgroundColor": "#000000",
+        "flex": 1,
       }
     }
   >
