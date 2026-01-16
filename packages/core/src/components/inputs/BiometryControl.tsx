@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { check, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ToggleButton from '../buttons/ToggleButton'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
@@ -137,7 +136,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   }, [onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t, onBiometryToggle])
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']}>
+    <View style={{ flex: 1 }}>
       {settingsPopupConfig && (
         <DismissiblePopupModal
           title={settingsPopupConfig.title}
@@ -183,7 +182,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         </View>
       </ScrollView>
       {children}
-    </SafeAreaView>
+    </View>
   )
 }
 

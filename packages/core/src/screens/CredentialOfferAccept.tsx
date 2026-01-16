@@ -42,9 +42,14 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [{ connectionTimerDelay }, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
-    container: {
+    root: {
+      flex: 1,
       ...ListItems.credentialOfferBackground,
-      height: '100%',
+    },
+    scroll: {
+      flex: 1,
+    },
+    scrollContent: {
       padding: 20,
     },
     image: {
@@ -58,8 +63,10 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
       marginTop: 30,
     },
     controlsContainer: {
-      marginTop: 'auto',
-      margin: 20,
+      paddingHorizontal: 20,
+      paddingTop: 10,
+      paddingBottom: 20, // let SafeAreaView add more if needed
+      ...ListItems.credentialOfferBackground,
     },
     delayMessageText: {
       textAlign: 'center',
@@ -131,9 +138,9 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   }, [shouldShowDelayMessage, credentialDeliveryStatus, t])
 
   return (
-    <SafeAreaModal visible={visible} transparent={true} animationType={'none'}>
-      <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
-        <ScrollView style={styles.container}>
+    <SafeAreaModal visible={visible} transparent animationType="none">
+      <SafeAreaView style={styles.root} edges={['top', 'left', 'right', 'bottom']}>
+        <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
           <View style={styles.messageContainer}>
             {credentialDeliveryStatus === DeliveryStatus.Pending && (
               <ThemedText
@@ -171,27 +178,23 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
 
         <View style={styles.controlsContainer}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
-            <View>
-              <Button
-                title={t('Loading.BackToHome')}
-                accessibilityLabel={t('Loading.BackToHome')}
-                testID={testIdWithKey('BackToHome')}
-                onPress={onBackToHomeTouched}
-                buttonType={ButtonType.ModalSecondary}
-              />
-            </View>
+            <Button
+              title={t('Loading.BackToHome')}
+              accessibilityLabel={t('Loading.BackToHome')}
+              testID={testIdWithKey('BackToHome')}
+              onPress={onBackToHomeTouched}
+              buttonType={ButtonType.ModalSecondary}
+            />
           )}
 
           {credentialDeliveryStatus === DeliveryStatus.Completed && (
-            <View>
-              <Button
-                title={t('Global.Done')}
-                accessibilityLabel={t('Global.Done')}
-                testID={testIdWithKey('Done')}
-                onPress={onDoneTouched}
-                buttonType={ButtonType.ModalPrimary}
-              />
-            </View>
+            <Button
+              title={t('Global.Done')}
+              accessibilityLabel={t('Global.Done')}
+              testID={testIdWithKey('Done')}
+              onPress={onDoneTouched}
+              buttonType={ButtonType.ModalPrimary}
+            />
           )}
         </View>
       </SafeAreaView>

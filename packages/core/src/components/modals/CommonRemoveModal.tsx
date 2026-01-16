@@ -86,7 +86,6 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       borderTopLeftRadius: 10,
     },
     container: {
-      height: '100%',
       paddingTop: 10,
       paddingHorizontal: 20,
     },

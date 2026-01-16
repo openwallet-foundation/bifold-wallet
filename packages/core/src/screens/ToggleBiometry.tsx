@@ -10,6 +10,8 @@ import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { useAppAgent } from '../utils/agent'
 import VerifyPINModal from '../components/modals/VerifyPINModal'
 import { PINEntryUsage } from './PINVerify'
+import ScreenLayout from '../layout/ScreenLayout'
+import { Screens } from '../types/navigators'
 
 const ToggleBiometry: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -127,16 +129,18 @@ const ToggleBiometry: React.FC = () => {
   }, [setCanSeeCheckPIN])
 
   return (
-    <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
-      <VerifyPINModal
-        onAuthenticationComplete={onAuthenticationComplete}
-        onBackPressed={onBackPressed}
-        onCancelAuth={onBackPressed}
-        PINVerifyModalUsage={PINEntryUsage.ChangeBiometrics}
-        title={t('Screens.EnterPIN')}
-        visible={canSeeCheckPIN}
-      />
-    </BiometryControl>
+    <ScreenLayout screen={Screens.Biometry}>
+      <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
+        <VerifyPINModal
+          onAuthenticationComplete={onAuthenticationComplete}
+          onBackPressed={onBackPressed}
+          onCancelAuth={onBackPressed}
+          PINVerifyModalUsage={PINEntryUsage.ChangeBiometrics}
+          title={t('Screens.EnterPIN')}
+          visible={canSeeCheckPIN}
+        />
+      </BiometryControl>
+    </ScreenLayout>
   )
 }
 

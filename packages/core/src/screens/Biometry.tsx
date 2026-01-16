@@ -9,6 +9,8 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { testIdWithKey } from '../utils/testable'
+import ScreenLayout from '../layout/ScreenLayout'
+import { Screens } from '../types/navigators'
 
 const Biometry: React.FC = () => {
   const [store, dispatch] = useStore()
@@ -34,20 +36,22 @@ const Biometry: React.FC = () => {
   }, [])
 
   return (
-    <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
-      <View style={{ marginTop: 'auto', margin: 20 }}>
-        <Button
-          title={t('Global.Continue')}
-          accessibilityLabel={'Continue'}
-          testID={testIdWithKey('Continue')}
-          onPress={continueTouched}
-          buttonType={ButtonType.Primary}
-          disabled={!continueEnabled}
-        >
-          {!continueEnabled && <ButtonLoading />}
-        </Button>
-      </View>
-    </BiometryControl>
+    <ScreenLayout screen={Screens.Biometry}>
+      <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
+        <View style={{ marginTop: 'auto', margin: 20 }}>
+          <Button
+            title={t('Global.Continue')}
+            accessibilityLabel={'Continue'}
+            testID={testIdWithKey('Continue')}
+            onPress={continueTouched}
+            buttonType={ButtonType.Primary}
+            disabled={!continueEnabled}
+          >
+            {!continueEnabled && <ButtonLoading />}
+          </Button>
+        </View>
+      </BiometryControl>
+    </ScreenLayout>
   )
 }
 
