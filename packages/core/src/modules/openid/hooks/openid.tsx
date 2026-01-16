@@ -127,7 +127,7 @@ export const useOpenID = ({
           (err as Error)?.message ?? err,
           1043
         )
-        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
       }
     },
     [agent, t]

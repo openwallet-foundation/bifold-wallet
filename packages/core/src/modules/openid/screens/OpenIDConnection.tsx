@@ -7,7 +7,7 @@ import {
   ProofExchangeRecord
 } from '@credo-ts/core'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BackHandler, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../../../hooks/connections'
@@ -68,7 +68,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     } catch (err: unknown) {
       logger.error(`[${Screens.OpenIDConnection}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [])
+  }, [agent, historyEnabled, logger])
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -100,7 +100,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         break
       }
     }
-  }, [notificationRecord, notifications, logger])
+  }, [notificationRecord, notifications, logger, connection, oobRecord])
 
   useEffect(() => {
 
@@ -124,7 +124,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       navigation.replace(Screens.OpenIDProofPresentation, { credential: notificationRecord })
     }
 
-  }, [logger, navigation])
+  }, [logger, navigation, notificationRecord])
 
   useEffect(() => {
     const handle = DeviceEventEmitter.addListener(EventTypes.OPENID_CONNECTION_ERROR, (err: BifoldError) => {
