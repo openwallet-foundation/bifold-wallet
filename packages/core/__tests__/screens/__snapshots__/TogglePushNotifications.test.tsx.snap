@@ -206,45 +206,53 @@ exports[`TogglePushNotification Screen Push notification screen renders correctl
             ]
           }
         >
-          <Text
-            maxFontSizeMultiplier={2}
-            style={
-              Array [
-                Object {
-                  "color": "#FFFFFF",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                },
-                undefined,
-              ]
-            }
-          >
-            PushNotifications.ReceiveNotifications
-          </Text>
-          <RCTSwitch
-            accessibilityLabel="PushNotifications.ReceiveNotifications"
-            accessibilityRole="switch"
-            onChange={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            onTintColor="rgba(53, 130, 63, 0.35)"
-            style={
-              Array [
-                Object {
-                  "alignSelf": "flex-start",
-                },
-                Object {
-                  "backgroundColor": "#D3D3D3",
-                  "borderRadius": 16,
-                },
-              ]
-            }
-            testID="com.ariesbifold:id/PushNotificationSwitch"
-            thumbTintColor="#606060"
-            tintColor="#D3D3D3"
-            value={false}
-          />
-        </View>
+          PushNotifications.BulletThree
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginTop": 20,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              undefined,
+            ]
+          }
+        >
+          •
+        </Text>
+        <Text
+          maxFontSizeMultiplier={2}
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "fontWeight": "normal",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 18,
+                "fontWeight": "normal",
+                "paddingLeft": 5,
+              },
+            ]
+          }
+        >
+          PushNotifications.BulletFour
+        </Text>
       </View>
     </View>
   </RCTScrollView>
@@ -298,8 +306,7 @@ exports[`TogglePushNotification Screen Push notification screen renders correctl
         style={
           Array [
             Object {
-              "height": 31,
-              "width": 51,
+              "alignSelf": "flex-start",
             },
             Object {
               "backgroundColor": "#D3D3D3",
