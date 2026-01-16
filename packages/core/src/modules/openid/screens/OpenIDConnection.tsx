@@ -7,8 +7,8 @@ import {
   ProofExchangeRecord
 } from '@credo-ts/core'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useReducer } from 'react'
-import { BackHandler, View, StyleSheet } from 'react-native'
+import React, { useEffect, useReducer, useState } from 'react'
+import { BackHandler, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 
 import { useConnectionByOutOfBandId, useOutOfBandById } from '../../../hooks/connections'
 import { DeliveryStackParams, Screens } from '../../../types/navigators'
@@ -16,19 +16,16 @@ import { useServices, TOKENS } from '../../../container-api'
 import { OpenId4VPRequestRecord } from '../../../modules/openid/types'
 import { useAppAgent } from '../../../utils/agent'
 import LoadingSpinner from '../../../components/animated/LoadingSpinner'
+import { EventTypes } from '../../../constants'
+import FullScreenErrorModal from '../../../components/modals/FullScreenErrorModal'
+import { TabStacks } from '../../../types/navigators'
+import { BifoldError } from '../../../types/error'
+import { useTheme } from '../../../contexts/theme'
 
 
 type NotCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDConnection>
-
-type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
-
-type LocalState = {
-  notificationRecord?: any
-}
-
-const merge: MergeFunction = (current, next) => ({ ...current, ...next })
 
 const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { openIDUri, openIDPresentationUri, oobRecordId } = route.params
@@ -45,10 +42,13 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { agent } = useAppAgent()
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
+  const { ColorPalette } = useTheme()
 
-  const [state, dispatch] = useReducer(merge, {
-    notificationRecord: undefined,
-  })
+  const [notificationRecord, setNotificationRecord] = useState<any>(undefined)
+
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
+  const [errorDetails, setErrorDetails] = useState<Partial<BifoldError>>({})
+
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -86,7 +86,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
         logger?.info(`Connection: Handling notification ${(notification as NotCustomNotification).id}`)
 
-        dispatch({ notificationRecord: notification })
+        setNotificationRecord(notification)
         break
       }
 
@@ -96,40 +96,62 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         (notification as MdocRecord).type === 'MdocRecord' ||
         (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
       ) {
-        dispatch({ notificationRecord: notification })
+        setNotificationRecord(notification)
         break
       }
     }
-  }, [state.notificationRecord, notifications, logger, dispatch])
+  }, [notificationRecord, notifications, logger])
 
   useEffect(() => {
 
-    if (!state.notificationRecord) {
+    if (!notificationRecord) {
       return
     }
 
     if (
-      (state.notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-      (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
-      (state.notificationRecord as MdocRecord).type === 'MdocRecord'
+      (notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+      (notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+      (notificationRecord as MdocRecord).type === 'MdocRecord'
     ) {
       logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
       navigation.replace(Screens.OpenIDCredentialOffer, {
-        credential: state.notificationRecord,
+        credential: notificationRecord,
       })
       return
     }
 
-    if ((state.notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
-      navigation.replace(Screens.OpenIDProofPresentation, { credential: state.notificationRecord })
+    if ((notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
+      navigation.replace(Screens.OpenIDProofPresentation, { credential: notificationRecord })
     }
 
-  }, [logger, navigation, state])
+  }, [logger, navigation])
+
+  useEffect(() => {
+    const handle = DeviceEventEmitter.addListener(EventTypes.OPENID_CONNECTION_ERROR, (err: BifoldError) => {
+      setShowErrorModal(true)
+      setErrorDetails({
+        ...err
+      })
+    })
+    return () => {
+      handle.remove()
+    }
+  }, [])
 
   return (
-    <View style={styles.pageContainer}>
-      <LoadingSpinner size={50} color='white' />
-    </View>
+    <>
+      <View style={styles.pageContainer}>
+        <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+      </View>
+      <FullScreenErrorModal 
+        errorTitle={errorDetails?.title ?? ''}
+        errorDescription={errorDetails?.description ?? ''}
+        visible={showErrorModal}
+        onPressCTA={() => {
+          navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+        }}
+      />
+    </>
   )
 }
 
