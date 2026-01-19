@@ -1,10 +1,11 @@
 
 import { DidCommConnectionRecord, DidCommOutOfBandRecord } from '@credo-ts/didcomm'
-import { useAgent, useConnectionById, useConnections } from '@credo-ts/react-hooks'
 import { useEffect, useMemo, useState } from 'react'
+import { useConnectionById, useConnections } from '@credo-ts/react-hooks'
+import { useAppAgent } from '../utils/agent'
 
 export const useOutOfBandById = (oobId: string): DidCommOutOfBandRecord | undefined => {
-  const { agent } = useAgent()
+  const { agent } = useAppAgent()
   const [oob, setOob] = useState<DidCommOutOfBandRecord | undefined>(undefined)
 
   useEffect(() => {

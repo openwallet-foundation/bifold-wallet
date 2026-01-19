@@ -1,5 +1,4 @@
 import { AnonCredsProof, AnonCredsProofRequest } from '@credo-ts/anoncreds'
-import { Agent } from '@credo-ts/core'
 import { DidCommProofExchangeRecord, DidCommProofState } from '@credo-ts/didcomm'
 
 import { BifoldAgent } from '../types/agent'
@@ -10,6 +9,17 @@ import {
   GroupedSharedProofDataItem,
   ParsedAnonCredsProof,
 } from '../types/proof'
+
+type ProofFormatData = {
+  request?: {
+    anoncreds?: AnonCredsProofRequest
+    indy?: AnonCredsProofRequest
+  }
+  presentation?: {
+    anoncreds?: AnonCredsProof
+    indy?: AnonCredsProof
+  }
+}
 
 /*
  * Extract identifiers from indy proof
@@ -130,7 +140,8 @@ export const groupSharedProofDataByCredential = (data: ParsedAnonCredsProof): Gr
  * Retrieve proof details from Credo record
  * */
 export const getProofData = async (agent: BifoldAgent, recordId: string): Promise<ParsedAnonCredsProof | undefined> => {
-  const data = await agent.modules.proofs.getFormatData(recordId)
+  const data = await agent.modules.didcomm.proofs.getFormatData(recordId) as ProofFormatData
+  
   if (data.request?.anoncreds && data.presentation?.anoncreds) {
     return parseAnonCredsProof(data.request.anoncreds, data.presentation.anoncreds)
   } else if (data.request?.indy && data.presentation?.indy) {
@@ -157,18 +168,18 @@ export const isPresentationFailed = (record: DidCommProofExchangeRecord) => {
 /*
  * Mark Proof record as viewed
  * */
-export const markProofAsViewed = async (agent: Agent, record: DidCommProofExchangeRecord) => {
+export const markProofAsViewed = async (agent: BifoldAgent, record: DidCommProofExchangeRecord) => {
   record.metadata.set(ProofMetadata.customMetadata, { ...record.metadata.data.customMetadata, details_seen: true })
-  return agent.modules.proofs.update(record)
+  return agent.modules.didcomm.proofs.update(record)
 }
 
 /*
  * Add template reference to Proof Exchange record
  * */
-export const linkProofWithTemplate = async (agent: Agent, record: DidCommProofExchangeRecord, templateId: string) => {
+export const linkProofWithTemplate = async (agent: BifoldAgent, record: DidCommProofExchangeRecord, templateId: string) => {
   record.metadata.set(ProofMetadata.customMetadata, {
     ...record.metadata.data.customMetadata,
     proof_request_template_id: templateId,
   })
-  return agent.modules.proofs.update(record)
+  return agent.modules.didcomm.proofs.update(record)
 }

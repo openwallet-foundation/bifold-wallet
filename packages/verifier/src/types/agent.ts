@@ -1,24 +1,9 @@
 import {
-  AnonCredsDidCommCredentialFormat,
   AnonCredsModule,
-  AnonCredsDidCommProofFormatService,
-  DataIntegrityDidCommCredentialFormatService,
-  LegacyIndyDidCommCredentialFormatService,
-  LegacyIndyDidCommProofFormatService,
-  DidCommCredentialV1Protocol,
-  DidCommProofV1Protocol,
-  AnonCredsDidCommCredentialFormatService,
 } from '@credo-ts/anoncreds'
 
 import {
-  DidCommConnectionsModule,
-  DidCommCredentialsModule,
-  DidCommDifPresentationExchangeProofFormatService,
-  DidCommMediationRecipientModule,
-  DidCommProofsModule,
-  DidCommCredentialV2Protocol,
-  DidCommProofV2Protocol,
-  DidCommOutOfBandModule
+  DidCommModule
 } from '@credo-ts/didcomm'
 
 import {
@@ -29,30 +14,7 @@ type GetAgentModules = () => {
   //askar: AskarModule
   //anoncredsRs: AnonCredsRsModule
   anoncreds: AnonCredsModule
-    //indyVdr: IndyVdrModule
-    oob: DidCommOutOfBandModule
-    connections: DidCommConnectionsModule
-    credentials: DidCommCredentialsModule<
-      (
-        | DidCommCredentialV1Protocol
-        | DidCommCredentialV2Protocol<
-            (
-              | LegacyIndyDidCommCredentialFormatService
-              | AnonCredsDidCommCredentialFormatService
-              | DataIntegrityDidCommCredentialFormatService
-            )[]
-          >
-      )[]
-    >
-    proofs: DidCommProofsModule<
-      (
-        | DidCommProofV1Protocol
-        | DidCommProofV2Protocol<
-            (LegacyIndyDidCommProofFormatService | AnonCredsDidCommProofFormatService | DidCommDifPresentationExchangeProofFormatService)[]
-          >
-      )[]
-    >
-    mediationRecipient: DidCommMediationRecipientModule
+  didcomm: DidCommModule
 }
 
 export type BifoldAgent = Agent<ReturnType<GetAgentModules>>
