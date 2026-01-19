@@ -127,14 +127,14 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [logger, navigation, notificationRecord])
 
   useEffect(() => {
-    const handle = DeviceEventEmitter.addListener(EventTypes.OPENID_CONNECTION_ERROR, (err: BifoldError) => {
+    const handler = DeviceEventEmitter.addListener(EventTypes.OPENID_CONNECTION_ERROR, (err: BifoldError) => {
       setShowErrorModal(true)
       setErrorDetails({
         ...err
       })
     })
     return () => {
-      handle.remove()
+      handler.remove()
     }
   }, [])
 
