@@ -1976,6 +1976,7 @@ __metadata:
     "@credo-ts/anoncreds": "npm:0.6.1"
     "@credo-ts/askar": "npm:0.6.1"
     "@credo-ts/core": "npm:0.6.1"
+    "@credo-ts/didcomm": "npm:0.6.1"
     "@credo-ts/indy-vdr": "npm:0.6.1"
     "@credo-ts/openid4vc": "npm:0.6.1"
     "@credo-ts/push-notifications": "npm:0.7.1"
@@ -2081,11 +2082,13 @@ __metadata:
     "@credo-ts/anoncreds": 0.6.1
     "@credo-ts/askar": 0.6.1
     "@credo-ts/core": 0.6.1
+    "@credo-ts/didcomm": 0.6.1
     "@credo-ts/indy-vdr": 0.6.1
     "@credo-ts/openid4vc": 0.6.1
     "@credo-ts/push-notifications": 0.7.1
     "@credo-ts/question-answer": 0.6.1
     "@credo-ts/react-native": 0.6.1
+    "@credo-ts/webvh": 0.6.1
     "@formatjs/intl-datetimeformat": ~6.18.2
     "@formatjs/intl-displaynames": ~6.8.13
     "@formatjs/intl-getcanonicallocales": ~2.5.6
@@ -2108,6 +2111,7 @@ __metadata:
     "@react-navigation/stack": ~6.3.29
     axios: ~1.13.2
     base-64: ~1.0.0
+    class-transformer: 0.5.1
     i18next: ~21.6.16
     lodash.startcase: ~4.4.0
     moment: ~2.29.4
