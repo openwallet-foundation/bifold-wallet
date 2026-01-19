@@ -88,7 +88,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     // fetch credential for ID
     const fetchCredential = async () => {
       try {
-        const credentialExchangeRecord = await agent?.modules.credentials.getById(credentialId)
+        const credentialExchangeRecord = await agent?.modules.didcomm.credentials.getById(credentialId)
         setCredential(credentialExchangeRecord)
       } catch (error) {
         // credential not found for id, display an error
@@ -211,7 +211,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential?.revocationNotification) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
-      agent?.modules.credentials.update(credential)
+      agent?.modules.didcomm.credentials.update(credential)
     }
   }, [credential, agent])
 
@@ -296,7 +296,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
-      agent?.modules.credentials.update(credential)
+      agent?.modules.didcomm.credentials.update(credential)
     }
   }, [credential, agent])
 

@@ -26,9 +26,8 @@ import {
   DidCommProofV2Protocol, 
   DidCommDifPresentationExchangeProofFormatService,
   DidCommModule,
-  DidCommOutOfBandModule,
-  DidCommBasicMessagesModule,
-  DidCommMediatorPickupStrategy} from '@credo-ts/didcomm'
+  DidCommMediatorPickupStrategy
+} from '@credo-ts/didcomm'
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcHolderModule, OpenId4VcModule } from '@credo-ts/openid4vc'
@@ -45,7 +44,9 @@ interface GetAgentModulesOptions {
   txnCache?: { capacity: number; expiryOffsetMs: number; path?: string }
 }
 
-export type BifoldAgent = Agent<ReturnType<typeof getAgentModules>>
+export type BifoldAgentModules = ReturnType<typeof getAgentModules>
+
+export type BifoldAgent = Agent<BifoldAgentModules>
 
 /**
  * Constructs the modules to be used in the agent setup
@@ -139,7 +140,7 @@ interface MyAgentContextInterface {
 
 export const useAppAgent = useAgent as () => MyAgentContextInterface
 
-export const createLinkSecretIfRequired = async (agent: Agent) => {
+export const createLinkSecretIfRequired = async (agent: BifoldAgent) => {
   // If we don't have any link secrets yet, we will create a
   // default link secret that will be used for all anoncreds
   // credential requests.

@@ -10,7 +10,6 @@ import {
   AnonCredsRequestedPredicateMatch,
 } from '@credo-ts/anoncreds'
 import {
-  Agent,
   parseDid,
 } from '@credo-ts/core'
 import {
@@ -25,8 +24,6 @@ import {
   DidCommCredentialPreviewAttribute,
   DidCommOutOfBandRole,
   DidCommBasicMessageRole,
-  DidCommOutOfBandModule,
-  DidCommOutOfBandApi
 } from '@credo-ts/didcomm'
 import { useConnectionById } from '@credo-ts/react-hooks'
 import { BrandingOverlay, CaptureBaseAttributeType } from '@bifold/oca'
@@ -331,7 +328,7 @@ export const credentialSortFn = (a: any, b: any) => {
   }
 }
 
-export const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Promise<string | undefined> => {
+export const resolveCredDefTag = async (cred_def_id: string, agent?: BifoldAgent): Promise<string | undefined> => {
   if (cred_def_id && agent?.modules?.anoncreds) {
     try {
       const { credentialDefinition } = await agent.modules.anoncreds.getCredentialDefinition(cred_def_id)
@@ -353,7 +350,7 @@ export const resolveCredDefTag = async (cred_def_id: string, agent?: Agent): Pro
   return undefined
 }
 
-export const resolveSchemaName = async (schema_id: string, agent?: Agent): Promise<string | undefined> => {
+export const resolveSchemaName = async (schema_id: string, agent?: BifoldAgent): Promise<string | undefined> => {
   if (schema_id && agent?.modules?.anoncreds) {
     try {
       const { schema } = await agent.modules.anoncreds.getSchema(schema_id)
@@ -373,7 +370,7 @@ export const resolveSchemaName = async (schema_id: string, agent?: Agent): Promi
 
 export const credNameFromRestriction = async (
   queries?: AnonCredsProofRequestRestriction[],
-  agent?: Agent
+  agent?: BifoldAgent
 ): Promise<string> => {
   let schema_name = ''
   let cred_def_id = ''
@@ -513,7 +510,7 @@ export const evaluatePredicates =
 const addMissingDisplayAttributes = async (
   attrReq: AnonCredsRequestedAttribute,
   records: DidCommCredentialExchangeRecord[],
-  agent?: Agent
+  agent?: BifoldAgent
 ): Promise<ProofCredentialAttributes> => {
   const { name, names, restrictions } = attrReq
   const credName = await credNameFromRestriction(restrictions, agent)
@@ -580,7 +577,7 @@ export const processProofAttributes = async (
   credentials?: AnonCredsCredentialsForProofRequest, // credentials that 100% validate the proof request
   credentialRecords?: DidCommCredentialExchangeRecord[], // all the credentials in the wallet
   groupByReferent?: boolean,
-  agent?: Agent
+  agent?: BifoldAgent
 ): Promise<{ [key: string]: ProofCredentialAttributes }> => {
   const processedAttributes = {} as { [key: string]: ProofCredentialAttributes }
   const requestedProofAttributes = request?.requested_attributes
@@ -687,7 +684,7 @@ export const mergeAttributesAndPredicates = (
   return merged
 }
 
-const addMissingDisplayPredicates = async (predReq: AnonCredsRequestedPredicate, agent?: Agent) => {
+const addMissingDisplayPredicates = async (predReq: AnonCredsRequestedPredicate, agent?: BifoldAgent) => {
   const { name, p_type: pType, p_value: pValue, restrictions } = predReq
 
   const credName = await credNameFromRestriction(restrictions, agent)
@@ -721,7 +718,7 @@ export const processProofPredicates = async (
   credentials?: AnonCredsCredentialsForProofRequest,
   credentialRecords?: DidCommCredentialExchangeRecord[],
   groupByReferent?: boolean,
-  agent?: Agent
+  agent?: BifoldAgent
 ): Promise<{ [key: string]: ProofCredentialPredicates }> => {
   const processedPredicates = {} as { [key: string]: ProofCredentialPredicates }
   const requestedProofPredicates = request?.requested_predicates
@@ -1054,7 +1051,7 @@ export const sortCredentialsForAutoSelect = (
  * @param logger optional logger instance
  */
 export const removeExistingInvitationsById = async (
-  agent: Agent | undefined,
+  agent: BifoldAgent | undefined,
   invitationId: string,
   logger?: BifoldLogger
 ): Promise<void> => {
@@ -1082,7 +1079,7 @@ export const removeExistingInvitationsById = async (
  */
 export const connectFromInvitation = async (
   uri: string,
-  agent: Agent | undefined,
+  agent: BifoldAgent | undefined,
   implicitInvitations: boolean = false,
   reuseConnection: boolean = false
 ): Promise<DidCommOutOfBandRecord> => {
@@ -1098,7 +1095,7 @@ export const connectFromInvitation = async (
         const did = parseDid(invitation.getDidServices()[0])
         const record = await agent?.modules.didcomm.oob.receiveImplicitInvitation({
           did: did.did,
-          label: invitation.label,
+          label: invitation.label ?? '',
           handshakeProtocols: invitation.handshakeProtocols as DidCommHandshakeProtocol[] | undefined,
         })
 
@@ -1109,7 +1106,7 @@ export const connectFromInvitation = async (
     }
   }
 
-  const record = await (agent?.modules.didcomm.oob as DidCommOutOfBandApi).receiveInvitation(invitation, {
+  const record = await agent?.modules.didcomm.oob.receiveInvitation(invitation, {
     reuseConnection,
     label: 'didcomm-oob-invitation',
   })
@@ -1145,7 +1142,7 @@ const processBetaUrlIfRequired = (uri: string): string => {
  */
 export const connectFromScanOrDeepLink = async (
   uri: string,
-  agent: Agent | undefined,
+  agent: BifoldAgent | undefined,
   logger: BifoldLogger,
   navigation: any,
   isDeepLink: boolean,
@@ -1208,7 +1205,7 @@ export const connectFromScanOrDeepLink = async (
  * @param goalCode add goalCode to connection invitation
  * @returns a connection record
  */
-export const createConnectionInvitation = async (agent: Agent | undefined, goalCode?: string) => {
+export const createConnectionInvitation = async (agent: BifoldAgent | undefined, goalCode?: string) => {
   const record = await agent?.modules.didcomm.oob.createInvitation({ goalCode })
   if (!record) {
     throw new Error('Could not create new invitation')
@@ -1229,7 +1226,7 @@ export const createConnectionInvitation = async (agent: Agent | undefined, goalC
  * @param type add goalCode to connection invitation
  * @returns a connection record
  */
-export const createTempConnectionInvitation = async (agent: Agent | undefined, type: 'issue' | 'verify') => {
+export const createTempConnectionInvitation = async (agent: BifoldAgent | undefined, type: 'issue' | 'verify') => {
   return createConnectionInvitation(agent, `aries.vc.${type}.once`)
 }
 

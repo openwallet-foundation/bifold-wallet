@@ -1,13 +1,14 @@
 
-import { DidCommConnectionRecord, DidCommOutOfBandApi, DidCommOutOfBandModule, DidCommOutOfBandRecord } from '@credo-ts/didcomm'
-import { useAgent, useConnectionById, useConnections } from '@credo-ts/react-hooks'
+import { DidCommConnectionRecord, DidCommOutOfBandRecord } from '@credo-ts/didcomm'
+import { useConnectionById, useConnections } from '@credo-ts/react-hooks'
 import { useMemo, useState } from 'react'
+import { useAppAgent } from '../utils/agent'
 
 export const useOutOfBandById = (oobId: string): DidCommOutOfBandRecord | undefined => {
-  const { agent } = useAgent()
+  const { agent } = useAppAgent()
   const [oob, setOob] = useState<DidCommOutOfBandRecord | undefined>(undefined)
   if (!oob) {
-    (agent?.modules.didcomm.oob as DidCommOutOfBandApi).findById(oobId).then((res) => {
+    agent?.modules.didcomm.oob.findById(oobId).then((res) => {
       if (res) {
         setOob(res)
       }

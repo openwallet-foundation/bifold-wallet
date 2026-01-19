@@ -278,7 +278,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           const proofId = (notification as DidCommProofExchangeRecord).id
           let message: DidCommRequestPresentationV2Message | null | undefined
           try {
-            message = await agent?.modules.proofs.findRequestMessage(proofId)
+            message = await agent?.modules.didcomm.proofs.findRequestMessage(proofId)
           } catch (error) {
             logger.error('Error finding request message:', error as CredoError)
           }

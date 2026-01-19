@@ -22,38 +22,37 @@ import {
   DidCommProofsModule,
   DidCommCredentialV2Protocol,
   DidCommProofV2Protocol,
-  DidCommOutOfBandModule
+  DidCommOutOfBandModule,
+  DidCommModule
 } from '@credo-ts/didcomm'
 
 function getAgentModules() {
   return null as unknown as {
-    //askar: AskarModule
-    //anoncredsRs: AnonCredsRsModule
     anoncreds: AnonCredsModule
-    //indyVdr: IndyVdrModule
-    oob: DidCommOutOfBandModule
-    connections: DidCommConnectionsModule
-    credentials: DidCommCredentialsModule<
-      (
-        | DidCommCredentialV1Protocol
-        | DidCommCredentialV2Protocol<
-            (
-              | LegacyIndyDidCommCredentialFormatService
-              | AnonCredsDidCommCredentialFormatService
-              | DataIntegrityDidCommCredentialFormatService
-            )[]
-          >
-      )[]
-    >
-    proofs: DidCommProofsModule<
-      (
-        | DidCommProofV1Protocol
-        | DidCommProofV2Protocol<
-            (LegacyIndyDidCommProofFormatService | AnonCredsDidCommProofFormatService | DidCommDifPresentationExchangeProofFormatService)[]
-          >
-      )[]
-    >
-    mediationRecipient: DidCommMediationRecipientModule
+    didcomm: DidCommModule
+    // oob: DidCommOutOfBandModule
+    // connections: DidCommConnectionsModule
+    // credentials: DidCommCredentialsModule<
+    //   (
+    //     | DidCommCredentialV1Protocol
+    //     | DidCommCredentialV2Protocol<
+    //         (
+    //           | LegacyIndyDidCommCredentialFormatService
+    //           | AnonCredsDidCommCredentialFormatService
+    //           | DataIntegrityDidCommCredentialFormatService
+    //         )[]
+    //       >
+    //   )[]
+    // >
+    // proofs: DidCommProofsModule<
+    //   (
+    //     | DidCommProofV1Protocol
+    //     | DidCommProofV2Protocol<
+    //         (LegacyIndyDidCommProofFormatService | AnonCredsDidCommProofFormatService | DidCommDifPresentationExchangeProofFormatService)[]
+    //       >
+    //   )[]
+    // >
+    // mediationRecipient: DidCommMediationRecipientModule
   }
 }
 
