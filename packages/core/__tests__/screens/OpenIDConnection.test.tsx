@@ -14,30 +14,38 @@ const oobRecordId = '979c6c76-2885-4315-842b-2080a76bad13'
 const openIDUri = '123456'
 const openIDPresentationUri = '//'
 
+jest.useFakeTimers({ legacyFakeTimers: true })
+
 describe('OpenID Connection Screen', () => {
+
+  beforeEach(() => {
+    jest.clearAllTimers()
+    jest.clearAllMocks()
+  })
 
   test('Renders correctly', async () => {
 
-    const element = (
+    const tree = (
       <BasicAppContext>
         <OpenIDConnectionScreen navigation={useNavigation()} route={{ params: { oobRecordId, openIDUri, openIDPresentationUri } } as any} />
       </BasicAppContext>
     )
-    const { getByTestId } = render(element)
+    const { getByTestId } = render(tree)
 
     const loading = getByTestId(testIdWithKey('Loading'))
 
     expect(loading).not.toBeNull()
+
   })
 
   test('Displays error correctly', async () => {
 
-    const element = (
+    const tree = (
       <BasicAppContext>
         <OpenIDConnectionScreen navigation={useNavigation()} route={{ params: { oobRecordId, openIDUri, openIDPresentationUri } } as any} />
       </BasicAppContext>
     )
-    const { findByText } = render(element)
+    const { findByText } = render(tree)
 
     const error = new BifoldError(
       'ErrorTitle',
