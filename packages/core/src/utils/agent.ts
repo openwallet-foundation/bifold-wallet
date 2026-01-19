@@ -114,10 +114,10 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
           }),
         ],
       },
-      // mediationRecipient: {
-      //   mediatorInvitationUrl: mediatorInvitationUrl,
-      //   mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
-      // },
+      mediationRecipient: {
+        mediatorInvitationUrl: mediatorInvitationUrl,
+        mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
+      },
     }),
     openid4vc: new OpenId4VcModule(),
     // oob: new DidCommOutOfBandModule(),
