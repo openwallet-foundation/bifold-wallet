@@ -107,12 +107,12 @@ export const createConnectionlessProofRequestInvitation = async (
   if (!proofFormats) {
     return undefined
   }
-  const { message: request, proofRecord } = await agent.modules.proofs.createRequest({
+  const { message: request, proofRecord } = await agent.modules.didcomm.proofs.createRequest({
     protocolVersion,
     autoAcceptProof: DidCommAutoAcceptProof.Always,
     proofFormats,
   })
-  const { message: invitation, invitationUrl } = await agent.modules.oob.createLegacyConnectionlessInvitation({
+  const { message: invitation, invitationUrl } = await agent.modules.didcomm.oob.createLegacyConnectionlessInvitation({
     recordId: proofRecord.id,
     message: request,
     domain,
@@ -142,7 +142,7 @@ export const sendProofRequest = async (
   if (!proofFormats) {
     return undefined
   }
-  const proofRecord = await agent.modules.proofs.requestProof({
+  const proofRecord = await agent.modules.didcomm.proofs.requestProof({
     protocolVersion,
     connectionId,
     proofFormats,
