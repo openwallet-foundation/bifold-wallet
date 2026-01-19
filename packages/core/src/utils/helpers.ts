@@ -24,7 +24,9 @@ import {
   DidCommOutOfBandRecord,
   DidCommCredentialPreviewAttribute,
   DidCommOutOfBandRole,
-  DidCommBasicMessageRole
+  DidCommBasicMessageRole,
+  DidCommOutOfBandModule,
+  DidCommOutOfBandApi
 } from '@credo-ts/didcomm'
 import { useConnectionById } from '@credo-ts/react-hooks'
 import { BrandingOverlay, CaptureBaseAttributeType } from '@bifold/oca'
@@ -1059,13 +1061,13 @@ export const removeExistingInvitationsById = async (
   // This is implemented just as findByReceivedInvitationId is
   // in Credo only this is able to return multiple if they exist
   const oobRecords =
-    (await agent?.modules.oob.findAllByQuery({
+    (await agent?.modules.didcomm.oob.findAllByQuery({
       invitationId,
       role: DidCommOutOfBandRole.Receiver,
     })) || []
 
   for (const r of oobRecords) {
-    await agent?.modules.oob.deleteById(r.id)
+    await agent?.modules.didcomm.oob.deleteById(r.id)
     agent?.config.logger.info('Successfully removed an existing oob invitation')
   }
 }
@@ -1084,7 +1086,7 @@ export const connectFromInvitation = async (
   implicitInvitations: boolean = false,
   reuseConnection: boolean = false
 ): Promise<DidCommOutOfBandRecord> => {
-  const invitation = await agent?.modules.oob.parseInvitation(uri)
+  const invitation = await agent?.modules.didcomm.oob.parseInvitation(uri)
 
   if (!invitation) {
     throw new Error('Could not parse invitation from URL')
@@ -1094,7 +1096,7 @@ export const connectFromInvitation = async (
     try {
       if (invitation.getDidServices().length > 0) {
         const did = parseDid(invitation.getDidServices()[0])
-        const record = await agent?.modules.oob.receiveImplicitInvitation({
+        const record = await agent?.modules.didcomm.oob.receiveImplicitInvitation({
           did: did.did,
           label: invitation.label,
           handshakeProtocols: invitation.handshakeProtocols as DidCommHandshakeProtocol[] | undefined,
@@ -1107,7 +1109,10 @@ export const connectFromInvitation = async (
     }
   }
 
-  const record = await agent?.modules.oob.receiveInvitation(invitation, { reuseConnection })
+  const record = await (agent?.modules.didcomm.oob as DidCommOutOfBandApi).receiveInvitation(invitation, {
+    reuseConnection,
+    label: 'didcomm-oob-invitation',
+  })
   return record?.outOfBandRecord as DidCommOutOfBandRecord
 }
 
@@ -1204,7 +1209,7 @@ export const connectFromScanOrDeepLink = async (
  * @returns a connection record
  */
 export const createConnectionInvitation = async (agent: Agent | undefined, goalCode?: string) => {
-  const record = await agent?.modules.oob.createInvitation({ goalCode })
+  const record = await agent?.modules.didcomm.oob.createInvitation({ goalCode })
   if (!record) {
     throw new Error('Could not create new invitation')
   }

@@ -76,6 +76,7 @@
     "@credo-ts/openid4vc": "0.6.1",
     "@credo-ts/react-native": "0.6.1",
     "@sphereon/ssi-types": "0.33.0",
+    "class-transformer": "0.5.1",
     "react": "19.0.0",
     "tslib": "2.6.2",
     "react-native": "0.79.7",
