@@ -47,7 +47,7 @@ const MainStack: React.FC = () => {
     declinedProofs.forEach((proof) => {
       const meta = proof?.metadata?.get(ProofMetadata.customMetadata) as ProofCustomMetadata
       if (meta?.delete_conn_after_seen) {
-        agent?.modules.connections.deleteById(proof?.connectionId ?? '').catch(() => null)
+        agent?.modules.didcomm.connections.deleteById(proof?.connectionId ?? '').catch(() => null)
         proof?.metadata.set(ProofMetadata.customMetadata, { ...meta, delete_conn_after_seen: false })
       }
     })
