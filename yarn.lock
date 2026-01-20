@@ -2160,6 +2160,7 @@ __metadata:
     "@babel/plugin-proposal-decorators": "npm:^7.23.9"
     "@babel/runtime": "npm:~7.23.9"
     "@credo-ts/core": "npm:0.5.17"
+    "@react-native-clipboard/clipboard": "npm:^1.16.3"
     "@react-native/babel-preset": "npm:~0.73.21"
     "@types/jest": "npm:^29.5.14"
     "@types/react": "npm:~18.2.79"
@@ -2171,14 +2172,17 @@ __metadata:
     react-native-document-picker: "npm:^9.3.1"
     react-native-fs: "npm:^2.20.0"
     react-native-share: "npm:^10.0.2"
+    react-native-zip-archive: "npm:^6.0.9"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
   peerDependencies:
+    "@react-native-clipboard/clipboard": "*"
     bip39: "*"
     react-native-document-picker: "*"
     react-native-fs: "*"
     react-native-get-random-values: "*"
     react-native-share: "*"
+    react-native-zip-archive: "*"
   languageName: unknown
   linkType: soft
 
@@ -5184,7 +5188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-clipboard/clipboard@npm:~1.16.3":
+"@react-native-clipboard/clipboard@npm:^1.16.3, @react-native-clipboard/clipboard@npm:~1.16.3":
   version: 1.16.3
   resolution: "@react-native-clipboard/clipboard@npm:1.16.3"
   peerDependencies:
@@ -8677,6 +8681,7 @@ __metadata:
     react-native-vector-icons: "npm:~10.3.0"
     react-native-vision-camera: "npm:~4.3.2"
     react-native-webview: "npm:~13.10.7"
+    react-native-zip-archive: "npm:^6.0.9"
     tsyringe: "npm:~4.8.0"
     typescript: "npm:~5.5.4"
     uuid: "npm:~9.0.1"
@@ -18328,6 +18333,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/b815fa08f9c5dfdbb35f63476b55c82fa4f0989ae75be6739913f3268213447d5345f28afda08c29e318cf854bbf74f4010585523919b4c6e31dd9b8e019fb83
+  languageName: node
+  linkType: hard
+
+"react-native-zip-archive@npm:^6.0.9":
+  version: 6.1.2
+  resolution: "react-native-zip-archive@npm:6.1.2"
+  peerDependencies:
+    react: ">=16.8.6"
+    react-native: ">=0.60.0"
+  checksum: 10c0/e2cd9f10f6a49fc4432dbbae9dd9db975e7207573773b28f946dc593c96d5d5223445fd805705a2e4de703336c68216425b9d705e7dcaf192e1b9a339e4d25ba
   languageName: node
   linkType: hard
 

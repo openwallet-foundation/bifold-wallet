@@ -43,7 +43,7 @@ export const RestoreWalletScreen = ({ walletConfig, onRestoreSuccess }: RestoreW
     }
 
     const targetConfig: WalletConfig = walletConfig || {
-      id: `restored-wallet-${Date.now()}`,
+      id: 'walletId',
       key: mnemonic,
     }
 

@@ -14,16 +14,19 @@
     "tsyringe": "~4.8.0"
   },
   "peerDependencies": {
+    "@react-native-clipboard/clipboard": "*",
     "bip39": "*",
     "react-native-document-picker": "*",
     "react-native-fs": "*",
     "react-native-get-random-values": "*",
-    "react-native-share": "*"
+    "react-native-share": "*",
+    "react-native-zip-archive": "*"
   },
   "devDependencies": {
     "@babel/core": "~7.22.20",
     "@babel/plugin-proposal-decorators": "^7.23.9",
     "@babel/runtime": "~7.23.9",
+    "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native/babel-preset": "~0.73.21",
     "@types/jest": "^29.5.14",
     "@types/react": "~18.2.79",
@@ -33,6 +36,7 @@
     "react-native-document-picker": "^9.3.1",
     "react-native-fs": "^2.20.0",
     "react-native-share": "^10.0.2",
+    "react-native-zip-archive": "^6.0.9",
     "typescript": "~5.5.4"
   }
 }

@@ -920,9 +920,13 @@ PODS:
   - React-Mapbuffer (0.73.11):
     - glog
     - React-debug
-  - react-native-config (1.5.5):
-    - react-native-config/App (= 1.5.5)
-  - react-native-config/App (1.5.5):
+  - react-native-config (1.5.10):
+    - react-native-config/App (= 1.5.10)
+  - react-native-config/App (1.5.10):
+    - React-Core
+  - react-native-document-picker (9.3.1):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - react-native-encrypted-storage (4.0.3):
     - React-Core
@@ -942,7 +946,7 @@ PODS:
     - React-Core
   - react-native-safe-area-context (4.8.2):
     - React-Core
-  - react-native-screenguard (1.1.0):
+  - react-native-screenguard (1.1.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1142,7 +1146,7 @@ PODS:
     - React-Core
   - RNLocalize (2.2.6):
     - React-Core
-  - RNPermissions (5.4.1):
+  - RNPermissions (5.4.4):
     - React-Core
   - RNReanimated (3.15.5):
     - glog
@@ -1166,16 +1170,28 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - React-RCTImage
-  - RNSVG (15.0.0):
-    - React-Core
-  - RNVectorIcons (10.0.3):
+  - RNShare (12.2.2):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
+  - RNSVG (15.0.0):
+    - React-Core
+  - RNVectorIcons (10.3.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+  - RNZipArchive (6.1.2):
+    - React-Core
+    - RNZipArchive/Core (= 6.1.2)
+    - SSZipArchive (~> 2.2)
+  - RNZipArchive/Core (6.1.2):
+    - React-Core
+    - SSZipArchive (~> 2.2)
   - SDWebImage (5.21.3):
     - SDWebImage/Core (= 5.21.3)
   - SDWebImage/Core (5.21.3)
   - SocketRocket (0.6.1)
+  - SSZipArchive (2.4.3)
   - VisionCamera (4.3.2):
     - VisionCamera/Core (= 4.3.2)
     - VisionCamera/React (= 4.3.2)
@@ -1226,6 +1242,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
@@ -1268,8 +1285,10 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - RNZipArchive (from `../node_modules/react-native-zip-archive`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1282,6 +1301,7 @@ SPEC REPOS:
     - OpenSSL-Universal
     - SDWebImage
     - SocketRocket
+    - SSZipArchive
 
 EXTERNAL SOURCES:
   anoncreds:
@@ -1361,6 +1381,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-document-picker:
+    :path: "../node_modules/react-native-document-picker"
   react-native-encrypted-storage:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-get-random-values:
@@ -1445,10 +1467,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  RNZipArchive:
+    :path: "../node_modules/react-native-zip-archive"
   VisionCamera:
     :path: "../node_modules/react-native-vision-camera"
   Yoga:
@@ -1497,7 +1523,8 @@ SPEC CHECKSUMS:
   React-jsinspector: a98428936fb888cc15d857226a26d9ac0a668a0e
   React-logger: 6e4873d1f9c54cca30f6c91a6617f8c91b75ba4c
   React-Mapbuffer: 57bf49a458398d329dad2bf8bc660e3e35b96989
-  react-native-config: 644074ab88db883fcfaa584f03520ec29589d7df
+  react-native-config: eae2b928a919c9743d710bbff3b7592882268fe8
+  react-native-document-picker: 4425fea5360a9e3ec5f268681194bf88ae67ec65
   react-native-encrypted-storage: 569d114e329b1c2c2d9f8c84bcdbe4478dda2258
   react-native-get-random-values: 0fd2b6a3129988d701d10e30f0622d5f039531bc
   react-native-keyboard-controller: cd466e02cb8a59b505d7aa02e01050a1d24a6069
@@ -1505,7 +1532,7 @@ SPEC CHECKSUMS:
   react-native-orientation-locker: ee8bb2177365ca74f51dc1e11218fe544634d523
   react-native-quick-crypto: 4a239789a4e5b1a1f0f3b022c21c6f44dd5ae3ce
   react-native-safe-area-context: bf9d9d58f0f6726d4a6257088044c2595017579d
-  react-native-screenguard: 38cf6d55781c6225f33be32afeb13cb2a0e154ee
+  react-native-screenguard: 3187963a55b31ba35440fcefe6f3d678d824cec3
   react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
   react-native-tcp-socket: ae8abcfebc071216302a09d9ed1e375d4e877484
   react-native-webview: f802f655c8446404bb0c134da9335a8cf667e8cb
@@ -1537,13 +1564,16 @@ SPEC CHECKSUMS:
   RNGestureHandler: 03a2c31aea5d46f51080f1c1b6659b76a9ac78c9
   RNKeychain: c497f7844b24577523bb84a6e8af9d217957972f
   RNLocalize: 8bf466de4c92d4721b254aabe1ff0a1456e7b9f4
-  RNPermissions: 86ee53d047f9275d82b57119afa7505edb4c0a22
+  RNPermissions: b080b4dc4ffcb889f89d57ca2390a65d14d49cc9
   RNReanimated: 7fdc3dc5bdf06ce359b54d16e911778c3b0b31b9
   RNScreens: e0f79783ce405f4362c29d098b19fe7e241f11a9
+  RNShare: 5eb9d9028490836619c11e82b32bc9ce4ad64152
   RNSVG: a9e095acf2e207f2ef491870523ed455636cf3b8
-  RNVectorIcons: 102cd20472bf0d7cd15443d43cd87f9c97228ac3
+  RNVectorIcons: 24c506ef3aab67787a85607b8d4a312ce8f6f3b0
+  RNZipArchive: 29236989a51e92d44e0a5d4c02555426e4e4726c
   SDWebImage: 16309af6d214ba3f77a7c6f6fdda888cb313a50a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   VisionCamera: 6ad4b86176f6fea45e90e380d3d530bc5e1abff9
   Yoga: a813a6d82538ccba91c54406404e3ed80b48a692
 

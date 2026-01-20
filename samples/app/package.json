@@ -104,6 +104,7 @@
     "react-native-vector-icons": "~10.3.0",
     "react-native-vision-camera": "~4.3.2",
     "react-native-webview": "~13.10.7",
+    "react-native-zip-archive": "^6.0.9",
     "tsyringe": "~4.8.0",
     "uuid": "~9.0.1",
     "zustand": "^4.5.2"

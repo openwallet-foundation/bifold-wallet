@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, ActivityIndicator, StyleSheet, ScrollView, Alert } from 'react-native'
+import { View, Text, Button, ActivityIndicator, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { container } from 'tsyringe'
+import Clipboard from '@react-native-clipboard/clipboard'
 import { BackupService } from '../services/BackupService'
 
 export const BackupWalletScreen = () => {
@@ -15,6 +16,13 @@ export const BackupWalletScreen = () => {
     const generated = backupService.generateMnemonic()
     setMnemonic(generated)
   }, [backupService])
+
+  const handleCopy = () => {
+    if (mnemonic) {
+      Clipboard.setString(mnemonic)
+      Alert.alert('Copied', 'Mnemonic phrase copied to clipboard')
+    }
+  }
 
   const handleBackup = async () => {
     if (!agent) return
@@ -43,6 +51,9 @@ export const BackupWalletScreen = () => {
 
         <View style={styles.mnemonicContainer}>
           <Text style={styles.mnemonic}>{mnemonic}</Text>
+          <TouchableOpacity style={styles.copyButton} onPress={handleCopy}>
+            <Text style={styles.copyButtonText}>Copy to Clipboard</Text>
+          </TouchableOpacity>
         </View>
 
         {loading ? (
@@ -85,6 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 30,
     width: '100%',
+    alignItems: 'center',
   },
   mnemonic: {
     fontSize: 18,
@@ -92,5 +104,17 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontWeight: '500',
     color: '#333',
+    marginBottom: 15,
+  },
+  copyButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 5,
+  },
+  copyButtonText: {
+    color: '#007AFF',
+    fontWeight: '600',
+    fontSize: 14,
   },
 })
