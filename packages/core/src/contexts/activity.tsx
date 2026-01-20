@@ -1,4 +1,3 @@
-import { useAgent } from '@credo-ts/react-hooks'
 import React, {
   createContext,
   PropsWithChildren,
@@ -14,6 +13,7 @@ import { defaultAutoLockTime } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { LockoutReason, useAuth } from './auth'
 import { useStore } from './store'
+import { useAppAgent } from '../utils/agent'
 
 // number of minutes before the timeout action is triggered
 // a value of 0 will never trigger the lock out action and
@@ -34,7 +34,7 @@ export const ActivityContext = createContext<ActivityContext>(null as unknown as
 export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const [store] = useStore()
-  const { agent } = useAgent()
+  const { agent } = useAppAgent()
   const { lockOutUser } = useAuth()
   const lastActiveTimeRef = useRef<number | undefined>(undefined)
   const timeoutInMilliseconds = useRef<number>((store.preferences.autoLockTime ?? defaultAutoLockTime) * 60000)
@@ -74,7 +74,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
         // remove timeout when backgrounded as timeout refs can be lost when app is backgrounded
         clearInactivityTimeoutIfExists()
         try {
-          await agent.modules.mediationRecipient.stopMessagePickup()
+          await agent.modules.didcomm.mediationRecipient.stopMessagePickup()
           logger.info('Stopped agent message pickup')
         } catch (err) {
           logger.error(`Error stopping agent message pickup, ${err}`)
@@ -93,7 +93,7 @@ export const ActivityProvider: React.FC<PropsWithChildren> = ({ children }) => {
         } else {
           // otherwise restart message pickup
           try {
-            await agent.modules.mediationRecipient.initiateMessagePickup()
+            await agent.modules.didcomm.mediationRecipient.initiateMessagePickup()
             logger.info('Restarted agent message pickup')
           } catch (err) {
             logger.error(`Error restarting agent message pickup, ${err}`)

@@ -111,7 +111,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       },
       mediationRecipient: {
         mediatorInvitationUrl: mediatorInvitationUrl,
-        mediatorPickupStrategy: DidCommMediatorPickupStrategy.PickUpV2,
+        mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
       },
     }),
     openid4vc: new OpenId4VcModule(),
