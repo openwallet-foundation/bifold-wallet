@@ -201,7 +201,6 @@ export type DeliveryStackParams = {
     openIDPresentationUri?: string
   }
   [Screens.OpenIDConnection]: {
-    oobRecordId?: string
     openIDUri?: string
     openIDPresentationUri?: string
   }

@@ -10,7 +10,6 @@ import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { BackHandler, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 
-import { useConnectionByOutOfBandId, useOutOfBandById } from '../../../hooks/connections'
 import { DeliveryStackParams, Screens } from '../../../types/navigators'
 import { useServices, TOKENS } from '../../../container-api'
 import { OpenId4VPRequestRecord } from '../../../modules/openid/types'
@@ -23,12 +22,10 @@ import { BifoldError } from '../../../types/error'
 import { useTheme } from '../../../contexts/theme'
 
 
-type NotCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
-
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDConnection>
 
 const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { openIDUri, openIDPresentationUri, oobRecordId } = route.params
+  const { openIDUri, openIDPresentationUri } = route.params
   const [
     logger,
     { useNotifications },
@@ -40,8 +37,6 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   ])
   const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const { agent } = useAppAgent()
-  const oobRecord = useOutOfBandById(oobRecordId ?? '')
-  const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
   const { ColorPalette } = useTheme()
 
   const [notificationRecord, setNotificationRecord] = useState<any>(undefined)
@@ -78,29 +73,15 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   useEffect(() => {
     for (const notification of notifications) {
       if (
-        (connection && (notification as NotCustomNotification).connectionId === connection.id) ||
-        oobRecord
-          ?.getTags()
-          ?.invitationRequestsThreadIds?.includes((notification as NotCustomNotification)?.threadId ?? '')
-      ) {
-
-        logger?.info(`Connection: Handling notification ${(notification as NotCustomNotification).id}`)
-
-        setNotificationRecord(notification)
-        break
-      }
-
-      if (
         (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
         (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
         (notification as MdocRecord).type === 'MdocRecord' ||
         (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
       ) {
         setNotificationRecord(notification)
-        break
       }
     }
-  }, [notificationRecord, notifications, logger, connection, oobRecord])
+  }, [notificationRecord, notifications, logger])
 
   useEffect(() => {
 
