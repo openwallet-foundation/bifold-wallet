@@ -11,11 +11,14 @@
   },
   "license": "Apache-2.0",
   "description": "Exposes useful React hooks that allow easy interaction with Credo.",
-  "homepage": "https://github.com/openwallet-foundation/credo-ts-ext/tree/main/packages/react-hooks",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openwallet-foundation/credo-ts-ext",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
     "directory": "packages/react-hooks"
+  },
+  "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
+  "bin": {
+    "bifold": "bin/bifold"
   },
   "scripts": {
     "build": "yarn run clean && yarn run compile",
@@ -28,13 +31,14 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
-    "@credo-ts/core": "^0.5.17",
-    "@credo-ts/question-answer": "^0.5.17",
-    "@types/react": "^18.2.14"
+    "@credo-ts/core": "0.5.17",
+    "@credo-ts/question-answer": "0.5.17",
+    "@types/react": "^18.2.14",
+    "rimraf": "^6.1.2"
   },
   "peerDependencies": {
-    "@credo-ts/core": "^0.5.17",
-    "@credo-ts/question-answer": "^0.5.17",
+    "@credo-ts/core": "0.5.17",
+    "@credo-ts/question-answer": "0.5.17",
     "react": ">=17.0.0 <19.0.0"
   }
 }
