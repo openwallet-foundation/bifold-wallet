@@ -1,0 +1,40 @@
+{
+  "name": "@credo-ts/react-hooks",
+  "main": "build/index",
+  "types": "build/index",
+  "version": "0.6.1",
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "description": "Exposes useful React hooks that allow easy interaction with Credo.",
+  "homepage": "https://github.com/openwallet-foundation/credo-ts-ext/tree/main/packages/react-hooks",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openwallet-foundation/credo-ts-ext",
+    "directory": "packages/react-hooks"
+  },
+  "scripts": {
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf -rf ./build",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "rxjs": "^7.2.0"
+  },
+  "devDependencies": {
+    "@credo-ts/core": "^0.5.0",
+    "@credo-ts/question-answer": "^0.5.0",
+    "@types/react": "^18.2.14"
+  },
+  "peerDependencies": {
+    "@credo-ts/question-answer": "^0.5.0",
+    "@credo-ts/core": "^0.5.0",
+    "react": ">=17.0.0 <19.0.0"
+  }
+}
