@@ -25,12 +25,12 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   const { isBiometricsActive } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
-  const { ColorPalette, Assets } = useTheme()
+  const { ColorPalette, Assets, Spacing } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
       height: '100%',
-      padding: 20,
+      padding: Spacing.md,
       backgroundColor: ColorPalette.brand.primaryBackground,
     },
     image: {
@@ -39,7 +39,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
       marginBottom: 66,
     },
     biometryAvailableRowGap: {
-      rowGap: 20,
+      rowGap: Spacing.md,
     },
   })
 

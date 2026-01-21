@@ -1,6 +1,6 @@
 {
   "name": "@bifold/verifier",
-  "version": "2.11.10",
+  "version": "2.11.12",
   "main": "build/commonjs/index.js",
   "types": "build/typescript/index.d.ts",
   "module": "build/module/index.js",
