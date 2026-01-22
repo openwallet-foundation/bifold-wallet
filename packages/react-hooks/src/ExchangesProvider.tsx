@@ -37,10 +37,11 @@ const ExchangesProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children
     loading: true,
   })
 
+  const { records: basicMessages } = useBasicMessages()
+  const { records: proofs } = useProofs()
+  const { records: credentials } = useCredentials()
+
   const setInitialState = () => {
-    const { records: basicMessages } = useBasicMessages()
-    const { records: proofs } = useProofs()
-    const { records: credentials } = useCredentials()
     const records = [...basicMessages, ...proofs, ...credentials] as BaseRecord[]
     setState({ records, loading: false })
   }
