@@ -2,17 +2,17 @@ import globals from 'globals'
 import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import reactPlugin from 'eslint-plugin-react'
-import importPlugin from 'eslint-plugin-import';
-import reactHooks from 'eslint-plugin-react-hooks';
+import importPlugin from 'eslint-plugin-import'
+import reactHooks from 'eslint-plugin-react-hooks'
 import jestPlugin from 'eslint-plugin-jest'
 
 export default [
   {
     settings: {
-      "react": {
-        "version": "detect"
-      }
-    }
+      react: {
+        version: 'detect',
+      },
+    },
   },
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
@@ -43,7 +43,7 @@ export default [
       ...reactPlugin.configs.flat.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'error',
-      'no-console': "error",
+      'no-console': 'error',
     },
   },
   {
@@ -62,6 +62,8 @@ export default [
       'packages/react-native-attestation/build/',
       'packages/core/lib/',
       'packages/legacy/core/lib',
+      'packages/react-hooks/build/',
+      'samples/app/lib/',
     ],
   },
   {
@@ -87,6 +89,6 @@ export default [
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-    }
+    },
   },
 ]
