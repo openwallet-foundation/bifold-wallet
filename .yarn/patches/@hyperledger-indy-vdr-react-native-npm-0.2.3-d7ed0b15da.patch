@@ -1,0 +1,22 @@
+diff --git a/cpp/turboModuleUtility.cpp b/cpp/turboModuleUtility.cpp
+index 3ff7d9a455748748d84abf076dc29166bd94a717..5a029ea34225d5bb9f5610270677d5ffda80203a 100644
+--- a/cpp/turboModuleUtility.cpp
++++ b/cpp/turboModuleUtility.cpp
+@@ -143,7 +143,7 @@ int64_t jsiToValue(jsi::Runtime &rt, jsi::Object &options, const char *name,
+                    bool optional) {
+   jsi::Value value = options.getProperty(rt, name);
+   if ((value.isNull() || value.isUndefined()) && optional)
+-    return 0;
++    return -1;
+ 
+   if (value.isNumber())
+     return value.asNumber();
+@@ -169,7 +169,7 @@ int32_t jsiToValue(jsi::Runtime &rt, jsi::Object &options, const char *name,
+                    bool optional) {
+   jsi::Value value = options.getProperty(rt, name);
+   if ((value.isNull() || value.isUndefined()) && optional)
+-    return 0;
++    return -1;
+ 
+   if (value.isNumber())
+     return value.asNumber();

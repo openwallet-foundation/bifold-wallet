@@ -15,7 +15,7 @@ import { BasicAppContext } from '../helpers/app'
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('@openwallet-foundation/askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
@@ -48,7 +48,7 @@ describe('CredentialOffer Screen', () => {
         <NetworkProvider>
           <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
-      </BasicAppContext>
+      </BasicAppContext>,
     )
 
     await act(async () => {})
@@ -67,7 +67,7 @@ describe('CredentialOffer Screen', () => {
         <NetworkProvider>
           <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
-      </BasicAppContext>
+      </BasicAppContext>,
     )
 
     await act(async () => {})
@@ -86,7 +86,7 @@ describe('CredentialOffer Screen', () => {
         <NetworkProvider>
           <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
-      </BasicAppContext>
+      </BasicAppContext>,
     )
 
     await act(async () => {})
@@ -108,7 +108,7 @@ describe('CredentialOffer Screen', () => {
         <NetworkProvider>
           <CredentialOffer credentialId={credentialId} navigation={useNavigation()} />
         </NetworkProvider>
-      </BasicAppContext>
+      </BasicAppContext>,
     )
 
     await act(async () => {})

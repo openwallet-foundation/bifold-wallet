@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
@@ -6,20 +6,18 @@ import { useTheme } from '../../contexts/theme'
 import { Button, ButtonType, ButtonProps } from './Button-api'
 import { ThemedText } from '../texts/ThemedText'
 
-const ButtonImplComponent = (
-  {
-    title,
-    buttonType,
-    accessibilityLabel,
-    accessibilityHint,
-    testID,
-    onPress,
-    disabled = false,
+const ButtonImpl = ({
+  title,
+  buttonType,
+  accessibilityLabel,
+  accessibilityHint,
+  testID,
+  onPress,
+  disabled = false,
   maxfontSizeMultiplier,
   children,
-  }: ButtonProps,
-  ref: React.ForwardedRef<React.ComponentRef<typeof TouchableOpacity>>
-) => {
+  ref,
+}: ButtonProps) => {
   const { Buttons, heavyOpacity } = useTheme()
   const buttonStyles = {
     [ButtonType.Critical]: {
@@ -119,7 +117,6 @@ const ButtonImplComponent = (
   )
 }
 
-const ButtonImpl = forwardRef<React.ElementRef<typeof TouchableOpacity>, ButtonProps>(ButtonImplComponent)
 export default ButtonImpl
 export { ButtonType, ButtonImpl }
 export type { Button, ButtonProps }

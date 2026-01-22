@@ -10,6 +10,7 @@ import { useAuth } from '../../contexts/auth'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import { getSupportedBiometryType, BIOMETRY_TYPE } from 'react-native-keychain'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -28,7 +29,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
 
   const styles = StyleSheet.create({
     container: {
-      height: '100%',
+      flexGrow: 1,
       padding: Spacing.md,
       backgroundColor: ColorPalette.brand.primaryBackground,
     },
@@ -136,7 +137,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   }, [onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t, onBiometryToggle])
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom']}>
       {settingsPopupConfig && (
         <DismissiblePopupModal
           title={settingsPopupConfig.title}
@@ -182,7 +183,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         </View>
       </ScrollView>
       {children}
-    </View>
+    </SafeAreaView>
   )
 }
 

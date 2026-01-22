@@ -9,10 +9,10 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { testIdWithKey } from '../utils/testable'
-import ScreenLayout from '../layout/ScreenLayout'
-import { Screens } from '../types/navigators'
+import { useTheme } from '../contexts/theme'
 
 const Biometry: React.FC = () => {
+  const { Spacing } = useTheme()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { commitWalletToKeychain } = useAuth()
@@ -36,22 +36,20 @@ const Biometry: React.FC = () => {
   }, [])
 
   return (
-    <ScreenLayout screen={Screens.Biometry}>
-      <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
-        <View style={{ marginTop: 'auto', margin: 20 }}>
-          <Button
-            title={t('Global.Continue')}
-            accessibilityLabel={'Continue'}
-            testID={testIdWithKey('Continue')}
-            onPress={continueTouched}
-            buttonType={ButtonType.Primary}
-            disabled={!continueEnabled}
-          >
-            {!continueEnabled && <ButtonLoading />}
-          </Button>
-        </View>
-      </BiometryControl>
-    </ScreenLayout>
+    <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
+      <View style={{ marginTop: 'auto', margin: Spacing.md }}>
+        <Button
+          title={t('Global.Continue')}
+          accessibilityLabel={'Continue'}
+          testID={testIdWithKey('Continue')}
+          onPress={continueTouched}
+          buttonType={ButtonType.Primary}
+          disabled={!continueEnabled}
+        >
+          {!continueEnabled && <ButtonLoading />}
+        </Button>
+      </View>
+    </BiometryControl>
   )
 }
 

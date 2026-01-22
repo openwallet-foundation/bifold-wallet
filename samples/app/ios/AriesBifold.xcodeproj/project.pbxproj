@@ -9,23 +9,12 @@
 /* Begin PBXBuildFile section */
 		048117462E27616DA47F2FBE /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D055503F207F559673827A7 /* ExpoModulesProvider.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		43857C042720ABB4004F54E0 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43857C032720ABB4004F54E0 /* libswiftWebKit.tbd */; };
 		442476112D61583B00100568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442476102D61583B00100568 /* AppDelegate.swift */; };
 		566FB1F2273B158E003E9BEE /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 566FB1F1273B158E003E9BEE /* Media.xcassets */; };
 		56D96E222D31B8C40029DA6A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 56D96E212D31B8C40029DA6A /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		FE8E5FF56635B38E3EDDB4FE /* libPods-AriesBifold.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FD3028FC6F338DC6AC5F0E /* libPods-AriesBifold.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = AriesBifold;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		433E774026557E1B00F569EE /* Embed Frameworks */ = {
@@ -41,11 +30,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* AriesBifoldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AriesBifoldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DCEA582210DEA8A082CA163 /* Pods-AriesBifold.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AriesBifold.release.xcconfig"; path = "Target Support Files/Pods-AriesBifold/Pods-AriesBifold.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AriesBifold.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AriesBifold.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AriesBifold/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AriesBifold/Info.plist; sourceTree = "<group>"; };
+		1A22E6532F20BE9E00AD47E6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		3E80637D552C876D84B165B7 /* Pods-AriesBifold.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AriesBifold.debug.xcconfig"; path = "Target Support Files/Pods-AriesBifold/Pods-AriesBifold.debug.xcconfig"; sourceTree = "<group>"; };
 		433E773D26557E1B00F569EE /* Indy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Indy.framework; path = Pods/Frameworks/Indy.framework; sourceTree = "<group>"; };
 		43857C032720ABB4004F54E0 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
@@ -59,18 +48,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00E356EB1AD99517003FC87E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43857C042720ABB4004F54E0 /* libswiftWebKit.tbd in Frameworks */,
 				FE8E5FF56635B38E3EDDB4FE /* libPods-AriesBifold.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,23 +59,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* AriesBifoldTests */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F21AD99517003FC87E /* AriesBifoldTests.m */,
-				00E356F01AD99517003FC87E /* Supporting Files */,
-			);
-			path = AriesBifoldTests;
-			sourceTree = "<group>";
-		};
-		00E356F01AD99517003FC87E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F11AD99517003FC87E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* AriesBifold */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +73,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A22E6532F20BE9E00AD47E6 /* WebKit.framework */,
 				43857C032720ABB4004F54E0 /* libswiftWebKit.tbd */,
 				433E773D26557E1B00F569EE /* Indy.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
@@ -137,7 +102,6 @@
 				56D96E212D31B8C40029DA6A /* PrivacyInfo.xcprivacy */,
 				566FB1F1273B158E003E9BEE /* Media.xcassets */,
 				13B07FAE1A68108700A75B9A /* AriesBifold */,
-				00E356EF1AD99517003FC87E /* AriesBifoldTests */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
@@ -154,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* AriesBifold.app */,
-				00E356EE1AD99517003FC87E /* AriesBifoldTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,25 +150,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* AriesBifoldTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AriesBifoldTests" */;
-			buildPhases = (
-				C82DE6CBC66E630CA80A8C7F /* [Expo] Configure project */,
-				00E356EA1AD99517003FC87E /* Sources */,
-				00E356EB1AD99517003FC87E /* Frameworks */,
-				00E356EC1AD99517003FC87E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				00E356F51AD99517003FC87E /* PBXTargetDependency */,
-			);
-			name = AriesBifoldTests;
-			productName = AriesBifoldTests;
-			productReference = 00E356EE1AD99517003FC87E /* AriesBifoldTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		13B07F861A680F5B00A75B9A /* AriesBifold */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AriesBifold" */;
@@ -238,10 +182,6 @@
 			attributes = {
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
-					00E356ED1AD99517003FC87E = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1120;
 					};
@@ -261,19 +201,11 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* AriesBifold */,
-				00E356ED1AD99517003FC87E /* AriesBifoldTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		00E356EC1AD99517003FC87E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -332,13 +264,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -368,29 +296,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-AriesBifold/expo-configure-project.sh\"\n";
 		};
-		C82DE6CBC66E630CA80A8C7F /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env",
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/Pods/Target Support Files/Pods-AriesBifold-AriesBifoldTests/expo-configure-project.sh",
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/Pods/Target Support Files/Pods-AriesBifold-AriesBifoldTests/ExpoModulesProvider.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-AriesBifold-AriesBifoldTests/expo-configure-project.sh\"\n";
-		};
 		CE595219BD015E8367A1C692 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,13 +304,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AriesBifold/Pods-AriesBifold-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -428,20 +329,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"### [Start Packager] Script running...\"\necho \"### [Start Packager] SRCROOT = $SRCROOT\"\necho \"### [Start Packager] PWD (before cd) = $(pwd)\"\n\n# SRCROOT = .../aries-mobile-agent-react-native/samples/app/ios\n# Go to repo root: samples/app/ios -> samples/app -> samples -> repo root\ncd \"$SRCROOT/../../..\" || {\n  echo \"### [Start Packager] cd to repo root (SRCROOT/../../..) FAILED\"\n  exit 1\n}\n\necho \"### [Start Packager] PWD (repo root) = $(pwd)\"\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"### [Start Packager] Using port ${RCT_METRO_PORT}\"\n\n# Try to find corepack\nCOREPACK_BIN=$(command -v corepack || echo \"\")\n\n# Fallback to common locations if Xcode's PATH is weird\nif [ -z \"$COREPACK_BIN\" ]; then\n  for p in /usr/local/bin/corepack /opt/homebrew/bin/corepack; do\n    if [ -x \"$p\" ]; then\n      COREPACK_BIN=\"$p\"\n      break\n    fi\n  done\nfi\n\nif [ -z \"$COREPACK_BIN\" ]; then\n  echo \"### [Start Packager] ERROR: 'corepack' not found in PATH or common locations.\"\n  echo \"### [Start Packager] Make sure Node 16.9+ / 18+ / 20+ is installed and 'corepack enable' has been run.\"\n  exit 1\nfi\n\necho \"### [Start Packager] Using corepack at: $COREPACK_BIN\"\n\n# If something already on the port, don't start another\nif lsof -i:${RCT_METRO_PORT} -t >/dev/null 2>&1; then\n  echo \"### [Start Packager] Metro (or something) already running on port ${RCT_METRO_PORT}\"\nelse\n  echo \"### [Start Packager] cd into samples/app and start Metro via 'corepack yarn'...\"\n  cd samples/app || {\n    echo \"### [Start Packager] cd to samples/app FAILED\"\n    exit 1\n  }\n  echo \"### [Start Packager] PWD (before starting Metro) = $(pwd)\"\n\n  # Fully detach Metro so Xcode doesn't hang on build\n  echo \"### [Start Packager] Starting Metro (detached)...\"\n  nohup \"$COREPACK_BIN\" yarn start -- --port ${RCT_METRO_PORT} >/dev/null 2>&1 &\n  disown || true\nfi\n";
+			shellScript = "echo \"### [Start Packager] Script running...\"\necho \"### [Start Packager] SRCROOT = $SRCROOT\"\necho \"### [Start Packager] PWD (before cd) = $(pwd)\"\n\n# SRCROOT = .../aries-mobile-agent-react-native/samples/app/ios\n# Go to repo root: samples/app/ios -> samples/app -> samples -> repo root\ncd \"$SRCROOT/../../..\" || {\n  echo \"### [Start Packager] cd to repo root (SRCROOT/../../..) FAILED\"\n  exit 1\n}\n\necho \"### [Start Packager] PWD (repo root) = $(pwd)\"\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"### [Start Packager] Using port ${RCT_METRO_PORT}\"\n\n# Try to find corepack\nCOREPACK_BIN=$(command -v corepack || echo \"\")\n\n# Fallback to common locations if Xcode's PATH is weird\nif [ -z \"$COREPACK_BIN\" ]; then\n  for p in /usr/local/bin/corepack /opt/homebrew/bin/corepack ~/.local/share/mise/installs/node/*/bin/corepack; do\n    if [ -x \"$p\" ]; then\n      COREPACK_BIN=\"$p\"\n      break\n    fi\n  done\nfi\n\nif [ -z \"$COREPACK_BIN\" ]; then\n  echo \"### [Start Packager] ERROR: 'corepack' not found in PATH or common locations.\"\n  echo \"### [Start Packager] Make sure Node 16.9+ / 18+ / 20+ is installed and 'corepack enable' has been run.\"\n  exit 1\nfi\n\necho \"### [Start Packager] Using corepack at: $COREPACK_BIN\"\n\n# If something already on the port, don't start another\nif lsof -i:${RCT_METRO_PORT} -t >/dev/null 2>&1; then\n  echo \"### [Start Packager] Metro (or something) already running on port ${RCT_METRO_PORT}\"\nelse\n  echo \"### [Start Packager] cd into samples/app and start Metro via 'corepack yarn'...\"\n  cd samples/app || {\n    echo \"### [Start Packager] cd to samples/app FAILED\"\n    exit 1\n  }\n  echo \"### [Start Packager] PWD (before starting Metro) = $(pwd)\"\n\n  # Fully detach Metro so Xcode doesn't hang on build\n  echo \"### [Start Packager] Starting Metro (detached)...\"\n  nohup \"$COREPACK_BIN\" yarn start -- --port ${RCT_METRO_PORT} >/dev/null 2>&1 &\n  disown || true\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		00E356EA1AD99517003FC87E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00E356F31AD99517003FC87E /* AriesBifoldTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,70 +346,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* AriesBifold */;
-			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		00E356F61AD99517003FC87E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AriesBifoldTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AriesBifold.app/AriesBifold";
-			};
-			name = Debug;
-		};
-		00E356F71AD99517003FC87E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = AriesBifoldTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AriesBifold.app/AriesBifold";
-			};
-			name = Release;
-		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3E80637D552C876D84B165B7 /* Pods-AriesBifold.debug.xcconfig */;
@@ -744,15 +574,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AriesBifoldTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				00E356F61AD99517003FC87E /* Debug */,
-				00E356F71AD99517003FC87E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AriesBifold" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

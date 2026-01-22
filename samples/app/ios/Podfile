@@ -2,6 +2,9 @@ require File.join(File.dirname(`node --print "require.resolve('expo/package.json
 source 'https://cdn.cocoapods.org'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 
+# prevents location usage from react-native-vision-camera
+$VCEnableLocation = false
+
 # From RNP docs here: https://www.npmjs.com/package/react-native-permissions/v/4.0.1
 def node_require(script)
   # Resolve script with node to allow for hoisting

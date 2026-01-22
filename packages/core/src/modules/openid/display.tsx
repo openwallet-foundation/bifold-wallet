@@ -121,8 +121,8 @@ function getW3cIssuerDisplay(
     issuerDisplay.logo = issuerJson?.logoUrl
       ? { url: issuerJson?.logoUrl }
       : issuerJson?.image
-      ? { url: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
-      : undefined
+        ? { url: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
+        : undefined
   }
 
   // Issuer name from JFF
@@ -272,7 +272,7 @@ function safeCalculateJwkThumbprint(jwk: JwkJson): string | undefined {
       )
     )
     return `urn:ietf:params:oauth:jwk-thumbprint:sha-256:${thumbprint}`
-  } catch (e) {
+  } catch {
     return undefined
   }
 }
@@ -291,7 +291,7 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { _sd_alg, _sd_hash, iss, vct, cnf, iat, exp, nbf, ...visibleProperties } = sdJwtVcPayload as SdJwtVcPayload
 
-  const holder = cnf.kid ?? cnf.jwk ? safeCalculateJwkThumbprint(cnf.jwk as JwkJson) : undefined
+  const holder = (cnf.kid ?? cnf.jwk) ? safeCalculateJwkThumbprint(cnf.jwk as JwkJson) : undefined
   const credentialMetadata: CredentialMetadata = {
     type: vct,
     issuer: iss,
@@ -400,7 +400,7 @@ export function getCredentialForDisplay(
 
   // to be implimented later support credential with multiple subjects
   const credentialAttributes = Array.isArray(credential.credentialSubject)
-    ? credential.credentialSubject[0] ?? {}
+    ? (credential.credentialSubject[0] ?? {})
     : credential.credentialSubject
 
   return {

@@ -322,19 +322,68 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
+    logger?.info(
+      `[Connection] Processing ${notifications.length} notifications. ` +
+        `connection=${connection?.id ?? 'NONE'}, oobRecord=${oobRecordId ?? 'NONE'}`
+    )
+
+    if (oobRecord) {
+      const tags = oobRecord.getTags()
+      logger?.info(
+        `[Connection] OOB Record tags: ` +
+          `invitationRequestsThreadIds=${JSON.stringify(tags?.invitationRequestsThreadIds ?? [])}`
+      )
+      logger?.info(
+        `[Connection] OOB Record details: ` +
+          `id=${oobRecord.id}, ` +
+          `state=${oobRecord.state}, ` +
+          `role=${oobRecord.role}, ` +
+          `goalCode=${oobRecord.outOfBandInvitation?.goalCode ?? 'NONE'}`
+      )
+      logger?.info(`[Connection] OOB Record full tags: ${JSON.stringify(tags)}`)
+    }
+
+    if (connection) {
+      logger?.info(
+        `[Connection] Connection details: ` +
+          `id=${connection.id}, ` +
+          `state=${connection.state}, ` +
+          `theirLabel=${connection.theirLabel}, ` +
+          `outOfBandId=${connection.outOfBandId}`
+      )
+    }
+
     for (const notification of notifications) {
+      logger?.info(
+        `[Connection] Checking notification: ` +
+          `type=${(notification as any).type}, ` +
+          `id=${(notification as NotCustomNotification).id ?? 'N/A'}, ` +
+          `connectionId=${(notification as NotCustomNotification).connectionId ?? 'N/A'}, ` +
+          `threadId=${(notification as NotCustomNotification).threadId ?? 'N/A'}`
+      )
+
       // no action taken for BasicMessageRecords
       if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
         logger?.info('Connection: BasicMessageRecord, skipping')
         continue
       }
 
-      if (
-        (connection && (notification as NotCustomNotification).connectionId === connection.id) ||
-        oobRecord
-          ?.getTags()
-          ?.invitationRequestsThreadIds?.includes((notification as NotCustomNotification)?.threadId ?? '')
-      ) {
+      const notifConnectionId = (notification as NotCustomNotification).connectionId
+      const notifThreadId = (notification as NotCustomNotification)?.threadId
+      const matchesConnection = connection && notifConnectionId === connection.id
+      const matchesOobThread = oobRecord?.getTags()?.invitationRequestsThreadIds?.includes(notifThreadId ?? '')
+
+      // When we have an OOB record but no connection found yet via useConnectionByOutOfBandId,
+      // we should still accept notifications - the connection may not be indexed properly yet
+      const hasOobRecordAndConnectionId = oobRecord && notifConnectionId
+
+      logger?.info(
+        `[Connection] Notification matching: ` +
+          `matchesConnection=${matchesConnection}, matchesOobThread=${matchesOobThread}, ` +
+          `hasOobRecordAndConnectionId=${hasOobRecordAndConnectionId}`
+      )
+
+      if (matchesConnection || matchesOobThread || (hasOobRecordAndConnectionId && !connection)) {
         logger?.info(`Connection: Handling notification ${(notification as NotCustomNotification).id}`)
 
         dispatch({ notificationRecord: notification })
@@ -347,11 +396,18 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         (notification as MdocRecord).type === 'MdocRecord' ||
         (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
       ) {
+        logger?.info(`[Connection] Matched OpenID credential type: ${(notification as any).type}`)
         dispatch({ notificationRecord: notification })
         break
       }
+
+      logger?.info(`[Connection] Notification did not match any criteria`)
     }
-  }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch])
+
+    if (notifications.length > 0 && !state.notificationRecord) {
+      logger?.warn(`[Connection] Had ${notifications.length} notifications but none matched!`)
+    }
+  }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch, oobRecordId])
 
   const loadingPlaceholderWorkflowType = () => {
     if (state.shouldShowProofComponent) {

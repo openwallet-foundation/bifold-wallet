@@ -8,7 +8,6 @@ import React from 'react'
 import CredentialCard from '../../src/components/misc/CredentialCard'
 import { StoreProvider, defaultState } from '../../src/contexts/store'
 import ListCredentials from '../../src/screens/ListCredentials'
-import { ReactTestInstance } from 'react-test-renderer'
 import { BasicAppContext } from '../helpers/app'
 
 interface CredentialContextInterface {
@@ -66,7 +65,7 @@ describe('CredentialList Screen', () => {
 
       // @ts-expect-error useCredentialByState will be replaced with a mock which does have this method
       useCredentialByState.mockImplementation((state) =>
-        testCredentialRecords.credentials.filter((c) => c.state === state)
+        testCredentialRecords.credentials.filter((c) => c.state === state),
       )
     })
 
@@ -81,7 +80,7 @@ describe('CredentialList Screen', () => {
       const { findAllByText } = render(
         <BasicAppContext>
           <ListCredentials />
-        </BasicAppContext>
+        </BasicAppContext>,
       )
 
       const credentialItemInstances = await findAllByText('Person', { exact: false })
@@ -109,14 +108,14 @@ describe('CredentialList Screen', () => {
     const tree = render(
       <BasicAppContext>
         <ListCredentials />
-      </BasicAppContext>
+      </BasicAppContext>,
     )
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
 
       expect(credentialCards).toHaveLength(3)
 
-      const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
+      const createdAtDates = credentialCards.map((instance) => instance.props.credential.createdAt)
 
       expect(new Date(createdAtDates[0])).toEqual(new Date('2020-01-02T00:00:00'))
       expect(new Date(createdAtDates[1])).toEqual(new Date('2020-01-01T00:01:00'))
@@ -138,7 +137,7 @@ describe('CredentialList Screen', () => {
         <BasicAppContext>
           <ListCredentials />
         </BasicAppContext>
-      </StoreProvider>
+      </StoreProvider>,
     )
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
@@ -161,7 +160,7 @@ describe('CredentialList Screen', () => {
         <BasicAppContext>
           <ListCredentials />
         </BasicAppContext>
-      </StoreProvider>
+      </StoreProvider>,
     )
     await act(async () => {
       const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)

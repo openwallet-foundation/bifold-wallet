@@ -134,10 +134,11 @@ describe('Biometry Screen', () => {
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
-    expect(toggleButton.props.accessibilityState.checked).toBe(false)
+    const updatedToggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
+    expect(updatedToggleButton.props.accessibilityState.checked).toBe(false)
   })
 
   test('can toggle on when biometrics available and permission is GRANTED', async () => {
@@ -156,10 +157,11 @@ describe('Biometry Screen', () => {
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
-    expect(toggleButton.props.accessibilityState.checked).toBe(true)
+    const updatedToggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
+    expect(updatedToggleButton.props.accessibilityState.checked).toBe(true)
   })
 
   test('shows settings popup when permission is UNAVAILABLE', async () => {
@@ -178,7 +180,7 @@ describe('Biometry Screen', () => {
 
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
     expect(await findByText('Biometry.SetupBiometricsTitle')).toBeTruthy()
@@ -203,7 +205,7 @@ describe('Biometry Screen', () => {
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
     expect(await findByText('Biometry.AllowBiometricsTitle')).toBeTruthy()
@@ -228,7 +230,7 @@ describe('Biometry Screen', () => {
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
     const openSettingsButton = await findByText('Biometry.OpenSettings')
@@ -253,12 +255,13 @@ describe('Biometry Screen', () => {
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
     expect(mockedRequest).toHaveBeenCalledTimes(1)
-    await waitFor(() => {
-      expect(toggleButton.props.accessibilityState.checked).toBe(true)
+    await waitFor(async () => {
+      const updatedToggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
+      expect(updatedToggleButton.props.accessibilityState.checked).toBe(true)
     })
   })
 
@@ -276,7 +279,7 @@ describe('Biometry Screen', () => {
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
 
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
     expect(mockedRequest).toHaveBeenCalledTimes(1)
@@ -296,14 +299,14 @@ describe('Biometry Screen', () => {
 
     await findByText('Biometry.EnabledText1')
     const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(toggleButton, 'press')
     })
 
     expect(mockedCheck).toHaveBeenCalledTimes(1)
 
     const continueButton = await findByTestId(testIdWithKey('Continue'))
-    await waitFor(() => {
+    await waitFor(async () => {
       fireEvent(continueButton, 'press')
     })
 
