@@ -2,9 +2,6 @@ import {
   MdocRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
-  BasicMessageRecord,
-  CredentialExchangeRecord,
-  ProofExchangeRecord
 } from '@credo-ts/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
