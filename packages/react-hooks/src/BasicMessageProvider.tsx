@@ -3,7 +3,7 @@ import type { Agent } from '@credo-ts/core'
 import type { PropsWithChildren } from 'react'
 
 import { BasicMessageRecord } from '@credo-ts/core'
-import { useState, createContext, useContext, useEffect, useMemo } from 'react'
+import { useState, createContext, useContext, useEffect, useMemo, useCallback } from 'react'
 import * as React from 'react'
 
 import {
@@ -46,14 +46,14 @@ const BasicMessageProvider: React.FC<PropsWithChildren<Props>> = ({ agent, child
     loading: true,
   })
 
-  const setInitialState = async () => {
+  const setInitialState = useCallback(async () => {
     const records = await agent.basicMessages.findAllByQuery({})
     setState({ records, loading: false })
-  }
+  }, [agent])
 
   useEffect(() => {
     setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   useEffect(() => {
     if (state.loading) return

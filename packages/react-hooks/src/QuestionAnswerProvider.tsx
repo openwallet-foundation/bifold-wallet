@@ -3,7 +3,7 @@ import type { QuestionAnswerRecord, QuestionAnswerStateChangedEvent } from '@cre
 import type { PropsWithChildren } from 'react'
 
 import { QuestionAnswerApi, QuestionAnswerEventTypes } from '@credo-ts/question-answer'
-import { createContext, useState, useEffect, useContext, useMemo } from 'react'
+import { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react'
 import * as React from 'react'
 
 interface QuestionAnswerContextInterface {
@@ -25,7 +25,7 @@ export const useQuestionAnswerByConnectionId = (connectionId: string): QuestionA
   const { questionAnswerMessages } = useQuestionAnswer()
   const messages = useMemo(
     () => questionAnswerMessages.filter((m) => m.connectionId === connectionId),
-    [questionAnswerMessages, connectionId],
+    [questionAnswerMessages, connectionId]
   )
   return messages
 }
@@ -45,16 +45,16 @@ const QuestionAnswerProvider: React.FC<PropsWithChildren<Props>> = ({ agent, chi
     loading: true,
   })
 
-  const setInitialState = async () => {
+  const setInitialState = useCallback(async () => {
     const questAnswerApi = agent.dependencyManager.resolve(QuestionAnswerApi)
     const questionAnswerMessages = await questAnswerApi.getAll()
 
     setQuestionAnswerState({ questionAnswerMessages, loading: false })
-  }
+  }, [agent])
 
   useEffect(() => {
     setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   useEffect(() => {
     if (questionAnswerState.loading) return
@@ -62,7 +62,7 @@ const QuestionAnswerProvider: React.FC<PropsWithChildren<Props>> = ({ agent, chi
     const listener = (event: QuestionAnswerStateChangedEvent) => {
       const newQuestionAnswerState = [...questionAnswerState.questionAnswerMessages]
       const index = newQuestionAnswerState.findIndex(
-        (questionAnswerMessage) => questionAnswerMessage.id === event.payload.questionAnswerRecord.id,
+        (questionAnswerMessage) => questionAnswerMessage.id === event.payload.questionAnswerRecord.id
       )
       if (index > -1) {
         newQuestionAnswerState[index] = event.payload.questionAnswerRecord

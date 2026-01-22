@@ -3,7 +3,7 @@ import type { Agent, ProofState } from '@credo-ts/core'
 import type { PropsWithChildren } from 'react'
 
 import { ProofExchangeRecord } from '@credo-ts/core'
-import { useState, createContext, useContext, useEffect, useMemo } from 'react'
+import { useState, createContext, useContext, useEffect, useMemo, useCallback } from 'react'
 import * as React from 'react'
 
 import {
@@ -29,7 +29,7 @@ export const useProofsByConnectionId = (connectionId: string): ProofExchangeReco
   const { records: proofs } = useProofs()
   return useMemo(
     () => proofs.filter((proof: ProofExchangeRecord) => proof.connectionId === connectionId),
-    [proofs, connectionId],
+    [proofs, connectionId]
   )
 }
 
@@ -48,7 +48,7 @@ export const useProofByState = (state: ProofState | ProofState[]): ProofExchange
       proofs.filter((r: ProofExchangeRecord) => {
         if (states.includes(r.state)) return r
       }),
-    [proofs],
+    [proofs, states]
   )
 
   return filteredProofs
@@ -64,7 +64,7 @@ export const useProofNotInState = (state: ProofState | ProofState[]): ProofExcha
       proofs.filter((r: ProofExchangeRecord) => {
         if (!states.includes(r.state)) return r
       }),
-    [proofs],
+    [proofs, states]
   )
 
   return filteredProofs
@@ -80,28 +80,28 @@ const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) 
     loading: true,
   })
 
-  const setInitialState = async () => {
+  const setInitialState = useCallback(async () => {
     const records = await agent.proofs.getAll()
     setState({ records, loading: false })
-  }
+  }, [agent])
 
   useEffect(() => {
     setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   useEffect(() => {
     if (state.loading) return
 
     const proofAdded$ = recordsAddedByType(agent, ProofExchangeRecord).subscribe((record) =>
-      setState(addRecord(record, state)),
+      setState(addRecord(record, state))
     )
 
     const proofUpdated$ = recordsUpdatedByType(agent, ProofExchangeRecord).subscribe((record) =>
-      setState(updateRecord(record, state)),
+      setState(updateRecord(record, state))
     )
 
     const proofRemoved$ = recordsRemovedByType(agent, ProofExchangeRecord).subscribe((record) =>
-      setState(removeRecord(record, state)),
+      setState(removeRecord(record, state))
     )
 
     return () => {

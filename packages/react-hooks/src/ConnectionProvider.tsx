@@ -3,7 +3,7 @@ import type { Agent, DidExchangeState, ConnectionType } from '@credo-ts/core'
 import type { PropsWithChildren } from 'react'
 
 import { ConnectionRecord } from '@credo-ts/core'
-import { useState, createContext, useContext, useEffect, useMemo } from 'react'
+import { useState, createContext, useContext, useEffect, useMemo, useCallback } from 'react'
 import * as React from 'react'
 
 import {
@@ -71,14 +71,14 @@ const ConnectionProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
     loading: true,
   })
 
-  const setInitialState = async () => {
+  const setInitialState = useCallback(async () => {
     const records = await agent.connections.getAll()
     setState({ records, loading: false })
-  }
+  }, [agent])
 
   useEffect(() => {
     setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   useEffect(() => {
     if (state.loading) return

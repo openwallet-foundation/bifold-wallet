@@ -3,7 +3,7 @@ import type { Awaited } from '@credo-ts/core/build/types'
 import type { PropsWithChildren } from 'react'
 
 import { ProofExchangeRecord } from '@credo-ts/core'
-import { useState, createContext, useContext, useEffect } from 'react'
+import { useState, createContext, useContext, useEffect, useCallback } from 'react'
 import * as React from 'react'
 
 import { recordsAddedByType, recordsRemovedByType, recordsUpdatedByType } from './recordUtils'
@@ -80,7 +80,7 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
     loading: true,
   })
 
-  const setInitialState = async () => {
+  const setInitialState = useCallback(async () => {
     const records = await agent.proofs.getAll()
     const formattedData: Array<ProofFormatData> = []
     for (const record of records) {
@@ -88,11 +88,11 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
       formattedData.push({ ...formatData, id: record.id })
     }
     setState({ formattedData, loading: false })
-  }
+  }, [agent])
 
   useEffect(() => {
     void setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   useEffect(() => {
     if (state.loading) return
@@ -108,7 +108,7 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
     })
 
     const proofRemove$ = recordsRemovedByType(agent, ProofExchangeRecord).subscribe((record) =>
-      setState(removeRecord(record, state)),
+      setState(removeRecord(record, state))
     )
 
     return () => {

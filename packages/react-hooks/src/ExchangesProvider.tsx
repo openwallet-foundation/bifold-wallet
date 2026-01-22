@@ -1,8 +1,8 @@
 import type { RecordsState } from './recordUtils'
-import type { Agent, BaseRecord } from '@credo-ts/core'
+import type { BaseRecord } from '@credo-ts/core'
 import type { PropsWithChildren } from 'react'
 
-import { useState, createContext, useContext, useEffect } from 'react'
+import { useState, createContext, useContext, useEffect, useCallback } from 'react'
 import * as React from 'react'
 
 import { useBasicMessages, useBasicMessagesByConnectionId } from './BasicMessageProvider'
@@ -27,11 +27,7 @@ export const useExchangesByConnectionId = (connectionId: string): BaseRecord[] |
   return [...basicMessages, ...proofMessages, ...credentialMessages] as BaseRecord[]
 }
 
-interface Props {
-  agent: Agent
-}
-
-const ExchangesProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
+const ExchangesProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useState<RecordsState<BaseRecord>>({
     records: [],
     loading: true,
@@ -41,14 +37,14 @@ const ExchangesProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children
   const { records: proofs } = useProofs()
   const { records: credentials } = useCredentials()
 
-  const setInitialState = () => {
+  const setInitialState = useCallback(() => {
     const records = [...basicMessages, ...proofs, ...credentials] as BaseRecord[]
     setState({ records, loading: false })
-  }
+  }, [basicMessages, proofs, credentials])
 
   useEffect(() => {
     setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   return <ExchangesContext.Provider value={state}>{children}</ExchangesContext.Provider>
 }

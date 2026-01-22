@@ -3,7 +3,7 @@ import type { Awaited } from '@credo-ts/core/build/types'
 import type { PropsWithChildren } from 'react'
 
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import React, { useState, createContext, useContext, useEffect } from 'react'
+import React, { useState, createContext, useContext, useEffect, useCallback } from 'react'
 
 import { recordsAddedByType, recordsRemovedByType, recordsUpdatedByType } from './recordUtils'
 
@@ -87,18 +87,18 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
     return { ...formatData, id: record.id }
   }
 
-  const setInitialState = async () => {
+  const setInitialState = useCallback(async () => {
     const records = await agent.credentials.getAll()
     const formattedData: Array<CredentialFormatData> = []
     for (const record of records) {
       formattedData.push(await fetchCredentialInformation(agent, record))
     }
     setState({ formattedData, loading: false })
-  }
+  }, [agent])
 
   useEffect(() => {
     void setInitialState()
-  }, [agent])
+  }, [setInitialState])
 
   useEffect(() => {
     if (state.loading) return
