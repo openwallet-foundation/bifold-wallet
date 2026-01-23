@@ -1,8 +1,8 @@
 diff --git a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
-index f1723e774dc337b8ceae11cf5765d222fd07ea24..556fcef6877b0248134182551e6b46ebe9a758e4 100644
+index 12df3a49c3e7b1774fa18ef1a4e45ebb600d2da4..ba41b17660c2a4a5a53a1428c27bc304d662ed95 100644
 --- a/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
 +++ b/build/modules/dif-presentation-exchange/DifPresentationExchangeService.js
-@@ -177,7 +177,18 @@ let DifPresentationExchangeService = class DifPresentationExchangeService {
+@@ -178,7 +178,18 @@ let DifPresentationExchangeService = class DifPresentationExchangeService {
              presentationSubmission.descriptor_map.push(...descriptorMap);
          });
          return {

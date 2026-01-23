@@ -42,7 +42,7 @@ export const fetchLedgerNodes = (indyNamespace = 'sovrin'): Array<{ host: string
   if (genesisTransactionsAsString) {
     try {
       genesisTransactions = genesisTransactionsAsString.split('\n').map((g) => JSON.parse(g))
-    } catch (error: unknown) {
+    } catch {
       return []
     }
   }

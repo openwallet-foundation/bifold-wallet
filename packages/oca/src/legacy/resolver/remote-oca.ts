@@ -296,7 +296,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       this.log?.info(`File ${fileName} ${fileExists ? 'does' : 'does not'} exist at ${pathToFile}`)
 
       return fileExists
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to check existence of ${fileName} at ${pathToFile}`)
     }
 
@@ -316,7 +316,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       try {
         await mkdir(workSpace)
         return true
-      } catch (error) {
+      } catch {
         this.log?.error(`Failed to create directory ${workSpace}`)
         return false
       }
@@ -369,7 +369,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       this.log?.info(`File ${fileName} loaded from ${pathToFile}`)
 
       return data
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to load file ${fileName} from ${pathToFile}`)
     }
   }
@@ -386,7 +386,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
     try {
       await unlink(pathToFile)
       return true
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to unlink file ${fileName} from ${pathToFile}`)
     }
 
@@ -473,7 +473,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
       }
 
       await this.saveFileToLocalStorage(filePath, JSON.stringify(this.indexFile))
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to fetch OCA index ${filePath}`)
     }
   }
@@ -584,7 +584,7 @@ export class RemoteOCABundleResolver extends DefaultOCABundleResolver {
         ...this.options,
         language: language ?? this.options.language,
       })
-    } catch (error) {
+    } catch {
       // probably couldn't parse the overlay bundle.
       return Promise.resolve(undefined)
     }

@@ -21,7 +21,7 @@ export interface ChatMessageProps {
 }
 
 export interface ExtendedChatMessage extends IMessage {
-  renderEvent: () => JSX.Element
+  renderEvent: () => React.ReactElement
   createdAt: Date
   messageOpensCallbackType?: CallbackType
   onDetails?: () => void

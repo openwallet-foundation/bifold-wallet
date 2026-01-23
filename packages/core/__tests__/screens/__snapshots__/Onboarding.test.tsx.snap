@@ -21,20 +21,46 @@ exports[`Onboarding Screen Renders correctly 1`] = `
   <RCTScrollView
     data={
       Array [
-        <React.Fragment>
-          <ThemedText
-            testID="bodyText"
-          >
-            Hello
-          </ThemedText>
-        </React.Fragment>,
-        <React.Fragment>
-          <ThemedText
-            testID="bodyText"
-          >
-            World
-          </ThemedText>
-        </React.Fragment>,
+        Object {
+          "$$typeof": Symbol(react.transitional.element),
+          "_owner": null,
+          "_store": Object {},
+          "key": null,
+          "props": Object {
+            "children": Object {
+              "$$typeof": Symbol(react.transitional.element),
+              "_owner": null,
+              "_store": Object {},
+              "key": null,
+              "props": Object {
+                "children": "Hello",
+                "testID": "bodyText",
+              },
+              "type": [Function],
+            },
+          },
+          "type": Symbol(react.fragment),
+        },
+        Object {
+          "$$typeof": Symbol(react.transitional.element),
+          "_owner": null,
+          "_store": Object {},
+          "key": null,
+          "props": Object {
+            "children": Object {
+              "$$typeof": Symbol(react.transitional.element),
+              "_owner": null,
+              "_store": Object {},
+              "key": null,
+              "props": Object {
+                "children": "World",
+                "testID": "bodyText",
+              },
+              "type": [Function],
+            },
+          },
+          "type": Symbol(react.fragment),
+        },
       ]
     }
     getItem={[Function]}

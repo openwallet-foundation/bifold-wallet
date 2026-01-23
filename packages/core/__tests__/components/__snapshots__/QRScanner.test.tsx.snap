@@ -63,6 +63,11 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
         }
         format={Object {}}
         isActive={true}
+        ref={
+          Object {
+            "current": null,
+          }
+        }
         style={
           Object {
             "bottom": 0,
@@ -130,8 +135,8 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
       testID="com.ariesbifold:id/ScanOverlay"
     >
       <RNSVGSvgView
-        bbHeight="1334"
-        bbWidth="750"
+        bbHeight={1334}
+        bbWidth={750}
         focusable={false}
         height={1334}
         style={
@@ -170,6 +175,7 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
               }
               height="100%"
               maskContentUnits={1}
+              maskType={0}
               maskUnits={0}
               name="overlayMask"
               width="100%"
@@ -183,15 +189,15 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
                     "type": 0,
                   }
                 }
-                height="1334"
+                height={1334}
                 propList={
                   Array [
                     "fill",
                   ]
                 }
-                width="750"
-                x="0"
-                y="0"
+                width={750}
+                x={0}
+                y={0}
               />
               <RNSVGRect
                 fill={
@@ -200,7 +206,7 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
                     "type": 0,
                   }
                 }
-                height="675"
+                height={675}
                 propList={
                   Array [
                     "fill",
@@ -214,10 +220,10 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
                     "type": 0,
                   }
                 }
-                strokeWidth="2"
-                width="675"
-                x="37.5"
-                y="217"
+                strokeWidth={2}
+                width={675}
+                x={37.5}
+                y={217}
               />
             </RNSVGMask>
           </RNSVGDefs>
@@ -229,7 +235,7 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
               }
             }
             fillOpacity={0.6}
-            height="1334"
+            height={1334}
             mask="overlayMask"
             propList={
               Array [
@@ -237,9 +243,9 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
                 "fillOpacity",
               ]
             }
-            width="750"
-            x="0"
-            y="0"
+            width={750}
+            x={0}
+            y={0}
           />
           <RNSVGRect
             fill={
@@ -248,7 +254,7 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
                 "type": 0,
               }
             }
-            height="675"
+            height={675}
             propList={
               Array [
                 "fill",
@@ -262,10 +268,10 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
                 "type": 0,
               }
             }
-            strokeWidth="2"
-            width="675"
-            x="37.5"
-            y="217"
+            strokeWidth={2}
+            width={675}
+            x={37.5}
+            y={217}
           />
         </RNSVGGroup>
       </RNSVGSvgView>
@@ -658,6 +664,11 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
         }
         format={Object {}}
         isActive={true}
+        ref={
+          Object {
+            "current": null,
+          }
+        }
         style={
           Object {
             "bottom": 0,
@@ -725,8 +736,8 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
       testID="com.ariesbifold:id/ScanOverlay"
     >
       <RNSVGSvgView
-        bbHeight="1334"
-        bbWidth="750"
+        bbHeight={1334}
+        bbWidth={750}
         focusable={false}
         height={1334}
         style={
@@ -765,6 +776,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
               }
               height="100%"
               maskContentUnits={1}
+              maskType={0}
               maskUnits={0}
               name="overlayMask"
               width="100%"
@@ -778,15 +790,15 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
                     "type": 0,
                   }
                 }
-                height="1334"
+                height={1334}
                 propList={
                   Array [
                     "fill",
                   ]
                 }
-                width="750"
-                x="0"
-                y="0"
+                width={750}
+                x={0}
+                y={0}
               />
               <RNSVGRect
                 fill={
@@ -795,7 +807,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
                     "type": 0,
                   }
                 }
-                height="675"
+                height={675}
                 propList={
                   Array [
                     "fill",
@@ -809,10 +821,10 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
                     "type": 0,
                   }
                 }
-                strokeWidth="2"
-                width="675"
-                x="37.5"
-                y="217"
+                strokeWidth={2}
+                width={675}
+                x={37.5}
+                y={217}
               />
             </RNSVGMask>
           </RNSVGDefs>
@@ -824,7 +836,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
               }
             }
             fillOpacity={0.6}
-            height="1334"
+            height={1334}
             mask="overlayMask"
             propList={
               Array [
@@ -832,9 +844,9 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
                 "fillOpacity",
               ]
             }
-            width="750"
-            x="0"
-            y="0"
+            width={750}
+            x={0}
+            y={0}
           />
           <RNSVGRect
             fill={
@@ -843,7 +855,7 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
                 "type": 0,
               }
             }
-            height="675"
+            height={675}
             propList={
               Array [
                 "fill",
@@ -857,10 +869,10 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
                 "type": 0,
               }
             }
-            strokeWidth="2"
-            width="675"
-            x="37.5"
-            y="217"
+            strokeWidth={2}
+            width={675}
+            x={37.5}
+            y={217}
           />
         </RNSVGGroup>
       </RNSVGSvgView>
@@ -1807,6 +1819,11 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
         }
         format={Object {}}
         isActive={true}
+        ref={
+          Object {
+            "current": null,
+          }
+        }
         style={
           Object {
             "bottom": 0,
@@ -1874,8 +1891,8 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
       testID="com.ariesbifold:id/ScanOverlay"
     >
       <RNSVGSvgView
-        bbHeight="1334"
-        bbWidth="750"
+        bbHeight={1334}
+        bbWidth={750}
         focusable={false}
         height={1334}
         style={
@@ -1914,6 +1931,7 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
               }
               height="100%"
               maskContentUnits={1}
+              maskType={0}
               maskUnits={0}
               name="overlayMask"
               width="100%"
@@ -1927,15 +1945,15 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
                     "type": 0,
                   }
                 }
-                height="1334"
+                height={1334}
                 propList={
                   Array [
                     "fill",
                   ]
                 }
-                width="750"
-                x="0"
-                y="0"
+                width={750}
+                x={0}
+                y={0}
               />
               <RNSVGRect
                 fill={
@@ -1944,7 +1962,7 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
                     "type": 0,
                   }
                 }
-                height="675"
+                height={675}
                 propList={
                   Array [
                     "fill",
@@ -1958,10 +1976,10 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
                     "type": 0,
                   }
                 }
-                strokeWidth="2"
-                width="675"
-                x="37.5"
-                y="217"
+                strokeWidth={2}
+                width={675}
+                x={37.5}
+                y={217}
               />
             </RNSVGMask>
           </RNSVGDefs>
@@ -1973,7 +1991,7 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
               }
             }
             fillOpacity={0.6}
-            height="1334"
+            height={1334}
             mask="overlayMask"
             propList={
               Array [
@@ -1981,9 +1999,9 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
                 "fillOpacity",
               ]
             }
-            width="750"
-            x="0"
-            y="0"
+            width={750}
+            x={0}
+            y={0}
           />
           <RNSVGRect
             fill={
@@ -1992,7 +2010,7 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
                 "type": 0,
               }
             }
-            height="675"
+            height={675}
             propList={
               Array [
                 "fill",
@@ -2006,10 +2024,10 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
                 "type": 0,
               }
             }
-            strokeWidth="2"
-            width="675"
-            x="37.5"
-            y="217"
+            strokeWidth={2}
+            width={675}
+            x={37.5}
+            y={217}
           />
         </RNSVGGroup>
       </RNSVGSvgView>

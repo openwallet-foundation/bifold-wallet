@@ -10,6 +10,7 @@ import {
   credentialSortFn,
   formatIfDate,
   formatTime,
+  getAttributeFormats,
   getConnectionName,
   removeExistingInvitationsById,
   schemaIdFromRestrictions,
@@ -287,5 +288,63 @@ describe('schemaIdFromRestrictions', () => {
 
     const result = schemaIdFromRestrictions(restrictions)
     expect(result).toBe(expected)
+  })
+})
+
+describe('getAttributeFormats', () => {
+  test('returns empty object when bundle is undefined', () => {
+    const result = getAttributeFormats(undefined)
+    expect(result).toEqual({})
+  })
+
+  test('returns empty object when bundle is null', () => {
+    const result = getAttributeFormats(null)
+    expect(result).toEqual({})
+  })
+
+  test('returns empty object when attributes is not an array', () => {
+    const bundle = { attributes: 'not-an-array' }
+    const result = getAttributeFormats(bundle)
+    expect(result).toEqual({})
+  })
+
+  test('returns empty object when attributes array is empty', () => {
+    const bundle = { attributes: [] }
+    const result = getAttributeFormats(bundle)
+    expect(result).toEqual({})
+  })
+
+  test('skips attributes without name property', () => {
+    const bundle = {
+      attributes: [{ format: 'YYYYMMDD' }, { name: 'validAttr', format: 'text' }],
+    }
+    const result = getAttributeFormats(bundle)
+    expect(result).toEqual({ validAttr: 'text' })
+  })
+
+  test('extracts formats from attributes with names', () => {
+    const bundle = {
+      attributes: [
+        { name: 'birthdate', format: 'YYYYMMDD' },
+        { name: 'email', format: 'email' },
+        { name: 'noFormat' },
+      ],
+    }
+    const result = getAttributeFormats(bundle)
+    expect(result).toEqual({
+      birthdate: 'YYYYMMDD',
+      email: 'email',
+      noFormat: undefined,
+    })
+  })
+
+  test('handles nested bundle structure', () => {
+    const bundle = {
+      bundle: {
+        attributes: [{ name: 'nested', format: 'text' }],
+      },
+    }
+    const result = getAttributeFormats(bundle)
+    expect(result).toEqual({ nested: 'text' })
   })
 })

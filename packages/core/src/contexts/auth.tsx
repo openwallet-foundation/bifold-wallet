@@ -1,5 +1,5 @@
 // Dont remove the following import line or the pin check will fail when opening askar waller
-import '@hyperledger/aries-askar-react-native'
+import { askar } from '@openwallet-foundation/askar-react-native'
 
 import 'reflect-metadata'
 import { DeviceEventEmitter } from 'react-native'
@@ -24,6 +24,7 @@ import { migrateToAskar } from '../utils/migration'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { useServices, TOKENS } from '../container-api'
+import { AskarModuleConfig } from '@credo-ts/askar/build/AskarModuleConfig'
 
 export interface AuthContext {
   lockOutUser: (reason: LockoutReason) => void
@@ -49,16 +50,15 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const [
-    hashPIN
-  ] = useServices([
-    TOKENS.FN_PIN_HASH_ALGORITHM,
-  ])
+  const [hashPIN] = useServices([TOKENS.FN_PIN_HASH_ALGORITHM])
 
-  const setPIN = useCallback(async (PIN: string): Promise<void> => {
-    const secret = await secretForPIN(PIN, hashPIN)
-    await storeWalletSecret(secret)
-  }, [hashPIN])
+  const setPIN = useCallback(
+    async (PIN: string): Promise<void> => {
+      const secret = await secretForPIN(PIN, hashPIN)
+      await storeWalletSecret(secret)
+    },
+    [hashPIN]
+  )
 
   const getWalletSecret = useCallback(async (): Promise<WalletSecret | undefined> => {
     if (walletSecret) {
@@ -118,7 +118,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         const askarWallet = new AskarWallet(
           new ConsoleLogger(LogLevel.off),
           new agentDependencies.FileSystem(),
-          new SigningProviderRegistry([])
+          new SigningProviderRegistry([]),
+          new AskarModuleConfig({ ariesAskar: askar })
         )
         await askarWallet.open({
           id: secret.id,
@@ -129,7 +130,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
         setWalletSecret({ id: secret.id, key: hash, salt: secret.salt })
         return true
-      } catch (e) {
+      } catch {
         return false
       }
     },

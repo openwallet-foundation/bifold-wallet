@@ -8,18 +8,21 @@ import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
 import path from 'path'
 
+// React 18+/19: enable proper act() behavior in tests
+globalThis.IS_REACT_ACT_ENVIRONMENT = true
+
 mockRNDeviceInfo.getVersion = jest.fn(() => '1')
 mockRNDeviceInfo.getBuildNumber = jest.fn(() => '1')
 
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext)
 jest.mock('react-native-device-info', () => mockRNDeviceInfo)
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.mock('react-native/src/private/animated/NativeAnimatedHelper')
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('react-native-localize', () => mockRNLocalize)
 jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
-jest.mock('@hyperledger/aries-askar-react-native', () => ({}))
+jest.mock('@openwallet-foundation/askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 jest.mock('react-native-vision-camera', () => {
@@ -50,6 +53,33 @@ jest.mock('react-native-keyboard-controller', () => {
     KeyboardAwareScrollView: ScrollView,
   }
 })
+
+// Mock Keyboard to fix KeyboardAvoidingView cleanup issues in tests
+// React Native 0.81+ exports Keyboard as .default
+const mockKeyboard = {
+  addListener: jest.fn(() => ({ remove: jest.fn() })),
+  removeListener: jest.fn(),
+  dismiss: jest.fn(),
+  scheduleLayoutAnimation: jest.fn(),
+  isVisible: jest.fn(() => false),
+  metrics: jest.fn(() => null),
+}
+jest.mock('react-native/Libraries/Components/Keyboard/Keyboard', () => ({
+  default: mockKeyboard,
+  ...mockKeyboard,
+}))
+
+// Mock BackHandler to return subscription with remove() method
+// This covers the new subscription-based API used in React Native 0.81+
+const mockBackHandler = {
+  addEventListener: jest.fn(() => ({ remove: jest.fn() })),
+  removeEventListener: jest.fn(),
+  exitApp: jest.fn(),
+}
+jest.mock('react-native/Libraries/Utilities/BackHandler', () => ({
+  default: mockBackHandler,
+  ...mockBackHandler,
+}))
 
 // Fix timezone issues in tests
 process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed

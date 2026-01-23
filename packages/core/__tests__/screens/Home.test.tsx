@@ -20,6 +20,7 @@ describe('displays a home screen', () => {
     // jest.resetAllMocks()
   })
 
+  // eslint-disable-next-line jest/no-disabled-tests
   test.skip('defaults to no notifications', async () => {
     // @ts-expect-error This is a mock object and the fn exists
     useBasicMessages.mockReturnValue({ records: [] as BasicMessageRecord[] })
@@ -46,6 +47,7 @@ describe('displays a home screen', () => {
     })
   })
 
+  // eslint-disable-next-line jest/no-disabled-tests
   test.skip('notifications are displayed', async () => {
     const tree = render(
       <BasicAppContext>

@@ -3,8 +3,7 @@ import { useCredentialById, useAgent } from '@credo-ts/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AccessibilityInfo, ScrollView, StyleSheet, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { AccessibilityInfo, StyleSheet, View } from 'react-native'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import SafeAreaModal from '../components/modals/SafeAreaModal'
@@ -15,6 +14,7 @@ import { testIdWithKey } from '../utils/testable'
 import { TOKENS, useServices } from '../container-api'
 import { ThemedText } from '../components/texts/ThemedText'
 import { ensureCredentialMetadata } from '../utils/credential'
+import ScreenWrapper from '../components/views/ScreenWrapper'
 
 enum DeliveryStatus {
   Pending,
@@ -42,11 +42,6 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
   const [{ connectionTimerDelay }, logger] = useServices([TOKENS.CONFIG, TOKENS.UTIL_LOGGER])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
   const styles = StyleSheet.create({
-    container: {
-      ...ListItems.credentialOfferBackground,
-      height: '100%',
-      padding: 20,
-    },
     image: {
       marginTop: 20,
     },
@@ -56,10 +51,6 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     messageText: {
       textAlign: 'center',
       marginTop: 30,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      margin: 20,
     },
     delayMessageText: {
       textAlign: 'center',
@@ -130,71 +121,67 @@ const CredentialOfferAccept: React.FC<CredentialOfferAcceptProps> = ({ visible, 
     }
   }, [shouldShowDelayMessage, credentialDeliveryStatus, t])
 
+  const controls = (
+    <>
+      {credentialDeliveryStatus === DeliveryStatus.Pending && (
+        <Button
+          title={t('Loading.BackToHome')}
+          accessibilityLabel={t('Loading.BackToHome')}
+          testID={testIdWithKey('BackToHome')}
+          onPress={onBackToHomeTouched}
+          buttonType={ButtonType.ModalSecondary}
+        />
+      )}
+
+      {credentialDeliveryStatus === DeliveryStatus.Completed && (
+        <Button
+          title={t('Global.Done')}
+          accessibilityLabel={t('Global.Done')}
+          testID={testIdWithKey('Done')}
+          onPress={onDoneTouched}
+          buttonType={ButtonType.ModalPrimary}
+        />
+      )}
+    </>
+  )
+
   return (
-    <SafeAreaModal visible={visible} transparent={true} animationType={'none'}>
-      <SafeAreaView style={{ ...ListItems.credentialOfferBackground }}>
-        <ScrollView style={styles.container}>
-          <View style={styles.messageContainer}>
-            {credentialDeliveryStatus === DeliveryStatus.Pending && (
-              <ThemedText
-                style={[ListItems.credentialOfferTitle, styles.messageText]}
-                testID={testIdWithKey('CredentialOnTheWay')}
-              >
-                {t('CredentialOffer.CredentialOnTheWay')}
-              </ThemedText>
-            )}
-
-            {credentialDeliveryStatus === DeliveryStatus.Completed && (
-              <ThemedText
-                style={[ListItems.credentialOfferTitle, styles.messageText]}
-                testID={testIdWithKey('CredentialAddedToYourWallet')}
-              >
-                {t('CredentialOffer.CredentialAddedToYourWallet')}
-              </ThemedText>
-            )}
-          </View>
-
-          <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
-            {credentialDeliveryStatus === DeliveryStatus.Completed && <CredentialAdded />}
-            {credentialDeliveryStatus === DeliveryStatus.Pending && <CredentialPending />}
-          </View>
-
-          {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
-            <ThemedText
-              style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
-              testID={testIdWithKey('TakingTooLong')}
-            >
-              {t('Connection.TakingTooLong')}
-            </ThemedText>
-          )}
-        </ScrollView>
-
-        <View style={styles.controlsContainer}>
+    <SafeAreaModal visible={visible} transparent animationType="none">
+      <ScreenWrapper edges={['bottom', 'top', 'left', 'right']} controls={controls}>
+        <View style={styles.messageContainer}>
           {credentialDeliveryStatus === DeliveryStatus.Pending && (
-            <View>
-              <Button
-                title={t('Loading.BackToHome')}
-                accessibilityLabel={t('Loading.BackToHome')}
-                testID={testIdWithKey('BackToHome')}
-                onPress={onBackToHomeTouched}
-                buttonType={ButtonType.ModalSecondary}
-              />
-            </View>
+            <ThemedText
+              style={[ListItems.credentialOfferTitle, styles.messageText]}
+              testID={testIdWithKey('CredentialOnTheWay')}
+            >
+              {t('CredentialOffer.CredentialOnTheWay')}
+            </ThemedText>
           )}
 
           {credentialDeliveryStatus === DeliveryStatus.Completed && (
-            <View>
-              <Button
-                title={t('Global.Done')}
-                accessibilityLabel={t('Global.Done')}
-                testID={testIdWithKey('Done')}
-                onPress={onDoneTouched}
-                buttonType={ButtonType.ModalPrimary}
-              />
-            </View>
+            <ThemedText
+              style={[ListItems.credentialOfferTitle, styles.messageText]}
+              testID={testIdWithKey('CredentialAddedToYourWallet')}
+            >
+              {t('CredentialOffer.CredentialAddedToYourWallet')}
+            </ThemedText>
           )}
         </View>
-      </SafeAreaView>
+
+        <View style={[styles.image, { minHeight: 250, alignItems: 'center', justifyContent: 'flex-end' }]}>
+          {credentialDeliveryStatus === DeliveryStatus.Completed && <CredentialAdded />}
+          {credentialDeliveryStatus === DeliveryStatus.Pending && <CredentialPending />}
+        </View>
+
+        {shouldShowDelayMessage && credentialDeliveryStatus === DeliveryStatus.Pending && (
+          <ThemedText
+            style={[ListItems.credentialOfferDetails, styles.delayMessageText]}
+            testID={testIdWithKey('TakingTooLong')}
+          >
+            {t('Connection.TakingTooLong')}
+          </ThemedText>
+        )}
+      </ScreenWrapper>
     </SafeAreaModal>
   )
 }

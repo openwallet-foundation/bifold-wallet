@@ -108,7 +108,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
           },
         })
       }
-    } catch (err) {
+    } catch {
       logger.error('[Credential Offer] error sending notification')
     }
   }

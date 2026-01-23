@@ -62,7 +62,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
         enableImplicitInvitations,
         enableReuseConnections
       )
-    } catch (err: unknown) {
+    } catch {
       setErrorMessage({ title: t('PasteUrl.ErrorInvalidUrl'), message: t('PasteUrl.ErrorInvalidUrlDescription') })
     }
   }

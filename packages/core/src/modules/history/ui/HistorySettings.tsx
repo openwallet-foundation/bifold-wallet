@@ -17,7 +17,7 @@ import { HistoryBlockSelection, IHistoryManager } from '../types'
 import SingleSelectBlock from './components/SingleSelectBlock'
 import { ThemedText } from '../../../components/texts/ThemedText'
 
-interface HistorySettingsProps extends StackScreenProps<SettingStackParams, Screens.HistorySettings> {}
+type HistorySettingsProps = StackScreenProps<SettingStackParams, Screens.HistorySettings>
 
 const HistorySettings: React.FC<HistorySettingsProps> = () => {
   const [continueEnabled] = useState(true)
@@ -97,7 +97,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
       //     animated: true,
       //   })
       // console.log('History option saved')
-    } catch (e: unknown) {
+    } catch {
       //TODO: Impliment Alert
       // console.log('Error:', e)
       //   log(`[${SettingsActivityHistory.name}]: Handle history save: ${e}`, LogLevel.error)

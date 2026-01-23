@@ -90,7 +90,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       try {
         const credentialExchangeRecord = await agent?.credentials.getById(credentialId)
         setCredential(credentialExchangeRecord)
-      } catch (error) {
+      } catch {
         // credential not found for id, display an error
         DeviceEventEmitter.emit(
           EventTypes.ERROR_ADDED,

@@ -13,9 +13,6 @@ jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
 
-jest.useFakeTimers({ legacyFakeTimers: true })
-jest.spyOn(global, 'setTimeout')
-
 const navigation = testUseNavigation()
 
 describe('ListProofRequests Component', () => {
@@ -53,14 +50,12 @@ describe('ListProofRequests Component', () => {
   test('Pressing on a request template takes the user to a proof request template detail screen', async () => {
     const tree = renderView()
 
-    await act(async () => {
-      const templateItemInstance = await tree.findByText('Student full name', { exact: true })
+    const templateItemInstance = await tree.findByText('Student full name', { exact: true })
 
-      fireEvent(templateItemInstance, 'press')
+    fireEvent(templateItemInstance, 'press')
 
-      expect(navigation.navigate).toBeCalledWith('Proof Request Details', {
-        templateId: getProofRequestTemplates(false)[0].id,
-      })
+    expect(navigation.navigate).toBeCalledWith('Proof Request Details', {
+      templateId: getProofRequestTemplates(false)[0].id,
     })
   })
 })
