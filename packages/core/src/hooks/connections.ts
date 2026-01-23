@@ -1,17 +1,27 @@
 import { ConnectionRecord, OutOfBandRecord } from '@credo-ts/core'
 import { useAgent, useConnectionById, useConnections } from '@credo-ts/react-hooks'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export const useOutOfBandById = (oobId: string): OutOfBandRecord | undefined => {
   const { agent } = useAgent()
   const [oob, setOob] = useState<OutOfBandRecord | undefined>(undefined)
-  if (!oob) {
-    agent?.oob.findById(oobId).then((res) => {
-      if (res) {
-        setOob(res)
-      }
-    })
-  }
+
+  useEffect(() => {
+    if (!oobId || !agent) {
+      setOob(undefined)
+      return
+    }
+
+    agent.oob
+      .findById(oobId)
+      .then((res) => {
+        setOob(res ?? undefined)
+      })
+      .catch(() => {
+        setOob(undefined)
+      })
+  }, [oobId, agent])
+
   return oob
 }
 

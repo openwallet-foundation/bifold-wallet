@@ -22,7 +22,6 @@ import { BasicAppContext } from '../helpers/app'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.useFakeTimers({ legacyFakeTimers: true })
 jest.spyOn(global, 'setTimeout')
 

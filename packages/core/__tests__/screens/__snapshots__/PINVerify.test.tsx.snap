@@ -647,7 +647,7 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                 }
                 accessible={true}
                 collapsable={false}
-                focusable={true}
+                focusable={false}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1328,7 +1328,7 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                 }
                 accessible={true}
                 collapsable={false}
-                focusable={true}
+                focusable={false}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -2133,7 +2133,7 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                 }
                 accessible={true}
                 collapsable={false}
-                focusable={true}
+                focusable={false}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}

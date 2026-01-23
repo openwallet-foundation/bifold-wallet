@@ -29,11 +29,11 @@ interface InfoBoxProps {
   bodyContent?: Element
   message?: string
   callToActionDisabled?: boolean
-  callToActionIcon?: JSX.Element
+  callToActionIcon?: React.ReactNode
   secondaryCallToActionTitle?: string
   secondaryCallToActionPressed?: GenericFn
   secondaryCallToActionDisabled?: boolean
-  secondaryCallToActionIcon?: JSX.Element
+  secondaryCallToActionIcon?: React.ReactNode
   onCallToActionPressed?: GenericFn
   onCallToActionLabel?: string
   onClosePressed?: GenericFn

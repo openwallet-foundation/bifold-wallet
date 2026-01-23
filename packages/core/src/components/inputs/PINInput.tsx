@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import {
@@ -30,20 +30,19 @@ interface PINInputProps {
   autoFocus?: boolean
   inlineMessage?: InlineMessageProps
   onSubmitEditing?: (...args: any[]) => void
+  ref?: React.Ref<TextInput>
 }
 
-const PINInputComponent = (
-  {
-    label,
-    onPINChanged,
-    testID,
-    accessibilityLabel,
-    autoFocus = false,
-    inlineMessage,
-    onSubmitEditing = () => {},
-  }: PINInputProps,
-  ref: Ref<TextInput>
-) => {
+const PINInput = ({
+  label,
+  onPINChanged,
+  testID,
+  accessibilityLabel,
+  autoFocus = false,
+  inlineMessage,
+  onSubmitEditing = () => {},
+  ref,
+}: PINInputProps) => {
   const [{ PINScreensConfig }] = useServices([TOKENS.CONFIG])
 
   const { PINInputTheme, SeparatedPINInputTheme, ColorPalette } = useTheme()
@@ -85,7 +84,7 @@ const PINInputComponent = (
         onPINChanged && onPINChanged(newPIN)
       }
     },
-    [PIN, displayValue, onPINChanged]
+    [PIN, displayValue, onPINChanged],
   )
 
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -206,7 +205,5 @@ const PINInputComponent = (
     </View>
   )
 }
-
-const PINInput = forwardRef<TextInput, PINInputProps>(PINInputComponent)
 
 export default PINInput

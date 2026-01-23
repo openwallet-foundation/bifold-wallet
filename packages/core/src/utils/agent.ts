@@ -33,7 +33,7 @@ import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-
 import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@credo-ts/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
-import { ariesAskar } from '@hyperledger/aries-askar-react-native'
+import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
 
 interface GetAgentModulesOptions {
@@ -65,7 +65,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
 
   return {
     askar: new AskarModule({
-      ariesAskar,
+      ariesAskar: askar,
     }),
     anoncreds: new AnonCredsModule({
       anoncreds,

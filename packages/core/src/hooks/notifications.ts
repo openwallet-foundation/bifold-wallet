@@ -53,7 +53,6 @@ export const useNotifications = ({
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const openIDExpiredNotifs = useExpiredNotifications()
-
   useEffect(() => {
     // get all unseen messages
     const unseenMessages: BasicMessageRecord[] = basicMessages.filter((msg) => {

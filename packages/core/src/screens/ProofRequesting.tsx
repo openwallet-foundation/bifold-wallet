@@ -145,9 +145,9 @@ const ProofRequesting: React.FC<ProofRequestingProps> = ({ route, navigation }) 
         return true
       }
 
-      BackHandler.addEventListener('hardwareBackPress', onBackPress)
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+      return () => subscription.remove()
     }, [navigation])
   )
 
