@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.12.2
+
+### Patch Changes
+
+- 72a1171: fix typo in turbo module
+
 ## 2.12.1
 
 ### Patch Changes
