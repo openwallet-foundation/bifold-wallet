@@ -212,7 +212,7 @@ const CredentialCard11: React.FC<CredentialCard11Props> = ({
         const flagged = overlayBundle?.flaggedAttributes ?? resolvedBundle?.captureBase?.flaggedAttributes
         const flaggedNames =
           Array.isArray(flagged) && flagged.every((item: unknown) => typeof item === 'string')
-            ? (flagged as string[])
+            ? flagged
             : Array.isArray(flagged)
               ? flagged.map((attr: any) => attr?.name).filter(Boolean)
               : []

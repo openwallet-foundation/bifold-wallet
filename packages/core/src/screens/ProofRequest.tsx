@@ -423,7 +423,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       const flagged = overlayBundle?.flaggedAttributes ?? resolvedBundle?.captureBase?.flaggedAttributes
       const flaggedNames =
         Array.isArray(flagged) && flagged.every((item: unknown) => typeof item === 'string')
-          ? (flagged as string[])
+          ? flagged
           : Array.isArray(flagged)
             ? flagged.map((attr: any) => attr?.name).filter(Boolean)
             : []

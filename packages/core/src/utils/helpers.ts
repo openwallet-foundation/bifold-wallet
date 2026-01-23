@@ -259,7 +259,7 @@ export function formatIfDate(format: string | undefined, value: string | number 
  * Used by credential card components to get format information for attributes.
  */
 export const getAttributeFormats = (bundle: any): Record<string, string | undefined> => {
-  const overlayBundle = (bundle?.bundle ?? bundle) as any
+  const overlayBundle = bundle?.bundle ?? bundle
   const attributes = overlayBundle?.attributes
 
   if (!Array.isArray(attributes)) {

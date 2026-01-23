@@ -16,9 +16,7 @@ const exclusionList = (additionalExclusions = []) => {
       const escaped = pattern.replace(/[\-\[\]\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
       return escaped.replaceAll('/', `\\${path.sep}`)
     }
-    throw new Error(
-      `Expected exclusionList to be called with RegExp or string, got: ${typeof pattern}`
-    )
+    throw new Error(`Expected exclusionList to be called with RegExp or string, got: ${typeof pattern}`)
   }
 
   return new RegExp(`(${additionalExclusions.concat(defaults).map(escapeRegExp).join('|')})$`)
@@ -60,9 +58,7 @@ const {
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */
-const combinedWatchFolders = Array.from(
-  new Set([...(defaultConfig.watchFolders || []), ...watchFolders])
-)
+const combinedWatchFolders = Array.from(new Set([...(defaultConfig.watchFolders || []), ...watchFolders]))
 
 const config = mergeConfig(defaultConfig, {
   transformer: {
