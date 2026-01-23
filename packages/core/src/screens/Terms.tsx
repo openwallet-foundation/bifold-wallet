@@ -59,6 +59,10 @@ const Terms: React.FC = () => {
     //   nav.goBack()
     // }
 
+    dispatch({ 
+      type: DispatchAction.DID_COMPLETE_TUTORIAL,
+      payload: [{ didCompleteTutorial: false }]
+    })
     navigation.navigate(Screens.Onboarding)
   }
 
