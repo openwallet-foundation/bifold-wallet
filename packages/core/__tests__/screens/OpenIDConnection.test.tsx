@@ -10,7 +10,6 @@ import { BasicAppContext } from '../helpers/app'
 import { BifoldError } from '../../src/types/error'
 import { EventTypes } from '../../src/constants'
 
-const oobRecordId = '979c6c76-2885-4315-842b-2080a76bad13'
 const openIDUri = '123456'
 const openIDPresentationUri = '//'
 
@@ -27,7 +26,7 @@ describe('OpenID Connection Screen', () => {
 
     const tree = (
       <BasicAppContext>
-        <OpenIDConnectionScreen navigation={useNavigation()} route={{ params: { oobRecordId, openIDUri, openIDPresentationUri } } as any} />
+        <OpenIDConnectionScreen navigation={useNavigation()} route={{ params: { openIDUri, openIDPresentationUri } } as any} />
       </BasicAppContext>
     )
     const { getByTestId } = render(tree)
@@ -42,18 +41,18 @@ describe('OpenID Connection Screen', () => {
 
     const tree = (
       <BasicAppContext>
-        <OpenIDConnectionScreen navigation={useNavigation()} route={{ params: { oobRecordId, openIDUri, openIDPresentationUri } } as any} />
+        <OpenIDConnectionScreen navigation={useNavigation()} route={{ params: { openIDUri, openIDPresentationUri } } as any} />
       </BasicAppContext>
     )
     const { findByText } = render(tree)
 
-    const error = new BifoldError(
-      'ErrorTitle',
-      'ErrorDescription',
-      'ErrorMessage',
-      1043
-    )
     act(() => {
+      const error = new BifoldError(
+        'ErrorTitle',
+        'ErrorDescription',
+        'ErrorMessage',
+        1043
+      )
       DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
     })
 

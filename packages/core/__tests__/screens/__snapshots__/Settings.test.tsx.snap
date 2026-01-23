@@ -1044,7 +1044,7 @@ exports[`Settings Screen Renders correctly 1`] = `
                   ]
                 }
               >
-                5 min
+                undefined min
               </Text>
             </View>
           </View>
