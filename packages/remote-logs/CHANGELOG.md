@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.12.0
+
+### Minor Changes
+
+- 43446f3: upgrade to React Native 0.81.5
+
+### Patch Changes
+
+- Updated dependencies [e718f5b]
+- Updated dependencies [43446f3]
+  - @bifold/core@2.12.0
+
 ## 2.11.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.12.0
+
+### Minor Changes
+
+- 43446f3: upgrade to React Native 0.81.5
+
 ## 2.11.12
 
 ## 2.11.11
