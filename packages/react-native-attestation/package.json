@@ -8,6 +8,7 @@
   "source": "build/commonjs/index.js",
   "react-native": "build/commonjs/index.js",
   "files": [
+    "src",
     "build",
     "ios",
     "android",
