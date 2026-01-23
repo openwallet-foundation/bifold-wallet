@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.12.2
+
+### Patch Changes
+
+- 8ba7a18: Fix terms screen back button functionality
+
 ## 2.12.1
 
 ## 2.12.0
