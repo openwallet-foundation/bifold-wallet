@@ -49,7 +49,7 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { oobRecordId, openIDUri, openIDPresentationUri, proofId, credentialId } = route.params
+  const { oobRecordId, proofId, credentialId, openIDPresentationUri, openIDUri } = route.params
   const [
     logger,
     { useNotifications },
@@ -68,10 +68,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
-  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const { agent } = useAppAgent()
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
+  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
 
   const { t } = useTranslation()
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
@@ -84,6 +84,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     percentComplete: 30,
     queriedConnection: undefined,
   })
+
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -368,6 +369,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           dispatch({ notificationRecord: notification })
           break
         }
+      }
     }
 
     checkNotifications()
