@@ -269,7 +269,7 @@ RCT_EXPORT_METHOD(appleAttestation:(NSString *)keyId
 }
 
 RCT_EXPORT_METHOD(getAppStoreReceipt:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject) {
+                  reject:(RCTPromiseRejectBlock)reject) {
     NSURL *appStoreReceiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
     
     if (appStoreReceiptURL && [[NSFileManager defaultManager] fileExistsAtPath:[appStoreReceiptURL path]]) {
