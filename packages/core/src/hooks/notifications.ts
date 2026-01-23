@@ -22,7 +22,6 @@ import { useOpenID } from '../modules/openid/hooks/openid'
 import { CustomNotification } from '../types/notification'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
-import { TOKENS, useServices } from '../container-api'
 
 export type NotificationsInputProps = {
   openIDUri?: string
@@ -54,17 +53,7 @@ export const useNotifications = ({
   const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const openIDExpiredNotifs = useExpiredNotifications()
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
-
   useEffect(() => {
-    logger?.info(
-      `[useNotifications] Processing notifications. Inputs: ` +
-        `offers=${offers.length}, proofsRequested=${proofsRequested.length}, ` +
-        `proofsDone=${proofsDone.length}, credsDone=${credsDone.length}, ` +
-        `openIDCredRecieved=${openIDCredRecieved ? 'YES' : 'NO'}, ` +
-        `openIDExpiredNotifs=${openIDExpiredNotifs.length}`,
-    )
-
     // get all unseen messages
     const unseenMessages: BasicMessageRecord[] = basicMessages.filter((msg) => {
       const meta = msg.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
@@ -105,31 +94,6 @@ export const useNotifications = ({
       openIDCreds.push(openIDCredRecieved)
     }
 
-    logger?.info(
-      `[useNotifications] Filtered notifications: ` +
-        `messages=${messagesToShow.length}, offers=${offers.length}, ` +
-        `proofsRequested=${proofsRequested.length}, validProofsDone=${validProofsDone.length}, ` +
-        `revoked=${revoked.length}, openIDCreds=${openIDCreds.length}`,
-    )
-
-    // Log details of proof requests
-    proofsRequested.forEach((proof, index) => {
-      logger?.info(
-        `[useNotifications] ProofRequest[${index}]: ` +
-          `id=${proof.id}, connectionId=${proof.connectionId}, ` +
-          `threadId=${proof.threadId}, state=${proof.state}`,
-      )
-    })
-
-    // Log details of offers
-    offers.forEach((offer, index) => {
-      logger?.info(
-        `[useNotifications] Offer[${index}]: ` +
-          `id=${offer.id}, connectionId=${offer.connectionId}, ` +
-          `threadId=${offer.threadId}, state=${offer.state}`,
-      )
-    })
-
     const notif = [
       ...messagesToShow,
       ...offers,
@@ -139,8 +103,6 @@ export const useNotifications = ({
       ...openIDCreds,
       ...openIDExpiredNotifs,
     ].sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime())
-
-    logger?.info(`[useNotifications] Total notifications: ${notif.length}`)
 
     setNotifications(notif)
   }, [
@@ -152,7 +114,6 @@ export const useNotifications = ({
     credsDone,
     openIDCredRecieved,
     openIDExpiredNotifs,
-    logger,
   ])
 
   return notifications

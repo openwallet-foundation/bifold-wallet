@@ -1,5 +1,6 @@
 import {
   BasicMessageRecord,
+  ConnectionRecord,
   CredentialExchangeRecord,
   MdocRecord,
   ProofExchangeRecord,
@@ -42,6 +43,7 @@ type LocalState = {
   shouldShowProofComponent: boolean
   shouldShowOfferComponent: boolean
   percentComplete: number
+  queriedConnection?: ConnectionRecord
 }
 
 const GoalCodes = {
@@ -84,6 +86,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     shouldShowProofComponent: false,
     shouldShowOfferComponent: false,
     percentComplete: 30,
+    queriedConnection: undefined,
   })
   const styles = StyleSheet.create({
     pageContainer: {
@@ -220,12 +223,18 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
+    // Use queriedConnection as fallback if the hook hasn't found the connection yet
+    const actualConnection = connection || state.queriedConnection
+
     // If we have a connection, but no goal code, we should navigate
     // to Chat
-    if (connection && !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')) {
+    if (
+      actualConnection &&
+      !(Object.values(GoalCodes) as [string]).includes(oobRecord?.outOfBandInvitation.goalCode ?? '')
+    ) {
       logger?.info('Connection: Handling connection without goal code, navigate to Chat')
 
-      handleNavigation(connection.id)
+      handleNavigation(actualConnection.id)
 
       return
     }
@@ -237,7 +246,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     }
 
     // Connectionless proof request, we don't have connectionless offers.
-    if (!connection) {
+    if (!actualConnection) {
       navigation.setOptions({ title: t('Screens.ProofRequest') })
       dispatch({ inProgress: false, shouldShowProofComponent: true })
 
@@ -274,11 +283,12 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
     logger?.info(`Connection: Unable to handle ${goalCode} goal code`)
 
-    handleNavigation(connection.id)
+    handleNavigation(actualConnection.id)
   }, [
     oobRecord,
     state.inProgress,
     connection,
+    state.queriedConnection,
     logger,
     dispatch,
     navigation,
@@ -322,92 +332,89 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
-    logger?.info(
-      `[Connection] Processing ${notifications.length} notifications. ` +
-        `connection=${connection?.id ?? 'NONE'}, oobRecord=${oobRecordId ?? 'NONE'}`
-    )
+    const actualConnection = connection || state.queriedConnection
 
-    if (oobRecord) {
-      const tags = oobRecord.getTags()
-      logger?.info(
-        `[Connection] OOB Record tags: ` +
-          `invitationRequestsThreadIds=${JSON.stringify(tags?.invitationRequestsThreadIds ?? [])}`
-      )
-      logger?.info(
-        `[Connection] OOB Record details: ` +
-          `id=${oobRecord.id}, ` +
-          `state=${oobRecord.state}, ` +
-          `role=${oobRecord.role}, ` +
-          `goalCode=${oobRecord.outOfBandInvitation?.goalCode ?? 'NONE'}`
-      )
-      logger?.info(`[Connection] OOB Record full tags: ${JSON.stringify(tags)}`)
-    }
-
-    if (connection) {
-      logger?.info(
-        `[Connection] Connection details: ` +
-          `id=${connection.id}, ` +
-          `state=${connection.state}, ` +
-          `theirLabel=${connection.theirLabel}, ` +
-          `outOfBandId=${connection.outOfBandId}`
-      )
-    }
-
-    for (const notification of notifications) {
-      logger?.info(
-        `[Connection] Checking notification: ` +
-          `type=${(notification as any).type}, ` +
-          `id=${(notification as NotCustomNotification).id ?? 'N/A'}, ` +
-          `connectionId=${(notification as NotCustomNotification).connectionId ?? 'N/A'}, ` +
-          `threadId=${(notification as NotCustomNotification).threadId ?? 'N/A'}`
-      )
-
-      // no action taken for BasicMessageRecords
-      if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
-        logger?.info('Connection: BasicMessageRecord, skipping')
-        continue
+    const checkNotifications = async () => {
+      // First, try to find the connection for this OOB record directly from the agent
+      // This handles cases where the connection was created but not yet indexed by the hook
+      let foundConnection = actualConnection
+      if (!foundConnection && agent && oobRecordId) {
+        try {
+          const allConnections = await agent.connections.getAll()
+          foundConnection = allConnections.find((conn) => conn.outOfBandId === oobRecordId)
+          if (foundConnection) {
+            // Store the found connection in state so other useEffects can access it
+            dispatch({ queriedConnection: foundConnection })
+          }
+        } catch (error) {
+          // Silently continue if query fails
+          logger.debug(`[Connection] Failed to query connections, continuing: ${error}`)
+        }
       }
 
-      const notifConnectionId = (notification as NotCustomNotification).connectionId
-      const notifThreadId = (notification as NotCustomNotification)?.threadId
-      const matchesConnection = connection && notifConnectionId === connection.id
-      const matchesOobThread = oobRecord?.getTags()?.invitationRequestsThreadIds?.includes(notifThreadId ?? '')
+      for (const notification of notifications) {
+        // no action taken for BasicMessageRecords
+        if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
+          continue
+        }
 
-      // When we have an OOB record but no connection found yet via useConnectionByOutOfBandId,
-      // we should still accept notifications - the connection may not be indexed properly yet
-      const hasOobRecordAndConnectionId = oobRecord && notifConnectionId
+        const notifConnectionId = (notification as NotCustomNotification).connectionId
+        const notifThreadId = (notification as NotCustomNotification)?.threadId
+        const matchesConnection = foundConnection && notifConnectionId === foundConnection.id
+        const matchesOobThread = oobRecord?.getTags()?.invitationRequestsThreadIds?.includes(notifThreadId ?? '')
 
-      logger?.info(
-        `[Connection] Notification matching: ` +
-          `matchesConnection=${matchesConnection}, matchesOobThread=${matchesOobThread}, ` +
-          `hasOobRecordAndConnectionId=${hasOobRecordAndConnectionId}`
-      )
+        // Check if this notification is for a reused connection
+        const matchesReuseConnection = oobRecord?.reuseConnectionId && notifConnectionId === oobRecord.reuseConnectionId
 
-      if (matchesConnection || matchesOobThread || (hasOobRecordAndConnectionId && !connection)) {
-        logger?.info(`Connection: Handling notification ${(notification as NotCustomNotification).id}`)
+        // For robustness, also check if the notification's connection matches this OOB record
+        let matchesOobConnection = false
+        if (agent && oobRecordId && notifConnectionId && !foundConnection) {
+          try {
+            // Get all connections
+            const allConnections = await agent.connections.getAll()
 
-        dispatch({ notificationRecord: notification })
-        break
+            // Find any connection that references this OOB record ID
+            const oobConnection = allConnections.find((conn) => conn.outOfBandId === oobRecordId)
+
+            // If we found a connection for this OOB record and the notification is for that connection
+            if (oobConnection && oobConnection.id === notifConnectionId) {
+              matchesOobConnection = true
+            }
+          } catch (error) {
+            logger.debug(`[Connection] Failed to query connections for OOB match, continuing: ${error} `)
+          }
+        }
+
+        if (matchesConnection || matchesOobThread || matchesReuseConnection || matchesOobConnection) {
+          dispatch({ notificationRecord: notification })
+          break
+        }
+
+        if (
+          (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+          (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+          (notification as MdocRecord).type === 'MdocRecord' ||
+          (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
+        ) {
+          dispatch({ notificationRecord: notification })
+          break
+        }
       }
-
-      if (
-        (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-        (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
-        (notification as MdocRecord).type === 'MdocRecord' ||
-        (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
-      ) {
-        logger?.info(`[Connection] Matched OpenID credential type: ${(notification as any).type}`)
-        dispatch({ notificationRecord: notification })
-        break
-      }
-
-      logger?.info(`[Connection] Notification did not match any criteria`)
     }
 
-    if (notifications.length > 0 && !state.notificationRecord) {
-      logger?.warn(`[Connection] Had ${notifications.length} notifications but none matched!`)
-    }
-  }, [state.inProgress, state.notificationRecord, notifications, logger, connection, oobRecord, dispatch, oobRecordId])
+    checkNotifications()
+  }, [
+    state.inProgress,
+    state.notificationRecord,
+    state.queriedConnection,
+    notifications,
+    logger,
+    connection,
+    oobRecord,
+    dispatch,
+    oobRecordId,
+    agent,
+  ])
 
   const loadingPlaceholderWorkflowType = () => {
     if (state.shouldShowProofComponent) {

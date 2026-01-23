@@ -84,6 +84,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       backgroundColor: ColorPalette.brand.modalPrimaryBackground,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10,
+      flex: 1,
     },
     container: {
       paddingTop: 10,
