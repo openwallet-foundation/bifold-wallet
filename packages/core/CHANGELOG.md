@@ -1,5 +1,15 @@
 # @bifold/core
 
+## 2.12.0
+
+### Minor Changes
+
+- 43446f3: upgrade to React Native 0.81.5
+
+### Patch Changes
+
+- e718f5b: Allow unacceptable PIN list to be injected
+
 ## 2.11.12
 
 ### Patch Changes
