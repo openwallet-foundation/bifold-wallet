@@ -14,9 +14,23 @@ index 424685229a55086d101bc30a4444d473b9902fb9..cdbde442353a9eea5d3fc7385ff8024f
      /**
       * Request a credential. Can be used with both the pre-authorized code flow and the authorization code flow.
 diff --git a/build/openid4vc-holder/OpenId4VciHolderService.js b/build/openid4vc-holder/OpenId4VciHolderService.js
-index 2d0149b8b4e2bd63ec7f52bd419ec6ac3db689ea..b982dc983b5b48332871e5ed9171ecccd93fceb1 100644
+index 2d0149b8b4e2bd63ec7f52bd419ec6ac3db689ea..0a1cbc2594827035d11a15191584c4898f1bcca4 100644
 --- a/build/openid4vc-holder/OpenId4VciHolderService.js
 +++ b/build/openid4vc-holder/OpenId4VciHolderService.js
+@@ -154,11 +154,11 @@ let OpenId4VciHolderService = class OpenId4VciHolderService {
+     async sendNotification(options) {
+         const { notificationMetadata, notificationEvent } = options;
+         const { notificationId, notificationEndpoint } = notificationMetadata;
+-        const response = await (0, oid4vci_common_1.post)(notificationEndpoint, { notification_id: notificationId, event: notificationEvent }, {
++        const response = await (0, oid4vci_common_1.post)(notificationEndpoint, JSON.stringify({ notification_id: notificationId, event: notificationEvent }), {
+             bearerToken: options.accessToken,
+             contentType: 'application/json',
+         });
+-        if (!response.successBody) {
++        if (response.error) {
+             throw new core_1.CredoError(`Failed to send notification event '${notificationId}' to '${notificationEndpoint}'`);
+         }
+     }
 @@ -229,6 +229,7 @@ let OpenId4VciHolderService = class OpenId4VciHolderService {
          return {
              ...accessTokenResponse.successBody,

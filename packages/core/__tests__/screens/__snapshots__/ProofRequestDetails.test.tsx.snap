@@ -109,7 +109,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
             testID="com.ariesbifold:id/CredentialCard"
           >
             <View
-              accessibilityLabel=",  Student Credentials.Credential. First Name, undefined null, Last Name, undefined null"
+              accessibilityLabel="Credentials.IssuedBy Unknown Contact,  Student Card Credentials.Credential. student_first_name, undefined null, student_last_name, undefined null, expiry_date, ProofRequest.PredicateGe @{currentDate(0)}"
               accessible={true}
               style={
                 Object {
@@ -207,40 +207,6 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                         Array [
                           Object {
                             "color": "#FFFFFF",
-                            "fontSize": 14,
-                            "fontWeight": "bold",
-                          },
-                          Array [
-                            Object {
-                              "color": "#FFFFFF",
-                              "flexShrink": 1,
-                              "lineHeight": 24,
-                            },
-                            Object {
-                              "flex": 1,
-                              "flexWrap": "wrap",
-                              "lineHeight": 19,
-                              "opacity": 0.8,
-                            },
-                          ],
-                        ]
-                      }
-                      testID="com.ariesbifold:id/CredentialIssuer"
-                    />
-                  </View>
-                  <View
-                    style={
-                      Object {
-                        "flexDirection": "row",
-                      }
-                    }
-                  >
-                    <Text
-                      maxFontSizeMultiplier={2}
-                      style={
-                        Array [
-                          Object {
-                            "color": "#FFFFFF",
                             "fontSize": 18,
                             "fontWeight": "bold",
                           },
@@ -259,7 +225,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                       }
                       testID="com.ariesbifold:id/CredentialName"
                     >
-                      Student
+                      Student Card
                     </Text>
                   </View>
                 </View>
@@ -271,7 +237,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                         "encoding": undefined,
                         "format": undefined,
                         "hasError": undefined,
-                        "label": "First Name",
+                        "label": undefined,
                         "mimeType": undefined,
                         "name": "student_first_name",
                         "nonRevoked": undefined,
@@ -282,7 +248,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                         ],
                         "revealed": undefined,
                         "revoked": undefined,
-                        "type": "Text",
+                        "type": undefined,
                         "value": null,
                       },
                       Attribute {
@@ -290,7 +256,7 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                         "encoding": undefined,
                         "format": undefined,
                         "hasError": undefined,
-                        "label": "Last Name",
+                        "label": undefined,
                         "mimeType": undefined,
                         "name": "student_last_name",
                         "nonRevoked": undefined,
@@ -301,14 +267,34 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                         ],
                         "revealed": undefined,
                         "revoked": undefined,
-                        "type": "Text",
+                        "type": undefined,
                         "value": null,
+                      },
+                      Predicate {
+                        "credentialId": undefined,
+                        "encoding": undefined,
+                        "format": undefined,
+                        "label": undefined,
+                        "mimeType": undefined,
+                        "name": "expiry_date",
+                        "nonRevoked": undefined,
+                        "pType": ">=",
+                        "pValue": "@{currentDate(0)}",
+                        "parameterizable": undefined,
+                        "restrictions": Array [
+                          Object {
+                            "cred_def_id": "XUxBrVSALWHLeycAUhrNr9:3:CL:26293:student_card",
+                          },
+                        ],
+                        "revoked": undefined,
+                        "satisfied": undefined,
+                        "type": undefined,
                       },
                     ]
                   }
                   getItem={[Function]}
                   getItemCount={[Function]}
-                  initialNumToRender={2}
+                  initialNumToRender={3}
                   keyExtractor={[Function]}
                   onContentSizeChange={[Function]}
                   onLayout={[Function]}
@@ -408,6 +394,104 @@ exports[`ProofRequestDetails Screen Renders correctly 1`] = `
                           >
                             Last Name
                           </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      onFocusCapture={[Function]}
+                      onLayout={[Function]}
+                      style={null}
+                    >
+                      <View
+                        style={
+                          Object {
+                            "gap": 4,
+                            "marginVertical": 16,
+                          }
+                        }
+                      >
+                        <View>
+                          <Text
+                            maxFontSizeMultiplier={2}
+                            style={
+                              Array [
+                                Object {
+                                  "color": "#FFFFFF",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal",
+                                },
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "flexShrink": 1,
+                                    "lineHeight": 24,
+                                  },
+                                  Object {
+                                    "lineHeight": 19,
+                                    "opacity": 0.8,
+                                  },
+                                ],
+                              ]
+                            }
+                            testID="com.ariesbifold:id/PredicateName"
+                          >
+                            Expiry Date
+                          </Text>
+                          <View
+                            style={
+                              Object {
+                                "alignItems": "flex-end",
+                                "flexDirection": "row",
+                                "flexWrap": "wrap",
+                              }
+                            }
+                          >
+                            <Text
+                              maxFontSizeMultiplier={2}
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "fontSize": 18,
+                                    "fontWeight": "bold",
+                                  },
+                                  Array [
+                                    Object {
+                                      "color": "#FFFFFF",
+                                      "flexShrink": 1,
+                                      "lineHeight": 24,
+                                    },
+                                    Object {
+                                      "lineHeight": 19,
+                                      "marginRight": 5,
+                                    },
+                                  ],
+                                ]
+                              }
+                            >
+                              ProofRequest.PredicateGe
+                            </Text>
+                            <Text
+                              maxFontSizeMultiplier={2}
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "fontSize": 18,
+                                    "fontWeight": "bold",
+                                  },
+                                  Object {
+                                    "color": "#FFFFFF",
+                                    "flexShrink": 1,
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                              testID="com.ariesbifold:id/PredicateValue"
+                            >
+                              @{currentDate(0)}
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     </View>

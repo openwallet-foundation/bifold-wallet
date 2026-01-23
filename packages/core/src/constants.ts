@@ -98,6 +98,12 @@ export const PINRules: PINValidationRules = {
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
   most_used_pins: false,
+  unacceptable_pin_list: [
+    '123456',
+    '111111',
+    '000000',
+    '123123',
+  ]
 }
 
 export const domain = 'didcomm://invite'

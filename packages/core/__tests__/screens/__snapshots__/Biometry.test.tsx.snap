@@ -10,13 +10,18 @@ exports[`Biometry Screen renders correctly when biometry available 1`] = `
       "top": "off",
     }
   }
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
 >
   <RCTScrollView
     style={
       Object {
         "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
+        "flexGrow": 1,
+        "padding": 16,
       }
     }
   >
@@ -41,7 +46,7 @@ exports[`Biometry Screen renders correctly when biometry available 1`] = `
       <View
         style={
           Object {
-            "rowGap": 20,
+            "rowGap": 16,
           }
         }
       >
@@ -229,7 +234,7 @@ exports[`Biometry Screen renders correctly when biometry available 1`] = `
   <View
     style={
       Object {
-        "margin": 20,
+        "margin": 16,
         "marginTop": "auto",
       }
     }
@@ -324,13 +329,18 @@ exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
       "top": "off",
     }
   }
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
 >
   <RCTScrollView
     style={
       Object {
         "backgroundColor": "#000000",
-        "height": "100%",
-        "padding": 20,
+        "flexGrow": 1,
+        "padding": 16,
       }
     }
   >
@@ -355,7 +365,7 @@ exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
       <View
         style={
           Object {
-            "rowGap": 20,
+            "rowGap": 16,
           }
         }
       >
@@ -527,7 +537,7 @@ exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
   <View
     style={
       Object {
-        "margin": 20,
+        "margin": 16,
         "marginTop": "auto",
       }
     }

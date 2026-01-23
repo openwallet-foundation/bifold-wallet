@@ -6,10 +6,8 @@ import {
   AccessibilityInfo,
   DeviceEventEmitter,
   Keyboard,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
-  View,
   findNodeHandle,
 } from 'react-native'
 
@@ -49,7 +47,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
-  const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const createPINButtonRef = useRef<React.ComponentRef<typeof TouchableOpacity>>(null)
   const [
     PINExplainer,
     PINHeader,
@@ -65,24 +63,17 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
   ])
   const [PINConfirmModalVisible, setPINConfirmModalVisible] = useState(false)
   const [explained, setExplained] = useState(explainedStatus || showPINExplainer === false)
-  const { PINValidations, validatePINEntry, inlineMessageField1, inlineMessageField2, modalState, PINSecurity, setInlineMessageField1, setInlineMessageField2 } =
-    usePINValidation(PIN)
+  const {
+    PINValidations,
+    validatePINEntry,
+    inlineMessageField1,
+    inlineMessageField2,
+    modalState,
+    PINSecurity,
+    setInlineMessageField1,
+    setInlineMessageField2,
+  } = usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
-
-  const style = StyleSheet.create({
-    screenContainer: {
-      height: '100%',
-      backgroundColor: ColorPalette.brand.primaryBackground,
-      padding: 20,
-      justifyContent: 'space-between',
-    },
-    // below used as helpful labels for views, no properties needed atp
-    contentContainer: {},
-    controlsContainer: {},
-    infoBox: {
-      marginBottom: 24,
-    },
-  })
 
   const handleConfirmPINFlow = useCallback(
     async (pin: string) => {
@@ -149,92 +140,85 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
     setExplained(true)
   }, [])
 
+  const controls = !PINScreensConfig.useNewPINDesign && (
+    <Button
+      title={t('PINCreate.CreatePIN')}
+      testID={testIdWithKey('CreatePIN')}
+      accessibilityLabel={t('PINCreate.CreatePIN')}
+      buttonType={ButtonType.Primary}
+      disabled={isContinueDisabled}
+      onPress={onCreatePIN}
+      ref={createPINButtonRef}
+    >
+      {isLoading ? <ButtonLoading /> : null}
+    </Button>
+  )
+
   return explained ? (
-    <ScreenWrapper keyboardActive>
-      <View style={style.screenContainer}>
-        <View style={style.contentContainer}>
-          <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
-          <PINHeader />
-          <PINInput
-            label={t('PINCreate.EnterPINTitle')}
-            onPINChanged={async (userPinInput: string) => {
-              setInlineMessageField1(undefined)
-              setPIN(() => userPinInput)
-              if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
-                Keyboard.dismiss()
-                await handleConfirmPINFlow(userPinInput)
-              } else if (
-                !PINScreensConfig.useNewPINDesign &&
-                userPinInput.length === minPINLength &&
-                PINTwoInputRef?.current
-              ) {
-                PINTwoInputRef.current.focus()
-                const reactTag = findNodeHandle(PINTwoInputRef.current)
-                if (reactTag) {
-                  AccessibilityInfo.setAccessibilityFocus(reactTag)
-                }
+    <ScreenWrapper keyboardActive controls={controls}>
+      <PINScreenTitleText header={t('PINCreate.Header')} subheader={t('PINCreate.Subheader')} />
+      <PINHeader />
+      <PINInput
+        label={t('PINCreate.EnterPINTitle')}
+        onPINChanged={async (userPinInput: string) => {
+          setInlineMessageField1(undefined)
+          setPIN(() => userPinInput)
+          if (userPinInput.length === minPINLength && PINScreensConfig.useNewPINDesign) {
+            Keyboard.dismiss()
+            await handleConfirmPINFlow(userPinInput)
+          } else if (
+            !PINScreensConfig.useNewPINDesign &&
+            userPinInput.length === minPINLength &&
+            PINTwoInputRef?.current
+          ) {
+            PINTwoInputRef.current.focus()
+            const reactTag = findNodeHandle(PINTwoInputRef.current)
+            if (reactTag) {
+              AccessibilityInfo.setAccessibilityFocus(reactTag)
+            }
+          }
+        }}
+        testID={testIdWithKey('EnterPIN')}
+        accessibilityLabel={t('PINCreate.EnterPIN')}
+        autoFocus={false}
+        inlineMessage={inlineMessageField1}
+      />
+      {!PINScreensConfig.useNewPINDesign && (
+        <PINInput
+          label={t('PINCreate.ReenterPIN')}
+          onPINChanged={(userPinInput: string) => {
+            setInlineMessageField2(undefined)
+            setPINTwo(userPinInput)
+            if (userPinInput.length === minPINLength) {
+              Keyboard.dismiss()
+              const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
+              if (reactTag) {
+                AccessibilityInfo.setAccessibilityFocus(reactTag)
               }
-            }}
-            testID={testIdWithKey('EnterPIN')}
-            accessibilityLabel={t('PINCreate.EnterPIN')}
-            autoFocus={false}
-            inlineMessage={inlineMessageField1}
-          />
-          {!PINScreensConfig.useNewPINDesign && (
-            <PINInput
-              label={t('PINCreate.ReenterPIN')}
-              onPINChanged={(userPinInput: string) => {
-                setInlineMessageField2(undefined)
-                setPINTwo(userPinInput)
-                if (userPinInput.length === minPINLength) {
-                  Keyboard.dismiss()
-                  const reactTag = createPINButtonRef?.current && findNodeHandle(createPINButtonRef.current)
-                  if (reactTag) {
-                    AccessibilityInfo.setAccessibilityFocus(reactTag)
-                  }
-                }
-              }}
-              testID={testIdWithKey('ReenterPIN')}
-              accessibilityLabel={t('PINCreate.ReenterPIN')}
-              autoFocus={false}
-              ref={PINTwoInputRef}
-              inlineMessage={inlineMessageField2}
-            />
-          )}
-          {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
-          {PINScreensConfig.useNewPINDesign && isLoading && (
-            <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
-          )}
-          {modalState.visible && (
-            <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
-          )}
-        </View>
-        {!PINScreensConfig.useNewPINDesign && (
-          <View style={style.controlsContainer}>
-            <Button
-              title={t('PINCreate.CreatePIN')}
-              testID={testIdWithKey('CreatePIN')}
-              accessibilityLabel={t('PINCreate.CreatePIN')}
-              buttonType={ButtonType.Primary}
-              disabled={isContinueDisabled}
-              onPress={onCreatePIN}
-              ref={createPINButtonRef}
-            >
-              {isLoading ? <ButtonLoading /> : null}
-            </Button>
-          </View>
-        )}
-        <ConfirmPINModal
-          modalUsage={ConfirmPINModalUsage.PIN_CREATE}
-          onBackPressed={modalBackButtonPressed}
-          onConfirmPIN={onConfirmPIN}
-          PINOne={PIN}
-          setPINTwo={setPINTwo}
-          title={t('Screens.CreatePIN')}
-          visible={PINConfirmModalVisible}
-          isLoading={isLoading}
+            }
+          }}
+          testID={testIdWithKey('ReenterPIN')}
+          accessibilityLabel={t('PINCreate.ReenterPIN')}
+          autoFocus={false}
+          ref={PINTwoInputRef}
+          inlineMessage={inlineMessageField2}
         />
-      </View>
+      )}
+      {PINSecurity.displayHelper && <PINValidationHelper validations={PINValidations} />}
+      {PINScreensConfig.useNewPINDesign && isLoading && <LoadingSpinner size={50} color={ColorPalette.brand.primary} />}
+      {modalState.visible && (
+        <AlertModal title={modalState.title} message={modalState.message} submit={modalState.onModalDismiss} />
+      )}
+      <ConfirmPINModal
+        modalUsage={ConfirmPINModalUsage.PIN_CREATE}
+        onBackPressed={modalBackButtonPressed}
+        onConfirmPIN={onConfirmPIN}
+        PINOne={PIN}
+        setPINTwo={setPINTwo}
+        title={t('Screens.CreatePIN')}
+        visible={PINConfirmModalVisible}
+        isLoading={isLoading}
+      />
     </ScreenWrapper>
   ) : (
     <PINExplainer continueCreatePIN={continueCreatePIN} />

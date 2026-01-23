@@ -66,17 +66,15 @@ describe('PINVerify Screen', () => {
     const pinInput = tree.getByTestId(testIdWithKey('BiometricChangedEnterPIN'))
     expect(pinInput).not.toBeNull()
 
-    await act(async () => {
-      fireEvent.changeText(pinInput, '123456')
-      fireEvent(pinInput, 'submitEditing')
+    fireEvent.changeText(pinInput, '123456')
+    // Allow the PIN change to propagate (and inline errors to clear) before submitting
+    await act(async () => {})
 
-      // this assumes the pin verify fails. If mocks are set up later this will need to also look for the success modal
-      await waitFor(
-        () => {
-          expect(tree.queryByText('PINEnter.IncorrectPIN')).not.toBeNull()
-        },
-        { timeout: 1000 }
-      )
+    fireEvent(pinInput, 'submitEditing', { nativeEvent: { text: '123456' } })
+
+    // This assumes the PIN verify fails. If mocks are set up later this will need to also look for the success modal.
+    await waitFor(() => {
+      expect(tree.queryByText('PINEnter.IncorrectPIN')).not.toBeNull()
     })
   })
 })
