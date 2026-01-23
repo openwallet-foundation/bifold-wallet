@@ -665,7 +665,7 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       const payload = (action?.payload ?? [])?.pop()
       const onboarding = {
         ...state.onboarding,
-        didCompleteTutorial: payload?.DidCompleteTutorial ?? true,
+        didCompleteTutorial: payload?.didCompleteTutorial ?? true,
       }
       const newState = {
         ...state,

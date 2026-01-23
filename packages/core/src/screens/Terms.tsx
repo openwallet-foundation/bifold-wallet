@@ -61,7 +61,7 @@ const Terms: React.FC = () => {
 
     dispatch({ 
       type: DispatchAction.DID_COMPLETE_TUTORIAL,
-      payload: [{ DidCompleteTutorial: false }]
+      payload: [{ didCompleteTutorial: false }]
     })
     navigation.navigate(Screens.Onboarding)
   }
