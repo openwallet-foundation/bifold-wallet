@@ -179,7 +179,7 @@ export class RemoteProofBundleResolver extends FileCache implements IProofBundle
       remoteFetchSucceeded = true
 
       await this.saveFileToLocalStorage(filePath, JSON.stringify(this.templateData))
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to fetch remote file index ${filePath}`)
     }
 

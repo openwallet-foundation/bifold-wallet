@@ -91,7 +91,7 @@ export class FileCache {
       try {
         await mkdir(path)
         return true
-      } catch (error) {
+      } catch {
         this.log?.error(`Failed to create directory ${path}`)
         return false
       }
@@ -115,7 +115,7 @@ export class FileCache {
       this.log?.info(`File ${fileName} loaded from ${pathToFile}`)
 
       return data
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to load file ${fileName} from ${pathToFile}`)
     }
   }
@@ -128,7 +128,7 @@ export class FileCache {
       this.log?.info(`File ${fileName} ${fileExists ? 'does' : 'does not'} exist at ${pathToFile}`)
 
       return fileExists
-    } catch (error) {
+    } catch {
       this.log?.error(`Failed to check existence of ${fileName} at ${pathToFile}`)
     }
 

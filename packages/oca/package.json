@@ -1,6 +1,6 @@
 {
   "name": "@bifold/oca",
-  "version": "2.11.12",
+  "version": "2.12.0",
   "description": "TypeScript implementation of Overlay Capture Architecture (OCA) for styling Aries Verifiable Credentials",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -40,11 +40,11 @@
     "jest": "~29.6.4",
     "rimraf": "~5.0.10",
     "ts-jest": "~29.1.5",
-    "typescript": "~5.5.4"
+    "typescript": "~5.9.2"
   },
   "dependencies": {
-    "@credo-ts/anoncreds": "0.5.17",
-    "@credo-ts/core": "0.5.17",
+    "@credo-ts/anoncreds": "0.5.19",
+    "@credo-ts/core": "0.5.19",
     "axios": "~1.13.2",
     "lodash.startcase": "~4.4.0",
     "react-native-fs": "~2.20.0"
