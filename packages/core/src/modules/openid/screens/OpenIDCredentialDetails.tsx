@@ -83,7 +83,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
         }
 
         setCredential(record)
-      } catch (error) {
+      } catch {
         // credential not found for id, display an error
         DeviceEventEmitter.emit(
           EventTypes.ERROR_ADDED,
@@ -100,7 +100,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     try {
       const credDisplay = getCredentialForDisplay(credential)
       setCredentialDisplay(credDisplay)
-    } catch (error) {
+    } catch {
       DeviceEventEmitter.emit(
         EventTypes.ERROR_ADDED,
         new BifoldError(t('Error.Title1033'), t('Error.Message1033'), t('CredentialDetails.CredentialNotFound'), 1034)

@@ -34,9 +34,9 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   const [store] = useStore()
   const [isLoading, setIsLoading] = useState(false)
   const { t } = useTranslation()
-  const { ColorPalette } = useTheme()
+  const { ColorPalette, Spacing } = useTheme()
   const { ButtonLoading } = useAnimatedComponents()
-  const createPINButtonRef = useRef<TouchableOpacity>(null)
+  const createPINButtonRef = useRef<React.ComponentRef<typeof TouchableOpacity>>(null)
 
   const [
     Button,
@@ -80,7 +80,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
     screenContainer: {
       height: '100%',
       backgroundColor: ColorPalette.brand.primaryBackground,
-      padding: 20,
+      padding: Spacing.md,
       justifyContent: 'space-between',
     },
     // below used as helpful labels for views, no properties needed atp
@@ -231,7 +231,7 @@ const PINChange: React.FC<StackScreenProps<SettingStackParams, Screens.ChangePIN
   }, [inlineMessages, isLoading, PIN])
 
   return (
-    <ScreenWrapper keyboardActive>
+    <ScreenWrapper keyboardActive padded={false}>
       <View style={style.screenContainer}>
         <View style={style.contentContainer}>
           <PINHeader updatePin />

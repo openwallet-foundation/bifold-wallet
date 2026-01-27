@@ -85,7 +85,7 @@ const CameraDisclosureModal: React.FC<CameraDisclosureModalProps> = ({ requestCa
           onDismissPressed={onOpenSettingsDismissed}
         />
       )}
-      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground }}>
+      <SafeAreaView style={{ backgroundColor: ColorPalette.brand.modalPrimaryBackground, flex: 1 }}>
         <ScrollView style={styles.container}>
           <ThemedText variant="modalHeadingOne" testID={testIdWithKey('AllowCameraUse')} accessibilityRole="header">
             {t('CameraDisclosure.AllowCameraUse')}

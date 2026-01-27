@@ -1,6 +1,6 @@
 {
   "name": "@bifold/react-native-attestation",
-  "version": "2.11.10",
+  "version": "2.12.2",
   "description": "Mobile app attestation",
   "main": "build/commonjs/index.js",
   "module": "build/module/index.js",
@@ -8,6 +8,7 @@
   "source": "build/commonjs/index.js",
   "react-native": "build/commonjs/index.js",
   "files": [
+    "src",
     "build",
     "ios",
     "android",
@@ -43,15 +44,14 @@
     "hoistingLimits": "workspaces"
   },
   "devDependencies": {
-    "@babel/core": "~7.22.20",
-    "@babel/plugin-proposal-class-properties": "~7.17.12",
-    "@babel/preset-env": "~7.22.20",
-    "@babel/preset-react": "~7.17.12",
-    "@babel/preset-typescript": "~7.17.12",
+    "@babel/core": "~7.28.6",
+    "@babel/preset-env": "~7.28.6",
+    "@babel/preset-react": "~7.28.5",
+    "@babel/preset-typescript": "~7.28.5",
     "@commitlint/config-conventional": "~17.0.3",
-    "@react-native/eslint-config": "~0.73.2",
+    "@react-native/eslint-config": "~0.81.5",
     "@types/jest": "~29.5.14",
-    "@types/react": "~18.2.79",
+    "@types/react": "~19.1.9",
     "commitlint": "~17.7.2",
     "del-cli": "~5.0.1",
     "eslint": "~8.57.1",
@@ -60,19 +60,19 @@
     "eslint-plugin-prettier": "~5.2.6",
     "jest": "~29.6.4",
     "pod-install": "~0.1.39",
-    "prettier": "~2.8.8",
+    "prettier": "~3.4.2",
     "react": "*",
     "react-native": "*",
     "react-native-builder-bob": "~0.21.3",
     "rimraf": "~5.0.10",
-    "typescript": "~5.5.4"
+    "typescript": "~5.9.2"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">= 20"
   },
   "jest": {
     "preset": "react-native",

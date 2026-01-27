@@ -9,8 +9,10 @@ import { useAuth } from '../contexts/auth'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { testIdWithKey } from '../utils/testable'
+import { useTheme } from '../contexts/theme'
 
 const Biometry: React.FC = () => {
+  const { Spacing } = useTheme()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { commitWalletToKeychain } = useAuth()
@@ -35,7 +37,7 @@ const Biometry: React.FC = () => {
 
   return (
     <BiometryControl biometryEnabled={biometryEnabled} onBiometryToggle={handleBiometryToggle}>
-      <View style={{ marginTop: 'auto', margin: 20 }}>
+      <View style={{ marginTop: 'auto', margin: Spacing.md }}>
         <Button
           title={t('Global.Continue')}
           accessibilityLabel={'Continue'}

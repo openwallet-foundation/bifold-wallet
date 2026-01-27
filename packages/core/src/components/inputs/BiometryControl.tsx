@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform, ScrollView, StyleSheet, View } from 'react-native'
 import { check, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ToggleButton from '../buttons/ToggleButton'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
@@ -11,6 +10,7 @@ import { useAuth } from '../../contexts/auth'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
 import { getSupportedBiometryType, BIOMETRY_TYPE } from 'react-native-keychain'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -25,12 +25,12 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   const { isBiometricsActive } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
   const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
-  const { ColorPalette, Assets } = useTheme()
+  const { ColorPalette, Assets, Spacing } = useTheme()
 
   const styles = StyleSheet.create({
     container: {
-      height: '100%',
-      padding: 20,
+      flexGrow: 1,
+      padding: Spacing.md,
       backgroundColor: ColorPalette.brand.primaryBackground,
     },
     image: {
@@ -39,7 +39,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
       marginBottom: 66,
     },
     biometryAvailableRowGap: {
-      rowGap: 20,
+      rowGap: Spacing.md,
     },
   })
 
@@ -137,7 +137,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   }, [onRequestSystemBiometrics, onCheckSystemBiometrics, biometryEnabled, t, onBiometryToggle])
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']}>
+    <SafeAreaView style={{ flex: 1 }} edges={['left', 'right', 'bottom']}>
       {settingsPopupConfig && (
         <DismissiblePopupModal
           title={settingsPopupConfig.title}

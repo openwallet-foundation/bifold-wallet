@@ -1,5 +1,35 @@
 # @bifold/core
 
+## 2.12.2
+
+### Patch Changes
+
+- 8ba7a18: Fix terms screen back button functionality
+
+## 2.12.1
+
+## 2.12.0
+
+### Minor Changes
+
+- 43446f3: upgrade to React Native 0.81.5
+
+### Patch Changes
+
+- e718f5b: Allow unacceptable PIN list to be injected
+
+## 2.11.12
+
+### Patch Changes
+
+- 7fe30c1: styling fixes, better ScreenWrapper usage
+
+## 2.11.11
+
+### Patch Changes
+
+- 7d51e3d: Make hashing function injectable while still maintaining previous implementation
+
 ## 2.11.10
 
 ### Patch Changes

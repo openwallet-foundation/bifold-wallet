@@ -11,13 +11,11 @@ import { MainContainer } from '../../src/container-impl'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 jest.mock('react-native-localize', () => {})
-jest.useFakeTimers({ legacyFakeTimers: true })
 
 const navigation = testUseNavigation()
 
 describe('ListContacts Screen', () => {
   beforeEach(() => {
-    jest.clearAllTimers()
     jest.clearAllMocks()
   })
 
