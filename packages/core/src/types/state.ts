@@ -32,7 +32,7 @@ export interface Preferences {
   preventAutoLock: boolean
   enableShareableLink: boolean
   alternateContactNames: Record<string, string>
-  autoLockTime: number
+  autoLockTime?: number
   theme?: string
   selectedMediator: string
   availableMediators: string[]
