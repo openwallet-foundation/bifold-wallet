@@ -1,9 +1,9 @@
 // modules/openid/refresh/verifyCredentialStatus.ts
-import type { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import type { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { getListFromStatusListJWT, getStatusListFromJWT } from '@sd-jwt/jwt-status-list'
 import type { BifoldLogger } from '../../../services/logger'
 
-type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 
 /**
  * Verifies credential status for Sd-JWT credentials using status lists.
@@ -17,7 +17,7 @@ export async function verifyCredentialStatus(rec: AnyCred, logger?: BifoldLogger
 
     logger?.info(`[Verifier] Verifying credential status for Sd-JWT credential: ${rec.id}`)
 
-    const ref = getStatusListFromJWT(rec.compactSdJwtVc)
+    const ref = getStatusListFromJWT(rec.firstCredential.compact)
     const res = await fetch(ref.uri)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const jwt = await res.text()

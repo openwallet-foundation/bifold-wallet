@@ -6,7 +6,7 @@ import type {
   W3cCredentialDisplay,
   W3cCredentialJson,
 } from './types'
-import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord } from '@credo-ts/core'
+import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'
 import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
@@ -324,7 +324,7 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
 }
 
 export function getCredentialForDisplay(
-  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 ): W3cCredentialDisplay {
   if (credentialRecord instanceof SdJwtVcRecord) {
     // FIXME: we should probably add a decode method on the SdJwtVcRecord
@@ -405,6 +405,14 @@ export function getCredentialForDisplay(
     ? (credential.credentialSubject[0] ?? {})
     : credential.credentialSubject
 
+  // Extract issuer id from credential
+  const issuerId = credential.issuer.id
+
+  // Extract holder/subject id from credential subject
+  const holderId = Array.isArray(credential.credentialSubject)
+    ? credential.credentialSubject[0]?.id
+    : credential.credentialSubject.id
+
   return {
     id: `w3c-credential-${credentialRecord.id}` satisfies CredentialForDisplayId,
     createdAt: credentialRecord.createdAt,
@@ -415,21 +423,21 @@ export function getCredentialForDisplay(
     credential,
     attributes: credentialAttributes,
     metadata: {
-      holder: credentialRecord.firstCredential.credentialSubjectIds[0],
-      issuer: credentialRecord.firstCredential.issuerId,
-      type: credentialRecord.firstCredential.type[credentialRecord.firstCredential.type.length - 1],
-      issuedAt: formatDate(new Date(credentialRecord.firstCredential.issuanceDate)),
-      validUntil: credentialRecord.firstCredential.expirationDate
-        ? formatDate(new Date(credentialRecord.firstCredential.expirationDate))
+      holder: holderId,
+      issuer: issuerId,
+      type: credential.type[credential.type.length - 1],
+      issuedAt: formatDate(new Date(credential.issuanceDate)),
+      validUntil: credential.expiryDate
+        ? formatDate(new Date(credential.expiryDate))
         : undefined,
       validFrom: undefined,
     } satisfies CredentialMetadata,
     claimFormat: credentialRecord.firstCredential.claimFormat,
-    validUntil: credentialRecord.firstCredential.expirationDate
-      ? new Date(credentialRecord.firstCredential.expirationDate)
+    validUntil: credential.expiryDate
+      ? new Date(credential.expiryDate)
       : undefined,
-    validFrom: credentialRecord.firstCredential.issuanceDate
-      ? new Date(credentialRecord.firstCredential.issuanceDate)
+    validFrom: credential.issuanceDate
+      ? new Date(credential.issuanceDate)
       : undefined,
     credentialSubject: openId4VcMetadata?.credential.credential_subject,
   }

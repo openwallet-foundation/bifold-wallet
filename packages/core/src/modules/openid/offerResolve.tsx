@@ -247,10 +247,12 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   //   })
   // }
 
-  const notificationMetadata = { ...firstCredential.notificationMetadata }
-  if (notificationMetadata) {
-    temporaryMetaVanillaObject.notificationMetadata = notificationMetadata
-  }
+  // TODO: Confirm how this should be handled, notificationMetadata for openid4vc may have been removed
+
+  // const notificationMetadata = { ...firstCredential.notificationMetadata }
+  // if (notificationMetadata) {
+  //   temporaryMetaVanillaObject.notificationMetadata = notificationMetadata
+  // }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
     Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0] as any,

@@ -48,7 +48,7 @@ async function resolveIdsFromFormatData(
   logger?: BifoldLogger
 ): Promise<{ schemaId?: string; credDefId?: string }> {
   try {
-    const { offer } = await agent.credentials.getFormatData(credential.id)
+    const { offer } = await agent.didcomm.credentials.getFormatData(credential.id)
     const formatOfferData = offer?.anoncreds ?? offer?.indy
 
     // Type guard to check if formatOfferData has the expected structure
@@ -149,7 +149,7 @@ async function updateCredentialMetadata(params: {
   }
 
   credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
-  await agent.credentials.update(credential)
+  await agent.didcomm.credentials.update(credential)
 
   logger?.info('Credential metadata ensured', {
     credentialId: credential.id,

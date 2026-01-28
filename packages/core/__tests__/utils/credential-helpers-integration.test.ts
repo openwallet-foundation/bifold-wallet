@@ -1,13 +1,12 @@
-import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
-
+import { DidCommCredentialExchangeRecord, DidCommCredentialState } from '@credo-ts/didcomm'
 import { getEffectiveCredentialName } from '../../src/utils/credential'
 import { fallbackDefaultCredentialNameValue } from '../../src/utils/cred-def'
 
 // Mock credential record for testing
-const createMockCredential = (overrides: Partial<CredentialExchangeRecord> = {}): CredentialExchangeRecord => {
+const createMockCredential = (overrides: Partial<DidCommCredentialExchangeRecord> = {}): DidCommCredentialExchangeRecord => {
   return {
     id: 'test-credential-id',
-    state: CredentialState.Done,
+    state: DidCommCredentialState.Done,
     createdAt: new Date(),
     updatedAt: new Date(),
     connectionId: 'test-connection-id',
@@ -20,7 +19,7 @@ const createMockCredential = (overrides: Partial<CredentialExchangeRecord> = {})
     tags: {},
     _tags: {},
     ...overrides,
-  } as unknown as CredentialExchangeRecord
+  } as unknown as DidCommCredentialExchangeRecord
 }
 
 describe('getEffectiveCredentialName integration in helpers', () => {

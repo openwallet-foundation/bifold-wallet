@@ -1,5 +1,5 @@
 // modules/openid/refresh/RefreshOrchestrator.ts
-import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
 import { refreshAccessToken } from './refreshToken'
 import { reissueCredentialWithAccessToken } from './reIssuance'
@@ -14,7 +14,7 @@ import {
   setRefreshCredentialMetadata,
 } from '../metadata'
 
-type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 
 const defaultToLite = (rec: AnyCred) => ({
   id: rec.id,
@@ -22,8 +22,8 @@ const defaultToLite = (rec: AnyCred) => ({
   // Fallback to JwtVc if unknown so UI has *some* value.
   format:
     (rec instanceof W3cCredentialRecord && ClaimFormat.JwtVc) ||
-    (rec instanceof SdJwtVcRecord && ClaimFormat.SdJwtVc) ||
-    ClaimFormat.JwtVc,
+    (rec instanceof SdJwtVcRecord && ClaimFormat.SdJwtW3cVc) ||
+    ClaimFormat.JwtVc, // TODO: Won't these checks against ClaimFormat always be true?
   createdAt: rec.createdAt?.toISOString(),
   issuer: undefined,
 })

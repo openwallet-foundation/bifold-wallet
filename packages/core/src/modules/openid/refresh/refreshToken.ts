@@ -1,4 +1,4 @@
-import { AgentContext, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { AgentContext, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
 import { RefreshResponse } from '../types'
 import { getRefreshCredentialMetadata, persistCredentialRecord, setRefreshCredentialMetadata } from '../metadata'
@@ -9,7 +9,7 @@ export async function refreshAccessToken({
   agentContext,
 }: {
   logger: BifoldLogger
-  cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+  cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
   agentContext: AgentContext
 }): Promise<RefreshResponse | undefined> {
   logger.info(`[refreshAccessToken] Checking new credential for record: ${cred.id}`)

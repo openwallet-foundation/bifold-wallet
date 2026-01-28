@@ -121,8 +121,6 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       },
     }),
     openid4vc: new OpenId4VcModule(),
-    // oob: new DidCommOutOfBandModule(),
-    // basicMessages: new DidCommBasicMessagesModule(),
     dids: new DidsModule({
       resolvers: [
         new WebVhDidResolver(),
@@ -131,9 +129,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
         new KeyDidResolver(),
         new PeerDidResolver(),
       ],
-    }),
-    oob: new DidCommOutOfBandModule(),
-    basicMessages: new DidCommBasicMessagesModule(),
+    })
   }
 }
 
