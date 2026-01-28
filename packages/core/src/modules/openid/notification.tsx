@@ -1,4 +1,4 @@
-import { OpenId4VciNotificationMetadata, OpenId4VciRequestTokenResponse } from '@credo-ts/openid4vc'
+import { OpenId4VciRequestTokenResponse } from '@credo-ts/openid4vc'
 import { useAgent } from '@credo-ts/react-hooks'
 import { useServices, TOKENS } from '../../container-api'
 
@@ -10,7 +10,7 @@ export enum NotificationEventType {
 
 //TODO: ADD TYPE SAFETY
 interface sendOpenId4VciNotificationOptions {
-  notificationMetadata: OpenId4VciNotificationMetadata
+  notificationMetadata: any // TODO: Confirm what replaces OpenId4VciNotificationMetadata, if anything.
   accessToken: OpenId4VciRequestTokenResponse['accessToken']
   notificationEvent: NotificationEventType
 }

@@ -12,20 +12,10 @@ import {
 import { AskarModule } from '@credo-ts/askar'
 import {
   Agent,
-  AutoAcceptCredential,
-  AutoAcceptProof,
-  ConnectionsModule,
-  CredentialsModule,
   DidsModule,
-  DifPresentationExchangeProofFormatService,
   JwkDidResolver,
   KeyDidResolver,
-  MediationRecipientModule,
-  MediatorPickupStrategy,
   PeerDidResolver,
-  ProofsModule,
-  V2CredentialProtocol,
-  V2ProofProtocol,
   WebDidResolver,
 } from '@credo-ts/core'
 
@@ -129,8 +119,6 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       },
     }),
     openid4vc: new OpenId4VcModule(),
-    // oob: new DidCommOutOfBandModule(),
-    // basicMessages: new DidCommBasicMessagesModule(),
     dids: new DidsModule({
       resolvers: [
         new WebVhDidResolver(),
@@ -139,9 +127,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
         new KeyDidResolver(),
         new PeerDidResolver(),
       ],
-    }),
-    oob: new DidCommOutOfBandModule(),
-    basicMessages: new DidCommBasicMessagesModule(),
+    })
   }
 }
 
