@@ -5,7 +5,7 @@ module.exports = {
       'module-resolver',
       {
         root: ['.'],
-        extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
+        extensions: ['.tsx', '.ts', '.js', '.jsx', '.json', '.mjs'],
       },
     ],
     '@babel/plugin-transform-export-namespace-from',
