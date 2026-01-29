@@ -5,7 +5,6 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import React, { useEffect, useState } from 'react'
 import RecordLoading from '../../../components/animated/RecordLoading'
-import { CredentialCard } from '../../../components/misc'
 import { ThemedText } from '../../../components/texts/ThemedText'
 import { useTheme } from '../../../contexts/theme'
 import ScreenLayout from '../../../layout/ScreenLayout'
@@ -13,6 +12,7 @@ import { DeliveryStackParams, Screens } from '../../../types/navigators'
 import { testIdWithKey } from '../../../utils/testable'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
+import CredentialCardGen from '../../../components/misc/CredentialCardGen'
 
 type Props = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofCredentialSelect>
 type TypedCred = {
@@ -120,7 +120,7 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
                   { marginBottom: 10 },
                 ]}
               >
-                <CredentialCard credential={item.credential}></CredentialCard>
+                <CredentialCardGen credential={item.credential}></CredentialCardGen>
               </TouchableOpacity>
             </View>
           )
