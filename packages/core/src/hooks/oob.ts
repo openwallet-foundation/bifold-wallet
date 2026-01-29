@@ -1,13 +1,13 @@
-import { OutOfBandRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { DidCommOutOfBandRecord } from '@credo-ts/didcomm'
 import { useState } from 'react'
+import { useAppAgent } from '../utils/agent'
 
-export const useOutOfBandByReceivedInvitationId = (receivedInvitationId: string): OutOfBandRecord | undefined => {
-  const { agent } = useAgent()
+export const useOutOfBandByReceivedInvitationId = (receivedInvitationId: string): DidCommOutOfBandRecord | undefined => {
+  const { agent } = useAppAgent()
 
-  const [oob, setOob] = useState<OutOfBandRecord | undefined>(undefined)
+  const [oob, setOob] = useState<DidCommOutOfBandRecord | undefined>(undefined)
   if (!oob) {
-    agent?.oob.findByReceivedInvitationId(receivedInvitationId).then((res) => {
+    agent?.modules.didcomm.oob.findByReceivedInvitationId(receivedInvitationId).then((res) => {
       if (res) {
         setOob(res)
       }

@@ -1,6 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { useAgent } from '@credo-ts/react-hooks'
 import { BrandingOverlay } from '@bifold/oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
@@ -56,7 +56,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   const { credentialId } = route.params
   const { width, height } = useWindowDimensions()
-  const [credential, setCredential] = useState<CredentialExchangeRecord | undefined>(undefined)
+  const [credential, setCredential] = useState<DidCommCredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
   const { t, i18n } = useTranslation()
   const { ColorPalette, Assets } = useTheme()
@@ -88,7 +88,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     // fetch credential for ID
     const fetchCredential = async () => {
       try {
-        const credentialExchangeRecord = await agent?.credentials.getById(credentialId)
+        const credentialExchangeRecord = await agent?.modules.didcomm.credentials.getById(credentialId)
         setCredential(credentialExchangeRecord)
       } catch {
         // credential not found for id, display an error
@@ -211,7 +211,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential?.revocationNotification) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
-      agent?.credentials.update(credential)
+      agent?.modules.didcomm.credentials.update(credential)
     }
   }, [credential, agent])
 
@@ -270,7 +270,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
         await logHistoryRecord()
       }
 
-      await agent.credentials.deleteById(credential.id)
+      await agent.modules.credentials.deleteById(credential.id)
 
       navigation.pop()
 
@@ -296,11 +296,11 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
-      agent?.credentials.update(credential)
+      agent?.modules.didcomm.credentials.update(credential)
     }
   }, [credential, agent])
 
-  const CredentialRevocationMessage: React.FC<{ credential: CredentialExchangeRecord }> = ({ credential }) => {
+  const CredentialRevocationMessage: React.FC<{ credential: DidCommCredentialExchangeRecord }> = ({ credential }) => {
     return (
       <InfoBox
         notificationType={InfoBoxType.Error}

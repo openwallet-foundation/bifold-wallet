@@ -14,7 +14,7 @@ const RenameWallet: React.FC = () => {
 
   const onSubmitSuccess = useCallback(
     (name: string) => {
-      agent.config.label = name
+      // agent.config.label = name
       navigation.goBack()
     },
     [navigation, agent]

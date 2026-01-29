@@ -1,4 +1,5 @@
-import { CredentialPreviewAttribute } from '@credo-ts/core'
+import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
+import { DidCommCredentialPreviewAttribute } from '@credo-ts/didcomm'
 import { useCredentialById } from '@credo-ts/react-hooks'
 import { BrandingOverlay, MetaOverlay } from '@bifold/oca'
 import { Attribute, CredentialOverlay } from '@bifold/oca/build/legacy'
@@ -126,7 +127,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     }
 
     const updateCredentialPreview = async () => {
-      const { ...formatData } = await agent.credentials.getFormatData(credential.id)
+      const { ...formatData } = await agent.modules.didcomm.credentials.getFormatData(credential.id)
       const { offer, offerAttributes } = formatData
       const offerData = offer?.anoncreds ?? offer?.indy
 
@@ -143,7 +144,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
       }
 
       if (offerAttributes) {
-        credential.credentialAttributes = [...offerAttributes.map((item) => new CredentialPreviewAttribute(item))]
+        credential.credentialAttributes = [...offerAttributes.map((item) => new DidCommCredentialPreviewAttribute(item))]
       }
     }
 
@@ -218,7 +219,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
 
       setAcceptModalVisible(true)
 
-      await agent.credentials.acceptOffer({ credentialRecordId: credential.id })
+      await agent.modules.didcomm.credentials.acceptOffer({ credentialExchangeRecordId: credential.id })
       if (historyEventsLogger.logAttestationAccepted) {
         const type = HistoryCardType.CardAccepted
         await logHistoryRecord(type)
@@ -234,13 +235,13 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
     try {
       if (agent && credential) {
         const connectionId = credential.connectionId ?? ''
-        const connection = await agent.connections.findById(connectionId)
+        const connection = await agent.modules.didcomm.connections.findById(connectionId)
 
-        await agent.credentials.declineOffer(credential.id)
+        await agent.modules.didcomm.credentials.declineOffer(credential.id)
 
         if (connection) {
-          await agent.credentials.sendProblemReport({
-            credentialRecordId: credential.id,
+          await agent.modules.didcomm.credentials.sendProblemReport({
+            credentialExchangeRecordId: credential.id,
             description: t('CredentialOffer.Declined'),
           })
         }

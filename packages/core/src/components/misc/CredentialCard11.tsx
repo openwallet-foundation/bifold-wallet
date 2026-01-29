@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { BrandingOverlay } from '@bifold/oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay, Field, Predicate } from '@bifold/oca/build/legacy'
 import { useNavigation } from '@react-navigation/native'
@@ -37,7 +37,7 @@ import { ThemedText } from '../texts/ThemedText'
 import { CredentialErrors } from '../../types/credentials'
 
 interface CredentialCard11Props {
-  credential?: CredentialExchangeRecord
+  credential?: DidCommCredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
   displayItems?: (Attribute | Predicate)[]
