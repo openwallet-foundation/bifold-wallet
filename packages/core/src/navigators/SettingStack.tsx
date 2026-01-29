@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../contexts/theme'
+import { useStore } from '../contexts/store'
 import HistorySettings from '../modules/history/ui/HistorySettings'
 import DataRetention from '../screens/DataRetention'
 import Language from '../screens/Language'
@@ -27,6 +28,7 @@ const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
   const theme = useTheme()
   const { t } = useTranslation()
+  const [store] = useStore()
   const [pages, { screen: terms }, ToggleBiometry, developer, ScreenOptionsDictionary] = useServices([
     TOKENS.SCREEN_ONBOARDING_PAGES,
     TOKENS.SCREEN_TERMS,
@@ -189,12 +191,18 @@ const SettingStack: React.FC = () => {
       />
       <Stack.Screen
         name={Screens.RestoreWallet}
-        component={RestoreWalletScreen}
         options={{
           title: 'Restore Wallet',
           headerBackTestID: testIdWithKey('Back'),
         }}
-      />
+      >
+        {(props) => (
+          <RestoreWalletScreen
+            {...props}
+            mediatorUrl={store.preferences.selectedMediator}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   )
 }

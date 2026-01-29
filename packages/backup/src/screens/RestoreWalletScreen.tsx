@@ -3,7 +3,8 @@ import { View, Text, Button, TextInput, ActivityIndicator, StyleSheet, ScrollVie
 import { useAgent } from '@credo-ts/react-hooks'
 import { container } from 'tsyringe'
 import { WalletConfig } from '@credo-ts/core'
-import { BackupService } from '../services/BackupService'
+import { BackupService, RestoreStatus } from '../services/BackupService'
+import { loadWalletSecret } from '../../../core/src/services/keychain'
 
 interface RestoreWalletScreenProps {
   /**
@@ -12,16 +13,21 @@ interface RestoreWalletScreenProps {
    */
   walletConfig?: WalletConfig
   /**
+   * URL of the mediator to connect to after restore
+   */
+  mediatorUrl: string
+  /**
    * Callback when restore is successful
    */
   onRestoreSuccess?: () => void
 }
 
-export const RestoreWalletScreen = ({ walletConfig, onRestoreSuccess }: RestoreWalletScreenProps) => {
+export const RestoreWalletScreen = ({ walletConfig, mediatorUrl, onRestoreSuccess }: RestoreWalletScreenProps) => {
   const { agent } = useAgent()
   const [mnemonic, setMnemonic] = useState('')
   const [filePath, setFilePath] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [restoreStatus, setRestoreStatus] = useState<RestoreStatus | null>(null)
   const [backupService] = useState(() => container.resolve(BackupService))
 
   const handlePickFile = async () => {
@@ -35,6 +41,42 @@ export const RestoreWalletScreen = ({ walletConfig, onRestoreSuccess }: RestoreW
     }
   }
 
+  const getStatusMessage = (status: RestoreStatus): string => {
+    const messages = {
+      [RestoreStatus.VALIDATING]: 'Validating backup file...',
+      [RestoreStatus.SHUTTING_DOWN]: 'Preparing for restore...',
+      [RestoreStatus.DELETING_OLD]: 'Removing old wallet...',
+      [RestoreStatus.IMPORTING]: 'Importing wallet from backup...',
+      [RestoreStatus.INITIALIZING]: 'Initializing wallet...',
+      [RestoreStatus.CONNECTING_MEDIATOR]: 'Connecting to mediator...',
+      [RestoreStatus.SUCCESS]: 'Wallet restored successfully!',
+    }
+    return messages[status] || 'Processing...'
+  }
+
+  const getErrorMessage = (error: Error): string => {
+    const message = error.message.toLowerCase()
+
+    if (message.includes('not found')) {
+      return 'Backup file not found. Please select a valid backup file.'
+    }
+    if (message.includes('corrupted') || message.includes('invalid')) {
+      return 'Backup file is corrupted or invalid. Please check your backup file.'
+    }
+    if (message.includes('mnemonic') || message.includes('key')) {
+      return 'Incorrect mnemonic or key. Please check and try again.'
+    }
+    if (message.includes('permission')) {
+      return 'Cannot access wallet files. Please restart the app and try again.'
+    }
+    if (message.includes('already exists')) {
+      return 'Wallet already exists. Please contact support.'
+    }
+
+    // Generic error
+    return `Failed to restore wallet: ${error.message}`
+  }
+
   const handleRestore = async () => {
     if (!agent) return
     if (!filePath || !mnemonic) {
@@ -42,23 +84,44 @@ export const RestoreWalletScreen = ({ walletConfig, onRestoreSuccess }: RestoreW
       return
     }
 
-    const targetConfig: WalletConfig = walletConfig || {
-      id: 'walletId',
-      key: mnemonic,
-    }
-
     setLoading(true)
+
     try {
-      // Note: importWallet uses the agent instance to access the wallet module
-      // The new wallet is created on disk but not necessarily opened as the active wallet of this agent
-      // depending on how Credo works (usually it just imports).
-      await backupService.importWallet(agent, filePath, mnemonic, targetConfig)
-      Alert.alert('Success', 'Wallet restored successfully')
+      // Load existing wallet secret from keychain (reuse existing PIN)
+      const walletSecret = await loadWalletSecret()
+      
+      if (!walletSecret) {
+        Alert.alert('Error', 'Could not load wallet credentials. Please ensure you have set up your wallet.')
+        setLoading(false)
+        return
+      }
+
+      // Use wallet secret from keychain (same PIN as before)
+      const targetConfig: WalletConfig = walletConfig || {
+        id: walletSecret.id,      // 'walletId' from keychain
+        key: walletSecret.key,    // Hashed PIN from keychain (NOT mnemonic!)
+      }
+
+      // Use new complete restore method
+      await backupService.restoreWalletComplete(
+        agent,
+        filePath,
+        mnemonic,        // Used only for decrypting the backup file
+        targetConfig,    // Wallet config with hashed PIN from keychain
+        mediatorUrl,
+        (status) => {
+          setRestoreStatus(status)
+        }
+      )
+
+      Alert.alert('Success', 'Wallet restored successfully. You can now use your existing PIN to access the wallet.')
       onRestoreSuccess?.()
     } catch (error) {
-      Alert.alert('Error', (error as Error).message || 'Failed to restore wallet')
+      const errorMessage = getErrorMessage(error as Error)
+      Alert.alert('Error', errorMessage)
     } finally {
       setLoading(false)
+      setRestoreStatus(null)
     }
   }
 
@@ -91,7 +154,12 @@ export const RestoreWalletScreen = ({ walletConfig, onRestoreSuccess }: RestoreW
         </View>
 
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <View style={styles.progressContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            {restoreStatus && (
+              <Text style={styles.progressText}>{getStatusMessage(restoreStatus)}</Text>
+            )}
+          </View>
         ) : (
           <Button title="Restore Wallet" onPress={handleRestore} disabled={!agent || !filePath || !mnemonic} />
         )}
@@ -147,5 +215,16 @@ const styles = StyleSheet.create({
     minHeight: 100,
     textAlignVertical: 'top',
     color: '#333',
+  },
+  progressContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  progressText: {
+    marginTop: 15,
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
   },
 })
