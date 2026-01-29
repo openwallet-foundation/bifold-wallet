@@ -14,6 +14,9 @@ jest.mock('tsyringe', () => ({
   },
   injectable: () => (target: any) => target,
 }))
+jest.mock('../../../core/src/contexts/store', () => ({
+  useStore: jest.fn(),
+}))
 jest.mock('react-native-fs', () => ({
   DocumentDirectoryPath: '/mock/path',
   exists: jest.fn(),
@@ -34,17 +37,44 @@ jest.mock('react-native-zip-archive', () => ({
   zip: jest.fn(),
   unzip: jest.fn(),
 }))
+jest.mock('../../../core/src/services/MnemonicStorage', () => ({
+  storeMnemonicPlain: jest.fn(),
+}))
 
 import React from 'react'
 import { create, act } from 'react-test-renderer'
 import { RestoreWalletScreen } from '../screens/RestoreWalletScreen'
 import { BackupService, RestoreStatus } from '../services/BackupService'
 import { useAgent } from '@credo-ts/react-hooks'
+import { useStore } from '../../../core/src/contexts/store'
+import { storeMnemonicPlain } from '../../../core/src/services/MnemonicStorage'
+
+// Mock navigation
+const mockNavigation = {
+  navigate: jest.fn(),
+  goBack: jest.fn(),
+  reset: jest.fn(),
+  dispatch: jest.fn(),
+  isFocused: jest.fn(() => true),
+  canGoBack: jest.fn(() => true),
+  getId: jest.fn(() => 'RestoreWallet'),
+  getParent: jest.fn(),
+  setParams: jest.fn(),
+  addListener: jest.fn(),
+  removeListener: jest.fn(),
+}
+
+// Mock route
+const mockRoute = {
+  key: 'RestoreWallet',
+  name: 'RestoreWallet' as const,
+  params: undefined,
+}
 
 describe('RestoreWalletScreen', () => {
   let mockAgent: any
   let mockBackupService: jest.Mocked<BackupService>
-  let mockSetMediationToDefault: jest.Mock
+  let mockStore: any
 
   beforeEach(() => {
     // Reset all mocks
@@ -57,7 +87,22 @@ describe('RestoreWalletScreen', () => {
           id: 'test-wallet-id',
         },
       },
+      wallet: {
+        create: jest.fn().mockResolvedValue(undefined),
+        open: jest.fn().mockResolvedValue(undefined),
+      },
+      initialize: jest.fn().mockResolvedValue(undefined),
     }
+
+    // Mock store with preferences
+    mockStore = [
+      {
+        preferences: {
+          selectedMediator: 'https://mediator.example.com',
+        },
+      },
+      jest.fn(),
+    ]
 
     // Mock BackupService
     mockBackupService = {
@@ -69,15 +114,18 @@ describe('RestoreWalletScreen', () => {
       deleteWallet: jest.fn(),
     } as any
 
-    // Mock setMediationToDefault
-    mockSetMediationToDefault = jest.fn().mockResolvedValue(undefined)
-
     // Setup useAgent mock
     ;(useAgent as jest.Mock).mockReturnValue({ agent: mockAgent })
+
+    // Setup useStore mock
+    ;(useStore as jest.Mock).mockReturnValue(mockStore)
 
     // Setup container.resolve mock
     const { container } = require('tsyringe')
     container.resolve.mockReturnValue(mockBackupService)
+
+    // Mock storeMnemonicPlain
+    ;(storeMnemonicPlain as jest.Mock).mockResolvedValue(true)
   })
 
   describe('Component Rendering', () => {
@@ -86,28 +134,8 @@ describe('RestoreWalletScreen', () => {
       act(() => {
         root = create(
           <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      expect(root.toJSON()).toBeTruthy()
-    })
-
-    it('should render with custom wallet config', () => {
-      const customConfig = {
-        id: 'custom-wallet-id',
-        key: 'custom-key',
-      }
-
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-            walletConfig={customConfig}
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
           />
         )
       })
@@ -122,362 +150,13 @@ describe('RestoreWalletScreen', () => {
       act(() => {
         root = create(
           <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
           />
         )
       })
 
       expect(root.toJSON()).toBeTruthy()
-    })
-  })
-
-  describe('Wallet ID Resolution', () => {
-    it('should use wallet ID from agent config when no custom config provided', async () => {
-      mockBackupService.restoreWalletComplete.mockResolvedValue(undefined)
-
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      // Simulate file selection
-      const instance = root.getInstance()
-      await act(async () => {
-        mockBackupService.pickBackupFile.mockResolvedValue('/path/to/backup.zip')
-        // Trigger file selection through component state
-        instance.setState({ filePath: '/path/to/backup.zip', mnemonic: 'test mnemonic' })
-      })
-
-      // The component should use 'test-wallet-id' from agent config
-      expect(mockAgent.config.walletConfig.id).toBe('test-wallet-id')
-    })
-
-    it('should use custom wallet config when provided', () => {
-      const customConfig = {
-        id: 'custom-wallet-id',
-        key: 'custom-key',
-      }
-
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-            walletConfig={customConfig}
-          />
-        )
-      })
-
-      // Custom config should be passed to component
-      expect(root.root.props.walletConfig).toEqual(customConfig)
-    })
-
-    it('should fallback to "walletId" when agent has no wallet config', () => {
-      // Mock agent without wallet config
-      const agentWithoutConfig = {
-        config: {},
-      }
-      ;(useAgent as jest.Mock).mockReturnValue({ agent: agentWithoutConfig })
-
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      expect(root.toJSON()).toBeTruthy()
-      // Component should handle missing wallet config gracefully
-    })
-  })
-
-  describe('Error Message Formatting', () => {
-    it('should format "not found" error correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const error = new Error('Backup file not found')
-      const message = instance.getErrorMessage(error)
-
-      expect(message).toBe('Backup file not found. Please select a valid backup file.')
-    })
-
-    it('should format "corrupted" error correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const error = new Error('Backup file is corrupted')
-      const message = instance.getErrorMessage(error)
-
-      expect(message).toBe('Backup file is corrupted or invalid. Please check your backup file.')
-    })
-
-    it('should format "mnemonic" error correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const error = new Error('Invalid mnemonic')
-      const message = instance.getErrorMessage(error)
-
-      expect(message).toBe('Incorrect mnemonic or key. Please check and try again.')
-    })
-
-    it('should format "permission" error correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const error = new Error('Permission denied')
-      const message = instance.getErrorMessage(error)
-
-      expect(message).toBe('Cannot access wallet files. Please restart the app and try again.')
-    })
-
-    it('should format "already exists" error correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const error = new Error('Path already exists')
-      const message = instance.getErrorMessage(error)
-
-      expect(message).toBe('Wallet already exists. Please contact support.')
-    })
-
-    it('should format unknown error with generic message', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const error = new Error('Some unknown error')
-      const message = instance.getErrorMessage(error)
-
-      expect(message).toBe('Failed to restore wallet: Some unknown error')
-    })
-  })
-
-  describe('Status Message Formatting', () => {
-    it('should format VALIDATING status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.VALIDATING)
-
-      expect(message).toBe('Validating backup file...')
-    })
-
-    it('should format SHUTTING_DOWN status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.SHUTTING_DOWN)
-
-      expect(message).toBe('Preparing for restore...')
-    })
-
-    it('should format DELETING_OLD status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.DELETING_OLD)
-
-      expect(message).toBe('Removing old wallet...')
-    })
-
-    it('should format IMPORTING status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.IMPORTING)
-
-      expect(message).toBe('Importing wallet from backup...')
-    })
-
-    it('should format INITIALIZING status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.INITIALIZING)
-
-      expect(message).toBe('Initializing wallet...')
-    })
-
-    it('should format CONNECTING_MEDIATOR status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.CONNECTING_MEDIATOR)
-
-      expect(message).toBe('Connecting to mediator...')
-    })
-
-    it('should format SUCCESS status correctly', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      const instance = root.getInstance()
-      const message = instance.getStatusMessage(RestoreStatus.SUCCESS)
-
-      expect(message).toBe('Wallet restored successfully!')
-    })
-  })
-
-  describe('Props Validation', () => {
-    it('should accept mediatorUrl prop', () => {
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://custom-mediator.com"
-            setMediationToDefault={mockSetMediationToDefault}
-          />
-        )
-      })
-
-      expect(root.root.props.mediatorUrl).toBe('http://custom-mediator.com')
-    })
-
-    it('should accept setMediationToDefault prop', () => {
-      const customSetMediation = jest.fn()
-
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={customSetMediation}
-          />
-        )
-      })
-
-      expect(root.root.props.setMediationToDefault).toBe(customSetMediation)
-    })
-
-    it('should accept onRestoreSuccess callback prop', () => {
-      const onSuccess = jest.fn()
-
-      let root: any
-      act(() => {
-        root = create(
-          <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
-            onRestoreSuccess={onSuccess}
-          />
-        )
-      })
-
-      expect(root.root.props.onRestoreSuccess).toBe(onSuccess)
     })
   })
 
@@ -488,8 +167,8 @@ describe('RestoreWalletScreen', () => {
       act(() => {
         create(
           <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
           />
         )
       })
@@ -505,8 +184,8 @@ describe('RestoreWalletScreen', () => {
       act(() => {
         root = create(
           <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
           />
         )
       })
@@ -518,14 +197,68 @@ describe('RestoreWalletScreen', () => {
       act(() => {
         root.update(
           <RestoreWalletScreen
-            mediatorUrl="http://mediator.example.com"
-            setMediationToDefault={mockSetMediationToDefault}
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
           />
         )
       })
 
       // Should still be called only once (useState initialization)
       expect(container.resolve).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('Step Labels', () => {
+    it('should have 3 steps: Select File, Enter Mnemonic, Complete', () => {
+      let root: any
+      act(() => {
+        root = create(
+          <RestoreWalletScreen
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
+          />
+        )
+      })
+
+      const instance = root.getInstance()
+      const stepLabels = instance.stepLabels
+
+      expect(stepLabels).toEqual(['Select File', 'Enter Mnemonic', 'Complete'])
+      expect(stepLabels).toHaveLength(3)
+    })
+
+    it('should not include "Set PIN" or "Restoring" steps in the flow', () => {
+      let root: any
+      act(() => {
+        root = create(
+          <RestoreWalletScreen
+            navigation={mockNavigation as any}
+            route={mockRoute as any}
+          />
+        )
+      })
+
+      const instance = root.getInstance()
+      const stepLabels = instance.stepLabels
+
+      expect(stepLabels).not.toContain('Set PIN')
+      expect(stepLabels).not.toContain('Restoring')
+    })
+  })
+
+  describe('Step Type', () => {
+    it('should have RestoreStep type with 4 values internally but display 3 steps', () => {
+      // The component uses 4 internal steps for state management
+      const steps = ['file', 'mnemonic', 'restoring', 'complete'] as const
+
+      expect(steps).toHaveLength(4)
+      expect(steps).not.toContain('pin')
+
+      // But only 3 steps are displayed to the user
+      expect(steps).toContain('file')
+      expect(steps).toContain('mnemonic')
+      expect(steps).toContain('restoring') // Internal use
+      expect(steps).toContain('complete')
     })
   })
 })

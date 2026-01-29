@@ -5,6 +5,18 @@
 // Required for tsyringe
 import 'reflect-metadata'
 
+// Set up react-native mock first
+jest.mock('react-native', () => {
+  const ReactNative = jest.requireActual('react-native')
+  ReactNative.Platform.OS = 'ios'
+  ReactNative.NativeModules.RNCNetInfo = {
+    getCurrentState: jest.fn(),
+    addListener: jest.fn(),
+    removeListeners: jest.fn(),
+  }
+  return ReactNative
+})
+
 // Mock React Native modules
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper', () => ({
   API: {
@@ -86,13 +98,24 @@ try {
   // Module not found, skip mock
 }
 
-// Mock react-native-quick-crypto
-jest.mock('react-native-quick-crypto', () => ({
-  randomBytes: jest.fn(),
-  createCipheriv: jest.fn(),
-  createDecipheriv: jest.fn(),
-  pbkdf2: jest.fn(),
+// Mock @react-native-clipboard/clipboard
+jest.mock('@react-native-clipboard/clipboard', () => ({
+  default: {
+    getString: jest.fn(),
+    setString: jest.fn(),
+  },
+  getString: jest.fn(),
+  setString: jest.fn(),
 }))
+
+// Mock react-native-quick-crypto
+// TODO: Install react-native-quick-crypto or remove this mock
+// jest.mock('react-native-quick-crypto', () => ({
+//   randomBytes: jest.fn(),
+//   createCipheriv: jest.fn(),
+//   createDecipheriv: jest.fn(),
+//   pbkdf2: jest.fn(),
+// }))
 
 // Mock react-native-zip-archive
 jest.mock('react-native-zip-archive', () => ({
