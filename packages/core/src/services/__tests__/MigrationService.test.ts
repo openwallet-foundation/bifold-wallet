@@ -607,9 +607,7 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false,
+        false, // useBiometrics
         onProgress
       )
 
@@ -641,9 +639,7 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false,
+        false, // useBiometrics
         onProgress
       )
 
@@ -666,9 +662,8 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        true // use biometrics
+        true, // use biometrics
+        jest.fn()
       )
 
       expect(result.success).toBe(true)
@@ -687,9 +682,8 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        testPin, // same PIN
-        false
+        false, // useBiometrics
+        jest.fn()
       )
 
       expect(result.success).toBe(true)
@@ -702,9 +696,8 @@ describe('MigrationService', () => {
 
       await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false
+        false, // useBiometrics
+        jest.fn()
       )
 
       expect(KeyDerivation.generateWalletMnemonic).toHaveBeenCalled()
@@ -755,9 +748,8 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false
+        false, // useBiometrics
+        jest.fn()
       )
 
       // Should fail
@@ -779,9 +771,8 @@ describe('MigrationService', () => {
       // Migration should still work
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false
+        false, // useBiometrics
+        jest.fn()
       )
 
       expect(result.success).toBe(true)
@@ -796,9 +787,8 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false
+        false, // useBiometrics
+        jest.fn()
       )
 
       expect(result.success).toBe(true)
@@ -815,9 +805,8 @@ describe('MigrationService', () => {
 
     //   const result = await migrationService.migrateWallet(
     //     mockAgent,
-    //     testPin,
-    //     newPin,
-    //     false
+    //     false, // useBiometrics
+    //     jest.fn()
     //   )
 
     //   expect(result.success).toBe(true)
@@ -833,9 +822,8 @@ describe('MigrationService', () => {
 
       const result = await migrationService.migrateWallet(
         mockAgent,
-        testPin,
-        newPin,
-        false
+        false, // useBiometrics
+        jest.fn()
       )
 
       // Should still succeed

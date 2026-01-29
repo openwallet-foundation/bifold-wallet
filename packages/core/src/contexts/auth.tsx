@@ -8,6 +8,7 @@ import { Agent, ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-
 import { agentDependencies } from '@credo-ts/react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { DispatchAction } from './reducers/store'
 import { useStore } from './store'
@@ -209,7 +210,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         resetPinAttempts()
         
         // Store PIN in AsyncStorage for backup convenience
-        AsyncStorage.setItem('@BifoldWallet:UserPIN', PIN).catch((error) => {
+        AsyncStorage.setItem('@BifoldWallet:UserPIN', PIN).catch((error: Error) => {
           console.warn('Failed to store PIN in AsyncStorage:', error)
         })
         

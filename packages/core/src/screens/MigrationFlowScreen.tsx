@@ -394,10 +394,8 @@ const MigrationFlowScreen: React.FC<MigrationFlowScreenProps> = ({ navigation })
     try {
       const result = await migrationService.migrateWallet(
         agent,
-        oldPIN,
-        newPIN || oldPIN, // Use new PIN if set, otherwise use old PIN
-        false, // TODO: Add biometrics support
-        (status) => {
+        false, // useBiometrics
+        (status: MigrationStatus) => {
           setMigrationStatus(status)
         }
       )
