@@ -59,10 +59,12 @@ const config = {
     blacklistRE: exclusionList(extraExclusionlist.map((m) => new RegExp(`^${escape(m)}\\/.*$`))),
     extraNodeModules: extraNodeModules,
     tslib: path.join(__dirname, 'node_modules/tslib'),
-    assetExts: assetExts.filter((ext) => ext !== 'svg'),
+    assetExts: [...assetExts.filter((ext) => ext !== 'svg'), 'wasm'],
     sourceExts: [...sourceExts, 'svg', 'cjs'],
     unstable_enablePackageExports: true,
     unstable_conditionNames: ['react-native', 'browser', 'import', 'require'],
+    // Prioritize 'browser' field in package.json for WASM support
+    resolverMainFields: ['browser', 'react-native', 'main'],
   },
   watchFolders,
 }

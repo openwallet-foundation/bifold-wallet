@@ -8,6 +8,9 @@ export enum Screens {
   AttemptLockout = 'Temporarily Locked',
   Splash = 'Splash',
   Onboarding = 'Onboarding',
+  OnboardingWelcome = 'Onboarding Welcome',
+  CreateWallet = 'Create Wallet',
+  RestoreWalletOnboarding = 'Restore Wallet Onboarding',
   Terms = 'Terms',
   Preface = 'Preface',
   CreatePIN = 'Create a PIN',
@@ -63,7 +66,11 @@ export enum Screens {
   UpdateAvailable = 'Update Available',
   ConfigureMediator = 'Configure Mediator',
   BackupWallet = 'Backup Wallet',
+  BackupSettings = 'Backup Settings',
+  ViewRecoveryPhrase = 'View Recovery Phrase',
   RestoreWallet = 'Restore Wallet',
+  MigrationPrompt = 'Migration Prompt',
+  MigrationFlow = 'Migration Flow',
 }
 
 export enum Stacks {
@@ -100,6 +107,7 @@ export type RootStackParams = {
   [Screens.CredentialDetails]: { credentialId: string }
   [Screens.OpenIDCredentialDetails]: { credentialId: string; type: OpenIDCredentialType }
   [Stacks.CustomNavStack1]: undefined
+  [Screens.MigrationFlow]: undefined
 }
 
 export type TabStackParams = {
@@ -111,9 +119,19 @@ export type TabStackParams = {
 export type OnboardingStackParams = {
   [Screens.Preface]: undefined
   [Screens.Onboarding]: undefined
+  [Screens.OnboardingWelcome]: undefined
+  [Screens.CreateWallet]: undefined
+  [Screens.RestoreWalletOnboarding]: undefined
   [Screens.Terms]: undefined
   [Screens.AttemptLockout]: undefined
-  [Screens.CreatePIN]: { setAuthenticated: (status: boolean) => void } | undefined
+  [Screens.CreatePIN]: 
+    | { 
+        setAuthenticated: (status: boolean) => void
+        mnemonic?: string
+        isCreatingWallet?: boolean
+        isRestoringWallet?: boolean
+      } 
+    | undefined
   [Screens.EnterPIN]: { setAuthenticated: (status: boolean) => void } | undefined
   [Screens.Biometry]: undefined
   [Screens.NameWallet]: undefined
@@ -180,8 +198,20 @@ export type SettingStackParams = {
   [Screens.HistorySettings]: undefined
   [Screens.AutoLock]: undefined
   [Screens.ConfigureMediator]: { scannedMediatorUri: string } | undefined
+  [Screens.BackupSettings]: undefined
   [Screens.BackupWallet]: undefined
+  [Screens.ViewRecoveryPhrase]: undefined
   [Screens.RestoreWallet]: undefined
+  [Screens.MigrationPrompt]: undefined
+  [Screens.MigrationFlow]: undefined
+  [Screens.CreatePIN]: 
+    | { 
+        setAuthenticated: (status: boolean) => void
+        mnemonic?: string
+        isCreatingWallet?: boolean
+        isRestoringWallet?: boolean
+      } 
+    | undefined
 }
 
 export type NotificationStackParams = {

@@ -177,18 +177,22 @@ export interface INotificationColors {
   successBorder: string
   successIcon: string
   successText: string
+  successBackground: string
   info: string
   infoBorder: string
   infoIcon: string
   infoText: string
+  infoBackground: string
   warn: string
   warnBorder: string
   warnIcon: string
   warnText: string
+  warnBackground: string
   error: string
   errorBorder: string
   errorIcon: string
   errorText: string
+  errorBackground: string
   popupOverlay: string
 }
 
@@ -302,18 +306,22 @@ const NotificationColors: INotificationColors = {
   successBorder: '#2E8540',
   successIcon: '#2E8540',
   successText: '#FFFFFF',
+  successBackground: '#2E8540',
   info: '#313132',
   infoBorder: '#0099FF',
   infoIcon: '#0099FF',
   infoText: '#FFFFFF',
+  infoBackground: '#0099FF',
   warn: '#313132',
   warnBorder: '#FCBA19',
   warnIcon: '#FCBA19',
   warnText: '#FFFFFF',
+  warnBackground: '#FCBA19',
   error: '#313132',
   errorBorder: '#D8292F',
   errorIcon: '#D8292F',
   errorText: '#FFFFFF',
+  errorBackground: '#D8292F',
   popupOverlay: `rgba(0, 0, 0, ${mediumOpacity})`,
 }
 

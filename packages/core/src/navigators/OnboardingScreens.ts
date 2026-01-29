@@ -16,6 +16,9 @@ interface ScreenComponents {
   SplashScreen: React.FC
   Preface: React.FC
   UpdateAvailableScreen: React.FC
+  OnboardingWelcomeScreen: React.FC
+  CreateWalletScreen: React.FC
+  RestoreWalletOnboardingScreen: React.FC
   Terms: React.FC
   NameWallet: React.FC
   Biometry: React.FC
@@ -57,6 +60,34 @@ export const getOnboardingScreens = (
       ...TransitionPresets.SlideFromRightIOS,
       title: t('Screens.UpdateAvailable'),
     },
+  },
+  {
+    name: Screens.OnboardingWelcome,
+    component: components.OnboardingWelcomeScreen,
+    options: () => ({
+      ...TransitionPresets.SlideFromRightIOS,
+      title: t('Screens.OnboardingWelcome'),
+      headerLeft: () => false,
+      ...ScreenOptionsDictionary[Screens.OnboardingWelcome],
+    }),
+  },
+  {
+    name: Screens.CreateWallet,
+    component: components.CreateWalletScreen,
+    options: () => ({
+      ...TransitionPresets.SlideFromRightIOS,
+      title: t('Screens.CreateWallet'),
+      ...ScreenOptionsDictionary[Screens.CreateWallet],
+    }),
+  },
+  {
+    name: Screens.RestoreWalletOnboarding,
+    component: components.RestoreWalletOnboardingScreen,
+    options: () => ({
+      ...TransitionPresets.SlideFromRightIOS,
+      title: t('Screens.RestoreWallet'),
+      ...ScreenOptionsDictionary[Screens.RestoreWalletOnboarding],
+    }),
   },
   {
     name: Screens.Onboarding,

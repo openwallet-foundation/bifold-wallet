@@ -1,4 +1,3 @@
-import { ParamListBase } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,20 +25,21 @@ import { useAuth } from '../contexts/auth'
 import { TOKENS, useServices } from '../container-api'
 import { useAnimatedComponents } from '../contexts/animated-components'
 import { useTheme } from '../contexts/theme'
-import { Screens } from '../types/navigators'
+import { Screens, OnboardingStackParams } from '../types/navigators'
 import { BifoldError } from '../types/error'
 import { testIdWithKey } from '../utils/testable'
 import PINScreenTitleText from '../components/misc/PINScreenTitleText'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import ConfirmPINModal, { ConfirmPINModalUsage } from '../components/modals/ConfirmPINModal'
+import { encryptMnemonic, storeMnemonicInKeychain } from '../services/MnemonicStorage'
 
-interface PINCreateProps extends StackScreenProps<ParamListBase, Screens.CreatePIN> {
+interface PINCreateProps extends StackScreenProps<OnboardingStackParams, Screens.CreatePIN> {
   explainedStatus: boolean
   setAuthenticated: (status: boolean) => void
 }
 
-const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated }) => {
+const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated, route }) => {
   const [, dispatch] = useStore()
   const { setPIN: setWalletPIN } = useAuth()
   const PINTwoInputRef = useRef<TextInput>(null)
@@ -69,6 +69,11 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
     usePINValidation(PIN)
   usePreventScreenCapture(preventScreenCapture)
 
+  // Get mnemonic from route params if creating/restoring wallet
+  const mnemonic = route?.params?.mnemonic
+  const isCreatingWallet = route?.params?.isCreatingWallet
+  const isRestoringWallet = route?.params?.isRestoringWallet
+
   const style = StyleSheet.create({
     screenContainer: {
       height: '100%',
@@ -97,6 +102,25 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
     async (PIN: string) => {
       try {
         await setWalletPIN(PIN)
+        
+        // If we have a mnemonic (from wallet creation/restore), encrypt and store it
+        if (mnemonic && (isCreatingWallet || isRestoringWallet)) {
+          try {
+            const encryptedMnemonic = await encryptMnemonic(mnemonic, PIN)
+            await storeMnemonicInKeychain(encryptedMnemonic, false) // TODO: Add biometrics support
+          } catch (err) {
+            console.error('Failed to store mnemonic:', err)
+            const error = new BifoldError(
+              t('Error.Title1041'),
+              t('Error.Message1041'),
+              (err as Error)?.message ?? err,
+              1041
+            )
+            DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+            return
+          }
+        }
+        
         setAuthenticated(true)
         // this dispatch finishes this step of onboarding and will cause a navigation
         dispatch({
@@ -112,7 +136,7 @@ const PINCreate: React.FC<PINCreateProps> = ({ explainedStatus, setAuthenticated
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     },
-    [setWalletPIN, setAuthenticated, dispatch, t]
+    [setWalletPIN, setAuthenticated, dispatch, t, mnemonic, isCreatingWallet, isRestoringWallet]
   )
 
   const onConfirmPIN = useCallback(

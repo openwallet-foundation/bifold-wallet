@@ -24,6 +24,8 @@ import { migrateToAskar } from '../utils/migration'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { useServices, TOKENS } from '../container-api'
+import * as MnemonicStorage from '../services/MnemonicStorage'
+import * as KeyDerivation from '../services/KeyDerivation'
 
 export interface AuthContext {
   lockOutUser: (reason: LockoutReason) => void
@@ -37,6 +39,11 @@ export interface AuthContext {
   isBiometricsActive: () => Promise<boolean>
   verifyPIN: (PIN: string) => Promise<boolean>
   rekeyWallet: (agent: Agent, oldPin: string, newPin: string, useBiometry?: boolean) => Promise<boolean>
+  pinAttempts: number
+  resetPinAttempts: () => void
+  maxPinAttempts: number
+  shouldOfferMnemonicRecovery: boolean
+  recoverWithMnemonic: (mnemonic: string, newPin: string) => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContext>(null as unknown as AuthContext)
@@ -47,6 +54,8 @@ export enum LockoutReason {
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
+  const [pinAttempts, setPinAttempts] = useState<number>(0)
+  const maxPinAttempts = 3
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const [
@@ -54,6 +63,13 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   ] = useServices([
     TOKENS.FN_PIN_HASH_ALGORITHM,
   ])
+
+  // Task 6.2.4: Track if user should be offered mnemonic recovery
+  const shouldOfferMnemonicRecovery = pinAttempts >= maxPinAttempts
+
+  const resetPinAttempts = useCallback(() => {
+    setPinAttempts(0)
+  }, [])
 
   const setPIN = useCallback(async (PIN: string): Promise<void> => {
     const secret = await secretForPIN(PIN, hashPIN)
@@ -98,6 +114,66 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const checkWalletPIN = useCallback(
     async (PIN: string): Promise<boolean> => {
       try {
+        // Task 6.2.2: Use new wallet open flow with mnemonic
+        // Check if we have mnemonic-based wallet (new format)
+        const hasMnemonic = await MnemonicStorage.hasMnemonicInKeychain()
+        
+        if (hasMnemonic) {
+          // New format: Use mnemonic-based authentication
+          try {
+            const encryptedData = await MnemonicStorage.loadMnemonicFromKeychain()
+            
+            if (!encryptedData) {
+              return false
+            }
+            
+            // Try to decrypt mnemonic with PIN
+            const mnemonic = await MnemonicStorage.decryptMnemonic(encryptedData, PIN)
+            
+            // Validate mnemonic
+            if (!KeyDerivation.isValidMnemonic(mnemonic)) {
+              return false
+            }
+            
+            // Derive wallet key
+            const walletKey = KeyDerivation.deriveWalletKeyFromMnemonic(mnemonic)
+            
+            // Verify wallet can be opened with derived key
+            const askarWallet = new AskarWallet(
+              new ConsoleLogger(LogLevel.off),
+              new agentDependencies.FileSystem(),
+              new SigningProviderRegistry([])
+            )
+            
+            const secret = await loadWalletSalt()
+            if (!secret) {
+              return false
+            }
+            
+            await askarWallet.open({
+              id: secret.id,
+              key: walletKey,
+            })
+            
+            await askarWallet.close()
+            
+            setWalletSecret({ id: secret.id, key: walletKey, salt: secret.salt })
+            
+            // Task 6.2.3: Reset PIN attempts on successful authentication
+            resetPinAttempts()
+            
+            // Store PIN in authenticated session for backup feature
+            MnemonicStorage.storeAuthenticatedSessionPIN(PIN)
+            
+            return true
+          } catch (error) {
+            // Task 6.2.3: Increment PIN attempts on failure
+            setPinAttempts(prev => prev + 1)
+            return false
+          }
+        }
+        
+        // Old format: Use legacy PIN-based authentication
         const secret = await loadWalletSalt()
 
         if (!secret?.salt) {
@@ -128,12 +204,24 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         await askarWallet.close()
 
         setWalletSecret({ id: secret.id, key: hash, salt: secret.salt })
+        
+        // Reset PIN attempts on successful authentication
+        resetPinAttempts()
+        
+        // Store PIN in AsyncStorage for backup convenience
+        AsyncStorage.setItem('@BifoldWallet:UserPIN', PIN).catch((error) => {
+          console.warn('Failed to store PIN in AsyncStorage:', error)
+        })
+        
         return true
       } catch (e) {
+        // Increment PIN attempts on failure
+        setPinAttempts(prev => prev + 1)
+        
         return false
       }
     },
-    [dispatch, store.migration.didMigrateToAskar, hashPIN]
+    [dispatch, store.migration.didMigrateToAskar, hashPIN, resetPinAttempts]
   )
 
   const removeSavedWalletSecret = useCallback(() => {
@@ -202,9 +290,17 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         }
         const key = await hashPIN(PIN, credentials.salt)
         if (credentials.key !== key) {
+          // Increment PIN attempts on failure
+          setPinAttempts(prev => prev + 1)
           return false
         }
 
+        // Reset PIN attempts on successful verification
+        resetPinAttempts()
+        
+        // Store PIN in authenticated session for backup feature
+        MnemonicStorage.storeAuthenticatedSessionPIN(PIN)
+        
         return true
       } catch (err: unknown) {
         const error = new BifoldError(
@@ -214,10 +310,61 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           1042
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        
+        // Increment PIN attempts on error
+        setPinAttempts(prev => prev + 1)
         return false
       }
     },
-    [getWalletSecret, t, hashPIN]
+    [getWalletSecret, t, hashPIN, resetPinAttempts]
+  )
+
+  // Task 6.2.4: Recover wallet with mnemonic after max PIN attempts
+  const recoverWithMnemonic = useCallback(
+    async (mnemonic: string, newPin: string): Promise<boolean> => {
+      try {
+        // Validate mnemonic
+        if (!KeyDerivation.isValidMnemonic(mnemonic)) {
+          throw new Error('Invalid mnemonic phrase')
+        }
+        
+        // Derive wallet key from mnemonic
+        const walletKey = KeyDerivation.deriveWalletKeyFromMnemonic(mnemonic)
+        
+        // Verify wallet can be opened with derived key
+        const secret = await loadWalletSalt()
+        if (!secret) {
+          throw new Error('Wallet not found')
+        }
+        
+        const askarWallet = new AskarWallet(
+          new ConsoleLogger(LogLevel.off),
+          new agentDependencies.FileSystem(),
+          new SigningProviderRegistry([])
+        )
+        
+        await askarWallet.open({
+          id: secret.id,
+          key: walletKey,
+        })
+        
+        await askarWallet.close()
+        
+        // Encrypt mnemonic with new PIN and store in keychain
+        await MnemonicStorage.encryptAndStoreMnemonic(mnemonic, newPin, false)
+        
+        // Update wallet secret
+        setWalletSecret({ id: secret.id, key: walletKey, salt: secret.salt })
+        
+        // Reset PIN attempts
+        resetPinAttempts()
+        
+        return true
+      } catch (error) {
+        return false
+      }
+    },
+    [resetPinAttempts]
   )
 
   return (
@@ -234,6 +381,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         rekeyWallet,
         walletSecret,
         verifyPIN,
+        pinAttempts,
+        resetPinAttempts,
+        maxPinAttempts,
+        shouldOfferMnemonicRecovery,
+        recoverWithMnemonic,
       }}
     >
       {children}

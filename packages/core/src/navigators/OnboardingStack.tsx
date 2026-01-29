@@ -13,11 +13,14 @@ import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
 import { useOnboardingState } from '../hooks/useOnboardingState'
 import AttemptLockout from '../screens/AttemptLockout'
+import CreateWalletScreen from '../screens/CreateWalletScreen'
 import NameWallet from '../screens/NameWallet'
+import OnboardingWelcomeScreen from '../screens/OnboardingWelcomeScreen'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINCreate from '../screens/PINCreate'
 import PINEnter from '../screens/PINEnter'
 import PushNotifications from '../screens/PushNotifications'
+import RestoreWalletOnboardingScreen from '../screens/RestoreWalletOnboardingScreen'
 import { Config } from '../types/config'
 import { OnboardingStackParams } from '../types/navigators'
 import { WalletSecret } from '../types/security'
@@ -166,6 +169,9 @@ const OnboardingStack: React.FC<OnboardingStackProps> = ({ initializeAgent, agen
         SplashScreen,
         Preface,
         UpdateAvailableScreen,
+        OnboardingWelcomeScreen,
+        CreateWalletScreen,
+        RestoreWalletOnboardingScreen,
         Terms,
         NameWallet,
         Biometry,

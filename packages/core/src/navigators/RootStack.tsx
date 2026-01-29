@@ -9,6 +9,10 @@ import { TOKENS, useServices } from '../container-api'
 import { ActivityProvider } from '../contexts/activity'
 import { useStore } from '../contexts/store'
 import { BifoldError } from '../types/error'
+import { RootStackParams, Screens } from '../types/navigators'
+import { useMigrationPrompt } from '../hooks/useMigrationPrompt'
+import { useNavigationRef } from '../contexts/navigation'
+import MigrationPrompt from '../components/MigrationPrompt'
 import MainStack from './MainStack'
 
 const RootStack: React.FC = () => {
@@ -21,11 +25,27 @@ const RootStack: React.FC = () => {
   ])
   const { agent, initializeAgent, shutdownAndClearAgentIfExists } = useAgentSetup()
   const [onboardingComplete, setOnboardingComplete] = useState(false)
+  const navigationRef = useNavigationRef()
 
   const shouldRenderMainStack = useMemo(
     () => onboardingComplete && store.authentication.didAuthenticate,
     [onboardingComplete, store.authentication.didAuthenticate]
   )
+
+  // Migration prompt hook
+  const {
+    showPrompt: showMigrationPrompt,
+    postponeCount,
+    daysRemaining,
+    deadlinePassed,
+    handleAccept: handleMigrationAccept,
+    handlePostpone: handleMigrationPostpone,
+  } = useMigrationPrompt(() => {
+    // Navigate to MigrationFlowScreen when user accepts migration
+    if (navigationRef?.current) {
+      navigationRef.current.navigate(Screens.MigrationFlow)
+    }
+  })
 
   useEffect(() => {
     // if user gets locked out, erase agent
@@ -55,13 +75,27 @@ const RootStack: React.FC = () => {
 
   if (shouldRenderMainStack && agent) {
     return (
-      <AgentProvider agent={agent}>
-        <OpenIDCredentialRecordProvider>
-          <ActivityProvider>
-            <MainStack />
-          </ActivityProvider>
-        </OpenIDCredentialRecordProvider>
-      </AgentProvider>
+      <>
+        <AgentProvider agent={agent}>
+          <OpenIDCredentialRecordProvider>
+            <ActivityProvider>
+              <MainStack />
+            </ActivityProvider>
+          </OpenIDCredentialRecordProvider>
+        </AgentProvider>
+        
+        {/* Migration prompt - shown after authentication */}
+        {showMigrationPrompt && (
+          <MigrationPrompt
+            visible={showMigrationPrompt}
+            postponeCount={postponeCount}
+            daysRemaining={daysRemaining}
+            deadlinePassed={deadlinePassed}
+            onAccept={handleMigrationAccept}
+            onPostpone={handleMigrationPostpone}
+          />
+        )}
+      </>
     )
   }
 

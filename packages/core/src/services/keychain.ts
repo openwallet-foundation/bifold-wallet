@@ -174,6 +174,19 @@ export const loadWalletSecret = async (title?: string, description?: string): Pr
   return secret
 }
 
+export const deleteWalletSecret = async (): Promise<boolean> => {
+  try {
+    await wipeWalletKey(false)
+    const opts: Keychain.Options = {
+      service: KeychainServices.Salt,
+    }
+    await Keychain.resetGenericPassword(opts)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 // This function checks if the biometrics on a device have been configured
 // If fingerprints or a face scan is setup, this will return true
 // If the device supports biometrics but they have not been configured, it will return false

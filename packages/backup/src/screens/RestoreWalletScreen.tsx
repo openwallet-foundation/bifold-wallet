@@ -1,47 +1,130 @@
+/**
+ * RestoreWalletScreen (Settings)
+ * 
+ * Complete SSI-compliant wallet restore flow from Settings menu.
+ * 
+ * Flow:
+ * 1. Select backup file (optional - can skip for mnemonic-only restore)
+ * 2. Enter 12-word recovery phrase with autocomplete
+ * 3. Restore wallet with progress indicator
+ * 4. Setup new PIN for the restored wallet
+ * 5. Store encrypted mnemonic in keychain
+ * 
+ * Features:
+ * - File picker for backup file selection
+ * - MnemonicInput component with BIP39 validation
+ * - Paste from clipboard support
+ * - Progress indicator showing restore steps
+ * - PIN setup after successful restore
+ * - Comprehensive error handling
+ */
+
 import React, { useState } from 'react'
-import { View, Text, Button, TextInput, ActivityIndicator, StyleSheet, ScrollView, Alert } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { useAgent } from '@credo-ts/react-hooks'
 import { container } from 'tsyringe'
-import { WalletConfig } from '@credo-ts/core'
+import Clipboard from '@react-native-clipboard/clipboard'
+import type { StackScreenProps } from '@react-navigation/stack'
+
+import { useTheme } from '../../../core/src/contexts/theme'
+import { MnemonicInput } from '../../../core/src/components/MnemonicInput'
+import { ProgressIndicator, createSteps } from '../../../core/src/components/ProgressIndicator'
+import Button, { ButtonType } from '../../../core/src/components/buttons/Button'
+import { isValidMnemonic, deriveWalletKeyFromMnemonic } from '../../../core/src/services/KeyDerivation'
 import { BackupService, RestoreStatus } from '../services/BackupService'
-import { loadWalletSecret } from '../../../core/src/services/keychain'
+import { SettingStackParams, Screens } from '../../../core/src/types/navigators'
+import { testIdWithKey } from '../../../core/src/utils/testable'
 
-interface RestoreWalletScreenProps {
-  /**
-   * Configuration for the new wallet to be created from import.
-   * If not provided, a default configuration with a random ID will be used.
-   */
-  walletConfig?: WalletConfig
-  /**
-   * URL of the mediator to connect to after restore
-   */
-  mediatorUrl: string
-  /**
-   * Callback when restore is successful
-   */
-  onRestoreSuccess?: () => void
-}
+type RestoreStep = 'file' | 'mnemonic' | 'restoring' | 'pin' | 'complete'
 
-export const RestoreWalletScreen = ({ walletConfig, mediatorUrl, onRestoreSuccess }: RestoreWalletScreenProps) => {
+type Props = StackScreenProps<SettingStackParams, Screens.RestoreWallet>
+
+export const RestoreWalletScreen: React.FC<Props> = ({ navigation }) => {
+  const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const [mnemonic, setMnemonic] = useState('')
-  const [filePath, setFilePath] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [restoreStatus, setRestoreStatus] = useState<RestoreStatus | null>(null)
   const [backupService] = useState(() => container.resolve(BackupService))
 
-  const handlePickFile = async () => {
-    try {
-      const path = await backupService.pickBackupFile()
-      if (path) {
-        setFilePath(path)
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Failed to pick file')
-    }
-  }
+  const [step, setStep] = useState<RestoreStep>('file')
+  const [backupFilePath, setBackupFilePath] = useState<string>('')
+  const [words, setWords] = useState<string[]>(Array(12).fill(''))
+  const [error, setError] = useState<string>('')
+  const [restoreStatus, setRestoreStatus] = useState<RestoreStatus | null>(null)
 
-  const getStatusMessage = (status: RestoreStatus): string => {
+  const stepLabels = ['Select File', 'Enter Mnemonic', 'Restoring', 'Set PIN']
+  const currentStepIndex = stepLabels.indexOf(
+    step === 'file' ? 'Select File' :
+    step === 'mnemonic' ? 'Enter Mnemonic' :
+    step === 'restoring' ? 'Restoring' :
+    'Set PIN'
+  )
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: ColorPalette.brand.primaryBackground,
+    },
+    scrollView: {
+      flexGrow: 1,
+      paddingHorizontal: 24,
+      paddingVertical: 20,
+    },
+    progressContainer: {
+      marginBottom: 24,
+    },
+    title: {
+      ...TextTheme.headingTwo,
+      color: ColorPalette.brand.primary,
+      marginBottom: 16,
+    },
+    description: {
+      ...TextTheme.normal,
+      color: ColorPalette.grayscale.mediumGrey,
+      marginBottom: 24,
+      lineHeight: 22,
+    },
+    fileInfoContainer: {
+      backgroundColor: ColorPalette.brand.secondaryBackground,
+      padding: 16,
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    fileInfoText: {
+      ...TextTheme.normal,
+      color: ColorPalette.grayscale.darkGrey,
+    },
+    buttonContainer: {
+      marginTop: 24,
+      gap: 12,
+    },
+    pasteButton: {
+      alignSelf: 'center',
+      marginTop: 16,
+    },
+    pasteButtonText: {
+      ...TextTheme.normal,
+      color: ColorPalette.brand.link,
+      textDecorationLine: 'underline',
+    },
+    errorText: {
+      ...TextTheme.normal,
+      color: ColorPalette.semantic.error,
+      marginTop: 12,
+      textAlign: 'center',
+    },
+    restoreProgressContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 40,
+    },
+    restoreProgressText: {
+      ...TextTheme.normal,
+      color: ColorPalette.grayscale.mediumGrey,
+      marginTop: 16,
+      textAlign: 'center',
+    },
+  })
+
+  const getRestoreStatusMessage = (status: RestoreStatus): string => {
     const messages = {
       [RestoreStatus.VALIDATING]: 'Validating backup file...',
       [RestoreStatus.SHUTTING_DOWN]: 'Preparing for restore...',
@@ -54,177 +137,247 @@ export const RestoreWalletScreen = ({ walletConfig, mediatorUrl, onRestoreSucces
     return messages[status] || 'Processing...'
   }
 
-  const getErrorMessage = (error: Error): string => {
-    const message = error.message.toLowerCase()
-
-    if (message.includes('not found')) {
-      return 'Backup file not found. Please select a valid backup file.'
+  const handleSelectFile = async () => {
+    try {
+      const path = await backupService.pickBackupFile()
+      if (path) {
+        setBackupFilePath(path)
+        setStep('mnemonic')
+        setError('')
+      }
+    } catch (err) {
+      setError('Failed to select backup file. Please try again.')
+      console.error('Failed to pick file:', err)
     }
-    if (message.includes('corrupted') || message.includes('invalid')) {
-      return 'Backup file is corrupted or invalid. Please check your backup file.'
-    }
-    if (message.includes('mnemonic') || message.includes('key')) {
-      return 'Incorrect mnemonic or key. Please check and try again.'
-    }
-    if (message.includes('permission')) {
-      return 'Cannot access wallet files. Please restart the app and try again.'
-    }
-    if (message.includes('already exists')) {
-      return 'Wallet already exists. Please contact support.'
-    }
-
-    // Generic error
-    return `Failed to restore wallet: ${error.message}`
   }
 
-  const handleRestore = async () => {
-    if (!agent) return
-    if (!filePath || !mnemonic) {
-      Alert.alert('Error', 'Please provide both backup file and mnemonic')
-      return
-    }
+  const handleSkipFile = () => {
+    // Allow user to proceed with just mnemonic (for mnemonic-only restore)
+    setStep('mnemonic')
+    setError('')
+  }
 
-    setLoading(true)
-
+  const handlePasteFromClipboard = async () => {
     try {
-      // Load existing wallet secret from keychain (reuse existing PIN)
-      const walletSecret = await loadWalletSecret()
-      
-      if (!walletSecret) {
-        Alert.alert('Error', 'Could not load wallet credentials. Please ensure you have set up your wallet.')
-        setLoading(false)
+      const clipboardContent = await Clipboard.getString()
+      if (clipboardContent) {
+        const pastedWords = clipboardContent.trim().split(/\s+/)
+        if (pastedWords.length === 12) {
+          setWords(pastedWords.map(w => w.toLowerCase()))
+        } else {
+          Alert.alert(
+            'Invalid Format',
+            'Please paste exactly 12 words separated by spaces.'
+          )
+        }
+      }
+    } catch (err) {
+      console.error('Failed to paste from clipboard:', err)
+    }
+  }
+
+  const handleMnemonicComplete = async (mnemonic: string) => {
+    try {
+      // Validate mnemonic
+      if (!isValidMnemonic(mnemonic)) {
+        setError('Invalid recovery phrase. Please check and try again.')
         return
       }
 
-      // Use wallet secret from keychain (same PIN as before)
-      const targetConfig: WalletConfig = walletConfig || {
-        id: walletSecret.id,      // 'walletId' from keychain
-        key: walletSecret.key,    // Hashed PIN from keychain (NOT mnemonic!)
+      setStep('restoring')
+      setError('')
+
+      if (!agent) {
+        throw new Error('Agent not initialized')
       }
 
-      // Use new complete restore method
-      await backupService.restoreWalletComplete(
-        agent,
-        filePath,
-        mnemonic,        // Used only for decrypting the backup file
-        targetConfig,    // Wallet config with hashed PIN from keychain
-        mediatorUrl,
-        (status) => {
-          setRestoreStatus(status)
-        }
-      )
+      // Derive wallet key from mnemonic
+      const walletKey = deriveWalletKeyFromMnemonic(mnemonic)
 
-      Alert.alert('Success', 'Wallet restored successfully. You can now use your existing PIN to access the wallet.')
-      onRestoreSuccess?.()
-    } catch (error) {
-      const errorMessage = getErrorMessage(error as Error)
-      Alert.alert('Error', errorMessage)
-    } finally {
-      setLoading(false)
+      // Get mediator URL from config (or use default)
+      const mediatorUrl = 'https://mediator.example.com' // TODO: Get from config
+
+      if (backupFilePath) {
+        // Restore from backup file with mnemonic
+        await backupService.restoreWalletComplete(
+          agent,
+          backupFilePath,
+          mnemonic,
+          {
+            id: 'main',
+            key: walletKey,
+          },
+          mediatorUrl,
+          (status) => {
+            setRestoreStatus(status)
+          }
+        )
+      } else {
+        // Mnemonic-only restore: Create new wallet with derived key
+        await agent.wallet.create({
+          id: 'main',
+          key: walletKey,
+        })
+
+        await agent.wallet.open({
+          id: 'main',
+          key: walletKey,
+        })
+
+        await agent.initialize()
+      }
+
+      // Navigate to PIN setup
+      setStep('pin')
+      
+      // Navigate to PINCreate screen with mnemonic
+      navigation.navigate(Screens.CreatePIN, {
+        setAuthenticated: () => {
+          // After PIN is set, complete the restore
+          setStep('complete')
+          Alert.alert(
+            'Success',
+            'Wallet restored successfully! You can now use your new PIN to access the wallet.',
+            [
+              {
+                text: 'OK',
+                onPress: () => {
+                  // Navigate back to settings
+                  navigation.goBack()
+                }
+              }
+            ]
+          )
+        },
+        mnemonic: mnemonic,
+        isRestoringWallet: true,
+      })
+    } catch (err) {
+      setError('Failed to restore wallet. Please check your recovery phrase and try again.')
+      console.error('Failed to restore wallet:', err)
+      setStep('mnemonic')
       setRestoreStatus(null)
+    }
+  }
+
+  const renderStepContent = () => {
+    switch (step) {
+      case 'file':
+        return (
+          <View>
+            <Text style={styles.title}>Select Backup File</Text>
+            <Text style={styles.description}>
+              Select your wallet backup file (.zip) or skip this step if you only have your recovery phrase.
+            </Text>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Select Backup File"
+                accessibilityLabel="Select Backup File"
+                testID={testIdWithKey('SelectBackupFileButton')}
+                buttonType={ButtonType.Primary}
+                onPress={handleSelectFile}
+              />
+              <Button
+                title="Skip (Mnemonic Only)"
+                accessibilityLabel="Skip File Selection"
+                testID={testIdWithKey('SkipFileSelectionButton')}
+                buttonType={ButtonType.Secondary}
+                onPress={handleSkipFile}
+              />
+            </View>
+          </View>
+        )
+
+      case 'mnemonic':
+        return (
+          <View>
+            <Text style={styles.title}>Enter Recovery Phrase</Text>
+            <Text style={styles.description}>
+              Enter your 12-word recovery phrase to restore your wallet.
+            </Text>
+            
+            {backupFilePath && (
+              <View style={styles.fileInfoContainer}>
+                <Text style={styles.fileInfoText}>
+                  Backup file: {backupFilePath.split('/').pop()}
+                </Text>
+              </View>
+            )}
+
+            <MnemonicInput
+              words={words}
+              onChange={setWords}
+              onComplete={handleMnemonicComplete}
+              showAutocomplete={true}
+              autoFocus={true}
+            />
+
+            <TouchableOpacity
+              style={styles.pasteButton}
+              onPress={handlePasteFromClipboard}
+              accessibilityLabel="Paste from Clipboard"
+              testID={testIdWithKey('PasteFromClipboardButton')}
+            >
+              <Text style={styles.pasteButtonText}>
+                📋 Paste from Clipboard
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )
+
+      case 'restoring':
+        return (
+          <View>
+            <Text style={styles.title}>Restoring Wallet</Text>
+            <Text style={styles.description}>
+              Please wait while we restore your wallet. This may take a few moments.
+            </Text>
+            <View style={styles.restoreProgressContainer}>
+              <ActivityIndicator size="large" color={ColorPalette.brand.primary} />
+              {restoreStatus && (
+                <Text style={styles.restoreProgressText}>
+                  {getRestoreStatusMessage(restoreStatus)}
+                </Text>
+              )}
+            </View>
+          </View>
+        )
+
+      case 'pin':
+        // PIN screen is handled by navigation
+        return null
+
+      case 'complete':
+        return (
+          <View>
+            <Text style={styles.title}>Restore Complete</Text>
+            <Text style={styles.description}>
+              Your wallet has been restored successfully. You can now use your new PIN to access the wallet.
+            </Text>
+          </View>
+        )
+
+      default:
+        return null
     }
   }
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Restore Wallet</Text>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Backup File</Text>
-          <View style={styles.fileRow}>
-            <Text style={styles.filePath} numberOfLines={1} ellipsizeMode="middle">
-              {filePath || 'No file selected'}
-            </Text>
-            <Button title="Select File" onPress={handlePickFile} />
-          </View>
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Mnemonic / Key</Text>
-          <TextInput
-            style={styles.input}
-            value={mnemonic}
-            onChangeText={setMnemonic}
-            placeholder="Enter mnemonic phrase"
-            multiline
-            autoCapitalize="none"
-            placeholderTextColor="#999"
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.progressContainer}>
+          <ProgressIndicator
+            steps={createSteps(stepLabels, currentStepIndex)}
+            currentStep={currentStepIndex}
+            showNumbers={true}
+            compact={false}
           />
         </View>
 
-        {loading ? (
-          <View style={styles.progressContainer}>
-            <ActivityIndicator size="large" color="#0000ff" />
-            {restoreStatus && (
-              <Text style={styles.progressText}>{getStatusMessage(restoreStatus)}</Text>
-            )}
-          </View>
-        ) : (
-          <Button title="Restore Wallet" onPress={handleRestore} disabled={!agent || !filePath || !mnemonic} />
-        )}
+        {renderStepContent()}
+
+        {error && <Text style={styles.errorText}>{error}</Text>}
       </ScrollView>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  content: {
-    flexGrow: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center',
-    color: '#000',
-  },
-  inputGroup: {
-    marginBottom: 20,
-    width: '100%',
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-    fontWeight: '600',
-    color: '#333',
-  },
-  fileRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-  },
-  filePath: {
-    flex: 1,
-    marginRight: 10,
-    color: '#333',
-  },
-  input: {
-    backgroundColor: '#f5f5f5',
-    padding: 15,
-    borderRadius: 8,
-    fontSize: 16,
-    minHeight: 100,
-    textAlignVertical: 'top',
-    color: '#333',
-  },
-  progressContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  progressText: {
-    marginTop: 15,
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
-})

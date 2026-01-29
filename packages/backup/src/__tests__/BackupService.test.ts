@@ -389,7 +389,7 @@ describe('BackupService', () => {
 
     it('should not call initialize if agent is already initialized', async () => {
       // Arrange
-      mockAgent.isInitialized = true // Agent already initialized
+      mockAgent.wallet.isInitialized = true // Agent already initialized
       const onProgress = jest.fn()
 
       // Act
@@ -410,7 +410,7 @@ describe('BackupService', () => {
 
     it('should call initialize if agent is not initialized', async () => {
       // Arrange
-      mockAgent.isInitialized = false // Agent not initialized
+      mockAgent.wallet.isInitialized = false // Agent not initialized
       const onProgress = jest.fn()
 
       // Act

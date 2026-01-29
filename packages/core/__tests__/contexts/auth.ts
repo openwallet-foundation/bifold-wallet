@@ -9,6 +9,11 @@ const authContext = {
   rekeyWallet: jest.fn(),
   verifyPIN: jest.fn(),
   lockOutUser: jest.fn(),
+  pinAttempts: 0,
+  resetPinAttempts: jest.fn(),
+  maxPinAttempts: 3,
+  shouldOfferMnemonicRecovery: false,
+  recoverWithMnemonic: jest.fn(),
 }
 
 export default authContext

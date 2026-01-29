@@ -159,6 +159,10 @@
     "Message1048": "There was a problem with the proof request.",
     "Title1049": "Unable to change PIN.",
     "Message1049": "There was a problem while attempting to change your PIN.",
+    "Title1050": "Backup Failed",
+    "Message1050": "Failed to create wallet backup. Please try again.",
+    "Title1051": "PIN Set Failed",
+    "Message1051": "Failed to set new PIN. Please try again.",
     "GenericError": {
       "Title": "Something went wrong",
       "Message": "There was an unexpected error, please try again later."
@@ -897,7 +901,9 @@
     "History": "History",
     "HistoryDetails": "History Details",
     "UpdateAvailable": "Update Available",
-    "JSONDetails": "JSON details"
+    "JSONDetails": "JSON details",
+    "MigrationFlow": "Migration Flow",
+    "CreateWallet": "Create Wallet"
   },
   "Loading": {
     "TakingTooLong": "This is taking longer than usual. You can return to home or continue waiting.",
@@ -928,6 +934,12 @@
   },
   "Onboarding": {
     "SkipA11y": "Skip introduction to Aries Bifold"
+  },
+  "OnboardingWelcome": {
+    "Title": "Welcome to Your Wallet",
+    "Subtitle": "Create a new wallet or restore an existing one to get started with your digital credentials.",
+    "CreateNewWallet": "Create New Wallet",
+    "RestoreWallet": "Restore Wallet"
   },
   "Preface": {
     "PrimaryHeading": "Is this app for you?",
@@ -1006,5 +1018,173 @@
   },
   "FullScreenErrorModal": {
     "PrimaryCTA": "Go back to home"
+  },
+  "Migration": {
+    "Benefit1": "Enhanced security with improved encryption",
+    "Benefit2": "Better backup and restore options",
+    "Benefit3": "Faster performance and stability",
+    "Benefit4": "Compatibility with latest standards",
+    "DeadlinePassed": "Migration deadline has passed. You must migrate now to continue using your wallet.",
+    "DeadlineToday": "Migration deadline is today. Please migrate before the end of the day.",
+    "DeadlineTomorrow": "Migration deadline is tomorrow.",
+    "DeadlineUrgent": "Migration deadline is approaching soon.",
+    "DeadlineRemaining": "{{days}} days remaining until migration deadline.",
+    "TitleUrgent": "Migration Required - Urgent",
+    "Title": "Wallet Migration Required",
+    "DescriptionUrgent": "Your wallet needs to be migrated to the new format. This is critical for security and compatibility.",
+    "Description": "Your wallet needs to be migrated to a new format to ensure continued security and compatibility.",
+    "BenefitsTitle": "What's new in this update:",
+    "MigrateNow": "Migrate Now",
+    "RemindLater": "Remind Me Later",
+    "RemindLaterHint": "You can postpone migration up to 3 times. After that, migration will be required.",
+    "RemindLaterTitle": "We'll Remind You",
+    "RemindLaterMessage": "We'll remind you again later. You can postpone {{count}} more times.",
+    "LearnMore": "Learn More About Migration",
+    "HideDetails": "Hide Details",
+    "WhatIsNewTitle": "What's New?",
+    "WhatIsNewText": "We're upgrading to a new wallet format that uses a standard 12-word recovery phrase (BIP39). This is the same technology used by major wallets worldwide, making it easier to restore your wallet on any device.",
+    "WhyMigrateTitle": "Why Migrate?",
+    "WhyMigrateText": "The new format provides better security, easier backup and restore, and compatibility with other wallets. You'll be able to restore your wallet on any device using just your recovery phrase.",
+    "WhatHappensTitle": "What Happens During Migration?",
+    "WhatHappensText": "Your wallet will be securely converted to the new format. All your credentials and data will be preserved. The process takes just a few moments.",
+    "IsItSafeTitle": "Is It Safe?",
+    "IsItSafeText": "Yes! The migration process is completely secure and happens locally on your device. Your data never leaves your device during the migration.",
+    "MigrateNowHint": "Start the migration process now",
+    "StartUpgrade": "Start Upgrade",
+    "StepBackup": "Backup",
+    "StepMnemonic": "Recovery Phrase",
+    "StepVerify": "Verify Phrase",
+    "StepMigrate": "Migrate",
+    "StepPIN": "Create PIN",
+    "StepComplete": "Complete",
+    "InvalidPIN": "Invalid PIN",
+    "EnterValidPIN": "Please enter a valid PIN",
+    "IncorrectPIN": "Incorrect PIN",
+    "IncorrectPINMessage": "The PIN you entered is incorrect. Please try again.",
+    "BackupTitle": "Create Wallet Backup",
+    "BackupDescription": "Before migrating, you need to create a backup of your wallet. This ensures you can always recover your wallet if something goes wrong.",
+    "Important": "Important",
+    "BackupWarning": "Your backup will contain a 12-word recovery phrase. Keep this safe and never share it with anyone.",
+    "EnterCurrentPIN": "Enter Current PIN",
+    "PINLabel": "PIN",
+    "CreateBackup": "Create Backup",
+    "NewRecoveryPhrase": "Your New Recovery Phrase",
+    "MnemonicDescription": "Write down these 12 words in order and keep them in a safe place. You'll need them to recover your wallet.",
+    "Error": "Error",
+    "AgentNotReady": "Agent not ready",
+    "StatusBackingUp": "Backing up wallet...",
+    "StatusExporting": "Exporting wallet data...",
+    "StatusGenerating": "Generating new recovery phrase...",
+    "StatusCreatingWallet": "Creating new wallet...",
+    "StatusImporting": "Importing wallet data...",
+    "StatusUpdatingKeychain": "Updating secure storage...",
+    "StatusVerifying": "Verifying migration...",
+    "StatusCleaning": "Cleaning up...",
+    "StatusComplete": "Migration complete!",
+    "StatusProcessing": "Processing...",
+    "Migrating": "Migrating your wallet...",
+    "PINMismatch": "PIN Mismatch",
+    "PINMismatchMessage": "PINs do not match. Please try again.",
+    "SetPINTitle": "Set Your PIN",
+    "SetPINDescription": "Choose a secure PIN to protect your wallet. You can use your existing PIN or create a new one.",
+    "EnterNewPIN": "Enter New PIN",
+    "ConfirmPIN": "Confirm PIN",
+    "SetPIN": "Set PIN",
+    "UseOldPIN": "Use Same PIN",
+    "CompleteTitle": "Migration Complete!",
+    "CompleteDescription": "Your wallet has been successfully migrated to the new format. Your credentials and data are safe and secure.",
+    "WhatNextTitle": "What's Next?",
+    "WhatNextText": "Your wallet is now using the new format with enhanced security. Keep your recovery phrase safe - you'll need it if you ever need to restore your wallet.",
+    "Finish": "Finish",
+    "UnknownError": "An unknown error occurred",
+    "ErrorBackup": "Failed to create backup. Please ensure you have enough storage space.",
+    "ErrorExport": "Failed to export wallet data. Please try again.",
+    "ErrorWalletCreate": "Failed to create new wallet. Please try again.",
+    "ErrorImport": "Failed to import wallet data. Please try again.",
+    "ErrorKeychain": "Failed to update secure storage. Please try again.",
+    "ErrorVerification": "Migration verification failed. Please try again.",
+    "ErrorRollback": "Failed to rollback after error. Your wallet may be in an inconsistent state. Please contact support.",
+    "ErrorTitle": "Migration Failed",
+    "SomethingWentWrong": "Something Went Wrong",
+    "ErrorHint": "An error occurred during migration. Please try again. If the problem persists, contact support.",
+    "TryAgain": "Try Again",
+    "Cancel": "Cancel"
+  },
+  "RestoreWallet": {
+    "File": {
+      "Title": "Restore from Backup File",
+      "Description": "Select a backup file to restore your wallet from a previous backup.",
+      "SelectButton": "Select Backup File",
+      "SkipButton": "Skip - Enter Recovery Phrase Instead"
+    },
+    "Mnemonic": {
+      "Title": "Enter Recovery Phrase",
+      "Description": "Enter your 12-word recovery phrase to restore your wallet.",
+      "FileSelected": "Backup file selected",
+      "PasteButton": "Paste from Clipboard"
+    },
+    "Restoring": {
+      "Title": "Restoring Wallet",
+      "Description": "Please wait while we restore your wallet. This may take a few moments."
+    },
+    "Complete": {
+      "Title": "Wallet Restored Successfully",
+      "Description": "Your wallet has been restored. You can now access your credentials and continue using the app."
+    },
+    "Steps": {
+      "SelectFile": "Select File",
+      "EnterMnemonic": "Enter Recovery Phrase",
+      "Restoring": "Restoring",
+      "SetPIN": "Set PIN"
+    },
+    "Errors": {
+      "FilePickerFailed": "Failed to select backup file. Please try again.",
+      "InvalidMnemonic": "Invalid recovery phrase. Please check and try again.",
+      "RestoreFailed": "Failed to restore wallet. Please try again or contact support."
+    },
+    "PasteError": {
+      "Title": "Invalid Recovery Phrase",
+      "InvalidFormat": "Please paste exactly 12 words separated by spaces."
+    }
+  },
+  "CreateWallet": {
+    "Steps": {
+      "Generate": "Generate",
+      "Display": "Display",
+      "Verify": "Verify",
+      "SetPIN": "Set PIN",
+      "Creating": "Creating"
+    },
+    "VerificationFailed": {
+      "Title": "Verification Failed",
+      "Message": "The recovery phrase you entered doesn't match. Please try again.",
+      "TryAgain": "Try Again",
+      "Cancel": "Cancel"
+    },
+    "Generate": {
+      "Title": "Generate Recovery Phrase",
+      "Description": "We'll generate a unique 12-word recovery phrase for you. Write it down and keep it safe.",
+      "Button": "Generate Recovery Phrase"
+    },
+    "Display": {
+      "Title": "Your Recovery Phrase",
+      "Description": "Write down these 12 words in order and keep them in a safe place. You'll need them to restore your wallet."
+    },
+    "Verify": {
+      "Title": "Verify Recovery Phrase",
+      "Description": "Enter the 12 words in the correct order to verify you've saved them."
+    },
+    "Creating": {
+      "Title": "Creating Your Wallet",
+      "Description": "Please wait while we create your wallet..."
+    },
+    "Complete": {
+      "Title": "Wallet Created!",
+      "Description": "Your wallet has been created successfully. You can now add credentials."
+    },
+    "Errors": {
+      "GenerateFailed": "Failed to generate recovery phrase",
+      "CreateFailed": "Failed to create wallet"
+    }
   }
 }

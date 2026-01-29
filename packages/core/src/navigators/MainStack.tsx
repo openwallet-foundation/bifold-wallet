@@ -18,6 +18,7 @@ import { useTour } from '../contexts/tour/tour-context'
 import { useDeepLinks } from '../hooks/deep-links'
 import CredentialDetails from '../screens/CredentialDetails'
 import OpenIDCredentialDetails from '../modules/openid/screens/OpenIDCredentialDetails'
+import MigrationFlowScreen from '../screens/MigrationFlowScreen'
 
 import ConnectStack from './ConnectStack'
 import ContactStack from './ContactStack'
@@ -119,6 +120,16 @@ const MainStack: React.FC = () => {
           }}
         />
         <Stack.Screen name={Stacks.ContactStack} component={ContactStack} />
+        <Stack.Screen
+          name={Screens.MigrationFlow}
+          component={MigrationFlowScreen}
+          options={{
+            headerShown: true,
+            title: t('Screens.MigrationFlow'),
+            cardStyleInterpolator: forFade,
+            ...ScreenOptionsDictionary[Screens.MigrationFlow],
+          }}
+        />
         <Stack.Screen name={Stacks.NotificationStack} component={NotificationStack} />
         <Stack.Screen
           name={Stacks.ConnectionStack}

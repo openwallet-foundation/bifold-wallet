@@ -11,10 +11,20 @@ import { useStore } from '../contexts/store'
 import { WalletSecret } from '../types/security'
 import { createLinkSecretIfRequired, getAgentModules } from '../utils/agent'
 import { migrateToAskar } from '../utils/migration'
+import {
+  loadAndDecryptMnemonic,
+  encryptAndStoreMnemonic,
+  hasMnemonicInKeychain,
+} from '../services/MnemonicStorage'
+import {
+  deriveWalletKeyFromMnemonic,
+  generateWalletMnemonic,
+  isValidMnemonic,
+} from '../services/KeyDerivation'
 
 export type AgentSetupReturnType = {
   agent: Agent | null
-  initializeAgent: (walletSecret: WalletSecret) => Promise<void>
+  initializeAgent: (walletSecret: WalletSecret, pin?: string) => Promise<void>
   shutdownAndClearAgentIfExists: () => Promise<void>
 }
 
@@ -118,9 +128,79 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
   )
 
   const initializeAgent = useCallback(
-    async (walletSecret: WalletSecret): Promise<void> => {
+    async (walletSecret: WalletSecret, pin?: string): Promise<void> => {
       const mediatorUrl = store.preferences.selectedMediator
       logger.info('Checking for existing agent...')
+      
+      // If PIN is provided, use new mnemonic-based flow
+      if (pin) {
+        logger.info('Using mnemonic-based wallet opening flow...')
+        
+        try {
+          // Step 1: Load encrypted mnemonic from keychain (Task 6.1.2)
+          logger.info('Loading encrypted mnemonic from keychain...')
+          const encryptedData = await loadAndDecryptMnemonic(pin)
+          
+          if (!encryptedData) {
+            throw new Error('No wallet found. Please create or restore a wallet.')
+          }
+          
+          // Step 2: Decrypt mnemonic with PIN (Task 6.1.3)
+          logger.info('Decrypting mnemonic with PIN...')
+          let mnemonic: string
+          try {
+            mnemonic = encryptedData
+          } catch (error) {
+            // Handle wrong PIN (Task 6.1.6)
+            if (error instanceof Error && error.message.includes('Incorrect PIN')) {
+              throw new Error('Incorrect PIN')
+            }
+            throw error
+          }
+          
+          // Step 3: Validate mnemonic
+          if (!isValidMnemonic(mnemonic)) {
+            throw new Error('Corrupted wallet data. Please restore from backup.')
+          }
+          
+          // Step 4: Derive wallet key from mnemonic (Task 6.1.4)
+          logger.info('Deriving wallet key from mnemonic...')
+          const derivedKey = deriveWalletKeyFromMnemonic(mnemonic)
+          
+          // Update wallet secret with derived key
+          walletSecret = {
+            ...walletSecret,
+            key: derivedKey,
+          }
+          
+          // Step 5: Clear sensitive data from memory (Task 6.1.7)
+          // Force garbage collection by setting to empty string
+          mnemonic = ''
+          
+        } catch (error) {
+          // Error handling (Task 6.1.8)
+          logger.error(`Mnemonic-based wallet opening failed: ${error}`)
+          
+          if (error instanceof Error) {
+            if (error.message.includes('Incorrect PIN')) {
+              throw new Error('Incorrect PIN')
+            }
+            if (error.message.includes('Incorrect key') || error.message.includes('decrypt')) {
+              throw new Error('Incorrect PIN')
+            }
+            if (error.message.includes('No wallet found')) {
+              throw error
+            }
+            if (error.message.includes('Corrupted wallet data')) {
+              throw error
+            }
+          }
+          
+          throw new Error('Failed to open wallet. Please try again.')
+        }
+      }
+      
+      // Step 6: Open wallet with derived key (Task 6.1.5)
       if (agentInstanceRef.current) {
         const restartedAgent = await restartExistingAgent(agentInstanceRef.current, walletSecret)
         if (restartedAgent) {

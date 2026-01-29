@@ -11,6 +11,7 @@ import RenameWallet from '../screens/RenameWallet'
 import Onboarding from '../screens/Onboarding'
 import { createCarouselStyle } from '../screens/OnboardingPages'
 import PINChange from '../screens/PINChange'
+import PINCreate from '../screens/PINCreate'
 import TogglePushNotifications from '../screens/TogglePushNotifications'
 import Settings from '../screens/Settings'
 import Tours from '../screens/Tours'
@@ -22,7 +23,7 @@ import { testIdWithKey } from '../utils/testable'
 
 import { useDefaultStackOptions } from './defaultStackOptions'
 import { TOKENS, useServices } from '../container-api'
-import { BackupWalletScreen, RestoreWalletScreen } from '@bifold/backup'
+import { BackupWalletScreen, RestoreWalletScreen, BackupSettingsScreen, ViewRecoveryPhraseScreen } from '@bifold/backup'
 
 const SettingStack: React.FC = () => {
   const Stack = createStackNavigator<SettingStackParams>()
@@ -182,24 +183,55 @@ const SettingStack: React.FC = () => {
         }}
       />
       <Stack.Screen
+        name={Screens.BackupSettings}
+        component={BackupSettingsScreen}
+        options={{
+          title: 'Backup Settings',
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.BackupSettings],
+        }}
+      />
+      <Stack.Screen
         name={Screens.BackupWallet}
         component={BackupWalletScreen}
         options={{
           title: 'Backup Wallet',
           headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.BackupWallet],
+        }}
+      />
+      <Stack.Screen
+        name={Screens.ViewRecoveryPhrase}
+        component={ViewRecoveryPhraseScreen}
+        options={{
+          title: 'View Recovery Phrase',
+          headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.ViewRecoveryPhrase],
         }}
       />
       <Stack.Screen
         name={Screens.RestoreWallet}
+        component={RestoreWalletScreen}
         options={{
           title: 'Restore Wallet',
           headerBackTestID: testIdWithKey('Back'),
+          ...ScreenOptionsDictionary[Screens.RestoreWallet],
+        }}
+      />
+      <Stack.Screen
+        name={Screens.CreatePIN}
+        options={{
+          title: t('Screens.CreatePIN'),
+          headerBackTestID: testIdWithKey('Back'),
+          headerLeft: () => null,
+          ...ScreenOptionsDictionary[Screens.CreatePIN],
         }}
       >
         {(props) => (
-          <RestoreWalletScreen
+          <PINCreate
             {...props}
-            mediatorUrl={store.preferences.selectedMediator}
+            explainedStatus={true}
+            setAuthenticated={props.route.params?.setAuthenticated || (() => {})}
           />
         )}
       </Stack.Screen>

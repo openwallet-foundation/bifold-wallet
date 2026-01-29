@@ -56,6 +56,59 @@ jest.mock('react-native-fs', () => ({
   RNFSFileTypeDirectory: 1,
 }))
 
+// Mock react-native-share
+jest.mock('react-native-share', () => ({
+  open: jest.fn().mockResolvedValue(undefined),
+}))
+
+// Mock react-native-keychain (if it exists)
+try {
+  jest.mock('react-native-keychain', () => ({
+    ACCESSIBLE: {
+      ALWAYS: 'Always',
+      WHEN_UNLOCKED_THIS_DEVICE_ONLY: 'WhenUnlockedThisDeviceOnly',
+    },
+    ACCESS_CONTROL: {
+      BIOMETRY_ANY: 'BiometryAny',
+    },
+    SECURITY_LEVEL: {
+      ANY: 'Any',
+    },
+    STORAGE_TYPE: {
+      AES: 'AES',
+      RSA: 'RSA',
+    },
+    setGenericPassword: jest.fn(),
+    getGenericPassword: jest.fn(),
+    resetGenericPassword: jest.fn(),
+  }))
+} catch (e) {
+  // Module not found, skip mock
+}
+
+// Mock react-native-quick-crypto
+jest.mock('react-native-quick-crypto', () => ({
+  randomBytes: jest.fn(),
+  createCipheriv: jest.fn(),
+  createDecipheriv: jest.fn(),
+  pbkdf2: jest.fn(),
+}))
+
+// Mock react-native-zip-archive
+jest.mock('react-native-zip-archive', () => ({
+  zip: jest.fn().mockResolvedValue(undefined),
+  unzip: jest.fn().mockResolvedValue(undefined),
+}))
+
+// Mock react-native-document-picker
+jest.mock('react-native-document-picker', () => ({
+  pickSingle: jest.fn(),
+  isCancel: jest.fn(() => false),
+  types: {
+    allFiles: 'allFiles',
+  },
+}))
+
 // Silence console warnings during tests
 const originalWarn = console.warn
 console.warn = (...args) => {
