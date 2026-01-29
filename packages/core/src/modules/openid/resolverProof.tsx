@@ -5,6 +5,7 @@ import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
 import { OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
 import { Linking } from 'react-native'
+import { BifoldAgent } from '../../utils/agent'
 
 function handleTextResponse(text: string): ParseInvitationResult {
   // If the text starts with 'ey' we assume it's a JWT and thus an OpenID authorization request
@@ -150,7 +151,7 @@ export async function withTrustedCertificate<T>(
   certificate: string | null,
   method: () => Promise<T> | T
 ): Promise<T> {
-  const x509ModuleConfig = agent.modules.dependencyManager.resolve(X509ModuleConfig)
+  const x509ModuleConfig = agent.dependencyManager.resolve(X509ModuleConfig)
   const currentTrustedCertificates = x509ModuleConfig.trustedCertificates
     ? [...x509ModuleConfig.trustedCertificates]
     : []
@@ -171,7 +172,7 @@ export const getCredentialsForProofRequest = async ({
   data,
   uri,
 }: {
-  agent: Agent
+  agent: BifoldAgent
   // Either data itself (the offer) or uri can be passed
   data?: string
   uri?: string
@@ -199,22 +200,27 @@ export const getCredentialsForProofRequest = async ({
 
     // Temp solution to add and remove the trusted certificate
     const resolved = await withTrustedCertificate(agent, certificate, () => {
-      return agent.modules.openid4vc.holder.resolveSiopAuthorizationRequest(requestUri)
+      return agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(String(requestUri)) // Could throw instead of using constructor here
     })
 
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
     }
 
-    return {
+    const requestRecord: OpenId4VPRequestRecord = {
       ...resolved.presentationExchange,
-      authorizationRequest: resolved.authorizationRequest,
-      verifierHostName: resolved.authorizationRequest.responseURI
-        ? getHostNameFromUrl(resolved.authorizationRequest.responseURI)
+      authorizationRequestPayload: resolved.authorizationRequestPayload,
+      verifierHostName: resolved.authorizationRequestPayload.response_uri
+        ? getHostNameFromUrl(String(resolved.authorizationRequestPayload.response_uri))
         : undefined,
       createdAt: new Date(),
       type: 'OpenId4VPRequestRecord',
+      verifier: {
+        clientIdPrefix: resolved.verifier.clientIdPrefix,
+        effectiveClientId: resolved.verifier.effectiveClientId,
+      }
     }
+    return requestRecord
   } catch (err) {
     agent.config.logger.error(`Parsing presentation request:  ${(err as Error)?.message ?? err}`)
     throw err
