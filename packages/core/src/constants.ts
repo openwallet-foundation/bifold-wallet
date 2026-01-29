@@ -32,6 +32,8 @@ export enum KeychainServices {
   Salt = 'secret.wallet.salt',
   Key = 'secret.wallet.key',
   LoginAttempt = 'wallet.loginAttempt',
+  Mnemonic = 'secret.wallet.mnemonic',
+  MnemonicBackup = 'secret.wallet.mnemonic.backup',
 }
 
 export enum EventTypes {
