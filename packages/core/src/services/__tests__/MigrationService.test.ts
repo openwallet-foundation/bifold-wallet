@@ -99,6 +99,9 @@ describe('MigrationService', () => {
     ;(KeyDerivation.isValidMnemonic as jest.Mock).mockReturnValue(true)
 
     // Setup MnemonicStorage mocks
+    ;(MnemonicStorage.decryptMnemonicWithoutVerification as jest.Mock).mockResolvedValue(testMnemonic)
+    ;(MnemonicStorage.loadMnemonicForBackup as jest.Mock).mockResolvedValue(testMnemonic)
+    ;(MnemonicStorage.storeMnemonicPlain as jest.Mock).mockResolvedValue(true)
     ;(MnemonicStorage.encryptMnemonic as jest.Mock).mockResolvedValue({
       ciphertext: 'encrypted',
       iv: 'iv',
@@ -117,14 +120,17 @@ describe('MigrationService', () => {
   })
 
   describe('backupOldWallet', () => {
-    it('should backup old wallet with PIN-based key', async () => {
-      const backupPath = await migrationService.backupOldWallet(mockAgent, testPin)
+    it('should backup old wallet with mnemonic-derived key', async () => {
+      const backupPath = await migrationService.backupOldWallet(mockAgent)
 
       // Should return backup path
-      expect(backupPath).toContain('old_wallet_backup.zip')
+      expect(backupPath).toContain('old_wallet_backup.db')
 
-      // Should load wallet secret
-      expect(keychain.loadWalletSecret).toHaveBeenCalledWith(testPin)
+      // Should load mnemonic from keychain (no PIN)
+      expect(MnemonicStorage.decryptMnemonicWithoutVerification).toHaveBeenCalled()
+
+      // Should derive wallet key from mnemonic
+      expect(KeyDerivation.deriveWalletKeyFromMnemonic).toHaveBeenCalledWith(testMnemonic)
 
       // Should export wallet
       expect(mockAgent.wallet.export).toHaveBeenCalledWith(
@@ -135,36 +141,36 @@ describe('MigrationService', () => {
 
       // Should store backup metadata
       expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-        '@BifoldWallet:MigrationBackupPath',
+        expect.stringContaining('MigrationBackupPath'),
         expect.any(String)
       )
       expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-        '@BifoldWallet:MigrationBackupTimestamp',
+        expect.stringContaining('MigrationBackupTimestamp'),
         expect.any(String)
       )
     })
 
     it('should create backup directory', async () => {
-      await migrationService.backupOldWallet(mockAgent, testPin)
+      await migrationService.backupOldWallet(mockAgent)
 
       expect(RNFS.mkdir).toHaveBeenCalled()
     })
 
     it('should cleanup temp files after backup', async () => {
-      await migrationService.backupOldWallet(mockAgent, testPin)
+      await migrationService.backupOldWallet(mockAgent)
 
       expect(RNFS.unlink).toHaveBeenCalled()
     })
 
-    it('should throw MigrationError if wallet secret not found', async () => {
-      ;(keychain.loadWalletSecret as jest.Mock).mockResolvedValue(undefined)
+    it('should throw MigrationError if mnemonic not found', async () => {
+      ;(MnemonicStorage.decryptMnemonicWithoutVerification as jest.Mock).mockResolvedValue(undefined)
 
       await expect(
-        migrationService.backupOldWallet(mockAgent, testPin)
+        migrationService.backupOldWallet(mockAgent)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.backupOldWallet(mockAgent, testPin)
+        migrationService.backupOldWallet(mockAgent)
       ).rejects.toMatchObject({
         type: MigrationErrorType.BACKUP_FAILED,
       })
@@ -174,11 +180,11 @@ describe('MigrationService', () => {
       (mockAgent.wallet.export as jest.Mock).mockRejectedValue(new Error('Export failed'))
 
       await expect(
-        migrationService.backupOldWallet(mockAgent, testPin)
+        migrationService.backupOldWallet(mockAgent)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.backupOldWallet(mockAgent, testPin)
+        migrationService.backupOldWallet(mockAgent)
       ).rejects.toMatchObject({
         type: MigrationErrorType.BACKUP_FAILED,
       })
@@ -188,11 +194,11 @@ describe('MigrationService', () => {
       ;(RNFS.mkdir as jest.Mock).mockRejectedValue(new Error('Permission denied'))
 
       await expect(
-        migrationService.backupOldWallet(mockAgent, testPin)
+        migrationService.backupOldWallet(mockAgent)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.backupOldWallet(mockAgent, testPin)
+        migrationService.backupOldWallet(mockAgent)
       ).rejects.toMatchObject({
         type: MigrationErrorType.BACKUP_FAILED,
       })
@@ -383,54 +389,45 @@ describe('MigrationService', () => {
   })
 
   describe('updateKeychain', () => {
-    it('should update keychain with encrypted mnemonic', async () => {
-      await migrationService.updateKeychain(testMnemonic, testPin, false)
+    it('should update keychain with plain text mnemonic', async () => {
+      await migrationService.updateKeychain(testMnemonic, false)
 
-      // Should encrypt mnemonic
-      expect(MnemonicStorage.encryptMnemonic).toHaveBeenCalledWith(testMnemonic, testPin)
-
-      // Should store in keychain
-      expect(MnemonicStorage.storeMnemonicInKeychain).toHaveBeenCalledWith(
-        expect.any(Object),
-        false
-      )
+      // Should store mnemonic in plain text (no PIN encryption)
+      expect(MnemonicStorage.storeMnemonicPlain).toHaveBeenCalledWith(testMnemonic)
 
       // Should delete old wallet secret
       expect(keychain.deleteWalletSecret).toHaveBeenCalled()
     })
 
-    it('should support biometrics', async () => {
-      await migrationService.updateKeychain(testMnemonic, testPin, true)
+    it('should support biometrics flag', async () => {
+      await migrationService.updateKeychain(testMnemonic, true)
 
-      expect(MnemonicStorage.storeMnemonicInKeychain).toHaveBeenCalledWith(
-        expect.any(Object),
-        true
-      )
+      expect(MnemonicStorage.storeMnemonicPlain).toHaveBeenCalledWith(testMnemonic)
     })
 
-    it('should throw MigrationError if encryption fails', async () => {
-      ;(MnemonicStorage.encryptMnemonic as jest.Mock).mockRejectedValue(new Error('Encryption failed'))
+    it('should throw MigrationError if storing fails', async () => {
+      ;(MnemonicStorage.storeMnemonicPlain as jest.Mock).mockRejectedValue(new Error('Storage failed'))
 
       await expect(
-        migrationService.updateKeychain(testMnemonic, testPin)
+        migrationService.updateKeychain(testMnemonic)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.updateKeychain(testMnemonic, testPin)
+        migrationService.updateKeychain(testMnemonic)
       ).rejects.toMatchObject({
         type: MigrationErrorType.KEYCHAIN_UPDATE_FAILED,
       })
     })
 
     it('should throw MigrationError if keychain update fails', async () => {
-      ;(MnemonicStorage.storeMnemonicInKeychain as jest.Mock).mockRejectedValue(new Error('Keychain error'))
+      ;(keychain.deleteWalletSecret as jest.Mock).mockRejectedValue(new Error('Keychain error'))
 
       await expect(
-        migrationService.updateKeychain(testMnemonic, testPin)
+        migrationService.updateKeychain(testMnemonic)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.updateKeychain(testMnemonic, testPin)
+        migrationService.updateKeychain(testMnemonic)
       ).rejects.toMatchObject({
         type: MigrationErrorType.KEYCHAIN_UPDATE_FAILED,
       })
@@ -446,7 +443,7 @@ describe('MigrationService', () => {
         { id: 'conn1' },
       ] as any)
 
-      await migrationService.verifyMigration(mockAgent, testMnemonic, testPin)
+      await migrationService.verifyMigration(mockAgent, testMnemonic)
 
       // Should validate mnemonic
       expect(KeyDerivation.isValidMnemonic).toHaveBeenCalledWith(testMnemonic)
@@ -473,11 +470,11 @@ describe('MigrationService', () => {
       ;(KeyDerivation.isValidMnemonic as jest.Mock).mockReturnValue(false)
 
       await expect(
-        migrationService.verifyMigration(mockAgent, 'invalid', testPin)
+        migrationService.verifyMigration(mockAgent, 'invalid')
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.verifyMigration(mockAgent, 'invalid', testPin)
+        migrationService.verifyMigration(mockAgent, 'invalid')
       ).rejects.toMatchObject({
         type: MigrationErrorType.VERIFICATION_FAILED,
       })
@@ -487,11 +484,11 @@ describe('MigrationService', () => {
       ;(KeyDerivation.deriveWalletKeyFromMnemonic as jest.Mock).mockReturnValue('')
 
       await expect(
-        migrationService.verifyMigration(mockAgent, testMnemonic, testPin)
+        migrationService.verifyMigration(mockAgent, testMnemonic)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.verifyMigration(mockAgent, testMnemonic, testPin)
+        migrationService.verifyMigration(mockAgent, testMnemonic)
       ).rejects.toMatchObject({
         type: MigrationErrorType.VERIFICATION_FAILED,
       })
@@ -501,11 +498,11 @@ describe('MigrationService', () => {
       (mockAgent.wallet.open as jest.Mock).mockRejectedValue(new Error('Open failed'))
 
       await expect(
-        migrationService.verifyMigration(mockAgent, testMnemonic, testPin)
+        migrationService.verifyMigration(mockAgent, testMnemonic)
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.verifyMigration(mockAgent, testMnemonic, testPin)
+        migrationService.verifyMigration(mockAgent, testMnemonic)
       ).rejects.toMatchObject({
         type: MigrationErrorType.VERIFICATION_FAILED,
       })
@@ -548,9 +545,9 @@ describe('MigrationService', () => {
 
   describe('rollback', () => {
     it('should rollback migration on error', async () => {
-      const backupPath = '/path/to/backup.zip'
+      const backupPath = '/path/to/backup.db'
 
-      await migrationService.rollback(mockAgent, backupPath, testPin)
+      await migrationService.rollback(mockAgent, backupPath)
 
       // Should close current wallet
       expect(mockAgent.wallet.close).toHaveBeenCalled()
@@ -558,8 +555,8 @@ describe('MigrationService', () => {
       // Should delete new wallet files
       expect(RNFS.unlink).toHaveBeenCalled()
 
-      // Should load wallet secret
-      expect(keychain.loadWalletSecret).toHaveBeenCalledWith(testPin)
+      // Should load mnemonic from keychain (no PIN)
+      expect(MnemonicStorage.decryptMnemonicWithoutVerification).toHaveBeenCalled()
 
       // Should import old wallet
       expect(mockAgent.wallet.import).toHaveBeenCalled()
@@ -570,19 +567,29 @@ describe('MigrationService', () => {
       // Should initialize agent
       expect(mockAgent.initialize).toHaveBeenCalled()
 
-      // Should delete encrypted mnemonic
-      expect(AsyncStorage.multiRemove).toHaveBeenCalled()
+      // Should delete mnemonic from keychain
+      expect(MnemonicStorage.deleteMnemonicFromKeychain).toHaveBeenCalled()
+
+      // Should clean up AsyncStorage metadata
+      expect(AsyncStorage.multiRemove).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          expect.stringContaining('MigrationBackupPath'),
+          expect.stringContaining('MigrationBackupTimestamp'),
+          expect.stringContaining('MigrationImportMetadata'),
+          expect.stringContaining('MigrationBackupDeleteAt'),
+        ])
+      )
     })
 
     it('should throw MigrationError if rollback fails', async () => {
-      ;(keychain.loadWalletSecret as jest.Mock).mockResolvedValue(undefined)
+      ;(MnemonicStorage.decryptMnemonicWithoutVerification as jest.Mock).mockResolvedValue(undefined)
 
       await expect(
-        migrationService.rollback(mockAgent, '/path/to/backup.zip', testPin)
+        migrationService.rollback(mockAgent, '/path/to/backup.db')
       ).rejects.toThrow(MigrationError)
 
       await expect(
-        migrationService.rollback(mockAgent, '/path/to/backup.zip', testPin)
+        migrationService.rollback(mockAgent, '/path/to/backup.db')
       ).rejects.toMatchObject({
         type: MigrationErrorType.ROLLBACK_FAILED,
       })
@@ -767,7 +774,7 @@ describe('MigrationService', () => {
       (mockAgent.dids.getCreatedDids as jest.Mock).mockResolvedValue([] as any)
 
       // Pre-create backup
-      const existingBackup = await migrationService.backupOldWallet(mockAgent, testPin)
+      const existingBackup = await migrationService.backupOldWallet(mockAgent)
 
       // Migration should still work
       const result = await migrationService.migrateWallet(

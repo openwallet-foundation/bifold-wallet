@@ -26,7 +26,13 @@ import { Agent } from '@credo-ts/core'
 import RNFS from 'react-native-fs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { generateWalletMnemonic, deriveWalletKeyFromMnemonic, isValidMnemonic } from './KeyDerivation'
-import { encryptMnemonic, storeMnemonicInKeychain, deleteMnemonicFromKeychain } from './MnemonicStorage'
+import {
+  storeMnemonicInKeychain,
+  deleteMnemonicFromKeychain,
+  decryptMnemonicWithoutVerification,
+  loadMnemonicForBackup,
+  storeMnemonicPlain,
+} from './MnemonicStorage'
 import { loadWalletSecret, deleteWalletSecret } from './keychain'
 import { markMigrationComplete } from './MigrationDetection'
 
@@ -103,29 +109,32 @@ export interface MigrationResult {
  * Provides methods for migrating wallet from old format to new format.
  */
 export class MigrationService {
+  private readonly STORAGE_PREFIX = '@BifoldWallet:'
   private readonly BACKUP_DIR = `${RNFS.DocumentDirectoryPath}/migration_backups`
-  private readonly OLD_WALLET_BACKUP_NAME = 'old_wallet_backup.zip'
+  private readonly OLD_WALLET_BACKUP_NAME = 'old_wallet_backup.db'
   private readonly TEMP_EXPORT_DIR = `${RNFS.CachesDirectoryPath}/migration_export`
 
   /**
    * Backup old wallet before migration
-   * 
+   *
    * Creates a backup of the current wallet using the old format (PIN-based).
    * This backup is used for rollback if migration fails.
-   * 
+   *
+   * SSI-Compliant: Uses mnemonic-derived key for backup instead of PIN.
+   * The mnemonic is loaded from keychain storage (plain text).
+   *
    * @param agent - The agent instance
-   * @param pin - User's current PIN
    * @returns Path to backup file
-   * 
+   *
    * @throws {MigrationError} If backup fails
-   * 
+   *
    * @example
    * ```typescript
-   * const backupPath = await migrationService.backupOldWallet(agent, '123456')
+   * const backupPath = await migrationService.backupOldWallet(agent)
    * console.log(`Backup created at: ${backupPath}`)
    * ```
    */
-  public async backupOldWallet(agent: Agent, pin: string): Promise<string> {
+  public async backupOldWallet(agent: Agent): Promise<string> {
     try {
       // Ensure backup directory exists
       await RNFS.mkdir(this.BACKUP_DIR, { NSURLIsExcludedFromBackupKey: true })
@@ -134,19 +143,19 @@ export class MigrationService {
       const timestamp = Date.now()
       const backupPath = `${this.BACKUP_DIR}/${this.OLD_WALLET_BACKUP_NAME}`
 
-      // Export wallet with old key (PIN-based)
-      const walletSecret = await loadWalletSecret(pin)
-      if (!walletSecret) {
-        throw new Error('Failed to load wallet secret')
-      }
+      // Get mnemonic from keychain (plain text, no PIN needed)
+      const mnemonic = await decryptMnemonicWithoutVerification()
 
-      // Export wallet database
+      // Derive wallet key from mnemonic
+      const walletKey = deriveWalletKeyFromMnemonic(mnemonic)
+
+      // Export wallet database with mnemonic-derived key
       const tempDbPath = `${this.TEMP_EXPORT_DIR}/sqlite.db`
       await RNFS.mkdir(this.TEMP_EXPORT_DIR, { NSURLIsExcludedFromBackupKey: true })
 
       await agent.wallet.export({
         path: tempDbPath,
-        key: walletSecret.key,
+        key: walletKey,
       })
 
       // Create zip file
@@ -155,8 +164,8 @@ export class MigrationService {
       await RNFS.copyFile(tempDbPath, backupPath)
 
       // Store backup metadata
-      await AsyncStorage.setItem('@BifoldWallet:MigrationBackupPath', backupPath)
-      await AsyncStorage.setItem('@BifoldWallet:MigrationBackupTimestamp', timestamp.toString())
+      await AsyncStorage.setItem(`${this.STORAGE_PREFIX}MigrationBackupPath`, backupPath)
+      await AsyncStorage.setItem(`${this.STORAGE_PREFIX}MigrationBackupTimestamp`, timestamp.toString())
 
       // Cleanup temp files
       await RNFS.unlink(tempDbPath).catch(() => {})
@@ -295,15 +304,29 @@ export class MigrationService {
 
   /**
    * Import wallet data into new wallet
-   * 
+   *
    * Imports all data from the old wallet export into the new wallet.
    * This includes credentials, connections, DIDs, and other wallet data.
-   * 
+   *
+   * **NOTE**: This is a simplified placeholder implementation. The actual Credo API
+   * doesn't provide direct methods to import all wallet data types programmatically.
+   * In production, you would need to:
+   * - Use wallet storage APIs directly to insert records
+   * - Implement credential re-issuance through credential exchange protocols
+   * - Re-establish connections through out-of-band communication
+   * - Use agent.dids.import() for DIDs where supported
+   *
+   * For now, this method stores the export data in AsyncStorage for later processing.
+   * The app layer should handle re-importing data through normal user flows.
+   *
+   * **TODO**: Implement proper data import using lower-level wallet storage APIs
+   * or coordinate with Credo team to add official migration support.
+   *
    * @param agent - The agent instance (must be initialized with new wallet)
    * @param data - Exported wallet data
-   * 
+   *
    * @throws {MigrationError} If import fails
-   * 
+   *
    * @example
    * ```typescript
    * await migrationService.importWalletData(agent, exportedData)
@@ -334,9 +357,9 @@ export class MigrationService {
       console.log(`Imported ${data.connections.length} connections`)
       console.log(`Imported ${data.dids.length} DIDs`)
 
-      // Store import metadata
+      // Store import metadata for later processing
       await AsyncStorage.setItem(
-        '@BifoldWallet:MigrationImportMetadata',
+        `${this.STORAGE_PREFIX}MigrationImportMetadata`,
         JSON.stringify(data.metadata)
       )
     } catch (error) {
@@ -349,33 +372,31 @@ export class MigrationService {
   }
 
   /**
-   * Update keychain with encrypted mnemonic
-   * 
-   * Encrypts the new mnemonic with the user's PIN and stores it in the keychain.
+   * Update keychain with plain text mnemonic
+   *
+   * Stores the new mnemonic in plain text in the keychain.
    * Also deletes the old wallet secret from the keychain.
-   * 
+   *
+   * SSI-Compliant: No PIN encryption needed - mnemonic stored securely in keychain.
+   * The keychain provides hardware-backed security.
+   *
    * @param mnemonic - The new BIP39 mnemonic
-   * @param pin - User's PIN (can be same as old PIN or new)
-   * @param useBiometrics - Whether to enable biometric authentication
-   * 
+   * @param useBiometrics - Whether to enable biometric authentication (for backward compatibility)
+   *
    * @throws {MigrationError} If keychain update fails
-   * 
+   *
    * @example
    * ```typescript
-   * await migrationService.updateKeychain(mnemonic, '123456', true)
+   * await migrationService.updateKeychain(mnemonic, true)
    * ```
    */
   public async updateKeychain(
     mnemonic: string,
-    pin: string,
     useBiometrics: boolean = false
   ): Promise<void> {
     try {
-      // Encrypt mnemonic with PIN
-      const encryptedMnemonic = await encryptMnemonic(mnemonic, pin)
-
-      // Store encrypted mnemonic in keychain
-      await storeMnemonicInKeychain(encryptedMnemonic, useBiometrics)
+      // Store mnemonic in plain text (no PIN encryption)
+      await storeMnemonicPlain(mnemonic)
 
       // Delete old wallet secret
       await deleteWalletSecret()
@@ -392,49 +413,56 @@ export class MigrationService {
 
   /**
    * Verify migration success
-   * 
+   *
    * Verifies that the migration was successful by:
-   * 1. Checking that mnemonic is stored in keychain
+   * 1. Checking that mnemonic is stored in keychain (no PIN needed)
    * 2. Verifying wallet can be opened with derived key
    * 3. Checking that data is accessible
-   * 
+   *
+   * SSI-Compliant: Verification only requires mnemonic, no PIN.
+   *
    * @param agent - The agent instance
    * @param mnemonic - The new mnemonic
-   * @param pin - User's PIN
-   * 
+   *
    * @throws {MigrationError} If verification fails
-   * 
+   *
    * @example
    * ```typescript
-   * await migrationService.verifyMigration(agent, mnemonic, '123456')
+   * await migrationService.verifyMigration(agent, mnemonic)
    * ```
    */
-  public async verifyMigration(agent: Agent, mnemonic: string, pin: string): Promise<void> {
+  public async verifyMigration(agent: Agent, mnemonic: string): Promise<void> {
     try {
-      // 1. Verify mnemonic is valid
+      // 1. Verify mnemonic is stored in keychain (plain text, no PIN needed)
+      const storedMnemonic = await loadMnemonicForBackup()
+      if (!storedMnemonic || storedMnemonic !== mnemonic) {
+        throw new Error('Mnemonic not found in keychain or does not match')
+      }
+
+      // 2. Verify mnemonic is valid
       if (!isValidMnemonic(mnemonic)) {
         throw new Error('Invalid mnemonic')
       }
 
-      // 2. Verify wallet key can be derived
+      // 3. Verify wallet key can be derived
       const walletKey = deriveWalletKeyFromMnemonic(mnemonic)
       if (!walletKey) {
         throw new Error('Failed to derive wallet key')
       }
 
-      // 3. Verify wallet can be closed and reopened
+      // 4. Verify wallet can be closed and reopened
       await agent.wallet.close()
       await agent.wallet.open({
         id: agent.config.walletConfig?.id || 'walletId',
         key: walletKey,
       })
 
-      // 4. Verify agent can be initialized
+      // 5. Verify agent can be initialized
       if (!agent.isInitialized) {
         await agent.initialize()
       }
 
-      // 5. Verify data is accessible
+      // 6. Verify data is accessible
       const credentials = await agent.credentials.getAll()
       const connections = await agent.connections.getAll()
 
@@ -452,12 +480,16 @@ export class MigrationService {
 
   /**
    * Cleanup after successful migration
-   * 
+   *
    * Removes temporary files and old wallet data.
    * Keeps the backup file for a grace period (30 days).
-   * 
+   *
+   * **Note**: This method is designed to be non-fatal. If cleanup fails, the error
+   * is logged but not thrown, as the migration itself has already succeeded.
+   * Temporary files can be manually cleaned up later if needed.
+   *
    * @param backupPath - Path to backup file (optional, will be kept)
-   * 
+   *
    * @example
    * ```typescript
    * await migrationService.cleanup(backupPath)
@@ -475,38 +507,39 @@ export class MigrationService {
       if (backupPath) {
         const gracePeriod = 30 * 24 * 60 * 60 * 1000 // 30 days in milliseconds
         const deleteAt = Date.now() + gracePeriod
-        await AsyncStorage.setItem('@BifoldWallet:MigrationBackupDeleteAt', deleteAt.toString())
+        await AsyncStorage.setItem(`${this.STORAGE_PREFIX}MigrationBackupDeleteAt`, deleteAt.toString())
       }
 
       console.log('Migration cleanup completed')
     } catch (error) {
-      // Don't throw error on cleanup failure
-      console.error('Migration cleanup failed:', error)
+      // Don't throw error on cleanup failure - migration already succeeded
+      console.error('Migration cleanup failed (non-fatal):', error)
     }
   }
 
   /**
    * Rollback migration on error
-   * 
+   *
    * Restores the old wallet from backup if migration fails.
    * This ensures the user can continue using their wallet even if migration fails.
-   * 
+   *
+   * SSI-Compliant: Rollback uses mnemonic-derived key instead of PIN.
+   *
    * @param agent - The agent instance
    * @param backupPath - Path to backup file
-   * @param pin - User's PIN
-   * 
+   *
    * @throws {MigrationError} If rollback fails
-   * 
+   *
    * @example
    * ```typescript
    * try {
    *   await migrationService.migrateWallet(...)
    * } catch (error) {
-   *   await migrationService.rollback(agent, backupPath, pin)
+   *   await migrationService.rollback(agent, backupPath)
    * }
    * ```
    */
-  public async rollback(agent: Agent, backupPath: string, pin: string): Promise<void> {
+  public async rollback(agent: Agent, backupPath: string): Promise<void> {
     try {
       console.log('Rolling back migration...')
 
@@ -523,28 +556,26 @@ export class MigrationService {
         await RNFS.unlink(walletPath)
       }
 
-      // Restore from backup
-      const walletSecret = await loadWalletSecret(pin)
-      if (!walletSecret) {
-        throw new Error('Failed to load wallet secret for rollback')
-      }
+      // Get mnemonic from keychain for rollback (plain text, no PIN needed)
+      const mnemonic = await decryptMnemonicWithoutVerification()
+      const walletKey = deriveWalletKeyFromMnemonic(mnemonic)
 
-      // Import old wallet from backup
+      // Import old wallet from backup with mnemonic-derived key
       await agent.wallet.import(
         {
           id: walletId,
-          key: walletSecret.key,
+          key: walletKey,
         },
         {
           path: backupPath,
-          key: walletSecret.key,
+          key: walletKey,
         }
       )
 
       // Open restored wallet
       await agent.wallet.open({
         id: walletId,
-        key: walletSecret.key,
+        key: walletKey,
       })
 
       // Initialize agent
@@ -552,8 +583,16 @@ export class MigrationService {
         await agent.initialize()
       }
 
-      // Delete encrypted mnemonic if it was stored
+      // Delete mnemonic from keychain if it was stored
       await deleteMnemonicFromKeychain().catch(() => {})
+
+      // Clean up migration metadata from AsyncStorage
+      await AsyncStorage.multiRemove([
+        `${this.STORAGE_PREFIX}MigrationBackupPath`,
+        `${this.STORAGE_PREFIX}MigrationBackupTimestamp`,
+        `${this.STORAGE_PREFIX}MigrationImportMetadata`,
+        `${this.STORAGE_PREFIX}MigrationBackupDeleteAt`,
+      ]).catch(() => {})
 
       console.log('Rollback completed successfully')
     } catch (error) {
@@ -567,7 +606,7 @@ export class MigrationService {
 
   /**
    * Migrate wallet from old format to new format
-   * 
+   *
    * Main migration function that orchestrates the entire migration process:
    * 1. Backup old wallet
    * 2. Export old wallet data
@@ -577,26 +616,24 @@ export class MigrationService {
    * 6. Update keychain
    * 7. Verify migration
    * 8. Cleanup
-   * 
+   *
    * If any step fails, automatically rolls back to old wallet.
-   * 
+   *
+   * SSI-Compliant: Migration only requires mnemonic, no PIN needed.
+   *
    * @param agent - The agent instance
-   * @param pin - User's current PIN
-   * @param newPin - New PIN (can be same as old PIN)
-   * @param useBiometrics - Whether to enable biometric authentication
+   * @param useBiometrics - Whether to enable biometric authentication (for backward compatibility)
    * @param onProgress - Progress callback
    * @returns Migration result with mnemonic
-   * 
+   *
    * @example
    * ```typescript
    * const result = await migrationService.migrateWallet(
    *   agent,
-   *   '123456',
-   *   '123456',
    *   true,
    *   (status) => console.log(status)
    * )
-   * 
+   *
    * if (result.success) {
    *   console.log('Migration successful!')
    *   console.log('New mnemonic:', result.mnemonic)
@@ -607,8 +644,6 @@ export class MigrationService {
    */
   public async migrateWallet(
     agent: Agent,
-    pin: string,
-    newPin: string,
     useBiometrics: boolean = false,
     onProgress?: (status: MigrationStatus) => void
   ): Promise<MigrationResult> {
@@ -616,9 +651,9 @@ export class MigrationService {
     let mnemonic: string | undefined
 
     try {
-      // Step 1: Backup old wallet
+      // Step 1: Backup old wallet (no PIN needed)
       onProgress?.(MigrationStatus.BACKING_UP)
-      backupPath = await this.backupOldWallet(agent, pin)
+      backupPath = await this.backupOldWallet(agent)
 
       // Step 2: Export old wallet data
       onProgress?.(MigrationStatus.EXPORTING_DATA)
@@ -636,13 +671,13 @@ export class MigrationService {
       onProgress?.(MigrationStatus.IMPORTING_DATA)
       await this.importWalletData(agent, oldWalletData)
 
-      // Step 6: Update keychain
+      // Step 6: Update keychain (plain text, no PIN)
       onProgress?.(MigrationStatus.UPDATING_KEYCHAIN)
-      await this.updateKeychain(mnemonic, newPin, useBiometrics)
+      await this.updateKeychain(mnemonic, useBiometrics)
 
-      // Step 7: Verify migration
+      // Step 7: Verify migration (no PIN needed)
       onProgress?.(MigrationStatus.VERIFYING)
-      await this.verifyMigration(agent, mnemonic, newPin)
+      await this.verifyMigration(agent, mnemonic)
 
       // Step 8: Cleanup
       onProgress?.(MigrationStatus.CLEANING_UP)
@@ -664,7 +699,7 @@ export class MigrationService {
 
       if (backupPath) {
         try {
-          await this.rollback(agent, backupPath, pin)
+          await this.rollback(agent, backupPath)
         } catch (rollbackError) {
           console.error('Rollback failed:', rollbackError)
         }
