@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.12.4
+
+### Patch Changes
+
+- Updated dependencies [fecd99e]
+  - @bifold/core@2.12.4
+
 ## 2.12.3
 
 ### Patch Changes
