@@ -59,6 +59,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
       enableHiddenDevModeTrigger,
       attemptLockoutConfig: { thresholdRules } = attemptLockoutConfig,
       PINScreensConfig,
+      customAutoLockTimes
     },
     inlineMessages,
   ] = useServices([TOKENS.UTIL_LOGGER, TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
@@ -73,6 +74,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
   }
   const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
   const isContinueDisabled = inlineMessages.enabled ? !continueEnabled : !continueEnabled || PIN.length < minPINLength
+  const defaultAutoLockoutTime = customAutoLockTimes?.default?.time ?? defaultAutoLockTime
   usePreventScreenCapture(preventScreenCapture)
 
   // listen for biometrics error event
@@ -315,7 +317,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     let header = t('PINEnter.Title')
     let subheader = t('PINEnter.SubText')
     if (store.lockout.displayNotification) {
-      header = t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockTime) })
+      header = t('PINEnter.LockedOut', { time: String(store.preferences.autoLockTime ?? defaultAutoLockoutTime) })
       subheader = t('PINEnter.ReEnterPIN')
     }
     if (biometricsEnrollmentChange) {
@@ -356,6 +358,7 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
     store.preferences.autoLockTime,
     style.helpTextSubtitle,
     PINScreensConfig.useNewPINDesign,
+    defaultAutoLockoutTime
   ])
 
   const controls = (

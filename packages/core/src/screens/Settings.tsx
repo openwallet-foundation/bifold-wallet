@@ -28,6 +28,7 @@ import { GenericFn } from '../types/fn'
 import { Screens, SettingStackParams, Stacks } from '../types/navigators'
 import { SettingIcon, SettingSection } from '../types/settings'
 import { testIdWithKey } from '../utils/testable'
+import { defaultAutoLockTime } from '../constants'
 
 type SettingsProps = StackScreenProps<SettingStackParams>
 
@@ -41,10 +42,12 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
   }
   const { incrementDeveloperMenuCounter } = useDeveloperMode(onDevModeTriggered)
   const { SettingsTheme, TextTheme, ColorPalette, Assets, maxFontSizeMultiplier } = useTheme()
-  const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings }, historyEnabled] = useServices([
+  const [{ settings, enableTours, enablePushNotifications, disableContactsInSettings, customAutoLockTimes }, historyEnabled] = useServices([
     TOKENS.CONFIG,
     TOKENS.HISTORY_ENABLED,
   ])
+  const defaultAutoLockoutTime = customAutoLockTimes?.default?.time ?? defaultAutoLockTime
+  const autoLockTime = store.preferences?.autoLockTime ?? defaultAutoLockoutTime
   const { fontScale } = useWindowDimensions()
   const fontIsGreaterThanCap = fontScale >= maxFontSizeMultiplier
   const defaultIconSize = 24
@@ -149,7 +152,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         {
           title: t('Settings.AutoLockTime'),
           value:
-            store.preferences.autoLockTime !== AutoLockTime.Never ? `${store.preferences.autoLockTime} min` : 'Never',
+            autoLockTime !== AutoLockTime.Never ? `${autoLockTime} min` : 'Never',
           accessibilityLabel: t('Settings.AutoLockTime'),
           testID: testIdWithKey('Lockout'),
           onPress: () => navigation.navigate(Screens.AutoLock),
