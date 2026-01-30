@@ -32,7 +32,6 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
-import { TFunction } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
@@ -59,6 +58,7 @@ import { fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-de
 import { getEffectiveCredentialName } from './credential'
 import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 import { isMediatorInvitation } from './mediatorhelpers'
+import { TFunction } from 'i18next'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 

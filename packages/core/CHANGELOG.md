@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.12.3
+
+### Patch Changes
+
+- e26f1ff: Bumped i18next & react-i18next to latest
+
 ## 2.12.2
 
 ### Patch Changes

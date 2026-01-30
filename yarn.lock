@@ -2235,7 +2235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:~7.28.6":
+"@babel/runtime@npm:^7.28.4, @babel/runtime@npm:~7.28.6":
   version: 7.28.6
   resolution: "@babel/runtime@npm:7.28.6"
   checksum: 10c0/358cf2429992ac1c466df1a21c1601d595c46930a13c1d4662fde908d44ee78ec3c183aaff513ecb01ef8c55c3624afe0309eeeb34715672dbfadb7feedb2c0d
@@ -2321,14 +2321,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bifold/core@npm:2.12.2, @bifold/core@workspace:packages/core":
+"@bifold/core@npm:2.12.3, @bifold/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
     "@babel/core": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/oca": "npm:2.12.2"
-    "@bifold/verifier": "npm:2.12.2"
+    "@bifold/oca": "npm:2.12.3"
+    "@bifold/verifier": "npm:2.12.3"
     "@credo-ts/anoncreds": "npm:0.5.19"
     "@credo-ts/askar": "npm:0.5.19"
     "@credo-ts/core": "npm:0.5.19"
@@ -2384,7 +2384,7 @@ __metadata:
     eslint-plugin-prettier: "npm:~5.2.6"
     expo: "npm:*"
     expo-secure-store: "npm:*"
-    i18next: "npm:~21.6.16"
+    i18next: "npm:~25.8.0"
     install-peerdeps: "npm:~3.0.7"
     jest: "npm:~29.6.4"
     lodash.startcase: "npm:~4.4.0"
@@ -2394,7 +2394,7 @@ __metadata:
     prettier: "npm:~3.4.2"
     query-string: "npm:~7.1.3"
     react: "npm:*"
-    react-i18next: "npm:~11.17.1"
+    react-i18next: "npm:~16.5.4"
     react-native: "npm:0.81.5"
     react-native-animated-pagination-dots: "npm:~0.1.73"
     react-native-argon2: "npm:~2.0.1"
@@ -2507,7 +2507,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/oca@npm:2.12.2, @bifold/oca@workspace:packages/oca":
+"@bifold/oca@npm:2.12.3, @bifold/oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
@@ -2571,7 +2571,7 @@ __metadata:
     "@babel/preset-flow": "npm:~7.27.1"
     "@babel/preset-typescript": "npm:~7.28.5"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/core": "npm:2.12.2"
+    "@bifold/core": "npm:2.12.3"
     "@credo-ts/core": "npm:0.5.19"
     "@types/jest": "npm:~29.5.12"
     "@typescript-eslint/parser": "npm:~7.18.0"
@@ -2597,7 +2597,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/verifier@npm:2.12.2, @bifold/verifier@workspace:packages/verifier":
+"@bifold/verifier@npm:2.12.3, @bifold/verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
@@ -8491,8 +8491,8 @@ __metadata:
     "@babel/core": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/core": "npm:2.12.2"
-    "@bifold/oca": "npm:2.12.2"
+    "@bifold/core": "npm:2.12.3"
+    "@bifold/oca": "npm:2.12.3"
     "@credo-ts/anoncreds": "npm:0.5.19"
     "@credo-ts/askar": "npm:0.5.19"
     "@credo-ts/core": "npm:0.5.19"
@@ -12339,6 +12339,20 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.17.2"
   checksum: 10c0/d116bf02de3878e1541945bdcdd7af8646a3b7a50849957efa925c9e14174683a4be66e03a55490459c13f820e2a4b516e1be591cde4ea9cd5a73cb2616efdeb
+  languageName: node
+  linkType: hard
+
+"i18next@npm:~25.8.0":
+  version: 25.8.0
+  resolution: "i18next@npm:25.8.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.28.4"
+  peerDependencies:
+    typescript: ^5
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/20451fcaa86584b7395ee0375d2038270cce84e1541ec154bacfa32efbb420a2bafd1c71184242927f0eb8be6ec379ea132850f847b39b2eebcea6a49d746cac
   languageName: node
   linkType: hard
 
@@ -16555,6 +16569,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:~16.5.4":
+  version: 16.5.4
+  resolution: "react-i18next@npm:16.5.4"
+  dependencies:
+    "@babel/runtime": "npm:^7.28.4"
+    html-parse-stringify: "npm:^3.0.1"
+    use-sync-external-store: "npm:^1.6.0"
+  peerDependencies:
+    i18next: ">= 25.6.2"
+    react: ">= 16.8.0"
+    typescript: ^5
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 10c0/41d0b76873addfa3abe0c6b8a10a796e01f205f3636bc2d090d0078b42222f2949c4303f18d7a80cc26cf1298918cb6220d96e39ae2b8644abfdbec3bb504b37
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.0, react-is@npm:^16.13.1, react-is@npm:^16.7.0, react-is@npm:^16.8.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -19380,7 +19416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.2":
+"use-sync-external-store@npm:^1.2.2, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
   peerDependencies:
