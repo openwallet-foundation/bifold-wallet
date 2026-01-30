@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 2.12.4
+
+### Patch Changes
+
+- fecd99e: Updated bifold/core package exports to prevent metro warning
+
 ## 2.12.3
 
 ### Patch Changes
