@@ -35,13 +35,11 @@ if (typeof global.Buffer === 'undefined') {
 }
 
 import { initLanguages, translationResources, createApp, MainContainer } from '@bifold/core'
-import { AppRegistry, LogBox } from 'react-native'
+import { AppRegistry } from 'react-native'
 import { container } from 'tsyringe'
 
 import { name as appName } from './app.json'
 import { AppContainer } from './container-imp'
-
-LogBox.ignoreAllLogs()
 
 initLanguages(translationResources)
 const bifoldContainer = new MainContainer(container.createChildContainer()).init()
