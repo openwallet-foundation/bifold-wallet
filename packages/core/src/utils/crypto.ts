@@ -1,11 +1,21 @@
-import argon2 from 'react-native-argon2'
+import { Argon2, Argon2Algorithm, Argon2Version } from '@openwallet-foundation/askar-react-native'
 
 export const hashPIN = async (PIN: string, salt: string): Promise<string> => {
-  try {
-    const result = await argon2(PIN, salt, {})
-    const { rawHash } = result
-    return rawHash
-  } catch (error) {
-    throw new Error(`Error generating hash for PIN ${String((error as Error)?.message ?? error)}`)
-  }
+  const passwordBytes = Uint8Array.from(Buffer.from(PIN))
+  const saltBytes = Uint8Array.from(Buffer.from(salt))
+
+  // Parameters match react-native-argon2 defaults for backward compatibility
+  const derivedPassword = Argon2.derivePassword(
+    {
+      algorithm: Argon2Algorithm.Argon2id,
+      version: Argon2Version.V0x13,
+      parallelism: 1,
+      memCost: 32 * 1024,
+      timeCost: 2,
+    },
+    passwordBytes,
+    saltBytes
+  )
+
+  return Buffer.from(derivedPassword).toString('hex')
 }

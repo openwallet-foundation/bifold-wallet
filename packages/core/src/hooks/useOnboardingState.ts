@@ -1,5 +1,5 @@
 import { Agent } from '@credo-ts/core'
-import { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useNavigationState } from '@react-navigation/native'
 import { State } from '../types/state'
 import { OnboardingTask } from '../types/navigators'
