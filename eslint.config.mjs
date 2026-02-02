@@ -42,8 +42,14 @@ export default [
       ...reactHooks.configs.recommended.rules,
       ...reactPlugin.configs.flat.recommended.rules,
       'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
       'react-hooks/exhaustive-deps': 'error',
       'no-console': 'error',
+      '@typescript-eslint/no-unused-expressions': ['error', { 
+        allowShortCircuit: true, 
+        allowTernary: true,
+        allowTaggedTemplates: true 
+      }],
     },
   },
   {
@@ -82,6 +88,20 @@ export default [
       'jest/no-identical-title': 'error',
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    files: ['**/app.config.js', '**/cli.js', '**/jestSetup.js'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  // For images, inline require statements that metro needs
+  {
+    files: ['**/theme.ts', '**/theme.tsx'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
   {

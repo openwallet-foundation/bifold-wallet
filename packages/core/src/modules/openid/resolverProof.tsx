@@ -140,7 +140,7 @@ export const extractCertificateFromAuthorizationRequest = async ({
       }
     }
     return { data: null, certificate: null }
-  } catch (error) {
+  } catch {
     return { data: null, certificate: null }
   }
 }

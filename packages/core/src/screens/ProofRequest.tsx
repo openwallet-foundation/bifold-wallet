@@ -30,7 +30,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import { CredentialCard } from '../components/misc'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
@@ -73,6 +72,7 @@ import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
 import { CredentialErrors } from '../types/credentials'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 type ProofRequestProps = {
   navigation: any
@@ -80,8 +80,8 @@ type ProofRequestProps = {
 }
 
 type CredentialListProps = {
-  header?: JSX.Element
-  footer?: JSX.Element
+  header?: React.ReactElement | null
+  footer?: React.ReactElement | null
   items: ProofCredentialItems[]
   missing: boolean
 }
@@ -414,12 +414,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       if (!item || !(item.credDefId || item.schemaId)) {
         return false
       }
-      const labels = (item.attributes ?? []).map((field) => field.label ?? field.name ?? '')
+      const labels = (item.attributes ?? []).flatMap((field) => [field.label, field.name].filter(Boolean) as string[])
       const bundle = await bundleResolver.resolveAllBundles({
         identifiers: { credentialDefinitionId: item.credDefId, schemaId: item.schemaId },
       })
-      const flaggedAttributes: string[] = (bundle as any).bundle.bundle.flaggedAttributes.map((attr: any) => attr.name)
-      const foundPI = labels.some((label) => flaggedAttributes.includes(label))
+      const resolvedBundle = (bundle as any)?.bundle
+      const overlayBundle = resolvedBundle?.bundle ?? resolvedBundle
+      const flagged = overlayBundle?.flaggedAttributes ?? resolvedBundle?.captureBase?.flaggedAttributes
+      const flaggedNames =
+        Array.isArray(flagged) && flagged.every((item: unknown) => typeof item === 'string')
+          ? flagged
+          : Array.isArray(flagged)
+            ? flagged.map((attr: any) => attr?.name).filter(Boolean)
+            : []
+      const foundPI = labels.some((label) => flaggedNames.includes(label))
       setContainsPI(foundPI)
       return foundPI
     })
@@ -853,7 +861,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               {loading || attestationLoading ? null : (
                 <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
                   {/*  Use for new arch CredentialCardGen */}
-                  <CredentialCard
+                  <CredentialCardGen
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
                     schemaId={item.schemaId}

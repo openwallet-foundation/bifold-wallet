@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, useCallback, useImperativeHandle, useMemo, useState } from 'react'
+import React, { useCallback, useImperativeHandle, useMemo, useState } from 'react'
 import { ColorValue, LayoutRectangle } from 'react-native'
 
 import { TourOverlay } from '../../components/tour/TourOverlay'
@@ -55,9 +55,10 @@ export interface TourProviderProps {
    * The list of steps for the home tour.
    */
   tours: Tours
+  ref?: React.Ref<Tour>
 }
 
-const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
+export const TourProvider = (props: TourProviderProps) => {
   const {
     children,
     onBackdropPress,
@@ -65,6 +66,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
     overlayOpacity = 0.45,
     tours,
     nativeDriver = false,
+    ref,
   } = props
 
   const [currentTour, setCurrentTour] = useState<TourID>(BaseTourID.HomeTour)
@@ -77,7 +79,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
         setCurrentStep(index)
       }
     },
-    [currentTour, tours]
+    [currentTour, tours],
   )
 
   const changeSpot = useCallback((newSpot: LayoutRectangle): void => {
@@ -89,7 +91,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
       setCurrentTour(tourId)
       renderStep(0)
     },
-    [renderStep]
+    [renderStep],
   )
 
   const stop = useCallback((): void => {
@@ -125,7 +127,7 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
       stop,
       tours,
     }),
-    [changeSpot, currentTour, currentStep, next, previous, spot, start, stop, tours]
+    [changeSpot, currentTour, currentStep, next, previous, spot, start, stop, tours],
   )
 
   useImperativeHandle(ref, () => ({
@@ -156,5 +158,3 @@ const TourProviderComponent = (props: TourProviderProps, ref: Ref<Tour>) => {
     </TourContext.Provider>
   )
 }
-
-export const TourProvider = forwardRef<Tour, TourProviderProps>(TourProviderComponent)

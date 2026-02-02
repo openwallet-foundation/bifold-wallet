@@ -41,7 +41,7 @@ export interface AnonCredsProofRequestTemplatePayload {
   data: Array<AnonCredsProofRequestTemplatePayloadData>
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DifProofRequestTemplatePayloadData {}
 
 export interface DifProofRequestTemplatePayload {

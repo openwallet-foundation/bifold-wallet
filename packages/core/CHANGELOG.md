@@ -1,5 +1,35 @@
 # @bifold/core
 
+## 2.12.4
+
+### Patch Changes
+
+- fecd99e: Updated bifold/core package exports to prevent metro warning
+
+## 2.12.3
+
+### Patch Changes
+
+- e26f1ff: Bumped i18next & react-i18next to latest
+
+## 2.12.2
+
+### Patch Changes
+
+- 8ba7a18: Fix terms screen back button functionality
+
+## 2.12.1
+
+## 2.12.0
+
+### Minor Changes
+
+- 43446f3: upgrade to React Native 0.81.5
+
+### Patch Changes
+
+- e718f5b: Allow unacceptable PIN list to be injected
+
 ## 2.11.12
 
 ### Patch Changes

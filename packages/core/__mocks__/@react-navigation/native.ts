@@ -39,7 +39,14 @@ const CommonActions = {
   goBack: jest.fn(),
 }
 
-const useFocusEffect = jest.fn()
+const useFocusEffect = jest.fn((callback: () => void | (() => void)) => {
+  // Execute the callback immediately to simulate focus
+  const cleanup = callback()
+  // Execute cleanup to simulate unfocus (for coverage)
+  if (typeof cleanup === 'function') {
+    cleanup()
+  }
+})
 const createNavigatorFactory = jest.fn()
 
 export { useNavigation, useIsFocused, useRoute, useFocusEffect, createNavigatorFactory, CommonActions }

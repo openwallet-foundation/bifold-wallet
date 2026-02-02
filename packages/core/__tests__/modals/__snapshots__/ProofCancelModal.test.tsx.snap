@@ -3,7 +3,6 @@
 exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
 <Modal
   animationType="slide"
-  hardwareAccelerated={false}
   visible={true}
 >
   <RNCSafeAreaView

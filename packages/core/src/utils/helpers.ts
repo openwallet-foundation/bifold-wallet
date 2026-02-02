@@ -32,7 +32,6 @@ import { Buffer } from 'buffer'
 import moment from 'moment'
 import { parseUrl } from 'query-string'
 import { ReactNode } from 'react'
-import { TFunction } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { EventTypes, domain } from '../constants'
@@ -59,6 +58,7 @@ import { fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-de
 import { getEffectiveCredentialName } from './credential'
 import { isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './parsers'
 import { isMediatorInvitation } from './mediatorhelpers'
+import { TFunction } from 'i18next'
 
 export { parsedCredDefNameFromCredential } from './cred-def'
 
@@ -181,9 +181,9 @@ export function formatTime(
       trim && sameYear
         ? momentTime.format(formatString)
         : // if non-english, don't include comma between year and month
-        isNonEnglish
-        ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
-        : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
+          isNonEnglish
+          ? `${momentTime.format(formatString)} ${momentTime.format('YYYY')}`
+          : `${momentTime.format(formatString)}, ${momentTime.format('YYYY')}`
     if (includeHour) {
       formattedTime = `${formattedTime}, ${momentTime.format(hoursFormat)}`
     }
@@ -252,6 +252,26 @@ export function formatIfDate(format: string | undefined, value: string | number 
     }
   }
   return value
+}
+
+/**
+ * Extracts attribute formats from an overlay bundle.
+ * Used by credential card components to get format information for attributes.
+ */
+export const getAttributeFormats = (bundle: any): Record<string, string | undefined> => {
+  const overlayBundle = bundle?.bundle ?? bundle
+  const attributes = overlayBundle?.attributes
+
+  if (!Array.isArray(attributes)) {
+    return {}
+  }
+
+  return attributes.reduce((prev: Record<string, string | undefined>, curr: { name?: string; format?: string }) => {
+    if (!curr?.name) {
+      return prev
+    }
+    return { ...prev, [curr.name]: curr.format }
+  }, {})
 }
 
 export function getConnectionName(
@@ -766,7 +786,9 @@ export const processProofPredicates = async (
       const credNameRestriction = await credNameFromRestriction(requestedProofPredicates[key]?.restrictions, agent)
 
       // Use cached metadata if we have the credential record
-      const credName = credExchangeRecord ? getEffectiveCredentialName(credExchangeRecord) : credNameRestriction ?? key
+      const credName = credExchangeRecord
+        ? getEffectiveCredentialName(credExchangeRecord)
+        : (credNameRestriction ?? key)
       if (!processedPredicates[credential.credentialId]) {
         processedPredicates[credential.credentialId] = {
           altCredentials,
@@ -1032,8 +1054,8 @@ export const sortCredentialsForAutoSelect = (
     }
   }
 
-  requestedAttributes && requestedAttributes.sort(sortFn)
-  requestedPredicates && requestedPredicates.sort(sortFn)
+  requestedAttributes?.sort(sortFn)
+  requestedPredicates?.sort(sortFn)
 
   return credentials
 }
@@ -1098,7 +1120,7 @@ export const connectFromInvitation = async (
 
         return record?.outOfBandRecord as OutOfBandRecord
       }
-    } catch (e) {
+    } catch {
       // don't throw an error, will try to connect again below
     }
   }

@@ -167,7 +167,7 @@ export function mapW3CToCard(input: W3CInput, id: string): WalletCredentialCardD
       key,
       label,
       value,
-      format: isDataUrl(val) ? 'image' : format ?? 'text',
+      format: isDataUrl(val) ? 'image' : (format ?? 'text'),
       isPII: input.piiKeys?.includes(key) ?? false,
     }
   })
@@ -349,10 +349,14 @@ export async function mapCredentialTypeToCard({
   const overlay: CredentialOverlay<BrandingOverlay | BaseOverlay | LegacyBrandingOverlay> =
     await bundleResolver.resolveAllBundles(params)
 
+  const resolvedBundle = (overlay as any)?.bundle?.bundle ?? (overlay as any)?.bundle
+  const overlayBundle = resolvedBundle?.bundle ?? resolvedBundle
+  const flagged = overlayBundle?.flaggedAttributes ?? resolvedBundle?.captureBase?.flaggedAttributes ?? []
+
   const bundleLite = {
     labels: overlay?.bundle?.labelOverlay?.attributeLabels,
     formats: Object.fromEntries(((overlay.bundle as any)?.attributes ?? []).map((a: any) => [a.name, a.format])),
-    flaggedPII: (overlay as any).bundle.bundle.flaggedAttributes?.map((a: any) => a.name),
+    flaggedPII: flagged.map((a: any) => a.name),
     primaryAttributeKey: (overlay as CredentialOverlay<BrandingOverlay>)?.brandingOverlay?.primaryAttribute,
     secondaryAttributeKey: (overlay as CredentialOverlay<BrandingOverlay>)?.brandingOverlay?.secondaryAttribute,
     issuer: overlay?.metaOverlay?.issuer,

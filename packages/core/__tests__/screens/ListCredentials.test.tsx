@@ -5,11 +5,10 @@ import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
 
-import CredentialCard from '../../src/components/misc/CredentialCard'
 import { StoreProvider, defaultState } from '../../src/contexts/store'
 import ListCredentials from '../../src/screens/ListCredentials'
-import { ReactTestInstance } from 'react-test-renderer'
 import { BasicAppContext } from '../helpers/app'
+import CredentialCardGen from '../../src/components/misc/CredentialCardGen'
 
 interface CredentialContextInterface {
   loading: boolean
@@ -66,7 +65,7 @@ describe('CredentialList Screen', () => {
 
       // @ts-expect-error useCredentialByState will be replaced with a mock which does have this method
       useCredentialByState.mockImplementation((state) =>
-        testCredentialRecords.credentials.filter((c) => c.state === state)
+        testCredentialRecords.credentials.filter((c) => c.state === state),
       )
     })
 
@@ -81,21 +80,19 @@ describe('CredentialList Screen', () => {
       const { findAllByText } = render(
         <BasicAppContext>
           <ListCredentials />
-        </BasicAppContext>
+        </BasicAppContext>,
       )
 
-      await act(async () => {
-        const credentialItemInstances = await findAllByText('Person', { exact: false })
+      const credentialItemInstances = await findAllByText('Person', { exact: false })
 
-        expect(credentialItemInstances).toHaveLength(1)
+      expect(credentialItemInstances).toHaveLength(1)
 
-        const credentialItemInstance = credentialItemInstances[0]
+      const credentialItemInstance = credentialItemInstances[0]
 
-        fireEvent(credentialItemInstance, 'press')
+      fireEvent(credentialItemInstance, 'press')
 
-        expect(navigation.navigate).toBeCalledWith('Credential Details', {
-          credentialId: testOpenVPCredentialRecord.id,
-        })
+      expect(navigation.navigate).toBeCalledWith('Credential Details', {
+        credentialId: testOpenVPCredentialRecord.id,
       })
     })
   })
@@ -111,14 +108,14 @@ describe('CredentialList Screen', () => {
     const tree = render(
       <BasicAppContext>
         <ListCredentials />
-      </BasicAppContext>
+      </BasicAppContext>,
     )
     await act(async () => {
-      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCardGen)
 
       expect(credentialCards).toHaveLength(3)
 
-      const createdAtDates = credentialCards.map((instance: ReactTestInstance) => instance.props.credential.createdAt)
+      const createdAtDates = credentialCards.map((instance) => instance.props.credential.createdAt)
 
       expect(new Date(createdAtDates[0])).toEqual(new Date('2020-01-02T00:00:00'))
       expect(new Date(createdAtDates[1])).toEqual(new Date('2020-01-01T00:01:00'))
@@ -140,10 +137,10 @@ describe('CredentialList Screen', () => {
         <BasicAppContext>
           <ListCredentials />
         </BasicAppContext>
-      </StoreProvider>
+      </StoreProvider>,
     )
     await act(async () => {
-      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCardGen)
 
       expect(credentialCards).toHaveLength(3)
     })
@@ -163,10 +160,10 @@ describe('CredentialList Screen', () => {
         <BasicAppContext>
           <ListCredentials />
         </BasicAppContext>
-      </StoreProvider>
+      </StoreProvider>,
     )
     await act(async () => {
-      const credentialCards = tree.UNSAFE_getAllByType(CredentialCard)
+      const credentialCards = tree.UNSAFE_getAllByType(CredentialCardGen)
 
       expect(credentialCards).toHaveLength(3)
     })

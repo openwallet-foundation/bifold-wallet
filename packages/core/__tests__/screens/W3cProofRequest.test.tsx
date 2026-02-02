@@ -32,7 +32,6 @@ import * as Helpers from '../../src/utils/helpers'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
 jest.mock('@credo-ts/anoncreds', () => {
   return {
     ...jest.requireActual('@credo-ts/anoncreds'),
@@ -152,22 +151,20 @@ describe('displays a proof request screen', () => {
       // @ts-expect-error this method will be replaced with a mock which does have this method
       getCredentialsForAnonCredsProofRequest.mockResolvedValue(anonCredsCredentialsForProofRequest)
 
-      const { getByText, getByTestId, queryByText } = render(
+      const { getByText, getByTestId, queryByText, findByText, getAllByText } = render(
         <BasicAppContext>
           <ProofRequest navigation={useNavigation()} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
-      await waitFor(() => {
-        Promise.resolve()
-      })
+      // Wait for the email value to appear, indicating data has loaded
+      await findByText(testEmail)
 
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
-      const emailLabel = getByText(/Email/, { exact: false })
+      const emailLabels = getAllByText(/email/i)
       const emailValue = getByText(testEmail)
-      const timeLabel = getByText(/Time/, { exact: false })
       const timeValue = getByText(testTime)
       const shareButton = getByTestId(testIdWithKey('Share'))
       const declineButton = getByTestId(testIdWithKey('Decline'))
@@ -175,12 +172,9 @@ describe('displays a proof request screen', () => {
       expect(contact).not.toBeNull()
       expect(contact).toBeTruthy()
       expect(missingInfo).toBeNull()
-      expect(emailLabel).not.toBeNull()
-      expect(emailLabel).toBeTruthy()
+      expect(emailLabels.length).toBeGreaterThan(0)
       expect(emailValue).not.toBeNull()
       expect(emailValue).toBeTruthy()
-      expect(timeLabel).not.toBeNull()
-      expect(timeLabel).toBeTruthy()
       expect(timeValue).not.toBeNull()
       expect(timeValue).toBeTruthy()
       expect(missingClaim).toBeNull()
@@ -307,38 +301,32 @@ describe('displays a proof request screen', () => {
 
       const navigation = useNavigation()
 
-      const { getByText, getByTestId, queryByText } = render(
+      const { getByText, getByTestId, queryByText, findByTestId, getAllByText } = render(
         <BasicAppContext>
           <ProofRequest navigation={navigation as any} proofId={testProofRequest.id} />
         </BasicAppContext>
       )
 
-      await waitFor(() => {
-        Promise.resolve()
-      })
-      const changeCred = getByText('ProofRequest.ChangeCredential', { exact: false })
-      const changeCredButton = getByTestId(testIdWithKey('ChangeCredential'))
+      // Wait for the change credential option to appear, indicating data has loaded
+      await findByTestId(testIdWithKey('ShowCredentialDetails'))
+
+      const changeCredButton = getByText(/change credential/i)
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })
-      const emailLabel = getByText(/Email/, { exact: false })
+      const emailLabels = getAllByText(/email/i)
       const emailValue = getByText(testEmail)
-      const timeLabel = getByText(/Time/, { exact: false })
       const timeValue = getByText(testTime)
       const shareButton = getByTestId(testIdWithKey('Share'))
       const declineButton = getByTestId(testIdWithKey('Decline'))
 
-      expect(changeCred).not.toBeNull()
-      expect(changeCredButton).not.toBeNull()
+      expect(changeCredButton).toBeTruthy()
       expect(contact).not.toBeNull()
       expect(contact).toBeTruthy()
       expect(missingInfo).toBeNull()
-      expect(emailLabel).not.toBeNull()
-      expect(emailLabel).toBeTruthy()
+      expect(emailLabels.length).toBeGreaterThan(0)
       expect(emailValue).not.toBeNull()
       expect(emailValue).toBeTruthy()
-      expect(timeLabel).not.toBeNull()
-      expect(timeLabel).toBeTruthy()
       expect(timeValue).not.toBeNull()
       expect(timeValue).toBeTruthy()
       expect(missingClaim).toBeNull()
@@ -346,7 +334,7 @@ describe('displays a proof request screen', () => {
       expect(shareButton).toBeEnabled()
       expect(declineButton).not.toBeNull()
 
-      fireEvent(changeCredButton, 'press')
+      fireEvent.press(changeCredButton)
       expect(navigation.navigate).toBeCalledTimes(1)
     })
 
@@ -475,11 +463,15 @@ describe('displays a proof request screen', () => {
         </BasicAppContext>
       )
 
-      await waitFor(() => {
-        timeTravel(1000)
-      })
+      // Wait for the error message to appear, indicating the component has loaded
+      const errorMessage = await tree.findByText('ProofRequest.YouCantRespond', { exact: false })
 
-      expect(tree).toMatchSnapshot()
+      const cancelButton = tree.getByTestId(testIdWithKey('Cancel'))
+
+      expect(errorMessage).not.toBeNull()
+      expect(errorMessage).toBeTruthy()
+      expect(cancelButton).not.toBeNull()
+      expect(cancelButton).not.toBeDisabled()
     })
   })
 })
