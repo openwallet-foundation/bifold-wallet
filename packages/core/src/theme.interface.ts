@@ -1,3 +1,4 @@
+import React from 'react'
 import { TextStyle, ViewStyle } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 

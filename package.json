@@ -52,6 +52,7 @@
   "resolutions": {
     "@unimodules/react-native-adapter": "./noop",
     "@unimodules/core": "./noop",
+    "@openwallet-foundation/askar-shared": "0.5.0-alpha-20260121132554",
     "tsyringe": "4.8.0",
     "expo": "~54.0.31",
     "expo-secure-store": "~15.0.8",

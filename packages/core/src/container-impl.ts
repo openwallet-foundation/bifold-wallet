@@ -1,7 +1,7 @@
 import { DefaultOCABundleResolver } from '@bifold/oca/build/legacy'
 import { getProofRequestTemplates } from '@bifold/verifier'
 import { Agent } from '@credo-ts/core'
-import { createContext, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { DependencyContainer } from 'tsyringe'
 
 import * as bundle from './assets/oca-bundles.json'

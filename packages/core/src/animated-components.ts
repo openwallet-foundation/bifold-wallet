@@ -1,3 +1,5 @@
+import React from 'react'
+
 import ButtonLoading from './components/animated/ButtonLoading'
 import ConnectionLoading from './components/animated/ConnectionLoading'
 import CredentialAdded from './components/animated/CredentialAdded'

@@ -1,3 +1,4 @@
+import React from 'react'
 import { ParamListBase, RouteConfig, StackNavigationState } from '@react-navigation/native'
 import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack'
 import type { StackNavigationEventMap } from '@react-navigation/stack/lib/typescript/src/types'

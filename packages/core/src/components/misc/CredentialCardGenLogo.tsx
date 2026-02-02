@@ -1,3 +1,4 @@
+import React from 'react'
 import { ViewStyle } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 import LogoOrLetter from './LogoOrLetter'

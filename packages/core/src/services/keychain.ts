@@ -1,5 +1,13 @@
 import { Platform } from 'react-native'
-import Keychain, { getSupportedBiometryType } from 'react-native-keychain'
+import Keychain, {
+  getSupportedBiometryType,
+  ACCESSIBLE,
+  ACCESS_CONTROL,
+  SECURITY_LEVEL,
+  STORAGE_TYPE,
+  type SetOptions,
+  type GetOptions,
+} from 'react-native-keychain'
 import uuid from 'react-native-uuid'
 
 import { walletId, KeychainServices } from '../constants'
@@ -19,29 +27,33 @@ export interface WalletKey {
   key: string
 }
 
-export const optionsForKeychainAccess = (service: KeychainServices, useBiometrics = false): Keychain.Options => {
-  const opts: Keychain.Options = {
-    accessible: useBiometrics ? Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY : Keychain.ACCESSIBLE.ALWAYS,
+export const optionsForKeychainAccess = (service: KeychainServices, useBiometrics = false): SetOptions => {
+  const opts: SetOptions = {
+    accessible: useBiometrics ? ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY : ACCESSIBLE.ALWAYS,
     service,
   }
 
   if (useBiometrics) {
-    opts.accessControl = Keychain.ACCESS_CONTROL.BIOMETRY_ANY
+    opts.accessControl = ACCESS_CONTROL.BIOMETRY_ANY
   }
 
   if (Platform.OS === 'android') {
-    opts.securityLevel = Keychain.SECURITY_LEVEL.ANY
+    opts.securityLevel = SECURITY_LEVEL.ANY
     if (!useBiometrics) {
-      opts.storage = Keychain.STORAGE_TYPE.AES
+      opts.storage = STORAGE_TYPE.AES_GCM_NO_AUTH
     } else {
-      opts.storage = Keychain.STORAGE_TYPE.RSA
+      opts.storage = STORAGE_TYPE.RSA
     }
   }
 
   return opts
 }
 
-export const secretForPIN = async (PIN: string, hashAlgorithm: (PIN: string, salt: string) => Promise<string>, salt?: string): Promise<WalletSecret> => {
+export const secretForPIN = async (
+  PIN: string,
+  hashAlgorithm: (PIN: string, salt: string) => Promise<string>,
+  salt?: string
+): Promise<WalletSecret> => {
   const mySalt = salt ?? uuid.v4().toString()
   const myKey = await hashAlgorithm(PIN, mySalt)
   const secret: WalletSecret = {
@@ -93,7 +105,7 @@ export const storeWalletSecret = async (secret: WalletSecret, useBiometrics = fa
 
 export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
   let salt: WalletSalt | undefined = undefined
-  const opts: Keychain.Options = {
+  const opts: GetOptions = {
     service: KeychainServices.Salt,
   }
   const result = await Keychain.getGenericPassword(opts)
@@ -116,7 +128,7 @@ export const loadWalletSalt = async (): Promise<WalletSalt | undefined> => {
 }
 
 export const loadLoginAttempt = async (): Promise<LoginAttempt | undefined> => {
-  const opts: Keychain.Options = {
+  const opts: GetOptions = {
     service: KeychainServices.LoginAttempt,
   }
 
@@ -129,7 +141,7 @@ export const loadLoginAttempt = async (): Promise<LoginAttempt | undefined> => {
 }
 
 export const loadWalletKey = async (title?: string, description?: string): Promise<WalletKey | undefined> => {
-  let opts: Keychain.Options = {
+  let opts: GetOptions = {
     service: KeychainServices.Key,
   }
 
