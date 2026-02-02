@@ -1,5 +1,8 @@
 import { AbstractBifoldLogger } from '../services/AbstractBifoldLogger'
 
+/**
+ * Mock logger to reduce noise in tests
+ */
 export class MockLogger extends AbstractBifoldLogger {
   constructor() {
     super()
