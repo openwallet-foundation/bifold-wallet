@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.12.5
+
+### Patch Changes
+
+- 30b4754: force release to align all packages including new react-hooks package
+- Updated dependencies [30b4754]
+- Updated dependencies [c9b8621]
+- Updated dependencies [958987e]
+  - @bifold/core@2.12.5
+
 ## 2.12.4
 
 ### Patch Changes
