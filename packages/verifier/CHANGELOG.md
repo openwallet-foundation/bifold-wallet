@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 2.12.5
+
+### Patch Changes
+
+- 30b4754: force release to align all packages including new react-hooks package
+
 ## 2.12.4
 
 ## 2.12.3
