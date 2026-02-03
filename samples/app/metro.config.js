@@ -25,6 +25,7 @@ const exclusionList = (additionalExclusions = []) => {
 const packageDirs = [
   path.resolve(__dirname, '../../packages/core'),
   path.resolve(__dirname, '../../packages/oca'),
+  path.resolve(__dirname, '../../packages/react-hooks'),
   path.resolve(__dirname, '../../packages/verifier'),
 ]
 
@@ -36,6 +37,7 @@ const extraNodeModules = {}
 for (const packageDir of packageDirs) {
   const pak = require(path.join(packageDir, 'package.json'))
   const modules = Object.keys({
+    ...pak.dependencies,
     ...pak.peerDependencies,
     ...pak.devDependencies,
   })
