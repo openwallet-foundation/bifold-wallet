@@ -1,4 +1,4 @@
-// Dont remove the following import line or the pin check will fail when opening askar waller
+// Dont remove the following import line or the pin check will fail when opening askar wallet
 import { askar } from '@openwallet-foundation/askar-react-native'
 
 import 'reflect-metadata'
@@ -167,7 +167,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           // no agent set, cannot rekey the wallet
           return false
         }
-        // argon2.hash can sometimes generate an error
+
         const secret = await loadWalletSalt()
         if (!secret) {
           return false

@@ -3,12 +3,11 @@ PODS:
     - React
     - React-callinvoker
     - React-Core
-  - askar (0.4.3):
+  - askar (0.5.0-alpha-20260121132554):
     - React
     - React-callinvoker
     - React-Core
   - boost (1.84.0)
-  - CatCrypto (0.3.2)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - EXConstants (18.0.13):
@@ -2558,9 +2557,6 @@ PODS:
     - React-perflogger (= 0.81.5)
     - React-utils (= 0.81.5)
     - SocketRocket
-  - RNArgon2 (2.0.1):
-    - CatCrypto
-    - React-Core
   - RNCAsyncStorage (2.2.0):
     - boost
     - DoubleConversion
@@ -2649,8 +2645,34 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNKeychain (8.1.3):
+  - RNKeychain (10.0.0):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - RNLocalize (2.2.6):
     - React-Core
   - RNPermissions (5.4.4):
@@ -2990,7 +3012,6 @@ DEPENDENCIES:
   - "anoncreds (from `../node_modules/@hyperledger/anoncreds-react-native`)"
   - "askar (from `../node_modules/@openwallet-foundation/askar-react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
-  - CatCrypto
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - Expo (from `../node_modules/expo`)
@@ -3080,7 +3101,6 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RNArgon2 (from `../node_modules/react-native-argon2`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -3099,7 +3119,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - CatCrypto
     - CocoaAsyncSocket
     - OpenSSL-Universal
     - SDWebImage
@@ -3289,8 +3308,6 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  RNArgon2:
-    :path: "../node_modules/react-native-argon2"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
@@ -3322,9 +3339,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   anoncreds: d48fc0f3bde44f97aef5bb907f6821bf9191d758
-  askar: 2bbf4b40a242b330d7995cd73ed99b177b489ff9
+  askar: e4600f17f3067e57dca7324b5baaa1b66c3efd23
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
@@ -3415,13 +3431,12 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 1bcd3527ac0390a1c898c114f81ff954be35ed79
   ReactCodegen: 6c26f8c25d0b5ae66f86a1cce1777076ac8bcbd8
   ReactCommon: 5f0e5c09a64a2717215dd84380e1a747810406f2
-  RNArgon2: 708e188b7a4d4ec8baf62463927c47abef453a94
   RNCAsyncStorage: 29f0230e1a25f36c20b05f65e2eb8958d6526e82
   RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
   RNDeviceInfo: d3e91ffb33ee97a7982108476edb68cb3672efa6
   RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
   RNGestureHandler: 3a73f098d74712952870e948b3d9cf7b6cae9961
-  RNKeychain: c497f7844b24577523bb84a6e8af9d217957972f
+  RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNLocalize: 8bf466de4c92d4721b254aabe1ff0a1456e7b9f4
   RNPermissions: e45c11d9f7e2cb8d5bf553a48540177956edae00
   RNReanimated: 9af1b9f7d221d1cc2f99d935bab08419cae7c1ce
@@ -3433,6 +3448,6 @@ SPEC CHECKSUMS:
   VisionCamera: b51af005669c6642dd1b4fca434eda4c1778de87
   Yoga: 728df40394d49f3f471688747cf558158b3a3bd1
 
-PODFILE CHECKSUM: af3f6531aa2dd7540758f0d017966ea8adb2fcb5
+PODFILE CHECKSUM: 5c56c1e476bc2a73f829c7185869bdd25f18de35
 
 COCOAPODS: 1.14.3
