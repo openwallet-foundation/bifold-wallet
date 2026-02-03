@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.12.6
+
+### Patch Changes
+
+- 90b964b: Bump package versions for release
+- Updated dependencies [90b964b]
+  - @bifold/core@2.12.6
+
 ## 2.12.5
 
 ### Patch Changes
