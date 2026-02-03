@@ -45,6 +45,7 @@
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
     "@bifold/oca": "2.12.5",
+    "@bifold/react-hooks": "0.6.1",
     "@bifold/verifier": "2.12.5",
     "@credo-ts/anoncreds": "0.5.19",
     "@credo-ts/askar": "0.5.19",
@@ -54,7 +55,6 @@
     "@credo-ts/openid4vc": "0.5.19",
     "@credo-ts/push-notifications": "0.7.1",
     "@credo-ts/question-answer": "0.5.19",
-    "@credo-ts/react-hooks": "0.6.1",
     "@credo-ts/react-native": "0.5.19",
     "@credo-ts/webvh": "0.5.19",
     "@formatjs/intl-datetimeformat": "~6.18.2",
@@ -151,6 +151,7 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
+    "@bifold/react-hooks": "0.6.1",
     "@credo-ts/anoncreds": "0.5.19",
     "@credo-ts/askar": "0.5.19",
     "@credo-ts/core": "0.5.19",
@@ -159,7 +160,6 @@
     "@credo-ts/openid4vc": "0.5.19",
     "@credo-ts/push-notifications": "0.7.1",
     "@credo-ts/question-answer": "0.5.19",
-    "@credo-ts/react-hooks": "0.6.1",
     "@credo-ts/react-native": "0.5.19",
     "@formatjs/intl-datetimeformat": "~6.18.2",
     "@formatjs/intl-displaynames": "~6.8.13",

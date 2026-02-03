@@ -1,4 +1,4 @@
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import {
   AnonCredsProofRequestTemplatePayloadData,
   ProofRequestType,

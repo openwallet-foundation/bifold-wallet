@@ -1,4 +1,4 @@
-import { useConnectionById } from '@credo-ts/react-hooks'
+import { useConnectionById } from '@bifold/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useState } from 'react'

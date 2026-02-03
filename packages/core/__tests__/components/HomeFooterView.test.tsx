@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord as CredentialRecord, CredentialRole, CredentialState } from '@credo-ts/core'
-import { useCredentialByState } from '@credo-ts/react-hooks'
+import { useCredentialByState } from '@bifold/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 
