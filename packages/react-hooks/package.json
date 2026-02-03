@@ -1,8 +1,8 @@
 {
   "name": "@bifold/react-hooks",
-  "main": "build/index",
-  "types": "build/index",
-  "version": "2.12.5",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "version": "2.12.6",
   "files": [
     "build"
   ],
