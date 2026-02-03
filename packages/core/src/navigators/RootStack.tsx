@@ -1,4 +1,4 @@
-import AgentProvider from '@credo-ts/react-hooks'
+import AgentProvider from '@bifold/react-hooks'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'

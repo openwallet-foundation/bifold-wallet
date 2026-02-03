@@ -1,5 +1,5 @@
 import { ProofExchangeRecord, ProofState } from '@credo-ts/core'
-import { useConnectionById } from '@credo-ts/react-hooks'
+import { useConnectionById } from '@bifold/react-hooks'
 import { isPresentationReceived, useProofsByTemplateId } from '@bifold/verifier'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useMemo } from 'react'

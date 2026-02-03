@@ -8,7 +8,7 @@ import {
   SdJwtVcRecord,
   W3cCredentialRecord,
 } from '@credo-ts/core'
-import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
+import { useBasicMessages, useCredentialByState, useProofByState } from '@bifold/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
 import { useEffect, useState } from 'react'
 

@@ -8,7 +8,7 @@ import {
   ProofRole,
   ProofState,
 } from '@credo-ts/core'
-import { useAgent, useProofById } from '@credo-ts/react-hooks'
+import { useAgent, useProofById } from '@bifold/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native'
@@ -26,7 +26,7 @@ import {
   testPresentationDefinition1,
   testW3cCredentialRecord,
 } from './fixtures/w3c-proof-request'
-import { useCredentials } from '../../__mocks__/@credo-ts/react-hooks'
+import { useCredentials } from '../../__mocks__/@bifold/react-hooks'
 import { BasicAppContext } from '../helpers/app'
 import * as Helpers from '../../src/utils/helpers'
 

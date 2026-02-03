@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { ProofExchangeRecord, ProofState } from '@credo-ts/core'
-import { useAgent, useConnectionById, useProofById } from '@credo-ts/react-hooks'
+import { useAgent, useConnectionById, useProofById } from '@bifold/react-hooks'
 import { GroupedSharedProofDataItem, ProofCustomMetadata, ProofMetadata, markProofAsViewed } from '@bifold/verifier'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'

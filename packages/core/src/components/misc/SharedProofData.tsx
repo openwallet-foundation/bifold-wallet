@@ -1,4 +1,4 @@
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { GroupedSharedProofDataItem, getProofData, groupSharedProofDataByCredential } from '@bifold/verifier'
 import { BrandingOverlayType, Field } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'

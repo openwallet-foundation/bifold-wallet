@@ -1,3 +1,3 @@
-describe('@credo-ts/react-hooks', () => {
+describe('@bifold/react-hooks', () => {
   it.todo('React Hooks Tests')
 })

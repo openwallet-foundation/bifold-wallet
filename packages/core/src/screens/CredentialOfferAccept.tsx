@@ -1,5 +1,5 @@
 import { CredentialState } from '@credo-ts/core'
-import { useCredentialById, useAgent } from '@credo-ts/react-hooks'
+import { useCredentialById, useAgent } from '@bifold/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

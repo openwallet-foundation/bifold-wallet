@@ -1,6 +1,6 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
-import { useAgent, useCredentialById } from '@credo-ts/react-hooks'
+import { useAgent, useCredentialById } from '@bifold/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native'
 import React from 'react'
@@ -47,7 +47,7 @@ const buildCredentialExchangeRecord = () => {
   return testOpenVPCredentialRecord
 }
 
-jest.mock('@credo-ts/react-hooks')
+jest.mock('@bifold/react-hooks')
 jest.mock('react-native-localize', () => {
   return require('../../__mocks__/custom/react-native-localize')
 })

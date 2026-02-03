@@ -8,7 +8,7 @@ import {
   ProofState,
 } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
-import { useAgent, useProofById } from '@credo-ts/react-hooks'
+import { useAgent, useProofById } from '@bifold/react-hooks'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import { useNavigation } from '@react-navigation/native'
 import '@testing-library/jest-native'

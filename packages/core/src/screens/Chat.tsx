@@ -1,5 +1,5 @@
 import { BasicMessageRepository, ConnectionRecord } from '@credo-ts/core'
-import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
+import { useAgent, useBasicMessagesByConnectionId, useConnectionById } from '@bifold/react-hooks'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { useHeaderHeight } from '@react-navigation/elements'
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'

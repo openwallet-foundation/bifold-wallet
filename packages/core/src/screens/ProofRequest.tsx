@@ -12,7 +12,7 @@ import {
   V2RequestPresentationMessage,
   ProofState,
 } from '@credo-ts/core'
-import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
+import { useConnectionById, useProofById } from '@bifold/react-hooks'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'

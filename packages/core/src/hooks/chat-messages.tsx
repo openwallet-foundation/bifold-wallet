@@ -6,7 +6,7 @@ import {
   ProofExchangeRecord,
   ProofState,
 } from '@credo-ts/core'
-import { useBasicMessagesByConnectionId } from '@credo-ts/react-hooks'
+import { useBasicMessagesByConnectionId } from '@bifold/react-hooks'
 import { isPresentationReceived } from '@bifold/verifier'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'

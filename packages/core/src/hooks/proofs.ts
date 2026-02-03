@@ -1,5 +1,5 @@
 import { ProofExchangeRecord } from '@credo-ts/core'
-import { useAgent, useCredentials, useProofById, useProofs } from '@credo-ts/react-hooks'
+import { useAgent, useCredentials, useProofById, useProofs } from '@bifold/react-hooks'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -1,4 +1,4 @@
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AppState, Linking, StyleSheet, Switch, View } from 'react-native'

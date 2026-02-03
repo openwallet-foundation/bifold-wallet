@@ -1,5 +1,5 @@
 import { OutOfBandRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { useState } from 'react'
 
 export const useOutOfBandByReceivedInvitationId = (receivedInvitationId: string): OutOfBandRecord | undefined => {

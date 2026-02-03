@@ -1,6 +1,6 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialExchangeRecord, CredentialRole, CredentialState } from '@credo-ts/core'
-import { useCredentialByState } from '@credo-ts/react-hooks'
+import { useCredentialByState } from '@bifold/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native'
 import React from 'react'

@@ -31,14 +31,19 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
-    "@credo-ts/core": "0.5.17",
-    "@credo-ts/question-answer": "0.5.17",
+    "@credo-ts/core": "0.5.19",
+    "@credo-ts/question-answer": "0.5.19",
+    "@jest/types": "^29.6.3",
+    "@types/jest": "^29.5.12",
     "@types/react": "^18.2.14",
-    "rimraf": "^6.1.2"
+    "jest": "^29.7.0",
+    "rimraf": "^6.1.2",
+    "ts-jest": "^29.2.5",
+    "typescript": "~5.3.3"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.5.17",
-    "@credo-ts/question-answer": "0.5.17",
+    "@credo-ts/core": "0.5.19",
+    "@credo-ts/question-answer": "0.5.19",
     "react": ">=17.0.0 <19.0.0"
   }
 }

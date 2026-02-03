@@ -9,7 +9,7 @@ import Home from '../../src/screens/Home'
 import { testIdWithKey } from '../../src/utils/testable'
 import { BasicAppContext } from '../helpers/app'
 
-import { useBasicMessages, useCredentialByState, useProofByState } from '@credo-ts/react-hooks'
+import { useBasicMessages, useCredentialByState, useProofByState } from '@bifold/react-hooks'
 
 jest.useFakeTimers()
 

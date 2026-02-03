@@ -5,7 +5,7 @@ import {
   DidExchangeRole,
   DidExchangeState,
 } from '@credo-ts/core'
-import { useBasicMessagesByConnectionId, useConnectionById } from '@credo-ts/react-hooks'
+import { useBasicMessagesByConnectionId, useConnectionById } from '@bifold/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
 

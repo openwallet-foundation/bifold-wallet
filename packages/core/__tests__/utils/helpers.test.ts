@@ -1,5 +1,5 @@
 import { ConnectionRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import fs from 'fs'
 import path from 'path'
 

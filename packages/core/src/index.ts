@@ -2,7 +2,7 @@
 import type { OnboardingStyleSheet } from './screens/Onboarding'
 
 import { Agent } from '@credo-ts/core'
-import AgentProvider from '@credo-ts/react-hooks'
+import AgentProvider from '@bifold/react-hooks'
 
 import createApp from './App'
 import * as components from './components'

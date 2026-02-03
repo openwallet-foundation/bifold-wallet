@@ -1,5 +1,5 @@
 import { ConnectionRecord, OutOfBandRecord } from '@credo-ts/core'
-import { useAgent, useConnectionById, useConnections } from '@credo-ts/react-hooks'
+import { useAgent, useConnectionById, useConnections } from '@bifold/react-hooks'
 import { useEffect, useMemo, useState } from 'react'
 
 export const useOutOfBandById = (oobId: string): OutOfBandRecord | undefined => {
