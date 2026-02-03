@@ -1,5 +1,5 @@
 import { ConnectionRecord, ConnectionType, DidExchangeState } from '@credo-ts/core'
-import { useAgent, useConnections } from '@credo-ts/react-hooks'
+import { useAgent, useConnections } from '@bifold/react-hooks'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

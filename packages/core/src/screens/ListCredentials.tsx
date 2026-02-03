@@ -1,6 +1,6 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
 import { CredentialState, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
-import { useCredentialByState } from '@credo-ts/react-hooks'
+import { useCredentialByState } from '@bifold/react-hooks'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'

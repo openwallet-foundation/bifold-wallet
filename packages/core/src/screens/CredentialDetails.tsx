@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { BrandingOverlay } from '@bifold/oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'

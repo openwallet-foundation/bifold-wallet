@@ -1,5 +1,5 @@
 import { OpenId4VciNotificationMetadata, OpenId4VciRequestTokenResponse } from '@credo-ts/openid4vc'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { useServices, TOKENS } from '../../container-api'
 
 export enum NotificationEventType {

@@ -2328,6 +2328,7 @@ __metadata:
     "@babel/core": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
     "@bifold/oca": "npm:2.12.4"
+    "@bifold/react-hooks": "npm:0.6.1"
     "@bifold/verifier": "npm:2.12.4"
     "@credo-ts/anoncreds": "npm:0.5.19"
     "@credo-ts/askar": "npm:0.5.19"
@@ -2337,7 +2338,6 @@ __metadata:
     "@credo-ts/openid4vc": "npm:0.5.19"
     "@credo-ts/push-notifications": "npm:0.7.1"
     "@credo-ts/question-answer": "npm:0.5.19"
-    "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.19"
     "@credo-ts/webvh": "npm:0.5.19"
     "@formatjs/intl-datetimeformat": "npm:~6.18.2"
@@ -2434,6 +2434,7 @@ __metadata:
     uuid: "npm:~9.0.1"
     zustand: "npm:~4.5.4"
   peerDependencies:
+    "@bifold/react-hooks": 0.6.1
     "@credo-ts/anoncreds": 0.5.19
     "@credo-ts/askar": 0.5.19
     "@credo-ts/core": 0.5.19
@@ -2442,7 +2443,6 @@ __metadata:
     "@credo-ts/openid4vc": 0.5.19
     "@credo-ts/push-notifications": 0.7.1
     "@credo-ts/question-answer": 0.5.19
-    "@credo-ts/react-hooks": 0.6.1
     "@credo-ts/react-native": 0.5.19
     "@formatjs/intl-datetimeformat": ~6.18.2
     "@formatjs/intl-displaynames": ~6.8.13
@@ -2529,18 +2529,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/react-hooks@workspace:packages/react-hooks":
+"@bifold/react-hooks@npm:0.6.1, @bifold/react-hooks@workspace:packages/react-hooks":
   version: 0.0.0-use.local
   resolution: "@bifold/react-hooks@workspace:packages/react-hooks"
   dependencies:
-    "@credo-ts/core": "npm:0.5.17"
-    "@credo-ts/question-answer": "npm:0.5.17"
+    "@credo-ts/core": "npm:0.5.19"
+    "@credo-ts/question-answer": "npm:0.5.19"
     "@types/react": "npm:^18.2.14"
     rimraf: "npm:^6.1.2"
     rxjs: "npm:^7.2.0"
   peerDependencies:
-    "@credo-ts/core": 0.5.17
-    "@credo-ts/question-answer": 0.5.17
+    "@credo-ts/core": 0.5.19
+    "@credo-ts/question-answer": 0.5.19
     react: ">=17.0.0 <19.0.0"
   bin:
     bifold: bin/bifold
@@ -2620,9 +2620,9 @@ __metadata:
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
     "@babel/core": "npm:~7.28.6"
+    "@bifold/react-hooks": "npm:0.6.1"
     "@credo-ts/anoncreds": "npm:0.5.19"
     "@credo-ts/core": "npm:0.5.19"
-    "@credo-ts/react-hooks": "npm:0.6.1"
     "@hyperledger/anoncreds-shared": "npm:0.3.4"
     "@react-native/babel-preset": "npm:~0.81.5"
     "@types/jest": "npm:~29.5.14"
@@ -2635,9 +2635,9 @@ __metadata:
     rimraf: "npm:~5.0.10"
     typescript: "npm:~5.9.2"
   peerDependencies:
+    "@bifold/react-hooks": 0.6.1
     "@credo-ts/anoncreds": 0.5.19
     "@credo-ts/core": 0.5.19
-    "@credo-ts/react-hooks": 0.6.1
     "@hyperledger/anoncreds-shared": 0.3.4
     react: ~19.1.4
   languageName: unknown
@@ -3153,56 +3153,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/core@npm:0.5.17":
-  version: 0.5.17
-  resolution: "@credo-ts/core@npm:0.5.17"
-  dependencies:
-    "@animo-id/mdoc": "npm:0.2.38"
-    "@animo-id/pex": "npm:4.1.1-alpha.0"
-    "@astronautlabs/jsonpath": "npm:^1.1.2"
-    "@digitalcredentials/jsonld": "npm:^6.0.0"
-    "@digitalcredentials/jsonld-signatures": "npm:^9.4.0"
-    "@digitalcredentials/vc": "npm:^6.0.1"
-    "@multiformats/base-x": "npm:^4.0.1"
-    "@noble/curves": "npm:^1.6.0"
-    "@noble/hashes": "npm:^1.5.0"
-    "@peculiar/asn1-ecc": "npm:^2.3.8"
-    "@peculiar/asn1-schema": "npm:^2.3.8"
-    "@peculiar/asn1-x509": "npm:^2.3.8"
-    "@peculiar/x509": "npm:^1.11.0"
-    "@sd-jwt/core": "npm:^0.7.0"
-    "@sd-jwt/decode": "npm:^0.7.0"
-    "@sd-jwt/jwt-status-list": "npm:^0.7.0"
-    "@sd-jwt/sd-jwt-vc": "npm:^0.7.0"
-    "@sd-jwt/types": "npm:^0.7.0"
-    "@sd-jwt/utils": "npm:^0.7.0"
-    "@sphereon/pex-models": "npm:^2.3.1"
-    "@sphereon/ssi-types": "npm:0.30.2-next.135"
-    "@stablelib/ed25519": "npm:^1.0.2"
-    "@types/ws": "npm:^8.5.4"
-    abort-controller: "npm:^3.0.0"
-    big-integer: "npm:^1.6.51"
-    borc: "npm:^3.0.0"
-    buffer: "npm:^6.0.3"
-    class-transformer: "npm:0.5.1"
-    class-validator: "npm:0.14.1"
-    did-resolver: "npm:^4.1.0"
-    lru_map: "npm:^0.4.1"
-    luxon: "npm:^3.5.0"
-    make-error: "npm:^1.3.6"
-    object-inspect: "npm:^1.10.3"
-    query-string: "npm:^7.0.1"
-    reflect-metadata: "npm:^0.1.13"
-    rxjs: "npm:^7.8.0"
-    tsyringe: "npm:^4.8.0"
-    uuid: "npm:^9.0.0"
-    varint: "npm:^6.0.0"
-    web-did-resolver: "npm:^2.0.21"
-    webcrypto-core: "npm:^1.8.0"
-  checksum: 10c0/0c832eab6ec84db306a94d79a1d604c7fcd2e74f7e4764b2f5d22cebb65f791760de79e7e1f467a74d2d5199929658bc6c277913df8c78459ef0dd2b063bd38a
-  languageName: node
-  linkType: hard
-
 "@credo-ts/core@npm:0.5.19":
   version: 0.5.19
   resolution: "@credo-ts/core@npm:0.5.19"
@@ -3415,18 +3365,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@credo-ts/question-answer@npm:0.5.17":
-  version: 0.5.17
-  resolution: "@credo-ts/question-answer@npm:0.5.17"
-  dependencies:
-    "@credo-ts/core": "npm:0.5.17"
-    class-transformer: "npm:0.5.1"
-    class-validator: "npm:0.14.1"
-    rxjs: "npm:^7.8.0"
-  checksum: 10c0/7e9abcec74dd0bcc6d99b799e92c63cbb0cccc3c153607dd3078023e02f0ecb7fff522f40d00c74248e3a349d26a1974d53a95dce92757db9238b91177c37756
-  languageName: node
-  linkType: hard
-
 "@credo-ts/question-answer@npm:0.5.19":
   version: 0.5.19
   resolution: "@credo-ts/question-answer@npm:0.5.19"
@@ -3436,19 +3374,6 @@ __metadata:
     class-validator: "npm:0.14.1"
     rxjs: "npm:^7.8.0"
   checksum: 10c0/eb1680b4331ee89cbe8e4d8bd087b2cc9b1b0697858d3ccac6ccfae1f2c99e80c70fc3c8e2acd92c4f555054f38077395f1137c1883590c6a4e0de59275c09eb
-  languageName: node
-  linkType: hard
-
-"@credo-ts/react-hooks@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@credo-ts/react-hooks@npm:0.6.1"
-  dependencies:
-    rxjs: "npm:^7.2.0"
-  peerDependencies:
-    "@credo-ts/core": ^0.5.0
-    "@credo-ts/question-answer": ^0.5.0
-    react: ">=17.0.0 <19.0.0"
-  checksum: 10c0/8712cedb61f73825438b82a97b5b4996cee9a9da250c90782f2dde3bb7678bb1180ba7d7dadf42c49840ca30a48f015123ad2826a977be7cb3effb0f3dac48b4
   languageName: node
   linkType: hard
 
@@ -8573,6 +8498,7 @@ __metadata:
     "@babel/runtime": "npm:~7.28.6"
     "@bifold/core": "npm:2.12.4"
     "@bifold/oca": "npm:2.12.4"
+    "@bifold/react-hooks": "npm:0.6.1"
     "@credo-ts/anoncreds": "npm:0.5.19"
     "@credo-ts/askar": "npm:0.5.19"
     "@credo-ts/core": "npm:0.5.19"
@@ -8581,7 +8507,6 @@ __metadata:
     "@credo-ts/openid4vc": "npm:0.5.19"
     "@credo-ts/push-notifications": "npm:0.7.1"
     "@credo-ts/question-answer": "npm:0.5.19"
-    "@credo-ts/react-hooks": "npm:0.6.1"
     "@credo-ts/react-native": "npm:0.5.19"
     "@credo-ts/webvh": "npm:0.5.19"
     "@formatjs/intl-datetimeformat": "npm:~6.18.2"

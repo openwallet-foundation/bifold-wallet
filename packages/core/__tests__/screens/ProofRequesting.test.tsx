@@ -9,7 +9,7 @@ import {
   ProofState,
 } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
-import { useConnections } from '@credo-ts/react-hooks'
+import { useConnections } from '@bifold/react-hooks'
 import * as verifier from '@bifold/verifier'
 import { getProofRequestTemplates } from '@bifold/verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
