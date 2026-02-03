@@ -1,5 +1,5 @@
 import { ProofState } from '@credo-ts/core'
-import { useProofById } from '@credo-ts/react-hooks'
+import { useProofById } from '@bifold/react-hooks'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

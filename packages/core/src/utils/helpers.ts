@@ -25,7 +25,7 @@ import {
   OutOfBandRole,
 } from '@credo-ts/core'
 import { BasicMessageRole } from '@credo-ts/core/build/modules/basic-messages/BasicMessageRole'
-import { useConnectionById } from '@credo-ts/react-hooks'
+import { useConnectionById } from '@bifold/react-hooks'
 import { BrandingOverlay, CaptureBaseAttributeType } from '@bifold/oca'
 import { Attribute, CredentialOverlay, Predicate } from '@bifold/oca/build/legacy'
 import { Buffer } from 'buffer'

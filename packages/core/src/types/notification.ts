@@ -1,3 +1,4 @@
+import React from 'react'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
 export interface CustomNotification {
@@ -15,7 +16,7 @@ export interface CustomNotification {
       component: React.FC
       name: string
       stackOptions?: StackNavigationOptions
-    }
+    },
   ]
   metadata?: Record<string, unknown>
 }

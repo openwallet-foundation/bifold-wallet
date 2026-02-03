@@ -1,7 +1,7 @@
 // modules/openid/hooks/useUpgradeExpiredCredential.ts
 import { useCallback } from 'react'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 
 import { RootStackParams, Screens, Stacks } from '../../../types/navigators'
 import { refreshAccessToken } from '../refresh/refreshToken'

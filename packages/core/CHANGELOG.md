@@ -1,5 +1,21 @@
 # @bifold/core
 
+## 2.12.6
+
+### Patch Changes
+
+- 90b964b: Bump package versions for release
+- Updated dependencies [90b964b]
+  - @bifold/react-hooks@2.12.6
+
+## 2.12.5
+
+### Patch Changes
+
+- 30b4754: force release to align all packages including new react-hooks package
+- c9b8621: adjust dependencies to pass 16kb requirement on Android, swap react-native-argon2 out for askar's argon2 implementation
+- 958987e: force publish
+
 ## 2.12.4
 
 ### Patch Changes

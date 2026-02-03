@@ -11,8 +11,8 @@ import {
   W3cCredentialRecord,
   W3cCredentialRepository,
 } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
-import { recordsAddedByType, recordsRemovedByType } from '@credo-ts/react-hooks/build/recordUtils'
+import { useAgent } from '@bifold/react-hooks'
+import { recordsAddedByType, recordsRemovedByType } from '@bifold/react-hooks/build/recordUtils'
 import { useTranslation } from 'react-i18next'
 import { TOKENS, useServices } from '../../../container-api'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'

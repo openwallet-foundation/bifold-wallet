@@ -1,5 +1,5 @@
 import { isPresentationFailed, isPresentationReceived } from '@bifold/verifier'
-import { useAgent, useProofById } from '@credo-ts/react-hooks'
+import { useAgent, useProofById } from '@bifold/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

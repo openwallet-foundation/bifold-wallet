@@ -1,5 +1,5 @@
 import { CredentialPreviewAttribute } from '@credo-ts/core'
-import { useCredentialById } from '@credo-ts/react-hooks'
+import { useCredentialById } from '@bifold/react-hooks'
 import { BrandingOverlay, MetaOverlay } from '@bifold/oca'
 import { Attribute, CredentialOverlay } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'

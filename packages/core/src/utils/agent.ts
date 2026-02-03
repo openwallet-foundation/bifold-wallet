@@ -31,7 +31,7 @@ import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@cre
 import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
 import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { WebVhAnonCredsRegistry, WebvhDidResolver } from '@credo-ts/webvh'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
