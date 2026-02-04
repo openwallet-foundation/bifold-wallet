@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.12.7
+
+### Patch Changes
+
+- 75cca52: Bump package versions for release
+
 ## 2.12.6
 
 ### Patch Changes

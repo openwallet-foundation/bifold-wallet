@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 2.12.7
+
+### Patch Changes
+
+- 75cca52: Bump package versions for release
+- Updated dependencies [75cca52]
+  - @bifold/react-hooks@2.12.7
+
 ## 2.12.6
 
 ### Patch Changes
