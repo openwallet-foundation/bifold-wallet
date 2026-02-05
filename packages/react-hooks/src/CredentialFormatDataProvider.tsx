@@ -1,13 +1,11 @@
-import type { Agent } from '@credo-ts/core'
-import type { Awaited } from '@credo-ts/core/build/types'
 import type { PropsWithChildren } from 'react'
-
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import React, { useState, createContext, useContext, useEffect, useCallback } from 'react'
 
 import { recordsAddedByType, recordsRemovedByType, recordsUpdatedByType } from './recordUtils'
+import { BifoldAgent } from './agent'
 
-type FormatReturn = Awaited<ReturnType<Agent['credentials']['getFormatData']>>
+type FormatReturn = Awaited<ReturnType<BifoldAgent['didcomm']['credentials']['getFormatData']>>
 
 export type CredentialFormatData = FormatReturn & {
   id: string
@@ -69,7 +67,7 @@ export const useCredentialFormatDataById = (id: string): CredentialFormatData | 
 }
 
 interface Props {
-  agent: Agent
+  agent: BifoldAgent
 }
 
 const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -81,14 +79,14 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
     loading: true,
   })
 
-  const fetchCredentialInformation = async (agent: Agent, record: CredentialExchangeRecord) => {
-    const formatData = await agent.credentials.getFormatData(record.id)
+  const fetchCredentialInformation = async (agent: BifoldAgent, record: DidCommCredentialExchangeRecord) => {
+    const formatData = await agent.didcomm.credentials.getFormatData(record.id)
 
     return { ...formatData, id: record.id }
   }
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.credentials.getAll()
+    const records = await agent.didcomm.credentials.getAll()
     const formattedData: Array<CredentialFormatData> = []
     for (const record of records) {
       formattedData.push(await fetchCredentialInformation(agent, record))
@@ -103,21 +101,21 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
   useEffect(() => {
     if (state.loading) return
 
-    const credentialAdded$ = recordsAddedByType(agent, CredentialExchangeRecord).subscribe(
-      async (record: CredentialExchangeRecord) => {
+    const credentialAdded$ = recordsAddedByType(agent, DidCommCredentialExchangeRecord).subscribe(
+      async (record: DidCommCredentialExchangeRecord) => {
         const formatData = await fetchCredentialInformation(agent, record)
         setState(addRecord(formatData, state))
       },
     )
 
-    const credentialUpdate$ = recordsUpdatedByType(agent, CredentialExchangeRecord).subscribe(
-      async (record: CredentialExchangeRecord) => {
+    const credentialUpdate$ = recordsUpdatedByType(agent, DidCommCredentialExchangeRecord).subscribe(
+      async (record: DidCommCredentialExchangeRecord) => {
         const formatData = await fetchCredentialInformation(agent, record)
         setState(updateRecord(formatData, state))
       },
     )
 
-    const credentialRemove$ = recordsRemovedByType(agent, CredentialExchangeRecord).subscribe((record) =>
+    const credentialRemove$ = recordsRemovedByType(agent, DidCommCredentialExchangeRecord).subscribe((record) =>
       setState(removeRecord(record.id, state)),
     )
 

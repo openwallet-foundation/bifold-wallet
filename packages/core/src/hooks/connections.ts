@@ -1,7 +1,6 @@
-import { useAgent, useConnectionById, useConnections } from '@bifold/react-hooks'
+import { useConnectionById, useConnections } from '@bifold/react-hooks'
 import { DidCommConnectionRecord, DidCommOutOfBandRecord } from '@credo-ts/didcomm'
 import { useEffect, useMemo, useState } from 'react'
-import { useConnectionById, useConnections } from '@credo-ts/react-hooks'
 import { useAppAgent } from '../utils/agent'
 
 export const useOutOfBandById = (oobId: string): DidCommOutOfBandRecord | undefined => {

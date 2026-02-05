@@ -38,6 +38,7 @@ export type NotificationItemType =
   | CustomNotification
   | SdJwtVcRecord
   | W3cCredentialRecord
+  | W3cV2CredentialRecord
   | MdocRecord
   | OpenId4VPRequestRecord
 
