@@ -1,8 +1,6 @@
 import type { RecordsState } from './recordUtils'
-import type { Agent, ProofState } from '@credo-ts/core'
 import type { PropsWithChildren } from 'react'
-
-import { ProofExchangeRecord } from '@credo-ts/core'
+import { DidCommProofState, DidCommProofExchangeRecord } from '@credo-ts/didcomm'
 import { useState, createContext, useContext, useEffect, useMemo, useCallback } from 'react'
 import * as React from 'react'
 
@@ -14,8 +12,9 @@ import {
   updateRecord,
   addRecord,
 } from './recordUtils'
+import { BifoldAgent } from './agent'
 
-const ProofContext = createContext<RecordsState<ProofExchangeRecord> | undefined>(undefined)
+const ProofContext = createContext<RecordsState<DidCommProofExchangeRecord> | undefined>(undefined)
 
 export const useProofs = () => {
   const proofContext = useContext(ProofContext)
@@ -25,27 +24,27 @@ export const useProofs = () => {
   return proofContext
 }
 
-export const useProofsByConnectionId = (connectionId: string): ProofExchangeRecord[] => {
+export const useProofsByConnectionId = (connectionId: string): DidCommProofExchangeRecord[] => {
   const { records: proofs } = useProofs()
   return useMemo(
-    () => proofs.filter((proof: ProofExchangeRecord) => proof.connectionId === connectionId),
+    () => proofs.filter((proof: DidCommProofExchangeRecord) => proof.connectionId === connectionId),
     [proofs, connectionId]
   )
 }
 
-export const useProofById = (id: string): ProofExchangeRecord | undefined => {
+export const useProofById = (id: string): DidCommProofExchangeRecord | undefined => {
   const { records: proofs } = useProofs()
-  return proofs.find((p: ProofExchangeRecord) => p.id === id)
+  return proofs.find((p: DidCommProofExchangeRecord) => p.id === id)
 }
 
-export const useProofByState = (state: ProofState | ProofState[]): ProofExchangeRecord[] => {
+export const useProofByState = (state: DidCommProofState | DidCommProofState[]): DidCommProofExchangeRecord[] => {
   const states = useMemo(() => (typeof state === 'string' ? [state] : state), [state])
 
   const { records: proofs } = useProofs()
 
   const filteredProofs = useMemo(
     () =>
-      proofs.filter((r: ProofExchangeRecord) => {
+      proofs.filter((r: DidCommProofExchangeRecord) => {
         if (states.includes(r.state)) return r
       }),
     [proofs, states]
@@ -54,14 +53,14 @@ export const useProofByState = (state: ProofState | ProofState[]): ProofExchange
   return filteredProofs
 }
 
-export const useProofNotInState = (state: ProofState | ProofState[]): ProofExchangeRecord[] => {
+export const useProofNotInState = (state: DidCommProofState | DidCommProofState[]): DidCommProofExchangeRecord[] => {
   const states = useMemo(() => (typeof state === 'string' ? [state] : state), [state])
 
   const { records: proofs } = useProofs()
 
   const filteredProofs = useMemo(
     () =>
-      proofs.filter((r: ProofExchangeRecord) => {
+      proofs.filter((r: DidCommProofExchangeRecord) => {
         if (!states.includes(r.state)) return r
       }),
     [proofs, states]
@@ -71,17 +70,17 @@ export const useProofNotInState = (state: ProofState | ProofState[]): ProofExcha
 }
 
 interface Props {
-  agent: Agent
+  agent: BifoldAgent
 }
 
 const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
-  const [state, setState] = useState<RecordsState<ProofExchangeRecord>>({
+  const [state, setState] = useState<RecordsState<DidCommProofExchangeRecord>>({
     records: [],
     loading: true,
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.proofs.getAll()
+    const records = await agent.didcomm.proofs.getAll()
     setState({ records, loading: false })
   }, [agent])
 
@@ -92,15 +91,15 @@ const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) 
   useEffect(() => {
     if (state.loading) return
 
-    const proofAdded$ = recordsAddedByType(agent, ProofExchangeRecord).subscribe((record) =>
+    const proofAdded$ = recordsAddedByType(agent, DidCommProofExchangeRecord).subscribe((record) =>
       setState(addRecord(record, state))
     )
 
-    const proofUpdated$ = recordsUpdatedByType(agent, ProofExchangeRecord).subscribe((record) =>
+    const proofUpdated$ = recordsUpdatedByType(agent, DidCommProofExchangeRecord).subscribe((record) =>
       setState(updateRecord(record, state))
     )
 
-    const proofRemoved$ = recordsRemovedByType(agent, ProofExchangeRecord).subscribe((record) =>
+    const proofRemoved$ = recordsRemovedByType(agent, DidCommProofExchangeRecord).subscribe((record) =>
       setState(removeRecord(record, state))
     )
 
