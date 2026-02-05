@@ -1,5 +1,5 @@
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { useCredentials } from '@credo-ts/react-hooks'
+import { useCredentials } from '@bifold/react-hooks'
 import { useMemo } from 'react'
 
 export const useCredentialsByConnectionId = (connectionId: string): CredentialExchangeRecord[] => {

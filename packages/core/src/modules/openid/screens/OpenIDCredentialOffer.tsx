@@ -1,7 +1,7 @@
 import { BrandingOverlay } from '@bifold/oca'
 import { CredentialOverlay } from '@bifold/oca/build/legacy'
 import { W3cCredentialRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

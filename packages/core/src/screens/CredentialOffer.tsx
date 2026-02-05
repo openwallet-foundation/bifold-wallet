@@ -1,5 +1,5 @@
 import { CredentialPreviewAttribute } from '@credo-ts/core'
-import { useCredentialById } from '@credo-ts/react-hooks'
+import { useCredentialById } from '@bifold/react-hooks'
 import { BrandingOverlay, MetaOverlay } from '@bifold/oca'
 import { Attribute, CredentialOverlay } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
@@ -10,7 +10,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
 import ConnectionImage from '../components/misc/ConnectionImage'
-import CredentialCard from '../components/misc/CredentialCard'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
 import { EventTypes } from '../constants'
@@ -40,6 +39,7 @@ import { testIdWithKey } from '../utils/testable'
 import CredentialOfferAccept from './CredentialOfferAccept'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 type CredentialOfferProps = {
   navigation: any
@@ -279,7 +279,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         </View>
         {!loading && credential && (
           <View style={{ marginHorizontal: 15, marginBottom: 16 }}>
-            <CredentialCard credential={credential} />
+            <CredentialCardGen credential={credential} />
           </View>
         )}
       </>

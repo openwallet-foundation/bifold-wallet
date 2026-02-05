@@ -1,7 +1,7 @@
 import { AnonCredsProof, INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
 import { ProofExchangeRecord, ProofRole, ProofState } from '@credo-ts/core'
 import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
-import { useProofById } from '@credo-ts/react-hooks'
+import { useProofById } from '@bifold/react-hooks'
 import * as verifier from '@bifold/verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import '@testing-library/jest-native'

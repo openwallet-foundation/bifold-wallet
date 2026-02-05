@@ -9,7 +9,7 @@ import {
   ProofState,
   V2RequestPresentationMessage,
 } from '@credo-ts/core'
-import { useAgent, useConnectionById } from '@credo-ts/react-hooks'
+import { useAgent, useConnectionById } from '@bifold/react-hooks'
 import { markProofAsViewed } from '@bifold/verifier'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'

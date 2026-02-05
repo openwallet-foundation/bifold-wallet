@@ -1,7 +1,7 @@
 import type { StackScreenProps } from '@react-navigation/stack'
 
 import { CredentialExchangeRecord } from '@credo-ts/core'
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { BrandingOverlay } from '@bifold/oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -11,7 +11,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import { useStore } from '../contexts/store'
 
-import CredentialCard from '../components/misc/CredentialCard'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import Record from '../components/record/Record'
@@ -40,6 +39,7 @@ import CredentialDetailPrimaryHeader from '../components/views/CredentialDetailP
 import CredentialDetailSecondaryHeader from '../components/views/CredentialDetailSecondaryHeader'
 import { ThemedText } from '../components/texts/ThemedText'
 import CardWatermark from '../components/misc/CardWatermark'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 type CredentialDetailsProps = StackScreenProps<
   RootStackParams & ContactStackParams & NotificationStackParams,
@@ -379,7 +379,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             {credential && <CredentialRevocationMessage credential={credential} />}
           </View>
         ) : null}
-        {credential && <CredentialCard credential={credential} style={{ margin: 16 }} />}
+        {credential && <CredentialCardGen credential={credential} style={{ margin: 16 }} />}
       </View>
     ) : (
       <View style={styles.container}>

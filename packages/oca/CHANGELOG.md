@@ -1,5 +1,31 @@
 # Change Log
 
+## 2.12.7
+
+### Patch Changes
+
+- 75cca52: Bump package versions for release
+
+## 2.12.6
+
+### Patch Changes
+
+- 90b964b: Bump package versions for release
+
+## 2.12.5
+
+### Patch Changes
+
+- 30b4754: force release to align all packages including new react-hooks package
+
+## 2.12.4
+
+## 2.12.3
+
+## 2.12.2
+
+## 2.12.1
+
 ## 2.12.0
 
 ### Minor Changes

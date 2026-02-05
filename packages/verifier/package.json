@@ -1,6 +1,6 @@
 {
   "name": "@bifold/verifier",
-  "version": "2.12.0",
+  "version": "2.12.7",
   "main": "build/commonjs/index.js",
   "types": "build/typescript/index.d.ts",
   "module": "build/module/index.js",
@@ -24,9 +24,9 @@
   },
   "devDependencies": {
     "@babel/core": "~7.28.6",
+    "@bifold/react-hooks": "2.12.7",
     "@credo-ts/anoncreds": "0.5.19",
     "@credo-ts/core": "0.5.19",
-    "@credo-ts/react-hooks": "0.6.1",
     "@hyperledger/anoncreds-shared": "0.3.4",
     "@react-native/babel-preset": "~0.81.5",
     "@types/jest": "~29.5.14",
@@ -40,9 +40,9 @@
     "typescript": "~5.9.2"
   },
   "peerDependencies": {
+    "@bifold/react-hooks": "2.12.7",
     "@credo-ts/anoncreds": "0.5.19",
     "@credo-ts/core": "0.5.19",
-    "@credo-ts/react-hooks": "0.6.1",
     "@hyperledger/anoncreds-shared": "0.3.4",
     "react": "~19.1.4"
   },

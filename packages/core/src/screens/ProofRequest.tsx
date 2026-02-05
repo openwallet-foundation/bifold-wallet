@@ -12,7 +12,7 @@ import {
   V2RequestPresentationMessage,
   ProofState,
 } from '@credo-ts/core'
-import { useConnectionById, useProofById } from '@credo-ts/react-hooks'
+import { useConnectionById, useProofById } from '@bifold/react-hooks'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
@@ -30,7 +30,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
-import { CredentialCard } from '../components/misc'
 import ConnectionImage from '../components/misc/ConnectionImage'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
@@ -73,6 +72,7 @@ import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 import { BaseTourID } from '../types/tour'
 import { ThemedText } from '../components/texts/ThemedText'
 import { CredentialErrors } from '../types/credentials'
+import CredentialCardGen from '../components/misc/CredentialCardGen'
 
 type ProofRequestProps = {
   navigation: any
@@ -861,7 +861,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
               {loading || attestationLoading ? null : (
                 <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
                   {/*  Use for new arch CredentialCardGen */}
-                  <CredentialCard
+                  <CredentialCardGen
                     credential={item.credExchangeRecord}
                     credDefId={item.credDefId}
                     schemaId={item.schemaId}

@@ -1,5 +1,5 @@
 import { ProofExchangeRecord } from '@credo-ts/core'
-import { useProofs } from '@credo-ts/react-hooks'
+import { useProofs } from '@bifold/react-hooks'
 import { useMemo } from 'react'
 
 import { ProofCustomMetadata, ProofMetadata } from '../types/metadata'

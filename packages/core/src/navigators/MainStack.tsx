@@ -1,5 +1,5 @@
 import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
-import { useAgent, useProofByState } from '@credo-ts/react-hooks'
+import { useAgent, useProofByState } from '@bifold/react-hooks'
 import { ProofState } from '@credo-ts/core'
 import { CardStyleInterpolators, StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack'
 import React, { useEffect, useMemo } from 'react'

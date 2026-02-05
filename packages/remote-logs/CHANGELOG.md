@@ -1,5 +1,58 @@
 # Change Log
 
+## 2.12.7
+
+### Patch Changes
+
+- 75cca52: Bump package versions for release
+- Updated dependencies [75cca52]
+  - @bifold/core@2.12.7
+
+## 2.12.6
+
+### Patch Changes
+
+- 90b964b: Bump package versions for release
+- Updated dependencies [90b964b]
+  - @bifold/core@2.12.6
+
+## 2.12.5
+
+### Patch Changes
+
+- 30b4754: force release to align all packages including new react-hooks package
+- Updated dependencies [30b4754]
+- Updated dependencies [c9b8621]
+- Updated dependencies [958987e]
+  - @bifold/core@2.12.5
+
+## 2.12.4
+
+### Patch Changes
+
+- Updated dependencies [fecd99e]
+  - @bifold/core@2.12.4
+
+## 2.12.3
+
+### Patch Changes
+
+- Updated dependencies [e26f1ff]
+  - @bifold/core@2.12.3
+
+## 2.12.2
+
+### Patch Changes
+
+- Updated dependencies [8ba7a18]
+  - @bifold/core@2.12.2
+
+## 2.12.1
+
+### Patch Changes
+
+- @bifold/core@2.12.1
+
 ## 2.12.0
 
 ### Minor Changes

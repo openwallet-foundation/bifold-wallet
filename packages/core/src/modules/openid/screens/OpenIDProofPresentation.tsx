@@ -1,4 +1,4 @@
-import { useAgent } from '@credo-ts/react-hooks'
+import { useAgent } from '@bifold/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +9,6 @@ import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
-import { CredentialCard } from '../../../components/misc'
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
 import { EventTypes } from '../../../constants'
 import { useTheme } from '../../../contexts/theme'
@@ -29,6 +28,7 @@ import {
 } from '../displayProof'
 import { shareProof } from '../resolverProof'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
+import CredentialCardGen from '../../../components/misc/CredentialCardGen'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -275,7 +275,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     const requestedAttributes = selectedCredential.requestedAttributes
     const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
     return (
-      <CredentialCard
+      <CredentialCardGen
         credential={credential}
         displayItems={fields as Attribute[]}
         hasAltCredentials={hasMultipleCreds}

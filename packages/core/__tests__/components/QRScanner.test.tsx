@@ -1,4 +1,4 @@
-import { useAgent, useConnections } from '@credo-ts/react-hooks'
+import { useAgent, useConnections } from '@bifold/react-hooks'
 import { act, render, fireEvent } from '@testing-library/react-native'
 import React from 'react'
 
