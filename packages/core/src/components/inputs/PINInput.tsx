@@ -142,7 +142,7 @@ const PINInput = ({
                 child = showPIN ? (
                   symbol
                 ) : (
-                  <MaskSymbol maskSymbol="●" isLastFilledCell={isLastFilledCell({ index, value: displayValue })}>
+                  <MaskSymbol maskSymbol="●" isLastFilledCell={isLastFilledCell({ index, value: PINScreensConfig.useNewPINDesign ? PIN : displayValue })}>
                     {symbol}
                   </MaskSymbol>
                 )
