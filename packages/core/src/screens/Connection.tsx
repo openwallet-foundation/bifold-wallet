@@ -2,7 +2,10 @@ import {
   BasicMessageRecord,
   ConnectionRecord,
   CredentialExchangeRecord,
+  MdocRecord,
   ProofExchangeRecord,
+  SdJwtVcRecord,
+  W3cCredentialRecord,
 } from '@credo-ts/core'
 import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
@@ -23,6 +26,7 @@ import { EventTypes } from '../constants'
 import { testIdWithKey } from '../utils/testable'
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
+import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useAppAgent } from '../utils/agent'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 
@@ -49,7 +53,7 @@ const GoalCodes = {
 } as const
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
-  const { oobRecordId, proofId, credentialId, openIDPresentationUri, openIDUri } = route.params
+  const { oobRecordId, openIDUri, openIDPresentationUri, proofId, credentialId } = route.params
   const [
     logger,
     { useNotifications },
@@ -68,10 +72,10 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     TOKENS.HISTORY_EVENTS_LOGGER,
   ])
   const connTimerDelay = connectionTimerDelay ?? 10000 // in ms
+  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const { agent } = useAppAgent()
   const oobRecord = useOutOfBandById(oobRecordId ?? '')
   const connection = useConnectionByOutOfBandId(oobRecordId ?? '')
-  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
 
   const { t } = useTranslation()
   const merge: MergeFunction = (current, next) => ({ ...current, ...next })
@@ -84,7 +88,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     percentComplete: 30,
     queriedConnection: undefined,
   })
-
   const styles = StyleSheet.create({
     pageContainer: {
       flex: 1,
@@ -305,6 +308,23 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
+    if (
+      (state.notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+      (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+      (state.notificationRecord as MdocRecord).type === 'MdocRecord'
+    ) {
+      logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
+      dispatch({ inProgress: false })
+      navigation.replace(Screens.OpenIDCredentialOffer, {
+        credential: state.notificationRecord,
+      })
+      return
+    }
+
+    if ((state.notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
+      dispatch({ inProgress: false })
+      navigation.replace(Screens.OpenIDProofPresentation, { credential: state.notificationRecord })
+    }
   }, [logger, navigation, state])
 
   useEffect(() => {
@@ -366,6 +386,16 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         }
 
         if (matchesConnection || matchesOobThread || matchesReuseConnection || matchesOobConnection) {
+          dispatch({ notificationRecord: notification })
+          break
+        }
+
+        if (
+          (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
+          (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
+          (notification as MdocRecord).type === 'MdocRecord' ||
+          (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
+        ) {
           dispatch({ notificationRecord: notification })
           break
         }
