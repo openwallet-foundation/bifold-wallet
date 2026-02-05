@@ -236,7 +236,7 @@ const CredentialOffer: React.FC<CredentialOfferProps> = ({ navigation, credentia
         const connectionId = credential.connectionId ?? ''
         const connection = await agent.modules.didcomm.connections.findById(connectionId)
 
-        await agent.modules.didcomm.credentials.declineOffer(credential.id)
+        await agent.modules.didcomm.credentials.declineOffer({ credentialExchangeRecordId: credential.id })
 
         if (connection) {
           await agent.modules.didcomm.credentials.sendProblemReport({

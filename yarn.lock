@@ -2180,8 +2180,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bifold/react-hooks@workspace:packages/react-hooks"
   dependencies:
-    "@credo-ts/core": "npm:0.5.19"
-    "@credo-ts/question-answer": "npm:0.5.19"
+    "@credo-ts/core": "npm:0.6.1"
+    "@credo-ts/didcomm": "npm:0.6.1"
+    "@credo-ts/question-answer": "npm:0.6.1"
     "@jest/types": "npm:^29.6.3"
     "@types/jest": "npm:^29.5.12"
     "@types/react": "npm:^18.2.14"
@@ -2191,8 +2192,9 @@ __metadata:
     ts-jest: "npm:^29.2.5"
     typescript: "npm:~5.3.3"
   peerDependencies:
-    "@credo-ts/core": 0.5.19
-    "@credo-ts/question-answer": 0.5.19
+    "@credo-ts/core": 0.6.1
+    "@credo-ts/didcomm": 0.6.1
+    "@credo-ts/question-answer": 0.6.1
     react: ">=17.0.0 <19.0.0"
   bin:
     bifold: bin/bifold
@@ -2873,18 +2875,6 @@ __metadata:
   peerDependencies:
     "@credo-ts/core": ^0.5.0
   checksum: 10c0/cf227b6d243c868f8ac178c91d5680ff6c807a59aa3be1fd574998a6a89353e9b89128486c9a6e9eece961974a3b28d25b4e3a2f29561856db44e09def776ea1
-  languageName: node
-  linkType: hard
-
-"@credo-ts/question-answer@npm:0.5.19":
-  version: 0.5.19
-  resolution: "@credo-ts/question-answer@npm:0.5.19"
-  dependencies:
-    "@credo-ts/core": "npm:0.5.19"
-    class-transformer: "npm:0.5.1"
-    class-validator: "npm:0.14.1"
-    rxjs: "npm:^7.8.0"
-  checksum: 10c0/eb1680b4331ee89cbe8e4d8bd087b2cc9b1b0697858d3ccac6ccfae1f2c99e80c70fc3c8e2acd92c4f555054f38077395f1137c1883590c6a4e0de59275c09eb
   languageName: node
   linkType: hard
 
@@ -15758,7 +15748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.2.0, rxjs@npm:^7.8.0, rxjs@npm:^7.8.2":
+"rxjs@npm:^7.2.0, rxjs@npm:^7.8.2":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:
