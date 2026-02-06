@@ -1,7 +1,7 @@
 // packages/core/src/components/misc/CredentialCard.tsx
 import React, { useEffect, useState } from 'react'
 import type { ViewStyle } from 'react-native'
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { BrandingOverlay } from '@bifold/oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay, Predicate } from '@bifold/oca/build/legacy'
 
@@ -47,7 +47,7 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const { ColorPalette } = useTheme()
   const { t } = useTranslation()
-  const credentialConnectionLabel = useCredentialConnectionLabel(credential as CredentialExchangeRecord)
+  const credentialConnectionLabel = useCredentialConnectionLabel(credential as DidCommCredentialExchangeRecord)
 
   // unified card data
   const [cardData, setCardData] = useState<WalletCredentialCardData | undefined>(undefined)

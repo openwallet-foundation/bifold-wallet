@@ -1,12 +1,14 @@
 import {
-  BasicMessageRecord,
-  ConnectionRecord,
-  CredentialExchangeRecord,
   MdocRecord,
-  ProofExchangeRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
 } from '@credo-ts/core'
+import {
+  DidCommBasicMessage,
+  DidCommCredentialExchangeRecord,
+  DidCommProofExchangeRecord,
+  DidCommConnectionRecord
+} from '@credo-ts/didcomm'
 import { CommonActions } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useReducer } from 'react'
@@ -34,7 +36,7 @@ type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.Connection>
 
 type MergeFunction = (current: LocalState, next: Partial<LocalState>) => LocalState
 
-type NotCustomNotification = BasicMessageRecord | CredentialExchangeRecord | ProofExchangeRecord
+type NotCustomNotification = DidCommCredentialExchangeRecord | DidCommProofExchangeRecord
 
 type LocalState = {
   inProgress: boolean
@@ -43,7 +45,7 @@ type LocalState = {
   shouldShowProofComponent: boolean
   shouldShowOfferComponent: boolean
   percentComplete: number
-  queriedConnection?: ConnectionRecord
+  queriedConnection?: DidCommConnectionRecord
 }
 
 const GoalCodes = {
@@ -340,7 +342,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       let foundConnection = actualConnection
       if (!foundConnection && agent && oobRecordId) {
         try {
-          const allConnections = await agent.connections.getAll()
+          const allConnections = await agent.modules.didcomm.connections.getAll()
           foundConnection = allConnections.find((conn) => conn.outOfBandId === oobRecordId)
           if (foundConnection) {
             // Store the found connection in state so other useEffects can access it
@@ -354,7 +356,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
       for (const notification of notifications) {
         // no action taken for BasicMessageRecords
-        if ((notification as BasicMessageRecord).type === 'BasicMessageRecord') {
+        if (notification.type === 'BasicMessageRecord') {
           continue
         }
 
@@ -371,7 +373,7 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         if (agent && oobRecordId && notifConnectionId && !foundConnection) {
           try {
             // Get all connections
-            const allConnections = await agent.connections.getAll()
+            const allConnections = await agent.modules.didcomm.connections.getAll()
 
             // Find any connection that references this OOB record ID
             const oobConnection = allConnections.find((conn) => conn.outOfBandId === oobRecordId)

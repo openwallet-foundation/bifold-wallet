@@ -1,12 +1,12 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialState, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { useCredentialByState } from '@bifold/react-hooks'
+import { SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, View } from 'react-native'
-
+import { DidCommCredentialState } from '@credo-ts/didcomm'
 import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -44,8 +44,8 @@ const ListCredentials: React.FC = () => {
   } = useOpenIDCredentials()
 
   let credentials: GenericCredentialExchangeRecord[] = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
+    ...useCredentialByState(DidCommCredentialState.CredentialReceived),
+    ...useCredentialByState(DidCommCredentialState.Done),
     ...w3cCredentialRecords,
     ...sdJwtVcRecords,
   ]
