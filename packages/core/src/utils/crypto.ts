@@ -1,4 +1,6 @@
 import { Argon2, Argon2Algorithm, Argon2Version } from '@openwallet-foundation/askar-react-native'
+// Buffer polyfill for React Native environment where Buffer is not available globally
+import { Buffer } from 'buffer'
 
 export const hashPIN = async (PIN: string, salt: string): Promise<string> => {
   const passwordBytes = Uint8Array.from(Buffer.from(PIN))
