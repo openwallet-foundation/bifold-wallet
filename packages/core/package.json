@@ -4,15 +4,17 @@
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
-  "react-native": "./lib/commonjs/index.js",
+  "react-native": "./src/index.ts",
   "source": "src/index.ts",
   "exports": {
     ".": {
+      "react-native": "./src/index.ts",
       "import": "./lib/module/index.js",
       "require": "./lib/commonjs/index.js",
       "types": "./lib/typescript/src/index.d.ts"
     },
     "./utils/ledger": {
+      "react-native": "./src/index.ts",
       "import": "./lib/module/utils/ledger.js",
       "require": "./lib/commonjs/utils/ledger.js",
       "types": "./lib/typescript/src/utils/ledger.d.ts"
