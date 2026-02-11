@@ -10,7 +10,7 @@ import {
 } from '@credo-ts/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@bifold/react-hooks'
 import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import {
   BasicMessageMetadata,
@@ -44,13 +44,15 @@ export const useNotifications = ({
   openIDUri,
   openIDPresentationUri,
 }: NotificationsInputProps): NotificationReturnType => {
+  const doneStates = useMemo(() => [ProofState.Done, ProofState.PresentationReceived] as ProofState[], [])
+
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
   const { records: basicMessages } = useBasicMessages()
   const offers = useCredentialByState(CredentialState.OfferReceived)
   const proofsRequested = useProofByState(ProofState.RequestReceived)
   const credsReceived = useCredentialByState(CredentialState.CredentialReceived)
   const credsDone = useCredentialByState(CredentialState.Done)
-  const proofsDone = useProofByState([ProofState.Done, ProofState.PresentationReceived])
+  const proofsDone = useProofByState(doneStates)
   const openIDCredRecieved = useOpenID({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
   const openIDExpiredNotifs = useExpiredNotifications()
   useEffect(() => {
