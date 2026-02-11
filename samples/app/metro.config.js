@@ -83,7 +83,7 @@ const config = mergeConfig(defaultConfig, {
     tslib: path.join(__dirname, 'node_modules/tslib'),
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'svg', 'cjs'],
-    unstable_enablePackageExports: true,
+    unstable_enablePackageExports: false,
     unstable_conditionNames: ['react-native', 'require', 'browser'],
   },
   watchFolders: combinedWatchFolders,
