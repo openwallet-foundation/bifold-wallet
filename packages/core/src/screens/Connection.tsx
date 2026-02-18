@@ -4,7 +4,6 @@ import {
   W3cCredentialRecord,
 } from '@credo-ts/core'
 import {
-  DidCommBasicMessage,
   DidCommCredentialExchangeRecord,
   DidCommProofExchangeRecord,
   DidCommConnectionRecord

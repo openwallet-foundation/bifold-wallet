@@ -17,7 +17,6 @@ import {
 import {
   extractOpenId4VcCredentialMetadata,
   setOpenId4VcCredentialMetadata,
-  temporaryMetaVanillaObject,
 } from './metadata'
 
 export const resolveOpenId4VciOffer = async ({
@@ -79,9 +78,6 @@ export const customCredentialBindingResolver = async ({
   supportsAllDidMethods,
   supportsJwk,
   credentialFormat,
-  resolvedCredentialOffer,
-  pidSchemes,
-  credentialConfigurationId,
   proofTypes
 }: Partial<OpenId4VciCredentialBindingOptions> & {
   agent: Agent
@@ -171,7 +167,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   pidSchemes?: { sdJwtVcVcts: Array<string>; msoMdocDoctypes: Array<string> }
 }) => {
   const offeredCredentialsToRequest = credentialConfigurationIdsToRequest
-    ? Object.entries(resolvedCredentialOffer.offeredCredentialConfigurations).filter(([k,v]) =>
+    ? Object.entries(resolvedCredentialOffer.offeredCredentialConfigurations).filter(([k]) =>
         credentialConfigurationIdsToRequest.includes(k)
       )
     : [Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0]]

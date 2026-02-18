@@ -1,7 +1,4 @@
 import {
-  OpenId4VciCredentialConfigurationsSupported,
-  OpenId4VciCredentialConfigurationSupportedWithFormats,
-  OpenId4VciCredentialConfigurationSupported,
   OpenId4VciCredentialIssuerMetadataDisplay,
   OpenId4VpResolvedAuthorizationRequest,
 } from '@credo-ts/openid4vc'

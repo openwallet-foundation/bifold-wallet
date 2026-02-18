@@ -101,8 +101,7 @@ export async function reissueCredentialWithAccessToken({
     throw new Error('Issuer returned empty or malformed credential on re-issuance.')
   }
 
-  let newRecord: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
-  newRecord = firstCredential.record
+  const newRecord: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord = firstCredential.record
   // if ('compact' in firstCredential) {
   //   newRecord = new SdJwtVcRecord({ c })
   // } else if ((firstCredential as any)?.credential instanceof Mdoc) {

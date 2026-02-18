@@ -30,8 +30,6 @@ import {
 } from '@credo-ts/didcomm'
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
-import { OpenId4VcHolderModule } from '@credo-ts/openid4vc'
-import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@bifold/react-hooks'
 import { OpenId4VcModule } from '@credo-ts/openid4vc'

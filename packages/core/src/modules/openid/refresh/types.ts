@@ -7,7 +7,7 @@ import {
 } from '@credo-ts/core'
 import { KnownJwaSignatureAlgorithm } from '@credo-ts/core/build/modules/kms/jwk/jwa.mjs'
 import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
-import { OpenId4VciResolvedCredentialOffer, OpenId4VciCredentialIssuerMetadata } from '@credo-ts/openid4vc'
+import { OpenId4VciResolvedCredentialOffer } from '@credo-ts/openid4vc'
 
 export type IssuerMetadataCache = {
   credential_issuer: string

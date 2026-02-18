@@ -11,7 +11,6 @@ import type {
 import { RepositoryEventTypes } from '@credo-ts/core'
 import { useMemo } from 'react'
 import { map, filter, pipe } from 'rxjs'
-import { BifoldAgent } from './agent'
 
 // BaseRecordAny makes sure we allow any type to be used for the generic
 // properties of the BaseRecord. The default BaseRecord type uses Empty objects

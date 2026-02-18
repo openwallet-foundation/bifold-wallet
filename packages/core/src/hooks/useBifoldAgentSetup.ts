@@ -84,7 +84,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
 
       return newAgent
     },
-    [store.preferences.walletName, logger, indyLedgers]
+    [/*store.preferences.walletName,*/ logger, indyLedgers]
   )
 
   const migrateIfRequired = useCallback(
