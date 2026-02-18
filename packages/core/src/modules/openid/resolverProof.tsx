@@ -232,7 +232,6 @@ export const shareProof = async ({
   authorizationRequest,
   credentialsForRequest,
   selectedCredentials,
-  allowUntrustedCertificate = false,
 }: {
   agent: Agent
   authorizationRequest: OpenId4VpAuthorizationRequestPayload

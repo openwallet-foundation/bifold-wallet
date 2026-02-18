@@ -1073,7 +1073,6 @@ export const sortCredentialsForAutoSelect = (
 export const removeExistingInvitationsById = async (
   agent: BifoldAgent | undefined,
   invitationId: string,
-  logger?: BifoldLogger
 ): Promise<void> => {
   // This is implemented just as findByReceivedInvitationId is
   // in Credo only this is able to return multiple if they exist
