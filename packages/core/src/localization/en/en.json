@@ -800,7 +800,8 @@
     "FiveMinutes": "Five Minutes",
     "ThreeMinutes": "Three Minutes",
     "OneMinute": "One Minute",
-    "Never": "Never"
+    "Never": "Never",
+    "Preview": "{{time}} min"
   },
   "TabStack": {
     "Home": "Notifications",
