@@ -52,9 +52,9 @@ export function formatDifPexCredentialsForRequest(
           )
 
           let disclosedPayload = attributes
-          if (verifiableCredential.type === ClaimFormat.SdJwtVc) {
+          if (verifiableCredential.claimFormat === ClaimFormat.SdJwtDc) {
             disclosedPayload = filterAndMapSdJwtKeys(verifiableCredential.disclosedPayload).visibleProperties
-          } else if (verifiableCredential.type === ClaimFormat.MsoMdoc) {
+          } else if (verifiableCredential.claimFormat === ClaimFormat.MsoMdoc) {
             disclosedPayload = Object.fromEntries(
               Object.values(verifiableCredential.disclosedPayload).flatMap((entry) => Object.entries(entry))
             )
