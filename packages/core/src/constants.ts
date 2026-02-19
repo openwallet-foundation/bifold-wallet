@@ -41,6 +41,7 @@ export enum EventTypes {
   BIOMETRY_ERROR = 'BiometryError',
   DID_COMPLETE_ONBOARDING = 'DidCompleteOnboarding',
   OPENID_REFRESH_REQUEST = 'OPENID_REFRESH_REQUEST',
+  OPENID_CONNECTION_ERROR = 'OPENID_CONNECTION_ERROR',
 }
 
 export const second = 1000
