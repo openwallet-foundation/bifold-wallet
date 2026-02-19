@@ -1,5 +1,15 @@
 # @bifold/core
 
+## 2.12.8
+
+### Patch Changes
+
+- 4263767: Fix endless loop in notifications hook
+- c9ba746: Add config for custom app lockout time
+- fd2e7cd: Add connection screen for OpenID
+- 04a41bb: Fix for delay in hiding pin
+  - @bifold/react-hooks@2.12.8
+
 ## 2.12.7
 
 ### Patch Changes
