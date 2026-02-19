@@ -793,7 +793,8 @@
     "FiveMinutes": "Five Minutes (FR)",
     "ThreeMinutes": "Three Minutes (FR)",
     "OneMinute": "One Minute (FR)",
-    "Never": "Never (FR)"
+    "Never": "Never (FR)",
+    "Preview": "{{time}} min (FR)"
   },
   "TabStack": {
     "Home": "Notifications",

@@ -769,7 +769,8 @@
     "FiveMinutes": "Five Minutes (PT-BR)",
     "ThreeMinutes": "Three Minutes (PT-BR)",
     "OneMinute": "One Minute (PT-BR)",
-    "Never": "Never (PT-BR)"
+    "Never": "Never (PT-BR)",
+    "Preview": "{{time}} min (PT-BR)"
   },
   "TabStack": {
     "Home": "Notificações",
