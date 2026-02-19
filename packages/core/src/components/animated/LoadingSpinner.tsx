@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import { Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { testIdWithKey } from '../../utils/testable'
+
 const timing: Animated.TimingAnimationConfig = {
   toValue: 1,
   duration: 2000,
@@ -26,7 +28,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color }) => 
 
   return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-      <Icon style={{ color }} size={size} name="refresh" />
+      <Icon style={{ color }} size={size} name="refresh" testID={testIdWithKey('Loading')} />
     </Animated.View>
   )
 }

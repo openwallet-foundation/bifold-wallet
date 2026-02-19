@@ -14,6 +14,7 @@ import OpenIDProofPresentation from '../modules/openid/screens/OpenIDProofPresen
 import { TOKENS, useServices } from '../container-api'
 import OpenIDCredentialOffer from '../modules/openid/screens/OpenIDCredentialOffer'
 import OpenIDProofCredentialSelect from '../modules/openid/screens/OpenIDProofChangeCredential'
+import OpenIDConnection from '../modules/openid/screens/OpenIDConnection'
 
 const DeliveryStack: React.FC = () => {
   const Stack = createStackNavigator<DeliveryStackParams>()
@@ -35,6 +36,7 @@ const DeliveryStack: React.FC = () => {
         ...ScreenOptionsDictionary[Screens.Connection],
       }}
     >
+      <Stack.Screen name={Screens.OpenIDConnection} component={OpenIDConnection} options={{ ...defaultStackOptions }} />
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
       <Stack.Screen
         name={Screens.OpenIDCredentialOffer}
