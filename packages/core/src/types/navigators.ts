@@ -26,6 +26,7 @@ export enum Screens {
   OpenIDCredentialOffer = 'Open ID Credential offer',
   OpenIDProofPresentation = 'Open ID Proof Presentation',
   OpenIDProofCredentialSelect = 'Open ID Proof Credential Select',
+  OpenIDConnection = 'Open ID Connection',
   ProofRequest = 'Proof Request',
   ProofRequestDetails = 'Proof Request Details',
   ProofRequestUsageHistory = 'Proof Request Usage History',
@@ -196,6 +197,10 @@ export type DeliveryStackParams = {
     oobRecordId?: string
     proofId?: string
     credentialId?: string
+    openIDUri?: string
+    openIDPresentationUri?: string
+  }
+  [Screens.OpenIDConnection]: {
     openIDUri?: string
     openIDPresentationUri?: string
   }
