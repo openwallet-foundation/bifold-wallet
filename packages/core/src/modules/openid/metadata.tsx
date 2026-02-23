@@ -10,6 +10,7 @@ import {
 } from '@credo-ts/core'
 import type {
   OpenId4VciCredentialIssuerMetadataDisplay,
+  OpenId4VciMetadata,
   OpenId4VciRequestTokenResponse,
 } from '@credo-ts/openid4vc'
 import { RefreshCredentialMetadata, RefreshStatus } from './refresh/types'
@@ -39,7 +40,7 @@ export type OpenId4VcCredentialMetadataExtended = Partial<
 >
 
 export type OpenIDCredentialNotificationMetadata = {
-  notificationMetadata?: any //OpenId4VciNotificationMetadata
+  notificationMetadata?: OpenId4VciMetadata
   tokenResponse?: OpenId4VciRequestTokenResponse
 }
 

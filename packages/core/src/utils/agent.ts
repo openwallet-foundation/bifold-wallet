@@ -84,6 +84,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
       networks: indyNetworks as [IndyVdrPoolConfig],
     }),
     didcomm: new DidCommModule({
+      useDidSovPrefixWhereAllowed: true,
       connections: {
         autoAcceptConnections: true,
       },
