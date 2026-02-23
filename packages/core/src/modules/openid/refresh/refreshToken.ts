@@ -30,9 +30,9 @@ export async function refreshAccessToken({
 
     logger.info(`[refreshAccessToken] Found auth server for credential: ${cred.id}: ${authServer}`)
 
-    // Build token endpoint: <AS>/token?force=false
+    // Build token endpoint:
     // React-Native-safe URL build
-    const tokenUrl = (authServer.endsWith('/') ? authServer.slice(0, -1) : authServer) + '/token?force=false'
+    const tokenUrl = (authServer.endsWith('/') ? authServer.slice(0, -1) : authServer)
     // const tokenUrl = new URL('token', authServer)
     // tokenUrl.searchParams.set('force', 'false')
 

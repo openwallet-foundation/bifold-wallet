@@ -46,7 +46,6 @@ export const useOpenID = ({
 
         const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
         const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]
-        const authEndpoint = authServer.authorization_endpoint
         const credentialIssuer = authServer.issuer
         const issuerMetadata = resolvedCredentialOffer.metadata.credentialIssuer
         const configID = getCredentialConfigurationIds(resolvedCredentialOffer)?.[0]
@@ -58,9 +57,6 @@ export const useOpenID = ({
         }
         if (!authServer) {
           throw new Error('No authorization server found in the credential offer metadata')
-        }
-        if (!authEndpoint) {
-          throw new Error('No authorization endpoint found in the credential offer metadata')
         }
         if (!credentialIssuer) {
           throw new Error('No credential issuer found in the credential offer metadata')
@@ -79,7 +75,7 @@ export const useOpenID = ({
 
         if (refreshToken && authServer) {
           setRefreshCredentialMetadata(credential, {
-            authServer: authEndpoint,
+            authServer: tokenEndpoint,
             tokenEndpoint: tokenEndpoint,
             refreshToken: refreshToken,
             issuerMetadataCache: {
