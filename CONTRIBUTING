@@ -1,27 +1,35 @@
-## Contributor's Guide:
+## Contributor's Guide
 
-Thanks for your interest in the project! We welcome pull requests from developers of all skill levels.
+Thanks for your interest in the project! We welcome pull requests from developers of all skill levels. Whether you're fixing a typo or building a new feature, your contribution is valued.
 
-If you would like to contribute but don't already have something in mind,
-we invite you to take a look at our roadmap list. If you see one you'd like
-to work on, please leave a quick comment so that we don't end up with
-duplicated effort. Thanks in advance!
+If you would like to contribute but don't already have something in mind, take a look at our open issues. If you see one you'd like to work on, please leave a quick comment so that we don't end up with duplicated effort. Thanks in advance!
 
 Please note that all contributors and maintainers of this project are subject to our [Code of Conduct][coc].
 
+### Developer Certificate of Origin (DCO)
+
+All commits to this project **must** include a DCO `Signed-off-by` line. This certifies that you wrote or otherwise have the right to submit the contribution. You can read the full text at [developercertificate.org](https://developercertificate.org/).
+
+To add the sign-off automatically, use the `-s` flag when committing:
+
+```bash
+git commit -s -m "feat: add new feature"
+```
+
+Commits without a valid sign-off will not be accepted.
+
 ### Pull Requests
 
-Before submitting a pull request, please ensure you have added or updated tests as appropriate, and that all existing tests still pass with your changes. Please also ensure that your coding style is consistent with existing code in the project. A checklist is included in the PR template as a friendly reminder. 
+Before submitting a pull request, please ensure you have added or updated tests as appropriate, and that all existing tests still pass with your changes. Please also ensure that your coding style is consistent with existing code in the project. A checklist is included in the PR template as a friendly reminder.
 
-**If your changes should result in a new version, please add a changeset with `yarn changeset add`**
+**If your changes should result in a new version, please add a changeset with `yarn changeset add`.**
 
-### Commit Messages
+#### Human Ownership Required
 
-We require all contributors to agree to the [DCO](https://developercertificate.org/). Every commit must contain a DCO `Signed-off-by` line. To automatically add this line, simply include the `-s` flag when executing `git commit`.
+Every pull request must have a human owner who is accountable for the changes. This means a real person must be responsible for reviewing, understanding, and standing behind the work in the PR — even if parts of the contribution were generated with the help of AI tools. Automated or bot-generated pull requests without a human owner will not be merged.
 
-### Test coverage
+### Test Coverage
 
 At minimum, all pull requests should maintain current test coverage, and preferably increase it. To run tests with coverage output, run `yarn coverage` from the root of the repo.
-
 
 [coc]: ./CODE_OF_CONDUCT.md
