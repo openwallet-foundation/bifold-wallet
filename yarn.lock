@@ -2538,13 +2538,13 @@ __metadata:
     "@types/react": "npm:^18.2.14"
     jest: "npm:^29.7.0"
     rimraf: "npm:^6.1.2"
-    rxjs: "npm:^7.2.0"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:~5.3.3"
   peerDependencies:
     "@credo-ts/core": 0.5.19
     "@credo-ts/question-answer": 0.5.19
     react: ">=17.0.0 <19.0.0"
+    rxjs: ^7.2.0
   bin:
     bifold: bin/bifold
   languageName: unknown
@@ -17715,7 +17715,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.2.0, rxjs@npm:^7.8.0":
+"rxjs@npm:^7.8.0":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:

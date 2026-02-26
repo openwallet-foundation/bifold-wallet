@@ -27,9 +27,6 @@
     "prepublishOnly": "yarn run build",
     "test": "jest"
   },
-  "dependencies": {
-    "rxjs": "^7.2.0"
-  },
   "devDependencies": {
     "@credo-ts/core": "0.5.19",
     "@credo-ts/question-answer": "0.5.19",
@@ -44,6 +41,7 @@
   "peerDependencies": {
     "@credo-ts/core": "0.5.19",
     "@credo-ts/question-answer": "0.5.19",
-    "react": ">=17.0.0 <19.0.0"
+    "react": ">=17.0.0 <19.0.0",
+    "rxjs": "^7.2.0"
   }
 }
