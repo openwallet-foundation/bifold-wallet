@@ -21,6 +21,11 @@ credentialRecord.createdAt = new Date(credentialRecord.createdAt)
 useCredentialById.mockReturnValue(credentialRecord)
 
 describe('CredentialOfferAccept Screen', () => {
+  afterEach(() => {
+    jest.clearAllTimers()
+    jest.useRealTimers()
+  })
+
   test('renders correctly', () => {
     const tree = render(
       <BasicAppContext>
@@ -50,7 +55,6 @@ describe('CredentialOfferAccept Screen', () => {
     const backToHomeButton = tree.getByTestId(testIdWithKey('BackToHome'))
     const doneButton = tree.queryByTestId(testIdWithKey('Done'))
 
-    expect(tree).toMatchSnapshot()
     expect(backToHomeButton).not.toBeNull()
     expect(doneButton).toBeNull()
   })

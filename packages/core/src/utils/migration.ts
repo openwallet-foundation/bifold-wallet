@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AskarModule } from '@credo-ts/askar'
 import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
 import { agentDependencies } from '@credo-ts/react-native'
@@ -24,7 +25,7 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
       modules: {
         askar: new AskarModule({
           askar,
-          store: { id: 'askarMigration', key: 'askarMigration' }
+          store: { id: 'askarMigration', key: 'askarMigration' },
         }),
       },
       dependencies: agentDependencies,

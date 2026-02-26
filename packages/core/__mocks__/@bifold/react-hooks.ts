@@ -410,11 +410,14 @@ const mockCredentialModule = {
   credentials: [credential],
   acceptOffer: jest.fn(),
   declineOffer: jest.fn(),
+  getById: jest.fn().mockResolvedValue(credential),
   getFormatData: jest
     .fn()
     .mockReturnValue(
       Promise.resolve({} as CredentialProtocolOptions.GetCredentialFormatDataReturn<[LegacyIndyCredentialFormat]>)
     ),
+  update: jest.fn().mockResolvedValue(undefined),
+  deleteById: jest.fn().mockResolvedValue(undefined),
   findAllByQuery: jest.fn().mockReturnValue(Promise.resolve([])),
 }
 
@@ -440,6 +443,9 @@ const mockBasicMessagesModule = {
 }
 const mockConnectionsModule = {
   getAll: jest.fn().mockReturnValue(Promise.resolve(mockConnectionRecords)),
+  findById: jest.fn().mockResolvedValue(undefined),
+  deleteById: jest.fn().mockResolvedValue(undefined),
+  findAllByOutOfBandId: jest.fn().mockResolvedValue([]),
 }
 
 const mockMediationRecipient = {
@@ -463,8 +469,26 @@ const mockAgentContext = {
     resolve: jest.fn().mockReturnValue(mockBasicMessageRepository),
   },
 }
+const mockDidcommModule = {
+  credentials: mockCredentialModule,
+  proofs: mockProofModule,
+  basicMessages: mockBasicMessagesModule,
+  connections: mockConnectionsModule,
+  mediationRecipient: mockMediationRecipient,
+  oob: mockOobModule,
+}
 const agent = {
   agent: {
+    modules: {
+      didcomm: mockDidcommModule,
+      // legacy tests still access modules.<api> directly
+      credentials: mockCredentialModule,
+      proofs: mockProofModule,
+      basicMessages: mockBasicMessagesModule,
+      connections: mockConnectionsModule,
+      mediationRecipient: mockMediationRecipient,
+      oob: mockOobModule,
+    },
     credentials: mockCredentialModule,
     proofs: mockProofModule,
     basicMessages: mockBasicMessagesModule,

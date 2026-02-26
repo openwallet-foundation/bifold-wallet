@@ -22,7 +22,6 @@ import {
   setRefreshCredentialMetadata,
 } from '../metadata'
 import { RefreshStatus } from './types'
-import { KnownJwaSignatureAlgorithms } from '@credo-ts/core/build/modules/kms/jwk/jwa.mjs'
 
 type ReissueWithAccessTokenInput = {
   agent: Agent
@@ -78,7 +77,7 @@ export async function reissueCredentialWithAccessToken({
     clientId,
     credentialsToRequest: [credentialConfigurationId],
     verifyCredentialStatus: false, // you’ll check after storing
-    allowedProofOfPossessionSignatureAlgorithms: [KnownJwaSignatureAlgorithms.EdDSA, KnownJwaSignatureAlgorithms.ES256],
+    allowedProofOfPossessionSignatureAlgorithms: ['EdDSA', 'ES256'],
     credentialBindingResolver: async (opts: OpenId4VciCredentialBindingOptions) =>
       customCredentialBindingResolver({
         agent,

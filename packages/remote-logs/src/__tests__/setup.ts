@@ -57,7 +57,7 @@ jest.mock(
 )
 
 // Silence React Native animations for testing
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper', () => ({}), { virtual: true })
 
 // Global console configuration for tests
 global.console = {
