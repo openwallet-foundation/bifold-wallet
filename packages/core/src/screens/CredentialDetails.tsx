@@ -57,6 +57,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const { width, height } = useWindowDimensions()
   const [credential, setCredential] = useState<DidCommCredentialExchangeRecord | undefined>(undefined)
   const { agent } = useAgent()
+  const didcommCredentials = (agent as any)?.modules?.didcomm?.credentials ?? (agent as any)?.credentials
   const { t, i18n } = useTranslation()
   const { ColorPalette, Assets } = useTheme()
   const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
@@ -87,7 +88,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     // fetch credential for ID
     const fetchCredential = async () => {
       try {
-        const credentialExchangeRecord = await agent?.modules.didcomm.credentials.getById(credentialId)
+        const credentialExchangeRecord = await didcommCredentials?.getById?.(credentialId)
+        if (!credentialExchangeRecord) {
+          throw new Error('Credential record not found')
+        }
         setCredential(credentialExchangeRecord)
       } catch {
         // credential not found for id, display an error
@@ -98,7 +102,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
       }
     }
     fetchCredential()
-  }, [credentialId, agent, t])
+  }, [credentialId, didcommCredentials, t])
 
   const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
     bundle: undefined,
@@ -210,9 +214,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential?.revocationNotification) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_seen: true })
-      agent?.modules.didcomm.credentials.update(credential)
+      didcommCredentials?.update?.(credential)
     }
-  }, [credential, agent])
+  }, [credential, didcommCredentials])
 
   const callOnRemove = useCallback(() => {
     setIsRemoveModalDisplayed(true)
@@ -295,9 +299,9 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     if (credential) {
       const meta = credential.metadata.get(CredentialMetadata.customMetadata)
       credential.metadata.set(CredentialMetadata.customMetadata, { ...meta, revoked_detail_dismissed: true })
-      agent?.modules.didcomm.credentials.update(credential)
+      didcommCredentials?.update?.(credential)
     }
-  }, [credential, agent])
+  }, [credential, didcommCredentials])
 
   const CredentialRevocationMessage: React.FC<{ credential: DidCommCredentialExchangeRecord }> = ({ credential }) => {
     return (

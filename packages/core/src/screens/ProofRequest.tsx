@@ -287,6 +287,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
         value = await credProofPromise
 
         if (!value) {
+          setLoading(false)
           return
         }
       } catch (err) {
@@ -297,6 +298,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           1026
         )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        setLoading(false)
         return
       }
 

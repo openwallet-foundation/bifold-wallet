@@ -7,6 +7,12 @@ import { luminanceForHexColor } from './luminance'
 import { getSchemaName, getCredDefTag, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
 import { BifoldLogger } from '../services/logger'
 
+// Credo agent shape differs across versions/contexts.
+// Resolve the credentials api from the available path.
+function getCredentialsApi(agent: Agent): any {
+  return (agent as any)?.modules?.didcomm?.credentials || (agent as any)?.didcomm?.credentials || (agent as any)?.credentials
+}
+
 export const isValidAnonCredsCredential = (credential: DidCommCredentialExchangeRecord) => {
   return (
     credential &&
@@ -48,7 +54,12 @@ async function resolveIdsFromFormatData(
   logger?: BifoldLogger
 ): Promise<{ schemaId?: string; credDefId?: string }> {
   try {
-    const { offer } = await agent.didcomm.credentials.getFormatData(credential.id)
+    const credentialsApi = getCredentialsApi(agent)
+    if (!credentialsApi?.getFormatData) {
+      return {}
+    }
+
+    const { offer } = await credentialsApi.getFormatData(credential.id)
     const formatOfferData = offer?.anoncreds ?? offer?.indy
 
     // Type guard to check if formatOfferData has the expected structure
@@ -149,7 +160,14 @@ async function updateCredentialMetadata(params: {
   }
 
   credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
-  await agent.didcomm.credentials.update(credential)
+  const credentialsApi = getCredentialsApi(agent)
+  if (credentialsApi?.update) {
+    await credentialsApi.update(credential)
+  } else {
+    logger?.warn('Unable to persist credential metadata; credentials update API unavailable', {
+      credentialId: credential.id,
+    })
+  }
 
   logger?.info('Credential metadata ensured', {
     credentialId: credential.id,

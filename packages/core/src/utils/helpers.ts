@@ -834,13 +834,18 @@ export const retrieveCredentialsForProof = async (
   }
 
   try {
-    const format = await agent.modules.didcomm.proofs.getFormatData(proof.id)
+    const didcomm = (agent as any)?.modules?.didcomm ?? (agent as any)
+    if (!didcomm?.proofs) {
+      throw new Error(t('ProofRequest.RequestedCredentialsCouldNotBeFound'))
+    }
+
+    const format = await didcomm.proofs.getFormatData(proof.id)
     const hasPresentationExchange = format.request?.presentationExchange !== undefined
     const hasAnonCreds = format.request?.anoncreds !== undefined
     const hasIndy = format.request?.indy !== undefined
 
     // Will fail if credential not in state 'request-received'
-    const credentialsAsPromise = agent.modules.didcomm.proofs.getCredentialsForRequest({
+    const credentialsAsPromise = didcomm.proofs.getCredentialsForRequest({
       proofExchangeRecordId: proof.id,
       proofFormats: {
         // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
@@ -872,7 +877,7 @@ export const retrieveCredentialsForProof = async (
     })
 
     // Will fail if credential not in state 'request-received'
-    const credentialsWithRevokedAsPromise = agent.modules.didcomm.proofs.getCredentialsForRequest({
+    const credentialsWithRevokedAsPromise = didcomm.proofs.getCredentialsForRequest({
       proofExchangeRecordId: proof.id,
       proofFormats: {
         // FIXME: Credo will try to use the format, even if the value is undefined (but the key is present)
@@ -1225,7 +1230,8 @@ export const connectFromScanOrDeepLink = async (
  * @returns a connection record
  */
 export const createConnectionInvitation = async (agent: BifoldAgent | undefined, goalCode?: string) => {
-  const record = await agent?.modules.didcomm.oob.createInvitation({ goalCode })
+  const didcomm = (agent as any)?.modules?.didcomm ?? (agent as any)
+  const record = await didcomm?.oob?.createInvitation?.({ goalCode })
   if (!record) {
     throw new Error('Could not create new invitation')
   }
