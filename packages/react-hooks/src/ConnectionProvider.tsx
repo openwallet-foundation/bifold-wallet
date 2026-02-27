@@ -72,7 +72,7 @@ const ConnectionProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.didcomm.connections.getAll()
+    const records = await agent.modules.didcomm.connections.getAll()
     setState({ records, loading: false })
   }, [agent])
 

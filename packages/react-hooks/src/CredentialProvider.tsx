@@ -73,7 +73,7 @@ const CredentialProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.didcomm.credentials.getAll()
+    const records = await agent.modules.didcomm.credentials.getAll()
     setState({ records, loading: false })
   }, [agent])
 
