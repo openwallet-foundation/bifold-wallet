@@ -80,7 +80,7 @@ const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) 
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.didcomm.proofs.getAll()
+    const records = await agent.modules.didcomm.proofs.getAll()
     setState({ records, loading: false })
   }, [agent])
 

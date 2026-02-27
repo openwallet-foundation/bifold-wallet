@@ -80,10 +80,10 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.didcomm.proofs.getAll()
+    const records = await agent.modules.didcomm.proofs.getAll()
     const formattedData: Array<ProofFormatData> = []
     for (const record of records) {
-      const formatData = await agent.didcomm.proofs.getFormatData(record.id)
+      const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
       formattedData.push({ ...formatData, id: record.id })
     }
     setState({ formattedData, loading: false })
@@ -97,12 +97,12 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
     if (state.loading) return
 
     const proofAdded$ = recordsAddedByType(agent, DidCommProofExchangeRecord).subscribe(async (record) => {
-      const formatData = await agent.didcomm.proofs.getFormatData(record.id)
+      const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
       setState(addRecord({ ...formatData, id: record.id }, state))
     })
 
     const proofUpdate$ = recordsUpdatedByType(agent, DidCommProofExchangeRecord).subscribe(async (record) => {
-      const formatData = await agent.didcomm.proofs.getFormatData(record.id)
+      const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
       setState(updateRecord({ ...formatData, id: record.id }, state))
     })
 

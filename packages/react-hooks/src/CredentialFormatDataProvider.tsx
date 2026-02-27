@@ -80,13 +80,13 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
   })
 
   const fetchCredentialInformation = async (agent: BifoldAgent, record: DidCommCredentialExchangeRecord) => {
-    const formatData = await agent.didcomm.credentials.getFormatData(record.id)
+    const formatData = await agent.modules.didcomm.credentials.getFormatData(record.id)
 
     return { ...formatData, id: record.id }
   }
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.didcomm.credentials.getAll()
+    const records = await agent.modules.didcomm.credentials.getAll()
     const formattedData: Array<CredentialFormatData> = []
     for (const record of records) {
       formattedData.push(await fetchCredentialInformation(agent, record))

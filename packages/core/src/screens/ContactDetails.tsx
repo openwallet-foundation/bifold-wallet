@@ -161,9 +161,9 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
         logHistoryRecord()
       }
 
-      const basicMessages = await agent.modules.basicMessages.findAllByQuery({ connectionId: connection.id })
-      const proofs = await agent.modules.proofs.findAllByQuery({ connectionId: connection.id })
-      const offers = await agent.modules.credentials.findAllByQuery({
+      const basicMessages = await agent.modules.didcomm.basicMessages.findAllByQuery({ connectionId: connection.id })
+      const proofs = await agent.modules.didcomm.proofs.findAllByQuery({ connectionId: connection.id })
+      const offers = await agent.modules.didcomm.credentials.findAllByQuery({
         connectionId: connection.id,
         state: DidCommCredentialState.OfferReceived,
       })
@@ -173,10 +173,10 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({ route }) => {
       )
 
       const results = await Promise.allSettled([
-        ...proofs.map((proof: any) => agent.modules.proofs.deleteById(proof.id)),
-        ...offers.map((offer: any) => agent.modules.credentials.deleteById(offer.id)),
-        ...basicMessages.map((msg: any) => agent.modules.basicMessages.deleteById(msg.id)),
-        agent.modules.connections.deleteById(connection.id),
+        ...proofs.map((proof: any) => agent.modules.didcomm.proofs.deleteById(proof.id)),
+        ...offers.map((offer: any) => agent.modules.didcomm.credentials.deleteById(offer.id)),
+        ...basicMessages.map((msg: any) => agent.modules.didcomm.basicMessages.deleteById(msg.id)),
+        agent.modules.didcomm.connections.deleteById(connection.id),
       ])
 
       const failed = results.filter((result) => result.status === 'rejected')

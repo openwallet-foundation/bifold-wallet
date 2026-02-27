@@ -45,7 +45,7 @@ const BasicMessageProvider: React.FC<PropsWithChildren<Props>> = ({ agent, child
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.didcomm.basicMessages.findAllByQuery({})
+    const records = await agent.modules.didcomm.basicMessages.findAllByQuery({})
     setState({ records, loading: false })
   }, [agent])
 
