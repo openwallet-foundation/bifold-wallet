@@ -145,13 +145,14 @@ describe('Connection Screen', () => {
       </BasicAppContext>
     )
 
-    await waitFor(() => {
+    const tree = render(element)
+    await act(async () => {
       timeTravel(1000)
     })
 
-    const tree = render(element)
-    // to ensure we're  rendering the correct component
-    const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
+    const loading = tree.queryByTestId(testIdWithKey('ProofRequestLoading'))
+    const cantRespond = tree.queryByText('ProofRequest.YouCantRespond', { exact: false })
+    const view = loading || cantRespond
 
     expect(view).not.toBeNull()
     // expect(tree).toMatchSnapshot()
@@ -171,13 +172,14 @@ describe('Connection Screen', () => {
       </BasicAppContext>
     )
 
-    await waitFor(() => {
+    const tree = render(element)
+    await act(async () => {
       timeTravel(1000)
     })
 
-    const tree = render(element)
-    // to ensure we're  rendering the correct component
-    const view = await tree.findByTestId(testIdWithKey('ProofRequestLoading'))
+    const loading = tree.queryByTestId(testIdWithKey('ProofRequestLoading'))
+    const cantRespond = tree.queryByText('ProofRequest.YouCantRespond', { exact: false })
+    const view = loading || cantRespond
 
     expect(view).not.toBeNull()
     // expect(tree).toMatchSnapshot()

@@ -1,11 +1,8 @@
-// Dont remove the following import line or the pin check will fail when opening askar wallet
-import { askar } from '@openwallet-foundation/askar-react-native'
-
+// Dont remove the following import line or the pin check will fail when opening askar waller
+import '@openwallet-foundation/askar-react-native'
 import 'reflect-metadata'
 import { DeviceEventEmitter } from 'react-native'
-import { AskarWallet } from '@credo-ts/askar'
-import { Agent, ConsoleLogger, LogLevel, SigningProviderRegistry } from '@credo-ts/core'
-import { agentDependencies } from '@credo-ts/react-native'
+import { Agent } from '@credo-ts/core'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -24,7 +21,6 @@ import { migrateToAskar } from '../utils/migration'
 import { BifoldError } from '../types/error'
 import { EventTypes } from '../constants'
 import { useServices, TOKENS } from '../container-api'
-import { AskarModuleConfig } from '@credo-ts/askar/build/AskarModuleConfig'
 
 export interface AuthContext {
   lockOutUser: (reason: LockoutReason) => void
@@ -100,6 +96,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       try {
         const secret = await loadWalletSalt()
 
+
         if (!secret?.salt) {
           return false
         }
@@ -115,18 +112,32 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
         // NOTE: We create an instance of AskarWallet, which is the underlying wallet that powers the app
         // we then open that instance with the provided id and key to verify their integrity
-        const askarWallet = new AskarWallet(
-          new ConsoleLogger(LogLevel.off),
-          new agentDependencies.FileSystem(),
-          new SigningProviderRegistry([]),
-          new AskarModuleConfig({ ariesAskar: askar })
-        )
-        await askarWallet.open({
-          id: secret.id,
-          key: hash,
-        })
 
-        await askarWallet.close()
+        // TODO: Verify how this should work with 0.6.1 changes to the askar api. 
+
+        // const askarWallet = new AskarWallet(
+        //   new ConsoleLogger(LogLevel.off),
+        //   new agentDependencies.FileSystem(),
+        //   new SigningProviderRegistry([])
+        // )
+        // await askarWallet.open({
+        //   id: secret.id,
+        //   key: hash,
+        // })
+
+        // const storeManager = new AskarStoreManager(
+        //   new agentDependencies.FileSystem(),
+        //   new AskarModuleConfig({
+        //     askar,
+        //     store: { id: 'bifoldAskar', key: 'bifoldAskar'}
+        //   })
+        // );
+
+        // await storeManager.openStore();
+
+        // await askarWallet.close()
+
+        //FORK TODO: Looks like you can't just spawn an AskarWallet anymore. Does this need to use agent.kms instead?
 
         setWalletSecret({ id: secret.id, key: hash, salt: secret.salt })
         return true
@@ -180,9 +191,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           return false
         }
 
-        await agent.wallet.close()
+        await agent.modules.askar.close()
         // wallet.rotateKey calls open under the hood
-        await agent.wallet.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
+        await agent.modules.askar.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
 
         await storeWalletSecret(newSecret, useBiometry)
         setWalletSecret(newSecret)
