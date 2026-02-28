@@ -1,5 +1,5 @@
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { useAgent } from '@bifold/react-hooks'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -25,9 +25,9 @@ type OpenIDContextProps = {
 export const useOpenID = ({
   openIDUri,
   openIDPresentationUri,
-}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | undefined => {
+}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord | undefined => {
   const [openIdRecord, setOpenIdRecord] = useState<
-    SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord
+    SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord
   >()
 
   const { agent } = useAgent()
@@ -44,14 +44,13 @@ export const useOpenID = ({
           uri: uri,
         })
 
-        const authServers = resolvedCredentialOffer.metadata.credentialIssuerMetadata.authorization_servers
-        // const authServer = authServers?.[0]
-        const credentialIssuer = resolvedCredentialOffer.metadata.issuer
-        const authServer = credentialIssuer
+        const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
+        const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]
+        const credentialIssuer = authServer.issuer
+        const issuerMetadata = resolvedCredentialOffer.metadata.credentialIssuer
         const configID = getCredentialConfigurationIds(resolvedCredentialOffer)?.[0]
-        const tokenEndpoint = resolvedCredentialOffer.metadata.token_endpoint
-        const issuerMetadata = resolvedCredentialOffer.metadata.credentialIssuerMetadata
-        const credentialEndpoint = resolvedCredentialOffer.metadata.credential_endpoint
+        const tokenEndpoint = authServer?.token_endpoint
+        const credentialEndpoint = issuerMetadata.credential_endpoint
 
         if (!configID) {
           throw new Error('No credential configuration ID found in the credential offer metadata')
@@ -76,7 +75,7 @@ export const useOpenID = ({
 
         if (refreshToken && authServer) {
           setRefreshCredentialMetadata(credential, {
-            authServer: authServer,
+            authServer: tokenEndpoint,
             tokenEndpoint: tokenEndpoint,
             refreshToken: refreshToken,
             issuerMetadataCache: {
