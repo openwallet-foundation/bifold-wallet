@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LegacyIndyCredentialFormat } from '@credo-ts/anoncreds'
 import {
-  BasicMessageRecord,
-  BasicMessageRole,
-  CredentialExchangeRecord,
-  CredentialPreviewAttribute,
+  DidCommBasicMessageRecord,
+  DidCommBasicMessageRole,
+  DidCommCredentialExchangeRecord,
+  DidCommCredentialPreviewAttribute,
   CredentialProtocolOptions,
-  CredentialState,
-  CredentialRole,
-  ProofExchangeRecord,
-  ProofState,
-  ProofRole,
-  ConnectionRecord,
-  DidExchangeRole,
-  DidExchangeState,
-  OutOfBandRecord,
-  OutOfBandInvitation,
-  OutOfBandRole,
-  OutOfBandState,
+  DidCommCredentialState,
+  DidCommCredentialRole,
+  DidCommProofExchangeRecord,
+  DidCommProofState,
+  DidCommProofRole,
+  DidCommConnectionRecord,
+  DidCommDidExchangeRole,
+  DidCommDidExchangeState,
+  DidCommOutOfBandRecord,
+  DidCommOutOfBandInvitation,
+  DidCommOutOfBandRole,
+  DidCommOutOfBandState,
   OutOfBandDidCommService,
-  Attachment,
-  AgentMessage,
-} from '@credo-ts/core'
+  DidCommAttachment,
+  DidCommMessage,
+} from '@credo-ts/didcomm'
 import { useMemo } from 'react'
 
 // This is the test data set thatd is used to mock
@@ -60,11 +60,11 @@ import { useMemo } from 'react'
 // imageUrl?: string
 // appendedAttachments?: Attachment[]
 
-const oobForProofNoConnection = new OutOfBandRecord({
+const oobForProofNoConnection = new DidCommOutOfBandRecord({
   id: '548ee21c-5b98-4eeb-8fe0-5a5019a5f4a5',
   createdAt: new Date('2024-09-05T18:56:08.454Z'),
   autoAcceptConnection: true,
-  outOfBandInvitation: new OutOfBandInvitation({
+  outOfBandInvitation: new DidCommOutOfBandInvitation({
     id: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
     handshakeProtocols: [],
     services: [
@@ -76,7 +76,7 @@ const oobForProofNoConnection = new OutOfBandRecord({
       }),
     ],
     appendedAttachments: [
-      new Attachment({
+      new DidCommAttachment({
         id: '9641549a-59ce-4cd1-b96f-559aa1752c72',
         mimeType: 'application/json',
         data: {
@@ -96,12 +96,12 @@ const oobForProofNoConnection = new OutOfBandRecord({
     threadId: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
   },
   reusable: false,
-  role: OutOfBandRole.Receiver,
-  state: OutOfBandState.PrepareResponse,
+  role: DidCommOutOfBandRole.Receiver,
+  state: DidCommOutOfBandState.PrepareResponse,
   updatedAt: new Date('2024-09-05T18:56:08.530Z'),
 })
 
-const message = new AgentMessage()
+const message = new DidCommMessage()
 message.setThread({
   // This will become an invitationRequestsThreadId which matches the
   // connectionless proof request to the OOB record.
@@ -111,11 +111,11 @@ message.setThread({
 oobForProofNoConnection.outOfBandInvitation.addRequest(message)
 
 const mockOobRecords = [
-  new OutOfBandRecord({
+  new DidCommOutOfBandRecord({
     id: 'b8aaa6fe-47c9-4ed8-8cb9-96299e4e0109',
     createdAt: new Date('2024-09-04T18:50:27.350Z'),
     autoAcceptConnection: true,
-    outOfBandInvitation: new OutOfBandInvitation({
+    outOfBandInvitation: new DidCommOutOfBandInvitation({
       id: 'd5b67d62-8592-4041-8144-20985fda1373',
       goal: 'Showcase connection',
       goalCode: 'aries.vc.issue',
@@ -131,15 +131,15 @@ const mockOobRecords = [
       threadId: 'd5b67d62-8592-4041-8144-20985fda1373',
     },
     reusable: false,
-    role: OutOfBandRole.Receiver,
-    state: OutOfBandState.PrepareResponse,
+    role: DidCommOutOfBandRole.Receiver,
+    state: DidCommOutOfBandState.PrepareResponse,
     updatedAt: new Date('2024-09-04T18:50:27.404Z'),
   }),
-  new OutOfBandRecord({
+  new DidCommOutOfBandRecord({
     id: 'bc37583b-cee1-43aa-96f4-b7087b71fbc5',
     createdAt: new Date('2024-09-04T21:12:12.014Z'),
     autoAcceptConnection: true,
-    outOfBandInvitation: new OutOfBandInvitation({
+    outOfBandInvitation: new DidCommOutOfBandInvitation({
       id: '91c0a070-8030-493e-9c42-17a2b0d327bc',
       goal: 'Showcase connection',
       goalCode: 'aries.vc.verify',
@@ -155,15 +155,15 @@ const mockOobRecords = [
       threadId: '91c0a070-8030-493e-9c42-17a2b0d327bc',
     },
     reusable: false,
-    role: OutOfBandRole.Receiver,
-    state: OutOfBandState.PrepareResponse,
+    role: DidCommOutOfBandRole.Receiver,
+    state: DidCommOutOfBandState.PrepareResponse,
     updatedAt: new Date('2024-09-04T21:12:12.077Z'),
   }),
-  new OutOfBandRecord({
+  new DidCommOutOfBandRecord({
     id: 'd1036d48-4b88-4f63-9d7e-b4b0476f8108',
     createdAt: new Date('2024-09-04T18:50:27.350Z'),
     autoAcceptConnection: true,
-    outOfBandInvitation: new OutOfBandInvitation({
+    outOfBandInvitation: new DidCommOutOfBandInvitation({
       id: 'd6d0f46b-43b4-4e81-9a02-cddd2ae2fcca',
       handshakeProtocols: [],
       label: 'BestBC College',
@@ -177,16 +177,16 @@ const mockOobRecords = [
       threadId: 'd6d0f46b-43b4-4e81-9a02-cddd2ae2fcca',
     },
     reusable: false,
-    role: OutOfBandRole.Receiver,
-    state: OutOfBandState.PrepareResponse,
+    role: DidCommOutOfBandRole.Receiver,
+    state: DidCommOutOfBandState.PrepareResponse,
     updatedAt: new Date('2024-09-04T18:50:27.404Z'),
   }),
   oobForProofNoConnection,
-  new OutOfBandRecord({
+  new DidCommOutOfBandRecord({
     id: '27cfe0f6-253d-4105-a87e-2d8b1b0234c3',
     createdAt: new Date('2024-09-01T21:12:12.014Z'),
     autoAcceptConnection: true,
-    outOfBandInvitation: new OutOfBandInvitation({
+    outOfBandInvitation: new DidCommOutOfBandInvitation({
       id: 'b280fdd5-5cfa-4e49-8ab1-cbd13fa67636',
       goal: 'Coffee Connection',
       goalCode: 'aries.vc.verify.once',
@@ -202,15 +202,15 @@ const mockOobRecords = [
       threadId: 'b280fdd5-5cfa-4e49-8ab1-cbd13fa67636',
     },
     reusable: false,
-    role: OutOfBandRole.Receiver,
-    state: OutOfBandState.PrepareResponse,
+    role: DidCommOutOfBandRole.Receiver,
+    state: DidCommOutOfBandState.PrepareResponse,
     updatedAt: new Date('2024-09-01T21:12:12.077Z'),
   }),
-  new OutOfBandRecord({
+  new DidCommOutOfBandRecord({
     id: '6e739679-db69-4228-9fdf-d1b8cc2431aa',
     createdAt: new Date('2024-09-06T18:50:27.350Z'),
     autoAcceptConnection: true,
-    outOfBandInvitation: new OutOfBandInvitation({
+    outOfBandInvitation: new DidCommOutOfBandInvitation({
       id: 'f98ae4fd-21e4-4002-9bdf-9b3bf36e6899',
       goal: 'Make Great Tea',
       goalCode: 'aries.vc.happy-teapot',
@@ -226,80 +226,80 @@ const mockOobRecords = [
       threadId: 'f98ae4fd-21e4-4002-9bdf-9b3bf36e6899',
     },
     reusable: false,
-    role: OutOfBandRole.Receiver,
-    state: OutOfBandState.PrepareResponse,
+    role: DidCommOutOfBandRole.Receiver,
+    state: DidCommOutOfBandState.PrepareResponse,
     updatedAt: new Date('2024-09-06T18:50:27.404Z'),
   }),
 ]
 
 const mockConnectionRecords = [
-  new ConnectionRecord({
+  new DidCommConnectionRecord({
     // Offer
     id: 'b4b1b9cd-a445-4bb3-9645-a2377471965a',
     outOfBandId: 'b8aaa6fe-47c9-4ed8-8cb9-96299e4e0109',
     did: 'did:peer:1zQmZYcmJeMX5Lc2HvQjf4VXSC3raHfBci6A4MnjDNCZTVp9',
     theirLabel: 'BestBC College',
-    role: DidExchangeRole.Requester,
+    role: DidCommDidExchangeRole.Requester,
     theirDid: 'did:peer:1zQmaiE6oyFzYYdBtKD3fJW6yfXE1r5hXMLfa7Ve8nundki6',
     threadId: '5c667314-6465-4fa8-9a45-f66e571e99e2',
-    state: DidExchangeState.Completed,
+    state: DidCommDidExchangeState.Completed,
     createdAt: new Date('2024-09-04T18:50:28.647Z'),
   }),
-  new ConnectionRecord({
+  new DidCommConnectionRecord({
     // Proof
     id: '20f1f732-b64f-4d52-99fd-e13fe0d9e62f',
     outOfBandId: 'bc37583b-cee1-43aa-96f4-b7087b71fbc5',
     did: 'did:peer:1zQmRRUJPpFLScPNFuE9HLPJ6N3MRACb5J3ZYjnDHfvvfZG2',
     theirLabel: 'Cool Clothes Online',
-    role: DidExchangeRole.Requester,
+    role: DidCommDidExchangeRole.Requester,
     theirDid: 'did:peer:1zQmeXt27PyTpgf1sYEQV45jP1WYTU63raWMzhQtKhxCzxzF',
     threadId: '8c5846e2-c36f-42a2-a403-6edeb2850bcb',
-    state: DidExchangeState.ResponseReceived,
+    state: DidCommDidExchangeState.ResponseReceived,
     createdAt: new Date('2024-09-04T21:12:12.655Z'),
   }),
-  new ConnectionRecord({
+  new DidCommConnectionRecord({
     // Offer
     id: '3712d956-7731-428b-bcbb-127c0f6d615d',
     outOfBandId: 'd1036d48-4b88-4f63-9d7e-b4b0476f8108',
     did: 'did:peer:1zQmZYcmJeMX5Lc2HvQjf4VXSC3raHfBci6A4MnjDNCZTVp9',
     theirLabel: 'BestBC College',
-    role: DidExchangeRole.Requester,
+    role: DidCommDidExchangeRole.Requester,
     theirDid: 'did:peer:1zQmaiE6oyFzYYdBtKD3fJW6yfXE1r5hXMLfa7Ve8nundki6',
     threadId: '8df1d523-5415-4e62-9975-4d248fcb8f4a',
-    state: DidExchangeState.Completed,
+    state: DidCommDidExchangeState.Completed,
     createdAt: new Date('2024-09-04T18:50:28.647Z'),
   }),
-  new ConnectionRecord({
+  new DidCommConnectionRecord({
     // Proof
     id: 'efa7d36e-9dbe-4c0b-b128-556e731d329a',
     outOfBandId: '27cfe0f6-253d-4105-a87e-2d8b1b0234c3',
     did: 'did:peer:1zQmRRUJPpFLScPNFuE9HLPJ6N3MRACb5J3ZYjnDHfvvfZG2',
     theirLabel: 'Cool Coffee Online',
-    role: DidExchangeRole.Requester,
+    role: DidCommDidExchangeRole.Requester,
     theirDid: 'did:peer:1zQmeXt27PyTpgf1sYEQV45jP1WYTU63raWMzhQtKhxCzxzF',
     threadId: 'ad1b6c8d-d098-49f6-a841-dbf1072bf2fb',
-    state: DidExchangeState.ResponseReceived,
+    state: DidCommDidExchangeState.ResponseReceived,
     createdAt: new Date('2024-09-01T21:12:12.655Z'),
   }),
-  new ConnectionRecord({
+  new DidCommConnectionRecord({
     // Offer
     id: 'c426f2dc-0ffc-4252-b7d6-2304755f84d9',
     outOfBandId: '6e739679-db69-4228-9fdf-d1b8cc2431aa',
     did: 'did:peer:1zQmZYcmJeMX5Lc2HvQjf4VXSC3raHfBci6A4MnjDNCZTVp9',
     theirLabel: 'BestBC Tea',
-    role: DidExchangeRole.Requester,
+    role:DidCommDidExchangeRole.Requester,
     theirDid: 'did:peer:1zQmaiE6oyFzYYdBtKD3fJW6yfXE1r5hXMLfa7Ve8nundki6',
     threadId: 'fc7405e5-039c-4b7a-bc3d-f9626fc96d25',
-    state: DidExchangeState.Completed,
+    state: DidCommDidExchangeState.Completed,
     createdAt: new Date('2024-09-04T18:50:28.647Z'),
   }),
 ]
 
 const mockProofRecords = [
-  new ProofExchangeRecord({
+  new DidCommProofExchangeRecord({
     id: 'c54dfe4e-925d-4b9a-9f2c-2adeb308c5de',
-    state: ProofState.RequestReceived,
-    role: ProofRole.Prover,
+    state: DidCommProofState.RequestReceived,
+    role: DidCommProofRole.Prover,
     connectionId: '20f1f732-b64f-4d52-99fd-e13fe0d9e62f',
     threadId: '985a0d98-bc31-435c-a3fe-2f884acae4fe',
     protocolVersion: 'v1',
@@ -307,12 +307,12 @@ const mockProofRecords = [
     isVerified: undefined,
     tags: {
       connectionId: '20f1f732-b64f-4d52-99fd-e13fe0d9e62f',
-      state: ProofState.RequestReceived,
-      role: ProofRole.Prover,
+      state: DidCommProofState.RequestReceived,
+      role: DidCommProofRole.Prover,
       threadId: '985a0d98-bc31-435c-a3fe-2f884acae4fe',
     },
   }),
-  new ProofExchangeRecord({
+  new DidCommProofExchangeRecord({
     autoAcceptProof: undefined,
     connectionId: undefined,
     createdAt: new Date('2024-09-05T18:56:08.770Z'),
@@ -321,11 +321,11 @@ const mockProofRecords = [
     isVerified: undefined,
     parentThreadId: 'd06b0c33-ba17-42d7-9334-afdf60403f02',
     protocolVersion: 'v1',
-    state: ProofState.RequestReceived,
-    role: ProofRole.Prover,
+    state: DidCommProofState.RequestReceived,
+    role: DidCommProofRole.Prover,
     threadId: 'dbc57c37-63b8-40ed-bb14-4b58e86db4ec',
   }),
-  new ProofExchangeRecord({
+  new DidCommProofExchangeRecord({
     //   _tags: {
     //     connectionId: 'efa7d36e-9dbe-4c0b-b128-556e731d329a',
     //     role: 'prover',
@@ -336,63 +336,63 @@ const mockProofRecords = [
     id: 'bbbf9c83-7930-4c97-944f-9b6adbbc8f49',
     createdAt: new Date('2024-09-04T21:12:14.072Z'),
     protocolVersion: 'v1',
-    state: ProofState.RequestReceived,
-    role: ProofRole.Prover,
+    state: DidCommProofState.RequestReceived,
+    role: DidCommProofRole.Prover,
     connectionId: 'efa7d36e-9dbe-4c0b-b128-556e731d329a',
     threadId: '78de35dd-980e-4379-a668-3a6e9c4365d4',
     isVerified: undefined,
     tags: {
       connectionId: 'efa7d36e-9dbe-4c0b-b128-556e731d329a',
-      state: ProofState.RequestReceived,
-      role: ProofRole.Prover,
+      state: DidCommProofState.RequestReceived,
+      role: DidCommProofRole.Prover,
       threadId: '78de35dd-980e-4379-a668-3a6e9c4365d4',
     },
   }),
-] as ProofExchangeRecord[]
+] as DidCommProofExchangeRecord[]
 
 const mockBasicMessages = {
   records: [
-    new BasicMessageRecord({
+    new DidCommBasicMessageRecord({
       id: 'cbd8f4f0-36ce-4a2e-8c47-d9d5cbaa5617',
       threadId: '18b5dad0-49d1-4e26-b52d-bb01ee5f4f53',
       connectionId: 'c426f2dc-0ffc-4252-b7d6-2304755f84d9',
-      role: BasicMessageRole.Receiver,
+      role: DidCommBasicMessageRole.Receiver,
       content: 'Earl Grey',
       sentTime: '20200303',
       createdAt: new Date('2024-09-04T18:53:11.771Z'),
     }),
-    new BasicMessageRecord({
+    new DidCommBasicMessageRecord({
       id: '43203ac9-c11a-43be-9b8d-fd387f43856c',
       threadId: '2cd06130-8e99-44d6-a30e-6af751a2ce3a',
       connectionId: 'c426f2dc-0ffc-4252-b7d6-2304755f84d9',
-      role: BasicMessageRole.Receiver,
+      role: DidCommBasicMessageRole.Receiver,
       content: 'English Breakfast',
       sentTime: '20200303',
       createdAt: new Date('2024-09-04T18:51:11.771Z'),
     }),
-  ] as BasicMessageRecord[],
+  ] as DidCommBasicMessageRecord[],
 }
 
-const credential = new CredentialExchangeRecord({
+const credential = new DidCommCredentialExchangeRecord({
   id: '99bbf805-fc82-44dc-82eb-e3eb1e7f8ab7',
-  state: CredentialState.OfferReceived,
-  role: CredentialRole.Holder,
+  state: DidCommCredentialState.OfferReceived,
+  role: DidCommCredentialRole.Holder,
   threadId: '735df561-5346-4cb0-b11f-44a49984c0c3',
   protocolVersion: 'v1',
   connectionId: 'b4b1b9cd-a445-4bb3-9645-a2377471965a',
   credentials: [],
   credentialAttributes: [
-    new CredentialPreviewAttribute({
+    new DidCommCredentialPreviewAttribute({
       name: 'student_first_name',
       value: 'Alice',
       mimeType: 'text/plain',
     }),
-    new CredentialPreviewAttribute({
+    new DidCommCredentialPreviewAttribute({
       name: 'student_last_name',
       value: 'Smith',
       mimeType: 'text/plain',
     }),
-    new CredentialPreviewAttribute({
+    new DidCommCredentialPreviewAttribute({
       name: 'expiry_date',
       value: '20280820',
       mimeType: 'text/plain',
@@ -410,11 +410,14 @@ const mockCredentialModule = {
   credentials: [credential],
   acceptOffer: jest.fn(),
   declineOffer: jest.fn(),
+  getById: jest.fn().mockResolvedValue(credential),
   getFormatData: jest
     .fn()
     .mockReturnValue(
       Promise.resolve({} as CredentialProtocolOptions.GetCredentialFormatDataReturn<[LegacyIndyCredentialFormat]>)
     ),
+  update: jest.fn().mockResolvedValue(undefined),
+  deleteById: jest.fn().mockResolvedValue(undefined),
   findAllByQuery: jest.fn().mockReturnValue(Promise.resolve([])),
 }
 
@@ -423,7 +426,7 @@ const mockCredentialModule = {
 // })
 
 const useProofByState = jest.fn().mockReturnValue(mockProofRecords)
-const useBasicMessagesByConnectionId = jest.fn().mockReturnValue([] as BasicMessageRecord[])
+const useBasicMessagesByConnectionId = jest.fn().mockReturnValue([] as DidCommBasicMessageRecord[])
 const useBasicMessages = jest.fn().mockReturnValue(mockBasicMessages)
 const mockProofModule = {
   getCredentialsForRequest: jest.fn(),
@@ -440,6 +443,9 @@ const mockBasicMessagesModule = {
 }
 const mockConnectionsModule = {
   getAll: jest.fn().mockReturnValue(Promise.resolve(mockConnectionRecords)),
+  findById: jest.fn().mockResolvedValue(undefined),
+  deleteById: jest.fn().mockResolvedValue(undefined),
+  findAllByOutOfBandId: jest.fn().mockResolvedValue([]),
 }
 
 const mockMediationRecipient = {
@@ -463,8 +469,26 @@ const mockAgentContext = {
     resolve: jest.fn().mockReturnValue(mockBasicMessageRepository),
   },
 }
+const mockDidcommModule = {
+  credentials: mockCredentialModule,
+  proofs: mockProofModule,
+  basicMessages: mockBasicMessagesModule,
+  connections: mockConnectionsModule,
+  mediationRecipient: mockMediationRecipient,
+  oob: mockOobModule,
+}
 const agent = {
   agent: {
+    modules: {
+      didcomm: mockDidcommModule,
+      // legacy tests still access modules.<api> directly
+      credentials: mockCredentialModule,
+      proofs: mockProofModule,
+      basicMessages: mockBasicMessagesModule,
+      connections: mockConnectionsModule,
+      mediationRecipient: mockMediationRecipient,
+      oob: mockOobModule,
+    },
     credentials: mockCredentialModule,
     proofs: mockProofModule,
     basicMessages: mockBasicMessagesModule,
@@ -480,7 +504,7 @@ const agent = {
 //mocked react hooks should return singleton objects to avoid unecessary re-renderings
 const useAgent = jest.fn().mockReturnValue(agent)
 
-// const useCredentialById = jest.fn().mockReturnValue(mockCredentialModule.credentials[0] as CredentialExchangeRecord)
+// const useCredentialById = jest.fn().mockReturnValue(mockCredentialModule.credentials[0] as DidCommCredentialExchangeRecord)
 const useCredentialById = jest.fn().mockImplementation((id: string) => {
   return mockCredentialModule.credentials.find((cred) => cred.id === id)
 })

@@ -19,6 +19,7 @@ const CredentialPending: React.FC = () => {
   const { Assets } = useTheme()
   const fadeAnim = useRef(new Animated.Value(0))
   const tranAnim = useRef(new Animated.Value(-90))
+  const animation = useRef<Animated.CompositeAnimation | null>(null)
   const style = StyleSheet.create({
     container: {
       flexDirection: 'column',
@@ -39,14 +40,23 @@ const CredentialPending: React.FC = () => {
   })
 
   useEffect(() => {
-    setTimeout(() => {
-      Animated.loop(
+    const timeout = setTimeout(() => {
+      if (!Animated?.loop || !Animated?.sequence || !Animated?.timing) {
+        return
+      }
+      animation.current = Animated.loop(
         Animated.sequence([
           Animated.timing(fadeAnim.current, fadeTiming),
           Animated.timing(tranAnim.current, slideTiming),
         ])
-      ).start()
+      )
+      animation.current.start()
     }, animationDelay)
+
+    return () => {
+      clearTimeout(timeout)
+      animation.current?.stop?.()
+    }
   }, [])
 
   return (

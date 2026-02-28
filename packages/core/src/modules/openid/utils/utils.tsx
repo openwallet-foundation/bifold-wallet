@@ -1,7 +1,6 @@
 import { getDomainFromUrl } from '@credo-ts/core'
 import { Attribute, Field } from '@bifold/oca/build/legacy'
 import { OpenId4VciResolvedCredentialOffer } from '@credo-ts/openid4vc'
-import { RefreshCredentialMetadata } from '../refresh/types'
 
 /**
  * Converts a camelCase string to a sentence format (first letter capitalized, rest in lower case).
@@ -121,11 +120,11 @@ export function isSdJwtProofRequest(type: string): boolean {
 }
 
 export function getCredentialConfigurationIds(resolved: OpenId4VciResolvedCredentialOffer): string[] {
-  const fromOffered = (resolved.offeredCredentials ?? []).map((c) => c?.id).filter((x): x is string => !!x)
+  const fromOffered = (resolved.credentialOfferPayload.credential_configuration_ids ?? []).filter((x): x is string => !!x)
 
   if (fromOffered.length > 0) return fromOffered
 
-  const cfg = resolved.metadata?.credentialIssuerMetadata?.credential_configurations_supported
+  const cfg = resolved.offeredCredentialConfigurations
   if (cfg && typeof cfg === 'object') {
     return Object.keys(cfg) // keys are the credential_configuration_id values
   }
@@ -133,7 +132,12 @@ export function getCredentialConfigurationIds(resolved: OpenId4VciResolvedCreden
   return []
 }
 
+// TODO: This is pretty broken and seemingly not used anywhere, do we actually still need this?
+
+/*
 export function buildResolvedOfferFromMeta(meta: RefreshCredentialMetadata): OpenId4VciResolvedCredentialOffer {
+  
+  
   const { credentialIssuer, credentialConfigurationId, tokenEndpoint, authServer, issuerMetadataCache } = meta
 
   const supported = issuerMetadataCache.credential_configurations_supported?.[credentialConfigurationId]
@@ -155,7 +159,7 @@ export function buildResolvedOfferFromMeta(meta: RefreshCredentialMetadata): Ope
     // display omitted per your preference
   }
 
-  return {
+  const credentialOffer: OpenId4VciResolvedCredentialOffer = {
     metadata: {
       issuer: credentialIssuer,
       token_endpoint: tokenEndpoint ?? issuerMetadataCache.token_endpoint, // top-level field
@@ -177,5 +181,8 @@ export function buildResolvedOfferFromMeta(meta: RefreshCredentialMetadata): Ope
       [credentialConfigurationId]: supported,
     },
     version: 1011, // optional; include if your types expect it
-  } as OpenId4VciResolvedCredentialOffer
+  }
+
+  return credentialOffer
 }
+*/

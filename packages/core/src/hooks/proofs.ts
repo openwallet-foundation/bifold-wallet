@@ -1,16 +1,16 @@
-import { ProofExchangeRecord } from '@credo-ts/core'
 import { useAgent, useCredentials, useProofById, useProofs } from '@bifold/react-hooks'
+import { DidCommProofExchangeRecord } from '@credo-ts/didcomm'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TOKENS, useServices } from '../container-api'
 import { retrieveCredentialsForProof } from '../utils/helpers'
 
-export const useProofsByConnectionId = (connectionId: string): ProofExchangeRecord[] => {
+export const useProofsByConnectionId = (connectionId: string): DidCommProofExchangeRecord[] => {
   const { records: proofs } = useProofs()
 
   return useMemo(
-    () => proofs.filter((proof: ProofExchangeRecord) => proof.connectionId === connectionId),
+    () => proofs.filter((proof: DidCommProofExchangeRecord) => proof.connectionId === connectionId),
     [proofs, connectionId]
   )
 }

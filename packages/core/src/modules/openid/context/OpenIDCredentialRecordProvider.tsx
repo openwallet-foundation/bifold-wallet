@@ -10,29 +10,30 @@ import {
   SdJwtVcRepository,
   W3cCredentialRecord,
   W3cCredentialRepository,
+  W3cV2CredentialRecord,
 } from '@credo-ts/core'
-import { useAgent } from '@bifold/react-hooks'
 import { recordsAddedByType, recordsRemovedByType } from '@bifold/react-hooks/build/recordUtils'
 import { useTranslation } from 'react-i18next'
 import { TOKENS, useServices } from '../../../container-api'
 import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { getCredentialForDisplay } from '../display'
 import { OpenIDCredentialType } from '../types'
+import { useAppAgent } from '../../../utils/agent'
 
-type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
+type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined
 
 export type OpenIDCredentialContext = {
   openIdState: OpenIDCredentialRecordState
   getW3CCredentialById: (id: string) => Promise<W3cCredentialRecord | undefined>
   getSdJwtCredentialById: (id: string) => Promise<SdJwtVcRecord | undefined>
   getMdocCredentialById: (id: string) => Promise<MdocRecord | undefined>
-  storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) => Promise<void>
+  storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) => Promise<void>
   removeCredential: (
-    cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord,
+    cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord,
     type: OpenIDCredentialType
   ) => Promise<void>
   resolveBundleForCredential: (
-    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
+    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
   ) => Promise<CredentialOverlay<BrandingOverlay>>
 }
 
@@ -129,7 +130,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 }: OpenIDCredentialProviderProps) => {
   const [state, setState] = useState<OpenIDCredentialRecordState>(defaultState)
 
-  const { agent } = useAgent()
+  const { agent } = useAppAgent()
   const [logger, bundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
   const { i18n } = useTranslation()
 
@@ -143,7 +144,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
 
   async function getW3CCredentialById(id: string): Promise<W3cCredentialRecord | undefined> {
     checkAgent()
-    return await agent?.w3cCredentials.getCredentialRecordById(id)
+    return await agent?.w3cCredentials.getById(id)
   }
 
   async function getSdJwtCredentialById(id: string): Promise<SdJwtVcRecord | undefined> {
@@ -156,21 +157,24 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     return await agent?.mdoc.getById(id)
   }
 
-  async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord): Promise<void> {
+  async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord): Promise<void> {
     checkAgent()
     if (cred instanceof W3cCredentialRecord) {
-      await agent?.dependencyManager.resolve(W3cCredentialRepository).save(agent.context, cred)
+      const repo: W3cCredentialRepository = agent?.context.dependencyManager.resolve(W3cCredentialRepository)
+      await repo.save(agent.context, cred)
     } else if (cred instanceof SdJwtVcRecord) {
-      await agent?.dependencyManager.resolve(SdJwtVcRepository).save(agent.context, cred)
+      const repo: SdJwtVcRepository = agent?.context.dependencyManager.resolve(SdJwtVcRepository)
+      await repo.save(agent.context, cred)
     } else if (cred instanceof MdocRecord) {
-      await agent?.dependencyManager.resolve(MdocRepository).save(agent.context, cred)
+      const repo: MdocRepository = agent?.context.dependencyManager.resolve(MdocRepository)
+      await repo.save(agent.context, cred)
     }
   }
 
-  async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord, type: OpenIDCredentialType) {
+  async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord, type: OpenIDCredentialType) {
     checkAgent()
     if (type === OpenIDCredentialType.W3cCredential) {
-      await agent?.w3cCredentials.removeCredentialRecord(cred.id)
+      await agent?.w3cCredentials.deleteById(cred.id)
     } else if (type === OpenIDCredentialType.SdJwtVc) {
       await agent?.sdJwtVc.deleteById(cred.id)
     } else if (type === OpenIDCredentialType.Mdoc) {
@@ -179,7 +183,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }
 
   const resolveBundleForCredential = async (
-    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
+    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
   ): Promise<CredentialOverlay<BrandingOverlay>> => {
     const credentialDisplay = getCredentialForDisplay(credential)
 
@@ -204,8 +208,8 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       capture_base: 'none',
       type: BrandingOverlayType.Branding10,
       primary_background_color: credentialDisplay.display.backgroundColor,
-      background_image: credentialDisplay.display.backgroundImage?.url,
-      logo: credentialDisplay.display.logo?.url,
+      background_image: credentialDisplay.display.backgroundImage?.uri,
+      logo: credentialDisplay.display.logo?.uri,
     })
     const ocaBundle: CredentialOverlay<BrandingOverlay> = {
       ..._bundle,
@@ -219,7 +223,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   useEffect(() => {
     if (!agent) return
 
-    agent.w3cCredentials?.getAllCredentialRecords().then((w3cCredentialRecords) => {
+    agent.w3cCredentials?.getAll().then((w3cCredentialRecords) => {
       setState((prev) => ({
         ...prev,
         w3cCredentialRecords: filterW3CCredentialsOnly(w3cCredentialRecords),
@@ -244,27 +248,28 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       //This handler will return ANY creds added to the wallet even DidComm
       //Sounds like a bug in the hooks package
       //This check will safe guard the flow untill a fix goes to the hooks
-      if (isW3CCredentialRecord(record)) {
-        setState(addW3cRecord(record, state))
+      const w3cRecord = record as W3cCredentialRecord // TODO: Why do we need to cast here now?
+      if (isW3CCredentialRecord(w3cRecord)) {
+        setState(addW3cRecord(w3cRecord, state))
       }
     })
 
     const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
-      setState(removeW3cRecord(record, state))
+      setState(removeW3cRecord(record as W3cCredentialRecord, state))
     })
 
     const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
       //This handler will return ANY creds added to the wallet even DidComm
       //Sounds like a bug in the hooks package
       //This check will safe guard the flow untill a fix goes to the hooks
-      setState(addSdJwtRecord(record, state))
+      setState(addSdJwtRecord(record as SdJwtVcRecord, state))
       // if (isW3CCredentialRecord(record)) {
       //   setState(addW3cRecord(record, state))
       // }
     })
 
     const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
-      setState(removeSdJwtRecord(record, state))
+      setState(removeSdJwtRecord(record as SdJwtVcRecord, state))
     })
 
     return () => {

@@ -1,5 +1,5 @@
-import { DidExchangeState } from '@credo-ts/core'
 import { useAgent } from '@bifold/react-hooks'
+import { DidCommDidExchangeState } from '@credo-ts/didcomm'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -175,7 +175,7 @@ const QRScanner: React.FC<Props> = ({
 
   useEffect(() => {
     // Effect not required if tabs are not enabled
-    if (showTabs && record?.state === DidExchangeState.Completed) {
+    if (showTabs && record?.state === DidCommDidExchangeState.Completed) {
       navigation.getParent()?.navigate(Stacks.ConnectionStack, {
         screen: Screens.Connection,
         params: { oobRecordId: recordId },

@@ -1,20 +1,20 @@
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay } from '@bifold/oca/build/legacy'
-import { CredentialExchangeRecord } from '@credo-ts/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import CardWatermark from '../../components/misc/CardWatermark'
 import { useTheme } from '../../contexts/theme'
 import { credentialTextColor, getEffectiveCredentialName } from '../../utils/credential'
-import { formatTime } from '../../utils/helpers'
 import { testIdWithKey } from '../../utils/testable'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
+import { formatTime } from '../../utils/helpers'
 import { ThemedText } from '../texts/ThemedText'
 
 type CredentialDetailPrimaryHeaderProps = {
   overlay: CredentialOverlay<BrandingOverlay>
   brandingOverlayType?: BrandingOverlayType
-  credential?: CredentialExchangeRecord
+  credential?: DidCommCredentialExchangeRecord
 }
 
 const paddingHorizontal = 24

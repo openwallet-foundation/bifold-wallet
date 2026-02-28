@@ -6,13 +6,15 @@ import type {
   W3cCredentialDisplay,
   W3cCredentialJson,
 } from './types'
-import { JwkJson, Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord } from '@credo-ts/core'
+import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'
 import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
 import { CredentialForDisplayId } from './types'
 import { detectImageMimeType, formatDate, getHostNameFromUrl, isDateString, sanitizeString } from './utils/utils'
 import { getOpenId4VcCredentialMetadata } from './metadata'
+import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
+
 
 function findDisplay<Display extends { locale?: string }>(display?: Display[]): Display | undefined {
   if (!display) return undefined
@@ -36,7 +38,7 @@ function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetada
 
       if (openidIssuerDisplay.logo) {
         issuerDisplay.logo = {
-          url: openidIssuerDisplay.logo?.url,
+          uri: openidIssuerDisplay.logo?.uri,
           altText: openidIssuerDisplay.logo?.alt_text,
         }
       }
@@ -46,8 +48,8 @@ function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetada
     const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
     if (openidCredentialDisplay && !issuerDisplay.logo && openidCredentialDisplay.logo) {
       issuerDisplay.logo = {
-        url: openidCredentialDisplay.logo?.url,
-        altText: openidCredentialDisplay.logo?.alt_text,
+        uri: openidCredentialDisplay.logo?.uri,
+        altText: openidCredentialDisplay.logo?.altText,
       }
     }
   }
@@ -74,7 +76,7 @@ function getIssuerDisplay(metadata: OpenId4VcCredentialMetadata | null | undefin
   issuerDisplay.name = openidIssuerDisplay?.name
   issuerDisplay.logo = openidIssuerDisplay?.logo
     ? {
-        url: openidIssuerDisplay.logo?.url,
+        uri: openidIssuerDisplay.logo?.uri,
         altText: openidIssuerDisplay.logo?.alt_text,
       }
     : undefined
@@ -83,8 +85,8 @@ function getIssuerDisplay(metadata: OpenId4VcCredentialMetadata | null | undefin
   const openidCredentialDisplay = findDisplay(metadata?.credential.display)
   if (openidCredentialDisplay && !issuerDisplay.logo && openidCredentialDisplay.logo) {
     issuerDisplay.logo = {
-      url: openidCredentialDisplay.logo?.url,
-      altText: openidCredentialDisplay.logo?.alt_text,
+      uri: openidCredentialDisplay.logo?.uri,
+      altText: openidCredentialDisplay.logo?.altText,
     }
   }
 
@@ -117,12 +119,12 @@ function getW3cIssuerDisplay(
   const issuerJson = typeof jffCredential.issuer === 'string' ? undefined : jffCredential.issuer
 
   // Issuer Display from JFF
-  if (!issuerDisplay.logo || !issuerDisplay.logo.url) {
+  if (!issuerDisplay.logo || !issuerDisplay.logo.uri) {
     issuerDisplay.logo = issuerJson?.logoUrl
-      ? { url: issuerJson?.logoUrl }
+      ? { uri: issuerJson?.logoUrl }
       : issuerJson?.image
-        ? { url: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
-        : undefined
+      ? { uri: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
+      : undefined
   }
 
   // Issuer name from JFF
@@ -143,12 +145,12 @@ function getCredentialDisplay(
     const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
     credentialDisplay.name = openidCredentialDisplay?.name
     credentialDisplay.description = openidCredentialDisplay?.description
-    credentialDisplay.textColor = openidCredentialDisplay?.text_color
-    credentialDisplay.backgroundColor = openidCredentialDisplay?.background_color
-    credentialDisplay.backgroundImage = openidCredentialDisplay?.background_image
+    credentialDisplay.textColor = openidCredentialDisplay?.textColor
+    credentialDisplay.backgroundColor = openidCredentialDisplay?.backgroundColor
+    credentialDisplay.backgroundImage = openidCredentialDisplay?.backgroundImage
       ? {
-          url: openidCredentialDisplay.background_image.url,
-          altText: openidCredentialDisplay.background_image.alt_text,
+          uri: openidCredentialDisplay.backgroundImage.uri,
+          altText: openidCredentialDisplay.backgroundImage.altText,
         }
       : undefined
     credentialDisplay.logo = openidCredentialDisplay?.logo
@@ -220,13 +222,13 @@ function getMdocCredentialDisplay(
     if (openidCredentialDisplay) {
       credentialDisplay.name = openidCredentialDisplay.name
       credentialDisplay.description = openidCredentialDisplay.description
-      credentialDisplay.textColor = openidCredentialDisplay.text_color
-      credentialDisplay.backgroundColor = openidCredentialDisplay.background_color
+      credentialDisplay.textColor = openidCredentialDisplay.textColor
+      credentialDisplay.backgroundColor = openidCredentialDisplay.backgroundColor
 
-      if (openidCredentialDisplay.background_image) {
+      if (openidCredentialDisplay.backgroundImage) {
         credentialDisplay.backgroundImage = {
-          url: openidCredentialDisplay.background_image.url,
-          altText: openidCredentialDisplay.background_image.alt_text,
+          uri: openidCredentialDisplay.backgroundImage.uri,
+          altText: openidCredentialDisplay.backgroundImage.altText,
         }
       }
 
@@ -263,7 +265,7 @@ export interface CredentialMetadata {
   issuedAt?: string
 }
 
-function safeCalculateJwkThumbprint(jwk: JwkJson): string | undefined {
+function safeCalculateJwkThumbprint(jwk: Jwk): string | undefined {
   try {
     const thumbprint = TypedArrayEncoder.toBase64URL(
       Hasher.hash(
@@ -291,7 +293,7 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { _sd_alg, _sd_hash, iss, vct, cnf, iat, exp, nbf, ...visibleProperties } = sdJwtVcPayload as SdJwtVcPayload
 
-  const holder = (cnf.kid ?? cnf.jwk) ? safeCalculateJwkThumbprint(cnf.jwk as JwkJson) : undefined
+  const holder = (cnf.kid ?? cnf.jwk) ? safeCalculateJwkThumbprint(cnf.jwk as Jwk) : undefined
   const credentialMetadata: CredentialMetadata = {
     type: vct,
     issuer: iss,
@@ -322,13 +324,13 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
 }
 
 export function getCredentialForDisplay(
-  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 ): W3cCredentialDisplay {
   if (credentialRecord instanceof SdJwtVcRecord) {
     // FIXME: we should probably add a decode method on the SdJwtVcRecord
     // as you now need the agent context to decode the sd-jwt vc, while that's
     // not really needed
-    const { disclosures, jwt } = decodeSdJwtSync(credentialRecord.compactSdJwtVc, (data, alg) => Hasher.hash(data, alg))
+    const { disclosures, jwt } = decodeSdJwtSync(credentialRecord.firstCredential.compact, (data, alg) => Hasher.hash(data, alg))
     const decodedPayload: Record<string, unknown> = getClaimsSync(jwt.payload, disclosures, (data, alg) =>
       Hasher.hash(data, alg)
     )
@@ -348,7 +350,7 @@ export function getCredentialForDisplay(
       },
       attributes: mapped.visibleProperties,
       metadata: mapped.metadata,
-      claimFormat: ClaimFormat.SdJwtVc,
+      claimFormat: ClaimFormat.SdJwtW3cVc,
       validUntil: mapped.raw.validUntil,
       validFrom: mapped.raw.validFrom,
       credentialSubject: openId4VcMetadata?.credential.credential_subject,
@@ -360,7 +362,7 @@ export function getCredentialForDisplay(
     const issuerDisplay = getOpenId4VcIssuerDisplay(openId4VcMetadata)
     const credentialDisplay = getMdocCredentialDisplay({}, openId4VcMetadata)
 
-    const mdocInstance = Mdoc.fromBase64Url(credentialRecord.base64Url)
+    const mdocInstance = Mdoc.fromBase64Url(credentialRecord.firstCredential.base64Url)
     const attributes = Object.fromEntries(
       Object.values(mdocInstance.issuerSignedNamespaces).flatMap((v) =>
         Object.entries(v).map(([key, value]) => [key, recursivelyMapAttribues(value)])
@@ -389,9 +391,9 @@ export function getCredentialForDisplay(
   }
 
   const credential = JsonTransformer.toJSON(
-    credentialRecord.credential.claimFormat === ClaimFormat.JwtVc
-      ? credentialRecord.credential.credential
-      : credentialRecord.credential
+    credentialRecord.firstCredential.claimFormat === ClaimFormat.JwtVc
+      ? credentialRecord.firstCredential.credential
+      : credentialRecord.firstCredential
   ) as W3cCredentialJson
 
   const openId4VcMetadata = getOpenId4VcCredentialMetadata(credentialRecord)
@@ -403,6 +405,14 @@ export function getCredentialForDisplay(
     ? (credential.credentialSubject[0] ?? {})
     : credential.credentialSubject
 
+  // Extract issuer id from credential
+  const issuerId = credential.issuer.id
+
+  // Extract holder/subject id from credential subject
+  const holderId = Array.isArray(credential.credentialSubject)
+    ? credential.credentialSubject[0]?.id
+    : credential.credentialSubject.id
+
   return {
     id: `w3c-credential-${credentialRecord.id}` satisfies CredentialForDisplayId,
     createdAt: credentialRecord.createdAt,
@@ -413,21 +423,21 @@ export function getCredentialForDisplay(
     credential,
     attributes: credentialAttributes,
     metadata: {
-      holder: credentialRecord.credential.credentialSubjectIds[0],
-      issuer: credentialRecord.credential.issuerId,
-      type: credentialRecord.credential.type[credentialRecord.credential.type.length - 1],
-      issuedAt: formatDate(new Date(credentialRecord.credential.issuanceDate)),
-      validUntil: credentialRecord.credential.expirationDate
-        ? formatDate(new Date(credentialRecord.credential.expirationDate))
+      holder: holderId,
+      issuer: issuerId,
+      type: credential.type[credential.type.length - 1],
+      issuedAt: formatDate(new Date(credential.issuanceDate)),
+      validUntil: credential.expiryDate
+        ? formatDate(new Date(credential.expiryDate))
         : undefined,
       validFrom: undefined,
     } satisfies CredentialMetadata,
-    claimFormat: credentialRecord.credential.claimFormat,
-    validUntil: credentialRecord.credential.expirationDate
-      ? new Date(credentialRecord.credential.expirationDate)
+    claimFormat: credentialRecord.firstCredential.claimFormat,
+    validUntil: credential.expiryDate
+      ? new Date(credential.expiryDate)
       : undefined,
-    validFrom: credentialRecord.credential.issuanceDate
-      ? new Date(credentialRecord.credential.issuanceDate)
+    validFrom: credential.issuanceDate
+      ? new Date(credential.issuanceDate)
       : undefined,
     credentialSubject: openId4VcMetadata?.credential.credential_subject,
   }

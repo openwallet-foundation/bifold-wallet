@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import 'reflect-metadata'
-import 'react-native-gesture-handler/jestSetup'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js'
+import path from 'path'
 import mockRNLocalize from 'react-native-localize/mock'
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock'
+import 'react-native-gesture-handler/jestSetup'
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
-import path from 'path'
+import 'reflect-metadata'
 
 // React 18+/19: enable proper act() behavior in tests
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
@@ -14,17 +14,19 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 mockRNDeviceInfo.getVersion = jest.fn(() => '1')
 mockRNDeviceInfo.getBuildNumber = jest.fn(() => '1')
 
+jest.mock('react-native', () => jest.requireActual('react-native'))
+
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext)
 jest.mock('react-native-device-info', () => mockRNDeviceInfo)
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo)
-jest.mock('react-native/src/private/animated/NativeAnimatedHelper')
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
+// jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 jest.mock('react-native-localize', () => mockRNLocalize)
 jest.mock('react-native-fs', () => ({}))
 jest.mock('@hyperledger/anoncreds-react-native', () => ({}))
 jest.mock('@openwallet-foundation/askar-react-native', () => ({}))
 jest.mock('@hyperledger/indy-vdr-react-native', () => ({}))
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
+jest.mock('react-native-orientation-locker', () => require('./__mocks__/custom/react-native-orientation-locker'))
 jest.mock('react-native-vision-camera', () => {
   return require('./__mocks__/custom/react-native-camera')
 })

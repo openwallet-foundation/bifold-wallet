@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey, parseIndyCredentialDefinitionId, parseIndySchemaId } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord as CredentialRecord } from '@credo-ts/didcomm'
 import type { Agent } from '@credo-ts/core'
 
 import { credentialSchema } from './schema'

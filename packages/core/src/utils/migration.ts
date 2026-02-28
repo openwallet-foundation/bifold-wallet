@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { AskarModule } from '@credo-ts/askar'
 import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
-import { IndySdkToAskarMigrationUpdater } from '@credo-ts/indy-sdk-to-askar-migration'
 import { agentDependencies } from '@credo-ts/react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { Platform } from 'react-native'
@@ -15,26 +15,26 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
     agent ??
     new Agent({
       config: {
-        label: 'Aries Bifold',
-        walletConfig: {
-          id: walletId,
-          key,
-        },
+        // walletConfig: {
+        //   id: walletId,
+        //   key,
+        // },
         logger: new ConsoleLogger(LogLevel.trace),
         autoUpdateStorageOnStartup: false,
       },
       modules: {
         askar: new AskarModule({
-          ariesAskar: askar,
+          askar,
+          store: { id: 'askarMigration', key: 'askarMigration' },
         }),
       },
       dependencies: agentDependencies,
     })
 
-  const updater = await IndySdkToAskarMigrationUpdater.initialize({
-    dbPath,
-    agent: aAgent,
-  })
+  // const updater = await IndySdkToAskarMigrationUpdater.initialize({
+  //   dbPath,
+  //   agent: aAgent,
+  // })
 
-  await updater.update()
+  // await updater.update()
 }

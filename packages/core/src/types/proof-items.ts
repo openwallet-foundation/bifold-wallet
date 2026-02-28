@@ -1,17 +1,17 @@
 import { AnonCredsCredentialsForProofRequest } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 
 export type CredentialDataForProof = {
   groupedProof: (ProofCredentialPredicates & ProofCredentialAttributes)[]
   retrievedCredentials: AnonCredsCredentialsForProofRequest | undefined
-  fullCredentials: CredentialExchangeRecord[]
+  fullCredentials: DidCommCredentialExchangeRecord[]
   descriptorMetadata?: DescriptorMetadata
 }
 export interface ProofCredentialAttributes {
   altCredentials?: string[]
-  credExchangeRecord?: CredentialExchangeRecord
+  credExchangeRecord?: DidCommCredentialExchangeRecord
   credId: string
   credDefId?: string
   schemaId?: string
@@ -21,7 +21,7 @@ export interface ProofCredentialAttributes {
 
 export interface ProofCredentialPredicates {
   altCredentials?: string[]
-  credExchangeRecord?: CredentialExchangeRecord
+  credExchangeRecord?: DidCommCredentialExchangeRecord
   credId: string
   credDefId?: string
   schemaId?: string

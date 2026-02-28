@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { LegacyBrandingOverlay } from '@bifold/oca'
 import { CredentialOverlay } from '@bifold/oca/build/legacy'
 import React, { useEffect, useState } from 'react'
@@ -31,7 +31,7 @@ import { testIdWithKey } from '../../utils/testable'
 import CardWatermark from './CardWatermark'
 
 interface CredentialCard10Props {
-  credential: CredentialExchangeRecord
+  credential: DidCommCredentialExchangeRecord
   onPress?: GenericFn
   style?: ViewStyle
 }

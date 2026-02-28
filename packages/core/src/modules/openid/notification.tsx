@@ -1,6 +1,6 @@
-import { OpenId4VciNotificationMetadata, OpenId4VciRequestTokenResponse } from '@credo-ts/openid4vc'
-import { useAgent } from '@bifold/react-hooks'
+import { OpenId4VciRequestTokenResponse, OpenId4VciMetadata } from '@credo-ts/openid4vc'
 import { useServices, TOKENS } from '../../container-api'
+import { useAppAgent } from '../../utils/agent'
 
 export enum NotificationEventType {
   CREDENTIAL_ACCEPTED = 'credential_accepted',
@@ -10,13 +10,14 @@ export enum NotificationEventType {
 
 //TODO: ADD TYPE SAFETY
 interface sendOpenId4VciNotificationOptions {
-  notificationMetadata: OpenId4VciNotificationMetadata
+  notificationId: string
+  notificationMetadata: OpenId4VciMetadata
   accessToken: OpenId4VciRequestTokenResponse['accessToken']
   notificationEvent: NotificationEventType
 }
 
 export const useOpenId4VciNotifications = () => {
-  const { agent } = useAgent()
+  const { agent } = useAppAgent()
   const [logger] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
 
   /**
@@ -29,8 +30,9 @@ export const useOpenId4VciNotifications = () => {
       logger.error(`[OpenIDCredentialNotification] ${error}`)
       throw new Error(error)
     }
-    await agent.modules.openId4VcHolder.sendNotification({
-      notificationMetadata: options?.notificationMetadata,
+    await agent.modules.openid4vc.holder.sendNotification({
+      notificationId: options.notificationId,
+      metadata: options?.notificationMetadata,
       accessToken: options?.accessToken,
       notificationEvent: options?.notificationEvent,
     })

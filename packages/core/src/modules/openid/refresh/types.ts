@@ -1,11 +1,12 @@
 import {
   ClaimFormat,
-  JwaSignatureAlgorithm,
-  JwkJson,
   MdocRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
+  W3cV2CredentialRecord,
 } from '@credo-ts/core'
+import { KnownJwaSignatureAlgorithm } from '@credo-ts/core/build/modules/kms/jwk/jwa.mjs'
+import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
 import { OpenId4VciResolvedCredentialOffer } from '@credo-ts/openid4vc'
 
 export type IssuerMetadataCache = {
@@ -33,7 +34,7 @@ export interface RefreshCredentialMetadata {
   issuerMetadataCache: IssuerMetadataCache
   clientId?: string
   tokenBinding?: 'DPoP' | 'Bearer'
-  dpop?: { alg: JwaSignatureAlgorithm; jwk: JwkJson }
+  dpop?: { alg: KnownJwaSignatureAlgorithm; jwk: Jwk }
 
   // refresh lifecycle
   lastCheckedAt?: number
@@ -52,7 +53,7 @@ export type RefreshOrchestratorOpts = {
   autoStart?: boolean
   onError?: (e: unknown) => void
   listRecords?: () => Promise<any[]>
-  toLite?: (rec: W3cCredentialRecord | SdJwtVcRecord | MdocRecord) => {
+  toLite?: (rec: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) => {
     id: string
     format: ClaimFormat
     createdAt?: string
@@ -66,7 +67,7 @@ export interface IRefreshOrchestrator {
   stop(): void
   runOnce(reason?: string): Promise<void>
   isRunning(): boolean
-  resolveFull(id: string): W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
+  resolveFull(id: string): W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord| undefined
 }
 
 export enum OpenIDCustomNotificationType {

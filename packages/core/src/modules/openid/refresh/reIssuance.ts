@@ -1,17 +1,16 @@
 import {
   Agent,
-  JwaSignatureAlgorithm,
-  Mdoc,
   MdocRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
-  W3cJsonLdVerifiableCredential,
-  W3cJwtVerifiableCredential,
+  W3cV2CredentialRecord,
 } from '@credo-ts/core'
 import { RefreshResponse } from '../types'
 import {
   OpenId4VciCredentialBindingOptions,
-  OpenId4VciCredentialSupportedWithId,
+  OpenId4VciCredentialResponse,
+  OpenId4VciDeferredCredentialResponse,
+  OpenId4VciDpopRequestOptions,
   OpenId4VciResolvedCredentialOffer,
 } from '@credo-ts/openid4vc'
 import { customCredentialBindingResolver } from '../offerResolve'
@@ -27,7 +26,7 @@ import { RefreshStatus } from './types'
 type ReissueWithAccessTokenInput = {
   agent: Agent
   logger: BifoldLogger
-  record?: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
+  record?: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
   tokenResponse: RefreshResponse
   resolvedOffer?: OpenId4VciResolvedCredentialOffer
   clientId?: string
@@ -42,7 +41,7 @@ export async function reissueCredentialWithAccessToken({
   tokenResponse,
   clientId,
   pidSchemes,
-}: ReissueWithAccessTokenInput): Promise<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined> {
+}: ReissueWithAccessTokenInput): Promise<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined> {
   if (!record) {
     throw new Error('No credential record provided for re-issuance.')
   }
@@ -63,7 +62,14 @@ export async function reissueCredentialWithAccessToken({
 
   logger.info('*** Starting to get new credential via re-issuance flow ***')
   // Request a **new** credential using the *existing* configuration id
-  const creds = await agent.modules.openId4VcHolder.requestCredentials({
+  type credsRet = {
+    credentials: OpenId4VciCredentialResponse[]
+    deferredCredentials: OpenId4VciDeferredCredentialResponse[]
+    dpop?: OpenId4VciDpopRequestOptions
+    cNonce?: string
+  }
+
+  const creds: credsRet = await agent.modules.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
     accessToken: tokenResponse.access_token,
     tokenType: tokenResponse.token_type || 'Bearer',
@@ -71,16 +77,16 @@ export async function reissueCredentialWithAccessToken({
     clientId,
     credentialsToRequest: [credentialConfigurationId],
     verifyCredentialStatus: false, // you’ll check after storing
-    allowedProofOfPossessionSignatureAlgorithms: [JwaSignatureAlgorithm.EdDSA, JwaSignatureAlgorithm.ES256],
+    allowedProofOfPossessionSignatureAlgorithms: ['EdDSA', 'ES256'],
     credentialBindingResolver: async (opts: OpenId4VciCredentialBindingOptions) =>
       customCredentialBindingResolver({
         agent,
         supportedDidMethods: opts.supportedDidMethods,
-        keyType: opts.keyType,
+        // keyType: opts.keyType,
         supportsAllDidMethods: opts.supportsAllDidMethods,
         supportsJwk: opts.supportsJwk,
         credentialFormat: opts.credentialFormat,
-        supportedCredentialId: opts.supportedCredentialId,
+        // supportedCredentialId: opts.supportedCredentialId,
         resolvedCredentialOffer: resolvedCredentialOffer,
         pidSchemes,
       }),
@@ -89,28 +95,28 @@ export async function reissueCredentialWithAccessToken({
   logger.info('*** New credential received via re-issuance flow ***.')
 
   // Normalize to your local record types
-  const [firstCredential] = creds
+  const [firstCredential] = creds.credentials
   if (!firstCredential || typeof firstCredential === 'string') {
     throw new Error('Issuer returned empty or malformed credential on re-issuance.')
   }
 
-  let newRecord: SdJwtVcRecord | W3cCredentialRecord | MdocRecord
-  if ('compact' in firstCredential.credential) {
-    newRecord = new SdJwtVcRecord({ compactSdJwtVc: firstCredential.credential.compact })
-  } else if ((firstCredential as any)?.credential instanceof Mdoc) {
-    newRecord = new MdocRecord({ mdoc: firstCredential.credential })
-  } else {
-    newRecord = new W3cCredentialRecord({
-      credential: firstCredential.credential as W3cJwtVerifiableCredential | W3cJsonLdVerifiableCredential,
-      tags: {},
-    })
-  }
+  const newRecord: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord = firstCredential.record
+  // if ('compact' in firstCredential) {
+  //   newRecord = new SdJwtVcRecord({ c })
+  // } else if ((firstCredential as any)?.credential instanceof Mdoc) {
+  //   newRecord = new MdocRecord({ mdoc: firstCredential.credential })
+  // } else {
+  //   newRecord = new W3cCredentialRecord({
+  //     credential: firstCredential.credential as W3cJwtVerifiableCredential | W3cJsonLdVerifiableCredential,
+  //     tags: {},
+  //   })
+  // }
 
   const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
-    resolvedCredentialOffer.offeredCredentials[0] as OpenId4VciCredentialSupportedWithId,
+    resolvedCredentialOffer.offeredCredentialConfigurations,
     {
-      id: resolvedCredentialOffer.metadata.issuer,
-      display: resolvedCredentialOffer.metadata.credentialIssuerMetadata.display,
+      id: resolvedCredentialOffer.metadata.credentialIssuer.credential_issuer,
+      display: resolvedCredentialOffer.metadata.credentialIssuer.display,
     }
   )
 

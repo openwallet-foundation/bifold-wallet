@@ -1,7 +1,6 @@
-import { AnonCredsProof, INDY_PROOF_REQUEST_ATTACHMENT_ID, V1RequestPresentationMessage } from '@credo-ts/anoncreds'
-import { ProofExchangeRecord, ProofRole, ProofState } from '@credo-ts/core'
-import { Attachment, AttachmentData } from '@credo-ts/core/build/decorators/attachment/Attachment'
 import { useProofById } from '@bifold/react-hooks'
+import { AnonCredsProof, INDY_PROOF_REQUEST_ATTACHMENT_ID, DidCommRequestPresentationV1Message } from '@credo-ts/anoncreds'
+import { DidCommProofExchangeRecord, DidCommProofRole, DidCommProofState, DidCommAttachment, DidCommAttachmentData } from '@credo-ts/didcomm'
 import * as verifier from '@bifold/verifier'
 import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock'
 import '@testing-library/jest-native'
@@ -79,13 +78,13 @@ const proof: AnonCredsProof = {
   ],
 }
 
-const requestPresentationMessage = new V1RequestPresentationMessage({
+const requestPresentationMessage = new DidCommRequestPresentationV1Message({
   comment: 'some comment',
   requestAttachments: [
-    new Attachment({
+    new DidCommAttachment({
       id: INDY_PROOF_REQUEST_ATTACHMENT_ID,
       mimeType: 'application/json',
-      data: new AttachmentData({
+      data: new DidCommAttachmentData({
         json: proof_request,
       }),
     }),
@@ -112,11 +111,11 @@ describe('ProofDetails Screen', () => {
   }
 
   describe('with a verified proof record', () => {
-    const testVerifiedProofRequest = new ProofExchangeRecord({
-      role: ProofRole.Prover,
+    const testVerifiedProofRequest = new DidCommProofExchangeRecord({
+      role: DidCommProofRole.Prover,
       connectionId: undefined,
       threadId: requestPresentationMessage.id,
-      state: ProofState.Done,
+      state: DidCommProofState.Done,
       protocolVersion: 'V1',
       isVerified: true,
     })
@@ -189,13 +188,13 @@ describe('ProofDetails Screen', () => {
   })
 
   describe('renders correctly with an unverified proof', () => {
-    const testUnverifiedProofRequest = new ProofExchangeRecord({
+    const testUnverifiedProofRequest = new DidCommProofExchangeRecord({
       connectionId: '123',
       threadId: requestPresentationMessage.id,
-      state: ProofState.Done,
+      state: DidCommProofState.Done,
       protocolVersion: 'V1',
       isVerified: false,
-      role: ProofRole.Verifier,
+      role: DidCommProofRole.Verifier,
     })
 
     beforeEach(() => {

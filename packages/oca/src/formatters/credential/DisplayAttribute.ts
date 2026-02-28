@@ -1,8 +1,8 @@
-import { CredentialPreviewAttribute, CredentialPreviewAttributeOptions } from '@credo-ts/core'
+import { DidCommCredentialPreviewAttribute, DidCommCredentialPreviewAttributeOptions } from '@credo-ts/didcomm'
 
 import { IOverlayBundleAttribute as OverlayBundleAttributeOptions } from '../../interfaces/overlay'
 
-export default class DisplayAttribute extends CredentialPreviewAttribute {
+export default class DisplayAttribute extends DidCommCredentialPreviewAttribute {
   characterEncoding: string | undefined
   standard: string | undefined
   format: string | undefined
@@ -10,7 +10,7 @@ export default class DisplayAttribute extends CredentialPreviewAttribute {
   label: string | undefined
 
   constructor(
-    options: CredentialPreviewAttributeOptions,
+    options: DidCommCredentialPreviewAttributeOptions,
     overlayOptions: OverlayBundleAttributeOptions,
     language: string
   ) {

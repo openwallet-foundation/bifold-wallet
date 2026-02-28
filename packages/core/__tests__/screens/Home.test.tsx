@@ -1,4 +1,4 @@
-import { BasicMessageRecord, CredentialExchangeRecord as CredentialRecord, ProofExchangeRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord as CredentialRecord } from '@credo-ts/didcomm'
 import { useNavigation } from '@react-navigation/native'
 import { fireEvent, render, act } from '@testing-library/react-native'
 

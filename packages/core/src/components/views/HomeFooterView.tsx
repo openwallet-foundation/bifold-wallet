@@ -1,5 +1,5 @@
-import { CredentialState } from '@credo-ts/core'
 import { useCredentialByState } from '@bifold/react-hooks'
+import { DidCommCredentialState } from '@credo-ts/didcomm'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -17,8 +17,8 @@ const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
   const { openIdState } = useOpenIDCredentials()
   const { w3cCredentialRecords, sdJwtVcRecords } = openIdState
   const credentials = [
-    ...useCredentialByState(CredentialState.CredentialReceived),
-    ...useCredentialByState(CredentialState.Done),
+    ...useCredentialByState(DidCommCredentialState.CredentialReceived),
+    ...useCredentialByState(DidCommCredentialState.Done),
     ...w3cCredentialRecords,
     ...sdJwtVcRecords,
   ]

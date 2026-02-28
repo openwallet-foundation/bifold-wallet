@@ -3,8 +3,9 @@ import { ParseInvitationResult } from '../../utils/parsers'
 import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
-import { OpenId4VcSiopVerifiedAuthorizationRequest } from '@credo-ts/openid4vc'
+import { OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
 import { Linking } from 'react-native'
+import { BifoldAgent } from '../../utils/agent'
 
 function handleTextResponse(text: string): ParseInvitationResult {
   // If the text starts with 'ey' we assume it's a JWT and thus an OpenID authorization request
@@ -146,7 +147,7 @@ export const extractCertificateFromAuthorizationRequest = async ({
 }
 
 export async function withTrustedCertificate<T>(
-  agent: Agent,
+  agent: Agent, //This should maybe be AgentContext instead
   certificate: string | null,
   method: () => Promise<T> | T
 ): Promise<T> {
@@ -156,7 +157,7 @@ export async function withTrustedCertificate<T>(
     : []
 
   try {
-    if (certificate) agent.x509.addTrustedCertificate(certificate)
+    if (certificate) agent.modules.x509.addTrustedCertificate(certificate)
     return await method()
   } finally {
     if (certificate) x509ModuleConfig.setTrustedCertificates(currentTrustedCertificates as [string])
@@ -171,7 +172,7 @@ export const getCredentialsForProofRequest = async ({
   data,
   uri,
 }: {
-  agent: Agent
+  agent: BifoldAgent
   // Either data itself (the offer) or uri can be passed
   data?: string
   uri?: string
@@ -199,22 +200,27 @@ export const getCredentialsForProofRequest = async ({
 
     // Temp solution to add and remove the trusted certificate
     const resolved = await withTrustedCertificate(agent, certificate, () => {
-      return agent.modules.openId4VcHolder.resolveSiopAuthorizationRequest(requestUri)
+      return agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(String(requestUri)) // Could throw instead of using constructor here
     })
 
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
     }
 
-    return {
+    const requestRecord: OpenId4VPRequestRecord = {
       ...resolved.presentationExchange,
-      authorizationRequest: resolved.authorizationRequest,
-      verifierHostName: resolved.authorizationRequest.responseURI
-        ? getHostNameFromUrl(resolved.authorizationRequest.responseURI)
+      authorizationRequestPayload: resolved.authorizationRequestPayload,
+      verifierHostName: resolved.authorizationRequestPayload.response_uri
+        ? getHostNameFromUrl(String(resolved.authorizationRequestPayload.response_uri))
         : undefined,
       createdAt: new Date(),
       type: 'OpenId4VPRequestRecord',
+      verifier: {
+        clientIdPrefix: resolved.verifier.clientIdPrefix,
+        effectiveClientId: resolved.verifier.effectiveClientId,
+      }
     }
+    return requestRecord
   } catch (err) {
     agent.config.logger.error(`Parsing presentation request:  ${(err as Error)?.message ?? err}`)
     throw err
@@ -226,10 +232,9 @@ export const shareProof = async ({
   authorizationRequest,
   credentialsForRequest,
   selectedCredentials,
-  allowUntrustedCertificate = false,
 }: {
   agent: Agent
-  authorizationRequest: OpenId4VcSiopVerifiedAuthorizationRequest
+  authorizationRequest: OpenId4VpAuthorizationRequestPayload
   credentialsForRequest: DifPexCredentialsForRequest
   selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
   allowUntrustedCertificate?: boolean
@@ -256,12 +261,14 @@ export const shareProof = async ({
 
   try {
     // Temp solution to add and remove the trusted certicaite
-    const certificate =
-      authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest.jwt) : null
+    // const certificate =
+    //   authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest) : null
 
-    const result = await withTrustedCertificate(agent, certificate, () =>
-      agent.modules.openId4VcHolder.acceptSiopAuthorizationRequest({
-        authorizationRequest,
+    // Need to figure out how to include this certificate, does not seem like the JWT is included in the authorizationRequest any more.
+
+    const result = await withTrustedCertificate(agent, null, () =>
+      agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
+        authorizationRequest: authorizationRequest,
         presentationExchange: {
           credentials,
         },

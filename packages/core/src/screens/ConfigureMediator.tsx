@@ -1,5 +1,5 @@
-import { MediationRecipientService } from '@credo-ts/core'
 import { useAgent } from '@bifold/react-hooks'
+import { AgentContext } from '@credo-ts/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,15 +7,16 @@ import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
-import { ThemedText } from '../components/texts/ThemedText'
-import { LockoutReason, useAuth } from '../contexts/auth'
-import { DispatchAction } from '../contexts/reducers/store'
 import { useStore } from '../contexts/store'
+import { DispatchAction } from '../contexts/reducers/store'
 import { useTheme } from '../contexts/theme'
+import { ThemedText } from '../components/texts/ThemedText'
+import { testIdWithKey } from '../utils/testable'
+import { LockoutReason, useAuth } from '../contexts/auth'
+import DismissiblePopupModal from '../components/modals/DismissiblePopupModal'
 import { Screens, SettingStackParams } from '../types/navigators'
 import { setMediationToDefault } from '../utils/mediatorhelpers'
-import { testIdWithKey } from '../utils/testable'
+import { DidCommMediationRecipientService } from '@credo-ts/didcomm'
 
 type MediatorItem = {
   id: string
@@ -76,7 +77,7 @@ const ConfigureMediator = ({ route }: ConfigureMediatorProps) => {
   const confirmMediatorChange = async () => {
     if (!pendingMediatorId || !agent) return
 
-    await agent.dependencyManager.resolve(MediationRecipientService).clearDefaultMediator(agent.context)
+    await agent.context.dependencyManager.resolve<DidCommMediationRecipientService>(DidCommMediationRecipientService).clearDefaultMediator(agent.context as AgentContext)
     agent.config.logger.info(`successfully cleared default mediator`)
     await setMediationToDefault(agent, pendingMediatorId)
     dispatch({

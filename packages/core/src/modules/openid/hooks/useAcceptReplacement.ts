@@ -1,12 +1,12 @@
 // modules/openid/hooks/useAcceptReplacement.ts
-import { SdJwtVcRecord, W3cCredentialRecord, MdocRecord } from '@credo-ts/core'
+import { SdJwtVcRecord, W3cCredentialRecord, MdocRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { useCallback } from 'react'
 import { TOKENS, useServices } from '../../../container-api'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { credentialRegistry, selectOldIdByReplacementId } from '../refresh/registry'
 import { OpenIDCredentialType } from '../types'
 
-type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 
 const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms))
 /**

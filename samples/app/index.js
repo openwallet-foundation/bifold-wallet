@@ -15,7 +15,9 @@ import '@formatjs/intl-relativetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/polyfill'
 import '@formatjs/intl-datetimeformat/locale-data/en' // locale-data for en
 import '@formatjs/intl-datetimeformat/add-all-tz' // Add ALL tz data
+import 'react-native-url-polyfill/auto'
 import 'reflect-metadata'
+import '@openwallet-foundation/askar-react-native'
 
 //Used to decode base64 in sub-modules like openID4Vp, or any other decoder
 import { decode, encode } from 'base-64'
