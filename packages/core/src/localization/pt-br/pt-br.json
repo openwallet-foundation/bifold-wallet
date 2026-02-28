@@ -770,7 +770,7 @@
     "ThreeMinutes": "Three Minutes (PT-BR)",
     "OneMinute": "One Minute (PT-BR)",
     "Never": "Never (PT-BR)",
-    "Preview": "{{time}} min (PT-BR)"
+    "Preview": "{{autoLockTime}} min (PT-BR)"
   },
   "TabStack": {
     "Home": "Notificações",

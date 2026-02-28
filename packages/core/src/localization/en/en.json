@@ -801,7 +801,7 @@
     "ThreeMinutes": "Three Minutes",
     "OneMinute": "One Minute",
     "Never": "Never",
-    "Preview": "{{time}} min"
+    "Preview": "{{autoLockTime}} min"
   },
   "TabStack": {
     "Home": "Notifications",
