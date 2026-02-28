@@ -1,5 +1,5 @@
-import { ConnectionRecord, ConnectionType, DidExchangeState } from '@credo-ts/core'
 import { useAgent, useConnections } from '@bifold/react-hooks'
+import { DidCommConnectionRecord, DidCommConnectionType, DidCommDidExchangeState } from '@credo-ts/didcomm'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,7 +25,7 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
   const { ColorPalette } = useTheme()
   const { t } = useTranslation()
   const { agent } = useAgent()
-  const [connections, setConnections] = useState<ConnectionRecord[]>([])
+  const [connections, setConnections] = useState<DidCommConnectionRecord[]>([])
   const { records: connectionRecords } = useConnections()
   const [store] = useStore()
   const [{ contactHideList }, ContactListItem, defaultScreenOptionsDict] = useServices([
@@ -53,9 +53,9 @@ const ListContacts: React.FC<ListContactsProps> = ({ navigation }) => {
       if (!store.preferences.developerModeEnabled) {
         orderedContacts = orderedContacts.filter((r) => {
           return (
-            !r.connectionTypes.includes(ConnectionType.Mediator) &&
+            !r.connectionTypes.includes(DidCommConnectionType.Mediator) &&
             !contactHideList?.includes((r.theirLabel || r.alias) ?? '') &&
-            r.state === DidExchangeState.Completed
+            r.state === DidCommDidExchangeState.Completed
           )
         })
       }

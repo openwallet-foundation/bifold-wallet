@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord, CredentialPreviewAttribute } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord, DidCommCredentialPreviewAttribute } from '@credo-ts/didcomm'
 
 import { OverlayBundle } from '../../types'
 
@@ -11,7 +11,7 @@ export default class LocalizedCredential {
   name: string
   attributes!: DisplayAttribute[]
 
-  constructor(bundle: OverlayBundle, record: CredentialExchangeRecord, language: string) {
+  constructor(bundle: OverlayBundle, record: DidCommCredentialExchangeRecord, language: string) {
     if (!language) {
       throw new Error('language is required')
     }
@@ -25,7 +25,7 @@ export default class LocalizedCredential {
     const credentialAttributes = record.credentialAttributes?.length
       ? record.credentialAttributes
       : bundle.attributes.map((attribute) => {
-          return new CredentialPreviewAttribute({ ...attribute, value: '' })
+          return new DidCommCredentialPreviewAttribute({ ...attribute, value: '' })
         })
 
     this.attributes =

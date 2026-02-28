@@ -1,16 +1,22 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord, CredentialState } from '@credo-ts/core'
 import type { Agent } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord, DidCommCredentialState } from '@credo-ts/didcomm'
 import { ImageSourcePropType } from 'react-native'
 
 import { luminanceForHexColor } from './luminance'
 import { getSchemaName, getCredDefTag, fallbackDefaultCredentialNameValue, defaultCredDefTag } from './cred-def'
 import { BifoldLogger } from '../services/logger'
 
-export const isValidAnonCredsCredential = (credential: CredentialExchangeRecord) => {
+// Credo agent shape differs across versions/contexts.
+// Resolve the credentials api from the available path.
+function getCredentialsApi(agent: Agent): any {
+  return (agent as any)?.modules?.didcomm?.credentials || (agent as any)?.didcomm?.credentials || (agent as any)?.credentials
+}
+
+export const isValidAnonCredsCredential = (credential: DidCommCredentialExchangeRecord) => {
   return (
     credential &&
-    (credential.state === CredentialState.OfferReceived ||
+    (credential.state === DidCommCredentialState.OfferReceived ||
       (Boolean(credential.metadata.get(AnonCredsCredentialMetadataKey)) &&
         credential.credentials.find((c) => c.credentialRecordType === 'anoncreds' || c.credentialRecordType === 'w3c')))
   )
@@ -32,7 +38,7 @@ export const toImageSource = (source: unknown): ImageSourcePropType => {
   return source as ImageSourcePropType
 }
 
-export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) => {
+export const getCredentialIdentifiers = (credential: DidCommCredentialExchangeRecord) => {
   return {
     credentialDefinitionId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId,
     schemaId: credential.metadata.get(AnonCredsCredentialMetadataKey)?.schemaId,
@@ -43,12 +49,17 @@ export const getCredentialIdentifiers = (credential: CredentialExchangeRecord) =
  * Attempts to resolve schema and credDef IDs from credential format data.
  */
 async function resolveIdsFromFormatData(
-  credential: CredentialExchangeRecord,
+  credential: DidCommCredentialExchangeRecord,
   agent: Agent,
   logger?: BifoldLogger
 ): Promise<{ schemaId?: string; credDefId?: string }> {
   try {
-    const { offer } = await agent.credentials.getFormatData(credential.id)
+    const credentialsApi = getCredentialsApi(agent)
+    if (!credentialsApi?.getFormatData) {
+      return {}
+    }
+
+    const { offer } = await credentialsApi.getFormatData(credential.id)
     const formatOfferData = offer?.anoncreds ?? offer?.indy
 
     // Type guard to check if formatOfferData has the expected structure
@@ -106,7 +117,7 @@ async function resolveCredDefTag(credDefId: string, agent: Agent, logger?: Bifol
  * Determines the IDs to use for resolution, preferring offer data over existing metadata.
  */
 async function determineSchemaAndCredDefIds(
-  credential: CredentialExchangeRecord,
+  credential: DidCommCredentialExchangeRecord,
   agent: Agent,
   offerData: { schema_id?: string; cred_def_id?: string } | undefined,
   existingMetadata: any,
@@ -129,7 +140,7 @@ async function determineSchemaAndCredDefIds(
  * Updates credential metadata with resolved schema name and cred def tag.
  */
 async function updateCredentialMetadata(params: {
-  credential: CredentialExchangeRecord
+  credential: DidCommCredentialExchangeRecord
   agent: Agent
   existingMetadata: any
   schemaId: string | undefined
@@ -149,7 +160,14 @@ async function updateCredentialMetadata(params: {
   }
 
   credential.metadata.add(AnonCredsCredentialMetadataKey, metadataToStore)
-  await agent.credentials.update(credential)
+  const credentialsApi = getCredentialsApi(agent)
+  if (credentialsApi?.update) {
+    await credentialsApi.update(credential)
+  } else {
+    logger?.warn('Unable to persist credential metadata; credentials update API unavailable', {
+      credentialId: credential.id,
+    })
+  }
 
   logger?.info('Credential metadata ensured', {
     credentialId: credential.id,
@@ -170,7 +188,7 @@ async function updateCredentialMetadata(params: {
  * @returns Promise<boolean> - Returns true if metadata was updated, false otherwise
  */
 export async function ensureCredentialMetadata(
-  credential: CredentialExchangeRecord,
+  credential: DidCommCredentialExchangeRecord,
   agent: Agent,
   offerData?: { schema_id?: string; cred_def_id?: string },
   logger?: BifoldLogger
@@ -241,7 +259,7 @@ export function isValidCredentialName(name: string | undefined): boolean {
  * @param ocaName - The name from OCA meta overlay
  * @returns The effective name to use for display
  */
-export function getEffectiveCredentialName(credential: CredentialExchangeRecord, ocaName?: string): string {
+export function getEffectiveCredentialName(credential: DidCommCredentialExchangeRecord, ocaName?: string): string {
   // 1. Try OCA Bundle name
   if (isValidCredentialName(ocaName)) {
     return ocaName!
