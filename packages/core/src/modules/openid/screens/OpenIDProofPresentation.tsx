@@ -187,7 +187,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       }
       await shareProof({
         agent,
-        authorizationRequest: credential.authorizationRequest,
+        authorizationRequest: credential.authorizationRequestPayload,
         credentialsForRequest: credential.credentialsForRequest,
         selectedCredentials: selectedCredentialsSubmission,
       })

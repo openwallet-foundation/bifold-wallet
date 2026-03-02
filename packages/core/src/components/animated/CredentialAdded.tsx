@@ -20,6 +20,7 @@ const CredentialAdded: React.FC = () => {
   const cardFadeAnim = useRef(new Animated.Value(0))
   const checkFadeAnim = useRef(new Animated.Value(0))
   const tranAnim = useRef(new Animated.Value(-90))
+  const animation = useRef<Animated.CompositeAnimation | null>(null)
   const style = StyleSheet.create({
     container: {
       flexDirection: 'column',
@@ -44,13 +45,22 @@ const CredentialAdded: React.FC = () => {
   })
 
   useEffect(() => {
-    setTimeout(() => {
-      Animated.sequence([
+    const timeout = setTimeout(() => {
+      if (!Animated?.sequence || !Animated?.timing) {
+        return
+      }
+      animation.current = Animated.sequence([
         Animated.timing(cardFadeAnim.current, fadeTiming),
         Animated.timing(tranAnim.current, slideTiming),
         Animated.timing(checkFadeAnim.current, fadeTiming),
-      ]).start()
+      ])
+      animation.current.start()
     }, animationDelay)
+
+    return () => {
+      clearTimeout(timeout)
+      animation.current?.stop?.()
+    }
   }, [])
 
   return (
