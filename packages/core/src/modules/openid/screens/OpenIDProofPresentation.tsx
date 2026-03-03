@@ -29,6 +29,7 @@ import {
 import { shareProof } from '../resolverProof'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 import CredentialCardGen from '../../../components/misc/CredentialCardGen'
+import OpenIdProofRequestDisplay from '../components/OpenIDProofRequestDisplay'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -262,30 +263,6 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     )
   }
 
-  const renderCard = (
-    sub: FormattedSubmissionEntry,
-    selectedCredential: FormattedSelectedCredentialEntry,
-    hasMultipleCreds: boolean
-  ) => {
-    const credential = credentialsRequested.find((c) => c.id === selectedCredential.id)
-    if (!credential) {
-      return null
-    }
-    const credentialDisplay = getCredentialForDisplay(credential)
-    const requestedAttributes = selectedCredential.requestedAttributes
-    const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
-    return (
-      <CredentialCardGen
-        credential={credential}
-        displayItems={fields as Attribute[]}
-        hasAltCredentials={hasMultipleCreds}
-        handleAltCredChange={() => {
-          handleAltCredChange(sub.inputDescriptorId, selectedCredential.id, sub.inputDescriptorId)
-        }}
-      />
-    )
-  }
-
   const renderBody = () => {
     if (submission && !submission.areAllSatisfied) {
       return (
@@ -299,10 +276,12 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
     if (!selectedCredentialsSubmission || !submission) return
 
+
+
     return (
       <View style={styles.credentialsList}>
         {Object.entries(selectedCredentialsSubmission).map(([inputDescriptorId, credentialSimplified], i) => {
-          //TODO: Support multiplae credentials
+          //TODO: Support multiple credentials
 
           const globalSubmissionName = submission.name
           const globalSubmissionPurpose = submission.purpose
@@ -310,33 +289,32 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
           const submissionName = correspondingSubmission?.name
           const submissionPurpose = correspondingSubmission?.purpose
           const isSatisfied = correspondingSubmission?.isSatisfied
-          const credentialSubmittion = correspondingSubmission?.credentials.find(
+          const credentialSubmission = correspondingSubmission?.credentials.find(
             (s) => s.id === credentialSimplified.id
           )
-          const requestedAttributes = credentialSubmittion?.requestedAttributes
+          const requestedAttributes = credentialSubmission?.requestedAttributes
+          const multipleCreds = correspondingSubmission?.credentials ? correspondingSubmission.credentials.length > 1 : false
 
           const name = submissionName || globalSubmissionName || undefined
           const purpose = submissionPurpose || globalSubmissionPurpose || undefined
+          
+          const credential = credentialsRequested.find((c) => c.id === credentialSubmission?.id)
+          
+          if (!credential) {
+            return null
+          }
 
           return (
             <View key={i}>
-              <View style={styles.cardContainer}>
-                <View style={styles.cardGroupContainer}>
-                  {name && purpose && (
-                    <View style={styles.cardGroupHeader}>
-                      <Text style={TextTheme.bold}>{name}</Text>
-                      <Text style={TextTheme.labelTitle}>{purpose}</Text>
-                    </View>
-                  )}
-                  {isSatisfied && requestedAttributes
-                    ? renderCard(
-                        correspondingSubmission,
-                        credentialSubmittion,
-                        correspondingSubmission.credentials.length > 1
-                      )
-                    : null}
-                </View>
-              </View>
+              <OpenIdProofRequestDisplay
+                hasMultipleCreds={multipleCreds}
+                credential={credential}
+                handleAltCredChange={handleAltCredChange}
+                submissionName={name}
+                submissionPurpose={purpose}
+                isSatisfied={isSatisfied}
+                requestedAttributes={requestedAttributes}
+              />
             </View>
           )
         })}
