@@ -33,6 +33,19 @@ const watchFolders = [...packageDirs]
 
 const extraExclusionList = []
 const extraNodeModules = {}
+const localPackageEntryPoints = {
+  '@bifold/core': path.resolve(__dirname, '../../packages/core/src/index.ts'),
+}
+
+const fallbackResolveRequest = (context, moduleName, platform) => {
+  if (context.resolveRequest) {
+    return context.resolveRequest(context, moduleName, platform)
+  }
+
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+  const { resolve } = require('metro-resolver')
+  return resolve(context, moduleName, platform)
+}
 
 for (const packageDir of packageDirs) {
   const pak = require(path.join(packageDir, 'package.json'))
@@ -44,7 +57,9 @@ for (const packageDir of packageDirs) {
   extraExclusionList.push(...modules.map((m) => path.join(packageDir, 'node_modules', m)))
 
   modules.reduce((acc, name) => {
-    acc[name] = path.join(__dirname, 'node_modules', name)
+    if (!(name in acc)) {
+      acc[name] = path.join(__dirname, 'node_modules', name)
+    }
     return acc
   }, extraNodeModules)
 }
@@ -75,6 +90,16 @@ const config = mergeConfig(defaultConfig, {
   },
   resolver: {
     ...defaultConfig.resolver,
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName in localPackageEntryPoints) {
+        return {
+          type: 'sourceFile',
+          filePath: localPackageEntryPoints[moduleName],
+        }
+      }
+
+      return fallbackResolveRequest(context, moduleName, platform)
+    },
     blockList: exclusionList(extraExclusionList.map((m) => new RegExp(`^${escape(m)}[/\\\\].*$`))),
     extraNodeModules: {
       ...(defaultConfig.resolver.extraNodeModules || {}),
