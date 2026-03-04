@@ -1,6 +1,6 @@
 {
   "name": "@bifold/react-native-attestation",
-  "version": "2.12.8",
+  "version": "3.0.0",
   "description": "Mobile app attestation",
   "main": "build/commonjs/index.js",
   "module": "build/module/index.js",
