@@ -1,5 +1,12 @@
 // modules/openid/refresh/RefreshOrchestrator.ts
-import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
+import {
+  Agent,
+  ClaimFormat,
+  MdocRecord,
+  SdJwtVcRecord,
+  W3cCredentialRecord,
+  W3cV2CredentialRecord,
+} from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
 import { refreshAccessToken } from './refreshToken'
 import { reissueCredentialWithAccessToken } from './reIssuance'
@@ -37,7 +44,11 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
   private readonly recentlyIssued = new Map<string, AnyCred>()
   private readonly checkStatusOnly = true
 
-  public constructor(private readonly logger: BifoldLogger, bridge: AgentBridge, opts?: RefreshOrchestratorOpts) {
+  public constructor(
+    private readonly logger: BifoldLogger,
+    bridge: AgentBridge,
+    opts?: RefreshOrchestratorOpts
+  ) {
     this.opts = {
       intervalMs: 15 * 60 * 1000,
       autoStart: true,
@@ -207,21 +218,23 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
 
     try {
       // 3) verification
-      const isValid = await verifyCredentialStatus(rec, this.logger)
+      const status = await verifyCredentialStatus(rec, this.logger)
       const now = Date.now()
 
       const meta = getRefreshCredentialMetadata(rec) ?? ({} as RefreshCredentialMetadata)
-      meta.lastCheckResult = isValid ? RefreshStatus.Valid : RefreshStatus.Invalid
+      meta.lastCheckResult = status
       meta.lastCheckedAt = now
       meta.attemptCount = (meta.attemptCount ?? 0) + 1
       setRefreshCredentialMetadata(rec, meta)
       await persistCredentialRecord(this.agent.context, rec)
 
-      if (isValid) {
+      if (status === RefreshStatus.Valid) {
         this.logger.info(`✅ [Refresh] valid → ${id}`)
-      } else {
+      } else if (status === RefreshStatus.Invalid) {
         this.logger.info(`❌ [Refresh] invalid → ${id}`)
-        markInvalid(id) // <-- key change: we only flag invalid here
+        markInvalid(id)
+      } else {
+        this.logger.warn(`⚠️ [Refresh] status check error → ${id}`)
       }
       setLastSweep(new Date(now).toISOString())
     } catch (error) {
@@ -266,13 +279,23 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
 
     try {
       // 3) verification
-      const isValid = await verifyCredentialStatus(rec, this.logger)
-      if (isValid) {
+      const status = await verifyCredentialStatus(rec, this.logger)
+      if (status === RefreshStatus.Valid) {
         this.logger.info(`✅ [Refresh] valid → ${id}`)
         // If it was previously expired for any reason, clear that and block as succeeded
         clearExpired(id)
         //We can block if isValid but for now we will keep checking it again every time
         // blockAsSucceeded(id)
+        return
+      }
+
+      if (status === RefreshStatus.Error) {
+        this.logger.warn(`⚠️ [Refresh] status check failed; deferring re-issue → ${id}`)
+        await markOpenIDCredentialStatus({
+          credential: rec,
+          status: RefreshStatus.Error,
+          agentContext: this.agent.context,
+        })
         return
       }
 
