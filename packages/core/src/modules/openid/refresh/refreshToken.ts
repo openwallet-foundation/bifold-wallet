@@ -21,21 +21,17 @@ export async function refreshAccessToken({
   }
 
   logger.info(`[refreshAccessToken] Found refresh metadata for credential: ${cred.id}`)
-  const { refreshToken, authServer } = refreshMetaData
+  const { refreshToken, tokenEndpoint } = refreshMetaData
 
   try {
-    if (!authServer) {
-      throw new Error('No authorization server found in the credential offer metadata')
+    if (!tokenEndpoint) {
+      throw new Error('No token endpoint found in the credential offer metadata')
     }
 
-    logger.info(`[refreshAccessToken] Found auth server for credential: ${cred.id}: ${authServer}`)
+    logger.info(`[refreshAccessToken] Found token endpoint for credential: ${cred.id}: ${tokenEndpoint}`)
 
     // Build token endpoint:
-    // React-Native-safe URL build
-    const tokenUrl = (authServer.endsWith('/') ? authServer.slice(0, -1) : authServer)
-    // const tokenUrl = new URL('token', authServer)
-    // tokenUrl.searchParams.set('force', 'false')
-
+    const tokenUrl = tokenEndpoint.endsWith('/') ? tokenEndpoint.slice(0, -1) : tokenEndpoint
     logger.info(`[refreshAccessToken] Refreshing access token at URL: ${tokenUrl} for credential: ${cred.id}`)
 
     const body = new URLSearchParams({
@@ -71,7 +67,6 @@ export async function refreshAccessToken({
       logger.info(`[refreshAccessToken] Refresh token rotated; saving new one`)
       setRefreshCredentialMetadata(cred, {
         ...refreshMetaData,
-        authServer: authServer,
         refreshToken: data.refresh_token,
       })
 

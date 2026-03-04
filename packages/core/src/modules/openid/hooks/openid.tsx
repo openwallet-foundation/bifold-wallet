@@ -25,7 +25,13 @@ type OpenIDContextProps = {
 export const useOpenID = ({
   openIDUri,
   openIDPresentationUri,
-}: OpenIDContextProps): SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord | undefined => {
+}: OpenIDContextProps):
+  | SdJwtVcRecord
+  | W3cCredentialRecord
+  | MdocRecord
+  | OpenId4VPRequestRecord
+  | W3cV2CredentialRecord
+  | undefined => {
   const [openIdRecord, setOpenIdRecord] = useState<
     SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord
   >()
@@ -55,9 +61,6 @@ export const useOpenID = ({
         if (!configID) {
           throw new Error('No credential configuration ID found in the credential offer metadata')
         }
-        if (!authServer) {
-          throw new Error('No authorization server found in the credential offer metadata')
-        }
         if (!credentialIssuer) {
           throw new Error('No credential issuer found in the credential offer metadata')
         }
@@ -73,9 +76,8 @@ export const useOpenID = ({
           tokenResponse: tokenResponse,
         })
 
-        if (refreshToken && authServer) {
+        if (refreshToken) {
           setRefreshCredentialMetadata(credential, {
-            authServer: tokenEndpoint,
             tokenEndpoint: tokenEndpoint,
             refreshToken: refreshToken,
             issuerMetadataCache: {
