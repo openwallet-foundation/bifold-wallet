@@ -52,7 +52,7 @@ export async function refreshAccessToken({
       body: body.toString(),
     })
 
-    logger.info(`[refreshAccessToken] Response status: ${JSON.stringify(res)}`)
+    logger.info(`[refreshAccessToken] Token endpoint response status: ${res.status}`)
 
     if (!res.ok) {
       const errText = await res.text()
@@ -60,7 +60,14 @@ export async function refreshAccessToken({
     }
 
     const data: RefreshResponse = await res.json()
-    logger.info(`[refreshAccessToken] New access token acquired: ${JSON.stringify(data)}`)
+    logger.info(
+      `[refreshAccessToken] Token refresh succeeded: ${JSON.stringify({
+        token_type: data.token_type,
+        expires_in: data.expires_in,
+        has_access_token: Boolean(data.access_token),
+        has_refresh_token: Boolean(data.refresh_token),
+      })}`
+    )
 
     // If refresh token rotated, persist it
     if (data.refresh_token && data.refresh_token !== refreshToken) {
