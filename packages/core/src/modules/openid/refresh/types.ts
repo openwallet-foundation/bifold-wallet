@@ -18,6 +18,16 @@ export enum RefreshStatus {
   Error = 'error',
 }
 
+/**
+ * Controls how invalid OpenID credentials are handled after status checks.
+ * - InvalidThenOnDemand: show invalid notification; replacement is attempted on user action.
+ * - FullReplacement: orchestrator attempts replacement immediately and surfaces replacement notification when available.
+ */
+export enum OpenIDCredentialRefreshFlowType {
+  InvalidThenOnDemand = 'invalid-then-on-demand',
+  FullReplacement = 'full-replacement',
+}
+
 export interface RefreshCredentialMetadata {
   tokenEndpoint: string
   refreshToken: string
@@ -43,6 +53,7 @@ export interface RefreshCredentialMetadata {
 export type RefreshOrchestratorOpts = {
   intervalMs?: number | null
   autoStart?: boolean
+  flowType?: OpenIDCredentialRefreshFlowType
   onError?: (e: unknown) => void
   listRecords?: () => Promise<any[]>
   toLite?: (rec: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) => {
