@@ -401,6 +401,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.Custom:
         onPress = () => {
+          if (customNotification?.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
+            openReplacementOffer(customNotification)
+            return
+          }
           if (
             customNotification?.type === OpenIDCustomNotificationType.CredentialExpired &&
             customNotification.metadata &&
