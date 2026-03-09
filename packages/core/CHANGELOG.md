@@ -1,5 +1,23 @@
 # @bifold/core
 
+## 3.0.0
+
+### Major Changes
+
+- c1df038: Updated all bifold packages for compatibility with credo-ts v0.6.x.
+  Compatibility with this credo-ts release is important as it has big enhancements across the board,
+  especially for OpenID related credentials such as mdoc.
+  This version of credo changes many type and method names, changes which types and methods are available from which exports,
+  and modifies the interfaces of many existing modules. Thus, changes are made across the project,
+  some of which may be breaking.
+
+### Patch Changes
+
+- 2aa1740: Fix Bifold/core bundling issue and enabling hot reload for sample app
+- cb1442e: Fix for improper autolock display
+- Updated dependencies [c1df038]
+  - @bifold/react-hooks@3.0.0
+
 ## 2.12.8
 
 ### Patch Changes
