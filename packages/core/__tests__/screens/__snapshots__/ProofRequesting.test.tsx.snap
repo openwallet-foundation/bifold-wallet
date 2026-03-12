@@ -206,7 +206,6 @@ exports[`ProofRequesting Component generate new qr works correctly 1`] = `
                   "textAlign": "center",
                 },
                 false,
-                false,
               ],
             ]
           }
@@ -425,7 +424,6 @@ exports[`ProofRequesting Component renders correctly 1`] = `
                   "textAlign": "center",
                 },
                 false,
-                false,
               ],
             ]
           }
@@ -592,7 +590,6 @@ exports[`ProofRequesting Component renders correctly 2`] = `
                   "fontWeight": "bold",
                   "textAlign": "center",
                 },
-                false,
                 false,
                 false,
               ],
