@@ -18,6 +18,13 @@
 - Updated dependencies [cb1442e]
   - @bifold/core@3.0.0
 
+## 2.12.9
+
+### Patch Changes
+
+- Updated dependencies [14825e1]
+  - @bifold/core@2.12.9
+
 ## 2.12.8
 
 ### Patch Changes

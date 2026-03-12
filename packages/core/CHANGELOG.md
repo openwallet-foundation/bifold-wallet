@@ -18,6 +18,13 @@
 - Updated dependencies [c1df038]
   - @bifold/react-hooks@3.0.0
 
+## 2.12.9
+
+### Patch Changes
+
+- 14825e1: expose ScreenWrapper scrollview ref as prop
+  - @bifold/react-hooks@2.12.9
+
 ## 2.12.8
 
 ### Patch Changes
