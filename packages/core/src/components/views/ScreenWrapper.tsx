@@ -1,9 +1,9 @@
-import React, { ComponentProps, Ref } from 'react'
+import React, { ComponentProps, RefObject } from 'react'
 import { ScrollView, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-import KeyboardView from './KeyboardView'
-import { useTheme } from '../../contexts/theme'
 import { Edges, SafeAreaView } from 'react-native-safe-area-context'
+import { useTheme } from '../../contexts/theme'
+import KeyboardView from './KeyboardView'
 
 interface ScreenWrapperProps {
   children: React.ReactNode
@@ -41,9 +41,9 @@ interface ScreenWrapperProps {
    */
   padded?: boolean
   /**
-   * Ref for the ScrollView, in case you want to scroll to a specific position programmatically
+   * Ref for the ScrollView. This allows parent components to control scrolling behaviour
    */
-  scrollViewRef?: Ref<ScrollView>
+  scrollViewRef?: RefObject<ScrollView | null>
 }
 
 /**
