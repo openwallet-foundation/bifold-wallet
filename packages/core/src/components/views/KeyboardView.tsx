@@ -1,7 +1,7 @@
-import React, { Ref } from 'react'
-import { Platform, KeyboardAvoidingView, ScrollViewProps, ScrollView } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
 import { useHeaderHeight } from '@react-navigation/elements'
+import React, { RefObject } from 'react'
+import { KeyboardAvoidingView, Platform, ScrollView, ScrollViewProps } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
 
 const useSafeHeaderHeight = (): number => {
   try {
@@ -24,7 +24,7 @@ const useSafeHeaderHeight = (): number => {
 const KeyboardView: React.FC<{
   children: React.ReactNode
   scrollViewProps?: ScrollViewProps
-  scrollViewRef?: Ref<ScrollView>
+  scrollViewRef?: RefObject<ScrollView | null>
 }> = ({ children, scrollViewProps, scrollViewRef }) => {
   const safeHeaderHeight = useSafeHeaderHeight()
 
