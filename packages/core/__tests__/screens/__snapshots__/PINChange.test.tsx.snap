@@ -1666,7 +1666,6 @@ exports[`PINChange Screen PIN change renders correctly 1`] = `
                           },
                           false,
                           false,
-                          false,
                         ],
                       ]
                     }
