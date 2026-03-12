@@ -18,6 +18,13 @@
 - Updated dependencies [c1df038]
   - @bifold/react-hooks@3.0.0
 
+## 2.12.10
+
+### Patch Changes
+
+- 85981ce: Updated screen wrapper ref
+  - @bifold/react-hooks@2.12.10
+
 ## 2.12.9
 
 ### Patch Changes
