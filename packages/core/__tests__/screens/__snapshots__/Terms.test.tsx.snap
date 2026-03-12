@@ -410,7 +410,6 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
                           "textAlign": "center",
                         },
                         false,
-                        false,
                       ],
                     ]
                   }
@@ -495,7 +494,6 @@ exports[`Terms Screen Button enabled by checkbox being checked 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],
@@ -923,7 +921,6 @@ exports[`Terms Screen Renders correctly 1`] = `
                           "textAlign": "center",
                         },
                         false,
-                        false,
                       ],
                     ]
                   }
@@ -1008,7 +1005,6 @@ exports[`Terms Screen Renders correctly 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],
