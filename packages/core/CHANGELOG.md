@@ -18,6 +18,15 @@
 - Updated dependencies [c1df038]
   - @bifold/react-hooks@3.0.0
 
+## 2.12.11
+
+### Patch Changes
+
+- 6a3bea3: updated core package.json
+- b7ff268: button clean up
+- Updated dependencies [6a3bea3]
+  - @bifold/react-hooks@2.12.11
+
 ## 2.12.10
 
 ### Patch Changes
