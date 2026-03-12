@@ -18,6 +18,15 @@
 - Updated dependencies [cb1442e]
   - @bifold/core@3.0.0
 
+## 2.12.11
+
+### Patch Changes
+
+- 6a3bea3: updated core package.json
+- Updated dependencies [6a3bea3]
+- Updated dependencies [b7ff268]
+  - @bifold/core@2.12.11
+
 ## 2.12.10
 
 ### Patch Changes
