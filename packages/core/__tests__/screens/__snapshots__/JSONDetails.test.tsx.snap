@@ -141,7 +141,6 @@ exports[`JSONDetails Screen JSONDetails Screen render render matches snapshot 1`
                   },
                   false,
                   false,
-                  false,
                 ],
               ]
             }
@@ -225,7 +224,6 @@ exports[`JSONDetails Screen JSONDetails Screen render render matches snapshot 1`
                     "fontWeight": "bold",
                     "textAlign": "center",
                   },
-                  false,
                   false,
                   false,
                 ],
