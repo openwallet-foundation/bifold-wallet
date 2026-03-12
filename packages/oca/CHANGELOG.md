@@ -11,6 +11,8 @@
   and modifies the interfaces of many existing modules. Thus, changes are made across the project,
   some of which may be breaking.
 
+## 2.12.9
+
 ## 2.12.8
 
 ## 2.12.7
