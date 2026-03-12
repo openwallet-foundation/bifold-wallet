@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.12.11
+
+### Patch Changes
+
+- 6a3bea3: updated core package.json
+
 ## 2.12.10
 
 ## 2.12.9
