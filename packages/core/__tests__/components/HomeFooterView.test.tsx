@@ -1,4 +1,4 @@
-import { CredentialExchangeRecord as CredentialRecord, CredentialRole, CredentialState } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord as CredentialRecord, DidCommCredentialRole, DidCommCredentialState } from '@credo-ts/didcomm'
 import { useCredentialByState } from '@bifold/react-hooks'
 import { render } from '@testing-library/react-native'
 import React from 'react'
@@ -20,9 +20,9 @@ describe('HomeFooterView Component', () => {
   test('Renders correctly with notifications', async () => {
     const testCredentialRecords: CredentialRecord[] = [
       new CredentialRecord({
-        role: CredentialRole.Holder,
+        role: DidCommCredentialRole.Holder,
         threadId: '1',
-        state: CredentialState.OfferReceived,
+        state: DidCommCredentialState.OfferReceived,
         protocolVersion: 'v1',
       }),
     ]

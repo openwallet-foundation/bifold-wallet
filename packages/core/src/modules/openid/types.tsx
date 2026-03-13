@@ -1,7 +1,6 @@
 import {
-  OpenId4VciCredentialSupported,
-  OpenId4VciIssuerMetadataDisplay,
-  OpenId4VcSiopResolvedAuthorizationRequest,
+  OpenId4VciCredentialIssuerMetadataDisplay,
+  OpenId4VpResolvedAuthorizationRequest,
 } from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
 import { ClaimFormat, DifPexCredentialsForRequest, DifPresentationExchangeDefinition } from '@credo-ts/core'
@@ -9,11 +8,11 @@ import { ClaimFormat, DifPexCredentialsForRequest, DifPresentationExchangeDefini
 export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}` | `mdoc-${string}`
 export interface OpenId4VcCredentialMetadata {
   credential: {
-    display?: OpenId4VciCredentialSupported['display']
-    order?: OpenId4VciCredentialSupported['order']
+    display?: CredentialDisplay[]
+    order?: unknown
   }
   issuer: {
-    display?: OpenId4VciIssuerMetadataDisplay[]
+    display?: OpenId4VciCredentialIssuerMetadataDisplay[]
     id: string
   }
 }
@@ -53,7 +52,7 @@ export type JffW3cCredentialJson = W3cCredentialJson & {
 }
 
 export interface DisplayImage {
-  url?: string
+  uri?: string
   altText?: string
 }
 
@@ -89,7 +88,7 @@ export interface W3cCredentialDisplay {
   credentialSubject: CredentialSubjectRecord | undefined
 }
 
-export interface OpenId4VPRequestRecord extends OpenId4VcSiopResolvedAuthorizationRequest {
+export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {
   definition: DifPresentationExchangeDefinition
   verifierHostName: string | undefined
   createdAt: string | Date

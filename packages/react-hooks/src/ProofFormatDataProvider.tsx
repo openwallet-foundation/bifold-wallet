@@ -1,14 +1,13 @@
 import type { Agent } from '@credo-ts/core'
-import type { Awaited } from '@credo-ts/core/build/types'
 import type { PropsWithChildren } from 'react'
-
-import { ProofExchangeRecord } from '@credo-ts/core'
+import { DidCommProofExchangeRecord } from '@credo-ts/didcomm'
 import { useState, createContext, useContext, useEffect, useCallback } from 'react'
 import * as React from 'react'
 
 import { recordsAddedByType, recordsRemovedByType, recordsUpdatedByType } from './recordUtils'
+import { BifoldAgent } from './agent'
 
-type FormatReturn = Awaited<ReturnType<Agent['proofs']['getFormatData']>>
+type FormatReturn = Awaited<ReturnType<BifoldAgent['didcomm']['proofs']['getFormatData']>>
 
 export type ProofFormatData = FormatReturn & { id: string }
 
@@ -41,7 +40,7 @@ const updateRecord = (record: ProofFormatData, state: FormattedProofDataState): 
   }
 }
 
-const removeRecord = (record: ProofExchangeRecord, state: FormattedProofDataState): FormattedProofDataState => {
+const removeRecord = (record: DidCommProofExchangeRecord, state: FormattedProofDataState): FormattedProofDataState => {
   const newRecordsState = state.formattedData.filter((r) => r.id !== record.id)
 
   return {
@@ -81,10 +80,10 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
   })
 
   const setInitialState = useCallback(async () => {
-    const records = await agent.proofs.getAll()
+    const records = await agent.modules.didcomm.proofs.getAll()
     const formattedData: Array<ProofFormatData> = []
     for (const record of records) {
-      const formatData = await agent.proofs.getFormatData(record.id)
+      const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
       formattedData.push({ ...formatData, id: record.id })
     }
     setState({ formattedData, loading: false })
@@ -97,17 +96,17 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
   useEffect(() => {
     if (state.loading) return
 
-    const proofAdded$ = recordsAddedByType(agent, ProofExchangeRecord).subscribe(async (record) => {
-      const formatData = await agent.proofs.getFormatData(record.id)
+    const proofAdded$ = recordsAddedByType(agent, DidCommProofExchangeRecord).subscribe(async (record) => {
+      const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
       setState(addRecord({ ...formatData, id: record.id }, state))
     })
 
-    const proofUpdate$ = recordsUpdatedByType(agent, ProofExchangeRecord).subscribe(async (record) => {
-      const formatData = await agent.proofs.getFormatData(record.id)
+    const proofUpdate$ = recordsUpdatedByType(agent, DidCommProofExchangeRecord).subscribe(async (record) => {
+      const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
       setState(updateRecord({ ...formatData, id: record.id }, state))
     })
 
-    const proofRemove$ = recordsRemovedByType(agent, ProofExchangeRecord).subscribe((record) =>
+    const proofRemove$ = recordsRemovedByType(agent, DidCommProofExchangeRecord).subscribe((record) =>
       setState(removeRecord(record, state))
     )
 

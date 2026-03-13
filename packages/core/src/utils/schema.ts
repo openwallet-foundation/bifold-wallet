@@ -1,5 +1,5 @@
 import { AnonCredsCredentialMetadataKey } from '@credo-ts/anoncreds'
-import { CredentialExchangeRecord as CredentialRecord } from '@credo-ts/core'
+import { DidCommCredentialExchangeRecord as CredentialRecord } from '@credo-ts/didcomm'
 
 export function parseSchemaFromId(schemaId?: string): { name: string; version: string } {
   let name = 'Credential'
