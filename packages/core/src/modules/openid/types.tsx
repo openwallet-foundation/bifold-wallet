@@ -142,3 +142,10 @@ export interface RefreshResponse {
   dpop_nonce?: string
   dpopNonce?: string
 }
+
+export interface SelectedCredentialsFormat {
+  [inputDescriptorId: string]: {
+    id: string
+    claimFormat: string
+  }
+}
