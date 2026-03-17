@@ -40,7 +40,8 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const { ColorPalette, Spacing } = useTheme()
   const { ButtonLoading, LoadingSpinner } = useAnimatedComponents()
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
-  const [{ preventScreenCapture }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
+  const [{ preventScreenCapture, PINScreensConfig }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
+
   usePreventScreenCapture(preventScreenCapture)
 
   useEffect(() => {
@@ -60,6 +61,13 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
       if (isPINVerified) {
         setAuthenticated(usage === PINEntryUsage.ChangePIN ? userPinInput : true)
       } else {
+        PINScreensConfig.useNewPINDesign && (
+          setInlineMessageField({
+            message: t('PINEnter.IncorrectPIN'),
+            inlineType: InlineErrorType.error,
+            config: inlineMessages,
+          })
+        )
         if (inlineMessages.enabled) {
           setInlineMessageField({
             message: t('PINEnter.IncorrectPIN'),

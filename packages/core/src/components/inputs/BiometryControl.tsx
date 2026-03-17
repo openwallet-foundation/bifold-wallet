@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, Platform, ScrollView, StyleSheet, View } from 'react-native'
+import { Linking, Platform, ScrollView, StyleSheet, View, AppState } from 'react-native'
 import { check, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions'
+import Keychain, { getSupportedBiometryType, BIOMETRY_TYPE } from 'react-native-keychain'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import ToggleButton from '../buttons/ToggleButton'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
@@ -9,8 +11,6 @@ import { ThemedText } from '../texts/ThemedText'
 import { useAuth } from '../../contexts/auth'
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
-import { getSupportedBiometryType, BIOMETRY_TYPE } from 'react-native-keychain'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -44,10 +44,27 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   })
 
   useEffect(() => {
-    isBiometricsActive().then((result: boolean) => {
-      setBiometryAvailable(result)
+    const checkBiometrics = async () => {
+      try {
+        const active = await Keychain.getSupportedBiometryType()
+        setBiometryAvailable(Boolean(active))
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
+    // Re-check biometrics when app transitions from background (inactive) to foreground (active)
+    const appStateListener = AppState.addEventListener('change', async (nextAppState) => {
+      if (nextAppState === 'active') {
+        await checkBiometrics()
+      }
     })
-  }, [isBiometricsActive])
+
+    return () => {
+      // Cleanup listeners and handlers on unmount
+      appStateListener.remove()
+    }
+  }, [isBiometricsActive, setBiometryAvailable])
 
   const onOpenSettingsTouched = async () => {
     await Linking.openSettings()
