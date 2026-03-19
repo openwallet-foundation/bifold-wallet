@@ -37,7 +37,7 @@ export const useAttestation = () => {
       console.log(err)
     }
 
-  }, [attestation?.challengeURL])
+  }, [attestation?.challengeURL, attestation?.enableAttestation])
 
   const attestationSetup = useCallback(async (): Promise<void> => {
     try {
@@ -76,7 +76,7 @@ export const useAttestation = () => {
       console.log(err)
     }
 
-  }, [attestation?.enableAttestation])
+  }, [attestation?.enableAttestation, attestation?.cloudProjectNumber])
 
   const attestChallenge = useCallback(async () => {
     try {
@@ -101,7 +101,7 @@ export const useAttestation = () => {
       console.log(err)
     }
 
-  }, [])
+  }, [attestation?.enableAttestation, fetchAttestationChallenge])
 
   const confirmAttestationChallenge = useCallback(async () => {
     try {
@@ -136,7 +136,7 @@ export const useAttestation = () => {
       console.log(err)
     }
 
-  }, [attestChallenge])
+  }, [attestChallenge, attestation?.applicationID, attestation?.enableAttestation, attestation?.registerAttestationURL])
 
   return {
     confirmAttestationChallenge,
