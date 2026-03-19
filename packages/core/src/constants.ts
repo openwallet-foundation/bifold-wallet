@@ -26,6 +26,7 @@ export enum LocalStorageKeys {
   Tours = 'ToursState',
   HistorySettingsOption = 'historySettingsOption',
   Language = 'language',
+  Attestation = 'Attestation',
 }
 
 export enum KeychainServices {

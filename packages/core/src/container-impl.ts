@@ -93,6 +93,13 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
+  attestation: {
+    applicationID: 'your.application.ID',
+    challengeURL: 'https://example.com',
+    cloudProjectNumber: '1234',
+    enableAttestation: false,
+    registerAttestationURL: 'https://example.com',
+  }
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {

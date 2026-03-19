@@ -155,6 +155,13 @@ export const CRYPTO_TOKENS = {
   FN_PIN_HASH_ALGORITHM: 'fn.crypto.pin-hash-algorithm'
 } as const
 
+export const ATTESTATION_TOKENS = {
+  ATTESTATION_ENABLE_ATTESTATION: 'attestation.enable-attestation',
+  ATTESTATION_REGISTER_URL: 'attestation.register-url',
+  ATTESTATION_GET_CHALLENGE_URL: 'attesation.get-challenge-url',
+  ATTESTATION_APPLICATION_ID: 'attestation.application-id'
+}
+
 export const TOKENS = {
   ...PROOF_TOKENS,
   ...COMPONENT_TOKENS,
@@ -173,6 +180,7 @@ export const TOKENS = {
   ...CONFIG_TOKENS,
   ...HISTORY_TOKENS,
   ...CRYPTO_TOKENS,
+  ...ATTESTATION_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
