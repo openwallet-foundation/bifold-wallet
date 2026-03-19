@@ -1,5 +1,3 @@
-// Dont remove the following import line or the pin check will fail when opening askar waller
-import '@openwallet-foundation/askar-react-native'
 import 'reflect-metadata'
 import { AskarModule, AskarModuleConfig, AskarStoreManager } from '@credo-ts/askar'
 import { DeviceEventEmitter } from 'react-native'
