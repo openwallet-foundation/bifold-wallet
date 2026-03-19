@@ -1,7 +1,7 @@
 // Dont remove the following import line or the pin check will fail when opening askar waller
 import '@openwallet-foundation/askar-react-native'
 import 'reflect-metadata'
-import { AskarModule, AskarStoreManager } from '@credo-ts/askar'
+import { AskarModule, AskarModuleConfig, AskarStoreManager } from '@credo-ts/askar'
 import { DeviceEventEmitter } from 'react-native'
 import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
 import { agentDependencies } from '@credo-ts/react-native'
@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   const [walletSecret, setWalletSecret] = useState<WalletSecret>()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
-  const [hashPIN] = useServices([TOKENS.FN_PIN_HASH_ALGORITHM])
+  const [hashPIN, logger] = useServices([TOKENS.FN_PIN_HASH_ALGORITHM, TOKENS.UTIL_LOGGER])
 
   const setPIN = useCallback(
     async (PIN: string): Promise<void> => {
@@ -171,34 +171,45 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     async (agent: Agent, oldPin: string, newPin: string, useBiometry?: boolean): Promise<boolean> => {
       try {
         if (!agent) {
-          // no agent set, cannot rekey the wallet
+          logger.warn('No agent set, cannot rekey wallet')
           return false
         }
 
         const secret = await loadWalletSalt()
         if (!secret) {
+          logger.warn('No wallet secret found, cannot rekey wallet')
           return false
         }
 
-        const oldHash = await hashPIN(oldPin, secret.salt)
+        const oldKey = await hashPIN(oldPin, secret.salt)
         const newSecret = await secretForPIN(newPin, hashPIN)
-        const newHash = await hashPIN(newPin, newSecret.salt)
         if (!newSecret.key) {
           return false
         }
 
-        await agent.modules.askar.close()
-        // wallet.rotateKey calls open under the hood
-        await agent.modules.askar.rotateKey({ id: secret.id, key: oldHash, rekey: newHash })
+        const storeManager = agent.dependencyManager.resolve(AskarStoreManager)
+        const askarModuleConfig = agent.dependencyManager.resolve(AskarModuleConfig)
+        if (askarModuleConfig.store.key !== oldKey) {
+          logger.warn('Old PIN is incorrect')
+          return false
+        }
+
+        if (!storeManager.isStoreOpen(agent.context)) {
+          await storeManager.openStore(agent.context)
+        }
+
+        await storeManager.rotateStoreKey(agent.context, { newKey: newSecret.key })
+        askarModuleConfig.store.key = newSecret.key
 
         await storeWalletSecret(newSecret, useBiometry)
         setWalletSecret(newSecret)
-      } catch {
+      } catch (err) {
+        logger.error('Error rekeying wallet', err as Error)
         return false
       }
       return true
     },
-    [hashPIN]
+    [hashPIN, logger]
   )
 
   const verifyPIN = useCallback(
