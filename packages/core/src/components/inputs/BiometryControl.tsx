@@ -49,7 +49,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         const active = await Keychain.getSupportedBiometryType()
         setBiometryAvailable(Boolean(active))
       } catch(err) {
-        console.log(err)
+        
       }
     }
 
