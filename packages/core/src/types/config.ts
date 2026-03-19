@@ -56,6 +56,7 @@ export interface Config {
     default: AutoLockTimer,
     values: [AutoLockTimer, ...AutoLockTimer[]]
   }
+  attestation?: AttestationConfig
 }
 
 export interface AutoLockTimer {
@@ -78,4 +79,12 @@ export interface HistoryEventsLoggerConfig {
   logAttestationRevoked: boolean
   logPinChanged: boolean
   logToggleBiometry: boolean
+}
+
+export interface AttestationConfig {
+  applicationID: string
+  challengeURL: string
+  cloudProjectNumber: string
+  enableAttestation: boolean
+  registerAttestationURL: string
 }

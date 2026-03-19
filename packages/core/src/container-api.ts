@@ -155,15 +155,11 @@ export const CRYPTO_TOKENS = {
   FN_PIN_HASH_ALGORITHM: 'fn.crypto.pin-hash-algorithm'
 } as const
 
-/*
-Endpoints:
-Register Attestation: POST https://attestation-pradeep-dev.apps.xkh544cb.canadacentral.aroapp.io/api/register-attestation
-Get Challenge: GET https://attestation-pradeep-dev.apps.xkh544cb.canadacentral.aroapp.io/api/get-challenge
-*/
-
 export const ATTESTATION_TOKENS = {
+  ATTESTATION_ENABLE_ATTESTATION: 'attestation.enable-attestation',
   ATTESTATION_REGISTER_URL: 'attestation.register-url',
-  ATTESTATION_GET_CHALLENGE_URL: 'attesation.get-challenge-url'
+  ATTESTATION_GET_CHALLENGE_URL: 'attesation.get-challenge-url',
+  ATTESTATION_APPLICATION_ID: 'attestation.application-id'
 }
 
 export const TOKENS = {
@@ -251,8 +247,6 @@ export type TokenMapping = {
   [TOKENS.UTIL_AGENT_BRIDGE]: AgentBridge
   [TOKENS.UTIL_REFRESH_ORCHESTRATOR]: IRefreshOrchestrator
   [TOKENS.FN_PIN_HASH_ALGORITHM]: FN_PIN_HASH_ALGORITHM
-  [TOKENS.ATTESTATION_REGISTER_URL]: string
-  [TOKENS.ATTESTATION_GET_CHALLENGE_URL]: string
 }
 
 export interface Container {
