@@ -81,9 +81,18 @@ export interface HistoryEventsLoggerConfig {
   logToggleBiometry: boolean
 }
 
+interface getAttestationJWTParams {
+    keyId?: string
+    attestation: string
+    bundleIdentifier: string
+    challenge: string
+    platform: "ios" | "android" | "windows" | "macos" | "web"
+}
+
 export interface AttestationConfig {
   applicationID: string
-  challengeURL: string
+  getAttestationChallenge: () => Promise<string>
+  getAttestationJWT: (params: getAttestationJWTParams) => void
   cloudProjectNumber: string
   enableAttestation: boolean
   registerAttestationURL: string

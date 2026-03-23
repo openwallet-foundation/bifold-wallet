@@ -13,70 +13,56 @@ import { LocalStorageKeys } from '../constants'
 import { useServices, TOKENS } from '../container-api'
 
 export const useAttestation = () => {
-  const [{
-    attestation
-  }] = useServices([
+  const [
+    { attestation }
+  ] = useServices([
     TOKENS.CONFIG
   ])
 
-  const fetchAttestationChallenge = useCallback(async (): Promise<string | void> => {
-    try {
-
-    if(attestation?.enableAttestation)
-      throw new Error('Attestation not enabled')
-    
-    const challengeResponse = await fetch(attestation?.challengeURL as string)
-    if (!challengeResponse.ok) {
-      throw new Error(`Failed to fetch challenge: ${challengeResponse.status}`);
-    }
-    const { challenge } = await challengeResponse.json();
-
-    return challenge
-
-    } catch (err) {
-      console.log(err)
-    }
-
-  }, [attestation?.challengeURL, attestation?.enableAttestation])
-
   const attestationSetup = useCallback(async (): Promise<void> => {
     try {
-
       if (!attestation?.enableAttestation) 
         throw new Error('Attestation not enabled')
-      
-      const attestKey = await PersistentStorage.fetchValueForKey(LocalStorageKeys.Attestation)
-      if (attestKey)
+
+      const attestationConfigured = await PersistentStorage.fetchValueForKey(LocalStorageKeys.AttestationConfigured)
+
+      if (attestationConfigured)
         throw new Error('Attestation already configured')
+
+      const challenge = await attestation.getAttestationChallenge()
+
       if (Platform.OS === 'ios') {
-        const keyID = await generateKeyAsync()
-        const challenge = await fetchAttestationChallenge()
-        attestKeyAsync(keyID, challenge as string)
-          .then(async (res: string) => {
-            await PersistentStorage.storeValueForKey(LocalStorageKeys.Attestation, keyID)
-            return res
-          })
-          .catch((err: any) => {
-            throw new Error(err)
-          })
+
+        const keyId = await generateKeyAsync()
+        const attestationResult = await attestKeyAsync(keyId, challenge)
+        const payload = {
+          keyId,
+          attestation: attestationResult,
+          bundleIdentifier: attestation?.applicationID,
+          challenge,
+          platform: Platform.OS,
+        }
+
+        const attestationJWT = await attestation?.getAttestationJWT(payload)
+
       }
       else if (Platform.OS === 'android') {
-        prepareIntegrityTokenProviderAsync(attestation?.cloudProjectNumber)
-          .then(async (res) => {
-            await PersistentStorage.storeValueForKey(LocalStorageKeys.Attestation, '')
-            return res
-          })
-          .catch((err) => {
-            throw new Error(err)
-          })
+        await prepareIntegrityTokenProviderAsync(attestation?.cloudProjectNumber)
+        const attestationResult = await requestIntegrityCheckAsync(challenge)
+        const payload = {
+          attestation: attestationResult,
+          bundleIdentifier: attestation?.applicationID,
+          challenge,
+          platform: Platform.OS,
+        }
+      const attestationJWT = await attestation?.getAttestationJWT(payload)
       }
       else throw new Error('Platform not supported')
-
     } catch(err) {
       console.log(err)
     }
 
-  }, [attestation?.enableAttestation, attestation?.cloudProjectNumber])
+  }, [attestation?.enableAttestation, attestation?.cloudProjectNumber, attestation?.getAttestationChallenge])
 
   const attestChallenge = useCallback(async () => {
     try {
@@ -84,11 +70,11 @@ export const useAttestation = () => {
       if (!attestation?.enableAttestation) 
         throw new Error('Attestation not enabled')
 
-      const challenge = await fetchAttestationChallenge()
+      const challenge = await attestation.getAttestationChallenge()
 
       if (Platform.OS === 'ios') {
-        const key = await PersistentStorage.fetchValueForKey(LocalStorageKeys.Attestation) as string
-        const result = await generateAssertionAsync(key, challenge as string)
+        const keyID = await PersistentStorage.fetchValueForKey(LocalStorageKeys.Attestation) as string
+        const result = await generateAssertionAsync(keyID, challenge as string)
         return { result, challenge }
       }
       else if (Platform.OS === 'android') {
@@ -101,7 +87,7 @@ export const useAttestation = () => {
       console.log(err)
     }
 
-  }, [attestation?.enableAttestation, fetchAttestationChallenge])
+  }, [attestation?.enableAttestation, attestation?.getAttestationChallenge])
 
   const confirmAttestationChallenge = useCallback(async () => {
     try {

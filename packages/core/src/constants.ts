@@ -27,6 +27,7 @@ export enum LocalStorageKeys {
   HistorySettingsOption = 'historySettingsOption',
   Language = 'language',
   Attestation = 'Attestation',
+  AttestationConfigured = 'AttestationConfigured',
 }
 
 export enum KeychainServices {

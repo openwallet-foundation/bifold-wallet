@@ -157,8 +157,8 @@ export const CRYPTO_TOKENS = {
 
 export const ATTESTATION_TOKENS = {
   ATTESTATION_ENABLE_ATTESTATION: 'attestation.enable-attestation',
-  ATTESTATION_REGISTER_URL: 'attestation.register-url',
-  ATTESTATION_GET_CHALLENGE_URL: 'attesation.get-challenge-url',
+  ATTESTATION_GET_ATTESTATION_JWT: 'attestation.get-attestation-jwt',
+  ATTESTATION_GET_CHALLENGE: 'attesation.get-challenge',
   ATTESTATION_APPLICATION_ID: 'attestation.application-id'
 }
 
