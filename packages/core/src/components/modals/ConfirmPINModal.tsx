@@ -73,7 +73,6 @@ const ConfirmPINModal: React.FC<ConfirmPINModalProps> = ({
   const style = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
       backgroundColor: ColorPalette.brand.primaryBackground,
     },
     loadingContainer: {

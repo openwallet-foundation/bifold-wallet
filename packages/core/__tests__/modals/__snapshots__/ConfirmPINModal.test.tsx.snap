@@ -235,7 +235,6 @@ exports[`ConfirmPINModal Component Renders correctly for PIN change 1`] = `
                 Object {
                   "backgroundColor": "#000000",
                   "flex": 1,
-                  "padding": 20,
                 }
               }
             >
@@ -1017,7 +1016,6 @@ exports[`ConfirmPINModal Component Renders correctly for PIN create 1`] = `
                 Object {
                   "backgroundColor": "#000000",
                   "flex": 1,
-                  "padding": 20,
                 }
               }
             >
