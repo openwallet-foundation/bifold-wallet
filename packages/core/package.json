@@ -1,20 +1,18 @@
 {
   "name": "@bifold/core",
-  "version": "2.12.8",
+  "version": "3.0.0",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
-  "react-native": "./src/index.ts",
+  "react-native": "./lib/commonjs/index.js",
   "source": "src/index.ts",
   "exports": {
     ".": {
-      "react-native": "./src/index.ts",
       "import": "./lib/module/index.js",
       "require": "./lib/commonjs/index.js",
       "types": "./lib/typescript/src/index.d.ts"
     },
     "./utils/ledger": {
-      "react-native": "./src/index.ts",
       "import": "./lib/module/utils/ledger.js",
       "require": "./lib/commonjs/utils/ledger.js",
       "types": "./lib/typescript/src/utils/ledger.d.ts"
@@ -46,9 +44,9 @@
   "devDependencies": {
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
-    "@bifold/oca": "2.12.8",
-    "@bifold/react-hooks": "2.12.8",
-    "@bifold/verifier": "2.12.8",
+    "@bifold/oca": "3.0.0",
+    "@bifold/react-hooks": "3.0.0",
+    "@bifold/verifier": "3.0.0",
     "@credo-ts/anoncreds": "0.6.1",
     "@credo-ts/askar": "0.6.1",
     "@credo-ts/core": "0.6.1",
@@ -154,7 +152,7 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
-    "@bifold/react-hooks": "2.12.8",
+    "@bifold/react-hooks": "3.0.0",
     "@credo-ts/anoncreds": "0.6.1",
     "@credo-ts/askar": "0.6.1",
     "@credo-ts/core": "0.6.1",

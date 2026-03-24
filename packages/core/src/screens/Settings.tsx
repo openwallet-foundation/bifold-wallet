@@ -145,14 +145,14 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         {
           title: t('Settings.Language'),
           value: currentLanguage,
-          accessibilityLabel: t('Settings.Language'),
+          accessibilityLabel: `${t('Settings.Language')} ${currentLanguage}`,
           testID: testIdWithKey('Language'),
           onPress: () => navigation.navigate(Screens.Language),
         },
         {
           title: t('Settings.AutoLockTime'),
           value:
-            autoLockTime !== AutoLockTime.Never ? t('AutoLockTimes.Preview', `${autoLockTime}`) : t('AutoLockTimes.Never'),
+            autoLockTime !== AutoLockTime.Never ? t('AutoLockTimes.Preview', { autoLockTime }) : t('AutoLockTimes.Never'),
           accessibilityLabel: t('Settings.AutoLockTime'),
           testID: testIdWithKey('Lockout'),
           onPress: () => navigation.navigate(Screens.AutoLock),
