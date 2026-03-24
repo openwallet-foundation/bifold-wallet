@@ -10,23 +10,16 @@ import {
 } from '@credo-ts/anoncreds'
 
 import { AskarModule } from '@credo-ts/askar'
-import {
-  Agent,
-  DidsModule,
-  JwkDidResolver,
-  KeyDidResolver,
-  PeerDidResolver,
-  WebDidResolver,
-} from '@credo-ts/core'
+import { Agent, DidsModule, JwkDidResolver, KeyDidResolver, PeerDidResolver, WebDidResolver } from '@credo-ts/core'
 
-import { 
-  DidCommAutoAcceptCredential, 
+import {
+  DidCommAutoAcceptCredential,
   DidCommAutoAcceptProof,
   DidCommCredentialV2Protocol,
-  DidCommProofV2Protocol, 
+  DidCommProofV2Protocol,
   DidCommDifPresentationExchangeProofFormatService,
   DidCommModule,
-  DidCommMediatorPickupStrategy
+  DidCommMediatorPickupStrategy,
 } from '@credo-ts/didcomm'
 
 import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
@@ -37,8 +30,10 @@ import { OpenId4VcModule } from '@credo-ts/openid4vc'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
+import { WalletSecret } from '../types/security'
 
 interface GetAgentModulesOptions {
+  walletSecret: WalletSecret
   indyNetworks: IndyVdrPoolConfig[]
   mediatorInvitationUrl?: string
   txnCache?: { capacity: number; expiryOffsetMs: number; path?: string }
@@ -55,7 +50,12 @@ export type BifoldAgent = Agent<BifoldAgentModules>
  * @param txnCache optional local cache config for indyvdr
  * @returns modules to be used in agent setup
  */
-export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache }: GetAgentModulesOptions) {
+export function getAgentModules({
+  walletSecret,
+  indyNetworks,
+  mediatorInvitationUrl,
+  txnCache,
+}: GetAgentModulesOptions) {
   const indyCredentialFormat = new LegacyIndyDidCommCredentialFormatService()
   const indyProofFormat = new LegacyIndyDidCommProofFormatService()
 
@@ -68,12 +68,10 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
     // })
   }
 
-  const askarStoreValue = 'bifoldAskar';
-
   return {
     askar: new AskarModule({
       askar,
-      store: { id: askarStoreValue, key: askarStoreValue },
+      store: { id: walletSecret.id, key: walletSecret.key },
     }),
     anoncreds: new AnonCredsModule({
       anoncreds,
@@ -128,7 +126,7 @@ export function getAgentModules({ indyNetworks, mediatorInvitationUrl, txnCache 
         new KeyDidResolver(),
         new PeerDidResolver(),
       ],
-    })
+    }),
   }
 }
 
