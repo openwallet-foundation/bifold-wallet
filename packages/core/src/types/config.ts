@@ -92,7 +92,7 @@ interface getAttestationJWTParams {
 export interface AttestationConfig {
   applicationID: string
   getAttestationChallenge: () => Promise<string>
-  getAttestationJWT: (params: getAttestationJWTParams) => void
+  getAttestationJWT: (params: getAttestationJWTParams) => Promise<any>
   cloudProjectNumber: string
   enableAttestation: boolean
   registerAttestationURL: string

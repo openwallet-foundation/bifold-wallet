@@ -49,6 +49,22 @@ type GenerateOnboardingWorkflowStepsFn = (
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
+interface getAttestationJWTParams {
+    keyId?: string
+    attestation: string
+    bundleIdentifier: string
+    challenge: string
+    platform: "ios" | "android" | "windows" | "macos" | "web"
+}
+
+interface AttestationConfig {
+  applicationID: string
+  getAttestationChallenge: () => Promise<string>
+  getAttestationJWT: (params: getAttestationJWTParams) => Promise<any>
+  cloudProjectNumber: string
+  enableAttestation: boolean
+}
+
 export const PROOF_TOKENS = {
   GROUP_BY_REFERENT: 'proof.groupByReferant',
   CRED_HELP_ACTION_OVERRIDES: 'proof.credHelpActionOverride',
@@ -156,10 +172,7 @@ export const CRYPTO_TOKENS = {
 } as const
 
 export const ATTESTATION_TOKENS = {
-  ATTESTATION_ENABLE_ATTESTATION: 'attestation.enable-attestation',
-  ATTESTATION_GET_ATTESTATION_JWT: 'attestation.get-attestation-jwt',
-  ATTESTATION_GET_CHALLENGE: 'attesation.get-challenge',
-  ATTESTATION_APPLICATION_ID: 'attestation.application-id'
+  ATTESTATION_CONFIG: 'attestation.config',
 }
 
 export const TOKENS = {
@@ -247,6 +260,7 @@ export type TokenMapping = {
   [TOKENS.UTIL_AGENT_BRIDGE]: AgentBridge
   [TOKENS.UTIL_REFRESH_ORCHESTRATOR]: IRefreshOrchestrator
   [TOKENS.FN_PIN_HASH_ALGORITHM]: FN_PIN_HASH_ALGORITHM
+  [TOKENS.ATTESTATION_CONFIG]: AttestationConfig
 }
 
 export interface Container {
