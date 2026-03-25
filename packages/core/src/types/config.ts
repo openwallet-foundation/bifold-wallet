@@ -56,7 +56,7 @@ export interface Config {
     default: AutoLockTimer,
     values: [AutoLockTimer, ...AutoLockTimer[]]
   }
-  attestation?: AttestationConfig
+  enableAttestation: boolean,
 }
 
 export interface AutoLockTimer {
@@ -79,21 +79,4 @@ export interface HistoryEventsLoggerConfig {
   logAttestationRevoked: boolean
   logPinChanged: boolean
   logToggleBiometry: boolean
-}
-
-interface getAttestationJWTParams {
-    keyId?: string
-    attestation: string
-    bundleIdentifier: string
-    challenge: string
-    platform: "ios" | "android" | "windows" | "macos" | "web"
-}
-
-export interface AttestationConfig {
-  applicationID: string
-  getAttestationChallenge: () => Promise<string>
-  getAttestationJWT: (params: getAttestationJWTParams) => Promise<any>
-  cloudProjectNumber: string
-  enableAttestation: boolean
-  registerAttestationURL: string
 }

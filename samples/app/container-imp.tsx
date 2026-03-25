@@ -1,4 +1,4 @@
-import { BifoldLogger, Container, TokenMapping } from '@bifold/core'
+import { BifoldLogger, Container, TokenMapping, TOKENS } from '@bifold/core'
 import { DependencyContainer } from 'tsyringe'
 // import crypto from 'react-native-quick-crypto'
 
@@ -56,7 +56,42 @@ export class AppContainer implements Container {
         throw new Error(`Error generating hash for PIN ${String((error as Error)?.message ?? error)}`)
       }
     })
-    */
+    */ 
+
+    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async () => {
+      try {
+        const challengeResponse = await fetch('')
+        if (!challengeResponse.ok) {
+          throw new Error(`Failed to fetch challenge: ${challengeResponse.status}`)
+        }
+        const { challenge } = await challengeResponse.json()
+        return challenge
+      } catch(err) {
+        console.log(err)
+      }
+    })
+
+    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationObject: any) => {
+      const registerAttestationResponse = await fetch(
+        '', 
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(attestationObject),
+        }
+      )
+
+      if (!registerAttestationResponse.ok) {
+        throw new Error(`Failed to register attestation: ${registerAttestationResponse.status}`)
+      }
+
+      const response = await registerAttestationResponse.json()
+
+      return response
+
+    })
 
     return this
   }

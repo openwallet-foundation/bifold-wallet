@@ -57,14 +57,6 @@ interface getAttestationJWTParams {
     platform: "ios" | "android" | "windows" | "macos" | "web"
 }
 
-interface AttestationConfig {
-  applicationID: string
-  getAttestationChallenge: () => Promise<string>
-  getAttestationJWT: (params: getAttestationJWTParams) => Promise<any>
-  cloudProjectNumber: string
-  enableAttestation: boolean
-}
-
 export const PROOF_TOKENS = {
   GROUP_BY_REFERENT: 'proof.groupByReferant',
   CRED_HELP_ACTION_OVERRIDES: 'proof.credHelpActionOverride',
@@ -172,8 +164,10 @@ export const CRYPTO_TOKENS = {
 } as const
 
 export const ATTESTATION_TOKENS = {
-  ATTESTATION_CONFIG: 'attestation.config',
-}
+  ATTESTATION_FUNCTIONS: 'attestation.functions',
+  FN_ATTESTATION_GET_CHALLENGE: 'attestation.get-challenge',
+  FN_ATTESTATION_GET_JWT: 'attestation.get-jwt',
+} as const
 
 export const TOKENS = {
   ...PROOF_TOKENS,
@@ -198,6 +192,14 @@ export const TOKENS = {
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
 export type FN_PIN_HASH_ALGORITHM = (PIN: string, salt: string) => Promise<string>
+
+export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<string>
+export type FN_ATTESTATION_GET_JWT = (attestationResult: string | string[], challenge: string) => Promise<any>
+
+export interface AttestationFunctions {
+  getChallenge: FN_ATTESTATION_GET_CHALLENGE
+  getJWT: FN_ATTESTATION_GET_JWT
+}
 
 export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
@@ -260,7 +262,8 @@ export type TokenMapping = {
   [TOKENS.UTIL_AGENT_BRIDGE]: AgentBridge
   [TOKENS.UTIL_REFRESH_ORCHESTRATOR]: IRefreshOrchestrator
   [TOKENS.FN_PIN_HASH_ALGORITHM]: FN_PIN_HASH_ALGORITHM
-  [TOKENS.ATTESTATION_CONFIG]: AttestationConfig
+  [TOKENS.FN_ATTESTATION_GET_CHALLENGE]: FN_ATTESTATION_GET_CHALLENGE
+  [TOKENS.FN_ATTESTATION_GET_JWT]: FN_ATTESTATION_GET_JWT
 }
 
 export interface Container {

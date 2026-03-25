@@ -60,6 +60,7 @@ import {
   Tours as ToursState,
 } from './types/state'
 import { hashPIN } from './utils/crypto'
+import { AttestationFunctions } from './container-api'
 
 export const defaultConfig: Config = {
   PINSecurity: {
@@ -93,13 +94,7 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
-  attestation: {
-    applicationID: 'your.application.ID',
-    challengeURL: 'https://example.com',
-    cloudProjectNumber: '1234',
-    enableAttestation: false,
-    registerAttestationURL: 'https://example.com',
-  }
+  enableAttestation: true,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
@@ -264,6 +259,7 @@ export class MainContainer implements Container {
     })
 
     return this
+
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
