@@ -1,5 +1,7 @@
+import { Platform } from 'react-native'
 import { BifoldLogger, Container, TokenMapping, TOKENS } from '@bifold/core'
 import { DependencyContainer } from 'tsyringe'
+import { applicationId } from 'expo-application';
 // import crypto from 'react-native-quick-crypto'
 
 export class AppContainer implements Container {
@@ -71,7 +73,14 @@ export class AppContainer implements Container {
       }
     })
 
-    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationObject: any) => {
+    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string, challenge: string, keyID: string) => {
+      const payload: any = {
+        attestation: attestationResult,
+        bundleIdentifier: applicationId,
+        challenge,
+        platform: Platform.OS,
+        keyId: Platform.OS === 'ios' ? keyID : ''
+      }
       const registerAttestationResponse = await fetch(
         '', 
         {
@@ -79,7 +88,7 @@ export class AppContainer implements Container {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(attestationObject),
+          body: JSON.stringify(payload),
         }
       )
 

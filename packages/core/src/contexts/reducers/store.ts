@@ -93,6 +93,10 @@ enum AppStatusDispatchAction {
   SET_VERSION_INFO = 'appStatus/checkVersionUpdate',
 }
 
+enum AttestationDispatchAction {
+  SET_ATTESTATION_COMPLETED = 'attestation/setAttestationCompleted'
+}
+
 export type DispatchAction =
   | StateDispatchAction
   | OnboardingDispatchAction
@@ -104,6 +108,7 @@ export type DispatchAction =
   | DeepLinkDispatchAction
   | MigrationDispatchAction
   | AppStatusDispatchAction
+  | AttestationDispatchAction
 
 export const DispatchAction = {
   ...StateDispatchAction,
@@ -116,6 +121,7 @@ export const DispatchAction = {
   ...DeepLinkDispatchAction,
   ...MigrationDispatchAction,
   ...AppStatusDispatchAction,
+  ...AttestationDispatchAction,
 }
 
 export interface ReducerAction<R> {
@@ -772,6 +778,15 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return {
         ...state,
         deepLink: value,
+      }
+    }
+    case AttestationDispatchAction.SET_ATTESTATION_COMPLETED: {
+      const isAttestationComplete: boolean = (action?.payload || []).pop() ?? false
+      return {
+        ...state,
+        attestation: {
+          isAttestationComplete
+        }
       }
     }
     default:

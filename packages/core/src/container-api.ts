@@ -194,7 +194,7 @@ export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
 export type FN_PIN_HASH_ALGORITHM = (PIN: string, salt: string) => Promise<string>
 
 export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<string>
-export type FN_ATTESTATION_GET_JWT = (attestationResult: string | string[], challenge: string) => Promise<any>
+export type FN_ATTESTATION_GET_JWT = (attestationResult: string | string[], challenge: string, keyId: string) => Promise<any>
 
 export interface AttestationFunctions {
   getChallenge: FN_ATTESTATION_GET_CHALLENGE

@@ -1,18 +1,21 @@
-import { useCallback } from 'react'
-import { Platform } from 'react-native'
+import { useCallback, useEffect } from 'react'
+import { Platform, DeviceEventEmitter } from 'react-native'
 import {
   attestKeyAsync,
-  generateAssertionAsync,
   generateKeyAsync,
   generateHardwareAttestedKeyAsync,
   getAttestationCertificateChainAsync,
-  isSupported as isDeviceAttestationSupported
+  isSupported as isDeviceAttestationSupported,
 } from '@expo/app-integrity'
-import { useAgent } from '@bifold/react-hooks'
+import { useTranslation } from 'react-i18next'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
 import { useServices, TOKENS } from '../container-api'
+import { BifoldError } from '../types/error'
+import { EventTypes } from '../constants'
+import { useStore } from '../contexts/store'
+import { DispatchAction } from '../contexts/reducers/store'
 
 export const useAttestation = () => {
 
@@ -20,27 +23,48 @@ export const useAttestation = () => {
     getAttestationChallenge,
     getAttestationJWT,
     { enableAttestation },
+    logger,
+    agentBridge,
   ] = useServices([
     TOKENS.FN_ATTESTATION_GET_CHALLENGE,
     TOKENS.FN_ATTESTATION_GET_JWT,
     TOKENS.CONFIG,
+    TOKENS.UTIL_LOGGER,
+    TOKENS.UTIL_AGENT_BRIDGE,
   ])
+  const [, dispatch] = useStore()
+  const { t } = useTranslation()
 
-  const { agent } = useAgent()
+  const storeAttestationJWT = useCallback(async (attestationJWT: any, keyID: string) => {
+    try {
+      agentBridge.onReady(async (agent) => {
+        await agent.genericRecords.save({
+          content: attestationJWT,
+          id: 'attestationJWT',
+        })
+        await PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationConfigured, true)
+        await PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationKey, keyID)
+        dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
+      })
+    } catch (err) {
+      throw new Error('Error storing attestation result')
+    }
+  }, [agentBridge])
 
-  const attestationSetup = useCallback(async (): Promise<void> => {
+  const setupAttestation = useCallback(async (): Promise<void> => {
     try {
 
-      if (!enableAttestation || !getAttestationChallenge || !getAttestationJWT) 
-        throw new Error('Attestation not configured')
-
-      if (!agent)
-        throw new Error('Agent unavailable')
-
-      const attestationConfigured = await PersistentStorage.fetchValueForKey(LocalStorageKeys.AttestationConfigured)
-
-      if (attestationConfigured)
+      if (!enableAttestation || !getAttestationChallenge || !getAttestationJWT) {
+        dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
         return
+      }
+
+      const isAttestationConfigured = await PersistentStorage.fetchValueForKey(LocalStorageKeys.AttestationConfigured)
+
+      if (isAttestationConfigured) {
+        dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
+        return
+      }
 
       const challenge = await getAttestationChallenge()
 
@@ -49,8 +73,8 @@ export const useAttestation = () => {
         if (!isDeviceAttestationSupported) throw new Error('iOS device not supported')
 
         const keyID = await generateKeyAsync()
-        const attestationResult = await generateAssertionAsync(keyID, challenge)
-        const attestationJWT = await getAttestationJWT(attestationResult, challenge)
+        const attestationResult = await attestKeyAsync(keyID, challenge)
+        const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyID)
         await storeAttestationJWT(attestationJWT, keyID)
 
       } else if (Platform.OS === 'android') {
@@ -58,36 +82,20 @@ export const useAttestation = () => {
         const keyID = 'walletAttestationKey'
         await generateHardwareAttestedKeyAsync(keyID, challenge)
         const attestationResult = await getAttestationCertificateChainAsync(keyID)
-        const attestationJWT = await getAttestationJWT(attestationResult, challenge)
+        const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyID)
         await storeAttestationJWT(attestationJWT, keyID)
 
       } else throw new Error('Platform not supported')
 
     } catch(err) {
-      console.log(err)
+      dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [false] })
+      throw new Error('Error initializing attestation')
     }
 
   }, [enableAttestation, getAttestationChallenge, getAttestationJWT])
 
-
-  const storeAttestationJWT = useCallback(async (attestationJWT: any, keyID: string) => {
-    try {
-
-      await agent.genericRecords.save({
-        content: attestationJWT,
-        id: 'attestationJWT',
-      })
-      
-      await PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationConfigured, true)
-      await PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationKey, keyID)
-
-    } catch (err) {
-      throw new Error('Error storing attestation result')
-    }
-  }, [agent])
-
   return {
-    attestationSetup,
+    setupAttestation,
   }
 
 }
