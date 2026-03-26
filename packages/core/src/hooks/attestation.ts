@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from 'react'
-import { Platform, DeviceEventEmitter } from 'react-native'
+import { useCallback } from 'react'
+import { Platform } from 'react-native'
 import {
   attestKeyAsync,
   generateKeyAsync,
@@ -7,15 +7,13 @@ import {
   getAttestationCertificateChainAsync,
   isSupported as isDeviceAttestationSupported,
 } from '@expo/app-integrity'
-import { useTranslation } from 'react-i18next'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
 import { useServices, TOKENS } from '../container-api'
-import { BifoldError } from '../types/error'
-import { EventTypes } from '../constants'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
+import { withRetry } from '../utils/network'
 
 export const useAttestation = () => {
 
@@ -33,7 +31,6 @@ export const useAttestation = () => {
     TOKENS.UTIL_AGENT_BRIDGE,
   ])
   const [, dispatch] = useStore()
-  const { t } = useTranslation()
 
   const storeAttestationJWT = useCallback(async (attestationJWT: any, keyID: string) => {
     try {
@@ -60,7 +57,6 @@ export const useAttestation = () => {
       }
 
       const isAttestationConfigured = await PersistentStorage.fetchValueForKey(LocalStorageKeys.AttestationConfigured)
-
       if (isAttestationConfigured) {
         dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
         return
@@ -73,7 +69,7 @@ export const useAttestation = () => {
         if (!isDeviceAttestationSupported) throw new Error('iOS device not supported')
 
         const keyID = await generateKeyAsync()
-        const attestationResult = await attestKeyAsync(keyID, challenge)
+        const attestationResult = await withRetry(attestKeyAsync, [keyID, challenge])
         const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyID)
         await storeAttestationJWT(attestationJWT, keyID)
 
@@ -81,14 +77,14 @@ export const useAttestation = () => {
 
         const keyID = 'walletAttestationKey'
         await generateHardwareAttestedKeyAsync(keyID, challenge)
-        const attestationResult = await getAttestationCertificateChainAsync(keyID)
+        const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyID])
         const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyID)
         await storeAttestationJWT(attestationJWT, keyID)
 
       } else throw new Error('Platform not supported')
 
     } catch(err) {
-      dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [false] })
+      logger.error('Error initializing attestation')
       throw new Error('Error initializing attestation')
     }
 
