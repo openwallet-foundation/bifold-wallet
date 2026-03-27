@@ -33,6 +33,7 @@ import Button, { ButtonType } from '../buttons/Button'
 import { InfoBoxType } from '../misc/InfoBox'
 import CommonRemoveModal from '../modals/CommonRemoveModal'
 import { ThemedText } from '../texts/ThemedText'
+import { useOpenIdReplacementNavigation } from '../../modules/openid/hooks/useOpenIdReplacementNavigation'
 import { OpenIDCustomNotificationType } from '../../modules/openid/refresh/types'
 import { useUpgradeExpiredCredential } from '../../modules/openid/hooks/useUpgradeExpiredCredential'
 
@@ -92,6 +93,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   customNotification,
 }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
+  const openReplacementOffer = useOpenIdReplacementNavigation()
   const { upgrade } = useUpgradeExpiredCredential()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
@@ -401,6 +403,10 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.Custom:
         onPress = () => {
+          if (customNotification?.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
+            openReplacementOffer(customNotification)
+            return
+          }
           if (
             customNotification?.type === OpenIDCustomNotificationType.CredentialExpired &&
             customNotification.metadata &&
