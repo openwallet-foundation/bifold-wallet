@@ -14,7 +14,7 @@ export const useExpiredNotifications = (): CustomNotification[] => {
   const build = useCallback(
     (s: RegistryStore): CustomNotification[] =>
       s.expired
-        .filter((oldId) => s.checked.includes(oldId))
+        .filter((oldId) => s.checked.includes(oldId) && !s.replacements[oldId])
         .map((oldId) => {
           const lite = s.byId[oldId]
           const n: CustomNotification = {
