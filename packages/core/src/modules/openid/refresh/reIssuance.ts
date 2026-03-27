@@ -1,10 +1,4 @@
-import {
-  Agent,
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-  W3cV2CredentialRecord,
-} from '@credo-ts/core'
+import { Agent, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { RefreshResponse } from '../types'
 import {
   OpenId4VciCredentialBindingOptions,
@@ -41,7 +35,9 @@ export async function reissueCredentialWithAccessToken({
   tokenResponse,
   clientId,
   pidSchemes,
-}: ReissueWithAccessTokenInput): Promise<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined> {
+}: ReissueWithAccessTokenInput): Promise<
+  W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined
+> {
   if (!record) {
     throw new Error('No credential record provided for re-issuance.')
   }
@@ -69,26 +65,23 @@ export async function reissueCredentialWithAccessToken({
     cNonce?: string
   }
 
-  const creds: credsRet = await agent.modules.openid4vc.holder.requestCredentials({
+  const creds: credsRet = await agent.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
     accessToken: tokenResponse.access_token,
     tokenType: tokenResponse.token_type || 'Bearer',
     cNonce: tokenResponse.c_nonce,
     clientId,
-    credentialsToRequest: [credentialConfigurationId],
+    credentialConfigurationIds: [credentialConfigurationId],
     verifyCredentialStatus: false, // you’ll check after storing
     allowedProofOfPossessionSignatureAlgorithms: ['EdDSA', 'ES256'],
     credentialBindingResolver: async (opts: OpenId4VciCredentialBindingOptions) =>
       customCredentialBindingResolver({
         agent,
         supportedDidMethods: opts.supportedDidMethods,
-        // keyType: opts.keyType,
+        proofTypes: opts.proofTypes,
         supportsAllDidMethods: opts.supportsAllDidMethods,
         supportsJwk: opts.supportsJwk,
         credentialFormat: opts.credentialFormat,
-        // supportedCredentialId: opts.supportedCredentialId,
-        resolvedCredentialOffer: resolvedCredentialOffer,
-        pidSchemes,
       }),
   })
 
@@ -112,13 +105,13 @@ export async function reissueCredentialWithAccessToken({
   //   })
   // }
 
-  const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
-    resolvedCredentialOffer.offeredCredentialConfigurations,
-    {
-      id: resolvedCredentialOffer.metadata.credentialIssuer.credential_issuer,
-      display: resolvedCredentialOffer.metadata.credentialIssuer.display,
-    }
-  )
+  const requestedCredentialConfiguration =
+    resolvedCredentialOffer.offeredCredentialConfigurations[credentialConfigurationId]
+
+  const openId4VcMetadata = extractOpenId4VcCredentialMetadata(requestedCredentialConfiguration as any, {
+    id: resolvedCredentialOffer.metadata.credentialIssuer.credential_issuer,
+    display: resolvedCredentialOffer.metadata.credentialIssuer.display,
+  })
 
   setOpenId4VcCredentialMetadata(newRecord, openId4VcMetadata)
 

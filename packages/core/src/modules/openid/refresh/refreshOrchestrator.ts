@@ -1,8 +1,6 @@
 // modules/openid/refresh/RefreshOrchestrator.ts
-import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
+import { Agent } from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
-import { refreshAccessToken } from './refreshToken'
-import { reissueCredentialWithAccessToken } from './reIssuance'
 import { IRefreshOrchestrator, RefreshCredentialMetadata, RefreshOrchestratorOpts, RefreshStatus } from './types'
 import { AgentBridge } from '../../../services/AgentBridge'
 import { credentialRegistry } from './registry'
@@ -13,20 +11,8 @@ import {
   persistCredentialRecord,
   setRefreshCredentialMetadata,
 } from '../metadata'
-
-type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
-
-const defaultToLite = (rec: AnyCred) => ({
-  id: rec.id,
-  // best-effort: SdJwt/W3C both expose claimFormat via tags in many setups.
-  // Fallback to JwtVc if unknown so UI has *some* value.
-  format:
-    (rec instanceof W3cCredentialRecord && ClaimFormat.JwtVc) ||
-    (rec instanceof SdJwtVcRecord && ClaimFormat.SdJwtW3cVc) ||
-    ClaimFormat.JwtVc, // TODO: Won't these checks against ClaimFormat always be true?
-  createdAt: rec.createdAt?.toISOString(),
-  issuer: undefined,
-})
+import { OpenIDCredentialRecord, toOpenIDCredentialLite } from '../credentialRecord'
+import { refreshAndQueueReplacement } from './operations'
 
 export class RefreshOrchestrator implements IRefreshOrchestrator {
   private timer?: ReturnType<typeof setInterval>
@@ -34,16 +20,20 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
   private runningOnce = false // a run is in progress?
   private opts: Required<RefreshOrchestratorOpts>
   private agent?: Agent
-  private readonly recentlyIssued = new Map<string, AnyCred>()
+  private readonly recentlyIssued = new Map<string, OpenIDCredentialRecord>()
   private readonly checkStatusOnly = true
 
-  public constructor(private readonly logger: BifoldLogger, bridge: AgentBridge, opts?: RefreshOrchestratorOpts) {
+  public constructor(
+    private readonly logger: BifoldLogger,
+    bridge: AgentBridge,
+    opts?: RefreshOrchestratorOpts
+  ) {
     this.opts = {
       intervalMs: 15 * 60 * 1000,
       autoStart: true,
       onError: (e) => this.logger.error(String(e)),
       listRecords: async () => [],
-      toLite: defaultToLite,
+      toLite: toOpenIDCredentialLite,
       ...(opts ?? {}),
     }
 
@@ -153,11 +143,14 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
     try {
       const records = await this.opts.listRecords()
       this.logger.info(`📦 [Refresh] found ${records.length} credential records`)
-      for (const rec of records as AnyCred[]) {
+      for (const rec of records as OpenIDCredentialRecord[]) {
         // don’t block whole batch if one fails
         try {
-          await this.checkRecordStatus(rec)
-          // await this.refreshRecord(rec)
+          if (this.checkStatusOnly) {
+            await this.checkRecordStatus(rec)
+          } else {
+            await this.refreshRecord(rec)
+          }
         } catch (e) {
           this.logger.error(`💥 [Refresh] record ${rec.id} failed: ${String(e)}`)
           this.opts.onError?.(e)
@@ -176,12 +169,12 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
     this.configure({ intervalMs })
   }
 
-  public resolveFull(id: string): AnyCred | undefined {
+  public resolveFull(id: string): OpenIDCredentialRecord | undefined {
     return this.recentlyIssued.get(id)
   }
 
   // ---- internals ----
-  private async checkRecordStatus(rec: AnyCred) {
+  private async checkRecordStatus(rec: OpenIDCredentialRecord) {
     const { shouldSkip, markRefreshing, clearRefreshing, upsert, markInvalid, setLastSweep } =
       credentialRegistry.getState()
 
@@ -232,17 +225,9 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
     }
   }
 
-  private async refreshRecord(rec: AnyCred) {
-    const {
-      shouldSkip,
-      markRefreshing,
-      clearRefreshing,
-      clearExpired,
-      markExpiredWithReplacement,
-      blockAsFailed,
-      blockAsSucceeded,
-      upsert,
-    } = credentialRegistry.getState()
+  private async refreshRecord(rec: OpenIDCredentialRecord) {
+    const { shouldSkip, markRefreshing, clearRefreshing, clearExpired, blockAsFailed, blockAsSucceeded, upsert } =
+      credentialRegistry.getState()
 
     const id = rec.id
 
@@ -284,40 +269,24 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
         agentContext: this.agent.context,
       })
 
-      // 4) needs refresh → get access token
       this.logger.info(`♻️ [Refresh] invalid, attempting re-issue → ${id}`)
-      const token = await refreshAccessToken({ logger: this.logger, cred: rec, agentContext: this.agent.context })
-      if (!token) {
-        const msg = `no refresh token available`
+      const newRecord = await refreshAndQueueReplacement({
+        agent: this.agent,
+        logger: this.logger,
+        record: rec,
+        toLite: this.opts.toLite,
+      })
+
+      if (!newRecord) {
+        const msg = 'credential refresh did not yield a replacement'
         this.logger.warn(`⚠️ [Refresh] ${msg} for ${id}`)
         blockAsFailed(id, msg)
         return
       }
 
-      // 5) re-issue
-      const newRecord = await reissueCredentialWithAccessToken({
-        agent: this.agent,
-        logger: this.logger,
-        record: rec,
-        tokenResponse: token,
-      })
-
-      if (newRecord) {
-        this.logger.info(`💾 [Refresh] new credential → ${newRecord.id}`)
-        // Queue a replacement for UI/notifications and block the old one as succeeded
-        markExpiredWithReplacement(id, this.opts.toLite(newRecord))
-        blockAsSucceeded(id)
-        this.recentlyIssued.set(newRecord.id, newRecord)
-      } else {
-        const msg = `re-issue returned no record`
-        this.logger.warn(`⚠️ [Refresh] ${msg} for ${id}`)
-        blockAsFailed(id, msg)
-        await markOpenIDCredentialStatus({
-          credential: rec,
-          status: RefreshStatus.Invalid,
-          agentContext: this.agent.context,
-        })
-      }
+      this.logger.info(`💾 [Refresh] new credential → ${newRecord.id}`)
+      blockAsSucceeded(id)
+      this.recentlyIssued.set(newRecord.id, newRecord)
     } catch (e) {
       const err = String(e)
       this.logger.error(`💥 [Refresh] error on ${id}: ${err}`)

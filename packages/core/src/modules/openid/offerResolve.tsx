@@ -1,23 +1,46 @@
 import {
   OpenId4VcCredentialHolderBinding,
-  OpenId4VcHolderApi,
   OpenId4VciCredentialBindingOptions,
   OpenId4VciCredentialFormatProfile,
   OpenId4VciRequestTokenResponse,
   OpenId4VciResolvedCredentialOffer,
 } from '@credo-ts/openid4vc'
-import {
-  Agent,
-  DidJwk,
-  DidKey,
-  JwkDidCreateOptions,
-  KeyDidCreateOptions,
-  Kms,
-} from '@credo-ts/core'
-import {
-  extractOpenId4VcCredentialMetadata,
-  setOpenId4VcCredentialMetadata,
-} from './metadata'
+import { Agent, DidJwk, DidKey, JwkDidCreateOptions, KeyDidCreateOptions, Kms } from '@credo-ts/core'
+import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
+import { OpenIDCredentialRecord } from './credentialRecord'
+
+type CredentialBindingResolverOptions = Pick<
+  OpenId4VciCredentialBindingOptions,
+  'credentialFormat' | 'proofTypes' | 'supportedDidMethods' | 'supportsAllDidMethods' | 'supportsJwk'
+> & {
+  agent: Agent
+}
+
+const getCredentialConfigurationIdsToRequest = ({
+  resolvedCredentialOffer,
+  credentialConfigurationIdsToRequest,
+}: {
+  resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
+  credentialConfigurationIdsToRequest?: string[]
+}) => {
+  const credentialConfigurationIds = credentialConfigurationIdsToRequest ?? [
+    Object.keys(resolvedCredentialOffer.offeredCredentialConfigurations)[0],
+  ]
+
+  if (credentialConfigurationIds.length === 0 || !credentialConfigurationIds[0]) {
+    throw new Error('No credential configuration ID found in the credential offer.')
+  }
+
+  for (const credentialConfigurationId of credentialConfigurationIds) {
+    if (!resolvedCredentialOffer.offeredCredentialConfigurations[credentialConfigurationId]) {
+      throw new Error(
+        `Parameter 'credentialConfigurationIdsToRequest' with values ${credentialConfigurationIdsToRequest} is not a credential_configuration_id in the credential offer.`
+      )
+    }
+  }
+
+  return credentialConfigurationIds
+}
 
 export const resolveOpenId4VciOffer = async ({
   agent,
@@ -27,7 +50,7 @@ export const resolveOpenId4VciOffer = async ({
 }: {
   agent: Agent
   // Either data itself (the offer) or uri can be passed
-  data?: string
+  data?: unknown
   uri?: string
   fetchAuthorization?: boolean
   authorization?: { clientId: string; redirectUri: string }
@@ -51,7 +74,7 @@ export const resolveOpenId4VciOffer = async ({
   const resolvedCredentialOffer = await agent.openid4vc.holder.resolveCredentialOffer(offerUri)
 
   if (authorization) {
-    throw new Error('Authorization flow is not supported yet as of Credo 0.5.13')
+    throw new Error('Authorization code flow is not implemented in this OpenID credential offer flow.')
   }
 
   return resolvedCredentialOffer
@@ -66,7 +89,7 @@ export async function acquirePreAuthorizedAccessToken({
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
 }): Promise<OpenId4VciRequestTokenResponse> {
-  return await agent.modules.openid4vc.holder.requestToken({
+  return await agent.openid4vc.holder.requestToken({
     resolvedCredentialOffer,
     txCode,
   })
@@ -78,24 +101,17 @@ export const customCredentialBindingResolver = async ({
   supportsAllDidMethods,
   supportsJwk,
   credentialFormat,
-  proofTypes
-}: Partial<OpenId4VciCredentialBindingOptions> & {
-  agent: Agent
-  resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
-  pidSchemes?: { sdJwtVcVcts: Array<string>; msoMdocDoctypes: Array<string> }
-}): Promise<OpenId4VcCredentialHolderBinding> => {
+  proofTypes,
+}: CredentialBindingResolverOptions): Promise<OpenId4VcCredentialHolderBinding> => {
   // First, we try to pick a did method
   // Prefer did:jwk, otherwise use did:key, otherwise use undefined
   let didMethod: 'key' | 'jwk' | undefined =
     supportsAllDidMethods || supportedDidMethods?.includes('did:jwk')
       ? 'jwk'
       : supportedDidMethods?.includes('did:key')
-      ? 'key'
-      : undefined
+        ? 'key'
+        : undefined
 
-  // If supportedDidMethods is undefined, and supportsJwk is false, we will default to did:key
-  // this is important as part of MATTR launchpad support which MUST use did:key but doesn't
-  // define which did methods they support
   if (!supportedDidMethods && !supportsJwk) {
     didMethod = 'key'
   }
@@ -103,7 +119,7 @@ export const customCredentialBindingResolver = async ({
   const key = await agent.kms.createKeyForSignatureAlgorithm({
     algorithm: proofTypes?.jwt?.supportedSignatureAlgorithms[0] ?? 'EdDSA',
   })
-  const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk);
+  const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk)
 
   if (didMethod) {
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({
@@ -140,7 +156,7 @@ export const customCredentialBindingResolver = async ({
   ) {
     return {
       method: 'jwk',
-      keys: [publicJwk] // Need to replace getJwkFromKey here
+      keys: [publicJwk], // Need to replace getJwkFromKey here
     }
   }
 
@@ -157,39 +173,30 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   tokenResponse,
   credentialConfigurationIdsToRequest,
   clientId,
-  pidSchemes,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   tokenResponse: OpenId4VciRequestTokenResponse
   credentialConfigurationIdsToRequest?: string[]
   clientId?: string
-  pidSchemes?: { sdJwtVcVcts: Array<string>; msoMdocDoctypes: Array<string> }
-}) => {
-  const offeredCredentialsToRequest = credentialConfigurationIdsToRequest
-    ? Object.entries(resolvedCredentialOffer.offeredCredentialConfigurations).filter(([k]) =>
-        credentialConfigurationIdsToRequest.includes(k)
-      )
-    : [Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0]]
+}): Promise<OpenIDCredentialRecord> => {
+  const credentialConfigurationIds = getCredentialConfigurationIdsToRequest({
+    resolvedCredentialOffer,
+    credentialConfigurationIdsToRequest,
+  })
 
-  if (offeredCredentialsToRequest.length === 0) {
-    throw new Error(
-      `Parameter 'credentialConfigurationIdsToRequest' with values ${credentialConfigurationIdsToRequest} is not a credential_configuration_id in the credential offer.`
-    )
-  }
-
-  const credentials = await (agent.openid4vc.holder as OpenId4VcHolderApi).requestCredentials({
+  const credentials = await agent.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
     ...tokenResponse,
     clientId,
-    credentialConfigurationIds: credentialConfigurationIdsToRequest,
+    credentialConfigurationIds,
     verifyCredentialStatus: false,
     allowedProofOfPossessionSignatureAlgorithms: [
       // NOTE: MATTR launchpad for JFF MUST use EdDSA. So it is important that the default (first allowed one)
       // is EdDSA. The list is ordered by preference, so if no suites are defined by the issuer, the first one
       // will be used
-      "EdDSA",
-      "ES256",
+      'EdDSA',
+      'ES256',
     ],
     credentialBindingResolver: async ({
       supportedDidMethods,
@@ -197,7 +204,6 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
       supportsAllDidMethods,
       supportsJwk,
       credentialFormat,
-      credentialConfigurationId,
     }: OpenId4VciCredentialBindingOptions) => {
       return customCredentialBindingResolver({
         agent,
@@ -206,9 +212,6 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
         supportsAllDidMethods,
         supportsJwk,
         credentialFormat,
-        credentialConfigurationId,
-        resolvedCredentialOffer,
-        pidSchemes,
       })
     },
   })
@@ -223,40 +226,13 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   }
 
   const record = firstCredential.record
+  const requestedCredentialConfiguration =
+    resolvedCredentialOffer.offeredCredentialConfigurations[credentialConfigurationIds[0]]
 
-  // This block likely not necessary anymore? The record seems to be defined on this object already.
-
-  // if ('compact' in firstCredential.) {
-  //   // TODO: add claimFormat to SdJwtVc
-  //   record = new SdJwtVcRecord({
-  //     credentialInstances: firstCredential.credential.compact,
-  //   })
-  // } else if (firstCredential.credential instanceof Mdoc) {
-  //   record = new MdocRecord({
-  //     mdoc: firstCredential.credential,
-  //   })
-  // } else {
-  //   record = new W3cCredentialRecord({
-  //     credential: firstCredential.credential as W3cJwtVerifiableCredential | W3cJsonLdVerifiableCredential,
-  //     // We don't support expanded types right now, but would become problem when we support JSON-LD
-  //     tags: {},
-  //   })
-  // }
-
-  // TODO: Confirm how this should be handled, notificationMetadata for openid4vc may have been removed
-
-  // const notificationMetadata = { ...firstCredential.notificationMetadata }
-  // if (notificationMetadata) {
-  //   temporaryMetaVanillaObject.notificationMetadata = notificationMetadata
-  // }
-
-  const openId4VcMetadata = extractOpenId4VcCredentialMetadata(
-    Object.values(resolvedCredentialOffer.offeredCredentialConfigurations)[0] as any,
-    {
-      id: resolvedCredentialOffer.metadata.credentialIssuer.credential_issuer, // This might not be correct
-      display: resolvedCredentialOffer.metadata.credentialIssuer.display,
-    }
-  )
+  const openId4VcMetadata = extractOpenId4VcCredentialMetadata(requestedCredentialConfiguration as any, {
+    id: resolvedCredentialOffer.metadata.credentialIssuer.credential_issuer,
+    display: resolvedCredentialOffer.metadata.credentialIssuer.display,
+  })
 
   setOpenId4VcCredentialMetadata(record, openId4VcMetadata)
 

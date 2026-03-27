@@ -1,16 +1,13 @@
 import { AnonCredsProofRequest } from '@credo-ts/anoncreds'
-import {
-  Agent,
-  CredoError,
-} from '@credo-ts/core'
+import { Agent, CredoError } from '@credo-ts/core'
 import { useAgent, useConnectionById } from '@bifold/react-hooks'
-import { 
+import {
   DidCommBasicMessageRecord,
   DidCommBasicMessageRepository,
   DidCommProofExchangeRecord,
   DidCommProofState,
   DidCommRequestPresentationV2Message,
-  DidCommCredentialExchangeRecord
+  DidCommCredentialExchangeRecord,
 } from '@credo-ts/didcomm'
 import { markProofAsViewed } from '@bifold/verifier'
 import { useNavigation } from '@react-navigation/native'
@@ -37,7 +34,6 @@ import { InfoBoxType } from '../misc/InfoBox'
 import CommonRemoveModal from '../modals/CommonRemoveModal'
 import { ThemedText } from '../texts/ThemedText'
 import { OpenIDCustomNotificationType } from '../../modules/openid/refresh/types'
-import { useOpenIdReplacementNavigation } from '../../modules/openid/hooks/useOpenIdReplacementNavigation'
 import { useUpgradeExpiredCredential } from '../../modules/openid/hooks/useUpgradeExpiredCredential'
 
 const iconSize = 30
@@ -53,7 +49,11 @@ export enum NotificationType {
 
 export interface NotificationListItemProps {
   notificationType: NotificationType
-  notification: DidCommBasicMessageRecord | DidCommCredentialExchangeRecord | DidCommProofExchangeRecord | CustomNotificationRecord
+  notification:
+    | DidCommBasicMessageRecord
+    | DidCommCredentialExchangeRecord
+    | DidCommProofExchangeRecord
+    | CustomNotificationRecord
   customNotification?: CustomNotification
 }
 
@@ -74,7 +74,8 @@ type StyleConfig = {
 const markMessageAsSeen = async (agent: Agent, record: DidCommBasicMessageRecord) => {
   const meta = record.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
   record.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
-  const basicMessageRepository: DidCommBasicMessageRepository = agent.context.dependencyManager.resolve(DidCommBasicMessageRepository)
+  const basicMessageRepository: DidCommBasicMessageRepository =
+    agent.context.dependencyManager.resolve(DidCommBasicMessageRepository)
   await basicMessageRepository.update(agent.context, record)
 }
 
@@ -91,7 +92,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   customNotification,
 }) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
-  const openReplacementOffer = useOpenIdReplacementNavigation()
   const { upgrade } = useUpgradeExpiredCredential()
   const [store, dispatch] = useStore()
   const { t } = useTranslation()
@@ -105,7 +105,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     notification instanceof DidCommBasicMessageRecord ||
     notification instanceof DidCommCredentialExchangeRecord ||
     notification instanceof DidCommProofExchangeRecord
-      ? notification.connectionId ?? ''
+      ? (notification.connectionId ?? '')
       : ''
   const connection = useConnectionById(connectionId)
   const [details, setDetails] = useState<DisplayDetails>(defaultDetails)
@@ -429,7 +429,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     toggleDeclineModalVisible,
     dismissBasicMessage,
     customNotification,
-    openReplacementOffer,
     upgrade,
   ])
 

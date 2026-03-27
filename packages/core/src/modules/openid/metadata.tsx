@@ -5,6 +5,7 @@ import {
   W3cV2CredentialRecord,
   AgentContext,
   W3cCredentialRepository,
+  W3cV2CredentialRepository,
   SdJwtVcRepository,
   MdocRepository,
 } from '@credo-ts/core'
@@ -31,8 +32,8 @@ export interface OpenId4VcCredentialMetadata {
 }
 
 type CredentialSupported = {
-  display: CredentialDisplay[],
-  order?: unknown,
+  display: CredentialDisplay[]
+  order?: unknown
 }
 
 export type OpenId4VcCredentialMetadataExtended = Partial<
@@ -103,7 +104,9 @@ export function setRefreshCredentialMetadata(
   credentialRecord.metadata.set(refreshCredentialMetadataKey, metadata)
 }
 
-export function deleteRefreshCredentialMetadata(credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) {
+export function deleteRefreshCredentialMetadata(
+  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
+) {
   credentialRecord.metadata.delete(refreshCredentialMetadataKey)
 }
 
@@ -113,6 +116,8 @@ export async function persistCredentialRecord(
 ) {
   if (record instanceof W3cCredentialRecord) {
     await agentContext.dependencyManager.resolve(W3cCredentialRepository).update(agentContext, record)
+  } else if (record instanceof W3cV2CredentialRecord) {
+    await agentContext.dependencyManager.resolve(W3cV2CredentialRepository).update(agentContext, record)
   } else if (record instanceof SdJwtVcRecord) {
     await agentContext.dependencyManager.resolve(SdJwtVcRepository).update(agentContext, record)
   } else if (record instanceof MdocRecord) {
