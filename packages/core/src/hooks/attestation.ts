@@ -47,7 +47,7 @@ export const useAttestation = () => {
       logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error storing attestation result')
     }
-  }, [agentBridge, dispatch])
+  }, [agentBridge, dispatch, logger])
 
   const setupAttestation = useCallback(async (): Promise<void> => {
     try {

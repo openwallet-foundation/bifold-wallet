@@ -60,7 +60,6 @@ import {
   Tours as ToursState,
 } from './types/state'
 import { hashPIN } from './utils/crypto'
-import { AttestationFunctions } from './container-api'
 
 export const defaultConfig: Config = {
   PINSecurity: {

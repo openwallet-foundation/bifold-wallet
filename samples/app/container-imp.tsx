@@ -1,8 +1,5 @@
-import { Platform } from 'react-native'
-import { BifoldLogger, Container, TokenMapping, TOKENS } from '@bifold/core'
+import { BifoldLogger, Container, TokenMapping } from '@bifold/core'
 import { DependencyContainer } from 'tsyringe'
-import { applicationId } from 'expo-application';
-// import crypto from 'react-native-quick-crypto'
 
 export class AppContainer implements Container {
   private _container: DependencyContainer
