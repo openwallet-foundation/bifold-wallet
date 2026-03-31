@@ -96,28 +96,15 @@ export async function fetchInvitationDataUrl(dataUrl: string): Promise<ParseInvi
 
 export const getCredentialsForProofRequest = async ({
   agent,
-  data,
-  uri,
+  request,
 }: {
   agent: BifoldAgent
-  // Either a raw authorization request string or a request URI can be passed
-  data?: string
-  uri?: string
+  request: string
 }): Promise<OpenId4VPRequestRecord | undefined> => {
-  let authorizationRequest = uri
-
   try {
-    if (data) {
-      authorizationRequest = data
-    } else if (uri) {
-      authorizationRequest = uri
-    } else {
-      throw new Error('Either data or uri must be provided')
-    }
+    agent.config.logger.info(`$$Receiving openid authorization request ${request}`)
 
-    agent.config.logger.info(`$$Receiving openid authorization request ${authorizationRequest}`)
-
-    const resolved = await agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(authorizationRequest)
+    const resolved = await agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(request)
 
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')

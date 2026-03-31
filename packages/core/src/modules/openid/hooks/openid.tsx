@@ -118,7 +118,7 @@ export const useOpenID = ({
       try {
         const record = await getCredentialsForProofRequest({
           agent: agent,
-          uri: uri,
+          request: uri,
         })
         return record
       } catch (err: unknown) {
