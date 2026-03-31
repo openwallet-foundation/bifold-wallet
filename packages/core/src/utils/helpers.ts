@@ -10,9 +10,7 @@ import {
   AnonCredsRequestedPredicateMatch,
   getCredentialsForAnonCredsProofRequest,
 } from '@credo-ts/anoncreds'
-import {
-  parseDid,
-} from '@credo-ts/core'
+import { parseDid } from '@credo-ts/core'
 import { useConnectionById } from '@bifold/react-hooks'
 import {
   DidCommBasicMessageRecord,
@@ -1077,7 +1075,7 @@ export const sortCredentialsForAutoSelect = (
  */
 export const removeExistingInvitationsById = async (
   agent: BifoldAgent | undefined,
-  invitationId: string,
+  invitationId: string
 ): Promise<void> => {
   // This is implemented just as findByReceivedInvitationId is
   // in Credo only this is able to return multiple if they exist
@@ -1177,7 +1175,6 @@ export const connectFromScanOrDeepLink = async (
     return
   }
 
-  // TODO:(jl) Do we care if the connection is a deep link?
   logger.info(`Attempting to connect from ${isDeepLink ? 'deeplink' : 'qr scan'}`)
   try {
     if (isOpenIdCredentialOffer(uri)) {

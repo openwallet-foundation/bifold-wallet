@@ -1,4 +1,4 @@
-import { Agent, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
+import { Agent } from '@credo-ts/core'
 import { RefreshResponse } from '../types'
 import {
   OpenId4VciCredentialBindingOptions,
@@ -16,16 +16,15 @@ import {
   setRefreshCredentialMetadata,
 } from '../metadata'
 import { RefreshStatus } from './types'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 type ReissueWithAccessTokenInput = {
   agent: Agent
   logger: BifoldLogger
-  record?: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
+  record?: OpenIDCredentialRecord
   tokenResponse: RefreshResponse
   resolvedOffer?: OpenId4VciResolvedCredentialOffer
   clientId?: string
-  // optional: pass to your resolver if you need PID schemes again
-  pidSchemes?: { sdJwtVcVcts: string[]; msoMdocDoctypes: string[] }
 }
 
 export async function reissueCredentialWithAccessToken({
@@ -34,10 +33,7 @@ export async function reissueCredentialWithAccessToken({
   record,
   tokenResponse,
   clientId,
-  pidSchemes,
-}: ReissueWithAccessTokenInput): Promise<
-  W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined
-> {
+}: ReissueWithAccessTokenInput): Promise<OpenIDCredentialRecord | undefined> {
   if (!record) {
     throw new Error('No credential record provided for re-issuance.')
   }
@@ -93,7 +89,7 @@ export async function reissueCredentialWithAccessToken({
     throw new Error('Issuer returned empty or malformed credential on re-issuance.')
   }
 
-  const newRecord: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord = firstCredential.record
+  const newRecord: OpenIDCredentialRecord = firstCredential.record
   // if ('compact' in firstCredential) {
   //   newRecord = new SdJwtVcRecord({ c })
   // } else if ((firstCredential as any)?.credential instanceof Mdoc) {

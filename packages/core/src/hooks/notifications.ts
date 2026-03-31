@@ -26,6 +26,7 @@ import { CustomNotification } from '../types/notification'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
 import { useReplacementNotifications } from '../modules/openid/hooks/useReplacementNotifications'
+import { OpenIDCredentialRecord } from '../modules/openid/credentialRecord'
 
 export type NotificationsInputProps = {
   openIDUri?: string
@@ -97,7 +98,7 @@ export const useNotifications = ({
       }
     })
 
-    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord> = []
+    const openIDCreds: Array<OpenIDCredentialRecord | OpenId4VPRequestRecord> = []
     if (openIDCredRecieved) {
       openIDCreds.push(openIDCredRecieved)
     }

@@ -8,7 +8,6 @@ import {
   MdocRecord,
   SdJwtVcRecord,
   W3cCredentialRecord,
-  W3cV2CredentialRecord,
 } from '@credo-ts/core'
 import { recordsAddedByType, recordsRemovedByType } from '@bifold/react-hooks/build/recordUtils'
 import { useTranslation } from 'react-i18next'
@@ -33,9 +32,7 @@ export type OpenIDCredentialContext = {
   getCredentialById: (id: string, type?: OpenIDCredentialType) => Promise<OpenIDCredentialRecord | undefined>
   storeCredential: (cred: OpenIDCredentialRecord) => Promise<void>
   removeCredential: (cred: OpenIDCredentialRecord, type: OpenIDCredentialType) => Promise<void>
-  resolveBundleForCredential: (
-    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
-  ) => Promise<CredentialOverlay<BrandingOverlay>>
+  resolveBundleForCredential: (credential: OpenIDCredentialRecord) => Promise<CredentialOverlay<BrandingOverlay>>
 }
 
 export type OpenIDCredentialRecordState = {
@@ -180,13 +177,14 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     await storeOpenIDCredential(agent, cred)
   }
 
-  async function deleteCredential(cred: OpenIDCredentialRecord, _type: OpenIDCredentialType) {
+  async function deleteCredential(cred: OpenIDCredentialRecord, type: OpenIDCredentialType) {
+    void type
     const agent = getAgent()
     await deleteOpenIDCredential(agent, cred)
   }
 
   const resolveBundleForCredential = async (
-    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
+    credential: OpenIDCredentialRecord
   ): Promise<CredentialOverlay<BrandingOverlay>> => {
     const credentialDisplay = getCredentialForDisplay(credential)
 
