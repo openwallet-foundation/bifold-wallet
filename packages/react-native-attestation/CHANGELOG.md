@@ -11,6 +11,12 @@
   and modifies the interfaces of many existing modules. Thus, changes are made across the project,
   some of which may be breaking.
 
+## 2.12.12
+
+### Patch Changes
+
+- d82de15: bubble up errors from app store receipt method in attestation package
+
 ## 2.12.11
 
 ### Patch Changes
