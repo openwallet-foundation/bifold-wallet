@@ -103,8 +103,6 @@ export const customCredentialBindingResolver = async ({
   credentialFormat,
   proofTypes,
 }: CredentialBindingResolverOptions): Promise<OpenId4VcCredentialHolderBinding> => {
-  // First, we try to pick a did method
-  // Prefer did:jwk, otherwise use did:key, otherwise use undefined
   let didMethod: 'key' | 'jwk' | undefined =
     supportsAllDidMethods || supportedDidMethods?.includes('did:jwk')
       ? 'jwk'
@@ -133,22 +131,21 @@ export const customCredentialBindingResolver = async ({
       throw new Error('DID creation failed.')
     }
 
-    let verificationMethodId: string
+    let didUrl: string
     if (didMethod === 'jwk') {
-      const didJwk = DidJwk.fromDid(didResult.didState.did)
-      verificationMethodId = didJwk.verificationMethodId
+      didUrl = DidJwk.fromDid(didResult.didState.did).verificationMethodId
     } else {
       const didKey = DidKey.fromDid(didResult.didState.did)
-      verificationMethodId = `${didKey.did}#${didKey.publicJwk.fingerprint}`
+      didUrl = `${didKey.did}#${didKey.publicJwk.fingerprint}`
     }
 
     return {
-      didUrls: [verificationMethodId],
       method: 'did',
+      didUrls: [didUrl],
     }
   }
 
-  // Otherwise we also support plain jwk for sd-jwt only
+  // Fallback: plain jwk for sd-jwt/mdoc only
   if (
     supportsJwk &&
     (credentialFormat === OpenId4VciCredentialFormatProfile.SdJwtVc ||
