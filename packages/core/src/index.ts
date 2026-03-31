@@ -171,6 +171,7 @@ export type { ScanCameraProps } from './components/misc/ScanCamera'
 export type { DismissiblePopupModalProps } from './components/modals/DismissiblePopupModal'
 export type { BannerSectionProps } from './components/views/Banner'
 export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
+export { OpenIDCredentialRefreshFlowType } from './modules/openid/refresh/types'
 
 export {
   AbstractBifoldLogger,

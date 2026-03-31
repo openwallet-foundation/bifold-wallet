@@ -145,7 +145,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
         {
           title: t('Settings.Language'),
           value: currentLanguage,
-          accessibilityLabel: t('Settings.Language'),
+          accessibilityLabel: `${t('Settings.Language')} ${currentLanguage}`,
           testID: testIdWithKey('Language'),
           onPress: () => navigation.navigate(Screens.Language),
         },

@@ -71,7 +71,7 @@ exports[`Settings Screen Renders correctly 1`] = `
               "title": "Settings.ChangePin",
             },
             Object {
-              "accessibilityLabel": "Settings.Language",
+              "accessibilityLabel": "Settings.Language Language.code",
               "onPress": [Function],
               "testID": "com.ariesbifold:id/Language",
               "title": "Settings.Language",
@@ -823,7 +823,7 @@ exports[`Settings Screen Renders correctly 1`] = `
         >
           <View>
             <View
-              accessibilityLabel="Settings.Language"
+              accessibilityLabel="Settings.Language Language.code"
               accessibilityRole="button"
               accessibilityState={
                 Object {
