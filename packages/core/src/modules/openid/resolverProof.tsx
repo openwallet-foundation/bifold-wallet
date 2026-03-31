@@ -100,26 +100,24 @@ export const getCredentialsForProofRequest = async ({
   uri,
 }: {
   agent: BifoldAgent
-  // Either data itself (the offer) or uri can be passed
+  // Either a raw authorization request string or a request URI can be passed
   data?: string
   uri?: string
 }): Promise<OpenId4VPRequestRecord | undefined> => {
-  let requestUri = uri
+  let authorizationRequest = uri
 
   try {
     if (data) {
-      // FIXME: Credo only support request string, but we already parsed it before. So we construct an request here
-      // but in the future we need to support the parsed request in Credo directly
-      requestUri = `openid://?request=${encodeURIComponent(data)}`
+      authorizationRequest = data
     } else if (uri) {
-      requestUri = uri
+      authorizationRequest = uri
     } else {
       throw new Error('Either data or uri must be provided')
     }
 
-    agent.config.logger.info(`$$Receiving openid uri ${requestUri}`)
+    agent.config.logger.info(`$$Receiving openid authorization request ${authorizationRequest}`)
 
-    const resolved = await agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(String(requestUri))
+    const resolved = await agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(authorizationRequest)
 
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
