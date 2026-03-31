@@ -234,7 +234,7 @@ describe('useAttestation', () => {
     })
 
     it('logs and rethrows when generateKeyAsync fails', async () => {
-      ;(generateKeyAsync as jest.Mock).mockRejectedValue(new Error('key gen failed'))
+      (generateKeyAsync as jest.Mock).mockRejectedValue(new Error('key gen failed'))
 
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
@@ -243,7 +243,7 @@ describe('useAttestation', () => {
     })
 
     it('logs and rethrows when withRetry (attestKeyAsync) fails', async () => {
-      ;(withRetry as jest.Mock).mockRejectedValue(new Error('attest failed'))
+      (withRetry as jest.Mock).mockRejectedValue(new Error('attest failed'))
 
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
@@ -318,7 +318,7 @@ describe('useAttestation', () => {
     })
 
     it('logs and rethrows when generateHardwareAttestedKeyAsync fails', async () => {
-      ;(generateHardwareAttestedKeyAsync as jest.Mock).mockRejectedValue(
+      (generateHardwareAttestedKeyAsync as jest.Mock).mockRejectedValue(
         new Error('hw key gen failed')
       )
 
@@ -329,7 +329,7 @@ describe('useAttestation', () => {
     })
 
     it('logs and rethrows when withRetry (getCertificateChain) fails', async () => {
-      ;(withRetry as jest.Mock).mockRejectedValue(new Error('cert chain failed'))
+      (withRetry as jest.Mock).mockRejectedValue(new Error('cert chain failed'))
 
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.setupAttestation())).rejects.toThrow(

@@ -59,7 +59,7 @@ export class AppContainer implements Container {
       }
     })
     */ 
-
+    /*
     this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async () => {
       try {
         const challengeResponse = await fetch('')
@@ -101,6 +101,7 @@ export class AppContainer implements Container {
       return response
 
     })
+    */
 
     return this
   }

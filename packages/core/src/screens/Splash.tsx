@@ -96,7 +96,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
 
     initAttestation()
 
-  }, [setupAttestation])
+  }, [setupAttestation, enableAttestation, logger, store.authentication.didAuthenticate, t])
 
   return (
     <SafeAreaView style={styles.container}>

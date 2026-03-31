@@ -49,14 +49,6 @@ type GenerateOnboardingWorkflowStepsFn = (
 
 type ProofRequestTemplateFn = (useDevTemplates: boolean) => Array<ProofRequestTemplate>
 
-interface getAttestationJWTParams {
-    keyId?: string
-    attestation: string
-    bundleIdentifier: string
-    challenge: string
-    platform: "ios" | "android" | "windows" | "macos" | "web"
-}
-
 export const PROOF_TOKENS = {
   GROUP_BY_REFERENT: 'proof.groupByReferant',
   CRED_HELP_ACTION_OVERRIDES: 'proof.credHelpActionOverride',

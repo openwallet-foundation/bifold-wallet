@@ -43,10 +43,11 @@ export const useAttestation = () => {
         await PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationKey, keyID)
         dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
       })
-    } catch (err) {
+    } catch (err: any) {
+      logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error storing attestation result')
     }
-  }, [agentBridge])
+  }, [agentBridge, dispatch])
 
   const setupAttestation = useCallback(async (): Promise<void> => {
     try {
@@ -83,12 +84,12 @@ export const useAttestation = () => {
 
       } else throw new Error('Platform not supported')
 
-    } catch(err) {
-      logger.error('Error initializing attestation')
+    } catch(err: any) {
+      logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error initializing attestation')
     }
 
-  }, [enableAttestation, getAttestationChallenge, getAttestationJWT])
+  }, [enableAttestation, getAttestationChallenge, getAttestationJWT, dispatch, logger, storeAttestationJWT])
 
   return {
     setupAttestation,
