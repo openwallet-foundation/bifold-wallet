@@ -1,6 +1,5 @@
-import { Agent, DifPexCredentialsForRequest, Jwt, X509ModuleConfig } from '@credo-ts/core'
+import { Agent, DifPexCredentialsForRequest } from '@credo-ts/core'
 import { ParseInvitationResult } from '../../utils/parsers'
-import q from 'query-string'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
 import { OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
@@ -95,78 +94,6 @@ export async function fetchInvitationDataUrl(dataUrl: string): Promise<ParseInvi
   }
 }
 
-const extractCertificateFromJwt = (jwt: string) => {
-  const jwtHeader = Jwt.fromSerializedJwt(jwt).header
-  return Array.isArray(jwtHeader.x5c) && typeof jwtHeader.x5c[0] === 'string' ? jwtHeader.x5c[0] : null
-}
-
-/**
- * This is a temp method to allow for untrusted certificates to still work with the wallet.
- */
-export const extractCertificateFromAuthorizationRequest = async ({
-  data,
-  uri,
-}: {
-  data?: string
-  uri?: string
-}): Promise<{ data: string | null; certificate: string | null }> => {
-  try {
-    if (data) {
-      return {
-        data,
-        certificate: extractCertificateFromJwt(data),
-      }
-    }
-
-    if (uri) {
-      const query = q.parseUrl(uri).query
-      if (query.request_uri && typeof query.request_uri === 'string') {
-        const result = await fetchInvitationDataUrl(query.request_uri)
-        if (
-          result.success &&
-          result.result.type === 'openid-authorization-request' &&
-          typeof result.result.data === 'string'
-        ) {
-          return {
-            data: result.result.data,
-            certificate: extractCertificateFromJwt(result.result.data),
-          }
-        }
-      } else if (query.request && typeof query.request === 'string') {
-        const _res = {
-          data: query.request,
-          certificate: extractCertificateFromJwt(query.request),
-        }
-        return _res
-      }
-    }
-    return { data: null, certificate: null }
-  } catch {
-    return { data: null, certificate: null }
-  }
-}
-
-export async function withTrustedCertificate<T>(
-  agent: Agent, //This should maybe be AgentContext instead
-  certificate: string | null,
-  method: () => Promise<T> | T
-): Promise<T> {
-  const x509ModuleConfig = agent.dependencyManager.resolve(X509ModuleConfig)
-  const currentTrustedCertificates = x509ModuleConfig.trustedCertificates
-    ? [...x509ModuleConfig.trustedCertificates]
-    : []
-
-  try {
-    if (certificate) agent.modules.x509.addTrustedCertificate(certificate)
-    return await method()
-  } finally {
-    if (certificate) x509ModuleConfig.setTrustedCertificates(currentTrustedCertificates as [string])
-  }
-}
-
-//This settings should be moved to an injectable config
-const allowUntrustedCertificates = false
-
 export const getCredentialsForProofRequest = async ({
   agent,
   data,
@@ -176,20 +103,14 @@ export const getCredentialsForProofRequest = async ({
   // Either data itself (the offer) or uri can be passed
   data?: string
   uri?: string
-  fetchAuthorization?: boolean
-  authorization?: { clientId: string; redirectUri: string }
 }): Promise<OpenId4VPRequestRecord | undefined> => {
   let requestUri = uri
 
   try {
-    const { certificate = null, data: newData = null } = allowUntrustedCertificates
-      ? await extractCertificateFromAuthorizationRequest({ data, uri })
-      : {}
-
-    if (newData) {
+    if (data) {
       // FIXME: Credo only support request string, but we already parsed it before. So we construct an request here
       // but in the future we need to support the parsed request in Credo directly
-      requestUri = `openid://?request=${encodeURIComponent(newData)}`
+      requestUri = `openid://?request=${encodeURIComponent(data)}`
     } else if (uri) {
       requestUri = uri
     } else {
@@ -198,10 +119,7 @@ export const getCredentialsForProofRequest = async ({
 
     agent.config.logger.info(`$$Receiving openid uri ${requestUri}`)
 
-    // Temp solution to add and remove the trusted certificate
-    const resolved = await withTrustedCertificate(agent, certificate, () => {
-      return agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(String(requestUri)) // Could throw instead of using constructor here
-    })
+    const resolved = await agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(String(requestUri))
 
     if (!resolved.presentationExchange) {
       throw new Error('No presentation exchange found in authorization request.')
@@ -218,7 +136,7 @@ export const getCredentialsForProofRequest = async ({
       verifier: {
         clientIdPrefix: resolved.verifier.clientIdPrefix,
         effectiveClientId: resolved.verifier.effectiveClientId,
-      }
+      },
     }
     return requestRecord
   } catch (err) {
@@ -237,7 +155,6 @@ export const shareProof = async ({
   authorizationRequest: OpenId4VpAuthorizationRequestPayload
   credentialsForRequest: DifPexCredentialsForRequest
   selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
-  allowUntrustedCertificate?: boolean
 }) => {
   if (!credentialsForRequest.areRequirementsSatisfied) {
     throw new Error('Requirements from proof request are not satisfied')
@@ -260,20 +177,12 @@ export const shareProof = async ({
   )
 
   try {
-    // Temp solution to add and remove the trusted certicaite
-    // const certificate =
-    //   authorizationRequest.jwt && allowUntrustedCertificate ? extractCertificateFromJwt(authorizationRequest) : null
-
-    // Need to figure out how to include this certificate, does not seem like the JWT is included in the authorizationRequest any more.
-
-    const result = await withTrustedCertificate(agent, null, () =>
-      agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
-        authorizationRequest: authorizationRequest,
-        presentationExchange: {
-          credentials,
-        },
-      })
-    )
+    const result = await agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
+      authorizationRequest: authorizationRequest,
+      presentationExchange: {
+        credentials,
+      },
+    })
 
     // if redirect_uri is provided, open it in the browser
     // Even if the response returned an error, we must open this uri
