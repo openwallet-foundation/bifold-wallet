@@ -149,6 +149,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
             format={format}
           />
           <Pressable
+            accessible={false}
             testID={testIdWithKey('ScanCameraTapArea')}
             style={StyleSheet.absoluteFill}
             onPressIn={(e) => {

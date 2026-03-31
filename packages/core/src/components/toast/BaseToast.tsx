@@ -2,6 +2,9 @@ import React from 'react'
 import { View, useWindowDimensions, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { useTranslation } from 'react-i18next'
+
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
@@ -25,6 +28,7 @@ export enum ToastType {
 }
 
 const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress = () => null }) => {
+  const { t } = useTranslation()
   const { TextTheme, borderRadius, borderWidth, ColorPalette } = useTheme()
   const { width } = useWindowDimensions()
   const iconSize = 24
@@ -96,7 +100,13 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
   }
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => onPress()}
+      accessibilityLabel={title}
+      accessibilityRole="alert"
+      testID={testIdWithKey('Toast')}
+    >
       <View style={[styles.container, { backgroundColor, borderColor, width: width - width * 0.1 }]}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Icon style={styles.icon} name={iconName} color={iconColor} size={iconSize} />
@@ -116,6 +126,10 @@ const BaseToast: React.FC<BaseToastProps> = ({ title, body, toastType, onPress =
             onPress={() => {
               Toast.hide()
             }}
+            accessibilityLabel={t('Global.CloseNotification')}
+            accessibilityRole="button"
+            testID={testIdWithKey('ToastClose')}
+            hitSlop={hitSlop}
           >
             <Icon style={styles.icon} name={'close'} color={iconColor} size={iconSize} />
           </TouchableOpacity>

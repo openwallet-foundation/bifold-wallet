@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { GenericFn } from '../../types/fn'
 import { testIdWithKey } from '../../utils/testable'
@@ -40,7 +41,14 @@ const CredentialActionFooter = ({ onPress, text, testID, textColor }: Credential
     <View>
       <View style={styles.seperator}></View>
       <View>
-        <TouchableOpacity onPress={onPress} testID={testIdWithKey(testID)} style={styles.touchable}>
+        <TouchableOpacity
+          onPress={onPress}
+          testID={testIdWithKey(testID)}
+          style={styles.touchable}
+          accessibilityLabel={text}
+          accessibilityRole="button"
+          hitSlop={hitSlop}
+        >
           <ThemedText style={styles.credActionText}>{text}</ThemedText>
           <Icon
             style={[styles.credActionText, { fontSize: styles.credActionText.fontSize + 5 }]}
