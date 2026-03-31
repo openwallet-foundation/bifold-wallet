@@ -435,6 +435,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     toggleDeclineModalVisible,
     dismissBasicMessage,
     customNotification,
+    openReplacementOffer,
     upgrade,
   ])
 
