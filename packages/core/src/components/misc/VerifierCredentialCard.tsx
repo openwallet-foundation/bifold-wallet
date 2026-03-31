@@ -205,6 +205,7 @@ const VerifierCredentialCard: React.FC<VerifierCredentialCardProps> = ({
                 onChangeValue(schemaId, item.label || item.name || '', item.name || '', currentValue)
               }}
               testID={testIdWithKey('PredicateInput')}
+              accessibilityLabel={t('ProofRequest.PredicateInput', { label: ylabel })}
             >
               {currentValue}
             </TextInput>

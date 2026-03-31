@@ -397,6 +397,7 @@ const Settings: React.FC<SettingsProps> = ({ navigation }) => {
             <TouchableWithoutFeedback
               onPress={incrementDeveloperMenuCounter}
               disabled={store.preferences.developerModeEnabled}
+              accessibilityLabel={t('Settings.VersionInfo')}
             >
               <View>
                 <ThemedText testID={testIdWithKey('Version')}>
