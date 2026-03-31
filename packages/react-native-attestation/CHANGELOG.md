@@ -1,5 +1,11 @@
 # @bifold/react-native-attestation
 
+## 2.12.12
+
+### Patch Changes
+
+- d82de15: bubble up errors from app store receipt method in attestation package
+
 ## 2.12.11
 
 ### Patch Changes

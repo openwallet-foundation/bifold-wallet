@@ -1,6 +1,6 @@
 {
   "name": "@bifold/core",
-  "version": "2.12.11",
+  "version": "2.12.12",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
@@ -45,9 +45,9 @@
   "devDependencies": {
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
-    "@bifold/oca": "2.12.11",
-    "@bifold/react-hooks": "2.12.11",
-    "@bifold/verifier": "2.12.11",
+    "@bifold/oca": "2.12.12",
+    "@bifold/react-hooks": "2.12.12",
+    "@bifold/verifier": "2.12.12",
     "@credo-ts/anoncreds": "0.5.19",
     "@credo-ts/askar": "0.5.19",
     "@credo-ts/core": "0.5.19",
@@ -152,7 +152,7 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
-    "@bifold/react-hooks": "2.12.11",
+    "@bifold/react-hooks": "2.12.12",
     "@credo-ts/anoncreds": "0.5.19",
     "@credo-ts/askar": "0.5.19",
     "@credo-ts/core": "0.5.19",
