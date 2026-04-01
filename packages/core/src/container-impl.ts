@@ -28,7 +28,7 @@ import { Locales } from './localization'
 import { IHistoryManager } from './modules/history'
 import HistoryManager from './modules/history/context/historyManager'
 import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
-import { IRefreshOrchestrator } from './modules/openid/refresh/types'
+import { IRefreshOrchestrator, OpenIDCredentialRefreshFlowType } from './modules/openid/refresh/types'
 import OnboardingStack from './navigators/OnboardingStack'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import { DefaultScreenOptionsDictionary } from './navigators/defaultStackOptions'
@@ -239,6 +239,7 @@ export class MainContainer implements Container {
       {
         autoStart: false,
         intervalMs: undefined,
+        flowType: OpenIDCredentialRefreshFlowType.FullReplacement,
         listRecords: async () => {
           const agent = (this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge).current
           if (!agent) return []

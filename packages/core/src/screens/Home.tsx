@@ -72,7 +72,10 @@ const Home: React.FC<HomeProps> = () => {
             customNotification={customNotification}
           />
         )
-      } else if (item.type === OpenIDCustomNotificationType.CredentialExpired) {
+      } else if (
+        item.type === OpenIDCustomNotificationType.CredentialExpired ||
+        item.type === OpenIDCustomNotificationType.CredentialReplacementAvailable
+      ) {
         component = (
           <NotificationListItem
             notificationType={NotificationType.Custom}
