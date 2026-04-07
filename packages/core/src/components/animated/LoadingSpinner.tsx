@@ -3,6 +3,7 @@ import { Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { testIdWithKey } from '../../utils/testable'
+import { TOKENS, useServices } from '../../container-api'
 
 const timing: Animated.TimingAnimationConfig = {
   toValue: 1,
@@ -11,8 +12,9 @@ const timing: Animated.TimingAnimationConfig = {
 }
 
 export interface LoadingSpinnerProps {
-  size?: number
   color: string
+  size?: number
+  testID?: string
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color }) => {
@@ -21,12 +23,14 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color }) => 
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   })
+  const [CustomLoadingSpinner] = useServices([TOKENS.COMPONENT_LOADING_SPINNER])
 
   useEffect(() => {
     Animated.loop(Animated.timing(rotationAnim.current, timing)).start()
   }, [])
 
-  return (
+  if(CustomLoadingSpinner) return <CustomLoadingSpinner size={size} color={color} testID={testIdWithKey('Loading')} />
+  else return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
       <Icon style={{ color }} size={size} name="refresh" testID={testIdWithKey('Loading')} />
     </Animated.View>

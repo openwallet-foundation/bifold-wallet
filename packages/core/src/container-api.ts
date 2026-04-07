@@ -32,6 +32,7 @@ import { AgentSetupReturnType } from './hooks/useBifoldAgentSetup'
 import { OnboardingStackProps } from './navigators/OnboardingStack'
 import { AgentBridge } from './services/AgentBridge'
 import { IRefreshOrchestrator } from './modules/openid/refresh/types'
+import { LoadingSpinnerProps } from './components/animated/LoadingSpinner'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -88,6 +89,7 @@ export const COMPONENT_TOKENS = {
   COMPONENT_CONTACT_LIST_ITEM: 'component.contact-list-item',
   COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM: 'component.contact-details-cred-list-item',
   COMPONENT_CONNECTION_ALERT: 'component.connection-alert',
+  COMPONENT_LOADING_SPINNER: 'component.loading-icon',
 } as const
 
 export const NOTIFICATION_TOKENS = {
@@ -233,6 +235,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_RECORD]: React.FC
   [TOKENS.COMPONENT_CONTACT_LIST_ITEM]: React.FC<ContactListItemProps>
   [TOKENS.COMPONENT_CONTACT_DETAILS_CRED_LIST_ITEM]: React.FC<ContactCredentialListItemProps>
+  [TOKENS.COMPONENT_LOADING_SPINNER]: React.FC<LoadingSpinnerProps>,
   [TOKENS.INLINE_ERRORS]: InlineErrorConfig
   [TOKENS.CUSTOM_NAV_STACK_1]: React.FC
   [TOKENS.COMPONENT_CONNECTION_ALERT]: React.FC<{ connectionLabel?: string }>
