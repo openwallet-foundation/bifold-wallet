@@ -6,6 +6,7 @@ import {
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { BackHandler, View, StyleSheet, DeviceEventEmitter } from 'react-native'
+import Icon from 'react-native-vector-icons/AntDesign'
 
 import { DeliveryStackParams, Screens } from '../../../types/navigators'
 import { useServices, TOKENS } from '../../../container-api'
@@ -17,6 +18,8 @@ import FullScreenErrorModal from '../../../components/modals/FullScreenErrorModa
 import { TabStacks } from '../../../types/navigators'
 import { BifoldError } from '../../../types/error'
 import { useTheme } from '../../../contexts/theme'
+import { testIdWithKey } from '../../../utils/testable'
+
 
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDConnection>
@@ -119,7 +122,9 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   return (
     <>
       <View style={styles.pageContainer}>
-        <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+        <LoadingSpinner color={ColorPalette.brand.loadingIcon}>
+          <Icon name='loading-3-quarters' size={50} style={{ color: ColorPalette.brand.loadingIcon }} testID={testIdWithKey('Loading')} />
+        </LoadingSpinner>
       </View>
       <FullScreenErrorModal 
         errorTitle={errorDetails?.title ?? ''}

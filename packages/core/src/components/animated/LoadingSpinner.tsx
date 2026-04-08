@@ -3,7 +3,6 @@ import { Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { testIdWithKey } from '../../utils/testable'
-import { TOKENS, useServices } from '../../container-api'
 
 const timing: Animated.TimingAnimationConfig = {
   toValue: 1,
@@ -14,25 +13,23 @@ const timing: Animated.TimingAnimationConfig = {
 export interface LoadingSpinnerProps {
   color: string
   size?: number
-  testID?: string
+  children?: React.ReactNode
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color, children }) => {
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   })
-  const [CustomLoadingSpinner] = useServices([TOKENS.COMPONENT_LOADING_SPINNER])
 
   useEffect(() => {
     Animated.loop(Animated.timing(rotationAnim.current, timing)).start()
   }, [])
 
-  if(CustomLoadingSpinner) return <CustomLoadingSpinner size={size} color={color} testID={testIdWithKey('Loading')} />
-  else return (
+  return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-      <Icon style={{ color }} size={size} name="refresh" testID={testIdWithKey('Loading')} />
+      {children ?? <Icon style={{ color }} size={size} name="refresh" testID={testIdWithKey('Loading')} />}
     </Animated.View>
   )
 }
