@@ -10,7 +10,7 @@ import {
 } from '@credo-ts/anoncreds'
 
 import { AskarModule } from '@credo-ts/askar'
-import { Agent, DidsModule, JwkDidResolver, KeyDidResolver, PeerDidResolver, WebDidResolver } from '@credo-ts/core'
+import { Agent, DcqlModule, DidsModule, JwkDidResolver, KeyDidResolver, PeerDidResolver, WebDidResolver } from '@credo-ts/core'
 
 import {
   DidCommAutoAcceptCredential,
@@ -117,6 +117,7 @@ export function getAgentModules({
         mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
       },
     }),
+    dcql: new DcqlModule(),
     openid4vc: new OpenId4VcModule(),
     dids: new DidsModule({
       resolvers: [
