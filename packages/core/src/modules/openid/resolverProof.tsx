@@ -2,7 +2,6 @@ import { Agent, DifPexCredentialsForRequest } from '@credo-ts/core'
 import { ParseInvitationResult } from '../../utils/parsers'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
-import { OpenId4VpAuthorizationRequestPayload } from '@credo-ts/openid4vc'
 import { Linking } from 'react-native'
 import { BifoldAgent } from '../../utils/agent'
 
@@ -111,17 +110,12 @@ export const getCredentialsForProofRequest = async ({
     }
 
     const requestRecord: OpenId4VPRequestRecord = {
-      ...resolved.presentationExchange,
-      authorizationRequestPayload: resolved.authorizationRequestPayload,
+      ...resolved,
       verifierHostName: resolved.authorizationRequestPayload.response_uri
         ? getHostNameFromUrl(String(resolved.authorizationRequestPayload.response_uri))
         : undefined,
       createdAt: new Date(),
       type: 'OpenId4VPRequestRecord',
-      verifier: {
-        clientIdPrefix: resolved.verifier.clientIdPrefix,
-        effectiveClientId: resolved.verifier.effectiveClientId,
-      },
     }
     return requestRecord
   } catch (err) {
@@ -132,15 +126,62 @@ export const getCredentialsForProofRequest = async ({
 
 export const shareProof = async ({
   agent,
-  authorizationRequest,
-  credentialsForRequest,
+  requestRecord,
   selectedCredentials,
 }: {
   agent: Agent
-  authorizationRequest: OpenId4VpAuthorizationRequestPayload
-  credentialsForRequest: DifPexCredentialsForRequest
+  requestRecord: OpenId4VPRequestRecord
   selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
 }) => {
+  try {
+    const presentationExchange = requestRecord.presentationExchange
+      ? {
+          credentials: getPexCredentialsForRequest(requestRecord.presentationExchange.credentialsForRequest, selectedCredentials),
+        }
+      : undefined
+
+    const dcql = !presentationExchange && requestRecord.dcql
+      ? {
+          credentials: agent.openid4vc.holder.selectCredentialsForDcqlRequest(requestRecord.dcql.queryResult),
+        }
+      : undefined
+
+    if (!presentationExchange && !dcql) {
+      throw new Error('Unsupported authorization request: missing presentation exchange or dcql parameters.')
+    }
+
+    const result = await agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
+      authorizationRequestPayload: requestRecord.authorizationRequestPayload,
+      presentationExchange,
+      dcql,
+      origin: requestRecord.origin,
+    })
+
+    // if redirect_uri is provided, open it in the browser
+    // Even if the response returned an error, we must open this uri
+    if (
+      result.serverResponse &&
+      typeof result.serverResponse.body === 'object' &&
+      typeof result.serverResponse.body?.redirect_uri === 'string'
+    ) {
+      await Linking.openURL(result.serverResponse.body.redirect_uri)
+    }
+
+    if (result.serverResponse && (result.serverResponse.status < 200 || result.serverResponse.status > 299)) {
+      throw new Error(`Error while accepting authorization request. ${result.serverResponse.body as string}`)
+    }
+
+    return result
+  } catch (error) {
+    // Handle biometric authentication errors
+    throw new Error(`Error accepting proof request. ${(error as Error)?.message ?? error}`)
+  }
+}
+
+const getPexCredentialsForRequest = (
+  credentialsForRequest: DifPexCredentialsForRequest,
+  selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
+) => {
   if (!credentialsForRequest.areRequirementsSatisfied) {
     throw new Error('Requirements from proof request are not satisfied')
   }
@@ -148,7 +189,7 @@ export const shareProof = async ({
   // Map all requirements and entries to a credential record. If a credential record for an
   // input descriptor has been provided in `selectedCredentials` we will use that. Otherwise
   // it will pick the first available credential.
-  const credentials = Object.fromEntries(
+  return Object.fromEntries(
     credentialsForRequest.requirements.flatMap((requirement) =>
       requirement.submissionEntry.map((entry) => {
         const credentialId = selectedCredentials[entry.inputDescriptorId].id
@@ -160,28 +201,4 @@ export const shareProof = async ({
       })
     )
   )
-
-  try {
-    const result = await agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
-      authorizationRequest: authorizationRequest,
-      presentationExchange: {
-        credentials,
-      },
-    })
-
-    // if redirect_uri is provided, open it in the browser
-    // Even if the response returned an error, we must open this uri
-    if (typeof result.serverResponse.body === 'object' && typeof result.serverResponse.body.redirect_uri === 'string') {
-      await Linking.openURL(result.serverResponse.body.redirect_uri)
-    }
-
-    if (result.serverResponse.status < 200 || result.serverResponse.status > 299) {
-      throw new Error(`Error while accepting authorization request. ${result.serverResponse.body as string}`)
-    }
-
-    return result
-  } catch (error) {
-    // Handle biometric authentication errors
-    throw new Error(`Error accepting proof request. ${(error as Error)?.message ?? error}`)
-  }
 }

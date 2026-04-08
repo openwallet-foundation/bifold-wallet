@@ -1,6 +1,6 @@
 import { OpenId4VciCredentialIssuerMetadataDisplay, OpenId4VpResolvedAuthorizationRequest } from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
-import { ClaimFormat, DifPexCredentialsForRequest, DifPresentationExchangeDefinition } from '@credo-ts/core'
+import { ClaimFormat } from '@credo-ts/core'
 
 export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}` | `mdoc-${string}`
 export interface OpenId4VcCredentialMetadata {
@@ -85,20 +85,42 @@ export interface W3cCredentialDisplay {
   credentialSubject: CredentialSubjectRecord | undefined
 }
 
-export interface OpenId4VPRequestRecordBase extends OpenId4VpResolvedAuthorizationRequest {
+export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {
   verifierHostName: string | undefined
   createdAt: string | Date
   type: 'OpenId4VPRequestRecord'
 }
 
-export interface OpenId4VPRequestRecordPEX extends OpenId4VPRequestRecordBase {
-  definition: DifPresentationExchangeDefinition
-  credentialsForRequest: DifPexCredentialsForRequest | undefined
+export type FormattedSelectedCredentialEntry = {
+  id: string
+  credentialName: string
+  issuerName?: string
+  requestedAttributes?: string[]
+  metadata?: CredentialMetadata
+  backgroundColor?: string
+  backgroundImage?: DisplayImage
+  textColor?: string
+  claimFormat: ClaimFormat | 'AnonCreds'
 }
 
-export interface OpenId4VPRequestRecordDCQL extends OpenId4VPRequestRecordBase {}
+export interface FormattedSubmissionEntry {
+  /** can be either AnonCreds groupName, PEX inputDescriptorId, or DCQL credential query id */
+  inputDescriptorId: string
+  isSatisfied: boolean
 
-export type OpenId4VPRequestRecord = OpenId4VPRequestRecordPEX | OpenId4VPRequestRecordDCQL
+  name: string
+  purpose?: string
+  description?: string
+
+  credentials: Array<FormattedSelectedCredentialEntry>
+}
+
+export interface FormattedSubmission {
+  name: string
+  purpose?: string
+  areAllSatisfied: boolean
+  entries: FormattedSubmissionEntry[]
+}
 
 interface DisplayInfo {
   name: string
