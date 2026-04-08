@@ -44,6 +44,38 @@ const getDcqlDisclosedPayload = (validCredential: DcqlValidCredential): Record<s
   return asRecord(output)
 }
 
+const formatDcqlClaimPath = (path: Array<string | number | null>): string =>
+  path.filter((item) => item !== null).join('.')
+
+const getDcqlRequestedAttributes = (credentialQuery: DcqlQueryResult['credentials'][number]): string[] => {
+  if (credentialQuery.format === 'mso_mdoc') {
+    return (
+      credentialQuery.claims?.map((claim) =>
+        'path' in claim ? formatDcqlClaimPath(claim.path) : [claim.namespace, claim.claim_name].join('.')
+      ) ?? []
+    )
+  }
+
+  return credentialQuery.claims?.map((claim) => formatDcqlClaimPath(claim.path)) ?? []
+}
+
+const getDcqlCredentialName = (credentialQuery: DcqlQueryResult['credentials'][number]): string => {
+  if (credentialQuery.format === 'mso_mdoc') {
+    return credentialQuery.meta?.doctype_value ?? credentialQuery.id
+  }
+
+  if (
+    (credentialQuery.format === 'vc+sd-jwt' && credentialQuery.meta && 'vct_values' in credentialQuery.meta) ||
+    credentialQuery.format === 'dc+sd-jwt'
+  ) {
+    return credentialQuery.meta && 'vct_values' in credentialQuery.meta && credentialQuery.meta.vct_values?.[0]
+      ? credentialQuery.meta.vct_values[0].replace('https://', '')
+      : credentialQuery.id
+  }
+
+  return credentialQuery.id
+}
+
 export function formatDcqlCredentialsForRequest(queryResult: DcqlQueryResult): FormattedSubmission {
   const credentialSets: NonNullable<DcqlQueryResult['credential_sets']> = queryResult.credential_sets ?? [
     {
@@ -67,6 +99,24 @@ export function formatDcqlCredentialsForRequest(queryResult: DcqlQueryResult): F
 
       const match = queryResult.credential_matches[credentialId]
       const validCredentials: DcqlValidCredential[] = match?.success ? Array.from(match.valid_credentials) : []
+
+      if (validCredentials.length === 0) {
+        return {
+          inputDescriptorId: credentialId,
+          name: getDcqlCredentialName(credentialQuery),
+          purpose: typeof credentialSet.purpose === 'string' ? credentialSet.purpose : undefined,
+          description: undefined,
+          isSatisfied: false,
+          credentials: [
+            {
+              id: credentialId,
+              credentialName: getDcqlCredentialName(credentialQuery),
+              requestedAttributes: getDcqlRequestedAttributes(credentialQuery),
+              claimFormat: ClaimFormat.JwtVc,
+            },
+          ],
+        }
+      }
 
       return {
         inputDescriptorId: credentialId,

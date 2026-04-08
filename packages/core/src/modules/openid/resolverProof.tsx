@@ -1,4 +1,14 @@
-import { Agent, DifPexCredentialsForRequest } from '@credo-ts/core'
+import {
+  Agent,
+  ClaimFormat,
+  CredentialMultiInstanceUseMode,
+  type DcqlCredentialsForRequest,
+  type DcqlQueryResult,
+  type DcqlValidCredential,
+  type DifPexCredentialsForRequest,
+  type JsonObject,
+  type MdocNameSpaces,
+} from '@credo-ts/core'
 import { ParseInvitationResult } from '../../utils/parsers'
 import { OpenId4VPRequestRecord } from './types'
 import { getHostNameFromUrl } from './utils/utils'
@@ -142,7 +152,7 @@ export const shareProof = async ({
 
     const dcql = !presentationExchange && requestRecord.dcql
       ? {
-          credentials: agent.openid4vc.holder.selectCredentialsForDcqlRequest(requestRecord.dcql.queryResult),
+          credentials: getDcqlCredentialsForRequest(agent, requestRecord.dcql.queryResult, selectedCredentials),
         }
       : undefined
 
@@ -201,4 +211,74 @@ const getPexCredentialsForRequest = (
       })
     )
   )
+}
+
+const getDcqlCredentialsForRequest = (
+  agent: Agent,
+  queryResult: DcqlQueryResult,
+  selectedCredentials: { [credentialQueryId: string]: { id: string; claimFormat: string } }
+): DcqlCredentialsForRequest => {
+  if (!queryResult.can_be_satisfied) {
+    throw new Error('Cannot select the credentials for the dcql query presentation if the request cannot be satisfied')
+  }
+
+  if (Object.keys(selectedCredentials).length === 0) {
+    return agent.openid4vc.holder.selectCredentialsForDcqlRequest(queryResult)
+  }
+
+  return Object.fromEntries(
+    Object.entries(selectedCredentials).map(([credentialQueryId, selectedCredential]) => {
+      const match = queryResult.credential_matches[credentialQueryId]
+
+      if (!match?.success) {
+        throw new Error(`No matching DCQL credentials found for credential query id ${credentialQueryId}`)
+      }
+
+      const validCredentials = Array.from(match.valid_credentials) as DcqlValidCredential[]
+      const validCredential = validCredentials.find((credential) => credential.record.id === selectedCredential.id)
+
+      if (!validCredential) {
+        throw new Error(
+          `Could not find credential record ${selectedCredential.id} in valid credential matches for credential query id ${credentialQueryId}`
+        )
+      }
+
+      return [credentialQueryId, [getDcqlCredentialForRequest(validCredential)]]
+    })
+  )
+}
+
+const getDcqlCredentialForRequest = (validCredential: DcqlValidCredential): DcqlCredentialsForRequest[string][number] => {
+  const useMode = CredentialMultiInstanceUseMode.NewOrFirst
+
+  switch (validCredential.record.type) {
+    case 'MdocRecord':
+      return {
+        claimFormat: ClaimFormat.MsoMdoc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as MdocNameSpaces,
+        useMode,
+      }
+    case 'SdJwtVcRecord':
+      return {
+        claimFormat: ClaimFormat.SdJwtDc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as JsonObject,
+        useMode,
+      }
+    case 'W3cCredentialRecord':
+      return {
+        claimFormat: validCredential.record.firstCredential.claimFormat as ClaimFormat.JwtVc | ClaimFormat.LdpVc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.record.firstCredential.jsonCredential as JsonObject,
+        useMode,
+      }
+    case 'W3cV2CredentialRecord':
+      return {
+        claimFormat: validCredential.record.firstCredential.claimFormat as ClaimFormat.JwtW3cVc | ClaimFormat.SdJwtW3cVc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as JsonObject,
+        useMode,
+      }
+  }
 }

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { Attribute } from '@bifold/oca/build/legacy'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
@@ -43,12 +43,15 @@ type SelectedCredentialsFormat = {
   }
 }
 
-type DisplayableOpenIDProofCredential = W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+type DisplayableOpenIDProofCredential = W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord
 
 const isDisplayableOpenIDProofCredential = (
   credential: OpenIDCredentialRecord
 ): credential is DisplayableOpenIDProofCredential =>
-  credential instanceof W3cCredentialRecord || credential instanceof SdJwtVcRecord || credential instanceof MdocRecord
+  credential instanceof W3cCredentialRecord ||
+  credential instanceof W3cV2CredentialRecord ||
+  credential instanceof SdJwtVcRecord ||
+  credential instanceof MdocRecord
 
 const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   navigation,
