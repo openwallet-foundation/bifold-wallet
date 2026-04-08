@@ -45,39 +45,61 @@ const getDcqlDisclosedPayload = (validCredential: DcqlValidCredential): Record<s
 }
 
 export function formatDcqlCredentialsForRequest(queryResult: DcqlQueryResult): FormattedSubmission {
-  const entries = queryResult.credentials.map((credentialQuery): FormattedSubmissionEntry => {
-    const match = queryResult.credential_matches[credentialQuery.id]
-    const validCredentials: DcqlValidCredential[] = match?.success ? Array.from(match.valid_credentials) : []
+  const credentialSets: NonNullable<DcqlQueryResult['credential_sets']> = queryResult.credential_sets ?? [
+    {
+      required: true,
+      options: [queryResult.credentials.map((credential) => credential.id)],
+      matching_options: queryResult.can_be_satisfied
+        ? [queryResult.credentials.map((credential) => credential.id)]
+        : undefined,
+    },
+  ]
 
-    return {
-      inputDescriptorId: credentialQuery.id,
-      name: credentialQuery.id,
-      purpose: undefined,
-      description: undefined,
-      isSatisfied: validCredentials.length >= 1,
-      credentials: validCredentials.map((validCredential) => {
-        const { display, metadata } = getCredentialForDisplay(validCredential.record)
-        const disclosedPayload = getDcqlDisclosedPayload(validCredential)
+  const entries = credentialSets.flatMap((credentialSet) => {
+    const credentialIds = credentialSet.matching_options?.[0] ?? credentialSet.options[0]
 
-        return {
-          id: validCredential.record.id,
-          credentialName: display.name,
-          issuerName: display.issuer.name,
-          requestedAttributes: [...Object.keys(disclosedPayload)],
-          metadata,
-          backgroundColor: display.backgroundColor,
-          textColor: display.textColor,
-          backgroundImage: display.backgroundImage,
-          claimFormat: getDcqlClaimFormat(validCredential.record),
-        }
-      }),
-    }
+    return credentialIds.map((credentialId): FormattedSubmissionEntry => {
+      const credentialQuery = queryResult.credentials.find((credential) => credential.id === credentialId)
+
+      if (!credentialQuery) {
+        throw new Error(`Credential '${credentialId}' not found in dcql query`)
+      }
+
+      const match = queryResult.credential_matches[credentialId]
+      const validCredentials: DcqlValidCredential[] = match?.success ? Array.from(match.valid_credentials) : []
+
+      return {
+        inputDescriptorId: credentialId,
+        name: credentialId,
+        purpose: typeof credentialSet.purpose === 'string' ? credentialSet.purpose : undefined,
+        description: undefined,
+        isSatisfied: validCredentials.length >= 1,
+        credentials: validCredentials.map((validCredential) => {
+          const { display, metadata } = getCredentialForDisplay(validCredential.record)
+          const disclosedPayload = getDcqlDisclosedPayload(validCredential)
+
+          return {
+            id: validCredential.record.id,
+            credentialName: display.name,
+            issuerName: display.issuer.name,
+            requestedAttributes: [...Object.keys(disclosedPayload)],
+            metadata,
+            backgroundColor: display.backgroundColor,
+            textColor: display.textColor,
+            backgroundImage: display.backgroundImage,
+            claimFormat: getDcqlClaimFormat(validCredential.record),
+          }
+        }),
+      }
+    })
   })
 
   return {
-    areAllSatisfied: queryResult.can_be_satisfied,
+    areAllSatisfied: entries.every((entry) => entry.isSatisfied),
     name: 'Unknown',
-    purpose: undefined,
+    purpose: credentialSets
+      .map((credentialSet) => credentialSet.purpose)
+      .find((purpose): purpose is string => typeof purpose === 'string'),
     entries,
   }
 }
