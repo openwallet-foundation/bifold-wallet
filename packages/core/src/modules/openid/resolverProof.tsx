@@ -106,8 +106,8 @@ export const getCredentialsForProofRequest = async ({
 
     const resolved = await agent.modules.openid4vc.holder.resolveOpenId4VpAuthorizationRequest(request)
 
-    if (!resolved.presentationExchange) {
-      throw new Error('No presentation exchange found in authorization request.')
+    if (!resolved.presentationExchange && !resolved.dcql) {
+      throw new Error('Unsupported authorization request: missing presentation exchange or dcql parameters.')
     }
 
     const requestRecord: OpenId4VPRequestRecord = {

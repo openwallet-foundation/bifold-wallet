@@ -1,7 +1,4 @@
-import {
-  OpenId4VciCredentialIssuerMetadataDisplay,
-  OpenId4VpResolvedAuthorizationRequest,
-} from '@credo-ts/openid4vc'
+import { OpenId4VciCredentialIssuerMetadataDisplay, OpenId4VpResolvedAuthorizationRequest } from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
 import { ClaimFormat, DifPexCredentialsForRequest, DifPresentationExchangeDefinition } from '@credo-ts/core'
 
@@ -88,13 +85,20 @@ export interface W3cCredentialDisplay {
   credentialSubject: CredentialSubjectRecord | undefined
 }
 
-export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {
-  definition: DifPresentationExchangeDefinition
+export interface OpenId4VPRequestRecordBase extends OpenId4VpResolvedAuthorizationRequest {
   verifierHostName: string | undefined
   createdAt: string | Date
-  credentialsForRequest: DifPexCredentialsForRequest | undefined
-  type: string
+  type: 'OpenId4VPRequestRecord'
 }
+
+export interface OpenId4VPRequestRecordPEX extends OpenId4VPRequestRecordBase {
+  definition: DifPresentationExchangeDefinition
+  credentialsForRequest: DifPexCredentialsForRequest | undefined
+}
+
+export interface OpenId4VPRequestRecordDCQL extends OpenId4VPRequestRecordBase {}
+
+export type OpenId4VPRequestRecord = OpenId4VPRequestRecordPEX | OpenId4VPRequestRecordDCQL
 
 interface DisplayInfo {
   name: string
