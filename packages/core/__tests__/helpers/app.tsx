@@ -7,7 +7,6 @@ import { MainContainer } from '../../src/container-impl'
 import { container } from 'tsyringe'
 import { OpenIDCredentialRecordProvider } from '../../src/modules/openid/context/OpenIDCredentialRecordProvider'
 import { MockLogger } from '../../src/testing/MockLogger'
-import { bifoldLoggerInstance } from '../../src/services/bifoldLogger'
 import startCase from 'lodash.startcase'
 import { BrandingOverlayType } from '@bifold/oca/build/legacy'
 
@@ -101,22 +100,8 @@ const createMockOCABundleResolver = () => ({
   }),
 })
 
-const silenceBifoldLoggerForTests = () => {
-  const mockLogger = new MockLogger()
-
-  bifoldLoggerInstance.test = mockLogger.test
-  bifoldLoggerInstance.trace = mockLogger.trace
-  bifoldLoggerInstance.debug = mockLogger.debug
-  bifoldLoggerInstance.info = mockLogger.info
-  bifoldLoggerInstance.warn = mockLogger.warn
-  bifoldLoggerInstance.error = mockLogger.error
-  bifoldLoggerInstance.fatal = mockLogger.fatal
-  bifoldLoggerInstance.report = mockLogger.report
-}
-
 export const BasicAppContext: React.FC<PropsWithChildren> = ({ children }) => {
   const context = useMemo(() => {
-    silenceBifoldLoggerForTests()
     const c = new MainContainer(container.createChildContainer()).init()
     c.resolve(TOKENS.UTIL_LOGGER)
     c.container.registerInstance(TOKENS.UTIL_LOGGER, new MockLogger())
@@ -140,7 +125,6 @@ interface CustomBasicAppContextProps extends PropsWithChildren {
 export const CustomBasicAppContext: React.FC<CustomBasicAppContextProps> = ({ children, container }) => {
   const context = useMemo(() => {
     // Align custom containers with the default test container setup
-    silenceBifoldLoggerForTests()
     container.resolve(TOKENS.UTIL_LOGGER)
     container.container.registerInstance(TOKENS.UTIL_LOGGER, new MockLogger())
     container.container.registerInstance(TOKENS.UTIL_OCA_RESOLVER, createMockOCABundleResolver())
