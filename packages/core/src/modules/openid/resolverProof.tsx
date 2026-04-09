@@ -154,74 +154,6 @@ export const getCredentialsForProofRequest = async ({
   }
 }
 
-/**
- * Submit phase for OpenID4VP after the user has reviewed the request and chosen
- * which credentials to share.
- *
- * This function takes:
- * - the resolved request record created by {@link getCredentialsForProofRequest}
- * - the user's final credential selections from the proof UI
- *
- * It then maps those selections into the Credo input expected for either
- * presentation exchange or DCQL and submits the authorization response.
- */
-export const shareProof = async ({
-  agent,
-  requestRecord,
-  selectedProofCredentials,
-}: {
-  agent: Agent
-  requestRecord: OpenId4VPRequestRecord
-  selectedProofCredentials: SelectedProofCredentials
-}) => {
-  try {
-    const presentationExchange = requestRecord.presentationExchange
-      ? {
-          credentials: getPexCredentialsForRequest(
-            requestRecord.presentationExchange.credentialsForRequest,
-            selectedProofCredentials
-          ),
-        }
-      : undefined
-
-    const dcql = !presentationExchange && requestRecord.dcql
-      ? {
-          credentials: getDcqlCredentialsForRequest(agent, requestRecord.dcql.queryResult, selectedProofCredentials),
-        }
-      : undefined
-
-    if (!presentationExchange && !dcql) {
-      throw new Error('Unsupported authorization request: missing presentation exchange or dcql parameters.')
-    }
-
-    const result = await agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
-      authorizationRequestPayload: requestRecord.authorizationRequestPayload,
-      presentationExchange,
-      dcql,
-      origin: requestRecord.origin,
-    })
-
-    // if redirect_uri is provided, open it in the browser
-    // Even if the response returned an error, we must open this uri
-    if (
-      result.serverResponse &&
-      typeof result.serverResponse.body === 'object' &&
-      typeof result.serverResponse.body?.redirect_uri === 'string'
-    ) {
-      await Linking.openURL(result.serverResponse.body.redirect_uri)
-    }
-
-    if (result.serverResponse && (result.serverResponse.status < 200 || result.serverResponse.status > 299)) {
-      throw new Error(`Error while accepting authorization request. ${result.serverResponse.body as string}`)
-    }
-
-    return result
-  } catch (error) {
-    // Handle biometric authentication errors
-    throw new Error(`Error accepting proof request. ${(error as Error)?.message ?? error}`)
-  }
-}
-
 const getPexCredentialsForRequest = (
   credentialsForRequest: DifPexCredentialsForRequest,
   selectedProofCredentials: SelectedProofCredentials
@@ -244,6 +176,45 @@ const getPexCredentialsForRequest = (
       })
     )
   )
+}
+
+const getDcqlCredentialForRequest = (
+  validCredential: DcqlValidCredential
+): DcqlCredentialsForRequest[string][number] => {
+  const useMode = CredentialMultiInstanceUseMode.NewOrFirst
+
+  switch (validCredential.record.type) {
+    case 'MdocRecord':
+      return {
+        claimFormat: ClaimFormat.MsoMdoc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as MdocNameSpaces,
+        useMode,
+      }
+    case 'SdJwtVcRecord':
+      return {
+        claimFormat: ClaimFormat.SdJwtDc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as JsonObject,
+        useMode,
+      }
+    case 'W3cCredentialRecord':
+      return {
+        claimFormat: validCredential.record.firstCredential.claimFormat as ClaimFormat.JwtVc | ClaimFormat.LdpVc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.record.firstCredential.jsonCredential as JsonObject,
+        useMode,
+      }
+    case 'W3cV2CredentialRecord':
+      return {
+        claimFormat: validCredential.record.firstCredential.claimFormat as
+          | ClaimFormat.JwtW3cVc
+          | ClaimFormat.SdJwtW3cVc,
+        credentialRecord: validCredential.record,
+        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as JsonObject,
+        useMode,
+      }
+  }
 }
 
 const getDcqlCredentialsForRequest = (
@@ -283,37 +254,71 @@ const getDcqlCredentialsForRequest = (
   )
 }
 
-const getDcqlCredentialForRequest = (validCredential: DcqlValidCredential): DcqlCredentialsForRequest[string][number] => {
-  const useMode = CredentialMultiInstanceUseMode.NewOrFirst
+/**
+ * Submit phase for OpenID4VP after the user has reviewed the request and chosen
+ * which credentials to share.
+ *
+ * This function takes:
+ * - the resolved request record created by {@link getCredentialsForProofRequest}
+ * - the user's final credential selections from the proof UI
+ *
+ * It then maps those selections into the Credo input expected for either
+ * presentation exchange or DCQL and submits the authorization response.
+ */
+export const shareProof = async ({
+  agent,
+  requestRecord,
+  selectedProofCredentials,
+}: {
+  agent: Agent
+  requestRecord: OpenId4VPRequestRecord
+  selectedProofCredentials: SelectedProofCredentials
+}) => {
+  try {
+    const presentationExchange = requestRecord.presentationExchange
+      ? {
+          credentials: getPexCredentialsForRequest(
+            requestRecord.presentationExchange.credentialsForRequest,
+            selectedProofCredentials
+          ),
+        }
+      : undefined
 
-  switch (validCredential.record.type) {
-    case 'MdocRecord':
-      return {
-        claimFormat: ClaimFormat.MsoMdoc,
-        credentialRecord: validCredential.record,
-        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as MdocNameSpaces,
-        useMode,
-      }
-    case 'SdJwtVcRecord':
-      return {
-        claimFormat: ClaimFormat.SdJwtDc,
-        credentialRecord: validCredential.record,
-        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as JsonObject,
-        useMode,
-      }
-    case 'W3cCredentialRecord':
-      return {
-        claimFormat: validCredential.record.firstCredential.claimFormat as ClaimFormat.JwtVc | ClaimFormat.LdpVc,
-        credentialRecord: validCredential.record,
-        disclosedPayload: validCredential.record.firstCredential.jsonCredential as JsonObject,
-        useMode,
-      }
-    case 'W3cV2CredentialRecord':
-      return {
-        claimFormat: validCredential.record.firstCredential.claimFormat as ClaimFormat.JwtW3cVc | ClaimFormat.SdJwtW3cVc,
-        credentialRecord: validCredential.record,
-        disclosedPayload: validCredential.claims.valid_claim_sets[0].output as JsonObject,
-        useMode,
-      }
+    const dcql =
+      !presentationExchange && requestRecord.dcql
+        ? {
+            credentials: getDcqlCredentialsForRequest(agent, requestRecord.dcql.queryResult, selectedProofCredentials),
+          }
+        : undefined
+
+    if (!presentationExchange && !dcql) {
+      throw new Error('Unsupported authorization request: missing presentation exchange or dcql parameters.')
+    }
+
+    const result = await agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
+      authorizationRequestPayload: requestRecord.authorizationRequestPayload,
+      presentationExchange,
+      dcql,
+      origin: requestRecord.origin,
+    })
+
+    // if redirect_uri is provided, open it in the browser
+    // Even if the response returned an error, we must open this uri
+    if (
+      result.serverResponse &&
+      typeof result.serverResponse.body === 'object' &&
+      typeof result.serverResponse.body?.redirect_uri === 'string'
+    ) {
+      await Linking.openURL(result.serverResponse.body.redirect_uri)
+    }
+
+    if (result.serverResponse && (result.serverResponse.status < 200 || result.serverResponse.status > 299)) {
+      throw new Error(`Error while accepting authorization request. ${result.serverResponse.body as string}`)
+    }
+
+    return result
+  } catch (error) {
+    // Handle biometric authentication errors
+    throw new Error(`Error accepting proof request. ${(error as Error)?.message ?? error}`)
   }
 }
