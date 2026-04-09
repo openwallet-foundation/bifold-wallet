@@ -15,6 +15,14 @@ import { getHostNameFromUrl } from './utils/utils'
 import { Linking } from 'react-native'
 import { BifoldAgent } from '../../utils/agent'
 
+type SelectedProofCredentials = Record<
+  string,
+  {
+    id: string
+    claimFormat: string
+  }
+>
+
 function handleTextResponse(text: string): ParseInvitationResult {
   // If the text starts with 'ey' we assume it's a JWT and thus an OpenID authorization request
   if (text.startsWith('ey')) {
@@ -103,6 +111,18 @@ export async function fetchInvitationDataUrl(dataUrl: string): Promise<ParseInvi
   }
 }
 
+/**
+ * Entry point for the OpenID4VP flow after QR scanning / deeplink / paste handling
+ * has identified an OpenID authorization request.
+ *
+ * This is the resolve phase only:
+ * - accept the raw request string coming from scan/deeplink handling
+ * - ask Credo to resolve the request into PEX or DCQL details
+ * - return a record that the proof UI can render
+ *
+ * It does not send anything to the verifier. The later submit phase is handled by
+ * {@link shareProof}, after the user explicitly opts in to share credentials.
+ */
 export const getCredentialsForProofRequest = async ({
   agent,
   request,
@@ -134,25 +154,39 @@ export const getCredentialsForProofRequest = async ({
   }
 }
 
+/**
+ * Submit phase for OpenID4VP after the user has reviewed the request and chosen
+ * which credentials to share.
+ *
+ * This function takes:
+ * - the resolved request record created by {@link getCredentialsForProofRequest}
+ * - the user's final credential selections from the proof UI
+ *
+ * It then maps those selections into the Credo input expected for either
+ * presentation exchange or DCQL and submits the authorization response.
+ */
 export const shareProof = async ({
   agent,
   requestRecord,
-  selectedCredentials,
+  selectedProofCredentials,
 }: {
   agent: Agent
   requestRecord: OpenId4VPRequestRecord
-  selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
+  selectedProofCredentials: SelectedProofCredentials
 }) => {
   try {
     const presentationExchange = requestRecord.presentationExchange
       ? {
-          credentials: getPexCredentialsForRequest(requestRecord.presentationExchange.credentialsForRequest, selectedCredentials),
+          credentials: getPexCredentialsForRequest(
+            requestRecord.presentationExchange.credentialsForRequest,
+            selectedProofCredentials
+          ),
         }
       : undefined
 
     const dcql = !presentationExchange && requestRecord.dcql
       ? {
-          credentials: getDcqlCredentialsForRequest(agent, requestRecord.dcql.queryResult, selectedCredentials),
+          credentials: getDcqlCredentialsForRequest(agent, requestRecord.dcql.queryResult, selectedProofCredentials),
         }
       : undefined
 
@@ -190,19 +224,18 @@ export const shareProof = async ({
 
 const getPexCredentialsForRequest = (
   credentialsForRequest: DifPexCredentialsForRequest,
-  selectedCredentials: { [inputDescriptorId: string]: { id: string; claimFormat: string } }
+  selectedProofCredentials: SelectedProofCredentials
 ) => {
   if (!credentialsForRequest.areRequirementsSatisfied) {
     throw new Error('Requirements from proof request are not satisfied')
   }
 
-  // Map all requirements and entries to a credential record. If a credential record for an
-  // input descriptor has been provided in `selectedCredentials` we will use that. Otherwise
-  // it will pick the first available credential.
+  // `selectedProofCredentials` always represents the user's final UI choice.
+  // For PEX, the map key is the input descriptor id.
   return Object.fromEntries(
     credentialsForRequest.requirements.flatMap((requirement) =>
       requirement.submissionEntry.map((entry) => {
-        const credentialId = selectedCredentials[entry.inputDescriptorId].id
+        const credentialId = selectedProofCredentials[entry.inputDescriptorId].id
         const credential =
           entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
           entry.verifiableCredentials[0]
@@ -216,18 +249,20 @@ const getPexCredentialsForRequest = (
 const getDcqlCredentialsForRequest = (
   agent: Agent,
   queryResult: DcqlQueryResult,
-  selectedCredentials: { [credentialQueryId: string]: { id: string; claimFormat: string } }
+  selectedProofCredentials: SelectedProofCredentials
 ): DcqlCredentialsForRequest => {
   if (!queryResult.can_be_satisfied) {
     throw new Error('Cannot select the credentials for the dcql query presentation if the request cannot be satisfied')
   }
 
-  if (Object.keys(selectedCredentials).length === 0) {
+  // This is the same user-selection map as for PEX.
+  // For DCQL, the map key is the credential query id instead of the input descriptor id.
+  if (Object.keys(selectedProofCredentials).length === 0) {
     return agent.openid4vc.holder.selectCredentialsForDcqlRequest(queryResult)
   }
 
   return Object.fromEntries(
-    Object.entries(selectedCredentials).map(([credentialQueryId, selectedCredential]) => {
+    Object.entries(selectedProofCredentials).map(([credentialQueryId, selectedCredential]) => {
       const match = queryResult.credential_matches[credentialQueryId]
 
       if (!match?.success) {

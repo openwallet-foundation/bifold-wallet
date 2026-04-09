@@ -183,7 +183,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       await shareProof({
         agent,
         requestRecord: credential,
-        selectedCredentials: selectedCredentialsSubmission,
+        selectedProofCredentials: selectedCredentialsSubmission,
       })
       setAcceptModalVisible(true)
     } catch (err: unknown) {
