@@ -697,7 +697,6 @@ exports[`PINVerify Screen Keyboard submits PIN on enter 1`] = `
                             "textAlign": "center",
                           },
                           false,
-                          false,
                         ],
                       ]
                     }
@@ -1378,7 +1377,6 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                             "textAlign": "center",
                           },
                           false,
-                          false,
                         ],
                       ]
                     }
@@ -1466,7 +1464,6 @@ exports[`PINVerify Screen PIN Verify renders correctly 1`] = `
                             "fontWeight": "bold",
                             "textAlign": "center",
                           },
-                          false,
                           false,
                           false,
                         ],
@@ -2182,7 +2179,6 @@ exports[`PINVerify Screen PIN Verify renders correctly for biometrics change 1`]
                             "fontWeight": "bold",
                             "textAlign": "center",
                           },
-                          false,
                           false,
                         ],
                       ]
