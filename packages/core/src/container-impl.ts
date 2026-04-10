@@ -242,10 +242,7 @@ export class MainContainer implements Container {
         listRecords: async () => {
           const agent = (this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge).current
           if (!agent) return []
-          const [w3c, sdjwt] = await Promise.all([
-            agent.w3cCredentials.getAll(),
-            agent.sdJwtVc.getAll(),
-          ])
+          const [w3c, sdjwt] = await Promise.all([agent.w3cCredentials.getAll(), agent.sdJwtVc.getAll()])
           return [...w3c, ...sdjwt]
         },
       }
