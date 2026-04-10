@@ -1994,8 +1994,8 @@ __metadata:
     "@hyperledger/anoncreds-react-native": "npm:0.3.4"
     "@hyperledger/indy-vdr-react-native": "npm:0.2.3"
     "@hyperledger/indy-vdr-shared": "npm:0.2.3"
-    "@openwallet-foundation/askar-react-native": "npm:0.5.0-alpha-20260121132554"
-    "@openwallet-foundation/askar-shared": "npm:^0.4.2"
+    "@openwallet-foundation/askar-react-native": "npm:0.6.0"
+    "@openwallet-foundation/askar-shared": "npm:0.6.0"
     "@react-native-async-storage/async-storage": "npm:~2.2.0"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
     "@react-native-community/netinfo": "npm:~11.4.1"
@@ -2100,7 +2100,7 @@ __metadata:
     "@hyperledger/anoncreds-react-native": 0.3.4
     "@hyperledger/indy-vdr-react-native": 0.2.3
     "@hyperledger/indy-vdr-shared": 0.2.3
-    "@openwallet-foundation/askar-react-native": 0.5.0-alpha-20260121132554
+    "@openwallet-foundation/askar-react-native": 0.6.0
     "@react-native-async-storage/async-storage": ~2.2.0
     "@react-native-clipboard/clipboard": ~1.16.3
     "@react-native-community/netinfo": ~11.4.1
@@ -2244,7 +2244,7 @@ __metadata:
     "@babel/preset-typescript": "npm:~7.28.5"
     "@babel/runtime": "npm:~7.28.6"
     "@bifold/core": "npm:3.0.0"
-    "@credo-ts/core": "npm:0.5.19"
+    "@credo-ts/core": "npm:0.6.1"
     "@types/jest": "npm:~29.5.12"
     "@typescript-eslint/parser": "npm:~7.18.0"
     axios: "npm:~1.13.2"
@@ -2260,7 +2260,7 @@ __metadata:
     rimraf: "npm:~5.0.10"
     typescript: "npm:~5.9.2"
   peerDependencies:
-    "@credo-ts/core": 0.5.19
+    "@credo-ts/core": 0.6.1
     axios: ~1.13.2
     buffer: ~6.0.3
     react: ~19.1.4
@@ -4294,25 +4294,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openwallet-foundation/askar-react-native@npm:0.5.0-alpha-20260121132554":
-  version: 0.5.0-alpha-20260121132554
-  resolution: "@openwallet-foundation/askar-react-native@npm:0.5.0-alpha-20260121132554"
+"@openwallet-foundation/askar-react-native@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@openwallet-foundation/askar-react-native@npm:0.6.0"
   dependencies:
-    "@openwallet-foundation/askar-shared": "npm:0.5.0-alpha-20260121132554"
+    "@openwallet-foundation/askar-shared": "npm:0.6.0"
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.71"
-  checksum: 10c0/aa1c21ba62307b6de10e1509cac1208a3e802229c5c5ae77b3a73514c9928df3bab6807d718a8025cc13d20074544d7482e0c67e48fcfa3caf6f83deea401297
+  checksum: 10c0/1ed1d7899a39bc777df9b3ddcf257c7d35c798ecc181d2c0768c60830b65f0a9ac08ea83b372654ffe48cded806a6ed55da4df561a7651350b2b4690a3e029ed
   languageName: node
   linkType: hard
 
-"@openwallet-foundation/askar-shared@npm:0.5.0-alpha-20260121132554":
-  version: 0.5.0-alpha-20260121132554
-  resolution: "@openwallet-foundation/askar-shared@npm:0.5.0-alpha-20260121132554"
+"@openwallet-foundation/askar-shared@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@openwallet-foundation/askar-shared@npm:0.6.0"
   dependencies:
     buffer: "npm:^6.0.3"
     tar: "npm:^7.4.3"
-  checksum: 10c0/fa42e74c296f573f4ab00109a17bc9e29b2377805bd0a7c4df58a44cbbb3080b2c5ea54c2f14ae9b6b75c0f1b95d521b1d905017e892b1952df4cb390d9cd9a7
+  checksum: 10c0/49e75561d408d11dc92aa7e063df886ccc1c4dd29ec177443e07164bfefaa8a74f2ccadff610f28b530b108209a911b08a66cca62716ae62ccf8a070e7563c7a
   languageName: node
   linkType: hard
 
@@ -7163,7 +7163,7 @@ __metadata:
     "@formatjs/intl-relativetimeformat": "npm:~11.4.13"
     "@hyperledger/anoncreds-react-native": "npm:0.3.4"
     "@hyperledger/indy-vdr-react-native": "npm:0.2.3"
-    "@openwallet-foundation/askar-react-native": "npm:0.5.0-alpha-20260121132554"
+    "@openwallet-foundation/askar-react-native": "npm:0.6.0"
     "@react-native-async-storage/async-storage": "npm:~2.2.0"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
     "@react-native-community/cli": "npm:20.0.0"

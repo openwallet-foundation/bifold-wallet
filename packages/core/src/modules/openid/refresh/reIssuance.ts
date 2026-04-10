@@ -1,11 +1,4 @@
-import {
-  Agent,
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-  W3cV2CredentialRecord,
-} from '@credo-ts/core'
-import { RefreshResponse } from '../types'
+import { Agent, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import {
   OpenId4VciCredentialBindingOptions,
   OpenId4VciCredentialResponse,
@@ -13,7 +6,6 @@ import {
   OpenId4VciDpopRequestOptions,
   OpenId4VciResolvedCredentialOffer,
 } from '@credo-ts/openid4vc'
-import { customCredentialBindingResolver } from '../offerResolve'
 import { BifoldLogger } from '../../../services/logger'
 import {
   extractOpenId4VcCredentialMetadata,
@@ -21,6 +13,8 @@ import {
   setOpenId4VcCredentialMetadata,
   setRefreshCredentialMetadata,
 } from '../metadata'
+import { customCredentialBindingResolver } from '../offerResolve'
+import { RefreshResponse } from '../types'
 import { RefreshStatus } from './types'
 
 type ReissueWithAccessTokenInput = {
@@ -41,7 +35,9 @@ export async function reissueCredentialWithAccessToken({
   tokenResponse,
   clientId,
   pidSchemes,
-}: ReissueWithAccessTokenInput): Promise<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined> {
+}: ReissueWithAccessTokenInput): Promise<
+  W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined
+> {
   if (!record) {
     throw new Error('No credential record provided for re-issuance.')
   }
@@ -82,11 +78,9 @@ export async function reissueCredentialWithAccessToken({
       customCredentialBindingResolver({
         agent,
         supportedDidMethods: opts.supportedDidMethods,
-        // keyType: opts.keyType,
         supportsAllDidMethods: opts.supportsAllDidMethods,
         supportsJwk: opts.supportsJwk,
         credentialFormat: opts.credentialFormat,
-        // supportedCredentialId: opts.supportedCredentialId,
         resolvedCredentialOffer: resolvedCredentialOffer,
         pidSchemes,
       }),
