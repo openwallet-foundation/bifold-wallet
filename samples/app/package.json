@@ -42,7 +42,7 @@
     "@formatjs/intl-relativetimeformat": "~11.4.13",
     "@hyperledger/anoncreds-react-native": "0.3.4",
     "@hyperledger/indy-vdr-react-native": "0.2.3",
-    "@openwallet-foundation/askar-react-native": "0.5.0-alpha-20260121132554",
+    "@openwallet-foundation/askar-react-native": "0.6.0",
     "@react-native-async-storage/async-storage": "~2.2.0",
     "@react-native-clipboard/clipboard": "~1.16.3",
     "@react-native-community/netinfo": "~11.4.1",
