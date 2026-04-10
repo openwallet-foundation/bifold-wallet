@@ -253,7 +253,6 @@ exports[`ChangePINSuccess Screen Renders correctly 1`] = `
                         },
                         false,
                         false,
-                        false,
                       ],
                     ]
                   }

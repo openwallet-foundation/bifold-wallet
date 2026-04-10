@@ -337,7 +337,6 @@ exports[`PushNotifications Screen Push notification screen renders correctly in 
                 },
                 false,
                 false,
-                false,
               ],
             ]
           }

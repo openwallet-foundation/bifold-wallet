@@ -306,7 +306,6 @@ exports[`Biometry Screen renders correctly when biometry available 1`] = `
                 },
                 false,
                 false,
-                false,
               ],
             ]
           }
@@ -607,7 +606,6 @@ exports[`Biometry Screen renders correctly when biometry unavailable 1`] = `
                   "fontWeight": "bold",
                   "textAlign": "center",
                 },
-                false,
                 false,
                 false,
               ],
