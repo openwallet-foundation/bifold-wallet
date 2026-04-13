@@ -803,6 +803,11 @@
     "Scan": "Numériser",
     "Credentials": "Justificatifs"
   },
+  "TabStackAccessibility": {
+    "Home": "Notifications tab {{notifications}} notifications (FR)",
+    "Scan": "Scan tab (FR)",
+    "Credentials": "Credentials tab (FR)"
+  },
   "RootStack": {
     "Contacts": "Contacts",
     "Settings": "Paramètres"
