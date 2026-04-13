@@ -2,10 +2,10 @@ name: Code Quality
 
 on:
   pull_request:
-    branches: [main, v2.x.x]
+    branches: [main]
     types: [opened, synchronize, reopened, labeled]
   push:
-    branches: [main, v2.x.x]
+    branches: [main]
 
 jobs:
   lint:

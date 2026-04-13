@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - v2.x.x
     paths:
       - '.github/workflows/main.yaml'
       - '.github/workflows/publish.yaml'
@@ -46,7 +45,7 @@ jobs:
         with:
           title: 'chore(release): new version'
           commit: 'chore(release): new version'
-          publish: ${{ github.ref == 'refs/heads/v2.x.x' && 'yarn release --tag legacy-v2' || 'yarn release' }}
+          publish: yarn release
           version: yarn changeset-version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
