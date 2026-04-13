@@ -6,7 +6,6 @@ import AgentProvider from '@bifold/react-hooks'
 
 import createApp from './App'
 import * as components from './components'
-import { ButtonImpl as Button, ButtonType, Button as IButton } from './components/buttons/Button'
 import IconButton, { ButtonLocation } from './components/buttons/IconButton'
 import BulletPoint from './components/inputs/BulletPoint'
 import CheckBoxRow from './components/inputs/CheckBoxRow'
@@ -95,6 +94,8 @@ export { bifoldTheme, ColorPalette, Assets as ImageAssets } from './theme'
 export * from './types/attestation'
 export { BifoldError } from './types/error'
 export { Screens, Stacks, TabStacks } from './types/navigators'
+export { default as Button, ButtonType } from './components/buttons/Button'
+export type { Button as IButton } from './components/buttons/Button'
 export * from './types/version-check'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
@@ -189,9 +190,7 @@ export {
   bifoldLoggerInstance,
   Biometry,
   BulletPoint,
-  Button,
   ButtonLocation,
-  ButtonType,
   CheckBoxRow,
   components,
   ContentGradient,
@@ -262,4 +261,4 @@ export {
   RefreshOrchestrator,
   AgentBridge,
 }
-export type { BannerMessage, DeepPartial, IButton }
+export type { BannerMessage, DeepPartial }
