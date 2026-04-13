@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import type { OnboardingStyleSheet } from './screens/Onboarding'
 
-import { Agent } from '@credo-ts/core'
 import AgentProvider from '@bifold/react-hooks'
+import { Agent } from '@credo-ts/core'
 
 import createApp from './App'
 import * as components from './components'
@@ -36,7 +36,7 @@ import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
 import { TourBox } from './components/tour/TourBox'
-import { Banner, BannerMessage, BannerSection } from './components/views/Banner'
+import { Banner, BannerSection } from './components/views/Banner'
 import HomeFooterView from './components/views/HomeFooterView'
 import KeyboardView from './components/views/KeyboardView'
 import ScreenWrapper from './components/views/ScreenWrapper'
@@ -53,6 +53,7 @@ import { useDeveloperMode } from './hooks/developer-mode'
 import usePreventScreenCapture from './hooks/screen-capture'
 import useBifoldAgentSetup from './hooks/useBifoldAgentSetup'
 import { OpenIDCredentialRecordProvider } from './modules/openid/context/OpenIDCredentialRecordProvider'
+import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
 import { DefaultScreenLayoutOptions } from './navigators/defaultLayoutOptions'
 import { DefaultScreenOptionsDictionary, useDefaultStackOptions } from './navigators/defaultStackOptions'
 import AttemptLockout from './screens/AttemptLockout'
@@ -66,18 +67,19 @@ import Splash from './screens/Splash'
 import Terms from './screens/Terms'
 import UpdateAvailable from './screens/UpdateAvailable'
 import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
+import { AgentBridge } from './services/AgentBridge'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { isBiometricsActive, loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
 import { MockLogger } from './testing/MockLogger'
-import { DeepPartial, ThemeBuilder } from './theme-builder'
+import { ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { QrCodeScanError } from './types/error'
-import { RefreshOrchestrator } from './modules/openid/refresh/refreshOrchestrator'
-import { AgentBridge } from './services/AgentBridge'
 
 export { animatedComponents } from './animated-components'
+export { default as Button, ButtonType } from './components/buttons/Button'
+export type { Button as IButton } from './components/buttons/Button'
 export { EventTypes, LocalStorageKeys } from './constants'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { useAuth } from './contexts/auth'
@@ -94,8 +96,6 @@ export { bifoldTheme, ColorPalette, Assets as ImageAssets } from './theme'
 export * from './types/attestation'
 export { BifoldError } from './types/error'
 export { Screens, Stacks, TabStacks } from './types/navigators'
-export { default as Button, ButtonType } from './components/buttons/Button'
-export type { Button as IButton } from './components/buttons/Button'
 export * from './types/version-check'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
@@ -171,13 +171,16 @@ export { BaseTourID } from './types/tour'
 export type { ScanCameraProps } from './components/misc/ScanCamera'
 export type { DismissiblePopupModalProps } from './components/modals/DismissiblePopupModal'
 export type { BannerSectionProps } from './components/views/Banner'
-export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
 export { OpenIDCredentialRefreshFlowType } from './modules/openid/refresh/types'
+export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
 
+export type { BannerMessage } from './components/views/Banner'
+export type { DeepPartial } from './theme-builder'
 export {
   AbstractBifoldLogger,
   ActivityProvider,
   Agent,
+  AgentBridge,
   AgentProvider,
   AttachTourStep,
   AttemptLockout,
@@ -234,6 +237,7 @@ export {
   QRRenderer,
   QRScannerTorch,
   Record,
+  RefreshOrchestrator,
   SafeAreaModal,
   Scan,
   ScanCamera,
@@ -258,7 +262,4 @@ export {
   usePreventScreenCapture,
   useTour,
   walletTimeout,
-  RefreshOrchestrator,
-  AgentBridge,
 }
-export type { BannerMessage, DeepPartial }
