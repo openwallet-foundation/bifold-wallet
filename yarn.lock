@@ -1992,7 +1992,7 @@ __metadata:
     "@formatjs/intl-pluralrules": "npm:~5.4.6"
     "@formatjs/intl-relativetimeformat": "npm:~11.4.13"
     "@hyperledger/anoncreds-react-native": "npm:0.3.4"
-    "@hyperledger/indy-vdr-react-native": "npm:0.2.3"
+    "@hyperledger/indy-vdr-react-native": "npm:0.2.4"
     "@hyperledger/indy-vdr-shared": "npm:0.2.3"
     "@openwallet-foundation/askar-react-native": "npm:0.6.0"
     "@openwallet-foundation/askar-shared": "npm:0.6.0"
@@ -2098,7 +2098,7 @@ __metadata:
     "@formatjs/intl-pluralrules": ~5.4.6
     "@formatjs/intl-relativetimeformat": ~11.4.13
     "@hyperledger/anoncreds-react-native": 0.3.4
-    "@hyperledger/indy-vdr-react-native": 0.2.3
+    "@hyperledger/indy-vdr-react-native": 0.2.4
     "@hyperledger/indy-vdr-shared": 0.2.3
     "@openwallet-foundation/askar-react-native": 0.6.0
     "@react-native-async-storage/async-storage": ~2.2.0
@@ -3668,27 +3668,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hyperledger/indy-vdr-react-native@npm:0.2.3":
-  version: 0.2.3
-  resolution: "@hyperledger/indy-vdr-react-native@npm:0.2.3"
+"@hyperledger/indy-vdr-react-native@npm:0.2.4":
+  version: 0.2.4
+  resolution: "@hyperledger/indy-vdr-react-native@npm:0.2.4"
   dependencies:
-    "@hyperledger/indy-vdr-shared": "npm:0.2.3"
+    "@hyperledger/indy-vdr-shared": "npm:0.2.4"
   peerDependencies:
     react: ">= 16"
     react-native: ">= 0.71"
-  checksum: 10c0/10e3690bc303a16567431cbb10d0e6cf56d62085346843f2c28ae62ff3e73c1be7e353e684fb85c98ab6f408e1b20b9aae81c810eec808b40f1e8a3915b3451c
-  languageName: node
-  linkType: hard
-
-"@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.3#~/.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.3-d7ed0b15da.patch":
-  version: 0.2.3
-  resolution: "@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.3#~/.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.3-d7ed0b15da.patch::version=0.2.3&hash=076916"
-  dependencies:
-    "@hyperledger/indy-vdr-shared": "npm:0.2.3"
-  peerDependencies:
-    react: ">= 16"
-    react-native: ">= 0.71"
-  checksum: 10c0/df4e1b1e18b9c7a18aaec6bad4be803b87ccf06a7671c9a67cbc4746c1a3bb7fa23a406025bd4d95f15428d78c84e88a44280bc620b4042029b8243de1352e98
+  checksum: 10c0/f8583f417045a4044c09c7878268ada7e583968faa49d73ff4a0bc63d6fd6f1f244c3df26e58a1e5b6623d5d6932972727204ffb6d8f118c7b691e8533da5027
   languageName: node
   linkType: hard
 
@@ -3698,6 +3686,15 @@ __metadata:
   dependencies:
     tar: "npm:^7.4.3"
   checksum: 10c0/3edf38099371684ee6302a55f8a8321bff61811cb56d895af31cdbba490f4dd8f95840b1f4f58afcdca3bedccb67e1c377da1d691c855b4bd72aa6d626b6624e
+  languageName: node
+  linkType: hard
+
+"@hyperledger/indy-vdr-shared@npm:0.2.4":
+  version: 0.2.4
+  resolution: "@hyperledger/indy-vdr-shared@npm:0.2.4"
+  dependencies:
+    tar: "npm:^7.4.3"
+  checksum: 10c0/a6d0f8b73088b75983812e69d21e0c046c9e152e627ccf7f6e50f8da091c3112d317c51e6329de1da6ed7891eeae8aa7a005694570b119eeca4bae4f6c2257f7
   languageName: node
   linkType: hard
 
@@ -7162,7 +7159,7 @@ __metadata:
     "@formatjs/intl-pluralrules": "npm:~5.4.6"
     "@formatjs/intl-relativetimeformat": "npm:~11.4.13"
     "@hyperledger/anoncreds-react-native": "npm:0.3.4"
-    "@hyperledger/indy-vdr-react-native": "npm:0.2.3"
+    "@hyperledger/indy-vdr-react-native": "npm:0.2.4"
     "@openwallet-foundation/askar-react-native": "npm:0.6.0"
     "@react-native-async-storage/async-storage": "npm:~2.2.0"
     "@react-native-clipboard/clipboard": "npm:~1.16.3"
