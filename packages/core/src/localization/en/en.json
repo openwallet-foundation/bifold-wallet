@@ -810,6 +810,11 @@
     "Scan": "Scan",
     "Credentials": "Credentials"
   },
+  "TabStackAccessibility": {
+    "Home": "Notifications tab {{notifications}} notifications",
+    "Scan": "Scan tab",
+    "Credentials": "Credentials tab"
+  },
   "RootStack": {
     "Contacts": "Contacts",
     "Settings": "Settings"
