@@ -5,7 +5,7 @@
   "privatePackages": false,
   "fixed": [["@bifold/*"]],
   "access": "public",
-  "baseBranch": "v2.x.x",
+  "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": []
 }
