@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../../contexts/theme'
 
 import { ThemedText } from '../texts/ThemedText'
-import { Button, ButtonProps, ButtonType } from './Button-api'
+import { ButtonProps, ButtonType } from './Button-api'
 
 const ButtonImpl = ({
   title,
@@ -110,5 +110,6 @@ const ButtonImpl = ({
 }
 
 export default ButtonImpl
-export { ButtonImpl, ButtonType }
-export type { Button, ButtonProps }
+export { ButtonImpl }
+export { ButtonType } from './Button-api'
+export type { Button, ButtonProps } from './Button-api'
