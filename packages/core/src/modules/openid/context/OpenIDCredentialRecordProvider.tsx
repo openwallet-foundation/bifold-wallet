@@ -2,13 +2,7 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useStat
 
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay, OCABundleResolveAllParams } from '@bifold/oca/build/legacy'
-import {
-  Agent,
-  ClaimFormat,
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-} from '@credo-ts/core'
+import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { recordsAddedByType, recordsRemovedByType } from '@bifold/react-hooks/build/recordUtils'
 import { useTranslation } from 'react-i18next'
 import { TOKENS, useServices } from '../../../container-api'
@@ -177,8 +171,8 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     await storeOpenIDCredential(agent, cred)
   }
 
-  async function deleteCredential(cred: OpenIDCredentialRecord, type: OpenIDCredentialType) {
-    void type
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function deleteCredential(cred: OpenIDCredentialRecord, _type: OpenIDCredentialType) {
     const agent = getAgent()
     await deleteOpenIDCredential(agent, cred)
   }
