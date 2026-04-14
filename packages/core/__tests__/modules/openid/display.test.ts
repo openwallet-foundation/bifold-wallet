@@ -44,7 +44,7 @@ describe('display helpers', () => {
     const result = recursivelyMapAttribues({
       issued_on: '2024-01-02',
       binary_text: new Uint8Array([65, 66, 67]),
-      nested: new Map([
+      nested: new Map<string, unknown>([
         ['active', true],
         ['scores', [1, 2]],
       ]),

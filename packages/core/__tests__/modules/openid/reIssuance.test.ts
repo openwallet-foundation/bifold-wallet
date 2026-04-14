@@ -89,7 +89,7 @@ describe('reissueCredentialWithAccessToken', () => {
         agent: {} as any,
         logger: logger as any,
         record: { id: 'cred-1' } as any,
-        tokenResponse: {},
+        tokenResponse: { access_token: '' },
       })
     ).rejects.toThrow('No access token found in the token response for re-issuance.')
   })
