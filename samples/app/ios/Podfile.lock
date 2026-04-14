@@ -45,6 +45,8 @@ PODS:
     - Yoga
   - ExpoAsset (12.0.12):
     - ExpoModulesCore
+  - ExpoCrypto (14.1.5):
+    - ExpoModulesCore
   - ExpoFileSystem (19.0.21):
     - ExpoModulesCore
   - ExpoFont (14.0.10):
@@ -3016,6 +3018,7 @@ DEPENDENCIES:
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - Expo (from `../node_modules/expo`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
+  - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
@@ -3139,6 +3142,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo"
   ExpoAsset:
     :path: "../node_modules/expo-asset/ios"
+  ExpoCrypto:
+    :path: "../node_modules/expo-crypto/ios"
   ExpoFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -3342,10 +3347,11 @@ SPEC CHECKSUMS:
   askar: e4600f17f3067e57dca7324b5baaa1b66c3efd23
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
+  DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
   Expo: 2a9695d3068f95b2262faa81295e1975949a482d
   ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
+  ExpoCrypto: a9f1d75baeea6ef8b03c1660621585196c382e85
   ExpoFileSystem: 858a44267a3e6e9057e0888ad7c7cfbf55d52063
   ExpoFont: 35ac6191ed86bbf56b3ebd2d9154eda9fad5b509
   ExpoKeepAwake: 55f75eca6499bb9e4231ebad6f3e9cb8f99c0296
@@ -3354,7 +3360,7 @@ SPEC CHECKSUMS:
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 5beb8028d5a2e75dd9634917f23e23d3a061d2aa
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
   indy-vdr: e84efdd7d3030da22354116cc3935f18727a02e3
   OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
@@ -3450,4 +3456,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5c56c1e476bc2a73f829c7185869bdd25f18de35
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
