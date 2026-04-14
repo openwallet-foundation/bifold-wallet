@@ -21,7 +21,7 @@
     "bifold": "bin/bifold"
   },
   "scripts": {
-    "build": "yarn run clean && yarn run compile",
+    "build": "echo 'building react-hooks 🏗️' && yarn run clean && yarn run compile && echo 'react-hooks built ✅'",
     "clean": "rimraf -rf ./build",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
@@ -31,9 +31,9 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
-    "@credo-ts/core": "0.6.1",
-    "@credo-ts/didcomm": "0.6.1",
-    "@credo-ts/question-answer": "0.6.1",
+    "@credo-ts/core": "0.6.3",
+    "@credo-ts/didcomm": "0.6.3",
+    "@credo-ts/question-answer": "0.6.3",
     "@jest/types": "^29.6.3",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.2.14",
@@ -43,9 +43,9 @@
     "typescript": "~5.3.3"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.6.1",
-    "@credo-ts/didcomm": "0.6.1",
-    "@credo-ts/question-answer": "0.6.1",
+    "@credo-ts/core": "0.6.3",
+    "@credo-ts/didcomm": "0.6.3",
+    "@credo-ts/question-answer": "0.6.3",
     "react": ">=17.0.0 <19.0.0"
   }
 }
