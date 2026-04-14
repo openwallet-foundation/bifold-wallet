@@ -5,17 +5,16 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../../constants'
 import { BifoldError } from '../../../types/error'
+import { setRefreshCredentialMetadata, temporaryMetaVanillaObject } from '../metadata'
 import {
   acquirePreAuthorizedAccessToken,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
 } from '../offerResolve'
+import { RefreshStatus } from '../refresh/types'
 import { getCredentialsForProofRequest } from '../resolverProof'
 import { OpenId4VPRequestRecord } from '../types'
 import { getCredentialConfigurationIds } from '../utils/utils'
-import { setRefreshCredentialMetadata } from '../metadata'
-import { RefreshStatus } from '../refresh/types'
-import { temporaryMetaVanillaObject } from '../metadata'
 
 type OpenIDContextProps = {
   openIDUri?: string

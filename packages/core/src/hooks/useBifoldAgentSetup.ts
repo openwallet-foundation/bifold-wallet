@@ -52,6 +52,12 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
     async (walletSecret: WalletSecret, mediatorUrl: string): Promise<Agent> => {
       const newAgent = new Agent({
         config: {
+          //label: store.preferences.walletName || 'Aries Bifold',
+          // walletConfig: {
+          //   id: walletSecret.id,
+          //   key: walletSecret.key,
+          // },
+          // FORK TODO: This config appears to be deprecated, but it's not obvious what the new equivalent is.
           logger,
           autoUpdateStorageOnStartup: true,
         },

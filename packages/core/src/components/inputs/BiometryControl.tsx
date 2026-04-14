@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, Platform, ScrollView, StyleSheet, View, AppState, DeviceEventEmitter } from 'react-native'
+import { AppState, DeviceEventEmitter, Linking, Platform, ScrollView, StyleSheet, View } from 'react-native'
+import Keychain, { BIOMETRY_TYPE, getSupportedBiometryType } from 'react-native-keychain'
 import { check, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions'
-import Keychain, { getSupportedBiometryType, BIOMETRY_TYPE } from 'react-native-keychain'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import { EventTypes } from '../../constants'
+import { useAuth } from '../../contexts/auth'
+import { useTheme } from '../../contexts/theme'
+import { BifoldError } from '../../types/error'
+import { testIdWithKey } from '../../utils/testable'
 import ToggleButton from '../buttons/ToggleButton'
 import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 import { ThemedText } from '../texts/ThemedText'
-import { useAuth } from '../../contexts/auth'
-import { useTheme } from '../../contexts/theme'
-import { testIdWithKey } from '../../utils/testable'
-import { BifoldError } from '../../types/error'
-import { EventTypes } from '../../constants'
 
 const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
 
@@ -51,7 +51,12 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         setBiometryAvailable(res)
       })
       .catch((err) => {
-        const error = new BifoldError(t('Error.Title1050'), t('Error.Message1050'), (err as Error)?.message ?? err, 1050)
+        const error = new BifoldError(
+          t('Error.Title1050'),
+          t('Error.Message1050'),
+          (err as Error)?.message ?? err,
+          1050
+        )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       })
   }, [isBiometricsActive, t])
@@ -61,12 +66,17 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
       try {
         const active = await Keychain.getSupportedBiometryType()
         setBiometryAvailable(Boolean(active))
-      } catch(err) {
-        const error = new BifoldError(t('Error.Title1050'), t('Error.Message1050'), (err as Error)?.message ?? err, 1050)
+      } catch (err) {
+        const error = new BifoldError(
+          t('Error.Title1050'),
+          t('Error.Message1050'),
+          (err as Error)?.message ?? err,
+          1050
+        )
         DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       }
     }
-    
+
     const appStateListener = AppState.addEventListener('change', async (nextAppState) => {
       if (nextAppState === 'active') {
         await checkBiometrics()

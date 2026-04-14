@@ -1,31 +1,26 @@
-import {
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-  W3cV2CredentialRecord,
-} from '@credo-ts/core'
 import { useBasicMessages, useCredentialByState, useProofByState } from '@bifold/react-hooks'
+import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import {
-  DidCommBasicMessageRecord,
   DidCommCredentialExchangeRecord as CredentialRecord,
+  DidCommBasicMessageRecord,
   DidCommCredentialState,
   DidCommProofExchangeRecord,
   DidCommProofState,
 } from '@credo-ts/didcomm'
-import { ProofCustomMetadata, ProofMetadata } from '@bifold/verifier'
 import { useEffect, useMemo, useState } from 'react'
 
+import { useOpenID } from '../modules/openid/hooks/openid'
+import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
+import { useReplacementNotifications } from '../modules/openid/hooks/useReplacementNotifications'
+import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import {
   BasicMessageMetadata,
   CredentialMetadata,
   basicMessageCustomMetadata,
   credentialCustomMetadata,
 } from '../types/metadata'
-import { useOpenID } from '../modules/openid/hooks/openid'
 import { CustomNotification } from '../types/notification'
-import { OpenId4VPRequestRecord } from '../modules/openid/types'
-import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
-import { useReplacementNotifications } from '../modules/openid/hooks/useReplacementNotifications'
 
 export type NotificationsInputProps = {
   openIDUri?: string
@@ -49,7 +44,10 @@ export const useNotifications = ({
   openIDUri,
   openIDPresentationUri,
 }: NotificationsInputProps): NotificationReturnType => {
-  const doneStates = useMemo(() => [DidCommProofState.Done, DidCommProofState.PresentationReceived] as DidCommProofState[], [])
+  const doneStates = useMemo(
+    () => [DidCommProofState.Done, DidCommProofState.PresentationReceived] as DidCommProofState[],
+    []
+  )
 
   const [notifications, setNotifications] = useState<NotificationReturnType>([])
   const { records: basicMessages } = useBasicMessages()
@@ -97,7 +95,9 @@ export const useNotifications = ({
       }
     })
 
-    const openIDCreds: Array<SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord> = []
+    const openIDCreds: Array<
+      SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord
+    > = []
     if (openIDCredRecieved) {
       openIDCreds.push(openIDCredRecieved)
     }

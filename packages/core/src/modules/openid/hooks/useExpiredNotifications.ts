@@ -1,9 +1,9 @@
 // modules/openid/hooks/useExpiredNotifications.ts
 import { useCallback, useEffect, useState } from 'react'
-import { credentialRegistry, RegistryStore } from '../refresh/registry'
-import { CustomNotification } from '../../../types/notification'
-import { OpenIDCustomNotificationType } from '../refresh/types'
 import { TOKENS, useServices } from '../../../container-api'
+import { CustomNotification } from '../../../types/notification'
+import { credentialRegistry, RegistryStore } from '../refresh/registry'
+import { OpenIDCustomNotificationType } from '../refresh/types'
 import { useDeclineReplacement } from './useDeclineReplacement'
 
 export const useExpiredNotifications = (): CustomNotification[] => {

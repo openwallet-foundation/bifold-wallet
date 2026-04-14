@@ -1,4 +1,4 @@
-import React, { ComponentProps, RefObject } from 'react'
+import React, { ComponentProps } from 'react'
 import { ScrollView, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { Edges, SafeAreaView } from 'react-native-safe-area-context'
@@ -40,10 +40,6 @@ interface ScreenWrapperProps {
    * @default true
    */
   padded?: boolean
-  /**
-   * Ref for the ScrollView. This allows parent components to control scrolling behaviour
-   */
-  scrollViewRef?: RefObject<ScrollView | null>
 }
 
 /**

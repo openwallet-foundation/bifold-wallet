@@ -78,9 +78,11 @@ export async function reissueCredentialWithAccessToken({
       customCredentialBindingResolver({
         agent,
         supportedDidMethods: opts.supportedDidMethods,
+        // keyType: opts.keyType,
         supportsAllDidMethods: opts.supportsAllDidMethods,
         supportsJwk: opts.supportsJwk,
         credentialFormat: opts.credentialFormat,
+        // supportedCredentialId: opts.supportedCredentialId,
         resolvedCredentialOffer: resolvedCredentialOffer,
         pidSchemes,
       }),

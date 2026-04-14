@@ -16,20 +16,20 @@ import {
   DidCommAutoAcceptCredential,
   DidCommAutoAcceptProof,
   DidCommCredentialV2Protocol,
-  DidCommProofV2Protocol,
   DidCommDifPresentationExchangeProofFormatService,
-  DidCommModule,
   DidCommMediatorPickupStrategy,
+  DidCommModule,
+  DidCommProofV2Protocol,
 } from '@credo-ts/didcomm'
 
-import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
-import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@bifold/react-hooks'
+import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@credo-ts/indy-vdr'
 import { OpenId4VcModule } from '@credo-ts/openid4vc'
+import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
 // import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
-import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
+import { askar } from '@openwallet-foundation/askar-react-native'
 import { WalletSecret } from '../types/security'
 
 interface GetAgentModulesOptions {

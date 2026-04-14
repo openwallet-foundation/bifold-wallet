@@ -1,14 +1,14 @@
-import 'reflect-metadata'
 import { AskarModule, AskarModuleConfig, AskarStoreManager } from '@credo-ts/askar'
-import { DeviceEventEmitter } from 'react-native'
 import { Agent, ConsoleLogger, LogLevel } from '@credo-ts/core'
 import { agentDependencies } from '@credo-ts/react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DeviceEventEmitter } from 'react-native'
+import 'reflect-metadata'
 
-import { DispatchAction } from './reducers/store'
-import { useStore } from './store'
+import { EventTypes } from '../constants'
+import { TOKENS, useServices } from '../container-api'
 import {
   isBiometricsActive,
   loadWalletSalt,
@@ -17,11 +17,11 @@ import {
   storeWalletSecret,
   wipeWalletKey,
 } from '../services/keychain'
+import { BifoldError } from '../types/error'
 import { WalletSecret } from '../types/security'
 import { migrateToAskar } from '../utils/migration'
-import { BifoldError } from '../types/error'
-import { EventTypes } from '../constants'
-import { useServices, TOKENS } from '../container-api'
+import { DispatchAction } from './reducers/store'
+import { useStore } from './store'
 
 export interface AuthContext {
   lockOutUser: (reason: LockoutReason) => void

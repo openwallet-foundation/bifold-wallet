@@ -1,5 +1,5 @@
-import { NativeModules, Platform } from 'react-native';
 import { Buffer } from 'buffer';
+import { NativeModules, Platform } from 'react-native';
 
 import NativeAttestationSpec from './NativeAttestation';
 

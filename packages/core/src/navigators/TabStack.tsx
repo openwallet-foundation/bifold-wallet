@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text, useWindowDimensions, View, StyleSheet, DeviceEventEmitter } from 'react-native'
+import { DeviceEventEmitter, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import { OrientationType, useOrientationChange } from 'react-native-orientation-locker'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -21,10 +21,10 @@ import { Screens, Stacks, TabStackParams, TabStacks } from '../types/navigators'
 import { connectFromScanOrDeepLink } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
 
+import { ThemedText } from '../components/texts/ThemedText'
+import { BaseTourID } from '../types/tour'
 import CredentialStack from './CredentialStack'
 import HomeStack from './HomeStack'
-import { BaseTourID } from '../types/tour'
-import { ThemedText } from '../components/texts/ThemedText'
 
 const TabStack: React.FC = () => {
   const { fontScale } = useWindowDimensions()

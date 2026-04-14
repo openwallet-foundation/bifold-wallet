@@ -1,7 +1,7 @@
 import { AgentContext, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
-import { RefreshResponse } from '../types'
 import { getRefreshCredentialMetadata, persistCredentialRecord, setRefreshCredentialMetadata } from '../metadata'
+import { RefreshResponse } from '../types'
 
 export async function refreshAccessToken({
   logger,

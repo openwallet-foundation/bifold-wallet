@@ -7,8 +7,16 @@ import {
   W3cCredentialRecord,
   W3cV2CredentialRecord,
 } from '@credo-ts/core'
+import { AgentBridge } from '../../../services/AgentBridge'
 import { BifoldLogger } from '../../../services/logger'
+import {
+  getRefreshCredentialMetadata,
+  markOpenIDCredentialStatus,
+  persistCredentialRecord,
+  setRefreshCredentialMetadata,
+} from '../metadata'
 import { refreshAccessToken } from './refreshToken'
+import { credentialRegistry } from './registry'
 import { reissueCredentialWithAccessToken } from './reIssuance'
 import {
   IRefreshOrchestrator,
@@ -17,15 +25,7 @@ import {
   RefreshOrchestratorOpts,
   RefreshStatus,
 } from './types'
-import { AgentBridge } from '../../../services/AgentBridge'
-import { credentialRegistry } from './registry'
 import { verifyCredentialStatus } from './verifyCredentialStatus'
-import {
-  getRefreshCredentialMetadata,
-  markOpenIDCredentialStatus,
-  persistCredentialRecord,
-  setRefreshCredentialMetadata,
-} from '../metadata'
 
 type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 

@@ -3,7 +3,6 @@ import type { OnboardingStyleSheet } from './screens/Onboarding'
 
 import AgentProvider from '@bifold/react-hooks'
 import { Agent } from '@credo-ts/core'
-
 import createApp from './App'
 import * as components from './components'
 import IconButton, { ButtonLocation } from './components/buttons/IconButton'
