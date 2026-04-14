@@ -90,10 +90,11 @@ export const useOpenID = ({
 
         return credential
       } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : String(err)
         const error = new BifoldError(
           t('Error.Title1024'),
-          t('Error.Message1024'),
-          (err as Error)?.message ?? err,
+          errorMessage,
+          errorMessage,
           1043
         )
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
@@ -114,10 +115,11 @@ export const useOpenID = ({
         })
         return record
       } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : String(err)
         const error = new BifoldError(
           t('Error.Title1043'),
-          t('Error.Message1043'),
-          (err as Error)?.message ?? err,
+          errorMessage,
+          errorMessage,
           1043
         )
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)

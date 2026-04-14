@@ -779,6 +779,11 @@
     "Scan": "Scanear",
     "Credentials": "Credenciais"
   },
+  "TabStackAccessibility": {
+    "Home": "Notifications tab {{notifications}} notifications (PT-BR)",
+    "Scan": "Scan tab (PT-BR)",
+    "Credentials": "Credentials tab (PT-BR)"
+  },
   "RootStack": {
     "Contacts": "Contatos",
     "Settings": "Configurações"
