@@ -258,8 +258,8 @@ export class MainContainer implements Container {
       return hashPIN(PIN, salt)
     })
 
-    this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, undefined)
-    this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, undefined)
+    this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, () => {})
+    this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, () => {})
 
     return this
 

@@ -125,30 +125,6 @@ describe('useAttestation', () => {
       expect(mockGetChallenge).not.toHaveBeenCalled()
     })
 
-    it('marks attestation completed and returns when getAttestationChallenge is null', async () => {
-      setupDefaultMocks({ getAttestationChallenge: null })
-      const { result } = renderHook(() => useAttestation())
-
-      await act(() => result.current.setupAttestation())
-
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: DispatchAction.SET_ATTESTATION_COMPLETED,
-        payload: [true],
-      })
-    })
-
-    it('marks attestation completed and returns when getAttestationJWT is null', async () => {
-      setupDefaultMocks({ getAttestationJWT: null })
-      const { result } = renderHook(() => useAttestation())
-
-      await act(() => result.current.setupAttestation())
-
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: DispatchAction.SET_ATTESTATION_COMPLETED,
-        payload: [true],
-      })
-    })
-
     it('marks attestation completed and returns when already configured', async () => {
       setupDefaultMocks({ isAttestationConfigured: true })
       const { result } = renderHook(() => useAttestation())

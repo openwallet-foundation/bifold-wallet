@@ -76,7 +76,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
 
   useEffect(() => {
 
-    if (!store.authentication.didAuthenticate || !enableAttestation)
+    if (!store.authentication.didAuthenticate)
       return
 
     const initAttestation = async (): Promise<void> => {

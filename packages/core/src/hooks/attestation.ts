@@ -52,7 +52,7 @@ export const useAttestation = () => {
   const setupAttestation = useCallback(async (): Promise<void> => {
     try {
 
-      if (!enableAttestation || !getAttestationChallenge || !getAttestationJWT) {
+      if (!enableAttestation) {
         dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
         return
       }
