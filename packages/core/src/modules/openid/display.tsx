@@ -6,7 +6,7 @@ import type {
   W3cCredentialDisplay,
   W3cCredentialJson,
 } from './types'
-import { Mdoc, MdocRecord, TypedArrayEncoder, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
+import { Mdoc, MdocRecord, TypedArrayEncoder } from '@credo-ts/core'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'
 import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
@@ -14,7 +14,7 @@ import { CredentialForDisplayId } from './types'
 import { detectImageMimeType, formatDate, getHostNameFromUrl, isDateString, sanitizeString } from './utils/utils'
 import { getOpenId4VcCredentialMetadata } from './metadata'
 import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
-
+import { OpenIDCredentialRecord } from './credentialRecord'
 
 function findDisplay<Display extends { locale?: string }>(display?: Display[]): Display | undefined {
   if (!display) return undefined
@@ -123,8 +123,8 @@ function getW3cIssuerDisplay(
     issuerDisplay.logo = issuerJson?.logoUrl
       ? { uri: issuerJson?.logoUrl }
       : issuerJson?.image
-      ? { uri: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
-      : undefined
+        ? { uri: typeof issuerJson.image === 'string' ? issuerJson.image : issuerJson.image.id }
+        : undefined
   }
 
   // Issuer name from JFF
@@ -323,14 +323,11 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
   }
 }
 
-export function getCredentialForDisplay(
-  credentialRecord: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
-): W3cCredentialDisplay {
+export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord): W3cCredentialDisplay {
   if (credentialRecord instanceof SdJwtVcRecord) {
-    // FIXME: we should probably add a decode method on the SdJwtVcRecord
-    // as you now need the agent context to decode the sd-jwt vc, while that's
-    // not really needed
-    const { disclosures, jwt } = decodeSdJwtSync(credentialRecord.firstCredential.compact, (data, alg) => Hasher.hash(data, alg))
+    const { disclosures, jwt } = decodeSdJwtSync(credentialRecord.firstCredential.compact, (data, alg) =>
+      Hasher.hash(data, alg)
+    )
     const decodedPayload: Record<string, unknown> = getClaimsSync(jwt.payload, disclosures, (data, alg) =>
       Hasher.hash(data, alg)
     )
@@ -427,18 +424,12 @@ export function getCredentialForDisplay(
       issuer: issuerId,
       type: credential.type[credential.type.length - 1],
       issuedAt: formatDate(new Date(credential.issuanceDate)),
-      validUntil: credential.expiryDate
-        ? formatDate(new Date(credential.expiryDate))
-        : undefined,
+      validUntil: credential.expiryDate ? formatDate(new Date(credential.expiryDate)) : undefined,
       validFrom: undefined,
     } satisfies CredentialMetadata,
     claimFormat: credentialRecord.firstCredential.claimFormat,
-    validUntil: credential.expiryDate
-      ? new Date(credential.expiryDate)
-      : undefined,
-    validFrom: credential.issuanceDate
-      ? new Date(credential.issuanceDate)
-      : undefined,
+    validUntil: credential.expiryDate ? new Date(credential.expiryDate) : undefined,
+    validFrom: credential.issuanceDate ? new Date(credential.issuanceDate) : undefined,
     credentialSubject: openId4VcMetadata?.credential.credential_subject,
   }
 }

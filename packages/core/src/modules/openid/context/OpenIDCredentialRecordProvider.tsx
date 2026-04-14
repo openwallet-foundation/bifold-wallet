@@ -2,16 +2,7 @@ import React, { createContext, PropsWithChildren, useContext, useEffect, useStat
 
 import { BrandingOverlay } from '@bifold/oca'
 import { BrandingOverlayType, CredentialOverlay, OCABundleResolveAllParams } from '@bifold/oca/build/legacy'
-import {
-  ClaimFormat,
-  MdocRecord,
-  MdocRepository,
-  SdJwtVcRecord,
-  SdJwtVcRepository,
-  W3cCredentialRecord,
-  W3cCredentialRepository,
-  W3cV2CredentialRecord,
-} from '@credo-ts/core'
+import { Agent, ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { recordsAddedByType, recordsRemovedByType } from '@bifold/react-hooks/build/recordUtils'
 import { useTranslation } from 'react-i18next'
 import { TOKENS, useServices } from '../../../container-api'
@@ -19,26 +10,27 @@ import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { getCredentialForDisplay } from '../display'
 import { OpenIDCredentialType } from '../types'
 import { useAppAgent } from '../../../utils/agent'
-
-type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined
+import {
+  findOpenIDCredentialById,
+  getOpenIDCredentialById,
+  OpenIDCredentialRecord,
+  storeOpenIDCredential,
+  deleteOpenIDCredential,
+} from '../credentialRecord'
 
 export type OpenIDCredentialContext = {
   openIdState: OpenIDCredentialRecordState
   getW3CCredentialById: (id: string) => Promise<W3cCredentialRecord | undefined>
   getSdJwtCredentialById: (id: string) => Promise<SdJwtVcRecord | undefined>
   getMdocCredentialById: (id: string) => Promise<MdocRecord | undefined>
-  storeCredential: (cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) => Promise<void>
-  removeCredential: (
-    cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord,
-    type: OpenIDCredentialType
-  ) => Promise<void>
-  resolveBundleForCredential: (
-    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
-  ) => Promise<CredentialOverlay<BrandingOverlay>>
+  getCredentialById: (id: string, type?: OpenIDCredentialType) => Promise<OpenIDCredentialRecord | undefined>
+  storeCredential: (cred: OpenIDCredentialRecord) => Promise<void>
+  removeCredential: (cred: OpenIDCredentialRecord, type: OpenIDCredentialType) => Promise<void>
+  resolveBundleForCredential: (credential: OpenIDCredentialRecord) => Promise<CredentialOverlay<BrandingOverlay>>
 }
 
 export type OpenIDCredentialRecordState = {
-  openIDCredentialRecords: Array<OpenIDCredentialRecord>
+  openIDCredentialRecords: Array<OpenIDCredentialRecord | undefined>
   w3cCredentialRecords: Array<W3cCredentialRecord>
   sdJwtVcRecords: Array<SdJwtVcRecord>
   mdocVcRecords: Array<MdocRecord>
@@ -134,56 +126,59 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   const [logger, bundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
   const { i18n } = useTranslation()
 
-  function checkAgent() {
+  function getAgent(): Agent {
     if (!agent) {
       const error = 'Agent undefined!'
       logger.error(`[OpenIDCredentialRecordProvider] ${error}`)
       throw new Error(error)
     }
+
+    return agent
   }
 
   async function getW3CCredentialById(id: string): Promise<W3cCredentialRecord | undefined> {
-    checkAgent()
-    return await agent?.w3cCredentials.getById(id)
+    const agent = getAgent()
+    const record = await getOpenIDCredentialById(agent, OpenIDCredentialType.W3cCredential, id)
+    return record instanceof W3cCredentialRecord ? record : undefined
   }
 
   async function getSdJwtCredentialById(id: string): Promise<SdJwtVcRecord | undefined> {
-    checkAgent()
-    return await agent?.sdJwtVc.getById(id)
+    const agent = getAgent()
+    const record = await getOpenIDCredentialById(agent, OpenIDCredentialType.SdJwtVc, id)
+    return record instanceof SdJwtVcRecord ? record : undefined
   }
 
   async function getMdocCredentialById(id: string): Promise<MdocRecord | undefined> {
-    checkAgent()
-    return await agent?.mdoc.getById(id)
+    const agent = getAgent()
+    const record = await getOpenIDCredentialById(agent, OpenIDCredentialType.Mdoc, id)
+    return record instanceof MdocRecord ? record : undefined
   }
 
-  async function storeCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord): Promise<void> {
-    checkAgent()
-    if (cred instanceof W3cCredentialRecord) {
-      const repo: W3cCredentialRepository = agent?.context.dependencyManager.resolve(W3cCredentialRepository)
-      await repo.save(agent.context, cred)
-    } else if (cred instanceof SdJwtVcRecord) {
-      const repo: SdJwtVcRepository = agent?.context.dependencyManager.resolve(SdJwtVcRepository)
-      await repo.save(agent.context, cred)
-    } else if (cred instanceof MdocRecord) {
-      const repo: MdocRepository = agent?.context.dependencyManager.resolve(MdocRepository)
-      await repo.save(agent.context, cred)
+  async function getCredentialById(
+    id: string,
+    type?: OpenIDCredentialType
+  ): Promise<OpenIDCredentialRecord | undefined> {
+    const agent = getAgent()
+    if (type !== undefined) {
+      return getOpenIDCredentialById(agent, type, id)
     }
+
+    return findOpenIDCredentialById(agent, id)
   }
 
-  async function deleteCredential(cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord, type: OpenIDCredentialType) {
-    checkAgent()
-    if (type === OpenIDCredentialType.W3cCredential) {
-      await agent?.w3cCredentials.deleteById(cred.id)
-    } else if (type === OpenIDCredentialType.SdJwtVc) {
-      await agent?.sdJwtVc.deleteById(cred.id)
-    } else if (type === OpenIDCredentialType.Mdoc) {
-      await agent?.mdoc.deleteById(cred.id)
-    }
+  async function storeCredential(cred: OpenIDCredentialRecord): Promise<void> {
+    const agent = getAgent()
+    await storeOpenIDCredential(agent, cred)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function deleteCredential(cred: OpenIDCredentialRecord, _type: OpenIDCredentialType) {
+    const agent = getAgent()
+    await deleteOpenIDCredential(agent, cred)
   }
 
   const resolveBundleForCredential = async (
-    credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | W3cV2CredentialRecord
+    credential: OpenIDCredentialRecord
   ): Promise<CredentialOverlay<BrandingOverlay>> => {
     const credentialDisplay = getCredentialForDisplay(credential)
 
@@ -289,6 +284,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         getW3CCredentialById: getW3CCredentialById,
         getSdJwtCredentialById: getSdJwtCredentialById,
         getMdocCredentialById: getMdocCredentialById,
+        getCredentialById: getCredentialById,
         resolveBundleForCredential: resolveBundleForCredential,
       }}
     >

@@ -1,7 +1,8 @@
-import { ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
+import { ClaimFormat } from '@credo-ts/core'
 import { KnownJwaSignatureAlgorithm } from '@credo-ts/core/build/modules/kms/jwk/jwa.mjs'
 import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
 import { OpenId4VciResolvedCredentialOffer } from '@credo-ts/openid4vc'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 export type IssuerMetadataCache = {
   credential_issuer: string
@@ -56,7 +57,7 @@ export type RefreshOrchestratorOpts = {
   flowType?: OpenIDCredentialRefreshFlowType
   onError?: (e: unknown) => void
   listRecords?: () => Promise<any[]>
-  toLite?: (rec: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) => {
+  toLite?: (rec: OpenIDCredentialRecord) => {
     id: string
     format: ClaimFormat
     createdAt?: string
@@ -70,7 +71,7 @@ export interface IRefreshOrchestrator {
   stop(): void
   runOnce(reason?: string): Promise<void>
   isRunning(): boolean
-  resolveFull(id: string): W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord | undefined
+  resolveFull(id: string): OpenIDCredentialRecord | undefined
 }
 
 export enum OpenIDCustomNotificationType {
