@@ -58,7 +58,9 @@ describe('getCredentialsForProofRequest', () => {
   })
 
   test('parses a fetched didcomm invitation from json', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    const fetchMock = global.fetch as jest.Mock
+
+    fetchMock.mockResolvedValue({
       ok: true,
       headers: {
         get: jest.fn().mockReturnValue('application/json'),
@@ -67,7 +69,7 @@ describe('getCredentialsForProofRequest', () => {
         '@type': 'https://didcomm.org/out-of-band/2.0/invitation',
         id: 'invitation-id',
       }),
-    })
+      })
 
     await expect(fetchInvitationDataUrl('https://example.com/invitation')).resolves.toEqual({
       success: true,
@@ -84,14 +86,15 @@ describe('getCredentialsForProofRequest', () => {
 
   test('parses a fetched authorization request from text', async () => {
     const jwt = 'eyJhbGciOiJFZERTQSJ9.payload.signature'
+    const fetchMock = global.fetch as jest.Mock
 
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    fetchMock.mockResolvedValue({
       ok: true,
       headers: {
         get: jest.fn().mockReturnValue('text/plain'),
       },
       text: jest.fn().mockResolvedValue(jwt),
-    })
+      })
 
     await expect(fetchInvitationDataUrl('https://example.com/request')).resolves.toEqual({
       success: true,
@@ -104,12 +107,14 @@ describe('getCredentialsForProofRequest', () => {
   })
 
   test('wraps invitation fetch failures with a retrieval error', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValue({
+    const fetchMock = global.fetch as jest.Mock
+
+    fetchMock.mockResolvedValue({
       ok: false,
       headers: {
         get: jest.fn(),
       },
-    })
+      })
 
     await expect(fetchInvitationDataUrl('https://example.com/fail')).rejects.toThrow(
       '[retrieve_invitation_error] Unable to retrieve invitation'
