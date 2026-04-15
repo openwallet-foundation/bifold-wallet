@@ -167,7 +167,6 @@ exports[`ProofCancelModal Component Rerenders correctly when not visible 1`] = `
                     },
                     false,
                     false,
-                    false,
                   ],
                 ]
               }

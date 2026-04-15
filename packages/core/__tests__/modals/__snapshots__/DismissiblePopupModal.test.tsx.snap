@@ -356,7 +356,6 @@ exports[`DismissiblePopupModal Component Renders correctly with call to action 1
                         },
                         false,
                         false,
-                        false,
                       ],
                     ]
                   }

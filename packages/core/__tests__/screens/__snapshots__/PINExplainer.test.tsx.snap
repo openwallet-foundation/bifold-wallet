@@ -315,7 +315,6 @@ exports[`PINExplainer Screen Renders correctly 1`] = `
                 },
                 false,
                 false,
-                false,
               ],
             ]
           }

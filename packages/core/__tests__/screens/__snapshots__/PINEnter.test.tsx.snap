@@ -737,7 +737,6 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       },
                       false,
                       false,
-                      false,
                     ],
                   ]
                 }
@@ -1509,7 +1508,6 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],
