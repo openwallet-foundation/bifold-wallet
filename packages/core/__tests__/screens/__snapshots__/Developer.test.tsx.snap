@@ -928,7 +928,6 @@ exports[`Developer Screen acceptDevCredentials can be toggled 1`] = `
                       },
                       false,
                       false,
-                      false,
                     ],
                   ]
                 }
@@ -1870,7 +1869,6 @@ exports[`Developer Screen enableWalletNaming can be toggled 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],
@@ -2816,7 +2814,6 @@ exports[`Developer Screen preventAutoLock can be toggled 1`] = `
                       },
                       false,
                       false,
-                      false,
                     ],
                   ]
                 }
@@ -3758,7 +3755,6 @@ exports[`Developer Screen screen renders correctly 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],
@@ -4704,7 +4700,6 @@ exports[`Developer Screen useConnectionInviterCapability can be toggled 1`] = `
                       },
                       false,
                       false,
-                      false,
                     ],
                   ]
                 }
@@ -5648,7 +5643,6 @@ exports[`Developer Screen useDevVerifierTemplates can be toggled 1`] = `
                       },
                       false,
                       false,
-                      false,
                     ],
                   ]
                 }
@@ -6590,7 +6584,6 @@ exports[`Developer Screen useVerifierCapability can be toggled 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],
