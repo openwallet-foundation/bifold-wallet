@@ -1,5 +1,13 @@
 # @bifold/verifier
 
+## 3.0.1
+
+### Patch Changes
+
+- 6ff5dbb: updated credo ts packages to 0.6.3
+- Updated dependencies [6ff5dbb]
+  - @bifold/react-hooks@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

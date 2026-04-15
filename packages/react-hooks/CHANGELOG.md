@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1
+
+### Patch Changes
+
+- 6ff5dbb: updated credo ts packages to 0.6.3
+
 ## 3.0.0
 
 ### Major Changes
