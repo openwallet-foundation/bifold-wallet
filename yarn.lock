@@ -3680,6 +3680,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.4#~/.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.4-d7ed0b15da.patch":
+  version: 0.2.4
+  resolution: "@hyperledger/indy-vdr-react-native@patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.4#~/.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.4-d7ed0b15da.patch::version=0.2.4&hash=076916"
+  dependencies:
+    "@hyperledger/indy-vdr-shared": "npm:0.2.4"
+  peerDependencies:
+    react: ">= 16"
+    react-native: ">= 0.71"
+  checksum: 10c0/5d5acf3b267681f5897a3cbb91e8655a493586695969ced3d78234e8ae0d6d4b9febdc8608d1cae89266349278597347d85b527355c3ad1df99f904bc3994184
+  languageName: node
+  linkType: hard
+
 "@hyperledger/indy-vdr-shared@npm:0.2.3":
   version: 0.2.3
   resolution: "@hyperledger/indy-vdr-shared@npm:0.2.3"
