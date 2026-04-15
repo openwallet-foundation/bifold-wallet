@@ -8,7 +8,7 @@ export interface Spec extends TurboModule {
   appleKeyAttestation(keyId: string, challenge: string): Promise<Buffer>;
   isPlayIntegrityAvailable(): Promise<boolean>;
   googleAttestation(nonce: string): Promise<string>;
-  getAppStoreReceipt(): Promise<string | null>;
+  getAppStoreReceipt(): Promise<string>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('Attestation');
