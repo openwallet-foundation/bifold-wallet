@@ -110,5 +110,6 @@ const ButtonImpl = ({
 }
 
 export default ButtonImpl
-export { ButtonImpl, ButtonType }
+export { ButtonType } from './Button-api'
+export { ButtonImpl }
 export type { Button, ButtonProps }
