@@ -12,11 +12,11 @@ const timing: Animated.TimingAnimationConfig = {
 
 export interface LoadingSpinnerProps {
   color: string
+  name?: string
   size?: number
-  children?: React.ReactNode
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color, children }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color, name="refresh" }) => {
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
@@ -29,7 +29,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color, child
 
   return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-      {children ?? <Icon style={{ color }} size={size} name="refresh" testID={testIdWithKey('Loading')} />}
+      <Icon style={{ color }} size={size} name={name} testID={testIdWithKey('Loading')} />
     </Animated.View>
   )
 }
