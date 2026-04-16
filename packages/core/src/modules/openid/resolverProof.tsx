@@ -156,14 +156,14 @@ export const shareProof = async ({
           entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
           entry.verifiableCredentials[0]
 
-        return [entry.inputDescriptorId, [credential.credentialRecord]]
+        return [entry.inputDescriptorId, [credential]]
       })
     )
   )
 
   try {
     const result = await agent.openid4vc.holder.acceptOpenId4VpAuthorizationRequest({
-      authorizationRequest: authorizationRequest,
+      authorizationRequestPayload: authorizationRequest,
       presentationExchange: {
         credentials,
       },
