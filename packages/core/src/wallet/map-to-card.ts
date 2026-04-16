@@ -1,4 +1,4 @@
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { DidCommCredentialExchangeRecord as CredentialExchangeRecord } from '@credo-ts/didcomm'
 import startCase from 'lodash.startcase'
 import {
@@ -211,7 +211,7 @@ export function mapW3CToCard(input: W3CInput, id: string): WalletCredentialCardD
  */
 
 const resolveBundleForW3CCredential = async (
-  credential: SdJwtVcRecord | W3cCredentialRecord | MdocRecord,
+  credential: SdJwtVcRecord | W3cCredentialRecord | W3cV2CredentialRecord | MdocRecord,
   bundleResolver: OCABundleResolverType
 ): Promise<CredentialOverlay<BrandingOverlay>> => {
   const credentialDisplay = getCredentialForDisplay(credential)
@@ -250,7 +250,7 @@ const resolveBundleForW3CCredential = async (
 }
 
 const mapW3CCredToCard = (
-  w3cCred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord,
+  w3cCred: W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord,
   brandingOverlay: CredentialOverlay<BrandingOverlay>,
   brandingOverlayTypeString: string
 ): WalletCredentialCardData => {
@@ -323,6 +323,7 @@ export async function mapCredentialTypeToCard({
   //W3C case
   if (
     credential instanceof W3cCredentialRecord ||
+    credential instanceof W3cV2CredentialRecord ||
     credential instanceof SdJwtVcRecord ||
     credential instanceof MdocRecord
   ) {

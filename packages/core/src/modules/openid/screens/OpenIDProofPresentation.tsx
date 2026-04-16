@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { Attribute } from '@bifold/oca/build/legacy'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
@@ -21,14 +21,11 @@ import { buildFieldsFromW3cCredsCredential } from '../../../utils/oca'
 import { testIdWithKey } from '../../../utils/testable'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
-import {
-  formatDifPexCredentialsForRequest,
-  FormattedSelectedCredentialEntry,
-  FormattedSubmissionEntry,
-} from '../displayProof'
+import { formatOpenIdProofRequest } from '../displayProof'
 import { shareProof } from '../resolverProof'
-import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 import CredentialCardGen from '../../../components/misc/CredentialCardGen'
+import { OpenIDCredentialRecord } from '../credentialRecord'
+import { FormattedSelectedCredentialEntry, FormattedSubmissionEntry } from '../types'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -46,6 +43,16 @@ type SelectedCredentialsFormat = {
   }
 }
 
+type DisplayableOpenIDProofCredential = W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord
+
+const isDisplayableOpenIDProofCredential = (
+  credential: OpenIDCredentialRecord
+): credential is DisplayableOpenIDProofCredential =>
+  credential instanceof W3cCredentialRecord ||
+  credential instanceof W3cV2CredentialRecord ||
+  credential instanceof SdJwtVcRecord ||
+  credential instanceof MdocRecord
+
 const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   navigation,
   route: {
@@ -55,13 +62,11 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const [credentialsRequested, setCredentialsRequested] = useState<
-    Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord>
-  >([])
+  const [credentialsRequested, setCredentialsRequested] = useState<Array<DisplayableOpenIDProofCredential>>([])
   const [satistfiedCredentialsSubmission, setSatistfiedCredentialsSubmission] = useState<SatisfiedCredentialsFormat>()
   const [selectedCredentialsSubmission, setSelectedCredentialsSubmission] = useState<SelectedCredentialsFormat>()
 
-  const { getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
+  const { getCredentialById } = useOpenIDCredentials()
 
   const { ColorPalette, ListItems, TextTheme } = useTheme()
   const { t } = useTranslation()
@@ -114,13 +119,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     },
   })
 
-  const submission = useMemo(
-    () =>
-      credential && credential.credentialsForRequest
-        ? formatDifPexCredentialsForRequest(credential.credentialsForRequest)
-        : undefined,
-    [credential]
-  )
+  const submission = useMemo(() => (credential ? formatOpenIdProofRequest(credential) : undefined), [credential])
 
   //This should run only once when the screen is mounted
   useEffect(() => {
@@ -139,17 +138,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   useEffect(() => {
     async function fetchCreds() {
       if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries) return
-      const creds: Array<W3cCredentialRecord | SdJwtVcRecord | MdocRecord> = []
+      const creds: Array<DisplayableOpenIDProofCredential> = []
 
       for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
-        for (const { id, claimFormat } of credIDs) {
-          let credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined
-          if (isW3CProofRequest(claimFormat)) {
-            credential = await getW3CCredentialById(id)
-          } else if (isSdJwtProofRequest(claimFormat)) {
-            credential = await getSdJwtCredentialById(id)
-          }
-          if (credential && inputDescriptorID) {
+        for (const { id } of credIDs) {
+          const credential = await getCredentialById(id)
+
+          if (credential && isDisplayableOpenIDProofCredential(credential) && inputDescriptorID) {
             creds.push(credential)
           }
         }
@@ -157,7 +152,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       setCredentialsRequested(creds)
     }
     fetchCreds()
-  }, [satistfiedCredentialsSubmission, getW3CCredentialById, getSdJwtCredentialById])
+  }, [satistfiedCredentialsSubmission, getCredentialById])
 
   //Once satisfied credentials are set and all credentials fetched, we select the first one of each submission to display on screen
   useEffect(() => {
@@ -182,14 +177,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const handleAcceptTouched = async () => {
     try {
-      if (!agent || !credential.credentialsForRequest || !selectedCredentialsSubmission) {
+      if (!agent || !selectedCredentialsSubmission) {
         return
       }
       await shareProof({
         agent,
-        authorizationRequest: credential.authorizationRequestPayload,
-        credentialsForRequest: credential.credentialsForRequest,
-        selectedCredentials: selectedCredentialsSubmission,
+        requestRecord: credential,
+        selectedProofCredentials: selectedCredentialsSubmission,
       })
       setAcceptModalVisible(true)
     } catch (err: unknown) {

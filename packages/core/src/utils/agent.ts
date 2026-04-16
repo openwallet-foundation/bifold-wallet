@@ -18,6 +18,7 @@ import {
   PeerDidResolver,
   WebDidResolver,
   X509Module,
+  DcqlModule,
 } from '@credo-ts/core'
 
 import {
@@ -128,6 +129,7 @@ export function getAgentModules({
         mediatorPickupStrategy: DidCommMediatorPickupStrategy.Implicit,
       },
     }),
+    dcql: new DcqlModule(),
     openid4vc: new OpenId4VcModule(),
     ...(mdocTrustedCertificate
       ? {
