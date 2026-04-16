@@ -1,20 +1,11 @@
 // modules/openid/hooks/useDeclineReplacement.ts
 import { useCallback } from 'react'
-import { credentialRegistry } from '../refresh/registry'
+import { credentialRegistry, selectOldIdByReplacementId } from '../refresh/registry'
 import type { BifoldLogger } from '../../../services/logger'
 import type { CustomNotification } from '../../../types/notification'
 
 type Options = {
   logger?: BifoldLogger
-}
-
-function findOldIdByNewId(newId: string): string | undefined {
-  const s = credentialRegistry.getState()
-  // replacements: { [oldId]: { id: newId, ... } }
-  for (const [oldId, lite] of Object.entries(s.replacements)) {
-    if (lite?.id === newId) return oldId
-  }
-  return undefined
 }
 
 /**
@@ -52,7 +43,7 @@ export function useDeclineReplacement(opts: Options = {}) {
    */
   const declineByNewId = useCallback(
     async (newId: string) => {
-      const oldId = findOldIdByNewId(newId)
+      const oldId = selectOldIdByReplacementId(newId)
       if (!oldId) {
         logger?.warn(`🧹 [Decline] No matching oldId found for newId=${newId}`)
         return

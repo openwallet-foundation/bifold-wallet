@@ -3,8 +3,8 @@ import { TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
-import { Button, ButtonType, ButtonProps } from './Button-api'
 import { ThemedText } from '../texts/ThemedText'
+import { Button, ButtonProps, ButtonType } from './Button-api'
 
 const ButtonImpl = ({
   title,
@@ -81,14 +81,7 @@ const ButtonImpl = ({
       onPressIn={() => setIsActive(!disabled && true)}
       onPressOut={() => setIsActive(false)}
       testID={testID}
-      style={[
-        buttonStyles[buttonType].color,
-        disabled && buttonStyles[buttonType].colorDisabled,
-        isActive &&
-          (buttonType === ButtonType.Secondary || buttonType === ButtonType.Tertiary) && {
-            backgroundColor: Buttons.primary.backgroundColor,
-          },
-      ]}
+      style={[buttonStyles[buttonType].color, disabled && buttonStyles[buttonType].colorDisabled]}
       disabled={disabled}
       activeOpacity={heavyOpacity}
       ref={ref}
@@ -107,7 +100,6 @@ const ButtonImpl = ({
             buttonStyles[buttonType].text,
             disabled && buttonStyles[buttonType].textDisabled,
             isActive && { textDecorationLine: 'underline' },
-            isActive && buttonType === ButtonType.Secondary && { color: Buttons.primaryText.color },
           ]}
         >
           {title}
@@ -118,5 +110,6 @@ const ButtonImpl = ({
 }
 
 export default ButtonImpl
-export { ButtonType, ButtonImpl }
+export { ButtonType } from './Button-api'
+export { ButtonImpl }
 export type { Button, ButtonProps }
