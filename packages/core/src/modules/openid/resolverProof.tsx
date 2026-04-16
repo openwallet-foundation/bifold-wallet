@@ -172,7 +172,7 @@ const getPexCredentialsForRequest = (
           entry.verifiableCredentials.find((vc) => vc.credentialRecord.id === credentialId) ??
           entry.verifiableCredentials[0]
 
-        return [entry.inputDescriptorId, [credential.credentialRecord]]
+        return [entry.inputDescriptorId, [credential]]
       })
     )
   )

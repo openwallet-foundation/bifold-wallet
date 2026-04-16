@@ -10,7 +10,16 @@ import {
 } from '@credo-ts/anoncreds'
 
 import { AskarModule } from '@credo-ts/askar'
-import { Agent, DcqlModule, DidsModule, JwkDidResolver, KeyDidResolver, PeerDidResolver, WebDidResolver } from '@credo-ts/core'
+import {
+  Agent,
+  DidsModule,
+  JwkDidResolver,
+  KeyDidResolver,
+  PeerDidResolver,
+  WebDidResolver,
+  X509Module,
+  DcqlModule,
+} from '@credo-ts/core'
 
 import {
   DidCommAutoAcceptCredential,
@@ -30,6 +39,7 @@ import { OpenId4VcModule } from '@credo-ts/openid4vc'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
 import { indyVdr } from '@hyperledger/indy-vdr-react-native'
+import Config from 'react-native-config'
 import { WalletSecret } from '../types/security'
 
 interface GetAgentModulesOptions {
@@ -42,6 +52,8 @@ interface GetAgentModulesOptions {
 export type BifoldAgentModules = ReturnType<typeof getAgentModules>
 
 export type BifoldAgent = Agent<BifoldAgentModules>
+
+const mdocTrustedCertificate = Config.MDOC_TRUSTED_CERTIFICATE_BASE64
 
 /**
  * Constructs the modules to be used in the agent setup
@@ -119,6 +131,13 @@ export function getAgentModules({
     }),
     dcql: new DcqlModule(),
     openid4vc: new OpenId4VcModule(),
+    ...(mdocTrustedCertificate
+      ? {
+          x509: new X509Module({
+            trustedCertificates: [mdocTrustedCertificate],
+          }),
+        }
+      : {}),
     dids: new DidsModule({
       resolvers: [
         new WebVhDidResolver(),
