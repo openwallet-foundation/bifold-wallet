@@ -158,6 +158,8 @@
     "Message1048": "There was a problem with the proof request. (PT-BR)",
     "Title1049": "Unable to change PIN. (PT-BR)",
     "Message1049": "There was a problem while attempting to change your PIN. (PT-BR)",
+    "Title1050": "Unable to access biometrics (PR-BR)",
+    "Message1050": "There was a problem while attempting to access this device' biometrics (PT-BR)",
     "GenericError": {
       "Title": "Something went wrong (PT-BR)",
       "Message": "There was an unexpected error, please try again later. (PT-BR)"
@@ -770,7 +772,7 @@
     "ThreeMinutes": "Three Minutes (PT-BR)",
     "OneMinute": "One Minute (PT-BR)",
     "Never": "Never (PT-BR)",
-    "Preview": "{{time}} min (PT-BR)"
+    "Preview": "{{autoLockTime}} min (PT-BR)"
   },
   "TabStack": {
     "Home": "Notificações",

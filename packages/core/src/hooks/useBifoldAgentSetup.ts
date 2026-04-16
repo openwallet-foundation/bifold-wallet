@@ -33,12 +33,8 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
   ])
 
   const restartExistingAgent = useCallback(
-    async (agent: Agent, walletSecret: WalletSecret): Promise<Agent | undefined> => {
+    async (agent: Agent): Promise<Agent | undefined> => {
       try {
-        await agent.modules.wallet.open({
-          id: walletSecret.id,
-          key: walletSecret.key,
-        })
         await agent.initialize()
       } catch (error) {
         logger.warn(`Agent restart failed with error ${error}`)
@@ -56,17 +52,12 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
     async (walletSecret: WalletSecret, mediatorUrl: string): Promise<Agent> => {
       const newAgent = new Agent({
         config: {
-          //label: store.preferences.walletName || 'Aries Bifold',
-          // walletConfig: {
-          //   id: walletSecret.id,
-          //   key: walletSecret.key,
-          // },
-          // FORK TODO: This config appears to be deprecated, but it's not obvious what the new equivalent is. 
           logger,
           autoUpdateStorageOnStartup: true,
         },
         dependencies: agentDependencies,
         modules: getAgentModules({
+          walletSecret,
           indyNetworks: indyLedgers,
           mediatorInvitationUrl: mediatorUrl,
           txnCache: {
@@ -84,7 +75,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
 
       return newAgent
     },
-    [/*store.preferences.walletName,*/ logger, indyLedgers]
+    [logger, indyLedgers]
   )
 
   const migrateIfRequired = useCallback(
@@ -124,7 +115,7 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       const mediatorUrl = store.preferences.selectedMediator
       logger.info('Checking for existing agent...')
       if (agentInstanceRef.current) {
-        const restartedAgent = await restartExistingAgent(agentInstanceRef.current, walletSecret)
+        const restartedAgent = await restartExistingAgent(agentInstanceRef.current)
         if (restartedAgent) {
           logger.info('Successfully restarted existing agent...')
           agentInstanceRef.current = restartedAgent
@@ -145,11 +136,10 @@ const useBifoldAgentSetup = (): AgentSetupReturnType => {
       } catch (e: any) {
         logger.error('Stack: ' + (e as CredoError).stack)
         logger.error('Message: ' + (e as CredoError).message)
-        logger.error((e as CredoError).cause?.stack ?? 'No cause stack');
-        logger.error((e as CredoError).cause?.message ?? 'No cause message');
-        throw e;
+        logger.error((e as CredoError).cause?.stack ?? 'No cause stack')
+        logger.error((e as CredoError).cause?.message ?? 'No cause message')
+        throw e
       }
-      
 
       logger.info('Creating link secret if required...')
       await createLinkSecretIfRequired(newAgent)

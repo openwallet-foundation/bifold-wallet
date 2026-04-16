@@ -159,6 +159,8 @@
     "Message1048": "There was a problem with the proof request.",
     "Title1049": "Unable to change PIN.",
     "Message1049": "There was a problem while attempting to change your PIN.",
+    "Title1050": "Unable to access biometrics",
+    "Message1050": "There was a problem while attempting to access this device' biometrics",
     "GenericError": {
       "Title": "Something went wrong",
       "Message": "There was an unexpected error, please try again later."
@@ -801,7 +803,7 @@
     "ThreeMinutes": "Three Minutes",
     "OneMinute": "One Minute",
     "Never": "Never",
-    "Preview": "{{time}} min"
+    "Preview": "{{autoLockTime}} min"
   },
   "TabStack": {
     "Home": "Notifications",
