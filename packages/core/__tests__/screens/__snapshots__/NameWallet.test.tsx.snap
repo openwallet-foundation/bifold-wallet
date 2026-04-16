@@ -258,7 +258,6 @@ exports[`NameWallet Screen LimitedInput and continue button are present 1`] = `
                             },
                             false,
                             false,
-                            false,
                           ],
                         ]
                       }

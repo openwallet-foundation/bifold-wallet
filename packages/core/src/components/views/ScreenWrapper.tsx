@@ -1,9 +1,9 @@
-import React, { ComponentProps } from 'react'
+import React, { ComponentProps, RefObject } from 'react'
 import { ScrollView, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-import KeyboardView from './KeyboardView'
-import { useTheme } from '../../contexts/theme'
 import { Edges, SafeAreaView } from 'react-native-safe-area-context'
+import { useTheme } from '../../contexts/theme'
+import KeyboardView from './KeyboardView'
 
 interface ScreenWrapperProps {
   children: React.ReactNode
@@ -40,6 +40,10 @@ interface ScreenWrapperProps {
    * @default true
    */
   padded?: boolean
+  /**
+   * Ref for the ScrollView. This allows parent components to control scrolling behaviour
+   */
+  scrollViewRef?: RefObject<ScrollView | null>
 }
 
 /**
@@ -55,6 +59,7 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   scrollViewContainerStyle,
   controlsContainerStyle,
   padded = true,
+  scrollViewRef,
 }) => {
   const { Spacing, ColorPalette } = useTheme()
 
@@ -81,7 +86,7 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
     }
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={scrollStyle}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={scrollStyle} ref={scrollViewRef}>
         {children}
       </ScrollView>
     )
@@ -92,7 +97,7 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   if (keyboardActive) {
     return (
       <SafeAreaView style={[styles.container, style]} edges={edges}>
-        <KeyboardView>
+        <KeyboardView scrollViewRef={scrollViewRef}>
           <View style={scrollStyle}>{children}</View>
           {controls && <View style={[controlsStyle, { marginTop: 'auto' }]}>{controls}</View>}
         </KeyboardView>

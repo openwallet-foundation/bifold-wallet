@@ -1,5 +1,4 @@
 import { useAgent } from '@bifold/react-hooks'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
@@ -16,6 +15,7 @@ import { getCredentialConfigurationIds } from '../utils/utils'
 import { setRefreshCredentialMetadata } from '../metadata'
 import { RefreshStatus } from '../refresh/types'
 import { temporaryMetaVanillaObject } from '../metadata'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -25,16 +25,8 @@ type OpenIDContextProps = {
 export const useOpenID = ({
   openIDUri,
   openIDPresentationUri,
-}: OpenIDContextProps):
-  | SdJwtVcRecord
-  | W3cCredentialRecord
-  | MdocRecord
-  | OpenId4VPRequestRecord
-  | W3cV2CredentialRecord
-  | undefined => {
-  const [openIdRecord, setOpenIdRecord] = useState<
-    SdJwtVcRecord | W3cCredentialRecord | MdocRecord | OpenId4VPRequestRecord | W3cV2CredentialRecord
-  >()
+}: OpenIDContextProps): OpenIDCredentialRecord | OpenId4VPRequestRecord | undefined => {
+  const [openIdRecord, setOpenIdRecord] = useState<OpenIDCredentialRecord | OpenId4VPRequestRecord>()
 
   const { agent } = useAgent()
   const { t } = useTranslation()
@@ -98,10 +90,11 @@ export const useOpenID = ({
 
         return credential
       } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : String(err)
         const error = new BifoldError(
           t('Error.Title1024'),
-          t('Error.Message1024'),
-          (err as Error)?.message ?? err,
+          errorMessage,
+          errorMessage,
           1043
         )
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
@@ -118,14 +111,15 @@ export const useOpenID = ({
       try {
         const record = await getCredentialsForProofRequest({
           agent: agent,
-          uri: uri,
+          request: uri,
         })
         return record
       } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : String(err)
         const error = new BifoldError(
           t('Error.Title1043'),
-          t('Error.Message1043'),
-          (err as Error)?.message ?? err,
+          errorMessage,
+          errorMessage,
           1043
         )
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
