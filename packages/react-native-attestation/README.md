@@ -26,6 +26,7 @@ if (Platform.OS === 'ios') {
   const attestationAsBuffer = await appleAttestation(keyId, nonce);
 
   // Legacy App Store receipt (for compatibility)
+  // Throws if the receipt is missing or unreadable.
   const appStoreReceipt = await getAppStoreReceipt();
 } else if (Platform.OS === 'android') {
   const available = await isPlayIntegrityAvailable();
