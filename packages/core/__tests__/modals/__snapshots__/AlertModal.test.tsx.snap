@@ -218,7 +218,6 @@ exports[`AlertModal Component Renders correctly 1`] = `
                           },
                           false,
                           false,
-                          false,
                         ],
                       ]
                     }

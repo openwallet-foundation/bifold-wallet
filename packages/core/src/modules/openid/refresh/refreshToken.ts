@@ -1,7 +1,8 @@
-import { AgentContext, MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
+import { AgentContext } from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
 import { RefreshResponse } from '../types'
 import { getRefreshCredentialMetadata, persistCredentialRecord, setRefreshCredentialMetadata } from '../metadata'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 export async function refreshAccessToken({
   logger,
@@ -9,7 +10,7 @@ export async function refreshAccessToken({
   agentContext,
 }: {
   logger: BifoldLogger
-  cred: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
+  cred: OpenIDCredentialRecord
   agentContext: AgentContext
 }): Promise<RefreshResponse | undefined> {
   logger.info(`[refreshAccessToken] Checking new credential for record: ${cred.id}`)
@@ -21,21 +22,17 @@ export async function refreshAccessToken({
   }
 
   logger.info(`[refreshAccessToken] Found refresh metadata for credential: ${cred.id}`)
-  const { refreshToken, authServer } = refreshMetaData
+  const { refreshToken, tokenEndpoint } = refreshMetaData
 
   try {
-    if (!authServer) {
-      throw new Error('No authorization server found in the credential offer metadata')
+    if (!tokenEndpoint) {
+      throw new Error('No token endpoint found in the credential offer metadata')
     }
 
-    logger.info(`[refreshAccessToken] Found auth server for credential: ${cred.id}: ${authServer}`)
+    logger.info(`[refreshAccessToken] Found token endpoint for credential: ${cred.id}: ${tokenEndpoint}`)
 
     // Build token endpoint:
-    // React-Native-safe URL build
-    const tokenUrl = (authServer.endsWith('/') ? authServer.slice(0, -1) : authServer)
-    // const tokenUrl = new URL('token', authServer)
-    // tokenUrl.searchParams.set('force', 'false')
-
+    const tokenUrl = tokenEndpoint.endsWith('/') ? tokenEndpoint.slice(0, -1) : tokenEndpoint
     logger.info(`[refreshAccessToken] Refreshing access token at URL: ${tokenUrl} for credential: ${cred.id}`)
 
     const body = new URLSearchParams({
@@ -56,7 +53,7 @@ export async function refreshAccessToken({
       body: body.toString(),
     })
 
-    logger.info(`[refreshAccessToken] Response status: ${JSON.stringify(res)}`)
+    logger.info(`[refreshAccessToken] Token endpoint response status: ${res.status}`)
 
     if (!res.ok) {
       const errText = await res.text()
@@ -64,14 +61,20 @@ export async function refreshAccessToken({
     }
 
     const data: RefreshResponse = await res.json()
-    logger.info(`[refreshAccessToken] New access token acquired: ${JSON.stringify(data)}`)
+    logger.info(
+      `[refreshAccessToken] Token refresh succeeded: ${JSON.stringify({
+        token_type: data.token_type,
+        expires_in: data.expires_in,
+        has_access_token: Boolean(data.access_token),
+        has_refresh_token: Boolean(data.refresh_token),
+      })}`
+    )
 
     // If refresh token rotated, persist it
     if (data.refresh_token && data.refresh_token !== refreshToken) {
       logger.info(`[refreshAccessToken] Refresh token rotated; saving new one`)
       setRefreshCredentialMetadata(cred, {
         ...refreshMetaData,
-        authServer: authServer,
         refreshToken: data.refresh_token,
       })
 

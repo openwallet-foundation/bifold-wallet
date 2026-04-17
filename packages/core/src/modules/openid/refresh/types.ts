@@ -1,13 +1,8 @@
-import {
-  ClaimFormat,
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-  W3cV2CredentialRecord,
-} from '@credo-ts/core'
+import { ClaimFormat } from '@credo-ts/core'
 import { KnownJwaSignatureAlgorithm } from '@credo-ts/core/build/modules/kms/jwk/jwa.mjs'
 import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
 import { OpenId4VciResolvedCredentialOffer } from '@credo-ts/openid4vc'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 export type IssuerMetadataCache = {
   credential_issuer: string
@@ -24,9 +19,17 @@ export enum RefreshStatus {
   Error = 'error',
 }
 
+/**
+ * Controls how invalid OpenID credentials are handled after status checks.
+ * - InvalidThenOnDemand: show invalid notification; replacement is attempted on user action.
+ * - FullReplacement: orchestrator attempts replacement immediately and surfaces replacement notification when available.
+ */
+export enum OpenIDCredentialRefreshFlowType {
+  InvalidThenOnDemand = 'invalid-then-on-demand',
+  FullReplacement = 'full-replacement',
+}
+
 export interface RefreshCredentialMetadata {
-  // issuer & config to re-issue the same cred
-  authServer: string
   tokenEndpoint: string
   refreshToken: string
   credentialIssuer: string
@@ -51,9 +54,10 @@ export interface RefreshCredentialMetadata {
 export type RefreshOrchestratorOpts = {
   intervalMs?: number | null
   autoStart?: boolean
+  flowType?: OpenIDCredentialRefreshFlowType
   onError?: (e: unknown) => void
   listRecords?: () => Promise<any[]>
-  toLite?: (rec: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord) => {
+  toLite?: (rec: OpenIDCredentialRecord) => {
     id: string
     format: ClaimFormat
     createdAt?: string
@@ -67,7 +71,7 @@ export interface IRefreshOrchestrator {
   stop(): void
   runOnce(reason?: string): Promise<void>
   isRunning(): boolean
-  resolveFull(id: string): W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord| undefined
+  resolveFull(id: string): OpenIDCredentialRecord | undefined
 }
 
 export enum OpenIDCustomNotificationType {

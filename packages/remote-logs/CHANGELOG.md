@@ -1,5 +1,35 @@
 # Change Log
 
+## 3.0.1
+
+### Patch Changes
+
+- 6ff5dbb: updated credo ts packages to 0.6.3
+- Updated dependencies [1e57f76]
+- Updated dependencies [fda1a41]
+- Updated dependencies [b4c4ded]
+- Updated dependencies [a9428ed]
+- Updated dependencies [6ff5dbb]
+  - @bifold/core@3.0.1
+
+## 3.0.0
+
+### Major Changes
+
+- c1df038: Updated all bifold packages for compatibility with credo-ts v0.6.x.
+  Compatibility with this credo-ts release is important as it has big enhancements across the board,
+  especially for OpenID related credentials such as mdoc.
+  This version of credo changes many type and method names, changes which types and methods are available from which exports,
+  and modifies the interfaces of many existing modules. Thus, changes are made across the project,
+  some of which may be breaking.
+
+### Patch Changes
+
+- Updated dependencies [c1df038]
+- Updated dependencies [2aa1740]
+- Updated dependencies [cb1442e]
+  - @bifold/core@3.0.0
+
 ## 2.12.8
 
 ### Patch Changes
