@@ -1983,6 +1983,7 @@ __metadata:
     "@credo-ts/question-answer": "npm:0.6.3"
     "@credo-ts/react-native": "npm:0.6.3"
     "@credo-ts/webvh": "npm:0.6.3"
+    "@expo/app-integrity": "npm:^55.0.9"
     "@formatjs/intl-datetimeformat": "npm:~6.18.2"
     "@formatjs/intl-displaynames": "npm:~6.8.13"
     "@formatjs/intl-getcanonicallocales": "npm:~2.5.6"
@@ -3058,6 +3059,16 @@ __metadata:
   version: 8.57.1
   resolution: "@eslint/js@npm:8.57.1"
   checksum: 10c0/b489c474a3b5b54381c62e82b3f7f65f4b8a5eaaed126546520bf2fede5532a8ed53212919fed1e9048dcf7f37167c8561d58d0ba4492a4244004e7793805223
+  languageName: node
+  linkType: hard
+
+"@expo/app-integrity@npm:^55.0.9":
+  version: 55.0.9
+  resolution: "@expo/app-integrity@npm:55.0.9"
+  peerDependencies:
+    expo: "*"
+    react-native: "*"
+  checksum: 10c0/ef5ce737e5e492a8589cd13155f341588a835a67b36e8942fbe145099b85c4096ded95f90f0af6cbce2153ad999d46e44d9cba5023bfdbd1ad1b9564df423b0f
   languageName: node
   linkType: hard
 
@@ -7181,6 +7192,7 @@ __metadata:
     "@credo-ts/question-answer": "npm:0.6.3"
     "@credo-ts/react-native": "npm:0.6.3"
     "@credo-ts/webvh": "npm:0.6.3"
+    "@expo/app-integrity": "npm:^55.0.9"
     "@formatjs/intl-datetimeformat": "npm:~6.18.2"
     "@formatjs/intl-displaynames": "npm:~6.8.13"
     "@formatjs/intl-getcanonicallocales": "npm:~2.5.6"
@@ -7218,6 +7230,7 @@ __metadata:
     eslint: "npm:~8.57.1"
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
+    expo-application: "npm:~7.0.8"
     expo-crypto: "npm:~14.1.5"
     expo-secure-store: "npm:*"
     fast-text-encoding: "npm:~1.0.6"
@@ -9668,6 +9681,15 @@ __metadata:
     jest-message-util: "npm:^29.7.0"
     jest-util: "npm:^29.7.0"
   checksum: 10c0/2eddeace66e68b8d8ee5f7be57f3014b19770caaf6815c7a08d131821da527fb8c8cb7b3dcd7c883d2d3d8d184206a4268984618032d1e4b16dc8d6596475d41
+  languageName: node
+  linkType: hard
+
+"expo-application@npm:~7.0.8":
+  version: 7.0.8
+  resolution: "expo-application@npm:7.0.8"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/3926cb3e0be1ea82ee991cab55c0b7baf40a5b4ec5812857fc4c8fe1cb63b9dc5e94b2a7030b0cb1d6288d2a4877459f775118075d72b868fd19b57b5b789981
   languageName: node
   linkType: hard
 

@@ -56,6 +56,7 @@ export interface Config {
     default: AutoLockTimer,
     values: [AutoLockTimer, ...AutoLockTimer[]]
   }
+  enableAttestation: boolean,
 }
 
 export interface AutoLockTimer {
