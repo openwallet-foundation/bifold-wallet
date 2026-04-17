@@ -46,6 +46,7 @@
     "Updated": "Mis à jour",
     "Remove": "Supprimer",
     "Close": "Fermer",
+    "CloseNotification": "Close notification (FR)",
     "GotIt": "Got it (FR)",
     "Send": "Envoyer",
     "Reset": "Reset (FR)",
@@ -334,7 +335,8 @@
     "ForgotPINLink": "Forgot your PIN? (FR)",
     "ForgotPINModalTitle": "Forgot your PIN? (FR)",
     "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (FR)",
-    "Loading": "Logging in (FR)"
+    "Loading": "Logging in (FR)",
+    "DeveloperMenuTrigger": "App information (FR)"
   },
   "AttemptLockout": {
     "Title": "Votre portefeuille est temporairement verrouillé",
@@ -626,7 +628,9 @@
     "ErrorTextboxEmpty": "La zone de texte est vide",
     "ErrorTextboxEmptyDescription": "Veuillez ajouter une URL destinée aux portefeuilles numériques et réessayer.",
     "ErrorInvalidUrl": "URL non reconnue",
-    "ErrorInvalidUrlDescription": "Vérifiez si l'URL est destinée aux portefeuilles numériques et si elle a été copiée correctement, puis réessayez."
+    "ErrorInvalidUrlDescription": "Vérifiez si l'URL est destinée aux portefeuilles numériques et si elle a été copiée correctement, puis réessayez.",
+    "PasteUrlInput": "URL input (FR)",
+    "ScanDisabled": "Submit disabled, enter a URL first (FR)"
   },
   "Connection": {
     "JustAMoment": "Veuillez patienter pendant que nous établissons une connexion sécurisée...",
@@ -711,6 +715,8 @@
     "RequestProcessing": "Juste un instant...",
     "OfferDelay": "Retard de l'offre",
     "ChangeCredential": "Modifier l'attestations d'identification",
+    "SelectCredential": "Select credential (FR)",
+    "PredicateInput": "Enter value for {{label}} (FR)",
     "GetThisCredential": "Obtenir cette attestation d'identification",
     "RejectThisProof?": "Rejeter cette preuve?",
     "AcceptingProof": "Acceptation de la preuve",
@@ -789,7 +795,8 @@
     "ConfigureMediator": "Configurer le médiateur",
     "ChangeMediator": "Change mediator (FR)",
     "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (FR)",
-    "GenericErrorMessages": "Generic error messages (FR)"
+    "GenericErrorMessages": "Generic error messages (FR)",
+    "VersionInfo": "Version information (FR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (FR)",

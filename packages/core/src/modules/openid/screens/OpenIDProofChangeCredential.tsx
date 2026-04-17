@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import React, { useEffect, useState } from 'react'
 import RecordLoading from '../../../components/animated/RecordLoading'
+import { hitSlop } from '../../../constants'
 import { ThemedText } from '../../../components/texts/ThemedText'
 import { useTheme } from '../../../contexts/theme'
 import ScreenLayout from '../../../layout/ScreenLayout'
@@ -113,8 +114,10 @@ const OpenIDProofCredentialSelect: React.FC<Props> = ({ route, navigation }: Pro
             <View style={styles.pageMargin}>
               <TouchableOpacity
                 accessibilityRole="button"
+                accessibilityLabel={t('ProofRequest.SelectCredential')}
                 testID={testIdWithKey(`select:${item.credential.id}`)}
                 onPress={() => changeCred(item)}
+                hitSlop={hitSlop}
                 style={[
                   item.credential.id === selectedCredentialID ? SelectedCredTheme : undefined,
                   { marginBottom: 10 },

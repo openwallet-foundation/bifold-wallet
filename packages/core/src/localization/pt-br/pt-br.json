@@ -44,6 +44,7 @@
     "Requested": "Requested",
     "Updated": "Updated",
     "Close": "Fechar",
+    "CloseNotification": "Close notification (PT-BR)",
     "Remove": "Remover",
     "GotIt": "Got it (PT-BR)",
     "Send": "Enviar",
@@ -306,7 +307,8 @@
     "ForgotPINLink": "Forgot your PIN? (PT-BR)",
     "ForgotPINModalTitle": "Forgot your PIN? (PT-BR)",
     "ForgotPINModalDescription": "For security purposes, you're unable to recover or reset your PIN. You will need to reinstall your wallet and add your credentials again. (PT-BR)",
-    "Loading": "Logging in (PT-BR)"
+    "Loading": "Logging in (PT-BR)",
+    "DeveloperMenuTrigger": "App information (PT-BR)"
   },
   "AttemptLockout": {
     "Title": "Your wallet is temporarily locked (PT-BR)",
@@ -598,7 +600,9 @@
     "ErrorTextboxEmpty": "Textbox Empty (PT-BR)",
     "ErrorTextboxEmptyDescription": "Please add a URL intended for digital wallets and try again. (PT-BR)",
     "ErrorInvalidUrl": "URL not recognized (PT-BR)",
-    "ErrorInvalidUrlDescription": "Check if the URL is intended for digital wallets and if it was copied correctly, then try again. (PT-BR)"
+    "ErrorInvalidUrlDescription": "Check if the URL is intended for digital wallets and if it was copied correctly, then try again. (PT-BR)",
+    "PasteUrlInput": "URL input (PT-BR)",
+    "ScanDisabled": "Submit disabled, enter a URL first (PT-BR)"
   },
   "Connection": {
     "JustAMoment": "Aguarde um momento enquanto fazemos uma conexão segura...",
@@ -685,6 +689,8 @@
     "RequestProcessing": "Só um momento...",
     "OfferDelay": "Atrasar oferta",
     "ChangeCredential": "Escolher credencial",
+    "SelectCredential": "Select credential (PT-BR)",
+    "PredicateInput": "Enter value for {{label}} (PT-BR)",
     "GetThisCredential": "Obter esta credencial",
     "RejectThisProof?": "Rejeitar esta Requisição de Prova?",
     "DeclineThisProof?": "Recusar esta Requisição de Prova?",
@@ -765,7 +771,8 @@
     "ConfigureMediator": "Configurar Mediator",
     "ChangeMediator": "Change mediator (PT-BR)",
     "ChangeMediatorDescription": "Changing the mediator will restart the app. Do you want to continue? (PT-BR)",
-    "GenericErrorMessages": "Generic error messages (PT-BR)"
+    "GenericErrorMessages": "Generic error messages (PT-BR)",
+    "VersionInfo": "Version information (PT-BR)"
   },
   "AutoLockTimes": {
     "FiveMinutes": "Five Minutes (PT-BR)",

@@ -41,7 +41,16 @@ const SingleSelectBlock: React.FC<Props> = ({ selection, onSelect, initialSelect
   return (
     <View style={styles.container}>
       {selection.map((item) => (
-        <TouchableOpacity key={item.id} style={styles.row} onPress={() => handleSelect(item)} hitSlop={hitSlop}>
+        <TouchableOpacity
+          key={item.id}
+          style={styles.row}
+          onPress={() => handleSelect(item)}
+          hitSlop={hitSlop}
+          accessibilityLabel={item.value}
+          accessibilityRole="radio"
+          accessibilityState={{ selected: item.id === selected.id }}
+          testID={item.id}
+        >
           <ThemedText style={Inputs.singleSelectText}>{item.value}</ThemedText>
           {item.id === selected.id ? <Icon name={'check'} size={25} color={Inputs.singleSelectIcon.color} /> : null}
         </TouchableOpacity>
