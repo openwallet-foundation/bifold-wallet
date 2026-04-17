@@ -15,12 +15,13 @@ interface HomeFooterViewProps {
 
 const HomeFooterView: React.FC<HomeFooterViewProps> = ({ children }) => {
   const { openIdState } = useOpenIDCredentials()
-  const { w3cCredentialRecords, sdJwtVcRecords } = openIdState
+  const { w3cCredentialRecords, sdJwtVcRecords, mdocVcRecords } = openIdState
   const credentials = [
     ...useCredentialByState(DidCommCredentialState.CredentialReceived),
     ...useCredentialByState(DidCommCredentialState.Done),
     ...w3cCredentialRecords,
     ...sdJwtVcRecords,
+    ...mdocVcRecords,
   ]
   const { HomeTheme, TextTheme, Assets } = useTheme()
   const { t } = useTranslation()

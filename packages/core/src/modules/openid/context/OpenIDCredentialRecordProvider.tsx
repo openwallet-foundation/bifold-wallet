@@ -86,6 +86,29 @@ const removeSdJwtRecord = (record: SdJwtVcRecord, state: OpenIDCredentialRecordS
   }
 }
 
+const addMdocRecord = (record: MdocRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.mdocVcRecords]
+  newRecordsState.unshift(record)
+
+  return {
+    ...state,
+    mdocVcRecords: newRecordsState,
+  }
+}
+
+const removeMdocRecord = (record: MdocRecord, state: OpenIDCredentialRecordState): OpenIDCredentialRecordState => {
+  const newRecordsState = [...state.mdocVcRecords]
+  const index = newRecordsState.findIndex((r) => r.id === record.id)
+  if (index > -1) {
+    newRecordsState.splice(index, 1)
+  }
+
+  return {
+    ...state,
+    mdocVcRecords: newRecordsState,
+  }
+}
+
 const defaultState: OpenIDCredentialRecordState = {
   openIDCredentialRecords: [],
   w3cCredentialRecords: [],
@@ -171,7 +194,6 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     await storeOpenIDCredential(agent, cred)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function deleteCredential(cred: OpenIDCredentialRecord, _type: OpenIDCredentialType) {
     const agent = getAgent()
     await deleteOpenIDCredential(agent, cred)
@@ -233,6 +255,14 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         isLoading: false,
       }))
     })
+
+    agent.mdoc?.getAll().then((mdocVcRecords) => {
+      setState((prev) => ({
+        ...prev,
+        mdocVcRecords,
+        isLoading: false,
+      }))
+    })
   }, [agent])
 
   useEffect(() => {
@@ -243,28 +273,35 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       //This handler will return ANY creds added to the wallet even DidComm
       //Sounds like a bug in the hooks package
       //This check will safe guard the flow untill a fix goes to the hooks
-      const w3cRecord = record as W3cCredentialRecord // TODO: Why do we need to cast here now?
-      if (isW3CCredentialRecord(w3cRecord)) {
-        setState(addW3cRecord(w3cRecord, state))
+      if (!isW3CCredentialRecord(record)) {
+        return
       }
+
+      setState((prev) => addW3cRecord(record, prev))
     })
 
     const w3c_credentialRemoved$ = recordsRemovedByType(agent, W3cCredentialRecord).subscribe((record) => {
-      setState(removeW3cRecord(record as W3cCredentialRecord, state))
+      setState((prev) => removeW3cRecord(record, prev))
     })
 
     const sdjwt_credentialAdded$ = recordsAddedByType(agent, SdJwtVcRecord).subscribe((record) => {
-      //This handler will return ANY creds added to the wallet even DidComm
-      //Sounds like a bug in the hooks package
-      //This check will safe guard the flow untill a fix goes to the hooks
-      setState(addSdJwtRecord(record as SdJwtVcRecord, state))
-      // if (isW3CCredentialRecord(record)) {
-      //   setState(addW3cRecord(record, state))
-      // }
+      if (!isSdJwtCredentialRecord(record)) {
+        return
+      }
+
+      setState((prev) => addSdJwtRecord(record, prev))
     })
 
     const sdjwt_credentialRemoved$ = recordsRemovedByType(agent, SdJwtVcRecord).subscribe((record) => {
-      setState(removeSdJwtRecord(record as SdJwtVcRecord, state))
+      setState((prev) => removeSdJwtRecord(record, prev))
+    })
+
+    const mdoc_credentialAdded$ = recordsAddedByType(agent, MdocRecord).subscribe((record) => {
+      setState(addMdocRecord(record as MdocRecord, state))
+    })
+
+    const mdoc_credentialRemoved$ = recordsRemovedByType(agent, MdocRecord).subscribe((record) => {
+      setState(removeMdocRecord(record as MdocRecord, state))
     })
 
     return () => {
@@ -272,20 +309,22 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       w3c_credentialRemoved$.unsubscribe()
       sdjwt_credentialAdded$.unsubscribe()
       sdjwt_credentialRemoved$.unsubscribe()
+      mdoc_credentialAdded$.unsubscribe()
+      mdoc_credentialRemoved$.unsubscribe()
     }
-  }, [state, agent])
+  }, [state.isLoading, agent])
 
   return (
     <OpenIDCredentialRecordContext.Provider
       value={{
         openIdState: state,
-        storeCredential: storeCredential,
+        getW3CCredentialById,
+        getSdJwtCredentialById,
+        getMdocCredentialById,
+        getCredentialById,
+        storeCredential,
         removeCredential: deleteCredential,
-        getW3CCredentialById: getW3CCredentialById,
-        getSdJwtCredentialById: getSdJwtCredentialById,
-        getMdocCredentialById: getMdocCredentialById,
-        getCredentialById: getCredentialById,
-        resolveBundleForCredential: resolveBundleForCredential,
+        resolveBundleForCredential,
       }}
     >
       {children}
@@ -293,4 +332,11 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   )
 }
 
-export const useOpenIDCredentials = () => useContext(OpenIDCredentialRecordContext)
+export const useOpenIDCredentials = (): OpenIDCredentialContext => {
+  const context = useContext(OpenIDCredentialRecordContext)
+  if (context) {
+    return context
+  }
+
+  throw new Error('useOpenIDCredentials must be used within a OpenIDCredentialRecordProvider')
+}

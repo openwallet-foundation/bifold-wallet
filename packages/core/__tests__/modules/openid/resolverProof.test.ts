@@ -69,7 +69,7 @@ describe('getCredentialsForProofRequest', () => {
         '@type': 'https://didcomm.org/out-of-band/2.0/invitation',
         id: 'invitation-id',
       }),
-      })
+    })
 
     await expect(fetchInvitationDataUrl('https://example.com/invitation')).resolves.toEqual({
       success: true,
@@ -94,7 +94,7 @@ describe('getCredentialsForProofRequest', () => {
         get: jest.fn().mockReturnValue('text/plain'),
       },
       text: jest.fn().mockResolvedValue(jwt),
-      })
+    })
 
     await expect(fetchInvitationDataUrl('https://example.com/request')).resolves.toEqual({
       success: true,
@@ -114,7 +114,7 @@ describe('getCredentialsForProofRequest', () => {
       headers: {
         get: jest.fn(),
       },
-      })
+    })
 
     await expect(fetchInvitationDataUrl('https://example.com/fail')).rejects.toThrow(
       '[retrieve_invitation_error] Unable to retrieve invitation'
@@ -158,16 +158,13 @@ describe('getCredentialsForProofRequest', () => {
     })
 
     expect(result?.verifierHostName).toBe('verifier.example.com')
-    expect(result?.verifier).toEqual({
-      clientIdPrefix: 'redirect_uri',
-      effectiveClientId: 'https://verifier.example.com/callback',
-    })
     expect(result?.type).toBe('OpenId4VPRequestRecord')
   })
 
-  test('logs and rethrows when the authorization request has no presentation exchange', async () => {
+  test('logs and rethrows when the authorization request has neither pex nor dcql payload', async () => {
     const resolveOpenId4VpAuthorizationRequest = jest.fn().mockResolvedValue({
       presentationExchange: undefined,
+      dcql: undefined,
       authorizationRequestPayload: {},
       verifier: {
         clientIdPrefix: 'redirect_uri',
@@ -194,14 +191,14 @@ describe('getCredentialsForProofRequest', () => {
         agent: agent as any,
         request: 'eyJhbGciOiJFZERTQSJ9.payload.signature',
       })
-    ).rejects.toThrow('No presentation exchange found in authorization request.')
+    ).rejects.toThrow('Unsupported authorization request: missing presentation exchange or dcql parameters.')
 
     expect(logger.error).toHaveBeenCalledWith(
-      'Parsing presentation request:  No presentation exchange found in authorization request.'
+      'Parsing presentation request:  Unsupported authorization request: missing presentation exchange or dcql parameters.'
     )
   })
 
-  test('shares a proof with the selected credential and opens redirect_uri when returned', async () => {
+  test('shares a pex proof with the selected credential and opens redirect_uri when returned', async () => {
     const credentialA = { id: 'cred-a' }
     const credentialB = { id: 'cred-b' }
     const acceptOpenId4VpAuthorizationRequest = jest.fn().mockResolvedValue({
@@ -219,25 +216,30 @@ describe('getCredentialsForProofRequest', () => {
         },
       },
     }
-    const credentialsForRequest = {
-      areRequirementsSatisfied: true,
-      requirements: [
-        {
-          submissionEntry: [
+    const requestRecord = {
+      authorizationRequestPayload: { client_id: 'verifier' },
+      origin: 'https://verifier.example.com',
+      presentationExchange: {
+        credentialsForRequest: {
+          areRequirementsSatisfied: true,
+          requirements: [
             {
-              inputDescriptorId: 'descriptor-1',
-              verifiableCredentials: [{ credentialRecord: credentialA }, { credentialRecord: credentialB }],
+              submissionEntry: [
+                {
+                  inputDescriptorId: 'descriptor-1',
+                  verifiableCredentials: [{ credentialRecord: credentialA }, { credentialRecord: credentialB }],
+                },
+              ],
             },
           ],
         },
-      ],
+      },
     }
 
     await shareProof({
       agent: agent as any,
-      authorizationRequest: { client_id: 'verifier' } as any,
-      credentialsForRequest: credentialsForRequest as any,
-      selectedCredentials: {
+      requestRecord: requestRecord as any,
+      selectedProofCredentials: {
         'descriptor-1': {
           id: 'cred-b',
           claimFormat: 'jwt_vc_json',
@@ -246,18 +248,27 @@ describe('getCredentialsForProofRequest', () => {
     })
 
     expect(acceptOpenId4VpAuthorizationRequest).toHaveBeenCalledWith({
-      authorizationRequest: { client_id: 'verifier' },
+      authorizationRequestPayload: { client_id: 'verifier' },
       presentationExchange: {
         credentials: {
           'descriptor-1': [credentialB],
         },
       },
+      dcql: undefined,
+      origin: 'https://verifier.example.com',
     })
     expect(Linking.openURL).toHaveBeenCalledWith('https://wallet.example/complete')
   })
 
-  test('falls back to the first available credential when the selected id is not present', async () => {
-    const credentialA = { id: 'cred-a' }
+  test('falls back to credo dcql selection when no credential is preselected', async () => {
+    const selectCredentialsForDcqlRequest = jest.fn().mockReturnValue({
+      queryA: [
+        {
+          credentialRecord: { id: 'cred-a' },
+          claimFormat: 'dcql',
+        },
+      ],
+    })
     const acceptOpenId4VpAuthorizationRequest = jest.fn().mockResolvedValue({
       serverResponse: {
         status: 200,
@@ -267,43 +278,42 @@ describe('getCredentialsForProofRequest', () => {
     const agent = {
       openid4vc: {
         holder: {
+          selectCredentialsForDcqlRequest,
           acceptOpenId4VpAuthorizationRequest,
         },
       },
     }
-    const credentialsForRequest = {
-      areRequirementsSatisfied: true,
-      requirements: [
-        {
-          submissionEntry: [
-            {
-              inputDescriptorId: 'descriptor-1',
-              verifiableCredentials: [{ credentialRecord: credentialA }],
-            },
-          ],
+    const requestRecord = {
+      authorizationRequestPayload: { client_id: 'verifier' },
+      origin: 'https://verifier.example.com',
+      dcql: {
+        queryResult: {
+          can_be_satisfied: true,
         },
-      ],
+      },
     }
 
     await shareProof({
       agent: agent as any,
-      authorizationRequest: { client_id: 'verifier' } as any,
-      credentialsForRequest: credentialsForRequest as any,
-      selectedCredentials: {
-        'descriptor-1': {
-          id: 'missing',
-          claimFormat: 'jwt_vc_json',
-        },
-      },
+      requestRecord: requestRecord as any,
+      selectedProofCredentials: {},
     })
 
+    expect(selectCredentialsForDcqlRequest).toHaveBeenCalledWith(requestRecord.dcql.queryResult)
     expect(acceptOpenId4VpAuthorizationRequest).toHaveBeenCalledWith({
-      authorizationRequest: { client_id: 'verifier' },
-      presentationExchange: {
+      authorizationRequestPayload: { client_id: 'verifier' },
+      presentationExchange: undefined,
+      dcql: {
         credentials: {
-          'descriptor-1': [credentialA],
+          queryA: [
+            {
+              credentialRecord: { id: 'cred-a' },
+              claimFormat: 'dcql',
+            },
+          ],
         },
       },
+      origin: 'https://verifier.example.com',
     })
   })
 
@@ -311,12 +321,15 @@ describe('getCredentialsForProofRequest', () => {
     await expect(
       shareProof({
         agent: {} as any,
-        authorizationRequest: {} as any,
-        credentialsForRequest: {
-          areRequirementsSatisfied: false,
-          requirements: [],
+        requestRecord: {
+          presentationExchange: {
+            credentialsForRequest: {
+              areRequirementsSatisfied: false,
+              requirements: [],
+            },
+          },
         } as any,
-        selectedCredentials: {},
+        selectedProofCredentials: {},
       })
     ).rejects.toThrow('Requirements from proof request are not satisfied')
   })
@@ -338,21 +351,26 @@ describe('getCredentialsForProofRequest', () => {
             },
           },
         } as any,
-        authorizationRequest: { client_id: 'verifier' } as any,
-        credentialsForRequest: {
-          areRequirementsSatisfied: true,
-          requirements: [
-            {
-              submissionEntry: [
+        requestRecord: {
+          authorizationRequestPayload: { client_id: 'verifier' },
+          origin: 'https://verifier.example.com',
+          presentationExchange: {
+            credentialsForRequest: {
+              areRequirementsSatisfied: true,
+              requirements: [
                 {
-                  inputDescriptorId: 'descriptor-1',
-                  verifiableCredentials: [{ credentialRecord: { id: 'cred-a' } }],
+                  submissionEntry: [
+                    {
+                      inputDescriptorId: 'descriptor-1',
+                      verifiableCredentials: [{ credentialRecord: { id: 'cred-a' } }],
+                    },
+                  ],
                 },
               ],
             },
-          ],
+          },
         } as any,
-        selectedCredentials: {
+        selectedProofCredentials: {
           'descriptor-1': {
             id: 'cred-a',
             claimFormat: 'jwt_vc_json',

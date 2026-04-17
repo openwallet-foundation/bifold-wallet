@@ -1,9 +1,4 @@
 import {
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-} from '@credo-ts/core'
-import {
   DidCommCredentialExchangeRecord,
   DidCommProofExchangeRecord,
   DidCommConnectionRecord
@@ -27,7 +22,7 @@ import { EventTypes } from '../constants'
 import { testIdWithKey } from '../utils/testable'
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
-import { OpenId4VPRequestRecord } from '../modules/openid/types'
+import { isOpenIDCredentialRecord, isOpenIdProofRequestRecord } from '../modules/openid/credentialRecord'
 import { useAppAgent } from '../utils/agent'
 import { HistoryCardType, HistoryRecord } from '../modules/history/types'
 
@@ -52,6 +47,12 @@ const GoalCodes = {
   proofRequestVerifyOnce: 'aries.vc.verify.once',
   credentialOffer: 'aries.vc.issue',
 } as const
+
+const assertNotOpenIdRecord = (record: unknown) => {
+  if (isOpenIDCredentialRecord(record) || isOpenIdProofRequestRecord(record)) {
+    throw new Error('OpenID records must be handled by OpenIDConnection, not Connection.')
+  }
+}
 
 const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { oobRecordId, openIDUri, openIDPresentationUri, proofId, credentialId } = route.params
@@ -298,8 +299,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     handleNavigation,
   ])
 
-  // This hook will monitor notification for openID type credentials
-  // where there is not connection or oobID present
   useEffect(() => {
     if (!state.inProgress) {
       return
@@ -309,24 +308,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
-    if (
-      (state.notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-      (state.notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
-      (state.notificationRecord as MdocRecord).type === 'MdocRecord'
-    ) {
-      logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
-      dispatch({ inProgress: false })
-      navigation.replace(Screens.OpenIDCredentialOffer, {
-        credential: state.notificationRecord,
-      })
-      return
-    }
-
-    if ((state.notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
-      dispatch({ inProgress: false })
-      navigation.replace(Screens.OpenIDProofPresentation, { credential: state.notificationRecord })
-    }
-  }, [logger, navigation, state])
+    assertNotOpenIdRecord(state.notificationRecord)
+  }, [state])
 
   useEffect(() => {
     if (!state.inProgress || state.notificationRecord) {
@@ -358,6 +341,8 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
         if (notification.type === 'BasicMessageRecord') {
           continue
         }
+
+        assertNotOpenIdRecord(notification)
 
         const notifConnectionId = (notification as NotCustomNotification).connectionId
         const notifThreadId = (notification as NotCustomNotification)?.threadId
@@ -391,15 +376,6 @@ const Connection: React.FC<ConnectionProps> = ({ navigation, route }) => {
           break
         }
 
-        if (
-          (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-          (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
-          (notification as MdocRecord).type === 'MdocRecord' ||
-          (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
-        ) {
-          dispatch({ notificationRecord: notification })
-          break
-        }
       }
     }
 
