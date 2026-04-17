@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Animated } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { testIdWithKey } from '../../utils/testable'
 
@@ -11,11 +11,12 @@ const timing: Animated.TimingAnimationConfig = {
 }
 
 export interface LoadingSpinnerProps {
-  size?: number
   color: string
+  name?: string
+  size?: number
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color, name="refresh" }) => {
   const rotationAnim = useRef(new Animated.Value(0))
   const rotation = rotationAnim.current.interpolate({
     inputRange: [0, 1],
@@ -28,7 +29,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 25, color }) => 
 
   return (
     <Animated.View style={{ transform: [{ rotate: rotation }] }}>
-      <Icon style={{ color }} size={size} name="refresh" testID={testIdWithKey('Loading')} />
+      <Icon style={{ color }} size={size} name={name} testID={testIdWithKey('Loading')} />
     </Animated.View>
   )
 }

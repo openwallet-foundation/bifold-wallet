@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 3.0.1
+
+### Patch Changes
+
+- 1e57f76: Fix Wallet Key
+- fda1a41: Add separate accessibility label for tab bar buttons
+- b4c4ded: Fix for biometrics availability not refreshing after being enabled on android
+- a9428ed: Cleanup OpenID module
+- 6ff5dbb: updated credo ts packages to 0.6.3
+- Updated dependencies [6ff5dbb]
+  - @bifold/react-hooks@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

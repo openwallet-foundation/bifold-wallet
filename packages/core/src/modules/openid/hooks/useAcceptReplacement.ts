@@ -1,20 +1,21 @@
-// modules/openid/hooks/useAcceptReplacement.ts
-import { SdJwtVcRecord, W3cCredentialRecord, MdocRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { useCallback } from 'react'
 import { TOKENS, useServices } from '../../../container-api'
+import { useAppAgent } from '../../../utils/agent'
 import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { credentialRegistry, selectOldIdByReplacementId } from '../refresh/registry'
-import { OpenIDCredentialType } from '../types'
-
-type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
-
-const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms))
+import {
+  deleteOpenIDCredential,
+  findOpenIDCredentialById,
+  OpenIDCredentialRecord,
+  storeOpenIDCredential,
+} from '../credentialRecord'
 /**
  * A hook that provides functions to accept newly issued credentials, handling replacements if applicable.
  */
 
 export function useAcceptReplacement() {
-  const { storeCredential, removeCredential, getW3CCredentialById, getSdJwtCredentialById } = useOpenIDCredentials()
+  const { getCredentialById } = useOpenIDCredentials()
+  const { agent } = useAppAgent()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
 
   /**
@@ -24,11 +25,15 @@ export function useAcceptReplacement() {
    * 3) update the registry (acceptReplacement)
    */
   const acceptNewCredential = useCallback(
-    async (newCred: AnyCred) => {
+    async (newCred: OpenIDCredentialRecord) => {
+      if (!agent) {
+        throw new Error('Agent not ready')
+      }
+
       logger.info(`🟢 [useAcceptReplacement] accepting new credential → ${newCred.id}`)
 
       // 1) persist new
-      await storeCredential(newCred)
+      await storeOpenIDCredential(agent, newCred)
 
       // 2) check if it replaces an old credential
       const oldId = selectOldIdByReplacementId(newCred.id)
@@ -37,8 +42,8 @@ export function useAcceptReplacement() {
         return
       }
 
-      // 3) fetch old via provider (always)
-      const oldRecord = await getSdJwtCredentialById(oldId)
+      // 3) fetch old record across OpenID credential stores
+      const oldRecord = await findOpenIDCredentialById(agent, oldId)
 
       if (!oldRecord) {
         logger.warn(`⚠️ [useAcceptReplacement] old record ${oldId} not found — skipping delete`)
@@ -47,17 +52,15 @@ export function useAcceptReplacement() {
         return
       }
 
-      await sleep(200)
-
       // 4) delete old
-      await removeCredential(oldRecord, OpenIDCredentialType.SdJwtVc)
+      await deleteOpenIDCredential(agent, oldRecord)
 
       // 5) finalize the swap in registry
       credentialRegistry.getState().acceptReplacement(oldId)
 
       logger.info(`✅ [useAcceptReplacement] replacement complete: old=${oldId} → new=${newCred.id}`)
     },
-    [storeCredential, removeCredential, getSdJwtCredentialById, logger]
+    [agent, logger]
   )
 
   /**
@@ -66,14 +69,11 @@ export function useAcceptReplacement() {
    */
   const acceptById = useCallback(
     async (newId: string) => {
-      // try W3C first, then Sd-JWT
-      const newW3c = await getW3CCredentialById(newId)
-      const newSd = newW3c ? undefined : await getSdJwtCredentialById(newId)
-      const rec = (newW3c ?? newSd) as AnyCred | undefined
+      const rec = await getCredentialById(newId)
       if (!rec) throw new Error(`New credential not found for id=${newId}`)
       await acceptNewCredential(rec)
     },
-    [getW3CCredentialById, getSdJwtCredentialById, acceptNewCredential]
+    [getCredentialById, acceptNewCredential]
   )
 
   return { acceptNewCredential, acceptById }

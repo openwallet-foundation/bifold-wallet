@@ -258,7 +258,6 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                             },
                             false,
                             false,
-                            false,
                           ],
                         ]
                       }
@@ -340,7 +339,6 @@ exports[`RenameWallet Screen Check non-onboarding rendering 1`] = `
                                 "fontWeight": "bold",
                                 "textAlign": "center",
                               },
-                              false,
                               false,
                               false,
                             ],

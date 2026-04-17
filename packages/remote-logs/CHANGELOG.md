@@ -1,5 +1,17 @@
 # Change Log
 
+## 3.0.1
+
+### Patch Changes
+
+- 6ff5dbb: updated credo ts packages to 0.6.3
+- Updated dependencies [1e57f76]
+- Updated dependencies [fda1a41]
+- Updated dependencies [b4c4ded]
+- Updated dependencies [a9428ed]
+- Updated dependencies [6ff5dbb]
+  - @bifold/core@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

@@ -177,7 +177,6 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
                         "textAlign": "center",
                       },
                       false,
-                      false,
                     ],
                   ]
                 }
@@ -260,7 +259,6 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
                         "fontWeight": "bold",
                         "textAlign": "center",
                       },
-                      false,
                       false,
                       false,
                     ],

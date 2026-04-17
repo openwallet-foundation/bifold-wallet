@@ -1,42 +1,25 @@
-import {
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-} from '@credo-ts/core'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
 import { BackHandler, View, StyleSheet, DeviceEventEmitter } from 'react-native'
 
 import { DeliveryStackParams, Screens } from '../../../types/navigators'
 import { useServices, TOKENS } from '../../../container-api'
-import { OpenId4VPRequestRecord } from '../../../modules/openid/types'
-import { useAppAgent } from '../../../utils/agent'
 import LoadingSpinner from '../../../components/animated/LoadingSpinner'
 import { EventTypes } from '../../../constants'
 import FullScreenErrorModal from '../../../components/modals/FullScreenErrorModal'
 import { TabStacks } from '../../../types/navigators'
 import { BifoldError } from '../../../types/error'
 import { useTheme } from '../../../contexts/theme'
-
+import { useOpenID } from '../hooks/openid'
+import { isOpenIDCredentialRecord, isOpenIdProofRequestRecord } from '../credentialRecord'
 
 type ConnectionProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDConnection>
 
 const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   const { openIDUri, openIDPresentationUri } = route.params
-  const [
-    logger,
-    { useNotifications },
-    historyEnabled,
-  ] = useServices([
-    TOKENS.UTIL_LOGGER,
-    TOKENS.NOTIFICATIONS,
-    TOKENS.HISTORY_ENABLED,
-  ])
-  const notifications = useNotifications({ openIDUri: openIDUri, openIDPresentationUri: openIDPresentationUri })
-  const { agent } = useAppAgent()
+  const [logger, historyEnabled] = useServices([TOKENS.UTIL_LOGGER, TOKENS.HISTORY_ENABLED])
   const { ColorPalette } = useTheme()
-
-  const [notificationRecord, setNotificationRecord] = useState<any>(undefined)
+  const notificationRecord = useOpenID({ openIDUri, openIDPresentationUri })
 
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
   const [errorDetails, setErrorDetails] = useState<Partial<BifoldError>>({})
@@ -51,7 +34,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
 
   useEffect(() => {
     try {
-      if (!(agent && historyEnabled)) {
+      if (!historyEnabled) {
         logger.trace(
           `[${Screens.OpenIDConnection}]:[logHistoryRecord] Skipping history log, either history function disabled or agent undefined!`
         )
@@ -60,7 +43,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
     } catch (err: unknown) {
       logger.error(`[${Screens.OpenIDConnection}]:[logHistoryRecord] Error saving history: ${err}`)
     }
-  }, [agent, historyEnabled, logger])
+  }, [historyEnabled, logger])
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
@@ -68,29 +51,11 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   }, [])
 
   useEffect(() => {
-    for (const notification of notifications) {
-      if (
-        (notification as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-        (notification as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
-        (notification as MdocRecord).type === 'MdocRecord' ||
-        (notification as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord'
-      ) {
-        setNotificationRecord(notification)
-      }
-    }
-  }, [notificationRecord, notifications, logger])
-
-  useEffect(() => {
-
     if (!notificationRecord) {
       return
     }
 
-    if (
-      (notificationRecord as W3cCredentialRecord).type === 'W3cCredentialRecord' ||
-      (notificationRecord as SdJwtVcRecord).type === 'SdJwtVcRecord' ||
-      (notificationRecord as MdocRecord).type === 'MdocRecord'
-    ) {
+    if (isOpenIDCredentialRecord(notificationRecord)) {
       logger?.info(`Connection: Handling OpenID4VCi Credential, navigate to CredentialOffer`)
       navigation.replace(Screens.OpenIDCredentialOffer, {
         credential: notificationRecord,
@@ -98,17 +63,16 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
       return
     }
 
-    if ((notificationRecord as OpenId4VPRequestRecord).type === 'OpenId4VPRequestRecord') {
+    if (isOpenIdProofRequestRecord(notificationRecord)) {
       navigation.replace(Screens.OpenIDProofPresentation, { credential: notificationRecord })
     }
-
   }, [logger, navigation, notificationRecord])
 
   useEffect(() => {
     const handler = DeviceEventEmitter.addListener(EventTypes.OPENID_CONNECTION_ERROR, (err: BifoldError) => {
       setShowErrorModal(true)
       setErrorDetails({
-        ...err
+        ...err,
       })
     })
     return () => {
@@ -119,9 +83,9 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   return (
     <>
       <View style={styles.pageContainer}>
-        <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+        <LoadingSpinner color={ColorPalette.brand.loadingIcon} name='loading' size={50}/>
       </View>
-      <FullScreenErrorModal 
+      <FullScreenErrorModal
         errorTitle={errorDetails?.title ?? ''}
         errorDescription={errorDetails?.description ?? ''}
         visible={showErrorModal}
