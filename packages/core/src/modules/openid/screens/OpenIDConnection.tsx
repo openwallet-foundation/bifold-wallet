@@ -83,7 +83,7 @@ const OpenIDConnection: React.FC<ConnectionProps> = ({ navigation, route }) => {
   return (
     <>
       <View style={styles.pageContainer}>
-        <LoadingSpinner size={50} color={ColorPalette.brand.primary} />
+        <LoadingSpinner color={ColorPalette.brand.loadingIcon} name='loading' size={50}/>
       </View>
       <FullScreenErrorModal
         errorTitle={errorDetails?.title ?? ''}
