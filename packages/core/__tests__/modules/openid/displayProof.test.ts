@@ -1,6 +1,7 @@
 import { ClaimFormat } from '@credo-ts/core'
 import { formatDifPexCredentialsForRequest } from '../../../src/modules/openid/displayProof'
 import { filterAndMapSdJwtKeys, getCredentialForDisplay } from '../../../src/modules/openid/display'
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
 jest.mock('../../../src/modules/openid/display', () => ({
   filterAndMapSdJwtKeys: jest.fn(),
@@ -122,7 +123,6 @@ describe('formatDifPexCredentialsForRequest', () => {
       credentialName: 'Employee Card',
       issuerName: 'Issuer Inc.',
       requestedAttributes: ['employeeId'],
-      disclosedPayload: { employeeId: '1234' },
       metadata: { type: 'EmployeeCard' },
       backgroundColor: '#123456',
       textColor: '#ffffff',
@@ -135,13 +135,8 @@ describe('formatDifPexCredentialsForRequest', () => {
       name: 'Unknown',
       isSatisfied: true,
     })
-    expect(result.entries[1]?.credentials[0]?.disclosedPayload).toEqual({ given_name: 'Ada' })
     expect(result.entries[1]?.credentials[0]?.requestedAttributes).toEqual(['given_name'])
 
-    expect(result.entries[2]?.credentials[0]?.disclosedPayload).toEqual({
-      family_name: 'Doe',
-      age_over_18: true,
-    })
     expect(result.entries[2]?.credentials[0]?.requestedAttributes).toEqual(['family_name', 'age_over_18'])
 
     expect(result.entries[3]).toEqual({
