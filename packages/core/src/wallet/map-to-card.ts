@@ -261,7 +261,7 @@ const mapW3CCredToCard = (
 
   const input = {
     vc: {
-      issuer: credentialDisplay.display.description,
+      issuer: credentialDisplay.display.issuer,
       type: credentialDisplay.metadata.type ? [credentialDisplay.metadata.type] : ['VerifiableCredential'],
       credentialSubject: credentialDisplay.credentialSubject,
       name: credentialDisplay.display.name,
