@@ -7,6 +7,7 @@ import {
   getAttestationCertificateChainAsync,
   isSupported as isDeviceAttestationSupported,
 } from '@expo/app-integrity'
+import uuid from 'react-native-uuid'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
@@ -76,7 +77,7 @@ export const useAttestation = () => {
 
       } else if (Platform.OS === 'android') {
 
-        const keyID = 'walletAttestationKey'
+        const keyID = uuid.v4().toString()
         await generateHardwareAttestedKeyAsync(keyID, challenge)
         const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyID])
         const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyID)
