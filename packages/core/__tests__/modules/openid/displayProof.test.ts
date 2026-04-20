@@ -1,5 +1,9 @@
 import { ClaimFormat } from '@credo-ts/core'
-import { formatDifPexCredentialsForRequest } from '../../../src/modules/openid/displayProof'
+import {
+  formatDcqlCredentialsForRequest,
+  formatDifPexCredentialsForRequest,
+  formatOpenIdProofRequest,
+} from '../../../src/modules/openid/displayProof'
 import { filterAndMapSdJwtKeys, getCredentialForDisplay } from '../../../src/modules/openid/display'
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
@@ -147,5 +151,256 @@ describe('formatDifPexCredentialsForRequest', () => {
       isSatisfied: false,
       credentials: [],
     })
+  })
+})
+
+describe('formatDcqlCredentialsForRequest', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('formats satisfied dcql credentials including sd-jwt and mdoc claim handling', () => {
+    mockGetCredentialForDisplay
+      .mockReturnValueOnce({
+        display: {
+          name: 'Mobile Employee',
+          issuer: { name: 'Issuer Inc.' },
+          backgroundColor: '#111111',
+          textColor: '#ffffff',
+        },
+        metadata: { type: 'EmployeeCredential' },
+      })
+      .mockReturnValueOnce({
+        display: {
+          name: 'Mobile Driver Licence',
+          issuer: { name: 'DMV' },
+          backgroundImage: { uri: 'https://example.com/mdoc.png' },
+        },
+        metadata: { type: 'org.iso.18013.5.1.mDL' },
+      })
+
+    mockFilterAndMapSdJwtKeys.mockReturnValue({
+      visibleProperties: {
+        given_name: 'Ada',
+        family_name: 'Lovelace',
+      },
+    })
+
+    const result = formatDcqlCredentialsForRequest({
+      can_be_satisfied: true,
+      credentials: [
+        {
+          id: 'query-sdjwt',
+          format: 'vc+sd-jwt',
+          meta: { vct_values: ['https://example.com/EmployeeCredential'] },
+          claims: [{ path: ['given_name'] }, { path: ['family_name'] }],
+        },
+        {
+          id: 'query-mdoc',
+          format: 'mso_mdoc',
+          meta: { doctype_value: 'org.iso.18013.5.1.mDL' },
+          claims: [
+            { path: ['org.iso.18013.5.1', 'family_name'] },
+            { namespace: 'org.iso.18013.5.1', claim_name: 'given_name' },
+          ],
+        },
+      ],
+      credential_matches: {
+        'query-sdjwt': {
+          success: true,
+          valid_credentials: [
+            {
+              record: { id: 'cred-sdjwt', type: 'SdJwtVcRecord' },
+              claims: {
+                valid_claim_sets: [
+                  {
+                    output: {
+                      given_name: 'Ada',
+                      family_name: 'Lovelace',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        'query-mdoc': {
+          success: true,
+          valid_credentials: [
+            {
+              record: { id: 'cred-mdoc', type: 'MdocRecord' },
+              claims: {
+                valid_claim_sets: [
+                  {
+                    output: {
+                      org_iso_18013_5_1: {
+                        family_name: 'Doe',
+                        given_name: 'John',
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      credential_sets: [
+        {
+          required: true,
+          purpose: 'Prove entitlement',
+          options: [['query-sdjwt', 'query-mdoc']],
+          matching_options: [['query-sdjwt', 'query-mdoc']],
+        },
+      ],
+    } as any)
+
+    expect(result).toMatchObject({
+      name: 'Unknown',
+      purpose: 'Prove entitlement',
+      areAllSatisfied: true,
+    })
+
+    expect(result.entries[0]).toEqual({
+      inputDescriptorId: 'query-sdjwt',
+      name: 'query-sdjwt',
+      purpose: 'Prove entitlement',
+      description: undefined,
+      isSatisfied: true,
+      credentials: [
+        {
+          id: 'cred-sdjwt',
+          credentialName: 'Mobile Employee',
+          issuerName: 'Issuer Inc.',
+          requestedAttributes: ['given_name', 'family_name'],
+          metadata: { type: 'EmployeeCredential' },
+          backgroundColor: '#111111',
+          textColor: '#ffffff',
+          backgroundImage: undefined,
+          claimFormat: ClaimFormat.SdJwtDc,
+        },
+      ],
+    })
+
+    expect(result.entries[1]).toEqual({
+      inputDescriptorId: 'query-mdoc',
+      name: 'query-mdoc',
+      purpose: 'Prove entitlement',
+      description: undefined,
+      isSatisfied: true,
+      credentials: [
+        {
+          id: 'cred-mdoc',
+          credentialName: 'Mobile Driver Licence',
+          issuerName: 'DMV',
+          requestedAttributes: ['family_name', 'given_name'],
+          metadata: { type: 'org.iso.18013.5.1.mDL' },
+          backgroundColor: undefined,
+          textColor: undefined,
+          backgroundImage: { uri: 'https://example.com/mdoc.png' },
+          claimFormat: ClaimFormat.MsoMdoc,
+        },
+      ],
+    })
+  })
+
+  test('creates an unsatisfied placeholder entry when no valid dcql credentials exist', () => {
+    const result = formatDcqlCredentialsForRequest({
+      can_be_satisfied: false,
+      credentials: [
+        {
+          id: 'query-jwt',
+          format: 'jwt_vc_json',
+          claims: [{ path: ['employee', 'id'] }],
+        },
+      ],
+      credential_matches: {
+        'query-jwt': {
+          success: false,
+        },
+      },
+    } as any)
+
+    expect(result).toEqual({
+      name: 'Unknown',
+      purpose: undefined,
+      areAllSatisfied: false,
+      entries: [
+        {
+          inputDescriptorId: 'query-jwt',
+          name: 'query-jwt',
+          purpose: undefined,
+          description: undefined,
+          isSatisfied: false,
+          credentials: [
+            {
+              id: 'query-jwt',
+              credentialName: 'query-jwt',
+              requestedAttributes: ['employee.id'],
+              claimFormat: ClaimFormat.JwtVc,
+            },
+          ],
+        },
+      ],
+    })
+  })
+})
+
+describe('formatOpenIdProofRequest', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('routes to pex, dcql, or undefined depending on the request record shape', () => {
+    mockGetCredentialForDisplay.mockReturnValue({
+      display: {
+        name: 'Employee Card',
+        issuer: { name: 'Issuer Inc.' },
+      },
+      attributes: { employeeId: '1234' },
+      metadata: { type: 'EmployeeCard' },
+      claimFormat: ClaimFormat.JwtVc,
+    })
+
+    const pexResult = formatOpenIdProofRequest({
+      presentationExchange: {
+        credentialsForRequest: {
+          requirements: [
+            {
+              submissionEntry: [
+                {
+                  inputDescriptorId: 'descriptor-1',
+                  verifiableCredentials: [
+                    {
+                      claimFormat: ClaimFormat.JwtVc,
+                      credentialRecord: { id: 'cred-1' },
+                      disclosedPayload: {},
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    } as any)
+
+    const dcqlResult = formatOpenIdProofRequest({
+      dcql: {
+        queryResult: {
+          can_be_satisfied: false,
+          credentials: [{ id: 'query-1', format: 'jwt_vc_json', claims: [] }],
+          credential_matches: {
+            'query-1': { success: false },
+          },
+        },
+      },
+    } as any)
+
+    const emptyResult = formatOpenIdProofRequest({} as any)
+
+    expect(pexResult?.entries[0]?.inputDescriptorId).toBe('descriptor-1')
+    expect(dcqlResult?.entries[0]?.inputDescriptorId).toBe('query-1')
+    expect(emptyResult).toBeUndefined()
   })
 })
