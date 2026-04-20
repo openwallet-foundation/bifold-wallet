@@ -25,6 +25,13 @@ jest.mock('@expo/app-integrity', () => ({
   isSupported: true,
 }))
 
+jest.mock('react-native-uuid', () => ({
+  __esModule: true,
+  default: {
+    v4: jest.fn().mockReturnValue('123456789')
+  }
+}))
+
 jest.mock('../../src/services/storage', () => ({
   PersistentStorage: {
     fetchValueForKey: jest.fn(),
@@ -240,7 +247,7 @@ describe('useAttestation', () => {
   // ── Android flow ─────────────────────────────────────────────────────────────
 
   describe('Android attestation flow', () => {
-    const androidKeyID = 'walletAttestationKey'
+    const androidKeyID = '123456789'
 
     beforeEach(() => {
       Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true })
@@ -248,7 +255,7 @@ describe('useAttestation', () => {
       ;(withRetry as jest.Mock).mockResolvedValue(mockAttestationResult)
     })
 
-    it('generates a hardware attested key with the correct fixed key ID', async () => {
+    it('generates a hardware attested key with the correct key ID', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.setupAttestation())
 
