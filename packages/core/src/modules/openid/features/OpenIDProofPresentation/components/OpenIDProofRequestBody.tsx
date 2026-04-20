@@ -96,12 +96,6 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
           <View key={i}>
             <View style={styles.cardContainer}>
               <View style={styles.cardGroupContainer}>
-                {name && purpose && (
-                  <View style={styles.cardGroupHeader}>
-                    <Text style={TextTheme.bold}>{name}</Text>
-                    <Text style={TextTheme.labelTitle}>{purpose}</Text>
-                  </View>
-                )}
                 {isSatisfied && requestedAttributes &&
                   <CredentialCardGen
                     credential={credential}

@@ -8,11 +8,13 @@ import { type SelectedCredentialsFormat } from '../../../types'
 interface OpenIDProofRequestHeaderProps {
   selectedCredentialsSubmission?: SelectedCredentialsFormat
   verifierName: string
+  reason: string
 }
 
 const OpenIDProofRequestHeader: React.FC<OpenIDProofRequestHeaderProps> = ({
   selectedCredentialsSubmission,
   verifierName = '',
+  reason = ''
 }) => {
 
   const { ListItems, TextTheme } = useTheme()
@@ -25,6 +27,7 @@ const OpenIDProofRequestHeader: React.FC<OpenIDProofRequestHeaderProps> = ({
         headerText: {
             ...ListItems.recordAttributeText,
             flexShrink: 1,
+            paddingBottom: 10,
         },
     })
 
@@ -32,11 +35,11 @@ const OpenIDProofRequestHeader: React.FC<OpenIDProofRequestHeaderProps> = ({
 
     return (
         <View style={styles.headerTextContainer}>
-        <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-            <Text style={TextTheme.normal}>{t('ProofRequest.ReceiveProofTitle')}</Text>
-            {'\n'}
-          <Text style={TextTheme.title}>{verifierName}</Text>
-        </Text>
+          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+              <Text style={TextTheme.normal}>{t('ProofRequest.ReceiveProofTitle')}</Text>
+            <Text style={TextTheme.title}> ${verifierName}</Text>
+          </Text>
+          <Text style={TextTheme.normal}>{reason}</Text>
         </View>
     )
 }

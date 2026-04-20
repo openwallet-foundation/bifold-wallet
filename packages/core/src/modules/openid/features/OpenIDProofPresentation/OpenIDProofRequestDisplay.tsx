@@ -56,7 +56,7 @@ const OpenIdProofRequestDisplay: React.FC<OpenIdProofRequestDisplayProps> = ({
     <>
       <ScrollView>
         <View style={styles.container}>
-          <OpenIDProofRequestHeader selectedCredentialsSubmission={selectedCredentialsSubmission} verifierName={verifierName} />
+          <OpenIDProofRequestHeader selectedCredentialsSubmission={selectedCredentialsSubmission} verifierName={verifierName} reason={submission?.purpose ?? ''}/>
           <OpenIDProofRequestBody
             credentialsRequested={credentialsRequested}
             onPressAltCredChange={onPressAltCredChange}
