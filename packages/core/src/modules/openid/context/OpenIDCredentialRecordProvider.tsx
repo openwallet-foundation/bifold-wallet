@@ -144,6 +144,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   children,
 }: OpenIDCredentialProviderProps) => {
   const [state, setState] = useState<OpenIDCredentialRecordState>(defaultState)
+  const { isLoading } = state
 
   const { agent } = useAppAgent()
   const [logger, bundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
@@ -194,7 +195,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     await storeOpenIDCredential(agent, cred)
   }
 
-  async function deleteCredential(cred: OpenIDCredentialRecord, _type: OpenIDCredentialType) {
+  async function deleteCredential(cred: OpenIDCredentialRecord) {
     const agent = getAgent()
     await deleteOpenIDCredential(agent, cred)
   }
@@ -266,7 +267,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
   }, [agent])
 
   useEffect(() => {
-    if (state.isLoading) return
+    if (isLoading) return
     if (!agent?.events?.observable) return
 
     const w3c_credentialAdded$ = recordsAddedByType(agent, W3cCredentialRecord).subscribe((record) => {
@@ -297,11 +298,11 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
     })
 
     const mdoc_credentialAdded$ = recordsAddedByType(agent, MdocRecord).subscribe((record) => {
-      setState(addMdocRecord(record as MdocRecord, state))
+      setState((prev) => addMdocRecord(record as MdocRecord, prev))
     })
 
     const mdoc_credentialRemoved$ = recordsRemovedByType(agent, MdocRecord).subscribe((record) => {
-      setState(removeMdocRecord(record as MdocRecord, state))
+      setState((prev) => removeMdocRecord(record as MdocRecord, prev))
     })
 
     return () => {
@@ -312,7 +313,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
       mdoc_credentialAdded$.unsubscribe()
       mdoc_credentialRemoved$.unsubscribe()
     }
-  }, [state.isLoading, agent])
+  }, [isLoading, agent])
 
   return (
     <OpenIDCredentialRecordContext.Provider
