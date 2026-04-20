@@ -1,4 +1,5 @@
 import { ClaimFormat, Hasher, Mdoc, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import {
   filterAndMapSdJwtKeys,
   getCredentialForDisplay,
@@ -20,7 +21,7 @@ const mockGetOpenId4VcCredentialMetadata = getOpenId4VcCredentialMetadata as jes
 const mockDecodeSdJwtSync = decodeSdJwtSync as jest.Mock
 const mockGetClaimsSync = getClaimsSync as jest.Mock
 
-const createRecord = <T extends object>(prototype: T, values: Record<string, unknown> = {}) => {
+const createRecord = <T extends object>(prototype: T, values: Record<string, unknown> = {}): T => {
   const record = Object.create(prototype)
 
   for (const [key, value] of Object.entries(values)) {
@@ -32,7 +33,7 @@ const createRecord = <T extends object>(prototype: T, values: Record<string, unk
     })
   }
 
-  return record
+  return record as T
 }
 
 describe('display helpers', () => {
@@ -137,7 +138,11 @@ describe('display helpers', () => {
         id: 'https://issuer.example',
         display: [
           { locale: 'fr-CA', name: 'Emetteur' },
-          { locale: 'en-CA', name: 'Issuer Example', logo: { uri: 'https://issuer.example/logo.png', alt_text: 'Logo' } },
+          {
+            locale: 'en-CA',
+            name: 'Issuer Example',
+            logo: { uri: 'https://issuer.example/logo.png', alt_text: 'Logo' },
+          },
         ],
       },
       credential: {
@@ -180,7 +185,7 @@ describe('display helpers', () => {
       },
     })
 
-    const result = getCredentialForDisplay(record as any)
+    const result = getCredentialForDisplay(record)
 
     expect(result.id).toBe('w3c-credential-cred-1')
     expect(result.display).toEqual({
@@ -239,7 +244,7 @@ describe('display helpers', () => {
       },
     })
 
-    const result = getCredentialForDisplay(record as any)
+    const result = getCredentialForDisplay(record)
 
     expect(result.display.name).toBe('University degree credential')
     expect(result.display.backgroundColor).toBe('#663399')
@@ -308,7 +313,7 @@ describe('display helpers', () => {
       },
     })
 
-    const result = getCredentialForDisplay(record as any)
+    const result = getCredentialForDisplay(record)
 
     expect(result).toMatchObject({
       id: 'sd-jwt-vc-sdjwt-1',
@@ -382,7 +387,7 @@ describe('display helpers', () => {
         validFrom: new Date('2024-01-01T00:00:00.000Z'),
         validUntil: new Date('2025-01-01T00:00:00.000Z'),
       },
-    } as any)
+    } as unknown as ReturnType<typeof Mdoc.fromBase64Url>)
 
     const record = createRecord(MdocRecord.prototype, {
       id: 'mdoc-1',
@@ -392,7 +397,7 @@ describe('display helpers', () => {
       },
     })
 
-    const result = getCredentialForDisplay(record as any)
+    const result = getCredentialForDisplay(record)
 
     expect(result).toMatchObject({
       id: 'mdoc-mdoc-1',
@@ -422,6 +427,249 @@ describe('display helpers', () => {
         age_over_18: true,
         portrait: 'data:image/jpeg;base64,/9j/4AAAAAAAAAAA',
       },
+    })
+  })
+
+  test('prefers locale-less OpenID display values when no english locale is available', () => {
+    mockGetOpenId4VcCredentialMetadata.mockReturnValue({
+      issuer: {
+        id: 'https://issuer.example',
+        display: [{ locale: 'fr-CA', name: 'Emetteur FR' }, { name: 'Issuer Default' }],
+      },
+      credential: {
+        display: [{ locale: 'fr-CA', name: 'Carte FR' }, { name: 'Default Credential Name' }],
+      },
+    })
+
+    const record = createRecord(W3cCredentialRecord.prototype, {
+      id: 'cred-locale-fallback',
+      createdAt: new Date('2024-01-02T03:04:05.000Z'),
+      firstCredential: {
+        claimFormat: ClaimFormat.LdpVc,
+        type: ['VerifiableCredential', 'LocaleFallbackCredential'],
+        issuer: {
+          id: 'https://issuer.example',
+        },
+        issuanceDate: '2024-01-02T03:04:05.000Z',
+        credentialSubject: {
+          id: 'did:example:holder',
+        },
+      },
+    })
+
+    const result = getCredentialForDisplay(record)
+
+    expect(result.display.name).toBe('Default Credential Name')
+    expect(result.display.issuer).toEqual({
+      name: 'Issuer Default',
+    })
+  })
+
+  test('falls back to the first OpenID display entry when neither english nor locale-less values exist', () => {
+    mockGetOpenId4VcCredentialMetadata.mockReturnValue({
+      issuer: {
+        id: 'https://issuer.example',
+        display: [
+          { locale: 'fr-CA', name: 'Emetteur FR' },
+          { locale: 'de-DE', name: 'Aussteller DE' },
+        ],
+      },
+      credential: {
+        display: [
+          { locale: 'fr-CA', name: 'Carte FR' },
+          { locale: 'de-DE', name: 'Karte DE' },
+        ],
+      },
+    })
+
+    const record = createRecord(W3cCredentialRecord.prototype, {
+      id: 'cred-first-fallback',
+      createdAt: new Date('2024-01-02T03:04:05.000Z'),
+      firstCredential: {
+        claimFormat: ClaimFormat.LdpVc,
+        type: ['VerifiableCredential', 'LocaleFallbackCredential'],
+        issuer: {
+          id: 'https://issuer.example',
+        },
+        issuanceDate: '2024-01-02T03:04:05.000Z',
+        credentialSubject: {
+          id: 'did:example:holder',
+        },
+      },
+    })
+
+    const result = getCredentialForDisplay(record)
+
+    expect(result.display.name).toBe('Carte FR')
+    expect(result.display.issuer).toEqual({
+      name: 'Emetteur FR',
+    })
+  })
+
+  test('uses credential display logo and issuer hostname fallback when issuer display metadata is absent', () => {
+    mockGetOpenId4VcCredentialMetadata.mockReturnValue({
+      issuer: {
+        id: 'https://issuer.example/path',
+        display: undefined,
+      },
+      credential: {
+        display: [
+          {
+            name: 'Logo Fallback Credential',
+            logo: { uri: 'https://issuer.example/cred-logo.png', altText: 'Credential logo' },
+          },
+        ],
+      },
+    })
+
+    const record = createRecord(W3cCredentialRecord.prototype, {
+      id: 'cred-logo-fallback',
+      createdAt: new Date('2024-01-02T03:04:05.000Z'),
+      firstCredential: {
+        claimFormat: ClaimFormat.LdpVc,
+        type: ['VerifiableCredential', 'LogoFallbackCredential'],
+        issuer: {
+          id: 'https://issuer.example/path',
+        },
+        issuanceDate: '2024-01-02T03:04:05.000Z',
+        credentialSubject: {
+          id: 'did:example:holder',
+        },
+      },
+    })
+
+    const result = getCredentialForDisplay(record)
+
+    expect(result.display.issuer).toEqual({
+      name: 'issuer.example',
+      logo: { uri: 'https://issuer.example/cred-logo.png', altText: 'Credential logo' },
+    })
+  })
+
+  test('builds a jwt-vc display using the nested credential payload and first credential subject entry', () => {
+    mockGetOpenId4VcCredentialMetadata.mockReturnValue(null)
+
+    const record = createRecord(W3cCredentialRecord.prototype, {
+      id: 'cred-jwt-vc',
+      createdAt: new Date('2024-01-02T03:04:05.000Z'),
+      firstCredential: {
+        claimFormat: ClaimFormat.JwtVc,
+        credential: {
+          type: ['VerifiableCredential', 'JwtEmployeeCredential'],
+          issuer: {
+            id: 'https://issuer.example',
+            name: 'Example Issuer',
+            image: 'https://issuer.example/logo.png',
+          },
+          issuanceDate: '2024-01-02T03:04:05.000Z',
+          expiryDate: '2025-01-02T03:04:05.000Z',
+          credentialSubject: [
+            {
+              id: 'did:example:first',
+              employeeId: 'A-123',
+            },
+            {
+              id: 'did:example:second',
+              employeeId: 'B-456',
+            },
+          ],
+        },
+      },
+    })
+
+    const result = getCredentialForDisplay(record)
+
+    expect(result.attributes).toEqual({
+      id: 'did:example:first',
+      employeeId: 'A-123',
+    })
+    expect(result.metadata).toMatchObject({
+      holder: 'did:example:first',
+      issuer: 'https://issuer.example',
+      type: 'JwtEmployeeCredential',
+    })
+    expect(result.display).toMatchObject({
+      name: 'Jwt employee credential',
+      issuer: {
+        name: 'Example Issuer',
+        logo: { uri: 'https://issuer.example/logo.png' },
+      },
+    })
+    expect(result.claimFormat).toBe(ClaimFormat.JwtVc)
+  })
+
+  test('falls back to sanitized sd-jwt vct when OpenID metadata is absent', () => {
+    mockGetOpenId4VcCredentialMetadata.mockReturnValue(null)
+
+    mockDecodeSdJwtSync.mockReturnValue({
+      disclosures: [],
+      jwt: {
+        payload: 'payload',
+      },
+    })
+    mockGetClaimsSync.mockReturnValue({
+      iss: 'https://issuer.example',
+      vct: 'ExampleEmployeeCard',
+      cnf: {},
+      employee_number: '12345',
+    })
+
+    const record = createRecord(SdJwtVcRecord.prototype, {
+      id: 'sdjwt-fallback',
+      createdAt: new Date('2024-01-02T03:04:05.000Z'),
+      firstCredential: {
+        compact: 'header.payload.signature',
+      },
+    })
+
+    const result = getCredentialForDisplay(record)
+
+    expect(result.display).toMatchObject({
+      name: 'Example employee card',
+      issuer: {
+        name: 'Unknown',
+      },
+    })
+    expect(result.attributes).toEqual({
+      employee_number: '12345',
+    })
+  })
+
+  test('falls back to generic mdoc display values when OpenID metadata is absent', () => {
+    mockGetOpenId4VcCredentialMetadata.mockReturnValue(null)
+
+    jest.spyOn(Mdoc, 'fromBase64Url').mockReturnValue({
+      issuerSignedNamespaces: {
+        org_iso_18013_5_1: {
+          family_name: 'Doe',
+        },
+      },
+      docType: 'org.iso.18013.5.1.mDL',
+      validityInfo: {
+        validFrom: new Date('2024-01-01T00:00:00.000Z'),
+        validUntil: new Date('2025-01-01T00:00:00.000Z'),
+      },
+    } as unknown as ReturnType<typeof Mdoc.fromBase64Url>)
+
+    const record = createRecord(MdocRecord.prototype, {
+      id: 'mdoc-no-metadata',
+      createdAt: new Date('2024-01-02T03:04:05.000Z'),
+      firstCredential: {
+        base64Url: 'encoded-mdoc',
+      },
+    })
+
+    const result = getCredentialForDisplay(record)
+
+    expect(result.display).toEqual({
+      name: 'Credential',
+      issuer: {
+        name: 'Unknown',
+      },
+    })
+    expect(result.metadata).toEqual({
+      issuer: 'Unknown',
+      type: 'org.iso.18013.5.1.mDL',
     })
   })
 })
