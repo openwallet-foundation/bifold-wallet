@@ -56,50 +56,6 @@ export class AppContainer implements Container {
       }
     })
     */ 
-    /*
-    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async () => {
-      try {
-        const challengeResponse = await fetch('')
-        if (!challengeResponse.ok) {
-          throw new Error(`Failed to fetch challenge: ${challengeResponse.status}`)
-        }
-        const { challenge } = await challengeResponse.json()
-        return challenge
-      } catch(err) {
-        console.log(err)
-      }
-    })
-
-    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string, challenge: string, keyID: string) => {
-      const payload: any = {
-        attestation: attestationResult,
-        bundleIdentifier: applicationId,
-        challenge,
-        platform: Platform.OS,
-        keyId: Platform.OS === 'ios' ? keyID : ''
-      }
-      const registerAttestationResponse = await fetch(
-        '', 
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        }
-      )
-
-      if (!registerAttestationResponse.ok) {
-        throw new Error(`Failed to register attestation: ${registerAttestationResponse.status}`)
-      }
-
-      const response = await registerAttestationResponse.json()
-
-      return response
-
-    })
-    */
-
     return this
   }
 
