@@ -251,7 +251,7 @@ describe('getCredentialsForProofRequest', () => {
       authorizationRequestPayload: { client_id: 'verifier' },
       presentationExchange: {
         credentials: {
-          'descriptor-1': [credentialB],
+          'descriptor-1': [{ credentialRecord: credentialB }],
         },
       },
       dcql: undefined,

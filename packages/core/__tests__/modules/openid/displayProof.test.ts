@@ -4,8 +4,8 @@ import { filterAndMapSdJwtKeys, getCredentialForDisplay } from '../../../src/mod
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
 jest.mock('../../../src/modules/openid/display', () => ({
-  filterAndMapSdJwtKeys: jest.fn(),
-  getCredentialForDisplay: jest.fn(),
+  filterAndMapSdJwtKeys: require('@jest/globals').jest.fn(),
+  getCredentialForDisplay: require('@jest/globals').jest.fn(),
 }))
 
 const mockFilterAndMapSdJwtKeys = filterAndMapSdJwtKeys as jest.Mock
