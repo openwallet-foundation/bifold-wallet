@@ -1,7 +1,7 @@
 import { BrandingOverlayType, Field } from '@bifold/oca/build/legacy'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 import { testIdWithKey } from '../../utils/testable'
@@ -23,16 +23,17 @@ export interface RecordProps {
 const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
-  const { ListItems, TextTheme } = useTheme()
+  const { ListItems, TextTheme, Spacing } = useTheme()
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
 
   const styles = StyleSheet.create({
     linkContainer: {
       ...ListItems.recordContainer,
       flexDirection: 'row',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       paddingHorizontal: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? 25 : 16,
-      paddingVertical: 16,
+      paddingVertical: Spacing.sm,
+      paddingBottom: Spacing.lg,
     },
     link: {
       minHeight: TextTheme.normal.fontSize,
@@ -76,6 +77,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
             {header()}
             {hideFieldValues ? (
               <View style={styles.linkContainer}>
+                <Text style={TextTheme.headingFour}>{"Information Requested"}</Text>
                 <TouchableOpacity
                   style={styles.link}
                   activeOpacity={1}

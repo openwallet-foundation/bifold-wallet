@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 
 import { useTheme } from '../../../../../contexts/theme'
@@ -26,19 +26,18 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
   verifierName,
 }) => {
 
-  const { ColorPalette, TextTheme } = useTheme()
+  const { ColorPalette } = useTheme()
 
   const styles = StyleSheet.create({
     cardContainer: {
-      paddingHorizontal: 25,
+      paddingHorizontal: 12,
+      paddingBottom: 24,
+    },
+    detailContainer: {
+      paddingHorizontal: 8,
       paddingVertical: 16,
       backgroundColor: ColorPalette.brand.secondaryBackground,
       marginBottom: 20,
-    },
-    cardGroupContainer: {
-      borderRadius: 8,
-      borderWidth: 2,
-      borderColor: 'rgba(255, 255, 255, 0.2)',
     },
     cardGroupHeader: {
       padding: 8,
@@ -64,13 +63,9 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
 
   return (
     <View style={styles.credentialsList}>
-      {Object.entries(selectedCredentialsSubmission).map(([inputDescriptorId, credentialSimplified], i) => {
+      {Object.entries(selectedCredentialsSubmission).map(([inputDescriptorId, credentialSimplified]) => {
         //TODO: Support multiple credentials
-        const globalSubmissionName = submission.name
-        const globalSubmissionPurpose = submission.purpose
         const correspondingSubmission = submission.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
-        const submissionName = correspondingSubmission?.name
-        const submissionPurpose = correspondingSubmission?.purpose
         const isSatisfied = correspondingSubmission?.isSatisfied
         const credentialSubmission = correspondingSubmission?.credentials.find(
           (s) => s.id === credentialSimplified.id
@@ -78,8 +73,6 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
         const requestedAttributes = credentialSubmission?.requestedAttributes
         const hasMultipleCreds = correspondingSubmission?.credentials ? correspondingSubmission.credentials.length > 1 : false
 
-        const name = submissionName || globalSubmissionName || undefined
-        const purpose = submissionPurpose || globalSubmissionPurpose || undefined
         
         const credential = credentialsRequested.find((c) => c.id === credentialSubmission?.id)
 
@@ -93,18 +86,18 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
 
 
         return (
-          <View key={i}>
+          <View key={credentialSimplified.id}>
             <View style={styles.cardContainer}>
-              <View style={styles.cardGroupContainer}>
-                {isSatisfied && requestedAttributes &&
-                  <CredentialCardGen
-                    credential={credential}
-                    hasAltCredentials={hasMultipleCreds}
-                    handleAltCredChange={onPressAltCredChange}
-                  />
-                }
-              </View>
-              <Record fields={fields} />
+              {isSatisfied && requestedAttributes &&
+                <CredentialCardGen
+                  credential={credential}
+                  hasAltCredentials={hasMultipleCreds}
+                  handleAltCredChange={onPressAltCredChange}
+                />
+              }
+            </View>
+            <View style={styles.detailContainer}>
+              <Record fields={fields} hideFieldValues header={() => <></>}/>
             </View>
           </View>
         )

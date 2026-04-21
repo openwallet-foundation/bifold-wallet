@@ -2,7 +2,7 @@ import { useAgent } from '@bifold/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DeviceEventEmitter } from 'react-native'
+import { DeviceEventEmitter, View, StyleSheet, Text } from 'react-native'
 import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 
 import CommonRemoveModal from '../../../components/modals/CommonRemoveModal'
@@ -17,6 +17,7 @@ import { formatDifPexCredentialsForRequest } from '../displayProof'
 import { shareProof } from '../resolverProof'
 import { isSdJwtProofRequest, isW3CProofRequest } from '../utils/utils'
 import OpenIdProofRequestDisplay from '../features/OpenIDProofPresentation/OpenIDProofRequestDisplay'
+import { useTheme } from '../../../contexts/theme'
 
 type OpenIDProofPresentationProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofPresentation>
 
@@ -40,6 +41,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     params: { credential },
   },
 }: OpenIDProofPresentationProps) => {
+  const { TextTheme } = useTheme()
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
@@ -191,8 +193,19 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
     [submission, navigation]
   )
 
+  const styles = StyleSheet.create({
+    headerContainer: {
+      paddingVertical: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  })
+
   return (
-    <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
+    <ScreenLayout screen={Screens.OpenIDProofPresentation}>
+      <View style={styles.headerContainer}>
+        <Text style={TextTheme.headerTitle}>Information Request</Text>
+      </View>
       <OpenIdProofRequestDisplay
         buttonsVisible={buttonsVisible}
         credential={credential}

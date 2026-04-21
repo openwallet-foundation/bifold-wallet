@@ -17,17 +17,18 @@ const OpenIDProofRequestHeader: React.FC<OpenIDProofRequestHeaderProps> = ({
   reason = ''
 }) => {
 
-  const { ListItems, TextTheme } = useTheme()
+  const { ListItems, TextTheme, Spacing } = useTheme()
   const { t } = useTranslation()
 
     const styles = StyleSheet.create({
         headerTextContainer: {
-            paddingVertical: 16,
+            paddingVertical: Spacing.md,
+            paddingHorizontal: Spacing.sm
         },
         headerText: {
             ...ListItems.recordAttributeText,
             flexShrink: 1,
-            paddingBottom: 10,
+            paddingBottom: Spacing.sm,
         },
     })
 

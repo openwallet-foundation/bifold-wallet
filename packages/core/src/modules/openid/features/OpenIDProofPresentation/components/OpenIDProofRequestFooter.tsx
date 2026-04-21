@@ -29,7 +29,7 @@ const OpenIDProofPresentationFooter: React.FC<OpenIDProofPresentationFooterProps
     submission
 }) => {
 
-    const { ColorPalette } = useTheme()
+    const { ColorPalette, Spacing } = useTheme()
     const { t } = useTranslation()
 
     const styles = StyleSheet.create({
@@ -69,14 +69,16 @@ const OpenIDProofPresentationFooter: React.FC<OpenIDProofPresentationFooterProps
         <View style={styles.footerContainer}>
             {selectedCredentialsSubmission && Object.keys(selectedCredentialsSubmission).length > 0 ? (
                 <>
-                <Button
-                    title={t('Global.Send')}
-                    accessibilityLabel={t('Global.Send')}
-                    testID={testIdWithKey('AcceptCredentialOffer')}
-                    buttonType={ButtonType.Primary}
-                    onPress={onPressAccept}
-                    disabled={!buttonsVisible}
-                />
+                <View style={{ marginBottom: Spacing.sm }}>
+                    <Button
+                        title={t('Global.Send')}
+                        accessibilityLabel={t('Global.Send')}
+                        testID={testIdWithKey('AcceptCredentialOffer')}
+                        buttonType={ButtonType.Primary}
+                        onPress={onPressAccept}
+                        disabled={!buttonsVisible}
+                    />
+                </View>
                 <Button
                     title={t('Global.Decline')}
                     accessibilityLabel={t('Global.Decline')}

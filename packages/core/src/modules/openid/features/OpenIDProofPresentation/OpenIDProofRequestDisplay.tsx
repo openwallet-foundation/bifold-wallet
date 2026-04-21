@@ -44,7 +44,6 @@ const OpenIdProofRequestDisplay: React.FC<OpenIdProofRequestDisplayProps> = ({
     container: {
       flexGrow: 1,
       justifyContent: 'space-between',
-      padding: 10,
     },
   })
 
