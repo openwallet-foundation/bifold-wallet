@@ -18,13 +18,13 @@ import { OpenIDCredentialType, W3cCredentialDisplay } from '../types'
 import { TOKENS, useServices } from '../../../container-api'
 import { BrandingOverlay } from '@bifold/oca'
 import Record from '../../../components/record/Record'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { buildOverlayFromW3cCredential } from '../../../utils/oca'
 import CredentialDetailSecondaryHeader from '../../../components/views/CredentialDetailSecondaryHeader'
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 import ScreenLayout from '../../../layout/ScreenLayout'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -39,7 +39,7 @@ const paddingVertical = 16
 const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navigation, route }) => {
   const { credentialId, type } = route.params
 
-  const [credential, setCredential] = useState<W3cCredentialRecord | SdJwtVcRecord | MdocRecord | undefined>(undefined)
+  const [credential, setCredential] = useState<OpenIDCredentialRecord | undefined>(undefined)
   const [credentialDisplay, setCredentialDisplay] = useState<W3cCredentialDisplay>()
   const { t, i18n } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
@@ -75,7 +75,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     const fetchCredential = async () => {
       if (credentialRemoved) return
       try {
-        let record: SdJwtVcRecord | W3cCredentialRecord | MdocRecord | undefined
+        let record: OpenIDCredentialRecord | undefined
 
         if (type === OpenIDCredentialType.SdJwtVc) {
           record = await getSdJwtCredentialById(credentialId)
@@ -95,7 +95,16 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
       }
     }
     fetchCredential()
-  }, [credentialId, type, getSdJwtCredentialById, getMdocCredentialById, getW3CCredentialById, agent, t, credentialRemoved])
+  }, [
+    credentialId,
+    type,
+    getSdJwtCredentialById,
+    getMdocCredentialById,
+    getW3CCredentialById,
+    agent,
+    t,
+    credentialRemoved,
+  ])
 
   useEffect(() => {
     if (!credential) return

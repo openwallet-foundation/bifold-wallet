@@ -16,7 +16,7 @@ import { OpenIDCredentialRecord } from '../credentialRecord'
 
 type Props = StackScreenProps<DeliveryStackParams, Screens.OpenIDProofCredentialSelect>
 type TypedCred = {
-  credential: W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord
+  credential: OpenIDCredentialRecord
   claimFormat: string
 }
 

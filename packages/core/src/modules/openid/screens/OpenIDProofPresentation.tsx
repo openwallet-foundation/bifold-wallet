@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 
 import { Attribute } from '@bifold/oca/build/legacy'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord, W3cV2CredentialRecord } from '@credo-ts/core'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
 import OpenIDUnsatisfiedProofRequest from '../components/OpenIDUnsatisfiedProofRequest'
@@ -43,16 +42,6 @@ type SelectedCredentialsFormat = {
   }
 }
 
-type DisplayableOpenIDProofCredential = W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord
-
-const isDisplayableOpenIDProofCredential = (
-  credential: OpenIDCredentialRecord
-): credential is DisplayableOpenIDProofCredential =>
-  credential instanceof W3cCredentialRecord ||
-  credential instanceof W3cV2CredentialRecord ||
-  credential instanceof SdJwtVcRecord ||
-  credential instanceof MdocRecord
-
 const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   navigation,
   route: {
@@ -62,7 +51,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   const [declineModalVisible, setDeclineModalVisible] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
-  const [credentialsRequested, setCredentialsRequested] = useState<Array<DisplayableOpenIDProofCredential>>([])
+  const [credentialsRequested, setCredentialsRequested] = useState<Array<OpenIDCredentialRecord>>([])
   const [satistfiedCredentialsSubmission, setSatistfiedCredentialsSubmission] = useState<SatisfiedCredentialsFormat>()
   const [selectedCredentialsSubmission, setSelectedCredentialsSubmission] = useState<SelectedCredentialsFormat>()
 
@@ -138,13 +127,13 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   useEffect(() => {
     async function fetchCreds() {
       if (!satistfiedCredentialsSubmission || satistfiedCredentialsSubmission.entries) return
-      const creds: Array<DisplayableOpenIDProofCredential> = []
+      const creds: Array<OpenIDCredentialRecord> = []
 
       for (const [inputDescriptorID, credIDs] of Object.entries(satistfiedCredentialsSubmission)) {
         for (const { id } of credIDs) {
           const credential = await getCredentialById(id)
 
-          if (credential && isDisplayableOpenIDProofCredential(credential) && inputDescriptorID) {
+          if (credential && inputDescriptorID) {
             creds.push(credential)
           }
         }
