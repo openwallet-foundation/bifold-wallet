@@ -82,9 +82,9 @@ For Android, there are some validation steps for the extended data in the certif
    - keyStoreSecurityLevel is an enum. It should be either 1 for TEE or 2 for Strongbox
    - deviceLocked should be True to block rooted devices
 
-There are other data elements in the keyDescription that may be useful such as keymasterSecurityLevel and verifiedBootHash.
+There are other data elements in the keyDescription that may be useful such as keymasterSecurityLevel, verifiedBootHash and version. Version is not securely available for IOS and is not included in the attestation JWT as defined in the OID4VCI spec.
 
-### Capacity of the secure area on IOS and Android
+### Capacity of the secure area - IOS and Android
 
 Concerns around the capacity of the secure area to store key pairs have been raised in various forums. IOS and Android both support the HSM concept of key wrapping. With key wrapping, the key pair is encrypted via a key stored in the secure area and then stored outside the secure area in the keychain. All crypographic operations happen in the secure area by moving the encrypted key pair in and out of the secure area. This effectively means unlimited key pairs (up-to available device storage capacity)
 
