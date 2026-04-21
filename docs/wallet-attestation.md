@@ -8,7 +8,7 @@ The Bifold implementation aligns with the following standards:
 
    - IETF OAuth 2.0 Attestation-Based Client Authentication. Defines the mechanics of the attestation as an authentication mechanism: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-08
 
-### Initialization - IOS and Android
+### Initialization
 
 The IETF specification is agnostic to the mechanism used to create the client attestation as long as it is cryptographically backed. For Bifold, native IOS and Android mechanisms are used.
 
@@ -49,7 +49,8 @@ Android Key attestation does not require a call to Google servers. The process t
    - The device is not rooted via a boot state claim. This requires that any device with an unlocked boot loader must be rejected.
    - The Device is a Genuine OEM. It is up to the wallet provider to decide what root certificates they accept.
 
-**React-Native Support
+
+**React-Native Support**
 
 The following Expo library is used to implement the IOS and Android OS level APIs: https://docs.expo.dev/versions/latest/sdk/app-integrity/. Note that this library is still in Alpha. As per the OS requirements, a nonce is required from the backend server to generate the attested keys. The nonce is used to protect against replay attacks.
 
@@ -71,9 +72,9 @@ How an attestation object is validated is out of scope from a standards specific
    - Retrieve a nonce from the backend
    - Send the attestation object to the backend and retrieve a client attestation JWT as per the IETF specification
 
-For IOS the backend server should follow the validation steps precisely as documented to validate the legitimacy of the certificate chain and embedded checks - https://developer.apple.com/documentation/devicecheck/attestation-object-validation-guide
+For IOS, the backend server should follow the validation steps precisely as documented to validate the legitimacy of the certificate chain and embedded checks - https://developer.apple.com/documentation/devicecheck/attestation-object-validation-guide
 
-For Android there are some validation steps for the extended data in the certificate that must be followed in addition to the basic validate of the certificate chain - https://developer.android.com/privacy-and-security/security-key-attestation:
+For Android, there are some validation steps for the extended data in the certificate that must be followed in addition to the basic validate of the certificate chain - https://developer.android.com/privacy-and-security/security-key-attestation:
 
    **KeyDescription in Key Attestation extension of the certificate**
    - packageInfos lists the package names which must match your package name(s)
