@@ -12,6 +12,7 @@ import { BifoldError } from '../types/error'
 import { WalletSecret } from '../types/security'
 import { useAuth } from '../contexts/auth'
 import { useStore } from '../contexts/store'
+import { useAttestation } from '../hooks/attestation'
 
 export type SplashProps = {
   initializeAgent: (walletSecret: WalletSecret) => Promise<void>
@@ -28,7 +29,8 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
   const { ColorPalette } = useTheme()
   const { LoadingIndicator } = useAnimatedComponents()
   const initializing = useRef(false)
-  const [logger, ocaBundleResolver] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
+  const [logger, ocaBundleResolver, { enableAttestation }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER, TOKENS.CONFIG])
+  const { setupAttestation } = useAttestation()
 
   const styles = StyleSheet.create({
     container: {
@@ -47,6 +49,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
     if (!walletSecret) {
       throw new Error('Wallet secret is missing')
     }
+
     initializing.current = true
 
     const initAgentAsyncEffect = async (): Promise<void> => {
@@ -68,7 +71,32 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
     }
 
     initAgentAsyncEffect()
-  }, [initializeAgent, ocaBundleResolver, logger, walletSecret, t, store.authentication.didAuthenticate])
+
+  }, [initializeAgent, ocaBundleResolver, logger, walletSecret, t, store.authentication.didAuthenticate, setupAttestation])
+
+  useEffect(() => {
+
+    if (!store.authentication.didAuthenticate)
+      return
+
+    const initAttestation = async (): Promise<void> => {
+      try {
+        await setupAttestation()
+      } catch (err) {
+        const error = new BifoldError(
+          t('Error.GenericError.Title'),
+          t('Error.GenericError.Message'),
+          (err as Error)?.message ?? err,
+          1000
+        )
+        DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+        logger.error((err as Error)?.message ?? err)
+      }
+    }
+
+    initAttestation()
+
+  }, [setupAttestation, enableAttestation, logger, store.authentication.didAuthenticate, t])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -93,6 +93,7 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
+  enableAttestation: false,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {
@@ -259,7 +260,11 @@ export class MainContainer implements Container {
       return hashPIN(PIN, salt)
     })
 
+    this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, () => {})
+    this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, () => {})
+
     return this
+
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {

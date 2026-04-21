@@ -50,8 +50,8 @@ export const isAttemptLockoutComplete = (servedPenalty: boolean | undefined): On
   return { name: Screens.AttemptLockout, completed: servedPenalty !== false }
 }
 
-export const isAgentInitializationComplete = (agent: Agent | null): OnboardingTask => {
-  return { name: Screens.Splash, completed: !!agent }
+export const isAgentInitializationComplete = (agent: Agent | null, isAttestationComplete: boolean): OnboardingTask => {
+  return { name: Screens.Splash, completed: !!agent && isAttestationComplete }
 }
 
 export const generateOnboardingWorkflowSteps = (
@@ -72,6 +72,7 @@ export const generateOnboardingWorkflowSteps = (
   const { servedPenalty } = state.loginAttempt
   const { didAuthenticate } = state.authentication
   const { enableWalletNaming } = state.preferences
+  const { isAttestationComplete } = state.attestation
   const { showPreface, enablePushNotifications } = config
 
   return [
@@ -85,6 +86,6 @@ export const generateOnboardingWorkflowSteps = (
     isNameWalletComplete(didNameWallet, enableWalletNaming),
     isAttemptLockoutComplete(servedPenalty),
     isAuthenticationComplete(didCreatePIN, didAuthenticate),
-    isAgentInitializationComplete(agent),
+    isAgentInitializationComplete(agent, isAttestationComplete),
   ]
 }

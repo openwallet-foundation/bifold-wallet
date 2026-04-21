@@ -155,6 +155,12 @@ export const CRYPTO_TOKENS = {
   FN_PIN_HASH_ALGORITHM: 'fn.crypto.pin-hash-algorithm'
 } as const
 
+export const ATTESTATION_TOKENS = {
+  ATTESTATION_FUNCTIONS: 'attestation.functions',
+  FN_ATTESTATION_GET_CHALLENGE: 'attestation.get-challenge',
+  FN_ATTESTATION_GET_JWT: 'attestation.get-jwt',
+} as const
+
 export const TOKENS = {
   ...PROOF_TOKENS,
   ...COMPONENT_TOKENS,
@@ -173,10 +179,13 @@ export const TOKENS = {
   ...CONFIG_TOKENS,
   ...HISTORY_TOKENS,
   ...CRYPTO_TOKENS,
+  ...ATTESTATION_TOKENS,
 } as const
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
 export type FN_PIN_HASH_ALGORITHM = (PIN: string, salt: string) => Promise<string>
+export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<string>
+export type FN_ATTESTATION_GET_JWT = (attestationResult: string | string[], challenge: string, keyId: string) => Promise<any>
 
 export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
@@ -239,6 +248,8 @@ export type TokenMapping = {
   [TOKENS.UTIL_AGENT_BRIDGE]: AgentBridge
   [TOKENS.UTIL_REFRESH_ORCHESTRATOR]: IRefreshOrchestrator
   [TOKENS.FN_PIN_HASH_ALGORITHM]: FN_PIN_HASH_ALGORITHM
+  [TOKENS.FN_ATTESTATION_GET_CHALLENGE]: FN_ATTESTATION_GET_CHALLENGE
+  [TOKENS.FN_ATTESTATION_GET_JWT]: FN_ATTESTATION_GET_JWT
 }
 
 export interface Container {
