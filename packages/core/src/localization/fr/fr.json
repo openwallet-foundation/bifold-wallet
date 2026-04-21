@@ -758,7 +758,9 @@
     "CredentialForProofIsRevoked": "revoked credential (FR)",
     "ProofRequestStateError": "The proof request received is in: {{state}}, decline this proof and try again. (FR)",
     "ProofRequestErrorMessage": "Something went wrong with the proof request. (FR)",
-    "PleaseAddress": " Please address them before continuing. (FR)"
+    "PleaseAddress": " Please address them before continuing. (FR)",
+    "DetailsHeader": "Information Requested (FR)",
+    "OID4VCTitle": "Information Request (FR)"
   },
   "UnsatisfiedProofRequest": {
     "Title": "Information Request (FR)",

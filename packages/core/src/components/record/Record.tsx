@@ -77,7 +77,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
             {header()}
             {hideFieldValues ? (
               <View style={styles.linkContainer}>
-                <Text style={TextTheme.headingFour}>{"Information Requested"}</Text>
+                <Text style={TextTheme.headingFour}>{t('ProofRequest.DetailsHeader')}</Text>
                 <TouchableOpacity
                   style={styles.link}
                   activeOpacity={1}

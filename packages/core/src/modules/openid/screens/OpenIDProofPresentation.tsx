@@ -204,7 +204,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   return (
     <ScreenLayout screen={Screens.OpenIDProofPresentation}>
       <View style={styles.headerContainer}>
-        <Text style={TextTheme.headerTitle}>Information Request</Text>
+        <Text style={TextTheme.headerTitle}>{t('ProofRequest.OID4VCTitle')}</Text>
       </View>
       <OpenIdProofRequestDisplay
         buttonsVisible={buttonsVisible}
