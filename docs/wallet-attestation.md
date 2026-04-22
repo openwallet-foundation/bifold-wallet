@@ -110,8 +110,6 @@ Concerns around the capacity of the secure area to store key pairs have been rai
 
 More research is needed to clarify OS versions that support this approach any other hidden limitations.
 
-### Sequence Diagram for the flow
-
 ### OpenID4VCI Attestation Flow (with Nonce and iOS App Attest/App Check)
 
 ```mermaid
@@ -125,7 +123,7 @@ sequenceDiagram
    Wallet->>Backend: Request attestation nonce
    Backend-->>Wallet: Return nonce
    alt iOS App Attest/App Check
-      Wallet->>AppCheck: Request app attestation (optional)
+      Wallet->>AppCheck: Request app attestation
       AppCheck-->>Wallet: Return app attestation result
    end
    Wallet->>SecureArea: Generate hardware-backed key
