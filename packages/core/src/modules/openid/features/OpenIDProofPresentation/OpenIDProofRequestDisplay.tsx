@@ -1,16 +1,15 @@
 import { StyleSheet, View, ScrollView } from 'react-native'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 
-import { FormattedSubmission } from '../../displayProof'
+import { FormattedSubmission, OpenId4VPRequestRecord } from '../../types'
 import OpenIDProofPresentationFooter from './components/OpenIDProofRequestFooter'
 import OpenIDProofRequestHeader from './components/OpenIDProofRequestHeader'
 import OpenIDProofRequestBody from './components/OpenIDProofRequestBody'
-import { OpenId4VPRequestRecord } from '../../types'
+import { OpenIDCredentialRecord } from '../../credentialRecord'
 
 interface OpenIdProofRequestDisplayProps {
   buttonsVisible: boolean
-  credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | OpenId4VPRequestRecord | undefined
-  credentialsRequested: (SdJwtVcRecord | W3cCredentialRecord | MdocRecord)[]
+  credential?: OpenId4VPRequestRecord
+  credentialsRequested: OpenIDCredentialRecord[]
   onPressAccept: (...args: any[]) => void
   onPressAltCredChange: (...args: any[]) => void
   onPressDecline: (...args: any[]) => void

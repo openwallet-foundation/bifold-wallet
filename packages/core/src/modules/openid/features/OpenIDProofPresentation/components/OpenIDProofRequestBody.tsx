@@ -7,11 +7,12 @@ import { getCredentialForDisplay } from '../../../display'
 import CredentialCardGen from '../../../../../components/misc/CredentialCardGen'
 import Record from '../../../../../components/record/Record'
 import OpenIDUnsatisfiedProofRequest from '../../../components/OpenIDUnsatisfiedProofRequest'
-import { FormattedSubmission } from '../../../displayProof'
+import { FormattedSubmission } from '../../../types'
 import { type SelectedCredentialsFormat } from '../../../types'
+import type { OpenIDCredentialRecord } from '../../../credentialRecord'
 
 interface OpenIDProofRequestBodyProps {
-  credentialsRequested: (SdJwtVcRecord | W3cCredentialRecord | MdocRecord)[]
+  credentialsRequested: OpenIDCredentialRecord[]
   onPressAltCredChange: (...args: any[]) => void
   selectedCredentialsSubmission?: SelectedCredentialsFormat
   submission?: FormattedSubmission

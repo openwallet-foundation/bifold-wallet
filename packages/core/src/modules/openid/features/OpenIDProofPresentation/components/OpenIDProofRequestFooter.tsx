@@ -1,17 +1,15 @@
 import { StyleSheet, View } from 'react-native'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../../../../contexts/theme'
 import Button, { ButtonType } from '../../../../../components/buttons/Button'
-import { FormattedSubmission } from '../../../displayProof'
 import { testIdWithKey } from '../../../../../utils/testable'
 import { type SelectedCredentialsFormat } from '../../../types'
-import { OpenId4VPRequestRecord } from '../../../types'
+import { OpenId4VPRequestRecord, FormattedSubmission } from '../../../types'
 
 interface OpenIDProofPresentationFooterProps {
     buttonsVisible: boolean
-    credential: W3cCredentialRecord | SdJwtVcRecord | MdocRecord | OpenId4VPRequestRecord | undefined
+    credential?: OpenId4VPRequestRecord
     onPressAccept: (...args: any[]) => void
     onPressDecline: (...args: any[]) => void
     onPressDismiss: (...args: any[]) => void
