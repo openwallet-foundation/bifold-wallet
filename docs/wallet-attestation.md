@@ -22,14 +22,14 @@ The two vendors take different approaches based on their unique ecosystems but e
 
 **IOS**
 
-Apple's DeviceCheck framework (including App Attest and key attestaion) is a key attestation mechanism with support for a block list that can reject compromised devices (proprietary signals). Documentation is here: https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity.
+Apple's DeviceCheck framework (including App Attest and key attestation) is a key attestation mechanism with support for a block list that can reject compromised devices (proprietary signals). Documentation is here: https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity.
 
 Implementing the IOS device check requires a call to Apple servers (App Attest) from the mobile device which achieves the following:
    - Ensures the app is legitimate by matching App store records (Bundle ID)
-   - Checks a blocklist created via signals that Apple has access to. The most obvious being a phone reported stolen, but others exist including possibly some related to inferring that a phone is Jailbroken. The signals do not appear to be formally documented.
+   - Checks a block list created via signals that Apple has access to. The most obvious being a phone reported stolen, but others exist including possibly some related to inferring that a phone is Jailbroken. The signals do not appear to be formally documented.
 
 
-The call to Apple Device Check is only required once. The result lives for the lifetime of the specific app version. Note that Apple may reject an attestation request if the Apple servers are too busy. The specifics on how the throttling is handled by Apple are not documented. The recommendation is to try again with an incremental backout period.
+The call to Apple Device Check is only required once. The result lives for the lifetime of the specific app version. Note that Apple may reject an attestation request if the Apple servers are too busy. The specifics on how the throttling is handled by Apple are not documented. The recommendation is to try again with an incremental back-out period.
 
 
 **Android**
@@ -44,16 +44,16 @@ Note: Google Play Integrity is specific to the Google ecosystem and will not wor
 
 In the context of wallet attestation, Android key attestation is the appropriate tool for long lived wallet attestations. The EUDI ARF does include requirements for short lived device attestations where Google Play integrity or a third party RASP tool could be appropriate. These are not implemented in Bifold and it is not clear how they could be implemented without third party proprietary tooling - either on IOS or Android.
 
-Android Key attestation does not require an API call to Google servers. The process to generate the attestation (certificate chain) is internal to the device. The attesttion is used to validate the following:
+Android Key attestation does not require an API call to Google servers. The process to generate the attestation (certificate chain) is internal to the device. The attestation is used to validate the following:
    - The signing key of the app matches the expected signing key. This validates that app has not been tampered with. Note that it does not explicitly check that the App came from the Google Play store.
    - That the key pair was generated in the secure area
-   - Taht the device is not rooted via a boot state claim check. This requires that any device with an unlocked boot loader must be rejected.
+   - That the device is not rooted via a boot state claim check. This requires that any device with an unlocked boot loader must be rejected.
    - The Device is a Genuine OEM. It is up to the wallet provider to decide what root certificates they accept.
 
 
 **React-Native Support**
 
-The following Expo library is used to implement the IOS and Android OS level APIs: https://docs.expo.dev/versions/latest/sdk/app-integrity/ (in Alpha release). As per the OS requirements, a nonce is required from the backend server to generate the attested keys. The nonce is used to protect against replay attacks and is embedded in the attestation object. Unfortuanately because of this nonce requirement the expo app integrity library is likely not suitable to generate hardware backed keys for other use cases - dPOP and hardware backed cryptographic holder binding. 
+The following Expo library is used to implement the IOS and Android OS level APIs: https://docs.expo.dev/versions/latest/sdk/app-integrity/ (in Alpha release). As per the OS requirements, a nonce is required from the backend server to generate the attested keys. The nonce is used to protect against replay attacks and is embedded in the attestation object. Unfortunately because of this nonce requirement the expo app integrity library is likely not suitable to generate hardware backed keys for other use cases - dPOP and hardware backed cryptographic holder binding. 
 
 
 **Bifold**
@@ -87,11 +87,20 @@ There are other data elements in the keyDescription that may be useful such as k
 
 ### Why this works for long lived wallet attestations
 
-The initial process of creating an attested key creates a hardware bound key pair that cannot be exported from the device. At its core, the process of creating the attestation JWT proves that the wallet that created the keypair is the same app that was signed by the wallet developer. When requesting a credential at a later time the wallet must prove that the holder is still in control of the private key that was initially attested. The public key from this key pair is embedded in the signed attestation JWT.
+The initial process of creating an attested key creates a hardware bound key pair that cannot be exported from the device. At its core, the process of creating the attestation JWT proves that the wallet that created the key pair is the same app that was signed by the wallet developer. When requesting a credential at a later time the wallet must prove that the holder is still in control of the private key that was initially attested. The public key from this key pair is embedded in the signed attestation JWT.
 
-This proof of possession will fail if the wallet is modified, as the code would need to be re-signed by the attacker to install on the device. The newly signed app would not have access to the key pair that was attested to and bound to the attestation JWT. As the secure area is isolated from the OS even rooted or jailbroken devices should be blocked - more research is required on this point to confirm how and when key pairs in the secure area are "invalidated".
+This proof of possession will fail if the wallet is modified, as the code would need to be re-signed by the attacker to install on the device. The newly signed app would not have access to the key pair that was attested to and bound to the attestation JWT. 
 
-If the wallet is upgraded by the developer then the key pair could still be accessible. How to handle application updates is a TBD and may fall into the RASP category. On Android, the certificate extended data includes an app version. Unfortunately, IOS does not have any equivalent function that is cryptographically verifiable. Also, the openid4vci documented attestation JWT format does include a version of the wallet in its schema. The current assumption is that keypair should be invalidated on upgrade and refreshed. This needs more thought and testing.
+As the secure area is isolated from the OS, even rooted or jailbroken devices would provide some protection - i.e. keys could still not be exported from the secure area but a modified app could perhaps run in the same app context and use the keys. More research is required on this point to confirm how and when key pairs in the secure area are "invalidated". Considerations:
+
+   - On Android, a factory reset is required to unlock the boot loader which will also invalidate the secure area keys.
+   - There ways to root some older Android device without unlocking the boot loader.
+   - What about key invalidation for jailbreaking on IOS? This does not appear to be a built in function.
+   - There are no modern Apple phones that can be jailbroken as of this writing.
+   - It is hard to test various scenarios as modern devices cannot be rooted (without changing the bootloader) or jailbroken.
+   - Where do RASP tools (including Play Integrity) fit in?
+
+If the wallet is upgraded by the developer then the key pair could still be accessible. How to handle application updates is a TBD and may fall into the RASP category. On Android, the certificate extended data includes an app version. Unfortunately, IOS does not have any equivalent function that is cryptographically verifiable. Also, the openid4vci documented attestation JWT format does include a version of the wallet in its schema. The current assumption is that key pair should be invalidated on upgrade and refreshed. This needs more thought and testing.
 
 **Important** This only works if the issuer trusts the wallet provider and has effectively audited or otherwise certified the wallet function.
 
