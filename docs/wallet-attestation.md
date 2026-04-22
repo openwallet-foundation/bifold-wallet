@@ -110,7 +110,7 @@ Concerns around the capacity of the secure area to store key pairs have been rai
 
 More research is needed to clarify OS versions that support this approach any other hidden limitations.
 
-### OpenID4VCI Attestation Flow (with Nonce and iOS App Attest/App Check)
+### OpenID4VCI Attestation Flow
 
 ```mermaid
 sequenceDiagram
@@ -118,17 +118,20 @@ sequenceDiagram
    participant SecureArea as Secure Enclave/Keystore
    participant Backend as Wallet Provider Backend
    participant Issuer as Issuer
-   participant AppCheck as App Attest/App Check (iOS)
+   participant AppCheck as App Check (iOS)
 
-   Wallet->>Backend: Request attestation nonce
-   Backend-->>Wallet: Return nonce
-   alt iOS App Attest/App Check
-      Wallet->>AppCheck: Request app attestation
-      AppCheck-->>Wallet: Return app attestation result
-   end
-   Wallet->>SecureArea: Generate hardware-backed key
-   Wallet->>SecureArea: Request attestation (with nonce)
-   SecureArea-->>Wallet: Return attestation statement (includes nonce, key info)
+   Wallet->>Backend: Request attestation challenge (nonce)
+   Backend-->>Wallet: Return challenge
+      alt Android Key attestation
+         Wallet->>SecureArea: Request hardware-backed key (challenge, keyAlias)
+         Wallet->>SecureArea: Request attestation (keyAlias) 
+         SecureArea-->>Wallet: Return attestation certificate chain (includes nonce, key info)
+      end
+      alt iOS deviceCheck
+         Wallet->>SecureArea: Generate hardware-backed key
+         Wallet->>AppCheck: Request app attestation (challenge, keyID)
+         AppCheck-->>Wallet: Return app attestation result
+      end
    Wallet->>Backend: Send attestation statement
    Backend->>Backend: Validate attestation, issue attestation JWT
    Backend-->>Wallet: Return attestation JWT
