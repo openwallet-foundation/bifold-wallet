@@ -760,7 +760,8 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request. (FR)",
     "PleaseAddress": " Please address them before continuing. (FR)",
     "DetailsHeader": "Information Requested (FR)",
-    "OID4VCTitle": "Information Request (FR)"
+    "OID4VCTitle": "Information Request (FR)",
+    "UseDifferentCard": "Use different card (FR)"
   },
   "UnsatisfiedProofRequest": {
     "Title": "Information Request (FR)",

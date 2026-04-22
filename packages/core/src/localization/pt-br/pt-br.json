@@ -737,7 +737,8 @@
     "ProofRequestErrorMessage": "Something went wrong with the proof request. (PT-BR)",
     "PleaseAddress": " Please address them before continuing. (PT-BR)",
     "DetailsHeader": "Information Requested (PT-BR)",
-    "OID4VCTitle": "Information Request (PT-BR)"
+    "OID4VCTitle": "Information Request (PT-BR)",
+    "UseDifferentCard": "Use different card (PT-BR)"
   },
   "UnsatisfiedProofRequest": {
     "Title": "Information Request (PT-BR)",

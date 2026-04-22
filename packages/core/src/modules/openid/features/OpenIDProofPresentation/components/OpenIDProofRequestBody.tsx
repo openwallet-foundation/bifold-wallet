@@ -1,4 +1,5 @@
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../../../../contexts/theme'
 import { buildFieldsFromW3cCredsCredential } from '../../../../../utils/oca'
@@ -9,6 +10,8 @@ import OpenIDUnsatisfiedProofRequest from '../../../components/OpenIDUnsatisfied
 import { FormattedSubmission } from '../../../types'
 import { type SelectedCredentialsFormat } from '../../../types'
 import type { OpenIDCredentialRecord } from '../../../credentialRecord'
+import { ThemedText } from '../../../../../components/texts/ThemedText'
+
 
 interface OpenIDProofRequestBodyProps {
   credentialsRequested: OpenIDCredentialRecord[]
@@ -26,7 +29,8 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
   verifierName,
 }) => {
 
-  const { ColorPalette } = useTheme()
+  const { ColorPalette, Spacing, ListItems } = useTheme()
+    const { t } = useTranslation()
 
   const styles = StyleSheet.create({
     cardContainer: {
@@ -83,8 +87,6 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
         const credentialDisplay = getCredentialForDisplay(credential)
         const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
         
-
-
         return (
           <View key={credentialSimplified.id}>
             <View style={styles.cardContainer}>
@@ -95,6 +97,13 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
                   handleAltCredChange={onPressAltCredChange}
                 />
               }
+              {hasMultipleCreds && <View style={{ flex: 1, flexDirection: 'row-reverse', paddingTop: Spacing.sm }}>
+                <Pressable onPress={onPressAltCredChange}>
+                  <ThemedText style={ListItems.recordLink}>
+                    {t('ProofRequest.UseDifferentCard')}
+                  </ThemedText>
+                </Pressable>
+              </View>}
             </View>
             <View style={styles.detailContainer}>
               <Record fields={fields} hideFieldValues header={() => <></>} scrollEnabled={false} />
