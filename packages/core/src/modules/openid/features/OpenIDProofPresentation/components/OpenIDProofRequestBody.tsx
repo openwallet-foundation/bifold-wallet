@@ -1,5 +1,4 @@
 import { StyleSheet, View } from 'react-native'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 
 import { useTheme } from '../../../../../contexts/theme'
 import { buildFieldsFromW3cCredsCredential } from '../../../../../utils/oca'
