@@ -22,9 +22,9 @@ The two vendors take different approaches based on their unique ecosystems but e
 
 **IOS**
 
-IOS App integrity (via DeviceCheck APIs) is a key attestation mechanism with support for a block list that can reject compromised devices (proprietary signals). Documentation is here: https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity.
+Apple's DeviceCheck framework (including App Attest and key attestaion) is a key attestation mechanism with support for a block list that can reject compromised devices (proprietary signals). Documentation is here: https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity.
 
-Implementing the IOS device check requires a call to Apple servers which achieves the following:
+Implementing the IOS device check requires a call to Apple servers (App Attest) from the mobile device which achieves the following:
    - Ensures the app is legitimate by matching App store records (Bundle ID)
    - Checks a blocklist created via signals that Apple has access to. The most obvious being a phone reported stolen, but others exist including possibly some related to inferring that a phone is Jailbroken. The signals do not appear to be formally documented.
 
@@ -91,12 +91,12 @@ The initial process of creating an attested key creates a hardware bound key pai
 
 This proof of possession will fail if the wallet is modified, as the code would need to be re-signed by the attacker to install on the device. The newly signed app would not have access to the key pair that was attested to and bound to the attestation JWT. As the secure area is isolated from the OS even rooted or jailbroken devices should be blocked - more research is required on this point to confirm how and when key pairs in the secure area are "invalidated".
 
-If the wallet is upgraded by the developer then the key pair could still be accessible. How to handle application updates is a TBD and may fall into the RASP category. On Android, the certificate extendated data includes an app version. Unfortunately, IOS does note have any equivalent function that is cryptographically verifiable. Also, the openid4vci documented attestation JWT format does include a version of the wallet in it's schema. The current assumption is that keypair should be invalidated on upgrade and refreshed. This is needs more thought and testing.
+If the wallet is upgraded by the developer then the key pair could still be accessible. How to handle application updates is a TBD and may fall into the RASP category. On Android, the certificate extended data includes an app version. Unfortunately, IOS does not have any equivalent function that is cryptographically verifiable. Also, the openid4vci documented attestation JWT format does include a version of the wallet in its schema. The current assumption is that keypair should be invalidated on upgrade and refreshed. This needs more thought and testing.
 
-**Important** This only works if the issuer trusts the wallet provider and has effectively audited or otherwise certifed the wallet function.
+**Important** This only works if the issuer trusts the wallet provider and has effectively audited or otherwise certified the wallet function.
 
 ### Capacity of the secure area - IOS and Android
 
-Concerns around the capacity of the secure area to store key pairs have been raised in various forums. IOS and Android both support the HSM concept of key wrapping. With key wrapping, the key pair is encrypted via a key stored in the secure area and then stored outside the secure area in the keychain. All crypographic operations happen in the secure area by moving the encrypted key pair in and out of the secure area. This effectively means unlimited key pair capacity (up-to available device storage capacity)
+Concerns around the capacity of the secure area to store key pairs have been raised in various forums. IOS and Android both support the HSM concept of key wrapping. With key wrapping, the key pair is encrypted via a key stored in the secure area and then stored outside the secure area in the keychain. All cryptographic operations happen in the secure area by moving the encrypted key pair in and out of the secure area. This effectively means unlimited key pair capacity (up-to available device storage capacity)
 
 More research is needed to clarify OS versions that support this approach any other hidden limitations.
