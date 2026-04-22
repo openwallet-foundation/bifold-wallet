@@ -1217,6 +1217,7 @@ exports[`Settings Screen Renders correctly 1`] = `
           }
         >
           <View
+            accessibilityLabel="Settings.VersionInfo"
             accessibilityState={
               Object {
                 "busy": undefined,
