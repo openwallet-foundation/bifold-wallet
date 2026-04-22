@@ -131,10 +131,10 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
 
   const handleDeclineTouched = async () => {
     toggleDeclineModalVisible()
-    navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
   const handleDismiss = async () => {
+    toggleDeclineModalVisible()
     navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
   }
 
@@ -208,7 +208,7 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
       <CommonRemoveModal
         usage={ModalUsage.ProofRequestDecline}
         visible={declineModalVisible}
-        onSubmit={handleDeclineTouched}
+        onSubmit={handleDismiss}
         onCancel={toggleDeclineModalVisible}
       />
     </ScreenLayout>

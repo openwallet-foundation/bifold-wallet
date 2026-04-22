@@ -18,9 +18,10 @@ export interface RecordProps {
   fields: Field[]
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
+  scrollEnabled?: boolean
 }
 
-const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null }) => {
+const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null, scrollEnabled = true }) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
   const { ListItems, TextTheme, Spacing } = useTheme()
@@ -52,6 +53,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
   return (
     <FlatList
       data={fields}
+      scrollEnabled={scrollEnabled}
       keyExtractor={({ name }, index) => name || index.toString()}
       showsVerticalScrollIndicator={false}
       renderItem={({ item: attr, index }) =>
