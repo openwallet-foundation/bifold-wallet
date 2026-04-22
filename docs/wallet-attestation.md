@@ -115,7 +115,7 @@ More research is needed to clarify OS versions that support this approach any ot
 ```mermaid
 sequenceDiagram
    participant Wallet as Wallet App
-   participant SecureArea as Secure Enclave/Keystore
+   participant SecureArea as Secure Area/Keystore
    participant Backend as Wallet Provider Backend
    participant Issuer as Issuer
    participant AppCheck as App Check (iOS)
