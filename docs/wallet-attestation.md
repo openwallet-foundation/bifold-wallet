@@ -109,3 +109,32 @@ If the wallet is upgraded by the developer then the key pair could still be acce
 Concerns around the capacity of the secure area to store key pairs have been raised in various forums. IOS and Android both support the HSM concept of key wrapping. With key wrapping, the key pair is encrypted via a key stored in the secure area and then stored outside the secure area in the keychain. All cryptographic operations happen in the secure area by moving the encrypted key pair in and out of the secure area. This effectively means unlimited key pair capacity (up-to available device storage capacity)
 
 More research is needed to clarify OS versions that support this approach any other hidden limitations.
+
+### Sequence Diagram for the flow
+
+### OpenID4VCI Attestation Flow (with Nonce and iOS App Attest/App Check)
+
+```mermaid
+sequenceDiagram
+   participant Wallet as Wallet App
+   participant SecureArea as Secure Enclave/Keystore
+   participant Backend as Wallet Provider Backend
+   participant Issuer as Issuer
+   participant AppCheck as App Attest/App Check (iOS)
+
+   Wallet->>Backend: Request attestation nonce
+   Backend-->>Wallet: Return nonce
+   alt iOS App Attest/App Check
+      Wallet->>AppCheck: Request app attestation (optional)
+      AppCheck-->>Wallet: Return app attestation result
+   end
+   Wallet->>SecureArea: Generate hardware-backed key
+   Wallet->>SecureArea: Request attestation (with nonce)
+   SecureArea-->>Wallet: Return attestation statement (includes nonce, key info)
+   Wallet->>Backend: Send attestation statement
+   Backend->>Backend: Validate attestation, issue attestation JWT
+   Backend-->>Wallet: Return attestation JWT
+   Wallet->>Issuer: Send attestation JWT + PoP (Proof of Possession)
+   Issuer->>Issuer: Validate attestation JWT and PoP
+   Issuer-->>Wallet: Approve/reject based on validation
+```
