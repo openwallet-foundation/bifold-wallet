@@ -63,6 +63,14 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
       }
       if (this.opts.autoStart && this.opts.intervalMs) this.start()
     }, true)
+
+    bridge.onChange((agent) => {
+      if (agent) return
+
+      this.agent = undefined
+      this.logger.info('🪝 [RefreshOrchestrator] Agent cleared')
+      this.stop()
+    })
   }
 
   public configure(next: Partial<RefreshOrchestratorOpts>) {
