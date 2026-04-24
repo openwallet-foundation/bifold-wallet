@@ -54,6 +54,7 @@ export interface RefreshCredentialMetadata {
 export type RefreshOrchestratorOpts = {
   intervalMs?: number | null
   autoStart?: boolean
+  runOnStart?: boolean
   flowType?: OpenIDCredentialRefreshFlowType
   onError?: (e: unknown) => void
   listRecords?: () => Promise<any[]>
