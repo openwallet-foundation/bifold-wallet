@@ -107,7 +107,6 @@ export interface FormattedSubmissionEntry {
   /** can be either AnonCreds groupName, PEX inputDescriptorId, or DCQL credential query id */
   inputDescriptorId: string
   isSatisfied: boolean
-
   name: string
   purpose?: string
   description?: string
@@ -167,4 +166,11 @@ export interface RefreshResponse {
   /** Some ASs return a DPoP nonce (different naming conventions) */
   dpop_nonce?: string
   dpopNonce?: string
+}
+
+export interface SelectedCredentialsFormat {
+  [inputDescriptorId: string]: {
+    id: string
+    claimFormat: string
+  }
 }
