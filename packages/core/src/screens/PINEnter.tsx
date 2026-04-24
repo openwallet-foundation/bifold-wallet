@@ -408,6 +408,8 @@ const PINEnter: React.FC<PINEnterProps> = ({ setAuthenticated }) => {
         <Pressable
           onPress={enableHiddenDevModeTrigger ? incrementDeveloperMenuCounter : () => {}}
           testID={testIdWithKey('DeveloperCounter')}
+          accessibilityLabel={t('PINEnter.DeveloperMenuTrigger')}
+          accessibilityRole="text"
         >
           {HelpText}
         </Pressable>

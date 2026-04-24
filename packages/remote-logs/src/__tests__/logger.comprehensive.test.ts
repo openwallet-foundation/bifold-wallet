@@ -36,7 +36,9 @@ jest.mock('@credo-ts/core', () => ({
   },
 }))
 
-jest.mock('@bifold/core', () => ({
+jest.mock(
+  '@bifold/core',
+  () => ({
   BifoldLogger: class BifoldLogger {},
   AbstractBifoldLogger: class AbstractBifoldLogger {
     public logLevel = 2 // LogLevel.debug
@@ -80,7 +82,9 @@ jest.mock('@bifold/core', () => ({
       this.message = message
     }
   },
-}))
+}),
+  { virtual: true }
+)
 
 jest.mock('../transports', () => ({
   lokiTransport: jest.fn(),
