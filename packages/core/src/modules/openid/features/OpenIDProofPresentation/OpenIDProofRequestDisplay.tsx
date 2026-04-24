@@ -11,7 +11,7 @@ interface OpenIdProofRequestDisplayProps {
   credential?: OpenId4VPRequestRecord
   credentialsRequested: OpenIDCredentialRecord[]
   onPressAccept: (...args: any[]) => void
-  onPressAltCredChange: (...args: any[]) => void
+  onPressAltCredChange: (inputDescriptorID: string, selectedCredID: string) => void
   onPressDecline: (...args: any[]) => void
   onPressDismiss: (...args: any[]) => void
   selectedCredentialsSubmission?: SelectedCredentialsFormat

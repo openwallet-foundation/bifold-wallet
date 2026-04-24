@@ -107,7 +107,6 @@ export interface FormattedSubmissionEntry {
   /** can be either AnonCreds groupName, PEX inputDescriptorId, or DCQL credential query id */
   inputDescriptorId: string
   isSatisfied: boolean
-  id?: string
   name: string
   purpose?: string
   description?: string

@@ -15,7 +15,7 @@ import { ThemedText } from '../../../../../components/texts/ThemedText'
 
 interface OpenIDProofRequestBodyProps {
   credentialsRequested: OpenIDCredentialRecord[]
-  onPressAltCredChange: (...args: any[]) => void
+  onPressAltCredChange: (inputDescriptorID: string, selectedCredID: string) => void
   selectedCredentialsSubmission?: SelectedCredentialsFormat
   submission?: FormattedSubmission
   verifierName: string
@@ -80,7 +80,7 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
         
         const credential = credentialsRequested.find((c) => c.id === credentialSubmission?.id)
 
-        if (!credential) {
+        if (!credential || !correspondingSubmission) {
           return null
         }
 
@@ -94,11 +94,10 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
                 <CredentialCardGen
                   credential={credential}
                   hasAltCredentials={hasMultipleCreds}
-                  handleAltCredChange={onPressAltCredChange}
                 />
               }
               {hasMultipleCreds && <View style={{ flex: 1, flexDirection: 'row-reverse', paddingTop: Spacing.sm }}>
-                <Pressable onPress={onPressAltCredChange}>
+                <Pressable onPress={() => onPressAltCredChange(correspondingSubmission.inputDescriptorId, credential.id)}>
                   <ThemedText style={ListItems.recordLink}>
                     {t('ProofRequest.UseDifferentCard')}
                   </ThemedText>

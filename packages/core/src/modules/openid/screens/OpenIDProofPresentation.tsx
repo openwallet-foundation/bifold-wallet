@@ -158,8 +158,10 @@ const OpenIDProofPresentation: React.FC<OpenIDProofPresentationProps> = ({
   }
 
   const handleAltCredChange = useCallback(
-    (inputDescriptorID: string, selectedCredID: string, inputDescriptor: string) => {
-      const submissionEntries = submission?.entries.find((entry) => entry.id === inputDescriptor)
+    (inputDescriptorID: string, selectedCredID: string) => {
+      const submissionEntries = submission?.entries.find((entry) => {
+        return entry.inputDescriptorId === inputDescriptorID
+      })
       const credsForEntry = submissionEntries?.credentials
 
       if (!credsForEntry) return
