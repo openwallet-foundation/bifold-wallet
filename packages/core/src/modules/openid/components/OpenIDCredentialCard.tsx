@@ -17,7 +17,6 @@ import { testIdWithKey } from '../../../utils/testable'
 import { credentialTextColor, toImageSource } from '../../../utils/credential'
 import { useTheme } from '../../../contexts/theme'
 import { SvgUri } from 'react-native-svg'
-import { MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 import { getCredentialForDisplay } from '../display'
 import { BifoldError } from '../../../types/error'
 import { EventTypes } from '../../../constants'
@@ -25,10 +24,11 @@ import { Attribute } from '@bifold/oca/build/legacy'
 import { getAttributeField } from '../../../utils/oca'
 import { useCredentialErrorsFromRegistry } from '../hooks/useCredentialErrorsFromRegistry'
 import { CredentialErrors } from '../../../types/credentials'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 interface CredentialCardProps {
   credentialDisplay?: W3cCredentialDisplay
-  credentialRecord?: W3cCredentialRecord | SdJwtVcRecord | MdocRecord
+  credentialRecord?: OpenIDCredentialRecord
   onPress?: GenericFn
   style?: ViewStyle
 }
@@ -94,7 +94,7 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
       return
     }
-    const result = getCredentialForDisplay(credentialRecord as W3cCredentialRecord)
+    const result = getCredentialForDisplay(credentialRecord)
     return result.display
   }, [credentialDisplay, credentialRecord, t])
 

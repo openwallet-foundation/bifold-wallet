@@ -1,9 +1,6 @@
-import {
-  OpenId4VciCredentialIssuerMetadataDisplay,
-  OpenId4VpResolvedAuthorizationRequest,
-} from '@credo-ts/openid4vc'
+import { OpenId4VciCredentialIssuerMetadataDisplay, OpenId4VpResolvedAuthorizationRequest } from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
-import { ClaimFormat, DifPexCredentialsForRequest, DifPresentationExchangeDefinition } from '@credo-ts/core'
+import { ClaimFormat } from '@credo-ts/core'
 
 export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${string}` | `mdoc-${string}`
 export interface OpenId4VcCredentialMetadata {
@@ -89,11 +86,40 @@ export interface W3cCredentialDisplay {
 }
 
 export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {
-  definition: DifPresentationExchangeDefinition
   verifierHostName: string | undefined
   createdAt: string | Date
-  credentialsForRequest: DifPexCredentialsForRequest | undefined
-  type: string
+  type: 'OpenId4VPRequestRecord'
+}
+
+export type FormattedSelectedCredentialEntry = {
+  id: string
+  credentialName: string
+  issuerName?: string
+  requestedAttributes?: string[]
+  metadata?: CredentialMetadata
+  backgroundColor?: string
+  backgroundImage?: DisplayImage
+  textColor?: string
+  claimFormat: ClaimFormat | 'AnonCreds'
+}
+
+export interface FormattedSubmissionEntry {
+  /** can be either AnonCreds groupName, PEX inputDescriptorId, or DCQL credential query id */
+  inputDescriptorId: string
+  isSatisfied: boolean
+
+  name: string
+  purpose?: string
+  description?: string
+
+  credentials: Array<FormattedSelectedCredentialEntry>
+}
+
+export interface FormattedSubmission {
+  name: string
+  purpose?: string
+  areAllSatisfied: boolean
+  entries: FormattedSubmissionEntry[]
 }
 
 interface DisplayInfo {
