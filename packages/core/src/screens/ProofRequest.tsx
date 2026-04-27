@@ -4,23 +4,18 @@ import {
   AnonCredsRequestedPredicateMatch,
   DidCommRequestPresentationV1Message,
 } from '@credo-ts/anoncreds'
-import {
-  DifPexInputDescriptorToCredentials,
-  CredoError,
-  SubmissionEntryCredential,
-  ClaimFormat,
-} from '@credo-ts/core'
+import { DifPexInputDescriptorToCredentials, CredoError, SubmissionEntryCredential, ClaimFormat } from '@credo-ts/core'
 import { useConnectionById, useProofById } from '@bifold/react-hooks'
 import {
   DidCommCredentialExchangeRecord,
   CredentialRecordBinding,
   DidCommRequestPresentationV2Message,
-  DidCommProofState
+  DidCommProofState,
 } from '@credo-ts/didcomm'
 import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   DeviceEventEmitter,
@@ -116,6 +111,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [attestationLoading, setAttestationLoading] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showErrorModal, setShowErrorModal] = useState(false)
+  const isHandlingLocalProofExit = useRef(false)
 
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
@@ -184,10 +180,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   })
 
   useEffect(() => {
-    if (proof && proof?.state !== DidCommProofState.RequestReceived) {
-      setShowErrorModal(true)
+    if (!proof) {
+      return
     }
-  }, [t, proof])
+    if (proof.state === DidCommProofState.RequestReceived) {
+      setShowErrorModal(false)
+      isHandlingLocalProofExit.current = false
+      return
+    }
+
+    if (proof.state === DidCommProofState.Declined || proof.state === DidCommProofState.Abandoned) {
+      if (!isHandlingLocalProofExit.current) {
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      }
+      return
+    }
+
+    setShowErrorModal(true)
+  }, [navigation, proof])
 
   useEffect(() => {
     if (!attestationMonitor) {
@@ -510,12 +520,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           Object.entries(descriptorMetadata).map(([descriptorId, meta]) => {
             const activeCredentialIds = activeCreds.map((cred) => cred.credId)
             const selectedRecord = meta.find((item) => activeCredentialIds.includes(item.record.id))
-            if (!selectedRecord) { 
+            if (!selectedRecord) {
               throw new Error(t('ProofRequest.CredentialMetadataNotFound'))
             }
             const recordReturn: SubmissionEntryCredential = {
               claimFormat: ClaimFormat.JwtVc,
-              credentialRecord: selectedRecord.record
+              credentialRecord: selectedRecord.record,
             }
             return [descriptorId, [recordReturn]]
           })
@@ -598,13 +608,17 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   ])
 
   const handleDeclineTouched = useCallback(async () => {
+    isHandlingLocalProofExit.current = true
     try {
       if (agent && proof) {
         const connectionId = proof.connectionId ?? ''
         const connection = await agent.modules.didcomm.connections.findById(connectionId)
 
         if (connection) {
-          await agent.modules.didcomm.proofs.sendProblemReport({ proofExchangeRecordId: proof.id, description: t('ProofRequest.Declined') })
+          await agent.modules.didcomm.proofs.sendProblemReport({
+            proofExchangeRecordId: proof.id,
+            description: t('ProofRequest.Declined'),
+          })
         }
 
         await agent.modules.didcomm.proofs.declineRequest({ proofExchangeRecordId: proof.id })
@@ -636,11 +650,15 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   ])
 
   const handleCancelTouched = useCallback(async () => {
+    isHandlingLocalProofExit.current = true
     try {
       toggleCancelModalVisible()
 
       if (agent && proof) {
-        await agent.modules.didcomm.proofs.sendProblemReport({ proofExchangeRecordId: proof.id, description: t('ProofRequest.Declined') })
+        await agent.modules.didcomm.proofs.sendProblemReport({
+          proofExchangeRecordId: proof.id,
+          description: t('ProofRequest.Declined'),
+        })
         await agent.modules.didcomm.proofs.declineRequest({ proofExchangeRecordId: proof.id })
 
         if (proof.connectionId && goalCode?.endsWith('verify.once')) {
