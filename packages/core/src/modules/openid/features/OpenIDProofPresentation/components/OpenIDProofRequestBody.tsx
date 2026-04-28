@@ -1,3 +1,4 @@
+import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
@@ -11,7 +12,6 @@ import { FormattedSubmission } from '../../../types'
 import { type SelectedCredentialsFormat } from '../../../types'
 import type { OpenIDCredentialRecord } from '../../../credentialRecord'
 import { ThemedText } from '../../../../../components/texts/ThemedText'
-
 
 interface OpenIDProofRequestBodyProps {
   credentialsRequested: OpenIDCredentialRecord[]
@@ -28,9 +28,8 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
   submission,
   verifierName,
 }) => {
-
   const { ColorPalette, Spacing, ListItems } = useTheme()
-    const { t } = useTranslation()
+  const { t } = useTranslation()
 
   const styles = StyleSheet.create({
     cardContainer: {
@@ -71,13 +70,12 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
         //TODO: Support multiple credentials
         const correspondingSubmission = submission.entries?.find((s) => s.inputDescriptorId === inputDescriptorId)
         const isSatisfied = correspondingSubmission?.isSatisfied
-        const credentialSubmission = correspondingSubmission?.credentials.find(
-          (s) => s.id === credentialSimplified.id
-        )
+        const credentialSubmission = correspondingSubmission?.credentials.find((s) => s.id === credentialSimplified.id)
         const requestedAttributes = credentialSubmission?.requestedAttributes
-        const hasMultipleCreds = correspondingSubmission?.credentials ? correspondingSubmission.credentials.length > 1 : false
+        const hasMultipleCreds = correspondingSubmission?.credentials
+          ? correspondingSubmission.credentials.length > 1
+          : false
 
-        
         const credential = credentialsRequested.find((c) => c.id === credentialSubmission?.id)
 
         if (!credential || !correspondingSubmission) {
@@ -86,23 +84,22 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
 
         const credentialDisplay = getCredentialForDisplay(credential)
         const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
-        
+
         return (
           <View key={credentialSimplified.id}>
             <View style={styles.cardContainer}>
-              {isSatisfied && requestedAttributes &&
-                <CredentialCardGen
-                  credential={credential}
-                  hasAltCredentials={hasMultipleCreds}
-                />
-              }
-              {hasMultipleCreds && <View style={{ flex: 1, flexDirection: 'row-reverse', paddingTop: Spacing.sm }}>
-                <Pressable onPress={() => onPressAltCredChange(correspondingSubmission.inputDescriptorId, credential.id)}>
-                  <ThemedText style={ListItems.recordLink}>
-                    {t('ProofRequest.UseDifferentCard')}
-                  </ThemedText>
-                </Pressable>
-              </View>}
+              {isSatisfied && requestedAttributes && (
+                <CredentialCardGen credential={credential} hasAltCredentials={hasMultipleCreds} />
+              )}
+              {hasMultipleCreds && (
+                <View style={{ flex: 1, flexDirection: 'row-reverse', paddingTop: Spacing.sm }}>
+                  <Pressable
+                    onPress={() => onPressAltCredChange(correspondingSubmission.inputDescriptorId, credential.id)}
+                  >
+                    <ThemedText style={ListItems.recordLink}>{t('ProofRequest.UseDifferentCard')}</ThemedText>
+                  </Pressable>
+                </View>
+              )}
             </View>
             <View style={styles.detailContainer}>
               <Record fields={fields} hideFieldValues header={() => <></>} scrollEnabled={false} />

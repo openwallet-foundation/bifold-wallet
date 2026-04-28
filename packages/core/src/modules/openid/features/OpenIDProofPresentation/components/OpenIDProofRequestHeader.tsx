@@ -1,3 +1,4 @@
+import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
@@ -14,35 +15,34 @@ interface OpenIDProofRequestHeaderProps {
 const OpenIDProofRequestHeader: React.FC<OpenIDProofRequestHeaderProps> = ({
   selectedCredentialsSubmission,
   verifierName = '',
-  reason = ''
+  reason = '',
 }) => {
-
   const { ListItems, TextTheme, Spacing } = useTheme()
   const { t } = useTranslation()
 
-    const styles = StyleSheet.create({
-        headerTextContainer: {
-            paddingVertical: Spacing.md,
-            paddingHorizontal: Spacing.sm
-        },
-        headerText: {
-            ...ListItems.recordAttributeText,
-            flexShrink: 1,
-            paddingBottom: Spacing.sm,
-        },
-    })
+  const styles = StyleSheet.create({
+    headerTextContainer: {
+      paddingVertical: Spacing.md,
+      paddingHorizontal: Spacing.sm,
+    },
+    headerText: {
+      ...ListItems.recordAttributeText,
+      flexShrink: 1,
+      paddingBottom: Spacing.sm,
+    },
+  })
 
-    if (!selectedCredentialsSubmission) return
+  if (!selectedCredentialsSubmission) return
 
-    return (
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
-              <Text style={TextTheme.normal}>{t('ProofRequest.ReceiveProofTitle')}</Text>
-            <Text style={TextTheme.title}> ${verifierName}</Text>
-          </Text>
-          <Text style={TextTheme.normal}>{reason}</Text>
-        </View>
-    )
+  return (
+    <View style={styles.headerTextContainer}>
+      <Text style={styles.headerText} testID={testIdWithKey('HeaderText')}>
+        <Text style={TextTheme.normal}>{t('ProofRequest.ReceiveProofTitle')}</Text>
+        <Text style={TextTheme.title}> ${verifierName}</Text>
+      </Text>
+      <Text style={TextTheme.normal}>{reason}</Text>
+    </View>
+  )
 }
 
 export default OpenIDProofRequestHeader
