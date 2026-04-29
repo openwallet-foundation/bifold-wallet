@@ -762,7 +762,10 @@
     "CredentialForProofIsRevoked": "revoked credential",
     "ProofRequestStateError": "The proof request received is in: {{state}}, decline this proof and try again.",
     "ProofRequestErrorMessage": "Something went wrong with the proof request.",
-    "PleaseAddress": " Please address them before continuing."
+    "PleaseAddress": " Please address them before continuing.",
+    "DetailsHeader": "Information Requested",
+    "OID4VCTitle": "Information Request",
+    "UseDifferentCard": "Use different card"
   },
   "UnsatisfiedProofRequest": {
     "Title": "Information Request",

@@ -1,6 +1,6 @@
 {
   "name": "@bifold/core",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
@@ -44,9 +44,9 @@
   "devDependencies": {
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
-    "@bifold/oca": "3.0.1",
-    "@bifold/react-hooks": "3.0.1",
-    "@bifold/verifier": "3.0.1",
+    "@bifold/oca": "3.0.2",
+    "@bifold/react-hooks": "3.0.2",
+    "@bifold/verifier": "3.0.2",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -57,6 +57,7 @@
     "@credo-ts/question-answer": "0.6.3",
     "@credo-ts/react-native": "0.6.3",
     "@credo-ts/webvh": "0.6.3",
+    "@expo/app-integrity": "^55.0.9",
     "@formatjs/intl-datetimeformat": "~6.18.2",
     "@formatjs/intl-displaynames": "~6.8.13",
     "@formatjs/intl-getcanonicallocales": "~2.5.6",
@@ -152,7 +153,7 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
-    "@bifold/react-hooks": "3.0.1",
+    "@bifold/react-hooks": "3.0.2",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",

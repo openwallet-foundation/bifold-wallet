@@ -36,7 +36,7 @@ const DeliveryStack: React.FC = () => {
         ...ScreenOptionsDictionary[Screens.Connection],
       }}
     >
-      <Stack.Screen name={Screens.OpenIDConnection} component={OpenIDConnection} options={{ ...defaultStackOptions }} />
+      <Stack.Screen name={Screens.OpenIDConnection} component={OpenIDConnection} options={{ ...defaultStackOptions, headerShown: false }} />
       <Stack.Screen name={Screens.Connection} component={Connection} options={{ ...defaultStackOptions }} />
       <Stack.Screen
         name={Screens.OpenIDCredentialOffer}

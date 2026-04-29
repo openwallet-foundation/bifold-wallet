@@ -71,6 +71,9 @@ export const defaultState: State = {
   },
   stateLoaded: false,
   versionInfo: { needsUpdate: false, lastChecked: undefined, version: undefined },
+  attestation: {
+    isAttestationComplete: false
+  },
 }
 
 export const StoreContext = createContext<[State, Dispatch<ReducerAction<any>>]>([

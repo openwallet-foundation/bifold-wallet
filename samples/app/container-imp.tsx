@@ -1,6 +1,5 @@
 import { BifoldLogger, Container, TokenMapping } from '@bifold/core'
 import { DependencyContainer } from 'tsyringe'
-// import crypto from 'react-native-quick-crypto'
 
 export class AppContainer implements Container {
   private _container: DependencyContainer
@@ -56,8 +55,7 @@ export class AppContainer implements Container {
         throw new Error(`Error generating hash for PIN ${String((error as Error)?.message ?? error)}`)
       }
     })
-    */
-
+    */ 
     return this
   }
 

@@ -53,3 +53,19 @@ export const fetchLedgerNodes = (indyNamespace = 'sovrin'): Array<{ host: string
 
   return nodes
 }
+
+export async function withRetry <T>(promise: (...args: any[]) => Promise<T>, args: any[], maxRetries = 3, onRetry?: () => unknown): Promise<T> {
+  const retry = async (retries = 0): Promise<T> => {
+    try {
+      return await promise(...args)
+    } catch (err) {
+      onRetry?.()
+      if (retries < maxRetries) {
+        return retry(retries + 1)
+      } else {
+        throw err
+      }
+    }
+  }
+  return await retry()
+}

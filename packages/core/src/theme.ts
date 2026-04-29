@@ -288,6 +288,7 @@ const BrandColors = {
   tabBarInactive: GrayscaleColors.white,
   inlineError: InlineErrorMessageColors.error,
   inlineWarning: InlineErrorMessageColors.warning,
+  loadingIcon: GrayscaleColors.white,
 }
 export type IBrandColors = typeof BrandColors
 
