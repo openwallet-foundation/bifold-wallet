@@ -100,11 +100,16 @@ process.env.TZ = 'UTC' // or 'America/Toronto' — pick one and keep it fixed
 // Freeze "now" without enabling fake timers (prevents act() overlaps)
 const FIXED_NOW = new Date('2024-01-01T00:00:00Z').valueOf()
 let dateNowSpy
+let consoleDebugSpy
 
 beforeAll(() => {
   dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => FIXED_NOW)
+  if (!process.env.TEST_VERBOSE) {
+    consoleDebugSpy = jest.spyOn(console, 'debug').mockImplementation(() => {})
+  }
 })
 
 afterAll(() => {
   if (dateNowSpy) dateNowSpy.mockRestore()
+  if (consoleDebugSpy) consoleDebugSpy.mockRestore()
 })
