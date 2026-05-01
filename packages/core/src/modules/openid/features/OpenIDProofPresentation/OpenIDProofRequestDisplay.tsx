@@ -1,3 +1,4 @@
+import React from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 
 import { FormattedSubmission, OpenId4VPRequestRecord } from '../../types'
