@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.3
+
+### Patch Changes
+
+- 25146c1: add some additional exports
+- c7b866a: Fix proof screen
+  - @bifold/react-hooks@3.0.3
+
 ## 3.0.2
 
 ### Patch Changes
