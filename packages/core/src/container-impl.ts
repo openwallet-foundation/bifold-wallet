@@ -93,6 +93,7 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
+  enableHardwareBackedHolderBinding: false,
   enableAttestation: false,
 }
 
