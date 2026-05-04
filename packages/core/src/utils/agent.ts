@@ -9,16 +9,17 @@ import {
   LegacyIndyDidCommProofFormatService,
 } from '@credo-ts/anoncreds'
 
-import { AskarModule } from '@credo-ts/askar'
+import { AskarKeyManagementService, AskarModule } from '@credo-ts/askar'
 import {
   Agent,
+  DcqlModule,
   DidsModule,
   JwkDidResolver,
   KeyDidResolver,
+  Kms,
   PeerDidResolver,
   WebDidResolver,
   X509Module,
-  DcqlModule,
 } from '@credo-ts/core'
 
 import {
@@ -35,6 +36,7 @@ import { IndyVdrAnonCredsRegistry, IndyVdrModule, IndyVdrPoolConfig } from '@cre
 import { WebVhAnonCredsRegistry, WebVhDidResolver } from '@credo-ts/webvh'
 import { useAgent } from '@bifold/react-hooks'
 import { OpenId4VcModule } from '@credo-ts/openid4vc'
+import { SecureEnvironmentKeyManagementService } from '@credo-ts/react-native'
 // import { PushNotificationsApnsModule, PushNotificationsFcmModule } from '@credo-ts/push-notifications'
 import { anoncreds } from '@hyperledger/anoncreds-react-native'
 import { askar } from '@openwallet-foundation/askar-react-native'
@@ -82,8 +84,13 @@ export function getAgentModules({
 
   return {
     askar: new AskarModule({
+      enableKms: false,
       askar,
       store: { id: walletSecret.id, key: walletSecret.key },
+    }),
+    kms: new Kms.KeyManagementModule({
+      backends: [new AskarKeyManagementService(), new SecureEnvironmentKeyManagementService()],
+      defaultBackend: 'askar',
     }),
     anoncreds: new AnonCredsModule({
       anoncreds,
