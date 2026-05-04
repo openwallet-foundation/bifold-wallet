@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../../constants'
+import { TOKENS, useServices } from '../../../container-api'
 import { BifoldError } from '../../../types/error'
 import {
   acquirePreAuthorizedAccessToken,
@@ -30,6 +31,7 @@ export const useOpenID = ({
 
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [{ enableHardwareBackedHolderBinding }] = useServices([TOKENS.CONFIG])
 
   const resolveOpenIDCredential = useCallback(
     async (uri: string) => {
@@ -66,6 +68,7 @@ export const useOpenID = ({
           agent,
           resolvedCredentialOffer,
           tokenResponse: tokenResponse,
+          enableHardwareBackedHolderBinding,
         })
 
         if (refreshToken) {
@@ -100,7 +103,7 @@ export const useOpenID = ({
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
       }
     },
-    [agent, t]
+    [agent, enableHardwareBackedHolderBinding, t]
   )
 
   const resolveOpenIDPresentationRequest = useCallback(
