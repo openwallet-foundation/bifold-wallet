@@ -11,7 +11,8 @@ export const DefaultScreenLayoutOptions: ScreenLayoutConfig = {
     customEdges: ['left', 'right', 'bottom'],
   },
   [Screens.OpenIDProofPresentation]: {
-    customEdges: ['left', 'right', 'bottom'],
+    safeArea: true,
+    customEdges: ['left', 'right', 'bottom', 'top'],
   },
   //TODO: Add more screens here
 }

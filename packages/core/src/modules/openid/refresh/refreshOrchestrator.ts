@@ -24,6 +24,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
   private timer?: ReturnType<typeof setInterval>
   private intervalOn = false // interval enabled?
   private runningOnce = false // a run is in progress?
+  private startupRunTriggered = false
   private opts: Required<RefreshOrchestratorOpts>
   private agent?: Agent
   private readonly recentlyIssued = new Map<string, OpenIDCredentialRecord>()
@@ -36,6 +37,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
     this.opts = {
       intervalMs: 15 * 60 * 1000,
       autoStart: true,
+      runOnStart: false,
       flowType: OpenIDCredentialRefreshFlowType.FullReplacement,
       onError: (e) => this.logger.error(String(e)),
       listRecords: async () => [],
@@ -47,6 +49,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
       `🔧 [RefreshOrchestrator] initialized -> ${JSON.stringify({
         intervalMs: this.opts.intervalMs,
         autoStart: this.opts.autoStart,
+        runOnStart: this.opts.runOnStart,
         flowType: this.opts.flowType,
       })}`
     )
@@ -54,8 +57,20 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
     bridge.onReady((agent) => {
       this.agent = agent
       this.logger.info('🪝 [RefreshOrchestrator] Agent ready')
+      if (this.opts.runOnStart && !this.startupRunTriggered) {
+        this.startupRunTriggered = true
+        void this.runOnce('startup')
+      }
       if (this.opts.autoStart && this.opts.intervalMs) this.start()
     }, true)
+
+    bridge.onChange((agent) => {
+      if (agent) return
+
+      this.agent = undefined
+      this.logger.info('🪝 [RefreshOrchestrator] Agent cleared')
+      this.stop()
+    })
   }
 
   public configure(next: Partial<RefreshOrchestratorOpts>) {
@@ -73,6 +88,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
       `🔧 [RefreshOrchestrator] configure -> ${JSON.stringify({
         intervalMs: this.opts.intervalMs,
         autoStart: this.opts.autoStart,
+        runOnStart: this.opts.runOnStart,
         flowType: this.opts.flowType,
       })}`
     )

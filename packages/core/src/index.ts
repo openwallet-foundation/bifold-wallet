@@ -98,6 +98,7 @@ export { Screens, Stacks, TabStacks } from './types/navigators'
 export * from './types/version-check'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
+export { parsedSchema } from './utils/schema'
 export {
   connectFromScanOrDeepLink,
   formatTime,
@@ -110,6 +111,9 @@ export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { migrateToAskar } from './utils/migration'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 export { testIdForAccessabilityLabel, testIdWithKey } from './utils/testable'
+
+export { default as CredentialDetails } from './screens/CredentialDetails'
+export { default as OpenIDCredentialDetails } from './modules/openid/screens/OpenIDCredentialDetails'
 
 export type { AnimatedComponents } from './animated-components'
 export type { ReducerAction } from './contexts/reducers/store'
