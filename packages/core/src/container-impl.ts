@@ -239,7 +239,7 @@ export class MainContainer implements Container {
       {
         autoStart: false,
         intervalMs: undefined,
-        flowType: OpenIDCredentialRefreshFlowType.FullReplacement,
+        flowType: OpenIDCredentialRefreshFlowType.InvalidThenOnDemand,
         listRecords: async () => {
           const agent = (this._container.resolve(TOKENS.UTIL_AGENT_BRIDGE) as AgentBridge).current
           if (!agent) return []

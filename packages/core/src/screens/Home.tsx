@@ -48,8 +48,6 @@ const Home: React.FC<HomeProps> = () => {
   const screenIsFocused = useIsFocused()
   const refreshTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  console.log(notifications)
-
   const styles = StyleSheet.create({
     flatlist: {
       marginBottom: 35,
@@ -75,15 +73,16 @@ const Home: React.FC<HomeProps> = () => {
             customNotification={customNotification}
           />
         )
-      // } else if(item.type === OpenIDCustomNotificationType.CredentialExpired || item.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
-      //   component = (
-      //     <OpenIDNotificationCard 
-      //       cardName='Test'
-      //       notification={item}
-      //       type={item.type}
-      //       image={""}
-      //     />
-      //   )
+      } else if(item.type === OpenIDCustomNotificationType.CredentialExpired || item.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
+        component = (
+          <OpenIDNotificationCard 
+            cardName='Test'
+            notification={item}
+            type={item.type}
+            image={""}
+            onPress={onCTAPressed}
+          />
+        )
       } else if (
         item.type === OpenIDCustomNotificationType.CredentialExpired ||
         item.type === OpenIDCustomNotificationType.CredentialReplacementAvailable

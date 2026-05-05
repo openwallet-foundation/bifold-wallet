@@ -5,6 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { useTheme } from '../../../contexts/theme'
 import { ThemedText } from '../../../components/texts/ThemedText'
 import { CustomNotification } from '../../../types/notification'
+import { getOpenIDCredentialById } from '../credentialRecord'
+import { useOpenIdReplacementNavigation } from '../hooks/useOpenIdReplacementNavigation'
+import { useAgent } from '@bifold/react-hooks'
+import { useServices, TOKENS } from '../../../container-api'
 
 interface OpenIDNotificationCardProps {
   cardName: string
@@ -18,15 +22,20 @@ interface OpenIDNotificationCardProps {
 export function OpenIDNotificationCard({ notification, onPress, type, image }: OpenIDNotificationCardProps) {
   const { TextTheme, Spacing, ListItems } = useTheme()
   const { t } = useTranslation()
+  const { agent } = useAgent()
+  const openReplacementOffer = useOpenIdReplacementNavigation()
+  const replacementId = notification?.metadata?.['replacementId'] as string | undefined
+  const [orchestrator] = useServices([TOKENS.UTIL_REFRESH_ORCHESTRATOR])
+  console.log(notification?.metadata)
+  const oldId = notification?.metadata?.['oldId'] as string | undefined
+  const newCred = orchestrator.resolveFull(oldId)
 
-  console.log(notification)
-
+  console.log(newCred)
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'row',
-      padding: Spacing.sm
     },
     imageContainer: {
       flex: 1,
@@ -40,26 +49,29 @@ export function OpenIDNotificationCard({ notification, onPress, type, image }: O
     },
     dateText: {
       ...TextTheme.caption,
+      marginBottom: Spacing.sm,
     },
     titleText: {
       ...TextTheme.headingFour,
-      marginBottom: Spacing.md,
+      marginBottom: 8,
     },
     ctaText: {
       ...ListItems.recordLink,
+      textDecorationStyle: 'solid',
+      textDecorationLine: 'underline',
     }
   })
 
   return (
-    <Pressable onPress={notification?.onPressAction}>
+    <Pressable onPress={() => openReplacementOffer(notification)}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image resizeMode='center' src={image} height={50} width={50} />
+          <Image resizeMode='center' src={image} height={50} width={50} style={{ backgroundColor: 'red', borderRadius: Spacing.sm }} />
         </View>
         <View style={styles.detailsContainer}>
           <ThemedText style={styles.dateText}>{`${notification.createdAt}`}</ThemedText>
-          <ThemedText style={styles.dateText}>{t(`OpenIDNotification.${type}.Title`)}</ThemedText>
-          <ThemedText style={styles.dateText}>{t(`OpenIDNotification.${type}.CTA`)}</ThemedText>
+          <ThemedText style={styles.titleText}>{t(`OpenIDNotification.${type}.Title`)}</ThemedText>
+          <ThemedText style={styles.ctaText}>{t(`OpenIDNotification.${type}.CTA`)}</ThemedText>
         </View>
       </View>
     </Pressable>

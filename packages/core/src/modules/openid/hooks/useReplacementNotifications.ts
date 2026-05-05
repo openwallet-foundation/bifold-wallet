@@ -22,7 +22,9 @@ export const useReplacementNotifications = (): CustomNotification[] => {
     (s: Pick<RegistryStore, 'expired' | 'replacements'>): CustomNotification[] => {
       const out: CustomNotification[] = []
 
+      console.log(s.replacements)
       for (const oldId of s.expired) {
+        console.log(s.replacements)
         const repl = s.replacements[oldId] as OpenIDCredentialLite | undefined
         if (!repl) continue
 
@@ -53,12 +55,15 @@ export const useReplacementNotifications = (): CustomNotification[] => {
   useEffect(() => {
     // Initial build
     const s = credentialRegistry.getState()
+    console.log(s)
     setItems(build({ expired: s.expired, replacements: s.replacements }))
 
     // Subscribe to full state updates (since vanilla store lacks selector arg)
     const unsub = credentialRegistry.subscribe((state) => {
+      console.log(state.replacements)
       setItems(build({ expired: state.expired, replacements: state.replacements }))
     })
+    
 
     return unsub
   }, [build])
