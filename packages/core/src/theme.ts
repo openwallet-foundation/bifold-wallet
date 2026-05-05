@@ -1080,7 +1080,7 @@ export function createOnboardingTheme(theme: { ColorPalette: IColorPalette; Text
   return {
     ...textStyles,
     ...viewStyles,
-    headerTintColor: ColorPalette.grayscale.white,
+    headerTintColor: theme.ColorPalette.brand.headerIcon,
     imageDisplayOptions: {
       fill: ColorPalette.notification.infoText,
     },
