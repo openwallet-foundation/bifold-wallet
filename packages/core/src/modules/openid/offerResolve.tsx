@@ -14,6 +14,7 @@ type CredentialBindingResolverOptions = Pick<
   'credentialFormat' | 'proofTypes' | 'supportedDidMethods' | 'supportsAllDidMethods' | 'supportsJwk'
 > & {
   agent: Agent
+  enableHardwareBackedHolderBinding?: boolean
 }
 
 const getCredentialConfigurationIdsToRequest = ({
@@ -102,6 +103,7 @@ export const customCredentialBindingResolver = async ({
   supportsJwk,
   credentialFormat,
   proofTypes,
+  enableHardwareBackedHolderBinding = false,
 }: CredentialBindingResolverOptions): Promise<OpenId4VcCredentialHolderBinding> => {
   let didMethod: 'key' | 'jwk' | undefined =
     supportsAllDidMethods || supportedDidMethods?.includes('did:jwk')
@@ -114,9 +116,19 @@ export const customCredentialBindingResolver = async ({
     didMethod = 'key'
   }
 
-  const key = await agent.kms.createKeyForSignatureAlgorithm({
-    algorithm: proofTypes?.jwt?.supportedSignatureAlgorithms[0] ?? 'EdDSA',
-  })
+  const signatureAlgorithm = enableHardwareBackedHolderBinding
+    ? 'ES256'
+    : (proofTypes?.jwt?.supportedSignatureAlgorithms[0] ?? 'EdDSA')
+
+  if (enableHardwareBackedHolderBinding && !proofTypes?.jwt?.supportedSignatureAlgorithms.includes('ES256')) {
+    throw new Error('Unable to request credential with hardware-backed holder binding. Issuer does not support ES256.')
+  }
+
+  const key = await agent.kms.createKeyForSignatureAlgorithm(
+    enableHardwareBackedHolderBinding
+      ? { algorithm: signatureAlgorithm, backend: 'secureEnvironment' }
+      : { algorithm: signatureAlgorithm }
+  )
   const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk)
 
   if (didMethod) {
@@ -170,12 +182,14 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   tokenResponse,
   credentialConfigurationIdsToRequest,
   clientId,
+  enableHardwareBackedHolderBinding = false,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   tokenResponse: OpenId4VciRequestTokenResponse
   credentialConfigurationIdsToRequest?: string[]
   clientId?: string
+  enableHardwareBackedHolderBinding?: boolean
 }): Promise<OpenIDCredentialRecord> => {
   const credentialConfigurationIds = getCredentialConfigurationIdsToRequest({
     resolvedCredentialOffer,
@@ -188,13 +202,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
     clientId,
     credentialConfigurationIds,
     verifyCredentialStatus: false,
-    allowedProofOfPossessionSignatureAlgorithms: [
-      // NOTE: MATTR launchpad for JFF MUST use EdDSA. So it is important that the default (first allowed one)
-      // is EdDSA. The list is ordered by preference, so if no suites are defined by the issuer, the first one
-      // will be used
-      'EdDSA',
-      'ES256',
-    ],
+    allowedProofOfPossessionSignatureAlgorithms: enableHardwareBackedHolderBinding ? ['ES256'] : ['EdDSA', 'ES256'],
     credentialBindingResolver: async ({
       supportedDidMethods,
       proofTypes,
@@ -209,6 +217,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
         supportsAllDidMethods,
         supportsJwk,
         credentialFormat,
+        enableHardwareBackedHolderBinding,
       })
     },
   })

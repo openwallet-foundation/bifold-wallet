@@ -42,6 +42,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@animo-id/expo-secure-environment": "0.1.5",
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
     "@bifold/oca": "3.0.3",
@@ -101,6 +102,7 @@
     "eslint-plugin-import": "~2.29.1",
     "eslint-plugin-prettier": "~5.2.6",
     "expo": "*",
+    "expo-crypto": "~15.0.8",
     "expo-secure-store": "*",
     "i18next": "~25.8.0",
     "install-peerdeps": "~3.0.7",
@@ -153,6 +155,7 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
+    "@animo-id/expo-secure-environment": "0.1.5",
     "@bifold/react-hooks": "3.0.3",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
@@ -187,6 +190,7 @@
     "axios": "~1.13.2",
     "base-64": "~1.0.0",
     "class-transformer": "0.5.1",
+    "expo-crypto": "~15.0.8",
     "i18next": "~21.6.16",
     "lodash.startcase": "~4.4.0",
     "moment": "~2.29.4",

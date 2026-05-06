@@ -1,0 +1,68 @@
+diff --git a/build/kms/SecureEnvironmentKeyManagementService.d.mts b/build/kms/SecureEnvironmentKeyManagementService.d.mts
+index a24147575a9e37473c63d112d7bb64c79dceaa54..7ff91e5712fed3d4ae4da49d6d7fe54c338e8ba9 100644
+--- a/build/kms/SecureEnvironmentKeyManagementService.d.mts
++++ b/build/kms/SecureEnvironmentKeyManagementService.d.mts
+@@ -1,22 +1,27 @@
+ import { AgentContext, Kms } from "@credo-ts/core";
+ 
+ //#region src/kms/SecureEnvironmentKeyManagementService.d.ts
++interface SecureEnvironmentKeyManagementServiceOptions {
++  biometricsBacked?: boolean;
++}
+ declare class SecureEnvironmentKeyManagementService implements Kms.KeyManagementService {
+   readonly backend = "secureEnvironment";
+   private readonly secureEnvironment;
++  private readonly options;
++  constructor(options?: SecureEnvironmentKeyManagementServiceOptions);
+   isOperationSupported(_agentContext: AgentContext, operation: Kms.KmsOperation): boolean;
+   randomBytes(_agentContext: AgentContext, _options: Kms.KmsRandomBytesOptions): Kms.KmsRandomBytesReturn;
+   getPublicKey(_agentContext: AgentContext, keyId: string): Promise<Kms.KmsJwkPublic | null>;
+   importKey(): Promise<Kms.KmsImportKeyReturn<Kms.KmsJwkPrivate>>;
+   deleteKey(_agentContext: AgentContext, options: Kms.KmsDeleteKeyOptions): Promise<boolean>;
+   encrypt(): Promise<Kms.KmsEncryptReturn>;
+   decrypt(): Promise<Kms.KmsDecryptReturn>;
+   createKey(_agentContext: AgentContext, options: Kms.KmsCreateKeyOptions): Promise<Kms.KmsCreateKeyReturn>;
+   sign(_agentContext: AgentContext, options: Kms.KmsSignOptions): Promise<Kms.KmsSignReturn>;
+   verify(): Promise<Kms.KmsVerifyReturn>;
+   private publicJwkFromPublicKeyBytes;
+   private getKeyAsserted;
+ }
+ //#endregion
+-export { SecureEnvironmentKeyManagementService };
++export { SecureEnvironmentKeyManagementService, type SecureEnvironmentKeyManagementServiceOptions };
+ //# sourceMappingURL=SecureEnvironmentKeyManagementService.d.mts.map
+diff --git a/build/kms/SecureEnvironmentKeyManagementService.mjs b/build/kms/SecureEnvironmentKeyManagementService.mjs
+index 45aa862698d9d3e164c36d5b61b5977282981983..23d58743281711002c2425d39f0ab1d976d5d911 100644
+--- a/build/kms/SecureEnvironmentKeyManagementService.mjs
++++ b/build/kms/SecureEnvironmentKeyManagementService.mjs
+@@ -3,10 +3,11 @@ import { Kms, utils } from "@credo-ts/core";
+ 
+ //#region src/kms/SecureEnvironmentKeyManagementService.ts
+ var SecureEnvironmentKeyManagementService = class {
+-	constructor() {
++	constructor(options = {}) {
+ 		this.backend = "secureEnvironment";
+ 		this.secureEnvironment = importSecureEnvironment();
++		this.options = { biometricsBacked: true, ...options };
+ 	}
+ 	isOperationSupported(_agentContext, operation) {
+ 		if (operation.operation === "createKey") return operation.type.kty === "EC" && operation.type.crv === "P-256";
+ 		if (operation.operation === "sign") return operation.algorithm === "ES256";
+@@ -49,7 +50,7 @@ var SecureEnvironmentKeyManagementService = class {
+ 		const keyId = options.keyId ?? utils.uuid();
+ 		const secureEnvironment = await this.secureEnvironment;
+ 		try {
+-			await secureEnvironment.generateKeypair(keyId);
++			await secureEnvironment.generateKeypair(keyId, this.options.biometricsBacked);
+ 			return {
+ 				keyId,
+ 				publicJwk: await this.getKeyAsserted(keyId)
+@@ -64,7 +65,7 @@ var SecureEnvironmentKeyManagementService = class {
+ 		if (options.algorithm !== "ES256") throw new Kms.KeyManagementAlgorithmNotSupportedError(`algorithm '${options.algorithm}'. Only 'ES256' supported.`, this.backend);
+ 		const secureEnvironment = await this.secureEnvironment;
+ 		try {
+-			return { signature: await secureEnvironment.sign(options.keyId, options.data) };
++			return { signature: await secureEnvironment.sign(options.keyId, options.data, this.options.biometricsBacked) };
+ 		} catch (error) {
+ 			if (error instanceof secureEnvironment.KeyNotFoundError) throw new Kms.KeyManagementKeyNotFoundError(options.keyId, [this.backend]);
+ 			throw new Kms.KeyManagementError("Error signing with key", { cause: error });
