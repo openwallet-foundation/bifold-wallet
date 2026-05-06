@@ -72,7 +72,7 @@
     "@credo-ts/node": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/openid4vc": "0.6.3",
-    "@credo-ts/react-native": "0.6.3",
+    "@credo-ts/react-native": "patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch",
     "@sphereon/ssi-types": "0.33.0",
     "@hyperledger/indy-vdr-react-native@npm:0.2.4": "patch:@hyperledger/indy-vdr-react-native@npm%3A0.2.4#~/.yarn/patches/@hyperledger-indy-vdr-react-native-npm-0.2.4-d7ed0b15da.patch",
     "@animo-id/pex@npm:4.1.1-alpha.0": "patch:@animo-id/pex@npm%3A4.1.1-alpha.0#~/.yarn/patches/@animo-id-pex-npm-4.1.1-alpha.0-f29edfffa2.patch",

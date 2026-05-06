@@ -89,7 +89,10 @@ export function getAgentModules({
       store: { id: walletSecret.id, key: walletSecret.key },
     }),
     kms: new Kms.KeyManagementModule({
-      backends: [new AskarKeyManagementService(), new SecureEnvironmentKeyManagementService()],
+      backends: [
+        new AskarKeyManagementService(),
+        new SecureEnvironmentKeyManagementService({ biometricsBacked: false }),
+      ],
       defaultBackend: 'askar',
     }),
     anoncreds: new AnonCredsModule({
