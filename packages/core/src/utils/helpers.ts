@@ -286,18 +286,31 @@ export function getConnectionName(
   )
 }
 
-export function useCredentialConnectionLabel(credential?: DidCommCredentialExchangeRecord) {
+export function useCredentialConnectionLabel(
+  credential?: DidCommCredentialExchangeRecord,
+  overlay?: CredentialOverlay<BrandingOverlay>
+) {
   const connection = useConnectionById(credential?.connectionId ?? '')
 
   if (!credential) {
     return ''
   }
 
-  if (credential.connectionId) {
-    return connection?.alias || connection?.theirLabel || credential.connectionId
+  const connectionLabel = credential.connectionId ? connection?.alias || connection?.theirLabel || '' : ''
+
+  if (connectionLabel) {
+    return connectionLabel
   }
 
-  return 'Unknown Contact'
+  if (overlay?.metaOverlay?.issuer) {
+    return overlay.metaOverlay.issuer
+  }
+
+  if (!credential.connectionId) {
+    return 'Unknown Contact'
+  }
+
+  return ''
 }
 
 export function useConnectionImageUrl(connectionId: string) {
