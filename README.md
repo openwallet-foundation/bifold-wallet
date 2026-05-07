@@ -55,7 +55,7 @@ Key points to note:
 ### Supported Specifications
 
 - **Protocols:** DIF DIDComm v1 (AIP 2), OIDF OID4VCI (pre-authorized code flow) and OID4VP 1.0, ISO 18013-7 Annex B
-- **Credential Formats:** Hyperledger Anoncreds, IETF SD-JWT, ISO/IEC 18013-5 mDOC, W3C VCDM 1.1 JWT
+- **Credential Formats:** Hyperledger Anoncreds, IETF SD-JWT, ISO/IEC 18013-5 mDOC, W3C VCDM 1.1/2.0 JWT/SD-JWT
 - **DID Methods:** did:indy, did:web, did:key, did:jwk, did:peer and did:webvh
 - **Credential Status:** Hperledger Anoncreds Accumulator, IETF Token Status List, W3C Bitstring Status List 1.0
 - **Request and Query Languages:** DIF Presentation Exchange (PEX) and DCQL (OID4VP 1.0)
