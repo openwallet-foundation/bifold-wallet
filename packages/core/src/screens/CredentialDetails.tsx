@@ -486,10 +486,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     )
   }
 
-  console.log('Rendering CredentialDetails with overlay', overlay)
-  console.log('Credential data:', credential)
-  console.log('credentialConnectionLabel:', credentialConnectionLabel)
-
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
       <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
