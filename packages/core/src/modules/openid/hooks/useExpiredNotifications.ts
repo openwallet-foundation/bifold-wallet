@@ -5,41 +5,54 @@ import { CustomNotification } from '../../../types/notification'
 import { OpenIDCustomNotificationType } from '../refresh/types'
 import { TOKENS, useServices } from '../../../container-api'
 import { useDeclineReplacement } from './useDeclineReplacement'
+import { getOpenIDCredentialById } from '../credentialRecord'
+import { useAgent } from '@bifold/react-hooks'
+import { OpenIDCredentialType } from '../types'
 
 export const useExpiredNotifications = (): CustomNotification[] => {
   const [items, setItems] = useState<CustomNotification[]>([])
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const { declineByOldId } = useDeclineReplacement({ logger })
+  const { agent } = useAgent()
 
   const build = useCallback(
-    (s: RegistryStore): CustomNotification[] =>
-      s.expired
+    async (s: RegistryStore): Promise<CustomNotification[]> => {
+      const expiredCredentialNotification = s.expired
         .filter((oldId) => s.checked.includes(oldId) && !s.replacements[oldId])
         .map((oldId) => {
+          let credential; 
+          getOpenIDCredentialById(agent, OpenIDCredentialType.SdJwtVc, oldId)
+            .then((cred) => {
+              console.log(cred)
+            })
           const lite = s.byId[oldId]
-          const n: CustomNotification = {
+          const notification: CustomNotification = {
             type: OpenIDCustomNotificationType.CredentialExpired,
-            title: 'Credential expired',
-            pageTitle: 'Credential Expired',
-            buttonTitle: 'Review',
-            description: 'This credential is no longer valid. You can attempt to obtain an updated version.',
             createdAt: new Date(),
             onPressAction: () => {},
             onCloseAction: () => declineByOldId(oldId),
-            component: () => null,
             metadata: {
               oldId,
               format: lite?.format,
+              credential,
             },
           }
-          return n
-        }),
+          return notification
+        })
+      return expiredCredentialNotification
+    },
     [declineByOldId]
   )
 
   useEffect(() => {
-    setItems(build(credentialRegistry.getState()))
-    const unsub = credentialRegistry.subscribe((s) => setItems(build(s)))
+    build(credentialRegistry.getState()).then((result) => {
+      setItems(result)
+    })
+    const unsub = credentialRegistry.subscribe((s) => {
+      build(s).then((result) => {
+        setItems(result)
+      })
+    })
     return unsub
   }, [build])
 

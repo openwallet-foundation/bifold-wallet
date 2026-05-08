@@ -323,14 +323,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       setDetails(details ?? defaultDetails)
     }
 
-    if (notificationType === NotificationType.Custom && customNotification) {
-      setDetails({
-        type: InfoBoxType.Info,
-        title: t(customNotification?.title as any),
-        body: t(customNotification?.description as any),
-        buttonTitle: t(customNotification?.buttonTitle as any),
-      })
-    } else {
+    if (notificationType !== NotificationType.Custom && customNotification) {
       getDetails()
     }
   }, [

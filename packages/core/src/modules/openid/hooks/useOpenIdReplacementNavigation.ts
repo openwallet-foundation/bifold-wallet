@@ -18,7 +18,6 @@ export function useOpenIdReplacementNavigation(): OpenReplacementOfferFn {
   const openReplacementOffer = useCallback<OpenReplacementOfferFn>(
     (notif) => {
       const replacementId = notif?.metadata?.['replacementId'] as string | undefined
-      //   const oldId = notif?.metadata?.['oldId'] as string | undefined
 
       if (!replacementId) {
         Toast.show({ type: 'error', text1: 'Missing replacement', text2: 'No replacementId in notification.' })

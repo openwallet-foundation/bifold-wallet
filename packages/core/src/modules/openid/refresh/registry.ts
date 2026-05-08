@@ -1,11 +1,14 @@
 import { ClaimFormat } from '@credo-ts/core'
 import { createStore } from 'zustand/vanilla'
+import { OpenIDCredentialRecord } from '../credentialRecord'
 
 export interface OpenIDCredentialLite {
   id: string
   format: ClaimFormat
   createdAt?: string
   issuer?: string
+  credential?: OpenIDCredentialRecord
+  icon: any
 }
 
 export interface ReplacementMap {

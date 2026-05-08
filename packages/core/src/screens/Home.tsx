@@ -17,7 +17,7 @@ import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
 import { EventTypes } from '../constants'
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
-import { OpenIDNotificationCard } from '../modules/openid/components/OpenIDNotificationCard'
+import { OpenIDNotificationCard } from '../modules/openid/features/OpenIDNotificationCard/OpenIDNotificationCard'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 
@@ -47,6 +47,8 @@ const Home: React.FC<HomeProps> = () => {
   const [showTourPopup, setShowTourPopup] = useState(false)
   const screenIsFocused = useIsFocused()
   const refreshTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const isOpenIDNotification = (type: any) => type === OpenIDCustomNotificationType.CredentialExpired ||
+        type === OpenIDCustomNotificationType.CredentialReplacementAvailable
 
   const styles = StyleSheet.create({
     flatlist: {
@@ -73,14 +75,11 @@ const Home: React.FC<HomeProps> = () => {
             customNotification={customNotification}
           />
         )
-      } else if(item.type === OpenIDCustomNotificationType.CredentialExpired || item.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
+      } else if(isOpenIDNotification(item.type)) {
         component = (
           <OpenIDNotificationCard 
-            cardName='Test'
             notification={item}
             type={item.type}
-            image={""}
-            onPress={onCTAPressed}
           />
         )
       } else if (
