@@ -65,6 +65,7 @@ import Preface from './screens/Preface'
 import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
+import RenameWallet from './screens/RenameWallet'
 import UpdateAvailable from './screens/UpdateAvailable'
 import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
@@ -101,6 +102,7 @@ export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/cr
 export { parsedSchema } from './utils/schema'
 export {
   connectFromScanOrDeepLink,
+  createConnectionInvitation,
   formatTime,
   getConnectionName,
   removeExistingInvitationsById,
@@ -239,6 +241,7 @@ export {
   QRRenderer,
   QRScannerTorch,
   Record,
+  RenameWallet,
   SafeAreaModal,
   Scan,
   ScanCamera,
