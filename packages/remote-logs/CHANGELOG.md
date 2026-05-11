@@ -1,5 +1,14 @@
 # Change Log
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [4be9c48]
+- Updated dependencies [cc8ce46]
+- Updated dependencies [21d6689]
+  - @bifold/core@4.0.0
+
 ## 3.0.4
 
 ### Patch Changes
