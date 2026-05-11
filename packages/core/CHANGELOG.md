@@ -1,5 +1,15 @@
 # @bifold/core
 
+## 3.0.5
+
+### Patch Changes
+
+- 4be9c48: update issuer name helper function
+- cc8ce46: fix camera scan
+- 21d6689: fix proof request screen error handling
+- becac32: additional exports - no behavior change
+  - @bifold/react-hooks@3.0.5
+
 ## 3.0.4
 
 ### Patch Changes
