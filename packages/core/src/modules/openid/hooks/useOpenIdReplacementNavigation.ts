@@ -6,7 +6,7 @@ import { TOKENS, useServices } from '../../../container-api'
 import { RootStackParams, Screens, Stacks } from '../../../types/navigators'
 import { CustomNotification } from '../../../types/notification'
 
-type OpenReplacementOfferFn = (notif: CustomNotification) => void
+type OpenReplacementOfferFn = (replacementId: string) => void
 
 /**
  * A hook that returns a function to open the OpenID Credential Offer screen for a replacement credential
@@ -16,8 +16,7 @@ export function useOpenIdReplacementNavigation(): OpenReplacementOfferFn {
   const [orchestrator] = useServices([TOKENS.UTIL_REFRESH_ORCHESTRATOR])
 
   const openReplacementOffer = useCallback<OpenReplacementOfferFn>(
-    (notif) => {
-      const replacementId = notif?.metadata?.['replacementId'] as string | undefined
+    (replacementId) => {
 
       if (!replacementId) {
         Toast.show({ type: 'error', text1: 'Missing replacement', text2: 'No replacementId in notification.' })

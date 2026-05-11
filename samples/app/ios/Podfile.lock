@@ -3,7 +3,7 @@ PODS:
     - React
     - React-callinvoker
     - React-Core
-  - askar (0.5.0-alpha-20260121132554):
+  - askar (0.6.0):
     - React
     - React-callinvoker
     - React-Core
@@ -95,7 +95,7 @@ PODS:
   - hermes-engine (0.81.5):
     - hermes-engine/Pre-built (= 0.81.5)
   - hermes-engine/Pre-built (0.81.5)
-  - indy-vdr (0.2.3):
+  - indy-vdr (0.2.4):
     - React
     - React-callinvoker
     - React-Core
@@ -3354,7 +3354,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   anoncreds: 67c07584c907d0f9f00c07054ad5b90f80ce73d9
-  askar: 848127ce6e5a29c10615f3be08dda65dbda7662f
+  askar: 7406e7733f2ecff4e372c7b9ae6a2c88c227c997
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
@@ -3374,7 +3374,7 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
-  indy-vdr: 5acf53a8d01edc7573854594a6b3b67164b9c24a
+  indy-vdr: 7e39c2bc97820c0a4a952a8581d89df480ce4b27
   OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   RCT-Folly: 59ec0ac1f2f39672a0c6e6cecdd39383b764646f
   RCTDeprecation: 5eb1d2eeff5fb91151e8a8eef45b6c7658b6c897

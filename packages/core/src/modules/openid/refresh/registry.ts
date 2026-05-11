@@ -1,18 +1,23 @@
 import { ClaimFormat } from '@credo-ts/core'
 import { createStore } from 'zustand/vanilla'
-import { OpenIDCredentialRecord } from '../credentialRecord'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export interface OpenIDCredentialLite {
   id: string
   format: ClaimFormat
   createdAt?: string
   issuer?: string
-  credential?: OpenIDCredentialRecord
-  icon: any
+  credentialName?: string,
+  credentialLogo?: string,
 }
 
 export interface ReplacementMap {
   [oldId: string]: OpenIDCredentialLite // the new “offer”/replacement
+}
+
+export interface ExpiredMap {
+  [oldId: string]: OpenIDCredentialLite
 }
 
 export interface RefreshingMap {
@@ -48,6 +53,7 @@ export interface RegistryActions {
   upsert: (cred: OpenIDCredentialLite) => void
 
   markRefreshing: (id: string) => void
+
   clearRefreshing: (id: string) => void
 
   /** Old cred `oldId` has a replacement available (offer or reissued record) */
@@ -74,12 +80,17 @@ export interface RegistryActions {
   shouldSkip: (id: string) => boolean
 
   setLastSweep: (iso: string) => void
+
+  removedExpiredCredential: (id: string) => void
+
+  removedRefreshedCredential: (id: string) => void
+
   reset: () => void
 }
 
 export type RegistryStore = RegistryState & RegistryActions
 
-export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
+export const credentialRegistry = createStore<RegistryStore>()(persist((set, get) => ({
   byId: {},
   expired: [],
   checked: [],
@@ -162,6 +173,14 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
 
   setLastSweep: (iso) => set({ lastSweepAt: iso }),
 
+  removedExpiredCredential: (id: string) => {
+    set((s) => ({ expired: s.expired.filter((expiredId) => expiredId !== id) }))
+  },
+
+  removeRefreshedCredential: (id: string) => {
+    set((s) => ({ checked: s.checked.filter((checkedId) => checkedId !== id) }))
+  },
+
   reset: () =>
     set({
       byId: {},
@@ -172,7 +191,12 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
       blocked: {},
       lastSweepAt: undefined,
     }),
-}))
+}),
+  {
+    name: 'credential-refresh-storage',
+    storage: createJSONStorage(() => AsyncStorage),
+  }
+))
 
 // Non-React helpers for workers/services
 export const readRegistry = () => credentialRegistry.getState()

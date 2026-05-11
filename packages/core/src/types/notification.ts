@@ -1,11 +1,13 @@
 import React from 'react'
 import { StackNavigationOptions } from '@react-navigation/stack'
+import { ClaimFormat } from '@credo-ts/core'
+import { W3cCredentialDisplay } from '../modules/openid/types'
 
 export interface CustomNotification {
-  onCloseAction: (dispatch?: React.Dispatch<any>) => void
   type?: string
   createdAt?: Date
   onPressAction?: () => void
+  onCloseAction?: () => void
   additionalStackItems?: [
     {
       component: React.FC
@@ -13,7 +15,17 @@ export interface CustomNotification {
       stackOptions?: StackNavigationOptions
     },
   ]
-  metadata?: Record<string, unknown>
+  metadata?: {
+    oldId: string,
+    replacementId?: string,
+    credential?: {
+      name?: string,
+      logo?: string,
+      primaryBackgroundColor?: string,
+      secondaryBackgroundColor?: string
+    },
+    format?: ClaimFormat
+  }
 }
 
 export interface CustomNotificationRecord {

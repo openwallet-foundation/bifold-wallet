@@ -7,6 +7,9 @@ import {
   W3cV2CredentialRecord,
 } from '@credo-ts/core'
 import { OpenId4VPRequestRecord, OpenIDCredentialType } from './types'
+import { getOpenId4VcCredentialMetadata } from './metadata'
+import { getCredentialForDisplay } from './display'
+import { OpenIDCredentialLite } from './refresh/registry'
 
 export type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 
@@ -50,12 +53,18 @@ export const getOpenIDCredentialClaimFormat = (record: OpenIDCredentialRecord): 
   return typeof claimFormat === 'string' ? (claimFormat as ClaimFormat) : ClaimFormat.JwtVc
 }
 
-export const toOpenIDCredentialLite = (record: OpenIDCredentialRecord) => ({
-  id: record.id,
-  format: getOpenIDCredentialClaimFormat(record),
-  createdAt: record.createdAt?.toISOString(),
-  issuer: undefined,
-})
+export const toOpenIDCredentialLite = (record: OpenIDCredentialRecord): OpenIDCredentialLite => {
+  const credentialDisplay = getCredentialForDisplay(record)
+  console.log(record)
+  return {
+    id: record.id,
+    format: getOpenIDCredentialClaimFormat(record),
+    createdAt: record.createdAt?.toISOString(),
+    issuer: undefined,
+    credentialName: credentialDisplay?.display?.name,
+    credentialLogo: credentialDisplay?.display?.logo?.uri,
+  }
+}
 
 export async function storeOpenIDCredential(agent: Agent, record: OpenIDCredentialRecord) {
   if (record instanceof W3cCredentialRecord) {

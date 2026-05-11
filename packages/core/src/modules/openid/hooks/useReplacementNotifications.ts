@@ -6,9 +6,7 @@ import { CustomNotification } from '../../../types/notification'
 import { OpenIDCustomNotificationType } from '../refresh/types'
 import { useDeclineReplacement } from './useDeclineReplacement'
 import { TOKENS, useServices } from '../../../container-api'
-import { useAgent } from '@bifold/react-hooks'
-import { getOpenIDCredentialById } from '../credentialRecord'
-import { OpenIDCredentialType } from '../types'
+import { useOpenIdReplacementNavigation } from './useOpenIdReplacementNavigation'
 
 /**
  * A hook that returns a list of CustomNotifications for credentials that have replacements available
@@ -18,7 +16,7 @@ export const useReplacementNotifications = (): CustomNotification[] => {
   const [items, setItems] = useState<CustomNotification[]>([])
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const { declineByOldId } = useDeclineReplacement({ logger })
-  const { agent } = useAgent()
+  const openReplacementOffer = useOpenIdReplacementNavigation()
 
   // Keep first-seen timestamps stable per (oldId -> replId)
   const firstSeenRef = useRef<Record<string, string>>({})
@@ -28,20 +26,17 @@ export const useReplacementNotifications = (): CustomNotification[] => {
       const out: CustomNotification[] = []
 
       for (const oldId of s.expired) {
-        const repl = s.replacements[oldId] as OpenIDCredentialLite | undefined
+        const repl = s.replacements[oldId]
         if (!repl) continue
 
         const key = `${oldId}::${repl.id}`
         if (!firstSeenRef.current[key]) firstSeenRef.current[key] = new Date().toISOString()
-        
-        const credential = await getOpenIDCredentialById(agent, OpenIDCredentialType.SdJwtVc, oldId)
 
         out.push({
           type: OpenIDCustomNotificationType.CredentialReplacementAvailable,
           createdAt: new Date(firstSeenRef.current[key]),
-          onPressAction: () => {}, // your list item handles navigation
-          onCloseAction: () => declineByOldId(oldId),
-          metadata: { oldId, replacementId: repl.id, credential },
+          metadata: { oldId, replacementId: repl.id, credential: { name: repl.credentialName, logo: repl.credentialLogo } },
+          onPressAction: () => { openReplacementOffer(repl.id) },
         })
       }
 

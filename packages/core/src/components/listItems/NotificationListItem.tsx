@@ -34,7 +34,6 @@ import { InfoBoxType } from '../misc/InfoBox'
 import CommonRemoveModal from '../modals/CommonRemoveModal'
 import { ThemedText } from '../texts/ThemedText'
 import { useOpenIdReplacementNavigation } from '../../modules/openid/hooks/useOpenIdReplacementNavigation'
-import { OpenIDCustomNotificationType } from '../../modules/openid/refresh/types'
 import { useUpgradeExpiredCredential } from '../../modules/openid/hooks/useUpgradeExpiredCredential'
 
 const iconSize = 30
@@ -218,10 +217,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     toggleDeclineModalVisible()
   }, [notification, agent, t, toggleDeclineModalVisible])
 
-  const declineCustomNotification = useCallback(async () => {
-    customNotification?.onCloseAction(dispatch as any)
-    toggleDeclineModalVisible()
-  }, [customNotification, dispatch, toggleDeclineModalVisible])
 
   const commonRemoveModal = () => {
     let usage: ModalUsage | undefined
@@ -231,15 +226,12 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       usage = ModalUsage.ProofRequestDecline
       if ((notification as DidCommProofExchangeRecord).state === DidCommProofState.Done) {
         onSubmit = dismissProofRequest
-      } else {
+    } else {
         onSubmit = declineProofRequest
       }
     } else if (notificationType === NotificationType.CredentialOffer) {
       usage = ModalUsage.CredentialOfferDecline
       onSubmit = declineCredentialOffer
-    } else if (notificationType === NotificationType.Custom) {
-      usage = ModalUsage.CustomNotificationDecline
-      onSubmit = declineCustomNotification
     } else {
       usage = undefined
     }
@@ -393,28 +385,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
             screen: Screens.CredentialDetails,
             params: { credentialId: notification.id },
           })
-        break
-      case NotificationType.Custom:
-        onPress = () => {
-          if (customNotification?.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
-            openReplacementOffer(customNotification)
-            return
-          }
-          if (
-            customNotification?.type === OpenIDCustomNotificationType.CredentialExpired &&
-            customNotification.metadata &&
-            typeof customNotification.metadata.oldId === 'string'
-          ) {
-            upgrade(customNotification.metadata.oldId)
-            return
-          }
-          customNotification?.onPressAction
-            ? customNotification.onPressAction()
-            : navigation.getParent()?.navigate(Stacks.NotificationStack, {
-                screen: Screens.CustomNotification,
-              })
-        }
-        onClose = toggleDeclineModalVisible
         break
       default:
         throw new Error('NotificationType was not set correctly.')
