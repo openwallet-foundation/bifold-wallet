@@ -1,5 +1,5 @@
 ---
-'@bifold/core': major
+'@bifold/core': patch
 ---
 
 update issuer name helper function
