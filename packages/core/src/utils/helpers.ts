@@ -310,7 +310,7 @@ export function useCredentialConnectionLabel(
     return 'Unknown Contact'
   }
 
-  return ''
+  return credential.connectionId
 }
 
 export function useConnectionImageUrl(connectionId: string) {
