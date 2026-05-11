@@ -43,6 +43,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
     [OrientationType['LANDSCAPE-RIGHT']]: '90deg',
   }
   const [invalidQrCodes, setInvalidQrCodes] = useState(new Set<string>())
+  const hasFiredRef = useRef(false)
   const [focusPoint, setFocusPoint] = useState<{ x: number; y: number } | null>(null)
   const focusOpacity = useRef(new Animated.Value(0)).current
   const focusScale = useRef(new Animated.Value(1)).current
@@ -70,11 +71,16 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
       if (error?.data === value) {
         setInvalidQrCodes((prev) => new Set([...prev, value]))
         if (enableCameraOnError) {
+          hasFiredRef.current = false
           return setCameraActive(true)
         }
       }
 
+      if (hasFiredRef.current) {
+        return
+      }
       if (cameraActive) {
+        hasFiredRef.current = true
         Vibration.vibrate()
         handleCodeScan(value)
         return setCameraActive(false)
@@ -126,6 +132,7 @@ const ScanCamera: React.FC<ScanCameraProps> = ({ handleCodeScan, error, enableCa
 
   useEffect(() => {
     if (error?.data && enableCameraOnError) {
+      hasFiredRef.current = false
       setCameraActive(true)
     }
   }, [error, enableCameraOnError])
