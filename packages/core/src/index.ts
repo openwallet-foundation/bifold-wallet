@@ -270,3 +270,21 @@ export {
   AgentBridge,
 }
 export type { BannerMessage, DeepPartial, IButton }
+
+// Reusable screens for embedding in consumer-side nav graphs that don't register
+// Bifold's ConnectionStack / ContactStack hierarchy verbatim.
+export { default as CredentialOffer } from './screens/CredentialOffer'
+export { default as ProofRequest } from './screens/ProofRequest'
+
+// Loading view used by consumer-side connection-loading screens while a proof
+// or credential-offer notification is awaited.
+export {
+  default as LoadingPlaceholder,
+  LoadingPlaceholderWorkflowType,
+} from './components/views/LoadingPlaceholder'
+
+// Hooks that let consumers detect when a notification (offer / proof) has
+// arrived for a freshly received out-of-band invitation.
+export { useNotifications } from './hooks/notifications'
+export type { NotificationItemType, NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
+export { useConnectionByOutOfBandId, useOutOfBandById, useOutOfBandByConnectionId } from './hooks/connections'
