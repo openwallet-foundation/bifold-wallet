@@ -273,6 +273,7 @@ export type { BannerMessage, DeepPartial, IButton }
 
 // Reusable screens for embedding in consumer-side nav graphs that don't register
 // Bifold's ConnectionStack / ContactStack hierarchy verbatim.
+export { default as Connection } from './screens/Connection'
 export { default as CredentialOffer } from './screens/CredentialOffer'
 export { default as ProofRequest } from './screens/ProofRequest'
 
@@ -288,3 +289,8 @@ export {
 export { useNotifications } from './hooks/notifications'
 export type { NotificationItemType, NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
 export { useConnectionByOutOfBandId, useOutOfBandById, useOutOfBandByConnectionId } from './hooks/connections'
+
+// URL classifiers consumer-side scan dispatchers use to recognize and reject
+// OpenID / mediator URIs before parsing them as DIDComm OOB invitations.
+export { isDidCommInvitation, isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './utils/parsers'
+export { isMediatorInvitation } from './utils/mediatorhelpers'
