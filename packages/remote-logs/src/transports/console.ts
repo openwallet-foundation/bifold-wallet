@@ -45,6 +45,17 @@ export type ConsoleTransportProps = {
   options?: ConsoleLoggerOptions
 }
 
+const errorReplacer = (_key: string, value: unknown): unknown => {
+  if (value instanceof Error) {
+    return {
+      name: value.name,
+      message: value.message,
+      stack: value.stack?.split('\n').slice(1).map((line) => line.trim()) ?? [],
+    }
+  }
+  return value
+}
+
 const messageDataFormatter = (...msgs: unknown[]): unknown[] => {
   return msgs.map((msg) => {
     if (msg instanceof Error) {
@@ -65,7 +76,7 @@ const messageDataFormatter = (...msgs: unknown[]): unknown[] => {
 
     if (typeof msg === 'object' && msg !== null) {
       try {
-        return JSON.stringify(msg, null, 2)
+        return JSON.stringify(msg, errorReplacer, 2)
       } catch (error) {
         // Handle JSON serialization errors (circular references, BigInt, etc.)
         if (error instanceof TypeError && error.message.includes('circular')) {
