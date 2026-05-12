@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.6
+
+### Patch Changes
+
+- 8d27002: Export `Connection` screen and URL classifiers (`isDidCommInvitation`, `isOpenIdCredentialOffer`, `isOpenIdPresentationRequest`, `isMediatorInvitation`) for consumer-side reuse — no behavior change.
+  - @bifold/react-hooks@3.0.6
+
 ## 3.0.5
 
 ### Patch Changes
