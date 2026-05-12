@@ -2932,7 +2932,7 @@ __metadata:
 
 "@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch":
   version: 0.6.3
-  resolution: "@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch::version=0.6.3&hash=af0691"
+  resolution: "@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch::version=0.6.3&hash=324d01"
   dependencies:
     "@credo-ts/core": "npm:0.6.3"
     events: "npm:^3.3.0"
@@ -2945,7 +2945,7 @@ __metadata:
   peerDependenciesMeta:
     "@animo-id/expo-secure-environment":
       optional: true
-  checksum: 10c0/39ceac9d262dc603fe406715bc3dd6e89b0384f760f4abf4b9e242fcdc06dc1cd6f8b9af1ebbc4e96422aeb80111a8d4449ba6d77ac8bcd6e070d7096fe461fa
+  checksum: 10c0/28099216e58067fb5c57f893c1ac82b0edd9ed243b119a0a05521ecbd92b646a8c38be4eff2a901738956a5de4f560465a4caf51e73fd92624d0e4f045974465
   languageName: node
   linkType: hard
 

@@ -62,7 +62,7 @@ index 45aa862698d9d3e164c36d5b61b5977282981983..23d58743281711002c2425d39f0ab1d9
  		const secureEnvironment = await this.secureEnvironment;
  		try {
 -			return { signature: await secureEnvironment.sign(options.keyId, options.data) };
-+			return { signature: await secureEnvironment.sign(options.keyId, options.data, this.options.biometricsBacked) };
++			return { signature: await secureEnvironment.sign(options.keyId, new Uint8Array(options.data), this.options.biometricsBacked) };
  		} catch (error) {
  			if (error instanceof secureEnvironment.KeyNotFoundError) throw new Kms.KeyManagementKeyNotFoundError(options.keyId, [this.backend]);
  			throw new Kms.KeyManagementError("Error signing with key", { cause: error });
