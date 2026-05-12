@@ -273,6 +273,7 @@ export type { BannerMessage, DeepPartial, IButton }
 
 // Reusable screens for embedding in consumer-side nav graphs that don't register
 // Bifold's ConnectionStack / ContactStack hierarchy verbatim.
+export { default as Connection } from './screens/Connection'
 export { default as CredentialOffer } from './screens/CredentialOffer'
 export { default as ProofRequest } from './screens/ProofRequest'
 
