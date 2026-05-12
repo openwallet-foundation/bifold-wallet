@@ -7,6 +7,7 @@ import { TOKENS, useServices } from '../../../container-api'
 import { BifoldError } from '../../../types/error'
 import {
   acquirePreAuthorizedAccessToken,
+  createHolderBindingKey,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
 } from '../offerResolve'
@@ -59,7 +60,24 @@ export const useOpenID = ({
           throw new Error('No credential issuer found in the credential offer metadata')
         }
 
-        const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
+        const holderBindingKey = enableHardwareBackedHolderBinding
+          ? await createHolderBindingKey({
+              agent,
+              signatureAlgorithm: 'ES256',
+              enableHardwareBackedHolderBinding,
+            })
+          : undefined
+
+        const tokenResponse = await acquirePreAuthorizedAccessToken({
+          agent,
+          resolvedCredentialOffer,
+          dpop: holderBindingKey
+            ? {
+                jwk: holderBindingKey,
+                alg: 'ES256',
+              }
+            : undefined,
+        })
         const refreshToken = tokenResponse.refreshToken
 
         temporaryMetaVanillaObject.tokenResponse = tokenResponse
@@ -69,6 +87,7 @@ export const useOpenID = ({
           resolvedCredentialOffer,
           tokenResponse: tokenResponse,
           enableHardwareBackedHolderBinding,
+          holderBindingKey,
         })
 
         if (refreshToken) {

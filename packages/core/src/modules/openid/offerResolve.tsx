@@ -1,6 +1,7 @@
 import {
   OpenId4VcCredentialHolderBinding,
   OpenId4VciCredentialBindingOptions,
+  OpenId4VciDpopRequestOptions,
   OpenId4VciCredentialFormatProfile,
   OpenId4VciRequestTokenResponse,
   OpenId4VciResolvedCredentialOffer,
@@ -15,6 +16,25 @@ type CredentialBindingResolverOptions = Pick<
 > & {
   agent: Agent
   enableHardwareBackedHolderBinding?: boolean
+  holderBindingKey?: Kms.PublicJwk
+}
+
+export const createHolderBindingKey = async ({
+  agent,
+  signatureAlgorithm,
+  enableHardwareBackedHolderBinding = false,
+}: {
+  agent: Agent
+  signatureAlgorithm: Kms.KnownJwaSignatureAlgorithm
+  enableHardwareBackedHolderBinding?: boolean
+}): Promise<Kms.PublicJwk> => {
+  const key = await agent.kms.createKeyForSignatureAlgorithm(
+    enableHardwareBackedHolderBinding
+      ? { algorithm: signatureAlgorithm, backend: 'secureEnvironment' }
+      : { algorithm: signatureAlgorithm }
+  )
+
+  return Kms.PublicJwk.fromPublicJwk(key.publicJwk)
 }
 
 const getCredentialConfigurationIdsToRequest = ({
@@ -85,14 +105,17 @@ export async function acquirePreAuthorizedAccessToken({
   agent,
   resolvedCredentialOffer,
   txCode,
+  dpop,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
+  dpop?: OpenId4VciDpopRequestOptions
 }): Promise<OpenId4VciRequestTokenResponse> {
   return await agent.openid4vc.holder.requestToken({
     resolvedCredentialOffer,
     txCode,
+    dpop,
   })
 }
 
@@ -104,6 +127,7 @@ export const customCredentialBindingResolver = async ({
   credentialFormat,
   proofTypes,
   enableHardwareBackedHolderBinding = false,
+  holderBindingKey,
 }: CredentialBindingResolverOptions): Promise<OpenId4VcCredentialHolderBinding> => {
   let didMethod: 'key' | 'jwk' | undefined =
     supportsAllDidMethods || supportedDidMethods?.includes('did:jwk')
@@ -124,18 +148,19 @@ export const customCredentialBindingResolver = async ({
     throw new Error('Unable to request credential with hardware-backed holder binding. Issuer does not support ES256.')
   }
 
-  const key = await agent.kms.createKeyForSignatureAlgorithm(
-    enableHardwareBackedHolderBinding
-      ? { algorithm: signatureAlgorithm, backend: 'secureEnvironment' }
-      : { algorithm: signatureAlgorithm }
-  )
-  const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk)
+  const publicJwk =
+    holderBindingKey ??
+    (await createHolderBindingKey({
+      agent,
+      signatureAlgorithm,
+      enableHardwareBackedHolderBinding,
+    }))
 
   if (didMethod) {
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({
       method: didMethod,
       options: {
-        keyId: key.keyId,
+        keyId: publicJwk.keyId,
       },
     })
 
@@ -183,6 +208,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   credentialConfigurationIdsToRequest,
   clientId,
   enableHardwareBackedHolderBinding = false,
+  holderBindingKey,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
@@ -190,6 +216,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   credentialConfigurationIdsToRequest?: string[]
   clientId?: string
   enableHardwareBackedHolderBinding?: boolean
+  holderBindingKey?: Kms.PublicJwk
 }): Promise<OpenIDCredentialRecord> => {
   const credentialConfigurationIds = getCredentialConfigurationIdsToRequest({
     resolvedCredentialOffer,
@@ -218,6 +245,7 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
         supportsJwk,
         credentialFormat,
         enableHardwareBackedHolderBinding,
+        holderBindingKey,
       })
     },
   })

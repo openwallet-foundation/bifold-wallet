@@ -93,7 +93,7 @@ export const defaultConfig: Config = {
   },
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
-  enableHardwareBackedHolderBinding: false,
+  enableHardwareBackedHolderBinding: true,
   enableAttestation: false,
 }
 
@@ -266,7 +266,6 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, () => {})
 
     return this
-
   }
 
   public resolve<K extends keyof TokenMapping>(token: K): TokenMapping[K] {
