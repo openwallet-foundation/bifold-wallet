@@ -20,16 +20,6 @@ The Bifold Wallet is an open-source project designed to enhance the way we inter
 
 Currently, we're updating Bifold's architecture to make it easier to maintain and customize for various use cases. Check out our [design roadmap issue](https://github.com/openwallet-foundation/bifold-wallet/issues/754) for more information, and we welcome your feedback.
 
-## Architecture & Credential Lifecycle (OpenID4VC)
-
-For a deeper look into how Bifold manages credential validity, refresh, and lifecycle automation, check out the [OpenID Credential Refresh Lifecycle Architecture](./docs/cred-lifecycle-arc.md).  
-This document contains diagrams and explanations of wallet-side flows such as:
-
-- Status list verification for SD-JWT credentials
-- Automated refresh with stored refresh tokens
-- User and background triggers
-- UX integration and fallback strategies
-
 ## Contributing
 
 We warmly welcome contributions to the Bifold project! If you're interested in joining our community, please start by reading our [Contributor's Guide][contributor-guide].
@@ -58,9 +48,17 @@ The Bifold Wallet is a user-friendly mobile agent that is built with React Nativ
 
 Key points to note:
 
-- Bifold uses the Credo library, which in turn uses Rust libraries.
-- Credo uses the HTTP protocol to communicate with Aries agents and WebSockets for messaging via a mediator.
-- Bifold relies on a mediator because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app.
+- Bifold uses the OWF Credo-ts library, which in turn uses Rust libraries.
+- Credo provides the digital credential domain specific layer for Bifold - [features](https://github.com/openwallet-foundation/credo-ts#features) 
+- Bifold relies on a mediator for DIDComm protocols because mobile devices don't have a fixed IP address and often don't accept inbound network connections. The mediator, a service that runs on a server with a fixed IP address, relays messages between an agent and Bifold. The mediator is configured within the Bifold app. A mediator is not required for OID4VCI flows.
+
+### Supported Specifications
+
+- **Protocols:** DIF DIDComm v1 (AIP 2), OIDF OID4VCI (pre-authorized code flow) and OID4VP 1.0, ISO 18013-7 Annex B
+- **Credential Formats:** Hyperledger Anoncreds, IETF SD-JWT, ISO/IEC 18013-5 mDOC, W3C VCDM 1.1/2.0 JWT/SD-JWT
+- **DID Methods:** did:indy, did:web, did:key, did:jwk, did:peer and did:webvh
+- **Credential Status:** Hperledger Anoncreds Accumulator, IETF Token Status List, W3C Bitstring Status List 1.0
+- **Request and Query Languages:** DIF Presentation Exchange (PEX) and DCQL (OID4VP 1.0)
 
 ### Registering DID Method Resolvers
 
@@ -216,11 +214,15 @@ Some packages need to be built (transpiled) before they can be used from the app
 yarn run build
 ```
 
-As noted above Bifold requires a mediator to communicate with other Agents. For development purposes, this can be set by creating a `.env` file in the following directory:
+The .env file is used to configure specific aspects of Bifold such as the mediator, OCA URL and mDOC certificate for development purposes.
 
 ```sh
 touch samples/app/.env
 ```
+
+### Mediator setup - DIDComm flows only
+
+As noted above Bifold requires a mediator to communicate with other Agents via DIDComm. A mediator is not required for OID4VC flows.
 
 Add a line to the `.env` file with the following content:
 
@@ -228,17 +230,27 @@ Add a line to the `.env` file with the following content:
 MEDIATOR_URL=https://us-east.public.mediator.indiciotech.io/message?oob=eyJAaWQiOiJlOTFkZmYxOC1mYzIwLTRkMjItYjljMi1jMzZhZDI0ZTYwODEiLCJAdHlwZSI6Imh0dHBzOi8vZGlkY29tbS5vcmcvb3V0LW9mLWJhbmQvMS4xL2ludml0YXRpb24iLCJoYW5kc2hha2VfcHJvdG9jb2xzIjpbImh0dHBzOi8vZGlkY29tbS5vcmcvZGlkZXhjaGFuZ2UvMS4wIl0sInNlcnZpY2VzIjpbeyJpZCI6IiNpbmxpbmUiLCJ0eXBlIjoiZGlkLWNvbW11bmljYXRpb24iLCJyZWNpcGllbnRLZXlzIjpbImRpZDprZXk6ejZNa2dTWUJNNjNpSE5laVQyVlNRdTdiYnRYaEdZQ1FyUEo4dUVHdXJiZkdiYmdFIl0sInNlcnZpY2VFbmRwb2ludCI6Imh0dHBzOi8vdXMtZWFzdC5wdWJsaWMubWVkaWF0b3IuaW5kaWNpb3RlY2guaW8vbWVzc2FnZSJ9LHsiaWQiOiIjaW5saW5lIiwidHlwZSI6ImRpZC1jb21tdW5pY2F0aW9uIiwicmVjaXBpZW50S2V5cyI6WyJkaWQ6a2V5Ono2TWtnU1lCTTYzaUhOZWlUMlZTUXU3YmJ0WGhHWUNRclBKOHVFR3VyYmZHYmJnRSJdLCJzZXJ2aWNlRW5kcG9pbnQiOiJ3c3M6Ly93cy51cy1lYXN0LnB1YmxpYy5tZWRpYXRvci5pbmRpY2lvdGVjaC5pby93cyJ9XSwiYWNjZXB0IjpbImRpZGNvbW0vYWlwMSIsImRpZGNvbW0vYWlwMjtlbnY9cmZjMTkiXSwibGFiZWwiOiJDbG91ZCBNZWRpYXRvciJ9
 ```
 
-You can use the above mentioned public mediator hosted by Indecio or set up your own mediator. See [Aries Mediator](https://github.com/hyperledger/aries-mediator-service) for more information.
+You can use the above mentioned public mediator hosted by Indicio or set up your own mediator. See [Aries Mediator](https://github.com/hyperledger/aries-mediator-service) for more information.
 
 ### Custom Mediators in Bifold
 
-Bifold wallet supports using custom mediators. To succesfully add a mediator to the wallet for use, the mediator invitation must contain a goal code field with the value:
+Bifold wallet supports using custom mediators. To successfully add a mediator to the wallet for use, the mediator invitation must contain a goal code field with the value:
 
 ```text
 "aries.vc.mediate"
 ```
 
 Currently the way to add a custom mediator is by scanning a QR code containing the invitation URL. This will take you to a settings screen in the developer options allowing you to select which mediator to connect to.
+
+### Configuring a Certificate - ISO/IEC 18013-5 mdoc credentials
+
+Bifold requires the appropriate IACA certificate to verify an mDOC credential before accepting it. For development purposes the certificate can be configured in the .env file (base64)
+
+```text
+MDOC_TRUSTED_CERTIFICATE_BASE64="....Your Certificate...."
+```
+
+In production the certificates would likely come from a VICAL or other use case specific mechanism.
 
 # Running Bifold
 
@@ -367,18 +379,20 @@ cd samples/app
 yarn start
 ```
 
-## OpenID Credentials Refresh Lifecycle
+## OID4VCI Credentials Refresh Lifecycle
 
 Bifold now supports an **automated OpenID4VCI + SD-JWT credential refresh lifecycle**, enabling wallets to:
 
 - Periodically check credential **status lists**.
 - Automatically use stored **refresh tokens** to obtain a new access token.
 - Request and replace credentials seamlessly when a credential becomes invalid or revoked.
+- Status list verification for SD-JWT credentials
 
 For a detailed walkthrough of the flow, sequence diagrams, and implementation notes, see
 
 - [Cred Refresh Lifecycle Overview](docs/openid-refresh.md)
 - [Technical Diagram](docs/cred-lifecycle-arc.md)
+- [OpenID Credential Refresh Lifecycle Architecture](./docs/cred-lifecycle-arc.md)
 
 # Success Stories
 
