@@ -28,7 +28,7 @@ export const useExpiredNotifications = (): OpenIDNotificationData[] => {
           }
           return notification
         }),
-    []
+    [declineByOldId]
   )
 
   useEffect(() => {

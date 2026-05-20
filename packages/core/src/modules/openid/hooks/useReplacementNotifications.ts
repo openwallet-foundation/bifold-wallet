@@ -4,8 +4,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { credentialRegistry, RegistryStore } from '../refresh/registry'
 import { OpenIDNotificationData } from '../features/notifications/types'
 import { OpenIDCustomNotificationType } from '../refresh/types'
-import { useDeclineReplacement } from './useDeclineReplacement'
-import { TOKENS, useServices } from '../../../container-api'
 import { useOpenIdReplacementNavigation } from './useOpenIdReplacementNavigation'
 
 /**
@@ -14,8 +12,6 @@ import { useOpenIdReplacementNavigation } from './useOpenIdReplacementNavigation
 
 export const useReplacementNotifications = (): OpenIDNotificationData[] => {
   const [items, setItems] = useState<OpenIDNotificationData[]>([])
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const { declineByOldId } = useDeclineReplacement({ logger })
   const openReplacementOffer = useOpenIdReplacementNavigation()
 
   // Keep first-seen timestamps stable per (oldId -> replId)
