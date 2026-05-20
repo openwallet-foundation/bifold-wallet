@@ -39,7 +39,7 @@ export function OpenIDNotificationCard({ notification, type }: OpenIDNotificatio
       setCredential(credentialData?.display)
     })
 
-  }, [notification, getCredentialById, type, setCredential])
+  }, [id, getCredentialById, type, setCredential])
 
   const styles = StyleSheet.create({
     pressable: {

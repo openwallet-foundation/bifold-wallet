@@ -20,12 +20,15 @@ export const useExpiredNotifications = (): OpenIDNotificationData[] => {
             type: OpenIDCustomNotificationType.CredentialExpired,
             createdAt: new Date(),
             onPressAction: () => {},
-            onCloseAction: () => { s.markNotificationRemoved(oldId) },
+            onCloseAction: () => { 
+              s.markNotificationRemoved(oldId)
+              declineByOldId(oldId)
+            },
             metadata: { oldId },
           }
           return notification
         }),
-    [declineByOldId]
+    []
   )
 
   useEffect(() => {

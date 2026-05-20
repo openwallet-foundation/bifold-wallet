@@ -44,7 +44,7 @@ export const useReplacementNotifications = (): OpenIDNotificationData[] => {
       out.sort((a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0))
       return out
     },
-    [declineByOldId]
+    [openReplacementOffer]
   )
 
   useEffect(() => {
