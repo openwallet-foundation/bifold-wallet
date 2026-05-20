@@ -1,10 +1,10 @@
 import React from 'react'
 import { StackNavigationOptions } from '@react-navigation/stack'
-import { ClaimFormat } from '@credo-ts/core'
-import { W3cCredentialDisplay } from '../modules/openid/types'
+
+import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
 
 export interface CustomNotification {
-  type?: string
+  type?: OpenIDCustomNotificationType
   createdAt?: Date
   onPressAction?: () => void
   onCloseAction?: () => void
@@ -16,15 +16,8 @@ export interface CustomNotification {
     },
   ]
   metadata?: {
-    oldId: string,
+    oldId?: string,
     replacementId?: string,
-    credential?: {
-      name?: string,
-      logo?: string,
-      primaryBackgroundColor?: string,
-      secondaryBackgroundColor?: string
-    },
-    format?: ClaimFormat
   }
 }
 

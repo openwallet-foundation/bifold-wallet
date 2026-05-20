@@ -8,8 +8,6 @@ export interface OpenIDCredentialLite {
   format: ClaimFormat
   createdAt?: string
   issuer?: string
-  credentialName?: string,
-  credentialLogo?: string,
 }
 
 export interface ReplacementMap {
@@ -47,6 +45,8 @@ export interface RegistryState {
   blocked: Record<string, BlockEntry>
   // last run timestamps (optional, helps UI)
   lastSweepAt?: string
+
+  notificationRemoved: string[]
 }
 
 export interface RegistryActions {
@@ -81,9 +81,9 @@ export interface RegistryActions {
 
   setLastSweep: (iso: string) => void
 
-  removedExpiredCredential: (id: string) => void
+  removeCredentialFromRegistry: (id: string) => void
 
-  removedRefreshedCredential: (id: string) => void
+  markNotificationRemoved: (id: string) => void
 
   reset: () => void
 }
@@ -97,6 +97,7 @@ export const credentialRegistry = createStore<RegistryStore>()(persist((set, get
   replacements: {},
   refreshing: {},
   blocked: {},
+  notificationRemoved: [],
   lastSweepAt: undefined,
 
   upsert: (cred) => set((s) => ({ byId: { ...s.byId, [cred.id]: cred } })),
@@ -173,12 +174,22 @@ export const credentialRegistry = createStore<RegistryStore>()(persist((set, get
 
   setLastSweep: (iso) => set({ lastSweepAt: iso }),
 
-  removedExpiredCredential: (id: string) => {
-    set((s) => ({ expired: s.expired.filter((expiredId) => expiredId !== id) }))
+  removeCredentialFromRegistry: (id: string) => {
+    set((s) => {
+      const replacements = s.replacements
+      if (replacements?.id) delete replacements[id]
+      return {
+        expired: s.expired.filter((expiredId) => expiredId !== id),
+        checked: s.checked.filter((checkedId) => checkedId !== id),
+        replacements,
+      }
+    })
   },
 
-  removeRefreshedCredential: (id: string) => {
-    set((s) => ({ checked: s.checked.filter((checkedId) => checkedId !== id) }))
+  markNotificationRemoved: (id: string) => {
+    set((s) => ({
+      notificationRemoved: [...s.notificationRemoved, id]
+    }))
   },
 
   reset: () =>

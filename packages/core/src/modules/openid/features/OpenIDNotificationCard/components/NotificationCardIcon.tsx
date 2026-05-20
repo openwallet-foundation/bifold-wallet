@@ -7,7 +7,6 @@ import { OIDNotificationType } from '../OpenIDNotificationCard'
 import CredentialCardGenLogo from '../../../../../components/misc/CredentialCardGenLogo'
 import { CredentialDisplay } from '../../../types'
 
-
 interface NotificationCardIconProps {
   credentialDisplay: Partial<CredentialDisplay>
   notificationType: OIDNotificationType
@@ -69,7 +68,7 @@ export function NotificationCardIcon({ credentialDisplay, notificationType }: No
       <CredentialCardGenLogo
         containerStyle={styles.cardImage}
         logoHeight={50}
-        noLogoText={credentialDisplay?.logo?.altText ?? 'X'}
+        noLogoText={credentialDisplay?.logo?.altText ?? ''}
         primaryBackgroundColor={credentialDisplay?.backgroundColor ?? '#FFFFFF'}
         logo={credentialDisplay?.logo?.uri ?? ''} 
       />

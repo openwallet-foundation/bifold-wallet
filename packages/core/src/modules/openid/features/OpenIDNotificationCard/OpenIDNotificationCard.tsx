@@ -19,31 +19,27 @@ interface OpenIDNotificationCardProps {
   type: OIDNotificationType
 }
 
-interface NotificationCredentialData {
-  name?: string,
-  display?: Partial<CredentialDisplay>
-}
-
 export function OpenIDNotificationCard({ notification, type }: OpenIDNotificationCardProps) {
 
   const { TextTheme, ListItems, ColorPalette } = useTheme()
   const { t } = useTranslation()
   const { getCredentialById } = useOpenIDCredentials()
-  const [credential, setCredential] = useState<NotificationCredentialData>({ name: 'Credential', display: { logo: { uri: '' }, } })
+  const [credential, setCredential] = useState<Partial<CredentialDisplay> | undefined>()
+  const id = notification?.metadata?.oldId
  
   useEffect(() => {
+    
     const getCredentialData = async () => {
-      const credential = await getCredentialById(notification?.metadata?.oldId ?? '')
-      const credDisplay = credential && getCredentialForDisplay(credential)
-      return credDisplay
+      const credential = await getCredentialById(id ?? '')
+      return credential && getCredentialForDisplay(credential)
     }
 
+    if(!id) return
     getCredentialData().then((credentialData) => {
-      console.log(credentialData)
-      setCredential({ name: credentialData?.display.name, display: credentialData?.display })
+      setCredential(credentialData?.display)
     })
 
-  }, [getCredentialById, type])
+  }, [notification, getCredentialById, type, setCredential])
 
   const styles = StyleSheet.create({
     pressable: {
@@ -86,11 +82,13 @@ export function OpenIDNotificationCard({ notification, type }: OpenIDNotificatio
     }
   })
 
+  if (!credential) return
+
   return (
     <Pressable onPress={notification.onPressAction} style={styles.pressable}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <NotificationCardIcon credentialDisplay={credential?.display ?? {}} notificationType={type} />
+          <NotificationCardIcon credentialDisplay={credential ?? {}} notificationType={type} />
         </View>
         <View style={styles.detailsContainer}>
           <ThemedText style={styles.dateText}>{`${moment(notification?.createdAt ?? Date.now()).format('DD MMMM YYYY')}`}</ThemedText>

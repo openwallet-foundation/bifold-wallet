@@ -22,7 +22,7 @@ export const useReplacementNotifications = (): CustomNotification[] => {
   const firstSeenRef = useRef<Record<string, string>>({})
 
   const build = useCallback(
-    async (s: Pick<RegistryStore, 'expired' | 'replacements'>): Promise<CustomNotification[]> => {
+    (s: Pick<RegistryStore, 'expired' | 'replacements'>): CustomNotification[] => {
       const out: CustomNotification[] = []
 
       for (const oldId of s.expired) {
@@ -35,7 +35,7 @@ export const useReplacementNotifications = (): CustomNotification[] => {
         out.push({
           type: OpenIDCustomNotificationType.CredentialReplacementAvailable,
           createdAt: new Date(firstSeenRef.current[key]),
-          metadata: { oldId, replacementId: repl.id, credential: { name: repl.credentialName, logo: repl.credentialLogo } },
+          metadata: { oldId },
           onPressAction: () => { openReplacementOffer(repl.id) },
         })
       }
@@ -50,15 +50,11 @@ export const useReplacementNotifications = (): CustomNotification[] => {
   useEffect(() => {
     // Initial build
     const s = credentialRegistry.getState()
-    build({ expired: s.expired, replacements: s.replacements }).then((result) => {
-      setItems(result)
-    })
+    setItems(build({ expired: s.expired, replacements: s.replacements }))
 
     // Subscribe to full state updates (since vanilla store lacks selector arg)
     const unsub = credentialRegistry.subscribe((state) => {
-      build({ expired: state.expired, replacements: state.replacements }).then((result) => {
-        setItems(result)
-      })
+      setItems(build({ expired: state.expired, replacements: state.replacements }))
     })
     
 
