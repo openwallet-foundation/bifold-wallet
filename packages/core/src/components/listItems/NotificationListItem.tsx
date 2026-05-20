@@ -386,6 +386,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
             params: { credentialId: notification.id },
           })
         break
+      case NotificationType.Custom:
+        customNotification?.onPressAction
+            ? customNotification.onPressAction()
+            : navigation.getParent()?.navigate(Stacks.NotificationStack, {
+                screen: Screens.CustomNotification,
+              })
+        onClose = toggleDeclineModalVisible
+        break
       default:
         throw new Error('NotificationType was not set correctly.')
     }

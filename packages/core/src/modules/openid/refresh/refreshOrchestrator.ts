@@ -38,7 +38,7 @@ export class RefreshOrchestrator implements IRefreshOrchestrator {
       intervalMs: 15 * 60 * 1000,
       autoStart: true,
       runOnStart: false,
-      flowType: OpenIDCredentialRefreshFlowType.InvalidThenOnDemand,
+      flowType: OpenIDCredentialRefreshFlowType.FullReplacement,
       onError: (e) => this.logger.error(String(e)),
       listRecords: async () => [],
       toLite: toOpenIDCredentialLite,

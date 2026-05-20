@@ -25,7 +25,7 @@ import CredentialDetailPrimaryHeader from '../../../components/views/CredentialD
 import ScreenLayout from '../../../layout/ScreenLayout'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { OpenIDCredentialRecord } from '../credentialRecord'
-import { credentialRegistry, RegistryStore } from '../refresh/registry'
+import { credentialRegistry } from '../refresh/registry'
 
 export enum OpenIDCredScreenMode {
   offer,

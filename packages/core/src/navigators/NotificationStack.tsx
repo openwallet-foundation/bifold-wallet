@@ -34,7 +34,7 @@ const NotificationStack: React.FC = () => {
           name={Screens.CustomNotification}
           component={customNotification.component}
           options={{
-            title: t(customNotification.pageTitle ?? '' as any),
+            title: t(customNotification.pageTitle as any),
             ...ScreenOptionsDictionary[Screens.CustomNotification],
           }}
         />

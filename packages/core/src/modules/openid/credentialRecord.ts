@@ -7,8 +7,6 @@ import {
   W3cV2CredentialRecord,
 } from '@credo-ts/core'
 import { OpenId4VPRequestRecord, OpenIDCredentialType } from './types'
-import { getOpenId4VcCredentialMetadata } from './metadata'
-import { getCredentialForDisplay } from './display'
 import { OpenIDCredentialLite } from './refresh/registry'
 
 export type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
