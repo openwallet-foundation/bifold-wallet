@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useTheme } from '../../../../contexts/theme'
 import { ThemedText } from '../../../../components/texts/ThemedText'
-import { CustomNotification } from '../../../../types/notification'
+import { OpenIDNotificationData } from './types'
 import { NotificationCardIcon } from './components/NotificationCardIcon'
 import { useOpenIDCredentials } from '../../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../../display'
@@ -14,10 +14,10 @@ import { CredentialDisplay } from '../../types'
 
 export type OIDNotificationType = 'CredentialRefresh' | 'CredentialExpired'
 
-interface OpenIDNotificationCardProps {
-  notification: CustomNotification
+type OpenIDNotificationCardProps = Readonly<{
+  notification: OpenIDNotificationData
   type: OIDNotificationType
-}
+}>
 
 export function OpenIDNotificationCard({ notification, type }: OpenIDNotificationCardProps) {
 

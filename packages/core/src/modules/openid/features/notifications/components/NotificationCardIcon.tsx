@@ -7,10 +7,10 @@ import { OIDNotificationType } from '../OpenIDNotificationCard'
 import CredentialCardGenLogo from '../../../../../components/misc/CredentialCardGenLogo'
 import { CredentialDisplay } from '../../../types'
 
-interface NotificationCardIconProps {
+type NotificationCardIconProps = Readonly<{
   credentialDisplay: Partial<CredentialDisplay>
   notificationType: OIDNotificationType
-}
+}>
 
 export function NotificationCardIcon({ credentialDisplay, notificationType }: NotificationCardIconProps) {
 

@@ -4,7 +4,6 @@ import { useNavigation, NavigationProp } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 import { TOKENS, useServices } from '../../../container-api'
 import { RootStackParams, Screens, Stacks } from '../../../types/navigators'
-import { CustomNotification } from '../../../types/notification'
 
 type OpenReplacementOfferFn = (replacementId: string) => void
 

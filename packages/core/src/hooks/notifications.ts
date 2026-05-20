@@ -23,6 +23,7 @@ import {
 } from '../types/metadata'
 import { useOpenID } from '../modules/openid/hooks/openid'
 import { CustomNotification } from '../types/notification'
+import { OpenIDNotificationData } from '../modules/openid/features/notifications/types'
 import { OpenId4VPRequestRecord } from '../modules/openid/types'
 import { useExpiredNotifications } from '../modules/openid/hooks/useExpiredNotifications'
 import { useReplacementNotifications } from '../modules/openid/hooks/useReplacementNotifications'
@@ -43,6 +44,7 @@ export type NotificationItemType =
   | W3cV2CredentialRecord
   | MdocRecord
   | OpenId4VPRequestRecord
+  | OpenIDNotificationData
 
 export type NotificationReturnType = Array<NotificationItemType>
 

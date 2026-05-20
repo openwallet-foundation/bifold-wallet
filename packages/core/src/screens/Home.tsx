@@ -17,7 +17,7 @@ import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
 import { EventTypes } from '../constants'
 import Toast from 'react-native-toast-message'
 import { ToastType } from '../components/toast/BaseToast'
-import { OpenIDNotificationCard } from '../modules/openid/features/OpenIDNotificationCard/OpenIDNotificationCard'
+import { OpenIDNotificationCard } from '../modules/openid/features/notifications/OpenIDNotificationCard'
 
 type HomeProps = StackScreenProps<HomeStackParams, Screens.Home>
 

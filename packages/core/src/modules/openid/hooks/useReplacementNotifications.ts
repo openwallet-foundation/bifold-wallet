@@ -1,8 +1,8 @@
 // modules/openid/ui/useReplacementNotifications.ts
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { credentialRegistry, RegistryStore, OpenIDCredentialLite } from '../refresh/registry'
-import { CustomNotification } from '../../../types/notification'
+import { credentialRegistry, RegistryStore } from '../refresh/registry'
+import { OpenIDNotificationData } from '../features/notifications/types'
 import { OpenIDCustomNotificationType } from '../refresh/types'
 import { useDeclineReplacement } from './useDeclineReplacement'
 import { TOKENS, useServices } from '../../../container-api'
@@ -12,8 +12,8 @@ import { useOpenIdReplacementNavigation } from './useOpenIdReplacementNavigation
  * A hook that returns a list of CustomNotifications for credentials that have replacements available
  */
 
-export const useReplacementNotifications = (): CustomNotification[] => {
-  const [items, setItems] = useState<CustomNotification[]>([])
+export const useReplacementNotifications = (): OpenIDNotificationData[] => {
+  const [items, setItems] = useState<OpenIDNotificationData[]>([])
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const { declineByOldId } = useDeclineReplacement({ logger })
   const openReplacementOffer = useOpenIdReplacementNavigation()
@@ -22,8 +22,8 @@ export const useReplacementNotifications = (): CustomNotification[] => {
   const firstSeenRef = useRef<Record<string, string>>({})
 
   const build = useCallback(
-    (s: Pick<RegistryStore, 'expired' | 'replacements'>): CustomNotification[] => {
-      const out: CustomNotification[] = []
+    (s: Pick<RegistryStore, 'expired' | 'replacements'>): OpenIDNotificationData[] => {
+      const out: OpenIDNotificationData[] = []
 
       for (const oldId of s.expired) {
         const repl = s.replacements[oldId]

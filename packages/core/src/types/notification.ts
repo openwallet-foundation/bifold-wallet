@@ -4,6 +4,8 @@ import { StackNavigationOptions } from '@react-navigation/stack'
 import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
 
 export interface CustomNotification {
+  component: React.FC
+  pageTitle: string
   type?: OpenIDCustomNotificationType
   createdAt?: Date
   onPressAction?: () => void
