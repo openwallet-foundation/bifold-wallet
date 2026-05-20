@@ -31,6 +31,7 @@ Implementing the IOS device check requires a call to Apple servers (App Attest) 
 
 The call to Apple Device Check is only required once. The result lives for the lifetime of the specific app version. Note that Apple may reject an attestation request if the Apple servers are too busy. The specifics on how the throttling is handled by Apple are not documented. The recommendation is to try again with an incremental back-out period.
 
+IOS does not directly support key attestation. It is used in some manner during the app check process but is locked down in a way does not allow the use of the key pair to generically sign a string. As such it is not possible to generate a proof of possession (PoP) using the key ID created during the app check process. The workaround is to create a second hardware backed key in support of the PoP. The PoP key is not attested.
 
 **Android**
 
@@ -53,7 +54,7 @@ Android Key attestation does not require an API call to Google servers. The proc
 
 **React-Native Support**
 
-The following Expo library is used to implement the IOS and Android OS level APIs: https://docs.expo.dev/versions/latest/sdk/app-integrity/ (in Alpha release). As per the OS requirements, a nonce is required from the backend server to generate the attested keys. The nonce is used to protect against replay attacks and is embedded in the attestation object. Unfortunately because of this nonce requirement the expo app integrity library is likely not suitable to generate hardware backed keys for other use cases (outside key attestation) - dPOP and hardware backed cryptographic holder binding. 
+The following Expo library is used to implement the IOS and Android OS level APIs: https://docs.expo.dev/versions/latest/sdk/app-integrity/ (in Alpha release). As per the OS requirements, a nonce is required from the backend server to generate the attested keys. The nonce is used to protect against replay attacks and is embedded in the attestation object. Unfortunately because of this nonce requirement the expo app integrity library is likely not suitable to generate hardware backed keys for other use cases (outside key attestation) - DPoP and hardware backed cryptographic holder binding. 
 
 
 **Bifold**
@@ -102,7 +103,7 @@ As the secure area is isolated from the OS, even rooted or jailbroken devices wo
 
 If the wallet is upgraded by the developer then the key pair could still be accessible. How to handle application updates is a TBD and may fall into the RASP category. On Android, the certificate extended data includes an app version. Unfortunately, IOS does not have any equivalent function that is cryptographically verifiable. Also, the openid4vci documented attestation JWT format does include a version of the wallet in its schema. The current assumption is that the key pair should be invalidated on upgrade and refreshed. This needs more thought and testing.
 
-**Important** This only works if the issuer trusts the wallet provider and has effectively audited or otherwise certified the wallet function.
+**Important** This only works if the issuer trusts the wallet provider and has effectively audited or otherwise certified the wallet function including that the IOS PoP key is hardware backed.
 
 ### Capacity of the secure area - IOS and Android
 
@@ -110,22 +111,22 @@ Concerns around the capacity of the secure area to store key pairs have been rai
 
 More research is needed to clarify OS versions that support this approach any other hidden limitations.
 
-### Notes on dPOP and Key attestation for other wallet keys
+### Notes on DPoP and Key attestation for other wallet keys
 
-The attestation POP and the IETF dPOP flow are very similar in nature. In the latest revision (08) of the IETF attestation spec, dPOP can be used for the POP. This provides two benefits:
+The attestation POP and the IETF DPoP flow are very similar in nature. In the latest revision (08) of the IETF attestation spec, dPOP can be used for the POP. This provides two benefits:
 
 1. Simplifies the header that is passed to the Auth server token endpoint
-2. Attests that the dPOP key is hardware backed
+2. Attests that the DPoP key is hardware backed
 
 There may be privacy concerns with this approach as the wallet backend could have more information on the user relationship with a specific issuer then is necessary as wallet attestations are generic for all issuers. Key material can be used to correlate user activity.
 
 This is true for key attestations (OID4VCI spec) for other interactions such as cryptographic holder binding. The wallet backend will need to be involved in specific transactions with issuers.
 
-The current thinking is to keep dPOP and wallet attestation as separate keys. Trust in the wallet attestation then implies trust in the dPOP keys. More analysis is required to understand the risks and benefits of this approach. 
+The current thinking is to keep DPoP and wallet attestation as separate keys. Trust in the wallet attestation then implies trust in the dPOP keys. More analysis is required to understand the risks and benefits of this approach. 
 
 The EUDI ARF appears (TBC) to require unique wallet attestation keys per issuer which changes the relationship between the issuer and wallet backend and the risk profile.
 
-Note: the dPOP and holder binding key can be the same key as they share the same relationship pattern with the issuer.
+Note: the DPoP and holder binding key can be the same key as they share the same relationship pattern with the issuer.
 
 ### OpenID4VCI Attestation Flow
 
