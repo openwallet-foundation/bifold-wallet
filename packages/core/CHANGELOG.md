@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.8
+
+### Patch Changes
+
+- 75e0535: updated spacing for svg overlay
+  - @bifold/react-hooks@3.0.8
+
 ## 3.0.7
 
 ### Patch Changes
