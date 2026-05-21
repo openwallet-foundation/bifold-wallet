@@ -11,6 +11,10 @@ jest.mock('../../../src/modules/openid/metadata', () => ({
   setRefreshCredentialMetadata: jest.fn(),
 }))
 
+jest.mock('../../../src/modules/openid/refresh/config', () => ({
+  USE_CREDO_OPENID_REFRESH_FLOW: false,
+}))
+
 const mockGetRefreshCredentialMetadata = getRefreshCredentialMetadata as jest.Mock
 const mockPersistCredentialRecord = persistCredentialRecord as jest.Mock
 const mockSetRefreshCredentialMetadata = setRefreshCredentialMetadata as jest.Mock
@@ -22,6 +26,7 @@ describe('refreshAccessToken', () => {
   }
   const credential = { id: 'cred-1' }
   const agentContext = { context: 'agent' }
+  const agent = { context: agentContext }
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -35,7 +40,7 @@ describe('refreshAccessToken', () => {
       refreshAccessToken({
         logger: logger as any,
         cred: credential as any,
-        agentContext: agentContext as any,
+        agent: agent as any,
       })
     ).resolves.toBeUndefined()
 
@@ -60,7 +65,7 @@ describe('refreshAccessToken', () => {
     const result = await refreshAccessToken({
       logger: logger as any,
       cred: credential as any,
-      agentContext: agentContext as any,
+      agent: agent as any,
     })
 
     expect(global.fetch).toHaveBeenCalledWith('https://issuer.example/token', {
@@ -98,7 +103,7 @@ describe('refreshAccessToken', () => {
     await refreshAccessToken({
       logger: logger as any,
       cred: credential as any,
-      agentContext: agentContext as any,
+      agent: agent as any,
     })
 
     expect(mockSetRefreshCredentialMetadata).toHaveBeenCalledWith(credential, {
@@ -124,7 +129,7 @@ describe('refreshAccessToken', () => {
       refreshAccessToken({
         logger: logger as any,
         cred: credential as any,
-        agentContext: agentContext as any,
+        agent: agent as any,
       })
     ).rejects.toThrow('Refresh failed 400: bad request')
   })

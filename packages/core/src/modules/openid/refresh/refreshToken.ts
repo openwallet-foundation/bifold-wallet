@@ -1,4 +1,4 @@
-import { AgentContext } from '@credo-ts/core'
+import { Agent, Kms } from '@credo-ts/core'
 import { BifoldLogger } from '../../../services/logger'
 import { RefreshResponse } from '../types'
 import { getRefreshCredentialMetadata, persistCredentialRecord, setRefreshCredentialMetadata } from '../metadata'
@@ -8,11 +8,11 @@ import { USE_CREDO_OPENID_REFRESH_FLOW } from './config'
 export async function refreshAccessToken({
   logger,
   cred,
-  agentContext,
+  agent,
 }: {
   logger: BifoldLogger
   cred: OpenIDCredentialRecord
-  agentContext: AgentContext
+  agent: Agent
 }): Promise<RefreshResponse | undefined> {
   logger.info(`[refreshAccessToken] Checking new credential for record: ${cred.id}`)
   //   return _mockTokenRefreshResponse
@@ -23,15 +23,73 @@ export async function refreshAccessToken({
   }
 
   logger.info(`[refreshAccessToken] Found refresh metadata for credential: ${cred.id}`)
+  const { refreshToken, tokenEndpoint } = refreshMetaData
 
   if (USE_CREDO_OPENID_REFRESH_FLOW) {
     logger.info(`[refreshAccessToken] Credo refresh flow enabled for credential: ${cred.id}`)
-    throw new Error('Credo OpenID refresh flow is enabled but not implemented yet')
+
+    if (refreshMetaData.resolvedCredentialOffer) {
+      const tokenResponse = await agent.openid4vc.holder.refreshToken({
+        refreshToken,
+        issuerMetadata: refreshMetaData.resolvedCredentialOffer.metadata,
+        authorizationServer:
+          refreshMetaData.authorizationServer ??
+          refreshMetaData.resolvedCredentialOffer.metadata.authorizationServers[0]?.issuer,
+        clientId: refreshMetaData.clientId,
+        dpop: refreshMetaData.dpop
+          ? {
+              alg: refreshMetaData.dpop.alg,
+              jwk: Kms.PublicJwk.fromUnknown(refreshMetaData.dpop.jwk),
+              nonce: refreshMetaData.dpop.nonce,
+            }
+          : undefined,
+      })
+
+      logger.info(
+        `[refreshAccessToken] Credo token refresh succeeded: ${JSON.stringify({
+          token_type: tokenResponse.accessTokenResponse.token_type,
+          expires_in: tokenResponse.accessTokenResponse.expires_in,
+          has_access_token: Boolean(tokenResponse.accessToken),
+          has_refresh_token: Boolean(tokenResponse.refreshToken),
+          has_dpop: Boolean(tokenResponse.dpop),
+        })}`
+      )
+
+      setRefreshCredentialMetadata(cred, {
+        ...refreshMetaData,
+        refreshToken: tokenResponse.refreshToken || refreshMetaData.refreshToken,
+        dpop: tokenResponse.dpop
+          ? {
+              alg: tokenResponse.dpop.alg,
+              jwk: tokenResponse.dpop.jwk.toJson(),
+              nonce: tokenResponse.dpop.nonce,
+            }
+          : refreshMetaData.dpop,
+      })
+
+      await persistCredentialRecord(agent.context, cred)
+
+      return {
+        access_token: tokenResponse.accessToken,
+        refresh_token: tokenResponse.refreshToken,
+        token_type: tokenResponse.accessTokenResponse.token_type,
+        expires_in: tokenResponse.accessTokenResponse.expires_in,
+        c_nonce: tokenResponse.cNonce,
+        c_nonce_expires_in: tokenResponse.accessTokenResponse.c_nonce_expires_in,
+        scope: tokenResponse.accessTokenResponse.scope,
+        authorization_details: tokenResponse.accessTokenResponse.authorization_details,
+        dpop_nonce: tokenResponse.dpop?.nonce,
+        dpopNonce: tokenResponse.dpop?.nonce,
+        dpop: tokenResponse.dpop,
+      }
+    }
+
+    logger.warn(
+      `[refreshAccessToken] Credo refresh flow enabled but no resolved credential offer is stored for credential ${cred.id}; falling back to legacy refresh flow`
+    )
   }
 
   logger.info(`[refreshAccessToken] Legacy refresh flow enabled for credential: ${cred.id}`)
-
-  const { refreshToken, tokenEndpoint } = refreshMetaData
 
   try {
     if (!tokenEndpoint) {
@@ -87,7 +145,7 @@ export async function refreshAccessToken({
         refreshToken: data.refresh_token,
       })
 
-      await persistCredentialRecord(agentContext, cred)
+      await persistCredentialRecord(agent.context, cred)
     }
 
     return data

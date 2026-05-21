@@ -19,7 +19,7 @@ export async function refreshAndQueueReplacement({
   record,
   toLite = toOpenIDCredentialLite,
 }: QueueReplacementOptions) {
-  const token = await refreshAccessToken({ logger, cred: record, agentContext: agent.context })
+  const token = await refreshAccessToken({ logger, cred: record, agent })
   if (!token) {
     return undefined
   }

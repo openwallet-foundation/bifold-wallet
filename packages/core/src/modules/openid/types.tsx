@@ -1,4 +1,8 @@
-import { OpenId4VciCredentialIssuerMetadataDisplay, OpenId4VpResolvedAuthorizationRequest } from '@credo-ts/openid4vc'
+import {
+  OpenId4VciCredentialIssuerMetadataDisplay,
+  OpenId4VciDpopRequestOptions,
+  OpenId4VpResolvedAuthorizationRequest,
+} from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
 import { ClaimFormat } from '@credo-ts/core'
 
@@ -166,6 +170,9 @@ export interface RefreshResponse {
   /** Some ASs return a DPoP nonce (different naming conventions) */
   dpop_nonce?: string
   dpopNonce?: string
+
+  /** DPoP options used to bind the access token, if the issuer requires DPoP */
+  dpop?: OpenId4VciDpopRequestOptions
 }
 
 export interface SelectedCredentialsFormat {

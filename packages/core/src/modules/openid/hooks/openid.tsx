@@ -105,6 +105,7 @@ export const useOpenID = ({
           setRefreshCredentialMetadata(credential, {
             tokenEndpoint: tokenEndpoint,
             refreshToken: refreshToken,
+            authorizationServer: tokenResponse.authorizationServer,
             issuerMetadataCache: {
               credential_issuer: credentialIssuer,
               credential_endpoint: credentialEndpoint,
@@ -114,6 +115,14 @@ export const useOpenID = ({
             },
             credentialIssuer: credentialIssuer,
             credentialConfigurationId: configID,
+            tokenBinding: tokenResponse.dpop ? 'DPoP' : 'Bearer',
+            dpop: tokenResponse.dpop
+              ? {
+                  alg: tokenResponse.dpop.alg,
+                  jwk: tokenResponse.dpop.jwk.toJson(),
+                  nonce: tokenResponse.dpop.nonce,
+                }
+              : undefined,
             lastCheckedAt: Date.now(),
             lastCheckResult: RefreshStatus.Valid,
             attemptCount: 0,
