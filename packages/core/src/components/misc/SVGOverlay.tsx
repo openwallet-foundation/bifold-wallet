@@ -14,6 +14,7 @@ interface ISVGOverlay {
   maskType?: MaskType
   customPath?: string
   strokeColor?: string
+  strokeWidth?: number
   overlayColor?: string
   overlayOpacity?: number
 }
@@ -22,6 +23,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
   maskType = MaskType.OVAL,
   customPath,
   strokeColor = undefined,
+  strokeWidth = 2,
   overlayColor = 'black',
   overlayOpacity = 0.6,
 }) => {
@@ -40,6 +42,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             ry={screenHeight * 0.28}
             fill={fill}
             stroke={strokeColor}
+            strokeWidth={strokeWidth}
           />
         )
 
@@ -70,7 +73,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             ry={15}
             fill={fill}
             stroke={strokeColor}
-            strokeWidth={2}
+            strokeWidth={strokeWidth}
           />
         )
       }
@@ -84,7 +87,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
             height={qrSize}
             fill={fill}
             stroke={strokeColor}
-            strokeWidth={2}
+            strokeWidth={strokeWidth}
           />
         )
       }
