@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@babel/runtime": "~7.27.0",
-    "@bifold/core": "3.0.6",
-    "@bifold/oca": "3.0.6",
-    "@bifold/react-hooks": "3.0.6",
+    "@bifold/core": "3.0.7",
+    "@bifold/oca": "3.0.7",
+    "@bifold/react-hooks": "3.0.7",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
