@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.7
+
+### Patch Changes
+
+- 7cb7ff0: added stroke width to svg overlay
+  - @bifold/react-hooks@3.0.7
+
 ## 3.0.6
 
 ### Patch Changes
