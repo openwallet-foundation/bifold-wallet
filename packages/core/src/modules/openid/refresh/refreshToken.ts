@@ -3,6 +3,7 @@ import { BifoldLogger } from '../../../services/logger'
 import { RefreshResponse } from '../types'
 import { getRefreshCredentialMetadata, persistCredentialRecord, setRefreshCredentialMetadata } from '../metadata'
 import { OpenIDCredentialRecord } from '../credentialRecord'
+import { USE_CREDO_OPENID_REFRESH_FLOW } from './config'
 
 export async function refreshAccessToken({
   logger,
@@ -22,6 +23,14 @@ export async function refreshAccessToken({
   }
 
   logger.info(`[refreshAccessToken] Found refresh metadata for credential: ${cred.id}`)
+
+  if (USE_CREDO_OPENID_REFRESH_FLOW) {
+    logger.info(`[refreshAccessToken] Credo refresh flow enabled for credential: ${cred.id}`)
+    throw new Error('Credo OpenID refresh flow is enabled but not implemented yet')
+  }
+
+  logger.info(`[refreshAccessToken] Legacy refresh flow enabled for credential: ${cred.id}`)
+
   const { refreshToken, tokenEndpoint } = refreshMetaData
 
   try {
