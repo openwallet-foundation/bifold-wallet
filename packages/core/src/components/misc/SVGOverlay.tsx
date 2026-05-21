@@ -37,7 +37,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
         return (
           <Ellipse
             cx={centerX}
-            cy={centerY - 10}
+            cy={centerY - 30}
             rx={screenWidth * 0.45}
             ry={screenHeight * 0.28}
             fill={fill}
@@ -49,13 +49,7 @@ const SVGOverlay: React.FC<ISVGOverlay> = ({
       case MaskType.RECTANGLE: {
         const rectSize = screenWidth * 0.8
         return (
-          <Rect
-            x={centerX - rectSize / 2}
-            y={centerY - rectSize / 2}
-            width={rectSize}
-            height={rectSize}
-            fill={fill}
-          />
+          <Rect x={centerX - rectSize / 2} y={centerY - rectSize / 2} width={rectSize} height={rectSize} fill={fill} />
         )
       }
 
