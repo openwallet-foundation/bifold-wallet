@@ -5,11 +5,14 @@ import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
 
 export interface CustomNotification {
   component: React.FC
+  onCloseAction: (dispatch?: React.Dispatch<any>) => void
+  title: string
+  description: string
+  buttonTitle: string
   pageTitle: string
-  type?: OpenIDCustomNotificationType
+  type?: string
   createdAt?: Date
   onPressAction?: () => void
-  onCloseAction?: () => void
   additionalStackItems?: [
     {
       component: React.FC
@@ -17,10 +20,7 @@ export interface CustomNotification {
       stackOptions?: StackNavigationOptions
     },
   ]
-  metadata?: {
-    oldId?: string,
-    replacementId?: string,
-  }
+  metadata?: Record<string, unknown>
 }
 
 export interface CustomNotificationRecord {

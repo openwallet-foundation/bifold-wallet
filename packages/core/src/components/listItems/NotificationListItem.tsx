@@ -94,7 +94,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>()
   const openReplacementOffer = useOpenIdReplacementNavigation()
   const { upgrade } = useUpgradeExpiredCredential()
-  const [store] = useStore()
+  const [store, dispatch] = useStore()
   const { t } = useTranslation()
   const { ColorPalette } = useTheme()
   const { agent } = useAgent()
@@ -217,6 +217,11 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     toggleDeclineModalVisible()
   }, [notification, agent, t, toggleDeclineModalVisible])
 
+  const declineCustomNotification = useCallback(async () => {
+    customNotification?.onCloseAction(dispatch as any)
+    toggleDeclineModalVisible()
+  }, [customNotification, dispatch, toggleDeclineModalVisible])
+
 
   const commonRemoveModal = () => {
     let usage: ModalUsage | undefined
@@ -226,12 +231,15 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
       usage = ModalUsage.ProofRequestDecline
       if ((notification as DidCommProofExchangeRecord).state === DidCommProofState.Done) {
         onSubmit = dismissProofRequest
-    } else {
+      } else {
         onSubmit = declineProofRequest
       }
     } else if (notificationType === NotificationType.CredentialOffer) {
       usage = ModalUsage.CredentialOfferDecline
       onSubmit = declineCredentialOffer
+    } else if (notificationType === NotificationType.Custom) {
+      usage = ModalUsage.CustomNotificationDecline
+      onSubmit = declineCustomNotification
     } else {
       usage = undefined
     }
@@ -314,8 +322,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
       setDetails(details ?? defaultDetails)
     }
-
-    if (notificationType !== NotificationType.Custom && customNotification) {
+    if (notificationType === NotificationType.Custom && customNotification) {
+      setDetails({
+        type: InfoBoxType.Info,
+        title: t(customNotification?.title as any),
+        body: t(customNotification?.description as any),
+        buttonTitle: t(customNotification?.buttonTitle as any),
+      })
+    } else {
       getDetails()
     }
   }, [
@@ -387,12 +401,14 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
           })
         break
       case NotificationType.Custom:
-        customNotification?.onPressAction
+        onPress = () => {
+          customNotification?.onPressAction
             ? customNotification.onPressAction()
             : navigation.getParent()?.navigate(Stacks.NotificationStack, {
                 screen: Screens.CustomNotification,
               })
-        onClose = toggleDeclineModalVisible
+          onClose = toggleDeclineModalVisible
+        }
         break
       default:
         throw new Error('NotificationType was not set correctly.')
