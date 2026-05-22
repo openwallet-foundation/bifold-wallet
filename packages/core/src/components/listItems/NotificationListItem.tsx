@@ -407,8 +407,8 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
             : navigation.getParent()?.navigate(Stacks.NotificationStack, {
                 screen: Screens.CustomNotification,
               })
-          onClose = toggleDeclineModalVisible
         }
+        onClose = toggleDeclineModalVisible
         break
       default:
         throw new Error('NotificationType was not set correctly.')
