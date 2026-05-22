@@ -12,7 +12,7 @@ import InfoIcon from '../components/buttons/InfoIcon'
 import { renderComposer, renderInputToolbar, renderSend } from '../components/chat'
 import ActionSlider from '../components/chat/ActionSlider'
 import { renderActions } from '../components/chat/ChatActions'
-import { ChatMessage } from '../components/chat/ChatMessage'
+import { ChatMessage, ExtendedChatMessage } from '../components/chat/ChatMessage'
 import { useNetwork } from '../contexts/network'
 import { useStore } from '../contexts/store'
 import { useTheme } from '../contexts/theme'
@@ -21,7 +21,6 @@ import { Role } from '../types/chat'
 import { BasicMessageMetadata, basicMessageCustomMetadata } from '../types/metadata'
 import { RootStackParams, ContactStackParams, Screens, Stacks } from '../types/navigators'
 import { getConnectionName } from '../utils/helpers'
-import { KeyboardAvoidingView, Platform } from 'react-native'
 
 type ChatProps = StackScreenProps<ContactStackParams, Screens.Chat> | StackScreenProps<RootStackParams, Screens.Chat>
 
@@ -67,7 +66,8 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       const meta = msg.metadata.get(BasicMessageMetadata.customMetadata) as basicMessageCustomMetadata
       if (agent && !meta?.seen) {
         msg.metadata.set(BasicMessageMetadata.customMetadata, { ...meta, seen: true })
-        const basicMessageRepository: DidCommBasicMessageRepository = agent.context.dependencyManager.resolve(DidCommBasicMessageRepository) // Should maybe be resolved differently
+        const basicMessageRepository: DidCommBasicMessageRepository =
+          agent.context.dependencyManager.resolve(DidCommBasicMessageRepository)
         basicMessageRepository.update(agent.context, msg)
       }
     })
@@ -107,33 +107,29 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
   }, [])
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1, paddingTop: 20 }}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? undefined : 'padding'}
-        keyboardVerticalOffset={headerHeight}
-      >
-        <GiftedChat
-          keyboardShouldPersistTaps={'handled'}
-          messages={chatMessages}
-          showAvatarForEveryMessage={true}
-          alignTop
-          renderAvatar={() => null}
-          messageIdGenerator={(msg) => msg?._id.toString() || '0'}
-          renderMessage={(props) => <ChatMessage messageProps={props} />}
-          renderInputToolbar={(props) => renderInputToolbar(props, theme)}
-          renderSend={(props) => renderSend(props, theme)}
-          renderComposer={(props) => renderComposer(props, theme, t('Contacts.TypeHere'))}
-          disableComposer={!silentAssertConnectedNetwork()}
-          onSend={onSend}
-          user={{
-            _id: Role.me,
-          }}
-          renderActions={(props) => renderActions(props, theme, actions)}
-          onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
-        />
-        {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
-      </KeyboardAvoidingView>
+    <SafeAreaView edges={['bottom', 'left', 'right']} style={{ flex: 1 }}>
+      <GiftedChat<ExtendedChatMessage>
+        messages={chatMessages}
+        isAvatarVisibleForEveryMessage={true}
+        isAlignedTop
+        renderAvatar={() => null}
+        messageIdGenerator={(msg) => msg?._id.toString() || '0'}
+        renderMessage={(props) => <ChatMessage messageProps={props} />}
+        renderInputToolbar={(props) => renderInputToolbar(props, theme)}
+        renderSend={(props) => renderSend(props, theme)}
+        renderComposer={(props) =>
+          renderComposer(props, theme, t('Contacts.TypeHere'), !silentAssertConnectedNetwork())
+        }
+        onSend={onSend}
+        user={{
+          _id: Role.me,
+        }}
+        renderActions={(props) => renderActions(props, theme, actions)}
+        onPressActionButton={actions ? () => setShowActionSlider(true) : undefined}
+        keyboardAvoidingViewProps={{ keyboardVerticalOffset: headerHeight }}
+        listProps={{ keyboardShouldPersistTaps: 'handled' }}
+      />
+      {showActionSlider && <ActionSlider onDismiss={onDismiss} actions={actions} />}
     </SafeAreaView>
   )
 }
