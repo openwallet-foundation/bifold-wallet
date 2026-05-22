@@ -111,7 +111,6 @@ const Chat: React.FC<ChatProps> = ({ route }) => {
       <GiftedChat<ExtendedChatMessage>
         messages={chatMessages}
         isAvatarVisibleForEveryMessage={true}
-        isAlignedTop
         renderAvatar={() => null}
         messageIdGenerator={(msg) => msg?._id.toString() || '0'}
         renderMessage={(props) => <ChatMessage messageProps={props} />}
