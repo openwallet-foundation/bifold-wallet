@@ -1,8 +1,6 @@
 import React from 'react'
 import { StackNavigationOptions } from '@react-navigation/stack'
 
-import { OpenIDCustomNotificationType } from '../modules/openid/refresh/types'
-
 export interface CustomNotification {
   component: React.FC
   onCloseAction: (dispatch?: React.Dispatch<any>) => void
