@@ -207,8 +207,8 @@ export interface IErrorColors {
 }
 
 export interface IIconColors {
-  credentialRevoked: string,
-  credentialNotAvailable: string,
+  credentialRevoked: string
+  credentialNotAvailable: string
 }
 
 export interface IColorPalette {
@@ -863,7 +863,7 @@ export function createNavigationTheme(theme: { ColorPalette: IColorPalette }) {
       shadowColor: ColorPalette.grayscale.black,
       shadowOpacity: 0.15,
       elevation: 0,
-    }
+    },
   }
 }
 export type INavigationTheme = ReturnType<typeof createNavigationTheme>
@@ -962,6 +962,7 @@ export function createChatTheme(theme: { ColorPalette: IColorPalette; TextTheme:
       lineHeight: undefined,
       fontWeight: '500',
       fontSize: theme.TextTheme.normal.fontSize,
+      color: theme.ColorPalette.brand.text,
     },
     openButtonTextStyle: {
       fontSize: theme.TextTheme.normal.fontSize,
