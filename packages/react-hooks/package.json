@@ -2,7 +2,7 @@
   "name": "@bifold/react-hooks",
   "main": "build/index.js",
   "types": "build/index.d.ts",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "files": [
     "build"
   ],

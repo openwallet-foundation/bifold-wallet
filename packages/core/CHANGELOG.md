@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.9
+
+### Patch Changes
+
+- 0944c44: Update contacts chat screen, with fix for input scroll, text color and spacing.
+  - @bifold/react-hooks@3.0.9
+
 ## 3.0.8
 
 ### Patch Changes
