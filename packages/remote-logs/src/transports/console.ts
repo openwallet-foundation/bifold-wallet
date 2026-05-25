@@ -50,7 +50,12 @@ const errorReplacer = (_key: string, value: unknown): unknown => {
     return {
       name: value.name,
       message: value.message,
-      stack: value.stack?.split('\n').slice(1).map((line) => line.trim()) ?? [],
+      cause: 'cause' in value ? value.cause : undefined,
+      stack:
+        value.stack
+          ?.split('\n')
+          .slice(1)
+          .map((line) => line.trim()) ?? [],
     }
   }
   return value
